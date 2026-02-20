@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.style;
 
+import java.util.regex.Pattern;
+
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
@@ -46,95 +48,110 @@ public class ClockwiseTopRightBottomLeft {
 	private final double left;
 
 	public static ClockwiseTopRightBottomLeft same(double value) {
-<span class="fc" id="L49">		return new ClockwiseTopRightBottomLeft(value, value, value, value);</span>
+<span class="fc" id="L51">		return new ClockwiseTopRightBottomLeft(value, value, value, value);</span>
 	}
 
 	public static ClockwiseTopRightBottomLeft none() {
-<span class="fc" id="L53">		return new ClockwiseTopRightBottomLeft(0, 0, 0, 0);</span>
+<span class="fc" id="L55">		return new ClockwiseTopRightBottomLeft(0, 0, 0, 0);</span>
+	}
+
+<span class="fc" id="L58">	private static final Pattern NUMBERS_ONLY = Pattern.compile(&quot;[0-9 ]+&quot;);</span>
+
+	private static boolean isOnlyNumbersAndSpaces(String value) {
+<span class="fc" id="L61">		return NUMBERS_ONLY.matcher(value).matches();</span>
 	}
 
 	public static ClockwiseTopRightBottomLeft read(String value) {
-<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (value.matches(&quot;[0-9 ]+&quot;)) {</span>
-<span class="fc" id="L58">			final String split[] = value.split(&quot; +&quot;);</span>
-<span class="fc bfc" id="L59" title="All 2 branches covered.">			if (split.length == 1) {</span>
-<span class="fc" id="L60">				final double first = Integer.parseInt(split[0]);</span>
-<span class="fc" id="L61">				return new ClockwiseTopRightBottomLeft(first, first, first, first);</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (isOnlyNumbersAndSpaces(value) == false)</span>
+<span class="fc" id="L66">			return none();</span>
+
+<span class="fc" id="L68">		final String[] split = value.trim().split(&quot; +&quot;);</span>
+
+		try {
+<span class="pc bpc" id="L71" title="3 of 5 branches missed.">			switch (split.length) {</span>
+			case 1: {
+<span class="fc" id="L73">				final double v = Integer.parseInt(split[0]);</span>
+<span class="fc" id="L74">				return new ClockwiseTopRightBottomLeft(v, v, v, v);</span>
 			}
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">			if (split.length == 2) {</span>
-<span class="nc" id="L64">				final double first = Integer.parseInt(split[0]);</span>
-<span class="nc" id="L65">				final double second = Integer.parseInt(split[1]);</span>
-<span class="nc" id="L66">				return new ClockwiseTopRightBottomLeft(first, second, first, second);</span>
+			case 2: {
+<span class="nc" id="L77">				final double a = Integer.parseInt(split[0]);</span>
+<span class="nc" id="L78">				final double b = Integer.parseInt(split[1]);</span>
+<span class="nc" id="L79">				return new ClockwiseTopRightBottomLeft(a, b, a, b);</span>
 			}
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">			if (split.length == 3) {</span>
-<span class="nc" id="L69">				final double first = Integer.parseInt(split[0]);</span>
-<span class="nc" id="L70">				final double second = Integer.parseInt(split[1]);</span>
-<span class="nc" id="L71">				final double third = Integer.parseInt(split[2]);</span>
-<span class="nc" id="L72">				return new ClockwiseTopRightBottomLeft(first, second, third, second);</span>
+			case 3: {
+<span class="nc" id="L82">				final double a = Integer.parseInt(split[0]);</span>
+<span class="nc" id="L83">				final double b = Integer.parseInt(split[1]);</span>
+<span class="nc" id="L84">				final double c = Integer.parseInt(split[2]);</span>
+<span class="nc" id="L85">				return new ClockwiseTopRightBottomLeft(a, b, c, b);</span>
 			}
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">			if (split.length == 4) {</span>
-<span class="fc" id="L75">				final double first = Integer.parseInt(split[0]);</span>
-<span class="fc" id="L76">				final double second = Integer.parseInt(split[1]);</span>
-<span class="fc" id="L77">				final double third = Integer.parseInt(split[2]);</span>
-<span class="fc" id="L78">				final double forth = Integer.parseInt(split[3]);</span>
-<span class="fc" id="L79">				return new ClockwiseTopRightBottomLeft(first, second, third, forth);</span>
+			case 4: {
+<span class="fc" id="L88">				final double a = Integer.parseInt(split[0]);</span>
+<span class="fc" id="L89">				final double b = Integer.parseInt(split[1]);</span>
+<span class="fc" id="L90">				final double c = Integer.parseInt(split[2]);</span>
+<span class="fc" id="L91">				final double d = Integer.parseInt(split[3]);</span>
+<span class="fc" id="L92">				return new ClockwiseTopRightBottomLeft(a, b, c, d);</span>
 			}
+			default:
+<span class="nc" id="L95">				return none();</span>
+			}
+<span class="nc" id="L97">		} catch (NumberFormatException e) {</span>
+<span class="nc" id="L98">			return none();</span>
 		}
-<span class="fc" id="L82">		return none();</span>
 	}
 
 	public static ClockwiseTopRightBottomLeft margin1margin2(double margin1, double margin2) {
-<span class="nc" id="L86">		return topRightBottomLeft(margin1, margin2, margin1, margin2);</span>
+<span class="nc" id="L103">		return topRightBottomLeft(margin1, margin2, margin1, margin2);</span>
 	}
 
 	public static ClockwiseTopRightBottomLeft topRightBottomLeft(double top, double right, double bottom, double left) {
-<span class="fc" id="L90">		return new ClockwiseTopRightBottomLeft(top, right, bottom, left);</span>
+<span class="fc" id="L107">		return new ClockwiseTopRightBottomLeft(top, right, bottom, left);</span>
 	}
 
-<span class="fc" id="L93">	private ClockwiseTopRightBottomLeft(double top, double right, double bottom, double left) {</span>
-<span class="fc" id="L94">		this.top = top;</span>
-<span class="fc" id="L95">		this.right = right;</span>
-<span class="fc" id="L96">		this.bottom = bottom;</span>
-<span class="fc" id="L97">		this.left = left;</span>
-<span class="fc" id="L98">	}</span>
+<span class="fc" id="L110">	private ClockwiseTopRightBottomLeft(double top, double right, double bottom, double left) {</span>
+<span class="fc" id="L111">		this.top = top;</span>
+<span class="fc" id="L112">		this.right = right;</span>
+<span class="fc" id="L113">		this.bottom = bottom;</span>
+<span class="fc" id="L114">		this.left = left;</span>
+<span class="fc" id="L115">	}</span>
 
 	public ClockwiseTopRightBottomLeft incTop(double delta) {
-<span class="nc" id="L101">		return new ClockwiseTopRightBottomLeft(top + delta, right, bottom, left);</span>
+<span class="nc" id="L118">		return new ClockwiseTopRightBottomLeft(top + delta, right, bottom, left);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L106">		return &quot;&quot; + top + &quot;:&quot; + right + &quot;:&quot; + bottom + &quot;:&quot; + left;</span>
+<span class="nc" id="L123">		return &quot;&quot; + top + &quot;:&quot; + right + &quot;:&quot; + bottom + &quot;:&quot; + left;</span>
 	}
 
 	public final double getTop() {
-<span class="fc" id="L110">		return top;</span>
+<span class="fc" id="L127">		return top;</span>
 	}
 
 	public final double getRight() {
-<span class="fc" id="L114">		return right;</span>
+<span class="fc" id="L131">		return right;</span>
 	}
 
 	public final double getBottom() {
-<span class="fc" id="L118">		return bottom;</span>
+<span class="fc" id="L135">		return bottom;</span>
 	}
 
 	public final double getLeft() {
-<span class="fc" id="L122">		return left;</span>
+<span class="fc" id="L139">		return left;</span>
 	}
 
 	// ::comment when __HAXE__
 	public static ClockwiseTopRightBottomLeft marginForDocument(StyleBuilder styleBuilder) {
-<span class="nc" id="L127">		final Style style = StyleSignatureBasic.of(SName.root, SName.document).getMergedStyle(styleBuilder);</span>
-<span class="nc" id="L128">		return style.getMargin();</span>
+<span class="nc" id="L144">		final Style style = StyleSignatureBasic.of(SName.root, SName.document).getMergedStyle(styleBuilder);</span>
+<span class="nc" id="L145">		return style.getMargin();</span>
 	}
 	// ::done
 
 	public UTranslate getTranslate() {
-<span class="nc" id="L133">		return new UTranslate(left, top);</span>
+<span class="nc" id="L150">		return new UTranslate(left, top);</span>
 	}
 
 	public XDimension2D apply(XDimension2D dim) {
-<span class="nc" id="L137">		return new XDimension2D(left + dim.getWidth() + right, top + dim.getHeight() + bottom);</span>
+<span class="nc" id="L154">		return new XDimension2D(left + dim.getWidth() + right, top + dim.getHeight() + bottom);</span>
 	}
 
 }

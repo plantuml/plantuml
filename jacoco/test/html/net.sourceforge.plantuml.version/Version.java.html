@@ -44,69 +44,67 @@ import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
 <span class="nc" id="L46">public class Version {</span>
-	// ::remove folder when __HAXE__
-
 	public static String versionString() {
-<span class="fc" id="L50">		return CompilationInfo.VERSION;</span>
+<span class="fc" id="L48">		return CompilationInfo.VERSION;</span>
 	}
 
 	public static String fullDescription() {
-<span class="nc" id="L54">		return &quot;PlantUML version &quot; + Version.versionString() + &quot; (&quot; + Version.compileTimeString() + &quot;)&quot;;</span>
+<span class="nc" id="L52">		return &quot;PlantUML version &quot; + Version.versionString() + &quot; / &quot; + CompilationInfo.COMMIT + &quot; [&quot;</span>
+<span class="nc" id="L53">				+ Version.compileTimeString() + &quot;]&quot;;</span>
 	}
 
 	public static String versionString(int size) {
-<span class="fc" id="L58">		final StringBuilder sb = new StringBuilder(versionString());</span>
-<span class="fc bfc" id="L59" title="All 2 branches covered.">		while (sb.length() &lt; size)</span>
-<span class="fc" id="L60">			sb.append(' ');</span>
+<span class="fc" id="L57">		final StringBuilder sb = new StringBuilder(versionString());</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		while (sb.length() &lt; size)</span>
+<span class="fc" id="L59">			sb.append(' ');</span>
 
-<span class="fc" id="L62">		return sb.toString();</span>
+<span class="fc" id="L61">		return sb.toString();</span>
 	}
 
 	public static int beta() {
-<span class="nc" id="L66">		final int x = CompilationInfo.VERSION.indexOf(&quot;beta&quot;);</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (x == -1)</span>
-<span class="nc" id="L68">			return 0;</span>
-<span class="nc" id="L69">		return Integer.parseInt(CompilationInfo.VERSION.substring(x + &quot;beta&quot;.length()));</span>
+<span class="nc" id="L65">		final int x = CompilationInfo.VERSION.indexOf(&quot;beta&quot;);</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (x == -1)</span>
+<span class="nc" id="L67">			return 0;</span>
+<span class="nc" id="L68">		return Integer.parseInt(CompilationInfo.VERSION.substring(x + &quot;beta&quot;.length()));</span>
 	}
 
 	public static String etag() {
-<span class="nc" id="L73">		return SignatureUtils.getMD5Hex(CompilationInfo.VERSION);</span>
+<span class="nc" id="L72">		return SignatureUtils.getMD5Hex(CompilationInfo.VERSION);</span>
 	}
 
 	public static String turningId() {
-<span class="nc" id="L77">		return etag();</span>
+<span class="nc" id="L76">		return etag();</span>
 	}
 
 	public static long compileTime() {
-<span class="nc" id="L81">		return 1768736672346L;</span>
+<span class="nc" id="L80">		return 1768736672346L;</span>
 	}
 
 	public static String compileTimeString() {
 		if (CompilationInfo.COMPILE_TIMESTAMP == 0L)
 			return &quot;Unknown compile time&quot;;
 
-<span class="nc" id="L88">		return Instant.ofEpochMilli(CompilationInfo.COMPILE_TIMESTAMP)</span>
-<span class="nc" id="L89">				.atZone(ZoneOffset.UTC)</span>
-<span class="nc" id="L90">				.format(DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss 'UTC'&quot;));</span>
+<span class="nc" id="L87">		return Instant.ofEpochMilli(CompilationInfo.COMPILE_TIMESTAMP).atZone(ZoneOffset.UTC)</span>
+<span class="nc" id="L88">				.format(DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss 'UTC'&quot;));</span>
 	}
 
 	// ::comment when __CORE__ or __TEAVM__
 	public static String getJarPath() {
 		try {
-<span class="nc" id="L96">			final ClassLoader loader = Version.class.getClassLoader();</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (loader == null) </span>
-<span class="nc" id="L98">				return &quot;No ClassLoader?&quot;;</span>
-			
-<span class="nc" id="L100">			final SURL url = SURL.create(loader.getResource(&quot;net/sourceforge/plantuml/version/Version.class&quot;));</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">			if (url == null) </span>
-<span class="nc" id="L102">				return &quot;No URL?&quot;;</span>
-			
-<span class="nc" id="L104">			String fullpath = url.toString();</span>
-<span class="nc" id="L105">			fullpath = fullpath.replaceAll(&quot;net/sourceforge/plantuml/version/Version\\.class&quot;, &quot;&quot;);</span>
-<span class="nc" id="L106">			return fullpath;</span>
-<span class="nc" id="L107">		} catch (Throwable t) {</span>
-<span class="nc" id="L108">			Logme.error(t);</span>
-<span class="nc" id="L109">			return t.toString();</span>
+<span class="nc" id="L94">			final ClassLoader loader = Version.class.getClassLoader();</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (loader == null)</span>
+<span class="nc" id="L96">				return &quot;No ClassLoader?&quot;;</span>
+
+<span class="nc" id="L98">			final SURL url = SURL.create(loader.getResource(&quot;net/sourceforge/plantuml/version/Version.class&quot;));</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (url == null)</span>
+<span class="nc" id="L100">				return &quot;No URL?&quot;;</span>
+
+<span class="nc" id="L102">			String fullpath = url.toString();</span>
+<span class="nc" id="L103">			fullpath = fullpath.replaceAll(&quot;net/sourceforge/plantuml/version/Version\\.class&quot;, &quot;&quot;);</span>
+<span class="nc" id="L104">			return fullpath;</span>
+<span class="nc" id="L105">		} catch (Throwable t) {</span>
+<span class="nc" id="L106">			Logme.error(t);</span>
+<span class="nc" id="L107">			return t.toString();</span>
 		}
 	}
 	// ::done

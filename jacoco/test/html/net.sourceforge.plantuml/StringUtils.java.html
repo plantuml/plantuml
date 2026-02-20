@@ -497,74 +497,73 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L497">		return s;</span>
 	}
 
-	public static String trinNoTrace(CharSequence s) {
-<span class="fc" id="L501">		return s.toString().trim();</span>
-	}
-
 	public static String manageEscapedTabs(String s) {
-<span class="fc" id="L505">		return s.replace(&quot;\\t&quot;, &quot;\t&quot;);</span>
+<span class="fc" id="L501">		return s.replace(&quot;\\t&quot;, &quot;\t&quot;);</span>
 	}
 
 	public static long seed(String string) {
-<span class="fc" id="L509">		long h = 1125899906842597L; // prime</span>
-<span class="fc" id="L510">		final int len = string.length();</span>
+<span class="fc" id="L505">		long h = 1125899906842597L; // prime</span>
+<span class="fc" id="L506">		final int len = string.length();</span>
 
-<span class="fc bfc" id="L512" title="All 2 branches covered.">		for (int i = 0; i &lt; len; i++)</span>
-<span class="fc" id="L513">			h = 31 * h + string.charAt(i);</span>
+<span class="fc bfc" id="L508" title="All 2 branches covered.">		for (int i = 0; i &lt; len; i++)</span>
+<span class="fc" id="L509">			h = 31 * h + string.charAt(i);</span>
 
-<span class="fc" id="L515">		return h;</span>
+<span class="fc" id="L511">		return h;</span>
 	}
 
 	public static String trin(String arg) {
-<span class="fc bfc" id="L519" title="All 2 branches covered.">		if (arg.length() == 0)</span>
-<span class="fc" id="L520">			return arg;</span>
+<span class="fc" id="L515">		final int len = arg.length();</span>
+<span class="fc bfc" id="L516" title="All 2 branches covered.">		if (len == 0)</span>
+<span class="fc" id="L517">			return &quot;&quot;;</span>
 
-<span class="fc" id="L522">		return trinEndingInternal(arg, getPositionStartNonSpace(arg));</span>
+<span class="fc" id="L519">		int start = 0;</span>
+<span class="fc" id="L520">		int end = len - 1;</span>
+
+<span class="fc bfc" id="L522" title="All 2 branches covered.">		while (start &lt;= end) {</span>
+<span class="fc" id="L523">			final char cStart = arg.charAt(start);</span>
+<span class="pc bpc" id="L524" title="3 of 10 branches missed.">			if (cStart == ' ' || cStart == '\t' || cStart == '\r' || cStart == '\n' || cStart == '\0') {</span>
+<span class="fc" id="L525">				start++;</span>
+<span class="fc" id="L526">				continue;</span>
+			}
+
+<span class="fc" id="L529">			final char cEnd = arg.charAt(end);</span>
+<span class="pc bpc" id="L530" title="4 of 10 branches missed.">			if (cEnd == ' ' || cEnd == '\t' || cEnd == '\r' || cEnd == '\n' || cEnd == '\0') {</span>
+<span class="fc" id="L531">				end--;</span>
+<span class="fc" id="L532">				continue;</span>
+			}
+			break;
+		}
+
+<span class="fc bfc" id="L537" title="All 4 branches covered.">		if (start == 0 &amp;&amp; end == len - 1)</span>
+<span class="fc" id="L538">			return arg;</span>
+
+<span class="fc bfc" id="L540" title="All 2 branches covered.">		if (start &gt; end)</span>
+<span class="fc" id="L541">			return &quot;&quot;;</span>
+
+<span class="fc" id="L543">		return arg.substring(start, end + 1);</span>
 	}
 
-	private static int getPositionStartNonSpace(String arg) {
-<span class="fc" id="L526">		int i = 0;</span>
-<span class="fc bfc" id="L527" title="All 4 branches covered.">		while (i &lt; arg.length() &amp;&amp; isSpaceOrTabOrNull(arg.charAt(i)))</span>
-<span class="fc" id="L528">			i++;</span>
-
-<span class="fc" id="L530">		return i;</span>
-	}
-
-	private static String trinEnding(String arg) {
-<span class="nc bnc" id="L534" title="All 2 branches missed.">		if (arg.length() == 0)</span>
-<span class="nc" id="L535">			return arg;</span>
-
-<span class="nc" id="L537">		return trinEndingInternal(arg, 0);</span>
-	}
-
-	private static String trinEndingInternal(String arg, int from) {
-<span class="fc" id="L541">		int j = arg.length() - 1;</span>
-<span class="fc bfc" id="L542" title="All 4 branches covered.">		while (j &gt;= from &amp;&amp; isSpaceOrTabOrNull(arg.charAt(j)))</span>
-<span class="fc" id="L543">			j--;</span>
-
-<span class="fc bfc" id="L545" title="All 4 branches covered.">		if (from == 0 &amp;&amp; j == arg.length() - 1)</span>
-<span class="fc" id="L546">			return arg;</span>
-
-<span class="fc" id="L548">		return arg.substring(from, j + 1);</span>
+	public static String trinNoTrace(CharSequence s) {
+<span class="fc" id="L547">		return s.toString().trim();</span>
 	}
 
 	private static boolean isSpaceOrTabOrNull(char c) {
-<span class="fc bfc" id="L552" title="All 10 branches covered.">		return c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\0';</span>
+<span class="fc bfc" id="L551" title="All 10 branches covered.">		return c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\0';</span>
 	}
 
 	// ::comment when __CORE__ or __HAXE__ or __TEAVM__
 	public static int getWcWidth(Display stringsToDisplay) {
-<span class="fc" id="L557">		int result = 1;</span>
-<span class="fc bfc" id="L558" title="All 2 branches covered.">		for (CharSequence s : stringsToDisplay) {</span>
-<span class="pc bpc" id="L559" title="1 of 2 branches missed.">			if (s == null)</span>
-<span class="nc" id="L560">				continue;</span>
+<span class="fc" id="L556">		int result = 1;</span>
+<span class="fc bfc" id="L557" title="All 2 branches covered.">		for (CharSequence s : stringsToDisplay) {</span>
+<span class="pc bpc" id="L558" title="1 of 2 branches missed.">			if (s == null)</span>
+<span class="nc" id="L559">				continue;</span>
 
-<span class="fc" id="L562">			final int length = Wcwidth.length(s);</span>
-<span class="fc bfc" id="L563" title="All 2 branches covered.">			if (result &lt; length)</span>
-<span class="fc" id="L564">				result = length;</span>
+<span class="fc" id="L561">			final int length = Wcwidth.length(s);</span>
+<span class="fc bfc" id="L562" title="All 2 branches covered.">			if (result &lt; length)</span>
+<span class="fc" id="L563">				result = length;</span>
 
-<span class="fc" id="L566">		}</span>
-<span class="fc" id="L567">		return result;</span>
+<span class="fc" id="L565">		}</span>
+<span class="fc" id="L566">		return result;</span>
 	}
 	// ::done
 

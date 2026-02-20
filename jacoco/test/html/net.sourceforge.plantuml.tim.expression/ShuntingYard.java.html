@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.tim.expression;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
@@ -44,126 +45,128 @@ import net.sourceforge.plantuml.tim.EaterException;
 // https://en.cppreference.com/w/c/language/operator_precedence
 public class ShuntingYard {
 
-<span class="fc" id="L47">	final private TokenStack ouputQueue = new TokenStack();</span>
-<span class="fc" id="L48">	final private Deque&lt;Token&gt; operatorStack = new ArrayDeque&lt;&gt;();</span>
+<span class="fc" id="L48">	final private TokenStack ouputQueue = new TokenStack();</span>
+<span class="fc" id="L49">	final private Deque&lt;Token&gt; operatorStack = new ArrayDeque&lt;&gt;();</span>
 
 	private static final boolean TRACE = false;
 
 	private void traceMe() {
 		if (TRACE == false)
-<span class="fc" id="L54">			return;</span>
+<span class="fc" id="L55">			return;</span>
 		System.err.println(&quot;-------------------&quot;);
 		System.err.println(&quot;operatorStack=&quot; + operatorStack);
 		System.err.println(&quot;ouputQueue=&quot; + ouputQueue);
 		System.err.println(&quot;&quot;);
 	}
 
-<span class="fc" id="L61">	public ShuntingYard(TokenIterator it, Knowledge knowledge, StringLocated location) throws EaterException {</span>
+<span class="fc" id="L62">	public ShuntingYard(TokenIterator it, Knowledge knowledge, StringLocated location) throws EaterException {</span>
 
-<span class="fc bfc" id="L63" title="All 2 branches covered.">		while (it.hasMoreTokens()) {</span>
-<span class="fc" id="L64">			final Token token = it.nextToken();</span>
-<span class="fc" id="L65">			traceMe();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		while (it.hasMoreTokens()) {</span>
+<span class="fc" id="L65">			final Token token = it.nextToken();</span>
+<span class="fc" id="L66">			traceMe();</span>
 			if (TRACE)
 				System.err.println(&quot;token=&quot; + token);
-<span class="fc bfc" id="L68" title="All 4 branches covered.">			if (token.getTokenType() == TokenType.NUMBER || token.getTokenType() == TokenType.QUOTED_STRING) {</span>
-<span class="fc" id="L69">				ouputQueue.add(token);</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.FUNCTION_NAME) {</span>
-<span class="fc" id="L71">				operatorStack.addFirst(token);</span>
-<span class="fc bfc" id="L72" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.PLAIN_TEXT) {</span>
-<span class="fc" id="L73">				final String name = token.getSurface();</span>
-<span class="fc" id="L74">				final TValue variable = knowledge.getVariable(name);</span>
-<span class="fc bfc" id="L75" title="All 2 branches covered.">				if (variable == null) {</span>
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">					if (isVariableName(name) == false)</span>
-<span class="nc" id="L77">						throw new EaterException(&quot;Parsing syntax error about &quot; + name, location);</span>
+<span class="fc bfc" id="L69" title="All 4 branches covered.">			if (token.getTokenType() == TokenType.NUMBER || token.getTokenType() == TokenType.QUOTED_STRING) {</span>
+<span class="fc" id="L70">				ouputQueue.add(token);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.FUNCTION_NAME) {</span>
+<span class="fc" id="L72">				operatorStack.addFirst(token);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.PLAIN_TEXT) {</span>
+<span class="fc" id="L74">				final String name = token.getSurface();</span>
+<span class="fc" id="L75">				final TValue variable = knowledge.getVariable(name);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">				if (variable == null) {</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">					if (isVariableName(name) == false)</span>
+<span class="nc" id="L78">						throw new EaterException(&quot;Parsing syntax error about &quot; + name, location);</span>
 
-<span class="fc" id="L79">					ouputQueue.add(new Token(name, TokenType.QUOTED_STRING, null));</span>
+<span class="fc" id="L80">					ouputQueue.add(new Token(name, TokenType.QUOTED_STRING, null));</span>
 				} else {
-<span class="fc" id="L81">					ouputQueue.add(variable.toToken());</span>
+<span class="fc" id="L82">					ouputQueue.add(variable.toToken());</span>
 				}
-<span class="fc bfc" id="L83" title="All 2 branches covered.">			} else if (isOperatorOrAffectation(token)) {</span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">				while ((thereIsAFunctionAtTheTopOfTheOperatorStack() //</span>
-<span class="fc bfc" id="L85" title="All 2 branches covered.">						|| thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(token) //</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">						|| theOperatorAtTheTopOfTheOperatorStackHasEqualPrecedenceAndIsLeftAssociative(token)) //</span>
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">						&amp;&amp; theOperatorAtTheTopOfTheOperatorStackIsNotALeftParenthesis(token))</span>
-<span class="fc" id="L88">					ouputQueue.add(operatorStack.removeFirst());</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">			} else if (isOperatorOrAffectation(token)) {</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">				while ((thereIsAFunctionAtTheTopOfTheOperatorStack() //</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">						|| thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(token) //</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">						|| theOperatorAtTheTopOfTheOperatorStackHasEqualPrecedenceAndIsLeftAssociative(token)) //</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">						&amp;&amp; theOperatorAtTheTopOfTheOperatorStackIsNotALeftParenthesis(token))</span>
+<span class="fc" id="L89">					ouputQueue.add(operatorStack.removeFirst());</span>
 
 				// push it onto the operator stack.
-<span class="fc" id="L91">				operatorStack.addFirst(token);</span>
-<span class="fc bfc" id="L92" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.OPEN_PAREN_FUNC) {</span>
-<span class="fc" id="L93">				operatorStack.addFirst(token);</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.OPEN_PAREN_MATH) {</span>
-<span class="fc" id="L95">				operatorStack.addFirst(token);</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.CLOSE_PAREN_FUNC) {</span>
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">				while (operatorStack.peekFirst() != null</span>
-<span class="fc bfc" id="L98" title="All 2 branches covered.">						&amp;&amp; operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_FUNC)</span>
-<span class="fc" id="L99">					ouputQueue.add(operatorStack.removeFirst());</span>
-<span class="fc" id="L100">				final Token first = operatorStack.removeFirst();</span>
-<span class="fc" id="L101">				ouputQueue.add(first);</span>
-<span class="fc bfc" id="L102" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.CLOSE_PAREN_MATH) {</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">				while (operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_MATH)</span>
-<span class="fc" id="L104">					ouputQueue.add(operatorStack.removeFirst());</span>
+<span class="fc" id="L92">				operatorStack.addFirst(token);</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.OPEN_PAREN_FUNC) {</span>
+<span class="fc" id="L94">				operatorStack.addFirst(token);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.OPEN_PAREN_MATH) {</span>
+<span class="fc" id="L96">				operatorStack.addFirst(token);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.CLOSE_PAREN_FUNC) {</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">				while (operatorStack.peekFirst() != null</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">						&amp;&amp; operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_FUNC)</span>
+<span class="fc" id="L100">					ouputQueue.add(operatorStack.removeFirst());</span>
+<span class="fc" id="L101">				final Token first = operatorStack.removeFirst();</span>
+<span class="fc" id="L102">				ouputQueue.add(first);</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">			} else if (token.getTokenType() == TokenType.CLOSE_PAREN_MATH) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">				while (operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_MATH)</span>
+<span class="fc" id="L105">					ouputQueue.add(operatorStack.removeFirst());</span>
 
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">				if (operatorStack.peekFirst().getTokenType() == TokenType.OPEN_PAREN_MATH)</span>
-<span class="fc" id="L107">					operatorStack.removeFirst();</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">				if (operatorStack.peekFirst().getTokenType() == TokenType.OPEN_PAREN_MATH)</span>
+<span class="fc" id="L108">					operatorStack.removeFirst();</span>
 
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">			} else if (token.getTokenType() == TokenType.COMMA) {</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">				while (operatorStack.peekFirst() != null</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">						&amp;&amp; operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_FUNC)</span>
-<span class="fc" id="L112">					ouputQueue.add(operatorStack.removeFirst());</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">			} else if (token.getTokenType() == TokenType.COMMA) {</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">				while (operatorStack.peekFirst() != null</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">						&amp;&amp; operatorStack.peekFirst().getTokenType() != TokenType.OPEN_PAREN_FUNC)</span>
+<span class="fc" id="L113">					ouputQueue.add(operatorStack.removeFirst());</span>
 
 			} else {
-<span class="nc" id="L115">				throw new UnsupportedOperationException(token.toString());</span>
+<span class="nc" id="L116">				throw new UnsupportedOperationException(token.toString());</span>
 			}
-<span class="fc" id="L117">		}</span>
+<span class="fc" id="L118">		}</span>
 
-<span class="fc bfc" id="L119" title="All 2 branches covered.">		while (operatorStack.isEmpty() == false) {</span>
-<span class="fc" id="L120">			final Token token = operatorStack.removeFirst();</span>
-<span class="fc" id="L121">			ouputQueue.add(token);</span>
-<span class="fc" id="L122">		}</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		while (operatorStack.isEmpty() == false) {</span>
+<span class="fc" id="L121">			final Token token = operatorStack.removeFirst();</span>
+<span class="fc" id="L122">			ouputQueue.add(token);</span>
+<span class="fc" id="L123">		}</span>
 
 		// System.err.println(&quot;ouputQueue=&quot; + ouputQueue);
-<span class="fc" id="L125">	}</span>
+<span class="fc" id="L126">	}</span>
+
+<span class="fc" id="L128">	private static final Pattern VARIABLE_NAME_PATTERN = Pattern.compile(&quot;[a-zA-Z0-9.$_]+&quot;);</span>
 
 	private boolean isVariableName(String name) {
-<span class="fc" id="L128">		return name.matches(&quot;[a-zA-Z0-9.$_]+&quot;);</span>
+<span class="fc" id="L131">		return VARIABLE_NAME_PATTERN.matcher(name).matches();</span>
 	}
 
 	private boolean thereIsAFunctionAtTheTopOfTheOperatorStack() {
-<span class="fc" id="L132">		final Token top = operatorStack.peekFirst();</span>
-<span class="fc bfc" id="L133" title="All 4 branches covered.">		return top != null &amp;&amp; top.getTokenType() == TokenType.FUNCTION_NAME;</span>
+<span class="fc" id="L135">		final Token top = operatorStack.peekFirst();</span>
+<span class="fc bfc" id="L136" title="All 4 branches covered.">		return top != null &amp;&amp; top.getTokenType() == TokenType.FUNCTION_NAME;</span>
 	}
 
 	private boolean thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(Token token) {
-<span class="fc" id="L137">		final Token top = operatorStack.peekFirst();</span>
-<span class="fc bfc" id="L138" title="All 6 branches covered.">		if (top != null &amp;&amp; isOperatorOrAffectation(top) &amp;&amp; top.getPrecedence() &gt; token.getPrecedence())</span>
-<span class="fc" id="L139">			return true;</span>
+<span class="fc" id="L140">		final Token top = operatorStack.peekFirst();</span>
+<span class="fc bfc" id="L141" title="All 6 branches covered.">		if (top != null &amp;&amp; isOperatorOrAffectation(top) &amp;&amp; top.getPrecedence() &gt; token.getPrecedence())</span>
+<span class="fc" id="L142">			return true;</span>
 
-<span class="fc" id="L141">		return false;</span>
+<span class="fc" id="L144">		return false;</span>
 	}
 
 	private boolean theOperatorAtTheTopOfTheOperatorStackHasEqualPrecedenceAndIsLeftAssociative(Token token) {
-<span class="fc" id="L145">		final Token top = operatorStack.peekFirst();</span>
-<span class="pc bpc" id="L146" title="1 of 6 branches missed.">		if (top != null &amp;&amp; isOperatorOrAffectation(top) &amp;&amp; top.getLeftAssociativity()</span>
-<span class="fc bfc" id="L147" title="All 2 branches covered.">				&amp;&amp; top.getPrecedence() == token.getPrecedence())</span>
-<span class="fc" id="L148">			return true;</span>
+<span class="fc" id="L148">		final Token top = operatorStack.peekFirst();</span>
+<span class="pc bpc" id="L149" title="1 of 6 branches missed.">		if (top != null &amp;&amp; isOperatorOrAffectation(top) &amp;&amp; top.getLeftAssociativity()</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">				&amp;&amp; top.getPrecedence() == token.getPrecedence())</span>
+<span class="fc" id="L151">			return true;</span>
 
-<span class="fc" id="L150">		return false;</span>
+<span class="fc" id="L153">		return false;</span>
 	}
 
 	private boolean isOperatorOrAffectation(final Token token) {
-<span class="fc bfc" id="L154" title="All 4 branches covered.">		return token.getTokenType() == TokenType.OPERATOR || token.getTokenType() == TokenType.AFFECTATION;</span>
+<span class="fc bfc" id="L157" title="All 4 branches covered.">		return token.getTokenType() == TokenType.OPERATOR || token.getTokenType() == TokenType.AFFECTATION;</span>
 	}
 
 	private boolean theOperatorAtTheTopOfTheOperatorStackIsNotALeftParenthesis(Token token) {
-<span class="fc" id="L158">		final Token top = operatorStack.peekFirst();</span>
-<span class="pc bpc" id="L159" title="2 of 4 branches missed.">		if (top != null &amp;&amp; top.getTokenType() == TokenType.OPEN_PAREN_MATH)</span>
-<span class="nc" id="L160">			return true;</span>
+<span class="fc" id="L161">		final Token top = operatorStack.peekFirst();</span>
+<span class="pc bpc" id="L162" title="2 of 4 branches missed.">		if (top != null &amp;&amp; top.getTokenType() == TokenType.OPEN_PAREN_MATH)</span>
+<span class="nc" id="L163">			return true;</span>
 
-<span class="fc" id="L162">		return true;</span>
+<span class="fc" id="L165">		return true;</span>
 	}
 
 	public TokenStack getQueue() {
-<span class="fc" id="L166">		return this.ouputQueue;</span>
+<span class="fc" id="L169">		return this.ouputQueue;</span>
 	}
 
 }

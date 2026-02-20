@@ -220,56 +220,57 @@ final public class UmlSource {
 	 *
 	 * @return &lt;code&gt;true&lt;/code&gt; if the diagram does not contain information.
 	 */
+<span class="fc" id="L223">	private static final Pattern COMMENT_LINE = Pattern.compile(&quot;\\s*'.*&quot;);</span>
+
 	public boolean isEmpty() {
-<span class="fc bfc" id="L224" title="All 2 branches covered.">		for (StringLocated s : source) {</span>
-<span class="fc bfc" id="L225" title="All 2 branches covered.">			if (StartUtils.isArobaseStartDiagram(s.getString()))</span>
-<span class="fc" id="L226">				continue;</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">		for (StringLocated sl : source) {</span>
+<span class="fc" id="L227">			final String line = sl.getString();</span>
 
-<span class="fc bfc" id="L228" title="All 2 branches covered.">			if (StartUtils.isArobaseEndDiagram(s.getString()))</span>
-<span class="fc" id="L229">				continue;</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">			if (StartUtils.isArobaseStartDiagram(line))</span>
+<span class="fc" id="L230">				continue;</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">			if (StartUtils.isArobaseEndDiagram(line))</span>
+<span class="fc" id="L232">				continue;</span>
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">			if (COMMENT_LINE.matcher(line).matches())</span>
+<span class="nc" id="L234">				continue;</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">			if (StringUtils.trin(line).length() != 0)</span>
+<span class="fc" id="L236">				return false;</span>
 
-<span class="pc bpc" id="L231" title="1 of 2 branches missed.">			if (s.getString().matches(&quot;\\s*'.*&quot;))</span>
-<span class="nc" id="L232">				continue;</span>
-
-<span class="fc bfc" id="L234" title="All 2 branches covered.">			if (StringUtils.trin(s.getString()).length() != 0)</span>
-<span class="fc" id="L235">				return false;</span>
-
-<span class="fc" id="L237">		}</span>
-<span class="fc" id="L238">		return true;</span>
+<span class="fc" id="L238">		}</span>
+<span class="fc" id="L239">		return true;</span>
 	}
 
-<span class="fc" id="L241">	private static final Pattern2 TITLE = Pattern2.cmpile(&quot;^[%s]*title[%s]+(.+)$&quot;);</span>
+<span class="fc" id="L242">	private static final Pattern2 TITLE = Pattern2.cmpile(&quot;^[%s]*title[%s]+(.+)$&quot;);</span>
 
 	/**
 	 * Retrieve the title, if defined in the diagram source. Never return
 	 * &lt;code&gt;null&lt;/code&gt;.
 	 */
 	public Display getTitle() {
-<span class="nc bnc" id="L248" title="All 2 branches missed.">		for (StringLocated s : source) {</span>
-<span class="nc" id="L249">			final Matcher2 m = TITLE.matcher(s.getString());</span>
-<span class="nc" id="L250">			final boolean ok = m.matches();</span>
-<span class="nc bnc" id="L251" title="All 2 branches missed.">			if (ok)</span>
-<span class="nc" id="L252">				return Display.create(m.group(1));</span>
-<span class="nc" id="L253">		}</span>
-<span class="nc" id="L254">		return Display.empty();</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">		for (StringLocated s : source) {</span>
+<span class="nc" id="L250">			final Matcher2 m = TITLE.matcher(s.getString());</span>
+<span class="nc" id="L251">			final boolean ok = m.matches();</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">			if (ok)</span>
+<span class="nc" id="L253">				return Display.create(m.group(1));</span>
+<span class="nc" id="L254">		}</span>
+<span class="nc" id="L255">		return Display.empty();</span>
 	}
 
 	public boolean isStartDef() {
-<span class="nc" id="L258">		return source.get(0).getString().startsWith(&quot;@startdef&quot;);</span>
+<span class="nc" id="L259">		return source.get(0).getString().startsWith(&quot;@startdef&quot;);</span>
 	}
 
-<span class="fc" id="L261">	private static final Pattern ID = Pattern.compile(&quot;id=([\\w]+)\\b&quot;);</span>
+<span class="fc" id="L262">	private static final Pattern ID = Pattern.compile(&quot;id=([\\w]+)\\b&quot;);</span>
 
 	public String getId() {
-<span class="fc" id="L264">		final Matcher m = ID.matcher(source.get(0).getString());</span>
-<span class="pc bpc" id="L265" title="1 of 2 branches missed.">		if (m.find())</span>
-<span class="nc" id="L266">			return m.group(1);</span>
+<span class="fc" id="L265">		final Matcher m = ID.matcher(source.get(0).getString());</span>
+<span class="pc bpc" id="L266" title="1 of 2 branches missed.">		if (m.find())</span>
+<span class="nc" id="L267">			return m.group(1);</span>
 
-<span class="fc" id="L268">		return null;</span>
+<span class="fc" id="L269">		return null;</span>
 	}
 
 	public PathSystem getPathSystem() {
-<span class="fc" id="L272">		return pathSystem;</span>
+<span class="fc" id="L273">		return pathSystem;</span>
 	}
 
 }

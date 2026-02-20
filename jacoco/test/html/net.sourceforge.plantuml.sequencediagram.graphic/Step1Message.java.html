@@ -216,8 +216,8 @@ import net.sourceforge.plantuml.style.Style;
 			if (GlobalConfig.STRICT_SELFMESSAGE_POSITION)
 <span class="fc" id="L217">				deltaX += 5;</span>
 		}
-<span class="fc bfc" id="L219" title="All 2 branches covered.">		if (getMessage().isDeactivate())</span>
-<span class="fc" id="L220">			deltaY += halfLifeWidth;</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">		if (getMessage().isDeactivate())</span>
+<span class="nc" id="L220">			deltaY += halfLifeWidth;</span>
 
 <span class="fc" id="L222">		int currentLevel = getLevelAt(posY, halfLifeWidth);</span>
 
@@ -276,8 +276,8 @@ import net.sourceforge.plantuml.style.Style;
 
 	private ArrowConfiguration getSelfArrowType(Message m) {
 <span class="fc" id="L278">		ArrowConfiguration result = ArrowConfiguration.withDirectionSelf(m.getArrowConfiguration().isReverseDefine());</span>
-<span class="fc bfc" id="L279" title="All 2 branches covered.">		if (m.getArrowConfiguration().isDotted())</span>
-<span class="fc" id="L280">			result = result.withBody(ArrowBody.DOTTED);</span>
+<span class="pc bpc" id="L279" title="1 of 2 branches missed.">		if (m.getArrowConfiguration().isDotted())</span>
+<span class="nc" id="L280">			result = result.withBody(ArrowBody.DOTTED);</span>
 
 <span class="pc bpc" id="L282" title="1 of 2 branches missed.">		if (m.getArrowConfiguration().isHidden())</span>
 <span class="nc" id="L283">			result = result.withBody(ArrowBody.HIDDEN);</span>

@@ -108,12 +108,12 @@ public class LivingSpace {
 <span class="fc" id="L108">		this.skinParam = skinParam;</span>
 <span class="fc" id="L109">		this.englober = englober;</span>
 <span class="fc" id="L110">		this.posB = position;</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (p.getType() == ParticipantType.PARTICIPANT) {</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (p.getType() == ParticipantType.PARTICIPANT) {</span>
 <span class="fc" id="L112">			headType = ComponentType.PARTICIPANT_HEAD;</span>
 <span class="fc" id="L113">			tailType = ComponentType.PARTICIPANT_TAIL;</span>
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		} else if (p.getType() == ParticipantType.ACTOR) {</span>
-<span class="fc" id="L115">			headType = ComponentType.ACTOR_HEAD;</span>
-<span class="fc" id="L116">			tailType = ComponentType.ACTOR_TAIL;</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.ACTOR) {</span>
+<span class="nc" id="L115">			headType = ComponentType.ACTOR_HEAD;</span>
+<span class="nc" id="L116">			tailType = ComponentType.ACTOR_TAIL;</span>
 <span class="nc bnc" id="L117" title="All 2 branches missed.">		} else if (p.getType() == ParticipantType.BOUNDARY) {</span>
 <span class="nc" id="L118">			headType = ComponentType.BOUNDARY_HEAD;</span>
 <span class="nc" id="L119">			tailType = ComponentType.BOUNDARY_TAIL;</span>

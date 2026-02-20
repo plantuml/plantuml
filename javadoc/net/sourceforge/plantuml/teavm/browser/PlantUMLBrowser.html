@@ -93,53 +93,57 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PlantUMLBrowser</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">PlantUML rendering engine for browser environments, compiled to JavaScript via TeaVM.
+<div class="block">PlantUML rendering engine for browser environments, compiled to JavaScript
+ via TeaVM.
  
  <h2 id="overview-heading">Overview</h2>
  
- This class provides a bridge between JavaScript code running in a browser and the
- PlantUML Java rendering engine. It exposes a global JavaScript function
- <code>plantumlRender(lines, elementId)</code> that web pages can call to render diagrams.
+ This class provides a bridge between JavaScript code running in a browser and
+ the PlantUML Java rendering engine. It exposes a global JavaScript function
+ <code>plantumlRender(lines, elementId)</code> that web pages can call to render
+ diagrams.
  
  <h2 id="architecture-javascript-driven-paradigm-heading">Architecture: JavaScript-driven paradigm</h2>
  
  The design follows a "JS-driven" architecture where:
  <ul>
-   <li><b>JavaScript handles:</b> UI events, user input, debouncing, line splitting, 
-       DOM element selection, and overall application flow</li>
-   <li><b>Java handles:</b> PlantUML parsing and SVG rendering only</li>
+ <li><b>JavaScript handles:</b> UI events, user input, debouncing, line
+ splitting, DOM element selection, and overall application flow</li>
+ <li><b>Java handles:</b> PlantUML parsing and SVG rendering only</li>
  </ul>
  
- This separation keeps the Java code minimal and allows maximum flexibility for
- web developers to integrate PlantUML however they want.
+ This separation keeps the Java code minimal and allows maximum flexibility
+ for web developers to integrate PlantUML however they want.
  
  <h2 id="why-we-need-a-worker-thread-heading">Why we need a worker thread</h2>
  
- TeaVM compiles Java to JavaScript, but JavaScript is single-threaded and event-driven.
- To support Java's synchronous blocking APIs (like <code>Thread.sleep()</code> or 
- <code>Object.wait()</code>), TeaVM uses a coroutine-based approach that transforms
- blocking calls into asynchronous JavaScript Promises.
+ TeaVM compiles Java to JavaScript, but JavaScript is single-threaded and
+ event-driven. To support Java's synchronous blocking APIs (like
+ <code>Thread.sleep()</code> or <code>Object.wait()</code>), TeaVM uses a
+ coroutine-based approach that transforms blocking calls into asynchronous
+ JavaScript Promises.
  
  <h3 id="the-viz-js-constraint-heading">The Viz.js constraint</h3>
  
- PlantUML uses Viz.js (a JavaScript port of GraphViz) to render class diagrams,
- component diagrams, and other diagrams that require graph layout. Viz.js has an
- asynchronous API:
+ PlantUML uses Viz.js (a JavaScript port of GraphViz) to render class
+ diagrams, component diagrams, and other diagrams that require graph layout.
+ Viz.js has an asynchronous API:
  
  <pre>
  Viz.instance().then(viz =&gt; viz.renderString(dot, options))
  </pre>
  
- Our <code>GraphVizjsTeaVMEngine</code> class uses TeaVM's <code>@Async</code> annotation to
- make this async call appear synchronous to Java code. However, this only works
- when called from a "TeaVM coroutine context" - essentially, from within a TeaVM
- thread.
+ Our <code>GraphVizjsTeaVMEngine</code> class uses TeaVM's <code>@Async</code>
+ annotation to make this async call appear synchronous to Java code. However,
+ this only works when called from a "TeaVM coroutine context" - essentially,
+ from within a TeaVM thread.
  
  <h3 id="what-happens-without-the-worker-thread-heading">What happens without the worker thread</h3>
  
- If JavaScript calls our render function directly (e.g., from a <code>setTimeout</code>
- callback or an event listener), the call happens in a "native JS context", not a
- TeaVM coroutine context. When the code reaches the Viz.js async call, TeaVM throws:
+ If JavaScript calls our render function directly (e.g., from a
+ <code>setTimeout</code> callback or an event listener), the call happens in a
+ "native JS context", not a TeaVM coroutine context. When the code reaches the
+ Viz.js async call, TeaVM throws:
  
  <pre>
  Error: Suspension point reached from non-threading context
@@ -151,13 +155,15 @@ loadScripts(document, 'script');</script>
  
  We solve this by:
  <ol>
-   <li>Starting a background thread at initialization (in <code>main()</code>)</li>
-   <li>Having the JS-callable function just queue a render request and wake the thread</li>
-   <li>The worker thread performs the actual rendering in the correct coroutine context</li>
+ <li>Starting a background thread at initialization (in <code>main()</code>)</li>
+ <li>Having the JS-callable function just queue a render request and wake the
+ thread</li>
+ <li>The worker thread performs the actual rendering in the correct coroutine
+ context</li>
  </ol>
  
- This pattern ensures all PlantUML rendering (including Viz.js calls) happens in a
- context where TeaVM's async-to-sync transformation works correctly.
+ This pattern ensures all PlantUML rendering (including Viz.js calls) happens
+ in a context where TeaVM's async-to-sync transformation works correctly.
  
  <h2 id="usage-from-javascript-heading">Usage from JavaScript</h2>
  
@@ -175,13 +181,16 @@ loadScripts(document, 'script');</script>
  
  The class uses a simple producer-consumer pattern:
  <ul>
-   <li>Producer: <code>requestRender()</code> called from JS, sets pending request and notifies</li>
-   <li>Consumer: <code>workerLoop()</code> waits for requests, processes them one at a time</li>
+ <li>Producer: <code>requestRender()</code> called from JS, sets pending request
+ and notifies</li>
+ <li>Consumer: <code>workerLoop()</code> waits for requests, processes them one at
+ a time</li>
  </ul>
  
- If multiple render requests arrive while one is being processed, only the latest
- request is kept (the previous pending request is overwritten). This is intentional:
- when a user is typing, we only care about rendering the latest version.</div>
+ If multiple render requests arrive while one is being processed, only the
+ latest request is kept (the previous pending request is overwritten). This is
+ intentional: when a user is typing, we only care about rendering the latest
+ version.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -205,7 +214,8 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="PlantUMLBrowser.RenderCallback.html" class="type-name-link" title="interface in net.sourceforge.plantuml.teavm.browser">PlantUMLBrowser.RenderCallback</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Functional interface for the render callback, compatible with TeaVM's JS interop.</div>
+<div class="block">Functional interface for the render callback, compatible with TeaVM's JS
+ interop.</div>
 </div>
 </div>
 </section>
@@ -278,8 +288,8 @@ loadScripts(document, 'script');</script>
  
  This method:
  <ol>
-   <li>Starts the background worker thread that will handle all rendering</li>
-   <li>Registers the global <code>window.plantumlRender</code> function</li>
+ <li>Starts the background worker thread that will handle all rendering</li>
+ <li>Registers the global <code>window.plantumlRender</code> function</li>
  </ol>
  
  Must be called once before any rendering can occur.</div>

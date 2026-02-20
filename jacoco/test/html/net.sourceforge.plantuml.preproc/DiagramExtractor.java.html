@@ -36,74 +36,73 @@
 package net.sourceforge.plantuml.preproc;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.nio.InputFile;
-import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public class DiagramExtractor implements ReadLine {
 
+<span class="fc" id="L48">	private static final Pattern DIGITS = Pattern.compile(&quot;\\d+&quot;);</span>
+
 	private final ReadLine raw;
-<span class="fc" id="L52">	private boolean finished = false;</span>
+<span class="fc" id="L51">	private boolean finished = false;</span>
 
-<span class="fc" id="L54">	public DiagramExtractor(ReadLine raw, String suf) {</span>
-<span class="fc" id="L55">		int bloc = 0;</span>
-<span class="fc" id="L56">		String uid = null;</span>
-<span class="pc bpc" id="L57" title="3 of 4 branches missed.">		if (suf != null &amp;&amp; suf.matches(&quot;\\d+&quot;))</span>
-<span class="nc" id="L58">			bloc = Integer.parseInt(suf);</span>
+<span class="fc" id="L53">	public DiagramExtractor(ReadLine raw, String suf) {</span>
+<span class="fc" id="L54">		int bloc = 0;</span>
+<span class="fc" id="L55">		String uid = null;</span>
+<span class="pc bpc" id="L56" title="3 of 4 branches missed.">		if (suf != null &amp;&amp; DIGITS.matcher(suf).matches())</span>
+<span class="nc" id="L57">			bloc = Integer.parseInt(suf);</span>
 		else
-<span class="fc" id="L60">			uid = suf;</span>
+<span class="fc" id="L59">			uid = suf;</span>
 
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (bloc &lt; 0)</span>
-<span class="nc" id="L63">			bloc = 0;</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (bloc &lt; 0)</span>
+<span class="nc" id="L62">			bloc = 0;</span>
 
-<span class="fc" id="L65">		this.raw = raw;</span>
-<span class="fc" id="L66">		StringLocated s = null;</span>
+<span class="fc" id="L64">		this.raw = raw;</span>
+<span class="fc" id="L65">		StringLocated s = null;</span>
 		try {
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">			while ((s = raw.readLine()) != null) {</span>
-<span class="pc bpc" id="L69" title="2 of 4 branches missed.">				if (StartUtils.isArobaseStartDiagram(s.getString()) &amp;&amp; checkUid(uid, s)) {</span>
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">					if (bloc == 0)</span>
-<span class="fc" id="L71">						return;</span>
-<span class="nc" id="L72">					bloc--;</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">			while ((s = raw.readLine()) != null) {</span>
+<span class="pc bpc" id="L68" title="2 of 4 branches missed.">				if (StartUtils.isArobaseStartDiagram(s.getString()) &amp;&amp; checkUid(uid, s)) {</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">					if (bloc == 0)</span>
+<span class="fc" id="L70">						return;</span>
+<span class="nc" id="L71">					bloc--;</span>
 				}
 			}
-<span class="nc" id="L75">		} catch (IOException e) {</span>
-<span class="nc" id="L76">			Logme.error(e);</span>
-<span class="nc" id="L77">			Log.error(&quot;Error &quot; + e);</span>
-<span class="nc" id="L78">		}</span>
-<span class="nc" id="L79">		finished = true;</span>
-<span class="nc" id="L80">	}</span>
+<span class="nc" id="L74">		} catch (IOException e) {</span>
+<span class="nc" id="L75">			Logme.error(e);</span>
+<span class="nc" id="L76">			Log.error(&quot;Error &quot; + e);</span>
+<span class="nc" id="L77">		}</span>
+<span class="nc" id="L78">		finished = true;</span>
+<span class="nc" id="L79">	}</span>
 
 	private boolean checkUid(String uid, StringLocated s) {
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (uid == null)</span>
-<span class="fc" id="L84">			return true;</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (uid == null)</span>
+<span class="fc" id="L83">			return true;</span>
 
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (s.toString().matches(&quot;.*id=&quot; + uid + &quot;\\W.*&quot;))</span>
-<span class="nc" id="L87">			return true;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (s.toString().matches(&quot;.*id=&quot; + uid + &quot;\\W.*&quot;))</span>
+<span class="nc" id="L86">			return true;</span>
 
-<span class="nc" id="L89">		return false;</span>
+<span class="nc" id="L88">		return false;</span>
 	}
 
 	public StringLocated readLine() throws IOException {
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (finished)</span>
-<span class="nc" id="L94">			return null;</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (finished)</span>
+<span class="nc" id="L93">			return null;</span>
 
-<span class="fc" id="L96">		final StringLocated result = raw.readLine();</span>
-<span class="pc bpc" id="L97" title="1 of 4 branches missed.">		if (result != null &amp;&amp; StartUtils.isArobaseEndDiagram(result.getString())) {</span>
-<span class="fc" id="L98">			finished = true;</span>
-<span class="fc" id="L99">			return null;</span>
+<span class="fc" id="L95">		final StringLocated result = raw.readLine();</span>
+<span class="pc bpc" id="L96" title="1 of 4 branches missed.">		if (result != null &amp;&amp; StartUtils.isArobaseEndDiagram(result.getString())) {</span>
+<span class="fc" id="L97">			finished = true;</span>
+<span class="fc" id="L98">			return null;</span>
 		}
-<span class="fc" id="L101">		return result;</span>
+<span class="fc" id="L100">		return result;</span>
 	}
 
 	public void close() throws IOException {
-<span class="fc" id="L105">		raw.close();</span>
-<span class="fc" id="L106">	}</span>
+<span class="fc" id="L104">		raw.close();</span>
+<span class="fc" id="L105">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -135,9 +135,9 @@ class DrawableSetInitializer {
 
 <span class="fc bfc" id="L136" title="All 2 branches covered.">		for (Participant p : drawableSet.getAllParticipants()) {</span>
 <span class="fc" id="L137">			final LivingParticipantBox living = drawableSet.getLivingParticipantBox(p);</span>
-<span class="fc bfc" id="L138" title="All 2 branches covered.">			for (int i = 0; i &lt; p.getInitialLife(); i++)</span>
-<span class="fc" id="L139">				living.getLifeLine().addSegmentVariation(LifeSegmentVariation.LARGER,</span>
-<span class="fc" id="L140">						freeY2.getFreeY(getFullParticipantRange()), p.getLiveSpecificBackColors(i), null);</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">			for (int i = 0; i &lt; p.getInitialLife(); i++)</span>
+<span class="nc" id="L139">				living.getLifeLine().addSegmentVariation(LifeSegmentVariation.LARGER,</span>
+<span class="nc" id="L140">						freeY2.getFreeY(getFullParticipantRange()), p.getLiveSpecificBackColors(i), null);</span>
 
 <span class="fc" id="L142">		}</span>
 
@@ -485,21 +485,21 @@ class DrawableSetInitializer {
 <span class="fc" id="L485">		final AbstractMessage message = lifeEvent.getMessage();</span>
 <span class="fc bfc" id="L486" title="All 2 branches covered.">		if (lifeEvent.getType() == LifeEventType.ACTIVATE) {</span>
 <span class="fc" id="L487">			double pos = 0;</span>
-<span class="fc bfc" id="L488" title="All 2 branches covered.">			if (message != null) {</span>
+<span class="pc bpc" id="L488" title="1 of 2 branches missed.">			if (message != null) {</span>
 <span class="fc" id="L489">				int delta1 = 0;</span>
 <span class="pc bpc" id="L490" title="1 of 2 branches missed.">				if (message.isCreate())</span>
 <span class="nc" id="L491">					delta1 += 10;</span>
-<span class="fc bfc" id="L492" title="All 2 branches covered.">				else if (GlobalConfig.STRICT_SELFMESSAGE_POSITION &amp;&amp; message.isSelfMessage())</span>
+<span class="pc bpc" id="L492" title="1 of 2 branches missed.">				else if (GlobalConfig.STRICT_SELFMESSAGE_POSITION &amp;&amp; message.isSelfMessage())</span>
 <span class="fc" id="L493">					delta1 += 8;</span>
 
 <span class="fc" id="L495">				pos = message.getPosYstartLevel() + delta1;</span>
 			}
 <span class="fc" id="L497">			final LifeLine line1 = drawableSet.getLivingParticipantBox(lifeEvent.getParticipant()).getLifeLine();</span>
 <span class="fc" id="L498">			line1.addSegmentVariation(LifeSegmentVariation.LARGER, pos, lifeEvent.getSpecificColors(),</span>
-<span class="fc bfc" id="L499" title="All 2 branches covered.">					message == null ? null : message.getStyleBuilder());</span>
-<span class="pc bpc" id="L500" title="1 of 4 branches missed.">		} else if (lifeEvent.getType() == LifeEventType.DESTROY || lifeEvent.getType() == LifeEventType.DEACTIVATE) {</span>
+<span class="pc bpc" id="L499" title="1 of 2 branches missed.">					message == null ? null : message.getStyleBuilder());</span>
+<span class="pc bpc" id="L500" title="3 of 4 branches missed.">		} else if (lifeEvent.getType() == LifeEventType.DESTROY || lifeEvent.getType() == LifeEventType.DEACTIVATE) {</span>
 <span class="fc" id="L501">			double delta = 0;</span>
-<span class="pc bpc" id="L502" title="1 of 4 branches missed.">			if (GlobalConfig.STRICT_SELFMESSAGE_POSITION &amp;&amp; message != null &amp;&amp; message.isSelfMessage())</span>
+<span class="pc bpc" id="L502" title="2 of 4 branches missed.">			if (GlobalConfig.STRICT_SELFMESSAGE_POSITION &amp;&amp; message != null &amp;&amp; message.isSelfMessage())</span>
 <span class="fc" id="L503">				delta += 7;</span>
 
 <span class="fc" id="L505">			final Participant p = lifeEvent.getParticipant();</span>

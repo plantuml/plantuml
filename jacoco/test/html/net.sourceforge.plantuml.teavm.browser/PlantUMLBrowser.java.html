@@ -20,53 +20,57 @@ import net.sourceforge.plantuml.teavm.SvgGraphicsTeaVM;
 import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 
 /**
- * PlantUML rendering engine for browser environments, compiled to JavaScript via TeaVM.
+ * PlantUML rendering engine for browser environments, compiled to JavaScript
+ * via TeaVM.
  * 
  * &lt;h2&gt;Overview&lt;/h2&gt;
  * 
- * This class provides a bridge between JavaScript code running in a browser and the
- * PlantUML Java rendering engine. It exposes a global JavaScript function
- * {@code plantumlRender(lines, elementId)} that web pages can call to render diagrams.
+ * This class provides a bridge between JavaScript code running in a browser and
+ * the PlantUML Java rendering engine. It exposes a global JavaScript function
+ * {@code plantumlRender(lines, elementId)} that web pages can call to render
+ * diagrams.
  * 
  * &lt;h2&gt;Architecture: JavaScript-driven paradigm&lt;/h2&gt;
  * 
  * The design follows a &quot;JS-driven&quot; architecture where:
  * &lt;ul&gt;
- *   &lt;li&gt;&lt;b&gt;JavaScript handles:&lt;/b&gt; UI events, user input, debouncing, line splitting, 
- *       DOM element selection, and overall application flow&lt;/li&gt;
- *   &lt;li&gt;&lt;b&gt;Java handles:&lt;/b&gt; PlantUML parsing and SVG rendering only&lt;/li&gt;
+ * &lt;li&gt;&lt;b&gt;JavaScript handles:&lt;/b&gt; UI events, user input, debouncing, line
+ * splitting, DOM element selection, and overall application flow&lt;/li&gt;
+ * &lt;li&gt;&lt;b&gt;Java handles:&lt;/b&gt; PlantUML parsing and SVG rendering only&lt;/li&gt;
  * &lt;/ul&gt;
  * 
- * This separation keeps the Java code minimal and allows maximum flexibility for
- * web developers to integrate PlantUML however they want.
+ * This separation keeps the Java code minimal and allows maximum flexibility
+ * for web developers to integrate PlantUML however they want.
  * 
  * &lt;h2&gt;Why we need a worker thread&lt;/h2&gt;
  * 
- * TeaVM compiles Java to JavaScript, but JavaScript is single-threaded and event-driven.
- * To support Java's synchronous blocking APIs (like {@code Thread.sleep()} or 
- * {@code Object.wait()}), TeaVM uses a coroutine-based approach that transforms
- * blocking calls into asynchronous JavaScript Promises.
+ * TeaVM compiles Java to JavaScript, but JavaScript is single-threaded and
+ * event-driven. To support Java's synchronous blocking APIs (like
+ * {@code Thread.sleep()} or {@code Object.wait()}), TeaVM uses a
+ * coroutine-based approach that transforms blocking calls into asynchronous
+ * JavaScript Promises.
  * 
  * &lt;h3&gt;The Viz.js constraint&lt;/h3&gt;
  * 
- * PlantUML uses Viz.js (a JavaScript port of GraphViz) to render class diagrams,
- * component diagrams, and other diagrams that require graph layout. Viz.js has an
- * asynchronous API:
+ * PlantUML uses Viz.js (a JavaScript port of GraphViz) to render class
+ * diagrams, component diagrams, and other diagrams that require graph layout.
+ * Viz.js has an asynchronous API:
  * 
  * &lt;pre&gt;
  * Viz.instance().then(viz =&gt; viz.renderString(dot, options))
  * &lt;/pre&gt;
  * 
- * Our {@code GraphVizjsTeaVMEngine} class uses TeaVM's {@code @Async} annotation to
- * make this async call appear synchronous to Java code. However, this only works
- * when called from a &quot;TeaVM coroutine context&quot; - essentially, from within a TeaVM
- * thread.
+ * Our {@code GraphVizjsTeaVMEngine} class uses TeaVM's {@code @Async}
+ * annotation to make this async call appear synchronous to Java code. However,
+ * this only works when called from a &quot;TeaVM coroutine context&quot; - essentially,
+ * from within a TeaVM thread.
  * 
  * &lt;h3&gt;What happens without the worker thread&lt;/h3&gt;
  * 
- * If JavaScript calls our render function directly (e.g., from a {@code setTimeout}
- * callback or an event listener), the call happens in a &quot;native JS context&quot;, not a
- * TeaVM coroutine context. When the code reaches the Viz.js async call, TeaVM throws:
+ * If JavaScript calls our render function directly (e.g., from a
+ * {@code setTimeout} callback or an event listener), the call happens in a
+ * &quot;native JS context&quot;, not a TeaVM coroutine context. When the code reaches the
+ * Viz.js async call, TeaVM throws:
  * 
  * &lt;pre&gt;
  * Error: Suspension point reached from non-threading context
@@ -78,13 +82,15 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
  * 
  * We solve this by:
  * &lt;ol&gt;
- *   &lt;li&gt;Starting a background thread at initialization (in {@code main()})&lt;/li&gt;
- *   &lt;li&gt;Having the JS-callable function just queue a render request and wake the thread&lt;/li&gt;
- *   &lt;li&gt;The worker thread performs the actual rendering in the correct coroutine context&lt;/li&gt;
+ * &lt;li&gt;Starting a background thread at initialization (in {@code main()})&lt;/li&gt;
+ * &lt;li&gt;Having the JS-callable function just queue a render request and wake the
+ * thread&lt;/li&gt;
+ * &lt;li&gt;The worker thread performs the actual rendering in the correct coroutine
+ * context&lt;/li&gt;
  * &lt;/ol&gt;
  * 
- * This pattern ensures all PlantUML rendering (including Viz.js calls) happens in a
- * context where TeaVM's async-to-sync transformation works correctly.
+ * This pattern ensures all PlantUML rendering (including Viz.js calls) happens
+ * in a context where TeaVM's async-to-sync transformation works correctly.
  * 
  * &lt;h2&gt;Usage from JavaScript&lt;/h2&gt;
  * 
@@ -102,252 +108,264 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
  * 
  * The class uses a simple producer-consumer pattern:
  * &lt;ul&gt;
- *   &lt;li&gt;Producer: {@code requestRender()} called from JS, sets pending request and notifies&lt;/li&gt;
- *   &lt;li&gt;Consumer: {@code workerLoop()} waits for requests, processes them one at a time&lt;/li&gt;
+ * &lt;li&gt;Producer: {@code requestRender()} called from JS, sets pending request
+ * and notifies&lt;/li&gt;
+ * &lt;li&gt;Consumer: {@code workerLoop()} waits for requests, processes them one at
+ * a time&lt;/li&gt;
  * &lt;/ul&gt;
  * 
- * If multiple render requests arrive while one is being processed, only the latest
- * request is kept (the previous pending request is overwritten). This is intentional:
- * when a user is typing, we only care about rendering the latest version.
+ * If multiple render requests arrive while one is being processed, only the
+ * latest request is kept (the previous pending request is overwritten). This is
+ * intentional: when a user is typing, we only care about rendering the latest
+ * version.
  * 
  * @see net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine
  */
-<span class="nc" id="L115">public class PlantUMLBrowser {</span>
+<span class="nc" id="L124">public class PlantUMLBrowser {</span>
+	// ::remove file when __MIT__  __EPL__  __BSD__  __ASL__  __LGPL__  __GPLV2__
 
-    // =========================================================================
-    // Rendering configuration
-    // =========================================================================
+	// =========================================================================
+	// Rendering configuration
+	// =========================================================================
 
-<span class="nc" id="L121">    private static final StringBounder STRING_BOUNDER = new StringBounderTeaVM();</span>
-<span class="nc" id="L122">    private static final ColorMapper COLOR_MAPPER = ColorMapper.TEAVM;</span>
-<span class="nc" id="L123">    private static final HColor BACK = HColors.WHITE;</span>
-<span class="nc" id="L124">    private static final PSystemBuilder2 BUILDER = new PSystemBuilder2();</span>
+<span class="nc" id="L131">	private static final StringBounder STRING_BOUNDER = new StringBounderTeaVM();</span>
+<span class="nc" id="L132">	private static final ColorMapper COLOR_MAPPER = ColorMapper.TEAVM;</span>
+<span class="nc" id="L133">	private static final HColor BACK = HColors.WHITE;</span>
+<span class="nc" id="L134">	private static final PSystemBuilder2 BUILDER = new PSystemBuilder2();</span>
 
-    // =========================================================================
-    // Worker thread synchronization
-    // 
-    // We use a simple wait/notify pattern. The worker thread waits on LOCK until
-    // pendingLines becomes non-null, then processes the request and sets it back
-    // to null.
-    // =========================================================================
+	// =========================================================================
+	// Worker thread synchronization
+	//
+	// We use a simple wait/notify pattern. The worker thread waits on LOCK until
+	// pendingLines becomes non-null, then processes the request and sets it back
+	// to null.
+	// =========================================================================
 
-    /** Lock object for synchronizing between JS requests and worker thread. */
-<span class="nc" id="L135">    private static final Object LOCK = new Object();</span>
+	/** Lock object for synchronizing between JS requests and worker thread. */
+<span class="nc" id="L145">	private static final Object LOCK = new Object();</span>
 
-    /** 
-     * The PlantUML source lines to render, or null if no request is pending.
-     * Set by requestRender(), cleared by workerLoop() after processing.
-     */
-    private static volatile String[] pendingLines;
+	/**
+	 * The PlantUML source lines to render, or null if no request is pending. Set by
+	 * requestRender(), cleared by workerLoop() after processing.
+	 */
+	private static volatile String[] pendingLines;
 
-    /** The DOM element ID where the SVG should be inserted. */
-    private static volatile String pendingElementId;
+	/** The DOM element ID where the SVG should be inserted. */
+	private static volatile String pendingElementId;
 
-    // =========================================================================
-    // Initialization
-    // =========================================================================
+	// =========================================================================
+	// Initialization
+	// =========================================================================
 
-    /**
-     * Entry point called from JavaScript to initialize the PlantUML renderer.
-     * 
-     * This method:
-     * &lt;ol&gt;
-     *   &lt;li&gt;Starts the background worker thread that will handle all rendering&lt;/li&gt;
-     *   &lt;li&gt;Registers the global {@code window.plantumlRender} function&lt;/li&gt;
-     * &lt;/ol&gt;
-     * 
-     * Must be called once before any rendering can occur.
-     */
-    public static void main(String[] args) {
-        // Start worker thread FIRST - it needs to be ready to receive requests.
-        // The thread runs forever, waiting for render requests.
-<span class="nc" id="L164">        new Thread(PlantUMLBrowser::workerLoop, &quot;plantuml-render&quot;).start();</span>
+	/**
+	 * Entry point called from JavaScript to initialize the PlantUML renderer.
+	 * 
+	 * This method:
+	 * &lt;ol&gt;
+	 * &lt;li&gt;Starts the background worker thread that will handle all rendering&lt;/li&gt;
+	 * &lt;li&gt;Registers the global {@code window.plantumlRender} function&lt;/li&gt;
+	 * &lt;/ol&gt;
+	 * 
+	 * Must be called once before any rendering can occur.
+	 */
+	public static void main(String[] args) {
+		// Start worker thread FIRST - it needs to be ready to receive requests.
+		// The thread runs forever, waiting for render requests.
+<span class="nc" id="L174">		new Thread(PlantUMLBrowser::workerLoop, &quot;plantuml-render&quot;).start();</span>
 
-        // Register the JS-callable function. After this, JavaScript can call
-        // plantumlRender(lines, elementId) to request a diagram rendering.
-<span class="nc" id="L168">        registerRender(PlantUMLBrowser::requestRender);</span>
+		// Register the JS-callable function. After this, JavaScript can call
+		// plantumlRender(lines, elementId) to request a diagram rendering.
+<span class="nc" id="L178">		registerRender(PlantUMLBrowser::requestRender);</span>
 
-<span class="nc" id="L170">        consoleLog(&quot;PlantUML TeaVM loaded.&quot;);</span>
-<span class="nc" id="L171">        consoleLog(&quot;Version:  &quot; + net.sourceforge.plantuml.version.CompilationInfo.VERSION);</span>
-<span class="nc" id="L172">        consoleLog(&quot;Version:  &quot; + net.sourceforge.plantuml.version.Version.fullDescription());</span>
-<span class="nc" id="L173">        consoleLog(&quot;Commit:   &quot; + net.sourceforge.plantuml.version.CompilationInfo.COMMIT);</span>
-<span class="nc" id="L174">    }</span>
+<span class="nc" id="L180">		BrowserLog.jsStatusDuration();</span>
+<span class="nc" id="L181">	}</span>
 
-    // =========================================================================
-    // JavaScript API registration
-    // =========================================================================
+	// =========================================================================
+	// JavaScript API registration
+	// =========================================================================
 
-    /**
-     * Registers a callback function as {@code window.plantumlRender} in JavaScript.
-     * 
-     * After this call, JavaScript code can invoke:
-     * &lt;pre&gt;
-     * plantumlRender([&quot;@startuml&quot;, &quot;Alice -&gt; Bob&quot;, &quot;@enduml&quot;], &quot;out&quot;);
-     * &lt;/pre&gt;
-     */
-    @JSBody(params = &quot;cb&quot;, script = &quot;window.plantumlRender = cb;&quot;)
-    private static native void registerRender(RenderCallback cb);
+	/**
+	 * Registers a callback function as {@code window.plantumlRender} in JavaScript.
+	 * 
+	 * After this call, JavaScript code can invoke:
+	 * 
+	 * &lt;pre&gt;
+	 * plantumlRender([&quot;@startuml&quot;, &quot;Alice -&gt; Bob&quot;, &quot;@enduml&quot;], &quot;out&quot;);
+	 * &lt;/pre&gt;
+	 */
+	@JSBody(params = &quot;cb&quot;, script = &quot;window.plantumlRender = cb;&quot;)
+	private static native void registerRender(RenderCallback cb);
 
-    /**
-     * Functional interface for the render callback, compatible with TeaVM's JS interop.
-     * 
-     * The @JSFunctor annotation tells TeaVM to generate a JavaScript function that
-     * can be stored and called from JS code.
-     */
-    @JSFunctor
-    public interface RenderCallback extends JSObject {
-        void call(String[] lines, String elementId);
-    }
+	/**
+	 * Functional interface for the render callback, compatible with TeaVM's JS
+	 * interop.
+	 * 
+	 * The @JSFunctor annotation tells TeaVM to generate a JavaScript function that
+	 * can be stored and called from JS code.
+	 */
+	@JSFunctor
+	public interface RenderCallback extends JSObject {
+		void call(String[] lines, String elementId);
+	}
 
-    // =========================================================================
-    // Request handling (called from JavaScript)
-    // =========================================================================
+	// =========================================================================
+	// Request handling (called from JavaScript)
+	// =========================================================================
 
-    /**
-     * Called from JavaScript to request a diagram rendering.
-     * 
-     * This method does NOT perform the rendering itself - it only queues the request
-     * and wakes up the worker thread. This is necessary because:
-     * 
-     * &lt;ol&gt;
-     *   &lt;li&gt;This method is called from a native JS context (event handler, setTimeout, etc.)&lt;/li&gt;
-     *   &lt;li&gt;Viz.js async calls require a TeaVM coroutine context&lt;/li&gt;
-     *   &lt;li&gt;The worker thread provides that coroutine context&lt;/li&gt;
-     * &lt;/ol&gt;
-     * 
-     * If a previous request is still pending (worker hasn't picked it up yet), it will
-     * be overwritten. This is the desired behavior for live-typing scenarios.
-     * 
-     * @param lines     the PlantUML source code, split into lines by the JavaScript caller
-     * @param elementId the ID of the HTML element where the SVG should be rendered
-     */
-    private static void requestRender(String[] lines, String elementId) {
-<span class="nc" id="L225">        synchronized (LOCK) {</span>
-            // Store the request (overwrites any previous pending request)
-<span class="nc" id="L227">            pendingLines = lines;</span>
-<span class="nc" id="L228">            pendingElementId = elementId;</span>
+	/**
+	 * Called from JavaScript to request a diagram rendering.
+	 * 
+	 * This method does NOT perform the rendering itself - it only queues the
+	 * request and wakes up the worker thread. This is necessary because:
+	 * 
+	 * &lt;ol&gt;
+	 * &lt;li&gt;This method is called from a native JS context (event handler,
+	 * setTimeout, etc.)&lt;/li&gt;
+	 * &lt;li&gt;Viz.js async calls require a TeaVM coroutine context&lt;/li&gt;
+	 * &lt;li&gt;The worker thread provides that coroutine context&lt;/li&gt;
+	 * &lt;/ol&gt;
+	 * 
+	 * If a previous request is still pending (worker hasn't picked it up yet), it
+	 * will be overwritten. This is the desired behavior for live-typing scenarios.
+	 * 
+	 * @param lines     the PlantUML source code, split into lines by the JavaScript
+	 *                  caller
+	 * @param elementId the ID of the HTML element where the SVG should be rendered
+	 */
+	private static void requestRender(String[] lines, String elementId) {
+<span class="nc" id="L236">		synchronized (LOCK) {</span>
+			// Store the request (overwrites any previous pending request)
+<span class="nc" id="L238">			pendingLines = lines;</span>
+<span class="nc" id="L239">			pendingElementId = elementId;</span>
 
-            // Wake up the worker thread to process this request
-<span class="nc" id="L231">            LOCK.notify();</span>
-<span class="nc" id="L232">        }</span>
-<span class="nc" id="L233">    }</span>
+			// Wake up the worker thread to process this request
+<span class="nc" id="L242">			LOCK.notify();</span>
+<span class="nc" id="L243">		}</span>
+<span class="nc" id="L244">	}</span>
 
-    // =========================================================================
-    // Worker thread
-    // =========================================================================
+	// =========================================================================
+	// Worker thread
+	// =========================================================================
 
-    /**
-     * Main loop for the worker thread. Runs forever, processing render requests.
-     * 
-     * This method executes in a TeaVM coroutine context, which means:
-     * &lt;ul&gt;
-     *   &lt;li&gt;{@code LOCK.wait()} is properly transformed to async JS&lt;/li&gt;
-     *   &lt;li&gt;Viz.js async calls (via @Async annotation) work correctly&lt;/li&gt;
-     * &lt;/ul&gt;
-     * 
-     * The loop:
-     * &lt;ol&gt;
-     *   &lt;li&gt;Waits until a render request is available (pendingLines != null)&lt;/li&gt;
-     *   &lt;li&gt;Captures and clears the request atomically&lt;/li&gt;
-     *   &lt;li&gt;Performs the rendering (may involve async Viz.js calls)&lt;/li&gt;
-     *   &lt;li&gt;Repeats forever&lt;/li&gt;
-     * &lt;/ol&gt;
-     */
-    private static void workerLoop() {
-        while (true) {
-            String[] lines;
-            String elementId;
+	/**
+	 * Main loop for the worker thread. Runs forever, processing render requests.
+	 * 
+	 * This method executes in a TeaVM coroutine context, which means:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;{@code LOCK.wait()} is properly transformed to async JS&lt;/li&gt;
+	 * &lt;li&gt;Viz.js async calls (via @Async annotation) work correctly&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * 
+	 * The loop:
+	 * &lt;ol&gt;
+	 * &lt;li&gt;Waits until a render request is available (pendingLines != null)&lt;/li&gt;
+	 * &lt;li&gt;Captures and clears the request atomically&lt;/li&gt;
+	 * &lt;li&gt;Performs the rendering (may involve async Viz.js calls)&lt;/li&gt;
+	 * &lt;li&gt;Repeats forever&lt;/li&gt;
+	 * &lt;/ol&gt;
+	 */
+	private static void workerLoop() {
+		while (true) {
+			String[] lines;
+			String elementId;
 
-            // Wait for a render request
-<span class="nc" id="L262">            synchronized (LOCK) {</span>
-                // Spin-wait pattern: keep waiting until we have work to do.
-                // This handles spurious wakeups correctly.
-<span class="nc bnc" id="L265" title="All 2 branches missed.">                while (pendingLines == null) {</span>
-                    try {
-<span class="nc" id="L267">                        LOCK.wait();</span>
-<span class="nc" id="L268">                    } catch (InterruptedException e) {</span>
-                        // Interruption is not expected, but if it happens, just retry
-<span class="nc" id="L270">                    }</span>
-                }
+			// Wait for a render request
+<span class="nc" id="L273">			synchronized (LOCK) {</span>
+				// Spin-wait pattern: keep waiting until we have work to do.
+				// This handles spurious wakeups correctly.
+<span class="nc bnc" id="L276" title="All 2 branches missed.">				while (pendingLines == null) {</span>
+					try {
+<span class="nc" id="L278">						LOCK.wait();</span>
+<span class="nc" id="L279">					} catch (InterruptedException e) {</span>
+						// Interruption is not expected, but if it happens, just retry
+<span class="nc" id="L281">					}</span>
+				}
 
-                // Capture the request and clear the pending state.
-                // This must be atomic (inside synchronized) to avoid race conditions.
-<span class="nc" id="L275">                lines = pendingLines;</span>
-<span class="nc" id="L276">                elementId = pendingElementId;</span>
-<span class="nc" id="L277">                pendingLines = null;</span>
-<span class="nc" id="L278">            }</span>
+				// Capture the request and clear the pending state.
+				// This must be atomic (inside synchronized) to avoid race conditions.
+<span class="nc" id="L286">				lines = pendingLines;</span>
+<span class="nc" id="L287">				elementId = pendingElementId;</span>
+<span class="nc" id="L288">				pendingLines = null;</span>
+<span class="nc" id="L289">			}</span>
 
-            // Perform rendering OUTSIDE the synchronized block.
-            // This allows new requests to be queued while we're rendering.
-<span class="nc" id="L282">            doRender(lines, elementId);</span>
-<span class="nc" id="L283">        }</span>
-    }
+			// Perform rendering OUTSIDE the synchronized block.
+			// This allows new requests to be queued while we're rendering.
+<span class="nc" id="L293">			doRender(lines, elementId);</span>
+<span class="nc" id="L294">		}</span>
+	}
 
-    // =========================================================================
-    // Rendering
-    // =========================================================================
+	// =========================================================================
+	// Rendering
+	// =========================================================================
 
-    /**
-     * Performs the actual PlantUML rendering and inserts the SVG into the DOM.
-     * 
-     * This method:
-     * &lt;ol&gt;
-     *   &lt;li&gt;Clears the target element&lt;/li&gt;
-     *   &lt;li&gt;Creates a PlantUML diagram from the source lines&lt;/li&gt;
-     *   &lt;li&gt;Renders it to SVG using the TeaVM-compatible graphics system&lt;/li&gt;
-     *   &lt;li&gt;Appends the SVG element to the target&lt;/li&gt;
-     * &lt;/ol&gt;
-     * 
-     * For diagrams requiring GraphViz (class diagrams, etc.), this will internally
-     * call Viz.js asynchronously. This works because we're running in the worker
-     * thread's coroutine context.
-     * 
-     * @param lines     the PlantUML source lines
-     * @param elementId the target DOM element ID
-     */
-    private static void doRender(String[] lines, String elementId) {
-        // Find the target element in the DOM
-<span class="nc" id="L310">        HTMLElement out = HTMLDocument.current().getElementById(elementId);</span>
-<span class="nc bnc" id="L311" title="All 2 branches missed.">        if (out == null)</span>
-<span class="nc" id="L312">            return;</span>
+	/**
+	 * Performs the actual PlantUML rendering and inserts the SVG into the DOM.
+	 * 
+	 * This method:
+	 * &lt;ol&gt;
+	 * &lt;li&gt;Clears the target element&lt;/li&gt;
+	 * &lt;li&gt;Creates a PlantUML diagram from the source lines&lt;/li&gt;
+	 * &lt;li&gt;Renders it to SVG using the TeaVM-compatible graphics system&lt;/li&gt;
+	 * &lt;li&gt;Appends the SVG element to the target&lt;/li&gt;
+	 * &lt;/ol&gt;
+	 * 
+	 * For diagrams requiring GraphViz (class diagrams, etc.), this will internally
+	 * call Viz.js asynchronously. This works because we're running in the worker
+	 * thread's coroutine context.
+	 * 
+	 * @param lines     the PlantUML source lines
+	 * @param elementId the target DOM element ID
+	 */
+	private static void doRender(String[] lines, String elementId) {
+		// Find the target element in the DOM
+<span class="nc" id="L321">		HTMLElement out = HTMLDocument.current().getElementById(elementId);</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">		if (out == null)</span>
+<span class="nc" id="L323">			return;</span>
 
-        try {
-            // Create SVG graphics context with TeaVM-compatible implementation
-<span class="nc" id="L316">            SvgGraphicsTeaVM svg = new SvgGraphicsTeaVM(900, 900);</span>
-<span class="nc" id="L317">            UGraphicTeaVM ug = UGraphicTeaVM.build(BACK, COLOR_MAPPER, STRING_BOUNDER, svg);</span>
+		try {
+			// Create SVG graphics context with TeaVM-compatible implementation
+<span class="nc" id="L327">			BrowserLog.reset();</span>
+<span class="nc" id="L328">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender&quot;);</span>
 
-            // Parse and render the diagram.
-            // For class diagrams, this will call GraphVizjsTeaVMEngine internally,
-            // which uses Viz.js for layout. The @Async magic happens here.
-<span class="nc" id="L322">            Diagram diagram = BUILDER.createDiagram(lines);</span>
-<span class="nc" id="L323">            diagram.exportDiagramGraphic(ug, new FileFormatOption(FileFormat.SVG));</span>
+<span class="nc" id="L330">			SvgGraphicsTeaVM svg = new SvgGraphicsTeaVM(900, 900);</span>
+<span class="nc" id="L331">			UGraphicTeaVM ug = UGraphicTeaVM.build(BACK, COLOR_MAPPER, STRING_BOUNDER, svg);</span>
 
-            // Clear any previous content (old SVG, error messages, etc.)
-<span class="nc" id="L326">            removeAllChildren(out);</span>
+<span class="nc" id="L333">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender wip10&quot;);</span>
 
-            // Insert the rendered SVG into the DOM
-<span class="nc" id="L329">            appendSvgElement(out, svg.getSvgRoot());</span>
-<span class="nc" id="L330">        } catch (Exception e) {</span>
-            // Display error message in the target element
-<span class="nc" id="L332">            out.setTextContent(String.valueOf(e));</span>
-<span class="nc" id="L333">        }</span>
-<span class="nc" id="L334">    }</span>
+			// Parse and render the diagram.
+			// For class diagrams, this will call GraphVizjsTeaVMEngine internally,
+			// which uses Viz.js for layout. The @Async magic happens here.
+<span class="nc" id="L338">			Diagram diagram = BUILDER.createDiagram(lines);</span>
+<span class="nc" id="L339">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender wip20&quot;);</span>
+<span class="nc" id="L340">			diagram.exportDiagramGraphic(ug, new FileFormatOption(FileFormat.SVG));</span>
+<span class="nc" id="L341">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender wip30&quot;);</span>
 
-    // =========================================================================
-    // JavaScript interop utilities
-    // =========================================================================
+			// Clear any previous content (old SVG, error messages, etc.)
+<span class="nc" id="L344">			removeAllChildren(out);</span>
+<span class="nc" id="L345">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender wip40&quot;);</span>
 
-    /** Logs a message to the browser's JavaScript console. */
-    @JSBody(params = &quot;msg&quot;, script = &quot;console.log(msg);&quot;)
-    private static native void consoleLog(String msg);
+			// Insert the rendered SVG into the DOM
+<span class="nc" id="L348">			appendSvgElement(out, svg.getSvgRoot());</span>
+<span class="nc" id="L349">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender done&quot;);</span>
+<span class="nc" id="L350">			BrowserLog.jsStatusDuration();</span>
 
-    /** Appends an SVG element as a child of a DOM element. */
-    @JSBody(params = { &quot;p&quot;, &quot;svg&quot; }, script = &quot;p.appendChild(svg);&quot;)
-    private static native void appendSvgElement(HTMLElement p, Element svg);
+<span class="nc" id="L352">		} catch (Exception e) {</span>
+			// Display error message in the target element
+<span class="nc" id="L354">			out.setTextContent(String.valueOf(e));</span>
+<span class="nc" id="L355">		}</span>
+<span class="nc" id="L356">	}</span>
 
-    /** Removes all child nodes from a DOM element. */
-    @JSBody(params = &quot;el&quot;, script = &quot;while(el.firstChild)el.removeChild(el.firstChild);&quot;)
-    private static native void removeAllChildren(HTMLElement el);
-    
+	// =========================================================================
+	// JavaScript interop utilities
+	// =========================================================================
+
+	/** Appends an SVG element as a child of a DOM element. */
+	@JSBody(params = { &quot;p&quot;, &quot;svg&quot; }, script = &quot;p.appendChild(svg);&quot;)
+	private static native void appendSvgElement(HTMLElement p, Element svg);
+
+	/** Removes all child nodes from a DOM element. */
+	@JSBody(params = &quot;el&quot;, script = &quot;while(el.firstChild)el.removeChild(el.firstChild);&quot;)
+	private static native void removeAllChildren(HTMLElement el);
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

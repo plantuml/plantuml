@@ -234,82 +234,91 @@ final public class StringLocated {
 	}
 
 	public StringLocated getTrimmed() {
-<span class="fc bfc" id="L237" title="All 2 branches covered.">		if (trimmed == null) {</span>
-<span class="fc" id="L238">			this.trimmed = new StringLocated(StringUtils.trin(this.getString()), location, preprocessorError);</span>
-<span class="fc" id="L239">			trimmed.fox = this.fox;</span>
-<span class="fc" id="L240">			trimmed.trimmed = trimmed;</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">		if (s.length() == 0)</span>
+<span class="fc" id="L238">			return this;</span>
+
+<span class="fc bfc" id="L240" title="All 2 branches covered.">		if (trimmed == null) {</span>
+<span class="fc" id="L241">			final String tmp = StringUtils.trin(s);</span>
+			// tmp==s when no trim is needed
+<span class="fc bfc" id="L243" title="All 2 branches covered.">			if (tmp == s) {</span>
+<span class="fc" id="L244">				this.trimmed = this;</span>
+			} else {
+<span class="fc" id="L246">				this.trimmed = new StringLocated(tmp, location, preprocessorError);</span>
+<span class="fc" id="L247">				trimmed.fox = this.fox;</span>
+<span class="fc" id="L248">				trimmed.trimmed = trimmed;</span>
+			}
 		}
-<span class="fc" id="L242">		return trimmed;</span>
+<span class="fc" id="L251">		return trimmed;</span>
 	}
 
 	@JawsStrange
 	public StringLocated removeInnerComment() {
-<span class="fc" id="L247">		final String string = s.toString();</span>
-<span class="fc" id="L248">		final String trim = string.replace('\t', ' ').trim();</span>
-<span class="pc bpc" id="L249" title="1 of 2 branches missed.">		if (trim.startsWith(&quot;/'&quot;)) {</span>
-<span class="nc" id="L250">			final int idx = string.indexOf(&quot;'/&quot;);</span>
-<span class="nc bnc" id="L251" title="All 2 branches missed.">			if (idx != -1)</span>
-<span class="nc" id="L252">				return new StringLocated(removeSpecialInnerComment(s.substring(idx + 2, s.length())), location,</span>
+<span class="fc" id="L256">		final String string = s.toString();</span>
+<span class="fc" id="L257">		final String trim = string.replace('\t', ' ').trim();</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">		if (trim.startsWith(&quot;/'&quot;)) {</span>
+<span class="nc" id="L259">			final int idx = string.indexOf(&quot;'/&quot;);</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">			if (idx != -1)</span>
+<span class="nc" id="L261">				return new StringLocated(removeSpecialInnerComment(s.substring(idx + 2, s.length())), location,</span>
 						preprocessorError);
 
 		}
-<span class="pc bpc" id="L256" title="1 of 2 branches missed.">		if (trim.endsWith(&quot;'/&quot;)) {</span>
-<span class="nc" id="L257">			final int idx = string.lastIndexOf(&quot;/'&quot;);</span>
-<span class="nc bnc" id="L258" title="All 2 branches missed.">			if (idx != -1)</span>
-<span class="nc" id="L259">				return new StringLocated(removeSpecialInnerComment(s.substring(0, idx)), location, preprocessorError);</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">		if (trim.endsWith(&quot;'/&quot;)) {</span>
+<span class="nc" id="L266">			final int idx = string.lastIndexOf(&quot;/'&quot;);</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">			if (idx != -1)</span>
+<span class="nc" id="L268">				return new StringLocated(removeSpecialInnerComment(s.substring(0, idx)), location, preprocessorError);</span>
 
 		}
-<span class="pc bpc" id="L262" title="3 of 4 branches missed.">		if (trim.contains(&quot;/'''&quot;) &amp;&amp; trim.contains(&quot;'''/&quot;))</span>
-<span class="nc" id="L263">			return new StringLocated(removeSpecialInnerComment(s), location, preprocessorError);</span>
+<span class="pc bpc" id="L271" title="3 of 4 branches missed.">		if (trim.contains(&quot;/'''&quot;) &amp;&amp; trim.contains(&quot;'''/&quot;))</span>
+<span class="nc" id="L272">			return new StringLocated(removeSpecialInnerComment(s), location, preprocessorError);</span>
 
-<span class="fc" id="L265">		return this;</span>
+<span class="fc" id="L274">		return this;</span>
 	}
 
 	private String removeSpecialInnerComment(String s) {
-<span class="nc bnc" id="L269" title="All 4 branches missed.">		if (s.contains(&quot;/'''&quot;) &amp;&amp; s.contains(&quot;'''/&quot;))</span>
-<span class="nc" id="L270">			return s.replaceAll(&quot;/'''[-\\w]*'''/&quot;, &quot;&quot;);</span>
+<span class="nc bnc" id="L278" title="All 4 branches missed.">		if (s.contains(&quot;/'''&quot;) &amp;&amp; s.contains(&quot;'''/&quot;))</span>
+<span class="nc" id="L279">			return s.replaceAll(&quot;/'''[-\\w]*'''/&quot;, &quot;&quot;);</span>
 
-<span class="nc" id="L272">		return s;</span>
+<span class="nc" id="L281">		return s;</span>
 	}
 
 	public String getString() {
-<span class="fc" id="L276">		return s;</span>
+<span class="fc" id="L285">		return s;</span>
 	}
 
 	public LineLocation getLocation() {
-<span class="fc" id="L280">		return location;</span>
+<span class="fc" id="L289">		return location;</span>
 	}
 
 	public String getPreprocessorError() {
-<span class="fc" id="L284">		return preprocessorError;</span>
+<span class="fc" id="L293">		return preprocessorError;</span>
 	}
 
 	public long getFoxSignature() {
-<span class="fc bfc" id="L288" title="All 2 branches covered.">		if (fox == -1)</span>
-<span class="fc" id="L289">			fox = FoxSignature.getFoxSignatureFromRealString(getString());</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">		if (fox == -1)</span>
+<span class="fc" id="L298">			fox = FoxSignature.getFoxSignatureFromRealString(getString());</span>
 
-<span class="fc" id="L291">		return fox;</span>
+<span class="fc" id="L300">		return fox;</span>
 	}
 
 	public TLineType getType() {
-<span class="fc bfc" id="L295" title="All 2 branches covered.">		if (type == null)</span>
-<span class="fc" id="L296">			type = TLineType.getFromLineInternal(this);</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">		if (type == null)</span>
+<span class="fc" id="L305">			type = TLineType.getFromLineInternal(this);</span>
 
-<span class="fc" id="L298">		return type;</span>
+<span class="fc" id="L307">		return type;</span>
 	}
 
 	public int length() {
-<span class="fc" id="L302">		return s.length();</span>
+<span class="fc" id="L311">		return s.length();</span>
 	}
 
 	public char charAt(int i) {
-<span class="fc" id="L306">		return s.charAt(i);</span>
+<span class="fc" id="L315">		return s.charAt(i);</span>
 	}
 
-<span class="fc" id="L309">	private static final long EXCLAMATION_MARK = FoxSignature.getFoxSignatureFromRealString(&quot;!&quot;);</span>
+<span class="fc" id="L318">	private static final long EXCLAMATION_MARK = FoxSignature.getFoxSignatureFromRealString(&quot;!&quot;);</span>
 
 	public boolean containsExclamationMark() {
-<span class="fc bfc" id="L312" title="All 2 branches covered.">		return (getFoxSignature() &amp; EXCLAMATION_MARK) != 0L;</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">		return (getFoxSignature() &amp; EXCLAMATION_MARK) != 0L;</span>
 	}
 
 }
