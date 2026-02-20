@@ -34,4 +34,3 @@
  *
  */
 package net.sourceforge.plantuml.teavm;
-// ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__ or __GPLV2__

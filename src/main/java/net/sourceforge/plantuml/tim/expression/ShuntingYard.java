@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.tim.expression;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
@@ -124,8 +125,10 @@ public class ShuntingYard {
 		// System.err.println("ouputQueue=" + ouputQueue);
 	}
 
+	private static final Pattern VARIABLE_NAME_PATTERN = Pattern.compile("[a-zA-Z0-9.$_]+");
+
 	private boolean isVariableName(String name) {
-		return name.matches("[a-zA-Z0-9.$_]+");
+		return VARIABLE_NAME_PATTERN.matcher(name).matches();
 	}
 
 	private boolean thereIsAFunctionAtTheTopOfTheOperatorStack() {

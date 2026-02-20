@@ -49,19 +49,15 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.crash.GraphvizCrash;
-import net.sourceforge.plantuml.dot.CucaDiagramSimplifierActivity;
-import net.sourceforge.plantuml.dot.CucaDiagramSimplifierState;
 import net.sourceforge.plantuml.dot.DotData;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
-import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
+import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 
 public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
-	// ::remove file when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__ or __GPLV2__
-	
+	// ::remove file when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
+
 	public CucaDiagramFileMakerTeaVM(CucaDiagram diagram) {
 		super(diagram);
 
@@ -75,15 +71,16 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 
 	@Override
 	public void createOneGraphic(UGraphic ug) {
+		BrowserLog.consoleLog(CucaDiagramFileMakerTeaVM.class, "creating dot");
 		String[] dot = diagram.getDotStringSkek();
 		final List<String> dots = new ArrayList<String>();
-		for (String s : dot) {
-			System.err.println("-->" + s);
+		for (String s : dot)
 			dots.add(s);
-		}
 
 		try {
+			BrowserLog.consoleLog(CucaDiagramFileMakerTeaVM.class, "wip1");
 			createFileInternal(ug, dots);
+			BrowserLog.consoleLog(CucaDiagramFileMakerTeaVM.class, "wip2");
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new UnsupportedOperationException("TEAVM103");
@@ -91,11 +88,12 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 			e.printStackTrace();
 			throw new UnsupportedOperationException("TEAVM105");
 		}
+
+		BrowserLog.consoleLog(CucaDiagramFileMakerTeaVM.class, "done");
 	}
 
-
 	private void createFileInternal(UGraphic ug, List<String> dotStrings) throws IOException, InterruptedException {
-		
+
 		final StringBounder stringBounder = ug.getStringBounder();
 
 //		if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY)
@@ -147,15 +145,15 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 		// SvekResult::calculateDimension()
 		result.calculateDimension(stringBounder); // Ensure text near the margins is not cut off
 
-		//:: uncomment when __TEAVM__
-//		final ImageBuilder ib = diagram.createImageBuilder(new FileFormatOption(FileFormat.SVG)) //
-//				.annotations(false) // backwards compatibility (AnnotatedWorker is used above)
-//				.drawable(result) //
-//				.status(status) //
-//				.warningOrError(warningOrError);
-//		
-//		ib.udrawable.drawU(ug);
-		//:: done
+		final ImageBuilder ib = diagram.createImageBuilder(new FileFormatOption(FileFormat.SVG)) //
+				.annotations(false) // backwards compatibility (AnnotatedWorker is used above)
+				.drawable(result) //
+				.status(status) //
+				.warningOrError(warningOrError);
+
+		// :: uncomment when __TEAVM__
+		// ib.udrawable.drawU(ug);
+		// :: done
 
 	}
 

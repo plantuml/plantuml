@@ -44,14 +44,13 @@ import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
 public class Version {
-	// ::remove folder when __HAXE__
-
 	public static String versionString() {
 		return CompilationInfo.VERSION;
 	}
 
 	public static String fullDescription() {
-		return "PlantUML version " + Version.versionString() + " (" + Version.compileTimeString() + ")";
+		return "PlantUML version " + Version.versionString() + " / " + CompilationInfo.COMMIT + " ["
+				+ Version.compileTimeString() + "]";
 	}
 
 	public static String versionString(int size) {
@@ -85,8 +84,7 @@ public class Version {
 		if (CompilationInfo.COMPILE_TIMESTAMP == 0L)
 			return "Unknown compile time";
 
-		return Instant.ofEpochMilli(CompilationInfo.COMPILE_TIMESTAMP)
-				.atZone(ZoneOffset.UTC)
+		return Instant.ofEpochMilli(CompilationInfo.COMPILE_TIMESTAMP).atZone(ZoneOffset.UTC)
 				.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss 'UTC'"));
 	}
 
@@ -94,13 +92,13 @@ public class Version {
 	public static String getJarPath() {
 		try {
 			final ClassLoader loader = Version.class.getClassLoader();
-			if (loader == null) 
+			if (loader == null)
 				return "No ClassLoader?";
-			
+
 			final SURL url = SURL.create(loader.getResource("net/sourceforge/plantuml/version/Version.class"));
-			if (url == null) 
+			if (url == null)
 				return "No URL?";
-			
+
 			String fullpath = url.toString();
 			fullpath = fullpath.replaceAll("net/sourceforge/plantuml/version/Version\\.class", "");
 			return fullpath;

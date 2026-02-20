@@ -117,6 +117,22 @@ public class SkinParam implements ISkinParam {
 	private final PathSystem pathSystem;
 	private final ConfigurationStore<OptionKey> option;
 
+	private static final Pattern DIGITS = Pattern.compile("\\d+");
+	private static final Pattern DIGITS_DOT = Pattern.compile("[\\d.]+");
+	private static final Pattern INT_OR_DECIMAL = Pattern.compile("\\d+(\\.\\d+)?");
+
+	private static boolean isDigits(String s) {
+		return s != null && DIGITS.matcher(s).matches();
+	}
+
+	private static boolean isDigitsOrDot(String s) {
+		return s != null && DIGITS_DOT.matcher(s).matches();
+	}
+
+	private static boolean isIntOrDecimal(String s) {
+		return s != null && INT_OR_DECIMAL.matcher(s).matches();
+	}
+
 	private SkinParam(PathSystem pathSystem, UmlDiagramType type, Pragma pragma, ConfigurationStore<OptionKey> option) {
 		this.type = type;
 		this.pragma = pragma;
@@ -393,15 +409,15 @@ public class SkinParam implements ISkinParam {
 			checkStereotype(stereotype);
 			final String value2 = getFirstValueNonNullWithSuffix(
 					"fontsize" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR), param);
-			if (value2 != null && value2.matches("\\d+"))
+			if (isDigits(value2))
 				return Integer.parseInt(value2);
 
 		}
 		String value = getFirstValueNonNullWithSuffix("fontsize", param);
-		if (value == null || value.matches("\\d+") == false)
+		if (isDigits(value) == false)
 			value = getValue("defaultfontsize");
 
-		if (value == null || value.matches("\\d+") == false)
+		if (isDigits(value) == false)
 			return param[0].getDefaultSize(this);
 
 		return Integer.parseInt(value);
@@ -857,7 +873,7 @@ public class SkinParam implements ISkinParam {
 			key += stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR);
 
 		final String value = getValue(key);
-		if (value != null && value.matches("\\d+"))
+		if (isDigits(value))
 			return Double.parseDouble(value);
 
 		return null;
@@ -876,7 +892,7 @@ public class SkinParam implements ISkinParam {
 
 			final String value2 = getValue(
 					param.name() + "thickness" + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));
-			if (value2 != null && value2.matches("[\\d.]+")) {
+			if (isDigitsOrDot(value2)) {
 				if (style == null)
 					style = LinkStyle.NORMAL();
 
@@ -884,7 +900,7 @@ public class SkinParam implements ISkinParam {
 			}
 		}
 		final String value = getValue(param.name() + "thickness");
-		if (value != null && value.matches("[\\d.]+")) {
+		if (isDigitsOrDot(value)) {
 			if (style == null)
 				style = LinkStyle.NORMAL();
 
@@ -1057,7 +1073,7 @@ public class SkinParam implements ISkinParam {
 		if ("same".equalsIgnoreCase(value))
 			return SWIMLANE_WIDTH_SAME;
 
-		if (value != null && value.matches("\\d+"))
+		if (isDigits(value))
 			return Integer.parseInt(value);
 
 		return 0;
@@ -1091,7 +1107,7 @@ public class SkinParam implements ISkinParam {
 
 	private double getAsDouble(final String name) {
 		final String value = getValue(name);
-		if (value != null && value.matches("\\d+(\\.\\d+)?"))
+		if (isIntOrDecimal(value))
 			return Double.parseDouble(value);
 
 		return 0;
@@ -1099,7 +1115,7 @@ public class SkinParam implements ISkinParam {
 
 	private int getAsInt(String key, int defaultValue) {
 		final String value = getValue(key);
-		if (value != null && value.matches("\\d+"))
+		if (isDigits(value))
 			return Integer.parseInt(value);
 
 		return defaultValue;

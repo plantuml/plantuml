@@ -101,9 +101,7 @@ public final class StyleLoader {
 		InputStream is = null;
 		
 		// ::uncomment when __TEAVM__
-		// System.out.println("StyleLoader! "+filename);
 		// is = net.sourceforge.plantuml.teavm.EmbeddedResources.openPlantumlSkin();
-		// System.out.println("is="+is);
 		// ::done
 		
 

@@ -497,10 +497,6 @@ public class StringUtils {
 		return s;
 	}
 
-	public static String trinNoTrace(CharSequence s) {
-		return s.toString().trim();
-	}
-
 	public static String manageEscapedTabs(String s) {
 		return s.replace("\\t", "\t");
 	}
@@ -516,36 +512,39 @@ public class StringUtils {
 	}
 
 	public static String trin(String arg) {
-		if (arg.length() == 0)
+		final int len = arg.length();
+		if (len == 0)
+			return "";
+
+		int start = 0;
+		int end = len - 1;
+
+		while (start <= end) {
+			final char cStart = arg.charAt(start);
+			if (cStart == ' ' || cStart == '\t' || cStart == '\r' || cStart == '\n' || cStart == '\0') {
+				start++;
+				continue;
+			}
+
+			final char cEnd = arg.charAt(end);
+			if (cEnd == ' ' || cEnd == '\t' || cEnd == '\r' || cEnd == '\n' || cEnd == '\0') {
+				end--;
+				continue;
+			}
+			break;
+		}
+
+		if (start == 0 && end == len - 1)
 			return arg;
 
-		return trinEndingInternal(arg, getPositionStartNonSpace(arg));
+		if (start > end)
+			return "";
+
+		return arg.substring(start, end + 1);
 	}
 
-	private static int getPositionStartNonSpace(String arg) {
-		int i = 0;
-		while (i < arg.length() && isSpaceOrTabOrNull(arg.charAt(i)))
-			i++;
-
-		return i;
-	}
-
-	private static String trinEnding(String arg) {
-		if (arg.length() == 0)
-			return arg;
-
-		return trinEndingInternal(arg, 0);
-	}
-
-	private static String trinEndingInternal(String arg, int from) {
-		int j = arg.length() - 1;
-		while (j >= from && isSpaceOrTabOrNull(arg.charAt(j)))
-			j--;
-
-		if (from == 0 && j == arg.length() - 1)
-			return arg;
-
-		return arg.substring(from, j + 1);
+	public static String trinNoTrace(CharSequence s) {
+		return s.toString().trim();
 	}
 
 	private static boolean isSpaceOrTabOrNull(char c) {

@@ -42,6 +42,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.api.ImageDataSimple;
@@ -203,6 +204,8 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 	protected abstract ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException;
 
+	private static final Pattern DIGITS = Pattern.compile("\\d+");
+
 	@Override
 	public String getWarningOrError() {
 		if (lastInfo == null)
@@ -216,7 +219,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		if (value == null)
 			return null;
 
-		if (value.matches("\\d+") == false)
+		if (!DIGITS.matcher(value).matches())
 			return null;
 
 		final int widthwarning = Integer.parseInt(value);

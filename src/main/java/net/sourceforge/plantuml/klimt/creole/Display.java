@@ -163,9 +163,11 @@ public class Display implements Iterable<CharSequence> {
 		return new Display(showStereotype, newDisplay, naturalHorizontalAlignment, isNull, defaultCreoleMode);
 	}
 
+	private static final Pattern ONLY_WHITESPACE = Pattern.compile("\\s*");
+
 	public boolean isWhite() {
-		return displayData == null || displayData.size() == 0
-				|| (displayData.size() == 1 && displayData.get(0).toString().matches("\\s*"));
+		return displayData == null || displayData.isEmpty()
+				|| (displayData.size() == 1 && ONLY_WHITESPACE.matcher(displayData.get(0)).matches());
 	}
 
 	public static Display empty() {
@@ -182,7 +184,8 @@ public class Display implements Iterable<CharSequence> {
 			tmp.add(s.getString());
 
 		if (tmp.size() > 2)
-			if (tmp.get(tmp.size() - 1).toString().isEmpty() && tmp.get(tmp.size() - 2).toString().equals(EmbeddedDiagram.EMBEDDED_END))
+			if (tmp.get(tmp.size() - 1).toString().isEmpty()
+					&& tmp.get(tmp.size() - 2).toString().equals(EmbeddedDiagram.EMBEDDED_END))
 				tmp.remove(tmp.size() - 1);
 
 		final Display result = create(tmp);

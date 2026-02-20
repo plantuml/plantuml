@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.tim;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
@@ -223,10 +224,11 @@ public abstract class Eater {
 		return stringLocated.charAt(i);
 	}
 
+	private static final Pattern AFFECTATION_PATTERN = Pattern.compile("\\$?[_\\p{L}][_\\p{L}0-9]*\\s*=.*");
+
 	final public boolean matchAffectation() {
-		final String tmp = stringLocated.getString().substring(i);
-		final boolean result = tmp.matches("^\\$?[_\\p{L}][_\\p{L}0-9]*\\s*=.*");
-		return result;
+		final String s = stringLocated.getString();
+		return AFFECTATION_PATTERN.matcher(s).region(i, s.length()).lookingAt();
 	}
 
 	final public char peekCharN2() {

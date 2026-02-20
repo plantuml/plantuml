@@ -50,61 +50,74 @@ public class StartUtils {
 	public static final String PAUSE_PATTERN = "((?:\\W|\\<[^<>]*\\>)*)[@\\\\]unpause";
 	public static final String START_PATTERN = "((?:[^\\w~]|\\<[^<>]*\\>)*)[@\\\\]start";
 
+	public static boolean isArobaseStartDiagram(String s) {
+		return DiagramType.getTypeFromArobaseStart(s) != DiagramType.UNKNOWN;
+	}
+
 	public static String beforeStartUml(final String s) {
+		final int n = s.length();
 		boolean inside = false;
-		for (int i = 0; i < s.length(); i++) {
-			final String tmp = s.substring(i, s.length());
-			if (startsWithSymbolAnd("start", tmp))
+
+		for (int i = 0; i < n; i++) {
+			if (startsWithSymbolAndAt(s, i, "start"))
 				return s.substring(0, i);
 
-			final String single = s.substring(i, i + 1);
-			if (inside) {
-				if (single.equals(">"))
-					inside = false;
+			final char c = s.charAt(i);
 
+			if (inside) {
+				if (c == '>') {
+					inside = false;
+				}
 				continue;
 			}
 
-			if (single.equals("<"))
+			if (c == '<')
 				inside = true;
-			else if (single.matches("[\\w~]"))
+			else if (isWordOrTilde(c))
 				return null;
 
 		}
 		return null;
 	}
 
-	public static boolean isArobaseStartDiagram(String s) {
-		return DiagramType.getTypeFromArobaseStart(s) != DiagramType.UNKNOWN;
+	private static boolean isWordOrTilde(char c) {
+		return c == '~' || Character.isLetterOrDigit(c) || c == '_';
 	}
 
-	private static boolean startsWithSymbolAnd(String keyword, String text) {
-		for (int i = 0; i < text.length(); i++) {
+	private static boolean startsWithSymbolAndAt(String text, int from, String keyword) {
+		final int n = text.length();
+		int i = from;
+
+		while (i < n) {
 			final char c = text.charAt(i);
-			if (Character.isWhitespace(c))
+			if (Character.isWhitespace(c)) {
+				i++;
 				continue;
+			}
 
 			if (c != '@' && c != '\\')
 				return false;
 
-			if (text.length() - i - 1 < keyword.length())
+			final int kwLen = keyword.length();
+			final int start = i + 1;
+			if (start + kwLen > n)
 				return false;
 
-			return text.regionMatches(i + 1, keyword, 0, keyword.length());
+			return text.regionMatches(start, keyword, 0, kwLen);
 		}
 		return false;
 	}
 
 	public static boolean isArobaseEndDiagram(String s) {
-		return startsWithSymbolAnd("end", s);
+		return startsWithSymbolAndAt(s, 0, "end");
 	}
 
 	public static boolean isArobasePauseDiagram(String s) {
-		return startsWithSymbolAnd("pause", s);
+		return startsWithSymbolAndAt(s, 0, "pause");
 	}
 
 	public static boolean isArobaseUnpauseDiagram(String s) {
-		return startsWithSymbolAnd("unpause", s);
+		return startsWithSymbolAndAt(s, 0, "unpause");
 	}
 
 	public static boolean isExit(CharSequence s) {

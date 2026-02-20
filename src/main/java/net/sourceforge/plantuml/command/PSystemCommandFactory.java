@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -78,9 +79,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	final public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing) {
 
-		// ::uncomment when __TEAVM__
-		// System.err.println("[PSystemCommandFactory] createSystem " + getClass());
-		// ::done
+		BrowserLog.consoleLog(getClass(), "createSystem");
 
 		IteratorCounter2 it = source.iterator2();
 		final StringLocated startLine = it.next();

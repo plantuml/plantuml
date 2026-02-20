@@ -123,7 +123,7 @@ import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
  * @see AbstractPSystem
  */
 public class PSystemBuilder {
-	// ::remove file when __HAXE__ or __TEAVM__
+	// ::remove file when __TEAVM__
 
 	public static final long startTime = System.currentTimeMillis();
 
@@ -181,14 +181,12 @@ public class PSystemBuilder {
 			result = PSystemErrorUtils.merge(errors);
 			return result;
 		} finally {
-			
-			// ::comment when __CORE__
+
 			if (result != null && GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS)) {
 				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());
 			}
 			Log.info(() -> "Compilation duration " + (System.currentTimeMillis() - now));
 			RegexConcat.printCacheInfo();
-			// ::done
 		}
 	}
 
@@ -203,15 +201,11 @@ public class PSystemBuilder {
 		factories.add(new DescriptionDiagramFactory());
 		factories.add(new StateDiagramFactory());
 		factories.add(new ActivityDiagramFactory3());
-
-		// ::comment when __CORE__
 		factories.add(new BpmDiagramFactory(DiagramType.BPM));
-		// ::done
 
 		// factories.add(new PostIdDiagramFactory());
 		factories.add(new PSystemLicenseFactory());
 		factories.add(new PSystemVersionFactory());
-		// ::comment when __CORE__
 		factories.add(new PSystemDonorsFactory());
 		factories.add(new PSystemSkinparameterListFactory());
 		factories.add(new PSystemListFontsFactory());
@@ -219,13 +213,10 @@ public class PSystemBuilder {
 		factories.add(new PSystemOpenIconicFactory());
 		factories.add(new PSystemListOpenIconicFactory());
 		factories.add(new PSystemListArchimateSpritesFactory());
-		// ::done
 		factories.add(new PSystemSaltFactory(DiagramType.UML));
 		factories.add(new PSystemSaltFactory(DiagramType.SALT));
-		// ::comment when __CORE__
 		factories.add(new PSystemDotFactory(DiagramType.DOT));
 		factories.add(new PSystemDotFactory(DiagramType.UML));
-		// ::done
 		factories.add(new NwDiagramFactory(DiagramType.UML));
 		factories.add(new NwDiagramFactory(DiagramType.NW));
 		factories.add(new MindMapDiagramFactory());
@@ -233,19 +224,14 @@ public class PSystemBuilder {
 		factories.add(new ChartDiagramFactory());
 		factories.add(new PacketDiagramFactory());
 
-		// ::uncomment when __CORE__
-		// factories.add(new PSystemSudokuFactory());
-		// ::done
-
-		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
 		factories.add(new PSystemJcckitFactory());
 		factories.add(new PSystemSudokuFactory());
 		// ::done
-		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__
+		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__
 		factories.add(new PSystemDitaaFactory());
 		// ::done
 
-		// ::comment when __CORE__
 		factories.add(new PSystemDefinitionFactory());
 		factories.add(new ListSpriteDiagramFactory());
 		factories.add(new StdlibDiagramFactory());
@@ -258,31 +244,20 @@ public class PSystemBuilder {
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 			factories.add(new PSystemPathFactory());
 		factories.add(new PSystemOregonFactory());
-		// ::done
 
 		factories.add(new PSystemCharlieFactory());
 
 		factories.add(new GanttDiagramFactory());
 		factories.add(new ChronologyDiagramFactory());
 		factories.add(new FlowDiagramFactory());
-
-		// ::comment when __CORE__
 		factories.add(new PSystemDedicationFactory());
-		// ::done
-
 		factories.add(new TimingDiagramFactory());
-
-		// ::comment when __CORE__
 		factories.add(new HelpFactory());
 		factories.add(new WireDiagramFactory());
-		// ::done
-
 		factories.add(new JsonDiagramFactory());
 		factories.add(new GitDiagramFactory());
-		// ::comment when __CORE__
 		factories.add(new FilesDiagramFactory());
 		factories.add(new BoardDiagramFactory());
-		// ::done
 		factories.add(new YamlDiagramFactory());
 		factories.add(new HclDiagramFactory());
 		factories.add(new PSystemEbnfFactory());

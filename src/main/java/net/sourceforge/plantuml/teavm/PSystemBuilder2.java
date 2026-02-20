@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.regexdiagram.PSystemRegexFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
 import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
 import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
+import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.TimLoader;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagramFactory;
@@ -75,7 +76,8 @@ import net.sourceforge.plantuml.wbs.WBSDiagramFactory;
 import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 
 public class PSystemBuilder2 {
-
+	// ::remove file when __MIT__  __EPL__  __BSD__  __ASL__  __LGPL__  __GPLV2__
+	
 	private final List<PSystemFactory> factories = new ArrayList<>();
 	private PSystemFactory lastFactory;
 
@@ -103,6 +105,7 @@ public class PSystemBuilder2 {
 	}
 
 	public Diagram createDiagram(String[] split) {
+		BrowserLog.consoleLog(PSystemBuilder2.class, "createDiagram start");
 		final List<StringLocated> rawSource = new ArrayList<>();
 		for (String s : clean(split))
 			rawSource.add(new StringLocated(s, new LineLocationImpl("textarea", null)));
@@ -112,9 +115,11 @@ public class PSystemBuilder2 {
 		final Charset charset = java.nio.charset.StandardCharsets.UTF_8;
 		final DefinitionsContainer definitions = null;
 
+		BrowserLog.consoleLog(PSystemBuilder2.class, "wip3");
 		final TimLoader timLoader = new TimLoader(pathSystem, defines, charset, definitions, rawSource.get(0));
+		BrowserLog.consoleLog(PSystemBuilder2.class, "wip4");
 		timLoader.load(rawSource);
-		System.err.println("load ok");
+		BrowserLog.consoleLog(PSystemBuilder2.class, "createDiagram ok");
 		List<StringLocated> tmp = timLoader.getResultList();
 		tmp = Jaws.expands0(tmp);
 		tmp = Jaws.expandsJawsForPreprocessor(tmp);
@@ -138,9 +143,11 @@ public class PSystemBuilder2 {
 				continue;
 			if (f == lastFactory)
 				continue;
+			BrowserLog.consoleLog(PSystemBuilder2.class, "trying " + f.getClass());
 
 			final Diagram sys = f.createSystem(null, source, null, preprocessing);
 			if (isOk(sys)) {
+				BrowserLog.consoleLog(PSystemBuilder2.class, "ok!");
 				this.lastFactory = f;
 				return sys;
 			}
@@ -170,16 +177,6 @@ public class PSystemBuilder2 {
 			lines.remove(lines.size() - 1);
 
 		return lines;
-	}
-
-	public static void main(String[] args) {
-		System.err.println("Hello!");
-
-		final String source[] = new String[] { "@startuml", "class A", "class B extends A", "@enduml" };
-
-		final Diagram diagram = new PSystemBuilder2().createDiagram(source);
-
-		System.err.println("diagram=" + diagram);
 	}
 
 }

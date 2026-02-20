@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -436,7 +437,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	final public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
 		// ::revert when __TEAVM__
 		final CucaDiagramFileMaker maker = new CucaDiagramFileMakerSmetana(this);
-		// final CucaDiagramFileMaker maker = new net.sourceforge.plantuml.svek.CucaDiagramFileMakerTeaVM(this);
+		// final CucaDiagramFileMaker maker = new
+		// net.sourceforge.plantuml.svek.CucaDiagramFileMakerTeaVM(this);
 		// ::done
 		maker.createOneGraphic(ug);
 	}
@@ -509,8 +511,10 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return generalWarningOrError + BackSlash.NEWLINE + warningOrError;
 	}
 
+	private static final Pattern NUMBER_PATTERN = Pattern.compile("[+-]?(\\.?\\d+|\\d+\\.\\d*)");
+
 	private static boolean isNumber(String s) {
-		return s.matches("[+-]?(\\.?\\d+|\\d+\\.\\d*)");
+		return NUMBER_PATTERN.matcher(s).matches();
 	}
 
 	public void resetPragmaLabel() {

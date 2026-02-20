@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import java.util.regex.Pattern;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -130,12 +132,11 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 		return ColorParser.simpleColor(ColorType.BACK, "COLOR2");
 	}
 
+	private static final Pattern FORBIDDEN_PATTERN = Pattern.compile("^[\\p{L}0-9_.]+$");
+
 	@Override
-	final protected boolean isForbidden(CharSequence line) {
-		if (line.toString().matches("^[\\p{L}0-9_.]+$")) {
-			return true;
-		}
-		return false;
+	protected final boolean isForbidden(CharSequence line) {
+		return FORBIDDEN_PATTERN.matcher(line).matches();
 	}
 
 	@Override

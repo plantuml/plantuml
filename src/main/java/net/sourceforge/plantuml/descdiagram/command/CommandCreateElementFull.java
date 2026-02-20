@@ -36,6 +36,8 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import java.util.regex.Pattern;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -128,17 +130,16 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 	public static final String DISPLAY = "(" + DISPLAY_CORE + ")";
 	public static final String DISPLAY_WITHOUT_QUOTE = "(" + DISPLAY_CORE + "|[%pLN_.]+)";
 
-	@Override
-	final protected boolean isForbidden(CharSequence line) {
-		if (line.toString().matches("^[\\p{L}0-9_.]+$"))
-			return true;
+	private static final Pattern FORBIDDEN_PATTERN = Pattern.compile("^[\\p{L}0-9_.]+$");
 
-		return false;
+	@Override
+	protected final boolean isForbidden(CharSequence line) {
+		return FORBIDDEN_PATTERN.matcher(line).matches();
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		String codeRaw = arg.getLazzy("CODE", 0);
 		String displayRaw = arg.getLazzy("DISPLAY", 0);
 		final char codeChar = getCharEncoding(codeRaw);
@@ -228,7 +229,8 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 		Entity entity = quark.getData();
 		if (entity == null)
-			entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display), type, usymbol);
+			entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display),
+					type, usymbol);
 
 		entity.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));
 

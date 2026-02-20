@@ -39,8 +39,6 @@ import static java.util.Objects.requireNonNull;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,6 +48,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.FileSystem;
@@ -76,6 +75,7 @@ import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.theme.Theme;
@@ -340,16 +340,19 @@ public class TContext {
 
 	public TValue executeLines(TMemory memory, List<StringLocated> body, TFunctionType ftype, boolean modeSpecial)
 			throws EaterException {
+		BrowserLog.consoleLog(TContext.class, "executeLines start (" + body.size() + " lines)");
 		final CodeIterator it = buildCodeIterator(memory, body);
 
 		StringLocated s = null;
 		while ((s = it.peek()) != null) {
 			final TValue result = executeOneLineSafe(memory, s, ftype, modeSpecial);
-			if (result != null)
+			if (result != null) {
+				BrowserLog.consoleLog(TContext.class, "executeLines ok -> " + result);
 				return result;
-
+			}
 			it.next();
 		}
+		BrowserLog.consoleLog(TContext.class, "executeLines return null");
 		return null;
 
 	}
@@ -369,7 +372,9 @@ public class TContext {
 	private TValue executeOneLineSafe(TMemory memory, StringLocated s, TFunctionType ftype, boolean modeSpecial)
 			throws EaterException {
 		try {
+			// ::comment when __TEAVM__
 			this.debug.add(s);
+			// ::done
 			return executeOneLineNotSafe(memory, s, ftype, modeSpecial);
 		} catch (Exception e) {
 			if (e instanceof EaterException)
@@ -438,12 +443,14 @@ public class TContext {
 		} else if (type == TLineType.LOG) {
 			this.executeLog(memory, s);
 			return null;
-		} else if (s.getString().matches("^\\s+$")) {
+		} else if (ONLY_WHITESPACE_NON_EMPTY.matcher(s.getString()).matches()) {
 			return null;
 		} else {
 			throw new EaterException("Compile Error " + ftype + " " + type, s);
 		}
 	}
+
+	private static final Pattern ONLY_WHITESPACE_NON_EMPTY = Pattern.compile("^\\s+$");
 
 	private void addPlain(TMemory memory, StringLocated s) throws EaterException {
 		final StringLocated tmp[] = applyFunctionsAndVariablesInternal(memory, s);
@@ -804,8 +811,8 @@ public class TContext {
 				InputFile tmp = this.pathSystem.getInputFile(what);
 				this.pathSystem = this.pathSystem.changeCurrentDirectory(tmp.getParentFolder());
 				reader = PreprocessorUtils.getReaderStdlibInclude(s, stdlibPath);
-				// InputStream is = this.pathSystem.getTeaVMInputStream(what);
-				// reader = ReadLineReader.create(new InputStreamReader(is), what);
+				// java.io.InputStream is = this.pathSystem.getTeaVMInputStream(what);
+				// reader = ReadLineReader.create(new java.io.InputStreamReader(is), what);
 				// ::done
 			} else if (what.startsWith("http://") || what.startsWith("https://")) {
 				// ::comment when __TEAVM__

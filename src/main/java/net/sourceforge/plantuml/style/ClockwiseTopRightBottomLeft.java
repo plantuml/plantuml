@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.style;
 
+import java.util.regex.Pattern;
+
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
@@ -53,33 +55,48 @@ public class ClockwiseTopRightBottomLeft {
 		return new ClockwiseTopRightBottomLeft(0, 0, 0, 0);
 	}
 
+	private static final Pattern NUMBERS_ONLY = Pattern.compile("[0-9 ]+");
+
+	private static boolean isOnlyNumbersAndSpaces(String value) {
+		return NUMBERS_ONLY.matcher(value).matches();
+	}
+
 	public static ClockwiseTopRightBottomLeft read(String value) {
-		if (value.matches("[0-9 ]+")) {
-			final String split[] = value.split(" +");
-			if (split.length == 1) {
-				final double first = Integer.parseInt(split[0]);
-				return new ClockwiseTopRightBottomLeft(first, first, first, first);
+		if (isOnlyNumbersAndSpaces(value) == false)
+			return none();
+
+		final String[] split = value.trim().split(" +");
+
+		try {
+			switch (split.length) {
+			case 1: {
+				final double v = Integer.parseInt(split[0]);
+				return new ClockwiseTopRightBottomLeft(v, v, v, v);
 			}
-			if (split.length == 2) {
-				final double first = Integer.parseInt(split[0]);
-				final double second = Integer.parseInt(split[1]);
-				return new ClockwiseTopRightBottomLeft(first, second, first, second);
+			case 2: {
+				final double a = Integer.parseInt(split[0]);
+				final double b = Integer.parseInt(split[1]);
+				return new ClockwiseTopRightBottomLeft(a, b, a, b);
 			}
-			if (split.length == 3) {
-				final double first = Integer.parseInt(split[0]);
-				final double second = Integer.parseInt(split[1]);
-				final double third = Integer.parseInt(split[2]);
-				return new ClockwiseTopRightBottomLeft(first, second, third, second);
+			case 3: {
+				final double a = Integer.parseInt(split[0]);
+				final double b = Integer.parseInt(split[1]);
+				final double c = Integer.parseInt(split[2]);
+				return new ClockwiseTopRightBottomLeft(a, b, c, b);
 			}
-			if (split.length == 4) {
-				final double first = Integer.parseInt(split[0]);
-				final double second = Integer.parseInt(split[1]);
-				final double third = Integer.parseInt(split[2]);
-				final double forth = Integer.parseInt(split[3]);
-				return new ClockwiseTopRightBottomLeft(first, second, third, forth);
+			case 4: {
+				final double a = Integer.parseInt(split[0]);
+				final double b = Integer.parseInt(split[1]);
+				final double c = Integer.parseInt(split[2]);
+				final double d = Integer.parseInt(split[3]);
+				return new ClockwiseTopRightBottomLeft(a, b, c, d);
 			}
+			default:
+				return none();
+			}
+		} catch (NumberFormatException e) {
+			return none();
 		}
-		return none();
 	}
 
 	public static ClockwiseTopRightBottomLeft margin1margin2(double margin1, double margin2) {

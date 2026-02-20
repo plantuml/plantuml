@@ -36,13 +36,17 @@
 package net.sourceforge.plantuml.nio;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
+import org.teavm.jso.JSObject;
+
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
 
 //::uncomment when __TEAVM__
 //import java.io.InputStream;
@@ -73,20 +77,20 @@ public class PathSystem {
 //	}
 	// ::done
 
-	
-	// ::uncomment when __TEAVM__
-//	public InputStream getTeaVMInputStream(String path) {
-// 		final String full = path.substring(1, path.length() - 1).toLowerCase();
-// 		final String libname = full.substring(0, full.indexOf('/'));
-// 		final String filepath = full.substring(libname.length() + 1);
-//		TeaVmScriptLoader.loadOnceSync(libname + ".min.js");
-//		JSObject data = TeaVmScriptLoader.getRaw(libname, filepath);
-//		if (data == null)
-//			return null;
-//		String content = TeaVmScriptLoader.joinLines(data);
-//		return new java.io.ByteArrayInputStream(content.getBytes(java.nio.charset.StandardCharsets.UTF_8));
-//	}
-	// ::done
+	public InputStream getTeaVMInputStream(String path) {
+		// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
+		// return null;
+		final String full = path.substring(1, path.length() - 1).toLowerCase();
+		final String libname = full.substring(0, full.indexOf('/'));
+		final String filepath = full.substring(libname.length() + 1);
+		TeaVmScriptLoader.loadOnceSync(libname + ".min.js");
+		JSObject data = TeaVmScriptLoader.getRaw(libname, filepath);
+		if (data == null)
+			return null;
+		String content = TeaVmScriptLoader.joinLines(data);
+		return new java.io.ByteArrayInputStream(content.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+		// ::done
+	}
 
 	// ::comment when __TEAVM__
 	private final NFolder currentFolder;

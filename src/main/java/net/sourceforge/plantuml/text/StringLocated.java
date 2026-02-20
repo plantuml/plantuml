@@ -234,10 +234,19 @@ final public class StringLocated {
 	}
 
 	public StringLocated getTrimmed() {
+		if (s.length() == 0)
+			return this;
+
 		if (trimmed == null) {
-			this.trimmed = new StringLocated(StringUtils.trin(this.getString()), location, preprocessorError);
-			trimmed.fox = this.fox;
-			trimmed.trimmed = trimmed;
+			final String tmp = StringUtils.trin(s);
+			// tmp==s when no trim is needed
+			if (tmp == s) {
+				this.trimmed = this;
+			} else {
+				this.trimmed = new StringLocated(tmp, location, preprocessorError);
+				trimmed.fox = this.fox;
+				trimmed.trimmed = trimmed;
+			}
 		}
 		return trimmed;
 	}

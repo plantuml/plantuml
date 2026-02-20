@@ -36,17 +36,16 @@
 package net.sourceforge.plantuml.preproc;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.nio.InputFile;
-import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public class DiagramExtractor implements ReadLine {
+
+	private static final Pattern DIGITS = Pattern.compile("\\d+");
 
 	private final ReadLine raw;
 	private boolean finished = false;
@@ -54,7 +53,7 @@ public class DiagramExtractor implements ReadLine {
 	public DiagramExtractor(ReadLine raw, String suf) {
 		int bloc = 0;
 		String uid = null;
-		if (suf != null && suf.matches("\\d+"))
+		if (suf != null && DIGITS.matcher(suf).matches())
 			bloc = Integer.parseInt(suf);
 		else
 			uid = suf;

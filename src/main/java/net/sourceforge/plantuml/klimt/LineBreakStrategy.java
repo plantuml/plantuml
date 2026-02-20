@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.klimt;
 
+import java.util.regex.Pattern;
+
 public class LineBreakStrategy {
 
 	public static final LineBreakStrategy NONE = new LineBreakStrategy(null);
@@ -54,11 +56,12 @@ public class LineBreakStrategy {
 		return "auto".equalsIgnoreCase(value);
 	}
 
+	private static final Pattern SIGNED_INTEGER = Pattern.compile("-?\\d+");
+
 	public double getMaxWidth() {
-		if (value != null && value.matches("-?\\d+"))
+		if (value != null && SIGNED_INTEGER.matcher(value).matches())
 			return Double.parseDouble(value);
 
 		return 0;
 	}
-
 }

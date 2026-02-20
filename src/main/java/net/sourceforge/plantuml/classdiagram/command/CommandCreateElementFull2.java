@@ -36,6 +36,8 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import java.util.regex.Pattern;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -128,17 +130,16 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 				RegexLeaf.end());
 	}
 
-	@Override
-	final protected boolean isForbidden(CharSequence line) {
-		if (line.toString().matches("^[\\p{L}0-9_.]+$"))
-			return true;
+	private static final Pattern FORBIDDEN_PATTERN = Pattern.compile("^[\\p{L}0-9_.]+$");
 
-		return false;
+	@Override
+	protected final boolean isForbidden(CharSequence line) {
+		return FORBIDDEN_PATTERN.matcher(line).matches();
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		if (mode == Mode.NORMAL_KEYWORD && diagram.isAllowMixing() == false)
 			return CommandExecutionResult.error("Use 'allowmixing' if you want to mix classes and other UML elements.");
 
