@@ -289,7 +289,11 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 	@Override
 	public void createOneGraphic(UGraphic ug) {
-		throw new UnsupportedOperationException();
+		try {
+			diagram.createImageBuilder(fileFormatOption).drawable(new Foo(index)).drawU(ug);
+		} catch (IOException e) {
+			throw new UnsupportedOperationException(e);
+		}
 	}
 
 }

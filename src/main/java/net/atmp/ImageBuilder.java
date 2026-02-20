@@ -35,7 +35,6 @@
  */
 package net.atmp;
 
-
 import java.awt.Graphics2D;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -115,10 +114,7 @@ public class ImageBuilder {
 
 	private XDimension2D dimension;
 	private final FileFormatOption fileFormatOption;
-	// ::revert when __TEAVM__
 	private UDrawable udrawable;
-	// public UDrawable udrawable;
-	// ::done
 	private ClockwiseTopRightBottomLeft margin = ClockwiseTopRightBottomLeft.none();
 	private String metadata;
 	private long seed = 42;
@@ -229,14 +225,7 @@ public class ImageBuilder {
 	}
 
 	public ImageData write(OutputStream os) throws IOException {
-		if (annotations && diagram != null) {
-			if (!(udrawable instanceof TextBlock))
-				throw new IllegalStateException("udrawable is not a TextBlock");
-			final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, skinParam, stringBounder);
-			final AnnotatedWorker annotatedWorker = new AnnotatedWorker(diagram, builder);
-			udrawable = annotatedWorker.addAdd((TextBlock) udrawable);
-		}
-
+		prepareDrawable();
 		return writeImageInternal(os);
 	}
 
@@ -247,11 +236,70 @@ public class ImageBuilder {
 		}
 	}
 
+	/**
+	 * Draws the diagram content onto an externally provided UGraphic.
+	 *
+	 * This method applies all the decoration logic (annotations, warnings,
+	 * margins, handwritten mode, border) without creating a UGraphic or writing
+	 * to an OutputStream. It is designed for contexts like TeaVM where the
+	 * UGraphic is created externally by the browser runtime.
+	 *
+	 * @param ug the UGraphic to draw on, provided by the caller
+	 */
+	public void drawU(UGraphic ug) {
+		prepareDrawable();
+		ug = drawDecorations(ug);
+		udrawable.drawU(ug);
+	}
+
+	/**
+	 * Processes annotations if needed. Called by both write() and drawU() to ensure
+	 * consistent behavior regardless of the output path.
+	 */
+	private void prepareDrawable() {
+		if (annotations && diagram != null) {
+			if (!(udrawable instanceof TextBlock))
+				throw new IllegalStateException("udrawable is not a TextBlock");
+			final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, skinParam, stringBounder);
+			final AnnotatedWorker annotatedWorker = new AnnotatedWorker(diagram, builder);
+			udrawable = annotatedWorker.addAdd((TextBlock) udrawable);
+		}
+	}
+
+	/**
+	 * Draws all decorations (warnings, border, random pixel) and applies
+	 * transformations (margins, handwritten mode) to the UGraphic.
+	 *
+	 * This is the common rendering logic shared between write() and drawU().
+	 *
+	 * @param ug the UGraphic to decorate
+	 * @return the UGraphic with all transformations applied, ready for drawing
+	 *         the main content
+	 */
+	private UGraphic drawDecorations(UGraphic ug) {
+		XDimension2D dim = getFinalDimension();
+
+		if (warnings.size() > 0) {
+			final XDimension2D dimWarning = getWarningDimension(ug.getStringBounder());
+			// Widen the dimension so the warning banner spans the full width,
+			// with extra horizontal padding matching writeImageInternal()
+			dim = dim.atLeast(dimWarning.getWidth(), 0).delta(15, 0);
+			drawWarning(dimWarning, ug.apply(UTranslate.dy(5)), dim.getWidth());
+			ug = ug.apply(UTranslate.dy(dimWarning.getHeight() + 20));
+		}
+
+		maybeDrawBorder(ug, dim);
+		if (randomPixel)
+			drawRandomPoint(ug);
+
+		return handwritten(ug.apply(new UTranslate(margin.getLeft(), margin.getTop())));
+	}
+
 	private ImageData writeImageInternal(OutputStream os) throws IOException {
 		XDimension2D dim = getFinalDimension();
-		XDimension2D dimWarning = null;
 		if (warnings.size() > 0) {
-			dimWarning = getWarningDimension(fileFormatOption.getFileFormat().getDefaultStringBounder());
+			final XDimension2D dimWarning = getWarningDimension(
+					fileFormatOption.getFileFormat().getDefaultStringBounder());
 			dim = dim.atLeast(dimWarning.getWidth(), 0);
 			dim = dim.delta(15, dimWarning.getHeight() + 20);
 		}
@@ -262,16 +310,7 @@ public class ImageBuilder {
 			throw new IllegalStateException("Bad scaleFactor");
 		UGraphic ug = createUGraphic(dim, scaleFactor, diagram == null ? Pragma.createEmpty() : diagram.getPragma());
 
-		if (warnings.size() > 0) {
-			drawWarning(dimWarning, ug.apply(UTranslate.dy(5)), dim.getWidth());
-			ug = ug.apply(UTranslate.dy(dimWarning.getHeight() + 20));
-		}
-
-		maybeDrawBorder(ug, dim);
-		if (randomPixel)
-			drawRandomPoint(ug);
-
-		ug = handwritten(ug.apply(new UTranslate(margin.getLeft(), margin.getTop())));
+		ug = drawDecorations(ug);
 		udrawable.drawU(ug);
 		ug.flushUg();
 		ug.writeToStream(os, metadata, 96);

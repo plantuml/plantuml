@@ -42,8 +42,6 @@ import java.util.List;
 
 import net.atmp.CucaDiagram;
 import net.atmp.ImageBuilder;
-import net.sourceforge.plantuml.AnnotatedBuilder;
-import net.sourceforge.plantuml.AnnotatedWorker;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.abel.Link;
@@ -96,11 +94,6 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 
 		final StringBounder stringBounder = ug.getStringBounder();
 
-//		if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY)
-//			new CucaDiagramSimplifierActivity().simplify(diagram, stringBounder, DotMode.NORMAL);
-//		else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE)
-//			new CucaDiagramSimplifierState().simplify(diagram, stringBounder, DotMode.NORMAL);
-
 		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, clusterManager.getCurrent(),
 				diagram.getUmlDiagramType(), diagram.getSkinParam());
 
@@ -109,11 +102,8 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 
 		GraphvizImageBuilder imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),
 				diagram.getUmlDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager);
-		BaseFile basefile = null;
-//		if (fileFormatOption.isDebugSvek() && os instanceof NamedOutputStream)
-//			basefile = ((NamedOutputStream) os).getBasefile();
 
-		TextBlock result = imageBuilder.buildImage(stringBounder, basefile, diagram.getDotStringSkek(), false);
+		TextBlock result = imageBuilder.buildImage(stringBounder, null, diagram.getDotStringSkek(), false);
 
 		int status = 0;
 
@@ -125,36 +115,26 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 			imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),
 					diagram.getUmlDiagramType().getStyleName(), DotMode.NO_LEFT_RIGHT_AND_XLABEL, dotStringFactory,
 					clusterManager);
-			result = imageBuilder.buildImage(stringBounder, basefile, diagram.getDotStringSkek(), false);
+			result = imageBuilder.buildImage(stringBounder, null, diagram.getDotStringSkek(), false);
 		}
-		// TODO There is something strange with the left margin of mainframe, I think
-		// because AnnotatedWorker is used here
-		// It can be looked at in another PR
 
-		final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);
-		result = new AnnotatedWorker(diagram, builder).addAdd(result);
+		// Ensure text near the margins is not cut off (side effect in
+		// SvekResult::calculateDimension())
+		result.calculateDimension(stringBounder);
 
-		// TODO UmlDiagram.getWarningOrError() looks similar so this might be
-		// simplified? - will leave for a separate PR
 		final String widthwarning = diagram.getSkinParam().getValue("widthwarning");
 		String warningOrError = null;
 		if (widthwarning != null && widthwarning.matches("\\d+"))
 			warningOrError = imageBuilder.getWarningOrError(Integer.parseInt(widthwarning));
 
-		// Sorry about this hack. There is a side effect in
-		// SvekResult::calculateDimension()
-		result.calculateDimension(stringBounder); // Ensure text near the margins is not cut off
-
-		final ImageBuilder ib = diagram.createImageBuilder(new FileFormatOption(FileFormat.SVG)) //
-				.annotations(false) // backwards compatibility (AnnotatedWorker is used above)
-				.drawable(result) //
-				.status(status) //
+		// Use ImageBuilder.drawU() to apply all decoration logic (annotations,
+		// margins, handwritten mode, border) on the externally provided UGraphic.
+		final ImageBuilder ib = diagram.createImageBuilder(new FileFormatOption(FileFormat.SVG))
+				.drawable(result)
+				.status(status)
 				.warningOrError(warningOrError);
 
-		// :: uncomment when __TEAVM__
-		// ib.udrawable.drawU(ug);
-		// :: done
-
+		ib.drawU(ug);
 	}
 
 	private List<Link> getOrderedLinks() {

@@ -70,6 +70,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.warning.Warning;
 
@@ -94,7 +95,8 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 			PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
 		this.type = type;
-		this.skinParam = SkinParam.create(source.getPathSystem(), type, Pragma.createEmpty(), preprocessing.getOption());
+		this.skinParam = SkinParam.create(source.getPathSystem(), type, Pragma.createEmpty(),
+				preprocessing.getOption());
 		if (previous != null)
 			this.skinParam.copyAllFrom(previous);
 
@@ -282,8 +284,12 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 
 	@Override
 	public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
-		final TextBlock textBlock = getTextMainBlock(fileFormatOption);
-		textBlock.drawU(ug);
+		try {
+			final TextBlock textBlock = getTextMainBlock(fileFormatOption);
+			createImageBuilder(fileFormatOption).drawable(textBlock).drawU(ug);
+		} catch (IOException e) {
+			throw new UnsupportedOperationException(e);
+		}
 	}
 
 	final public Pragma getPragma() {
