@@ -883,93 +883,89 @@ public class TContext {
 	}
 
 	public boolean isLegacyDefine(String functionName) {
-<span class="fc bfc" id="L886" title="All 2 branches covered.">		for (Map.Entry&lt;TFunctionSignature, TFunction&gt; ent : functionsSet.functions().entrySet())</span>
-<span class="fc bfc" id="L887" title="All 4 branches covered.">			if (ent.getKey().getFunctionName().equals(functionName) &amp;&amp; ent.getValue().getFunctionType().isLegacy())</span>
+<span class="fc bfc" id="L886" title="All 2 branches covered.">		for (TFunction func : functionsSet.getFunctionsByName(functionName))</span>
+<span class="fc bfc" id="L887" title="All 2 branches covered.">			if (func.getFunctionType().isLegacy())</span>
 <span class="fc" id="L888">				return true;</span>
 
 <span class="fc" id="L890">		return false;</span>
 	}
 
 	public boolean isUnquoted(String functionName) {
-<span class="fc bfc" id="L894" title="All 2 branches covered.">		for (Map.Entry&lt;TFunctionSignature, TFunction&gt; ent : functionsSet.functions().entrySet())</span>
-<span class="fc bfc" id="L895" title="All 4 branches covered.">			if (ent.getKey().getFunctionName().equals(functionName) &amp;&amp; ent.getValue().isUnquoted())</span>
+<span class="fc bfc" id="L894" title="All 2 branches covered.">		for (TFunction func : functionsSet.getFunctionsByName(functionName))</span>
+<span class="fc bfc" id="L895" title="All 2 branches covered.">			if (func.isUnquoted())</span>
 <span class="fc" id="L896">				return true;</span>
 
 <span class="fc" id="L898">		return false;</span>
 	}
 
 	public boolean doesFunctionExist(String functionName) {
-<span class="fc bfc" id="L902" title="All 2 branches covered.">		for (Map.Entry&lt;TFunctionSignature, TFunction&gt; ent : functionsSet.functions().entrySet())</span>
-<span class="fc bfc" id="L903" title="All 2 branches covered.">			if (ent.getKey().getFunctionName().equals(functionName))</span>
-<span class="fc" id="L904">				return true;</span>
-
-<span class="fc" id="L906">		return false;</span>
+<span class="fc" id="L902">		return functionsSet.doesFunctionExist(functionName);</span>
 	}
 
 	@JawsStrange
 	private String getFunctionNameAt(String s, int pos) {
-<span class="fc bfc" id="L911" title="All 4 branches covered.">		final boolean justAfterALetter = pos &gt; 0 &amp;&amp; TLineType.isLetterOrEmojiOrUnderscoreOrDigit(s.charAt(pos - 1))</span>
-<span class="fc bfc" id="L912" title="All 2 branches covered.">				&amp;&amp; VariableManager.justAfterBackslashN(s, pos) == false;</span>
-<span class="pc bpc" id="L913" title="1 of 6 branches missed.">		if (justAfterALetter &amp;&amp; s.charAt(pos) != '%' &amp;&amp; s.charAt(pos) != '$')</span>
+<span class="fc bfc" id="L907" title="All 4 branches covered.">		final boolean justAfterALetter = pos &gt; 0 &amp;&amp; TLineType.isLetterOrEmojiOrUnderscoreOrDigit(s.charAt(pos - 1))</span>
+<span class="fc bfc" id="L908" title="All 2 branches covered.">				&amp;&amp; VariableManager.justAfterBackslashN(s, pos) == false;</span>
+<span class="pc bpc" id="L909" title="1 of 6 branches missed.">		if (justAfterALetter &amp;&amp; s.charAt(pos) != '%' &amp;&amp; s.charAt(pos) != '$')</span>
+<span class="fc" id="L910">			return null;</span>
+
+<span class="fc" id="L912">		final String fname = functionsSet.getLonguestMatchStartingIn(s, pos);</span>
+<span class="fc bfc" id="L913" title="All 2 branches covered.">		if (fname.length() == 0)</span>
 <span class="fc" id="L914">			return null;</span>
 
-<span class="fc" id="L916">		final String fname = functionsSet.getLonguestMatchStartingIn(s, pos);</span>
-<span class="fc bfc" id="L917" title="All 2 branches covered.">		if (fname.length() == 0)</span>
-<span class="fc" id="L918">			return null;</span>
-
-<span class="fc" id="L920">		return fname.substring(0, fname.length() - 1);</span>
+<span class="fc" id="L916">		return fname.substring(0, fname.length() - 1);</span>
 	}
 
 	public List&lt;StringLocated&gt; getResultList() {
-<span class="fc" id="L924">		return resultList;</span>
+<span class="fc" id="L920">		return resultList;</span>
 	}
 
 	public List&lt;StringLocated&gt; getDebug() {
-<span class="fc" id="L928">		return debug;</span>
+<span class="fc" id="L924">		return debug;</span>
 	}
 
 	public String extractFromResultList(int n1) {
-<span class="nc" id="L932">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L933" title="All 2 branches missed.">		while (resultList.size() &gt; n1) {</span>
-<span class="nc" id="L934">			sb.append(resultList.get(n1).getString());</span>
-<span class="nc" id="L935">			resultList.remove(n1);</span>
-<span class="nc bnc" id="L936" title="All 2 branches missed.">			if (resultList.size() &gt; n1)</span>
-<span class="nc" id="L937">				sb.append(Jaws.BLOCK_E1_NEWLINE);</span>
+<span class="nc" id="L928">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L929" title="All 2 branches missed.">		while (resultList.size() &gt; n1) {</span>
+<span class="nc" id="L930">			sb.append(resultList.get(n1).getString());</span>
+<span class="nc" id="L931">			resultList.remove(n1);</span>
+<span class="nc bnc" id="L932" title="All 2 branches missed.">			if (resultList.size() &gt; n1)</span>
+<span class="nc" id="L933">				sb.append(Jaws.BLOCK_E1_NEWLINE);</span>
 
 		}
-<span class="nc" id="L940">		return sb.toString();</span>
+<span class="nc" id="L936">		return sb.toString();</span>
 	}
 
 	public void appendEndOfLine(String endOfLine) {
-<span class="nc bnc" id="L944" title="All 2 branches missed.">		if (endOfLine.length() &gt; 0) {</span>
-<span class="nc" id="L945">			final int idx = resultList.size() - 1;</span>
-<span class="nc" id="L946">			StringLocated last = resultList.get(idx);</span>
-<span class="nc" id="L947">			last = last.append(endOfLine);</span>
-<span class="nc" id="L948">			resultList.set(idx, last);</span>
+<span class="nc bnc" id="L940" title="All 2 branches missed.">		if (endOfLine.length() &gt; 0) {</span>
+<span class="nc" id="L941">			final int idx = resultList.size() - 1;</span>
+<span class="nc" id="L942">			StringLocated last = resultList.get(idx);</span>
+<span class="nc" id="L943">			last = last.append(endOfLine);</span>
+<span class="nc" id="L944">			resultList.set(idx, last);</span>
 		}
-<span class="nc" id="L950">	}</span>
+<span class="nc" id="L946">	}</span>
 
 	public TFunction getFunctionSmart(TFunctionSignature signature) {
-<span class="nc" id="L953">		return functionsSet.getFunctionSmart(signature);</span>
+<span class="nc" id="L949">		return functionsSet.getFunctionSmart(signature);</span>
 	}
 
 	/**
 	 * Retrieve data given after @startuml.
 	 */
 	public Optional&lt;String&gt; getXargs() {
-<span class="nc bnc" id="L960" title="All 2 branches missed.">		if (resultList.size() == 0)</span>
-<span class="nc" id="L961">			return Optional.empty();</span>
+<span class="nc bnc" id="L956" title="All 2 branches missed.">		if (resultList.size() == 0)</span>
+<span class="nc" id="L957">			return Optional.empty();</span>
 
-<span class="nc" id="L963">		final String first = resultList.get(0).toString();</span>
-<span class="nc" id="L964">		final int idx = first.indexOf(' ');</span>
-<span class="nc bnc" id="L965" title="All 2 branches missed.">		if (idx == -1)</span>
-<span class="nc" id="L966">			return Optional.empty();</span>
+<span class="nc" id="L959">		final String first = resultList.get(0).toString();</span>
+<span class="nc" id="L960">		final int idx = first.indexOf(' ');</span>
+<span class="nc bnc" id="L961" title="All 2 branches missed.">		if (idx == -1)</span>
+<span class="nc" id="L962">			return Optional.empty();</span>
 
-<span class="nc" id="L968">		return Optional.of(first.substring(idx + 1).trim());</span>
+<span class="nc" id="L964">		return Optional.of(first.substring(idx + 1).trim());</span>
 	}
 
 	public PreprocessingArtifact getPreprocessingArtifact() {
-<span class="fc" id="L972">		return preprocessingArtifact;</span>
+<span class="fc" id="L968">		return preprocessingArtifact;</span>
 	}
 
 }

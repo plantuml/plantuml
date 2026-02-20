@@ -20221,8 +20221,8 @@
 
         <Package name="net.sourceforge.plantuml.tim">
             <Stats>
-                <TotalClasses>49</TotalClasses>
-                <ConcreteClasses>44</ConcreteClasses>
+                <TotalClasses>48</TotalClasses>
+                <ConcreteClasses>43</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
                 <Ca>6</Ca>
                 <Ce>24</Ce>
@@ -20343,9 +20343,6 @@
                 </Class>
                 <Class sourceFile="ExecutionContextWhile.java">
                     net.sourceforge.plantuml.tim.ExecutionContextWhile
-                </Class>
-                <Class sourceFile="FunctionsSet.java">
-                    net.sourceforge.plantuml.tim.FunctionsSet
                 </Class>
                 <Class sourceFile="StringEater.java">
                     net.sourceforge.plantuml.tim.StringEater

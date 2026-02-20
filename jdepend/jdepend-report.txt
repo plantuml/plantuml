@@ -13573,8 +13573,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 49
-    Concrete Classes: 44
+    Total Classes: 48
+    Concrete Classes: 43
     Abstract Classes: 5
 
     Ca: 6
@@ -13623,7 +13623,6 @@ Concrete Classes:
     net.sourceforge.plantuml.tim.ExecutionContextForeach
     net.sourceforge.plantuml.tim.ExecutionContextIf
     net.sourceforge.plantuml.tim.ExecutionContextWhile
-    net.sourceforge.plantuml.tim.FunctionsSet
     net.sourceforge.plantuml.tim.StringEater
     net.sourceforge.plantuml.tim.TContext
     net.sourceforge.plantuml.tim.TContext$1
@@ -17500,7 +17499,7 @@ net.sourceforge.plantuml.telnet,2,0,0,6,0,1,0,1
 net.sourceforge.plantuml.text,9,1,52,9,0.11,0.15,0.74,1
 net.sourceforge.plantuml.theme,1,0,3,6,0,0.67,0.33,1
 net.sourceforge.plantuml.tikz,1,0,2,15,0,0.88,0.12,1
-net.sourceforge.plantuml.tim,49,5,6,24,0.1,0.8,0.1,1
+net.sourceforge.plantuml.tim,48,5,6,24,0.1,0.8,0.1,1
 net.sourceforge.plantuml.tim.builtin,75,1,1,17,0.01,0.94,0.04,1
 net.sourceforge.plantuml.tim.expression,23,3,4,6,0.13,0.6,0.27,1
 net.sourceforge.plantuml.tim.iterator,17,3,1,7,0.18,0.88,0.05,1
