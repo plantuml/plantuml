@@ -46,8 +46,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
-public class TextBlockBordered extends AbstractTextBlock implements TextBlock {
-    // ::remove file when __HAXE__
+public class TextBlockBordered implements TextBlock {
 
 	private final double cornersize;
 	private final HColor backgroundColor;

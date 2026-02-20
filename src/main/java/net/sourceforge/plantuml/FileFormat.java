@@ -368,6 +368,10 @@ public enum FileFormat {
 		return false;
 	}
 
+	public boolean isXmi() {
+		return name().startsWith("XMI");
+	}
+
 	public String changeName(String fileName, int cpt) {
 		if (cpt == 0)
 			return changeName(fileName, getFileSuffix());

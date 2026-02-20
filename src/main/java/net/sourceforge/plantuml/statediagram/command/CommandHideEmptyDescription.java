@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandHideEmptyDescription extends SingleLineCommand2<UmlDiagram> {
+public class CommandHideEmptyDescription extends SingleLineCommand2<TitledDiagram> {
 
 	public static final CommandHideEmptyDescription ME = new CommandHideEmptyDescription();
 
@@ -63,7 +63,7 @@ public class CommandHideEmptyDescription extends SingleLineCommand2<UmlDiagram> 
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final boolean hide = arg.get("HIDE", 0).equalsIgnoreCase("hide");
 		diagram.setHideEmptyDescription(hide);
 		return CommandExecutionResult.ok();

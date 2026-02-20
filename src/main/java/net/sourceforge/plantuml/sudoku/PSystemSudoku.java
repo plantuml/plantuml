@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.sudoku;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.DirectOsDiagram;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-public class PSystemSudoku extends AbstractPSystem {
+public class PSystemSudoku extends DirectOsDiagram {
 
 	final private ISudoku sudoku;
 
@@ -76,7 +76,7 @@ public class PSystemSudoku extends AbstractPSystem {
 	}
 
 	@Override
-	public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
+	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
 		final GraphicsSudoku sud = new GraphicsSudoku(sudoku);
 		sud.drawInternal(ug);
 	}

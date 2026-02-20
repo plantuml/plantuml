@@ -77,7 +77,6 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockRaw;
@@ -230,21 +229,21 @@ public abstract class PSystemError extends PlainDiagram {
 		return Arrays.asList(" " + singleError.getError());
 	}
 
-	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
-			throws IOException {
-		if (!TeaVM.isTeaVM()) {
-			if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
-				final UGraphicTxt ugt = new UGraphicTxt();
-				final UmlCharArea area = ugt.getCharArea();
-				area.drawStringsLRSimple(getPureAsciiFormatted(), 0, 0);
-				area.print(SecurityUtils.createPrintStream(os));
-				return new ImageDataSimple(1, 1);
-
-			}
-		}
-		return super.exportDiagramNow(os, num, fileFormat);
-	}
+//	@Override
+//	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
+//			throws IOException {
+//		if (!TeaVM.isTeaVM()) {
+//			if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
+//				final UGraphicTxt ugt = new UGraphicTxt();
+//				final UmlCharArea area = ugt.getCharArea();
+//				area.drawStringsLRSimple(getPureAsciiFormatted(), 0, 0);
+//				area.print(SecurityUtils.createPrintStream(os));
+//				return new ImageDataSimple(1, 1);
+//
+//			}
+//		}
+//		return super.exportDiagramNow(os, num, fileFormat);
+//	}
 
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
@@ -404,7 +403,7 @@ public abstract class PSystemError extends PlainDiagram {
 			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;
 			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);
 		}
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				if (qrcode == null) {
@@ -453,7 +452,7 @@ public abstract class PSystemError extends PlainDiagram {
 			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);
 		}
 
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				if (qrcode == null) {

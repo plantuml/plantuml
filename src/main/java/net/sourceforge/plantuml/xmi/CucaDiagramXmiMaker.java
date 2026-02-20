@@ -43,7 +43,7 @@ import javax.xml.transform.TransformerException;
 
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.log.Logme;
@@ -61,7 +61,7 @@ public final class CucaDiagramXmiMaker {
 		this.fileFormat = fileFormat;
 	}
 
-	public static String getModel(UmlDiagram classDiagram) {
+	public static String getModel(TitledDiagram classDiagram) {
 		return "model1";
 	}
 

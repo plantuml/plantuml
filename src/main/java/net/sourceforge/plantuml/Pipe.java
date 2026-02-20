@@ -146,8 +146,8 @@ public class Pipe {
 
 	private void syntaxCheckDiagram(SourceStringReader sourceStringReader, ExitStatus exitStatus) {
 		final Diagram system = sourceStringReader.getBlocks().get(0).getDiagram();
-		if (system instanceof UmlDiagram) {
-			ps.println(((UmlDiagram) system).getUmlDiagramType().name());
+		if (system instanceof TitledDiagram) {
+			ps.println(((TitledDiagram) system).getUmlDiagramType().name());
 			ps.println(system.getDescription());
 		} else if (system instanceof PSystemError) {
 			exitStatus.goesHasErrors();

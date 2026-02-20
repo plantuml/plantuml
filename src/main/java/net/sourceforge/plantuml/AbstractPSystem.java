@@ -44,9 +44,6 @@ import java.util.Set;
 
 import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
-import net.sourceforge.plantuml.abel.DisplayPositionned;
-import net.sourceforge.plantuml.cli.GlobalConfig;
-import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -57,6 +54,7 @@ import net.sourceforge.plantuml.core.InstallationRequirement;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -68,9 +66,7 @@ import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.version.Version;
@@ -132,6 +128,16 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 	final public UmlSource getSource() {
 		return source;
 	}
+	
+	public final String getFlashData() {
+		final UmlSource source = getSource();
+		if (source == null)
+			return "";
+
+		return source.getPlainString("\n");
+	}
+
+
 
 	final public long seed() {
 		if (source == null)
@@ -140,7 +146,8 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 		return getSource().seed();
 	}
 
-	public int getNbImages() {
+	@Override
+	public int getCardinality() {
 		return 1;
 	}
 
@@ -162,7 +169,7 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 		this.splitPagesVertical = splitPagesVertical;
 	}
 
-	public DisplayPositionned getTitle() {
+	public DisplayPositioned getTitle() {
 		if (source == null)
 			return DisplayPositioned.single(Display.empty(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);
 
@@ -197,26 +204,8 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 		return false;
 	}
 
-	final public ImageData exportDiagram(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-		final long now = System.currentTimeMillis();
-		try {
-//			if (this instanceof TitledDiagram) {
-//				final TitledDiagram titledDiagram = (TitledDiagram) this;
-//				final StyleBuilder styleBuilder = titledDiagram.getCurrentStyleBuilder();
-//				if (styleBuilder != null) {
-//					styleBuilder.printMe();
-//				}
-//			}
-			return exportDiagramNow(os, index, fileFormatOption);
-		} finally {
-			if (!TeaVM.isTeaVM()) {
-				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS))
-					StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),
-							fileFormatOption.getFileFormat());
-
-			}
-		}
+	public HColor calculateBackColor() {
+		return null;
 	}
 
 	final public void setScale(Scale scale) {
@@ -237,9 +226,30 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 		return init;
 	}
 
-	// TODO "index" isnt really being used
-	protected abstract ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException;
+	/**
+	 * Exports this diagram in XMI format. Returns {@code null} if this diagram
+	 * type does not support XMI, allowing the caller to fall back to the
+	 * standard TextBlock export path.
+	 */
+	protected ImageData exportXmi(OutputStream os, FileFormat fileFormat) throws IOException {
+		return null;
+	}
+
+	/** @see #exportXmi */
+	protected ImageData exportScxml(OutputStream os) throws IOException {
+		return null;
+	}
+
+	/** @see #exportXmi */
+	protected ImageData exportGraphml(OutputStream os) throws IOException {
+		return null;
+	}
+
+	/** @see #exportXmi */
+	protected ImageData exportTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
+		return null;
+	}
+
 
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
 		return ClockwiseTopRightBottomLeft.same(0);
@@ -251,7 +261,7 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 	}
 
 	@Override
-	public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
+	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
 		final UFont font = UFontFactory.monospaced(14);
 		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
 		final UText text = UText.build("Not implemented yet for " + getClass().getName(), fc);

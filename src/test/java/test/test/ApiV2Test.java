@@ -34,7 +34,7 @@ class ApiV2Test {
 		assertEquals(DiagramType.UML, diagram.getSource().getDiagramType());
 		assertEquals("SequenceDiagram", diagram.getClass().getSimpleName());
 		assertEquals("(2 participants)", diagram.getDescription().getDescription());
-		assertEquals(1, diagram.getNbImages());
+		assertEquals(1, diagram.getCardinality());
 		assertTrue(Display.isNull(diagram.getTitleDisplay()));
 		assertEquals(0, diagram.getTitleDisplay().asList().size());
 		assertEquals(3, diagram.getSource().getTotalLineCount());
@@ -51,7 +51,7 @@ class ApiV2Test {
 		assertEquals(DiagramType.UML, diagram.getSource().getDiagramType());
 		assertEquals("SequenceDiagram", diagram.getClass().getSimpleName());
 		assertEquals("(2 participants)", diagram.getDescription().getDescription());
-		assertEquals(1, diagram.getNbImages());
+		assertEquals(1, diagram.getCardinality());
 		assertEquals(1, diagram.getTitleDisplay().asList().size());
 		assertEquals("this is the title", diagram.getTitleDisplay().get(0));
 		assertEquals(4, diagram.getSource().getTotalLineCount());
@@ -67,7 +67,7 @@ class ApiV2Test {
 		assertEquals(DiagramType.UML, diagram.getSource().getDiagramType());
 		assertEquals("PSystemErrorV2", diagram.getClass().getSimpleName());
 		assertEquals("(Error)", diagram.getDescription().getDescription());
-		assertEquals(1, diagram.getNbImages());
+		assertEquals(1, diagram.getCardinality());
 		assertTrue(Display.isNull(diagram.getTitleDisplay()));
 		assertEquals(0, diagram.getTitleDisplay().asList().size());
 		assertEquals(3, diagram.getSource().getTotalLineCount());
@@ -83,7 +83,7 @@ class ApiV2Test {
 		assertEquals(DiagramType.UML, diagram.getSource().getDiagramType());
 		assertEquals("PSystemErrorV2", diagram.getClass().getSimpleName());
 		assertEquals("(Error)", diagram.getDescription().getDescription());
-		assertEquals(1, diagram.getNbImages());
+		assertEquals(1, diagram.getCardinality());
 		assertTrue(Display.isNull(diagram.getTitleDisplay()));
 		assertEquals(0, diagram.getTitleDisplay().asList().size());
 		assertEquals(4, diagram.getSource().getTotalLineCount());

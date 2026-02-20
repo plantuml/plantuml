@@ -49,7 +49,9 @@ import net.sourceforge.plantuml.klimt.creole.Sheet;
 import net.sourceforge.plantuml.klimt.creole.SheetBlock1;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
@@ -133,6 +135,21 @@ public class FEntry implements Iterable<FEntry> {
 		for (FEntry child : children)
 			ug = child.drawAndMove(ug, fontConfiguration, skinParam, deltax + 21);
 		return ug;
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder, FontConfiguration fontConfiguration,
+			ISkinParam skinParam, double deltax) {
+		final TextBlock result = getTextBlock(fontConfiguration, skinParam);
+		final XDimension2D dim = result.calculateDimension(stringBounder);
+		double width = deltax + dim.getWidth();
+		double height = dim.getHeight() + 2;
+		for (FEntry child : children) {
+			final XDimension2D childDim = child.calculateDimension(stringBounder, fontConfiguration, skinParam,
+					deltax + 21);
+			width = Math.max(width, childDim.getWidth());
+			height += childDim.getHeight();
+		}
+		return new XDimension2D(width, height);
 	}
 
 	private TextBlock getTextBlock(FontConfiguration fontConfiguration, ISkinParam skinParam) {

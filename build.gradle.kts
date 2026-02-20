@@ -591,6 +591,26 @@ tasks.named("generateGitProperties") {
 
 val filteredSrcDir = layout.buildDirectory.dir("generated/sources/git-filtered")
 
+// Cleanup of generated filtered sources (avoid leaving copied sources on disk)
+val cleanupGitFilteredSources by tasks.registering(Delete::class) {
+    group = "build"
+    description = "Deletes build/generated/sources/git-filtered after the build."
+    delete(filteredSrcDir)
+}
+
+val keepFilteredSrc = project.hasProperty("keepFilteredSrc")
+
+tasks.named("build") {
+    if (!keepFilteredSrc) finalizedBy(cleanupGitFilteredSources)
+}
+tasks.named("jar") {
+    if (!keepFilteredSrc) finalizedBy(cleanupGitFilteredSources)
+}
+
+tasks.named("site") {
+    if (!keepFilteredSrc) finalizedBy(cleanupGitFilteredSources)
+}
+
 val filterSourcesWithBuildInfo by tasks.registering {
 	dependsOn("generateGitProperties")
 	mustRunAfter("processResources")

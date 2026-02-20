@@ -121,7 +121,6 @@ import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
  * @see AbstractPSystem
  */
 public class PSystemBuilder {
-	
 
 	public static final long startTime = System.currentTimeMillis();
 
@@ -231,7 +230,7 @@ public class PSystemBuilder {
 
 		factories.add(new PSystemDefinitionFactory());
 		factories.add(new ListSpriteDiagramFactory());
-		factories.add(new StdlibDiagramFactory());
+		// factories.add(new StdlibDiagramFactory());
 		factories.add(new PSystemMathFactory(DiagramType.MATH));
 		factories.add(new PSystemLatexFactory(DiagramType.LATEX));
 		factories.add(new PSystemCreoleFactory());

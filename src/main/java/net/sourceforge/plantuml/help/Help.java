@@ -41,7 +41,7 @@ import java.util.List;
 
 import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
-public class Help extends UmlDiagram {
+public class Help extends TitledDiagram {
 
 	private final List<CharSequence> lines = new ArrayList<>();
 
@@ -98,8 +98,18 @@ public class Help extends UmlDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 		throw new UnsupportedOperationException();
+	}
+	
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+		final Display display = Display.create(lines);
+		final UFont font = UFontFactory.serif(16);
+		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);
+		final Sheet sheet = getSkinParam().sheet(fontConfiguration, HorizontalAlignment.LEFT, CreoleMode.FULL)
+				.createSheet(display);
+		return new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
 	}
 
 }

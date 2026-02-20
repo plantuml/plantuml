@@ -5,7 +5,7 @@ public class ChenMovieExtended_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 1617.3106 ; 720.0000 ]
+dimension: [ 1610.0000 ; 714.0000 ]
 scaleFactor: 1.0000
 seed: -8173812650123393805
 svgLinkTarget: _top

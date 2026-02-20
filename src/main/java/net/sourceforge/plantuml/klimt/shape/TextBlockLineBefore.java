@@ -44,8 +44,7 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 
-public class TextBlockLineBefore extends AbstractTextBlock implements TextBlock, WithPorts {
-    // ::remove file when __HAXE__
+public class TextBlockLineBefore implements TextBlock, WithPorts {
 
 	private final TextBlock textBlock;
 	private final char separator;

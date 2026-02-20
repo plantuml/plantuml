@@ -39,11 +39,11 @@ import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class UBrexCommandFootboxIgnored extends UBrexSingleLineCommand2<UmlDiagram> {
+public class UBrexCommandFootboxIgnored extends UBrexSingleLineCommand2<TitledDiagram> {
 
 	public UBrexCommandFootboxIgnored() {
 		super(getRegexConcat());
@@ -59,7 +59,7 @@ public class UBrexCommandFootboxIgnored extends UBrexSingleLineCommand2<UmlDiagr
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		return CommandExecutionResult.ok();
 	}
 }

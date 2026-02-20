@@ -39,7 +39,7 @@ package net.sourceforge.plantuml.math;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.DirectOsDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-public class PSystemLatex extends AbstractPSystem {
+public class PSystemLatex extends DirectOsDiagram {
 
 	private String latex = "";
 	private float scale = 1;

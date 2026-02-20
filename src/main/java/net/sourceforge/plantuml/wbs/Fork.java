@@ -114,6 +114,8 @@ class Fork extends WBSTextBlock {
 			height = Math.max(height, childDim.getHeight());
 			width += childDim.getWidth();
 		}
+		if (right.size() > 1)
+			width += (right.size() - 1) * delta1x;
 		final XDimension2D mainDim = main.calculateDimension(stringBounder);
 		height += mainDim.getHeight();
 		height += deltay;

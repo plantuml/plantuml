@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.PngTitler;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontParam;
@@ -131,7 +132,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	private final double heightEnglober1;
 	private final double heightEnglober2;
 
-	public ImageData createOne(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
+	public ImageData createOne01970(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
 		if (this.index != index)
 			throw new IllegalStateException();
 
@@ -288,8 +289,47 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	}
 
 	@Override
-	public void createOneGraphic(UGraphic ug) {
-		throw new UnsupportedOperationException();
+	public void createOneGraphic01970(UGraphic ug) {
+		try {
+			diagram.createImageBuilder(fileFormatOption).drawable(new Foo(index)).drawU(ug);
+		} catch (IOException e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormat) {
+		return new TextBlock() {
+
+			public void drawU(UGraphic ug) {
+				ug = ug.apply(new UTranslate(5, 5));
+
+				body.setIndex(num);
+				final UTranslate min1translate = UTranslate.dx(-min1.getCurrentValue());
+				ug = ug.apply(min1translate);
+
+				dolls.drawEnglobers(goDownAndCenterForEnglobers(ug),
+						body.calculateDimension(stringBounder).getHeight() + heightEnglober1 + heightEnglober2 / 2,
+						new SimpleContext2D(true));
+
+				ug = ug.apply(UTranslate.dy(heightEnglober1));
+				printAligned(ug, HorizontalAlignment.CENTER, body);
+				ug = goDown(ug, body);
+				ug = ug.apply(UTranslate.dy(heightEnglober2));
+			}
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				final double totalWidth = body.calculateDimension(stringBounder).getWidth();
+				final double totalHeight = body.calculateDimension(stringBounder).getHeight() + heightEnglober1
+						+ heightEnglober2;
+				return new XDimension2D(totalWidth + 10, totalHeight + 10);
+			}
+
+			public HColor getBackcolor() {
+				return null;
+			}
+
+		};
 	}
 
 }

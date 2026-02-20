@@ -62,13 +62,13 @@ import net.sourceforge.plantuml.ebnf.ETileRegexGroupAllBut;
 import net.sourceforge.plantuml.ebnf.ETileZeroOrMore;
 import net.sourceforge.plantuml.ebnf.Symbol;
 import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -110,9 +110,9 @@ public class PSystemRegex extends TitledDiagram {
 	private final HColor lineColor;
 
 	@Override
-	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);
+		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);
 	}
 
 //	public CommandExecutionResult changeLanguage(String lang) {
@@ -126,24 +126,30 @@ public class PSystemRegex extends TitledDiagram {
 //	}
 
 	@Override
-	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 //		while (stack.size() > 1)
 //			concatenation();
 		final ETile peekFirst = stack.peekFirst();
-		final TextBlock tb = new AbstractTextBlock() {
+		final TextBlock tb = new TextBlock() {
 
 			@Override
 			public void drawU(UGraphic ug) {
+				ug = ug.apply(new UTranslate(5, 5));
 				peekFirst.drawU(ug.apply(lineColor));
 			}
 
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return peekFirst.calculateDimension(stringBounder);
+				return peekFirst.calculateDimension(stringBounder).delta(10);
 			}
 		};
 		return TextBlockUtils.addBackcolor(tb, null);
 
+	}
+
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+		return getTextMainBlock01970(fileFormatOption);
 	}
 
 	public CommandExecutionResult addBlocLines(BlocLines from) {

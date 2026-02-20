@@ -42,7 +42,7 @@ import java.util.Map;
 
 import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -72,8 +72,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
-public class FlowDiagram extends UmlDiagram implements TextBlock {
-	// ::remove folder when __HAXE__
+public class FlowDiagram extends TitledDiagram implements TextBlock {
 
 	private static double SINGLE_SIZE_X = 100;
 	private static double SINGLE_SIZE_Y = 35;
@@ -229,7 +228,12 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+		return this;
+	}
+
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		return this;
 	}
 

@@ -154,9 +154,9 @@ public class GanttDiagram extends TitledDiagram implements WithSprite, GanttStyl
 	}
 
 	@Override
-	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);
+		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);
 	}
 
 	public void setPrintScale(PrintScale printScale) {
@@ -178,7 +178,7 @@ public class GanttDiagram extends TitledDiagram implements WithSprite, GanttStyl
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 		if (this.timeBounds.getPrintStart() == null) {
 			initMinMax();
@@ -193,6 +193,11 @@ public class GanttDiagram extends TitledDiagram implements WithSprite, GanttStyl
 
 		return new GanttDiagramMainBlock(this.timeBounds, this.modelData, this.drawRegistry, this.displayConfig,
 				this.timelineStyle, this, timeHeader, stringBounder);
+	}
+	
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+		return getTextMainBlock01970(fileFormatOption);
 	}
 
 	private void initMinMax() {

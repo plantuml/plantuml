@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 import java.io.Serializable;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.text.SvgCharSizeHack;
@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.utils.Log;
  * 
  */
 public final class FileFormatOption implements Serializable {
-	// ::remove file when __HAXE__
 
 	private final FileFormat fileFormat;
 	private boolean withMetadata;

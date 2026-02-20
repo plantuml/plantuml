@@ -83,7 +83,7 @@ public class TextBlockUtils {
 	}
 
 	public static TextBlock empty(final double width, final double height) {
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 			public void drawU(UGraphic ug) {
 			}
 
@@ -185,7 +185,7 @@ public class TextBlockUtils {
 	}
 
 	public static TextBlock fromUImage(final UImage image) {
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				ug.draw(image);

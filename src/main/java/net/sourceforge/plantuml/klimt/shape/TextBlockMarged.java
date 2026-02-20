@@ -44,8 +44,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 
-class TextBlockMarged extends AbstractTextBlock implements TextBlock, WithPorts {
-	// ::remove file when __HAXE__
+class TextBlockMarged implements TextBlock, WithPorts {
 
 	private final TextBlock textBlock;
 	private final double top;

@@ -64,7 +64,7 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 
 	}
 
-	public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
+	public ImageData createFile01970(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException {
 		try {
 			return createFileInternal(os, dotStrings, fileFormatOption);
@@ -75,8 +75,37 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 	}
 
 	@Override
-	public void createOneGraphic(UGraphic ug) {
+	public void createOneGraphic01970(UGraphic ug) {
 		throw new UnsupportedOperationException();
+	}
+	
+	@Override
+	public TextBlock getTextBlock12026(List<String> dotStrings, FileFormatOption fileFormatOption) throws IOException, InterruptedException {
+
+		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
+
+		if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY)
+			new CucaDiagramSimplifierActivity().simplify(diagram, stringBounder, DotMode.NORMAL);
+		else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE)
+			new CucaDiagramSimplifierState().simplify(diagram, stringBounder, DotMode.NORMAL);
+
+		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, clusterManager.getCurrent(),
+				diagram.getUmlDiagramType(), diagram.getSkinParam());
+
+		final DotData dotData = new DotData(diagram, diagram.getRootGroup(), getOrderedLinks(), diagram.leafs(),
+				diagram, diagram);
+
+		GraphvizImageBuilder imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),
+				diagram.getUmlDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager);
+		BaseFile basefile = null;
+//		if (fileFormatOption.isDebugSvek() && os instanceof NamedOutputStream)
+//			basefile = ((NamedOutputStream) os).getBasefile();
+
+		TextBlock result = imageBuilder.buildImage(stringBounder, basefile, diagram.getDotStringSkek(),
+				fileFormatOption.isDebugSvek());
+		
+		return result;
+
 	}
 
 	private ImageData createFileInternal(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)

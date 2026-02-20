@@ -5,7 +5,7 @@ public class ComponentExtraArrows_0001_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 740.9979 ; 160.5401 ]
+dimension: [ 406.0000 ; 152.0000 ]
 scaleFactor: 1.0000
 seed: -2222432377358940502
 svgLinkTarget: _top

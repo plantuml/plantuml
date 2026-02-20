@@ -43,7 +43,7 @@ import java.util.List;
 
 import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
-public class BpmDiagram extends UmlDiagram {
+public class BpmDiagram extends TitledDiagram {
 	private void cleanGrid(Grid grid) {
 		while (true) {
 			final boolean v1 = new CleanerEmptyLine().clean(grid);
@@ -195,7 +195,15 @@ public class BpmDiagram extends UmlDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 		throw new UnsupportedOperationException();
+	}
+	
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+		final Grid grid = createGrid();
+		cleanGrid(grid);
+		return grid.toArray(SkinParam.create(PathSystem.fetch(), getUmlDiagramType(), getPragma(),
+				getPreprocessingArtifact().getOption()));
 	}
 }

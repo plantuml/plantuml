@@ -5,7 +5,7 @@ public class TeozTimelineIssues_0001_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 458.4553 ; 256.3889 ]
+dimension: [ 473.4553 ; 267.0000 ]
 scaleFactor: 1.0000
 seed: -8500361970287239996
 svgLinkTarget: _top
@@ -13,8 +13,8 @@ hoverPathColorRGB: null
 preserveAspectRatio: none
 
 RECTANGLE:
-  pt1: [ 62.1081 ; 79.0000 ]
-  pt2: [ 70.1081 ; 178.0000 ]
+  pt1: [ 67.1081 ; 84.0000 ]
+  pt2: [ 75.1081 ; 183.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -23,15 +23,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 65.6081 ; 79.0000 ]
-  pt2: [ 65.6081 ; 178.0000 ]
+  pt1: [ 70.6081 ; 84.0000 ]
+  pt2: [ 70.6081 ; 183.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 60.6081 ; 160.0000 ]
-  pt2: [ 70.6081 ; 173.0000 ]
+  pt1: [ 65.6081 ; 165.0000 ]
+  pt2: [ 75.6081 ; 178.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -40,8 +40,8 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 241.0424 ; 79.0000 ]
-  pt2: [ 249.0424 ; 178.0000 ]
+  pt1: [ 246.0424 ; 84.0000 ]
+  pt2: [ 254.0424 ; 183.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -50,15 +50,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 244.5424 ; 79.0000 ]
-  pt2: [ 244.5424 ; 178.0000 ]
+  pt1: [ 249.5424 ; 84.0000 ]
+  pt2: [ 249.5424 ; 183.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 239.5424 ; 87.0000 ]
-  pt2: [ 249.5424 ; 106.0000 ]
+  pt1: [ 244.5424 ; 92.0000 ]
+  pt2: [ 254.5424 ; 111.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -67,8 +67,8 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 239.5424 ; 133.0000 ]
-  pt2: [ 249.5424 ; 160.0000 ]
+  pt1: [ 244.5424 ; 138.0000 ]
+  pt2: [ 254.5424 ; 165.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -77,8 +77,8 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 414.9766 ; 79.0000 ]
-  pt2: [ 422.9766 ; 178.0000 ]
+  pt1: [ 419.9766 ; 84.0000 ]
+  pt2: [ 427.9766 ; 183.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -87,15 +87,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 418.4766 ; 79.0000 ]
-  pt2: [ 418.4766 ; 178.0000 ]
+  pt1: [ 423.4766 ; 84.0000 ]
+  pt2: [ 423.4766 ; 183.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 413.4766 ; 106.0000 ]
-  pt2: [ 423.4766 ; 133.0000 ]
+  pt1: [ 418.4766 ; 111.0000 ]
+  pt2: [ 428.4766 ; 138.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -104,8 +104,8 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 413.4766 ; 160.0000 ]
-  pt2: [ 423.4766 ; 173.0000 ]
+  pt1: [ 418.4766 ; 165.0000 ]
+  pt2: [ 428.4766 ; 173.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -115,15 +115,15 @@ RECTANGLE:
 
 TEXT:
   text: Mallory
-  position: [ 5.0000 ; 75.8889 ]
+  position: [ 10.0000 ; 80.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 57.6081 ; 5.5000 ]
-  pt2: [ 73.6081 ; 21.5000 ]
+  pt1: [ 62.6081 ; 10.5000 ]
+  pt2: [ 78.6081 ; 26.5000 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-0.5
@@ -155,15 +155,15 @@ PATH:
 
 TEXT:
   text: Bob
-  position: [ 223.6899 ; 75.8889 ]
+  position: [ 228.6899 ; 80.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 236.5424 ; 5.5000 ]
-  pt2: [ 252.5424 ; 21.5000 ]
+  pt1: [ 241.5424 ; 10.5000 ]
+  pt2: [ 257.5424 ; 26.5000 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-0.5
@@ -195,15 +195,15 @@ PATH:
 
 TEXT:
   text: Alice
-  position: [ 378.4980 ; 75.8889 ]
+  position: [ 383.4980 ; 80.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 410.4766 ; 5.5000 ]
-  pt2: [ 426.4766 ; 21.5000 ]
+  pt1: [ 415.4766 ; 10.5000 ]
+  pt2: [ 431.4766 ; 26.5000 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-0.5
@@ -235,15 +235,15 @@ PATH:
 
 TEXT:
   text: Mallory
-  position: [ 5.0000 ; 248.8889 ]
+  position: [ 10.0000 ; 253.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 57.6081 ; 178.5000 ]
-  pt2: [ 73.6081 ; 194.5000 ]
+  pt1: [ 62.6081 ; 183.5000 ]
+  pt2: [ 78.6081 ; 199.5000 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-0.5
@@ -275,15 +275,15 @@ PATH:
 
 TEXT:
   text: Bob
-  position: [ 223.6899 ; 248.8889 ]
+  position: [ 228.6899 ; 253.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 236.5424 ; 178.5000 ]
-  pt2: [ 252.5424 ; 194.5000 ]
+  pt1: [ 241.5424 ; 183.5000 ]
+  pt2: [ 257.5424 ; 199.5000 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-0.5
@@ -315,15 +315,15 @@ PATH:
 
 TEXT:
   text: Alice
-  position: [ 378.4980 ; 248.8889 ]
+  position: [ 383.4980 ; 253.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 410.4766 ; 178.5000 ]
-  pt2: [ 426.4766 ; 194.5000 ]
+  pt1: [ 415.4766 ; 183.5000 ]
+  pt2: [ 431.4766 ; 199.5000 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-0.5
@@ -354,116 +354,116 @@ PATH:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 411.4766 ; 106.0000 ]
-  pt2: [ 401.4766 ; 102.0000 ]
+  pt1: [ 416.4766 ; 111.0000 ]
+  pt2: [ 406.4766 ; 107.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 411.4766 ; 106.0000 ]
-  pt2: [ 401.4766 ; 110.0000 ]
+  pt1: [ 416.4766 ; 111.0000 ]
+  pt2: [ 406.4766 ; 115.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 249.5424 ; 106.0000 ]
-  pt2: [ 412.4766 ; 106.0000 ]
+  pt1: [ 254.5424 ; 111.0000 ]
+  pt2: [ 417.4766 ; 111.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: Hi Alice!
-  position: [ 256.5424 ; 101.1111 ]
+  position: [ 261.5424 ; 106.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 250.5424 ; 133.0000 ]
-  pt2: [ 260.5424 ; 129.0000 ]
+  pt1: [ 255.5424 ; 138.0000 ]
+  pt2: [ 265.5424 ; 134.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 250.5424 ; 133.0000 ]
-  pt2: [ 260.5424 ; 137.0000 ]
+  pt1: [ 255.5424 ; 138.0000 ]
+  pt2: [ 265.5424 ; 142.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 249.5424 ; 133.0000 ]
-  pt2: [ 412.4766 ; 133.0000 ]
+  pt1: [ 254.5424 ; 138.0000 ]
+  pt2: [ 417.4766 ; 138.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: Bye Bob!
-  position: [ 266.5424 ; 128.1111 ]
+  position: [ 271.5424 ; 133.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 411.4766 ; 160.0000 ]
-  pt2: [ 401.4766 ; 156.0000 ]
+  pt1: [ 416.4766 ; 165.0000 ]
+  pt2: [ 406.4766 ; 161.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 411.4766 ; 160.0000 ]
-  pt2: [ 401.4766 ; 164.0000 ]
+  pt1: [ 416.4766 ; 165.0000 ]
+  pt2: [ 406.4766 ; 169.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 249.5424 ; 160.0000 ]
-  pt2: [ 412.4766 ; 160.0000 ]
+  pt1: [ 254.5424 ; 165.0000 ]
+  pt2: [ 417.4766 ; 165.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: Bye Alice!
-  position: [ 256.5424 ; 155.1111 ]
+  position: [ 261.5424 ; 160.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 71.6081 ; 160.0000 ]
-  pt2: [ 81.6081 ; 156.0000 ]
+  pt1: [ 76.6081 ; 165.0000 ]
+  pt2: [ 86.6081 ; 161.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 71.6081 ; 160.0000 ]
-  pt2: [ 81.6081 ; 164.0000 ]
+  pt1: [ 76.6081 ; 165.0000 ]
+  pt2: [ 86.6081 ; 169.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 70.6081 ; 160.0000 ]
-  pt2: [ 238.5424 ; 160.0000 ]
+  pt1: [ 75.6081 ; 165.0000 ]
+  pt2: [ 243.5424 ; 165.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: Bye Alice!
-  position: [ 87.6081 ; 155.1111 ]
+  position: [ 92.6081 ; 160.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000

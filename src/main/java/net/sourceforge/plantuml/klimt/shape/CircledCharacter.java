@@ -42,8 +42,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class CircledCharacter extends AbstractTextBlock implements TextBlock {
-    // ::remove file when __HAXE__
+public class CircledCharacter implements TextBlock {
 
 	private final String c;
 	private final UFont font;

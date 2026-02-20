@@ -67,8 +67,7 @@ public class CommunicationTileNoteTop extends CommunicationTileNoteBottomTopAbst
 		if (YGauge.USE_ME)
 			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 
-		final double middleMsg = (tile.getMinX().getCurrentValue() + tile.getMaxX().getCurrentValue()) / 2;
-
+		final double middleMsg = getMiddleMsg();
 		final double xNote = getNotePosition(stringBounder).getCurrentValue();
 
 		comp.drawU(ug.apply(UTranslate.dx(xNote)), area, (Context2D) ug);

@@ -41,7 +41,7 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Previous;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -57,7 +57,6 @@ import net.sourceforge.plantuml.klimt.compress.CompressionXorYBuilder;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.TextBlockRecentred;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -66,7 +65,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.url.Url;
 
-public class ActivityDiagram3 extends UmlDiagram {
+public class ActivityDiagram3 extends TitledDiagram {
 
 	enum SwimlaneStrategy {
 		SWIMLANE_FORBIDDEN, SWIMLANE_ALLOWED;
@@ -208,9 +207,14 @@ public class ActivityDiagram3 extends UmlDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 		return getTextBlock(stringBounder);
+	}
+
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+		return getTextMainBlock01970(fileFormatOption);
 	}
 
 	private TextBlock getTextBlock(final StringBounder stringBounder) {
@@ -222,7 +226,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		result = CompressionXorYBuilder.build(CompressionMode.ON_X, result, stringBounder);
 		result = CompressionXorYBuilder.build(CompressionMode.ON_Y, result, stringBounder);
 
-		result = new TextBlockRecentred(result);
+		result = new Recentred(result);
 		return result;
 	}
 

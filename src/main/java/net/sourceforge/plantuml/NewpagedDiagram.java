@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,15 +43,20 @@ import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramChromeFactory12026;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.TextBlockExporter12026;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.utils.BlocLines;
 
-public class NewpagedDiagram extends AbstractPSystem {
-	// ::remove file when __HAXE__
+public class NewpagedDiagram extends UgDiagram {
 
 	private final List<Diagram> diagrams = new ArrayList<>();
 
@@ -108,16 +111,48 @@ public class NewpagedDiagram extends AbstractPSystem {
 		return diagrams.size();
 	}
 
+//	@Override
+//	public final ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+//		return diagrams.get(num).exportDiagram(os, 0, fileFormat);
+//	}
+
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
-			throws IOException {
-		return diagrams.get(num).exportDiagram(os, 0, fileFormat);
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception {
+		final TitledDiagram titledDiagram = (TitledDiagram) diagrams.get(num);
+		TextBlock result = titledDiagram.getTextBlock12026(num, fileFormatOption);
+		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(titledDiagram.getSkinParam());
+		result = DiagramChromeFactory12026.create(result, titledDiagram, titledDiagram.getSkinParam(), stringBounder,
+				titledDiagram.getWarnings());
+
+		return result;
 	}
 
-	public int getNbImages() {
+	@Override
+	protected TextBlockExporter12026 getExporter(int num, FileFormatOption fileFormatOption) throws Exception {
+
+		TextBlock result = getTextBlock12026(num, fileFormatOption);
+
+		final HColor backColor = calculateBackColor();
+		if (backColor != null)
+			result = TextBlockUtils.addBackcolor(result, backColor);
+
+		final ColorMapper mutedMapper = muteColorMapper(fileFormatOption.getColorMapper());
+		final FileFormatOption effectiveFormat = fileFormatOption.withColorMapper(mutedMapper);
+
+		final TextBlockExporter12026.Builder builder = TextBlockExporter12026.builder(result, effectiveFormat);
+
+		final TitledDiagram titledDiagram = (TitledDiagram) diagrams.get(num);
+
+		builder.styled(titledDiagram);
+
+		return builder.build();
+
+	}
+
+	public int getCardinality() {
 		int nb = 0;
 		for (Diagram d : diagrams)
-			nb += d.getNbImages();
+			nb += d.getCardinality();
 
 		return nb;
 	}
@@ -133,21 +168,21 @@ public class NewpagedDiagram extends AbstractPSystem {
 		return new DiagramDescription(sb.toString());
 	}
 
-	public String getWarningOrError() {
-		final StringBuilder sb = new StringBuilder();
-		for (Diagram d : diagrams) {
-			if (sb.length() > 0)
-				sb.append(" ");
-
-			if (d.getWarningOrError() != null)
-				sb.append(d.getWarningOrError());
-
-		}
-		if (sb.length() == 0)
-			return null;
-
-		return sb.toString();
-	}
+//	public String getWarningOrError() {
+//		final StringBuilder sb = new StringBuilder();
+//		for (Diagram d : diagrams) {
+//			if (sb.length() > 0)
+//				sb.append(" ");
+//
+//			if (d.getWarningOrError() != null)
+//				sb.append(d.getWarningOrError());
+//
+//		}
+//		if (sb.length() == 0)
+//			return null;
+//
+//		return sb.toString();
+//	}
 
 	@Override
 	public void makeDiagramReady() {

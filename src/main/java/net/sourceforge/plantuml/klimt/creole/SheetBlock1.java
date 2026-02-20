@@ -51,14 +51,12 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
-public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, Stencil {
-	// ::remove folder when __HAXE__
+public class SheetBlock1 implements TextBlock, Atom, Stencil {
 
 	private final Sheet sheet;
 	private List<Stripe> stripes;

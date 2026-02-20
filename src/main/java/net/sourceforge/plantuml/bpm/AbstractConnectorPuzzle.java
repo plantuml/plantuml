@@ -41,7 +41,6 @@ import java.util.Set;
 import net.sourceforge.plantuml.skin.Pragma;
 
 abstract class AbstractConnectorPuzzle implements ConnectorPuzzle {
-    // ::remove folder when __HAXE__
 
 	private final EnumSet<Where> connections = EnumSet.noneOf(Where.class);
 

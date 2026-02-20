@@ -35,17 +35,20 @@
 package net.sourceforge.plantuml;
 
 import java.io.IOException;
-import java.io.OutputStream;
 
 import net.atmp.ImageBuilder;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 // This class doesnt feel like a wonderful idea, just a stepping stone towards something
-public abstract class PlainDiagram extends AbstractPSystem {
+public abstract class PlainDiagram extends UgDiagram {
 
 	public PlainDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
@@ -57,24 +60,47 @@ public abstract class PlainDiagram extends AbstractPSystem {
 				.metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null).seed(seed());
 	}
 
-	@Override
-	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
+//	@Override
+//	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+//			throws IOException {
+//
+//		final UDrawable rootDrawable = getRootDrawable(fileFormatOption);
+//		return createImageBuilder(fileFormatOption).drawable(rootDrawable).write(os);
+//	}
 
-		final UDrawable rootDrawable = getRootDrawable(fileFormatOption);
-		return createImageBuilder(fileFormatOption).drawable(rootDrawable).write(os);
-	}
-
 	@Override
-	public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
+	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
 		try {
 			final UDrawable rootDrawable = getRootDrawable(fileFormatOption);
 			rootDrawable.drawU(ug);
 		} catch (IOException e) {
 			e.printStackTrace();
-			super.exportDiagramGraphic(ug, fileFormatOption);
+			super.exportDiagramGraphic01970(ug, fileFormatOption);
 		}
 	}
 
 	protected abstract UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException;
+
+	@Override
+	public final TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption)
+			throws IOException, InterruptedException {
+		final UDrawable rootDrawable = getRootDrawable(fileFormatOption);
+		return new TextBlock() {
+
+			public void drawU(UGraphic ug) {
+				rootDrawable.drawU(ug);
+			}
+
+			public XDimension2D calculateDimension(StringBounder sb) {
+				final LimitFinder limitFinder = LimitFinder.create(sb, true);
+				rootDrawable.drawU(limitFinder);
+				return new XDimension2D(limitFinder.getMaxX() + 1, limitFinder.getMaxY() + 1);
+			}
+
+			public HColor getBackcolor() {
+				return null;
+			}
+
+		};
+	}
 }

@@ -47,6 +47,8 @@ import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
@@ -72,6 +74,11 @@ public class PSystemOregon extends PlainDiagram {
 	@Override
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
 		return super.createImageBuilder(fileFormatOption).blackBackcolor();
+	}
+
+	@Override
+	public HColor calculateBackColor() {
+		return HColors.BLACK;
 	}
 
 	public PSystemOregon(UmlSource source, PreprocessingArtifact preprocessing) {

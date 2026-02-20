@@ -5,7 +5,7 @@ public class SequenceLeftMessageAndActiveLifeLines_0002_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 157.6623 ; 518.0000 ]
+dimension: [ 162.6623 ; 520.0000 ]
 scaleFactor: 1.0000
 seed: 6920060915531033680
 svgLinkTarget: _top

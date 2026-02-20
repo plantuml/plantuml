@@ -41,8 +41,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-class SimpleTextBlockBordered extends AbstractTextBlock implements TextBlock {
-    // ::remove file when __HAXE__
+class SimpleTextBlockBordered implements TextBlock {
 
 	private final TextBlock textBlock;
 	private final HColor color;

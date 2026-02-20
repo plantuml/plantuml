@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class DisplayPositioned extends DisplayPositionned {
+public class DisplayPositioned {
 
 	private final Display display;
 	private final HorizontalAlignment horizontalAlignment;

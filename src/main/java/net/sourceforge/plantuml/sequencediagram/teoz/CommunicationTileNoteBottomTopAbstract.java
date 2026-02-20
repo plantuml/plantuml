@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Note;
@@ -137,7 +138,17 @@ public abstract class CommunicationTileNoteBottomTopAbstract extends AbstractTil
 	}
 
 	public Real getMaxX() {
-		return tile.getMaxX();
+		final Real maxMessage = tile.getMaxX();
+		final Component comp = getComponent(getStringBounder());
+		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
+		final Real maxNote = tile.getMinX().addFixed(dim.getWidth());
+
+		return RealUtils.max(maxMessage, maxNote);
+	}
+
+	protected final double getMiddleMsg() {
+		final double middleMsg = (tile.getMinX().getCurrentValue() + tile.getMaxX().getCurrentValue()) / 2;
+		return middleMsg;
 	}
 
 }

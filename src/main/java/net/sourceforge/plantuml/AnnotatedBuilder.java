@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.BigFrame;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
@@ -64,7 +63,6 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.DecorateEntityImage;
 
 public class AnnotatedBuilder {
-	// ::remove file when __HAXE__
 
 	private final Annotated annotated;
 	private final ISkinParam skinParam;
@@ -127,7 +125,7 @@ public class AnnotatedBuilder {
 
 		final TextBlock frame = new BigFrame(title, width, height, symbolContext);
 
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				frame.drawU(ug.apply(margin.getTranslate()));

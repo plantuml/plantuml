@@ -39,10 +39,9 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicIntercep
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
-public class GotoInterceptor extends AbstractTextBlock implements TextBlock {
+public class GotoInterceptor implements TextBlock {
 
 	private final TextBlock swimlanes;
 

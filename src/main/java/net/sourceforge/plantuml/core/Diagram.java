@@ -42,6 +42,8 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ApiStable;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 
 /**
  * Represents a single diagram. A Diagram could be a UML (sequence diagram,
@@ -52,45 +54,46 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 @ApiStable
 public interface Diagram {
 
-	/**
-	 * Export the diagram as an image to some format. Note that a diagram could be
-	 * drawn as several images (think about <code>new page</code> for sequence
-	 * diagram for example).
-	 * 
-	 * @param os         where to write the image
-	 * @param num        usually 0 (index of the image to be exported for this
-	 *                   diagram).
-	 * @param fileFormat file format to use
-	 * 
-	 * @return a description of the generated image
-	 * 
-	 * @throws IOException
-	 */
-	ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException;
+	// Methods ending with 01970 are deprecated and will be removed after this
+	// refactoring
+	public ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException;
 
-	void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormat);
+	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormat);
+
+//	// Methods ending with 12026 are the new methods
+//	public default TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption)
+//			throws IOException, InterruptedException {
+//		/*
+//		 * This method should draw image number "num" of the diagram, but without
+//		 * titles, header, footer, legend, caption, or mainframe, which will be added by
+//		 * another class on top of this TextBlock
+//		 */
+//		System.err.println("Diagram::getTextBlock12026 " + getClass().getSimpleName());
+//		return TextBlockUtils.EMPTY_TEXT_BLOCK;
+//		// throw new UnsupportedOperationException("wip");
+//	}
 
 	/**
 	 * Number of images in this diagram (usually, 1)
 	 * 
 	 * @return usually 1
 	 */
-	int getNbImages();
+	public int getCardinality();
 
-	int getSplitPagesHorizontal();
+	public int getSplitPagesHorizontal();
 
-	int getSplitPagesVertical();
+	public int getSplitPagesVertical();
 
-	DiagramDescription getDescription();
+	public DiagramDescription getDescription();
 
-	String getMetadata();
+	public String getMetadata();
 
-	String getWarningOrError();
+	public String getWarningOrError();
 
 	/**
 	 * The original source of the diagram
 	 */
-	UmlSource getSource();
+	public UmlSource getSource();
 
 	/**
 	 * Check if the Diagram have some links.
@@ -98,8 +101,7 @@ public interface Diagram {
 	public boolean hasUrl();
 
 	public Display getTitleDisplay();
-	
-	
+
 	public InstallationRequirement getInstallationRequirement();
 
 }

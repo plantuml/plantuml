@@ -60,7 +60,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -111,10 +110,10 @@ public class JsonDiagram extends TitledDiagram {
 	}
 
 	@Override
-	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);
+		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);
 	}
 
 	private void drawInternal(UGraphic ug) {
@@ -133,17 +132,23 @@ public class JsonDiagram extends TitledDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock(final FileFormatOption fileFormatOption) {
-		return new AbstractTextBlock() {
+	protected TextBlock getTextMainBlock01970(final FileFormatOption fileFormatOption) {
+		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				drawInternal(ug);
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return TextBlockUtils.getMinMax(getTextMainBlock(fileFormatOption), stringBounder, true).getDimension();
+				return TextBlockUtils.getMinMax(getTextMainBlock01970(fileFormatOption), stringBounder, true).getDimension();
 			}
 		};
 	}
+	
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+		return getTextMainBlock01970(fileFormatOption);
+	}
+
 
 }

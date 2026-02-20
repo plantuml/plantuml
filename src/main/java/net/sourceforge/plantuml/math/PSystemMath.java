@@ -39,7 +39,7 @@ package net.sourceforge.plantuml.math;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.DirectOsDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -52,8 +52,7 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-public class PSystemMath extends AbstractPSystem {
-    // ::remove folder when __HAXE__
+public class PSystemMath extends DirectOsDiagram {
 
 	private String math = "";
 	private float scale = 1;

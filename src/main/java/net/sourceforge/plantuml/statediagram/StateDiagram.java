@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class StateDiagram extends AbstractEntityDiagram {
-	// ::remove folder when __HAXE__
 
 	private static final String CONCURRENT_PREFIX = "CONC";
 
