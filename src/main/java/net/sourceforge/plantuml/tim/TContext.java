@@ -883,27 +883,23 @@ public class TContext {
 	}
 
 	public boolean isLegacyDefine(String functionName) {
-		for (Map.Entry<TFunctionSignature, TFunction> ent : functionsSet.functions().entrySet())
-			if (ent.getKey().getFunctionName().equals(functionName) && ent.getValue().getFunctionType().isLegacy())
+		for (TFunction func : functionsSet.getFunctionsByName(functionName))
+			if (func.getFunctionType().isLegacy())
 				return true;
 
 		return false;
 	}
 
 	public boolean isUnquoted(String functionName) {
-		for (Map.Entry<TFunctionSignature, TFunction> ent : functionsSet.functions().entrySet())
-			if (ent.getKey().getFunctionName().equals(functionName) && ent.getValue().isUnquoted())
+		for (TFunction func : functionsSet.getFunctionsByName(functionName))
+			if (func.isUnquoted())
 				return true;
 
 		return false;
 	}
 
 	public boolean doesFunctionExist(String functionName) {
-		for (Map.Entry<TFunctionSignature, TFunction> ent : functionsSet.functions().entrySet())
-			if (ent.getKey().getFunctionName().equals(functionName))
-				return true;
-
-		return false;
+		return functionsSet.doesFunctionExist(functionName);
 	}
 
 	@JawsStrange

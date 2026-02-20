@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 public class FunctionsSet {
 
 	private final Map<TFunctionSignature, TFunction> functions = new HashMap<TFunctionSignature, TFunction>();
+	private final Map<String, Map<TFunctionSignature, TFunction>> functionsByName = new HashMap<>();
 	private final Set<TFunctionSignature> functionsFinal = new HashSet<>();
 	private final Trie functions3 = new TrieImpl();
 	private TFunctionImpl pendingFunction;
@@ -87,6 +88,29 @@ public class FunctionsSet {
 
 		this.functions.put(func.getSignature(), func);
 		this.functions3.add(func.getSignature().getFunctionName() + "(");
+		this.updateFunctionsByName(func);
+	}
+
+	private void updateFunctionsByName(TFunction func) {
+		final String name = func.getSignature().getFunctionName();
+		this.functionsByName.computeIfAbsent(name, k -> new HashMap<>()).put(func.getSignature(), func);
+	}
+
+	/**
+	 * Returns true if at least one function with the given name exists.
+	 */
+	public boolean doesFunctionExist(String functionName) {
+		return this.functionsByName.containsKey(functionName);
+	}
+
+	/**
+	 * Returns the functions matching the given name, or an empty collection.
+	 */
+	public Iterable<TFunction> getFunctionsByName(String functionName) {
+		final Map<TFunctionSignature, TFunction> map = this.functionsByName.get(functionName);
+		if (map == null)
+			return Collections.emptyList();
+		return map.values();
 	}
 
 	public void executeEndfunction() {
@@ -104,6 +128,7 @@ public class FunctionsSet {
 		final TFunction function = legacyDefine.getFunction();
 		this.functions.put(function.getSignature(), function);
 		this.functions3.add(function.getSignature().getFunctionName() + "(");
+		this.updateFunctionsByName(function);
 	}
 
 	public void executeLegacyDefineLong(TContext context, TMemory memory, StringLocated s)
