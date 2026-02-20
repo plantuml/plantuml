@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.ULine;
@@ -54,7 +53,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-abstract class WBSTextBlock extends AbstractTextBlock {
+abstract class WBSTextBlock implements TextBlock {
 
 	protected final ISkinParam skinParam;
 	private final Stereotype stereotype;
@@ -69,8 +68,9 @@ abstract class WBSTextBlock extends AbstractTextBlock {
 	}
 
 	private Style getStyleUsed() {
-		final StyleSignature signature = StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.arrow)
-				.addLevel(level).withTOBECHANGED(stereotype);
+		final StyleSignature signature = StyleSignatureBasic
+				.of(SName.root, SName.element, SName.wbsDiagram, SName.arrow).addLevel(level)
+				.withTOBECHANGED(stereotype);
 		return signature.getMergedStyle(styleBuilder);
 	}
 

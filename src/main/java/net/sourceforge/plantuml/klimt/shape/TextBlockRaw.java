@@ -44,9 +44,7 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class TextBlockRaw extends AbstractTextBlock implements TextBlock {
-    // ::remove file when __HAXE__
-
+public class TextBlockRaw implements TextBlock {
 	private List<Line> lines2;
 
 	private final List<String> strings;

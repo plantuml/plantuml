@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.utils.PatchUtils;
 
 public abstract class AbstractGtile extends AbstractGtileRoot implements Gtile {
 
@@ -89,7 +88,7 @@ public abstract class AbstractGtile extends AbstractGtileRoot implements Gtile {
 	@Override
 	public Set<Swimlane> getSwimlanes() {
 		if (singleSwimlane == null)
-			return PatchUtils.emptySet();
+			return Collections.emptySet();
 		return Collections.singleton(singleSwimlane);
 	}
 

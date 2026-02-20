@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.descdiagram.command;
 
 import net.sourceforge.plantuml.NewpagedDiagram;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandNewpage extends SingleLineCommand2<UmlDiagram> {
+public class CommandNewpage extends SingleLineCommand2<TitledDiagram> {
 
 	private final PSystemCommandFactory factory;
 
@@ -62,10 +62,10 @@ public class CommandNewpage extends SingleLineCommand2<UmlDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg,
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		final int dpi = diagram.getSkinParam().getDpi();
-		final UmlDiagram emptyDiagram = (UmlDiagram) factory.createEmptyDiagram(diagram.getPathSystem(),
+		final TitledDiagram emptyDiagram = (TitledDiagram) factory.createEmptyDiagram(diagram.getPathSystem(),
 				diagram.getSource(), diagram.getPrevious(), diagram.getPreprocessingArtifact());
 		if (dpi != 96)
 			emptyDiagram.setParam("dpi", "" + dpi);

@@ -35,14 +35,14 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandRotate extends SingleLineCommand2<UmlDiagram> {
+public class CommandRotate extends SingleLineCommand2<TitledDiagram> {
 
 	public static final CommandRotate ME = new CommandRotate();
 
@@ -57,8 +57,7 @@ public class CommandRotate extends SingleLineCommand2<UmlDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		diagram.setRotation(true);
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		return CommandExecutionResult.ok();
 	}
 

@@ -39,8 +39,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
@@ -52,7 +52,7 @@ public class PSystemEggFactory extends PSystemSingleLineFactory {
 			EggUtils.toByteArrays("421e5b773c5df733a1194f716f18e8842155196b3b"));
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
+	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		try {
 			for (byte[] crypted : all) {
 				final SentenceDecoder decoder = new SentenceDecoder(line, crypted);

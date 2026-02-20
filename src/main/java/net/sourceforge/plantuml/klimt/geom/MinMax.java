@@ -170,4 +170,8 @@ public class MinMax {
 		return new MinMax(minX + dx, minY + dy, maxX + dx, maxY + dy);
 	}
 
+	public MinMax enlarge(double dx, double dy) {
+		return new MinMax(minX, minY, maxX + dx, maxY + dy);
+	}
+
 }

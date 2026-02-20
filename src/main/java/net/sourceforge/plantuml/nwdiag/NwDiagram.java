@@ -45,7 +45,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -59,7 +59,6 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
@@ -81,7 +80,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-public class NwDiagram extends UmlDiagram {
+public class NwDiagram extends TitledDiagram {
 
 	private final Map<String, NServer> servers = new LinkedHashMap<>();
 	private final List<Network> networks = new ArrayList<>();
@@ -310,12 +309,12 @@ public class NwDiagram extends UmlDiagram {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);
+		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
-		return new AbstractTextBlock() {
+	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+		return new TextBlock() {
 			public void drawU(UGraphic ug) {
 				drawMe(ug);
 			}
@@ -326,6 +325,12 @@ public class NwDiagram extends UmlDiagram {
 
 		};
 	}
+	
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+		return getTextMainBlock01970(fileFormatOption);
+	}
+
 
 	private StyleSignatureBasic getStyleDefinitionNetwork(SName sname) {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.nwdiagDiagram, sname);

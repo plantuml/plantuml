@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockInEllipse;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
@@ -94,7 +93,7 @@ class USymbolUsecase extends USymbol {
 	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
 			final Fashion symbolContext, final HorizontalAlignment stereoAlignment) {
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 
 			final TextBlock tmp = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
 			final TextBlock desc = isBusiness ? TextBlockUtils.withMargin(tmp, 7, 0) : tmp;

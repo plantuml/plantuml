@@ -266,7 +266,7 @@ public class WBlock {
 		}
 	}
 
-	private XDimension2D getMaxDimension() {
+	public XDimension2D getMaxDimension() {
 		if (children.size() > 0) {
 			if (forcedWidth != 0) {
 				return new XDimension2D(forcedWidth, forcedHeight);

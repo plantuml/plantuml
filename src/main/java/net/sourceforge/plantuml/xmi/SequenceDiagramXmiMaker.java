@@ -37,7 +37,7 @@ public final class SequenceDiagramXmiMaker implements FileMaker {
 	}
 
 	@Override
-	public ImageData createOne(OutputStream os, int index, boolean isWithMetadata) throws IOException {
+	public ImageData createOne01970(OutputStream os, int index, boolean isWithMetadata) throws IOException {
 		DocumentBuilder builder;
 		ImageData imageData = new ImageDataSimple(0, 0);
 		try {
@@ -84,7 +84,7 @@ public final class SequenceDiagramXmiMaker implements FileMaker {
 	}
 
 	@Override
-	public void createOneGraphic(UGraphic ug) {
+	public void createOneGraphic01970(UGraphic ug) {
 		throw new UnsupportedOperationException();
 	}
 

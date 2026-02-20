@@ -5,7 +5,7 @@ public class SequenceLayout_0005_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 699.2234 ; 337.0000 ]
+dimension: [ 718.2234 ; 348.0000 ]
 scaleFactor: 1.0000
 seed: -1298507147889257806
 svgLinkTarget: _top
@@ -13,8 +13,8 @@ hoverPathColorRGB: null
 preserveAspectRatio: none
 
 RECTANGLE:
-  pt1: [ 225.6134 ; 34.0000 ]
-  pt2: [ 233.6134 ; 304.0000 ]
+  pt1: [ 230.6134 ; 39.0000 ]
+  pt2: [ 238.6134 ; 309.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -23,15 +23,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 229.1134 ; 34.0000 ]
-  pt2: [ 229.1134 ; 304.0000 ]
+  pt1: [ 234.1134 ; 39.0000 ]
+  pt2: [ 234.1134 ; 309.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 199.6674 ; 5.0000 ]
-  pt2: [ 258.5595 ; 33.0000 ]
+  pt1: [ 204.6674 ; 10.0000 ]
+  pt2: [ 263.5595 ; 38.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -41,15 +41,15 @@ RECTANGLE:
 
 TEXT:
   text: Test
-  position: [ 206.6674 ; 22.8889 ]
+  position: [ 211.6674 ; 27.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 199.6674 ; 304.0000 ]
-  pt2: [ 258.5595 ; 332.0000 ]
+  pt1: [ 204.6674 ; 309.0000 ]
+  pt2: [ 263.5595 ; 337.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -59,7 +59,7 @@ RECTANGLE:
 
 TEXT:
   text: Test
-  position: [ 206.6674 ; 321.8889 ]
+  position: [ 211.6674 ; 326.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
@@ -84,8 +84,8 @@ PATH:
   backcolor: ffeeeeee
 
 RECTANGLE:
-  pt1: [ 8.0000 ; 46.0000 ]
-  pt2: [ 694.2234 ; 280.0000 ]
+  pt1: [ 13.0000 ; 51.0000 ]
+  pt2: [ 699.2234 ; 285.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
@@ -95,39 +95,39 @@ RECTANGLE:
 
 TEXT:
   text: Grouping messages
-  position: [ 23.0000 ; 57.1111 ]
+  position: [ 28.0000 ; 62.1111 ]
   orientation: 0
   font: SansSerif.bold/13 [BOLD]
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 187.1134 ; 259.0000 ]
-  pt2: [ 228.1134 ; 259.0000 ]
+  pt1: [ 192.1134 ; 264.0000 ]
+  pt2: [ 233.1134 ; 264.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 187.1134 ; 259.0000 ]
-  pt2: [ 187.1134 ; 272.0000 ]
+  pt1: [ 192.1134 ; 264.0000 ]
+  pt2: [ 192.1134 ; 277.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 187.1134 ; 272.0000 ]
-  pt2: [ 227.1134 ; 272.0000 ]
+  pt1: [ 192.1134 ; 277.0000 ]
+  pt2: [ 232.1134 ; 277.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 217.1134 ; 268.0000 ]
-   - [ 227.1134 ; 272.0000 ]
-   - [ 217.1134 ; 276.0000 ]
-   - [ 221.1134 ; 272.0000 ]
+   - [ 222.1134 ; 273.0000 ]
+   - [ 232.1134 ; 277.0000 ]
+   - [ 222.1134 ; 281.0000 ]
+   - [ 226.1134 ; 277.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -135,7 +135,7 @@ POLYGON:
 
 TEXT:
   text: The
-  position: [ 31.0000 ; 85.1111 ]
+  position: [ 36.0000 ; 90.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -143,7 +143,7 @@ TEXT:
 
 TEXT:
   text:  
-  position: [ 64.9104 ; 85.1111 ]
+  position: [ 69.9104 ; 90.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -151,7 +151,7 @@ TEXT:
 
 TEXT:
   text: group
-  position: [ 77.2286 ; 85.1111 ]
+  position: [ 82.2286 ; 90.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -159,7 +159,7 @@ TEXT:
 
 TEXT:
   text:  
-  position: [ 139.3228 ; 85.1111 ]
+  position: [ 144.3228 ; 90.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -167,7 +167,7 @@ TEXT:
 
 TEXT:
   text: frame
-  position: [ 151.6410 ; 85.1111 ]
+  position: [ 156.6410 ; 90.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -175,7 +175,7 @@ TEXT:
 
 TEXT:
   text: [now]
-  position: [ 31.0000 ; 98.1111 ]
+  position: [ 36.0000 ; 103.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -183,7 +183,7 @@ TEXT:
 
 TEXT:
   text:  
-  position: [ 84.6267 ; 98.1111 ]
+  position: [ 89.6267 ; 103.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -191,7 +191,7 @@ TEXT:
 
 TEXT:
   text: does
-  position: [ 96.9448 ; 98.1111 ]
+  position: [ 101.9448 ; 103.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -199,7 +199,7 @@ TEXT:
 
 TEXT:
   text:  
-  position: [ 153.4686 ; 98.1111 ]
+  position: [ 158.4686 ; 103.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -207,7 +207,7 @@ TEXT:
 
 TEXT:
   text: draw
-  position: [ 165.7868 ; 98.1111 ]
+  position: [ 170.7868 ; 103.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -215,7 +215,7 @@ TEXT:
 
 TEXT:
   text: a
-  position: [ 31.0000 ; 111.1111 ]
+  position: [ 36.0000 ; 116.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -223,7 +223,7 @@ TEXT:
 
 TEXT:
   text:  
-  position: [ 43.4270 ; 111.1111 ]
+  position: [ 48.4270 ; 116.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -231,7 +231,7 @@ TEXT:
 
 TEXT:
   text: border
-  position: [ 55.7452 ; 111.1111 ]
+  position: [ 60.7452 ; 116.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -239,7 +239,7 @@ TEXT:
 
 TEXT:
   text: around
-  position: [ 31.0000 ; 124.1111 ]
+  position: [ 36.0000 ; 129.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -247,7 +247,7 @@ TEXT:
 
 TEXT:
   text:  
-  position: [ 118.1798 ; 124.1111 ]
+  position: [ 123.1798 ; 129.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -255,7 +255,7 @@ TEXT:
 
 TEXT:
   text: the
-  position: [ 130.4980 ; 124.1111 ]
+  position: [ 135.4980 ; 129.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -263,7 +263,7 @@ TEXT:
 
 TEXT:
   text: text
-  position: [ 31.0000 ; 137.1111 ]
+  position: [ 36.0000 ; 142.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -271,7 +271,7 @@ TEXT:
 
 TEXT:
   text:  
-  position: [ 79.4118 ; 137.1111 ]
+  position: [ 84.4118 ; 142.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -279,7 +279,7 @@ TEXT:
 
 TEXT:
   text: (located
-  position: [ 91.7299 ; 137.1111 ]
+  position: [ 96.7299 ; 142.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -287,7 +287,7 @@ TEXT:
 
 TEXT:
   text: on
-  position: [ 31.0000 ; 150.1111 ]
+  position: [ 36.0000 ; 155.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -295,7 +295,7 @@ TEXT:
 
 TEXT:
   text:  
-  position: [ 58.1983 ; 150.1111 ]
+  position: [ 63.1983 ; 155.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -303,7 +303,7 @@ TEXT:
 
 TEXT:
   text: the
-  position: [ 70.5164 ; 150.1111 ]
+  position: [ 75.5164 ; 155.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -311,7 +311,7 @@ TEXT:
 
 TEXT:
   text:  
-  position: [ 111.1733 ; 150.1111 ]
+  position: [ 116.1733 ; 155.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -319,7 +319,7 @@ TEXT:
 
 TEXT:
   text: left
-  position: [ 123.4914 ; 150.1111 ]
+  position: [ 128.4914 ; 155.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -327,7 +327,7 @@ TEXT:
 
 TEXT:
   text: side),
-  position: [ 31.0000 ; 163.1111 ]
+  position: [ 36.0000 ; 168.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -335,7 +335,7 @@ TEXT:
 
 TEXT:
   text:  
-  position: [ 115.5134 ; 163.1111 ]
+  position: [ 120.5134 ; 168.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -343,7 +343,7 @@ TEXT:
 
 TEXT:
   text: [lo
-  position: [ 127.8315 ; 163.1111 ]
+  position: [ 132.8315 ; 168.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -351,7 +351,7 @@ TEXT:
 
 TEXT:
   text: longer]
-  position: [ 31.0000 ; 176.1111 ]
+  position: [ 36.0000 ; 181.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -359,7 +359,7 @@ TEXT:
 
 TEXT:
   text: ignores
-  position: [ 31.0000 ; 189.1111 ]
+  position: [ 36.0000 ; 194.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -367,7 +367,7 @@ TEXT:
 
 TEXT:
   text:  
-  position: [ 140.6648 ; 189.1111 ]
+  position: [ 145.6648 ; 194.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -375,7 +375,7 @@ TEXT:
 
 TEXT:
   text: its
-  position: [ 152.9830 ; 189.1111 ]
+  position: [ 157.9830 ; 194.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -383,7 +383,7 @@ TEXT:
 
 TEXT:
   text: presence,
-  position: [ 31.0000 ; 202.1111 ]
+  position: [ 36.0000 ; 207.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -391,7 +391,7 @@ TEXT:
 
 TEXT:
   text:  
-  position: [ 129.8066 ; 202.1111 ]
+  position: [ 134.8066 ; 207.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -399,7 +399,7 @@ TEXT:
 
 TEXT:
   text: and
-  position: [ 142.1248 ; 202.1111 ]
+  position: [ 147.1248 ; 207.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -407,7 +407,7 @@ TEXT:
 
 TEXT:
   text: [no
-  position: [ 31.0000 ; 215.1111 ]
+  position: [ 36.0000 ; 220.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -415,7 +415,7 @@ TEXT:
 
 TEXT:
   text:  
-  position: [ 75.2395 ; 215.1111 ]
+  position: [ 80.2395 ; 220.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -423,7 +423,7 @@ TEXT:
 
 TEXT:
   text: longer]]
-  position: [ 87.5576 ; 215.1111 ]
+  position: [ 92.5576 ; 220.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -431,7 +431,7 @@ TEXT:
 
 TEXT:
   text: ignores
-  position: [ 31.0000 ; 228.1111 ]
+  position: [ 36.0000 ; 233.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -439,7 +439,7 @@ TEXT:
 
 TEXT:
   text:  
-  position: [ 140.6648 ; 228.1111 ]
+  position: [ 145.6648 ; 233.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -447,7 +447,7 @@ TEXT:
 
 TEXT:
   text: the
-  position: [ 152.9830 ; 228.1111 ]
+  position: [ 157.9830 ; 233.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -455,7 +455,7 @@ TEXT:
 
 TEXT:
   text: presence
-  position: [ 31.0000 ; 241.1111 ]
+  position: [ 36.0000 ; 246.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -463,7 +463,7 @@ TEXT:
 
 TEXT:
   text:  
-  position: [ 158.1033 ; 241.1111 ]
+  position: [ 163.1033 ; 246.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -471,7 +471,7 @@ TEXT:
 
 TEXT:
   text: of
-  position: [ 170.4215 ; 241.1111 ]
+  position: [ 175.4215 ; 246.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -479,7 +479,7 @@ TEXT:
 
 TEXT:
   text:  
-  position: [ 197.3682 ; 241.1111 ]
+  position: [ 202.3682 ; 246.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -487,7 +487,7 @@ TEXT:
 
 TEXT:
   text: a
-  position: [ 209.6864 ; 241.1111 ]
+  position: [ 214.6864 ; 246.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -495,7 +495,7 @@ TEXT:
 
 TEXT:
   text: line.
-  position: [ 31.0000 ; 254.1111 ]
+  position: [ 36.0000 ; 259.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -535,7 +535,7 @@ PATH:
 
 TEXT:
   text: A note on the self message
-  position: [ 240.1134 ; 91.1111 ]
+  position: [ 245.1134 ; 96.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000

@@ -139,14 +139,17 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 	}
 
 	@Override
-	public void createOneGraphic(UGraphic ug) {
-		final UDrawable drawable = createUDrawable(0);
-		drawable.drawU(ug);
-
+	public void createOneGraphic01970(UGraphic ug) {
+		try {
+			final UDrawable drawable = createUDrawable(0);
+			diagram.createImageBuilder(fileFormatOption).drawable(drawable).drawU(ug);
+		} catch (IOException e) {
+			throw new UnsupportedOperationException(e);
+		}
 	}
 
 	@Override
-	public ImageData createOne(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
+	public ImageData createOne01970(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
 		final UDrawable drawable = createUDrawable(index);
 		return diagram.createImageBuilder(fileFormatOption).drawable(drawable).write(os);
 	}
@@ -259,6 +262,20 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 	private boolean isLegendTop() {
 		return diagram.getLegend().isNull() == false
 				&& diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP;
+	}
+	
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormat) {
+		final Page page = pages.get(num);
+
+		double delta = 0;
+		if (num > 0)
+			delta = page.getNewpage1() - page.getHeaderHeight();
+
+		if (delta < 0)
+			delta = 0;
+
+		return drawableSet.asTextBlock(delta, fullDimension.getWidth(), page, diagram.isShowFootbox());
 	}
 
 }

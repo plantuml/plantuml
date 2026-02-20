@@ -5,7 +5,7 @@ public class TeozTimelineIssues_0002_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 1269.0192 ; 178.0000 ]
+dimension: [ 1283.0656 ; 189.0000 ]
 scaleFactor: 1.0000
 seed: -3809530879972030223
 svgLinkTarget: _top
@@ -13,8 +13,8 @@ hoverPathColorRGB: null
 preserveAspectRatio: none
 
 RECTANGLE:
-  pt1: [ 34.5537 ; 34.0000 ]
-  pt2: [ 42.5537 ; 145.0000 ]
+  pt1: [ 39.5537 ; 39.0000 ]
+  pt2: [ 47.5537 ; 150.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -23,15 +23,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 38.0537 ; 34.0000 ]
-  pt2: [ 38.0537 ; 145.0000 ]
+  pt1: [ 43.0537 ; 39.0000 ]
+  pt2: [ 43.0537 ; 150.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 227.5212 ; 34.0000 ]
-  pt2: [ 235.5212 ; 145.0000 ]
+  pt1: [ 232.5212 ; 39.0000 ]
+  pt2: [ 240.5212 ; 150.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -40,15 +40,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 231.0212 ; 34.0000 ]
-  pt2: [ 231.0212 ; 145.0000 ]
+  pt1: [ 236.0212 ; 39.0000 ]
+  pt2: [ 236.0212 ; 150.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 226.0212 ; 61.0000 ]
-  pt2: [ 236.0212 ; 88.0000 ]
+  pt1: [ 231.0212 ; 66.0000 ]
+  pt2: [ 241.0212 ; 93.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -57,8 +57,8 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 420.4829 ; 34.0000 ]
-  pt2: [ 428.4829 ; 145.0000 ]
+  pt1: [ 425.4829 ; 39.0000 ]
+  pt2: [ 433.4829 ; 150.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -67,15 +67,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 423.9829 ; 34.0000 ]
-  pt2: [ 423.9829 ; 145.0000 ]
+  pt1: [ 428.9829 ; 39.0000 ]
+  pt2: [ 428.9829 ; 150.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 418.9829 ; 88.0000 ]
-  pt2: [ 428.9829 ; 121.0000 ]
+  pt1: [ 423.9829 ; 93.0000 ]
+  pt2: [ 433.9829 ; 126.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -84,8 +84,8 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 608.4201 ; 34.0000 ]
-  pt2: [ 616.4201 ; 145.0000 ]
+  pt1: [ 613.4201 ; 39.0000 ]
+  pt2: [ 621.4201 ; 150.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -94,15 +94,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 611.9201 ; 34.0000 ]
-  pt2: [ 611.9201 ; 145.0000 ]
+  pt1: [ 616.9201 ; 39.0000 ]
+  pt2: [ 616.9201 ; 150.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 676.4477 ; 34.0000 ]
-  pt2: [ 684.4477 ; 145.0000 ]
+  pt1: [ 681.4477 ; 39.0000 ]
+  pt2: [ 689.4477 ; 150.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -111,15 +111,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 679.9477 ; 34.0000 ]
-  pt2: [ 679.9477 ; 145.0000 ]
+  pt1: [ 684.9477 ; 39.0000 ]
+  pt2: [ 684.9477 ; 150.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 674.9477 ; 121.0000 ]
-  pt2: [ 684.9477 ; 140.0000 ]
+  pt1: [ 679.9477 ; 126.0000 ]
+  pt2: [ 689.9477 ; 140.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -128,8 +128,8 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 770.5192 ; 34.0000 ]
-  pt2: [ 778.5192 ; 145.0000 ]
+  pt1: [ 775.5192 ; 39.0000 ]
+  pt2: [ 783.5192 ; 150.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -138,15 +138,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 774.0192 ; 34.0000 ]
-  pt2: [ 774.0192 ; 145.0000 ]
+  pt1: [ 779.0192 ; 39.0000 ]
+  pt2: [ 779.0192 ; 150.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 5.0000 ; 5.0000 ]
-  pt2: [ 71.1074 ; 33.0000 ]
+  pt1: [ 10.0000 ; 10.0000 ]
+  pt2: [ 76.1074 ; 38.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -156,15 +156,15 @@ RECTANGLE:
 
 TEXT:
   text: AAA
-  position: [ 12.0000 ; 22.8889 ]
+  position: [ 17.0000 ; 27.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 204.8264 ; 5.0000 ]
-  pt2: [ 257.2160 ; 33.0000 ]
+  pt1: [ 209.8264 ; 10.0000 ]
+  pt2: [ 262.2160 ; 38.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -174,15 +174,15 @@ RECTANGLE:
 
 TEXT:
   text: BBB
-  position: [ 211.8264 ; 22.8889 ]
+  position: [ 216.8264 ; 27.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 390.2105 ; 5.0000 ]
-  pt2: [ 457.7552 ; 33.0000 ]
+  pt1: [ 395.2105 ; 10.0000 ]
+  pt2: [ 462.7552 ; 38.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -192,15 +192,15 @@ RECTANGLE:
 
 TEXT:
   text: DDD
-  position: [ 397.2105 ; 22.8889 ]
+  position: [ 402.2105 ; 27.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 579.1156 ; 5.0000 ]
-  pt2: [ 644.7246 ; 33.0000 ]
+  pt1: [ 584.1156 ; 10.0000 ]
+  pt2: [ 649.7246 ; 38.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -210,15 +210,15 @@ RECTANGLE:
 
 TEXT:
   text: EEE
-  position: [ 586.1156 ; 22.8889 ]
+  position: [ 591.1156 ; 27.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 654.7246 ; 5.0000 ]
-  pt2: [ 705.1709 ; 33.0000 ]
+  pt1: [ 659.7246 ; 10.0000 ]
+  pt2: [ 710.1709 ; 38.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -228,15 +228,15 @@ RECTANGLE:
 
 TEXT:
   text: FFF
-  position: [ 661.7246 ; 22.8889 ]
+  position: [ 666.7246 ; 27.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 749.9671 ; 5.0000 ]
-  pt2: [ 798.0713 ; 33.0000 ]
+  pt1: [ 754.9671 ; 10.0000 ]
+  pt2: [ 803.0713 ; 38.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -246,15 +246,15 @@ RECTANGLE:
 
 TEXT:
   text: GGG
-  position: [ 756.9671 ; 22.8889 ]
+  position: [ 761.9671 ; 27.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 5.0000 ; 145.0000 ]
-  pt2: [ 71.1074 ; 173.0000 ]
+  pt1: [ 10.0000 ; 150.0000 ]
+  pt2: [ 76.1074 ; 178.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -264,15 +264,15 @@ RECTANGLE:
 
 TEXT:
   text: AAA
-  position: [ 12.0000 ; 162.8889 ]
+  position: [ 17.0000 ; 167.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 204.8264 ; 145.0000 ]
-  pt2: [ 257.2160 ; 173.0000 ]
+  pt1: [ 209.8264 ; 150.0000 ]
+  pt2: [ 262.2160 ; 178.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -282,15 +282,15 @@ RECTANGLE:
 
 TEXT:
   text: BBB
-  position: [ 211.8264 ; 162.8889 ]
+  position: [ 216.8264 ; 167.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 390.2105 ; 145.0000 ]
-  pt2: [ 457.7552 ; 173.0000 ]
+  pt1: [ 395.2105 ; 150.0000 ]
+  pt2: [ 462.7552 ; 178.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -300,15 +300,15 @@ RECTANGLE:
 
 TEXT:
   text: DDD
-  position: [ 397.2105 ; 162.8889 ]
+  position: [ 402.2105 ; 167.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 579.1156 ; 145.0000 ]
-  pt2: [ 644.7246 ; 173.0000 ]
+  pt1: [ 584.1156 ; 150.0000 ]
+  pt2: [ 649.7246 ; 178.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -318,15 +318,15 @@ RECTANGLE:
 
 TEXT:
   text: EEE
-  position: [ 586.1156 ; 162.8889 ]
+  position: [ 591.1156 ; 167.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 654.7246 ; 145.0000 ]
-  pt2: [ 705.1709 ; 173.0000 ]
+  pt1: [ 659.7246 ; 150.0000 ]
+  pt2: [ 710.1709 ; 178.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -336,15 +336,15 @@ RECTANGLE:
 
 TEXT:
   text: FFF
-  position: [ 661.7246 ; 162.8889 ]
+  position: [ 666.7246 ; 167.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 749.9671 ; 145.0000 ]
-  pt2: [ 798.0713 ; 173.0000 ]
+  pt1: [ 754.9671 ; 150.0000 ]
+  pt2: [ 803.0713 ; 178.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -354,7 +354,7 @@ RECTANGLE:
 
 TEXT:
   text: GGG
-  position: [ 756.9671 ; 162.8889 ]
+  position: [ 761.9671 ; 167.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
@@ -362,29 +362,29 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 214.0212 ; 57.0000 ]
-   - [ 224.0212 ; 61.0000 ]
-   - [ 214.0212 ; 65.0000 ]
-   - [ 218.0212 ; 61.0000 ]
+   - [ 219.0212 ; 62.0000 ]
+   - [ 229.0212 ; 66.0000 ]
+   - [ 219.0212 ; 70.0000 ]
+   - [ 223.0212 ; 66.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 38.0537 ; 61.0000 ]
-  pt2: [ 220.0212 ; 61.0000 ]
+  pt1: [ 43.0537 ; 66.0000 ]
+  pt2: [ 225.0212 ; 66.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 EMPTY:
-  pt1: [ 45.0537 ; 46.0000 ]
-  pt2: [ 61.3410 ; 59.0000 ]
+  pt1: [ 50.0537 ; 51.0000 ]
+  pt2: [ 66.3410 ; 64.0000 ]
 
 TEXT:
   text: 1
-  position: [ 45.0537 ; 56.1111 ]
+  position: [ 50.0537 ; 61.1111 ]
   orientation: 0
   font: SansSerif.bold/13 [BOLD]
   color: ff000000
@@ -392,7 +392,7 @@ TEXT:
 
 TEXT:
   text: Message 0
-  position: [ 61.3410 ; 56.1111 ]
+  position: [ 66.3410 ; 61.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -400,29 +400,29 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 406.9829 ; 84.0000 ]
-   - [ 416.9829 ; 88.0000 ]
-   - [ 406.9829 ; 92.0000 ]
-   - [ 410.9829 ; 88.0000 ]
+   - [ 411.9829 ; 89.0000 ]
+   - [ 421.9829 ; 93.0000 ]
+   - [ 411.9829 ; 97.0000 ]
+   - [ 415.9829 ; 93.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff22a722
   backcolor: ff22a722
 
 LINE:
-  pt1: [ 236.0212 ; 88.0000 ]
-  pt2: [ 412.9829 ; 88.0000 ]
+  pt1: [ 241.0212 ; 93.0000 ]
+  pt2: [ 417.9829 ; 93.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff22a722
 
 EMPTY:
-  pt1: [ 243.0212 ; 73.0000 ]
-  pt2: [ 259.3079 ; 86.0000 ]
+  pt1: [ 248.0212 ; 78.0000 ]
+  pt2: [ 264.3079 ; 91.0000 ]
 
 TEXT:
   text: 2
-  position: [ 243.0212 ; 83.1111 ]
+  position: [ 248.0212 ; 88.1111 ]
   orientation: 0
   font: SansSerif.bold/13 [BOLD]
   color: ff000000
@@ -430,7 +430,7 @@ TEXT:
 
 TEXT:
   text: Message 1
-  position: [ 259.3079 ; 83.1111 ]
+  position: [ 264.3079 ; 88.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -438,29 +438,29 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 599.9201 ; 84.0000 ]
-   - [ 609.9201 ; 88.0000 ]
-   - [ 599.9201 ; 92.0000 ]
-   - [ 603.9201 ; 88.0000 ]
+   - [ 604.9201 ; 89.0000 ]
+   - [ 614.9201 ; 93.0000 ]
+   - [ 604.9201 ; 97.0000 ]
+   - [ 608.9201 ; 93.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 428.9829 ; 88.0000 ]
-  pt2: [ 605.9201 ; 88.0000 ]
+  pt1: [ 433.9829 ; 93.0000 ]
+  pt2: [ 610.9201 ; 93.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 EMPTY:
-  pt1: [ 435.9829 ; 73.0000 ]
-  pt2: [ 452.2713 ; 86.0000 ]
+  pt1: [ 440.9829 ; 78.0000 ]
+  pt2: [ 457.2713 ; 91.0000 ]
 
 TEXT:
   text: 3
-  position: [ 435.9829 ; 83.1111 ]
+  position: [ 440.9829 ; 88.1111 ]
   orientation: 0
   font: SansSerif.bold/13 [BOLD]
   color: ff000000
@@ -468,7 +468,7 @@ TEXT:
 
 TEXT:
   text: Message 2
-  position: [ 452.2713 ; 83.1111 ]
+  position: [ 457.2713 ; 88.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -508,7 +508,7 @@ PATH:
 
 TEXT:
   text: <-- Expect 1 & 2 to be same row
-  position: [ 622.9201 ; 89.1111 ]
+  position: [ 627.9201 ; 94.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -516,29 +516,29 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 662.9477 ; 117.0000 ]
-   - [ 672.9477 ; 121.0000 ]
-   - [ 662.9477 ; 125.0000 ]
-   - [ 666.9477 ; 121.0000 ]
+   - [ 667.9477 ; 122.0000 ]
+   - [ 677.9477 ; 126.0000 ]
+   - [ 667.9477 ; 130.0000 ]
+   - [ 671.9477 ; 126.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff22a722
   backcolor: ff22a722
 
 LINE:
-  pt1: [ 428.9829 ; 121.0000 ]
-  pt2: [ 668.9477 ; 121.0000 ]
+  pt1: [ 433.9829 ; 126.0000 ]
+  pt2: [ 673.9477 ; 126.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff22a722
 
 EMPTY:
-  pt1: [ 435.9829 ; 106.0000 ]
-  pt2: [ 452.2707 ; 119.0000 ]
+  pt1: [ 440.9829 ; 111.0000 ]
+  pt2: [ 457.2707 ; 124.0000 ]
 
 TEXT:
   text: 4
-  position: [ 435.9829 ; 116.1111 ]
+  position: [ 440.9829 ; 121.1111 ]
   orientation: 0
   font: SansSerif.bold/13 [BOLD]
   color: ff000000
@@ -546,7 +546,7 @@ TEXT:
 
 TEXT:
   text: Msg 3
-  position: [ 452.2707 ; 116.1111 ]
+  position: [ 457.2707 ; 121.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -554,29 +554,29 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 762.0192 ; 117.0000 ]
-   - [ 772.0192 ; 121.0000 ]
-   - [ 762.0192 ; 125.0000 ]
-   - [ 766.0192 ; 121.0000 ]
+   - [ 767.0192 ; 122.0000 ]
+   - [ 777.0192 ; 126.0000 ]
+   - [ 767.0192 ; 130.0000 ]
+   - [ 771.0192 ; 126.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 684.9477 ; 121.0000 ]
-  pt2: [ 768.0192 ; 121.0000 ]
+  pt1: [ 689.9477 ; 126.0000 ]
+  pt2: [ 773.0192 ; 126.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 EMPTY:
-  pt1: [ 691.9477 ; 106.0000 ]
-  pt2: [ 708.2513 ; 119.0000 ]
+  pt1: [ 696.9477 ; 111.0000 ]
+  pt2: [ 713.2513 ; 124.0000 ]
 
 TEXT:
   text: 5
-  position: [ 691.9477 ; 116.1111 ]
+  position: [ 696.9477 ; 121.1111 ]
   orientation: 0
   font: SansSerif.bold/13 [BOLD]
   color: ff000000
@@ -584,7 +584,7 @@ TEXT:
 
 TEXT:
   text: Msg 4
-  position: [ 708.2513 ; 116.1111 ]
+  position: [ 713.2513 ; 121.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -624,7 +624,7 @@ PATH:
 
 TEXT:
   text: <-- Expect 3 & 4 to be same row
-  position: [ 785.0192 ; 122.1111 ]
+  position: [ 790.0192 ; 127.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000

@@ -62,7 +62,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
@@ -74,6 +73,8 @@ import net.sourceforge.plantuml.openiconic.SvgPath;
 // Shorcut from https://api.github.com/emojis
 
 public class SvgNanoParser implements ISvgSpriteParser, GrayLevelRange {
+
+	private final static boolean TRACE = false;
 
 	private static final Pattern P_TEXT_OR_DRAW = Pattern
 			.compile("(\\<text .*?\\</text\\>)|(\\<(svg|path|g|circle|ellipse)[^<>]*\\>)|(\\</[^<>]*\\>)");
@@ -161,7 +162,8 @@ public class SvgNanoParser implements ISvgSpriteParser, GrayLevelRange {
 			} else if (s.startsWith("<text ")) {
 				drawText(ugs, s, stackG);
 			} else {
-				System.err.println("**?=" + s);
+				if (TRACE)
+					System.err.println("ignored1=" + s);
 			}
 		}
 	}
@@ -177,8 +179,10 @@ public class SvgNanoParser implements ISvgSpriteParser, GrayLevelRange {
 						data.add(s);
 					else if (s.startsWith("<svg") || s.startsWith("</svg")) {
 						// Ignore
-					} else
-						System.err.println("???=" + s);
+					} else {
+						if (TRACE)
+							System.err.println("ignored2=" + s);
+					}
 				}
 			}
 		}
@@ -463,7 +467,7 @@ public class SvgNanoParser implements ISvgSpriteParser, GrayLevelRange {
 		final double width = data.getWidth();
 		final double height = data.getHeight();
 
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				if (backColor != null)

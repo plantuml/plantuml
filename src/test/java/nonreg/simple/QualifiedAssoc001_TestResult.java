@@ -1,9 +1,11 @@
 package nonreg.simple;
 
+public class QualifiedAssoc001_TestResult {
+}
 /*
 """
 DPI: 96
-dimension: [ 523.8874 ; 234.0000 ]
+dimension: [ 532.5000 ; 227.0000 ]
 scaleFactor: 1.0000
 seed: -9128753789116430235
 svgLinkTarget: _top
@@ -850,5 +852,3 @@ PATH:
 
 """
 */
-public class QualifiedAssoc001_TestResult {
-}

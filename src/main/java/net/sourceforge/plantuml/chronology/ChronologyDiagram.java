@@ -45,7 +45,6 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -56,7 +55,6 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.project.GanttStyle;
@@ -77,7 +75,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-public class ChronologyDiagram extends TitledDiagram implements WithSprite, GanttStyle {
+public class ChronologyDiagram extends TitledDiagram implements GanttStyle {
 
 	private final Map<Task, TaskDraw> draws = new LinkedHashMap<Task, TaskDraw>();
 	private final Map<TaskCode, Task> tasks = new LinkedHashMap<TaskCode, Task>();
@@ -139,9 +137,9 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 //	}
 
 	@Override
-	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);
+		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);
 	}
 
 //	public void setPrintScale(PrintScale printScale) {
@@ -180,7 +178,12 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 //	}
 
 	@Override
-	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+		return getTextMainBlock01970(fileFormatOption);
+	}
+
+	@Override
+	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 		initMinMax();
 
@@ -189,7 +192,7 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 		initTaskAndResourceDraws(timeHeader.getTimeScale(), timeHeader.getFullHeaderHeight(stringBounder),
 				stringBounder);
 
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return new XDimension2D(1000, 1000);
 			}

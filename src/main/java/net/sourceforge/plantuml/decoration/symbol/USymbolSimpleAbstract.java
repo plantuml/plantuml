@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 abstract class USymbolSimpleAbstract extends USymbol {
@@ -54,7 +53,7 @@ abstract class USymbolSimpleAbstract extends USymbol {
 			final Fashion symbolContext, final HorizontalAlignment stereoAlignment) {
 		Objects.requireNonNull(stereotype);
 		final TextBlock stickman = getDrawing(symbolContext);
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				final StringBounder stringBounder = ug.getStringBounder();

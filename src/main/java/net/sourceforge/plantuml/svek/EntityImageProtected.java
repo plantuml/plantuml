@@ -42,9 +42,8 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 
-public class EntityImageProtected extends AbstractTextBlock implements IEntityImage, Untranslated, WithPorts {
+public class EntityImageProtected implements IEntityImage, Untranslated, WithPorts {
 
 	private final IEntityImage orig;
 	private final double border;

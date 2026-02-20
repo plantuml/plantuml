@@ -128,7 +128,7 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 
 	}
 
-	public ImageData createOne(OutputStream os, int index, boolean isWithMetadata) throws IOException {
+	public ImageData createOne01970(OutputStream os, int index, boolean isWithMetadata) throws IOException {
 		if (fileFormat == FileFormat.UTXT) {
 			final PrintStream ps = SecurityUtils.createPrintStream(os, true, UTF_8);
 			ug.getCharArea().print(ps);
@@ -144,7 +144,7 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 	}
 
 	@Override
-	public void createOneGraphic(UGraphic ug) {
+	public void createOneGraphic01970(UGraphic ug) {
 		throw new UnsupportedOperationException();
 	}
 

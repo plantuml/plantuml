@@ -35,8 +35,8 @@
  */
 package net.sourceforge.plantuml.eggs;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
@@ -44,7 +44,7 @@ public class PSystemLostFactory extends PSystemSingleLineFactory {
 	
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
+	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		if (line.matches("^4\\D+8\\D+15\\D+16\\D+23\\D+42")) 
 			return new PSystemLost(source, preprocessing);
 		

@@ -51,7 +51,6 @@ import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public abstract class AbstractEntityDiagram extends CucaDiagram {
-	// ::remove folder when __HAXE__
 
 	public AbstractEntityDiagram(UmlSource source, UmlDiagramType type, Previous previous, PreprocessingArtifact preprocessing) {
 		super(source, type, previous, preprocessing);

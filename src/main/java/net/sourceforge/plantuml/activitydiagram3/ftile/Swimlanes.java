@@ -73,7 +73,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
@@ -89,7 +88,7 @@ import net.sourceforge.plantuml.style.Styleable;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 import net.sourceforge.plantuml.utils.MathUtils;
 
-public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable {
+public class Swimlanes implements TextBlock, Styleable {
 
 	private final ISkinParam skinParam;
 	private final Pragma pragma;

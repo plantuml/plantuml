@@ -35,14 +35,16 @@
  */
 package net.sourceforge.plantuml.project;
 
+import net.sourceforge.plantuml.annotation.PerformanceIssue;
 import net.sourceforge.plantuml.crash.CrashImage;
 import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.project.core.Resource;
@@ -62,7 +64,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-public class GanttDiagramMainBlock extends AbstractTextBlock {
+public class GanttDiagramMainBlock implements TextBlock {
 
 	private final GanttDiagram diagram;
 	private final TimeHeader timeHeader;
@@ -141,8 +143,13 @@ public class GanttDiagramMainBlock extends AbstractTextBlock {
 
 	}
 
+	@PerformanceIssue
+	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		return layout.calculateDimension();
+		final LimitFinder limitFinder = LimitFinder.create(stringBounder, true);
+		this.drawU(limitFinder);
+		return limitFinder.getMinMax().getDimension();
+		// return layout.calculateDimension();
 	}
 
 	private void drawTasksRect(UGraphic ug) {

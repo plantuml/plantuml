@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandNamespaceSeparator extends SingleLineCommand2<AbstractPSystem> {
+public class CommandNamespaceSeparator extends SingleLineCommand2<Diagram> {
 
 	public static final CommandNamespaceSeparator ME = new CommandNamespaceSeparator();
 
@@ -67,7 +67,7 @@ public class CommandNamespaceSeparator extends SingleLineCommand2<AbstractPSyste
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractPSystem diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(Diagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String s = arg.get("SEPARATOR", 0);
 		if ("none".equalsIgnoreCase(s))
 			diagram.setNamespaceSeparator(null);

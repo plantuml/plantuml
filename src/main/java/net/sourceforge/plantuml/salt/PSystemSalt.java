@@ -45,7 +45,6 @@ import java.util.List;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ScaleSimple;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -61,7 +60,6 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.log.Logme;
@@ -92,7 +90,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.Log;
 
-public class PSystemSalt extends TitledDiagram implements WithSprite {
+public class PSystemSalt extends TitledDiagram {
 
 	private final List<String> data;
 	private final SaltDictionary dictionary;
@@ -113,7 +111,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+	final protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		try {
 			final Element salt = createElement(manageSprite());
@@ -134,15 +132,20 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 		final Element salt = createElement(manageSprite());
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 		final XDimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);
 		return getTextBlock(salt, size);
 	}
 
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+		return getTextMainBlock01970(fileFormatOption);
+	}
+
 	private TextBlock getTextBlock(final Element salt, final XDimension2D size) {
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				ug = ug.apply(getBlack());
@@ -170,7 +173,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 
 	private List<String> manageSprite() {
 
-		final Command<WithSprite> cmd = CommandFactorySprite.ME.createMultiLine(false);
+		final Command<TitledDiagram> cmd = CommandFactorySprite.ME.createMultiLine(false);
 
 		final List<String> result = new ArrayList<>();
 		for (Iterator<String> it = data.iterator(); it.hasNext();) {
@@ -220,7 +223,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 
 		for (ElementFactory f : cpx) {
 			if (f.ready()) {
-				Log.info(()->"Using " + f);
+				Log.info(() -> "Using " + f);
 				return f.create().getElement();
 			}
 		}

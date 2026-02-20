@@ -63,7 +63,6 @@ import net.sourceforge.plantuml.klimt.geom.PlacementStrategyY1Y2Right;
 import net.sourceforge.plantuml.klimt.geom.ULayoutGroup;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockLineBefore;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
@@ -77,7 +76,7 @@ import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.CharHidder;
 
-public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock, WithPorts {
+public class MethodsOrFieldsArea implements TextBlock, WithPorts {
 
 	public TextBlock asBlockMemberImpl() {
 		return new TextBlockLineBefore(style.value(PName.LineThickness).asDouble(),
@@ -301,7 +300,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 		};
 	}
 
-	static class TextBlockTracer extends AbstractTextBlock implements TextBlock {
+	static class TextBlockTracer implements TextBlock {
 
 		private final TextBlock bloc;
 		private final Url url;
@@ -335,7 +334,7 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 
 	private TextBlock getUBlock(final VisibilityModifier modifier, Url url) {
 		if (modifier == null) {
-			return new AbstractTextBlock() {
+			return new TextBlock() {
 
 				public void drawU(UGraphic ug) {
 				}

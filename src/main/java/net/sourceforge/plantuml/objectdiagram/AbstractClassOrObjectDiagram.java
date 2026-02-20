@@ -57,7 +57,6 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram {
-	// ::remove folder when __HAXE__
 
 	public AbstractClassOrObjectDiagram(UmlSource source, UmlDiagramType type, Previous previous, PreprocessingArtifact preprocessingArtifact) {
 		super(source, type, previous, preprocessingArtifact);

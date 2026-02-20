@@ -40,7 +40,7 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.abel.EntityPortion;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandHideShowByVisibility extends SingleLineCommand2<UmlDiagram> {
+public class CommandHideShowByVisibility extends SingleLineCommand2<TitledDiagram> {
 
 	public static final CommandHideShowByVisibility ME = new CommandHideShowByVisibility();
 
@@ -72,7 +72,7 @@ public class CommandHideShowByVisibility extends SingleLineCommand2<UmlDiagram> 
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram classDiagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram classDiagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		if (classDiagram instanceof ClassDiagram) {
 			return executeArgClass((ClassDiagram) classDiagram, arg);
 		}

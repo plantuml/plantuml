@@ -35,15 +35,15 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.ScaleWidthAndHeight;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandScaleWidthAndHeight extends SingleLineCommand2<AbstractPSystem> {
+public class CommandScaleWidthAndHeight extends SingleLineCommand2<Diagram> {
 
 	public static final CommandScaleWidthAndHeight ME = new CommandScaleWidthAndHeight();
 
@@ -63,7 +63,7 @@ public class CommandScaleWidthAndHeight extends SingleLineCommand2<AbstractPSyst
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractPSystem diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(Diagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final double width = Double.parseDouble(arg.get("WIDTH", 0));
 		final double height = Double.parseDouble(arg.get("HEIGHT", 0));
 		diagram.setScale(new ScaleWidthAndHeight(width, height));

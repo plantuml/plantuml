@@ -45,12 +45,10 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class SingleLine extends AbstractTextBlock implements Line {
-    // ::remove file when __HAXE__
+public class SingleLine implements TextBlock, Line {
 
 	private final List<TextBlock> blocs = new ArrayList<>();
 	private final HorizontalAlignment horizontalAlignment;
-
 
 	public static SingleLine rawText(String text, FontConfiguration fontConfiguration) {
 		final SingleLine result = new SingleLine(HorizontalAlignment.LEFT);

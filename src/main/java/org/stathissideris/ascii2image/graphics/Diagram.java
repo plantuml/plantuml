@@ -721,8 +721,8 @@ public class Diagram {
 
 			int index = filledSets.indexOf(largest);
 			if(gridLargest.equals(gridOfSmalls)
-					&& !toBeRemovedIndices.contains(new Integer(index))) {
-				toBeRemovedIndices.add(new Integer(index));
+					&& !toBeRemovedIndices.contains(Integer.valueOf(index))) {
+				toBeRemovedIndices.add(Integer.valueOf(index));
 				if (DEBUG){
 					System.out.println("Decided to remove set:");
 					largest.printAsGrid();

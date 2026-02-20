@@ -53,7 +53,7 @@ import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Previous;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.abel.EntityPortion;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -80,7 +80,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 
-public class SequenceDiagram extends UmlDiagram {
+public class SequenceDiagram extends TitledDiagram {
 
 	private boolean hideUnlinkedData;
 
@@ -314,17 +314,35 @@ public class SequenceDiagram extends UmlDiagram {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormat)
 			throws IOException {
 		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(index, fileFormat);
-		return sequenceDiagramPngMaker.createOne(os, index, fileFormat.isWithMetadata());
+		return sequenceDiagramPngMaker.createOne01970(os, index, fileFormat.isWithMetadata());
 	}
 
 	@Override
-	final public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
+	protected ImageData exportXmi(OutputStream os, FileFormat fileFormat) throws IOException {
+		final SequenceDiagramXmiMaker maker = new SequenceDiagramXmiMaker(this, fileFormat);
+		return maker.createOne01970(os, 0, false);
+	}
+
+	@Override
+	protected ImageData exportTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
+		final SequenceDiagramTxtMaker maker = new SequenceDiagramTxtMaker(this, fileFormat);
+		return maker.createOne01970(os, index, false);
+	}
+
+	@Override
+	final public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
 		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(0, fileFormatOption);
-		sequenceDiagramPngMaker.createOneGraphic(ug);
+		sequenceDiagramPngMaker.createOneGraphic01970(ug);
+	}
+	
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormat) {
+		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(num, fileFormat);
+		return sequenceDiagramPngMaker.getTextBlock12026(num, fileFormat);
 	}
 
 	@Override
-	final protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+	final protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -492,7 +510,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	@Override
-	public int getNbImages() {
+	public int getCardinality() {
 		return countNewpage + 1;
 	}
 

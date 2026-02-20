@@ -35,16 +35,16 @@
  */
 package net.sourceforge.plantuml.font;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemListFontsFactory extends PSystemSingleLineFactory {
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
+	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		final String lineLower = StringUtils.goLowerCase(line);
 		if (lineLower.equals("listfont") || lineLower.equals("listfonts") || lineLower.startsWith("listfont ")
 				|| lineLower.startsWith("listfonts ")) {

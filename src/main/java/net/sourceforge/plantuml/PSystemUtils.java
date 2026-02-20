@@ -97,7 +97,7 @@ public class PSystemUtils {
 	private static List<FileImageData> exportDiagramsNewpaged(NewpagedDiagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
 		final List<FileImageData> result = new ArrayList<>();
-		final int nbImages = system.getNbImages();
+		final int nbImages = system.getCardinality();
 		for (int i = 0; i < nbImages; i++) {
 
 			final SFile f = suggestedFile.getFile(i);
@@ -138,7 +138,7 @@ public class PSystemUtils {
 	private static List<FileImageData> exportDiagramsSequence(SequenceDiagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
 		final List<FileImageData> result = new ArrayList<>();
-		final int nbImages = system.getNbImages();
+		final int nbImages = system.getCardinality();
 		for (int i = 0; i < nbImages; i++) {
 
 			final SFile f = suggestedFile.getFile(i);
@@ -208,8 +208,8 @@ public class PSystemUtils {
 		if (imageData == null)
 			return emptyList();
 
-		if (imageData.containsCMapData() && system instanceof UmlDiagram)
-			((UmlDiagram) system).exportCmap(suggestedFile, 0, imageData);
+		if (imageData.containsCMapData() && system instanceof TitledDiagram)
+			((TitledDiagram) system).exportCmap(suggestedFile, 0, imageData);
 
 		if (system instanceof TitledDiagram && fileFormatOption.getFileFormat() == FileFormat.PNG)
 			return splitPng((TitledDiagram) system, suggestedFile, imageData, fileFormatOption);

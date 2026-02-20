@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.version.IteratorCounter2;
 
 public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 
-	protected abstract AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing);
+	protected abstract Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing);
 
 	protected PSystemSingleLineFactory() {
 		super(DiagramType.UML);
@@ -82,7 +82,7 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 		if (StartUtils.isArobaseEndDiagram(s.getString()))
 			return buildEmptyError(source, s.getLocation(), it.getTrace(), preprocessing);
 
-		final AbstractPSystem sys = executeLine(source, s.getString(), preprocessing);
+		final Diagram sys = executeLine(source, s.getString(), preprocessing);
 		if (sys == null) {
 			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, s.getLocation(), getUmlDiagramType());
 			// return PSystemErrorUtils.buildV1(source, err, null);

@@ -46,7 +46,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -59,8 +59,8 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -74,7 +74,7 @@ import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
 import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
 import net.sourceforge.plantuml.timingdiagram.graphic.TimeArrow;
 
-public class TimingDiagram extends UmlDiagram implements Clocks {
+public class TimingDiagram extends TitledDiagram implements Clocks {
 
 	public static final double marginX1 = 5;
 	private final double marginX2 = 5;
@@ -102,12 +102,12 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);
+		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
-		return new AbstractTextBlock() {
+	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				drawInternal(ug);
@@ -120,6 +120,11 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 			}
 
 		};
+	}
+
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+		return TextBlockUtils.withMargin(getTextMainBlock01970(fileFormatOption), 10, 10);
 	}
 
 	private StyleSignatureBasic getStyleSignature() {

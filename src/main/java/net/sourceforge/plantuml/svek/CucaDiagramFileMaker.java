@@ -43,6 +43,8 @@ import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 
 public abstract class CucaDiagramFileMaker {
 
@@ -62,8 +64,22 @@ public abstract class CucaDiagramFileMaker {
 		return bibliotekon;
 	}
 
-	public abstract ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
-			throws IOException;
+	public abstract ImageData createFile01970(OutputStream os, List<String> dotStrings,
+			FileFormatOption fileFormatOption) throws IOException;
 
-	public abstract void createOneGraphic(UGraphic ug);
+	public abstract void createOneGraphic01970(UGraphic ug);
+
+	// Methods ending with 12026 are the new methods
+	public TextBlock getTextBlock12026(List<String> dotStrings, FileFormatOption fileFormatOption)
+			throws IOException, InterruptedException {
+		/*
+		 * This method should draw image number "num" of the diagram, but without
+		 * titles, header, footer, legend, caption, or mainframe, which will be added by
+		 * another class on top of this TextBlock
+		 */
+		System.err.println("CucaDiagramFileMaker::getTextBlock12026 " + getClass().getSimpleName());
+		return TextBlockUtils.EMPTY_TEXT_BLOCK;
+		// throw new UnsupportedOperationException("wip");
+	}
+
 }

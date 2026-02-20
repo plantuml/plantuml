@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.sprite;
 
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandListSprite extends SingleLineCommand2<UmlDiagram> {
+public class CommandListSprite extends SingleLineCommand2<TitledDiagram> {
 
 	public CommandListSprite() {
 		super(getRegexConcat());
@@ -59,7 +59,7 @@ public class CommandListSprite extends SingleLineCommand2<UmlDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		return CommandExecutionResult.ok();
 	}
 

@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
@@ -53,7 +54,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public final class CommandFactorySprite implements SingleMultiFactoryCommand<WithSprite> {
+public final class CommandFactorySprite implements SingleMultiFactoryCommand<TitledDiagram> {
 
 	private final static Lazy<Pattern2> END = new Lazy<>(
 			() -> Pattern2.cmpile("^end[%s]?sprite|\\}$"));
@@ -86,11 +87,11 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Wit
 			RegexLeaf.spaceOneOrMore(), //
 			new RegexLeaf(1, "DATA", "([-_A-Za-z0-9]+)"), RegexLeaf.end());
 
-	private final Command<WithSprite> commandMultiline = new CommandMultilines2<WithSprite>(multiline,
+	private final Command<TitledDiagram> commandMultiline = new CommandMultilines2<TitledDiagram>(multiline,
 			MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END) {
 
 		@Override
-		protected CommandExecutionResult executeNow(final WithSprite system, BlocLines lines, ParserPass currentPass) {
+		protected CommandExecutionResult executeNow(final TitledDiagram system, BlocLines lines, ParserPass currentPass) {
 			lines = lines.trim().removeEmptyLines();
 			final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 
@@ -104,11 +105,11 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Wit
 
 	};
 
-	public Command<WithSprite> createSingleLine() {
-		return new SingleLineCommand2<WithSprite>(singleLine) {
+	public Command<TitledDiagram> createSingleLine() {
+		return new SingleLineCommand2<TitledDiagram>(singleLine) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final WithSprite system, LineLocation location, RegexResult arg,
+			protected CommandExecutionResult executeArg(final TitledDiagram system, LineLocation location, RegexResult arg,
 					ParserPass currentPass) {
 				return executeInternal(system, arg, Arrays.asList((String) arg.get("DATA", 0)));
 			}
@@ -116,7 +117,7 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Wit
 		};
 	}
 
-	public Command<WithSprite> createMultiLine(boolean withBracketUnused) {
+	public Command<TitledDiagram> createMultiLine(boolean withBracketUnused) {
 		return commandMultiline;
 	}
 

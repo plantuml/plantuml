@@ -39,8 +39,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class TextBlockEmpty extends AbstractTextBlock {
-    // ::remove file when __HAXE__
+public class TextBlockEmpty implements TextBlock {
 
 	private final double width;
 	private final double height;

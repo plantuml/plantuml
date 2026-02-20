@@ -46,8 +46,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.ImgValign;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class TileImage extends AbstractTextBlock implements TextBlock {
-    // ::remove file when __HAXE__
+public class TileImage implements TextBlock {
 
 	private final PortableImage image;
 	private final int vspace;

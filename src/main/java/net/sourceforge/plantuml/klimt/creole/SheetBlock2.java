@@ -47,12 +47,11 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 
-final public class SheetBlock2 extends AbstractTextBlock implements TextBlock, Atom, WithPorts {
+final public class SheetBlock2 implements TextBlock, Atom, WithPorts {
 
 	private final SheetBlock1 block;
 	private final UStroke defaultStroke;

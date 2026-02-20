@@ -47,7 +47,7 @@ class ApiV2CsvTest {
 		assertThat(diagram.getSource().getDiagramType()).isEqualTo(DiagramType.valueOf(diagramType));
 		assertThat(diagram.getClass().getSimpleName()).isEqualTo(className);
 		assertThat(diagram.getDescription().getDescription()).isEqualTo(description);
-		assertThat(diagram.getNbImages()).isEqualTo(nbImages);
+		assertThat(diagram.getCardinality()).isEqualTo(nbImages);
 		assertThat(diagram.getSource().getTotalLineCount()).isEqualTo(totalLineCount);
 
 		assertThat(diagram.getTitleDisplay().asList().size()).isEqualTo(nbTitle);

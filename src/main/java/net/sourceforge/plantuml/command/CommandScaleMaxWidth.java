@@ -35,15 +35,15 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.ScaleMaxWidth;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandScaleMaxWidth extends SingleLineCommand2<AbstractPSystem> {
+public class CommandScaleMaxWidth extends SingleLineCommand2<Diagram> {
 
 	public static final CommandScaleMaxWidth ME = new CommandScaleMaxWidth();
 
@@ -63,7 +63,7 @@ public class CommandScaleMaxWidth extends SingleLineCommand2<AbstractPSystem> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractPSystem diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(Diagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final double width = Double.parseDouble(arg.get("WIDTH", 0));
 		diagram.setScale(new ScaleMaxWidth(width));
 		return CommandExecutionResult.ok();

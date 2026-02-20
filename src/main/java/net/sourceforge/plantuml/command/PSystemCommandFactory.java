@@ -39,11 +39,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -64,7 +64,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 	protected abstract void initCommandsList(List<Command> cmds);
 
-	public abstract AbstractPSystem createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+	public abstract Diagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing);
 
 	protected PSystemCommandFactory() {
@@ -92,7 +92,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 			return buildEmptyError(source, startLine.getLocation(), it.getTrace(), preprocessing);
 		}
-		AbstractPSystem sys = createEmptyDiagram(pathSystem, source, previous, preprocessing);
+		Diagram sys = createEmptyDiagram(pathSystem, source, previous, preprocessing);
 
 		final Set<ParserPass> requiredPass = sys.getRequiredPass();
 
@@ -114,7 +114,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 	}
 
-	private Diagram finalizeDiagram(AbstractPSystem sys, UmlSource source, IteratorCounter2 it,
+	private Diagram finalizeDiagram(Diagram sys, UmlSource source, IteratorCounter2 it,
 			PreprocessingArtifact preprocessing) {
 		if (sys == null)
 			return null;
@@ -135,7 +135,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 		return sys;
 	}
 
-	private AbstractPSystem executeFewLines(AbstractPSystem sys, UmlSource source, final IteratorCounter2 it,
+	private Diagram executeFewLines(Diagram sys, UmlSource source, final IteratorCounter2 it,
 			ParserPass currentPass, PreprocessingArtifact preprocessing) {
 		final Step step = getCandidate(it);
 		if (step == null) {

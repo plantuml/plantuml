@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityGender;
 import net.sourceforge.plantuml.abel.EntityGenderUtils;
@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
+public class CommandHideShowByGender extends SingleLineCommand2<TitledDiagram> {
 
 	public static final CommandHideShowByGender ME = new CommandHideShowByGender();
 
@@ -94,7 +94,7 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg,
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		if (diagram instanceof AbstractClassOrObjectDiagram)
 			return executeClassDiagram((AbstractClassOrObjectDiagram) diagram, arg);

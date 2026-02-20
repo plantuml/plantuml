@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.activitydiagram3.gtile.GtileBox;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileRepeat;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.klimt.color.Colors;
-import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;

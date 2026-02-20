@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.eggs;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.DirectOsDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-public class PSystemPath extends AbstractPSystem {
+public class PSystemPath extends DirectOsDiagram {
 	
 
 	private final GraphicsPath path;

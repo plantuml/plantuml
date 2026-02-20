@@ -5,7 +5,7 @@ public class A0003_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 367.7447 ; 74.0000 ]
+dimension: [ 366.7447 ; 74.1667 ]
 scaleFactor: 2.0000
 seed: 2061842952546013393
 svgLinkTarget: _top

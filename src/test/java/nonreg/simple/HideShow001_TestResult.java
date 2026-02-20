@@ -1,9 +1,11 @@
 package nonreg.simple;
 
+public class HideShow001_TestResult {
+}
 /*
 """
 DPI: 96
-dimension: [ 148.2616 ; 70.0000 ]
+dimension: [ 157.0000 ; 63.0000 ]
 scaleFactor: 1.0000
 seed: -6671548050035206981
 svgLinkTarget: _top
@@ -89,5 +91,3 @@ EMPTY:
 
 """
 */
-public class HideShow001_TestResult {
-}

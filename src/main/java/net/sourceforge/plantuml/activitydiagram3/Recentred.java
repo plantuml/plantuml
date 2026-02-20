@@ -33,30 +33,44 @@
  * 
  *
  */
-package net.sourceforge.plantuml.abel;
+package net.sourceforge.plantuml.activitydiagram3;
 
-import net.sourceforge.plantuml.api.ApiWarning;
-import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
-/**
- * 
- * There is a typo in this class name.
- * 
- * You should use directly DisplayPositioned and not this interface which is
- * here for legacy code. This file will be removed, so use DisplayPositioned
- * instead.
- * 
- */
-@Deprecated
-@ApiWarning(willBeRemoved = "use DisplayPositioned instead")
-public class DisplayPositionned {
+class Recentred implements TextBlock {
 
-	public Display getDisplay() {
-		return null;
+	private final TextBlock textBlock;
+	private MinMax minMax;
+
+	public Recentred(TextBlock textBlock) {
+		this.textBlock = textBlock;
 	}
 
-	public boolean isNull() {
-		return false;
+	public void drawU(final UGraphic ug) {
+		final MinMax minMax = getMinMax(ug.getStringBounder());
+		textBlock.drawU(ug.apply(new UTranslate(-minMax.getMinX() + 5, -minMax.getMinY() + 5)));
+	}
+
+	public MinMax getMinMax(StringBounder stringBounder) {
+		if (minMax == null)
+			minMax = textBlock.getMinMax(stringBounder).enlarge(15, 15);
+
+		return minMax;
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final MinMax minMax = getMinMax(stringBounder);
+		return minMax.getDimension();
+	}
+
+	public HColor getBackcolor() {
+		return textBlock.getBackcolor();
 	}
 
 }

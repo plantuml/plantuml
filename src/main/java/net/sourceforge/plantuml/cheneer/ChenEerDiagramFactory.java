@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.cheneer;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.cheneer.command.CommandAssociate;
 import net.sourceforge.plantuml.cheneer.command.CommandCreateAttribute;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandRankDir;
 import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
@@ -75,7 +75,7 @@ public class ChenEerDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public AbstractPSystem createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public Diagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
 		return new ChenEerDiagram(source, previous, preprocessing);
 	}
 

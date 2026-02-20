@@ -45,11 +45,10 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.style.ISkinParam;
 
-public abstract class AbstractFtile extends AbstractTextBlock implements Ftile {
+public abstract class AbstractFtile implements Ftile {
 
 	protected final boolean TRACE = false;
 

@@ -48,13 +48,12 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.nwdiag.VerticalLine;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
-public class PacketIndicator extends AbstractTextBlock {
+public class PacketIndicator implements TextBlock {
 
 	public static final double V_LINE_FULL = 32D;
 
@@ -111,19 +110,14 @@ public class PacketIndicator extends AbstractTextBlock {
 	}
 
 	public static TextBlock createNumberTextBlock(FontConfiguration fg, ISkinParam skinParam, CharSequence... s) {
-		return Display.create(s).create8(
-						fg,
-						HorizontalAlignment.LEFT,
-						skinParam,
-						CreoleMode.NO_CREOLE,
-						LineBreakStrategy.NONE
-		);
+		return Display.create(s).create8(fg, HorizontalAlignment.LEFT, skinParam, CreoleMode.NO_CREOLE,
+				LineBreakStrategy.NONE);
 	}
 
 	public static TextBlock createVLineTextBlock(Style style, ISkinParam skinParam, double y, double height) {
 		final HColor lineColor = style.getSymbolContext(skinParam.getIHtmlColorSet()).getForeColor();
 		final UStroke stroke = style.getStroke();
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return new XDimension2D(stroke.getThickness(), height);

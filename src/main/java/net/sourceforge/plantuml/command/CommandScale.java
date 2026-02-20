@@ -35,8 +35,8 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.ScaleSimple;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandScale extends SingleLineCommand2<AbstractPSystem> {
+public class CommandScale extends SingleLineCommand2<Diagram> {
 
 	public static final CommandScale ME = new CommandScale();
 
@@ -67,7 +67,7 @@ public class CommandScale extends SingleLineCommand2<AbstractPSystem> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractPSystem diagram, LineLocation location, RegexResult arg,
+	protected CommandExecutionResult executeArg(Diagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		double scale = Double.parseDouble(arg.get("SCALE", 0));
 		if (scale == 0)

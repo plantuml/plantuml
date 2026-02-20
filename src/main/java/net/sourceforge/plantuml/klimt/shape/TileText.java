@@ -47,8 +47,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Log;
 
-public class TileText extends AbstractTextBlock implements TextBlock {
-	// ::remove file when __HAXE__
+public class TileText implements TextBlock {
 
 	private final String text;
 	private final FontConfiguration fontConfiguration;

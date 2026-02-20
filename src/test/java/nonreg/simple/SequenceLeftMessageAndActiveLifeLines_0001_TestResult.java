@@ -5,7 +5,7 @@ public class SequenceLeftMessageAndActiveLifeLines_0001_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 1545.0316 ; 457.0000 ]
+dimension: [ 1563.1416 ; 464.0000 ]
 scaleFactor: 1.0000
 seed: 6683878288238933950
 svgLinkTarget: _top
@@ -13,8 +13,8 @@ hoverPathColorRGB: null
 preserveAspectRatio: none
 
 RECTANGLE:
-  pt1: [ 1081.5316 ; 38.0000 ]
-  pt2: [ 1089.5316 ; 416.0000 ]
+  pt1: [ 1086.5316 ; 43.0000 ]
+  pt2: [ 1094.5316 ; 421.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -23,15 +23,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 1085.0316 ; 38.0000 ]
-  pt2: [ 1085.0316 ; 416.0000 ]
+  pt1: [ 1090.0316 ; 43.0000 ]
+  pt2: [ 1090.0316 ; 421.0000 ]
   stroke: 5.0-5.0-1.0
   shadow: 0
   color: ffa80036
 
 RECTANGLE:
-  pt1: [ 1080.0316 ; 118.0000 ]
-  pt2: [ 1090.0316 ; 345.0000 ]
+  pt1: [ 1085.0316 ; 123.0000 ]
+  pt2: [ 1095.0316 ; 350.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -40,8 +40,8 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 1085.0316 ; 198.0000 ]
-  pt2: [ 1095.0316 ; 265.0000 ]
+  pt1: [ 1090.0316 ; 203.0000 ]
+  pt2: [ 1100.0316 ; 270.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -50,8 +50,8 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 1022.8308 ; 5.0000 ]
-  pt2: [ 1143.2325 ; 33.0000 ]
+  pt1: [ 1027.8308 ; 10.0000 ]
+  pt2: [ 1148.2325 ; 38.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
@@ -61,15 +61,15 @@ RECTANGLE:
 
 TEXT:
   text: Testing
-  position: [ 1029.8308 ; 22.8889 ]
+  position: [ 1034.8308 ; 27.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 1022.8308 ; 416.0000 ]
-  pt2: [ 1143.2325 ; 444.0000 ]
+  pt1: [ 1027.8308 ; 421.0000 ]
+  pt2: [ 1148.2325 ; 449.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
@@ -79,39 +79,39 @@ RECTANGLE:
 
 TEXT:
   text: Testing
-  position: [ 1029.8308 ; 433.8889 ]
+  position: [ 1034.8308 ; 438.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 1043.0316 ; 65.0000 ]
-  pt2: [ 1084.0316 ; 65.0000 ]
+  pt1: [ 1048.0316 ; 70.0000 ]
+  pt2: [ 1089.0316 ; 70.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1043.0316 ; 65.0000 ]
-  pt2: [ 1043.0316 ; 78.0000 ]
+  pt1: [ 1048.0316 ; 70.0000 ]
+  pt2: [ 1048.0316 ; 83.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1043.0316 ; 78.0000 ]
-  pt2: [ 1083.0316 ; 78.0000 ]
+  pt1: [ 1048.0316 ; 83.0000 ]
+  pt2: [ 1088.0316 ; 83.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 POLYGON:
   points:
-   - [ 1073.0316 ; 74.0000 ]
-   - [ 1083.0316 ; 78.0000 ]
-   - [ 1073.0316 ; 82.0000 ]
-   - [ 1077.0316 ; 78.0000 ]
+   - [ 1078.0316 ; 79.0000 ]
+   - [ 1088.0316 ; 83.0000 ]
+   - [ 1078.0316 ; 87.0000 ]
+   - [ 1082.0316 ; 83.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
@@ -119,7 +119,7 @@ POLYGON:
 
 TEXT:
   text: 1st self message, no activation
-  position: [ 648.8216 ; 60.1111 ]
+  position: [ 653.8216 ; 65.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -159,39 +159,39 @@ PATH:
 
 TEXT:
   text: A note on the self message
-  position: [ 199.7117 ; 66.1111 ]
+  position: [ 204.7117 ; 71.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 1043.0316 ; 105.0000 ]
-  pt2: [ 1084.0316 ; 105.0000 ]
+  pt1: [ 1048.0316 ; 110.0000 ]
+  pt2: [ 1089.0316 ; 110.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1043.0316 ; 105.0000 ]
-  pt2: [ 1043.0316 ; 118.0000 ]
+  pt1: [ 1048.0316 ; 110.0000 ]
+  pt2: [ 1048.0316 ; 123.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1043.0316 ; 118.0000 ]
-  pt2: [ 1078.0316 ; 118.0000 ]
+  pt1: [ 1048.0316 ; 123.0000 ]
+  pt2: [ 1083.0316 ; 123.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 POLYGON:
   points:
-   - [ 1068.0316 ; 114.0000 ]
-   - [ 1078.0316 ; 118.0000 ]
-   - [ 1068.0316 ; 122.0000 ]
-   - [ 1072.0316 ; 118.0000 ]
+   - [ 1073.0316 ; 119.0000 ]
+   - [ 1083.0316 ; 123.0000 ]
+   - [ 1073.0316 ; 127.0000 ]
+   - [ 1077.0316 ; 123.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
@@ -199,39 +199,39 @@ POLYGON:
 
 TEXT:
   text: 2nd self message, starting activation
-  position: [ 658.9545 ; 100.1111 ]
+  position: [ 663.9545 ; 105.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 1038.0316 ; 145.0000 ]
-  pt2: [ 1079.0316 ; 145.0000 ]
+  pt1: [ 1043.0316 ; 150.0000 ]
+  pt2: [ 1084.0316 ; 150.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1038.0316 ; 145.0000 ]
-  pt2: [ 1038.0316 ; 158.0000 ]
+  pt1: [ 1043.0316 ; 150.0000 ]
+  pt2: [ 1043.0316 ; 163.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1038.0316 ; 158.0000 ]
-  pt2: [ 1078.0316 ; 158.0000 ]
+  pt1: [ 1043.0316 ; 163.0000 ]
+  pt2: [ 1083.0316 ; 163.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 POLYGON:
   points:
-   - [ 1068.0316 ; 154.0000 ]
-   - [ 1078.0316 ; 158.0000 ]
-   - [ 1068.0316 ; 162.0000 ]
-   - [ 1072.0316 ; 158.0000 ]
+   - [ 1073.0316 ; 159.0000 ]
+   - [ 1083.0316 ; 163.0000 ]
+   - [ 1073.0316 ; 167.0000 ]
+   - [ 1077.0316 ; 163.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
@@ -239,7 +239,7 @@ POLYGON:
 
 TEXT:
   text: 2.5th self message, no change
-  position: [ 741.8141 ; 140.1111 ]
+  position: [ 746.8141 ; 145.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -279,86 +279,86 @@ PATH:
 
 TEXT:
   text: A note on the self message
-  position: [ 1106.0316 ; 146.1111 ]
+  position: [ 1111.0316 ; 151.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 1038.0316 ; 185.0000 ]
-  pt2: [ 1079.0316 ; 185.0000 ]
+  pt1: [ 1043.0316 ; 190.0000 ]
+  pt2: [ 1084.0316 ; 190.0000 ]
   stroke: 2.0-2.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1038.0316 ; 185.0000 ]
-  pt2: [ 1038.0316 ; 198.0000 ]
+  pt1: [ 1043.0316 ; 190.0000 ]
+  pt2: [ 1043.0316 ; 203.0000 ]
   stroke: 2.0-2.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1038.0316 ; 198.0000 ]
-  pt2: [ 1084.0316 ; 198.0000 ]
+  pt1: [ 1043.0316 ; 203.0000 ]
+  pt2: [ 1089.0316 ; 203.0000 ]
   stroke: 2.0-2.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1083.0316 ; 198.0000 ]
-  pt2: [ 1073.0316 ; 202.0000 ]
+  pt1: [ 1088.0316 ; 203.0000 ]
+  pt2: [ 1078.0316 ; 207.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 TEXT:
   text: 3rd self message, staring another activation
-  position: [ 521.9931 ; 180.1111 ]
+  position: [ 526.9931 ; 185.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 1038.0316 ; 225.0000 ]
-  pt2: [ 1084.0316 ; 225.0000 ]
+  pt1: [ 1043.0316 ; 230.0000 ]
+  pt2: [ 1089.0316 ; 230.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1038.0316 ; 225.0000 ]
-  pt2: [ 1038.0316 ; 238.0000 ]
+  pt1: [ 1043.0316 ; 230.0000 ]
+  pt2: [ 1043.0316 ; 243.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1038.0316 ; 238.0000 ]
-  pt2: [ 1084.0316 ; 238.0000 ]
+  pt1: [ 1043.0316 ; 243.0000 ]
+  pt2: [ 1089.0316 ; 243.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1083.0316 ; 238.0000 ]
-  pt2: [ 1073.0316 ; 234.0000 ]
+  pt1: [ 1088.0316 ; 243.0000 ]
+  pt2: [ 1078.0316 ; 239.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1083.0316 ; 238.0000 ]
-  pt2: [ 1073.0316 ; 242.0000 ]
+  pt1: [ 1088.0316 ; 243.0000 ]
+  pt2: [ 1078.0316 ; 247.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 TEXT:
   text: 4th self message, continuing in the current activation
-  position: [ 465.1100 ; 220.1111 ]
+  position: [ 470.1100 ; 225.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -398,39 +398,39 @@ PATH:
 
 TEXT:
   text: A note on the self message
-  position: [ 16.0000 ; 226.1111 ]
+  position: [ 21.0000 ; 231.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 1038.0316 ; 265.0000 ]
-  pt2: [ 1084.0316 ; 265.0000 ]
+  pt1: [ 1043.0316 ; 270.0000 ]
+  pt2: [ 1089.0316 ; 270.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1038.0316 ; 265.0000 ]
-  pt2: [ 1038.0316 ; 278.0000 ]
+  pt1: [ 1043.0316 ; 270.0000 ]
+  pt2: [ 1043.0316 ; 283.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1038.0316 ; 278.0000 ]
-  pt2: [ 1078.0316 ; 278.0000 ]
+  pt1: [ 1043.0316 ; 283.0000 ]
+  pt2: [ 1083.0316 ; 283.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 POLYGON:
   points:
-   - [ 1068.0316 ; 274.0000 ]
-   - [ 1078.0316 ; 278.0000 ]
-   - [ 1068.0316 ; 282.0000 ]
-   - [ 1072.0316 ; 278.0000 ]
+   - [ 1073.0316 ; 279.0000 ]
+   - [ 1083.0316 ; 283.0000 ]
+   - [ 1073.0316 ; 287.0000 ]
+   - [ 1077.0316 ; 283.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
@@ -438,39 +438,39 @@ POLYGON:
 
 TEXT:
   text: 5th self message, deactivating once
-  position: [ 678.2039 ; 260.1111 ]
+  position: [ 683.2039 ; 265.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 1038.0316 ; 305.0000 ]
-  pt2: [ 1079.0316 ; 305.0000 ]
+  pt1: [ 1043.0316 ; 310.0000 ]
+  pt2: [ 1084.0316 ; 310.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1038.0316 ; 305.0000 ]
-  pt2: [ 1038.0316 ; 318.0000 ]
+  pt1: [ 1043.0316 ; 310.0000 ]
+  pt2: [ 1043.0316 ; 323.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1038.0316 ; 318.0000 ]
-  pt2: [ 1078.0316 ; 318.0000 ]
+  pt1: [ 1043.0316 ; 323.0000 ]
+  pt2: [ 1083.0316 ; 323.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 POLYGON:
   points:
-   - [ 1068.0316 ; 314.0000 ]
-   - [ 1078.0316 ; 318.0000 ]
-   - [ 1068.0316 ; 322.0000 ]
-   - [ 1072.0316 ; 318.0000 ]
+   - [ 1073.0316 ; 319.0000 ]
+   - [ 1083.0316 ; 323.0000 ]
+   - [ 1073.0316 ; 327.0000 ]
+   - [ 1077.0316 ; 323.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
@@ -478,39 +478,39 @@ POLYGON:
 
 TEXT:
   text: 6th self message, continuing the activation
-  position: [ 382.9541 ; 300.1111 ]
+  position: [ 387.9541 ; 305.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 1038.0316 ; 345.0000 ]
-  pt2: [ 1079.0316 ; 345.0000 ]
+  pt1: [ 1043.0316 ; 350.0000 ]
+  pt2: [ 1084.0316 ; 350.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1038.0316 ; 345.0000 ]
-  pt2: [ 1038.0316 ; 358.0000 ]
+  pt1: [ 1043.0316 ; 350.0000 ]
+  pt2: [ 1043.0316 ; 363.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1038.0316 ; 358.0000 ]
-  pt2: [ 1083.0316 ; 358.0000 ]
+  pt1: [ 1043.0316 ; 363.0000 ]
+  pt2: [ 1088.0316 ; 363.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 POLYGON:
   points:
-   - [ 1073.0316 ; 354.0000 ]
-   - [ 1083.0316 ; 358.0000 ]
-   - [ 1073.0316 ; 362.0000 ]
-   - [ 1077.0316 ; 358.0000 ]
+   - [ 1078.0316 ; 359.0000 ]
+   - [ 1088.0316 ; 363.0000 ]
+   - [ 1078.0316 ; 367.0000 ]
+   - [ 1082.0316 ; 363.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
@@ -518,39 +518,39 @@ POLYGON:
 
 TEXT:
   text: 7th self message, exiting the activation
-  position: [ 565.9392 ; 340.1111 ]
+  position: [ 570.9392 ; 345.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 1043.0316 ; 385.0000 ]
-  pt2: [ 1084.0316 ; 385.0000 ]
+  pt1: [ 1048.0316 ; 390.0000 ]
+  pt2: [ 1089.0316 ; 390.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1043.0316 ; 385.0000 ]
-  pt2: [ 1043.0316 ; 398.0000 ]
+  pt1: [ 1048.0316 ; 390.0000 ]
+  pt2: [ 1048.0316 ; 403.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 LINE:
-  pt1: [ 1043.0316 ; 398.0000 ]
-  pt2: [ 1083.0316 ; 398.0000 ]
+  pt1: [ 1048.0316 ; 403.0000 ]
+  pt2: [ 1088.0316 ; 403.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
 
 POLYGON:
   points:
-   - [ 1073.0316 ; 394.0000 ]
-   - [ 1083.0316 ; 398.0000 ]
-   - [ 1073.0316 ; 402.0000 ]
-   - [ 1077.0316 ; 398.0000 ]
+   - [ 1078.0316 ; 399.0000 ]
+   - [ 1088.0316 ; 403.0000 ]
+   - [ 1078.0316 ; 407.0000 ]
+   - [ 1082.0316 ; 403.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff008000
@@ -558,7 +558,7 @@ POLYGON:
 
 TEXT:
   text: 8th self message, no activation
-  position: [ 666.4950 ; 380.1111 ]
+  position: [ 671.4950 ; 385.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000

@@ -42,13 +42,11 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 
-public class BoxedCharacter extends AbstractTextBlock implements TextBlock {
-    // ::remove folder when __HAXE__
+public class BoxedCharacter implements TextBlock {
 
 	private final String c;
 	private final UFont font;

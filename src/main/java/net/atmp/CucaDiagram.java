@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.abel.Bag;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityFactory;
@@ -105,7 +105,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.xmi.CucaDiagramXmiMaker;
 import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
-public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, PortionShower, EntityFactory {
+public abstract class CucaDiagram extends TitledDiagram implements GroupHierarchy, PortionShower, EntityFactory {
 
 	static class EntityHideOrShow {
 		private final EntityGender gender;
@@ -424,6 +424,30 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		maker.createFiles(suggestedFile);
 	}
 
+	@Override
+	protected ImageData exportXmi(OutputStream os, FileFormat fileFormat) throws IOException {
+		createFilesXmi(os, fileFormat);
+		return ImageDataSimple.ok();
+	}
+
+	@Override
+	protected ImageData exportScxml(OutputStream os) throws IOException {
+		createFilesScxml(os);
+		return ImageDataSimple.ok();
+	}
+
+	@Override
+	protected ImageData exportGraphml(OutputStream os) throws IOException {
+		createFilesGraphml(os);
+		return ImageDataSimple.ok();
+	}
+
+	@Override
+	protected ImageData exportTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
+		createFilesTxt(os, index, fileFormat);
+		return ImageDataSimple.ok();
+	}
+
 	private void createFilesScxml(OutputStream suggestedFile) throws IOException {
 		final StateDiagramScxmlMaker maker = new StateDiagramScxmlMaker((StateDiagram) this);
 		maker.createFiles(suggestedFile);
@@ -436,20 +460,74 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	// ::done
 
 	@Override
-	final public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
+	final public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
 		final CucaDiagramFileMaker maker;
 		if (TeaVM.isTeaVM())
-			// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
+			// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
 			maker = new CucaDiagramFileMakerTeaVM(this);
 		// maker = new CucaDiagramFileMakerSmetana(this);
 		// ::done
 		else
 			maker = new CucaDiagramFileMakerSmetana(this);
-		maker.createOneGraphic(ug);
+		maker.createOneGraphic01970(ug);
 	}
 
 	@Override
-	final protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption)
+			throws IOException, InterruptedException {
+		final FileFormat fileFormat = fileFormatOption.getFileFormat();
+
+//		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
+//			createFilesTxt(os, index, fileFormat);
+//			return ImageDataSimple.ok();
+//		}
+//
+//		if (fileFormat == FileFormat.GRAPHML) {
+//			createFilesGraphml(os);
+//			return ImageDataSimple.ok();
+//		}
+//
+//		if (fileFormat.name().startsWith("XMI")) {
+//			createFilesXmi(os, fileFormat);
+//			return ImageDataSimple.ok();
+//		}
+//
+//		if (fileFormat == FileFormat.SCXML) {
+//			createFilesScxml(os);
+//			return ImageDataSimple.ok();
+//		}
+
+		if (getUmlDiagramType() == UmlDiagramType.COMPOSITE)
+			throw new UnsupportedOperationException();
+
+		this.eventuallyBuildPhantomGroups(null);
+		final CucaDiagramFileMaker maker;
+
+		if (TeaVM.isTeaVM())
+			// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+			maker = new CucaDiagramFileMakerTeaVM(this);
+		// maker = new CucaDiagramFileMakerSmetana(this);
+		// ::done
+		else if (this.isUseElk())
+			maker = new CucaDiagramFileMakerElk(this);
+		else if (this.isUseSmetana())
+			maker = new CucaDiagramFileMakerSmetana(this);
+		else
+			maker = new CucaDiagramFileMakerSvek(this);
+
+		return maker.getTextBlock12026(getDotStrings(), fileFormatOption);
+//		final ImageData result = maker.createFile01970(os, getDotStrings(), fileFormatOption);
+//
+//		if (result == null)
+//			return ImageDataSimple.error();
+//
+//		this.warningOrError = result.getWarningOrError();
+//		return result;
+//
+	}
+
+	@Override
+	final protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -494,7 +572,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			else
 				maker = new CucaDiagramFileMakerSvek(this);
 
-			final ImageData result = maker.createFile(os, getDotStrings(), fileFormatOption);
+			final ImageData result = maker.createFile01970(os, getDotStrings(), fileFormatOption);
 
 			if (result == null)
 				return ImageDataSimple.error();

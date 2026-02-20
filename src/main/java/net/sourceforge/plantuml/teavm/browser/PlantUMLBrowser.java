@@ -9,11 +9,15 @@ import org.teavm.jso.dom.xml.Element;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramChromeFactory12026;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.teavm.PSystemBuilder2;
 import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
 import net.sourceforge.plantuml.teavm.SvgGraphicsTeaVM;
@@ -122,7 +126,7 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
  * @see net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine
  */
 public class PlantUMLBrowser {
-	// ::remove file when __MIT__  __EPL__  __BSD__  __ASL__  __LGPL__  __GPLV2__
+	// ::remove file when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
 	// ::remove file when JAVA8
 
 	// =========================================================================
@@ -337,9 +341,23 @@ public class PlantUMLBrowser {
 			// For class diagrams, this will call GraphVizjsTeaVMEngine internally,
 			// which uses Viz.js for layout. The @Async magic happens here.
 			Diagram diagram = BUILDER.createDiagram(lines);
-			BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender wip20");
-			diagram.exportDiagramGraphic(ug, new FileFormatOption(FileFormat.SVG));
-			BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender wip30");
+			final FileFormatOption fileFormat = new FileFormatOption(FileFormat.SVG);
+			if (diagram instanceof UgDiagram) {
+				BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender new10");
+				TextBlock tb = ((UgDiagram) diagram).getTextBlock12026(0, fileFormat);
+				final UgDiagram titled = (UgDiagram) diagram;
+
+				if (diagram instanceof TitledDiagram)
+					tb = DiagramChromeFactory12026.create(tb, (TitledDiagram) titled,
+							((TitledDiagram) titled).getSkinParam(), STRING_BOUNDER, titled.getWarnings());
+
+				tb.drawU(ug);
+				BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender new20");
+			} else {
+				BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender ERROR");
+				// diagram.exportDiagramGraphic01970(ug, fileFormat);
+				BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender ERROR");
+			}
 
 			// Clear any previous content (old SVG, error messages, etc.)
 			removeAllChildren(out);

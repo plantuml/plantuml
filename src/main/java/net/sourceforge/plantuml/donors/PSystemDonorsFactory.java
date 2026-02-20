@@ -35,8 +35,8 @@
  */
 package net.sourceforge.plantuml.donors;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
@@ -45,7 +45,7 @@ public class PSystemDonorsFactory extends PSystemSingleLineFactory {
 	
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
+	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		if (line.matches("(?i)^(donors)\\s*$")) 
 			return PSystemDonors.create(source, preprocessing);
 		

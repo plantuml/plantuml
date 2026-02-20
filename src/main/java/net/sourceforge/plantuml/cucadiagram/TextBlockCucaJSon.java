@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.ULine;
@@ -55,7 +54,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 
-public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
+public class TextBlockCucaJSon implements TextBlock, WithPorts {
 
 	private final ISkinParam skinParam;
 	private final FontConfiguration fontConfiguration;
@@ -80,7 +79,7 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 			((TextBlockJson) jsonTextBlock).jsonTotalWidth = mainTotalWidth;
 		if (jsonTextBlock instanceof TextBlockArray)
 			((TextBlockArray) jsonTextBlock).arrayTotalWidth = mainTotalWidth;
-		
+
 		return jsonTextBlock;
 	}
 
@@ -111,7 +110,7 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 		getJsonTextBlock().drawU(ug);
 	}
 
-	class TextBlockJson extends AbstractTextBlock {
+	class TextBlockJson implements TextBlock {
 
 		private final JsonObject obj;
 		private double jsonTotalWidth;
@@ -186,7 +185,7 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 		return result;
 	}
 
-	class TextBlockArray extends AbstractTextBlock {
+	class TextBlockArray implements TextBlock {
 
 		private final JsonArray array;
 		private double arrayTotalWidth;

@@ -72,7 +72,6 @@ import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.crash.GraphvizCrash;
 import net.sourceforge.plantuml.crash.CrashReportHandler;
 import net.sourceforge.plantuml.eggs.QuoteUtils;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -88,7 +87,6 @@ import net.sourceforge.plantuml.klimt.geom.Rankdir;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.log.Logme;
@@ -155,7 +153,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		return result;
 	}
 
-	class Drawing extends AbstractTextBlock {
+	class Drawing implements TextBlock {
 
 		private final YMirror ymirror;
 		private final MinMaxMutable minMax;
@@ -186,8 +184,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 				final TextBlock tailRole = quantifier1 != null ? role1 : null;
 				final TextBlock headRole = quantifier2 != null ? role2 : null;
 				final SmetanaEdge smetanaPath = new SmetanaEdge(link, edge, ymirror,
-						getLabel(ug.getStringBounder(), link), tailLabel,
-						headLabel, tailRole, headRole,
+						getLabel(ug.getStringBounder(), link), tailLabel, headLabel, tailRole, headRole,
 						getBibliotekon(), diagram.getSkinParam());
 				smetanaPathes.put(link, smetanaPath);
 			}
@@ -214,7 +211,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		}
 
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
-			return minMax.getDimension().delta(6);
+			return minMax.getDimension().delta(16, 6);
 		}
 
 		private XPoint2D getCorner(ST_Agnode_s n) {
@@ -392,7 +389,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	private static final Lock lock = new ReentrantLock();
 
-	public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
+	public ImageData createFile01970(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException {
 
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
@@ -431,7 +428,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	}
 
 	@Override
-	public void createOneGraphic(UGraphic ug) {
+	public void createOneGraphic01970(UGraphic ug) {
 		final Globals zz = Globals.open();
 		try {
 			final TextBlock textBlock = getTextBlock(ug.getStringBounder(), zz);
@@ -440,6 +437,49 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			SmetanaDebug.printMe();
 		} finally {
 			Globals.close();
+		}
+	}
+
+	@Override
+	public TextBlock getTextBlock12026(List<String> dotStrings, FileFormatOption fileFormatOption)
+			throws IOException, InterruptedException {
+
+		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
+
+		this.printAllSubgroups(stringBounder, diagram.getRootGroup());
+		this.printEntities(stringBounder, getUnpackagedEntities());
+
+		for (Link link : diagram.getLinks()) {
+			if (link.isRemoved())
+				continue;
+
+			if (isOpalisable(link.getEntity1())) {
+				final SvekNode node = getBibliotekon().getNode(link.getEntity1());
+				final SvekNode other = getBibliotekon().getNode(link.getEntity2());
+				if (other != null) {
+					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);
+					link.setOpale(true);
+				}
+			} else if (isOpalisable(link.getEntity2())) {
+				final SvekNode node = getBibliotekon().getNode(link.getEntity2());
+				final SvekNode other = getBibliotekon().getNode(link.getEntity1());
+				if (other != null) {
+					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);
+					link.setOpale(true);
+				}
+			}
+		}
+
+		lock.lock();
+		try {
+			final Globals zz = Globals.open();
+			try {
+				return getTextBlock(stringBounder, zz);
+			} finally {
+				Globals.close();
+			}
+		} finally {
+			lock.unlock();
 		}
 	}
 

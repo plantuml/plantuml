@@ -43,8 +43,7 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.svek.image.ContainingEllipse;
 import net.sourceforge.plantuml.svek.image.Footprint;
 
-public class TextBlockInEllipse extends AbstractTextBlock implements TextBlock {
-    // ::remove file when __HAXE__
+public class TextBlockInEllipse implements TextBlock {
 
 	private final TextBlock text;
 	private final ContainingEllipse ellipse;

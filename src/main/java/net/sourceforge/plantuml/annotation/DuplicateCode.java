@@ -10,7 +10,6 @@ import java.lang.annotation.Target;
  * of another part of the code. This can be used to mark areas of the codebase that
  * require refactoring or special attention.
  *
- * @author Whoever wrote it
  */
 @Retention(RetentionPolicy.SOURCE)
 @Target({ElementType.TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})

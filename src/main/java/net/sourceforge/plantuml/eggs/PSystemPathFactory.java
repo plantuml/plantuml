@@ -35,8 +35,8 @@
  */
 package net.sourceforge.plantuml.eggs;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.regex.Matcher2;
@@ -49,7 +49,7 @@ public class PSystemPathFactory extends PSystemSingleLineFactory {
 	final private static Pattern2 p = Pattern2.cmpile("^path[%s]+([0-9A-Za-z]+)$");
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
+	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		final Matcher2 m = p.matcher(line);
 		if (m.find() == false) 
 			return null;

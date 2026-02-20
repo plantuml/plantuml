@@ -38,11 +38,10 @@ package net.sourceforge.plantuml.svek;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.utils.Direction;
 
-public class DirectionalTextBlock extends AbstractTextBlock implements TextBlock {
+public class DirectionalTextBlock implements TextBlock {
 	private final TextBlock right;
 	private final TextBlock left;
 	private final TextBlock up;

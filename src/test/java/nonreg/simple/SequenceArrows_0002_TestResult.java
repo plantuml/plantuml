@@ -5,7 +5,7 @@ public class SequenceArrows_0002_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 357.0490 ; 4005.0000 ]
+dimension: [ 358.0490 ; 4016.0000 ]
 scaleFactor: 1.0000
 seed: -5843612217221368896
 svgLinkTarget: _top
@@ -13,8 +13,8 @@ hoverPathColorRGB: null
 preserveAspectRatio: none
 
 RECTANGLE:
-  pt1: [ 29.2741 ; 34.0000 ]
-  pt2: [ 37.2741 ; 3972.0000 ]
+  pt1: [ 34.2741 ; 39.0000 ]
+  pt2: [ 42.2741 ; 3977.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -23,15 +23,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 32.7741 ; 34.0000 ]
-  pt2: [ 32.7741 ; 3972.0000 ]
+  pt1: [ 37.7741 ; 39.0000 ]
+  pt2: [ 37.7741 ; 3977.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 27.7741 ; 42.0000 ]
-  pt2: [ 37.7741 ; 3972.0000 ]
+  pt1: [ 32.7741 ; 47.0000 ]
+  pt2: [ 42.7741 ; 3977.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -40,8 +40,8 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 126.3059 ; 34.0000 ]
-  pt2: [ 134.3059 ; 3972.0000 ]
+  pt1: [ 131.3059 ; 39.0000 ]
+  pt2: [ 139.3059 ; 3977.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -50,15 +50,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 129.8059 ; 34.0000 ]
-  pt2: [ 129.8059 ; 3972.0000 ]
+  pt1: [ 134.8059 ; 39.0000 ]
+  pt2: [ 134.8059 ; 3977.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 124.8059 ; 42.0000 ]
-  pt2: [ 134.8059 ; 3972.0000 ]
+  pt1: [ 129.8059 ; 47.0000 ]
+  pt2: [ 139.8059 ; 3977.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -67,8 +67,8 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 129.8059 ; 42.0000 ]
-  pt2: [ 139.8059 ; 3972.0000 ]
+  pt1: [ 134.8059 ; 47.0000 ]
+  pt2: [ 144.8059 ; 3977.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -77,8 +77,8 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 253.6377 ; 34.0000 ]
-  pt2: [ 261.6377 ; 3972.0000 ]
+  pt1: [ 258.6377 ; 39.0000 ]
+  pt2: [ 266.6377 ; 3977.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -87,15 +87,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 257.1377 ; 34.0000 ]
-  pt2: [ 257.1377 ; 3972.0000 ]
+  pt1: [ 262.1377 ; 39.0000 ]
+  pt2: [ 262.1377 ; 3977.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 252.1377 ; 42.0000 ]
-  pt2: [ 262.1377 ; 3972.0000 ]
+  pt1: [ 257.1377 ; 47.0000 ]
+  pt2: [ 267.1377 ; 3977.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -104,8 +104,8 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 257.1377 ; 42.0000 ]
-  pt2: [ 267.1377 ; 3972.0000 ]
+  pt1: [ 262.1377 ; 47.0000 ]
+  pt2: [ 272.1377 ; 3977.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -114,8 +114,8 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 262.1377 ; 42.0000 ]
-  pt2: [ 272.1377 ; 3972.0000 ]
+  pt1: [ 267.1377 ; 47.0000 ]
+  pt2: [ 277.1377 ; 3977.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -124,8 +124,8 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 267.1377 ; 42.0000 ]
-  pt2: [ 277.1377 ; 3972.0000 ]
+  pt1: [ 272.1377 ; 47.0000 ]
+  pt2: [ 282.1377 ; 3977.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0
@@ -134,8 +134,8 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 314.0196 ; 34.0000 ]
-  pt2: [ 322.0196 ; 3972.0000 ]
+  pt1: [ 319.0196 ; 39.0000 ]
+  pt2: [ 327.0196 ; 3977.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -144,15 +144,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 317.5196 ; 34.0000 ]
-  pt2: [ 317.5196 ; 3972.0000 ]
+  pt1: [ 322.5196 ; 39.0000 ]
+  pt2: [ 322.5196 ; 3977.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 5.0000 ; 5.0000 ]
-  pt2: [ 60.5481 ; 33.0000 ]
+  pt1: [ 10.0000 ; 10.0000 ]
+  pt2: [ 65.5481 ; 38.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -162,15 +162,15 @@ RECTANGLE:
 
 TEXT:
   text: Jim
-  position: [ 12.0000 ; 22.8889 ]
+  position: [ 17.0000 ; 27.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 85.8273 ; 5.0000 ]
-  pt2: [ 173.7846 ; 33.0000 ]
+  pt1: [ 90.8273 ; 10.0000 ]
+  pt2: [ 178.7846 ; 38.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -180,15 +180,15 @@ RECTANGLE:
 
 TEXT:
   text: Alice
-  position: [ 92.8273 ; 22.8889 ]
+  position: [ 97.8273 ; 27.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 232.2852 ; 5.0000 ]
-  pt2: [ 281.9902 ; 33.0000 ]
+  pt1: [ 237.2852 ; 10.0000 ]
+  pt2: [ 286.9902 ; 38.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -198,15 +198,15 @@ RECTANGLE:
 
 TEXT:
   text: Bob
-  position: [ 239.2852 ; 22.8889 ]
+  position: [ 244.2852 ; 27.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 291.9902 ; 5.0000 ]
-  pt2: [ 343.0490 ; 33.0000 ]
+  pt1: [ 296.9902 ; 10.0000 ]
+  pt2: [ 348.0490 ; 38.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -216,15 +216,15 @@ RECTANGLE:
 
 TEXT:
   text: Tom
-  position: [ 298.9902 ; 22.8889 ]
+  position: [ 303.9902 ; 27.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 5.0000 ; 3972.0000 ]
-  pt2: [ 60.5481 ; 4000.0000 ]
+  pt1: [ 10.0000 ; 3977.0000 ]
+  pt2: [ 65.5481 ; 4005.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -234,15 +234,15 @@ RECTANGLE:
 
 TEXT:
   text: Jim
-  position: [ 12.0000 ; 3989.8889 ]
+  position: [ 17.0000 ; 3994.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 85.8273 ; 3972.0000 ]
-  pt2: [ 173.7846 ; 4000.0000 ]
+  pt1: [ 90.8273 ; 3977.0000 ]
+  pt2: [ 178.7846 ; 4005.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -252,15 +252,15 @@ RECTANGLE:
 
 TEXT:
   text: Alice
-  position: [ 92.8273 ; 3989.8889 ]
+  position: [ 97.8273 ; 3994.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 232.2852 ; 3972.0000 ]
-  pt2: [ 281.9902 ; 4000.0000 ]
+  pt1: [ 237.2852 ; 3977.0000 ]
+  pt2: [ 286.9902 ; 4005.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -270,15 +270,15 @@ RECTANGLE:
 
 TEXT:
   text: Bob
-  position: [ 239.2852 ; 3989.8889 ]
+  position: [ 244.2852 ; 3994.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 291.9902 ; 3972.0000 ]
-  pt2: [ 343.0490 ; 4000.0000 ]
+  pt1: [ 296.9902 ; 3977.0000 ]
+  pt2: [ 348.0490 ; 4005.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -288,7 +288,7 @@ RECTANGLE:
 
 TEXT:
   text: Tom
-  position: [ 298.9902 ; 3989.8889 ]
+  position: [ 303.9902 ; 3994.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
@@ -296,54 +296,54 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 255.1377 ; 57.0000 ]
-   - [ 265.1377 ; 61.0000 ]
-   - [ 255.1377 ; 65.0000 ]
-   - [ 259.1377 ; 61.0000 ]
+   - [ 260.1377 ; 62.0000 ]
+   - [ 270.1377 ; 66.0000 ]
+   - [ 260.1377 ; 70.0000 ]
+   - [ 264.1377 ; 66.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 61.0000 ]
-  pt2: [ 261.1377 ; 61.0000 ]
+  pt1: [ 144.8059 ; 66.0000 ]
+  pt2: [ 266.1377 ; 66.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: ->   
-  position: [ 146.8059 ; 56.1111 ]
+  position: [ 151.8059 ; 61.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 265.1377 ; 88.0000 ]
-  pt2: [ 255.1377 ; 84.0000 ]
+  pt1: [ 270.1377 ; 93.0000 ]
+  pt2: [ 260.1377 ; 89.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 265.1377 ; 88.0000 ]
-  pt2: [ 255.1377 ; 92.0000 ]
+  pt1: [ 270.1377 ; 93.0000 ]
+  pt2: [ 260.1377 ; 97.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 88.0000 ]
-  pt2: [ 266.1377 ; 88.0000 ]
+  pt1: [ 144.8059 ; 93.0000 ]
+  pt2: [ 271.1377 ; 93.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: ->>  
-  position: [ 146.8059 ; 83.1111 ]
+  position: [ 151.8059 ; 88.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -351,46 +351,46 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 255.1377 ; 111.0000 ]
-   - [ 265.1377 ; 115.0000 ]
-   - [ 255.1377 ; 115.0000 ]
+   - [ 260.1377 ; 116.0000 ]
+   - [ 270.1377 ; 120.0000 ]
+   - [ 260.1377 ; 120.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 115.0000 ]
-  pt2: [ 266.1377 ; 115.0000 ]
+  pt1: [ 144.8059 ; 120.0000 ]
+  pt2: [ 271.1377 ; 120.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -\   
-  position: [ 146.8059 ; 110.1111 ]
+  position: [ 151.8059 ; 115.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 265.1377 ; 142.0000 ]
-  pt2: [ 255.1377 ; 138.0000 ]
+  pt1: [ 270.1377 ; 147.0000 ]
+  pt2: [ 260.1377 ; 143.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 142.0000 ]
-  pt2: [ 266.1377 ; 142.0000 ]
+  pt1: [ 144.8059 ; 147.0000 ]
+  pt2: [ 271.1377 ; 147.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -\\
-  position: [ 146.8059 ; 137.1111 ]
+  position: [ 151.8059 ; 142.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -398,123 +398,123 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 255.1377 ; 169.0000 ]
-   - [ 265.1377 ; 169.0000 ]
-   - [ 255.1377 ; 173.0000 ]
+   - [ 260.1377 ; 174.0000 ]
+   - [ 270.1377 ; 174.0000 ]
+   - [ 260.1377 ; 178.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 169.0000 ]
-  pt2: [ 266.1377 ; 169.0000 ]
+  pt1: [ 144.8059 ; 174.0000 ]
+  pt2: [ 271.1377 ; 174.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -/   
-  position: [ 146.8059 ; 164.1111 ]
+  position: [ 151.8059 ; 169.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 265.1377 ; 196.0000 ]
-  pt2: [ 255.1377 ; 200.0000 ]
+  pt1: [ 270.1377 ; 201.0000 ]
+  pt2: [ 260.1377 ; 205.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 196.0000 ]
-  pt2: [ 266.1377 ; 196.0000 ]
+  pt1: [ 144.8059 ; 201.0000 ]
+  pt2: [ 271.1377 ; 201.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -//  
-  position: [ 146.8059 ; 191.1111 ]
+  position: [ 151.8059 ; 196.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 249.1377 ; 218.0000 ]
+  pt1: [ 254.1377 ; 223.0000 ]
+  pt2: [ 264.1377 ; 233.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 254.1377 ; 233.0000 ]
+  pt2: [ 264.1377 ; 223.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 144.8059 ; 228.0000 ]
   pt2: [ 259.1377 ; 228.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 249.1377 ; 228.0000 ]
-  pt2: [ 259.1377 ; 218.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 139.8059 ; 223.0000 ]
-  pt2: [ 254.1377 ; 223.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: ->x  
-  position: [ 146.8059 ; 218.1111 ]
+  position: [ 151.8059 ; 223.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 146.8059 ; 245.0000 ]
-  pt2: [ 156.8059 ; 255.0000 ]
+  pt1: [ 151.8059 ; 250.0000 ]
+  pt2: [ 161.8059 ; 260.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 146.8059 ; 255.0000 ]
-  pt2: [ 156.8059 ; 245.0000 ]
+  pt1: [ 151.8059 ; 260.0000 ]
+  pt2: [ 161.8059 ; 250.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 255.1377 ; 246.0000 ]
-   - [ 265.1377 ; 250.0000 ]
-   - [ 255.1377 ; 254.0000 ]
-   - [ 259.1377 ; 250.0000 ]
+   - [ 260.1377 ; 251.0000 ]
+   - [ 270.1377 ; 255.0000 ]
+   - [ 260.1377 ; 259.0000 ]
+   - [ 264.1377 ; 255.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 151.8059 ; 250.0000 ]
-  pt2: [ 261.1377 ; 250.0000 ]
+  pt1: [ 156.8059 ; 255.0000 ]
+  pt2: [ 266.1377 ; 255.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: x->  
-  position: [ 156.8059 ; 245.1111 ]
+  position: [ 161.8059 ; 250.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 272.2500 ]
-  pt2: [ 143.3059 ; 280.2500 ]
+  pt1: [ 140.3059 ; 277.2500 ]
+  pt2: [ 148.3059 ; 285.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -524,33 +524,33 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 255.1377 ; 273.0000 ]
-   - [ 265.1377 ; 277.0000 ]
-   - [ 255.1377 ; 281.0000 ]
-   - [ 259.1377 ; 277.0000 ]
+   - [ 260.1377 ; 278.0000 ]
+   - [ 270.1377 ; 282.0000 ]
+   - [ 260.1377 ; 286.0000 ]
+   - [ 264.1377 ; 282.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 143.8059 ; 277.0000 ]
-  pt2: [ 261.1377 ; 277.0000 ]
+  pt1: [ 148.8059 ; 282.0000 ]
+  pt2: [ 266.1377 ; 282.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o->  
-  position: [ 146.8059 ; 272.1111 ]
+  position: [ 151.8059 ; 277.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 299.2500 ]
-  pt2: [ 270.6377 ; 307.2500 ]
+  pt1: [ 267.6377 ; 304.2500 ]
+  pt2: [ 275.6377 ; 312.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -560,33 +560,33 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 249.6377 ; 300.0000 ]
-   - [ 259.6377 ; 304.0000 ]
-   - [ 249.6377 ; 308.0000 ]
-   - [ 253.6377 ; 304.0000 ]
+   - [ 254.6377 ; 305.0000 ]
+   - [ 264.6377 ; 309.0000 ]
+   - [ 254.6377 ; 313.0000 ]
+   - [ 258.6377 ; 309.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 304.0000 ]
-  pt2: [ 255.6377 ; 304.0000 ]
+  pt1: [ 144.8059 ; 309.0000 ]
+  pt2: [ 260.6377 ; 309.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: ->o  
-  position: [ 146.8059 ; 299.1111 ]
+  position: [ 151.8059 ; 304.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 326.2500 ]
-  pt2: [ 143.3059 ; 334.2500 ]
+  pt1: [ 140.3059 ; 331.2500 ]
+  pt2: [ 148.3059 ; 339.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -595,8 +595,8 @@ ELLIPSE:
   backcolor: ff000000
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 326.2500 ]
-  pt2: [ 270.6377 ; 334.2500 ]
+  pt1: [ 267.6377 ; 331.2500 ]
+  pt2: [ 275.6377 ; 339.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -606,25 +606,25 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 249.6377 ; 327.0000 ]
-   - [ 259.6377 ; 331.0000 ]
-   - [ 249.6377 ; 335.0000 ]
-   - [ 253.6377 ; 331.0000 ]
+   - [ 254.6377 ; 332.0000 ]
+   - [ 264.6377 ; 336.0000 ]
+   - [ 254.6377 ; 340.0000 ]
+   - [ 258.6377 ; 336.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 143.8059 ; 331.0000 ]
-  pt2: [ 255.6377 ; 331.0000 ]
+  pt1: [ 148.8059 ; 336.0000 ]
+  pt2: [ 260.6377 ; 336.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o->o 
-  position: [ 146.8059 ; 326.1111 ]
+  position: [ 151.8059 ; 331.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -632,10 +632,10 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 150.8059 ; 354.0000 ]
-   - [ 140.8059 ; 358.0000 ]
-   - [ 150.8059 ; 362.0000 ]
-   - [ 146.8059 ; 358.0000 ]
+   - [ 155.8059 ; 359.0000 ]
+   - [ 145.8059 ; 363.0000 ]
+   - [ 155.8059 ; 367.0000 ]
+   - [ 151.8059 ; 363.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -643,33 +643,33 @@ POLYGON:
 
 POLYGON:
   points:
-   - [ 255.1377 ; 354.0000 ]
-   - [ 265.1377 ; 358.0000 ]
-   - [ 255.1377 ; 362.0000 ]
-   - [ 259.1377 ; 358.0000 ]
+   - [ 260.1377 ; 359.0000 ]
+   - [ 270.1377 ; 363.0000 ]
+   - [ 260.1377 ; 367.0000 ]
+   - [ 264.1377 ; 363.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 144.8059 ; 358.0000 ]
-  pt2: [ 261.1377 ; 358.0000 ]
+  pt1: [ 149.8059 ; 363.0000 ]
+  pt2: [ 266.1377 ; 363.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: <->  
-  position: [ 156.8059 ; 353.1111 ]
+  position: [ 161.8059 ; 358.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 380.2500 ]
-  pt2: [ 143.3059 ; 388.2500 ]
+  pt1: [ 140.3059 ; 385.2500 ]
+  pt2: [ 148.3059 ; 393.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -679,18 +679,18 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 156.3059 ; 381.0000 ]
-   - [ 146.3059 ; 385.0000 ]
-   - [ 156.3059 ; 389.0000 ]
-   - [ 152.3059 ; 385.0000 ]
+   - [ 161.3059 ; 386.0000 ]
+   - [ 151.3059 ; 390.0000 ]
+   - [ 161.3059 ; 394.0000 ]
+   - [ 157.3059 ; 390.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 380.2500 ]
-  pt2: [ 270.6377 ; 388.2500 ]
+  pt1: [ 267.6377 ; 385.2500 ]
+  pt2: [ 275.6377 ; 393.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -700,76 +700,76 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 249.6377 ; 381.0000 ]
-   - [ 259.6377 ; 385.0000 ]
-   - [ 249.6377 ; 389.0000 ]
-   - [ 253.6377 ; 385.0000 ]
+   - [ 254.6377 ; 386.0000 ]
+   - [ 264.6377 ; 390.0000 ]
+   - [ 254.6377 ; 394.0000 ]
+   - [ 258.6377 ; 390.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 150.3059 ; 385.0000 ]
-  pt2: [ 255.6377 ; 385.0000 ]
+  pt1: [ 155.3059 ; 390.0000 ]
+  pt2: [ 260.6377 ; 390.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o<->o
-  position: [ 156.8059 ; 380.1111 ]
+  position: [ 161.8059 ; 385.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 146.8059 ; 407.0000 ]
-  pt2: [ 156.8059 ; 417.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 146.8059 ; 417.0000 ]
-  pt2: [ 156.8059 ; 407.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 249.1377 ; 407.0000 ]
-  pt2: [ 259.1377 ; 417.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 249.1377 ; 417.0000 ]
-  pt2: [ 259.1377 ; 407.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
   pt1: [ 151.8059 ; 412.0000 ]
-  pt2: [ 254.1377 ; 412.0000 ]
+  pt2: [ 161.8059 ; 422.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 151.8059 ; 422.0000 ]
+  pt2: [ 161.8059 ; 412.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 254.1377 ; 412.0000 ]
+  pt2: [ 264.1377 ; 422.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 254.1377 ; 422.0000 ]
+  pt2: [ 264.1377 ; 412.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 156.8059 ; 417.0000 ]
+  pt2: [ 259.1377 ; 417.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: x<->x
-  position: [ 156.8059 ; 407.1111 ]
+  position: [ 161.8059 ; 412.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 434.2500 ]
-  pt2: [ 270.6377 ; 442.2500 ]
+  pt1: [ 267.6377 ; 439.2500 ]
+  pt2: [ 275.6377 ; 447.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -778,37 +778,37 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 259.6377 ; 439.0000 ]
-  pt2: [ 249.6377 ; 435.0000 ]
+  pt1: [ 264.6377 ; 444.0000 ]
+  pt2: [ 254.6377 ; 440.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 259.6377 ; 439.0000 ]
-  pt2: [ 249.6377 ; 443.0000 ]
+  pt1: [ 264.6377 ; 444.0000 ]
+  pt2: [ 254.6377 ; 448.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 439.0000 ]
-  pt2: [ 260.6377 ; 439.0000 ]
+  pt1: [ 144.8059 ; 444.0000 ]
+  pt2: [ 265.6377 ; 444.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: ->>o 
-  position: [ 146.8059 ; 434.1111 ]
+  position: [ 151.8059 ; 439.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 461.2500 ]
-  pt2: [ 270.6377 ; 469.2500 ]
+  pt1: [ 267.6377 ; 466.2500 ]
+  pt2: [ 275.6377 ; 474.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -818,32 +818,32 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 249.6377 ; 462.0000 ]
-   - [ 259.6377 ; 466.0000 ]
-   - [ 249.6377 ; 466.0000 ]
+   - [ 254.6377 ; 467.0000 ]
+   - [ 264.6377 ; 471.0000 ]
+   - [ 254.6377 ; 471.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 466.0000 ]
-  pt2: [ 260.6377 ; 466.0000 ]
+  pt1: [ 144.8059 ; 471.0000 ]
+  pt2: [ 265.6377 ; 471.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -\o  
-  position: [ 146.8059 ; 461.1111 ]
+  position: [ 151.8059 ; 466.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 488.2500 ]
-  pt2: [ 270.6377 ; 496.2500 ]
+  pt1: [ 267.6377 ; 493.2500 ]
+  pt2: [ 275.6377 ; 501.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -852,30 +852,30 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 259.6377 ; 493.0000 ]
-  pt2: [ 249.6377 ; 489.0000 ]
+  pt1: [ 264.6377 ; 498.0000 ]
+  pt2: [ 254.6377 ; 494.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 493.0000 ]
-  pt2: [ 260.6377 ; 493.0000 ]
+  pt1: [ 144.8059 ; 498.0000 ]
+  pt2: [ 265.6377 ; 498.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -\\o
-  position: [ 146.8059 ; 488.1111 ]
+  position: [ 151.8059 ; 493.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 515.2500 ]
-  pt2: [ 270.6377 ; 523.2500 ]
+  pt1: [ 267.6377 ; 520.2500 ]
+  pt2: [ 275.6377 ; 528.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -885,32 +885,32 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 249.6377 ; 520.0000 ]
-   - [ 259.6377 ; 520.0000 ]
-   - [ 249.6377 ; 524.0000 ]
+   - [ 254.6377 ; 525.0000 ]
+   - [ 264.6377 ; 525.0000 ]
+   - [ 254.6377 ; 529.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 520.0000 ]
-  pt2: [ 260.6377 ; 520.0000 ]
+  pt1: [ 144.8059 ; 525.0000 ]
+  pt2: [ 265.6377 ; 525.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -/o  
-  position: [ 146.8059 ; 515.1111 ]
+  position: [ 151.8059 ; 520.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 542.2500 ]
-  pt2: [ 270.6377 ; 550.2500 ]
+  pt1: [ 267.6377 ; 547.2500 ]
+  pt2: [ 275.6377 ; 555.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -919,44 +919,44 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 259.6377 ; 547.0000 ]
-  pt2: [ 249.6377 ; 551.0000 ]
+  pt1: [ 264.6377 ; 552.0000 ]
+  pt2: [ 254.6377 ; 556.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 547.0000 ]
-  pt2: [ 260.6377 ; 547.0000 ]
+  pt1: [ 144.8059 ; 552.0000 ]
+  pt2: [ 265.6377 ; 552.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -//o 
-  position: [ 146.8059 ; 542.1111 ]
+  position: [ 151.8059 ; 547.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 146.8059 ; 569.0000 ]
-  pt2: [ 156.8059 ; 579.0000 ]
+  pt1: [ 151.8059 ; 574.0000 ]
+  pt2: [ 161.8059 ; 584.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 146.8059 ; 579.0000 ]
-  pt2: [ 156.8059 ; 569.0000 ]
+  pt1: [ 151.8059 ; 584.0000 ]
+  pt2: [ 161.8059 ; 574.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 569.2500 ]
-  pt2: [ 270.6377 ; 577.2500 ]
+  pt1: [ 267.6377 ; 574.2500 ]
+  pt2: [ 275.6377 ; 582.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -966,25 +966,25 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 249.6377 ; 570.0000 ]
-   - [ 259.6377 ; 574.0000 ]
-   - [ 249.6377 ; 578.0000 ]
-   - [ 253.6377 ; 574.0000 ]
+   - [ 254.6377 ; 575.0000 ]
+   - [ 264.6377 ; 579.0000 ]
+   - [ 254.6377 ; 583.0000 ]
+   - [ 258.6377 ; 579.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 151.8059 ; 574.0000 ]
-  pt2: [ 255.6377 ; 574.0000 ]
+  pt1: [ 156.8059 ; 579.0000 ]
+  pt2: [ 260.6377 ; 579.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: x->o 
-  position: [ 156.8059 ; 569.1111 ]
+  position: [ 161.8059 ; 574.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -992,54 +992,54 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 150.8059 ; 597.0000 ]
-   - [ 140.8059 ; 601.0000 ]
-   - [ 150.8059 ; 605.0000 ]
-   - [ 146.8059 ; 601.0000 ]
+   - [ 155.8059 ; 602.0000 ]
+   - [ 145.8059 ; 606.0000 ]
+   - [ 155.8059 ; 610.0000 ]
+   - [ 151.8059 ; 606.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 144.8059 ; 601.0000 ]
-  pt2: [ 266.1377 ; 601.0000 ]
+  pt1: [ 149.8059 ; 606.0000 ]
+  pt2: [ 271.1377 ; 606.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: <-  
-  position: [ 156.8059 ; 596.1111 ]
+  position: [ 161.8059 ; 601.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 140.8059 ; 628.0000 ]
-  pt2: [ 150.8059 ; 624.0000 ]
+  pt1: [ 145.8059 ; 633.0000 ]
+  pt2: [ 155.8059 ; 629.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 140.8059 ; 628.0000 ]
-  pt2: [ 150.8059 ; 632.0000 ]
+  pt1: [ 145.8059 ; 633.0000 ]
+  pt2: [ 155.8059 ; 637.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 628.0000 ]
-  pt2: [ 266.1377 ; 628.0000 ]
+  pt1: [ 144.8059 ; 633.0000 ]
+  pt2: [ 271.1377 ; 633.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: <<-  
-  position: [ 156.8059 ; 623.1111 ]
+  position: [ 161.8059 ; 628.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -1047,46 +1047,46 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 150.8059 ; 651.0000 ]
-   - [ 140.8059 ; 655.0000 ]
-   - [ 150.8059 ; 655.0000 ]
+   - [ 155.8059 ; 656.0000 ]
+   - [ 145.8059 ; 660.0000 ]
+   - [ 155.8059 ; 660.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 655.0000 ]
-  pt2: [ 266.1377 ; 655.0000 ]
+  pt1: [ 144.8059 ; 660.0000 ]
+  pt2: [ 271.1377 ; 660.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: /-   
-  position: [ 156.8059 ; 650.1111 ]
+  position: [ 161.8059 ; 655.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 140.8059 ; 682.0000 ]
-  pt2: [ 150.8059 ; 678.0000 ]
+  pt1: [ 145.8059 ; 687.0000 ]
+  pt2: [ 155.8059 ; 683.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 682.0000 ]
-  pt2: [ 266.1377 ; 682.0000 ]
+  pt1: [ 144.8059 ; 687.0000 ]
+  pt2: [ 271.1377 ; 687.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: //-
-  position: [ 156.8059 ; 677.1111 ]
+  position: [ 161.8059 ; 682.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -1094,75 +1094,75 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 150.8059 ; 709.0000 ]
-   - [ 140.8059 ; 709.0000 ]
-   - [ 150.8059 ; 713.0000 ]
+   - [ 155.8059 ; 714.0000 ]
+   - [ 145.8059 ; 714.0000 ]
+   - [ 155.8059 ; 718.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 709.0000 ]
-  pt2: [ 266.1377 ; 709.0000 ]
+  pt1: [ 144.8059 ; 714.0000 ]
+  pt2: [ 271.1377 ; 714.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: \-
-  position: [ 156.8059 ; 704.1111 ]
+  position: [ 161.8059 ; 709.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 140.8059 ; 736.0000 ]
-  pt2: [ 150.8059 ; 740.0000 ]
+  pt1: [ 145.8059 ; 741.0000 ]
+  pt2: [ 155.8059 ; 745.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 736.0000 ]
-  pt2: [ 266.1377 ; 736.0000 ]
+  pt1: [ 144.8059 ; 741.0000 ]
+  pt2: [ 271.1377 ; 741.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: \\-
-  position: [ 156.8059 ; 731.1111 ]
+  position: [ 161.8059 ; 736.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 146.8059 ; 758.0000 ]
-  pt2: [ 156.8059 ; 768.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 146.8059 ; 768.0000 ]
-  pt2: [ 156.8059 ; 758.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
   pt1: [ 151.8059 ; 763.0000 ]
-  pt2: [ 266.1377 ; 763.0000 ]
+  pt2: [ 161.8059 ; 773.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 151.8059 ; 773.0000 ]
+  pt2: [ 161.8059 ; 763.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 156.8059 ; 768.0000 ]
+  pt2: [ 271.1377 ; 768.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: x<-  
-  position: [ 156.8059 ; 758.1111 ]
+  position: [ 161.8059 ; 763.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -1170,39 +1170,39 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 150.8059 ; 786.0000 ]
-   - [ 140.8059 ; 790.0000 ]
-   - [ 150.8059 ; 794.0000 ]
-   - [ 146.8059 ; 790.0000 ]
+   - [ 155.8059 ; 791.0000 ]
+   - [ 145.8059 ; 795.0000 ]
+   - [ 155.8059 ; 799.0000 ]
+   - [ 151.8059 ; 795.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 249.1377 ; 785.0000 ]
+  pt1: [ 254.1377 ; 790.0000 ]
+  pt2: [ 264.1377 ; 800.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 254.1377 ; 800.0000 ]
+  pt2: [ 264.1377 ; 790.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 149.8059 ; 795.0000 ]
   pt2: [ 259.1377 ; 795.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 249.1377 ; 795.0000 ]
-  pt2: [ 259.1377 ; 785.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 144.8059 ; 790.0000 ]
-  pt2: [ 254.1377 ; 790.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: <-x  
-  position: [ 156.8059 ; 785.1111 ]
+  position: [ 161.8059 ; 790.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -1210,18 +1210,18 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 150.8059 ; 813.0000 ]
-   - [ 140.8059 ; 817.0000 ]
-   - [ 150.8059 ; 821.0000 ]
-   - [ 146.8059 ; 817.0000 ]
+   - [ 155.8059 ; 818.0000 ]
+   - [ 145.8059 ; 822.0000 ]
+   - [ 155.8059 ; 826.0000 ]
+   - [ 151.8059 ; 822.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 812.2500 ]
-  pt2: [ 270.6377 ; 820.2500 ]
+  pt1: [ 267.6377 ; 817.2500 ]
+  pt2: [ 275.6377 ; 825.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -1230,23 +1230,23 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 144.8059 ; 817.0000 ]
-  pt2: [ 262.1377 ; 817.0000 ]
+  pt1: [ 149.8059 ; 822.0000 ]
+  pt2: [ 267.1377 ; 822.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: <-o  
-  position: [ 156.8059 ; 812.1111 ]
+  position: [ 161.8059 ; 817.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 839.2500 ]
-  pt2: [ 143.3059 ; 847.2500 ]
+  pt1: [ 140.3059 ; 844.2500 ]
+  pt2: [ 148.3059 ; 852.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -1256,33 +1256,33 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 156.3059 ; 840.0000 ]
-   - [ 146.3059 ; 844.0000 ]
-   - [ 156.3059 ; 848.0000 ]
-   - [ 152.3059 ; 844.0000 ]
+   - [ 161.3059 ; 845.0000 ]
+   - [ 151.3059 ; 849.0000 ]
+   - [ 161.3059 ; 853.0000 ]
+   - [ 157.3059 ; 849.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 150.3059 ; 844.0000 ]
-  pt2: [ 266.1377 ; 844.0000 ]
+  pt1: [ 155.3059 ; 849.0000 ]
+  pt2: [ 271.1377 ; 849.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o<-  
-  position: [ 156.8059 ; 839.1111 ]
+  position: [ 161.8059 ; 844.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 866.2500 ]
-  pt2: [ 143.3059 ; 874.2500 ]
+  pt1: [ 140.3059 ; 871.2500 ]
+  pt2: [ 148.3059 ; 879.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -1292,18 +1292,18 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 156.3059 ; 867.0000 ]
-   - [ 146.3059 ; 871.0000 ]
-   - [ 156.3059 ; 875.0000 ]
-   - [ 152.3059 ; 871.0000 ]
+   - [ 161.3059 ; 872.0000 ]
+   - [ 151.3059 ; 876.0000 ]
+   - [ 161.3059 ; 880.0000 ]
+   - [ 157.3059 ; 876.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 866.2500 ]
-  pt2: [ 270.6377 ; 874.2500 ]
+  pt1: [ 267.6377 ; 871.2500 ]
+  pt2: [ 275.6377 ; 879.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -1312,15 +1312,15 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 150.3059 ; 871.0000 ]
-  pt2: [ 262.1377 ; 871.0000 ]
+  pt1: [ 155.3059 ; 876.0000 ]
+  pt2: [ 267.1377 ; 876.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o<-o 
-  position: [ 156.8059 ; 866.1111 ]
+  position: [ 161.8059 ; 871.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -1328,10 +1328,10 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 150.8059 ; 894.0000 ]
-   - [ 140.8059 ; 898.0000 ]
-   - [ 150.8059 ; 902.0000 ]
-   - [ 146.8059 ; 898.0000 ]
+   - [ 155.8059 ; 899.0000 ]
+   - [ 145.8059 ; 903.0000 ]
+   - [ 155.8059 ; 907.0000 ]
+   - [ 151.8059 ; 903.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -1339,33 +1339,33 @@ POLYGON:
 
 POLYGON:
   points:
-   - [ 255.1377 ; 894.0000 ]
-   - [ 265.1377 ; 898.0000 ]
-   - [ 255.1377 ; 902.0000 ]
-   - [ 259.1377 ; 898.0000 ]
+   - [ 260.1377 ; 899.0000 ]
+   - [ 270.1377 ; 903.0000 ]
+   - [ 260.1377 ; 907.0000 ]
+   - [ 264.1377 ; 903.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 144.8059 ; 898.0000 ]
-  pt2: [ 261.1377 ; 898.0000 ]
+  pt1: [ 149.8059 ; 903.0000 ]
+  pt2: [ 266.1377 ; 903.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: <->  
-  position: [ 156.8059 ; 893.1111 ]
+  position: [ 161.8059 ; 898.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 920.2500 ]
-  pt2: [ 143.3059 ; 928.2500 ]
+  pt1: [ 140.3059 ; 925.2500 ]
+  pt2: [ 148.3059 ; 933.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -1375,18 +1375,18 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 156.3059 ; 921.0000 ]
-   - [ 146.3059 ; 925.0000 ]
-   - [ 156.3059 ; 929.0000 ]
-   - [ 152.3059 ; 925.0000 ]
+   - [ 161.3059 ; 926.0000 ]
+   - [ 151.3059 ; 930.0000 ]
+   - [ 161.3059 ; 934.0000 ]
+   - [ 157.3059 ; 930.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 920.2500 ]
-  pt2: [ 270.6377 ; 928.2500 ]
+  pt1: [ 267.6377 ; 925.2500 ]
+  pt2: [ 275.6377 ; 933.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -1396,76 +1396,76 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 249.6377 ; 921.0000 ]
-   - [ 259.6377 ; 925.0000 ]
-   - [ 249.6377 ; 929.0000 ]
-   - [ 253.6377 ; 925.0000 ]
+   - [ 254.6377 ; 926.0000 ]
+   - [ 264.6377 ; 930.0000 ]
+   - [ 254.6377 ; 934.0000 ]
+   - [ 258.6377 ; 930.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 150.3059 ; 925.0000 ]
-  pt2: [ 255.6377 ; 925.0000 ]
+  pt1: [ 155.3059 ; 930.0000 ]
+  pt2: [ 260.6377 ; 930.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o<->o
-  position: [ 156.8059 ; 920.1111 ]
+  position: [ 161.8059 ; 925.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 146.8059 ; 947.0000 ]
-  pt2: [ 156.8059 ; 957.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 146.8059 ; 957.0000 ]
-  pt2: [ 156.8059 ; 947.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 249.1377 ; 947.0000 ]
-  pt2: [ 259.1377 ; 957.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 249.1377 ; 957.0000 ]
-  pt2: [ 259.1377 ; 947.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
   pt1: [ 151.8059 ; 952.0000 ]
-  pt2: [ 254.1377 ; 952.0000 ]
+  pt2: [ 161.8059 ; 962.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 151.8059 ; 962.0000 ]
+  pt2: [ 161.8059 ; 952.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 254.1377 ; 952.0000 ]
+  pt2: [ 264.1377 ; 962.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 254.1377 ; 962.0000 ]
+  pt2: [ 264.1377 ; 952.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 156.8059 ; 957.0000 ]
+  pt2: [ 259.1377 ; 957.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: x<->x
-  position: [ 156.8059 ; 947.1111 ]
+  position: [ 161.8059 ; 952.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 974.2500 ]
-  pt2: [ 143.3059 ; 982.2500 ]
+  pt1: [ 140.3059 ; 979.2500 ]
+  pt2: [ 148.3059 ; 987.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -1474,37 +1474,37 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 146.3059 ; 979.0000 ]
-  pt2: [ 156.3059 ; 975.0000 ]
+  pt1: [ 151.3059 ; 984.0000 ]
+  pt2: [ 161.3059 ; 980.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 146.3059 ; 979.0000 ]
-  pt2: [ 156.3059 ; 983.0000 ]
+  pt1: [ 151.3059 ; 984.0000 ]
+  pt2: [ 161.3059 ; 988.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 145.3059 ; 979.0000 ]
-  pt2: [ 266.1377 ; 979.0000 ]
+  pt1: [ 150.3059 ; 984.0000 ]
+  pt2: [ 271.1377 ; 984.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o<<- 
-  position: [ 156.8059 ; 974.1111 ]
+  position: [ 161.8059 ; 979.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 1001.2500 ]
-  pt2: [ 143.3059 ; 1009.2500 ]
+  pt1: [ 140.3059 ; 1006.2500 ]
+  pt2: [ 148.3059 ; 1014.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -1514,32 +1514,32 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 156.3059 ; 1002.0000 ]
-   - [ 146.3059 ; 1006.0000 ]
-   - [ 156.3059 ; 1006.0000 ]
+   - [ 161.3059 ; 1007.0000 ]
+   - [ 151.3059 ; 1011.0000 ]
+   - [ 161.3059 ; 1011.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 145.3059 ; 1006.0000 ]
-  pt2: [ 266.1377 ; 1006.0000 ]
+  pt1: [ 150.3059 ; 1011.0000 ]
+  pt2: [ 271.1377 ; 1011.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o/-  
-  position: [ 156.8059 ; 1001.1111 ]
+  position: [ 161.8059 ; 1006.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 1028.2500 ]
-  pt2: [ 143.3059 ; 1036.2500 ]
+  pt1: [ 140.3059 ; 1033.2500 ]
+  pt2: [ 148.3059 ; 1041.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -1548,30 +1548,30 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 146.3059 ; 1033.0000 ]
-  pt2: [ 156.3059 ; 1029.0000 ]
+  pt1: [ 151.3059 ; 1038.0000 ]
+  pt2: [ 161.3059 ; 1034.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 145.3059 ; 1033.0000 ]
-  pt2: [ 266.1377 ; 1033.0000 ]
+  pt1: [ 150.3059 ; 1038.0000 ]
+  pt2: [ 271.1377 ; 1038.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o//-
-  position: [ 156.8059 ; 1028.1111 ]
+  position: [ 161.8059 ; 1033.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 1055.2500 ]
-  pt2: [ 143.3059 ; 1063.2500 ]
+  pt1: [ 140.3059 ; 1060.2500 ]
+  pt2: [ 148.3059 ; 1068.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -1581,32 +1581,32 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 156.3059 ; 1060.0000 ]
-   - [ 146.3059 ; 1060.0000 ]
-   - [ 156.3059 ; 1064.0000 ]
+   - [ 161.3059 ; 1065.0000 ]
+   - [ 151.3059 ; 1065.0000 ]
+   - [ 161.3059 ; 1069.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 145.3059 ; 1060.0000 ]
-  pt2: [ 266.1377 ; 1060.0000 ]
+  pt1: [ 150.3059 ; 1065.0000 ]
+  pt2: [ 271.1377 ; 1065.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o\-  
-  position: [ 156.8059 ; 1055.1111 ]
+  position: [ 161.8059 ; 1060.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 1082.2500 ]
-  pt2: [ 143.3059 ; 1090.2500 ]
+  pt1: [ 140.3059 ; 1087.2500 ]
+  pt2: [ 148.3059 ; 1095.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -1615,30 +1615,30 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 146.3059 ; 1087.0000 ]
-  pt2: [ 156.3059 ; 1091.0000 ]
+  pt1: [ 151.3059 ; 1092.0000 ]
+  pt2: [ 161.3059 ; 1096.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 145.3059 ; 1087.0000 ]
-  pt2: [ 266.1377 ; 1087.0000 ]
+  pt1: [ 150.3059 ; 1092.0000 ]
+  pt2: [ 271.1377 ; 1092.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o\\-
-  position: [ 156.8059 ; 1082.1111 ]
+  position: [ 161.8059 ; 1087.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 1109.2500 ]
-  pt2: [ 143.3059 ; 1117.2500 ]
+  pt1: [ 140.3059 ; 1114.2500 ]
+  pt2: [ 148.3059 ; 1122.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -1648,71 +1648,71 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 156.3059 ; 1110.0000 ]
-   - [ 146.3059 ; 1114.0000 ]
-   - [ 156.3059 ; 1118.0000 ]
-   - [ 152.3059 ; 1114.0000 ]
+   - [ 161.3059 ; 1115.0000 ]
+   - [ 151.3059 ; 1119.0000 ]
+   - [ 161.3059 ; 1123.0000 ]
+   - [ 157.3059 ; 1119.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 249.1377 ; 1109.0000 ]
+  pt1: [ 254.1377 ; 1114.0000 ]
+  pt2: [ 264.1377 ; 1124.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 254.1377 ; 1124.0000 ]
+  pt2: [ 264.1377 ; 1114.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 155.3059 ; 1119.0000 ]
   pt2: [ 259.1377 ; 1119.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 249.1377 ; 1119.0000 ]
-  pt2: [ 259.1377 ; 1109.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 150.3059 ; 1114.0000 ]
-  pt2: [ 254.1377 ; 1114.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o<-x 
-  position: [ 156.8059 ; 1109.1111 ]
+  position: [ 161.8059 ; 1114.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 139.8059 ; 1141.0000 ]
-  pt2: [ 181.8059 ; 1141.0000 ]
+  pt1: [ 144.8059 ; 1146.0000 ]
+  pt2: [ 186.8059 ; 1146.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 1141.0000 ]
-  pt2: [ 181.8059 ; 1154.0000 ]
+  pt1: [ 186.8059 ; 1146.0000 ]
+  pt2: [ 186.8059 ; 1159.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 140.8059 ; 1154.0000 ]
-  pt2: [ 181.8059 ; 1154.0000 ]
+  pt1: [ 145.8059 ; 1159.0000 ]
+  pt2: [ 186.8059 ; 1159.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 150.8059 ; 1150.0000 ]
-   - [ 140.8059 ; 1154.0000 ]
-   - [ 150.8059 ; 1158.0000 ]
-   - [ 146.8059 ; 1154.0000 ]
+   - [ 155.8059 ; 1155.0000 ]
+   - [ 145.8059 ; 1159.0000 ]
+   - [ 155.8059 ; 1163.0000 ]
+   - [ 151.8059 ; 1159.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -1720,81 +1720,81 @@ POLYGON:
 
 TEXT:
   text: ->   
-  position: [ 146.8059 ; 1136.1111 ]
+  position: [ 151.8059 ; 1141.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 139.8059 ; 1181.0000 ]
-  pt2: [ 181.8059 ; 1181.0000 ]
+  pt1: [ 144.8059 ; 1186.0000 ]
+  pt2: [ 186.8059 ; 1186.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 1181.0000 ]
-  pt2: [ 181.8059 ; 1194.0000 ]
+  pt1: [ 186.8059 ; 1186.0000 ]
+  pt2: [ 186.8059 ; 1199.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 1194.0000 ]
-  pt2: [ 181.8059 ; 1194.0000 ]
+  pt1: [ 144.8059 ; 1199.0000 ]
+  pt2: [ 186.8059 ; 1199.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 140.8059 ; 1194.0000 ]
-  pt2: [ 150.8059 ; 1190.0000 ]
+  pt1: [ 145.8059 ; 1199.0000 ]
+  pt2: [ 155.8059 ; 1195.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 140.8059 ; 1194.0000 ]
-  pt2: [ 150.8059 ; 1198.0000 ]
+  pt1: [ 145.8059 ; 1199.0000 ]
+  pt2: [ 155.8059 ; 1203.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: ->>  
-  position: [ 146.8059 ; 1176.1111 ]
+  position: [ 151.8059 ; 1181.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 139.8059 ; 1221.0000 ]
-  pt2: [ 181.8059 ; 1221.0000 ]
+  pt1: [ 144.8059 ; 1226.0000 ]
+  pt2: [ 186.8059 ; 1226.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 1221.0000 ]
-  pt2: [ 181.8059 ; 1234.0000 ]
+  pt1: [ 186.8059 ; 1226.0000 ]
+  pt2: [ 186.8059 ; 1239.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 140.8059 ; 1234.0000 ]
-  pt2: [ 181.8059 ; 1234.0000 ]
+  pt1: [ 145.8059 ; 1239.0000 ]
+  pt2: [ 186.8059 ; 1239.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 149.8059 ; 1230.0000 ]
-   - [ 139.8059 ; 1234.0000 ]
-   - [ 149.8059 ; 1234.0000 ]
+   - [ 154.8059 ; 1235.0000 ]
+   - [ 144.8059 ; 1239.0000 ]
+   - [ 154.8059 ; 1239.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -1802,74 +1802,74 @@ POLYGON:
 
 TEXT:
   text: -\   
-  position: [ 146.8059 ; 1216.1111 ]
+  position: [ 151.8059 ; 1221.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 139.8059 ; 1261.0000 ]
-  pt2: [ 181.8059 ; 1261.0000 ]
+  pt1: [ 144.8059 ; 1266.0000 ]
+  pt2: [ 186.8059 ; 1266.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 1261.0000 ]
-  pt2: [ 181.8059 ; 1274.0000 ]
+  pt1: [ 186.8059 ; 1266.0000 ]
+  pt2: [ 186.8059 ; 1279.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 1274.0000 ]
-  pt2: [ 181.8059 ; 1274.0000 ]
+  pt1: [ 144.8059 ; 1279.0000 ]
+  pt2: [ 186.8059 ; 1279.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 140.8059 ; 1274.0000 ]
-  pt2: [ 150.8059 ; 1270.0000 ]
+  pt1: [ 145.8059 ; 1279.0000 ]
+  pt2: [ 155.8059 ; 1275.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -\\
-  position: [ 146.8059 ; 1256.1111 ]
+  position: [ 151.8059 ; 1261.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 139.8059 ; 1301.0000 ]
-  pt2: [ 181.8059 ; 1301.0000 ]
+  pt1: [ 144.8059 ; 1306.0000 ]
+  pt2: [ 186.8059 ; 1306.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 1301.0000 ]
-  pt2: [ 181.8059 ; 1314.0000 ]
+  pt1: [ 186.8059 ; 1306.0000 ]
+  pt2: [ 186.8059 ; 1319.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 140.8059 ; 1314.0000 ]
-  pt2: [ 181.8059 ; 1314.0000 ]
+  pt1: [ 145.8059 ; 1319.0000 ]
+  pt2: [ 186.8059 ; 1319.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 149.8059 ; 1314.0000 ]
-   - [ 139.8059 ; 1314.0000 ]
-   - [ 149.8059 ; 1318.0000 ]
+   - [ 154.8059 ; 1319.0000 ]
+   - [ 144.8059 ; 1319.0000 ]
+   - [ 154.8059 ; 1323.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -1877,51 +1877,51 @@ POLYGON:
 
 TEXT:
   text: -/   
-  position: [ 146.8059 ; 1296.1111 ]
+  position: [ 151.8059 ; 1301.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 139.8059 ; 1341.0000 ]
-  pt2: [ 181.8059 ; 1341.0000 ]
+  pt1: [ 144.8059 ; 1346.0000 ]
+  pt2: [ 186.8059 ; 1346.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 1341.0000 ]
-  pt2: [ 181.8059 ; 1354.0000 ]
+  pt1: [ 186.8059 ; 1346.0000 ]
+  pt2: [ 186.8059 ; 1359.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 1354.0000 ]
-  pt2: [ 181.8059 ; 1354.0000 ]
+  pt1: [ 144.8059 ; 1359.0000 ]
+  pt2: [ 186.8059 ; 1359.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 140.8059 ; 1354.0000 ]
-  pt2: [ 150.8059 ; 1358.0000 ]
+  pt1: [ 145.8059 ; 1359.0000 ]
+  pt2: [ 155.8059 ; 1363.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -//  
-  position: [ 146.8059 ; 1336.1111 ]
+  position: [ 151.8059 ; 1341.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 1376.2500 ]
-  pt2: [ 143.3059 ; 1384.2500 ]
+  pt1: [ 140.3059 ; 1381.2500 ]
+  pt2: [ 148.3059 ; 1389.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -1930,32 +1930,32 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 143.8059 ; 1381.0000 ]
-  pt2: [ 181.8059 ; 1381.0000 ]
+  pt1: [ 148.8059 ; 1386.0000 ]
+  pt2: [ 186.8059 ; 1386.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 1381.0000 ]
-  pt2: [ 181.8059 ; 1394.0000 ]
+  pt1: [ 186.8059 ; 1386.0000 ]
+  pt2: [ 186.8059 ; 1399.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 140.8059 ; 1394.0000 ]
-  pt2: [ 181.8059 ; 1394.0000 ]
+  pt1: [ 145.8059 ; 1399.0000 ]
+  pt2: [ 186.8059 ; 1399.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 150.8059 ; 1390.0000 ]
-   - [ 140.8059 ; 1394.0000 ]
-   - [ 150.8059 ; 1398.0000 ]
-   - [ 146.8059 ; 1394.0000 ]
+   - [ 155.8059 ; 1395.0000 ]
+   - [ 145.8059 ; 1399.0000 ]
+   - [ 155.8059 ; 1403.0000 ]
+   - [ 151.8059 ; 1399.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -1963,15 +1963,15 @@ POLYGON:
 
 TEXT:
   text: o->  
-  position: [ 146.8059 ; 1376.1111 ]
+  position: [ 151.8059 ; 1381.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 1429.2500 ]
-  pt2: [ 143.3059 ; 1437.2500 ]
+  pt1: [ 140.3059 ; 1434.2500 ]
+  pt2: [ 148.3059 ; 1442.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -1980,32 +1980,32 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 139.8059 ; 1421.0000 ]
-  pt2: [ 181.8059 ; 1421.0000 ]
+  pt1: [ 144.8059 ; 1426.0000 ]
+  pt2: [ 186.8059 ; 1426.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 1421.0000 ]
-  pt2: [ 181.8059 ; 1434.0000 ]
+  pt1: [ 186.8059 ; 1426.0000 ]
+  pt2: [ 186.8059 ; 1439.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 146.3059 ; 1434.0000 ]
-  pt2: [ 181.8059 ; 1434.0000 ]
+  pt1: [ 151.3059 ; 1439.0000 ]
+  pt2: [ 186.8059 ; 1439.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 156.3059 ; 1430.0000 ]
-   - [ 146.3059 ; 1434.0000 ]
-   - [ 156.3059 ; 1438.0000 ]
-   - [ 152.3059 ; 1434.0000 ]
+   - [ 161.3059 ; 1435.0000 ]
+   - [ 151.3059 ; 1439.0000 ]
+   - [ 161.3059 ; 1443.0000 ]
+   - [ 157.3059 ; 1439.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -2013,15 +2013,15 @@ POLYGON:
 
 TEXT:
   text: ->o  
-  position: [ 146.8059 ; 1416.1111 ]
+  position: [ 151.8059 ; 1421.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 1456.2500 ]
-  pt2: [ 143.3059 ; 1464.2500 ]
+  pt1: [ 140.3059 ; 1461.2500 ]
+  pt2: [ 148.3059 ; 1469.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -2030,8 +2030,8 @@ ELLIPSE:
   backcolor: ff000000
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 1469.2500 ]
-  pt2: [ 143.3059 ; 1477.2500 ]
+  pt1: [ 140.3059 ; 1474.2500 ]
+  pt2: [ 148.3059 ; 1482.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -2040,32 +2040,32 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 143.8059 ; 1461.0000 ]
-  pt2: [ 181.8059 ; 1461.0000 ]
+  pt1: [ 148.8059 ; 1466.0000 ]
+  pt2: [ 186.8059 ; 1466.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 1461.0000 ]
-  pt2: [ 181.8059 ; 1474.0000 ]
+  pt1: [ 186.8059 ; 1466.0000 ]
+  pt2: [ 186.8059 ; 1479.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 146.3059 ; 1474.0000 ]
-  pt2: [ 181.8059 ; 1474.0000 ]
+  pt1: [ 151.3059 ; 1479.0000 ]
+  pt2: [ 186.8059 ; 1479.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 156.3059 ; 1470.0000 ]
-   - [ 146.3059 ; 1474.0000 ]
-   - [ 156.3059 ; 1478.0000 ]
-   - [ 152.3059 ; 1474.0000 ]
+   - [ 161.3059 ; 1475.0000 ]
+   - [ 151.3059 ; 1479.0000 ]
+   - [ 161.3059 ; 1483.0000 ]
+   - [ 157.3059 ; 1479.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -2073,39 +2073,39 @@ POLYGON:
 
 TEXT:
   text: o->o 
-  position: [ 146.8059 ; 1456.1111 ]
+  position: [ 151.8059 ; 1461.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 139.8059 ; 1501.0000 ]
-  pt2: [ 181.8059 ; 1501.0000 ]
+  pt1: [ 144.8059 ; 1506.0000 ]
+  pt2: [ 186.8059 ; 1506.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 1501.0000 ]
-  pt2: [ 181.8059 ; 1514.0000 ]
+  pt1: [ 186.8059 ; 1506.0000 ]
+  pt2: [ 186.8059 ; 1519.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 140.8059 ; 1514.0000 ]
-  pt2: [ 181.8059 ; 1514.0000 ]
+  pt1: [ 145.8059 ; 1519.0000 ]
+  pt2: [ 186.8059 ; 1519.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 149.8059 ; 1497.0000 ]
-   - [ 139.8059 ; 1501.0000 ]
-   - [ 149.8059 ; 1505.0000 ]
-   - [ 145.8059 ; 1501.0000 ]
+   - [ 154.8059 ; 1502.0000 ]
+   - [ 144.8059 ; 1506.0000 ]
+   - [ 154.8059 ; 1510.0000 ]
+   - [ 150.8059 ; 1506.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -2113,10 +2113,10 @@ POLYGON:
 
 POLYGON:
   points:
-   - [ 150.8059 ; 1510.0000 ]
-   - [ 140.8059 ; 1514.0000 ]
-   - [ 150.8059 ; 1518.0000 ]
-   - [ 146.8059 ; 1514.0000 ]
+   - [ 155.8059 ; 1515.0000 ]
+   - [ 145.8059 ; 1519.0000 ]
+   - [ 155.8059 ; 1523.0000 ]
+   - [ 151.8059 ; 1519.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -2124,15 +2124,15 @@ POLYGON:
 
 TEXT:
   text: <->  
-  position: [ 146.8059 ; 1496.1111 ]
+  position: [ 151.8059 ; 1501.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 1536.2500 ]
-  pt2: [ 143.3059 ; 1544.2500 ]
+  pt1: [ 140.3059 ; 1541.2500 ]
+  pt2: [ 148.3059 ; 1549.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -2141,8 +2141,8 @@ ELLIPSE:
   backcolor: ff000000
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 1549.2500 ]
-  pt2: [ 143.3059 ; 1557.2500 ]
+  pt1: [ 140.3059 ; 1554.2500 ]
+  pt2: [ 148.3059 ; 1562.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -2151,32 +2151,32 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 146.3059 ; 1541.0000 ]
-  pt2: [ 181.8059 ; 1541.0000 ]
+  pt1: [ 151.3059 ; 1546.0000 ]
+  pt2: [ 186.8059 ; 1546.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 1541.0000 ]
-  pt2: [ 181.8059 ; 1554.0000 ]
+  pt1: [ 186.8059 ; 1546.0000 ]
+  pt2: [ 186.8059 ; 1559.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 146.3059 ; 1554.0000 ]
-  pt2: [ 181.8059 ; 1554.0000 ]
+  pt1: [ 151.3059 ; 1559.0000 ]
+  pt2: [ 186.8059 ; 1559.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 156.3059 ; 1537.0000 ]
-   - [ 146.3059 ; 1541.0000 ]
-   - [ 156.3059 ; 1545.0000 ]
-   - [ 152.3059 ; 1541.0000 ]
+   - [ 161.3059 ; 1542.0000 ]
+   - [ 151.3059 ; 1546.0000 ]
+   - [ 161.3059 ; 1550.0000 ]
+   - [ 157.3059 ; 1546.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -2184,10 +2184,10 @@ POLYGON:
 
 POLYGON:
   points:
-   - [ 156.3059 ; 1550.0000 ]
-   - [ 146.3059 ; 1554.0000 ]
-   - [ 156.3059 ; 1558.0000 ]
-   - [ 152.3059 ; 1554.0000 ]
+   - [ 161.3059 ; 1555.0000 ]
+   - [ 151.3059 ; 1559.0000 ]
+   - [ 161.3059 ; 1563.0000 ]
+   - [ 157.3059 ; 1559.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -2195,15 +2195,15 @@ POLYGON:
 
 TEXT:
   text: o<->o
-  position: [ 146.8059 ; 1536.1111 ]
+  position: [ 151.8059 ; 1541.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 1589.2500 ]
-  pt2: [ 143.3059 ; 1597.2500 ]
+  pt1: [ 140.3059 ; 1594.2500 ]
+  pt2: [ 148.3059 ; 1602.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -2212,51 +2212,51 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 139.8059 ; 1581.0000 ]
-  pt2: [ 181.8059 ; 1581.0000 ]
+  pt1: [ 144.8059 ; 1586.0000 ]
+  pt2: [ 186.8059 ; 1586.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 1581.0000 ]
-  pt2: [ 181.8059 ; 1594.0000 ]
+  pt1: [ 186.8059 ; 1586.0000 ]
+  pt2: [ 186.8059 ; 1599.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 145.3059 ; 1594.0000 ]
-  pt2: [ 181.8059 ; 1594.0000 ]
+  pt1: [ 150.3059 ; 1599.0000 ]
+  pt2: [ 186.8059 ; 1599.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 146.3059 ; 1594.0000 ]
-  pt2: [ 156.3059 ; 1590.0000 ]
+  pt1: [ 151.3059 ; 1599.0000 ]
+  pt2: [ 161.3059 ; 1595.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 146.3059 ; 1594.0000 ]
-  pt2: [ 156.3059 ; 1598.0000 ]
+  pt1: [ 151.3059 ; 1599.0000 ]
+  pt2: [ 161.3059 ; 1603.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: ->>o 
-  position: [ 146.8059 ; 1576.1111 ]
+  position: [ 151.8059 ; 1581.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 1629.2500 ]
-  pt2: [ 143.3059 ; 1637.2500 ]
+  pt1: [ 140.3059 ; 1634.2500 ]
+  pt2: [ 148.3059 ; 1642.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -2265,31 +2265,31 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 139.8059 ; 1621.0000 ]
-  pt2: [ 181.8059 ; 1621.0000 ]
+  pt1: [ 144.8059 ; 1626.0000 ]
+  pt2: [ 186.8059 ; 1626.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 1621.0000 ]
-  pt2: [ 181.8059 ; 1634.0000 ]
+  pt1: [ 186.8059 ; 1626.0000 ]
+  pt2: [ 186.8059 ; 1639.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 146.3059 ; 1634.0000 ]
-  pt2: [ 181.8059 ; 1634.0000 ]
+  pt1: [ 151.3059 ; 1639.0000 ]
+  pt2: [ 186.8059 ; 1639.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 155.3059 ; 1630.0000 ]
-   - [ 145.3059 ; 1634.0000 ]
-   - [ 155.3059 ; 1634.0000 ]
+   - [ 160.3059 ; 1635.0000 ]
+   - [ 150.3059 ; 1639.0000 ]
+   - [ 160.3059 ; 1639.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -2297,15 +2297,15 @@ POLYGON:
 
 TEXT:
   text: -\o  
-  position: [ 146.8059 ; 1616.1111 ]
+  position: [ 151.8059 ; 1621.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 1669.2500 ]
-  pt2: [ 143.3059 ; 1677.2500 ]
+  pt1: [ 140.3059 ; 1674.2500 ]
+  pt2: [ 148.3059 ; 1682.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -2314,44 +2314,44 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 139.8059 ; 1661.0000 ]
-  pt2: [ 181.8059 ; 1661.0000 ]
+  pt1: [ 144.8059 ; 1666.0000 ]
+  pt2: [ 186.8059 ; 1666.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 1661.0000 ]
-  pt2: [ 181.8059 ; 1674.0000 ]
+  pt1: [ 186.8059 ; 1666.0000 ]
+  pt2: [ 186.8059 ; 1679.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 145.3059 ; 1674.0000 ]
-  pt2: [ 181.8059 ; 1674.0000 ]
+  pt1: [ 150.3059 ; 1679.0000 ]
+  pt2: [ 186.8059 ; 1679.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 146.3059 ; 1674.0000 ]
-  pt2: [ 156.3059 ; 1670.0000 ]
+  pt1: [ 151.3059 ; 1679.0000 ]
+  pt2: [ 161.3059 ; 1675.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -\\o
-  position: [ 146.8059 ; 1656.1111 ]
+  position: [ 151.8059 ; 1661.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 1709.2500 ]
-  pt2: [ 143.3059 ; 1717.2500 ]
+  pt1: [ 140.3059 ; 1714.2500 ]
+  pt2: [ 148.3059 ; 1722.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -2360,31 +2360,31 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 139.8059 ; 1701.0000 ]
-  pt2: [ 181.8059 ; 1701.0000 ]
+  pt1: [ 144.8059 ; 1706.0000 ]
+  pt2: [ 186.8059 ; 1706.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 1701.0000 ]
-  pt2: [ 181.8059 ; 1714.0000 ]
+  pt1: [ 186.8059 ; 1706.0000 ]
+  pt2: [ 186.8059 ; 1719.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 146.3059 ; 1714.0000 ]
-  pt2: [ 181.8059 ; 1714.0000 ]
+  pt1: [ 151.3059 ; 1719.0000 ]
+  pt2: [ 186.8059 ; 1719.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 155.3059 ; 1714.0000 ]
-   - [ 145.3059 ; 1714.0000 ]
-   - [ 155.3059 ; 1718.0000 ]
+   - [ 160.3059 ; 1719.0000 ]
+   - [ 150.3059 ; 1719.0000 ]
+   - [ 160.3059 ; 1723.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -2392,15 +2392,15 @@ POLYGON:
 
 TEXT:
   text: -/o  
-  position: [ 146.8059 ; 1696.1111 ]
+  position: [ 151.8059 ; 1701.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 1749.2500 ]
-  pt2: [ 143.3059 ; 1757.2500 ]
+  pt1: [ 140.3059 ; 1754.2500 ]
+  pt2: [ 148.3059 ; 1762.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -2409,68 +2409,68 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 139.8059 ; 1741.0000 ]
-  pt2: [ 181.8059 ; 1741.0000 ]
+  pt1: [ 144.8059 ; 1746.0000 ]
+  pt2: [ 186.8059 ; 1746.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 1741.0000 ]
-  pt2: [ 181.8059 ; 1754.0000 ]
+  pt1: [ 186.8059 ; 1746.0000 ]
+  pt2: [ 186.8059 ; 1759.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 145.3059 ; 1754.0000 ]
-  pt2: [ 181.8059 ; 1754.0000 ]
+  pt1: [ 150.3059 ; 1759.0000 ]
+  pt2: [ 186.8059 ; 1759.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 146.3059 ; 1754.0000 ]
-  pt2: [ 156.3059 ; 1758.0000 ]
+  pt1: [ 151.3059 ; 1759.0000 ]
+  pt2: [ 161.3059 ; 1763.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -//o 
-  position: [ 146.8059 ; 1736.1111 ]
+  position: [ 151.8059 ; 1741.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 210.1377 ; 1781.0000 ]
-  pt2: [ 266.1377 ; 1781.0000 ]
+  pt1: [ 215.1377 ; 1786.0000 ]
+  pt2: [ 271.1377 ; 1786.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 1781.0000 ]
-  pt2: [ 210.1377 ; 1794.0000 ]
+  pt1: [ 215.1377 ; 1786.0000 ]
+  pt2: [ 215.1377 ; 1799.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 1794.0000 ]
-  pt2: [ 265.1377 ; 1794.0000 ]
+  pt1: [ 215.1377 ; 1799.0000 ]
+  pt2: [ 270.1377 ; 1799.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 255.1377 ; 1790.0000 ]
-   - [ 265.1377 ; 1794.0000 ]
-   - [ 255.1377 ; 1798.0000 ]
-   - [ 259.1377 ; 1794.0000 ]
+   - [ 260.1377 ; 1795.0000 ]
+   - [ 270.1377 ; 1799.0000 ]
+   - [ 260.1377 ; 1803.0000 ]
+   - [ 264.1377 ; 1799.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -2478,15 +2478,15 @@ POLYGON:
 
 TEXT:
   text: <-
-  position: [ 209.1377 ; 1776.1111 ]
+  position: [ 214.1377 ; 1781.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 1829.2500 ]
-  pt2: [ 270.6377 ; 1837.2500 ]
+  pt1: [ 267.6377 ; 1834.2500 ]
+  pt2: [ 275.6377 ; 1842.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -2495,32 +2495,32 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 210.1377 ; 1821.0000 ]
-  pt2: [ 266.1377 ; 1821.0000 ]
+  pt1: [ 215.1377 ; 1826.0000 ]
+  pt2: [ 271.1377 ; 1826.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 1821.0000 ]
-  pt2: [ 210.1377 ; 1834.0000 ]
+  pt1: [ 215.1377 ; 1826.0000 ]
+  pt2: [ 215.1377 ; 1839.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 1834.0000 ]
-  pt2: [ 259.6377 ; 1834.0000 ]
+  pt1: [ 215.1377 ; 1839.0000 ]
+  pt2: [ 264.6377 ; 1839.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 249.6377 ; 1830.0000 ]
-   - [ 259.6377 ; 1834.0000 ]
-   - [ 249.6377 ; 1838.0000 ]
-   - [ 253.6377 ; 1834.0000 ]
+   - [ 254.6377 ; 1835.0000 ]
+   - [ 264.6377 ; 1839.0000 ]
+   - [ 254.6377 ; 1843.0000 ]
+   - [ 258.6377 ; 1839.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -2528,15 +2528,15 @@ POLYGON:
 
 TEXT:
   text: o<-
-  position: [ 195.5090 ; 1816.1111 ]
+  position: [ 200.5090 ; 1821.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 1856.2500 ]
-  pt2: [ 270.6377 ; 1864.2500 ]
+  pt1: [ 267.6377 ; 1861.2500 ]
+  pt2: [ 275.6377 ; 1869.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -2545,8 +2545,8 @@ ELLIPSE:
   backcolor: ff000000
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 1869.2500 ]
-  pt2: [ 270.6377 ; 1877.2500 ]
+  pt1: [ 267.6377 ; 1874.2500 ]
+  pt2: [ 275.6377 ; 1882.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -2555,32 +2555,32 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 210.1377 ; 1861.0000 ]
-  pt2: [ 262.1377 ; 1861.0000 ]
+  pt1: [ 215.1377 ; 1866.0000 ]
+  pt2: [ 267.1377 ; 1866.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 1861.0000 ]
-  pt2: [ 210.1377 ; 1874.0000 ]
+  pt1: [ 215.1377 ; 1866.0000 ]
+  pt2: [ 215.1377 ; 1879.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 1874.0000 ]
-  pt2: [ 259.6377 ; 1874.0000 ]
+  pt1: [ 215.1377 ; 1879.0000 ]
+  pt2: [ 264.6377 ; 1879.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 249.6377 ; 1870.0000 ]
-   - [ 259.6377 ; 1874.0000 ]
-   - [ 249.6377 ; 1878.0000 ]
-   - [ 253.6377 ; 1874.0000 ]
+   - [ 254.6377 ; 1875.0000 ]
+   - [ 264.6377 ; 1879.0000 ]
+   - [ 254.6377 ; 1883.0000 ]
+   - [ 258.6377 ; 1879.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -2588,81 +2588,81 @@ POLYGON:
 
 TEXT:
   text: o<-o
-  position: [ 183.6715 ; 1856.1111 ]
+  position: [ 188.6715 ; 1861.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 210.1377 ; 1901.0000 ]
-  pt2: [ 266.1377 ; 1901.0000 ]
+  pt1: [ 215.1377 ; 1906.0000 ]
+  pt2: [ 271.1377 ; 1906.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 1901.0000 ]
-  pt2: [ 210.1377 ; 1914.0000 ]
+  pt1: [ 215.1377 ; 1906.0000 ]
+  pt2: [ 215.1377 ; 1919.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 1914.0000 ]
-  pt2: [ 266.1377 ; 1914.0000 ]
+  pt1: [ 215.1377 ; 1919.0000 ]
+  pt2: [ 271.1377 ; 1919.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 265.1377 ; 1914.0000 ]
-  pt2: [ 255.1377 ; 1910.0000 ]
+  pt1: [ 270.1377 ; 1919.0000 ]
+  pt2: [ 260.1377 ; 1915.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 265.1377 ; 1914.0000 ]
-  pt2: [ 255.1377 ; 1918.0000 ]
+  pt1: [ 270.1377 ; 1919.0000 ]
+  pt2: [ 260.1377 ; 1923.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: <<-
-  position: [ 201.9718 ; 1896.1111 ]
+  position: [ 206.9718 ; 1901.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 210.1377 ; 1941.0000 ]
-  pt2: [ 266.1377 ; 1941.0000 ]
+  pt1: [ 215.1377 ; 1946.0000 ]
+  pt2: [ 271.1377 ; 1946.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 1941.0000 ]
-  pt2: [ 210.1377 ; 1954.0000 ]
+  pt1: [ 215.1377 ; 1946.0000 ]
+  pt2: [ 215.1377 ; 1959.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 1954.0000 ]
-  pt2: [ 266.1377 ; 1954.0000 ]
+  pt1: [ 215.1377 ; 1959.0000 ]
+  pt2: [ 271.1377 ; 1959.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 255.1377 ; 1950.0000 ]
-   - [ 265.1377 ; 1954.0000 ]
-   - [ 255.1377 ; 1954.0000 ]
+   - [ 260.1377 ; 1955.0000 ]
+   - [ 270.1377 ; 1959.0000 ]
+   - [ 260.1377 ; 1959.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -2670,74 +2670,74 @@ POLYGON:
 
 TEXT:
   text: /-
-  position: [ 209.1377 ; 1936.1111 ]
+  position: [ 214.1377 ; 1941.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 210.1377 ; 1981.0000 ]
-  pt2: [ 266.1377 ; 1981.0000 ]
+  pt1: [ 215.1377 ; 1986.0000 ]
+  pt2: [ 271.1377 ; 1986.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 1981.0000 ]
-  pt2: [ 210.1377 ; 1994.0000 ]
+  pt1: [ 215.1377 ; 1986.0000 ]
+  pt2: [ 215.1377 ; 1999.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 1994.0000 ]
-  pt2: [ 266.1377 ; 1994.0000 ]
+  pt1: [ 215.1377 ; 1999.0000 ]
+  pt2: [ 271.1377 ; 1999.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 265.1377 ; 1994.0000 ]
-  pt2: [ 255.1377 ; 1990.0000 ]
+  pt1: [ 270.1377 ; 1999.0000 ]
+  pt2: [ 260.1377 ; 1995.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: //
-  position: [ 209.1377 ; 1976.1111 ]
+  position: [ 214.1377 ; 1981.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 210.1377 ; 2021.0000 ]
-  pt2: [ 266.1377 ; 2021.0000 ]
+  pt1: [ 215.1377 ; 2026.0000 ]
+  pt2: [ 271.1377 ; 2026.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2021.0000 ]
-  pt2: [ 210.1377 ; 2034.0000 ]
+  pt1: [ 215.1377 ; 2026.0000 ]
+  pt2: [ 215.1377 ; 2039.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2034.0000 ]
-  pt2: [ 266.1377 ; 2034.0000 ]
+  pt1: [ 215.1377 ; 2039.0000 ]
+  pt2: [ 271.1377 ; 2039.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 255.1377 ; 2034.0000 ]
-   - [ 265.1377 ; 2034.0000 ]
-   - [ 255.1377 ; 2038.0000 ]
+   - [ 260.1377 ; 2039.0000 ]
+   - [ 270.1377 ; 2039.0000 ]
+   - [ 260.1377 ; 2043.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -2745,51 +2745,51 @@ POLYGON:
 
 TEXT:
   text: \-
-  position: [ 209.1377 ; 2016.1111 ]
+  position: [ 214.1377 ; 2021.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 210.1377 ; 2061.0000 ]
-  pt2: [ 266.1377 ; 2061.0000 ]
+  pt1: [ 215.1377 ; 2066.0000 ]
+  pt2: [ 271.1377 ; 2066.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2061.0000 ]
-  pt2: [ 210.1377 ; 2074.0000 ]
+  pt1: [ 215.1377 ; 2066.0000 ]
+  pt2: [ 215.1377 ; 2079.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2074.0000 ]
-  pt2: [ 266.1377 ; 2074.0000 ]
+  pt1: [ 215.1377 ; 2079.0000 ]
+  pt2: [ 271.1377 ; 2079.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 265.1377 ; 2074.0000 ]
-  pt2: [ 255.1377 ; 2078.0000 ]
+  pt1: [ 270.1377 ; 2079.0000 ]
+  pt2: [ 260.1377 ; 2083.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: \\-
-  position: [ 201.9970 ; 2056.1111 ]
+  position: [ 206.9970 ; 2061.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 2096.2500 ]
-  pt2: [ 270.6377 ; 2104.2500 ]
+  pt1: [ 267.6377 ; 2101.2500 ]
+  pt2: [ 275.6377 ; 2109.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -2798,32 +2798,32 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 210.1377 ; 2101.0000 ]
-  pt2: [ 262.1377 ; 2101.0000 ]
+  pt1: [ 215.1377 ; 2106.0000 ]
+  pt2: [ 267.1377 ; 2106.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2101.0000 ]
-  pt2: [ 210.1377 ; 2114.0000 ]
+  pt1: [ 215.1377 ; 2106.0000 ]
+  pt2: [ 215.1377 ; 2119.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2114.0000 ]
-  pt2: [ 265.1377 ; 2114.0000 ]
+  pt1: [ 215.1377 ; 2119.0000 ]
+  pt2: [ 270.1377 ; 2119.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 255.1377 ; 2110.0000 ]
-   - [ 265.1377 ; 2114.0000 ]
-   - [ 255.1377 ; 2118.0000 ]
-   - [ 259.1377 ; 2114.0000 ]
+   - [ 260.1377 ; 2115.0000 ]
+   - [ 270.1377 ; 2119.0000 ]
+   - [ 260.1377 ; 2123.0000 ]
+   - [ 264.1377 ; 2119.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -2831,15 +2831,15 @@ POLYGON:
 
 TEXT:
   text: <-o
-  position: [ 200.7717 ; 2096.1111 ]
+  position: [ 205.7717 ; 2101.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 2149.2500 ]
-  pt2: [ 270.6377 ; 2157.2500 ]
+  pt1: [ 267.6377 ; 2154.2500 ]
+  pt2: [ 275.6377 ; 2162.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -2848,32 +2848,32 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 210.1377 ; 2141.0000 ]
-  pt2: [ 266.1377 ; 2141.0000 ]
+  pt1: [ 215.1377 ; 2146.0000 ]
+  pt2: [ 271.1377 ; 2146.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2141.0000 ]
-  pt2: [ 210.1377 ; 2154.0000 ]
+  pt1: [ 215.1377 ; 2146.0000 ]
+  pt2: [ 215.1377 ; 2159.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2154.0000 ]
-  pt2: [ 259.6377 ; 2154.0000 ]
+  pt1: [ 215.1377 ; 2159.0000 ]
+  pt2: [ 264.6377 ; 2159.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 249.6377 ; 2150.0000 ]
-   - [ 259.6377 ; 2154.0000 ]
-   - [ 249.6377 ; 2158.0000 ]
-   - [ 253.6377 ; 2154.0000 ]
+   - [ 254.6377 ; 2155.0000 ]
+   - [ 264.6377 ; 2159.0000 ]
+   - [ 254.6377 ; 2163.0000 ]
+   - [ 258.6377 ; 2159.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -2881,15 +2881,15 @@ POLYGON:
 
 TEXT:
   text: o<-
-  position: [ 195.5090 ; 2136.1111 ]
+  position: [ 200.5090 ; 2141.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 2176.2500 ]
-  pt2: [ 270.6377 ; 2184.2500 ]
+  pt1: [ 267.6377 ; 2181.2500 ]
+  pt2: [ 275.6377 ; 2189.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -2898,8 +2898,8 @@ ELLIPSE:
   backcolor: ff000000
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 2189.2500 ]
-  pt2: [ 270.6377 ; 2197.2500 ]
+  pt1: [ 267.6377 ; 2194.2500 ]
+  pt2: [ 275.6377 ; 2202.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -2908,32 +2908,32 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 210.1377 ; 2181.0000 ]
-  pt2: [ 262.1377 ; 2181.0000 ]
+  pt1: [ 215.1377 ; 2186.0000 ]
+  pt2: [ 267.1377 ; 2186.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2181.0000 ]
-  pt2: [ 210.1377 ; 2194.0000 ]
+  pt1: [ 215.1377 ; 2186.0000 ]
+  pt2: [ 215.1377 ; 2199.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2194.0000 ]
-  pt2: [ 259.6377 ; 2194.0000 ]
+  pt1: [ 215.1377 ; 2199.0000 ]
+  pt2: [ 264.6377 ; 2199.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 249.6377 ; 2190.0000 ]
-   - [ 259.6377 ; 2194.0000 ]
-   - [ 249.6377 ; 2198.0000 ]
-   - [ 253.6377 ; 2194.0000 ]
+   - [ 254.6377 ; 2195.0000 ]
+   - [ 264.6377 ; 2199.0000 ]
+   - [ 254.6377 ; 2203.0000 ]
+   - [ 258.6377 ; 2199.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -2941,15 +2941,15 @@ POLYGON:
 
 TEXT:
   text: o<-o
-  position: [ 183.6715 ; 2176.1111 ]
+  position: [ 188.6715 ; 2181.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 2229.2500 ]
-  pt2: [ 270.6377 ; 2237.2500 ]
+  pt1: [ 267.6377 ; 2234.2500 ]
+  pt2: [ 275.6377 ; 2242.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -2958,51 +2958,51 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 210.1377 ; 2221.0000 ]
-  pt2: [ 266.1377 ; 2221.0000 ]
+  pt1: [ 215.1377 ; 2226.0000 ]
+  pt2: [ 271.1377 ; 2226.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2221.0000 ]
-  pt2: [ 210.1377 ; 2234.0000 ]
+  pt1: [ 215.1377 ; 2226.0000 ]
+  pt2: [ 215.1377 ; 2239.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2234.0000 ]
-  pt2: [ 260.6377 ; 2234.0000 ]
+  pt1: [ 215.1377 ; 2239.0000 ]
+  pt2: [ 265.6377 ; 2239.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 259.6377 ; 2234.0000 ]
-  pt2: [ 249.6377 ; 2230.0000 ]
+  pt1: [ 264.6377 ; 2239.0000 ]
+  pt2: [ 254.6377 ; 2235.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 259.6377 ; 2234.0000 ]
-  pt2: [ 249.6377 ; 2238.0000 ]
+  pt1: [ 264.6377 ; 2239.0000 ]
+  pt2: [ 254.6377 ; 2243.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o<<-
-  position: [ 185.2623 ; 2216.1111 ]
+  position: [ 190.2623 ; 2221.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 2269.2500 ]
-  pt2: [ 270.6377 ; 2277.2500 ]
+  pt1: [ 267.6377 ; 2274.2500 ]
+  pt2: [ 275.6377 ; 2282.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -3011,31 +3011,31 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 210.1377 ; 2261.0000 ]
-  pt2: [ 266.1377 ; 2261.0000 ]
+  pt1: [ 215.1377 ; 2266.0000 ]
+  pt2: [ 271.1377 ; 2266.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2261.0000 ]
-  pt2: [ 210.1377 ; 2274.0000 ]
+  pt1: [ 215.1377 ; 2266.0000 ]
+  pt2: [ 215.1377 ; 2279.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2274.0000 ]
-  pt2: [ 260.6377 ; 2274.0000 ]
+  pt1: [ 215.1377 ; 2279.0000 ]
+  pt2: [ 265.6377 ; 2279.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 249.6377 ; 2270.0000 ]
-   - [ 259.6377 ; 2274.0000 ]
-   - [ 249.6377 ; 2274.0000 ]
+   - [ 254.6377 ; 2275.0000 ]
+   - [ 264.6377 ; 2279.0000 ]
+   - [ 254.6377 ; 2279.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -3043,15 +3043,15 @@ POLYGON:
 
 TEXT:
   text: o/-
-  position: [ 209.1377 ; 2256.1111 ]
+  position: [ 214.1377 ; 2261.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 2309.2500 ]
-  pt2: [ 270.6377 ; 2317.2500 ]
+  pt1: [ 267.6377 ; 2314.2500 ]
+  pt2: [ 275.6377 ; 2322.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -3060,44 +3060,44 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 210.1377 ; 2301.0000 ]
-  pt2: [ 266.1377 ; 2301.0000 ]
+  pt1: [ 215.1377 ; 2306.0000 ]
+  pt2: [ 271.1377 ; 2306.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2301.0000 ]
-  pt2: [ 210.1377 ; 2314.0000 ]
+  pt1: [ 215.1377 ; 2306.0000 ]
+  pt2: [ 215.1377 ; 2319.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2314.0000 ]
-  pt2: [ 260.6377 ; 2314.0000 ]
+  pt1: [ 215.1377 ; 2319.0000 ]
+  pt2: [ 265.6377 ; 2319.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 259.6377 ; 2314.0000 ]
-  pt2: [ 249.6377 ; 2310.0000 ]
+  pt1: [ 264.6377 ; 2319.0000 ]
+  pt2: [ 254.6377 ; 2315.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o//-
-  position: [ 188.7421 ; 2296.1111 ]
+  position: [ 193.7421 ; 2301.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 2349.2500 ]
-  pt2: [ 270.6377 ; 2357.2500 ]
+  pt1: [ 267.6377 ; 2354.2500 ]
+  pt2: [ 275.6377 ; 2362.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -3106,31 +3106,31 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 210.1377 ; 2341.0000 ]
-  pt2: [ 266.1377 ; 2341.0000 ]
+  pt1: [ 215.1377 ; 2346.0000 ]
+  pt2: [ 271.1377 ; 2346.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2341.0000 ]
-  pt2: [ 210.1377 ; 2354.0000 ]
+  pt1: [ 215.1377 ; 2346.0000 ]
+  pt2: [ 215.1377 ; 2359.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2354.0000 ]
-  pt2: [ 260.6377 ; 2354.0000 ]
+  pt1: [ 215.1377 ; 2359.0000 ]
+  pt2: [ 265.6377 ; 2359.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 249.6377 ; 2354.0000 ]
-   - [ 259.6377 ; 2354.0000 ]
-   - [ 249.6377 ; 2358.0000 ]
+   - [ 254.6377 ; 2359.0000 ]
+   - [ 264.6377 ; 2359.0000 ]
+   - [ 254.6377 ; 2363.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -3138,15 +3138,15 @@ POLYGON:
 
 TEXT:
   text: o\-
-  position: [ 195.9003 ; 2336.1111 ]
+  position: [ 200.9003 ; 2341.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 2389.2500 ]
-  pt2: [ 270.6377 ; 2397.2500 ]
+  pt1: [ 267.6377 ; 2394.2500 ]
+  pt2: [ 275.6377 ; 2402.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -3155,68 +3155,68 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 210.1377 ; 2381.0000 ]
-  pt2: [ 266.1377 ; 2381.0000 ]
+  pt1: [ 215.1377 ; 2386.0000 ]
+  pt2: [ 271.1377 ; 2386.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2381.0000 ]
-  pt2: [ 210.1377 ; 2394.0000 ]
+  pt1: [ 215.1377 ; 2386.0000 ]
+  pt2: [ 215.1377 ; 2399.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2394.0000 ]
-  pt2: [ 260.6377 ; 2394.0000 ]
+  pt1: [ 215.1377 ; 2399.0000 ]
+  pt2: [ 265.6377 ; 2399.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 259.6377 ; 2394.0000 ]
-  pt2: [ 249.6377 ; 2398.0000 ]
+  pt1: [ 264.6377 ; 2399.0000 ]
+  pt2: [ 254.6377 ; 2403.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o\\-
-  position: [ 185.2958 ; 2376.1111 ]
+  position: [ 190.2958 ; 2381.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 139.8059 ; 2421.0000 ]
-  pt2: [ 181.8059 ; 2421.0000 ]
+  pt1: [ 144.8059 ; 2426.0000 ]
+  pt2: [ 186.8059 ; 2426.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 2421.0000 ]
-  pt2: [ 181.8059 ; 2434.0000 ]
+  pt1: [ 186.8059 ; 2426.0000 ]
+  pt2: [ 186.8059 ; 2439.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 140.8059 ; 2434.0000 ]
-  pt2: [ 181.8059 ; 2434.0000 ]
+  pt1: [ 145.8059 ; 2439.0000 ]
+  pt2: [ 186.8059 ; 2439.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 149.8059 ; 2417.0000 ]
-   - [ 139.8059 ; 2421.0000 ]
-   - [ 149.8059 ; 2425.0000 ]
-   - [ 145.8059 ; 2421.0000 ]
+   - [ 154.8059 ; 2422.0000 ]
+   - [ 144.8059 ; 2426.0000 ]
+   - [ 154.8059 ; 2430.0000 ]
+   - [ 150.8059 ; 2426.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -3224,10 +3224,10 @@ POLYGON:
 
 POLYGON:
   points:
-   - [ 150.8059 ; 2430.0000 ]
-   - [ 140.8059 ; 2434.0000 ]
-   - [ 150.8059 ; 2438.0000 ]
-   - [ 146.8059 ; 2434.0000 ]
+   - [ 155.8059 ; 2435.0000 ]
+   - [ 145.8059 ; 2439.0000 ]
+   - [ 155.8059 ; 2443.0000 ]
+   - [ 151.8059 ; 2439.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -3235,15 +3235,15 @@ POLYGON:
 
 TEXT:
   text:  <->
-  position: [ 146.8059 ; 2416.1111 ]
+  position: [ 151.8059 ; 2421.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 2456.2500 ]
-  pt2: [ 143.3059 ; 2464.2500 ]
+  pt1: [ 140.3059 ; 2461.2500 ]
+  pt2: [ 148.3059 ; 2469.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -3252,8 +3252,8 @@ ELLIPSE:
   backcolor: ff000000
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 2469.2500 ]
-  pt2: [ 143.3059 ; 2477.2500 ]
+  pt1: [ 140.3059 ; 2474.2500 ]
+  pt2: [ 148.3059 ; 2482.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -3262,32 +3262,32 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 146.3059 ; 2461.0000 ]
-  pt2: [ 181.8059 ; 2461.0000 ]
+  pt1: [ 151.3059 ; 2466.0000 ]
+  pt2: [ 186.8059 ; 2466.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 2461.0000 ]
-  pt2: [ 181.8059 ; 2474.0000 ]
+  pt1: [ 186.8059 ; 2466.0000 ]
+  pt2: [ 186.8059 ; 2479.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 146.3059 ; 2474.0000 ]
-  pt2: [ 181.8059 ; 2474.0000 ]
+  pt1: [ 151.3059 ; 2479.0000 ]
+  pt2: [ 186.8059 ; 2479.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 156.3059 ; 2457.0000 ]
-   - [ 146.3059 ; 2461.0000 ]
-   - [ 156.3059 ; 2465.0000 ]
-   - [ 152.3059 ; 2461.0000 ]
+   - [ 161.3059 ; 2462.0000 ]
+   - [ 151.3059 ; 2466.0000 ]
+   - [ 161.3059 ; 2470.0000 ]
+   - [ 157.3059 ; 2466.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -3295,10 +3295,10 @@ POLYGON:
 
 POLYGON:
   points:
-   - [ 156.3059 ; 2470.0000 ]
-   - [ 146.3059 ; 2474.0000 ]
-   - [ 156.3059 ; 2478.0000 ]
-   - [ 152.3059 ; 2474.0000 ]
+   - [ 161.3059 ; 2475.0000 ]
+   - [ 151.3059 ; 2479.0000 ]
+   - [ 161.3059 ; 2483.0000 ]
+   - [ 157.3059 ; 2479.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -3306,72 +3306,72 @@ POLYGON:
 
 TEXT:
   text:  o<->o
-  position: [ 146.8059 ; 2456.1111 ]
+  position: [ 151.8059 ; 2461.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 151.8059 ; 2501.0000 ]
-  pt2: [ 181.8059 ; 2501.0000 ]
+  pt1: [ 156.8059 ; 2506.0000 ]
+  pt2: [ 186.8059 ; 2506.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 2501.0000 ]
-  pt2: [ 181.8059 ; 2514.0000 ]
+  pt1: [ 186.8059 ; 2506.0000 ]
+  pt2: [ 186.8059 ; 2519.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 152.8059 ; 2514.0000 ]
-  pt2: [ 181.8059 ; 2514.0000 ]
+  pt1: [ 157.8059 ; 2519.0000 ]
+  pt2: [ 186.8059 ; 2519.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 145.8059 ; 2496.0000 ]
-  pt2: [ 155.8059 ; 2506.0000 ]
+  pt1: [ 150.8059 ; 2501.0000 ]
+  pt2: [ 160.8059 ; 2511.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 145.8059 ; 2506.0000 ]
-  pt2: [ 155.8059 ; 2496.0000 ]
+  pt1: [ 150.8059 ; 2511.0000 ]
+  pt2: [ 160.8059 ; 2501.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 145.8059 ; 2509.0000 ]
-  pt2: [ 155.8059 ; 2519.0000 ]
+  pt1: [ 150.8059 ; 2514.0000 ]
+  pt2: [ 160.8059 ; 2524.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 145.8059 ; 2519.0000 ]
-  pt2: [ 155.8059 ; 2509.0000 ]
+  pt1: [ 150.8059 ; 2524.0000 ]
+  pt2: [ 160.8059 ; 2514.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text:   x<->x
-  position: [ 146.8059 ; 2496.1111 ]
+  position: [ 151.8059 ; 2501.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 2549.2500 ]
-  pt2: [ 143.3059 ; 2557.2500 ]
+  pt1: [ 140.3059 ; 2554.2500 ]
+  pt2: [ 148.3059 ; 2562.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -3380,46 +3380,46 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 151.8059 ; 2541.0000 ]
-  pt2: [ 181.8059 ; 2541.0000 ]
+  pt1: [ 156.8059 ; 2546.0000 ]
+  pt2: [ 186.8059 ; 2546.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 2541.0000 ]
-  pt2: [ 181.8059 ; 2554.0000 ]
+  pt1: [ 186.8059 ; 2546.0000 ]
+  pt2: [ 186.8059 ; 2559.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 146.3059 ; 2554.0000 ]
-  pt2: [ 181.8059 ; 2554.0000 ]
+  pt1: [ 151.3059 ; 2559.0000 ]
+  pt2: [ 186.8059 ; 2559.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 145.8059 ; 2536.0000 ]
-  pt2: [ 155.8059 ; 2546.0000 ]
+  pt1: [ 150.8059 ; 2541.0000 ]
+  pt2: [ 160.8059 ; 2551.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 145.8059 ; 2546.0000 ]
-  pt2: [ 155.8059 ; 2536.0000 ]
+  pt1: [ 150.8059 ; 2551.0000 ]
+  pt2: [ 160.8059 ; 2541.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 156.3059 ; 2550.0000 ]
-   - [ 146.3059 ; 2554.0000 ]
-   - [ 156.3059 ; 2558.0000 ]
-   - [ 152.3059 ; 2554.0000 ]
+   - [ 161.3059 ; 2555.0000 ]
+   - [ 151.3059 ; 2559.0000 ]
+   - [ 161.3059 ; 2563.0000 ]
+   - [ 157.3059 ; 2559.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -3427,96 +3427,96 @@ POLYGON:
 
 TEXT:
   text: x->o 
-  position: [ 146.8059 ; 2536.1111 ]
+  position: [ 151.8059 ; 2541.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 139.8059 ; 2581.0000 ]
-  pt2: [ 181.8059 ; 2581.0000 ]
+  pt1: [ 144.8059 ; 2586.0000 ]
+  pt2: [ 186.8059 ; 2586.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 2581.0000 ]
-  pt2: [ 181.8059 ; 2594.0000 ]
+  pt1: [ 186.8059 ; 2586.0000 ]
+  pt2: [ 186.8059 ; 2599.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 152.8059 ; 2594.0000 ]
-  pt2: [ 181.8059 ; 2594.0000 ]
+  pt1: [ 157.8059 ; 2599.0000 ]
+  pt2: [ 186.8059 ; 2599.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 145.8059 ; 2589.0000 ]
-  pt2: [ 155.8059 ; 2599.0000 ]
+  pt1: [ 150.8059 ; 2594.0000 ]
+  pt2: [ 160.8059 ; 2604.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 145.8059 ; 2599.0000 ]
-  pt2: [ 155.8059 ; 2589.0000 ]
+  pt1: [ 150.8059 ; 2604.0000 ]
+  pt2: [ 160.8059 ; 2594.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: ->x  
-  position: [ 146.8059 ; 2576.1111 ]
+  position: [ 151.8059 ; 2581.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 151.8059 ; 2621.0000 ]
-  pt2: [ 181.8059 ; 2621.0000 ]
+  pt1: [ 156.8059 ; 2626.0000 ]
+  pt2: [ 186.8059 ; 2626.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 181.8059 ; 2621.0000 ]
-  pt2: [ 181.8059 ; 2634.0000 ]
+  pt1: [ 186.8059 ; 2626.0000 ]
+  pt2: [ 186.8059 ; 2639.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 140.8059 ; 2634.0000 ]
-  pt2: [ 181.8059 ; 2634.0000 ]
+  pt1: [ 145.8059 ; 2639.0000 ]
+  pt2: [ 186.8059 ; 2639.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 145.8059 ; 2616.0000 ]
-  pt2: [ 155.8059 ; 2626.0000 ]
+  pt1: [ 150.8059 ; 2621.0000 ]
+  pt2: [ 160.8059 ; 2631.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 145.8059 ; 2626.0000 ]
-  pt2: [ 155.8059 ; 2616.0000 ]
+  pt1: [ 150.8059 ; 2631.0000 ]
+  pt2: [ 160.8059 ; 2621.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 150.8059 ; 2630.0000 ]
-   - [ 140.8059 ; 2634.0000 ]
-   - [ 150.8059 ; 2638.0000 ]
-   - [ 146.8059 ; 2634.0000 ]
+   - [ 155.8059 ; 2635.0000 ]
+   - [ 145.8059 ; 2639.0000 ]
+   - [ 155.8059 ; 2643.0000 ]
+   - [ 151.8059 ; 2639.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -3524,96 +3524,96 @@ POLYGON:
 
 TEXT:
   text: x->  
-  position: [ 146.8059 ; 2616.1111 ]
+  position: [ 151.8059 ; 2621.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 82.8059 ; 2661.0000 ]
-  pt2: [ 128.8059 ; 2661.0000 ]
+  pt1: [ 87.8059 ; 2666.0000 ]
+  pt2: [ 133.8059 ; 2666.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 82.8059 ; 2661.0000 ]
-  pt2: [ 82.8059 ; 2674.0000 ]
+  pt1: [ 87.8059 ; 2666.0000 ]
+  pt2: [ 87.8059 ; 2679.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 82.8059 ; 2674.0000 ]
-  pt2: [ 112.8059 ; 2674.0000 ]
+  pt1: [ 87.8059 ; 2679.0000 ]
+  pt2: [ 117.8059 ; 2679.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 109.8059 ; 2669.0000 ]
-  pt2: [ 119.8059 ; 2679.0000 ]
+  pt1: [ 114.8059 ; 2674.0000 ]
+  pt2: [ 124.8059 ; 2684.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 109.8059 ; 2679.0000 ]
-  pt2: [ 119.8059 ; 2669.0000 ]
+  pt1: [ 114.8059 ; 2684.0000 ]
+  pt2: [ 124.8059 ; 2674.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: x<-
-  position: [ 81.8059 ; 2656.1111 ]
+  position: [ 86.8059 ; 2661.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 82.8059 ; 2701.0000 ]
-  pt2: [ 112.8059 ; 2701.0000 ]
+  pt1: [ 87.8059 ; 2706.0000 ]
+  pt2: [ 117.8059 ; 2706.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 82.8059 ; 2701.0000 ]
-  pt2: [ 82.8059 ; 2714.0000 ]
+  pt1: [ 87.8059 ; 2706.0000 ]
+  pt2: [ 87.8059 ; 2719.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 82.8059 ; 2714.0000 ]
-  pt2: [ 127.8059 ; 2714.0000 ]
+  pt1: [ 87.8059 ; 2719.0000 ]
+  pt2: [ 132.8059 ; 2719.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 109.8059 ; 2696.0000 ]
-  pt2: [ 119.8059 ; 2706.0000 ]
+  pt1: [ 114.8059 ; 2701.0000 ]
+  pt2: [ 124.8059 ; 2711.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 109.8059 ; 2706.0000 ]
-  pt2: [ 119.8059 ; 2696.0000 ]
+  pt1: [ 114.8059 ; 2711.0000 ]
+  pt2: [ 124.8059 ; 2701.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 117.8059 ; 2710.0000 ]
-   - [ 127.8059 ; 2714.0000 ]
-   - [ 117.8059 ; 2718.0000 ]
-   - [ 121.8059 ; 2714.0000 ]
+   - [ 122.8059 ; 2715.0000 ]
+   - [ 132.8059 ; 2719.0000 ]
+   - [ 122.8059 ; 2723.0000 ]
+   - [ 126.8059 ; 2719.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -3621,15 +3621,15 @@ POLYGON:
 
 TEXT:
   text: <-x
-  position: [ 73.5046 ; 2696.1111 ]
+  position: [ 78.5046 ; 2701.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 125.3059 ; 2749.2500 ]
-  pt2: [ 133.3059 ; 2757.2500 ]
+  pt1: [ 130.3059 ; 2754.2500 ]
+  pt2: [ 138.3059 ; 2762.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -3638,46 +3638,46 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 82.8059 ; 2741.0000 ]
-  pt2: [ 112.8059 ; 2741.0000 ]
+  pt1: [ 87.8059 ; 2746.0000 ]
+  pt2: [ 117.8059 ; 2746.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 82.8059 ; 2741.0000 ]
-  pt2: [ 82.8059 ; 2754.0000 ]
+  pt1: [ 87.8059 ; 2746.0000 ]
+  pt2: [ 87.8059 ; 2759.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 82.8059 ; 2754.0000 ]
-  pt2: [ 122.3059 ; 2754.0000 ]
+  pt1: [ 87.8059 ; 2759.0000 ]
+  pt2: [ 127.3059 ; 2759.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 109.8059 ; 2736.0000 ]
-  pt2: [ 119.8059 ; 2746.0000 ]
+  pt1: [ 114.8059 ; 2741.0000 ]
+  pt2: [ 124.8059 ; 2751.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 109.8059 ; 2746.0000 ]
-  pt2: [ 119.8059 ; 2736.0000 ]
+  pt1: [ 114.8059 ; 2751.0000 ]
+  pt2: [ 124.8059 ; 2741.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 112.3059 ; 2750.0000 ]
-   - [ 122.3059 ; 2754.0000 ]
-   - [ 112.3059 ; 2758.0000 ]
-   - [ 116.3059 ; 2754.0000 ]
+   - [ 117.3059 ; 2755.0000 ]
+   - [ 127.3059 ; 2759.0000 ]
+   - [ 117.3059 ; 2763.0000 ]
+   - [ 121.3059 ; 2759.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -3685,96 +3685,96 @@ POLYGON:
 
 TEXT:
   text:  o<-x 
-  position: [ 46.3699 ; 2736.1111 ]
+  position: [ 51.3699 ; 2741.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 210.1377 ; 2781.0000 ]
-  pt2: [ 266.1377 ; 2781.0000 ]
+  pt1: [ 215.1377 ; 2786.0000 ]
+  pt2: [ 271.1377 ; 2786.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2781.0000 ]
-  pt2: [ 210.1377 ; 2794.0000 ]
+  pt1: [ 215.1377 ; 2786.0000 ]
+  pt2: [ 215.1377 ; 2799.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2794.0000 ]
-  pt2: [ 240.1377 ; 2794.0000 ]
+  pt1: [ 215.1377 ; 2799.0000 ]
+  pt2: [ 245.1377 ; 2799.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 237.1377 ; 2789.0000 ]
-  pt2: [ 247.1377 ; 2799.0000 ]
+  pt1: [ 242.1377 ; 2794.0000 ]
+  pt2: [ 252.1377 ; 2804.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 237.1377 ; 2799.0000 ]
-  pt2: [ 247.1377 ; 2789.0000 ]
+  pt1: [ 242.1377 ; 2804.0000 ]
+  pt2: [ 252.1377 ; 2794.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: x<-
-  position: [ 209.1377 ; 2776.1111 ]
+  position: [ 214.1377 ; 2781.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 210.1377 ; 2821.0000 ]
-  pt2: [ 240.1377 ; 2821.0000 ]
+  pt1: [ 215.1377 ; 2826.0000 ]
+  pt2: [ 245.1377 ; 2826.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2821.0000 ]
-  pt2: [ 210.1377 ; 2834.0000 ]
+  pt1: [ 215.1377 ; 2826.0000 ]
+  pt2: [ 215.1377 ; 2839.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2834.0000 ]
-  pt2: [ 265.1377 ; 2834.0000 ]
+  pt1: [ 215.1377 ; 2839.0000 ]
+  pt2: [ 270.1377 ; 2839.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 237.1377 ; 2816.0000 ]
-  pt2: [ 247.1377 ; 2826.0000 ]
+  pt1: [ 242.1377 ; 2821.0000 ]
+  pt2: [ 252.1377 ; 2831.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 237.1377 ; 2826.0000 ]
-  pt2: [ 247.1377 ; 2816.0000 ]
+  pt1: [ 242.1377 ; 2831.0000 ]
+  pt2: [ 252.1377 ; 2821.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 255.1377 ; 2830.0000 ]
-   - [ 265.1377 ; 2834.0000 ]
-   - [ 255.1377 ; 2838.0000 ]
-   - [ 259.1377 ; 2834.0000 ]
+   - [ 260.1377 ; 2835.0000 ]
+   - [ 270.1377 ; 2839.0000 ]
+   - [ 260.1377 ; 2843.0000 ]
+   - [ 264.1377 ; 2839.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -3782,15 +3782,15 @@ POLYGON:
 
 TEXT:
   text: <-x
-  position: [ 200.8364 ; 2816.1111 ]
+  position: [ 205.8364 ; 2821.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 262.6377 ; 2869.2500 ]
-  pt2: [ 270.6377 ; 2877.2500 ]
+  pt1: [ 267.6377 ; 2874.2500 ]
+  pt2: [ 275.6377 ; 2882.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -3799,46 +3799,46 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 210.1377 ; 2861.0000 ]
-  pt2: [ 240.1377 ; 2861.0000 ]
+  pt1: [ 215.1377 ; 2866.0000 ]
+  pt2: [ 245.1377 ; 2866.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2861.0000 ]
-  pt2: [ 210.1377 ; 2874.0000 ]
+  pt1: [ 215.1377 ; 2866.0000 ]
+  pt2: [ 215.1377 ; 2879.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 210.1377 ; 2874.0000 ]
-  pt2: [ 259.6377 ; 2874.0000 ]
+  pt1: [ 215.1377 ; 2879.0000 ]
+  pt2: [ 264.6377 ; 2879.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 237.1377 ; 2856.0000 ]
-  pt2: [ 247.1377 ; 2866.0000 ]
+  pt1: [ 242.1377 ; 2861.0000 ]
+  pt2: [ 252.1377 ; 2871.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 237.1377 ; 2866.0000 ]
-  pt2: [ 247.1377 ; 2856.0000 ]
+  pt1: [ 242.1377 ; 2871.0000 ]
+  pt2: [ 252.1377 ; 2861.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 249.6377 ; 2870.0000 ]
-   - [ 259.6377 ; 2874.0000 ]
-   - [ 249.6377 ; 2878.0000 ]
-   - [ 253.6377 ; 2874.0000 ]
+   - [ 254.6377 ; 2875.0000 ]
+   - [ 264.6377 ; 2879.0000 ]
+   - [ 254.6377 ; 2883.0000 ]
+   - [ 258.6377 ; 2879.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -3846,7 +3846,7 @@ POLYGON:
 
 TEXT:
   text:  o<-x 
-  position: [ 173.7016 ; 2856.1111 ]
+  position: [ 178.7016 ; 2861.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -3854,54 +3854,54 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 117.8059 ; 2897.0000 ]
-   - [ 127.8059 ; 2901.0000 ]
-   - [ 117.8059 ; 2905.0000 ]
-   - [ 121.8059 ; 2901.0000 ]
+   - [ 122.8059 ; 2902.0000 ]
+   - [ 132.8059 ; 2906.0000 ]
+   - [ 122.8059 ; 2910.0000 ]
+   - [ 126.8059 ; 2906.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 5.0000 ; 2901.0000 ]
-  pt2: [ 123.8059 ; 2901.0000 ]
+  pt1: [ 10.0000 ; 2906.0000 ]
+  pt2: [ 128.8059 ; 2906.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [->   
-  position: [ 22.2029 ; 2896.1111 ]
+  position: [ 27.2029 ; 2901.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 127.8059 ; 2928.0000 ]
-  pt2: [ 117.8059 ; 2924.0000 ]
+  pt1: [ 132.8059 ; 2933.0000 ]
+  pt2: [ 122.8059 ; 2929.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 127.8059 ; 2928.0000 ]
-  pt2: [ 117.8059 ; 2932.0000 ]
+  pt1: [ 132.8059 ; 2933.0000 ]
+  pt2: [ 122.8059 ; 2937.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 5.0000 ; 2928.0000 ]
-  pt2: [ 128.8059 ; 2928.0000 ]
+  pt1: [ 10.0000 ; 2933.0000 ]
+  pt2: [ 133.8059 ; 2933.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [->>  
-  position: [ 18.0801 ; 2923.1111 ]
+  position: [ 23.0801 ; 2928.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -3909,46 +3909,46 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 117.8059 ; 2951.0000 ]
-   - [ 127.8059 ; 2955.0000 ]
-   - [ 117.8059 ; 2955.0000 ]
+   - [ 122.8059 ; 2956.0000 ]
+   - [ 132.8059 ; 2960.0000 ]
+   - [ 122.8059 ; 2960.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 5.0000 ; 2955.0000 ]
-  pt2: [ 128.8059 ; 2955.0000 ]
+  pt1: [ 10.0000 ; 2960.0000 ]
+  pt2: [ 133.8059 ; 2960.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [-\   
-  position: [ 24.7792 ; 2950.1111 ]
+  position: [ 29.7792 ; 2955.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 127.8059 ; 2982.0000 ]
-  pt2: [ 117.8059 ; 2978.0000 ]
+  pt1: [ 132.8059 ; 2987.0000 ]
+  pt2: [ 122.8059 ; 2983.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 5.0000 ; 2982.0000 ]
-  pt2: [ 128.8059 ; 2982.0000 ]
+  pt1: [ 10.0000 ; 2987.0000 ]
+  pt2: [ 133.8059 ; 2987.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [-\\
-  position: [ 60.0815 ; 2977.1111 ]
+  position: [ 65.0815 ; 2982.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -3956,123 +3956,123 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 117.8059 ; 3009.0000 ]
-   - [ 127.8059 ; 3009.0000 ]
-   - [ 117.8059 ; 3013.0000 ]
+   - [ 122.8059 ; 3014.0000 ]
+   - [ 132.8059 ; 3014.0000 ]
+   - [ 122.8059 ; 3018.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 5.0000 ; 3009.0000 ]
-  pt2: [ 128.8059 ; 3009.0000 ]
+  pt1: [ 10.0000 ; 3014.0000 ]
+  pt2: [ 133.8059 ; 3014.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [-/   
-  position: [ 39.3681 ; 3004.1111 ]
+  position: [ 44.3681 ; 3009.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 127.8059 ; 3036.0000 ]
-  pt2: [ 117.8059 ; 3040.0000 ]
+  pt1: [ 132.8059 ; 3041.0000 ]
+  pt2: [ 122.8059 ; 3045.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 5.0000 ; 3036.0000 ]
-  pt2: [ 128.8059 ; 3036.0000 ]
+  pt1: [ 10.0000 ; 3041.0000 ]
+  pt2: [ 133.8059 ; 3041.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [-//  
-  position: [ 28.5969 ; 3031.1111 ]
+  position: [ 33.5969 ; 3036.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 111.8059 ; 3058.0000 ]
+  pt1: [ 116.8059 ; 3063.0000 ]
+  pt2: [ 126.8059 ; 3073.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 116.8059 ; 3073.0000 ]
+  pt2: [ 126.8059 ; 3063.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 10.0000 ; 3068.0000 ]
   pt2: [ 121.8059 ; 3068.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 111.8059 ; 3068.0000 ]
-  pt2: [ 121.8059 ; 3058.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 5.0000 ; 3063.0000 ]
-  pt2: [ 116.8059 ; 3063.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [->x  
-  position: [ 38.2190 ; 3058.1111 ]
+  position: [ 43.2190 ; 3063.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 12.0000 ; 3085.0000 ]
-  pt2: [ 22.0000 ; 3095.0000 ]
+  pt1: [ 17.0000 ; 3090.0000 ]
+  pt2: [ 27.0000 ; 3100.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 12.0000 ; 3095.0000 ]
-  pt2: [ 22.0000 ; 3085.0000 ]
+  pt1: [ 17.0000 ; 3100.0000 ]
+  pt2: [ 27.0000 ; 3090.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 117.8059 ; 3086.0000 ]
-   - [ 127.8059 ; 3090.0000 ]
-   - [ 117.8059 ; 3094.0000 ]
-   - [ 121.8059 ; 3090.0000 ]
+   - [ 122.8059 ; 3091.0000 ]
+   - [ 132.8059 ; 3095.0000 ]
+   - [ 122.8059 ; 3099.0000 ]
+   - [ 126.8059 ; 3095.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 17.0000 ; 3090.0000 ]
-  pt2: [ 123.8059 ; 3090.0000 ]
+  pt1: [ 22.0000 ; 3095.0000 ]
+  pt2: [ 128.8059 ; 3095.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [x->  
-  position: [ 26.5628 ; 3085.1111 ]
+  position: [ 31.5628 ; 3090.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 6.5000 ; 3112.2500 ]
-  pt2: [ 14.5000 ; 3120.2500 ]
+  pt1: [ 11.5000 ; 3117.2500 ]
+  pt2: [ 19.5000 ; 3125.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4082,33 +4082,33 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 117.8059 ; 3113.0000 ]
-   - [ 127.8059 ; 3117.0000 ]
-   - [ 117.8059 ; 3121.0000 ]
-   - [ 121.8059 ; 3117.0000 ]
+   - [ 122.8059 ; 3118.0000 ]
+   - [ 132.8059 ; 3122.0000 ]
+   - [ 122.8059 ; 3126.0000 ]
+   - [ 126.8059 ; 3122.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 15.0000 ; 3117.0000 ]
-  pt2: [ 123.8059 ; 3117.0000 ]
+  pt1: [ 20.0000 ; 3122.0000 ]
+  pt2: [ 128.8059 ; 3122.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [o->  
-  position: [ 19.9221 ; 3112.1111 ]
+  position: [ 24.9221 ; 3117.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 125.3059 ; 3139.2500 ]
-  pt2: [ 133.3059 ; 3147.2500 ]
+  pt1: [ 130.3059 ; 3144.2500 ]
+  pt2: [ 138.3059 ; 3152.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4118,33 +4118,33 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 112.3059 ; 3140.0000 ]
-   - [ 122.3059 ; 3144.0000 ]
-   - [ 112.3059 ; 3148.0000 ]
-   - [ 116.3059 ; 3144.0000 ]
+   - [ 117.3059 ; 3145.0000 ]
+   - [ 127.3059 ; 3149.0000 ]
+   - [ 117.3059 ; 3153.0000 ]
+   - [ 121.3059 ; 3149.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 5.0000 ; 3144.0000 ]
-  pt2: [ 118.3059 ; 3144.0000 ]
+  pt1: [ 10.0000 ; 3149.0000 ]
+  pt2: [ 123.3059 ; 3149.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [->o  
-  position: [ 49.7972 ; 3139.1111 ]
+  position: [ 54.7972 ; 3144.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 6.5000 ; 3166.2500 ]
-  pt2: [ 14.5000 ; 3174.2500 ]
+  pt1: [ 11.5000 ; 3171.2500 ]
+  pt2: [ 19.5000 ; 3179.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4153,8 +4153,8 @@ ELLIPSE:
   backcolor: ff000000
 
 ELLIPSE:
-  pt1: [ 125.3059 ; 3166.2500 ]
-  pt2: [ 133.3059 ; 3174.2500 ]
+  pt1: [ 130.3059 ; 3171.2500 ]
+  pt2: [ 138.3059 ; 3179.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4164,25 +4164,25 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 112.3059 ; 3167.0000 ]
-   - [ 122.3059 ; 3171.0000 ]
-   - [ 112.3059 ; 3175.0000 ]
-   - [ 116.3059 ; 3171.0000 ]
+   - [ 117.3059 ; 3172.0000 ]
+   - [ 127.3059 ; 3176.0000 ]
+   - [ 117.3059 ; 3180.0000 ]
+   - [ 121.3059 ; 3176.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 15.0000 ; 3171.0000 ]
-  pt2: [ 118.3059 ; 3171.0000 ]
+  pt1: [ 20.0000 ; 3176.0000 ]
+  pt2: [ 123.3059 ; 3176.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [o->o 
-  position: [ 53.9506 ; 3166.1111 ]
+  position: [ 58.9506 ; 3171.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -4190,10 +4190,10 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 16.0000 ; 3194.0000 ]
-   - [ 6.0000 ; 3198.0000 ]
-   - [ 16.0000 ; 3202.0000 ]
-   - [ 12.0000 ; 3198.0000 ]
+   - [ 21.0000 ; 3199.0000 ]
+   - [ 11.0000 ; 3203.0000 ]
+   - [ 21.0000 ; 3207.0000 ]
+   - [ 17.0000 ; 3203.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -4201,33 +4201,33 @@ POLYGON:
 
 POLYGON:
   points:
-   - [ 117.8059 ; 3194.0000 ]
-   - [ 127.8059 ; 3198.0000 ]
-   - [ 117.8059 ; 3202.0000 ]
-   - [ 121.8059 ; 3198.0000 ]
+   - [ 122.8059 ; 3199.0000 ]
+   - [ 132.8059 ; 3203.0000 ]
+   - [ 122.8059 ; 3207.0000 ]
+   - [ 126.8059 ; 3203.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 10.0000 ; 3198.0000 ]
-  pt2: [ 123.8059 ; 3198.0000 ]
+  pt1: [ 15.0000 ; 3203.0000 ]
+  pt2: [ 128.8059 ; 3203.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [<->  
-  position: [ 43.7847 ; 3193.1111 ]
+  position: [ 48.7847 ; 3198.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 6.5000 ; 3220.2500 ]
-  pt2: [ 14.5000 ; 3228.2500 ]
+  pt1: [ 11.5000 ; 3225.2500 ]
+  pt2: [ 19.5000 ; 3233.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4237,18 +4237,18 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 27.5000 ; 3221.0000 ]
-   - [ 17.5000 ; 3225.0000 ]
-   - [ 27.5000 ; 3229.0000 ]
-   - [ 23.5000 ; 3225.0000 ]
+   - [ 32.5000 ; 3226.0000 ]
+   - [ 22.5000 ; 3230.0000 ]
+   - [ 32.5000 ; 3234.0000 ]
+   - [ 28.5000 ; 3230.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 ELLIPSE:
-  pt1: [ 125.3059 ; 3220.2500 ]
-  pt2: [ 133.3059 ; 3228.2500 ]
+  pt1: [ 130.3059 ; 3225.2500 ]
+  pt2: [ 138.3059 ; 3233.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4258,76 +4258,76 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 112.3059 ; 3221.0000 ]
-   - [ 122.3059 ; 3225.0000 ]
-   - [ 112.3059 ; 3229.0000 ]
-   - [ 116.3059 ; 3225.0000 ]
+   - [ 117.3059 ; 3226.0000 ]
+   - [ 127.3059 ; 3230.0000 ]
+   - [ 117.3059 ; 3234.0000 ]
+   - [ 121.3059 ; 3230.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 21.5000 ; 3225.0000 ]
-  pt2: [ 118.3059 ; 3225.0000 ]
+  pt1: [ 26.5000 ; 3230.0000 ]
+  pt2: [ 123.3059 ; 3230.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [o<->o
-  position: [ 50.5086 ; 3220.1111 ]
+  position: [ 55.5086 ; 3225.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 12.0000 ; 3247.0000 ]
-  pt2: [ 22.0000 ; 3257.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 12.0000 ; 3257.0000 ]
-  pt2: [ 22.0000 ; 3247.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 111.8059 ; 3247.0000 ]
-  pt2: [ 121.8059 ; 3257.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 111.8059 ; 3257.0000 ]
-  pt2: [ 121.8059 ; 3247.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
   pt1: [ 17.0000 ; 3252.0000 ]
-  pt2: [ 116.8059 ; 3252.0000 ]
+  pt2: [ 27.0000 ; 3262.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 17.0000 ; 3262.0000 ]
+  pt2: [ 27.0000 ; 3252.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 116.8059 ; 3252.0000 ]
+  pt2: [ 126.8059 ; 3262.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 116.8059 ; 3262.0000 ]
+  pt2: [ 126.8059 ; 3252.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 22.0000 ; 3257.0000 ]
+  pt2: [ 121.8059 ; 3257.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [x<->x
-  position: [ 30.4877 ; 3247.1111 ]
+  position: [ 35.4877 ; 3252.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 125.3059 ; 3274.2500 ]
-  pt2: [ 133.3059 ; 3282.2500 ]
+  pt1: [ 130.3059 ; 3279.2500 ]
+  pt2: [ 138.3059 ; 3287.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4336,37 +4336,37 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 122.3059 ; 3279.0000 ]
-  pt2: [ 112.3059 ; 3275.0000 ]
+  pt1: [ 127.3059 ; 3284.0000 ]
+  pt2: [ 117.3059 ; 3280.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 122.3059 ; 3279.0000 ]
-  pt2: [ 112.3059 ; 3283.0000 ]
+  pt1: [ 127.3059 ; 3284.0000 ]
+  pt2: [ 117.3059 ; 3288.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 5.0000 ; 3279.0000 ]
-  pt2: [ 123.3059 ; 3279.0000 ]
+  pt1: [ 10.0000 ; 3284.0000 ]
+  pt2: [ 128.3059 ; 3284.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [->>o 
-  position: [ 36.7767 ; 3274.1111 ]
+  position: [ 41.7767 ; 3279.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 125.3059 ; 3301.2500 ]
-  pt2: [ 133.3059 ; 3309.2500 ]
+  pt1: [ 130.3059 ; 3306.2500 ]
+  pt2: [ 138.3059 ; 3314.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4376,32 +4376,32 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 112.3059 ; 3302.0000 ]
-   - [ 122.3059 ; 3306.0000 ]
-   - [ 112.3059 ; 3306.0000 ]
+   - [ 117.3059 ; 3307.0000 ]
+   - [ 127.3059 ; 3311.0000 ]
+   - [ 117.3059 ; 3311.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 5.0000 ; 3306.0000 ]
-  pt2: [ 123.3059 ; 3306.0000 ]
+  pt1: [ 10.0000 ; 3311.0000 ]
+  pt2: [ 128.3059 ; 3311.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [-\o  
-  position: [ 12.0000 ; 3301.1111 ]
+  position: [ 17.0000 ; 3306.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 125.3059 ; 3328.2500 ]
-  pt2: [ 133.3059 ; 3336.2500 ]
+  pt1: [ 130.3059 ; 3333.2500 ]
+  pt2: [ 138.3059 ; 3341.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4410,30 +4410,30 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 122.3059 ; 3333.0000 ]
-  pt2: [ 112.3059 ; 3329.0000 ]
+  pt1: [ 127.3059 ; 3338.0000 ]
+  pt2: [ 117.3059 ; 3334.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 5.0000 ; 3333.0000 ]
-  pt2: [ 123.3059 ; 3333.0000 ]
+  pt1: [ 10.0000 ; 3338.0000 ]
+  pt2: [ 128.3059 ; 3338.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [-\\o
-  position: [ 55.0132 ; 3328.1111 ]
+  position: [ 60.0132 ; 3333.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 125.3059 ; 3355.2500 ]
-  pt2: [ 133.3059 ; 3363.2500 ]
+  pt1: [ 130.3059 ; 3360.2500 ]
+  pt2: [ 138.3059 ; 3368.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4443,32 +4443,32 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 112.3059 ; 3360.0000 ]
-   - [ 122.3059 ; 3360.0000 ]
-   - [ 112.3059 ; 3364.0000 ]
+   - [ 117.3059 ; 3365.0000 ]
+   - [ 127.3059 ; 3365.0000 ]
+   - [ 117.3059 ; 3369.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 5.0000 ; 3360.0000 ]
-  pt2: [ 123.3059 ; 3360.0000 ]
+  pt1: [ 10.0000 ; 3365.0000 ]
+  pt2: [ 128.3059 ; 3365.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [-/o  
-  position: [ 48.1693 ; 3355.1111 ]
+  position: [ 53.1693 ; 3360.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 125.3059 ; 3382.2500 ]
-  pt2: [ 133.3059 ; 3390.2500 ]
+  pt1: [ 130.3059 ; 3387.2500 ]
+  pt2: [ 138.3059 ; 3395.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4477,44 +4477,44 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 122.3059 ; 3387.0000 ]
-  pt2: [ 112.3059 ; 3391.0000 ]
+  pt1: [ 127.3059 ; 3392.0000 ]
+  pt2: [ 117.3059 ; 3396.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 5.0000 ; 3387.0000 ]
-  pt2: [ 123.3059 ; 3387.0000 ]
+  pt1: [ 10.0000 ; 3392.0000 ]
+  pt2: [ 128.3059 ; 3392.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [-//o 
-  position: [ 20.2854 ; 3382.1111 ]
+  position: [ 25.2854 ; 3387.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 12.0000 ; 3409.0000 ]
-  pt2: [ 22.0000 ; 3419.0000 ]
+  pt1: [ 17.0000 ; 3414.0000 ]
+  pt2: [ 27.0000 ; 3424.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 12.0000 ; 3419.0000 ]
-  pt2: [ 22.0000 ; 3409.0000 ]
+  pt1: [ 17.0000 ; 3424.0000 ]
+  pt2: [ 27.0000 ; 3414.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 ELLIPSE:
-  pt1: [ 125.3059 ; 3409.2500 ]
-  pt2: [ 133.3059 ; 3417.2500 ]
+  pt1: [ 130.3059 ; 3414.2500 ]
+  pt2: [ 138.3059 ; 3422.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4524,25 +4524,25 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 112.3059 ; 3410.0000 ]
-   - [ 122.3059 ; 3414.0000 ]
-   - [ 112.3059 ; 3418.0000 ]
-   - [ 116.3059 ; 3414.0000 ]
+   - [ 117.3059 ; 3415.0000 ]
+   - [ 127.3059 ; 3419.0000 ]
+   - [ 117.3059 ; 3423.0000 ]
+   - [ 121.3059 ; 3419.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 17.0000 ; 3414.0000 ]
-  pt2: [ 118.3059 ; 3414.0000 ]
+  pt1: [ 22.0000 ; 3419.0000 ]
+  pt2: [ 123.3059 ; 3419.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: [x->o 
-  position: [ 46.5188 ; 3409.1111 ]
+  position: [ 51.5188 ; 3414.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -4550,54 +4550,54 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 331.0490 ; 3437.0000 ]
-   - [ 341.0490 ; 3441.0000 ]
-   - [ 331.0490 ; 3445.0000 ]
-   - [ 335.0490 ; 3441.0000 ]
+   - [ 336.0490 ; 3442.0000 ]
+   - [ 346.0490 ; 3446.0000 ]
+   - [ 336.0490 ; 3450.0000 ]
+   - [ 340.0490 ; 3446.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 3441.0000 ]
-  pt2: [ 337.0490 ; 3441.0000 ]
+  pt1: [ 144.8059 ; 3446.0000 ]
+  pt2: [ 342.0490 ; 3446.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: ->]   
-  position: [ 146.8059 ; 3436.1111 ]
+  position: [ 151.8059 ; 3441.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 341.0490 ; 3468.0000 ]
-  pt2: [ 331.0490 ; 3464.0000 ]
+  pt1: [ 346.0490 ; 3473.0000 ]
+  pt2: [ 336.0490 ; 3469.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 341.0490 ; 3468.0000 ]
-  pt2: [ 331.0490 ; 3472.0000 ]
+  pt1: [ 346.0490 ; 3473.0000 ]
+  pt2: [ 336.0490 ; 3477.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 3468.0000 ]
-  pt2: [ 342.0490 ; 3468.0000 ]
+  pt1: [ 144.8059 ; 3473.0000 ]
+  pt2: [ 347.0490 ; 3473.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: ->>]  
-  position: [ 146.8059 ; 3463.1111 ]
+  position: [ 151.8059 ; 3468.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -4605,46 +4605,46 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 331.0490 ; 3491.0000 ]
-   - [ 341.0490 ; 3495.0000 ]
-   - [ 331.0490 ; 3495.0000 ]
+   - [ 336.0490 ; 3496.0000 ]
+   - [ 346.0490 ; 3500.0000 ]
+   - [ 336.0490 ; 3500.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 3495.0000 ]
-  pt2: [ 342.0490 ; 3495.0000 ]
+  pt1: [ 144.8059 ; 3500.0000 ]
+  pt2: [ 347.0490 ; 3500.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -\]   
-  position: [ 146.8059 ; 3490.1111 ]
+  position: [ 151.8059 ; 3495.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 341.0490 ; 3522.0000 ]
-  pt2: [ 331.0490 ; 3518.0000 ]
+  pt1: [ 346.0490 ; 3527.0000 ]
+  pt2: [ 336.0490 ; 3523.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 3522.0000 ]
-  pt2: [ 342.0490 ; 3522.0000 ]
+  pt1: [ 144.8059 ; 3527.0000 ]
+  pt2: [ 347.0490 ; 3527.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -\\]
-  position: [ 146.8059 ; 3517.1111 ]
+  position: [ 151.8059 ; 3522.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -4652,123 +4652,123 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 331.0490 ; 3549.0000 ]
-   - [ 341.0490 ; 3549.0000 ]
-   - [ 331.0490 ; 3553.0000 ]
+   - [ 336.0490 ; 3554.0000 ]
+   - [ 346.0490 ; 3554.0000 ]
+   - [ 336.0490 ; 3558.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 3549.0000 ]
-  pt2: [ 342.0490 ; 3549.0000 ]
+  pt1: [ 144.8059 ; 3554.0000 ]
+  pt2: [ 347.0490 ; 3554.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -/]   
-  position: [ 146.8059 ; 3544.1111 ]
+  position: [ 151.8059 ; 3549.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 341.0490 ; 3576.0000 ]
-  pt2: [ 331.0490 ; 3580.0000 ]
+  pt1: [ 346.0490 ; 3581.0000 ]
+  pt2: [ 336.0490 ; 3585.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 3576.0000 ]
-  pt2: [ 342.0490 ; 3576.0000 ]
+  pt1: [ 144.8059 ; 3581.0000 ]
+  pt2: [ 347.0490 ; 3581.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -//]  
-  position: [ 146.8059 ; 3571.1111 ]
+  position: [ 151.8059 ; 3576.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 325.0490 ; 3598.0000 ]
+  pt1: [ 330.0490 ; 3603.0000 ]
+  pt2: [ 340.0490 ; 3613.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 330.0490 ; 3613.0000 ]
+  pt2: [ 340.0490 ; 3603.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 144.8059 ; 3608.0000 ]
   pt2: [ 335.0490 ; 3608.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 325.0490 ; 3608.0000 ]
-  pt2: [ 335.0490 ; 3598.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 139.8059 ; 3603.0000 ]
-  pt2: [ 330.0490 ; 3603.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: ->x]  
-  position: [ 146.8059 ; 3598.1111 ]
+  position: [ 151.8059 ; 3603.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 146.8059 ; 3625.0000 ]
-  pt2: [ 156.8059 ; 3635.0000 ]
+  pt1: [ 151.8059 ; 3630.0000 ]
+  pt2: [ 161.8059 ; 3640.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 146.8059 ; 3635.0000 ]
-  pt2: [ 156.8059 ; 3625.0000 ]
+  pt1: [ 151.8059 ; 3640.0000 ]
+  pt2: [ 161.8059 ; 3630.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 POLYGON:
   points:
-   - [ 331.0490 ; 3626.0000 ]
-   - [ 341.0490 ; 3630.0000 ]
-   - [ 331.0490 ; 3634.0000 ]
-   - [ 335.0490 ; 3630.0000 ]
+   - [ 336.0490 ; 3631.0000 ]
+   - [ 346.0490 ; 3635.0000 ]
+   - [ 336.0490 ; 3639.0000 ]
+   - [ 340.0490 ; 3635.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 151.8059 ; 3630.0000 ]
-  pt2: [ 337.0490 ; 3630.0000 ]
+  pt1: [ 156.8059 ; 3635.0000 ]
+  pt2: [ 342.0490 ; 3635.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: x->]  
-  position: [ 156.8059 ; 3625.1111 ]
+  position: [ 161.8059 ; 3630.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 3652.2500 ]
-  pt2: [ 143.3059 ; 3660.2500 ]
+  pt1: [ 140.3059 ; 3657.2500 ]
+  pt2: [ 148.3059 ; 3665.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4778,33 +4778,33 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 331.0490 ; 3653.0000 ]
-   - [ 341.0490 ; 3657.0000 ]
-   - [ 331.0490 ; 3661.0000 ]
-   - [ 335.0490 ; 3657.0000 ]
+   - [ 336.0490 ; 3658.0000 ]
+   - [ 346.0490 ; 3662.0000 ]
+   - [ 336.0490 ; 3666.0000 ]
+   - [ 340.0490 ; 3662.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 143.8059 ; 3657.0000 ]
-  pt2: [ 337.0490 ; 3657.0000 ]
+  pt1: [ 148.8059 ; 3662.0000 ]
+  pt2: [ 342.0490 ; 3662.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o->]  
-  position: [ 146.8059 ; 3652.1111 ]
+  position: [ 151.8059 ; 3657.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 332.5490 ; 3679.2500 ]
-  pt2: [ 340.5490 ; 3687.2500 ]
+  pt1: [ 337.5490 ; 3684.2500 ]
+  pt2: [ 345.5490 ; 3692.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4814,33 +4814,33 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 319.5490 ; 3680.0000 ]
-   - [ 329.5490 ; 3684.0000 ]
-   - [ 319.5490 ; 3688.0000 ]
-   - [ 323.5490 ; 3684.0000 ]
+   - [ 324.5490 ; 3685.0000 ]
+   - [ 334.5490 ; 3689.0000 ]
+   - [ 324.5490 ; 3693.0000 ]
+   - [ 328.5490 ; 3689.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 3684.0000 ]
-  pt2: [ 325.5490 ; 3684.0000 ]
+  pt1: [ 144.8059 ; 3689.0000 ]
+  pt2: [ 330.5490 ; 3689.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: ->o]  
-  position: [ 146.8059 ; 3679.1111 ]
+  position: [ 151.8059 ; 3684.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 3706.2500 ]
-  pt2: [ 143.3059 ; 3714.2500 ]
+  pt1: [ 140.3059 ; 3711.2500 ]
+  pt2: [ 148.3059 ; 3719.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4849,8 +4849,8 @@ ELLIPSE:
   backcolor: ff000000
 
 ELLIPSE:
-  pt1: [ 332.5490 ; 3706.2500 ]
-  pt2: [ 340.5490 ; 3714.2500 ]
+  pt1: [ 337.5490 ; 3711.2500 ]
+  pt2: [ 345.5490 ; 3719.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4860,25 +4860,25 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 319.5490 ; 3707.0000 ]
-   - [ 329.5490 ; 3711.0000 ]
-   - [ 319.5490 ; 3715.0000 ]
-   - [ 323.5490 ; 3711.0000 ]
+   - [ 324.5490 ; 3712.0000 ]
+   - [ 334.5490 ; 3716.0000 ]
+   - [ 324.5490 ; 3720.0000 ]
+   - [ 328.5490 ; 3716.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 143.8059 ; 3711.0000 ]
-  pt2: [ 325.5490 ; 3711.0000 ]
+  pt1: [ 148.8059 ; 3716.0000 ]
+  pt2: [ 330.5490 ; 3716.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o->o] 
-  position: [ 146.8059 ; 3706.1111 ]
+  position: [ 151.8059 ; 3711.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -4886,10 +4886,10 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 150.8059 ; 3734.0000 ]
-   - [ 140.8059 ; 3738.0000 ]
-   - [ 150.8059 ; 3742.0000 ]
-   - [ 146.8059 ; 3738.0000 ]
+   - [ 155.8059 ; 3739.0000 ]
+   - [ 145.8059 ; 3743.0000 ]
+   - [ 155.8059 ; 3747.0000 ]
+   - [ 151.8059 ; 3743.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -4897,33 +4897,33 @@ POLYGON:
 
 POLYGON:
   points:
-   - [ 331.0490 ; 3734.0000 ]
-   - [ 341.0490 ; 3738.0000 ]
-   - [ 331.0490 ; 3742.0000 ]
-   - [ 335.0490 ; 3738.0000 ]
+   - [ 336.0490 ; 3739.0000 ]
+   - [ 346.0490 ; 3743.0000 ]
+   - [ 336.0490 ; 3747.0000 ]
+   - [ 340.0490 ; 3743.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 144.8059 ; 3738.0000 ]
-  pt2: [ 337.0490 ; 3738.0000 ]
+  pt1: [ 149.8059 ; 3743.0000 ]
+  pt2: [ 342.0490 ; 3743.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: <->]  
-  position: [ 156.8059 ; 3733.1111 ]
+  position: [ 161.8059 ; 3738.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 135.3059 ; 3760.2500 ]
-  pt2: [ 143.3059 ; 3768.2500 ]
+  pt1: [ 140.3059 ; 3765.2500 ]
+  pt2: [ 148.3059 ; 3773.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4933,18 +4933,18 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 156.3059 ; 3761.0000 ]
-   - [ 146.3059 ; 3765.0000 ]
-   - [ 156.3059 ; 3769.0000 ]
-   - [ 152.3059 ; 3765.0000 ]
+   - [ 161.3059 ; 3766.0000 ]
+   - [ 151.3059 ; 3770.0000 ]
+   - [ 161.3059 ; 3774.0000 ]
+   - [ 157.3059 ; 3770.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 ELLIPSE:
-  pt1: [ 332.5490 ; 3760.2500 ]
-  pt2: [ 340.5490 ; 3768.2500 ]
+  pt1: [ 337.5490 ; 3765.2500 ]
+  pt2: [ 345.5490 ; 3773.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -4954,76 +4954,76 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 319.5490 ; 3761.0000 ]
-   - [ 329.5490 ; 3765.0000 ]
-   - [ 319.5490 ; 3769.0000 ]
-   - [ 323.5490 ; 3765.0000 ]
+   - [ 324.5490 ; 3766.0000 ]
+   - [ 334.5490 ; 3770.0000 ]
+   - [ 324.5490 ; 3774.0000 ]
+   - [ 328.5490 ; 3770.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 150.3059 ; 3765.0000 ]
-  pt2: [ 325.5490 ; 3765.0000 ]
+  pt1: [ 155.3059 ; 3770.0000 ]
+  pt2: [ 330.5490 ; 3770.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: o<->o]
-  position: [ 156.8059 ; 3760.1111 ]
+  position: [ 161.8059 ; 3765.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 146.8059 ; 3787.0000 ]
-  pt2: [ 156.8059 ; 3797.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 146.8059 ; 3797.0000 ]
-  pt2: [ 156.8059 ; 3787.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 325.0490 ; 3787.0000 ]
-  pt2: [ 335.0490 ; 3797.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 325.0490 ; 3797.0000 ]
-  pt2: [ 335.0490 ; 3787.0000 ]
-  stroke: 0.0-0.0-2.0
-  shadow: 0
-  color: ff181818
-
-LINE:
   pt1: [ 151.8059 ; 3792.0000 ]
-  pt2: [ 330.0490 ; 3792.0000 ]
+  pt2: [ 161.8059 ; 3802.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 151.8059 ; 3802.0000 ]
+  pt2: [ 161.8059 ; 3792.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 330.0490 ; 3792.0000 ]
+  pt2: [ 340.0490 ; 3802.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 330.0490 ; 3802.0000 ]
+  pt2: [ 340.0490 ; 3792.0000 ]
+  stroke: 0.0-0.0-2.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 156.8059 ; 3797.0000 ]
+  pt2: [ 335.0490 ; 3797.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: x<->x]
-  position: [ 156.8059 ; 3787.1111 ]
+  position: [ 161.8059 ; 3792.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 332.5490 ; 3814.2500 ]
-  pt2: [ 340.5490 ; 3822.2500 ]
+  pt1: [ 337.5490 ; 3819.2500 ]
+  pt2: [ 345.5490 ; 3827.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -5032,37 +5032,37 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 329.5490 ; 3819.0000 ]
-  pt2: [ 319.5490 ; 3815.0000 ]
+  pt1: [ 334.5490 ; 3824.0000 ]
+  pt2: [ 324.5490 ; 3820.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 329.5490 ; 3819.0000 ]
-  pt2: [ 319.5490 ; 3823.0000 ]
+  pt1: [ 334.5490 ; 3824.0000 ]
+  pt2: [ 324.5490 ; 3828.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 3819.0000 ]
-  pt2: [ 330.5490 ; 3819.0000 ]
+  pt1: [ 144.8059 ; 3824.0000 ]
+  pt2: [ 335.5490 ; 3824.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: ->>o] 
-  position: [ 146.8059 ; 3814.1111 ]
+  position: [ 151.8059 ; 3819.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 332.5490 ; 3841.2500 ]
-  pt2: [ 340.5490 ; 3849.2500 ]
+  pt1: [ 337.5490 ; 3846.2500 ]
+  pt2: [ 345.5490 ; 3854.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -5072,32 +5072,32 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 319.5490 ; 3842.0000 ]
-   - [ 329.5490 ; 3846.0000 ]
-   - [ 319.5490 ; 3846.0000 ]
+   - [ 324.5490 ; 3847.0000 ]
+   - [ 334.5490 ; 3851.0000 ]
+   - [ 324.5490 ; 3851.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 3846.0000 ]
-  pt2: [ 330.5490 ; 3846.0000 ]
+  pt1: [ 144.8059 ; 3851.0000 ]
+  pt2: [ 335.5490 ; 3851.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -\o]  
-  position: [ 146.8059 ; 3841.1111 ]
+  position: [ 151.8059 ; 3846.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 332.5490 ; 3868.2500 ]
-  pt2: [ 340.5490 ; 3876.2500 ]
+  pt1: [ 337.5490 ; 3873.2500 ]
+  pt2: [ 345.5490 ; 3881.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -5106,30 +5106,30 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 329.5490 ; 3873.0000 ]
-  pt2: [ 319.5490 ; 3869.0000 ]
+  pt1: [ 334.5490 ; 3878.0000 ]
+  pt2: [ 324.5490 ; 3874.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 3873.0000 ]
-  pt2: [ 330.5490 ; 3873.0000 ]
+  pt1: [ 144.8059 ; 3878.0000 ]
+  pt2: [ 335.5490 ; 3878.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -\\o]
-  position: [ 146.8059 ; 3868.1111 ]
+  position: [ 151.8059 ; 3873.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 332.5490 ; 3895.2500 ]
-  pt2: [ 340.5490 ; 3903.2500 ]
+  pt1: [ 337.5490 ; 3900.2500 ]
+  pt2: [ 345.5490 ; 3908.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -5139,32 +5139,32 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 319.5490 ; 3900.0000 ]
-   - [ 329.5490 ; 3900.0000 ]
-   - [ 319.5490 ; 3904.0000 ]
+   - [ 324.5490 ; 3905.0000 ]
+   - [ 334.5490 ; 3905.0000 ]
+   - [ 324.5490 ; 3909.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 3900.0000 ]
-  pt2: [ 330.5490 ; 3900.0000 ]
+  pt1: [ 144.8059 ; 3905.0000 ]
+  pt2: [ 335.5490 ; 3905.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -/o]  
-  position: [ 146.8059 ; 3895.1111 ]
+  position: [ 151.8059 ; 3900.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 332.5490 ; 3922.2500 ]
-  pt2: [ 340.5490 ; 3930.2500 ]
+  pt1: [ 337.5490 ; 3927.2500 ]
+  pt2: [ 345.5490 ; 3935.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -5173,44 +5173,44 @@ ELLIPSE:
   backcolor: ff000000
 
 LINE:
-  pt1: [ 329.5490 ; 3927.0000 ]
-  pt2: [ 319.5490 ; 3931.0000 ]
+  pt1: [ 334.5490 ; 3932.0000 ]
+  pt2: [ 324.5490 ; 3936.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 139.8059 ; 3927.0000 ]
-  pt2: [ 330.5490 ; 3927.0000 ]
+  pt1: [ 144.8059 ; 3932.0000 ]
+  pt2: [ 335.5490 ; 3932.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: -//o] 
-  position: [ 146.8059 ; 3922.1111 ]
+  position: [ 151.8059 ; 3927.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 LINE:
-  pt1: [ 146.8059 ; 3949.0000 ]
-  pt2: [ 156.8059 ; 3959.0000 ]
+  pt1: [ 151.8059 ; 3954.0000 ]
+  pt2: [ 161.8059 ; 3964.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 LINE:
-  pt1: [ 146.8059 ; 3959.0000 ]
-  pt2: [ 156.8059 ; 3949.0000 ]
+  pt1: [ 151.8059 ; 3964.0000 ]
+  pt2: [ 161.8059 ; 3954.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
   color: ff181818
 
 ELLIPSE:
-  pt1: [ 332.5490 ; 3949.2500 ]
-  pt2: [ 340.5490 ; 3957.2500 ]
+  pt1: [ 337.5490 ; 3954.2500 ]
+  pt2: [ 345.5490 ; 3962.2500 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-1.5
@@ -5220,25 +5220,25 @@ ELLIPSE:
 
 POLYGON:
   points:
-   - [ 319.5490 ; 3950.0000 ]
-   - [ 329.5490 ; 3954.0000 ]
-   - [ 319.5490 ; 3958.0000 ]
-   - [ 323.5490 ; 3954.0000 ]
+   - [ 324.5490 ; 3955.0000 ]
+   - [ 334.5490 ; 3959.0000 ]
+   - [ 324.5490 ; 3963.0000 ]
+   - [ 328.5490 ; 3959.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 151.8059 ; 3954.0000 ]
-  pt2: [ 325.5490 ; 3954.0000 ]
+  pt1: [ 156.8059 ; 3959.0000 ]
+  pt2: [ 330.5490 ; 3959.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: x->o] 
-  position: [ 156.8059 ; 3949.1111 ]
+  position: [ 161.8059 ; 3954.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000

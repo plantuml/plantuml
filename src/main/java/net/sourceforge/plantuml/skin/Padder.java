@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 
@@ -108,7 +107,7 @@ public class Padder {
 		if (this == NONE) {
 			return orig;
 		}
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return orig.calculateDimension(stringBounder).delta(2 * (margin + padding));
 			}

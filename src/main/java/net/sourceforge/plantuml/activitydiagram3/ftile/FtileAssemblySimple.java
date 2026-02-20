@@ -51,10 +51,9 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
 
-public class FtileAssemblySimple extends AbstractTextBlock implements Ftile {
+public class FtileAssemblySimple implements Ftile {
 
 	private final Ftile tile1;
 	private final Ftile tile2;

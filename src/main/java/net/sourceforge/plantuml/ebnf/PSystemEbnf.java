@@ -97,13 +97,13 @@ public class PSystemEbnf extends TitledDiagram {
 	}
 
 	@Override
-	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);
+		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 		if (expressions.size() == 0) {
 			final Style style = ETile.getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 			final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
@@ -118,6 +118,11 @@ public class PSystemEbnf extends TitledDiagram {
 					expressions.get(i).getUDrawable(getSkinParam(), getPreprocessingArtifact()),
 					HorizontalAlignment.LEFT);
 		return TextBlockUtils.addBackcolor(result, null);
+	}
+
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+		return getTextMainBlock01970(fileFormatOption);
 	}
 
 }

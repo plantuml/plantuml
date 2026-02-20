@@ -5,7 +5,7 @@ public class SequenceLayout_0002_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 495.0504 ; 224.0000 ]
+dimension: [ 505.0504 ; 226.0000 ]
 scaleFactor: 1.0000
 seed: -5035208696638841906
 svgLinkTarget: _top

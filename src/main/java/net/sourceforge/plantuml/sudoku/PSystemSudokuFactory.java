@@ -35,9 +35,9 @@
  */
 package net.sourceforge.plantuml.sudoku;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.regex.Matcher2;
@@ -49,7 +49,7 @@ public class PSystemSudokuFactory extends PSystemSingleLineFactory {
 	final private static Pattern2 p = Pattern2.cmpile("^sudoku(?:[%s]+([0-9a-zA-Z]+))?[%s]*$");
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
+	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		final Matcher2 m = p.matcher(line);
 		if (m.find() == false) 
 			return null;

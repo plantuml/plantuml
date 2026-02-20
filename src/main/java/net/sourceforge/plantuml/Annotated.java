@@ -36,12 +36,10 @@
 package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.abel.DisplayPositioned;
-import net.sourceforge.plantuml.abel.DisplayPositionned;
 
 public interface Annotated {
-	// ::remove file when __HAXE__
 
-	public DisplayPositionned getTitle();
+	public DisplayPositioned getTitle();
 
 	public DisplayPositioned getCaption();
 
