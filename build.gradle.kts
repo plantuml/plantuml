@@ -27,8 +27,10 @@ group = "net.sourceforge.plantuml"
 description = "PlantUML"
 
 java {
-	withSourcesJar()
-	withJavadocJar()
+    if (!fastBuild) {
+        withSourcesJar()
+        withJavadocJar()
+    }
 	registerFeature("pdf") {
 		usingSourceSet(sourceSets["main"])
 	}
@@ -631,8 +633,10 @@ tasks.compileJava {
 	dependsOn(filterSourcesWithBuildInfo)
 }
 
-tasks.named("sourcesJar") {
-	dependsOn(filterSourcesWithBuildInfo)
+tasks.configureEach {
+    if (name == "sourcesJar") {
+        dependsOn(filterSourcesWithBuildInfo)
+    }
 }
 
 // ============================================
@@ -733,26 +737,38 @@ tasks.named<JavaCompile>("compileTeavmJava") {
 // Task to minify JavaScript using Google Closure Compiler
 // With -Pfast, simply copies classes.js to classes.min.js (skips minification)
 if (fastBuild) {
-	tasks.register<Copy>("minifyJavaScript") {
-		description = "Copies classes.js to classes.min.js (fast mode, no minification)"
-		group = "teavm"
+    tasks.register("minifyJavaScript") {
+        description = "Copies classes.js to classes.min.js (fast mode, no minification)"
+        group = "teavm"
 
-		dependsOn("generateJavaScript")
+        dependsOn("generateJavaScript")
 
-		val inputFile = layout.buildDirectory.file("teavm/js/classes.js")
-		val outputDir = layout.buildDirectory.dir("teavm/js")
+        val inputFile = layout.buildDirectory.file("teavm/js/classes.js")
+        val outputFile = layout.buildDirectory.file("teavm/js/classes.min.js")
 
-		inputs.file(inputFile)
-		outputs.file(outputDir.map { it.file("classes.min.js") })
+        inputs.file(inputFile)
+        outputs.file(outputFile)
 
-		from(inputFile)
-		into(outputDir)
-		rename { "classes.min.js" }
+        doFirst {
+            println("Fast mode: copying classes.js to classes.min.js (skipping minification)")
+        }
 
-		doFirst {
-			println("Fast mode: copying classes.js to classes.min.js (skipping minification)")
-		}
-	}
+        doLast {
+            val inF = inputFile.get().asFile
+            val outF = outputFile.get().asFile
+
+            if (!inF.exists()) {
+                throw GradleException("Input JS not found: ${inF.absolutePath}")
+            }
+
+            outF.parentFile.mkdirs()
+            inF.copyTo(outF, overwrite = true)
+
+            println("Fast copy done:")
+            println("  Input : ${inF.absolutePath} (${inF.length() / 1024} KB)")
+            println("  Output: ${outF.absolutePath} (${outF.length() / 1024} KB)")
+        }
+    }
 } else {
 	tasks.register<JavaExec>("minifyJavaScript") {
 		description = "Minifies classes.js using Google Closure Compiler"
@@ -853,7 +869,9 @@ tasks.register("teavm") {
 	group = "teavm"
 	
 	dependsOn("minifyJavaScript")
-	finalizedBy("teavmJavadoc")
+	if (!fastBuild) {
+	    finalizedBy(tasks.named("teavmJavadoc"))
+	}
 	
 	val outputDir = layout.buildDirectory.dir("teavm/js").get().asFile
 	
@@ -934,4 +952,39 @@ tasks.register<Zip>("teavmZip") {
 		println("======================")
 		println("")
 	}
+}
+
+
+
+if (fastBuild) {
+    // 1) Skip tests
+    tasks.withType<Test>().configureEach {
+        enabled = false
+    }
+
+    // 2) Skip javadoc (both generation and jar)
+    tasks.withType<Javadoc>().configureEach {
+        enabled = false
+    }
+    tasks.matching { it.name == "javadocJar" }.configureEach {
+        enabled = false
+    }
+    tasks.matching { it.name == "sourcesJar" }.configureEach {
+        enabled = false
+    }
+
+    // 3) Optional but consistent: skip jacoco in fast mode
+    tasks.matching { it.name.startsWith("jacoco") }.configureEach {
+        enabled = false
+    }
+
+    // 4) Key point: build only produces the jar
+    tasks.named("build") {
+        setDependsOn(listOf(tasks.named("jar")))
+    }
+
+    // Optional: if someone runs "check" explicitly, skip it in fast mode
+    tasks.named("check") {
+        enabled = false
+    }
 }

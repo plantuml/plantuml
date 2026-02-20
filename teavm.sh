@@ -1,1 +1,1 @@
-./gradlew clean teavm
+./gradlew clean teavm -Pfast

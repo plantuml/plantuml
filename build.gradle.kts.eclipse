@@ -76,27 +76,6 @@ tasks.compileJava {
 }
 
 // ============================================
-// Jar
-// ============================================
-
-tasks.withType<Jar>().configureEach {
-    manifest {
-        attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
-        attributes["Implementation-Version"] = archiveVersion
-        attributes["Build-Jdk-Spec"] = System.getProperty("java.specification.version")
-        from("manifest.txt")
-    }
-
-    val runtimeClasspath = configurations.runtimeClasspath.get()
-        .map { if (it.isDirectory) it else zipTree(it) }
-    from(runtimeClasspath) {
-        exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA")
-    }
-
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
-// ============================================
 // Compile & Test
 // ============================================
 
