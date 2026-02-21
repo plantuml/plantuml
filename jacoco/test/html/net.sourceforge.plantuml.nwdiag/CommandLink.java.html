@@ -47,19 +47,19 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandLink extends SingleLineCommand2&lt;NwDiagram&gt; {
 
 	public CommandLink() {
-<span class="fc" id="L50">		super(getRegexConcat());</span>
-<span class="fc" id="L51">	}</span>
+<span class="nc" id="L50">		super(getRegexConcat());</span>
+<span class="nc" id="L51">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L54">		return RegexConcat.build(CommandLink.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L55">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L54">		return RegexConcat.build(CommandLink.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L55">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;NAME1&quot;, &quot;([%pLN_]+)&quot;), //
-<span class="fc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;--&quot;), //
-<span class="fc" id="L59">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L59">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;NAME2&quot;, &quot;([%pLN_]+)&quot;), //
-<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L62">				new RegexLeaf(&quot;;?&quot;), RegexLeaf.end());</span>
+<span class="nc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L62">				new RegexLeaf(&quot;;?&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override

@@ -55,7 +55,7 @@ public class CommandPacketDiagStart extends SingleLineCommand2&lt;PacketDiagram&
 <span class="nc" id="L55">		return RegexConcat.build(CommandPacketDiagStart.class.getName(), RegexLeaf.start(), //</span>
 						new RegexLeaf(1, &quot;TYPE&quot;, &quot;(packetdiag)?&quot;), //
 <span class="nc" id="L57">						RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="nc" id="L58">						new RegexLeaf(&quot;\\{&quot;), RegexLeaf.end()); //</span>
+<span class="nc" id="L58">						new RegexLeaf(&quot;\\{?&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override

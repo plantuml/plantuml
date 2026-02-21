@@ -47,16 +47,16 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandComment extends SingleLineCommand2&lt;NwDiagram&gt; {
 
 	public CommandComment() {
-<span class="fc" id="L50">		super(getRegexConcat());</span>
-<span class="fc" id="L51">	}</span>
+<span class="nc" id="L50">		super(getRegexConcat());</span>
+<span class="nc" id="L51">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L54">		return RegexConcat.build(CommandComment.class.getName(), //</span>
-<span class="fc" id="L55">				RegexLeaf.start(), //</span>
-<span class="fc" id="L56">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L54">		return RegexConcat.build(CommandComment.class.getName(), //</span>
+<span class="nc" id="L55">				RegexLeaf.start(), //</span>
+<span class="nc" id="L56">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;//&quot;), //
 				new RegexLeaf(&quot;.*&quot;), //
-<span class="fc" id="L59">				RegexLeaf.end());</span>
+<span class="nc" id="L59">				RegexLeaf.end());</span>
 	}
 
 	@Override

@@ -166,13 +166,13 @@ import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 <span class="fc" id="L166">						return sys;</span>
 					}
 <span class="fc" id="L168">					errors.add((PSystemError) sys);</span>
-<span class="nc" id="L169">				} catch (Throwable t) {</span>
-<span class="nc" id="L170">					final StringLocated s = source.get(0);</span>
-<span class="nc" id="L171">					final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, &quot;Fatal crash error: &quot; + t, 0,</span>
-<span class="nc" id="L172">							s.getLocation(), null);</span>
-<span class="nc" id="L173">					errors.add(PSystemErrorUtils.buildV2(umlSource, err, Collections.&lt;String&gt;emptyList(), source,</span>
+<span class="fc" id="L169">				} catch (Throwable t) {</span>
+<span class="fc" id="L170">					final StringLocated s = source.get(0);</span>
+<span class="fc" id="L171">					final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, &quot;Fatal crash error: &quot; + t, 0,</span>
+<span class="fc" id="L172">							s.getLocation(), null);</span>
+<span class="fc" id="L173">					errors.add(PSystemErrorUtils.buildV2(umlSource, err, Collections.&lt;String&gt;emptyList(), source,</span>
 							preprocessing));
-<span class="nc" id="L175">					t.printStackTrace();</span>
+<span class="fc" id="L175">					t.printStackTrace();</span>
 <span class="fc" id="L176">				}</span>
 <span class="fc" id="L177">			}</span>
 <span class="pc bpc" id="L178" title="1 of 2 branches missed.">			if (errors.size() == 0)</span>

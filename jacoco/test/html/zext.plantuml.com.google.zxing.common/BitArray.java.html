@@ -30,10 +30,10 @@ public final class BitArray {
   public int[] bits;
   public int size;
 
-<span class="fc" id="L33">  public BitArray() {</span>
-<span class="fc" id="L34">    this.size = 0;</span>
-<span class="fc" id="L35">    this.bits = new int[1];</span>
-<span class="fc" id="L36">  }</span>
+<span class="nc" id="L33">  public BitArray() {</span>
+<span class="nc" id="L34">    this.size = 0;</span>
+<span class="nc" id="L35">    this.bits = new int[1];</span>
+<span class="nc" id="L36">  }</span>
 
 <span class="nc" id="L38">  public BitArray(int size) {</span>
 <span class="nc" id="L39">    this.size = size;</span>
@@ -41,27 +41,27 @@ public final class BitArray {
 <span class="nc" id="L41">  }</span>
 
   public int getSize() {
-<span class="fc" id="L44">    return size;</span>
+<span class="nc" id="L44">    return size;</span>
   }
 
   public int getSizeInBytes() {
-<span class="fc" id="L48">    return (size + 7) &gt;&gt; 3;</span>
+<span class="nc" id="L48">    return (size + 7) &gt;&gt; 3;</span>
   }
 
   private void ensureCapacity(int size) {
-<span class="fc bfc" id="L52" title="All 2 branches covered.">    if (size &gt; bits.length &lt;&lt; 5) {</span>
-<span class="fc" id="L53">      int[] newBits = makeArray(size);</span>
-<span class="fc" id="L54">      System.arraycopy(bits, 0, newBits, 0, bits.length);</span>
-<span class="fc" id="L55">      this.bits = newBits;</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">    if (size &gt; bits.length &lt;&lt; 5) {</span>
+<span class="nc" id="L53">      int[] newBits = makeArray(size);</span>
+<span class="nc" id="L54">      System.arraycopy(bits, 0, newBits, 0, bits.length);</span>
+<span class="nc" id="L55">      this.bits = newBits;</span>
     }
-<span class="fc" id="L57">  }</span>
+<span class="nc" id="L57">  }</span>
 
   /**
    * @param i bit to get
    * @return true iff bit i is set
    */
   public boolean get(int i) {
-<span class="fc bfc" id="L64" title="All 2 branches covered.">    return (bits[i &gt;&gt; 5] &amp; (1 &lt;&lt; (i &amp; 0x1F))) != 0;</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">    return (bits[i &gt;&gt; 5] &amp; (1 &lt;&lt; (i &amp; 0x1F))) != 0;</span>
   }
 
   /**
@@ -145,12 +145,12 @@ public final class BitArray {
   }
 
   public void appendBit(boolean bit) {
-<span class="fc" id="L148">    ensureCapacity(size + 1);</span>
-<span class="fc bfc" id="L149" title="All 2 branches covered.">    if (bit) {</span>
-<span class="fc" id="L150">      bits[size &gt;&gt; 5] |= (1 &lt;&lt; (size &amp; 0x1F));</span>
+<span class="nc" id="L148">    ensureCapacity(size + 1);</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">    if (bit) {</span>
+<span class="nc" id="L150">      bits[size &gt;&gt; 5] |= (1 &lt;&lt; (size &amp; 0x1F));</span>
     }
-<span class="fc" id="L152">    size++;</span>
-<span class="fc" id="L153">  }</span>
+<span class="nc" id="L152">    size++;</span>
+<span class="nc" id="L153">  }</span>
 
   /**
    * Appends the least-significant bits, from value, in order from most-significant to
@@ -158,33 +158,33 @@ public final class BitArray {
    * 0, 1, 1, 1, 1, 0 in that order.
    */
   public void appendBits(int value, int numBits) {
-<span class="pc bpc" id="L161" title="2 of 4 branches missed.">    if (numBits &lt; 0 || numBits &gt; 32) {</span>
+<span class="nc bnc" id="L161" title="All 4 branches missed.">    if (numBits &lt; 0 || numBits &gt; 32) {</span>
 <span class="nc" id="L162">      throw new IllegalArgumentException(&quot;Num bits must be between 0 and 32&quot;);</span>
     }
-<span class="fc" id="L164">    ensureCapacity(size + numBits);</span>
-<span class="fc bfc" id="L165" title="All 2 branches covered.">    for (int numBitsLeft = numBits; numBitsLeft &gt; 0; numBitsLeft--) {</span>
-<span class="fc bfc" id="L166" title="All 2 branches covered.">      appendBit(((value &gt;&gt; (numBitsLeft - 1)) &amp; 0x01) == 1);</span>
+<span class="nc" id="L164">    ensureCapacity(size + numBits);</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">    for (int numBitsLeft = numBits; numBitsLeft &gt; 0; numBitsLeft--) {</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">      appendBit(((value &gt;&gt; (numBitsLeft - 1)) &amp; 0x01) == 1);</span>
     }
-<span class="fc" id="L168">  }</span>
+<span class="nc" id="L168">  }</span>
 
   public void appendBitArray(BitArray other) {
-<span class="fc" id="L171">    int otherSize = other.getSize();</span>
-<span class="fc" id="L172">    ensureCapacity(size + otherSize);</span>
-<span class="fc bfc" id="L173" title="All 2 branches covered.">    for (int i = 0; i &lt; otherSize; i++) {</span>
-<span class="fc" id="L174">      appendBit(other.get(i));</span>
+<span class="nc" id="L171">    int otherSize = other.getSize();</span>
+<span class="nc" id="L172">    ensureCapacity(size + otherSize);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">    for (int i = 0; i &lt; otherSize; i++) {</span>
+<span class="nc" id="L174">      appendBit(other.get(i));</span>
     }
-<span class="fc" id="L176">  }</span>
+<span class="nc" id="L176">  }</span>
 
   public void xor(BitArray other) {
-<span class="pc bpc" id="L179" title="1 of 2 branches missed.">    if (bits.length != other.bits.length) {</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">    if (bits.length != other.bits.length) {</span>
 <span class="nc" id="L180">      throw new IllegalArgumentException(&quot;Sizes don't match&quot;);</span>
     }
-<span class="fc bfc" id="L182" title="All 2 branches covered.">    for (int i = 0; i &lt; bits.length; i++) {</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">    for (int i = 0; i &lt; bits.length; i++) {</span>
       // The last byte could be incomplete (i.e. not have 8 bits in
       // it) but there is no problem since 0 XOR 0 == 0.
-<span class="fc" id="L185">      bits[i] ^= other.bits[i];</span>
+<span class="nc" id="L185">      bits[i] ^= other.bits[i];</span>
     }
-<span class="fc" id="L187">  }</span>
+<span class="nc" id="L187">  }</span>
 
   /**
    *
@@ -195,17 +195,17 @@ public final class BitArray {
    * @param numBytes how many bytes to write
    */
   public void toBytes(int bitOffset, byte[] array, int offset, int numBytes) {
-<span class="fc bfc" id="L198" title="All 2 branches covered.">    for (int i = 0; i &lt; numBytes; i++) {</span>
-<span class="fc" id="L199">      int theByte = 0;</span>
-<span class="fc bfc" id="L200" title="All 2 branches covered.">      for (int j = 0; j &lt; 8; j++) {</span>
-<span class="fc bfc" id="L201" title="All 2 branches covered.">        if (get(bitOffset)) {</span>
-<span class="fc" id="L202">          theByte |= 1 &lt;&lt; (7 - j);</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">    for (int i = 0; i &lt; numBytes; i++) {</span>
+<span class="nc" id="L199">      int theByte = 0;</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">      for (int j = 0; j &lt; 8; j++) {</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        if (get(bitOffset)) {</span>
+<span class="nc" id="L202">          theByte |= 1 &lt;&lt; (7 - j);</span>
         }
-<span class="fc" id="L204">        bitOffset++;</span>
+<span class="nc" id="L204">        bitOffset++;</span>
       }
-<span class="fc" id="L206">      array[offset + i] = (byte) theByte;</span>
+<span class="nc" id="L206">      array[offset + i] = (byte) theByte;</span>
     }
-<span class="fc" id="L208">  }</span>
+<span class="nc" id="L208">  }</span>
 
   /**
    * @return underlying array of ints. The first element holds the first 32 bits, and the least
@@ -230,10 +230,10 @@ public final class BitArray {
 <span class="nc" id="L230">  }</span>
 
   private static int[] makeArray(int size) {
-<span class="fc" id="L233">    final int tmp = (size + 31) &gt;&gt; 5;</span>
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">    if (tmp &gt; 1000)</span>
+<span class="nc" id="L233">    final int tmp = (size + 31) &gt;&gt; 5;</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">    if (tmp &gt; 1000)</span>
 <span class="nc" id="L235">    	throw new IllegalArgumentException(&quot;Not even an issue :-) We just cancel flashcode generation.&quot;);</span>
-<span class="fc" id="L236">	return new int[tmp];</span>
+<span class="nc" id="L236">	return new int[tmp];</span>
   }
   
   public String toString() {

@@ -9071,11 +9071,11 @@ Stats:
     Abstract Classes: 0
 
     Ca: 3
-    Ce: 25
+    Ce: 26
 
     A: 0
-    I: 0.89
-    D: 0.11
+    I: 0.9
+    D: 0.1
 
 Abstract Classes:
 
@@ -9120,6 +9120,7 @@ Depends Upon:
     net.sourceforge.plantuml.skin
     net.sourceforge.plantuml.style
     net.sourceforge.plantuml.utils
+    net.sourceforge.plantuml.warning
 
 Used By:
     net.sourceforge.plantuml.nwdiag.next
@@ -14482,12 +14483,12 @@ Stats:
     Concrete Classes: 2
     Abstract Classes: 1
 
-    Ca: 9
+    Ca: 10
     Ce: 2
 
     A: 0.33
-    I: 0.18
-    D: 0.48
+    I: 0.17
+    D: 0.5
 
 Abstract Classes:
     net.sourceforge.plantuml.warning.WarningHandler
@@ -14506,6 +14507,7 @@ Used By:
     net.sourceforge.plantuml.activitydiagram3.command
     net.sourceforge.plantuml.command
     net.sourceforge.plantuml.klimt.creole
+    net.sourceforge.plantuml.nwdiag
     net.sourceforge.plantuml.preproc
     net.sourceforge.plantuml.skin
     net.sourceforge.plantuml.tim
@@ -17430,7 +17432,7 @@ net.sourceforge.plantuml.math,14,1,4,19,0.07,0.83,0.1,1
 net.sourceforge.plantuml.mda,3,0,1,7,0,0.88,0.12,1
 net.sourceforge.plantuml.mindmap,18,1,2,23,0.06,0.92,0.02,1
 net.sourceforge.plantuml.nio,11,2,43,10,0.18,0.19,0.63,1
-net.sourceforge.plantuml.nwdiag,13,0,3,25,0,0.89,0.11,1
+net.sourceforge.plantuml.nwdiag,13,0,3,26,0,0.9,0.1,1
 net.sourceforge.plantuml.nwdiag.core,4,1,2,15,0.25,0.88,0.13,1
 net.sourceforge.plantuml.nwdiag.next,11,1,2,12,0.09,0.86,0.05,1
 net.sourceforge.plantuml.objectdiagram,2,1,3,14,0.5,0.82,0.32,1
@@ -17510,7 +17512,7 @@ net.sourceforge.plantuml.url,8,0,41,7,0,0.15,0.85,1
 net.sourceforge.plantuml.utils,22,6,96,23,0.27,0.19,0.53,1
 net.sourceforge.plantuml.version,16,1,18,37,0.06,0.67,0.26,1
 net.sourceforge.plantuml.vizjs,7,0,1,6,0,0.86,0.14,1
-net.sourceforge.plantuml.warning,3,1,9,2,0.33,0.18,0.48,1
+net.sourceforge.plantuml.warning,3,1,10,2,0.33,0.17,0.5,1
 net.sourceforge.plantuml.wbs,13,2,2,25,0.15,0.93,0.08,1
 net.sourceforge.plantuml.webp,14,0,0,7,0,1,0,1
 net.sourceforge.plantuml.windowsdot,1,0,2,4,0,0.67,0.33,1

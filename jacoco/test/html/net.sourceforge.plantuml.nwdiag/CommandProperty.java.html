@@ -48,22 +48,22 @@ public class CommandProperty extends SingleLineCommand2&lt;NwDiagram&gt; {
     // ::remove folder when __HAXE__
 
 	public CommandProperty() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="nc" id="L51">		super(getRegexConcat());</span>
+<span class="nc" id="L52">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandProperty.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L56">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L55">		return RegexConcat.build(CommandProperty.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L56">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;(address|color|width|description)&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L58">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;=&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\&quot;?&quot;), //
 				new RegexLeaf(1, &quot;VALUE&quot;, &quot;([^\&quot;]*)&quot;), //
 				new RegexLeaf(&quot;\&quot;?&quot;), //
-<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L66">				RegexLeaf.end());</span>
+<span class="nc" id="L66">				RegexLeaf.end());</span>
 	}
 
 	@Override
