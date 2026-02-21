@@ -185,7 +185,7 @@ public class SourceStringReader {
 		}
 		for (BlockUml b : blocks) {
 			final Diagram system = b.getDiagram();
-			final int nbInSystem = system.getNbImages();
+			final int nbInSystem = system.getCardinality();
 			if (numImage < nbInSystem) {
 				// final CMapData cmap = new CMapData();
 				final ImageData imageData = system.exportDiagram(os, numImage, fileFormatOption);
@@ -208,7 +208,7 @@ public class SourceStringReader {
 
 		for (BlockUml b : blocks) {
 			final Diagram system = b.getDiagram();
-			final int nbInSystem = system.getNbImages();
+			final int nbInSystem = system.getCardinality();
 			if (numImage < nbInSystem) {
 				// final ImageData imageData = system.exportDiagram(os, numImage,
 				// fileFormatOption);
@@ -242,7 +242,7 @@ public class SourceStringReader {
 
 		for (BlockUml b : blocks) {
 			final Diagram system = b.getDiagram();
-			final int nbInSystem = system.getNbImages();
+			final int nbInSystem = system.getCardinality();
 			if (numImage < nbInSystem) {
 				final ImageData imageData = system.exportDiagram(new NullOutputStream(), numImage, fileFormatOption);
 				if (imageData.containsCMapData())

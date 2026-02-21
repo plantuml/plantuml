@@ -144,7 +144,8 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 		return getSource().seed();
 	}
 
-	public int getNbImages() {
+	@Override
+	public int getCardinality() {
 		return 1;
 	}
 

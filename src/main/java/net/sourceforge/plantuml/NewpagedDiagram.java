@@ -114,10 +114,10 @@ public class NewpagedDiagram extends AbstractPSystem {
 		return diagrams.get(num).exportDiagram(os, 0, fileFormat);
 	}
 
-	public int getNbImages() {
+	public int getCardinality() {
 		int nb = 0;
 		for (Diagram d : diagrams)
-			nb += d.getNbImages();
+			nb += d.getCardinality();
 
 		return nb;
 	}

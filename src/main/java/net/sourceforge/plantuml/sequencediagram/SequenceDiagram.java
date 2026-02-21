@@ -491,7 +491,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	@Override
-	public int getNbImages() {
+	public int getCardinality() {
 		return countNewpage + 1;
 	}
 

@@ -101,7 +101,7 @@ public class PSystemUtils {
 	private static List<FileImageData> exportDiagramsNewpaged(NewpagedDiagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
 		final List<FileImageData> result = new ArrayList<>();
-		final int nbImages = system.getNbImages();
+		final int nbImages = system.getCardinality();
 		for (int i = 0; i < nbImages; i++) {
 
 			final SFile f = suggestedFile.getFile(i);
@@ -142,7 +142,7 @@ public class PSystemUtils {
 	private static List<FileImageData> exportDiagramsSequence(SequenceDiagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
 		final List<FileImageData> result = new ArrayList<>();
-		final int nbImages = system.getNbImages();
+		final int nbImages = system.getCardinality();
 		for (int i = 0; i < nbImages; i++) {
 
 			final SFile f = suggestedFile.getFile(i);
