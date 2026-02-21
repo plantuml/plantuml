@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
@@ -75,7 +74,7 @@ public class ChartDiagram extends UmlDiagram {
 	private String xAxisTitle;
 	private Integer xAxisTickSpacing;
 	private ChartAxis.LabelPosition xAxisLabelPosition = ChartAxis.LabelPosition.DEFAULT;
-	private final ChartAxis xAxis = new ChartAxis();  // For numeric x-axis (horizontal bar charts)
+	private final ChartAxis xAxis = new ChartAxis(); // For numeric x-axis (horizontal bar charts)
 	private final List<String> yAxisLabels = new ArrayList<>();
 	private final List<ChartSeries> series = new ArrayList<>();
 	private final ChartAxis yAxis = new ChartAxis();
@@ -104,7 +103,7 @@ public class ChartDiagram extends UmlDiagram {
 
 	@Override
 	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				drawMe(ug);
@@ -122,20 +121,27 @@ public class ChartDiagram extends UmlDiagram {
 	}
 
 	private ChartRenderer getRenderer() {
-		// For horizontal orientation, use h-axis data where vertical mode uses y-axis, and vice versa
+		// For horizontal orientation, use h-axis data where vertical mode uses y-axis,
+		// and vice versa
 		// User writes: v-axis [labels], h-axis numeric
-		// For horizontal bars: xAxis=numeric (horizontal), yAxisLabels=categories (vertical)
+		// For horizontal bars: xAxis=numeric (horizontal), yAxisLabels=categories
+		// (vertical)
 		// We need to pass to renderer properly based on what it expects
 		if (orientation == Orientation.HORIZONTAL) {
 			// For horizontal: pass h-axis numeric as yAxis, v-axis labels as xAxisLabels
 			// This way bars grow along the correct axis
-			return new ChartRenderer(getSkinParam(), yAxisLabels, yAxis.getTitle(), null, xAxisLabelPosition, series, xAxis, xAxis, null, legendPosition, yGridMode, xGridMode, stackMode, orientation, annotations);
+			return new ChartRenderer(getSkinParam(), yAxisLabels, yAxis.getTitle(), null, xAxisLabelPosition, series,
+					xAxis, xAxis, null, legendPosition, yGridMode, xGridMode, stackMode, orientation, annotations);
 		}
 
 		// For vertical: h-axis=categories (xAxisLabels), v-axis=numeric (yAxis)
-		// Use xAxis title if available (for coordinate-pair mode), otherwise use xAxisTitle
-		final String hAxisTitle = (xAxis != null && xAxis.getTitle() != null && !xAxis.getTitle().isEmpty()) ? xAxis.getTitle() : xAxisTitle;
-		return new ChartRenderer(getSkinParam(), xAxisLabels, hAxisTitle, xAxisTickSpacing, xAxisLabelPosition, series, xAxis, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation, annotations);
+		// Use xAxis title if available (for coordinate-pair mode), otherwise use
+		// xAxisTitle
+		final String hAxisTitle = (xAxis != null && xAxis.getTitle() != null && !xAxis.getTitle().isEmpty())
+				? xAxis.getTitle()
+				: xAxisTitle;
+		return new ChartRenderer(getSkinParam(), xAxisLabels, hAxisTitle, xAxisTickSpacing, xAxisLabelPosition, series,
+				xAxis, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation, annotations);
 	}
 
 	// Command methods
@@ -213,31 +219,36 @@ public class ChartDiagram extends UmlDiagram {
 		if (series.hasExplicitXValues()) {
 			// Coordinate pairs only allowed for line and scatter charts
 			if (series.getType() != ChartSeries.SeriesType.LINE && series.getType() != ChartSeries.SeriesType.SCATTER) {
-				return CommandExecutionResult.error("Coordinate pair notation (x:y) is only supported for line and scatter charts");
+				return CommandExecutionResult
+						.error("Coordinate pair notation (x:y) is only supported for line and scatter charts");
 			}
 
 			// Coordinate pairs require numeric h-axis (not categorical labels)
 			if (!xAxisLabels.isEmpty()) {
-				return CommandExecutionResult.error("Coordinate pair notation requires numeric h-axis (e.g., h-axis \"x\" -5 --> 5), not categorical labels");
+				return CommandExecutionResult.error(
+						"Coordinate pair notation requires numeric h-axis (e.g., h-axis \"x\" -5 --> 5), not categorical labels");
 			}
 
 			// Coordinate pairs require h-axis to be explicitly set
 			if (xAxis.isAutoScale() || xAxis.getMax() == xAxis.getMin()) {
-				return CommandExecutionResult.error("Coordinate pair notation requires explicit h-axis range (e.g., h-axis \"x\" -5 --> 5)");
+				return CommandExecutionResult
+						.error("Coordinate pair notation requires explicit h-axis range (e.g., h-axis \"x\" -5 --> 5)");
 			}
 
 			// All series must use the same format
 			if (!this.series.isEmpty()) {
 				final boolean firstHasX = this.series.get(0).hasExplicitXValues();
 				if (firstHasX != series.hasExplicitXValues()) {
-					return CommandExecutionResult.error("All series must use the same data format (either all coordinate pairs or all index-based)");
+					return CommandExecutionResult.error(
+							"All series must use the same data format (either all coordinate pairs or all index-based)");
 				}
 			}
 
 			// Validate x-coordinates fall within axis range
 			for (double x : series.getXValues()) {
 				if (x < xAxis.getMin() || x > xAxis.getMax()) {
-					return CommandExecutionResult.error("X-coordinate " + x + " is outside h-axis range [" + xAxis.getMin() + ", " + xAxis.getMax() + "]");
+					return CommandExecutionResult.error("X-coordinate " + x + " is outside h-axis range ["
+							+ xAxis.getMin() + ", " + xAxis.getMax() + "]");
 				}
 			}
 
@@ -250,7 +261,8 @@ public class ChartDiagram extends UmlDiagram {
 			if (!this.series.isEmpty()) {
 				final boolean firstHasX = this.series.get(0).hasExplicitXValues();
 				if (firstHasX != series.hasExplicitXValues()) {
-					return CommandExecutionResult.error("All series must use the same data format (either all coordinate pairs or all index-based)");
+					return CommandExecutionResult.error(
+							"All series must use the same data format (either all coordinate pairs or all index-based)");
 				}
 			}
 		}

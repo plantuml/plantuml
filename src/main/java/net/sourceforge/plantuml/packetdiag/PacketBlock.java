@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
@@ -62,7 +61,8 @@ public class PacketBlock {
 	private static final UStroke openerStroke = new UStroke(5, 5, 1);
 
 	/**
-	 * Desired block width unit, this is not the final drawing dimension as margins, paddings and scaling are not added
+	 * Desired block width unit, this is not the final drawing dimension as margins,
+	 * paddings and scaling are not added
 	 */
 	private final int width;
 
@@ -132,7 +132,7 @@ public class PacketBlock {
 
 	Style getStyle() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.packetdiagDiagram, SName.rectangle)
-						.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
 	Fashion getFashion() {
@@ -141,12 +141,8 @@ public class PacketBlock {
 
 	private TextBlock getLabelTextBlock(String label) {
 		return Display.getWithNewlines(skinParam.getPragma(), label).create8(
-						getStyle().getFontConfiguration(skinParam.getIHtmlColorSet()),
-						HorizontalAlignment.CENTER,
-						skinParam,
-						CreoleMode.SIMPLE_LINE,
-						LineBreakStrategy.NONE
-		);
+				getStyle().getFontConfiguration(skinParam.getIHtmlColorSet()), HorizontalAlignment.CENTER, skinParam,
+				CreoleMode.SIMPLE_LINE, LineBreakStrategy.NONE);
 	}
 
 	private TextBlock getLabelTextBlockAbbr(StringBounder stringBounder, double bitWidth) {
@@ -158,7 +154,8 @@ public class PacketBlock {
 		if (labelDim.getWidth() < reqWidth) {
 			return getLabelTextBlock(label);
 		}
-		// Shrink label char by char, this is technically wrong when there's multiple Unicode code points
+		// Shrink label char by char, this is technically wrong when there's multiple
+		// Unicode code points
 		String abbr = label;
 		for (int i = label.length(); i > 0; i--) {
 			if (labelDim.getWidth() + padDim.getWidth() < reqWidth) {
@@ -176,12 +173,14 @@ public class PacketBlock {
 		final double reqWidth = getDrawWidth(bitWidth);
 		final Fashion fashion = getFashion();
 		final TextBlock label = getLabelTextBlockAbbr(stringBounder, bitWidth);
-		// mergeTB would add label height and margins to the shape so here this offset makes sure we actually get drawHeight
-		double heightPreOffset = Math.max(0D, getDrawHeight(bitHeight) - label.calculateDimension(stringBounder).getHeight() - vMargin - vMargin);
+		// mergeTB would add label height and margins to the shape so here this offset
+		// makes sure we actually get drawHeight
+		double heightPreOffset = Math.max(0D,
+				getDrawHeight(bitHeight) - label.calculateDimension(stringBounder).getHeight() - vMargin - vMargin);
 		final TextBlock stereo = TextBlockUtils.empty(reqWidth, heightPreOffset);
 
 		// Basically it's URectangle#asSmall, but without horizontal margin
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				final XDimension2D dimLabel = label.calculateDimension(stringBounder);

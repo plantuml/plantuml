@@ -46,9 +46,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.svek.GuideLine;
 
-public class TextBlockArrow2 extends AbstractTextBlock implements TextBlock {
-    // ::remove file when __HAXE__
-
+public class TextBlockArrow2 implements TextBlock {
 	private final double size;
 	private final GuideLine angle;
 	private final HColor color;

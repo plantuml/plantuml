@@ -68,7 +68,6 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -130,7 +129,7 @@ public class PSystemRegex extends TitledDiagram {
 //		while (stack.size() > 1)
 //			concatenation();
 		final ETile peekFirst = stack.peekFirst();
-		final TextBlock tb = new AbstractTextBlock() {
+		final TextBlock tb = new TextBlock() {
 
 			@Override
 			public void drawU(UGraphic ug) {

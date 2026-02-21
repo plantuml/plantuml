@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.Line;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
@@ -64,8 +63,7 @@ import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.text.StringLocated;
 
-public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
-	// ::remove file when __HAXE__
+public class EmbeddedDiagram implements Line, Atom {
 
 	public static final String EMBEDDED_START = "{{";
 	public static final String EMBEDDED_END = "}}";
@@ -79,46 +77,46 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 			return null;
 
 		switch (s) {
-			case EMBEDDED_START:
-				return "uml";
-			case EMBEDDED_START + "ditaa":
-				return "ditaa";
-			case EMBEDDED_START + "uml":
-				return "uml";
-			case EMBEDDED_START + "wbs":
-				return "wbs";
-			case EMBEDDED_START + "mindmap":
-				return "mindmap";
-			case EMBEDDED_START + "gantt":
-				return "gantt";
-			case EMBEDDED_START + "json":
-				return "json";
-			case EMBEDDED_START + "yaml":
-				return "yaml";
-			case EMBEDDED_START + "wire":
-				return "wire";
-			case EMBEDDED_START + "creole":
-				return "creole";
-			case EMBEDDED_START + "board":
-				return "board";
-			case EMBEDDED_START + "ebnf":
-				return "ebnf";
-			case EMBEDDED_START + "regex":
-				return "regex";
-			case EMBEDDED_START + "files":
-				return "files";
-			case EMBEDDED_START + "chronology":
-				return "chronology";
-			case EMBEDDED_START + "chen":
-				return "chen";
-			case EMBEDDED_START + "chart":
-				return "chart";
-			case EMBEDDED_START + "nwdiag":
-				return "nwdiag";
-			case EMBEDDED_START + "packetdiag":
-				return "packetdiag";
-			default:
-				return null;
+		case EMBEDDED_START:
+			return "uml";
+		case EMBEDDED_START + "ditaa":
+			return "ditaa";
+		case EMBEDDED_START + "uml":
+			return "uml";
+		case EMBEDDED_START + "wbs":
+			return "wbs";
+		case EMBEDDED_START + "mindmap":
+			return "mindmap";
+		case EMBEDDED_START + "gantt":
+			return "gantt";
+		case EMBEDDED_START + "json":
+			return "json";
+		case EMBEDDED_START + "yaml":
+			return "yaml";
+		case EMBEDDED_START + "wire":
+			return "wire";
+		case EMBEDDED_START + "creole":
+			return "creole";
+		case EMBEDDED_START + "board":
+			return "board";
+		case EMBEDDED_START + "ebnf":
+			return "ebnf";
+		case EMBEDDED_START + "regex":
+			return "regex";
+		case EMBEDDED_START + "files":
+			return "files";
+		case EMBEDDED_START + "chronology":
+			return "chronology";
+		case EMBEDDED_START + "chen":
+			return "chen";
+		case EMBEDDED_START + "chart":
+			return "chart";
+		case EMBEDDED_START + "nwdiag":
+			return "nwdiag";
+		case EMBEDDED_START + "packetdiag":
+			return "packetdiag";
+		default:
+			return null;
 		}
 	}
 

@@ -48,12 +48,10 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
-import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.skin.ColorParam;
@@ -97,7 +95,7 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 
 	public TextBlock toTextBlock(ISkinParam skinParam) {
 		final TextBlock raw = toTextBlockInternal(skinParam);
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				raw.drawU(ug);
@@ -165,7 +163,8 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 		final UFont font = UFontFactory.serif(14);
 		final FontConfiguration fc = FontConfiguration.create(font, HColors.RED, HColors.RED, null);
 		if (Display.isNull(display)) {
-			return Display.getWithNewlines(skinParam.getPragma(), type.toString()).create(fc, HorizontalAlignment.LEFT, skinParam);
+			return Display.getWithNewlines(skinParam.getPragma(), type.toString()).create(fc, HorizontalAlignment.LEFT,
+					skinParam);
 		}
 		return display.create(fc, HorizontalAlignment.LEFT, skinParam);
 	}

@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.url.Url;
 
-public class TextBlockWithUrl extends AbstractTextBlock implements TextBlock {
+public class TextBlockWithUrl implements TextBlock {
 
 	private final TextBlock block;
 	private final Url url;

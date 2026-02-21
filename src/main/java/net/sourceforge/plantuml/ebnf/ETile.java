@@ -41,12 +41,12 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-public abstract class ETile extends AbstractTextBlock {
+public abstract class ETile implements TextBlock {
 
 	protected final boolean TRACE = false;
 
@@ -74,7 +74,8 @@ public abstract class ETile extends AbstractTextBlock {
 		ug.apply(new UTranslate(x1, y)).draw(ULine.hline(x2 - x1));
 	}
 
-	protected final void drawHlineDirected(UGraphic ug, double y, double x1, double x2, double coef, double minimunSizeForArrow) {
+	protected final void drawHlineDirected(UGraphic ug, double y, double x1, double x2, double coef,
+			double minimunSizeForArrow) {
 		ug.apply(new UTranslate(x1, y)).draw(ULine.hline(x2 - x1));
 		if (x2 > x1 + minimunSizeForArrow)
 			ug.apply(new CopyForegroundColorToBackgroundColor())

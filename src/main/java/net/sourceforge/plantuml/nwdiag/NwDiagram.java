@@ -59,7 +59,6 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
@@ -315,7 +314,7 @@ public class NwDiagram extends UmlDiagram {
 
 	@Override
 	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 			public void drawU(UGraphic ug) {
 				drawMe(ug);
 			}

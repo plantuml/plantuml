@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.log.Logme;
@@ -64,8 +63,9 @@ public class SpriteImage implements Sprite {
 	}
 
 	@Override
-	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale, final HColor backColor) {
-		return new AbstractTextBlock() {
+	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale,
+			final HColor backColor) {
+		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				final ColorMapper colorMapper = ug.getColorMapper();

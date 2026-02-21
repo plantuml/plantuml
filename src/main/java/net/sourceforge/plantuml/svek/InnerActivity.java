@@ -40,10 +40,9 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 
-public final class InnerActivity extends AbstractTextBlock implements IEntityImage {
+public final class InnerActivity implements IEntityImage {
 
 	private final IEntityImage im;
 	private final HColor borderColor;

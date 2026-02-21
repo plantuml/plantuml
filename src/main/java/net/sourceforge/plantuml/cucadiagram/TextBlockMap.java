@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
@@ -62,8 +61,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 
-public class TextBlockMap extends AbstractTextBlock implements WithPorts {
-    // ::remove folder when __HAXE__
+public class TextBlockMap implements WithPorts, TextBlock {
 
 	private final ISkinParam skinParam;
 	private final FontConfiguration fontConfiguration;
@@ -176,7 +174,7 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 		return result;
 	}
 
-	static class Point extends AbstractTextBlock {
+	static class Point implements TextBlock {
 
 		private final HColor color;
 

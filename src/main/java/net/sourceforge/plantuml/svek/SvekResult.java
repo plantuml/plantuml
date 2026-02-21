@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UHidden;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -56,8 +55,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-public final class SvekResult extends AbstractTextBlock implements IEntityImage {
-	// ::remove file when __CORE__
+public final class SvekResult implements IEntityImage {
 
 	private final DotData dotData;
 	private final DotStringFactory clusterManager;

@@ -56,7 +56,6 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.project.GanttStyle;
@@ -189,7 +188,7 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 		initTaskAndResourceDraws(timeHeader.getTimeScale(), timeHeader.getFullHeaderHeight(stringBounder),
 				stringBounder);
 
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return new XDimension2D(1000, 1000);
 			}

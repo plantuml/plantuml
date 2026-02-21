@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
@@ -93,7 +92,7 @@ public enum VisibilityModifier {
 
 	public TextBlock getUBlock(final int size, final HColor foregroundColor, final HColor backgoundColor,
 			final boolean withInvisibleRectanble) {
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return new XDimension2D(size + 1, size + 1);
@@ -132,44 +131,44 @@ public enum VisibilityModifier {
 		ug = ug.apply(foregroundColor);
 		size = ensureEven(size);
 		switch (this) {
-			case PACKAGE_PRIVATE_FIELD:
-				drawTriangle(ug, false, size, x, y);
-				break;
+		case PACKAGE_PRIVATE_FIELD:
+			drawTriangle(ug, false, size, x, y);
+			break;
 
-			case PRIVATE_FIELD:
-				drawSquare(ug, false, size, x, y);
-				break;
+		case PRIVATE_FIELD:
+			drawSquare(ug, false, size, x, y);
+			break;
 
-			case PROTECTED_FIELD:
-				drawDiamond(ug, false, size, x, y);
-				break;
+		case PROTECTED_FIELD:
+			drawDiamond(ug, false, size, x, y);
+			break;
 
-			case PUBLIC_FIELD:
-				drawCircle(ug, false, size, x, y);
-				break;
+		case PUBLIC_FIELD:
+			drawCircle(ug, false, size, x, y);
+			break;
 
-			case PACKAGE_PRIVATE_METHOD:
-				drawTriangle(ug, true, size, x, y);
-				break;
+		case PACKAGE_PRIVATE_METHOD:
+			drawTriangle(ug, true, size, x, y);
+			break;
 
-			case PRIVATE_METHOD:
-				drawSquare(ug, true, size, x, y);
-				break;
+		case PRIVATE_METHOD:
+			drawSquare(ug, true, size, x, y);
+			break;
 
-			case PROTECTED_METHOD:
-				drawDiamond(ug, true, size, x, y);
-				break;
+		case PROTECTED_METHOD:
+			drawDiamond(ug, true, size, x, y);
+			break;
 
-			case PUBLIC_METHOD:
-				drawCircle(ug, true, size, x, y);
-				break;
+		case PUBLIC_METHOD:
+			drawCircle(ug, true, size, x, y);
+			break;
 
-			case IE_MANDATORY:
-				drawCircle(ug, true, size, x, y);
-				break;
+		case IE_MANDATORY:
+			drawCircle(ug, true, size, x, y);
+			break;
 
-			default:
-				throw new IllegalStateException();
+		default:
+			throw new IllegalStateException();
 		}
 	}
 

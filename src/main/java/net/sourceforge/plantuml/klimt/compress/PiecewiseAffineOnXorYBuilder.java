@@ -40,12 +40,10 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 
-public class PiecewiseAffineOnXorYBuilder extends AbstractTextBlock {
-    // ::remove file when __HAXE__
+public class PiecewiseAffineOnXorYBuilder implements TextBlock {
 
 	private final TextBlock textBlock;
 	private final CompressionMode mode;

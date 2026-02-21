@@ -60,7 +60,6 @@ import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.AlignmentParam;
@@ -83,7 +82,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.utils.Position;
 
 // The Drawing class does the real drawing
-class MyElkDrawing extends AbstractTextBlock {
+class MyElkDrawing implements TextBlock {
 
 	// min and max of all coord
 	private final MinMax minMax;
@@ -198,9 +197,8 @@ class MyElkDrawing extends AbstractTextBlock {
 		final TextBlock headLabel = quantifier2 != null ? quantifier2 : role2;
 		final TextBlock tailRole = quantifier1 != null ? role1 : null;
 		final TextBlock headRole = quantifier2 != null ? role2 : null;
-		final MyElkEdge elkPath = new MyElkEdge(diagram, SName.classDiagram, link, edge, label, tailLabel,
-				headLabel, tailRole, headRole,
-				magicY2, elkClusters, UTranslate.point(translate), nodeImages);
+		final MyElkEdge elkPath = new MyElkEdge(diagram, SName.classDiagram, link, edge, label, tailLabel, headLabel,
+				tailRole, headRole, magicY2, elkClusters, UTranslate.point(translate), nodeImages);
 		elkPath.drawU(ug);
 	}
 

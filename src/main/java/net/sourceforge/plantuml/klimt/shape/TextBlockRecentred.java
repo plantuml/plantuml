@@ -42,8 +42,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class TextBlockRecentred extends AbstractTextBlock {
-    // ::remove file when __HAXE__
+public class TextBlockRecentred implements TextBlock {
 
 	private final TextBlock textBlock;
 

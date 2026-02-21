@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorderNone;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
@@ -47,12 +48,20 @@ public interface TextBlock extends UDrawable, UShape {
 
 	public XDimension2D calculateDimension(StringBounder stringBounder);
 
-	public MinMax getMinMax(StringBounder stringBounder);
+	public default MinMax getMinMax(StringBounder stringBounder) {
+		throw new UnsupportedOperationException(getClass().toString());
+	}
 
-	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder);
+	public default XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
+		throw new UnsupportedOperationException("member=" + member + " " + getClass().toString());
+	}
 
-	public MagneticBorder getMagneticBorder();
+	public default MagneticBorder getMagneticBorder() {
+		return new MagneticBorderNone();
+	}
 
-	public HColor getBackcolor();
+	public default HColor getBackcolor() {
+		return null;
+	}
 
 }

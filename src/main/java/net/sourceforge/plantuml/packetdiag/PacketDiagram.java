@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
@@ -88,8 +87,8 @@ public class PacketDiagram extends UmlDiagram {
 	private int scaleInterval = colWidth / 2;
 
 	/**
-	 * Default scale interval is the half of {@link #colWidth}.
-	 * By calling {@link #updateScaleInterval(int)} user can override this setting.
+	 * Default scale interval is the half of {@link #colWidth}. By calling
+	 * {@link #updateScaleInterval(int)} user can override this setting.
 	 */
 	private boolean useDefaultScaleInterval = true;
 
@@ -123,13 +122,14 @@ public class PacketDiagram extends UmlDiagram {
 	}
 
 	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption) throws IOException {
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
 		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);
 	}
 
 	@Override
 	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return null;
@@ -222,21 +222,19 @@ public class PacketDiagram extends UmlDiagram {
 	public Style getStyle() {
 		if (style == null) {
 			style = StyleSignatureBasic.of(SName.root, SName.element, SName.packetdiagDiagram)
-							.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 		}
 		return style;
 	}
 
 	/**
-	 * Returns the last packet's end bit-position from the packet frame.
-	 * If the system currently contains no packet, return empty.
+	 * Returns the last packet's end bit-position from the packet frame. If the
+	 * system currently contains no packet, return empty.
 	 *
 	 * @return bit-position of the last packet item in system or empty
 	 */
 	Optional<Integer> getLastPacketEnd() {
-		return packetItems.isEmpty() ?
-						Optional.empty() :
-						Optional.of(packetItems.get(packetItems.size() - 1).bitEnd);
+		return packetItems.isEmpty() ? Optional.empty() : Optional.of(packetItems.get(packetItems.size() - 1).bitEnd);
 	}
 
 	private void build() {
@@ -273,7 +271,8 @@ public class PacketDiagram extends UmlDiagram {
 	}
 
 	/**
-	 * Rearranges packets into one grid, split long packets if it went out of the row
+	 * Rearranges packets into one grid, split long packets if it went out of the
+	 * row
 	 */
 	void adjustLayout() {
 		List<List<PacketBlock>> grid = new ArrayList<>();
@@ -312,7 +311,8 @@ public class PacketDiagram extends UmlDiagram {
 		if (!currRow.isEmpty()) {
 			grid.add(currRow);
 		}
-		// Equalize packet height, this behavior is not in the original implementation, but I find it make sense to do so
+		// Equalize packet height, this behavior is not in the original implementation,
+		// but I find it make sense to do so
 		grid.forEach(blocks -> {
 			final int maxH = blocks.stream().map(PacketBlock::getHeight).max(Integer::compare).orElse(1);
 			blocks.forEach(blk -> blk.setHeight(maxH));

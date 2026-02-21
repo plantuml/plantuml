@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.crash;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +53,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
@@ -64,7 +62,7 @@ import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
-public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
+public class GraphvizCrash implements IEntityImage {
 
 	private final TextBlock text1;
 	private final String flash;

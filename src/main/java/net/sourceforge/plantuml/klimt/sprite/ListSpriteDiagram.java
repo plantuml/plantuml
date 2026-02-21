@@ -54,14 +54,13 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ListSpriteDiagram extends UmlDiagram {
-	// ::remove file when __CORE__ or __TEAVM__
+	// ::remove file when __TEAVM__
 
 	public ListSpriteDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
 		super(source, UmlDiagramType.HELP, previous, preprocessing);
@@ -85,7 +84,7 @@ public class ListSpriteDiagram extends UmlDiagram {
 
 	@Override
 	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				double x = 0;
@@ -93,8 +92,9 @@ public class ListSpriteDiagram extends UmlDiagram {
 				double rawHeight = 0;
 				for (String n : getSkinParam().getAllSpriteNames()) {
 					final Sprite sprite = getSkinParam().getSprite(n);
-					TextBlock blockName = Display.create(n).create(FontConfiguration.blackBlueTrue(UFontFactory.sansSerif(14)),
-							HorizontalAlignment.LEFT, getSkinParam());
+					TextBlock blockName = Display.create(n).create(
+							FontConfiguration.blackBlueTrue(UFontFactory.sansSerif(14)), HorizontalAlignment.LEFT,
+							getSkinParam());
 					TextBlock tb = sprite.asTextBlock(HColors.BLACK, null, 1.0, null);
 					tb = TextBlockUtils.mergeTB(tb, blockName, HorizontalAlignment.CENTER);
 					tb.drawU(ug.apply(new UTranslate(x, y)));

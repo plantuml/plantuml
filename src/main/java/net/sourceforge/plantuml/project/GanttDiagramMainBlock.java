@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.project.core.Resource;
@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-public class GanttDiagramMainBlock extends AbstractTextBlock {
+public class GanttDiagramMainBlock implements TextBlock {
 
 	private final GanttDiagram diagram;
 	private final TimeHeader timeHeader;

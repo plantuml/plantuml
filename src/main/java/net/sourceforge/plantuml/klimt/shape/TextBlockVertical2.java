@@ -48,8 +48,7 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 
-public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, WithPorts {
-    // ::remove file when __HAXE__
+public class TextBlockVertical2 implements TextBlock, WithPorts {
 
 	private final List<TextBlock> blocks = new ArrayList<>();
 	private final HorizontalAlignment horizontalAlignment;
@@ -64,8 +63,8 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 		this(b1, convertImage(image), horizontalAlignment);
 	}
 
-	static private AbstractTextBlock convertImage(final UImage image) {
-		return new AbstractTextBlock() {
+	static private TextBlock convertImage(final UImage image) {
+		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				ug.draw(image);

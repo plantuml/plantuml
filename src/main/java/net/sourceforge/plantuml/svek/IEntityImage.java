@@ -52,8 +52,6 @@ public interface IEntityImage extends Hideable, TextBlock {
 
 	public double getOverscanX(StringBounder stringBounder);
 
-	public MagneticBorder getMagneticBorder();
-	
 	public default boolean isCrash() {
 		return false;
 	}

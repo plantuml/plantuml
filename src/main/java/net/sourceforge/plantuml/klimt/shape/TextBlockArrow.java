@@ -45,9 +45,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.utils.Direction;
 
-public class TextBlockArrow extends AbstractTextBlock implements TextBlock {
-    // ::remove file when __HAXE__
-
+public class TextBlockArrow implements TextBlock {
 	private final double size;
 	private final Direction arrow;
 	private final HColor color;

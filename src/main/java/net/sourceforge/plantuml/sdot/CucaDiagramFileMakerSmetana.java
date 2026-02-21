@@ -72,7 +72,6 @@ import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.crash.GraphvizCrash;
 import net.sourceforge.plantuml.crash.CrashReportHandler;
 import net.sourceforge.plantuml.eggs.QuoteUtils;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -88,7 +87,6 @@ import net.sourceforge.plantuml.klimt.geom.Rankdir;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.log.Logme;
@@ -157,7 +155,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		return result;
 	}
 
-	class Drawing extends AbstractTextBlock {
+	class Drawing implements TextBlock {
 
 		private final YMirror ymirror;
 		private final MinMaxMutable minMax;
@@ -188,8 +186,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 				final TextBlock tailRole = quantifier1 != null ? role1 : null;
 				final TextBlock headRole = quantifier2 != null ? role2 : null;
 				final SmetanaEdge smetanaPath = new SmetanaEdge(link, edge, ymirror,
-						getLabel(ug.getStringBounder(), link), tailLabel,
-						headLabel, tailRole, headRole,
+						getLabel(ug.getStringBounder(), link), tailLabel, headLabel, tailRole, headRole,
 						getBibliotekon(), diagram.getSkinParam());
 				smetanaPathes.put(link, smetanaPath);
 			}

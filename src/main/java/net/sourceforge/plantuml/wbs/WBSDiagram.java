@@ -57,7 +57,6 @@ import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -97,7 +96,7 @@ public class WBSDiagram extends UmlDiagram {
 
 	@Override
 	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				drawMe(ug);
@@ -144,8 +143,8 @@ public class WBSDiagram extends UmlDiagram {
 		return addIdea(code, backColor, level, display, Stereotype.build(stereotype), direction, shape);
 	}
 
-	public CommandExecutionResult addIdea(String code, HColor backColor, int level, Display display, Stereotype stereotype,
-			Direction direction, IdeaShape shape) {
+	public CommandExecutionResult addIdea(String code, HColor backColor, int level, Display display,
+			Stereotype stereotype, Direction direction, IdeaShape shape) {
 		try {
 			if (level == 0) {
 				if (root != null)

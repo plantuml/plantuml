@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.error;
 
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -78,7 +77,6 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockRaw;
@@ -405,7 +403,7 @@ public abstract class PSystemError extends PlainDiagram {
 			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;
 			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);
 		}
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				if (qrcode == null) {
@@ -454,7 +452,7 @@ public abstract class PSystemError extends PlainDiagram {
 			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);
 		}
 
-		return new AbstractTextBlock() {
+		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				if (qrcode == null) {
