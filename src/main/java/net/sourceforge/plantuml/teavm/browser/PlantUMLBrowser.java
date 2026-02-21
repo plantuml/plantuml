@@ -9,7 +9,9 @@ import org.teavm.jso.dom.xml.Element;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramChromeFactory;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -341,7 +343,10 @@ public class PlantUMLBrowser {
 			final FileFormatOption fileFormat = new FileFormatOption(FileFormat.SVG);
 			if (diagram instanceof MindMapDiagram) {
 				BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender new10");
-				final TextBlock tb = diagram.getTextBlock12026(0, fileFormat);
+				TextBlock tb = diagram.getTextBlock12026(0, fileFormat);
+				final TitledDiagram titled = (TitledDiagram) diagram;
+				tb = DiagramChromeFactory.create(tb, titled, titled.getSkinParam(), STRING_BOUNDER,
+						titled.getWarnings());
 				tb.drawU(ug);
 				BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender new20");
 			} else {
