@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ApiStable;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 /**
  * Represents a single diagram. A Diagram could be a UML (sequence diagram,
@@ -52,31 +53,35 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 @ApiStable
 public interface Diagram {
 
-	ImageData exportDiagram01970(OutputStream os, int num, FileFormatOption fileFormat) throws IOException;
+	public ImageData exportDiagram01970(OutputStream os, int num, FileFormatOption fileFormat) throws IOException;
 
-	void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormat);
+	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormat);
+
+	public default TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
+		throw new UnsupportedOperationException("wip");
+	}
 
 	/**
 	 * Number of images in this diagram (usually, 1)
 	 * 
 	 * @return usually 1
 	 */
-	int getCardinality();
+	public int getCardinality();
 
-	int getSplitPagesHorizontal();
+	public int getSplitPagesHorizontal();
 
-	int getSplitPagesVertical();
+	public int getSplitPagesVertical();
 
-	DiagramDescription getDescription();
+	public DiagramDescription getDescription();
 
-	String getMetadata();
+	public String getMetadata();
 
-	String getWarningOrError();
+	public String getWarningOrError();
 
 	/**
 	 * The original source of the diagram
 	 */
-	UmlSource getSource();
+	public UmlSource getSource();
 
 	/**
 	 * Check if the Diagram have some links.
@@ -84,7 +89,7 @@ public interface Diagram {
 	public boolean hasUrl();
 
 	public Display getTitleDisplay();
-	
+
 	public InstallationRequirement getInstallationRequirement();
 
 }
