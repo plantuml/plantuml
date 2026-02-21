@@ -111,7 +111,7 @@ public class NewpagedDiagram extends AbstractPSystem {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
-		return diagrams.get(num).exportDiagram(os, 0, fileFormat);
+		return diagrams.get(num).exportDiagram01970(os, 0, fileFormat);
 	}
 
 	public int getCardinality() {

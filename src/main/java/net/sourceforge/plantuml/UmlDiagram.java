@@ -175,7 +175,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		final File pdfFile = FileUtils.createTempFileLegacy("pdf", ".pdf");
 		final ImageData result;
 		try (OutputStream fos = new BufferedOutputStream(new FileOutputStream(svg))) {
-			result = exportDiagram(fos, index, new FileFormatOption(FileFormat.SVG));
+			result = exportDiagram01970(fos, index, new FileFormatOption(FileFormat.SVG));
 		}
 		PdfConverter.convert(svg, pdfFile);
 		FileUtils.copyToStream(pdfFile, os);

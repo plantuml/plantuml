@@ -188,7 +188,7 @@ public class SourceStringReader {
 			final int nbInSystem = system.getCardinality();
 			if (numImage < nbInSystem) {
 				// final CMapData cmap = new CMapData();
-				final ImageData imageData = system.exportDiagram(os, numImage, fileFormatOption);
+				final ImageData imageData = system.exportDiagram01970(os, numImage, fileFormatOption);
 				// if (imageData.containsCMapData()) {
 				// return system.getDescription().getDescription() + BackSlash.BS_N +
 				// imageData.getCMapData("plantuml");
@@ -244,7 +244,7 @@ public class SourceStringReader {
 			final Diagram system = b.getDiagram();
 			final int nbInSystem = system.getCardinality();
 			if (numImage < nbInSystem) {
-				final ImageData imageData = system.exportDiagram(new NullOutputStream(), numImage, fileFormatOption);
+				final ImageData imageData = system.exportDiagram01970(new NullOutputStream(), numImage, fileFormatOption);
 				if (imageData.containsCMapData())
 					return imageData.getCMapData("plantuml");
 

@@ -317,7 +317,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	@Override
-	final public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
+	final public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
 		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(0, fileFormatOption);
 		sequenceDiagramPngMaker.createOneGraphic(ug);
 	}

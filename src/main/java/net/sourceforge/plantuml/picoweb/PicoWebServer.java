@@ -251,7 +251,7 @@ public class PicoWebServer implements Runnable {
 		if (blocks.size() > 0) {
 			final Diagram system = blocks.get(0).getDiagram();
 			final ByteArrayOutputStream os = new ByteArrayOutputStream();
-			final ImageData imageData = system.exportDiagram(os, 0, fileFormatOption);
+			final ImageData imageData = system.exportDiagram01970(os, 0, fileFormatOption);
 			os.close();
 			sendDiagram(out, system, fileFormatOption, httpReturnCode(imageData.getStatus()), imageData,
 					os.toByteArray());
@@ -297,7 +297,7 @@ public class PicoWebServer implements Runnable {
 			imageData = ssr.noValidStartFound(os, option.getFileFormatOption());
 		} else {
 			system = ssr.getBlocks().get(0).getDiagram();
-			imageData = system.exportDiagram(os, 0, option.getFileFormatOption());
+			imageData = system.exportDiagram01970(os, 0, option.getFileFormatOption());
 		}
 
 		sendDiagram(out, system, option.getFileFormatOption(), "200", imageData, os.toByteArray());

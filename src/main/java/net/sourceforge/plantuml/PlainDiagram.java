@@ -67,13 +67,13 @@ public abstract class PlainDiagram extends AbstractPSystem {
 	}
 
 	@Override
-	public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
+	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
 		try {
 			final UDrawable rootDrawable = getRootDrawable(fileFormatOption);
 			rootDrawable.drawU(ug);
 		} catch (IOException e) {
 			e.printStackTrace();
-			super.exportDiagramGraphic(ug, fileFormatOption);
+			super.exportDiagramGraphic01970(ug, fileFormatOption);
 		}
 	}
 

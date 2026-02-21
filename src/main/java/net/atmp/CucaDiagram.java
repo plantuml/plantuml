@@ -434,7 +434,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	// ::done
 
 	@Override
-	final public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
+	final public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
 		// ::revert when __TEAVM__
 		final CucaDiagramFileMaker maker = new CucaDiagramFileMakerSmetana(this);
 		// final CucaDiagramFileMaker maker = new

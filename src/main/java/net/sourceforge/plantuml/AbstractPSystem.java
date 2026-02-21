@@ -202,7 +202,7 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 		return false;
 	}
 
-	final public ImageData exportDiagram(OutputStream os, int index, FileFormatOption fileFormatOption)
+	final public ImageData exportDiagram01970(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		final long now = System.currentTimeMillis();
 		try {
@@ -256,7 +256,7 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 	}
 
 	@Override
-	public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
+	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
 		final UFont font = UFontFactory.monospaced(14);
 		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
 		final UText text = UText.build("Not implemented yet for " + getClass().getName(), fc);

@@ -337,7 +337,7 @@ public class PlantUMLBrowser {
 			// which uses Viz.js for layout. The @Async magic happens here.
 			Diagram diagram = BUILDER.createDiagram(lines);
 			BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender wip20");
-			diagram.exportDiagramGraphic(ug, new FileFormatOption(FileFormat.SVG));
+			diagram.exportDiagramGraphic01970(ug, new FileFormatOption(FileFormat.SVG));
 			BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender wip30");
 
 			// Clear any previous content (old SVG, error messages, etc.)

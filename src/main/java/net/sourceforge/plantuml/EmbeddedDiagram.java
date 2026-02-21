@@ -207,7 +207,7 @@ public class EmbeddedDiagram implements Line, Atom {
 	private String getImageSvgSlow() throws IOException, InterruptedException {
 		final Diagram system = getSystem();
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
-		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));
+		system.exportDiagram01970(os, 0, new FileFormatOption(FileFormat.SVG));
 		os.close();
 		return new String(os.toByteArray());
 	}
@@ -221,7 +221,7 @@ public class EmbeddedDiagram implements Line, Atom {
 	private PortableImage getImageSlow() throws IOException, InterruptedException {
 		final Diagram system = getSystem();
 		final ByteArrayOutputStream os = new ByteArrayOutputStream();
-		system.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));
+		system.exportDiagram01970(os, 0, new FileFormatOption(FileFormat.PNG));
 		os.close();
 		return SImageIO.read(os.toByteArray());
 	}

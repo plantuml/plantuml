@@ -106,7 +106,7 @@ public class SyntaxResult {
 		if (systemError == null)
 			throw new IllegalStateException();
 
-		systemError.exportDiagram(os, 0, fileFormatOption);
+		systemError.exportDiagram01970(os, 0, fileFormatOption);
 	}
 
 	public void setLineLocation(LineLocation lineLocation) {

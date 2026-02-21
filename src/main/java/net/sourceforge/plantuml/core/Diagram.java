@@ -52,23 +52,9 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 @ApiStable
 public interface Diagram {
 
-	/**
-	 * Export the diagram as an image to some format. Note that a diagram could be
-	 * drawn as several images (think about <code>new page</code> for sequence
-	 * diagram for example).
-	 * 
-	 * @param os         where to write the image
-	 * @param num        usually 0 (index of the image to be exported for this
-	 *                   diagram).
-	 * @param fileFormat file format to use
-	 * 
-	 * @return a description of the generated image
-	 * 
-	 * @throws IOException
-	 */
-	ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException;
+	ImageData exportDiagram01970(OutputStream os, int num, FileFormatOption fileFormat) throws IOException;
 
-	void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormat);
+	void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormat);
 
 	/**
 	 * Number of images in this diagram (usually, 1)

@@ -82,7 +82,7 @@ public class PlantUmlTestUtils {
 
 		public ExportDiagram stream(OutputStream os, FileFormat fileFormat) throws IOException {
 			final FileFormatOption fileFormatOption = new FileFormatOption(fileFormat, metadata);
-			diagram.exportDiagram(os, 0, fileFormatOption);
+			diagram.exportDiagram01970(os, 0, fileFormatOption);
 			return this;
 		}
 

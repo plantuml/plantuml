@@ -111,7 +111,7 @@ public class PSystemUtils {
 			final OutputStream fos = f.createBufferedOutputStream();
 			ImageData cmap = null;
 			try {
-				system.exportDiagram(fos, i, fileFormat);
+				system.exportDiagram01970(fos, i, fileFormat);
 			} finally {
 				fos.close();
 			}
@@ -152,7 +152,7 @@ public class PSystemUtils {
 			final OutputStream fos = f.createBufferedOutputStream();
 			ImageData cmap = null;
 			try {
-				cmap = system.exportDiagram(fos, i, fileFormat);
+				cmap = system.exportDiagram01970(fos, i, fileFormat);
 			} finally {
 				fos.close();
 			}
@@ -207,7 +207,7 @@ public class PSystemUtils {
 		final ImageData imageData;
 
 		try (OutputStream os = outputFile.createBufferedOutputStream()) {
-			imageData = system.exportDiagram(os, 0, fileFormatOption);
+			imageData = system.exportDiagram01970(os, 0, fileFormatOption);
 		}
 
 		if (imageData == null)

@@ -104,7 +104,7 @@ public abstract class DiagramUtils {
 			public PortableImage asImage() throws IOException {
 				try (final ByteArrayOutputStream os = new ByteArrayOutputStream()) {
 					final FileFormatOption fileFormatOption = new FileFormatOption(FileFormat.PNG);
-					final ImageData imageData = diagram.exportDiagram(os, 0, fileFormatOption);
+					final ImageData imageData = diagram.exportDiagram01970(os, 0, fileFormatOption);
 					return SImageIO.read(os.toByteArray());
 				}
 			}
@@ -113,7 +113,7 @@ public abstract class DiagramUtils {
 			public Throwable getRootCause() {
 				try (final ByteArrayOutputStream os = new ByteArrayOutputStream()) {
 					final FileFormatOption fileFormatOption = new FileFormatOption(FileFormat.PNG);
-					final ImageData imageData = diagram.exportDiagram(os, 0, fileFormatOption);
+					final ImageData imageData = diagram.exportDiagram01970(os, 0, fileFormatOption);
 					return imageData.getRootCause();
 				} catch (IOException e) {
 					e.printStackTrace();
