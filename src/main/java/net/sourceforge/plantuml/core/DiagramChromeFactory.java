@@ -170,7 +170,8 @@ public final class DiagramChromeFactory {
 	private static class WarningBannerBlock implements TextBlock {
 
 		private static final double HORIZONTAL_PADDING = 10;
-		private static final double VERTICAL_PADDING = 5;
+		private static final double VERTICAL_PADDING_TOP = 15;
+		private static final double VERTICAL_PADDING_BOTTOM = 10;
 		private static final double LINE_SPACING = 10;
 		private static final double CORNER_RADIUS = 5;
 
@@ -192,7 +193,7 @@ public final class DiagramChromeFactory {
 			final URectangle rect = URectangle.build(dim.getWidth(), dim.getHeight()).rounded(CORNER_RADIUS);
 			ug.apply(back.bg()).apply(border).apply(UStroke.withThickness(3)).draw(rect);
 
-			UGraphic ugText = ug.apply(HColors.BLACK).apply(new UTranslate(HORIZONTAL_PADDING, VERTICAL_PADDING));
+			UGraphic ugText = ug.apply(HColors.BLACK).apply(new UTranslate(HORIZONTAL_PADDING, VERTICAL_PADDING_TOP));
 			for (Warning w : warnings) {
 				for (String s : w.getMessage()) {
 					final UText text = UText.build(s, WARNING_FC);
@@ -220,7 +221,7 @@ public final class DiagramChromeFactory {
 			if (!warnings.isEmpty())
 				height -= LINE_SPACING;
 
-			return new XDimension2D(width + 2 * HORIZONTAL_PADDING, height + 2 * VERTICAL_PADDING);
+			return new XDimension2D(width + 2 * HORIZONTAL_PADDING, height + VERTICAL_PADDING_TOP + VERTICAL_PADDING_BOTTOM);
 		}
 
 		@Override
