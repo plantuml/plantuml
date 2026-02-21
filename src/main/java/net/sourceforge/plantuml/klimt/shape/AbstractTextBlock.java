@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 
 public abstract class AbstractTextBlock implements TextBlock {
-    // ::remove file when __HAXE__
 
 	@Override
 	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {

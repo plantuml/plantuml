@@ -156,7 +156,7 @@ public class TextBlockUtils {
 	}
 
 	public static TextBlock addBackcolor(final TextBlock text, final HColor backColor) {
-		return new TextBlock() {
+		return new AbstractTextBlock() {
 			public void drawU(UGraphic ug) {
 				text.drawU(ug);
 			}
