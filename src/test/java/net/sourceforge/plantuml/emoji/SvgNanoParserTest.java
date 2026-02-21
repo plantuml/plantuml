@@ -11,8 +11,8 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
+import net.sourceforge.plantuml.klimt.awt.XColor;
 
 /**
  * Unit tests for SvgSaxParser focusing on public drawU behaviour.
@@ -36,8 +36,8 @@ public class SvgNanoParserTest {
         // Create a mock UGraphic that returns itself for chained apply(...) calls
         UGraphic ug = mock(UGraphic.class, org.mockito.Mockito.RETURNS_SELF);
 
-        HColorSimple fontColor = HColorSimple.create(java.awt.Color.BLACK);
-        HColorSimple forcedColor = HColorSimple.create(java.awt.Color.RED);
+        HColorSimple fontColor = HColorSimple.create(XColor.BLACK);
+        HColorSimple forcedColor = HColorSimple.create(XColor.RED);
 
         // call public drawU - using scale=1 and null colors (parser resolves defaults)
         parser.drawU(ug, 1.0, fontColor, forcedColor);

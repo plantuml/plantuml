@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -19,6 +18,7 @@ import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import test.utils.PlantUmlTestUtils;
 
 /**
@@ -111,7 +111,7 @@ public class SvgSpriteImageGenerationTest {
         
         // Verify PNG can be loaded as BufferedImage
         try {
-            BufferedImage pngImage = exporter.asImage(FileFormat.PNG);
+            PortableImage pngImage = exporter.asImage(FileFormat.PNG);
             assertNotNull(pngImage, "PNG image should be loadable");
             assertTrue(pngImage.getWidth() > 0, "PNG image should have width");
             assertTrue(pngImage.getHeight() > 0, "PNG image should have height");

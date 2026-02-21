@@ -31,6 +31,7 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontStyle;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
@@ -557,6 +558,7 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
             String fontStyle = attrs.getValue("font-style");
             String textDecoration = attrs.getValue("text-decoration");
             String fillString = attrs.getValue("fill");
+            String textAnchor = attrs.getValue("text-anchor");
             String xLocation = attrs.getValue("x");
             String yLocation = attrs.getValue("y");
 
@@ -569,7 +571,7 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
                 fontFamily = "SansSerif";
             }
 
-            UFont font = UFont.build(fontFamily, awtFontStyle, fontSizeValue);
+            UFont font = UFontFactory.build(fontFamily, awtFontStyle, fontSizeValue);
 
             HColor textColor = elementUgs.getDefaultColor();
             if (fillString != null && !fillString.isEmpty() && !"none".equals(fillString)) {
@@ -584,10 +586,19 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 
             UText utext = UText.build(textContent, fontConfig);
 
-            UTranslate textTranslate = new UTranslate(
-                xLocation != null && !xLocation.isEmpty() ? Double.parseDouble(xLocation) : 0,
-                yLocation != null && !yLocation.isEmpty() ? Double.parseDouble(yLocation) : 0
-            );
+            double x = xLocation != null && !xLocation.isEmpty() ? Double.parseDouble(xLocation) : 0;
+            double y = yLocation != null && !yLocation.isEmpty() ? Double.parseDouble(yLocation) : 0;
+            double anchorShift = 0;
+            if (textAnchor != null && textAnchor.isEmpty() == false) {
+                double textWidth = utext.calculateDimension(elementUgs.getUg().getStringBounder()).getWidth();
+                if ("middle".equalsIgnoreCase(textAnchor)) {
+                    anchorShift = -textWidth / 2.0;
+                } else if ("end".equalsIgnoreCase(textAnchor)) {
+                    anchorShift = -textWidth;
+                }
+            }
+
+            UTranslate textTranslate = new UTranslate(x + anchorShift, y);
             elementUgs.apply(textTranslate).draw(utext);
         }
 
