@@ -53,11 +53,18 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 @ApiStable
 public interface Diagram {
 
+	// Methods ending with 01970 are deprecated and will be removed after this refactoring
 	public ImageData exportDiagram01970(OutputStream os, int num, FileFormatOption fileFormat) throws IOException;
 
 	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormat);
 
-	public default TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
+	// Methods ending with 12026 are the new methods
+	public default TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+		/*
+		 * This method should draw image number "num" of the diagram, but without
+		 * titles, header, footer, legend, caption, or mainframe, which will be added
+		 * by another class on top of this TextBlock
+		 */
 		throw new UnsupportedOperationException("wip");
 	}
 

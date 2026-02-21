@@ -88,6 +88,11 @@ public class MindMapDiagram extends UmlDiagram {
 	}
 
 	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+		return getTextMainBlock(fileFormatOption);
+	}
+
+	@Override
 	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
 		return new TextBlock() {
 
