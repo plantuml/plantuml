@@ -99,7 +99,6 @@ public interface Diagram {
 
 	public Display getTitleDisplay();
 	
-	
 	public InstallationRequirement getInstallationRequirement();
 
 }
