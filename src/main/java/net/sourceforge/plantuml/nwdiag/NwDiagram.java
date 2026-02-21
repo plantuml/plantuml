@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.jaws.Jaws;
@@ -80,6 +81,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.warning.Warning;
 
 public class NwDiagram extends UmlDiagram {
 
@@ -101,6 +103,14 @@ public class NwDiagram extends UmlDiagram {
 
 	public void init() {
 		initDone = true;
+	}
+
+	@Override
+	public String checkFinalError() {
+		if (getSource().getDiagramType() == DiagramType.UML)
+			addWarning(new Warning("This syntax is deprecated, you must used '@startnwdiag'"));
+
+		return super.checkFinalError();
 	}
 
 	private Network currentNetwork() {
