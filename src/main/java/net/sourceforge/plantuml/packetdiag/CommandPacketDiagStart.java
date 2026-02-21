@@ -55,7 +55,7 @@ public class CommandPacketDiagStart extends SingleLineCommand2<PacketDiagram> {
 		return RegexConcat.build(CommandPacketDiagStart.class.getName(), RegexLeaf.start(), //
 						new RegexLeaf(1, "TYPE", "(packetdiag)?"), //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("\\{"), RegexLeaf.end()); //
+						new RegexLeaf("\\{?"), RegexLeaf.end()); //
 	}
 
 	@Override

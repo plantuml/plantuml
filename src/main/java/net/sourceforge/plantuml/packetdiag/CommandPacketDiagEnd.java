@@ -54,14 +54,13 @@ public class CommandPacketDiagEnd extends SingleLineCommand2<PacketDiagram> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandPacketDiagEnd.class.getName(), RegexLeaf.start(), //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("\\}"), //
+						new RegexLeaf("\\}?"), //
 						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
 
 	@Override
 	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-		system.build();
 		return CommandExecutionResult.ok();
 	}
 }
