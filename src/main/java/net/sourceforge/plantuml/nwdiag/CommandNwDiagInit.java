@@ -59,7 +59,6 @@ public class CommandNwDiagInit extends SingleLineCommand2<NwDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		diagram.init();
 		return CommandExecutionResult.ok();
 	}
 
