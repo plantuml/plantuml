@@ -52,14 +52,14 @@ public final class SvgSpriteParserFactory {
 		if ("sax".equals(parser))
 			return new SvgSaxParser(svg);
 
-		// Default parser: nano (backward-compatible, zero-dependency).
+		// Default parser: sax (preferred for gradients and SVG features).
 		return new SvgNanoParser(svg);
 	}
 
 	private static String getParserProperty() {
 		final String value = System.getProperty("plantuml.svg.parser");
 		if (value == null)
-			return "nano";
+			return "sax";
 
 		return value.trim().toLowerCase();
 	}

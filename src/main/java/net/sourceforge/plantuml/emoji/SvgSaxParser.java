@@ -414,79 +414,63 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
         // ---- Shape Handlers ----
 
         private void handleRect(Attributes attrs) {
-            ugs = applyStyleAndTransform(attrs, ugs);
+            UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);
 
             double x = getDoubleAttr(attrs, "x", 0);
             double y = getDoubleAttr(attrs, "y", 0);
             double width = getDoubleAttr(attrs, "width", 0);
             double height = getDoubleAttr(attrs, "height", 0);
 
-            double scalex = ugs.getAffineTransform().getScaleX();
-            double scaley = ugs.getAffineTransform().getScaleY();
-            double deltax = ugs.getAffineTransform().getTranslateX();
-            double deltay = ugs.getAffineTransform().getTranslateY();
+            net.sourceforge.plantuml.klimt.UPath path = net.sourceforge.plantuml.klimt.UPath.none();
+            path.moveTo(x, y);
+            path.lineTo(x + width, y);
+            path.lineTo(x + width, y + height);
+            path.lineTo(x, y + height);
+            path.lineTo(x, y);
 
-            UTranslate translate = new UTranslate(deltax + x * scalex, deltay + y * scaley);
-            ugs.apply(translate).draw(URectangle.build(width * scalex, height * scaley));
+            path = path.affine(elementUgs.getAffineTransform(), elementUgs.getAngle(), elementUgs.getInitialScale());
+            elementUgs.draw(path);
         }
 
         private void handleCircle(Attributes attrs) {
-            ugs = applyStyleAndTransform(attrs, ugs);
+            UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);
 
             double cx = getDoubleAttr(attrs, "cx", 0);
             double cy = getDoubleAttr(attrs, "cy", 0);
             double r = getDoubleAttr(attrs, "r", 0);
 
-            double scalex = ugs.getAffineTransform().getScaleX();
-            double scaley = ugs.getAffineTransform().getScaleY();
-            double deltax = ugs.getAffineTransform().getTranslateX();
-            double deltay = ugs.getAffineTransform().getTranslateY();
-
-            UTranslate translate = new UTranslate(
-                deltax + (cx - r) * scalex,
-                deltay + (cy - r) * scaley
-            );
-            ugs.apply(translate).draw(UEllipse.build(r * 2 * scalex, r * 2 * scaley));
+            net.sourceforge.plantuml.klimt.UPath path = buildEllipsePath(cx, cy, r, r);
+            path = path.affine(elementUgs.getAffineTransform(), elementUgs.getAngle(), elementUgs.getInitialScale());
+            elementUgs.draw(path);
         }
 
         private void handleEllipse(Attributes attrs) {
-            ugs = applyStyleAndTransform(attrs, ugs);
+            UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);
 
             double cx = getDoubleAttr(attrs, "cx", 0);
             double cy = getDoubleAttr(attrs, "cy", 0);
             double rx = getDoubleAttr(attrs, "rx", 0);
             double ry = getDoubleAttr(attrs, "ry", 0);
 
-            double scalex = ugs.getAffineTransform().getScaleX();
-            double scaley = ugs.getAffineTransform().getScaleY();
-            double deltax = ugs.getAffineTransform().getTranslateX();
-            double deltay = ugs.getAffineTransform().getTranslateY();
-
-            UTranslate translate = new UTranslate(
-                deltax + (cx - rx) * scalex,
-                deltay + (cy - ry) * scaley
-            );
-            ugs.apply(translate).draw(UEllipse.build(rx * 2 * scalex, ry * 2 * scaley));
+            net.sourceforge.plantuml.klimt.UPath path = buildEllipsePath(cx, cy, rx, ry);
+            path = path.affine(elementUgs.getAffineTransform(), elementUgs.getAngle(), elementUgs.getInitialScale());
+            elementUgs.draw(path);
         }
 
         private void handleLine(Attributes attrs) {
-            ugs = applyStyleAndTransform(attrs, ugs);
+            UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);
 
             double x1 = getDoubleAttr(attrs, "x1", 0);
             double y1 = getDoubleAttr(attrs, "y1", 0);
             double x2 = getDoubleAttr(attrs, "x2", 0);
             double y2 = getDoubleAttr(attrs, "y2", 0);
 
-            double scalex = ugs.getAffineTransform().getScaleX();
-            double scaley = ugs.getAffineTransform().getScaleY();
-            double deltax = ugs.getAffineTransform().getTranslateX();
-            double deltay = ugs.getAffineTransform().getTranslateY();
+            net.sourceforge.plantuml.klimt.UPath path = net.sourceforge.plantuml.klimt.UPath.none();
+            path.moveTo(x1, y1);
+            path.lineTo(x2, y2);
 
-            UTranslate translate = new UTranslate(deltax, deltay);
-            ugs.apply(translate).draw(ULine.create(
-                new XPoint2D(x1 * scalex, y1 * scaley),
-                new XPoint2D(x2 * scalex, y2 * scaley)
-            ));
+            path = path.affine(elementUgs.getAffineTransform(), elementUgs.getAngle(), elementUgs.getInitialScale());
+            elementUgs.draw(path);
         }
 
         private void handlePolyline(Attributes attrs) {
@@ -498,31 +482,30 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
         }
 
         private void handlePolyShape(Attributes attrs, boolean closed) {
-            ugs = applyStyleAndTransform(attrs, ugs);
+            final UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);
 
             String pointsStr = attrs.getValue("points");
             if (pointsStr == null || pointsStr.isEmpty()) {
                 return;
             }
 
-            double scalex = ugs.getAffineTransform().getScaleX();
-            double scaley = ugs.getAffineTransform().getScaleY();
-            double deltax = ugs.getAffineTransform().getTranslateX();
-            double deltay = ugs.getAffineTransform().getTranslateY();
-
             String[] pointPairs = pointsStr.trim().split("\\s+");
             net.sourceforge.plantuml.klimt.UPath path = 
                 new net.sourceforge.plantuml.klimt.UPath(closed ? "polygon" : "polyline", null);
             
             boolean first = true;
+            double firstX = 0;
+            double firstY = 0;
             for (String pair : pointPairs) {
                 String[] coords = pair.split(",");
                 if (coords.length == 2) {
                     try {
-                        double x = Double.parseDouble(coords[0].trim()) * scalex;
-                        double y = Double.parseDouble(coords[1].trim()) * scaley;
+                        double x = Double.parseDouble(coords[0].trim());
+                        double y = Double.parseDouble(coords[1].trim());
                         if (first) {
                             path.moveTo(x, y);
+                            firstX = x;
+                            firstY = y;
                             first = false;
                         } else {
                             path.lineTo(x, y);
@@ -536,23 +519,38 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
             if (closed) {
                 // NOTE: Keep polygons open to avoid SEG_CLOSE dependency in klimt.
                 // path.closePath();
+                if (first == false)
+                    path.lineTo(firstX, firstY);
             }
 
-            UTranslate translate = new UTranslate(deltax, deltay);
-            ugs.apply(translate).draw(path);
+            path = path.affine(elementUgs.getAffineTransform(), elementUgs.getAngle(), elementUgs.getInitialScale());
+            elementUgs.draw(path);
+        }
+
+        private net.sourceforge.plantuml.klimt.UPath buildEllipsePath(double cx, double cy, double rx, double ry) {
+            net.sourceforge.plantuml.klimt.UPath path = net.sourceforge.plantuml.klimt.UPath.none();
+            path.moveTo(0, ry);
+            path.arcTo(rx, ry, 0, 0, 1, rx, 0);
+            path.arcTo(rx, ry, 0, 0, 1, 2 * rx, ry);
+            path.arcTo(rx, ry, 0, 0, 1, rx, 2 * ry);
+            path.arcTo(rx, ry, 0, 0, 1, 0, ry);
+            path.lineTo(0, ry);
+
+            return path.translate(cx - rx, cy - ry);
         }
 
         private void handlePath(Attributes attrs) {
-            ugs = applyStyleAndTransform(attrs, ugs);
+            final UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);
 
             String pathData = attrs.getValue("d");
             if (pathData != null && !pathData.isEmpty()) {
                 SvgPath svgPath = new SvgPath(pathData, UTranslate.none());
-                svgPath.drawMe(ugs.getUg(), ugs.getAffineTransform());
+                svgPath.drawMe(elementUgs.getUg(), elementUgs.getAffineTransform());
             }
         }
 
         private void handleText(Attributes attrs, String content) {
+            final UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);
             String fontFamily = attrs.getValue("font-family");
             String fontSize = attrs.getValue("font-size");
             String fontWeight = attrs.getValue("font-weight");
@@ -573,9 +571,9 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 
             UFont font = UFont.build(fontFamily, awtFontStyle, fontSizeValue);
 
-            HColor textColor = ugs.getDefaultColor();
+            HColor textColor = elementUgs.getDefaultColor();
             if (fillString != null && !fillString.isEmpty() && !"none".equals(fillString)) {
-                HColor fc = ugs.getTrueColor(fillString);
+                HColor fc = elementUgs.getTrueColor(fillString);
                 if (fc != null) {
                     textColor = fc;
                 }
@@ -590,7 +588,7 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
                 xLocation != null && !xLocation.isEmpty() ? Double.parseDouble(xLocation) : 0,
                 yLocation != null && !yLocation.isEmpty() ? Double.parseDouble(yLocation) : 0
             );
-            ugs.apply(textTranslate).draw(utext);
+            elementUgs.apply(textTranslate).draw(utext);
         }
 
         private void handleUse(Attributes attrs) {
@@ -613,13 +611,13 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
             double x = getDoubleAttr(attrs, "x", 0);
             double y = getDoubleAttr(attrs, "y", 0);
 
-            ugs = applyStyleAndTransform(attrs, ugs);
+            UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);
 
             if (x != 0 || y != 0) {
-                double scalex = ugs.getAffineTransform().getScaleX();
-                double scaley = ugs.getAffineTransform().getScaleY();
+                double scalex = elementUgs.getAffineTransform().getScaleX();
+                double scaley = elementUgs.getAffineTransform().getScaleY();
                 UTranslate translate = new UTranslate(x * scalex, y * scaley);
-                ugs = ugs.apply(translate);
+                elementUgs = elementUgs.apply(translate);
             }
 
             // Note: For full <use> support, would need to re-parse the referenced element
@@ -818,91 +816,68 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 
         // ---- Transform Parsing (Shared DOM/SAX helpers) ----
 
-        private static final Pattern P_TRANSLATE1 = Pattern.compile("translate\\(([-.0-9]+)[ ,]+([-.0-9]+)\\)");
-        private static final Pattern P_TRANSLATE2 = Pattern.compile("translate\\(([-.0-9]+)\\)");
-        private static final Pattern P_ROTATE = Pattern.compile("rotate\\(([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)\\)");
-        private static final Pattern P_SCALE1 = Pattern.compile("scale\\(([-.0-9]+)\\)");
-        private static final Pattern P_SCALE2 = Pattern.compile("scale\\(([-.0-9]+)[ ,]+([-.0-9]+)\\)");
-        private static final Pattern P_MATRIX = Pattern.compile(
-            "matrix\\(([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)\\)");
+        private static final Pattern P_TRANSFORM_OP = Pattern.compile("(translate|rotate|scale|matrix)\\s*\\(([^)]*)\\)");
 
         private UGraphicWithScale applyTransform(UGraphicWithScale ugs, String transform) {
             if (transform == null || transform.isEmpty()) {
                 return ugs;
             }
 
-            if (transform.contains("rotate(")) {
-                return applyRotate(ugs, transform);
+            Matcher matcher = P_TRANSFORM_OP.matcher(transform);
+            while (matcher.find()) {
+                String op = matcher.group(1);
+                double[] values = parseNumberList(matcher.group(2));
+
+                if ("translate".equals(op)) {
+                    double tx = values.length > 0 ? values[0] : 0;
+                    double ty = values.length > 1 ? values[1] : 0;
+                    ugs = ugs.applyTranslate(tx, ty);
+                } else if ("scale".equals(op)) {
+                    double sx = values.length > 0 ? values[0] : 1;
+                    double sy = values.length > 1 ? values[1] : sx;
+                    if (sx == sy) {
+                        ugs = ugs.applyScale(sx, sy);
+                    } else {
+                        ugs = ugs.applyMatrix(sx, 0, 0, sy, 0, 0);
+                    }
+                } else if ("rotate".equals(op)) {
+                    double angle = values.length > 0 ? values[0] : 0;
+                    double cx = values.length > 2 ? values[1] : 0;
+                    double cy = values.length > 2 ? values[2] : 0;
+                    ugs = ugs.applyRotate(angle, cx, cy);
+                } else if ("matrix".equals(op)) {
+                    if (values.length >= 6) {
+                        ugs = ugs.applyMatrix(values[0], values[1], values[2], values[3], values[4], values[5]);
+                    }
+                }
             }
 
-            if (transform.contains("matrix(")) {
-                return applyMatrix(ugs, transform);
-            }
-
-            double[] scale = getScale(transform);
-            UTranslate translate = getTranslate(transform);
-            ugs = ugs.applyTranslate(translate.getDx(), translate.getDy());
-
-            return ugs.applyScale(scale[0], scale[1]);
-        }
-
-        private UGraphicWithScale applyMatrix(UGraphicWithScale ugs, String transform) {
-            Matcher m = P_MATRIX.matcher(transform);
-            if (m.find()) {
-                double v1 = Double.parseDouble(m.group(1));
-                double v2 = Double.parseDouble(m.group(2));
-                double v3 = Double.parseDouble(m.group(3));
-                double v4 = Double.parseDouble(m.group(4));
-                double v5 = Double.parseDouble(m.group(5));
-                double v6 = Double.parseDouble(m.group(6));
-                ugs = ugs.applyMatrix(v1, v2, v3, v4, v5, v6);
-            }
             return ugs;
         }
 
-        private UGraphicWithScale applyRotate(UGraphicWithScale ugs, String transform) {
-            Matcher m = P_ROTATE.matcher(transform);
-            if (m.find()) {
-                double angle = Double.parseDouble(m.group(1));
-                double x = Double.parseDouble(m.group(2));
-                double y = Double.parseDouble(m.group(3));
-                ugs = ugs.applyRotate(angle, x, y);
+        private double[] parseNumberList(String raw) {
+            if (raw == null || raw.trim().isEmpty()) {
+                return new double[0];
             }
-            return ugs;
-        }
-
-        private UTranslate getTranslate(String transform) {
-            double x = 0;
-            double y = 0;
-
-            Matcher m1 = P_TRANSLATE1.matcher(transform);
-            if (m1.find()) {
-                x = Double.parseDouble(m1.group(1));
-                y = Double.parseDouble(m1.group(2));
-            } else {
-                Matcher m2 = P_TRANSLATE2.matcher(transform);
-                if (m2.find()) {
-                    x = Double.parseDouble(m2.group(1));
-                    y = x;
+            String[] parts = raw.trim().split("[,\\s]+");
+            double[] values = new double[parts.length];
+            int idx = 0;
+            for (String part : parts) {
+                if (part.isEmpty()) {
+                    continue;
+                }
+                try {
+                    values[idx++] = Double.parseDouble(part);
+                } catch (NumberFormatException e) {
+                    // ignore invalid numbers
                 }
             }
-            return new UTranslate(x, y);
-        }
-
-        private double[] getScale(String transform) {
-            double[] scale = new double[] { 1, 1 };
-            Matcher m1 = P_SCALE1.matcher(transform);
-            if (m1.find()) {
-                scale[0] = Double.parseDouble(m1.group(1));
-                scale[1] = scale[0];
-            } else {
-                Matcher m2 = P_SCALE2.matcher(transform);
-                if (m2.find()) {
-                    scale[0] = Double.parseDouble(m2.group(1));
-                    scale[1] = Double.parseDouble(m2.group(2));
-                }
+            if (idx == values.length) {
+                return values;
             }
-            return scale;
+            double[] trimmed = new double[idx];
+            System.arraycopy(values, 0, trimmed, 0, idx);
+            return trimmed;
         }
 
         // ---- Font/Text Helpers (Shared DOM/SAX helpers) ----

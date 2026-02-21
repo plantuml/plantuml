@@ -1,0 +1,10 @@
+@startuml
+sprite textsprite <svg viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg">
+  <!-- centered text sprite -->
+  <text x="0" y="20" text-anchor="middle" font-family="Verdana" font-size="14" fill="#FF0000">
+    Verdana 14
+  </text>
+</svg>
+
+Alice -> Bob : hello <$textsprite> there
+@enduml
