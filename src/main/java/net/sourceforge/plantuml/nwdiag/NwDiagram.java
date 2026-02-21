@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.jaws.Jaws;
@@ -80,10 +81,10 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.warning.Warning;
 
 public class NwDiagram extends UmlDiagram {
 
-	private boolean initDone;
 	private final Map<String, NServer> servers = new LinkedHashMap<>();
 	private final List<Network> networks = new ArrayList<>();
 	private final List<NwGroup> groups = new ArrayList<>();
@@ -99,8 +100,12 @@ public class NwDiagram extends UmlDiagram {
 		super(source, UmlDiagramType.NWDIAG, null, preprocessing);
 	}
 
-	public void init() {
-		initDone = true;
+	@Override
+	public String checkFinalError() {
+		if (getSource().getDiagramType() == DiagramType.UML)
+			addWarning(new Warning("This syntax is deprecated, you must used '@startnwdiag'"));
+
+		return super.checkFinalError();
 	}
 
 	private Network currentNetwork() {
@@ -129,9 +134,6 @@ public class NwDiagram extends UmlDiagram {
 	}
 
 	public CommandExecutionResult openGroup(String name) {
-		if (initDone == false)
-			return errorNoInit();
-
 		for (NStackable element : stack)
 			if (element instanceof NwGroup)
 				return CommandExecutionResult.error("Cannot nest group");
@@ -143,9 +145,6 @@ public class NwDiagram extends UmlDiagram {
 	}
 
 	public CommandExecutionResult openNetwork(String name) {
-		if (initDone == false)
-			return errorNoInit();
-
 		if (currentGroup() != null)
 			return CommandExecutionResult.error("Cannot open network in a group");
 
@@ -174,9 +173,6 @@ public class NwDiagram extends UmlDiagram {
 	}
 
 	public CommandExecutionResult closeSomething() {
-		if (initDone == false)
-			return errorNoInit();
-
 		if (stack.size() > 0)
 			stack.remove(0);
 
@@ -190,9 +186,6 @@ public class NwDiagram extends UmlDiagram {
 	}
 
 	public CommandExecutionResult link(String name1, String name2) {
-		if (initDone == false)
-			return errorNoInit();
-
 		NServer server1 = servers.get(name1);
 		if (server1 == null) {
 			if (networks.size() == 0)
@@ -251,9 +244,6 @@ public class NwDiagram extends UmlDiagram {
 	}
 
 	public CommandExecutionResult addElement(String name, String definition) {
-		if (initDone == false)
-			return errorNoInit();
-
 		final Map<String, String> props = toSet(definition);
 		NServer server = servers.get(name);
 		if (server == null) {
@@ -307,10 +297,6 @@ public class NwDiagram extends UmlDiagram {
 				return true;
 
 		return false;
-	}
-
-	private CommandExecutionResult errorNoInit() {
-		return CommandExecutionResult.error("Maybe you forget 'nwdiag {' in your diagram ?");
 	}
 
 	private static final Pattern p = Pattern.compile("\\s*(\\w+)\\s*=\\s*(\"([^\"]*)\"|[^\\s,]+)");
@@ -465,9 +451,6 @@ public class NwDiagram extends UmlDiagram {
 	}
 
 	public CommandExecutionResult setProperty(String property, String value) {
-		if (initDone == false)
-			return errorNoInit();
-
 		if ("address".equalsIgnoreCase(property) && currentNetwork() != null)
 			currentNetwork().setOwnAdress(value);
 

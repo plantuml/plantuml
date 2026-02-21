@@ -93,6 +93,7 @@ public class PSystemBuilder2 {
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
 		factories.add(new NwDiagramFactory(DiagramType.UML));
+		factories.add(new NwDiagramFactory(DiagramType.NW));
 		factories.add(new PSystemSudokuFactory());
 		factories.add(new PSystemCreoleFactory());
 		factories.add(new TimingDiagramFactory());

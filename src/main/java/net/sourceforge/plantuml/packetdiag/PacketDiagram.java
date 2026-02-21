@@ -174,6 +174,12 @@ public class PacketDiagram extends UmlDiagram {
 		return new DiagramDescription("Packet Diagram");
 	}
 
+	@Override
+	public String checkFinalError() {
+		build();
+		return super.checkFinalError();
+	}
+
 	boolean isUseDefaultScaleInterval() {
 		return useDefaultScaleInterval;
 	}
@@ -233,7 +239,7 @@ public class PacketDiagram extends UmlDiagram {
 						Optional.of(packetItems.get(packetItems.size() - 1).bitEnd);
 	}
 
-	public void build() {
+	private void build() {
 		if (isUseDefaultScaleInterval()) {
 			updateScaleInterval(getColWidth() / 2);
 		}

@@ -52,14 +52,13 @@ public class CommandNwDiagInit extends SingleLineCommand2<NwDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandNwDiagInit.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf(0, "TYPE", "nwdiag"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("\\{"), RegexLeaf.end());
+				new RegexLeaf(0, "TYPE", "(nwdiag)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\{?"), RegexLeaf.end());
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		diagram.init();
 		return CommandExecutionResult.ok();
 	}
 
