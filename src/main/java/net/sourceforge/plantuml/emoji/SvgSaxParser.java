@@ -21,8 +21,11 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import net.atmp.PixelImage;
+import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -37,12 +40,15 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.openiconic.SvgPath;
+import net.sourceforge.plantuml.security.SImageIO;
+import net.sourceforge.plantuml.utils.Base64Coder;
 
 import java.awt.Font;
 
@@ -55,9 +61,9 @@ import java.awt.Font;
  * <p><b>Feature Set (SVG 1.1 Core Subset):</b>
  * <ul>
  *   <li>Basic shapes: rect, circle, ellipse, line, polyline, polygon, path</li>
- *   <li>Text elements with font styling (family, size, weight, style, decoration)</li>
+ *   <li>Text elements with font styling (family, size, weight, style, decoration) and text-anchor alignment</li>
  *   <li>Transforms: translate, rotate, scale, matrix</li>
- *   <li>Gradients: linearGradient, radialGradient (first stop color)</li>
+ *   <li>Gradients: linearGradient (core renderer does not support radial gradients)</li>
  *   <li>Groups with style inheritance</li>
  *   <li>Definitions: defs, symbol, use references</li>
  * </ul>
@@ -66,7 +72,9 @@ import java.awt.Font;
  * <ul>
  *   <li>Feature-frozen at SVG 1.1 core subset</li>
  *   <li>No SVG 2.0 extensions (use a full DOM-based parser for full support)</li>
- *   <li>No embedded images, clipPath, mask, filter, pattern</li>
+ *   <li>Radial gradients are not supported (not in core PlantUML renderer)</li>
+ *   <li>Embedded raster images via data URIs only (PNG/JPEG); no external URLs or embedded SVG</li>
+ *   <li>No clipPath, mask, filter, pattern</li>
  *   <li>Text: no tspan, overline, or advanced layout</li>
  *   <li>CSS: No &lt;style&gt; blocks or class selectors (use inline attributes only)</li>
  * </ul>
@@ -344,6 +352,9 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
                     textContent = new StringBuilder();
                     textAttrs = new AttributesAdapter(attrs);
                     break;
+                case "image":
+                    handleImage(attrs);
+                    break;
                 case "use":
                     handleUse(attrs);
                     break;
@@ -552,12 +563,12 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 
         private void handleText(Attributes attrs, String content) {
             final UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);
-            String fontFamily = attrs.getValue("font-family");
-            String fontSize = attrs.getValue("font-size");
-            String fontWeight = attrs.getValue("font-weight");
-            String fontStyle = attrs.getValue("font-style");
-            String textDecoration = attrs.getValue("text-decoration");
-            String fillString = attrs.getValue("fill");
+            String fontFamily = getAttrOrStyle(attrs, "font-family", "font-family");
+            String fontSize = getAttrOrStyle(attrs, "font-size", "font-size");
+            String fontWeight = getAttrOrStyle(attrs, "font-weight", "font-weight");
+            String fontStyle = getAttrOrStyle(attrs, "font-style", "font-style");
+            String textDecoration = getAttrOrStyle(attrs, "text-decoration", "text-decoration");
+            String fillString = getAttrOrStyle(attrs, "fill", "fill");
             String textAnchor = attrs.getValue("text-anchor");
             String xLocation = attrs.getValue("x");
             String yLocation = attrs.getValue("y");
@@ -600,6 +611,142 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 
             UTranslate textTranslate = new UTranslate(x + anchorShift, y);
             elementUgs.apply(textTranslate).draw(utext);
+        }
+
+        private void handleImage(Attributes attrs) {
+            final String href = getHref(attrs);
+            if (href == null || href.isEmpty())
+                return;
+
+            final DataImage dataImage = decodeDataImage(href);
+            if (dataImage == null)
+                return;
+
+            final PortableImage image = dataImage.image;
+            if (image == null)
+                return;
+
+            final UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);
+            final double x = getDoubleAttr(attrs, "x", 0);
+            final double y = getDoubleAttr(attrs, "y", 0);
+
+            final String widthAttr = attrs.getValue("width");
+            final String heightAttr = attrs.getValue("height");
+            final double width = getDoubleAttr(attrs, "width", image.getWidth());
+            final double height = getDoubleAttr(attrs, "height", image.getHeight());
+
+            if (width <= 0 || height <= 0)
+                return;
+
+            final double scale = resolveImageScale(widthAttr, heightAttr, width, height, image.getWidth(), image.getHeight());
+            if (scale <= 0)
+                return;
+
+            if (elementUgs.getUg().matchesProperty("SVG")) {
+                final String svgImage = buildSvgImage(href, width, height);
+                final UImageSvg imageSvg = new UImageSvg(svgImage, 1.0);
+                elementUgs.apply(new UTranslate(x, y)).draw(imageSvg);
+                return;
+            }
+
+            UImage uimage = new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR));
+            if (scale != 1.0) {
+                final PortableImage scaled = uimage.getImage(scale);
+                uimage = new UImage(new PixelImage(scaled, AffineTransformType.TYPE_BILINEAR));
+            }
+
+            elementUgs.apply(new UTranslate(x, y)).draw(uimage);
+        }
+
+        private String getHref(Attributes attrs) {
+            String href = attrs.getValue("href");
+            if (href == null || href.isEmpty())
+                href = attrs.getValue("xlink:href");
+
+            return href;
+        }
+
+        private double resolveImageScale(String widthAttr, String heightAttr, double width, double height,
+                int imageWidth, int imageHeight) {
+            if (imageWidth <= 0 || imageHeight <= 0)
+                return 1.0;
+
+            final double scaleX = width / imageWidth;
+            final double scaleY = height / imageHeight;
+
+            if (widthAttr == null && heightAttr == null)
+                return 1.0;
+
+            if (Math.abs(scaleX - scaleY) < 0.0001)
+                return scaleX;
+
+            if (widthAttr != null)
+                return scaleX;
+
+            return scaleY;
+        }
+
+        private DataImage decodeDataImage(String href) {
+            final String lowerHref = href.toLowerCase();
+            if (lowerHref.startsWith("data:image/svg+xml;base64,")) {
+                LOG.fine("Skipping embedded SVG image data URI");
+                return null;
+            }
+
+            final String prefix = getDataImagePrefix(lowerHref);
+            if (prefix == null) {
+                LOG.fine("Skipping non-data image href");
+                return null;
+            }
+
+            final String data = href.substring(prefix.length());
+            final byte[] bytes;
+            try {
+                bytes = Base64Coder.decode(data);
+            } catch (IllegalArgumentException e) {
+                LOG.warning("Failed to decode embedded image: " + e.getMessage());
+                return null;
+            }
+
+            try {
+                final PortableImage image = SImageIO.read(bytes);
+                if (image == null)
+                    return null;
+
+                return new DataImage(image);
+            } catch (IOException e) {
+                LOG.warning("Failed to read embedded image: " + e.getMessage());
+                return null;
+            }
+        }
+
+        private String getDataImagePrefix(String lowerHref) {
+            if (lowerHref.startsWith("data:image/png;base64,"))
+                return "data:image/png;base64,";
+
+            if (lowerHref.startsWith("data:image/jpeg;base64,"))
+                return "data:image/jpeg;base64,";
+
+            if (lowerHref.startsWith("data:image/jpg;base64,"))
+                return "data:image/jpg;base64,";
+
+            return null;
+        }
+
+        private String buildSvgImage(String href, double width, double height) {
+            final String safeHref = href.replace("&", "&amp;").replace("\"", "&quot;");
+            return "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
+                    + "width=\"" + formatNumber(width) + "\" height=\"" + formatNumber(height) + "\">"
+                    + "<image x=\"0\" y=\"0\" width=\"" + formatNumber(width) + "\" height=\""
+                    + formatNumber(height) + "\" xlink:href=\"" + safeHref + "\"/>"
+                    + "</svg>";
+        }
+
+        private String formatNumber(double value) {
+            if (value == Math.rint(value))
+                return Long.toString(Math.round(value));
+
+            return Double.toString(value);
         }
 
         private void handleUse(Attributes attrs) {
@@ -769,9 +916,9 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
                 ugs = applyTransform(ugs, transform);
             }
 
-            String fill = attrs.getValue("fill");
-            String stroke = attrs.getValue("stroke");
-            String strokeWidth = attrs.getValue("stroke-width");
+            String fill = getAttrOrStyle(attrs, "fill", "fill");
+            String stroke = getAttrOrStyle(attrs, "stroke", "stroke");
+            String strokeWidth = getAttrOrStyle(attrs, "stroke-width", "stroke-width");
 
             if (strokeWidth != null && !strokeWidth.isEmpty()) {
                 try {
@@ -823,6 +970,32 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
             }
 
             return ugs;
+        }
+
+        private String getAttrOrStyle(Attributes attrs, String attrName, String styleKey) {
+            final String styleValue = getStyleValue(attrs, styleKey);
+            if (styleValue != null && styleValue.isEmpty() == false)
+                return styleValue;
+
+            return attrs.getValue(attrName);
+        }
+
+        private String getStyleValue(Attributes attrs, String key) {
+            final String style = attrs.getValue("style");
+            if (style == null || style.isEmpty())
+                return null;
+
+            final String[] parts = style.split(";");
+            for (String part : parts) {
+                final int idx = part.indexOf(':');
+                if (idx <= 0)
+                    continue;
+
+                final String name = part.substring(0, idx).trim();
+                if (name.equalsIgnoreCase(key))
+                    return part.substring(idx + 1).trim();
+            }
+            return null;
         }
 
         // ---- Transform Parsing (Shared DOM/SAX helpers) ----
@@ -976,6 +1149,14 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
             this.id = attrs.getValue("id");
             this.className = attrs.getValue("class");
             this.transform = attrs.getValue("transform");
+        }
+    }
+
+    private static class DataImage {
+        private final PortableImage image;
+
+        private DataImage(PortableImage image) {
+            this.image = image;
         }
     }
 
