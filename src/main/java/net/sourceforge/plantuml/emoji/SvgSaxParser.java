@@ -167,6 +167,10 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 
     /**
      * Pass 1: Collects SVG definitions (defs, symbols, gradients) by ID.
+     *
+     * <p>Stores the raw XML for referenced elements so <code>&lt;use&gt;</code>
+     * can re-parse them during render. Gradient stops and definition attributes
+     * are also captured for gradient resolution.</p>
      */
     private static class DefsCollector extends DefaultHandler {
         private final Map<String, BufferedElement> definitions = new HashMap<>();
@@ -234,7 +238,9 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
                 
                 if (currentId != null && currentTag != null && currentTag.equals(qName)) {
                     if (currentElement != null) {
-                        definitions.put(currentId, currentElement);
+                        final BufferedElement buffered = new BufferedElement(currentTag, currentContent.toString(), currentAttrs);
+                        buffered.stops.addAll(currentElement.stops);
+                        definitions.put(currentId, buffered);
                     }
                     currentId = null;
                     currentTag = null;
@@ -296,6 +302,12 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 
     /**
      * Pass 2: Renders SVG elements to UGraphic.
+     *
+     * <p>Consumes SAX events from the SVG stream and translates supported
+     * elements into PlantUML drawing primitives. Definition blocks are skipped
+     * during this pass and <code>&lt;use&gt;</code> references are resolved by
+     * re-parsing the buffered definition XML with the current transform and
+     * inherited styling applied.</p>
      */
     private static class RenderHandler extends DefaultHandler {
         private final UGraphicWithScale initialUgs;
@@ -304,6 +316,7 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
         private final Map<String, BufferedElement> definitions;
         private final Deque<GroupState> groupStack = new ArrayDeque<>();
         private final List<UGraphicWithScale> ugsStack = new ArrayList<>();
+        private int defsDepth = 0;
         
         private boolean inText = false;
         private StringBuilder textContent = new StringBuilder();
@@ -318,6 +331,13 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attrs) throws SAXException {
+            if ("defs".equals(qName)) {
+                defsDepth++;
+                return;
+            }
+            if (defsDepth > 0) {
+                return;
+            }
             LOG.fine("Starting element: " + qName + " with " + attrs.getLength() + " attributes");
             switch (qName) {
                 case "svg":
@@ -384,6 +404,13 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 
         @Override
         public void endElement(String uri, String localName, String qName) {
+            if ("defs".equals(qName) && defsDepth > 0) {
+                defsDepth--;
+                return;
+            }
+            if (defsDepth > 0) {
+                return;
+            }
             LOG.fine("Ending element: " + qName);
             if ("g".equals(qName)) {
                 handleGroupEnd();
@@ -768,6 +795,8 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
             // Apply positioning from <use> element
             double x = getDoubleAttr(attrs, "x", 0);
             double y = getDoubleAttr(attrs, "y", 0);
+            double width = getDoubleAttr(attrs, "width", -1);
+            double height = getDoubleAttr(attrs, "height", -1);
 
             UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);
 
@@ -778,9 +807,67 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
                 elementUgs = elementUgs.apply(translate);
             }
 
-            // Note: For full <use> support, would need to re-parse the referenced element
-            // This is a simplified implementation
-            LOG.fine("Processing use reference: " + refId);
+            renderUseReference(refId, referenced, elementUgs, width, height);
+        }
+
+        private void renderUseReference(String refId, BufferedElement referenced, UGraphicWithScale elementUgs,
+                double width, double height) {
+            if (referenced.xmlContent == null || referenced.xmlContent.isEmpty()) {
+                LOG.fine("Referenced element has no buffered content: " + refId);
+                return;
+            }
+
+            if ("symbol".equals(referenced.tagName)) {
+                elementUgs = applySymbolViewport(referenced, elementUgs, width, height);
+            }
+
+            final String wrapped = wrapSvgFragment(referenced.xmlContent);
+            parseSvgFragment(wrapped, elementUgs);
+        }
+
+        private UGraphicWithScale applySymbolViewport(BufferedElement referenced, UGraphicWithScale elementUgs,
+                double width, double height) {
+            final String viewBox = referenced.attributes.get("viewBox");
+            if (viewBox == null || viewBox.isEmpty()) {
+                return elementUgs;
+            }
+
+            final double[] values = parseNumberList(viewBox);
+            if (values.length < 4) {
+                return elementUgs;
+            }
+
+            final double minX = values[0];
+            final double minY = values[1];
+            final double vbWidth = values[2];
+            final double vbHeight = values[3];
+
+            if (vbWidth == 0 || vbHeight == 0) {
+                return elementUgs;
+            }
+
+            final double scaleX = width > 0 ? width / vbWidth : 1.0;
+            final double scaleY = height > 0 ? height / vbHeight : 1.0;
+
+            elementUgs = elementUgs.applyTranslate(-minX, -minY);
+            elementUgs = elementUgs.applyScale(scaleX, scaleY);
+            return elementUgs;
+        }
+
+        private String wrapSvgFragment(String fragment) {
+            return "<svg xmlns=\"http://www.w3.org/2000/svg\">" + fragment + "</svg>";
+        }
+
+        private void parseSvgFragment(String svgFragment, UGraphicWithScale elementUgs) {
+            try {
+                SAXParserFactory factory = SAXParserFactory.newInstance();
+                factory.setNamespaceAware(true);
+                SAXParser parser = factory.newSAXParser();
+                RenderHandler renderer = new RenderHandler(elementUgs, colorResolver, definitions);
+                parser.parse(new InputSource(new StringReader(svgFragment)), renderer);
+            } catch (Exception e) {
+                LOG.warning("Failed to parse <use> reference: " + e.getMessage());
+            }
         }
 
         // ---- Style and Transform Helpers ----
