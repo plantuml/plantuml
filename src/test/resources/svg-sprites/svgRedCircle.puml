@@ -1,0 +1,7 @@
+@startuml
+sprite redcircle <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="18" cy="18" r="10" fill="#FF0000" />
+</svg>
+
+Alice -> Bob : hello <$redcircle> there
+@enduml

@@ -36,7 +36,8 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.emoji.SvgNanoParser;
+import net.sourceforge.plantuml.emoji.ISvgSpriteParser;
+import net.sourceforge.plantuml.emoji.SvgSpriteParserFactory;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -64,8 +65,8 @@ public class CommandSpriteSvg extends SingleLineCommand2<TitledDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String svg = arg.get("SVG", 0);
-		final SvgNanoParser nanoParser = new SvgNanoParser(svg);
-		system.addSprite(arg.get("NAME", 0), nanoParser);
+		final ISvgSpriteParser parser = SvgSpriteParserFactory.create(svg);
+		system.addSprite(arg.get("NAME", 0), parser);
 
 		return CommandExecutionResult.ok();
 	}

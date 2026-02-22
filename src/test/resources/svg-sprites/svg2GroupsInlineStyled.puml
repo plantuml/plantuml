@@ -1,0 +1,29 @@
+@startuml
+' Alternative to svg2GroupsWithStyle.puml using inline attributes
+' This approach works with both SvgSaxParser (zero-dependency) and SvgDomParser (Batik)
+sprite inlineStyleSprite <svg viewBox="0 0 140 60" xmlns="http://www.w3.org/2000/svg">
+  
+  <!-- Group 1: shapes with inline fill attributes -->
+  <g transform="translate(8,8)">
+    <!-- Instead of CSS: g.grp1 { fill: #FF6666; } -->
+    <circle cx="16" cy="16" r="12" fill="#FF6666"/>
+    
+    <!-- Instead of CSS: text { font-family: Verdana; font-size: 12px; fill: #222; } -->
+    <text x="40" y="20" font-family="Verdana" font-size="12" fill="#222">G1</text>
+  </g>
+
+  <!-- Group 2: shapes with inline stroke attributes -->
+  <g transform="translate(8,36)">
+    <!-- Instead of CSS: g.grp2 .shape { stroke: #0066CC; stroke-width: 4; fill: none; } -->
+    <path d="M0 10 L48 10" stroke="#0066CC" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <ellipse cx="88" cy="6" rx="20" ry="8" stroke="#0066CC" stroke-width="4" fill="none"/>
+    
+    <text x="64" y="28" font-family="Verdana" font-size="12" fill="#222">G2</text>
+  </g>
+
+  <!-- Element with inline fill (instead of CSS: #accent { fill: #FFD700; }) -->
+  <circle cx="120" cy="30" r="6" fill="#FFD700"/>
+</svg>
+
+Alice -> Bob : hello <$inlineStyleSprite> there
+@enduml
