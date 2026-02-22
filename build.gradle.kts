@@ -435,7 +435,7 @@ tasks.register<JavaExec>("renderJdependPuml") {
     description = "Renders jdepend-report.puml with PlantUML"
     group = "documentation"
 
-    dependsOn("jdependHtml")
+    dependsOn("jdependHtml", tasks.classes)
 
     val pumlInput = layout.buildDirectory.file("reports/jdepend/jdepend-report.puml")
     inputs.file(pumlInput)
@@ -444,7 +444,7 @@ tasks.register<JavaExec>("renderJdependPuml") {
     outputs.dir(outDir)
 
     mainClass.set("net.sourceforge.plantuml.Run")
-    classpath = files(layout.buildDirectory.file("libs/plantuml.jar"))
+    classpath = sourceSets.main.get().runtimeClasspath
 
     args(
         "-tsvg",

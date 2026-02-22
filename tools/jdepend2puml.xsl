@@ -24,6 +24,7 @@
 <xsl:template match="JDepend">
 <Root-Element>
 @startuml
+!pragma layout smetana
 title
 Jdepend-graph of plantuml
 %version()
