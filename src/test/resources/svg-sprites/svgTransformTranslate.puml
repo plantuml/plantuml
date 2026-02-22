@@ -1,0 +1,13 @@
+@startuml
+'Test transform translate(x,y) - should shift circle 30 units right and 40 units down
+skinparam backgroundColor white
+sprite $translateTest <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <circle cx="10" cy="10" r="8" fill="blue" transform="translate(30, 40)"/>
+  <circle cx="10" cy="10" r="8" fill="red" fill-opacity="0.3"/>
+</svg>
+
+title Transform Translate Test
+:The blue circle (with translate) should appear at 40,50;
+:The red circle (without translate) should appear at 10,10;
+:<$translateTest>;
+@enduml

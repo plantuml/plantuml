@@ -1,0 +1,8 @@
+@startuml
+sprite redpolyline <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+  <!-- zig-zag polyline -->
+  <polyline points="0,20 20,5 40,20 60,5 80,20 100,5" stroke="#FF0000" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+Alice -> Bob : hello <$redpolyline> there
+@enduml

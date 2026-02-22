@@ -1,0 +1,16 @@
+@startuml
+'Test transform matrix(a,b,c,d,e,f) - should apply affine transformation
+'Matrix: scale 1.5, rotate ~26.57°, translate (10,5)
+'matrix(cos(26.57°)*1.5, sin(26.57°)*1.5, -sin(26.57°)*1.5, cos(26.57°)*1.5, 10, 5)
+skinparam backgroundColor white
+sprite $matrixTest <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <rect x="20" y="20" width="30" height="20" fill="blue" transform="matrix(1.34, 0.67, -0.67, 1.34, 10, 5)"/>
+  <rect x="20" y="20" width="30" height="20" fill="red" fill-opacity="0.3"/>
+</svg>
+
+title Transform Matrix Test
+:The blue rectangle has matrix transform (scale + rotate + translate);
+:The red rectangle is untransformed reference;
+:Matrix combines scaling, rotation, and translation;
+:<$matrixTest>;
+@enduml

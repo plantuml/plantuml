@@ -1,0 +1,18 @@
+@startuml
+sprite complexsprite <svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+  <!-- Group 1: circle + label -->
+  <g id="group1" transform="translate(8,8)">
+    <circle cx="16" cy="16" r="12" fill="#FF6666"/>
+    <text x="40" y="20" font-family="Verdana" font-size="12" fill="#333">G1</text>
+  </g>
+
+  <!-- Group 2: stroked path + sideways ellipse -->
+  <g id="group2" transform="translate(8,36)">
+    <path d="M0 10 L48 10" stroke="#0066CC" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <ellipse cx="88" cy="6" rx="20" ry="8" fill="#66CC66"/>
+    <text x="64" y="28" font-family="Verdana" font-size="10" fill="#000">G2</text>
+  </g>
+</svg>
+
+Alice -> Bob : hello <$complexsprite> there
+@enduml
