@@ -4,6 +4,25 @@ import java.util.jar.JarFile
 import java.util.Base64
 import java.util.Properties
 import org.gradle.api.tasks.Sync
+import org.objectweb.asm.ClassReader
+import org.objectweb.asm.ClassWriter
+import org.objectweb.asm.Opcodes
+import org.objectweb.asm.tree.AbstractInsnNode
+import org.objectweb.asm.tree.ClassNode
+import org.objectweb.asm.tree.FieldInsnNode
+import org.objectweb.asm.tree.InsnList
+import org.objectweb.asm.tree.InsnNode
+import org.objectweb.asm.tree.MethodNode
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.ow2.asm:asm:9.7.1")
+        classpath("org.ow2.asm:asm-tree:9.7.1")
+    }
+}
 
 println("Running build.gradle.kts")
 println(project.version)
@@ -736,6 +755,120 @@ tasks.named<JavaCompile>("compileTeavmJava") {
 	dependsOn(generateTeavmEmbeddedResources)
 }
 
+// Strip Java assertions from TeaVM .class files so TeaVM can DCE the dead code.
+// Use -PkeepTeavmAsserts to skip this step (for debugging).
+val stripTeavmAssertions by tasks.registering {
+    group = "teavm"
+    description = "Rewrites TeaVM .class files to disable Java 'assert' without touching sources."
+
+    val keepAsserts = project.hasProperty("keepTeavmAsserts")
+    onlyIf { !keepAsserts }
+
+    dependsOn(tasks.named("compileTeavmJava"))
+
+    doLast {
+        val classesDirs = sourceSets["teavm"].output.classesDirs.files
+        if (classesDirs.isEmpty()) {
+            println("[ASSERT] No teavm classesDirs found, nothing to patch.")
+            return@doLast
+        }
+
+        var patchedCount = 0
+        var touchedCount = 0
+
+        classesDirs.forEach { dir ->
+            if (!dir.exists()) return@forEach
+
+            dir.walkTopDown()
+                .filter { it.isFile && it.extension == "class" && it.name != "module-info.class" }
+                .forEach { classFile ->
+                    val original = classFile.readBytes()
+
+                    val cr = ClassReader(original)
+                    val cn = ClassNode()
+                    cr.accept(cn, 0)
+
+                    val ownerInternalName = cn.name
+
+                    // 1) Force $assertionsDisabled to be a constant true
+                    var hasAssertField = false
+                    cn.fields.forEach { f ->
+                        if (f.name == "\$assertionsDisabled" && f.desc == "Z") {
+                            hasAssertField = true
+                            f.access = f.access or Opcodes.ACC_STATIC or Opcodes.ACC_FINAL
+                            f.value = true
+                        }
+                    }
+
+                    if (!hasAssertField) {
+                        return@forEach
+                    }
+
+                    touchedCount++
+
+                    // 2) Neutralize $assertionsDisabled init in <clinit>
+                    val clinit: MethodNode? = cn.methods.firstOrNull { it.name == "<clinit>" && it.desc == "()V" }
+                    if (clinit != null) {
+                        val insns = clinit.instructions
+                        if (insns != null && insns.size() > 0) {
+
+                            var put: AbstractInsnNode? = insns.first
+                            while (put != null) {
+                                if (put is FieldInsnNode
+                                    && put.opcode == Opcodes.PUTSTATIC
+                                    && put.owner == ownerInternalName
+                                    && put.name == "\$assertionsDisabled"
+                                    && put.desc == "Z"
+                                ) {
+                                    break
+                                }
+                                put = put.next
+                            }
+
+                            if (put != null) {
+                                // Build a label map for safe cloning of instructions
+                                val labelMap = HashMap<org.objectweb.asm.tree.LabelNode, org.objectweb.asm.tree.LabelNode>()
+                                var scan: AbstractInsnNode? = insns.first
+                                while (scan != null) {
+                                    if (scan is org.objectweb.asm.tree.LabelNode) {
+                                        labelMap[scan] = org.objectweb.asm.tree.LabelNode()
+                                    }
+                                    scan = scan.next
+                                }
+
+                                val newList = InsnList()
+                                newList.add(InsnNode(Opcodes.ICONST_1))
+                                newList.add(put.clone(labelMap))
+
+                                var cur = put.next
+                                while (cur != null) {
+                                    newList.add(cur.clone(labelMap))
+                                    cur = cur.next
+                                }
+
+                                clinit.instructions = newList
+                            }
+                        }
+                    }
+
+                    // Use COMPUTE_MAXS only (not COMPUTE_FRAMES) to avoid
+                    // ClassWriter needing to resolve the full class hierarchy
+                    val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
+                    cn.accept(cw)
+                    val patched = cw.toByteArray()
+
+                    if (!patched.contentEquals(original)) {
+                        classFile.writeBytes(patched)
+                        patchedCount++
+                    }
+                }
+        }
+
+        println("[ASSERT] TeaVM assert patch done. touched=$touchedCount, patched=$patchedCount")
+        println("[ASSERT] Tip: use -PkeepTeavmAsserts to skip this step.")
+    }
+}
+
 // Task to minify JavaScript using Google Closure Compiler
 // With -Pfast, simply copies classes.js to classes.min.js (skips minification)
 if (fastBuild) {
@@ -822,9 +955,9 @@ tasks.register<JavaExec>("generateJavaScript") {
 	description = "Compiles Java to JavaScript using TeaVM"
 	group = "teavm"
 	
-	// 1) preprocess -> 2) compile the preprocessed sources -> 3) TeaVM
+	// 1) preprocess -> 2) compile the preprocessed sources -> 3) strip asserts -> 4) TeaVM
 	dependsOn(preprocessForTeaVM)
-	dependsOn(tasks.named("compileTeavmJava"))
+	dependsOn(stripTeavmAssertions)
 	
 	mainClass.set("org.teavm.cli.TeaVMRunner")
 	
