@@ -1,5 +1,6 @@
-package net.sourceforge.plantuml.emoji;
+package net.sourceforge.plantuml.svg.parser;
 
+import java.awt.Font;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayDeque;
@@ -22,12 +23,14 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import net.atmp.PixelImage;
+import net.sourceforge.plantuml.emoji.ColorResolver;
+import net.sourceforge.plantuml.emoji.GrayLevelRange;
+import net.sourceforge.plantuml.emoji.UGraphicWithScale;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -36,21 +39,15 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
-import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
-import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.openiconic.SvgPath;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.utils.Base64Coder;
-
-import java.awt.Font;
 
 /**
  * Zero-dependency SAX-based SVG parser using only Java SDK components.
