@@ -332,25 +332,36 @@ tasks.register<JavaExec>("jdepend") {
 abstract class JdependHtmlTask @Inject constructor(
     private val execOperations: ExecOperations
 ) : DefaultTask() {
-    
+
     @get:InputFiles
     abstract val classesDir: ConfigurableFileCollection
-    
+
     @get:InputFiles
     abstract val jdependClasspath: ConfigurableFileCollection
-    
-    @get:InputFile
-    abstract val xsltFile: RegularFileProperty
-    
-    @get:OutputFile
-    abstract val htmlReport: RegularFileProperty
-    
+
     @get:OutputFile
     abstract val xmlReport: RegularFileProperty
+
+    // XSLT -> HTML
+	@get:InputFile
+    abstract val xsltFile: RegularFileProperty
+
+	// output.html
+    @get:OutputFile
+    abstract val htmlReport: RegularFileProperty
+
+    // XSLT -> PUML
+    @get:InputFile
+    abstract val pumlXsltFile: RegularFileProperty
+
+    // output.puml
+    @get:OutputFile
+    abstract val pumlReport: RegularFileProperty
     
     @TaskAction
     fun generate() {
         htmlReport.get().asFile.parentFile.mkdirs()
+        pumlReport.get().asFile.parentFile.mkdirs()
         
         // Generate XML report (with stderr filtering for "Unknown constant:" warnings)
         val rawErr = ByteArrayOutputStream()
@@ -368,26 +379,42 @@ abstract class JdependHtmlTask @Inject constructor(
             logger.warn(filtered)
         }
         
-        // Convert XML to HTML using XSLT
+        // Convert XML to HTML + PUML using XSLT
         if (xmlReport.get().asFile.exists()) {
             val factory = javax.xml.transform.TransformerFactory.newInstance()
-            val transformer = factory.newTransformer(
-                javax.xml.transform.stream.StreamSource(xsltFile.get().asFile)
-            )
-            transformer.transform(
-                javax.xml.transform.stream.StreamSource(xmlReport.get().asFile),
-                javax.xml.transform.stream.StreamResult(htmlReport.get().asFile)
-            )
+
+            // XML -> HTML
+            run {
+                val transformer = factory.newTransformer(
+                    javax.xml.transform.stream.StreamSource(xsltFile.get().asFile)
+                )
+                transformer.transform(
+                    javax.xml.transform.stream.StreamSource(xmlReport.get().asFile),
+                    javax.xml.transform.stream.StreamResult(htmlReport.get().asFile)
+                )
+            }
+
+            // XML -> PUML
+            run {
+                val transformer = factory.newTransformer(
+                    javax.xml.transform.stream.StreamSource(pumlXsltFile.get().asFile)
+                )
+                transformer.transform(
+                    javax.xml.transform.stream.StreamSource(xmlReport.get().asFile),
+                    javax.xml.transform.stream.StreamResult(pumlReport.get().asFile)
+                )
+            }
             
             println("JDepend reports generated:")
+            println("  XML : ${xmlReport.get().asFile.absolutePath}")
             println("  HTML: ${htmlReport.get().asFile.absolutePath}")
-            println("  XML:  ${xmlReport.get().asFile.absolutePath}")
+            println("  PUML: ${pumlReport.get().asFile.absolutePath}")
         }
     }
 }
 
 tasks.register<JdependHtmlTask>("jdependHtml") {
-    description = "Generates JDepend HTML report"
+    description = "Generates JDepend HTML/PUML report"
     group = "documentation"
     
     dependsOn(tasks.classes)
@@ -395,11 +422,35 @@ tasks.register<JdependHtmlTask>("jdependHtml") {
     val outputDir = layout.buildDirectory.dir("reports/jdepend").get().asFile
     classesDir.from(sourceSets.main.get().output.classesDirs)
     jdependClasspath.from(jdependConfig)
+	xmlReport.set(file("$outputDir/jdepend-report.xml"))
+
     xsltFile.set(file("tools/jdepend-report.xsl"))
     htmlReport.set(file("$outputDir/jdepend-report.html"))
-    xmlReport.set(file("$outputDir/jdepend-report.xml"))
+    
+    pumlXsltFile.set(file("tools/jdepend2puml.xsl"))
+    pumlReport.set(file("$outputDir/jdepend-report.puml"))
 }
 
+tasks.register<JavaExec>("renderJdependPuml") {
+    description = "Renders jdepend-report.puml with PlantUML"
+    group = "documentation"
+
+    dependsOn("jdependHtml")
+
+    val pumlInput = layout.buildDirectory.file("reports/jdepend/jdepend-report.puml")
+    inputs.file(pumlInput)
+
+    val outDir = layout.buildDirectory.dir("reports/jdepend")
+    outputs.dir(outDir)
+
+    mainClass.set("net.sourceforge.plantuml.Run")
+    classpath = files(layout.buildDirectory.file("libs/plantuml.jar"))
+
+    args(
+        "-tsvg",
+        pumlInput.get().asFile.absolutePath
+    )
+}
 
 val pdfJar by tasks.registering(Jar::class) {
 	group = "build" // OR for example, "build"
@@ -443,7 +494,8 @@ tasks.register("siteAssemble") {
 		tasks.test,
 		tasks.jacocoTestReport,
 		"jdepend",
-		"jdependHtml"
+		"jdependHtml",
+		"renderJdependPuml"
 	)
 	
 	doLast {
