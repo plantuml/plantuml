@@ -119,13 +119,13 @@ abstract class Step1Abstract {
 <span class="fc" id="L119">		final NoteBox noteBox = new NoteBox(arrow.getStartingY(), noteComp, p, null, noteOnMessage.getPosition(),</span>
 <span class="fc" id="L120">				noteOnMessage.getUrl());</span>
 
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (arrow instanceof MessageSelfArrow) {</span>
-<span class="nc" id="L123">			boolean isReverseSelfArrow = ((MessageSelfArrow) arrow).isReverse();</span>
-<span class="nc bnc" id="L124" title="All 4 branches missed.">			if (!isReverseSelfArrow &amp;&amp; noteOnMessage.getPosition() == NotePosition.RIGHT) {</span>
-<span class="nc" id="L125">				noteBox.pushToRight(arrow.getPreferredWidth(stringBounder));</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (arrow instanceof MessageSelfArrow) {</span>
+<span class="fc" id="L123">			boolean isReverseSelfArrow = ((MessageSelfArrow) arrow).isReverse();</span>
+<span class="fc bfc" id="L124" title="All 4 branches covered.">			if (!isReverseSelfArrow &amp;&amp; noteOnMessage.getPosition() == NotePosition.RIGHT) {</span>
+<span class="fc" id="L125">				noteBox.pushToRight(arrow.getPreferredWidth(stringBounder));</span>
 			}
-<span class="nc bnc" id="L127" title="All 4 branches missed.">			if (isReverseSelfArrow &amp;&amp; noteOnMessage.getPosition() == NotePosition.LEFT) {</span>
-<span class="nc" id="L128">				noteBox.pushToRight(-arrow.getPreferredWidth(stringBounder));</span>
+<span class="fc bfc" id="L127" title="All 4 branches covered.">			if (isReverseSelfArrow &amp;&amp; noteOnMessage.getPosition() == NotePosition.LEFT) {</span>
+<span class="fc" id="L128">				noteBox.pushToRight(-arrow.getPreferredWidth(stringBounder));</span>
 			}
 		}
 		// if (arrow instanceof MessageExoArrow) {
