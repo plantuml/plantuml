@@ -57,19 +57,19 @@ public class LicenseInfo {
 	
 	public static synchronized LicenseInfo retrieveQuick() {
 		// ::revert when __CORE__
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (cache == null)</span>
-<span class="fc" id="L61">			cache = retrieveDistributor();</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (cache == null)</span>
+<span class="nc" id="L61">			cache = retrieveDistributor();</span>
 
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (cache == null)</span>
-<span class="fc" id="L64">			cache = retrieveNamedSlow();</span>
-<span class="fc" id="L65">		return cache;</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (cache == null)</span>
+<span class="nc" id="L64">			cache = retrieveNamedSlow();</span>
+<span class="nc" id="L65">		return cache;</span>
 		// return new LicenseInfo();
 		// ::done
 	}
 
 	public boolean isValid() {
 		// ::revert when __CORE__
-<span class="pc bpc" id="L72" title="3 of 4 branches missed.">		return owner != null &amp;&amp; System.currentTimeMillis() &lt;= this.expirationDate;</span>
+<span class="nc bnc" id="L72" title="All 4 branches missed.">		return owner != null &amp;&amp; System.currentTimeMillis() &lt;= this.expirationDate;</span>
 		// return false;
 		// ::done
 	}
@@ -77,8 +77,8 @@ public class LicenseInfo {
 	// ::comment when __CORE__
 	private static LicenseInfo cache;
 
-<span class="fc" id="L80">	private final static Preferences prefs = Preferences.userNodeForPackage(LicenseInfo.class);</span>
-<span class="fc" id="L81">	public final static LicenseInfo NONE = new LicenseInfo(LicenseType.NONE, 0, 0, null, null, null);</span>
+<span class="nc" id="L80">	private final static Preferences prefs = Preferences.userNodeForPackage(LicenseInfo.class);</span>
+<span class="nc" id="L81">	public final static LicenseInfo NONE = new LicenseInfo(LicenseType.NONE, 0, 0, null, null, null);</span>
 
 	private final LicenseType type;
 	private final long generationDate;
@@ -88,14 +88,14 @@ public class LicenseInfo {
 	private final byte[] sha;
 
 	public LicenseInfo(LicenseType type, long generationDate, long expirationDate, String owner, String context,
-<span class="fc" id="L91">			byte[] sha) {</span>
-<span class="fc" id="L92">		this.type = type;</span>
-<span class="fc" id="L93">		this.generationDate = generationDate;</span>
-<span class="fc" id="L94">		this.expirationDate = expirationDate;</span>
-<span class="fc" id="L95">		this.owner = owner;</span>
-<span class="fc" id="L96">		this.context = context;</span>
-<span class="fc" id="L97">		this.sha = sha;</span>
-<span class="fc" id="L98">	}</span>
+<span class="nc" id="L91">			byte[] sha) {</span>
+<span class="nc" id="L92">		this.type = type;</span>
+<span class="nc" id="L93">		this.generationDate = generationDate;</span>
+<span class="nc" id="L94">		this.expirationDate = expirationDate;</span>
+<span class="nc" id="L95">		this.owner = owner;</span>
+<span class="nc" id="L96">		this.context = context;</span>
+<span class="nc" id="L97">		this.sha = sha;</span>
+<span class="nc" id="L98">	}</span>
 
 	public static void persistMe(String key) throws BackingStoreException {
 <span class="nc" id="L101">		prefs.sync();</span>
@@ -103,24 +103,24 @@ public class LicenseInfo {
 <span class="nc" id="L103">	}</span>
 
 	public static boolean retrieveNamedOrDistributorQuickIsValid() {
-<span class="fc" id="L106">		return retrieveQuick().isValid();</span>
+<span class="nc" id="L106">		return retrieveQuick().isValid();</span>
 	}
 
 	public static synchronized LicenseInfo retrieveNamedSlow() {
-<span class="fc" id="L110">		cache = LicenseInfo.NONE;</span>
+<span class="nc" id="L110">		cache = LicenseInfo.NONE;</span>
 //		if (OptionFlags.ALLOW_INCLUDE == false)
 //			return cache;
 
-<span class="fc" id="L114">		final String key = prefs.get(&quot;license&quot;, &quot;&quot;);</span>
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (key.length() &gt; 0) {</span>
+<span class="nc" id="L114">		final String key = prefs.get(&quot;license&quot;, &quot;&quot;);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (key.length() &gt; 0) {</span>
 <span class="nc" id="L116">			cache = setIfValid(retrieveNamed(key), cache);</span>
 <span class="nc bnc" id="L117" title="All 2 branches missed.">			if (cache.isValid())</span>
 <span class="nc" id="L118">				return cache;</span>
 
 		}
-<span class="fc bfc" id="L121" title="All 2 branches covered.">		for (SFile f : fileCandidates()) {</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		for (SFile f : fileCandidates()) {</span>
 			try {
-<span class="pc bpc" id="L123" title="3 of 4 branches missed.">				if (f.exists() &amp;&amp; f.canRead()) {</span>
+<span class="nc bnc" id="L123" title="All 4 branches missed.">				if (f.exists() &amp;&amp; f.canRead()) {</span>
 <span class="nc" id="L124">					final LicenseInfo result = retrieve(f);</span>
 <span class="nc bnc" id="L125" title="All 2 branches missed.">					if (result == null)</span>
 <span class="nc" id="L126">						return null;</span>
@@ -133,9 +133,9 @@ public class LicenseInfo {
 <span class="nc" id="L133">			} catch (IOException e) {</span>
 <span class="nc" id="L134">				Log.info(() -&gt; &quot;Error &quot; + e);</span>
 				// Logme.error(e);
-<span class="fc" id="L136">			}</span>
-<span class="fc" id="L137">		}</span>
-<span class="fc" id="L138">		return cache;</span>
+<span class="nc" id="L136">			}</span>
+<span class="nc" id="L137">		}</span>
+<span class="nc" id="L138">		return cache;</span>
 	}
 
 	public static LicenseInfo retrieveNamed(final String key) {
@@ -177,9 +177,9 @@ public class LicenseInfo {
 	}
 
 	public static LicenseInfo retrieveDistributor() {
-<span class="fc" id="L180">		final InputStream dis = PSystemVersion.class.getResourceAsStream(&quot;/distributor.txt&quot;);</span>
-<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (dis == null)</span>
-<span class="fc" id="L182">			return null;</span>
+<span class="nc" id="L180">		final InputStream dis = PSystemVersion.class.getResourceAsStream(&quot;/distributor.txt&quot;);</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (dis == null)</span>
+<span class="nc" id="L182">			return null;</span>
 
 		try {
 <span class="nc" id="L185">			final BufferedReader br = new BufferedReader(new InputStreamReader(dis));</span>
@@ -200,21 +200,21 @@ public class LicenseInfo {
 	}
 
 	public static Collection&lt;SFile&gt; fileCandidates() {
-<span class="fc" id="L203">		final Set&lt;SFile&gt; result = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L204">		final String classpath = System.getProperty(&quot;java.class.path&quot;);</span>
-<span class="fc" id="L205">		String[] classpathEntries = classpath.split(SFile.pathSeparator);</span>
-<span class="fc bfc" id="L206" title="All 2 branches covered.">		for (String s : classpathEntries) {</span>
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">			if (s == null)</span>
+<span class="nc" id="L203">		final Set&lt;SFile&gt; result = new TreeSet&lt;&gt;();</span>
+<span class="nc" id="L204">		final String classpath = System.getProperty(&quot;java.class.path&quot;);</span>
+<span class="nc" id="L205">		String[] classpathEntries = classpath.split(SFile.pathSeparator);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		for (String s : classpathEntries) {</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">			if (s == null)</span>
 <span class="nc" id="L208">				continue;</span>
-<span class="fc" id="L209">			SFile dir = new SFile(s);</span>
-<span class="fc bfc" id="L210" title="All 2 branches covered.">			if (dir.isFile())</span>
-<span class="fc" id="L211">				dir = dir.getParentFile();</span>
+<span class="nc" id="L209">			SFile dir = new SFile(s);</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">			if (dir.isFile())</span>
+<span class="nc" id="L211">				dir = dir.getParentFile();</span>
 
-<span class="pc bpc" id="L213" title="2 of 4 branches missed.">			if (dir != null &amp;&amp; dir.isDirectory())</span>
-<span class="fc" id="L214">				result.add(dir.file(&quot;license.txt&quot;));</span>
+<span class="nc bnc" id="L213" title="All 4 branches missed.">			if (dir != null &amp;&amp; dir.isDirectory())</span>
+<span class="nc" id="L214">				result.add(dir.file(&quot;license.txt&quot;));</span>
 
 		}
-<span class="fc" id="L217">		return result;</span>
+<span class="nc" id="L217">		return result;</span>
 	}
 
 	private static LicenseInfo setIfValid(LicenseInfo value, LicenseInfo def) {
