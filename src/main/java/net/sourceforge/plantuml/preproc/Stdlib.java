@@ -55,11 +55,11 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 import net.sourceforge.plantuml.FileUtils;
-import net.sourceforge.plantuml.emoji.ISvgSpriteParser;
-import net.sourceforge.plantuml.emoji.SvgSpriteParserFactory;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.spm.SpmChannel;
+import net.sourceforge.plantuml.svg.parser.ISvgSpriteParser;
+import net.sourceforge.plantuml.svg.parser.SvgSpriteParserFactory;
 import net.sourceforge.plantuml.utils.Log;
 
 public class Stdlib {

@@ -54,8 +54,11 @@ import net.sourceforge.plantuml.emoji.data.Dummy;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.svg.parser.ISvgSpriteParser;
+import net.sourceforge.plantuml.svg.parser.SvgSpriteParserFactory;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
+
 
 // Emojji from https://twemoji.twitter.com/
 // Shorcut from https://api.github.com/emojis

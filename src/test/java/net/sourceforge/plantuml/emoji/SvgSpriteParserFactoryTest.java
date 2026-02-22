@@ -4,6 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import net.sourceforge.plantuml.svg.parser.ISvgSpriteParser;
+import net.sourceforge.plantuml.svg.parser.SvgNanoParser;
+import net.sourceforge.plantuml.svg.parser.SvgSaxParser;
+import net.sourceforge.plantuml.svg.parser.SvgSpriteParserFactory;
+
 public class SvgSpriteParserFactoryTest {
 
 	private static final String SAMPLE_SVG = "<svg xmlns=\"http://www.w3.org/2000/svg\"></svg>";

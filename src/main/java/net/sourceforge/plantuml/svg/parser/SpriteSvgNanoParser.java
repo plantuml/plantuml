@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.emoji;
+package net.sourceforge.plantuml.svg.parser;
 
 import java.util.Objects;
 

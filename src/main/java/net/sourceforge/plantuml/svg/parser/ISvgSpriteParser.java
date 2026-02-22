@@ -33,42 +33,14 @@
  *
  *
  */
-package net.sourceforge.plantuml.emoji;
+package net.sourceforge.plantuml.svg.parser;
 
-import java.util.Collections;
-import java.util.List;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.sprite.Sprite;
 
-public final class SvgSpriteParserFactory {
+public interface ISvgSpriteParser extends Sprite {
 
-	private SvgSpriteParserFactory() {
-	}
-
-	public static ISvgSpriteParser create(String svg) {
-		return create(Collections.singletonList(svg));
-	}
-
-	public static ISvgSpriteParser create(List<String> svg) {
-		final String parser = getParserProperty();
-		// ::uncomment when __TEAVM__
-		// /* TeaVM build does not include javax.xml.parsers; always use Nano parser. */
-		// return new SvgNanoParser(svg);
-		// ::done
-
-		// ::comment when __TEAVM__
-		if ("sax".equals(parser))
-			return new SvgSaxParser(svg);
-
-		// Default parser: sax (preferred for gradients and SVG features).
-		return new SvgNanoParser(svg);
-		// ::done
-	}
-
-	private static String getParserProperty() {
-		final String value = System.getProperty("plantuml.svg.parser");
-		if (value == null)
-			return "sax";
-
-		return value.trim().toLowerCase();
-	}
+	void drawU(UGraphic ug, double scale, HColor fontColor, HColor forcedColor);
 
 }
