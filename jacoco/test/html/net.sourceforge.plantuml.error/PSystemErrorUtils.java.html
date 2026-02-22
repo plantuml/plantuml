@@ -85,7 +85,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 	private static PSystemErrorV2 mergeV2(List&lt;PSystemErrorV2&gt; errorsV2) {
 <span class="fc" id="L86">		PSystemErrorV2 result = null;</span>
 <span class="fc bfc" id="L87" title="All 2 branches covered.">		for (PSystemErrorV2 err : errorsV2)</span>
-<span class="fc bfc" id="L88" title="All 4 branches covered.">			if (result == null || result.score() &lt; err.score())</span>
+<span class="pc bpc" id="L88" title="1 of 4 branches missed.">			if (result == null || result.score() &lt; err.score())</span>
 <span class="fc" id="L89">				result = err;</span>
 
 <span class="fc" id="L91">		return result;</span>

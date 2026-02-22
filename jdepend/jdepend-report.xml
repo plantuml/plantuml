@@ -13380,10 +13380,10 @@
                 <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>3</Ca>
-                <Ce>26</Ce>
+                <Ce>25</Ce>
                 <A>0</A>
-                <I>0.9</I>
-                <D>0.1</D>
+                <I>0.89</I>
+                <D>0.11</D>
                 <V>1</V>
             </Stats>
 
@@ -13458,7 +13458,6 @@
                 <Package>net.sourceforge.plantuml.skin</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.utils</Package>
-                <Package>net.sourceforge.plantuml.warning</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -21722,11 +21721,11 @@
                 <TotalClasses>3</TotalClasses>
                 <ConcreteClasses>2</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>10</Ca>
+                <Ca>9</Ca>
                 <Ce>2</Ce>
                 <A>0.33</A>
-                <I>0.17</I>
-                <D>0.5</D>
+                <I>0.18</I>
+                <D>0.48</D>
                 <V>1</V>
             </Stats>
 
@@ -21756,7 +21755,6 @@
                 <Package>net.sourceforge.plantuml.activitydiagram3.command</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>
-                <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.skin</Package>
                 <Package>net.sourceforge.plantuml.tim</Package>

@@ -151,7 +151,7 @@ public class SFile implements Comparable&lt;SFile&gt;, InputFile {
 	}
 
 	public boolean isFile() {
-<span class="nc bnc" id="L154" title="All 4 branches missed.">		return internal != null &amp;&amp; internal.isFile();</span>
+<span class="pc bpc" id="L154" title="1 of 4 branches missed.">		return internal != null &amp;&amp; internal.isFile();</span>
 	}
 
 	public long lastModified() {
@@ -159,7 +159,7 @@ public class SFile implements Comparable&lt;SFile&gt;, InputFile {
 	}
 
 	public int compareTo(SFile other) {
-<span class="nc" id="L162">		return this.internal.compareTo(other.internal);</span>
+<span class="fc" id="L162">		return this.internal.compareTo(other.internal);</span>
 	}
 
 	public long length() {

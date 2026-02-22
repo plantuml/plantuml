@@ -50,32 +50,33 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class NwDiagramFactory extends PSystemCommandFactory {
 
-	public NwDiagramFactory(DiagramType type) {
-<span class="fc" id="L54">		super(type);</span>
+	public NwDiagramFactory() {
+<span class="fc" id="L54">		super(DiagramType.NW);</span>
 <span class="fc" id="L55">	}</span>
 
 	@Override
-	public NwDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L59">		return new NwDiagram(source, preprocessing);</span>
+	public NwDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
+<span class="nc" id="L60">		return new NwDiagram(source, preprocessing);</span>
 	}
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="fc" id="L64">		CommonCommands.addCommonCommands1(cmds);</span>
-<span class="nc" id="L65">		cmds.add(new CommandNwDiagInit());</span>
-<span class="nc" id="L66">		cmds.add(new CommandComment());</span>
-<span class="nc" id="L67">		cmds.add(new CommandElement());</span>
-<span class="nc" id="L68">		cmds.add(new CommandGroup());</span>
-<span class="nc" id="L69">		cmds.add(new CommandNetwork());</span>
-<span class="nc" id="L70">		cmds.add(new CommandLink());</span>
-<span class="nc" id="L71">		cmds.add(new CommandProperty());</span>
-<span class="nc" id="L72">		cmds.add(new CommandEndSomething());</span>
-<span class="nc" id="L73">		cmds.add(new CommandFootboxIgnored());</span>
-<span class="nc" id="L74">	}</span>
+<span class="nc" id="L65">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="nc" id="L66">		cmds.add(new CommandNwDiagInit());</span>
+<span class="nc" id="L67">		cmds.add(new CommandComment());</span>
+<span class="nc" id="L68">		cmds.add(new CommandElement());</span>
+<span class="nc" id="L69">		cmds.add(new CommandGroup());</span>
+<span class="nc" id="L70">		cmds.add(new CommandNetwork());</span>
+<span class="nc" id="L71">		cmds.add(new CommandLink());</span>
+<span class="nc" id="L72">		cmds.add(new CommandProperty());</span>
+<span class="nc" id="L73">		cmds.add(new CommandEndSomething());</span>
+<span class="nc" id="L74">		cmds.add(new CommandFootboxIgnored());</span>
+<span class="nc" id="L75">	}</span>
 
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="fc" id="L78">		return UmlDiagramType.NWDIAG;</span>
+<span class="nc" id="L79">		return UmlDiagramType.NWDIAG;</span>
 	}
 
 }

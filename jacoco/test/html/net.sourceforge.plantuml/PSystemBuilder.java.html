@@ -166,13 +166,13 @@ import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 <span class="fc" id="L166">						return sys;</span>
 					}
 <span class="fc" id="L168">					errors.add((PSystemError) sys);</span>
-<span class="fc" id="L169">				} catch (Throwable t) {</span>
-<span class="fc" id="L170">					final StringLocated s = source.get(0);</span>
-<span class="fc" id="L171">					final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, &quot;Fatal crash error: &quot; + t, 0,</span>
-<span class="fc" id="L172">							s.getLocation(), null);</span>
-<span class="fc" id="L173">					errors.add(PSystemErrorUtils.buildV2(umlSource, err, Collections.&lt;String&gt;emptyList(), source,</span>
+<span class="nc" id="L169">				} catch (Throwable t) {</span>
+<span class="nc" id="L170">					final StringLocated s = source.get(0);</span>
+<span class="nc" id="L171">					final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, &quot;Fatal crash error: &quot; + t, 0,</span>
+<span class="nc" id="L172">							s.getLocation(), null);</span>
+<span class="nc" id="L173">					errors.add(PSystemErrorUtils.buildV2(umlSource, err, Collections.&lt;String&gt;emptyList(), source,</span>
 							preprocessing));
-<span class="fc" id="L175">					t.printStackTrace();</span>
+<span class="nc" id="L175">					t.printStackTrace();</span>
 <span class="fc" id="L176">				}</span>
 <span class="fc" id="L177">			}</span>
 <span class="pc bpc" id="L178" title="1 of 2 branches missed.">			if (errors.size() == 0)</span>
@@ -217,60 +217,59 @@ import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 <span class="fc" id="L217">		factories.add(new PSystemSaltFactory(DiagramType.SALT));</span>
 <span class="fc" id="L218">		factories.add(new PSystemDotFactory(DiagramType.DOT));</span>
 <span class="fc" id="L219">		factories.add(new PSystemDotFactory(DiagramType.UML));</span>
-<span class="fc" id="L220">		factories.add(new NwDiagramFactory(DiagramType.UML));</span>
-<span class="fc" id="L221">		factories.add(new NwDiagramFactory(DiagramType.NW));</span>
-<span class="fc" id="L222">		factories.add(new MindMapDiagramFactory());</span>
-<span class="fc" id="L223">		factories.add(new WBSDiagramFactory());</span>
-<span class="fc" id="L224">		factories.add(new ChartDiagramFactory());</span>
-<span class="fc" id="L225">		factories.add(new PacketDiagramFactory());</span>
+<span class="fc" id="L220">		factories.add(new NwDiagramFactory());</span>
+<span class="fc" id="L221">		factories.add(new MindMapDiagramFactory());</span>
+<span class="fc" id="L222">		factories.add(new WBSDiagramFactory());</span>
+<span class="fc" id="L223">		factories.add(new ChartDiagramFactory());</span>
+<span class="fc" id="L224">		factories.add(new PacketDiagramFactory());</span>
 
 		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
-<span class="fc" id="L228">		factories.add(new PSystemJcckitFactory());</span>
-<span class="fc" id="L229">		factories.add(new PSystemSudokuFactory());</span>
+<span class="fc" id="L227">		factories.add(new PSystemJcckitFactory());</span>
+<span class="fc" id="L228">		factories.add(new PSystemSudokuFactory());</span>
 		// ::done
 		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__
-<span class="fc" id="L232">		factories.add(new PSystemDitaaFactory());</span>
+<span class="fc" id="L231">		factories.add(new PSystemDitaaFactory());</span>
 		// ::done
 
-<span class="fc" id="L235">		factories.add(new PSystemDefinitionFactory());</span>
-<span class="fc" id="L236">		factories.add(new ListSpriteDiagramFactory());</span>
-<span class="fc" id="L237">		factories.add(new StdlibDiagramFactory());</span>
-<span class="fc" id="L238">		factories.add(new PSystemMathFactory(DiagramType.MATH));</span>
-<span class="fc" id="L239">		factories.add(new PSystemLatexFactory(DiagramType.LATEX));</span>
-<span class="fc" id="L240">		factories.add(new PSystemCreoleFactory());</span>
-<span class="fc" id="L241">		factories.add(new PSystemEggFactory());</span>
-<span class="fc" id="L242">		factories.add(new PSystemAppleTwoFactory());</span>
-<span class="fc" id="L243">		factories.add(new PSystemRIPFactory());</span>
-<span class="pc bpc" id="L244" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
-<span class="nc" id="L245">			factories.add(new PSystemPathFactory());</span>
-<span class="fc" id="L246">		factories.add(new PSystemOregonFactory());</span>
+<span class="fc" id="L234">		factories.add(new PSystemDefinitionFactory());</span>
+<span class="fc" id="L235">		factories.add(new ListSpriteDiagramFactory());</span>
+<span class="fc" id="L236">		factories.add(new StdlibDiagramFactory());</span>
+<span class="fc" id="L237">		factories.add(new PSystemMathFactory(DiagramType.MATH));</span>
+<span class="fc" id="L238">		factories.add(new PSystemLatexFactory(DiagramType.LATEX));</span>
+<span class="fc" id="L239">		factories.add(new PSystemCreoleFactory());</span>
+<span class="fc" id="L240">		factories.add(new PSystemEggFactory());</span>
+<span class="fc" id="L241">		factories.add(new PSystemAppleTwoFactory());</span>
+<span class="fc" id="L242">		factories.add(new PSystemRIPFactory());</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
+<span class="nc" id="L244">			factories.add(new PSystemPathFactory());</span>
+<span class="fc" id="L245">		factories.add(new PSystemOregonFactory());</span>
 
-<span class="fc" id="L248">		factories.add(new PSystemCharlieFactory());</span>
+<span class="fc" id="L247">		factories.add(new PSystemCharlieFactory());</span>
 
-<span class="fc" id="L250">		factories.add(new GanttDiagramFactory());</span>
-<span class="fc" id="L251">		factories.add(new ChronologyDiagramFactory());</span>
-<span class="fc" id="L252">		factories.add(new FlowDiagramFactory());</span>
-<span class="fc" id="L253">		factories.add(new PSystemDedicationFactory());</span>
-<span class="fc" id="L254">		factories.add(new TimingDiagramFactory());</span>
-<span class="fc" id="L255">		factories.add(new HelpFactory());</span>
-<span class="fc" id="L256">		factories.add(new WireDiagramFactory());</span>
-<span class="fc" id="L257">		factories.add(new JsonDiagramFactory());</span>
-<span class="fc" id="L258">		factories.add(new GitDiagramFactory());</span>
-<span class="fc" id="L259">		factories.add(new FilesDiagramFactory());</span>
-<span class="fc" id="L260">		factories.add(new BoardDiagramFactory());</span>
-<span class="fc" id="L261">		factories.add(new YamlDiagramFactory());</span>
-<span class="fc" id="L262">		factories.add(new HclDiagramFactory());</span>
-<span class="fc" id="L263">		factories.add(new PSystemEbnfFactory());</span>
-<span class="fc" id="L264">		factories.add(new PSystemRegexFactory());</span>
+<span class="fc" id="L249">		factories.add(new GanttDiagramFactory());</span>
+<span class="fc" id="L250">		factories.add(new ChronologyDiagramFactory());</span>
+<span class="fc" id="L251">		factories.add(new FlowDiagramFactory());</span>
+<span class="fc" id="L252">		factories.add(new PSystemDedicationFactory());</span>
+<span class="fc" id="L253">		factories.add(new TimingDiagramFactory());</span>
+<span class="fc" id="L254">		factories.add(new HelpFactory());</span>
+<span class="fc" id="L255">		factories.add(new WireDiagramFactory());</span>
+<span class="fc" id="L256">		factories.add(new JsonDiagramFactory());</span>
+<span class="fc" id="L257">		factories.add(new GitDiagramFactory());</span>
+<span class="fc" id="L258">		factories.add(new FilesDiagramFactory());</span>
+<span class="fc" id="L259">		factories.add(new BoardDiagramFactory());</span>
+<span class="fc" id="L260">		factories.add(new YamlDiagramFactory());</span>
+<span class="fc" id="L261">		factories.add(new HclDiagramFactory());</span>
+<span class="fc" id="L262">		factories.add(new PSystemEbnfFactory());</span>
+<span class="fc" id="L263">		factories.add(new PSystemRegexFactory());</span>
 
-<span class="fc" id="L266">		factories.add(new ChenEerDiagramFactory());</span>
-<span class="fc" id="L267">	}</span>
+<span class="fc" id="L265">		factories.add(new ChenEerDiagramFactory());</span>
+<span class="fc" id="L266">	}</span>
 
 	private boolean isOk(Diagram ps) {
-<span class="fc bfc" id="L270" title="All 4 branches covered.">		if (ps == null || ps instanceof PSystemError)</span>
-<span class="fc" id="L271">			return false;</span>
+<span class="fc bfc" id="L269" title="All 4 branches covered.">		if (ps == null || ps instanceof PSystemError)</span>
+<span class="fc" id="L270">			return false;</span>
 
-<span class="fc" id="L273">		return true;</span>
+<span class="fc" id="L272">		return true;</span>
 	}
 
 }
