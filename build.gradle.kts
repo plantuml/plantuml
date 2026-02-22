@@ -29,7 +29,7 @@ println(project.version)
 
 val javacRelease = (project.findProperty("javacRelease") ?: "8") as String
 
-// When -Pfast is set, skip expensive steps like JavaScript minification
+// When -Pfast is set, skip expensive steps (tests, javadoc, etc.)
 val fastBuild = project.hasProperty("fast")
 
 plugins {
@@ -75,8 +75,7 @@ val teavmCompileConfig by configurations.creating {
 	}
 }
 
-// Configuration for Google Closure Compiler
-val closureConfig by configurations.creating
+
 
 dependencies {
 	compileOnly(libs.ant)
@@ -110,7 +109,6 @@ dependencies {
 	teavmCompileConfig(libs.teavm.jso.apis)
 	teavmCompileConfig(libs.teavm.jso)
 
-	closureConfig(libs.closure.compiler)
 
     // Custom configuration for pdfJar task
     configurations.create("pdfJarDeps")
@@ -921,85 +919,19 @@ val stripTeavmAssertions by tasks.registering {
     }
 }
 
-// Task to minify JavaScript using Google Closure Compiler
-// With -Pfast, simply copies classes.js to classes.min.js (skips minification)
-if (fastBuild) {
-    tasks.register("minifyJavaScript") {
-        description = "Copies classes.js to classes.min.js (fast mode, no minification)"
-        group = "teavm"
 
-        dependsOn("generateJavaScript")
 
-        val inputFile = layout.buildDirectory.file("teavm/js/classes.js")
-        val outputFile = layout.buildDirectory.file("teavm/js/classes.min.js")
+// Display TeaVM CLI options (runs before generateJavaScript)
+tasks.register<JavaExec>("teavmHelp") {
+	description = "Displays TeaVM CLI available options"
+	group = "teavm"
 
-        inputs.file(inputFile)
-        outputs.file(outputFile)
+	mainClass.set("org.teavm.cli.TeaVMRunner")
+	classpath = teavmConfig
+	args("--help")
 
-        doFirst {
-            println("Fast mode: copying classes.js to classes.min.js (skipping minification)")
-        }
-
-        doLast {
-            val inF = inputFile.get().asFile
-            val outF = outputFile.get().asFile
-
-            if (!inF.exists()) {
-                throw GradleException("Input JS not found: ${inF.absolutePath}")
-            }
-
-            outF.parentFile.mkdirs()
-            inF.copyTo(outF, overwrite = true)
-
-            println("Fast copy done:")
-            println("  Input : ${inF.absolutePath} (${inF.length() / 1024} KB)")
-            println("  Output: ${outF.absolutePath} (${outF.length() / 1024} KB)")
-        }
-    }
-} else {
-	tasks.register<JavaExec>("minifyJavaScript") {
-		description = "Minifies classes.js using Google Closure Compiler"
-		group = "teavm"
-	
-		dependsOn("generateJavaScript")
-	
-		val inputFile = layout.buildDirectory.file("teavm/js/classes.js").get().asFile
-		val outputFile = layout.buildDirectory.file("teavm/js/classes.min.js").get().asFile
-	
-		inputs.file(inputFile)
-		outputs.file(outputFile)
-	
-		classpath = closureConfig
-		mainClass.set("com.google.javascript.jscomp.CommandLineRunner")
-		jvmArgs("-Xmx4g", "-XX:+UseParallelGC")
-	
-		args = listOf(
-			"--js", inputFile.absolutePath,
-			"--js_output_file", outputFile.absolutePath,
-			"--compilation_level", "SIMPLE",
-			"--language_out", "ECMASCRIPT_2015",
-			"--warning_level", "QUIET",
-			"--rewrite_polyfills", "false",
-			"--assume_function_wrapper", "true"
-		)
-	
-		doFirst {
-			println("Minifying JavaScript with Google Closure Compiler...")
-			println("Input:  ${inputFile.absolutePath}")
-			println("Output: ${outputFile.absolutePath}")
-		}
-	
-		doLast {
-			val originalSize = inputFile.length() / 1024
-			val minifiedSize = outputFile.length() / 1024
-			val ratio = if (originalSize > 0) (100 - (minifiedSize * 100 / originalSize)) else 0
-			println("")
-			println("Google Closure Compiler minification complete! 🗜")
-			println("  Original:  $originalSize KB")
-			println("  Minified:  $minifiedSize KB")
-			println("  Reduction: $ratio%")
-		}
-	}
+	// TeaVMRunner calls System.exit(0) after --help, which would fail the build
+	isIgnoreExitValue = true
 }
 
 // Task to compile Java to JavaScript using TeaVM
@@ -1008,6 +940,7 @@ tasks.register<JavaExec>("generateJavaScript") {
 	group = "teavm"
 	
 	// 1) preprocess -> 2) compile the preprocessed sources -> 3) strip asserts -> 4) TeaVM
+	dependsOn("teavmHelp")
 	dependsOn(preprocessForTeaVM)
 	dependsOn(stripTeavmAssertions)
 	
@@ -1021,6 +954,8 @@ tasks.register<JavaExec>("generateJavaScript") {
 	args(
 		"-d", outputDir.absolutePath,
 		"-t", "javascript",
+		"-m",  // Minify/obfuscate: shorter names, 2-3x smaller output
+		"-O", "2",  // Optimization: 1=NONE/debug, 2=BALANCED/recommended for JS, 3=AGGRESSIVE/for Wasm
 //		"-G",  // Generate source maps
 //		"-g",  // Generate debug information
 		"net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser"  // Main class as positional argument
@@ -1055,7 +990,7 @@ tasks.register("teavm") {
 	description = "Prepares TeaVM JS version with HTML file"
 	group = "teavm"
 	
-	dependsOn("minifyJavaScript")
+	dependsOn("generateJavaScript")
 	if (!fastBuild) {
 	    finalizedBy(tasks.named("teavmJavadoc"))
 	}
@@ -1125,7 +1060,6 @@ tasks.register<Zip>("teavmZip") {
 	// Use lazy evaluation to ensure files are read after teavm task completes
 	from(layout.buildDirectory.dir("teavm/js")) {
 		include("*.js", "*.html")
-		exclude("classes.js")
 	}
 	
 	destinationDirectory.set(layout.buildDirectory.dir("libs"))

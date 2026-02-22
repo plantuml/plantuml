@@ -7,7 +7,6 @@
 ant                 = "1.10.15"
 assertj             = "3.27.7"
 batik               = "1.19"
-closure-compiler    = "v20260217"
 elk                 = "0.10.0"
 fop                 = "2.11"
 glytching-junit-ext = "2.6.0"
@@ -29,7 +28,6 @@ teavm               = "0.13.0"
 ant                         = { module = "org.apache.ant:ant", version.ref = "ant" }
 assertj-core                = { module = "org.assertj:assertj-core", version.ref = "assertj" }
 batik-all                   = { module = "org.apache.xmlgraphics:batik-all", version.ref = "batik" }
-closure-compiler            = { module = "com.google.javascript:closure-compiler", version.ref = "closure-compiler" }
 elk-core                    = { module = "org.eclipse.elk:org.eclipse.elk.core", version.ref = "elk" }
 elk-alg-layered             = { module = "org.eclipse.elk:org.eclipse.elk.alg.layered", version.ref = "elk" }
 elk-alg-mrtree              = { module = "org.eclipse.elk:org.eclipse.elk.alg.mrtree", version.ref = "elk" }
