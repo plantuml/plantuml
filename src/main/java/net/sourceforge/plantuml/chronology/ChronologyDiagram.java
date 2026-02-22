@@ -196,9 +196,9 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 
 			@Override
 			public void drawU(UGraphic ug) {
-				timeHeader.drawTimeHeader(ug, 200);
-				drawTasksRect(ug);
-				drawTasksTitle(ug, 0, 0);
+//				timeHeader.drawTimeHeader(ug, 200);
+//				drawTasksRect(ug);
+//				drawTasksTitle(ug, 0, 0);
 			}
 		};
 
