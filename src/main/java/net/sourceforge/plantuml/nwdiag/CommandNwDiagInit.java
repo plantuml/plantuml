@@ -52,7 +52,7 @@ public class CommandNwDiagInit extends SingleLineCommand2<NwDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandNwDiagInit.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf(0, "TYPE", "(nwdiag)?"), //
+				new RegexLeaf(1, "TYPE", "(nwdiag)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{?"), RegexLeaf.end());
 	}

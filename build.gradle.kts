@@ -241,12 +241,14 @@ tasks.test {
 	}
 	useJUnitPlatform()
 	testLogging.showStandardStreams = true
+	jvmArgs("-ea")
 }
 
 tasks.register<Test>("runIntermediateTest") {
     description = "Runs the 'IntermediateTest'"
     group = "dev"
     useJUnitPlatform()
+    jvmArgs("-ea")
     filter {
         includeTestsMatching("IntermediateTest*")
     }

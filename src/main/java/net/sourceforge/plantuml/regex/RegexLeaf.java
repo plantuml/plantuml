@@ -66,10 +66,7 @@ public class RegexLeaf implements IRegex {
 		this.pattern = regex;
 		this.name = name;
 		this.count = count;
-		assert internalSlowCount() == count : name; // name + " internal=" + internalSlowCount() + " count=" + count
-//		if (internalSlowCount() != count) {
-//			Log.logStackTrace(name + " internal=" + internalSlowCount() + " count=" + count);
-//		}
+		assert internalSlowCount() == count : "Bad count number for " + name;
 	}
 
 	public static RegexLeaf spaceZeroOrMore() {

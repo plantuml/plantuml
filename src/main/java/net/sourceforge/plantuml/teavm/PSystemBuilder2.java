@@ -76,8 +76,8 @@ import net.sourceforge.plantuml.wbs.WBSDiagramFactory;
 import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 
 public class PSystemBuilder2 {
-	// ::remove file when __MIT__  __EPL__  __BSD__  __ASL__  __LGPL__  __GPLV2__
-	
+	// ::remove file when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
+
 	private final List<PSystemFactory> factories = new ArrayList<>();
 	private PSystemFactory lastFactory;
 
@@ -92,8 +92,7 @@ public class PSystemBuilder2 {
 		// factories.add(new PSystemDotFactory(DiagramType.UML));
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
-		factories.add(new NwDiagramFactory(DiagramType.UML));
-		factories.add(new NwDiagramFactory(DiagramType.NW));
+		factories.add(new NwDiagramFactory());
 		factories.add(new PSystemSudokuFactory());
 		factories.add(new PSystemCreoleFactory());
 		factories.add(new TimingDiagramFactory());
