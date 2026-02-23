@@ -53,54 +53,56 @@ import net.sourceforge.plantuml.syntax.LanguageDescriptor;
 import net.sourceforge.plantuml.version.CompilationInfo;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.PSystemVersion;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.version.Version;
 
 public class OptionPrint {
 
 	public static Collection<String> interestingProperties() {
-		// ::revert when __TEAVM__
-		// return Collections.emptyList();
-		final Properties p = System.getProperties();
-		final List<String> all;
-		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {
-			all = Arrays.asList("java.runtime.name", "Java Runtime", "java.vm.name", "JVM", "java.runtime.version",
-					"Java Version", "os.name", "Operating System", "os.version", "OS Version", "file.encoding",
-					"Default Encoding", "user.language", "Language", "user.country", "Country");
-		} else {
-			all = Arrays.asList("java.runtime.name", "Java Runtime", "java.vm.name", "JVM", "file.encoding",
-					"Default Encoding", "user.language", "Language", "user.country", "Country");
-		}
-		final List<String> result = new ArrayList<>();
-		for (int i = 0; i < all.size(); i += 2)
-			result.add(all.get(i + 1) + ": " + p.getProperty(all.get(i)));
+		if (TeaVM.isTeaVM())
+			return Collections.emptyList();
+		else {
+			final Properties p = System.getProperties();
+			final List<String> all;
+			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {
+				all = Arrays.asList("java.runtime.name", "Java Runtime", "java.vm.name", "JVM", "java.runtime.version",
+						"Java Version", "os.name", "Operating System", "os.version", "OS Version", "file.encoding",
+						"Default Encoding", "user.language", "Language", "user.country", "Country");
+			} else {
+				all = Arrays.asList("java.runtime.name", "Java Runtime", "java.vm.name", "JVM", "file.encoding",
+						"Default Encoding", "user.language", "Language", "user.country", "Country");
+			}
+			final List<String> result = new ArrayList<>();
+			for (int i = 0; i < all.size(); i += 2)
+				result.add(all.get(i + 1) + ": " + p.getProperty(all.get(i)));
 
-		return result;
-		// ::done
+			return result;
+		}
 	}
 
 	public static Collection<String> interestingValues() {
 		final List<String> strings = new ArrayList<>();
-		// ::comment when __CORE__ or __TEAVM__
-		strings.add(" ");
-		strings.add("PLANTUML_LIMIT_SIZE: " + GraphvizUtils.getenvImageLimit());
-		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {
-			strings.add("Processors: " + Runtime.getRuntime().availableProcessors());
-			final long freeMemory = Runtime.getRuntime().freeMemory();
-			final long maxMemory = Runtime.getRuntime().maxMemory();
-			final long totalMemory = Runtime.getRuntime().totalMemory();
-			final long usedMemory = totalMemory - freeMemory;
-			final int threadActiveCount = Thread.activeCount();
-			strings.add("Max Memory: " + format(maxMemory));
-			strings.add("Total Memory: " + format(totalMemory));
-			strings.add("Free Memory: " + format(freeMemory));
-			strings.add("Used Memory: " + format(usedMemory));
-			strings.add("Thread Active Count: " + threadActiveCount);
+		if (!TeaVM.isTeaVM()) {
+			strings.add(" ");
+			strings.add("PLANTUML_LIMIT_SIZE: " + GraphvizUtils.getenvImageLimit());
+			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {
+				strings.add("Processors: " + Runtime.getRuntime().availableProcessors());
+				final long freeMemory = Runtime.getRuntime().freeMemory();
+				final long maxMemory = Runtime.getRuntime().maxMemory();
+				final long totalMemory = Runtime.getRuntime().totalMemory();
+				final long usedMemory = totalMemory - freeMemory;
+				final int threadActiveCount = Thread.activeCount();
+				strings.add("Max Memory: " + format(maxMemory));
+				strings.add("Total Memory: " + format(totalMemory));
+				strings.add("Free Memory: " + format(freeMemory));
+				strings.add("Used Memory: " + format(usedMemory));
+				strings.add("Thread Active Count: " + threadActiveCount);
+			}
 		}
-		// ::done
 		return Collections.unmodifiableCollection(strings);
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 
 	static public void printCheckGraphviz() {
 		final ReportLog result = new ReportLog();

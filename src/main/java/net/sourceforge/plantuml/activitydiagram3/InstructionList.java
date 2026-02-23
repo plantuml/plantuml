@@ -108,7 +108,6 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		return CommandExecutionResult.ok();
 	}
 
-	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		if (all.size() == 0)
@@ -126,7 +125,6 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		}
 		return result;
 	}
-	// ::done
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {

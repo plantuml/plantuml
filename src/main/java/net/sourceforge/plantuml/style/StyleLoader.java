@@ -47,13 +47,13 @@ import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.style.parser.StyleParser;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
+import net.sourceforge.plantuml.teavm.EmbeddedResources;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
 import net.sourceforge.plantuml.utils.Log;
 
 public final class StyleLoader {
-	// ::remove file when __HAXE__
-
 	private static final ConcurrentMap<String, StyleBuilder> cache = new ConcurrentHashMap<>();
 
 	private StyleLoader() {
@@ -98,39 +98,36 @@ public final class StyleLoader {
 	}
 
 	public static InputStream getInputStreamForStyle(String filename) throws IOException {
-		InputStream is = null;
-		
-		// ::uncomment when __TEAVM__
-		// is = net.sourceforge.plantuml.teavm.EmbeddedResources.openPlantumlSkin();
-		// ::done
-		
 
-		// ::comment when __TEAVM__
-		SFile localFile = new SFile(filename);
-		Log.info(() -> "Trying to load style " + filename);
-		try {
-			if (localFile.exists() == false)
-				localFile = FileSystem.getInstance().getFile(filename);
-		} catch (IOException e) {
-			Log.info(() -> "Cannot open file. " + e);
-		}
-
-		final SFile localFile2 = localFile;
-		if (localFile.exists()) {
-			Log.info(() -> "File found : " + localFile2.getPrintablePath());
-			is = localFile.openFile();
+		if (TeaVM.isTeaVM()) {
+			return EmbeddedResources.openPlantumlSkin();
 		} else {
-			Log.info(() -> "File not found : " + localFile2.getPrintablePath());
-			final String res = "/skin/" + filename;
-			is = StyleLoader.class.getResourceAsStream(res);
-			if (is != null)
-				Log.info(() -> "... but " + filename + " found inside the .jar");
+			InputStream is = null;
 
+			SFile localFile = new SFile(filename);
+			Log.info(() -> "Trying to load style " + filename);
+			try {
+				if (localFile.exists() == false)
+					localFile = FileSystem.getInstance().getFile(filename);
+			} catch (IOException e) {
+				Log.info(() -> "Cannot open file. " + e);
+			}
+
+			final SFile localFile2 = localFile;
+			if (localFile.exists()) {
+				Log.info(() -> "File found : " + localFile2.getPrintablePath());
+				is = localFile.openFile();
+			} else {
+				Log.info(() -> "File not found : " + localFile2.getPrintablePath());
+				final String res = "/skin/" + filename;
+				is = StyleLoader.class.getResourceAsStream(res);
+				if (is != null)
+					Log.info(() -> "... but " + filename + " found inside the .jar");
+
+			}
+			return is;
 		}
-		// ::done
-		return is;
 	}
-
 
 	public static final int DELTA_PRIORITY_FOR_STEREOTYPE = 1000;
 

@@ -110,7 +110,6 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		return current.add(ins);
 	}
 
-	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		for (Branch branch : thens)
@@ -132,7 +131,6 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 			return new GtileIfAlone(swimlane, gtiles.get(0), branches.get(0));
 		return GtileIfHexagon.build(swimlane, gtiles, branches);
 	}
-	// ::done
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {

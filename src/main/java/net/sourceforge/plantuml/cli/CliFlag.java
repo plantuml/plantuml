@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.stats.StatsUtils;
 import net.sourceforge.plantuml.swing.ClipboardLoop;
 
 public enum CliFlag {
-	// ::remove file when __TEAVM__
+	
 
 	// General:
 

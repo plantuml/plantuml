@@ -146,7 +146,7 @@ public class ReportLog implements Iterable<String> {
 	}
 
 	public void addProperties() {
-		// ::comment when __CORE__ or __TEAVM__
+		// ::comment when __TEAVM__
 		addAll(OptionPrint.interestingProperties());
 		addAll(OptionPrint.interestingValues());
 		// ::done

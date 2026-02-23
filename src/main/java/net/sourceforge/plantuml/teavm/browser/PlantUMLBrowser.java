@@ -123,6 +123,7 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
  */
 public class PlantUMLBrowser {
 	// ::remove file when __MIT__  __EPL__  __BSD__  __ASL__  __LGPL__  __GPLV2__
+	// ::remove file when JAVA8
 
 	// =========================================================================
 	// Rendering configuration

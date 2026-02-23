@@ -47,11 +47,11 @@ import java.io.IOException;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.utils.Log;
 
 public class ClipboardLoop {
-	// ::remove file when __CORE__
 
 	public static void runLoop() {
 		final ClipboardLoop clipboardLoop = new ClipboardLoop();
@@ -75,7 +75,7 @@ public class ClipboardLoop {
 			if (clipboardLoop.isTextOk(text))
 				clipboardLoop.runText(text);
 			else
-				clipboardLoop.setClipboardImage(new PortableImage(10, 10, BufferedImage.TYPE_INT_ARGB));
+				clipboardLoop.setClipboardImage(PortableImageFactory.build(10, 10, BufferedImage.TYPE_INT_ARGB));
 		} catch (InterruptedException | IOException e) {
 			e.printStackTrace();
 		}

@@ -76,6 +76,7 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 
@@ -284,15 +285,15 @@ public class SequenceDiagram extends UmlDiagram {
 		// We reset the counter for messages
 		this.cpt.set(1);
 
-		final FileFormat fileFormat = fileFormatOption.getFileFormat();
-		// ::comment when __CORE__ or __TEAVM__
-		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT)
-			return new SequenceDiagramTxtMaker(this, fileFormat);
+		if (!TeaVM.isTeaVM()) {
+			final FileFormat fileFormat = fileFormatOption.getFileFormat();
+			if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT)
+				return new SequenceDiagramTxtMaker(this, fileFormat);
 
-		if (fileFormat.name().startsWith("XMI"))
-			return new SequenceDiagramXmiMaker(this, fileFormat);
-		// ::done
+			if (fileFormat.name().startsWith("XMI"))
+				return new SequenceDiagramXmiMaker(this, fileFormat);
 
+		}
 		if (modeTeoz())
 			return new SequenceDiagramFileMakerTeoz(this, skin2, fileFormatOption, index);
 

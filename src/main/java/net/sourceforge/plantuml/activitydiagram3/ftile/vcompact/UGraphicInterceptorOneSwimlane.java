@@ -73,7 +73,6 @@ public class UGraphicInterceptorOneSwimlane extends UGraphicDelegator {
 				tile.drawU(this);
 				// drawGoto();
 			}
-			// ::comment when __CORE__
 		} else if (shape instanceof Gtile) {
 			final Gtile tile = (Gtile) shape;
 			final Set<Swimlane> swimlanes = tile.getSwimlanes();
@@ -89,7 +88,7 @@ public class UGraphicInterceptorOneSwimlane extends UGraphicDelegator {
 
 			if (point0.match(swimlane) && point1.match(swimlane))
 				connection.drawU(this);
-			// ::done
+
 		} else if (shape instanceof Connection) {
 			final Connection connection = (Connection) shape;
 			final Ftile tile1 = connection.getFtile1();

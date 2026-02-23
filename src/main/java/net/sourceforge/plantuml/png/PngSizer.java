@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PngSizer {
-	// ::remove file when __TEAVM__
+	
 	static public BufferedImage process(BufferedImage im, int minsize) {
 
 		if (minsize != Integer.MAX_VALUE) {

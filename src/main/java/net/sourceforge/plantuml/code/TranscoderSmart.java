@@ -43,7 +43,7 @@ public class TranscoderSmart implements Transcoder {
 			new CompressionZlib());
 	private final Transcoder hexOnly = TranscoderImpl.utf8(new AsciiEncoderHex(), new ArobaseStringCompressor(),
 			new CompressionNone());
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	// Legacy encoder
 	private final Transcoder oldOne = TranscoderImpl.utf8(new AsciiEncoder(), new ArobaseStringCompressor(),
 			new CompressionHuffman());
@@ -60,7 +60,7 @@ public class TranscoderSmart implements Transcoder {
 		if (code.startsWith("~0"))
 			return zlib.decode(code.substring(2));
 
-		// ::comment when __CORE__ or __TEAVM__
+		// ::comment when __TEAVM__
 		if (code.startsWith("~1"))
 			return oldOne.decode(code.substring(2));
 
@@ -74,11 +74,11 @@ public class TranscoderSmart implements Transcoder {
 			return zip.decode(code.substring(5));
 		// ::done
 
-		// ::comment when __CORE__ or __TEAVM__
+		// ::comment when __TEAVM__
 		try {
 			// ::done
 			return zlib.decode(code);
-			// ::comment when __CORE__ or __TEAVM__
+			// ::comment when __TEAVM__
 		} catch (Exception ex) {
 			return oldOne.decode(code);
 		}

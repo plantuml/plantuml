@@ -49,9 +49,7 @@ import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.xmi.XmlDiagramTransformer;
 
 public final class CucaDiagramGraphmlMaker {
-    // ::remove folder when __HAXE__
-	// ::remove folder when __CORE__
-
+	
 	private final CucaDiagram diagram;
 
 	public CucaDiagramGraphmlMaker(CucaDiagram diagram) throws IOException {

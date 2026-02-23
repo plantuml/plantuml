@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 // This class doesnt feel like a wonderful idea, just a stepping stone towards something
 public abstract class PlainDiagram extends AbstractPSystem {
-	// ::remove file when __HAXE__
 
 	public PlainDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);

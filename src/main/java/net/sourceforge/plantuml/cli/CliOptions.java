@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
 
 public class CliOptions {
-	// ::remove file when __CORE__ or __TEAVM__
+	
 	// ::remove file when __HAXE__
 
 	private final List<String> config = new ArrayList<>();
@@ -90,7 +90,6 @@ public class CliOptions {
 		this.fileFormatOption = newFormat;
 	}
 
-	// ::comment when __CORE__
 	CliOptions(String... arg) throws InterruptedException, IOException, CliParsingException {
 		if (arg.length == 0)
 			GlobalConfig.getInstance().put(GlobalConfigKey.GUI, true);
@@ -167,7 +166,6 @@ public class CliOptions {
 			return false;
 		return picoweb.toLowerCase().contains("stop");
 	}
-	// ::done
 
 	private void addFileInConfig(File file) throws IOException, CliParsingException {
 		if (file.exists() && file.canRead()) {
@@ -230,7 +228,6 @@ public class CliOptions {
 		return Collections.emptyList();
 	}
 
-	// ::comment when __CORE__
 	public Defines getDefaultDefines(SFile f) {
 		final Defines result = Defines.createWithFileName(f);
 		for (Map.Entry<String, String> ent : defines().entrySet()) {
@@ -264,7 +261,6 @@ public class CliOptions {
 
 		return result;
 	}
-	// ::done
 
 
 	private Map<String, String> defines() {

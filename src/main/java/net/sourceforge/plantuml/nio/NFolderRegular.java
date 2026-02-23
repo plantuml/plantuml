@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class NFolderRegular implements NFolder {
-	// ::remove file when __TEAVM__
+	
 
 	private final Path dir;
 

@@ -287,12 +287,12 @@ jobs:
           name: js-plantuml-zip
           path: build/libs
 
-      - name: Extract JS files into build/teavm/js
+      - name: Extract JS files into build/generated/teavm/js
         run: |
-          mkdir -p build/teavm/js
-          unzip -o build/libs/js-plantuml-*.zip -d build/teavm/js
-          echo "Contents of build/teavm/js:"
-          ls -la build/teavm/js/
+          mkdir -p build/generated/teavm/js
+          unzip -o build/libs/js-plantuml-*.zip -d build/generated/teavm/js
+          echo "Contents of build/generated/teavm/js:"
+          ls -la build/generated/teavm/js/
 
       - name: Build Site for GH Page (without TeaVM rebuild)
         run: gradle siteAssemble

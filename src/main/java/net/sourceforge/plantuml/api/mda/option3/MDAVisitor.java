@@ -36,6 +36,4 @@
 package net.sourceforge.plantuml.api.mda.option3;
 
 public interface MDAVisitor {
-    // ::remove folder when __HAXE__
-	// ::remove folder when __CORE__
 }

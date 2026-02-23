@@ -53,9 +53,7 @@ public interface Instruction extends Swimable {
 
 	public Ftile createFtile(FtileFactory factory);
 
-	// ::comment when __CORE__
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder);
-	// ::done
 
 	public CommandExecutionResult add(Instruction other);
 

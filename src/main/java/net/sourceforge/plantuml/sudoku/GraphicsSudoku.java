@@ -86,7 +86,7 @@ public class GraphicsSudoku {
 //	}
 	// ::done
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	public ImageData writeImageEps(OutputStream os) throws IOException {
 		final UGraphicEps ug = new UGraphicEps(HColors.WHITE, ColorMapper.IDENTITY,
 				FileFormat.EPS_TEXT.getDefaultStringBounder(), EpsStrategy.WITH_MACRO_AND_TEXT);

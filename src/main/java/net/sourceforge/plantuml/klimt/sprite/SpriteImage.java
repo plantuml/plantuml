@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SImageIO;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Log;
 
 public class SpriteImage implements Sprite {
@@ -86,7 +87,8 @@ public class SpriteImage implements Sprite {
 	}
 
 	public static Sprite fromInternal(String name) {
-		// ::revert when __TEAVM__
+		if (TeaVM.isTeaVM())
+			return null;
 		if (name.endsWith(".png") || name.endsWith(".svg"))
 			throw new IllegalArgumentException();
 
@@ -103,8 +105,6 @@ public class SpriteImage implements Sprite {
 			Logme.error(e);
 			return null;
 		}
-		// return null;
-		// ::done
 	}
 
 	private static InputStream getInternalSprite(final String inner) {

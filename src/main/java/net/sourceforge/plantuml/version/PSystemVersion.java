@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.NFolder;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -61,22 +62,22 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class PSystemVersion extends PlainStringsDiagram {
 
 	PSystemVersion(UmlSource source, boolean withImage, List<String> args, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
 		this.strings.addAll(args);
-		// ::comment when __CORE__ or __TEAVM__
-		try {
-			if (withImage) {
-				this.image = getPlantumlImage();
-				this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;
+		if (!TeaVM.isTeaVM())
+			try {
+				if (withImage) {
+					this.image = getPlantumlImage();
+					this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		// ::done
 	}
 
 	private PSystemVersion(UmlSource source, List<String> args, PortableImage image,
@@ -87,7 +88,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	public static PortableImage getPlantumlImage() {
 		return getImage("logo.png");
 	}
@@ -133,7 +134,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		} catch (IOException e) {
 			Logme.error(e);
 		}
-		return new PortableImage(10, 10, BufferedImage.TYPE_INT_ARGB);
+		return PortableImageFactory.build(10, 10, BufferedImage.TYPE_INT_ARGB);
 	}
 
 	private static PortableImage getImageWebp(final String name) {
@@ -142,7 +143,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		} catch (IOException e) {
 			Logme.error(e);
 		}
-		return new PortableImage(10, 10, BufferedImage.TYPE_INT_ARGB);
+		return PortableImageFactory.build(10, 10, BufferedImage.TYPE_INT_ARGB);
 	}
 
 	private static BufferedImage transparentIcon;
@@ -174,34 +175,33 @@ public class PSystemVersion extends PlainStringsDiagram {
 		strings.add("<b>Git Commit</b> \"\"" + CompilationInfo.COMMIT + "\"\"");
 		strings.add("<b>Build Time</b> \"\"" + Version.compileTimeString() + "\"\"");
 
-		// ::revert when __TEAVM__
-		strings.add("<b>License</b> \"\"" + License.getCurrent() + "\"\"");
-		strings.checkOldVersionWarning();
-		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {
-			strings.add("Loaded from " + Version.getJarPath());
+		if (!TeaVM.isTeaVM()) {
+			strings.add("<b>License</b> \"\"" + License.getCurrent() + "\"\"");
+			strings.checkOldVersionWarning();
+			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {
+				strings.add("Loaded from " + Version.getJarPath());
 
-			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD)) {
-				strings.add("Word Mode");
-				strings.add("Current Dir: " + new SFile(".").getAbsolutePath());
-				strings.add("plantuml.include.path: " + PreprocessorUtils.getenv(NFolder.PATHS_INCLUDES));
+				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD)) {
+					strings.add("Word Mode");
+					strings.add("Current Dir: " + new SFile(".").getAbsolutePath());
+					strings.add("plantuml.include.path: " + PreprocessorUtils.getenv(NFolder.PATHS_INCLUDES));
+				}
 			}
+			strings.add(" ");
+
+			GraphvizUtils.addDotStatus(strings, true);
+			strings.add(" ");
+			for (String name : OptionPrint.interestingProperties())
+				strings.add(name);
+
+			for (String v : OptionPrint.interestingValues())
+				strings.add(v);
 		}
-		strings.add(" ");
-
-		GraphvizUtils.addDotStatus(strings, true);
-		strings.add(" ");
-		for (String name : OptionPrint.interestingProperties())
-			strings.add(name);
-
-		for (String v : OptionPrint.interestingValues())
-			strings.add(v);
-
-		// ::done
 
 		return new PSystemVersion(source, true, strings.asList(), preprocessing);
 	}
 
-	// :: comment when __CORE__ or __TEAVM__
+	// :: comment when __TEAVM__
 	public static PSystemVersion createStdLib(UmlSource source, PreprocessingArtifact preprocessing) {
 		final List<String> strings = new ArrayList<>();
 		Stdlib.addInfoVersion(strings, true);
@@ -220,7 +220,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		final List<String> strings = new ArrayList<>();
 		add(strings, "<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")",
 				withTag);
-		// :: comment when __CORE__ or __TEAVM__
+		// :: comment when __TEAVM__
 		add(strings, "(" + License.getCurrent() + " source distribution)", withTag);
 		add(strings, " ", withTag);
 		// ::done
@@ -252,7 +252,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	public static PSystemVersion createTestDot(UmlSource source, PreprocessingArtifact preprocessing)
 			throws IOException {
 		final ReportLog strings = new ReportLog();

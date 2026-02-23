@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.klimt.font;
 import java.awt.Font;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 public final class UFontImpl implements UFont {
 
 	private final FontStack fontStack;
@@ -95,29 +97,28 @@ public final class UFontImpl implements UFont {
 	}
 
 	public String getFamily(String text, UFontContext context) {
-		// ::uncomment when __TEAVM__
-//		final String fullDefinition = fontStack.getFullDefinition();
-//		// Map Java font name to web-safe equivalent
-//		// http://plantuml.sourceforge.net/qa/?qa=5432/svg-monospace-output-has-wrong-font-family
-//		if ("monospaced".equalsIgnoreCase(fullDefinition))
-//			return "monospace";
-//
-//		return fullDefinition.replace('"', '\'').replaceAll("(?i)sansserif", "sans-serif");
-		// ::done
-		// ::comment when __TEAVM__
-		if (context == UFontContext.EPS) {
+		if (TeaVM.isTeaVM()) {
+			final String fullDefinition = fontStack.getFullDefinition();
+			// Map Java font name to web-safe equivalent
+			// http://plantuml.sourceforge.net/qa/?qa=5432/svg-monospace-output-has-wrong-font-family
+			if ("monospaced".equalsIgnoreCase(fullDefinition))
+				return "monospace";
+
+			return fullDefinition.replace('"', '\'').replaceAll("(?i)sansserif", "sans-serif");
+		} else {
+			if (context == UFontContext.EPS) {
 //			if (fontStack.getFamily() == null)
 //				return "Times-Roman";
-			return getUnderlayingFont(text).getPSName();
-		}
-		if (context == UFontContext.SVG) {
-			String result = fontStack.getFullDefinition().replace('"', '\'');
-			result = result.replaceAll("(?i)sansserif", "sans-serif");
+				return getUnderlayingFont(text).getPSName();
+			}
+			if (context == UFontContext.SVG) {
+				String result = fontStack.getFullDefinition().replace('"', '\'');
+				result = result.replaceAll("(?i)sansserif", "sans-serif");
 
-			return result;
+				return result;
+			}
 		}
 		throw new IllegalArgumentException();
-		// ::done
 	}
 
 	// Kludge for testing because font names on some machines (only macOS?) do not
@@ -145,8 +146,6 @@ public final class UFontImpl implements UFont {
 		return sb.toString();
 	}
 
-	// ::comment when __HAXE__
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(fontStack, style, size);
@@ -161,7 +160,5 @@ public final class UFontImpl implements UFont {
 		UFontImpl other = (UFontImpl) obj;
 		return Objects.equals(fontStack, other.fontStack) && style == other.style && size == other.size;
 	}
-
-	// ::done
 
 }

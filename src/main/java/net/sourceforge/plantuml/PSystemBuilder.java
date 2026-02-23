@@ -123,7 +123,7 @@ import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
  * @see AbstractPSystem
  */
 public class PSystemBuilder {
-	// ::remove file when __TEAVM__
+	
 
 	public static final long startTime = System.currentTimeMillis();
 

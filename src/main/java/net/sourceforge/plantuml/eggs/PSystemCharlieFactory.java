@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemCharlieFactory extends PSystemSingleLineFactory {
-	// ::remove file when __TEAVM__
+	
 	
 	@Override
 	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {

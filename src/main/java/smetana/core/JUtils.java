@@ -155,8 +155,6 @@ final public class JUtils {
 					return;
 			}
 		} finally {
-			
-			// ::comment when __CORE__
 			for (int i = 0; i < nb - 1; i++) {
 				final __ptr__ element1 = array.plus_(i);
 				final __ptr__ element2 = array.plus_(i + 1);
@@ -164,7 +162,6 @@ final public class JUtils {
 				if (cmp.intValue() > 0)
 					throw new IllegalStateException();
 			}
-			// ::done
 		}
 
 	}
@@ -188,8 +185,6 @@ final public class JUtils {
 					return;
 			}
 		} finally {
-			
-			// ::comment when __CORE__
 			for (int i = 0; i < nb - 1; i++) {
 				final Integer element1 = array[i];
 				final Integer element2 = array[i + 1];
@@ -197,7 +192,6 @@ final public class JUtils {
 				if (cmp.intValue() > 0)
 					throw new IllegalStateException();
 			}
-			// ::done
 		}
 
 	}

@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.shape.UText;
 
 public class DriverTextTeaVM implements UDriver<UText, SvgGraphicsTeaVM> {
+	// ::remove file when JAVA8
 
 	// Collects extra colored lines (underline/strikethrough) that cannot be
 	// expressed as simple CSS text-decoration because they use a custom color.

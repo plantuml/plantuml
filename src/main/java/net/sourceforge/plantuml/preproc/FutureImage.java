@@ -42,6 +42,7 @@ import java.io.UncheckedIOException;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 
 public class FutureImage {
 
@@ -62,7 +63,7 @@ public class FutureImage {
 		// ::comment when __TEAVM__
 		synchronized (this) {
 			if (image == null) {
-				image = new PortableImage(width, height, PortableImage.TYPE_INT_ARGB);
+				image = PortableImageFactory.build(width, height, PortableImage.TYPE_INT_ARGB);
 
 				try (InputStream is = new ByteArrayInputStream(data)) {
 					for (int y = 0; y < height; y++)

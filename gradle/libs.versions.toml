@@ -16,7 +16,6 @@ jdepend             = "2.9.1"
 jlatexmath          = "1.0.7"
 junit-jupiter       = "6.0.3"
 junit-platform-launcher = "6.0.3"
-mockito-j8          = "4.+"
 mockito             = "5.+"
 adarshr-test-logger = "4.0.0"
 xmlunit-core        = "2.11.0"
@@ -39,17 +38,15 @@ junit-jupiter               = { module = "org.junit.jupiter:junit-jupiter", vers
 junit-bom                   = { module = "org.junit:junit-bom", version.ref = "junit-jupiter" }
 junit-platform-launcher     = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform-launcher" }
 
-mockito-core-j8             = { module = "org.mockito:mockito-core", version.ref = "mockito-j8" }
 mockito-core                = { module = "org.mockito:mockito-core", version.ref = "mockito" }
-mockito-junit-jupiter-j8    = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito-j8" }
 mockito-junit-jupiter       = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
 xmlunit-core                = { module = "org.xmlunit:xmlunit-core", version.ref = "xmlunit-core" }
 junit-pioneer               = { module = "org.junit-pioneer:junit-pioneer", version.ref = "junit-pioneer" }
-teavm-cli                   = { module = "org.teavm:teavm-cli", version.ref = "teavm" }
+teavm-classlib              = { module = "org.teavm:teavm-classlib", version.ref = "teavm" }
 teavm-jso-apis              = { module = "org.teavm:teavm-jso-apis", version.ref = "teavm" }
-teavm-jso                   = { module = "org.teavm:teavm-jso", version.ref = "teavm" }
 
 [plugins]
 adarshr-test-logger = { id = "com.adarshr.test-logger", version.ref = "adarshr-test-logger" }
 gorylenko-gradle-git-properties = { id = "com.gorylenko.gradle-git-properties", version.ref = "gorylenko-gradle-git-properties" }
 graalvm-native = { id = "org.graalvm.buildtools.native", version.ref = "graalvm-native" }
+teavm = { id = "org.teavm", version.ref = "teavm" }

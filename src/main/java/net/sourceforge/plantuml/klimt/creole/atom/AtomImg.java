@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.creole.legacy.AtomTextUtils;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -63,6 +64,7 @@ import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Base64Coder;
 
@@ -85,19 +87,23 @@ public class AtomImg extends AbstractAtom implements Atom {
 
 	public static Atom createQrcode(String flash, double scale) {
 		PortableImage im = null;
-		// :: comment when __CORE__ or __TEAVM__
-		im = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, XColor.BLACK, XColor.WHITE);
-		if (im == null)
-			// ::done
-			im = new PortableImage(10, 10, PortableImage.TYPE_INT_RGB);
+		if (!TeaVM.isTeaVM()) {
+			im = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, XColor.BLACK, XColor.WHITE);
+			if (im == null)
+				im = PortableImageFactory.build(10, 10, PortableImage.TYPE_INT_RGB);
 
-		return new AtomImg(
-				new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(scale).getImage(1), 1,
-				null, null);
+			return new AtomImg(
+					new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(scale).getImage(1),
+					1, null, null);
+		} else {
+			throw new UnsupportedOperationException("TEA3423");
+		}
 	}
 
 	public static Atom create(String src, ImgValign valign, int vspace, double scale, Url url) {
-		// ::revert when __TEAVM__
+		if (TeaVM.isTeaVM())
+			throw new UnsupportedOperationException("TEA3424");
+
 		final UFont font = UFontFactory.monospaced(14);
 		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
 
@@ -175,10 +181,6 @@ public class AtomImg extends AbstractAtom implements Atom {
 
 			return AtomTextUtils.createLegacy("ERROR", fc);
 		}
-
-		// throw new UnsupportedOperationException();
-		// ::done
-
 	}
 
 	private static Atom buildRasterFromData(String source, final FontConfiguration fc, final byte[] data, double scale,

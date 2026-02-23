@@ -43,6 +43,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SImageIO;
 
@@ -104,7 +105,7 @@ public class IconLoader {
 		if (ico == null)
 			return null;
 
-		final PortableImage transparentIcon = new PortableImage(ico.getWidth(), ico.getHeight(),
+		final PortableImage transparentIcon = PortableImageFactory.build(ico.getWidth(), ico.getHeight(),
 				PortableImage.TYPE_INT_ARGB_PRE);
 		for (int i = 0; i < ico.getWidth(); i++)
 			for (int j = 0; j < ico.getHeight(); j++) {

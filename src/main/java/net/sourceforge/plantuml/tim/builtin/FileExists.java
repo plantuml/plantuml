@@ -62,14 +62,8 @@ public class FileExists extends SimpleReturnFunction {
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException {
-		// ::comment when __CORE__
 		final String path = values.get(0).toString();
 		return TValue.fromBoolean(new SFile(path).exists());
-		// ::done
-
-		// ::uncomment when __CORE__
-		// return TValue.fromBoolean(false);
-		// ::done
 	}
 
 }

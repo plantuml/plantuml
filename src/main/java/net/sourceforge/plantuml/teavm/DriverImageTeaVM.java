@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
  * URL using browser's canvas API, then embeds as an SVG image element.
  */
 public class DriverImageTeaVM implements UDriver<UImage, SvgGraphicsTeaVM> {
+	// ::remove file when JAVA8
 
 	private final ClipContainer clipContainer;
 

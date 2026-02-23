@@ -56,8 +56,6 @@ import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class BpmDiagram extends UmlDiagram {
-	// ::remove folder when __CORE__
-
 	private void cleanGrid(Grid grid) {
 		while (true) {
 			final boolean v1 = new CleanerEmptyLine().clean(grid);

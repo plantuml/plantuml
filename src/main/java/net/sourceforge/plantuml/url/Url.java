@@ -85,18 +85,14 @@ public class Url implements EnsureVisible {
 		return label;
 	}
 
-	// ::comment when __HAXE__
 	@Override
 	public String toString() {
 		return super.toString() + " " + url + " " + visible.getCoords(1.0);
 	}
-	// ::done
 
 	public String getCoords(double scale) {
-		// ::comment when __CORE__ or __HAXE__
 		if (Check.isJunit() && visible.getCoords(1.0).contains("0,0,0,0"))
 			throw new IllegalStateException(toString());
-		// ::done
 
 		return visible.getCoords(scale);
 	}

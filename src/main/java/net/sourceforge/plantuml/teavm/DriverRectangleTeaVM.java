@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 
 public class DriverRectangleTeaVM implements UDriver<URectangle, SvgGraphicsTeaVM> {
+	// ::remove file when JAVA8
 
 	private final ClipContainer clipContainer;
 

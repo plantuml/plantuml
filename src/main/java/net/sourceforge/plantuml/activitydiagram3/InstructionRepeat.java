@@ -139,7 +139,6 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		return repeatList.add(ins);
 	}
 
-	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 
@@ -159,7 +158,6 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 //		}
 		return result;
 	}
-	// ::done
 
 	public Ftile createFtile(FtileFactory factory) {
 		final Ftile back = getFtileBackward(factory);

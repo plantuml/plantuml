@@ -53,6 +53,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 import net.sourceforge.plantuml.klimt.sprite.SpriteGrayLevel;
 import net.sourceforge.plantuml.klimt.sprite.SpriteUtils;
 import net.sourceforge.plantuml.utils.Log;
@@ -153,7 +154,7 @@ public class SpriteWindow extends JFrame {
 
 		try {
 			if (t != null && t.isDataFlavorSupported(DataFlavor.imageFlavor)) {
-				final PortableImage text = new PortableImage(
+				final PortableImage text = PortableImageFactory.build(
 						(BufferedImage) t.getTransferData(DataFlavor.imageFlavor));
 				return text;
 			}

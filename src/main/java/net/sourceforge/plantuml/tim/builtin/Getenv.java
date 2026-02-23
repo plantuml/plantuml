@@ -62,20 +62,13 @@ public class Getenv extends SimpleReturnFunction {
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException {
-		// ::comment when __CORE__
 		final String value = getenv(values.get(0).toString());
 		if (value == null)
 			return TValue.fromString("");
 
 		return TValue.fromString(value);
-		// ::done
-
-		// ::uncomment when __CORE__
-		// return TValue.fromString("");
-		// ::done
 	}
 
-	// ::comment when __CORE__
 	private String getenv(String name) {
 		// Check, if the script requests secret information.
 		// A plantuml server should have an own SecurityManager to
@@ -90,5 +83,4 @@ public class Getenv extends SimpleReturnFunction {
 
 		return System.getenv(name);
 	}
-	// ::done
 }

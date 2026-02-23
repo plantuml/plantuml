@@ -54,6 +54,7 @@ import org.teavm.jso.JSObject;
  * </pre>
  */
 public class GraphVizjsTeaVMEngine {
+	// ::remove file when JAVA8
 
 	/**
 	 * Renders a DOT graph description to SVG format.

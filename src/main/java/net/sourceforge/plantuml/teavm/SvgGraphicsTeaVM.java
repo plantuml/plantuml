@@ -44,7 +44,8 @@ import org.teavm.jso.dom.xml.Element;
  * of javax.xml.
  */
 public class SvgGraphicsTeaVM {
-	
+	// ::remove file when JAVA8
+
 	private static final String SVG_NS = "http://www.w3.org/2000/svg";
 
 	private final Element svgRoot;
@@ -179,7 +180,8 @@ public class SvgGraphicsTeaVM {
 			String fontStyle, String textDecoration, String backColor) {
 		// Draw background rectangle if backColor is specified
 		if (backColor != null) {
-			double[] metrics = measureTextCanvas(text, fontFamily, fontSize, fontWeight != null ? fontWeight : "normal");
+			double[] metrics = measureTextCanvas(text, fontFamily, fontSize,
+					fontWeight != null ? fontWeight : "normal");
 			double width = metrics[0];
 			double height = metrics[1];
 			Element rect = createSvgElement("rect");
@@ -214,8 +216,9 @@ public class SvgGraphicsTeaVM {
 
 			// For monospace fonts, replace spaces with non-breaking spaces
 			// to ensure consistent character width
-			// if (fontFamily.equalsIgnoreCase("monospace") || fontFamily.equalsIgnoreCase("courier"))
-			//	text = text.replace(' ', (char) 160);
+			// if (fontFamily.equalsIgnoreCase("monospace") ||
+			// fontFamily.equalsIgnoreCase("courier"))
+			// text = text.replace(' ', (char) 160);
 		}
 		textElem.setTextContent(text);
 		mainGroup.appendChild(textElem);
@@ -401,8 +404,8 @@ public class SvgGraphicsTeaVM {
 	// ========================================================================
 
 	/**
-	 * Draws a single character centered at the specified position.
-	 * Uses SVG text-anchor and dominant-baseline for centering.
+	 * Draws a single character centered at the specified position. Uses SVG
+	 * text-anchor and dominant-baseline for centering.
 	 * 
 	 * @param c          The character to draw
 	 * @param x          Center X position
@@ -430,8 +433,8 @@ public class SvgGraphicsTeaVM {
 	// ========================================================================
 
 	/**
-	 * Draws an image at the specified position using a data URL.
-	 * The image is embedded directly in the SVG as a base64-encoded PNG.
+	 * Draws an image at the specified position using a data URL. The image is
+	 * embedded directly in the SVG as a base64-encoded PNG.
 	 * 
 	 * @param dataUrl PNG data URL (data:image/png;base64,...)
 	 * @param x       X position
@@ -452,7 +455,8 @@ public class SvgGraphicsTeaVM {
 		mainGroup.appendChild(image);
 	}
 
-	@JSBody(params = { "element", "href" }, script = "element.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', href);")
+	@JSBody(params = { "element",
+			"href" }, script = "element.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', href);")
 	private static native void setXlinkHref(Element element, String href);
 
 	// ========================================================================
@@ -460,8 +464,8 @@ public class SvgGraphicsTeaVM {
 	// ========================================================================
 
 	/**
-	 * Embeds an SVG image at the specified position.
-	 * The SVG content is parsed and inserted as a nested SVG element.
+	 * Embeds an SVG image at the specified position. The SVG content is parsed and
+	 * inserted as a nested SVG element.
 	 * 
 	 * @param image UImageSvg containing the SVG data
 	 * @param x     X position
@@ -503,14 +507,10 @@ public class SvgGraphicsTeaVM {
 	/**
 	 * Parses SVG string and inserts its content into the parent element.
 	 */
-	@JSBody(params = { "parent", "svgContent" }, script = 
-		"var parser = new DOMParser();" +
-		"var doc = parser.parseFromString(svgContent, 'image/svg+xml');" +
-		"var svgElem = doc.documentElement;" +
-		"if (svgElem && svgElem.tagName.toLowerCase() === 'svg') {" +
-		"  var imported = document.importNode(svgElem, true);" +
-		"  parent.appendChild(imported);" +
-		"}")
+	@JSBody(params = { "parent", "svgContent" }, script = "var parser = new DOMParser();"
+			+ "var doc = parser.parseFromString(svgContent, 'image/svg+xml');" + "var svgElem = doc.documentElement;"
+			+ "if (svgElem && svgElem.tagName.toLowerCase() === 'svg') {"
+			+ "  var imported = document.importNode(svgElem, true);" + "  parent.appendChild(imported);" + "}")
 	private static native void insertSvgContent(Element parent, String svgContent);
-	
+
 }

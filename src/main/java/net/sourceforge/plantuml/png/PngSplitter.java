@@ -44,6 +44,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.file.SuggestedFile;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
@@ -51,7 +52,7 @@ import net.sourceforge.plantuml.skin.SplitParam;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PngSplitter {
-	// ::remove file when __CORE__ or __TEAVM__
+	
 
 	private final List<SFile> files = new ArrayList<>();
 
@@ -90,7 +91,7 @@ public class PngSplitter {
 				PortableImage piece = im.getSubimage(horizontalSegment.getStart(i), verticalSegment.getStart(j), width,
 						height);
 				if (splitParam.isSet()) {
-					PortableImage withMargin = new PortableImage(width + 2 * splitParam.getExternalMargin(),
+					PortableImage withMargin = PortableImageFactory.build(width + 2 * splitParam.getExternalMargin(),
 							height + 2 * splitParam.getExternalMargin(), BufferedImage.TYPE_INT_ARGB);
 					final Graphics2D g2d = withMargin.createGraphics();
 					if (splitParam.getExternalColor() != null) {

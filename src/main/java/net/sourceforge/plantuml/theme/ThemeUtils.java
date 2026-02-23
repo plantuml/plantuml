@@ -59,14 +59,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.utils.Log;
 
-// ::uncomment when __CORE__
-//import static com.plantuml.api.cheerpj.StaticMemory.cheerpjPath;
-//import java.io.FileInputStream;
-//import java.io.FileNotFoundException;
-// ::done
-
 public class ThemeUtils {
-	// ::remove folder when __HAXE__
 
 	private static final String THEME_FILE_PREFIX = "puml-theme-";
 
@@ -74,7 +67,7 @@ public class ThemeUtils {
 
 	private static final String THEME_PATH = "themes";
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 
 	public static Theme loadTheme(PathSystem pathSystem, String name, String from, StringLocated location)
 			throws IOException, EaterException {

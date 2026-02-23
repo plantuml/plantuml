@@ -79,9 +79,7 @@ public class Branch {
 	private Colors specialColors;
 
 	private Ftile ftile;
-	// ::comment when __CORE__
 	private Gtile gtile;
-	// ::done
 
 	public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);
@@ -136,11 +134,9 @@ public class Branch {
 		this.ftile = factory.decorateOut(list.createFtile(factory), inlinkRendering);
 	}
 
-	// ::comment when __CORE__
 	public void updateGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		this.gtile = list.createGtile(skinParam, stringBounder);
 	}
-	// ::done
 
 	public Collection<? extends Swimlane> getSwimlanes() {
 		return list.getSwimlanes();
@@ -194,17 +190,13 @@ public class Branch {
 		return ftile;
 	}
 
-	// ::comment when __CORE__
 	public Gtile getGtile() {
 		return gtile;
 	}
-	// ::done
 
 	public ISkinParam skinParam() {
-		// ::comment when __CORE__
 		if (gtile != null)
 			return gtile.skinParam();
-		// ::done
 		return ftile.skinParam();
 	}
 

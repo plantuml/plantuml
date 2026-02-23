@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
@@ -78,14 +79,14 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class SecurityUtils {
 
-	// ::uncomment when __CORE__ or __TEAVM__
+	// ::uncomment when __TEAVM__
 //	public static SecurityProfile getSecurityProfile() {
 //		return SecurityProfile.UNSECURE;
 //	}
 	// ::done
 
 	public static boolean ignoreThisLink(String url) {
-		// ::comment when __CORE__ or __TEAVM__
+		// ::comment when __TEAVM__
 		if (allowJavascriptInLink() == false && isJavascriptLink(url))
 			return true;
 		// ::done
@@ -105,7 +106,7 @@ public class SecurityUtils {
 			return null;
 
 		// ::comment when __TEAVM__
-		final PortableImage image = new PortableImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(),
+		final PortableImage image = PortableImageFactory.build(imageIcon.getIconWidth(), imageIcon.getIconHeight(),
 				PortableImage.TYPE_INT_ARGB);
 		image.getGraphics().drawImage(tmpImage, 0, 0, null);
 		tmpImage.flush();

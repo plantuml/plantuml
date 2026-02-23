@@ -131,11 +131,9 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	private void register(double dpiFactor) {
 		registerDriver(URectangle.class, new DriverRectangleG2d(dpiFactor, this));
-		// ::comment when __CORE__
 		if (dpiFactor != 1.0)
 			registerDriver(UText.class, new DriverTextAsPathG2d(this, getStringBounder()));
 		else
-			// ::done
 			registerDriver(UText.class, new DriverTextG2d(this, getStringBounder()));
 
 		registerDriver(ULine.class, new DriverLineG2d(dpiFactor));

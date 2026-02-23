@@ -43,6 +43,7 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 
 /**
  * A collection of methods to help with processing images. A majority of this
@@ -109,7 +110,7 @@ public class ImageHelper {
 			g2.drawImage(ret.getBufferedImage(), 0, 0, w, h, null);
 			g2.dispose();
 
-			ret = new PortableImage(tmp);
+			ret = PortableImageFactory.build(tmp);
 		} while (w != targetWidth || h != targetHeight);
 
 		return ret;

@@ -67,7 +67,7 @@ import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemDonors extends PlainDiagram {
-	// ::remove file when __CORE__ or __TEAVM__
+	
 
 	private static final int COLS = 6;
 	private static final int FREE_LINES = 6;
@@ -145,7 +145,6 @@ public class PSystemDonors extends PlainDiagram {
 
 	private List<String> getDonors() throws IOException {
 		final List<String> lines = new ArrayList<>();
-		// ::comment when __CORE__
 		final Transcoder t = TranscoderImpl.utf8(new AsciiEncoder(), new StringCompressorNone(),
 				new CompressionBrotli());
 		try {
@@ -157,7 +156,6 @@ public class PSystemDonors extends PlainDiagram {
 		} catch (NoPlantumlCompressionException e) {
 			Logme.error(e);
 		}
-		// ::done
 		return lines;
 	}
 

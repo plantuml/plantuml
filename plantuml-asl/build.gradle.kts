@@ -7,7 +7,7 @@
 
 import java.util.jar.JarFile
 
-val javacRelease = (project.findProperty("javacRelease") ?: "8") as String
+val javacRelease = (project.findProperty("javacRelease") ?: "11") as String
 
 plugins {
 	java
@@ -25,6 +25,8 @@ java {
 
 dependencies {
 	compileOnly(libs.ant)
+	compileOnly(libs.teavm.jso.apis)
+	compileOnly(libs.teavm.classlib)
 	testImplementation(libs.assertj.core)
 	testImplementation(libs.junit.jupiter)
 	testImplementation(libs.jlatexmath)
@@ -49,11 +51,7 @@ sourceSets {
 
 
 tasks.compileJava {
-	if (JavaVersion.current().isJava8) {
-		java.targetCompatibility = JavaVersion.VERSION_1_8
-	} else {
-		options.release.set(Integer.parseInt(javacRelease))
-	}
+	options.release.set(Integer.parseInt(javacRelease))
 }
 
 tasks.withType<Jar>().configureEach {

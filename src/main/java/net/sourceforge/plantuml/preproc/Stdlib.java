@@ -63,13 +63,13 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class Stdlib {
 
-	// ::uncomment when __CORE__ or __TEAVM__
+	// ::uncomment when __TEAVM__
 //	public static InputStream getResourceAsStream(String fullname) {
 //			return null;
 //	}
 	// ::done
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 
 	private static final ConcurrentMap<String, Stdlib> all = new ConcurrentHashMap<>();
 

@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemLicense extends PlainDiagram implements UDrawable {
-	// ::remove file when __TEAVM__
+	
 	
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
@@ -86,13 +86,10 @@ public class PSystemLicense extends PlainDiagram implements UDrawable {
 	public void drawU(UGraphic ug) {
 
 		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();
-		// ::comment when __CORE__
 		final PortableImage logo = LicenseInfo.retrieveDistributorImage(licenseInfo);
 
 		if (logo == null) {
-			// ::done
 			getTextBlock(licenseInfo).drawU(ug);
-			// ::comment when __CORE__
 		} else {
 			final List<String> strings1 = new ArrayList<>();
 			final List<String> strings2 = new ArrayList<>();
@@ -110,7 +107,6 @@ public class PSystemLicense extends PlainDiagram implements UDrawable {
 			final TextBlock result2 = getGraphicStrings(strings2);
 			result2.drawU(ug);
 		}
-		// ::done
 	}
 
 	protected TextBlock getTextBlock(final LicenseInfo licenseInfo) {

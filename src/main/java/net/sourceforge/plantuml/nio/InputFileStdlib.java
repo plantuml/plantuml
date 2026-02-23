@@ -42,7 +42,7 @@ import java.nio.file.Path;
 import net.sourceforge.plantuml.preproc.Stdlib;
 
 public class InputFileStdlib implements InputFile {
-	// ::remove file when __TEAVM__
+	
 	
 	private final Stdlib stdlib;
 	private final Path stdlibPath;

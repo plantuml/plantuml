@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemCreoleFactory extends PSystemBasicFactory<PSystemCreole> {
-	// ::remove file when __CORE__
 
 	public PSystemCreoleFactory() {
 		super(DiagramType.CREOLE);

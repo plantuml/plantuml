@@ -39,20 +39,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Objects;
-
-import org.teavm.jso.JSObject;
 
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
 
-//::uncomment when __TEAVM__
-//import java.io.InputStream;
-//import org.teavm.jso.JSObject;
-//import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
+
+//::comment when JAVA8
+import org.teavm.jso.JSObject;
 //::done
+
+
 
 // Replacement for FileSystem
 //See ImportedFiles
@@ -62,23 +61,13 @@ import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
 public class PathSystem {
 
 	public static PathSystem fetch() {
-		// ::revert when __TEAVM__
+		if (TeaVM.isTeaVM())
+			return new PathSystem(null);
 		return new PathSystem(new NFolderRegular(Paths.get("")));
-		// return new PathSystem();
-		// ::done
 	}
 
-	// ::uncomment when __TEAVM__
-//	public PathSystem changeCurrentDirectory(Object... foo) {
-//		return this;
-//	}
-//	public PathSystem withCurrentDir(Object... foo) {
-//		return this;
-//	}
-	// ::done
-
 	public InputStream getTeaVMInputStream(String path) {
-		// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
+		// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
 		// return null;
 		final String full = path.substring(1, path.length() - 1).toLowerCase();
 		final String libname = full.substring(0, full.indexOf('/'));
@@ -92,14 +81,16 @@ public class PathSystem {
 		// ::done
 	}
 
-	// ::comment when __TEAVM__
 	private final NFolder currentFolder;
 
 	private PathSystem(NFolder currentFolder) {
-		this.currentFolder = Objects.requireNonNull(currentFolder);
+		this.currentFolder = currentFolder;
 	}
 
 	public PathSystem changeCurrentDirectory(Path newCurrentDir) throws IOException {
+		if (TeaVM.isTeaVM())
+			return this;
+		
 		if (newCurrentDir == null)
 			return this;
 		final NFolder folder = currentFolder.getSubfolder(newCurrentDir);
@@ -107,16 +98,25 @@ public class PathSystem {
 	}
 
 	public PathSystem changeCurrentDirectory(NFolder newCurrentDir) {
+		if (TeaVM.isTeaVM())
+			return this;
+		
 		return new PathSystem(newCurrentDir);
 	}
 
 	public PathSystem changeCurrentDirectory(SFile newCurrentDir) throws IOException {
+		if (TeaVM.isTeaVM())
+			return this;
+		
 		if (newCurrentDir == null)
 			return this;
 		return changeCurrentDirectory(newCurrentDir.toPath());
 	}
 
 	public PathSystem withCurrentDir(NFolder parentFile) {
+		if (TeaVM.isTeaVM())
+			return this;
+
 		return new PathSystem(parentFile);
 	}
 
@@ -181,6 +181,5 @@ public class PathSystem {
 		// Nothing right now
 
 	}
-	// ::done
 
 }

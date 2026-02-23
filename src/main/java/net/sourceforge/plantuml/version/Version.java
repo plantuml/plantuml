@@ -88,7 +88,7 @@ public class Version {
 				.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss 'UTC'"));
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	public static String getJarPath() {
 		try {
 			final ClassLoader loader = Version.class.getClassLoader();

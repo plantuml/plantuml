@@ -67,9 +67,9 @@ import net.sourceforge.plantuml.posimo.Path;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public final class CucaDiagramTxtMaker {
-	// ::remove file when __CORE__ or __TEAVM__
 
 	// private final CucaDiagram diagram;
 	private final FileFormat fileFormat;
@@ -92,52 +92,55 @@ public final class CucaDiagramTxtMaker {
 	}
 
 	public CucaDiagramTxtMaker(CucaDiagram diagram, FileFormat fileFormat) throws IOException {
-		this.fileFormat = fileFormat;
-		this.portionShower = diagram;
-		this.pragma = diagram.getPragma();
+		if (!TeaVM.isTeaVM()) {
+			this.fileFormat = fileFormat;
+			this.portionShower = diagram;
+			this.pragma = diagram.getPragma();
 
-		final Cluster root = new Cluster(null, 0, 0);
-		int uid = 0;
+			final Cluster root = new Cluster(null, 0, 0);
+			int uid = 0;
 
-		final Map<Entity, Block> blocks = new HashMap<Entity, Block>();
+			final Map<Entity, Block> blocks = new HashMap<Entity, Block>();
 
-		for (Entity ent : diagram.leafs()) {
-			// printClass(ent);
-			// ug.translate(0, getHeight(ent) + 1);
-			final double width = getWidth(ent) * getXPixelPerChar();
-			final double height = getHeight(ent) * getYPixelPerChar();
-			final Block b = new Block(uid++, width, height, null);
-			root.addBloc(b);
-			blocks.put(ent, b);
-		}
-
-		if (blocks.size() > 1) {
-			final GraphvizSolverB solver = new GraphvizSolverB();
-
-			final Collection<Path> paths = new ArrayList<>();
-			for (Link link : diagram.getLinks()) {
-				final Block b1 = blocks.get(link.getEntity1());
-				final Block b2 = blocks.get(link.getEntity2());
-				if (b1 != null && b2 != null)
-					paths.add(new Path(b1, b2, null, link.getLength(), link.isInvis()));
-			}
-			solver.solve(root, paths);
-			for (Path p : paths) {
-				if (p.isInvis())
-					continue;
-
-				drawDotPath(p.getDotPath(), globalUg.getCharArea(), getXPixelPerChar(), getYPixelPerChar());
+			for (Entity ent : diagram.leafs()) {
+				// printClass(ent);
+				// ug.translate(0, getHeight(ent) + 1);
+				final double width = getWidth(ent) * getXPixelPerChar();
+				final double height = getHeight(ent) * getYPixelPerChar();
+				final Block b = new Block(uid++, width, height, null);
+				root.addBloc(b);
+				blocks.put(ent, b);
 			}
 
-		}
+			if (blocks.size() > 1) {
+				final GraphvizSolverB solver = new GraphvizSolverB();
 
-		for (Entity ent : diagram.leafs()) {
-			final Block b = blocks.get(ent);
-			final XPoint2D p = b.getPosition();
-			printClass(ent, (UGraphicTxt) globalUg
-					.apply(new UTranslate(p.getX() / getXPixelPerChar(), p.getY() / getYPixelPerChar())));
-		}
+				final Collection<Path> paths = new ArrayList<>();
+				for (Link link : diagram.getLinks()) {
+					final Block b1 = blocks.get(link.getEntity1());
+					final Block b2 = blocks.get(link.getEntity2());
+					if (b1 != null && b2 != null)
+						paths.add(new Path(b1, b2, null, link.getLength(), link.isInvis()));
+				}
+				solver.solve(root, paths);
+				for (Path p : paths) {
+					if (p.isInvis())
+						continue;
 
+					drawDotPath(p.getDotPath(), globalUg.getCharArea(), getXPixelPerChar(), getYPixelPerChar());
+				}
+
+			}
+
+			for (Entity ent : diagram.leafs()) {
+				final Block b = blocks.get(ent);
+				final XPoint2D p = b.getPosition();
+				printClass(ent, (UGraphicTxt) globalUg
+						.apply(new UTranslate(p.getX() / getXPixelPerChar(), p.getY() / getYPixelPerChar())));
+			}
+		} else {
+			throw new UnsupportedOperationException("TEAV3423");
+		}
 	}
 
 	private void drawDotPath(DotPath dotPath, BasicCharArea area, double pixelXPerChar, double pixelYPerChar) {

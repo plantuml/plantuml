@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.preproc.Defines;
 
 @Deprecated
 public class DirWatcher {
-	// ::remove file when __CORE__
 
 	final private File dir;
 	final private CliOptions option;

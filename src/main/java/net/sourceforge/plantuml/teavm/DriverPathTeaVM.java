@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.geom.USegment;
 import net.sourceforge.plantuml.klimt.geom.USegmentType;
 
 public class DriverPathTeaVM implements UDriver<UPath, SvgGraphicsTeaVM> {
+	// ::remove file when JAVA8
 
 	private final ClipContainer clipContainer;
 

@@ -35,22 +35,26 @@
  */
 package net.sourceforge.plantuml.flashcode;
 
-public class FlashCodeFactory {
-	// ::remove folder when __CORE__ or __TEAVM__
+import net.sourceforge.plantuml.teavm.TeaVM;
 
+public class FlashCodeFactory {
 
 	public static FlashCodeUtils getFlashCodeUtils() {
-		final String name = "net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing";
-		try {
-			final Class cl = Class.forName(name);
-			return (FlashCodeUtils) cl.newInstance();
-		} catch (ClassNotFoundException e) {
+		if (!TeaVM.isTeaVM()) {
+			final String name = "net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing";
+			try {
+				final Class cl = Class.forName(name);
+				return (FlashCodeUtils) cl.newInstance();
+			} catch (ClassNotFoundException e) {
+				return new FlashCodeUtilsNone();
+			} catch (InstantiationException e) {
+				return new FlashCodeUtilsNone();
+			} catch (IllegalAccessException e) {
+				return new FlashCodeUtilsNone();
+			}
+		} else
 			return new FlashCodeUtilsNone();
-		} catch (InstantiationException e) {
-			return new FlashCodeUtilsNone();
-		} catch (IllegalAccessException e) {
-			return new FlashCodeUtilsNone();
-		}
+
 	}
 
 }

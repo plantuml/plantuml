@@ -46,24 +46,24 @@ import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class SImageIO {
 
 	public static PortableImage read(InputStream is) throws IOException {
-		// ::revert when __TEAVM__
-		return new PortableImage(javax.imageio.ImageIO.read(is));
-		// return null;
-		// ::done
+		if (TeaVM.isTeaVM())
+			return null;
+		return PortableImageFactory.build(javax.imageio.ImageIO.read(is));
 	}
 
 	public static PortableImage read(byte[] bytes) throws IOException {
-		// ::revert when __TEAVM__
-		return new PortableImage(javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes)));
-		// return null;
-		// ::done
+		if (TeaVM.isTeaVM())
+			return null;
+		return PortableImageFactory.build(javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes)));
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	public static ImageOutputStream createImageOutputStream(OutputStream os) throws IOException {
 		return javax.imageio.ImageIO.createImageOutputStream(os);
 	}
@@ -77,11 +77,11 @@ public class SImageIO {
 	}
 
 	public static PortableImage read(java.io.File file) throws IOException {
-		return new PortableImage(javax.imageio.ImageIO.read(file));
+		return PortableImageFactory.build(javax.imageio.ImageIO.read(file));
 	}
 
 	public static PortableImage read(SFile file) throws IOException {
-		return new PortableImage(javax.imageio.ImageIO.read(file.conv()));
+		return PortableImageFactory.build(javax.imageio.ImageIO.read(file.conv()));
 	}
 
 	public static ImageInputStream createImageInputStream(SFile file) throws IOException {

@@ -69,8 +69,6 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
  */
 
 public class AnimatedGifEncoder {
-	// ::remove file when __CORE__
-	// ::remove file when __HAXE__
 
 	protected int width; // image size
 

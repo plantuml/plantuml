@@ -1,33 +1,15 @@
+// Remove-Item -Recurse -Force */build
+
 import java.io.ByteArrayOutputStream
 import java.time.LocalDateTime
 import java.util.jar.JarFile
 import java.util.Base64
 import java.util.Properties
-import org.gradle.api.tasks.Sync
-import org.objectweb.asm.ClassReader
-import org.objectweb.asm.ClassWriter
-import org.objectweb.asm.Opcodes
-import org.objectweb.asm.tree.AbstractInsnNode
-import org.objectweb.asm.tree.ClassNode
-import org.objectweb.asm.tree.FieldInsnNode
-import org.objectweb.asm.tree.InsnList
-import org.objectweb.asm.tree.InsnNode
-import org.objectweb.asm.tree.MethodNode
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.ow2.asm:asm:9.7.1")
-        classpath("org.ow2.asm:asm-tree:9.7.1")
-    }
-}
 
 println("Running build.gradle.kts")
 println(project.version)
 
-val javacRelease = (project.findProperty("javacRelease") ?: "8") as String
+val javacRelease = (project.findProperty("javacRelease") ?: "11") as String
 
 // When -Pfast is set, skip expensive steps (tests, javadoc, etc.)
 val fastBuild = project.hasProperty("fast")
@@ -40,6 +22,7 @@ plugins {
 	jacoco
 	alias(libs.plugins.gorylenko.gradle.git.properties)
 //	alias(libs.plugins.adarshr.test.logger)
+	alias(libs.plugins.teavm)
 }
 
 group = "net.sourceforge.plantuml"
@@ -55,27 +38,7 @@ java {
 	}
 }
 
-sourceSets {
-	create("teavm") {
-		java.srcDir(layout.buildDirectory.dir("generated/teavm-sjpp"))
-		// If resources are needed at TeaVM runtime, you can also add them:
-		resources.srcDir("src/main/resources")
-		// Note: compileClasspath will be configured after dependencies are declared
-	}
-}
-
 val jdependConfig by configurations.creating
-val teavmConfig by configurations.creating
-
-// Separate configuration for TeaVM compile dependencies (requires Java 11+)
-val teavmCompileConfig by configurations.creating {
-	attributes {
-		// Force Java 11 compatibility for TeaVM dependencies
-		attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 11)
-	}
-}
-
-
 
 dependencies {
 	compileOnly(libs.ant)
@@ -86,14 +49,9 @@ dependencies {
 	testImplementation(libs.glytching.junit.extensions)
 	testImplementation(libs.assertj.core)
 	testImplementation(libs.xmlunit.core)
-	if (JavaVersion.current().isJava8) {
-		testImplementation(libs.mockito.core.j8)
-		testImplementation(libs.mockito.junit.jupiter.j8)
-	} else {
-		testImplementation(libs.mockito.core)
-		testImplementation(libs.mockito.junit.jupiter)
-		testImplementation(libs.junit.pioneer)
-	}
+	testImplementation(libs.mockito.core)
+	testImplementation(libs.mockito.junit.jupiter)
+	testImplementation(libs.junit.pioneer)
 	implementation(libs.jlatexmath)
     implementation(libs.elk.core)
     implementation(libs.elk.alg.layered)
@@ -102,13 +60,8 @@ dependencies {
 	// JDepend for package metrics
 	jdependConfig(libs.jdepend)
 
-	// TeaVM CLI for compilation (contains the main class)
-    teavmConfig(libs.teavm.cli)
-	
-	// TeaVM dependencies for Java to JavaScript compilation (Java 11+ only)
-	teavmCompileConfig(libs.teavm.jso.apis)
-	teavmCompileConfig(libs.teavm.jso)
-
+	// TeaVM JSO APIs for browser interop (provided to the teavm source set by the plugin)
+	teavm(teavm.libs.jsoApis)
 
     // Custom configuration for pdfJar task
     configurations.create("pdfJarDeps")
@@ -122,26 +75,23 @@ repositories {
 	mavenCentral()
 }
 
-// Configure teavm sourceSet classpath after dependencies are declared
-// Note: teavm sourceSet compiles preprocessed sources from generated/teavm-sjpp
-// It does NOT need the main sourceSet output (which would trigger unnecessary compilation)
-sourceSets["teavm"].apply {
-	compileClasspath = teavmCompileConfig
-	runtimeClasspath = teavmCompileConfig
-}
+// ============================================
+// TeaVM Configuration - Java to JavaScript
+// ============================================
 
-tasks.compileJava {
-	if (JavaVersion.current().isJava8) {
-		java.targetCompatibility = JavaVersion.VERSION_1_8
-	} else {
-		options.release.set(Integer.parseInt(javacRelease))
+teavm {
+	js {
+		mainClass.set("net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser")
+		obfuscated.set(true)
+		optimization.set(org.teavm.gradle.api.OptimizationLevel.BALANCED)
+		// obfuscated.set(false)
+		// optimization.set(org.teavm.gradle.api.OptimizationLevel.NONE)
+		// outputDir defaults to build/generated/teavm/js
 	}
 }
 
-tasks.named<JavaCompile>("compileTeavmJava") {
-	// TeaVM requires Java 11 minimum, regardless of the main javacRelease setting
-	options.release.set(11)
-	dependsOn("preprocessForTeaVM")
+tasks.compileJava {
+	options.release.set(Integer.parseInt(javacRelease))
 }
 
 tasks.withType<Jar>().configureEach {
@@ -477,9 +427,12 @@ signing {
 	}
 }
 
+// TeaVM output directory (set by the official plugin, defaults to build/generated/teavm)
+val teavmJsOutputDir = layout.buildDirectory.dir("generated/teavm/js")
+
 // Site assembly task - creates the site from pre-existing build outputs
 // Use 'site' for a full build (including TeaVM), or 'siteAssemble' if
-// TeaVM JS files are already present in build/teavm/js/ (e.g. from CI artifact)
+// TeaVM JS files are already present (e.g. from CI artifact)
 tasks.register("siteAssemble") {
 	description = "Assembles project site from pre-existing build outputs (no TeaVM build)."
 	group = "documentation"
@@ -503,7 +456,7 @@ tasks.register("siteAssemble") {
 		siteDir.mkdirs()
 
 		// Check TeaVM output
-		val teavmDir = layout.buildDirectory.dir("teavm/js").get().asFile
+		val teavmDir = teavmJsOutputDir.get().asFile
 		println("[SITE] teavmDir = ${teavmDir.absolutePath}")
 		println("[SITE] teavmDir.exists() = ${teavmDir.exists()}")
 		if (teavmDir.exists()) {
@@ -559,9 +512,9 @@ tasks.register("siteAssemble") {
 			into("$siteDir/jdepend")
 		}
 
-		println("[SITE] Copying teavm/js to js-plantuml...")
+		println("[SITE] Copying TeaVM JS output to js-plantuml...")
 		copy {
-			from(layout.buildDirectory.dir("teavm/js"))
+			from(teavmJsOutputDir)
 			into("$siteDir/js-plantuml")
 		}
 		
@@ -573,11 +526,11 @@ tasks.register("siteAssemble") {
 			jsPlantUmlDir.listFiles()?.forEach { println("[SITE]   - ${it.name} (${it.length()} bytes)") }
 		}
 		
-		// Check for classes.js specifically
-		val classesJs = file("$siteDir/js-plantuml/classes.js")
-		println("[SITE] classes.js exists: ${classesJs.exists()}")
-		if (classesJs.exists()) {
-			println("[SITE] classes.js size: ${classesJs.length()} bytes")
+		// Check for the generated JS file
+		val plantumlJs = file("$siteDir/js-plantuml/plantuml.js")
+		println("[SITE] plantuml.js exists: ${plantumlJs.exists()}")
+		if (plantumlJs.exists()) {
+			println("[SITE] plantuml.js size: ${plantumlJs.length()} bytes")
 		}
 		println("::endgroup::")
 
@@ -603,6 +556,11 @@ tasks.register("site") {
 	group = "documentation"
 	
 	dependsOn("teavm", "siteAssemble")
+}
+
+// Ensure siteAssemble runs AFTER teavm so JS files are available for copying
+tasks.named("siteAssemble") {
+	mustRunAfter("teavm")
 }
 
 // ============================================
@@ -711,291 +669,18 @@ tasks.configureEach {
 }
 
 // ============================================
-// TeaVM Configuration - Java to JavaScript
+// TeaVM tasks - build JS version with HTML file
 // ============================================
 
-// Sync sources for TeaVM preprocessing (use filtered sources with CompilationInfo injected)
-val syncSourcesForTeaVM by tasks.registering(Sync::class) {
-	dependsOn(filterSourcesWithBuildInfo)
-	from(filteredSrcDir)
-	into(layout.buildDirectory.dir("sources/teavm-sjpp/java"))
-
-	// Remove org.teavm stub sources after sync:
-	// these stubs exist in src/main/java for Java 8 compilation,
-	// but the real org.teavm classes are provided by teavmCompileConfig dependencies.
-	doLast {
-		val teavmStubDir = layout.buildDirectory.dir("sources/teavm-sjpp/java/org/teavm").get().asFile
-		if (teavmStubDir.exists()) {
-			val deleted = teavmStubDir.deleteRecursively()
-			println("Removed org.teavm stubs from synced sources: $deleted")
-		}
-	}
-}
-
-// Preprocess sources with SJPP for TeaVM
-val preprocessForTeaVM by tasks.registering {
-	dependsOn(syncSourcesForTeaVM)
-
-	inputs.dir(layout.buildDirectory.dir("sources/teavm-sjpp/java"))
-	outputs.dir(layout.buildDirectory.dir("generated/teavm-sjpp"))
-
-	doLast {
-		ant.withGroovyBuilder {
-			"taskdef"(
-				"name" to "sjpp",
-				"classname" to "sjpp.SjppAntTask",
-				"classpath" to rootProject.layout.projectDirectory.files("sjpp.jar").asPath
-			)
-			"sjpp"(
-				"src" to layout.buildDirectory.dir("sources/teavm-sjpp/java").get().asFile.absolutePath,
-				"dest" to layout.buildDirectory.dir("generated/teavm-sjpp").get().asFile.absolutePath,
-				"define" to "__TEAVM__"
-			)
-		}
-
-
-	}
-}
-
-// Generate embedded resources for TeaVM (Base64 encoded)
-val generateTeavmEmbeddedResources by tasks.registering {
-	dependsOn(preprocessForTeaVM)
-
-	val outDir = layout.buildDirectory.dir("generated/teavm-sjpp/net/sourceforge/plantuml/teavm")
-	inputs.file("src/main/resources/skin/plantuml.skin")
-	outputs.dir(outDir)
-
-	doLast {
-		val skinFile = file("src/main/resources/skin/plantuml.skin")
-		val bytes = skinFile.readBytes()
-		val b64 = Base64.getEncoder().encodeToString(bytes)
-
-		// Split into lines to avoid a giant single line
-		val chunks = b64.chunked(120).joinToString(separator = "\" +\n            \"", prefix = "\"", postfix = "\"")
-
-		val target = outDir.get().file("EmbeddedResources.java").asFile
-		target.parentFile.mkdirs()
-		target.writeText(
-			"""
-			package net.sourceforge.plantuml.teavm;
-
-			import java.io.ByteArrayInputStream;
-			import java.io.InputStream;
-			import java.util.Base64;
-
-			public final class EmbeddedResources {
-				private EmbeddedResources() {
-				}
-
-				private static final String PLANTUML_SKIN_B64 =
-						$chunks;
-
-				public static InputStream openPlantumlSkin() {
-					byte[] data = Base64.getDecoder().decode(PLANTUML_SKIN_B64);
-					return new ByteArrayInputStream(data);
-				}
-			}
-			""".trimIndent(),
-			Charsets.UTF_8
-		)
-	}
-}
-
-tasks.named<JavaCompile>("compileTeavmJava") {
-	dependsOn(generateTeavmEmbeddedResources)
-}
-
-// Strip Java assertions from TeaVM .class files so TeaVM can DCE the dead code.
-// Use -PkeepTeavmAsserts to skip this step (for debugging).
-val stripTeavmAssertions by tasks.registering {
-    group = "teavm"
-    description = "Rewrites TeaVM .class files to disable Java 'assert' without touching sources."
-
-    val keepAsserts = project.hasProperty("keepTeavmAsserts")
-    onlyIf { !keepAsserts }
-
-    dependsOn(tasks.named("compileTeavmJava"))
-
-    doLast {
-        val classesDirs = sourceSets["teavm"].output.classesDirs.files
-        if (classesDirs.isEmpty()) {
-            println("[ASSERT] No teavm classesDirs found, nothing to patch.")
-            return@doLast
-        }
-
-        var patchedCount = 0
-        var touchedCount = 0
-
-        classesDirs.forEach { dir ->
-            if (!dir.exists()) return@forEach
-
-            dir.walkTopDown()
-                .filter { it.isFile && it.extension == "class" && it.name != "module-info.class" }
-                .forEach { classFile ->
-                    val original = classFile.readBytes()
-
-                    val cr = ClassReader(original)
-                    val cn = ClassNode()
-                    cr.accept(cn, 0)
-
-                    val ownerInternalName = cn.name
-
-                    // 1) Force $assertionsDisabled to be a constant true
-                    var hasAssertField = false
-                    cn.fields.forEach { f ->
-                        if (f.name == "\$assertionsDisabled" && f.desc == "Z") {
-                            hasAssertField = true
-                            f.access = f.access or Opcodes.ACC_STATIC or Opcodes.ACC_FINAL
-                            f.value = true
-                        }
-                    }
-
-                    if (!hasAssertField) {
-                        return@forEach
-                    }
-
-                    touchedCount++
-
-                    // 2) Neutralize $assertionsDisabled init in <clinit>
-                    val clinit: MethodNode? = cn.methods.firstOrNull { it.name == "<clinit>" && it.desc == "()V" }
-                    if (clinit != null) {
-                        val insns = clinit.instructions
-                        if (insns != null && insns.size() > 0) {
-
-                            var put: AbstractInsnNode? = insns.first
-                            while (put != null) {
-                                if (put is FieldInsnNode
-                                    && put.opcode == Opcodes.PUTSTATIC
-                                    && put.owner == ownerInternalName
-                                    && put.name == "\$assertionsDisabled"
-                                    && put.desc == "Z"
-                                ) {
-                                    break
-                                }
-                                put = put.next
-                            }
-
-                            if (put != null) {
-                                // Build a label map for safe cloning of instructions
-                                val labelMap = HashMap<org.objectweb.asm.tree.LabelNode, org.objectweb.asm.tree.LabelNode>()
-                                var scan: AbstractInsnNode? = insns.first
-                                while (scan != null) {
-                                    if (scan is org.objectweb.asm.tree.LabelNode) {
-                                        labelMap[scan] = org.objectweb.asm.tree.LabelNode()
-                                    }
-                                    scan = scan.next
-                                }
-
-                                val newList = InsnList()
-                                newList.add(InsnNode(Opcodes.ICONST_1))
-                                newList.add(put.clone(labelMap))
-
-                                var cur = put.next
-                                while (cur != null) {
-                                    newList.add(cur.clone(labelMap))
-                                    cur = cur.next
-                                }
-
-                                clinit.instructions = newList
-                            }
-                        }
-                    }
-
-                    // Use COMPUTE_MAXS only (not COMPUTE_FRAMES) to avoid
-                    // ClassWriter needing to resolve the full class hierarchy
-                    val cw = ClassWriter(ClassWriter.COMPUTE_MAXS)
-                    cn.accept(cw)
-                    val patched = cw.toByteArray()
-
-                    if (!patched.contentEquals(original)) {
-                        classFile.writeBytes(patched)
-                        patchedCount++
-                    }
-                }
-        }
-
-        println("[ASSERT] TeaVM assert patch done. touched=$touchedCount, patched=$patchedCount")
-        println("[ASSERT] Tip: use -PkeepTeavmAsserts to skip this step.")
-    }
-}
-
-
-
-// Display TeaVM CLI options (runs before generateJavaScript)
-tasks.register<JavaExec>("teavmHelp") {
-	description = "Displays TeaVM CLI available options"
-	group = "teavm"
-
-	mainClass.set("org.teavm.cli.TeaVMRunner")
-	classpath = teavmConfig
-	args("--help")
-
-	// TeaVMRunner calls System.exit(0) after --help, which would fail the build
-	isIgnoreExitValue = true
-}
-
-// Task to compile Java to JavaScript using TeaVM
-tasks.register<JavaExec>("generateJavaScript") {
-	description = "Compiles Java to JavaScript using TeaVM"
-	group = "teavm"
-	
-	// 1) preprocess -> 2) compile the preprocessed sources -> 3) strip asserts -> 4) TeaVM
-	dependsOn("teavmHelp")
-	dependsOn(preprocessForTeaVM)
-	dependsOn(stripTeavmAssertions)
-	
-	mainClass.set("org.teavm.cli.TeaVMRunner")
-	
-	// TeaVMRunner + compiled classes from the teavm sourceSet
-	classpath = teavmConfig + sourceSets["teavm"].output
-	
-	val outputDir = layout.buildDirectory.dir("teavm/js").get().asFile
-	
-	args(
-		"-d", outputDir.absolutePath,
-		"-t", "javascript",
-		"-m",  // Minify/obfuscate: shorter names, 2-3x smaller output
-		"-O", "2",  // Optimization: 1=NONE/debug, 2=BALANCED/recommended for JS, 3=AGGRESSIVE/for Wasm
-//		"-G",  // Generate source maps
-//		"-g",  // Generate debug information
-		"net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser"  // Main class as positional argument
-	)
-	
-	doFirst {
-		outputDir.mkdirs()
-		println("Compiling Java to JavaScript with TeaVM (preprocessed __TEAVM__) ...")
-		println("Output directory: ${outputDir.absolutePath}")
-	}
-	
-	doLast {
-		println("::group::[TEAVM]")
-		println("[TEAVM] JavaScript generation complete!")
-		println("[TEAVM] Checking output directory: ${outputDir.absolutePath}")
-		println("[TEAVM] outputDir.exists() = ${outputDir.exists()}")
-		if (outputDir.exists()) {
-			println("[TEAVM] outputDir contents:")
-			outputDir.listFiles()?.forEach { println("[TEAVM]   - ${it.name} (${it.length() / 1024} KB)") }
-		}
-		val classesJs = file("${outputDir.absolutePath}/classes.js")
-		println("[TEAVM] classes.js exists: ${classesJs.exists()}")
-		println("::endgroup::")
-		if (!classesJs.exists()) {
-			println("[TEAVM] WARNING: classes.js was NOT generated!")
-		}
-	}
-}
-
-// Custom task to build TeaVM JS version with HTML file
+// Custom task to prepare TeaVM JS version with HTML file
 tasks.register("teavm") {
 	description = "Prepares TeaVM JS version with HTML file"
 	group = "teavm"
 	
+	// The official plugin provides the 'generateJavaScript' task
 	dependsOn("generateJavaScript")
-	if (!fastBuild) {
-	    finalizedBy(tasks.named("teavmJavadoc"))
-	}
 	
-	val outputDir = layout.buildDirectory.dir("teavm/js").get().asFile
+	val outputDir = teavmJsOutputDir.get().asFile
 	
 	doLast {
 		// Copy the HTML template and all js files (without erasing existing files)
@@ -1013,43 +698,6 @@ tasks.register("teavm") {
 	}
 }
 
-// Javadoc for TeaVM preprocessed sources
-tasks.register<Javadoc>("teavmJavadoc") {
-	description = "Generates Javadoc for TeaVM preprocessed sources (after SJPP processing)"
-	group = "documentation"
-	
-	dependsOn(preprocessForTeaVM)
-	
-	source = fileTree(layout.buildDirectory.dir("generated/teavm-sjpp"))
-	classpath = teavmCompileConfig
-	
-	destinationDir = layout.buildDirectory.dir("docs/teavm-javadoc").get().asFile
-	
-	options {
-		this as StandardJavadocDocletOptions
-		addBooleanOption("Xdoclint:none", true)
-		addStringOption("Xmaxwarns", "50")
-		encoding = "UTF-8"
-		isUse = true
-		windowTitle = "PlantUML TeaVM API (preprocessed)"
-		docTitle = "PlantUML TeaVM API - Code after SJPP preprocessing"
-		header = "<b>PlantUML TeaVM</b><br>After __TEAVM__ preprocessing"
-	}
-	
-	doFirst {
-		println("Generating Javadoc for TeaVM preprocessed sources...")
-		println("Source: ${layout.buildDirectory.dir("generated/teavm-sjpp").get().asFile.absolutePath}")
-	}
-	
-	doLast {
-		println("")
-		println("=======================")
-		println("TeaVM Javadoc generated: ${destinationDir}/index.html")
-		println("=======================")
-		println("")
-	}
-}
-
 // Task to create a ZIP archive of the TeaVM JS version
 tasks.register<Zip>("teavmZip") {
 	description = "Creates a ZIP archive of the TeaVM JS version"
@@ -1058,7 +706,7 @@ tasks.register<Zip>("teavmZip") {
 	dependsOn("teavm")
 	
 	// Use lazy evaluation to ensure files are read after teavm task completes
-	from(layout.buildDirectory.dir("teavm/js")) {
+	from(teavmJsOutputDir) {
 		include("*.js", "*.html")
 	}
 	

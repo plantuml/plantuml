@@ -5,6 +5,7 @@ import org.teavm.jso.JSFunctor;
 import org.teavm.jso.JSObject;
 
 public final class TeaVmScriptLoader {
+	// ::remove file when JAVA8
 
 	private static final Object LOCK = new Object();
 	private static volatile boolean loadSuccess;

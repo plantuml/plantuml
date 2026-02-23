@@ -40,19 +40,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class UnsupportedStarStruct implements __struct__, __ptr__ {
 
-	// ::revert when __CORE__
 	public final static AtomicInteger CPT = new AtomicInteger();
-	// public static int CPT;
-	// ::done
+
 	public final int UID;
 
 	public static UnsupportedStarStruct SPY_ME;
 
 	public UnsupportedStarStruct() {
-		// ::revert when __CORE__
 		this.UID = CPT.incrementAndGet();
-		// this.UID = CPT++;
-		// ::done
 	}
 
 	final public __ptr__ unsupported() {

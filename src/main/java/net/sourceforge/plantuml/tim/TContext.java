@@ -75,6 +75,7 @@ import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
@@ -212,16 +213,16 @@ public class TContext {
 		functionsSet.addFunction(new Filename(defines));
 		functionsSet.addFunction(new FilenameNoExtension(defines));
 		functionsSet.addFunction(new FunctionExists());
-		// ::comment when __TEAVM__
-		functionsSet.addFunction(new GetAllStdlib());
-		functionsSet.addFunction(new GetAllTheme());
-		// ::done
+		if (!TeaVM.isTeaVM()) {
+			functionsSet.addFunction(new GetAllStdlib());
+			functionsSet.addFunction(new GetAllTheme());
+		}
 		functionsSet.addFunction(new GetCurrentTheme());
 		functionsSet.addFunction(new GetJsonKey());
 		functionsSet.addFunction(new GetJsonType());
-		// ::comment when __TEAVM__
-		functionsSet.addFunction(new GetStdlib());
-		// ::done
+		if (!TeaVM.isTeaVM()) {
+			functionsSet.addFunction(new GetStdlib());
+		}
 		functionsSet.addFunction(new GetVariableValue());
 		functionsSet.addFunction(new GetVersion());
 		functionsSet.addFunction(new Getenv());
@@ -238,9 +239,9 @@ public class TContext {
 		functionsSet.addFunction(new JsonSet());
 		functionsSet.addFunction(new LeftAlign());
 		functionsSet.addFunction(new Lighten());
-		// ::comment when __TEAVM__
-		functionsSet.addFunction(new LoadJson());
-		// ::done
+		if (!TeaVM.isTeaVM()) {
+			functionsSet.addFunction(new LoadJson());
+		}
 		// functionsSet.addFunction(new LoadJsonLegacy());
 		functionsSet.addFunction(new LogicalAnd());
 		functionsSet.addFunction(new LogicalNand());
@@ -372,9 +373,9 @@ public class TContext {
 	private TValue executeOneLineSafe(TMemory memory, StringLocated s, TFunctionType ftype, boolean modeSpecial)
 			throws EaterException {
 		try {
-			// ::comment when __TEAVM__
-			this.debug.add(s);
-			// ::done
+			if (!TeaVM.isTeaVM()) {
+				this.debug.add(s);
+			}
 			return executeOneLineNotSafe(memory, s, ftype, modeSpecial);
 		} catch (Exception e) {
 			if (e instanceof EaterException)
@@ -601,23 +602,22 @@ public class TContext {
 	}
 
 	private void executeImport(TMemory memory, StringLocated s) throws EaterException {
-		// ::comment when __TEAVM__
-		final EaterImport _import = new EaterImport(s.getTrimmed());
-		_import.analyze(this, memory);
+		if (!TeaVM.isTeaVM()) {
+			final EaterImport _import = new EaterImport(s.getTrimmed());
+			_import.analyze(this, memory);
 
-		try {
-			final SFile file = FileSystem.getInstance()
-					.getFile(applyFunctionsAndVariables(memory, new StringLocated(_import.getWhat(), s.getLocation())));
-			if (file.exists() && file.isDirectory() == false) {
-				pathSystem.addImportFile(file);
-				return;
+			try {
+				final SFile file = FileSystem.getInstance().getFile(
+						applyFunctionsAndVariables(memory, new StringLocated(_import.getWhat(), s.getLocation())));
+				if (file.exists() && file.isDirectory() == false) {
+					pathSystem.addImportFile(file);
+					return;
+				}
+			} catch (IOException e) {
+				Logme.error(e);
+				throw new EaterException("Cannot import " + e.getMessage(), s);
 			}
-		} catch (IOException e) {
-			Logme.error(e);
-			throw new EaterException("Cannot import " + e.getMessage(), s);
 		}
-		// ::done
-
 		throw new EaterException("Cannot import", s);
 	}
 
@@ -635,83 +635,84 @@ public class TContext {
 //	}
 
 	private void executeIncludesub(TMemory memory, StringLocated s) throws EaterException {
-		// ::comment when __TEAVM__
-		PathSystem saveImportedFiles = null;
-		try {
-			final EaterIncludesub include = new EaterIncludesub(s.getTrimmed());
-			include.analyze(this, memory);
-			final String what = include.getWhat();
-			final int idx = what.indexOf('!');
-			Sub sub = null;
-			if (idx != -1) {
-				final String filename = what.substring(0, idx);
-				final String blocname = what.substring(idx + 1);
-				try {
-					final InputFile f2 = pathSystem.getFile(filename, null);
-					if (f2 != null) {
-						saveImportedFiles = this.pathSystem;
-						this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
-						final Reader reader = f2.getReader(charset);
-						if (reader == null)
-							throw new EaterException("cannot include " + what, s);
+		if (!TeaVM.isTeaVM()) {
+			PathSystem saveImportedFiles = null;
+			try {
+				final EaterIncludesub include = new EaterIncludesub(s.getTrimmed());
+				include.analyze(this, memory);
+				final String what = include.getWhat();
+				final int idx = what.indexOf('!');
+				Sub sub = null;
+				if (idx != -1) {
+					final String filename = what.substring(0, idx);
+					final String blocname = what.substring(idx + 1);
+					try {
+						final InputFile f2 = pathSystem.getFile(filename, null);
+						if (f2 != null) {
+							saveImportedFiles = this.pathSystem;
+							this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
+							final Reader reader = f2.getReader(charset);
+							if (reader == null)
+								throw new EaterException("cannot include " + what, s);
 
-						try {
-							ReadLine readerline = ReadLineReader.create(reader, what, s.getLocation());
-							readerline = new UncommentReadLine(readerline);
-							sub = Sub.fromFile(readerline, blocname, this, memory);
-						} finally {
-							reader.close();
+							try {
+								ReadLine readerline = ReadLineReader.create(reader, what, s.getLocation());
+								readerline = new UncommentReadLine(readerline);
+								sub = Sub.fromFile(readerline, blocname, this, memory);
+							} finally {
+								reader.close();
+							}
 						}
+					} catch (IOException e) {
+						Logme.error(e);
+						throw new EaterException("cannot include " + what, s);
 					}
-				} catch (IOException e) {
-					Logme.error(e);
-					throw new EaterException("cannot include " + what, s);
 				}
+				if (sub == null)
+					sub = subs.get(what);
+
+				if (sub == null)
+					throw new EaterException("cannot include " + what, s);
+
+				executeLinesInternal(memory, sub.lines(), null);
+			} finally {
+				if (saveImportedFiles != null)
+					this.pathSystem = saveImportedFiles;
+
 			}
-			if (sub == null)
-				sub = subs.get(what);
-
-			if (sub == null)
-				throw new EaterException("cannot include " + what, s);
-
-			executeLinesInternal(memory, sub.lines(), null);
-		} finally {
-			if (saveImportedFiles != null)
-				this.pathSystem = saveImportedFiles;
-
 		}
-		// ::done
 	}
 
 	private void executeIncludeDef(TMemory memory, StringLocated s) throws EaterException {
-		// ::comment when __TEAVM__
-		final EaterIncludeDef include = new EaterIncludeDef(s.getTrimmed());
-		include.analyze(this, memory);
-		final String definitionName = include.getLocation();
-		final List<String> definition = definitionsContainer.getDefinition(definitionName);
-		final ReadLine reader2 = new ReadLineList(definition, s.getLocation());
+		if (!TeaVM.isTeaVM()) {
 
-		try {
-			final List<StringLocated> body = new ArrayList<>();
-			do {
-				final StringLocated sl = reader2.readLine();
-				if (sl == null) {
-					executeLinesInternal(memory, body, null);
-					return;
-				}
-				body.add(sl);
-			} while (true);
-		} catch (IOException e) {
-			Logme.error(e);
-			throw new EaterException("" + e, s);
-		} finally {
+			final EaterIncludeDef include = new EaterIncludeDef(s.getTrimmed());
+			include.analyze(this, memory);
+			final String definitionName = include.getLocation();
+			final List<String> definition = definitionsContainer.getDefinition(definitionName);
+			final ReadLine reader2 = new ReadLineList(definition, s.getLocation());
+
 			try {
-				reader2.close();
+				final List<StringLocated> body = new ArrayList<>();
+				do {
+					final StringLocated sl = reader2.readLine();
+					if (sl == null) {
+						executeLinesInternal(memory, body, null);
+						return;
+					}
+					body.add(sl);
+				} while (true);
 			} catch (IOException e) {
 				Logme.error(e);
+				throw new EaterException("" + e, s);
+			} finally {
+				try {
+					reader2.close();
+				} catch (IOException e) {
+					Logme.error(e);
+				}
 			}
 		}
-		// ::done
 	}
 
 	private JsonObject themeMetadata = new JsonObject();
@@ -721,39 +722,39 @@ public class TContext {
 	}
 
 	private void executeTheme(TMemory memory, StringLocated s) throws EaterException {
-		// ::comment when __TEAVM__
-		final EaterTheme eater = new EaterTheme(s.getTrimmed(), pathSystem);
-		eater.analyze(this, memory);
-		final Theme theme = eater.getTheme();
-		if (theme == null)
-			throw new EaterException("No such theme " + eater.getName(), s);
+		if (!TeaVM.isTeaVM()) {
+			final EaterTheme eater = new EaterTheme(s.getTrimmed(), pathSystem);
+			eater.analyze(this, memory);
+			final Theme theme = eater.getTheme();
+			if (theme == null)
+				throw new EaterException("No such theme " + eater.getName(), s);
 
-		final PathSystem saveImportedFiles = this.pathSystem;
-		this.pathSystem = eater.getNewImportedFiles();
+			final PathSystem saveImportedFiles = this.pathSystem;
+			this.pathSystem = eater.getNewImportedFiles();
 
-		try {
-			final List<StringLocated> body = new ArrayList<>();
-			do {
-				final StringLocated sl = theme.readLine();
-				if (sl == null) {
-					executeLines(memory, body, null, false);
-					return;
-				}
-				body.add(sl);
-			} while (true);
-		} catch (IOException e) {
-			Logme.error(e);
-			throw new EaterException("Error reading theme " + e, s);
-		} finally {
-			this.themeMetadata = theme.getMetadata();
-			this.pathSystem = saveImportedFiles;
 			try {
-				theme.close();
+				final List<StringLocated> body = new ArrayList<>();
+				do {
+					final StringLocated sl = theme.readLine();
+					if (sl == null) {
+						executeLines(memory, body, null, false);
+						return;
+					}
+					body.add(sl);
+				} while (true);
 			} catch (IOException e) {
 				Logme.error(e);
+				throw new EaterException("Error reading theme " + e, s);
+			} finally {
+				this.themeMetadata = theme.getMetadata();
+				this.pathSystem = saveImportedFiles;
+				try {
+					theme.close();
+				} catch (IOException e) {
+					Logme.error(e);
+				}
 			}
 		}
-		// ::done
 	}
 
 //	private void executeIncludeSprites(TMemory memory, StringLocated s) throws EaterException {
@@ -807,49 +808,50 @@ public class TContext {
 			if (what.startsWith("<") && what.endsWith(">")) {
 				final String stdlibPath = what.substring(1, what.length() - 1);
 				saveImportedFiles = this.pathSystem;
-				// ::revert when __TEAVM__
-				InputFile tmp = this.pathSystem.getInputFile(what);
-				this.pathSystem = this.pathSystem.changeCurrentDirectory(tmp.getParentFolder());
-				reader = PreprocessorUtils.getReaderStdlibInclude(s, stdlibPath);
-				// java.io.InputStream is = this.pathSystem.getTeaVMInputStream(what);
-				// reader = ReadLineReader.create(new java.io.InputStreamReader(is), what);
-				// ::done
+				if (TeaVM.isTeaVM()) {
+					java.io.InputStream is = this.pathSystem.getTeaVMInputStream(what);
+					reader = ReadLineReader.create(new java.io.InputStreamReader(is), what);
+				} else {
+					InputFile tmp = this.pathSystem.getInputFile(what);
+					this.pathSystem = this.pathSystem.changeCurrentDirectory(tmp.getParentFolder());
+					reader = PreprocessorUtils.getReaderStdlibInclude(s, stdlibPath);
+				}
 			} else if (what.startsWith("http://") || what.startsWith("https://")) {
-				// ::comment when __TEAVM__
-				final SURL url = SURL.create(what);
-				if (url == null)
-					throw new EaterException("Cannot open URL", s);
+				if (!TeaVM.isTeaVM()) {
+					final SURL url = SURL.create(what);
+					if (url == null)
+						throw new EaterException("Cannot open URL", s);
 
-				reader = PreprocessorUtils.getReaderIncludeUrl(url, s, suf, charset);
-				// ::done
+					reader = PreprocessorUtils.getReaderIncludeUrl(url, s, suf, charset);
+				}
 			} else if (what.startsWith("[") && what.endsWith("]")) {
 				throw new IOException("To be finished");
 				// reader = PreprocessorUtils.getReaderNonstandardInclude(s, what.substring(1,
 				// what.length() - 1));
 			} else {
-				// ::comment when __TEAVM__
-				final InputFile f2 = this.pathSystem.getInputFile(what);
-				if (f2 != null) {
-					if (strategy == PreprocessorIncludeStrategy.DEFAULT && filesUsedCurrent.contains(f2))
-						return;
+				if (!TeaVM.isTeaVM()) {
+					final InputFile f2 = this.pathSystem.getInputFile(what);
+					if (f2 != null) {
+						if (strategy == PreprocessorIncludeStrategy.DEFAULT && filesUsedCurrent.contains(f2))
+							return;
 
-					if (strategy == PreprocessorIncludeStrategy.ONCE && filesUsedCurrent.contains(f2))
-						throw new EaterException("This file has already been included", s);
+						if (strategy == PreprocessorIncludeStrategy.ONCE && filesUsedCurrent.contains(f2))
+							throw new EaterException("This file has already been included", s);
 
-					reader = DiagramDetector.extractFromFile(f2, "desc2");
+						reader = DiagramDetector.extractFromFile(f2, "desc2");
 
-					if (reader == null) {
-						final Reader tmp = f2.getReader(charset);
-						if (tmp == null)
-							throw new EaterException("Cannot include file", s);
+						if (reader == null) {
+							final Reader tmp = f2.getReader(charset);
+							if (tmp == null)
+								throw new EaterException("Cannot include file", s);
 
-						reader = ReadLineReader.create(tmp, what, s.getLocation());
+							reader = ReadLineReader.create(tmp, what, s.getLocation());
+						}
+						saveImportedFiles = this.pathSystem;
+						this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
+						assert reader != null;
 					}
-					saveImportedFiles = this.pathSystem;
-					this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
-					assert reader != null;
 				}
-				// ::done
 			}
 			if (reader != null)
 				try {

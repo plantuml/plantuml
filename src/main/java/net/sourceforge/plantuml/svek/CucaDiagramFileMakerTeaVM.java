@@ -151,9 +151,7 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 				.status(status) //
 				.warningOrError(warningOrError);
 
-		// :: uncomment when __TEAVM__
-		// ib.udrawable.drawU(ug);
-		// :: done
+		ib.udrawable.drawU(ug);
 
 	}
 

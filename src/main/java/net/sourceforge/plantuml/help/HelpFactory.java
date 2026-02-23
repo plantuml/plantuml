@@ -46,8 +46,6 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class HelpFactory extends PSystemCommandFactory {
-	// ::comment when __CORE__
-	// ::comment when __HAXE__
 
 	@Override
 	public Help createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {

@@ -85,7 +85,6 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 		this.styleBuilder = styleBuilder;
 	}
 
-	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		GtileBox result = GtileBox.create(stringBounder, colors.mute(skinParam), label, getSwimlaneIn(), boxStyle,
@@ -102,7 +101,6 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 		}
 		return result;
 	}
-	// ::done
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {

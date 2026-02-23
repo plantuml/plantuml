@@ -98,8 +98,15 @@
                  token="COMPILE_TIMESTAMP = 000L"
                  value="COMPILE_TIMESTAMP = ${compile.timestamp.millis}L"/>
 
-        <!-- Compile Java sources from filtered sources -->
-        <javac target="1.8" source="1.8" srcdir="build/filtered-src" destdir="build" debug="on" encoding="UTF-8">
+        <!-- Preprocess sources with SJPP to strip TeaVM/Java11+ code -->
+        <mkdir dir="build/sjpp-out" />
+        <taskdef name="sjpp" classname="sjpp.SjppAntTask" classpath="sjpp.jar" />
+        <sjpp src="build/filtered-src"
+              dest="build/sjpp-out"
+              define="JAVA8" />
+
+        <!-- Compile Java sources from preprocessed sources -->
+        <javac target="1.8" source="1.8" srcdir="build/sjpp-out" destdir="build" debug="on" encoding="UTF-8">
             <exclude name="test/**" />
         </javac>
 

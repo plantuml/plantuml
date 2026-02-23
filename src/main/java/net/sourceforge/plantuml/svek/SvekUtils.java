@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class SvekUtils {
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	static public void traceString(final SFile f, String text) throws IOException {
 		Log.info(() -> "Creating intermediate file " + f.getPrintablePath());
 		try (PrintWriter pw = f.createPrintWriter()) {

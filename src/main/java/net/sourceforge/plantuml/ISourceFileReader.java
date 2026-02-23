@@ -41,8 +41,6 @@ import java.util.List;
 import net.sourceforge.plantuml.cli.ExitStatus;
 
 public interface ISourceFileReader {
-	// ::remove file when __CORE__
-	// ::remove file when __HAXE__
 
 	public List<GeneratedImage> getGeneratedImages() throws IOException;
 

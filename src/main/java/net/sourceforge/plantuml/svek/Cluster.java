@@ -500,7 +500,6 @@ public class Cluster implements Moveable {
 		this.rectangleArea = RectangleArea.build(min, max);
 	}
 
-	// ::comment when __CORE__
 	public boolean printCluster1(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder) {
 		final List<SvekNode> tmp = getNodesOrderedTop(lines);
 		if (tmp.size() == 0)
@@ -608,7 +607,6 @@ public class Cluster implements Moveable {
 			SvekUtils.println(sb);
 		}
 	}
-	// ::done
 
 	private Set<String> getRankSame(Collection<SvekEdge> lines) {
 		final Set<String> rankSame = new HashSet<>();

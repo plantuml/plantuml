@@ -94,7 +94,7 @@ import net.sourceforge.plantuml.tim.expression.TValue;
  * @author Aljoscha Rittner
  */
 public class LoadJson extends SimpleReturnFunction {
-	// ::remove file when __TEAVM__
+	
 	
 	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%load_json", 3);
 
@@ -178,7 +178,6 @@ public class LoadJson extends SimpleReturnFunction {
 			final SURL url = SURL.create(path);
 			if (url != null)
 				byteData = url.getBytes();
-			// ::comment when __CORE__
 		} else {
 			try {
 				final SFile file = FileSystem.getInstance().getFile(path);
@@ -190,7 +189,6 @@ public class LoadJson extends SimpleReturnFunction {
 			} catch (IOException e) {
 				Logme.error(e);
 			}
-			// ::done
 		}
 
 		if (byteData == null || byteData.length == 0)

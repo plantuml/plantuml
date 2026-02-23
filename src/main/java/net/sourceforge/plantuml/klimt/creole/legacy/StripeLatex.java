@@ -47,9 +47,10 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class StripeLatex implements StripeRaw {
-	// ::remove file when __CORE__ or __TEAVM__
+
 	final private FontConfiguration fontConfiguration;
 	final private StringBuilder formula = new StringBuilder();
 	private AtomMath atom;
@@ -84,11 +85,14 @@ public class StripeLatex implements StripeRaw {
 	}
 
 	private Atom getAtom() {
-		if (atom == null) {
-			final ScientificEquationSafe math = ScientificEquationSafe.fromLatex(formula.toString());
-			atom = new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor());
-		}
-		return atom;
+		if (!TeaVM.isTeaVM()) {
+			if (atom == null) {
+				final ScientificEquationSafe math = ScientificEquationSafe.fromLatex(formula.toString());
+				atom = new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor());
+			}
+			return atom;
+		} else
+			return null;
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {

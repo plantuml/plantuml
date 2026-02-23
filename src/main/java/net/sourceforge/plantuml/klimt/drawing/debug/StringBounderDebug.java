@@ -41,16 +41,12 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.font.StringBounderRaw;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class StringBounderDebug extends StringBounderRaw {
-	// ::remove folder when __HAXE__
-	// ::remove folder when __CORE__
 
 	public StringBounderDebug() {
-		// ::revert when __TEAVM__
-		super(FileFormat.gg.getFontRenderContext());
-		// super(null);
-		// ::done
+		super(TeaVM.isTeaVM() ? null : FileFormat.gg.getFontRenderContext());
 	}
 
 	@Override

@@ -97,6 +97,8 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMakerSvek;
+import net.sourceforge.plantuml.svek.CucaDiagramFileMakerTeaVM;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -411,7 +413,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return result.toArray(new String[result.size()]);
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	private void createFilesGraphml(OutputStream suggestedFile) throws IOException {
 		final CucaDiagramGraphmlMaker maker = new CucaDiagramGraphmlMaker(this);
 		maker.createFiles(suggestedFile);
@@ -435,11 +437,14 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	@Override
 	final public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
-		// ::revert when __TEAVM__
-		final CucaDiagramFileMaker maker = new CucaDiagramFileMakerSmetana(this);
-		// final CucaDiagramFileMaker maker = new
-		// net.sourceforge.plantuml.svek.CucaDiagramFileMakerTeaVM(this);
+		final CucaDiagramFileMaker maker;
+		if (TeaVM.isTeaVM())
+			// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
+			maker = new CucaDiagramFileMakerTeaVM(this);
+		// maker = new CucaDiagramFileMakerSmetana(this);
 		// ::done
+		else
+			maker = new CucaDiagramFileMakerSmetana(this);
 		maker.createOneGraphic(ug);
 	}
 
@@ -451,52 +456,52 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		final FileFormat fileFormat = fileFormatOption.getFileFormat();
+		if (TeaVM.isTeaVM()) {
+			throw new UnsupportedOperationException("TEAVM1676");
+		} else {
 
-		// ::comment when __CORE__ or __TEAVM__
-		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
-			createFilesTxt(os, index, fileFormat);
-			return ImageDataSimple.ok();
+			final FileFormat fileFormat = fileFormatOption.getFileFormat();
+
+			if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
+				createFilesTxt(os, index, fileFormat);
+				return ImageDataSimple.ok();
+			}
+
+			if (fileFormat == FileFormat.GRAPHML) {
+				createFilesGraphml(os);
+				return ImageDataSimple.ok();
+			}
+
+			if (fileFormat.name().startsWith("XMI")) {
+				createFilesXmi(os, fileFormat);
+				return ImageDataSimple.ok();
+			}
+
+			if (fileFormat == FileFormat.SCXML) {
+				createFilesScxml(os);
+				return ImageDataSimple.ok();
+			}
+
+			if (getUmlDiagramType() == UmlDiagramType.COMPOSITE)
+				throw new UnsupportedOperationException();
+
+			this.eventuallyBuildPhantomGroups(null);
+			final CucaDiagramFileMaker maker;
+			if (this.isUseElk())
+				maker = new CucaDiagramFileMakerElk(this);
+			else if (this.isUseSmetana())
+				maker = new CucaDiagramFileMakerSmetana(this);
+			else
+				maker = new CucaDiagramFileMakerSvek(this);
+
+			final ImageData result = maker.createFile(os, getDotStrings(), fileFormatOption);
+
+			if (result == null)
+				return ImageDataSimple.error();
+
+			this.warningOrError = result.getWarningOrError();
+			return result;
 		}
-
-		if (fileFormat == FileFormat.GRAPHML) {
-			createFilesGraphml(os);
-			return ImageDataSimple.ok();
-		}
-
-		if (fileFormat.name().startsWith("XMI")) {
-			createFilesXmi(os, fileFormat);
-			return ImageDataSimple.ok();
-		}
-
-		if (fileFormat == FileFormat.SCXML) {
-			createFilesScxml(os);
-			return ImageDataSimple.ok();
-		}
-		// ::done
-
-		if (getUmlDiagramType() == UmlDiagramType.COMPOSITE)
-			throw new UnsupportedOperationException();
-
-		this.eventuallyBuildPhantomGroups(null);
-		final CucaDiagramFileMaker maker;
-		// ::revert when __CORE__ or __TEAVM__
-		if (this.isUseElk())
-			maker = new CucaDiagramFileMakerElk(this);
-		else if (this.isUseSmetana())
-			maker = new CucaDiagramFileMakerSmetana(this);
-		else
-			maker = new CucaDiagramFileMakerSvek(this);
-		// maker = null;
-		// ::done
-
-		final ImageData result = maker.createFile(os, getDotStrings(), fileFormatOption);
-
-		if (result == null)
-			return ImageDataSimple.error();
-
-		this.warningOrError = result.getWarningOrError();
-		return result;
 	}
 
 	@Override

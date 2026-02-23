@@ -43,8 +43,6 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemListFonts extends PlainStringsDiagram {
-	// ::remove folder when __CORE__
-
 	public PSystemListFonts(UmlSource source, String text, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
 		strings.add("   <b><size:16>Fonts available:");

@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.annotation.DeadCode;
 
 @DeadCode(comment = "try for text diagram compression")
 public class Tokens {
-	// ::remove file when __TEAVM__
+	
 
 	private final List<String> keywords = new ArrayList<>();
 

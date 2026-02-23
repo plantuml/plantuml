@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.security;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 /**
  * There are 4 different security profile defined.
  * <p>
@@ -106,7 +108,9 @@ public enum SecurityProfile {
 	 * @return the value
 	 */
 	static SecurityProfile init() {
-		// ::comment when __CORE__ or __TEAVM__
+		if (TeaVM.isTeaVM())
+			return UNSECURE;
+
 		final String env = SecurityUtils.getenv("PLANTUML_SECURITY_PROFILE");
 		if ("SANDBOX".equalsIgnoreCase(env))
 			return SANDBOX;
@@ -115,12 +119,9 @@ public enum SecurityProfile {
 		else if ("INTERNET".equalsIgnoreCase(env))
 			return INTERNET;
 		else if ("UNSECURE".equalsIgnoreCase(env))
-			// ::done
 			return UNSECURE;
-		// ::comment when __CORE__ or __TEAVM__
 
 		return LEGACY;
-		// ::done
 	}
 
 	/**

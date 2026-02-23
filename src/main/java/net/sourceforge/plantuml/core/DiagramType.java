@@ -90,7 +90,7 @@ public enum DiagramType {
 		case 'd':
 			if (check("dot", text, p))
 				return DOT;
-			// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__
+			// ::comment when __MIT__ __EPL__ __BSD__ __ASL__
 			if (check("ditaa", text, p))
 				return DITAA;
 			// ::done
@@ -123,7 +123,7 @@ public enum DiagramType {
 			return UNKNOWN;
 
 		case 'j':
-			// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+			// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
 			if (check("jcckit", text, p))
 				return JCCKIT;
 			// ::done

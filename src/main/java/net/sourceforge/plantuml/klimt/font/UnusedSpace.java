@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 
 public class UnusedSpace {
 	// ::remove file when __HAXE__
@@ -86,7 +87,7 @@ public class UnusedSpace {
 
 		// ::comment when __TEAVM__
 
-		final PortableImage im = new PortableImage(2 * HALF_SIZE, 2 * HALF_SIZE, PortableImage.TYPE_INT_RGB);
+		final PortableImage im = PortableImageFactory.build(2 * HALF_SIZE, 2 * HALF_SIZE, PortableImage.TYPE_INT_RGB);
 		final Graphics2D g2d = im.createGraphics();
 		final String text = "" + c;
 		g2d.setFont(UFontImpl.getUnderlayingFont(font, text));

@@ -1,7 +1,10 @@
 package net.sourceforge.plantuml.teavm.browser;
 
+// ::comment when JAVA8
 import org.teavm.jso.JSBody;
+// ::done
 
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.version.Version;
 
 public class BrowserLog {
@@ -18,9 +21,11 @@ public class BrowserLog {
 	}
 
 	private static void consoleMessage(String msg) {
-		// ::uncomment when __TEAVM__
-		// final String message = getMessage(msg);
-		// jsLog(message);
+		// ::comment when JAVA8
+		if (TeaVM.isTeaVM()) {
+			final String message = getMessage(msg);
+			jsLog(message);
+		}
 		// ::done
 	}
 
@@ -30,10 +35,13 @@ public class BrowserLog {
 	}
 
 	public static void jsStatusDuration() {
+		// ::comment when JAVA8
 		final String msg = START == 0 ? "" : Version.fullDescription();
 		jsStatus(getMessage(msg));
+		// ::done
 	}
 
+	// ::comment when JAVA8
 	@JSBody(params = "msg", script = "console.log(msg);")
 	public static native void jsLog(String msg);
 
@@ -43,5 +51,6 @@ public class BrowserLog {
 			"if (el) { el.textContent = msg; }" //
 	)
 	public static native void jsStatus(String msg);
+	// ::done
 
 }

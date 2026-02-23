@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.klimt.color;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.awt.XColor;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class HColorGradient extends HColor {
 
@@ -89,11 +90,9 @@ public class HColorGradient extends HColor {
 	}
 
 	public final int getRGB(ColorMapper mapper, double coeff, int alpha) {
-		// ::revert when __TEAVM__
+		if (TeaVM.isTeaVM())
+			return 0;
 		return getColor(mapper, coeff, alpha).getRGB();
-		// return 0;
-		// ::done
-
 	}
 
 	public final char getPolicy() {

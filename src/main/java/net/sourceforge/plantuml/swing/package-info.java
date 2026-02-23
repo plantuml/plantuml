@@ -6,4 +6,4 @@
  */
 
 package net.sourceforge.plantuml.swing;
-// ::remove folder when __CORE__ or __TEAVM__
+

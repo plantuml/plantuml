@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.klimt.shape.DotPath;
  * consists of a series of cubic Bezier curves.
  */
 public class DriverDotPathTeaVM implements UDriver<DotPath, SvgGraphicsTeaVM> {
+	// ::remove file when JAVA8
 
 	@Override
 	public void draw(DotPath shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {

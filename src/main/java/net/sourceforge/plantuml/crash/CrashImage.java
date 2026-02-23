@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.crash;
 
-
-
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
@@ -52,6 +50,7 @@ import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Log;
 
 public class CrashImage implements UDrawable {
@@ -84,18 +83,19 @@ public class CrashImage implements UDrawable {
 
 	private PortableImage generateFlashcodeImage(String flash, ReportLog strings) {
 		assert flash != null;
-		// ::comment when __CORE__ or __TEAVM__
-		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-		try {
-			final PortableImage flashcodeImage = utils.exportFlashcode(flash, XColor.BLACK, XColor.WHITE);
-			if (flashcodeImage != null)
-				strings.addDecodeHint();
-			return flashcodeImage;
-		} catch (Throwable e) {
-			Log.error("Issue in flashcode generation " + e);
-			// Logme.error(e);
+		if (!TeaVM.isTeaVM()) {
+			final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
+			try {
+				final PortableImage flashcodeImage = utils.exportFlashcode(flash, XColor.BLACK, XColor.WHITE);
+				if (flashcodeImage != null)
+					strings.addDecodeHint();
+				return flashcodeImage;
+			} catch (Throwable e) {
+				Log.error("Issue in flashcode generation " + e);
+				// Logme.error(e);
+			}
 		}
-		// ::done
+
 		return null;
 	}
 

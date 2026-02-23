@@ -41,8 +41,6 @@ import java.lang.reflect.Method;
 import net.sourceforge.plantuml.log.Logme;
 
 public class PdfConverter {
-    // ::remove folder when __HAXE__
-	// ::remove folder when __CORE__
 
 	public static void convert(File svgFile, File pdfFile) {
 

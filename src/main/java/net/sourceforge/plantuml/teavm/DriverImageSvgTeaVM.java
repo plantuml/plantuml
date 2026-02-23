@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.klimt.shape.UImageSvg;
  * into the output SVG.
  */
 public class DriverImageSvgTeaVM implements UDriver<UImageSvg, SvgGraphicsTeaVM> {
+	// ::remove file when JAVA8
 
 	@Override
 	public void draw(UImageSvg image, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {

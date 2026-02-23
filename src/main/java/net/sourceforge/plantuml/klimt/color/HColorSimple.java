@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.klimt.color;
 import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior.WITH_FILL_NONE;
 
 import net.sourceforge.plantuml.klimt.awt.XColor;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class HColorSimple extends HColor {
 
@@ -95,22 +96,20 @@ public class HColorSimple extends HColor {
 
 	@Override
 	public HColor lighten(int ratio) {
-		// ::revert when __TEAVM__
+		if (TeaVM.isTeaVM())
+			return this;
 		final float[] hsl = new HSLColor(color).getHSL();
 		hsl[2] += hsl[2] * (ratio / 100.0);
 		return HColorSimple.create(new HSLColor(hsl).getRGB());
-		// return this;
-		// ::done
 	}
 
 	@Override
 	public HColor darken(int ratio) {
-		// ::revert when __TEAVM__
+		if (TeaVM.isTeaVM())
+			return this;
 		final float[] hsl = new HSLColor(color).getHSL();
 		hsl[2] -= hsl[2] * (ratio / 100.0);
 		return HColorSimple.create(new HSLColor(hsl).getRGB());
-		// return this;
-		// ::done
 	}
 
 	@Override

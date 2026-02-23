@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
  * converting the character to a path (which would require AWT).
  */
 public class DriverCenteredCharacterTeaVM implements UDriver<UCenteredCharacter, SvgGraphicsTeaVM> {
+	// ::remove file when JAVA8
 
 	@Override
 	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param,

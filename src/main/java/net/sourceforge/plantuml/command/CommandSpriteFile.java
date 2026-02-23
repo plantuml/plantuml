@@ -76,7 +76,6 @@ public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		// ::comment when __CORE__
 		final String src = arg.get("FILE", 0);
 		final Sprite sprite;
 		try {
@@ -121,11 +120,9 @@ public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 			return CommandExecutionResult.error("Cannot read: " + src);
 		}
 		system.addSprite(arg.get("NAME", 0), sprite);
-		// ::done
 		return CommandExecutionResult.ok();
 	}
 
-	// ::comment when __CORE__
 	private Sprite getImageFromZip(SFile f, String name) throws IOException {
 		final InputStream tmp = f.openFile();
 		if (tmp == null) {
@@ -160,5 +157,4 @@ public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 	private boolean isSvg(String name) {
 		return name.toLowerCase().endsWith(".svg");
 	}
-	// ::done
 }

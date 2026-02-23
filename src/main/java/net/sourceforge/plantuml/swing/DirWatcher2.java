@@ -57,7 +57,6 @@ import net.sourceforge.plantuml.file.FileWatcher;
 import net.sourceforge.plantuml.log.Logme;
 
 public class DirWatcher2 {
-	// ::remove file when __CORE__
 
 	final private File dir;
 	final private CliOptions option;

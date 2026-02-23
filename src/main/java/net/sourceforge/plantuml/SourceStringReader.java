@@ -60,7 +60,6 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.Log;
 
 public class SourceStringReader {
-	// ::remove file when __HAXE__ or __TEAVM__
 
 	final private List<BlockUml> blocks;
 
@@ -121,7 +120,7 @@ public class SourceStringReader {
 		return outputImage(os, 0);
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	/**
 	 * @deprecated Use {@link #outputImage(SFile)} instead
 	 */

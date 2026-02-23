@@ -58,7 +58,7 @@ import java.util.zip.ZipFile;
  * </pre>
  */
 public class InputFileZip implements InputFile {
-	// ::remove file when __TEAVM__
+	
 
 	private final File zipFile;
 	private final String entryName;

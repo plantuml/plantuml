@@ -80,7 +80,7 @@ public enum SpriteGrayLevel {
 		return nbColor;
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	public List<String> encode(PortableImage img) {
 		if (this == GRAY_16)
 			return encode16(img);
@@ -243,7 +243,7 @@ public enum SpriteGrayLevel {
 		return result;
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	public List<String> encodeZ(PortableImage img) {
 		final int width = img.getWidth();
 		final int height = img.getHeight();

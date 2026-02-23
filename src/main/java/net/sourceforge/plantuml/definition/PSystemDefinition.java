@@ -56,8 +56,6 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.Pragma;
 
 public class PSystemDefinition extends PlainDiagram implements UDrawable {
-    // ::remove folder when __HAXE__
-	// ::remove folder when __CORE__
 
 	private final List<String> lines = new ArrayList<>();
 	private final String startLine;

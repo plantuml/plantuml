@@ -61,10 +61,10 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
 import net.sourceforge.plantuml.svek.EmptySvgException;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.version.Version;
 
 public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annotated, WithSprite {
-	// ::remove file when __HAXE__
 
 	private boolean rotation;
 
@@ -111,10 +111,10 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		fileFormatOption = fileFormatOption.withTikzFontDistortion(getSkinParam().getTikzFontDistortion());
 		fileFormatOption.getTikzFontDistortion().updateFromPragma(getPragma());
 
-		// ::comment when __CORE__ or __TEAVM__
-		if (fileFormatOption.getFileFormat() == FileFormat.PDF)
-			return exportDiagramInternalPdf(os, index);
-		// ::done
+		if (!TeaVM.isTeaVM()) {
+			if (fileFormatOption.getFileFormat() == FileFormat.PDF)
+				return exportDiagramInternalPdf(os, index);
+		}
 
 		try {
 			final ImageData imageData = exportDiagramInternal(os, index, fileFormatOption);
@@ -169,7 +169,6 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		}
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
 	private ImageData exportDiagramInternalPdf(OutputStream os, int index) throws IOException {
 		final File svg = FileUtils.createTempFileLegacy("pdf", ".svf");
 		final File pdfFile = FileUtils.createTempFileLegacy("pdf", ".pdf");
@@ -197,7 +196,6 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 	static String changeName(String name) {
 		return name.replaceAll("(?i)\\.\\w{3}$", ".cmapx");
 	}
-	// ::done
 
 	private XDimension2D lastInfo;
 

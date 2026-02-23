@@ -54,10 +54,10 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.style.ISkinParam;
 
 public class ClusterDotString {
-	// ::remove file when __CORE__
 
 	private final Cluster cluster;
 	private final ISkinParam skinParam;
@@ -91,11 +91,8 @@ public class ClusterDotString {
 		}
 		final boolean thereALinkFromOrToGroup2 = isThereALinkFromOrToGroup(lines);
 		boolean thereALinkFromOrToGroup1 = thereALinkFromOrToGroup2;
-		// ::revert when __TEAVM__
-		final boolean useProtectionWhenThereALinkFromOrToGroup = graphvizVersion
-				.useProtectionWhenThereALinkFromOrToGroup();
-		// final boolean useProtectionWhenThereALinkFromOrToGroup = false;
-		// ::done
+		final boolean useProtectionWhenThereALinkFromOrToGroup = TeaVM.isTeaVM() ? false
+				: graphvizVersion.useProtectionWhenThereALinkFromOrToGroup();
 		if (useProtectionWhenThereALinkFromOrToGroup == false)
 			thereALinkFromOrToGroup1 = false;
 

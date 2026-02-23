@@ -110,6 +110,7 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
 import net.sourceforge.plantuml.svek.extremity.ExtremityOther;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.Log;
@@ -227,15 +228,16 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 			FontConfiguration cardinalityFont, Bibliotekon bibliotekon, Pragma pragma,
 			GraphvizVersion graphvizVersion) {
 		super(link, skinParam, bibliotekon);
-		// ::comment when __CORE__ or __TEAVM__
-		if (graphvizVersion.useShieldForQuantifier() 
-				&& (link.getLinkArg().getQuantifier1() != null || link.getLinkArg().getRole1() != null))
-			link.getEntity1().ensureMargins(Margins.uniform(16));
 
-		if (graphvizVersion.useShieldForQuantifier()
-				&& (link.getLinkArg().getQuantifier2() != null || link.getLinkArg().getRole2() != null))
-			link.getEntity2().ensureMargins(Margins.uniform(16));
-		// ::done
+		if (!TeaVM.isTeaVM()) {
+			if (graphvizVersion.useShieldForQuantifier()
+					&& (link.getLinkArg().getQuantifier1() != null || link.getLinkArg().getRole1() != null))
+				link.getEntity1().ensureMargins(Margins.uniform(16));
+
+			if (graphvizVersion.useShieldForQuantifier()
+					&& (link.getLinkArg().getQuantifier2() != null || link.getLinkArg().getRole2() != null))
+				link.getEntity2().ensureMargins(Margins.uniform(16));
+		}
 
 		if (link.getLinkArg().getKal1() != null)
 			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), skinParam, link.getEntity1(), link, stringBounder);
@@ -400,10 +402,11 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		sb.append(decoration);
 
 		int length = link.getLength();
-		// ::comment when __TEAVM__
-		if (graphvizVersion.ignoreHorizontalLinks() && length == 1)
-			length = 2;
-		// ::done
+
+		if (!TeaVM.isTeaVM()) {
+			if (graphvizVersion.ignoreHorizontalLinks() && length == 1)
+				length = 2;
+		}
 
 		if (useRankSame) {
 			if (pragma.isDefine(PragmaKey.HORIZONTAL_LINE_BETWEEN_DIFFERENT_PACKAGE_ALLOWED) || link.isInvis()
@@ -420,15 +423,14 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		sb.append("color=\"" + XColor.toHexRGBColor(lineColor) + "\"");
 		if (hasNoteLabelText() || link.getLinkConstraint() != null) {
 			sb.append(",");
-			// ::revert when __TEAVM__
-			if (graphvizVersion.useXLabelInsteadOfLabel() || dotMode == DotMode.NO_LEFT_RIGHT_AND_XLABEL
+			if (TeaVM.isTeaVM()) {
+				sb.append("label=<");
+			} else if (graphvizVersion.useXLabelInsteadOfLabel() || dotMode == DotMode.NO_LEFT_RIGHT_AND_XLABEL
 					|| dotSplines == DotSplines.ORTHO) {
 				sb.append("xlabel=<");
 			} else {
 				sb.append("label=<");
 			}
-			// sb.append("label=<");
-			// ::done
 			XDimension2D dimNote = hasNoteLabelText() ? labelText.calculateDimension(stringBounder) : CONSTRAINT_SPOT;
 			dimNote = dimNote.delta(2 * labelShield);
 
@@ -951,9 +953,8 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 			if (this.startTailText != null) {
 				this.startTailText.drawU(ug.apply(new UTranslate(labelX, labelY)));
 				if (this.startTailRoleText != null)
-					drawRoleLabel(ug, this.startTailRoleText, this.startTailText,
-							this.startTailLabelXY.getPosition(), dotPath.getStartPoint(),
-							dotPath.getEndPoint(), x, y);
+					drawRoleLabel(ug, this.startTailRoleText, this.startTailText, this.startTailLabelXY.getPosition(),
+							dotPath.getStartPoint(), dotPath.getEndPoint(), x, y);
 			} else if (this.startTailRoleText != null) {
 				this.startTailRoleText.drawU(ug.apply(new UTranslate(labelX, labelY)));
 			}
@@ -965,9 +966,8 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 			if (this.endHeadText != null) {
 				this.endHeadText.drawU(ug.apply(new UTranslate(labelX, labelY)));
 				if (this.endHeadRoleText != null)
-					drawRoleLabel(ug, this.endHeadRoleText, this.endHeadText,
-							this.endHeadLabelXY.getPosition(), dotPath.getEndPoint(),
-							dotPath.getStartPoint(), x, y);
+					drawRoleLabel(ug, this.endHeadRoleText, this.endHeadText, this.endHeadLabelXY.getPosition(),
+							dotPath.getEndPoint(), dotPath.getStartPoint(), x, y);
 			} else if (this.endHeadRoleText != null) {
 				this.endHeadRoleText.drawU(ug.apply(new UTranslate(labelX, labelY)));
 			}
@@ -1016,12 +1016,12 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 	}
 
 	/**
-	 * Draws a role label on the opposite side of the line from the quantifier.
-	 * For vertical lines, the role is placed on the other side of the line's X.
-	 * For horizontal lines, the role is placed on the other side of the line's Y.
+	 * Draws a role label on the opposite side of the line from the quantifier. For
+	 * vertical lines, the role is placed on the other side of the line's X. For
+	 * horizontal lines, the role is placed on the other side of the line's Y.
 	 */
-	private void drawRoleLabel(UGraphic ug, TextBlock role, TextBlock quantifier,
-			XPoint2D quantifierPos, XPoint2D thisEndpoint, XPoint2D otherEndpoint, double x, double y) {
+	private void drawRoleLabel(UGraphic ug, TextBlock role, TextBlock quantifier, XPoint2D quantifierPos,
+			XPoint2D thisEndpoint, XPoint2D otherEndpoint, double x, double y) {
 		final XDimension2D qDim = quantifier.calculateDimension(stringBounder);
 		final XDimension2D rDim = role.calculateDimension(stringBounder);
 
@@ -1029,8 +1029,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		final double dirY = otherEndpoint.getY() - thisEndpoint.getY();
 
 		if (Math.abs(dirX) + Math.abs(dirY) < 0.001) {
-			role.drawU(ug.apply(new UTranslate(x + quantifierPos.getX(),
-					y + quantifierPos.getY() + qDim.getHeight())));
+			role.drawU(ug.apply(new UTranslate(x + quantifierPos.getX(), y + quantifierPos.getY() + qDim.getHeight())));
 			return;
 		}
 

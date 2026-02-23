@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.url.Url;
 
 public class UGraphicTeaVM extends AbstractUGraphic<SvgGraphicsTeaVM> implements ClipContainer {
+	// ::remove file when JAVA8
 
 	private UGraphicTeaVM(StringBounder stringBounder) {
 		super(stringBounder);

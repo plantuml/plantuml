@@ -92,7 +92,6 @@ public class InstructionSplit extends AbstractInstruction implements Instruction
 		return getLast().add(ins);
 	}
 
-	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		final List<Gtile> all = new ArrayList<>();
@@ -105,7 +104,6 @@ public class InstructionSplit extends AbstractInstruction implements Instruction
 
 		return new GtileSplit(all, swimlaneIn, getInLinkRenderingColor(skinParam).getColor());
 	}
-	// ::done
 
 	private Rainbow getInLinkRenderingColor(ISkinParam skinParam) {
 		Rainbow color;

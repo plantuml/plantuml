@@ -42,8 +42,6 @@ import net.sourceforge.plantuml.cli.ExitStatus;
 import net.sourceforge.plantuml.core.Diagram;
 
 public interface Stdrpt {
-	// ::remove file when __CORE__
-	// ::remove file when __HAXE__
 
 	public void printInfo(PrintStream output, Diagram sys);
 

@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.klimt.creole.atom;
 
-
-
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -49,9 +47,9 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class AtomMath extends AbstractAtom implements Atom {
-	// ::remove file when __CORE__ or __TEAVM__
 
 	private final ScientificEquationSafe math;
 	private final HColor foreground;
@@ -88,22 +86,24 @@ public class AtomMath extends AbstractAtom implements Atom {
 	}
 
 	public void drawU(UGraphic ug) {
-		final ColorMapper colorMapper = ug.getColorMapper();
-		final boolean isSvg = ug.matchesProperty("SVG");
-		final XColor back;
-		if (background == null)
-			back = null;
-		else
-			back = getColor(colorMapper, background, XColor.WHITE);
+		if (!TeaVM.isTeaVM()) {
+			final ColorMapper colorMapper = ug.getColorMapper();
+			final boolean isSvg = ug.matchesProperty("SVG");
+			final XColor back;
+			if (background == null)
+				back = null;
+			else
+				back = getColor(colorMapper, background, XColor.WHITE);
 
-		final XColor fore = getColor(colorMapper, foreground, XColor.BLACK);
-		// final double dpiFactor = ug.dpiFactor();
-		if (isSvg) {
-			final UImageSvg svg = math.getSvg(1, fore, back);
-			ug.draw(svg);
-		} else {
-			final UImage image = new UImage(math.getImage(fore, back)).withFormula(math.getSource());
-			ug.draw(image);
+			final XColor fore = getColor(colorMapper, foreground, XColor.BLACK);
+			// final double dpiFactor = ug.dpiFactor();
+			if (isSvg) {
+				final UImageSvg svg = math.getSvg(1, fore, back);
+				ug.draw(svg);
+			} else {
+				final UImage image = new UImage(math.getImage(fore, back)).withFormula(math.getSource());
+				ug.draw(image);
+			}
 		}
 	}
 

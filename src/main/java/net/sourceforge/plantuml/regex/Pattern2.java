@@ -44,15 +44,16 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class Pattern2 {
 
 	private static final Map<String, String> QUOTED_REPLACEMENTS = new HashMap<>();
 	static {
-		// ::revert when __TEAVM__
-		QUOTED_REPLACEMENTS.put("%pLN", Matcher.quoteReplacement("\\p{L}\\p{N}")); // Unicode Letter or digit
-		// QUOTED_REPLACEMENTS.put("%pLN", Matcher.quoteReplacement("\\p{L}[0-9]")); // Unicode Letter or digit
-		// ::done
+		if (TeaVM.isTeaVM())
+			QUOTED_REPLACEMENTS.put("%pLN", Matcher.quoteReplacement("\\p{L}[0-9]")); // Unicode Letter or digit (TeaVM)
+		else
+			QUOTED_REPLACEMENTS.put("%pLN", Matcher.quoteReplacement("\\p{L}\\p{N}")); // Unicode Letter or digit
 		QUOTED_REPLACEMENTS.put("%s", Matcher.quoteReplacement("\\s\u00A0")); // normal or non-breaking space
 		QUOTED_REPLACEMENTS.put("%q", Matcher.quoteReplacement("'\u2018\u2019")); // single quotes
 		QUOTED_REPLACEMENTS.put("%g", Matcher.quoteReplacement("\"\u201c\u201d" + Jaws.BLOCK_E1_INVISIBLE_QUOTE));
@@ -97,18 +98,16 @@ public class Pattern2 {
 		// this helps detect potential excessive or unintended pattern compilations.
 		// Note: using 'assert' does not impact performance in production, as assertions
 		// are typically disabled by default.
-		// assert COUNT.computeIfAbsent(p, k -> new AtomicInteger()).incrementAndGet() < 5;
+		// assert COUNT.computeIfAbsent(p, k -> new AtomicInteger()).incrementAndGet() <
+		// 5;
 
 		return new Pattern2(p);
 
 	}
 
 	public static Pattern compileInternal(String patternString) {
-		// ::revert when __TEAVM__
 		final String regex = transform(patternString);
-		// final String regex = transform(patternString) + "";
-		// ::done
-		
+
 		// ::uncomment when __TEAVM__
 		// //System.out.println("compileInternal in "+regex);
 		// ::done

@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
@@ -72,6 +70,7 @@ import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.version.Version;
@@ -88,7 +87,6 @@ import net.sourceforge.plantuml.warning.WarningHandler;
  * @see PSystemBuilder
  */
 public abstract class AbstractPSystem implements Diagram, WarningHandler {
-	// ::remove file when __HAXE__
 
 	private final UmlSource source;
 	private Scale scale;
@@ -110,12 +108,10 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 		this.source = Objects.requireNonNull(source);
 		this.preprocessing = preprocessing;
 	}
-	
+
 	public PathSystem getPathSystem() {
 		return PathSystem.fetch();
 	}
-
-
 
 	private String getVersion() {
 		return Version.versionString();
@@ -214,12 +210,12 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 //			}
 			return exportDiagramNow(os, index, fileFormatOption);
 		} finally {
-			// ::comment when __CORE__ or __TEAVM__
-			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS))
-				StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),
-						fileFormatOption.getFileFormat());
+			if (!TeaVM.isTeaVM()) {
+				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS))
+					StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),
+							fileFormatOption.getFileFormat());
 
-			// ::done
+			}
 		}
 	}
 
@@ -283,8 +279,7 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 	public Collection<Warning> getWarnings() {
 		return preprocessing.getWarnings();
 	}
-	
-	
+
 	@Override
 	public InstallationRequirement getInstallationRequirement() {
 		return InstallationRequirement.NONE;

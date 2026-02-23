@@ -54,17 +54,11 @@ import net.sourceforge.plantuml.utils.Log;
 public class StringUtils {
 
 	public static String goUpperCase(String s) {
-		// ::revert when __HAXE__
 		return s.toUpperCase(Locale.ENGLISH);
-		// return s.toUpperCase();
-		// ::done
 	}
 
 	public static String goLowerCase(String s) {
-		// ::revert when __HAXE__
 		return s.toLowerCase(Locale.ENGLISH);
-		// return s.toLowerCase();
-		// ::done
 	}
 
 	public static String eventuallyRemoveStartingAndEndingDoubleQuote(String s, String format) {
@@ -97,8 +91,6 @@ public class StringUtils {
 	private static boolean isDoubleQuote(char c) {
 		return c == '\"' || c == '\u201c' || c == '\u201d' || c == '\u00ab' || c == '\u00bb';
 	}
-
-	// ::comment when __HAXE__
 
 	public static final char USER_NEWLINE = '\uEE00';
 	public static final char USER_TAB = '\uEE01';
@@ -551,7 +543,7 @@ public class StringUtils {
 		return c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\0';
 	}
 
-	// ::comment when __CORE__ or __HAXE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	public static int getWcWidth(Display stringsToDisplay) {
 		int result = 1;
 		for (CharSequence s : stringsToDisplay) {

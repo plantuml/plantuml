@@ -119,8 +119,6 @@ import smetana.core.debug.SmetanaDebug;
 
 @DuplicateCode(reference = "SvekEdge, CucaDiagramFileMakerElk, CucaDiagramFileMakerSmetana")
 public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
-	// ::remove folder when __HAXE__ or __TEAVM__
-
 	private final Map<Entity, ST_Agnode_s> nodes = new LinkedHashMap<Entity, ST_Agnode_s>();
 	private final Map<Entity, ST_Agnode_s> coreNodes = new LinkedHashMap<Entity, ST_Agnode_s>();
 	private final Map<Link, ST_Agedge_s> edges = new LinkedHashMap<Link, ST_Agedge_s>();

@@ -60,8 +60,10 @@ import javax.imageio.stream.ImageInputStream;
 import javax.swing.ImageIcon;
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.InputFile;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.nio.NFolder;
 import net.sourceforge.plantuml.nio.NFolderRegular;
 
@@ -245,7 +247,7 @@ public class SFile implements Comparable<SFile>, InputFile {
 	 * Check SecurityProfile to see if this file can be open.
 	 */
 	public boolean isFileOk() {
-		// ::comment when __CORE__ or __TEAVM__
+		// ::comment when __TEAVM__
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX)
 			// In SANDBOX, we cannot read any files
 			return false;
@@ -303,7 +305,7 @@ public class SFile implements Comparable<SFile>, InputFile {
 	 * @throws IOException If an I/O error occurs, which is possible because the
 	 *                     check the pathname may require filesystem queries
 	 */
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	private boolean isDenied() throws IOException {
 		final SFile securityPath = SecurityUtils.getSecurityPath();
 		if (securityPath == null)
@@ -339,21 +341,22 @@ public class SFile implements Comparable<SFile>, InputFile {
 	public PortableImage readRasterImageFromFile() {
 		// https://www.experts-exchange.com/questions/26171948/Why-are-ImageIO-read-images-losing-their-transparency.html
 		// https://stackoverflow.com/questions/18743790/can-java-load-images-with-transparency
-		if (isFileOk())
-			try {
-				// ::comment when __CORE__ or __TEAVM__
-				if (internal.getName().endsWith(".webp"))
-					return readWebp();
-				else
-					// ::done
-					return SecurityUtils.readRasterImage(new ImageIcon(this.getAbsolutePath()));
-			} catch (Exception e) {
-				Logme.error(e);
-			}
+
+		if (!TeaVM.isTeaVM()) {
+			if (isFileOk())
+				try {
+					if (internal.getName().endsWith(".webp"))
+						return readWebp();
+					else
+						return SecurityUtils.readRasterImage(new ImageIcon(this.getAbsolutePath()));
+				} catch (Exception e) {
+					Logme.error(e);
+				}
+		}
 		return null;
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	private PortableImage readWebp() throws IOException {
 		try (InputStream is = openFile()) {
 			final int riff = read32(is);
@@ -391,7 +394,7 @@ public class SFile implements Comparable<SFile>, InputFile {
 			// vp8Decoder.decodeFrame(iis);
 			iis.close();
 			final Object frame = clVP8Decoder.getMethod("getFrame").invoke(vp8Decoder);
-			return new PortableImage((BufferedImage) frame.getClass().getMethod("getBufferedImage").invoke(frame));
+			return PortableImageFactory.build((BufferedImage) frame.getClass().getMethod("getBufferedImage").invoke(frame));
 			// final VP8Frame frame = vp8Decoder.getFrame();
 			// return frame.getBufferedImage();
 		} catch (Exception e) {
@@ -466,10 +469,9 @@ public class SFile implements Comparable<SFile>, InputFile {
 
 	@Override
 	public NFolder getParentFolder() throws IOException {
-		// ::revert when __TEAVM__
+		if (TeaVM.isTeaVM())
+			throw new UnsupportedOperationException("TEAVM96521");
 		return new NFolderRegular(getSanitizedPath().getParent());
-		// throw new UnsupportedOperationException("TEAVM96521");
-		// ::done
 	}
 
 }

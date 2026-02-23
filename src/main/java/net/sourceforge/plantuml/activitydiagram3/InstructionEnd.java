@@ -60,12 +60,10 @@ public class InstructionEnd extends MonoSwimable implements Instruction {
 		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);
 	}
 
-	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		return new GtileCircleStart(stringBounder, skinParam, HColors.BLACK, getSwimlaneIn());
 	}
-	// ::done
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {

@@ -39,19 +39,14 @@ import java.io.File;
 import java.io.OutputStream;
 
 public interface Graphviz {
-	// ::remove folder when __HAXE__
-	// ::remove file when __CORE__
 	public String dotVersion();
 
 	public boolean graphviz244onWindows();
 
-	// ::comment when __TEAVM__
 	public ProcessState createFile3(OutputStream os);
 
 	public File getDotExe();
 
 	public ExeState getExeState();
-
-	// ::done
 
 }

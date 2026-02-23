@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class StringBounderTeaVM implements StringBounder {
+	// ::remove file when JAVA8
 
 	@Override
 	public XDimension2D calculateDimension(UFont font, String text) {

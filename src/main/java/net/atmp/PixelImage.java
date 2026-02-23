@@ -40,6 +40,7 @@ import java.util.Objects;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.MutableImage;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorUtils;
 
@@ -171,7 +172,7 @@ public class PixelImage implements MutableImage {
 //	}
 
 	private PortableImage deepCopy() {
-		final PortableImage result = new PortableImage(imageScale1.getWidth(), imageScale1.getHeight(),
+		final PortableImage result = PortableImageFactory.build(imageScale1.getWidth(), imageScale1.getHeight(),
 				PortableImage.TYPE_INT_ARGB);
 		for (int i = 0; i < this.imageScale1.getWidth(); i++)
 			for (int j = 0; j < this.imageScale1.getHeight(); j++)

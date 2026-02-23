@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
@@ -79,24 +80,24 @@ public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 			}
 		} else {
 			system.getPragma().define(name, value);
-			// ::comment when __CORE__ or __TEAVM__
-			if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("jdot"))
-				return CommandExecutionResult.error(
-						"This directive has been renamed to '!pragma layout smetana'. Please update your diagram.");
+			if (!TeaVM.isTeaVM()) {
+				if (name.equalsIgnoreCase("graphviz_dot") && value.equalsIgnoreCase("jdot"))
+					return CommandExecutionResult.error(
+							"This directive has been renamed to '!pragma layout smetana'. Please update your diagram.");
 
-			if (name.equalsIgnoreCase("graphviz_dot"))
-				return CommandExecutionResult.error("This directive has been renamed to '!pragma layout " + value
-						+ "'. Please update your diagram.");
+				if (name.equalsIgnoreCase("graphviz_dot"))
+					return CommandExecutionResult.error("This directive has been renamed to '!pragma layout " + value
+							+ "'. Please update your diagram.");
 
-			if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase("smetana"))
-				system.setUseSmetana(true);
+				if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase("smetana"))
+					system.setUseSmetana(true);
 
-			if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase("elk"))
-				system.setUseElk(true);
+				if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase("elk"))
+					system.setUseElk(true);
 
-			if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase(GraphvizRuntimeEnvironment.VIZJS))
-				system.getSkinParam().setUseVizJs(true);
-			// ::done
+				if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase(GraphvizRuntimeEnvironment.VIZJS))
+					system.getSkinParam().setUseVizJs(true);
+			}
 
 		}
 		return CommandExecutionResult.ok();

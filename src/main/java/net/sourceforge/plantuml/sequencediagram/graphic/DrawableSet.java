@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
@@ -322,10 +323,7 @@ public class DrawableSet {
 
 	private void drawLineU22(UGraphic ug, boolean showTail, Page page) {
 		// http://plantuml.sourceforge.net/qa/?qa=4826/lifelines-broken-for-txt-seq-diagrams-when-create-is-used
-		// ::revert when __CORE__ or __TEAVM__
-		final boolean isTxt = ug instanceof UGraphicTxt;
-		// final boolean isTxt = false;
-		// ::done
+		final boolean isTxt = TeaVM.isTeaVM() ? false : ug instanceof UGraphicTxt;
 		for (LivingParticipantBox box : getAllLivingParticipantBox()) {
 			final double create = box.getCreate();
 			final double startMin = page.getBodyRelativePosition() - box.magicMargin(ug.getStringBounder());

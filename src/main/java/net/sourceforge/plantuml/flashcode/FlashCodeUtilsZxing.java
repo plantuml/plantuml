@@ -41,6 +41,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.utils.Log;
 import zext.plantuml.com.google.zxing.BarcodeFormat;
@@ -52,7 +53,7 @@ import zext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 public class FlashCodeUtilsZxing implements FlashCodeUtils {
 	// ::remove file when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
-	// ::remove file when __TEAVM__
+	
 	private static final Lock lock = new ReentrantLock();
 
 	public PortableImage exportFlashcode(String s, XColor fore, XColor back) {
@@ -64,7 +65,7 @@ public class FlashCodeUtilsZxing implements FlashCodeUtils {
 				hints.put(EncodeHintType.CHARACTER_SET, "UTF8");
 				final int multiple = 1;
 				final BitMatrix bit = writer.encode(s, BarcodeFormat.QR_CODE, multiple, hints);
-				return new PortableImage(MatrixToImageWriter.toBufferedImage(bit, fore.getRGB() | 0xFF000000,
+				return PortableImageFactory.build(MatrixToImageWriter.toBufferedImage(bit, fore.getRGB() | 0xFF000000,
 						back.getRGB() | 0xFF000000));
 			} catch (Exception e) {
 				Log.debug(() -> "Cannot create qrcode " + e);

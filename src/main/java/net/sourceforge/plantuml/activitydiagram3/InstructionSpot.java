@@ -80,14 +80,12 @@ public class InstructionSpot extends MonoSwimable implements Instruction {
 		return result;
 	}
 
-	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);
 		return new GtileCircleSpot(stringBounder, skinParam, color, getSwimlaneIn(), spot, font);
 
 	}
-	// ::done
 
 	@Override
 	public CommandExecutionResult add(Instruction other) {

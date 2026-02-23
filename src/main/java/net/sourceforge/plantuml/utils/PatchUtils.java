@@ -38,16 +38,16 @@ package net.sourceforge.plantuml.utils;
 import java.util.Collections;
 import java.util.Set;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 public class PatchUtils {
 
 	
 	// See https://github.com/konsoletyper/teavm/issues/1150
 	public static <T> Set<T> emptySet() {
-		// ::revert when __TEAVM__
+		if (TeaVM.isTeaVM())
+			return Collections.unmodifiableSet(new java.util.HashSet<T>());
 		return Collections.emptySet();
-		// return Collections.unmodifiableSet(new java.util.HashSet<T>());
-		// ::done
-
 	}
 
 }

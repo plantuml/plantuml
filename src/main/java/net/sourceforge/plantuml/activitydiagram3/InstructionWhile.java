@@ -107,7 +107,6 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		return repeatList.add(ins);
 	}
 
-	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		final Gtile back = null;
@@ -115,7 +114,6 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		tmp = GtileWhile.createWhile(swimlane, tmp, test, yes, specialOut, back);
 		return tmp;
 	}
-	// ::done
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {

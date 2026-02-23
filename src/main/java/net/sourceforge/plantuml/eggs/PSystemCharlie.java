@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemCharlie extends PlainDiagram {
-	// ::remove file when __TEAVM__
+	
 	
 	private PortableImage image;
 

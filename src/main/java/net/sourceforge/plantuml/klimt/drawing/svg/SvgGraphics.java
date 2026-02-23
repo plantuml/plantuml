@@ -1051,7 +1051,6 @@ public class SvgGraphics {
 		this.hidden = hidden;
 	}
 
-	// ::comment when __CORE__
 	public static final String META_HEADER = "<!--SRC=[";
 
 	public static String getMetadataHex(String comment) {
@@ -1062,7 +1061,6 @@ public class SvgGraphics {
 			return "ERROR42";
 		}
 	}
-	// ::done
 
 	public void addCommentMetadata(String metadata) {
 		// https://github.com/plantuml/plantuml/issues/2306

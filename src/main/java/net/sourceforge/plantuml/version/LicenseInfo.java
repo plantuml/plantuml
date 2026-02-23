@@ -53,28 +53,21 @@ import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
 public class LicenseInfo {
-	// ::remove file when __TEAVM__
+	
 	
 	public static synchronized LicenseInfo retrieveQuick() {
-		// ::revert when __CORE__
 		if (cache == null)
 			cache = retrieveDistributor();
 
 		if (cache == null)
 			cache = retrieveNamedSlow();
 		return cache;
-		// return new LicenseInfo();
-		// ::done
 	}
 
 	public boolean isValid() {
-		// ::revert when __CORE__
 		return owner != null && System.currentTimeMillis() <= this.expirationDate;
-		// return false;
-		// ::done
 	}
 
-	// ::comment when __CORE__
 	private static LicenseInfo cache;
 
 	private final static Preferences prefs = Preferences.userNodeForPackage(LicenseInfo.class);
@@ -275,6 +268,5 @@ public class LicenseInfo {
 	public final String getContext() {
 		return context;
 	}
-	// ::done
 
 }

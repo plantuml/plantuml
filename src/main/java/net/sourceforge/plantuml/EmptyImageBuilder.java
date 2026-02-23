@@ -46,6 +46,7 @@ import java.util.List;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.klimt.UAntiAliasing;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.utils.Log;
@@ -63,7 +64,7 @@ public class EmptyImageBuilder {
 		if (width <= 0 || height <= 0)
 			throw new IllegalArgumentException("width and height must be positive");
 
-		// ::comment when __CORE__ or __TEAVM__
+		// ::comment when __TEAVM__
 		if (width > GraphvizUtils.getenvImageLimit()) {
 			final int width2 = width;
 			Log.info(() -> "Width too large " + width2 + ". You should set PLANTUML_LIMIT_SIZE");
@@ -81,9 +82,9 @@ public class EmptyImageBuilder {
 		final int type = getType(background);
 		Log.info(() -> "Creating image " + widthFinal + "x" + heightFinal + " type=" + type);
 
-		im = new PortableImage(width, height, type);
+		im = PortableImageFactory.build(width, height, type);
 
-		// ::comment when __CORE__ or __TEAVM__
+		// ::comment when __TEAVM__
 		g2d = im.createGraphics();
 		UAntiAliasing.ANTI_ALIASING_ON.apply(g2d);
 		if (background != null) {

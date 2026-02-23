@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 
 public class DriverEllipseTeaVM implements UDriver<UEllipse, SvgGraphicsTeaVM> {
+	// ::remove file when JAVA8
 
 	private final ClipContainer clipContainer;
 

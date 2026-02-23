@@ -48,8 +48,6 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class BoardDiagramFactory extends PSystemCommandFactory {
-	// ::remove folder when __CORE__
-
 	public BoardDiagramFactory() {
 		super(DiagramType.BOARD);
 	}

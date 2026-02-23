@@ -100,7 +100,6 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 		return current.add(ins);
 	}
 
-	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
 		for (Branch branch : switches)
@@ -115,7 +114,6 @@ public class InstructionSwitch extends WithNote implements Instruction, Instruct
 
 		return GtileIfHexagon.build(swimlane, gtiles, switches);
 	}
-	// ::done
 
 	public Ftile createFtile(FtileFactory factory) {
 		for (Branch branch : switches)

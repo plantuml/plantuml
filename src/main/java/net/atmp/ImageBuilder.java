@@ -35,7 +35,6 @@
  */
 package net.atmp;
 
-
 import java.awt.Graphics2D;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -103,6 +102,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.SvgCharSizeHack;
 import net.sourceforge.plantuml.url.CMapData;
 import net.sourceforge.plantuml.url.Url;
@@ -116,7 +116,7 @@ public class ImageBuilder {
 	private XDimension2D dimension;
 	private final FileFormatOption fileFormatOption;
 	// ::revert when __TEAVM__
-	private UDrawable udrawable;
+	public UDrawable udrawable;
 	// public UDrawable udrawable;
 	// ::done
 	private ClockwiseTopRightBottomLeft margin = ClockwiseTopRightBottomLeft.none();
@@ -277,15 +277,16 @@ public class ImageBuilder {
 		ug.writeToStream(os, metadata, 96);
 		os.flush();
 
-		// ::comment when __TEAVM__
-		if (ug instanceof UGraphicG2d) {
-			final Set<Url> urls = ((UGraphicG2d) ug).getAllUrlsEncountered();
-			if (urls.size() > 0) {
-				final CMapData cmap = CMapData.cmapString(urls, scaleFactor);
-				return new ImageDataComplex(dim, cmap, warningOrError, status);
+		if (!TeaVM.isTeaVM()) {
+			if (ug instanceof UGraphicG2d) {
+				final Set<Url> urls = ((UGraphicG2d) ug).getAllUrlsEncountered();
+				if (urls.size() > 0) {
+					final CMapData cmap = CMapData.cmapString(urls, scaleFactor);
+					return new ImageDataComplex(dim, cmap, warningOrError, status);
+				}
+
 			}
 		}
-		// ::done
 		return createImageData(dim);
 	}
 
@@ -377,45 +378,45 @@ public class ImageBuilder {
 	}
 
 	private UGraphic createUGraphic(final XDimension2D dim, double scaleFactor, Pragma pragma) {
-		// ::comment when __TEAVM__
-		final ColorMapper colorMapper = fileFormatOption.getColorMapper();
-		switch (fileFormatOption.getFileFormat()) {
-		case PNG:
-		case PNG_EMPTY:
-		case RAW:
-			return createUGraphicPNG(scaleFactor, dim, fileFormatOption.getWatermark(),
-					fileFormatOption.getFileFormat());
-		case SVG:
-			return createUGraphicSVG(scaleFactor, dim, pragma);
-		case EPS:
-			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.getDefault2());
-		case EPS_TEXT:
-			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.WITH_MACRO_AND_TEXT);
-		case HTML5:
-			return new UGraphicHtml5(backcolor, colorMapper, stringBounder);
-		case VDX:
-			return new UGraphicVdx(backcolor, colorMapper, stringBounder);
-		case LATEX:
-			return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, true, pragma);
-		case LATEX_NO_PREAMBLE:
-			return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, false, pragma);
-		case BRAILLE_PNG:
-			return new UGraphicBraille(backcolor, colorMapper, stringBounder);
-		case UTXT:
-		case ATXT:
-			return new UGraphicTxt();
-		case DEBUG:
-			return new UGraphicDebug(scaleFactor, dim, getSvgLinkTarget(), getHoverPathColorRGB(), seed,
-					getPreserveAspectRatio());
-		default:
-			// ::done
+		if (!TeaVM.isTeaVM()) {
+			final ColorMapper colorMapper = fileFormatOption.getColorMapper();
+			switch (fileFormatOption.getFileFormat()) {
+			case PNG:
+			case PNG_EMPTY:
+			case RAW:
+				return createUGraphicPNG(scaleFactor, dim, fileFormatOption.getWatermark(),
+						fileFormatOption.getFileFormat());
+			case SVG:
+				return createUGraphicSVG(scaleFactor, dim, pragma);
+			case EPS:
+				return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.getDefault2());
+			case EPS_TEXT:
+				return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.WITH_MACRO_AND_TEXT);
+			case HTML5:
+				return new UGraphicHtml5(backcolor, colorMapper, stringBounder);
+			case VDX:
+				return new UGraphicVdx(backcolor, colorMapper, stringBounder);
+			case LATEX:
+				return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, true, pragma);
+			case LATEX_NO_PREAMBLE:
+				return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, false, pragma);
+			case BRAILLE_PNG:
+				return new UGraphicBraille(backcolor, colorMapper, stringBounder);
+			case UTXT:
+			case ATXT:
+				return new UGraphicTxt();
+			case DEBUG:
+				return new UGraphicDebug(scaleFactor, dim, getSvgLinkTarget(), getHoverPathColorRGB(), seed,
+						getPreserveAspectRatio());
+			default:
+				throw new UnsupportedOperationException(fileFormatOption.getFileFormat().toString());
+			}
+		} else {
 			throw new UnsupportedOperationException(fileFormatOption.getFileFormat().toString());
-		// ::comment when __TEAVM__
 		}
-		// ::done
+
 	}
 
-	// ::comment when __TEAVM__
 	private UGraphic createUGraphicSVG(double scaleFactor, XDimension2D dim, Pragma pragma) {
 		SvgOption option = SvgOption.basic().withPreserveAspectRatio(getPreserveAspectRatio());
 		option = option.withHoverPathColorRGB(getHoverPathColorRGB());
@@ -447,7 +448,6 @@ public class ImageBuilder {
 
 		final UGraphicSvg ug = UGraphicSvg.build(option, false, seed, stringBounder);
 		return ug;
-
 	}
 
 	private UGraphic createUGraphicPNG(double scaleFactor, final XDimension2D dim, String watermark,
@@ -488,7 +488,6 @@ public class ImageBuilder {
 		}
 		return null;
 	}
-	// ::done
 
 	private static ClockwiseTopRightBottomLeft calculateMargin(TitledDiagram diagram) {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.document)

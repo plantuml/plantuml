@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 
 public class DriverPolygonTeaVM implements UDriver<UPolygon, SvgGraphicsTeaVM> {
+	// ::remove file when JAVA8
 
 	private final ClipContainer clipContainer;
 

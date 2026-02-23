@@ -44,6 +44,7 @@ import javax.swing.Icon;
 
 import net.sourceforge.plantuml.klimt.MutableImage;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
@@ -103,7 +104,7 @@ public class LatexBuilder implements ScientificEquation {
 		@Override
 		public PortableImage getImage() {
 			if (cache == null) {
-				cache = new PortableImage((int) (icon.getIconWidth() * scale), (int) (icon.getIconHeight() * scale),
+				cache = PortableImageFactory.build((int) (icon.getIconWidth() * scale), (int) (icon.getIconHeight() * scale),
 						PortableImage.TYPE_INT_ARGB);
 				final Graphics2D g2 = cache.createGraphics();
 				g2.scale(scale, scale);

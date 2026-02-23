@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class UGraphicHandwritten extends UGraphicDelegator implements UGraphic {
 
@@ -54,10 +55,10 @@ public class UGraphicHandwritten extends UGraphicDelegator implements UGraphic {
 
 	public UGraphicHandwritten(UGraphic ug) {
 		super(ug);
-		// ::comment when __TEAVM__
-		if (ug instanceof UGraphicSvg)
-			((UGraphicSvg) ug).enlargeClip();
-		// ::done
+		if (!TeaVM.isTeaVM()) {
+			if (ug instanceof UGraphicSvg)
+				((UGraphicSvg) ug).enlargeClip();
+		}
 	}
 
 	public void draw(UShape shape) {

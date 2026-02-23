@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.crash;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +42,7 @@ import net.atmp.PixelImage;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
+import net.sourceforge.plantuml.flashcode.FlashCodeUtilsNone;
 import net.sourceforge.plantuml.fun.IconLoader;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
@@ -62,23 +62,26 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.ShapeType;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 
 	private final TextBlock text1;
 	private final String flash;
-	// ::comment when __CORE__ or __TEAVM__
+
 	private final PortableImage flashCode;
 	private final boolean graphviz244onWindows;
-	// ::done
 
 	private GraphvizCrash(String flash, boolean graphviz244onWindows, Throwable rootCause) {
 		this.flash = flash;
-		// ::comment when __CORE__ or __TEAVM__
-		this.graphviz244onWindows = graphviz244onWindows;
-		this.flashCode = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, XColor.BLACK, XColor.WHITE);
-		// ::done
+		if (!TeaVM.isTeaVM()) {
+			this.graphviz244onWindows = graphviz244onWindows;
+			this.flashCode = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, XColor.BLACK, XColor.WHITE);
+		} else {
+			this.graphviz244onWindows = false;
+			this.flashCode = null;
+		}
 		final ReportLog strings = new ReportLog();
 		init(strings, rootCause);
 		this.text1 = GraphicStrings.createBlackOnWhite(strings.asList(), IconLoader.getRandom(),
@@ -100,20 +103,18 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		strings.addEmptyLine();
 		strings.addProperties();
 		strings.addEmptyLine();
-		// ::comment when __CORE__ or __TEAVM__
-		try {
-			final String dotVersion = GraphvizRuntimeEnvironment.getInstance().dotVersion();
-			strings.add("Default dot version: " + dotVersion);
-		} catch (Throwable e) {
-			strings.add("Cannot determine dot version: " + e.toString());
-		}
-		// ::done
+		if (!TeaVM.isTeaVM())
+			try {
+				final String dotVersion = GraphvizRuntimeEnvironment.getInstance().dotVersion();
+				strings.add("Default dot version: " + dotVersion);
+			} catch (Throwable e) {
+				strings.add("Cannot determine dot version: " + e.toString());
+			}
+
 		strings.pleaseCheckYourGraphVizVersion();
 		strings.youShouldSendThisDiagram();
-		// ::comment when __CORE__ or __TEAVM__
 		if (flashCode != null)
 			strings.addDecodeHint();
-		// ::done
 
 	}
 
@@ -150,30 +151,34 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	}
 
 	private TextBlock getMain() {
-		TextBlock result = text1;
-		// ::comment when __CORE__ or __TEAVM__
-		if (flashCode != null) {
-			final UImage flash = new UImage(new PixelImage(flashCode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
-					.scale(3);
-			result = TextBlockUtils.mergeTB(result, flash, HorizontalAlignment.LEFT);
+		if (!TeaVM.isTeaVM()) {
+			return text1;
+		} else {
+			TextBlock result = text1;
+			if (flashCode != null) {
+				final UImage flash = new UImage(new PixelImage(flashCode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
+						.scale(3);
+				result = TextBlockUtils.mergeTB(result, flash, HorizontalAlignment.LEFT);
+			}
+
+			if (graphviz244onWindows) {
+				final TextBlock text2 = GraphicStrings.createBlackOnWhite(getText2());
+				result = TextBlockUtils.mergeTB(result, text2, HorizontalAlignment.LEFT);
+
+				final UImage dotc = new UImage(
+						new PixelImage(PSystemVersion.getDotc(), AffineTransformType.TYPE_BILINEAR));
+				result = TextBlockUtils.mergeTB(result, dotc, HorizontalAlignment.LEFT);
+
+				final TextBlock text3 = GraphicStrings.createBlackOnWhite(getText3());
+				result = TextBlockUtils.mergeTB(result, text3, HorizontalAlignment.LEFT);
+
+				final UImage dotd = new UImage(
+						new PixelImage(PSystemVersion.getDotd(), AffineTransformType.TYPE_BILINEAR));
+				result = TextBlockUtils.mergeTB(result, dotd, HorizontalAlignment.LEFT);
+			}
+
+			return result;
 		}
-
-		if (graphviz244onWindows) {
-			final TextBlock text2 = GraphicStrings.createBlackOnWhite(getText2());
-			result = TextBlockUtils.mergeTB(result, text2, HorizontalAlignment.LEFT);
-
-			final UImage dotc = new UImage(new PixelImage(PSystemVersion.getDotc(), AffineTransformType.TYPE_BILINEAR));
-			result = TextBlockUtils.mergeTB(result, dotc, HorizontalAlignment.LEFT);
-
-			final TextBlock text3 = GraphicStrings.createBlackOnWhite(getText3());
-			result = TextBlockUtils.mergeTB(result, text3, HorizontalAlignment.LEFT);
-
-			final UImage dotd = new UImage(new PixelImage(PSystemVersion.getDotd(), AffineTransformType.TYPE_BILINEAR));
-			result = TextBlockUtils.mergeTB(result, dotd, HorizontalAlignment.LEFT);
-		}
-		// ::done
-
-		return result;
 	}
 
 	public ShapeType getShapeType() {
