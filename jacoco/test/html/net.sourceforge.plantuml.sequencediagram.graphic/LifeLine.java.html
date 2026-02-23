@@ -98,11 +98,11 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 	public void addSegmentVariation(LifeSegmentVariation type, double y, Fashion colors, StyleBuilder styleBuilder) {
 <span class="fc bfc" id="L99" title="All 2 branches covered.">		if (events.size() &gt; 0) {</span>
 <span class="fc" id="L100">			final Variation last = events.get(events.size() - 1);</span>
-<span class="fc bfc" id="L101" title="All 2 branches covered.">			if (y &lt; last.y) {</span>
-<span class="fc" id="L102">				return;</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">			if (y &lt; last.y) {</span>
+<span class="nc" id="L102">				return;</span>
 				// throw new IllegalArgumentException();
 			}
-<span class="pc bpc" id="L105" title="1 of 4 branches missed.">			if (y == last.y &amp;&amp; type != last.type) {</span>
+<span class="pc bpc" id="L105" title="3 of 4 branches missed.">			if (y == last.y &amp;&amp; type != last.type) {</span>
 <span class="nc" id="L106">				return;</span>
 				// throw new IllegalArgumentException();
 			}
@@ -118,8 +118,8 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 
 	public void finish(double y) {
 <span class="fc" id="L120">		final int missingClose = getMissingClose();</span>
-<span class="fc bfc" id="L121" title="All 2 branches covered.">		for (int i = 0; i &lt; missingClose; i++)</span>
-<span class="fc" id="L122">			addSegmentVariation(LifeSegmentVariation.SMALLER, y, null, null);</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		for (int i = 0; i &lt; missingClose; i++)</span>
+<span class="nc" id="L122">			addSegmentVariation(LifeSegmentVariation.SMALLER, y, null, null);</span>
 
 <span class="fc" id="L124">	}</span>
 
@@ -183,12 +183,12 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 
 <span class="fc" id="L184">		int level = 1;</span>
 <span class="pc bpc" id="L185" title="1 of 2 branches missed.">		for (int j = i + 1; j &lt; events.size(); j++) {</span>
-<span class="fc bfc" id="L186" title="All 2 branches covered.">			if (events.get(j).type == LifeSegmentVariation.LARGER)</span>
-<span class="fc" id="L187">				level++;</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">			if (events.get(j).type == LifeSegmentVariation.LARGER)</span>
+<span class="nc" id="L187">				level++;</span>
 			else
 <span class="fc" id="L189">				level--;</span>
 
-<span class="fc bfc" id="L191" title="All 2 branches covered.">			if (level == 0) {</span>
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">			if (level == 0) {</span>
 <span class="fc" id="L192">				final double y1 = events.get(i).y;</span>
 <span class="fc" id="L193">				final double y2 = events.get(j).y;</span>
 <span class="fc" id="L194">				return SegmentColored.create(y1, y2, events.get(i).colors, shadowing);</span>
@@ -232,8 +232,8 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 <span class="pc" id="L232">							: ComponentType.ACTIVATION_BOX_OPEN_CLOSE;</span>
 
 <span class="fc" id="L234">				StyleBuilder currentStyleBuilder = events.get(i).styleBuilder;</span>
-<span class="fc bfc" id="L235" title="All 2 branches covered.">				if (currentStyleBuilder == null)</span>
-<span class="fc" id="L236">					currentStyleBuilder = skinParam2.getCurrentStyleBuilder();</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">				if (currentStyleBuilder == null)</span>
+<span class="nc" id="L236">					currentStyleBuilder = skinParam2.getCurrentStyleBuilder();</span>
 
 <span class="fc" id="L238">				Style style = type.getStyleSignature().withTOBECHANGED(participant.getStereotype())</span>
 <span class="fc" id="L239">						.getMergedStyle(currentStyleBuilder);</span>
