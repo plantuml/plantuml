@@ -21,7 +21,7 @@ mockito             = "5.+"
 adarshr-test-logger = "4.0.0"
 xmlunit-core        = "2.11.0"
 junit-pioneer       = "2.3.0"
-teavm               = "0.13.0"
+teavm               = "0.13.1"
 
 [libraries]
 # name                      = { module = "", version.ref = "" }
