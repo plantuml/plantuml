@@ -95,11 +95,11 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 	}
 
 	public Constraint getConstraintBefore(Pushable p1) {
-<span class="nc" id="L98">		return getConstraint(Objects.requireNonNull(p1), getPrevious(p1));</span>
+<span class="fc" id="L98">		return getConstraint(Objects.requireNonNull(p1), getPrevious(p1));</span>
 	}
 
 	public Pushable getPrevious(Pushable p) {
-<span class="nc" id="L102">		return getOtherParticipant(p, -1);</span>
+<span class="fc" id="L102">		return getOtherParticipant(p, -1);</span>
 	}
 
 	public Pushable getNext(Pushable p) {
