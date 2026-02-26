@@ -8,6 +8,7 @@ mkdir "github_release"
 
 cp "build/libs/plantuml-${RELEASE_VERSION}.jar" "github_release/plantuml.jar"
 cp "build/libs/plantuml-${RELEASE_VERSION}.jar" "github_release/plantuml-${RELEASE_VERSION}.jar"
+cp "build/java8/plantuml.jar" "github_release/plantuml-java8-${RELEASE_VERSION}.jar"
 cp "build/libs/plantuml-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-${RELEASE_VERSION}-javadoc.jar"
 cp "build/libs/plantuml-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-${RELEASE_VERSION}-sources.jar"
 cp "build/libs/plantuml-pdf-${RELEASE_VERSION}.jar" "github_release/plantuml-pdf-${RELEASE_VERSION}.jar"

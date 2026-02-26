@@ -324,6 +324,12 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v5
 
+      - name: Download Java 8 JAR (built by Ant)
+        uses: actions/download-artifact@v7
+        with:
+          name: plantuml-jdk8-jar
+          path: build/java8
+
       - name: Restore Libs cache
         uses: actions/cache/restore@v5
         with:
