@@ -62,14 +62,8 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-		// ::comment when __CORE__
-<span class="nc" id="L66">		final String path = values.get(0).toString();</span>
-<span class="nc" id="L67">		return TValue.fromBoolean(new SFile(path).exists());</span>
-		// ::done
-
-		// ::uncomment when __CORE__
-		// return TValue.fromBoolean(false);
-		// ::done
+<span class="nc" id="L65">		final String path = values.get(0).toString();</span>
+<span class="nc" id="L66">		return TValue.fromBoolean(new SFile(path).exists());</span>
 	}
 
 }

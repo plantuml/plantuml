@@ -67,7 +67,7 @@ public class FileSystem {
 <span class="fc" id="L67">	}</span>
 
 	public SFile getCurrentDir() {
-		// ::comment when __CORE__ or __TEAVM__
+		// ::comment when __TEAVM__
 <span class="fc" id="L71">		final String path = this.currentDir.get();</span>
 <span class="fc bfc" id="L72" title="All 2 branches covered.">		if (path != null)</span>
 <span class="fc" id="L73">			return new SFile(path);</span>
@@ -77,11 +77,11 @@ public class FileSystem {
 	}
 
 	public SFile getFile(String nameOrPath) throws IOException {
-		// ::uncomment when __CORE__ or __TEAVM__
+		// ::uncomment when __TEAVM__
 		// return null;
 		// ::done
 
-		// ::comment when __CORE__ or __TEAVM__
+		// ::comment when __TEAVM__
 <span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (isAbsolute(nameOrPath)) {</span>
 <span class="nc" id="L86">			final SFile result = new SFile(nameOrPath);</span>
 <span class="nc" id="L87">			Log.info(() -&gt; &quot;Trying &quot; + result.getAbsolutePath());</span>
@@ -120,7 +120,7 @@ public class FileSystem {
 		// ::done
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	private boolean isAbsolute(String nameOrPath) {
 <span class="fc" id="L125">		final SFile f = new SFile(nameOrPath);</span>
 <span class="fc" id="L126">		return f.isAbsolute();</span>

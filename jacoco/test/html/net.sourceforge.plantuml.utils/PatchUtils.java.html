@@ -38,16 +38,16 @@ package net.sourceforge.plantuml.utils;
 import java.util.Collections;
 import java.util.Set;
 
-<span class="nc" id="L41">public class PatchUtils {</span>
+import net.sourceforge.plantuml.teavm.TeaVM;
+
+<span class="nc" id="L43">public class PatchUtils {</span>
 
 	
 	// See https://github.com/konsoletyper/teavm/issues/1150
 	public static &lt;T&gt; Set&lt;T&gt; emptySet() {
-		// ::revert when __TEAVM__
-<span class="fc" id="L47">		return Collections.emptySet();</span>
-		// return Collections.unmodifiableSet(new java.util.HashSet&lt;T&gt;());
-		// ::done
-
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L49">			return Collections.unmodifiableSet(new java.util.HashSet&lt;T&gt;());</span>
+<span class="fc" id="L50">		return Collections.emptySet();</span>
 	}
 
 }

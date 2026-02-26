@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.utils;
 
-// ::comment when __TEAVM__
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.FileNotFoundException;
@@ -53,305 +52,224 @@ import javax.crypto.spec.PBEKeySpec;
 import net.sourceforge.plantuml.code.AsciiEncoder;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.teavm.TeaVM;
+
+// ::comment when JAVA8
+import org.teavm.jso.JSBody;
 // ::done
 
-// ::uncomment when __TEAVM__
-//import org.teavm.jso.JSBody;
-// ::done
+<span class="nc" id="L61">public class SignatureUtils {</span>
 
-<span class="nc" id="L62">public class SignatureUtils {</span>
-
-	// ::comment when __TEAVM__
 	public static String toHexString(byte data[]) {
-<span class="nc" id="L66">		final StringBuilder sb = new StringBuilder(data.length * 2);</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		for (byte b : data)</span>
-<span class="nc" id="L68">			sb.append(String.format(&quot;%02x&quot;, b));</span>
+<span class="nc" id="L64">		final StringBuilder sb = new StringBuilder(data.length * 2);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		for (byte b : data)</span>
+<span class="nc" id="L66">			sb.append(String.format(&quot;%02x&quot;, b));</span>
 
-<span class="nc" id="L70">		return sb.toString();</span>
+<span class="nc" id="L68">		return sb.toString();</span>
 	}
 
 	public static String getMD5Hex(String s) {
-		try {
-<span class="nc" id="L75">			final byte[] digest = getMD5raw(s);</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">			assert digest.length == 16;</span>
-<span class="nc" id="L77">			return toHexString(digest);</span>
-<span class="nc" id="L78">		} catch (NoSuchAlgorithmException e) {</span>
-<span class="nc" id="L79">			Logme.error(e);</span>
-<span class="nc" id="L80">			throw new UnsupportedOperationException(e);</span>
-<span class="nc" id="L81">		} catch (UnsupportedEncodingException e) {</span>
-<span class="nc" id="L82">			Logme.error(e);</span>
-<span class="nc" id="L83">			throw new UnsupportedOperationException(e);</span>
-		}
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
+			// ::revert when JAVA8
+<span class="nc" id="L74">			return md5Native(s);</span>
+			// return null;
+			// ::done
+		} else
+			try {
+<span class="nc" id="L79">				final byte[] digest = getMD5raw(s);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">				assert digest.length == 16;</span>
+<span class="nc" id="L81">				return toHexString(digest);</span>
+<span class="nc" id="L82">			} catch (NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L83">				Logme.error(e);</span>
+<span class="nc" id="L84">				throw new UnsupportedOperationException(e);</span>
+<span class="nc" id="L85">			} catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L86">				Logme.error(e);</span>
+<span class="nc" id="L87">				throw new UnsupportedOperationException(e);</span>
+			}
 	}
 
 	public static synchronized byte[] getMD5raw(String s)
 			throws NoSuchAlgorithmException, UnsupportedEncodingException {
-<span class="nc" id="L89">		final MessageDigest msgDigest = MessageDigest.getInstance(&quot;MD5&quot;);</span>
-<span class="nc" id="L90">		msgDigest.update(s.getBytes(UTF_8));</span>
-<span class="nc" id="L91">		return msgDigest.digest();</span>
+<span class="nc" id="L93">		final MessageDigest msgDigest = MessageDigest.getInstance(&quot;MD5&quot;);</span>
+<span class="nc" id="L94">		msgDigest.update(s.getBytes(UTF_8));</span>
+<span class="nc" id="L95">		return msgDigest.digest();</span>
 	}
 
 	public static synchronized byte[] salting(String pass, byte[] salt)
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
-<span class="nc" id="L96">		final int iterations = 500;</span>
-<span class="nc" id="L97">		final int keyLength = 512;</span>
-<span class="nc" id="L98">		final SecretKeyFactory skf = SecretKeyFactory.getInstance(&quot;PBKDF2WithHmacSHA1&quot;);</span>
-<span class="nc" id="L99">		final PBEKeySpec spec = new PBEKeySpec(pass.toCharArray(), salt, iterations, keyLength);</span>
-<span class="nc" id="L100">		final SecretKey key = skf.generateSecret(spec);</span>
-<span class="nc" id="L101">		final byte[] tmp = key.getEncoded();</span>
-<span class="nc" id="L102">		return tmp;</span>
+<span class="nc" id="L100">		final int iterations = 500;</span>
+<span class="nc" id="L101">		final int keyLength = 512;</span>
+<span class="nc" id="L102">		final SecretKeyFactory skf = SecretKeyFactory.getInstance(&quot;PBKDF2WithHmacSHA1&quot;);</span>
+<span class="nc" id="L103">		final PBEKeySpec spec = new PBEKeySpec(pass.toCharArray(), salt, iterations, keyLength);</span>
+<span class="nc" id="L104">		final SecretKey key = skf.generateSecret(spec);</span>
+<span class="nc" id="L105">		final byte[] tmp = key.getEncoded();</span>
+<span class="nc" id="L106">		return tmp;</span>
 	}
 
 	public static String getSignature(String s) {
 		try {
-<span class="nc" id="L107">			final byte[] digest = getMD5raw(s);</span>
-<span class="nc" id="L108">			return toString(digest);</span>
-<span class="nc" id="L109">		} catch (NoSuchAlgorithmException e) {</span>
-<span class="nc" id="L110">			Logme.error(e);</span>
-<span class="nc" id="L111">			throw new UnsupportedOperationException(e);</span>
-<span class="nc" id="L112">		} catch (UnsupportedEncodingException e) {</span>
-<span class="nc" id="L113">			Logme.error(e);</span>
-<span class="nc" id="L114">			throw new UnsupportedOperationException(e);</span>
+<span class="nc" id="L111">			final byte[] digest = getMD5raw(s);</span>
+<span class="nc" id="L112">			return toString(digest);</span>
+<span class="nc" id="L113">		} catch (NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L114">			Logme.error(e);</span>
+<span class="nc" id="L115">			throw new UnsupportedOperationException(e);</span>
+<span class="nc" id="L116">		} catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L117">			Logme.error(e);</span>
+<span class="nc" id="L118">			throw new UnsupportedOperationException(e);</span>
 		}
 	}
 
 	public static String toString(byte data[]) {
-<span class="nc" id="L119">		final AsciiEncoder coder = new AsciiEncoder();</span>
-<span class="nc" id="L120">		return coder.encode(data);</span>
+<span class="nc" id="L123">		final AsciiEncoder coder = new AsciiEncoder();</span>
+<span class="nc" id="L124">		return coder.encode(data);</span>
 	}
 
 	public static String getSHA512Hex(String s) {
 		try {
-<span class="nc" id="L125">			final byte[] digest = getSHA512raw(s);</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">			assert digest.length == 64;</span>
-<span class="nc" id="L127">			return toHexString(digest);</span>
-<span class="nc" id="L128">		} catch (NoSuchAlgorithmException e) {</span>
-<span class="nc" id="L129">			Logme.error(e);</span>
-<span class="nc" id="L130">			throw new UnsupportedOperationException(e);</span>
-<span class="nc" id="L131">		} catch (UnsupportedEncodingException e) {</span>
-<span class="nc" id="L132">			Logme.error(e);</span>
-<span class="nc" id="L133">			throw new UnsupportedOperationException(e);</span>
+<span class="nc" id="L129">			final byte[] digest = getSHA512raw(s);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">			assert digest.length == 64;</span>
+<span class="nc" id="L131">			return toHexString(digest);</span>
+<span class="nc" id="L132">		} catch (NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L133">			Logme.error(e);</span>
+<span class="nc" id="L134">			throw new UnsupportedOperationException(e);</span>
+<span class="nc" id="L135">		} catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L136">			Logme.error(e);</span>
+<span class="nc" id="L137">			throw new UnsupportedOperationException(e);</span>
 		}
 	}
 
 	public static byte[] getSHA512raw(String s) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-<span class="nc" id="L138">		return getSHA512raw(s.getBytes(UTF_8));</span>
+<span class="nc" id="L142">		return getSHA512raw(s.getBytes(UTF_8));</span>
 	}
 
 	public static synchronized byte[] getSHA512raw(byte data[])
 			throws NoSuchAlgorithmException, UnsupportedEncodingException {
-<span class="nc" id="L143">		final MessageDigest msgDigest = MessageDigest.getInstance(&quot;SHA-512&quot;);</span>
-<span class="nc" id="L144">		msgDigest.update(data);</span>
-<span class="nc" id="L145">		return msgDigest.digest();</span>
+<span class="nc" id="L147">		final MessageDigest msgDigest = MessageDigest.getInstance(&quot;SHA-512&quot;);</span>
+<span class="nc" id="L148">		msgDigest.update(data);</span>
+<span class="nc" id="L149">		return msgDigest.digest();</span>
 	}
 
 	public static String getSignatureSha512(SFile f) throws IOException {
-<span class="nc" id="L149">		try (InputStream is = f.openFile()) {</span>
-<span class="nc" id="L150">			return getSignatureSha512(is);</span>
+<span class="nc" id="L153">		try (InputStream is = f.openFile()) {</span>
+<span class="nc" id="L154">			return getSignatureSha512(is);</span>
 		}
 	}
 
 	public static synchronized String getSignatureSha512(InputStream is) throws IOException {
 		try {
-<span class="nc" id="L156">			final MessageDigest msgDigest = MessageDigest.getInstance(&quot;SHA-512&quot;);</span>
-<span class="nc" id="L157">			int read = 0;</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">			while ((read = is.read()) != -1)</span>
-<span class="nc" id="L159">				msgDigest.update((byte) read);</span>
+<span class="nc" id="L160">			final MessageDigest msgDigest = MessageDigest.getInstance(&quot;SHA-512&quot;);</span>
+<span class="nc" id="L161">			int read = 0;</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">			while ((read = is.read()) != -1)</span>
+<span class="nc" id="L163">				msgDigest.update((byte) read);</span>
 
-<span class="nc" id="L161">			final byte[] digest = msgDigest.digest();</span>
-<span class="nc" id="L162">			return toString(digest);</span>
-<span class="nc" id="L163">		} catch (NoSuchAlgorithmException e) {</span>
-<span class="nc" id="L164">			Logme.error(e);</span>
-<span class="nc" id="L165">			throw new UnsupportedOperationException(e);</span>
-<span class="nc" id="L166">		} catch (UnsupportedEncodingException e) {</span>
-<span class="nc" id="L167">			Logme.error(e);</span>
-<span class="nc" id="L168">			throw new UnsupportedOperationException(e);</span>
+<span class="nc" id="L165">			final byte[] digest = msgDigest.digest();</span>
+<span class="nc" id="L166">			return toString(digest);</span>
+<span class="nc" id="L167">		} catch (NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L168">			Logme.error(e);</span>
+<span class="nc" id="L169">			throw new UnsupportedOperationException(e);</span>
+<span class="nc" id="L170">		} catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L171">			Logme.error(e);</span>
+<span class="nc" id="L172">			throw new UnsupportedOperationException(e);</span>
 		}
 	}
 
 	public static String getSignatureWithoutImgSrc(String s) {
-<span class="nc" id="L173">		s = getSignature(purge(s));</span>
-<span class="nc" id="L174">		return s;</span>
+<span class="nc" id="L177">		s = getSignature(purge(s));</span>
+<span class="nc" id="L178">		return s;</span>
 	}
 
 	public static String purge(String s) {
-<span class="nc" id="L178">		final String regex = &quot;(?i)\\&lt;img\\s+src=\&quot;(?:[^\&quot;]+[/\\\\])?([^/\\\\\\d.]+)\\d*(\\.\\w+)\&quot;/\\&gt;&quot;;</span>
-<span class="nc" id="L179">		s = s.replaceAll(regex, &quot;&lt;img src=\&quot;$1$2\&quot;/&gt;&quot;);</span>
-<span class="nc" id="L180">		final String regex2 = &quot;(?i)image=\&quot;(?:[^\&quot;]+[/\\\\])?([^/\\\\\\d.]+)\\d*(\\.\\w+)\&quot;&quot;;</span>
-<span class="nc" id="L181">		s = s.replaceAll(regex2, &quot;image=\&quot;$1$2\&quot;&quot;);</span>
-<span class="nc" id="L182">		return s;</span>
+<span class="nc" id="L182">		final String regex = &quot;(?i)\\&lt;img\\s+src=\&quot;(?:[^\&quot;]+[/\\\\])?([^/\\\\\\d.]+)\\d*(\\.\\w+)\&quot;/\\&gt;&quot;;</span>
+<span class="nc" id="L183">		s = s.replaceAll(regex, &quot;&lt;img src=\&quot;$1$2\&quot;/&gt;&quot;);</span>
+<span class="nc" id="L184">		final String regex2 = &quot;(?i)image=\&quot;(?:[^\&quot;]+[/\\\\])?([^/\\\\\\d.]+)\\d*(\\.\\w+)\&quot;&quot;;</span>
+<span class="nc" id="L185">		s = s.replaceAll(regex2, &quot;image=\&quot;$1$2\&quot;&quot;);</span>
+<span class="nc" id="L186">		return s;</span>
 	}
 
 	public static synchronized String getSignature(SFile f) throws IOException {
-<span class="nc" id="L186">		try (final InputStream is = f.openFile()) {</span>
-<span class="nc" id="L187">			final MessageDigest msgDigest = MessageDigest.getInstance(&quot;MD5&quot;);</span>
-<span class="nc bnc" id="L188" title="All 2 branches missed.">			if (is == null)</span>
-<span class="nc" id="L189">				throw new FileNotFoundException();</span>
+<span class="nc" id="L190">		try (final InputStream is = f.openFile()) {</span>
+<span class="nc" id="L191">			final MessageDigest msgDigest = MessageDigest.getInstance(&quot;MD5&quot;);</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">			if (is == null)</span>
+<span class="nc" id="L193">				throw new FileNotFoundException();</span>
 
-<span class="nc" id="L191">			int read = -1;</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">			while ((read = is.read()) != -1)</span>
-<span class="nc" id="L193">				msgDigest.update((byte) read);</span>
+<span class="nc" id="L195">			int read = -1;</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">			while ((read = is.read()) != -1)</span>
+<span class="nc" id="L197">				msgDigest.update((byte) read);</span>
 
-<span class="nc" id="L195">			final byte[] digest = msgDigest.digest();</span>
-<span class="nc" id="L196">			return toString(digest);</span>
-<span class="nc" id="L197">		} catch (NoSuchAlgorithmException e) {</span>
-<span class="nc" id="L198">			Logme.error(e);</span>
-<span class="nc" id="L199">			throw new UnsupportedOperationException(e);</span>
-<span class="nc" id="L200">		} catch (UnsupportedEncodingException e) {</span>
-<span class="nc" id="L201">			Logme.error(e);</span>
-<span class="nc" id="L202">			throw new UnsupportedOperationException(e);</span>
+<span class="nc" id="L199">			final byte[] digest = msgDigest.digest();</span>
+<span class="nc" id="L200">			return toString(digest);</span>
+<span class="nc" id="L201">		} catch (NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L202">			Logme.error(e);</span>
+<span class="nc" id="L203">			throw new UnsupportedOperationException(e);</span>
+<span class="nc" id="L204">		} catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L205">			Logme.error(e);</span>
+<span class="nc" id="L206">			throw new UnsupportedOperationException(e);</span>
 		}
 	}
-	// ::done
 
-	// ::uncomment when __TEAVM__
-//	/**
-//	 * Computes MD5 hash of a string and returns it as a hex string.
-//	 * Uses a pure JavaScript MD5 implementation for TeaVM compatibility.
-//	 */
-//	public static String getMD5Hex(String s) {
-//		return md5Native(s);
-//	}
-//
-//	/**
-//	 * Native JavaScript MD5 implementation.
-//	 * Based on the well-known MD5 algorithm adapted for browser environments.
-//	 */
-//	@JSBody(params = { &quot;string&quot; }, script = 
-//		&quot;function md5(string) {&quot; +
-//		&quot;  function md5cycle(x, k) {&quot; +
-//		&quot;    var a = x[0], b = x[1], c = x[2], d = x[3];&quot; +
-//		&quot;    a = ff(a, b, c, d, k[0], 7, -680876936);&quot; +
-//		&quot;    d = ff(d, a, b, c, k[1], 12, -389564586);&quot; +
-//		&quot;    c = ff(c, d, a, b, k[2], 17, 606105819);&quot; +
-//		&quot;    b = ff(b, c, d, a, k[3], 22, -1044525330);&quot; +
-//		&quot;    a = ff(a, b, c, d, k[4], 7, -176418897);&quot; +
-//		&quot;    d = ff(d, a, b, c, k[5], 12, 1200080426);&quot; +
-//		&quot;    c = ff(c, d, a, b, k[6], 17, -1473231341);&quot; +
-//		&quot;    b = ff(b, c, d, a, k[7], 22, -45705983);&quot; +
-//		&quot;    a = ff(a, b, c, d, k[8], 7, 1770035416);&quot; +
-//		&quot;    d = ff(d, a, b, c, k[9], 12, -1958414417);&quot; +
-//		&quot;    c = ff(c, d, a, b, k[10], 17, -42063);&quot; +
-//		&quot;    b = ff(b, c, d, a, k[11], 22, -1990404162);&quot; +
-//		&quot;    a = ff(a, b, c, d, k[12], 7, 1804603682);&quot; +
-//		&quot;    d = ff(d, a, b, c, k[13], 12, -40341101);&quot; +
-//		&quot;    c = ff(c, d, a, b, k[14], 17, -1502002290);&quot; +
-//		&quot;    b = ff(b, c, d, a, k[15], 22, 1236535329);&quot; +
-//		&quot;    a = gg(a, b, c, d, k[1], 5, -165796510);&quot; +
-//		&quot;    d = gg(d, a, b, c, k[6], 9, -1069501632);&quot; +
-//		&quot;    c = gg(c, d, a, b, k[11], 14, 643717713);&quot; +
-//		&quot;    b = gg(b, c, d, a, k[0], 20, -373897302);&quot; +
-//		&quot;    a = gg(a, b, c, d, k[5], 5, -701558691);&quot; +
-//		&quot;    d = gg(d, a, b, c, k[10], 9, 38016083);&quot; +
-//		&quot;    c = gg(c, d, a, b, k[15], 14, -660478335);&quot; +
-//		&quot;    b = gg(b, c, d, a, k[4], 20, -405537848);&quot; +
-//		&quot;    a = gg(a, b, c, d, k[9], 5, 568446438);&quot; +
-//		&quot;    d = gg(d, a, b, c, k[14], 9, -1019803690);&quot; +
-//		&quot;    c = gg(c, d, a, b, k[3], 14, -187363961);&quot; +
-//		&quot;    b = gg(b, c, d, a, k[8], 20, 1163531501);&quot; +
-//		&quot;    a = gg(a, b, c, d, k[13], 5, -1444681467);&quot; +
-//		&quot;    d = gg(d, a, b, c, k[2], 9, -51403784);&quot; +
-//		&quot;    c = gg(c, d, a, b, k[7], 14, 1735328473);&quot; +
-//		&quot;    b = gg(b, c, d, a, k[12], 20, -1926607734);&quot; +
-//		&quot;    a = hh(a, b, c, d, k[5], 4, -378558);&quot; +
-//		&quot;    d = hh(d, a, b, c, k[8], 11, -2022574463);&quot; +
-//		&quot;    c = hh(c, d, a, b, k[11], 16, 1839030562);&quot; +
-//		&quot;    b = hh(b, c, d, a, k[14], 23, -35309556);&quot; +
-//		&quot;    a = hh(a, b, c, d, k[1], 4, -1530992060);&quot; +
-//		&quot;    d = hh(d, a, b, c, k[4], 11, 1272893353);&quot; +
-//		&quot;    c = hh(c, d, a, b, k[7], 16, -155497632);&quot; +
-//		&quot;    b = hh(b, c, d, a, k[10], 23, -1094730640);&quot; +
-//		&quot;    a = hh(a, b, c, d, k[13], 4, 681279174);&quot; +
-//		&quot;    d = hh(d, a, b, c, k[0], 11, -358537222);&quot; +
-//		&quot;    c = hh(c, d, a, b, k[3], 16, -722521979);&quot; +
-//		&quot;    b = hh(b, c, d, a, k[6], 23, 76029189);&quot; +
-//		&quot;    a = hh(a, b, c, d, k[9], 4, -640364487);&quot; +
-//		&quot;    d = hh(d, a, b, c, k[12], 11, -421815835);&quot; +
-//		&quot;    c = hh(c, d, a, b, k[15], 16, 530742520);&quot; +
-//		&quot;    b = hh(b, c, d, a, k[2], 23, -995338651);&quot; +
-//		&quot;    a = ii(a, b, c, d, k[0], 6, -198630844);&quot; +
-//		&quot;    d = ii(d, a, b, c, k[7], 10, 1126891415);&quot; +
-//		&quot;    c = ii(c, d, a, b, k[14], 15, -1416354905);&quot; +
-//		&quot;    b = ii(b, c, d, a, k[5], 21, -57434055);&quot; +
-//		&quot;    a = ii(a, b, c, d, k[12], 6, 1700485571);&quot; +
-//		&quot;    d = ii(d, a, b, c, k[3], 10, -1894986606);&quot; +
-//		&quot;    c = ii(c, d, a, b, k[10], 15, -1051523);&quot; +
-//		&quot;    b = ii(b, c, d, a, k[1], 21, -2054922799);&quot; +
-//		&quot;    a = ii(a, b, c, d, k[8], 6, 1873313359);&quot; +
-//		&quot;    d = ii(d, a, b, c, k[15], 10, -30611744);&quot; +
-//		&quot;    c = ii(c, d, a, b, k[6], 15, -1560198380);&quot; +
-//		&quot;    b = ii(b, c, d, a, k[13], 21, 1309151649);&quot; +
-//		&quot;    a = ii(a, b, c, d, k[4], 6, -145523070);&quot; +
-//		&quot;    d = ii(d, a, b, c, k[11], 10, -1120210379);&quot; +
-//		&quot;    c = ii(c, d, a, b, k[2], 15, 718787259);&quot; +
-//		&quot;    b = ii(b, c, d, a, k[9], 21, -343485551);&quot; +
-//		&quot;    x[0] = add32(a, x[0]);&quot; +
-//		&quot;    x[1] = add32(b, x[1]);&quot; +
-//		&quot;    x[2] = add32(c, x[2]);&quot; +
-//		&quot;    x[3] = add32(d, x[3]);&quot; +
-//		&quot;  }&quot; +
-//		&quot;  function cmn(q, a, b, x, s, t) {&quot; +
-//		&quot;    a = add32(add32(a, q), add32(x, t));&quot; +
-//		&quot;    return add32((a &lt;&lt; s) | (a &gt;&gt;&gt; (32 - s)), b);&quot; +
-//		&quot;  }&quot; +
-//		&quot;  function ff(a, b, c, d, x, s, t) {&quot; +
-//		&quot;    return cmn((b &amp; c) | ((~b) &amp; d), a, b, x, s, t);&quot; +
-//		&quot;  }&quot; +
-//		&quot;  function gg(a, b, c, d, x, s, t) {&quot; +
-//		&quot;    return cmn((b &amp; d) | (c &amp; (~d)), a, b, x, s, t);&quot; +
-//		&quot;  }&quot; +
-//		&quot;  function hh(a, b, c, d, x, s, t) {&quot; +
-//		&quot;    return cmn(b ^ c ^ d, a, b, x, s, t);&quot; +
-//		&quot;  }&quot; +
-//		&quot;  function ii(a, b, c, d, x, s, t) {&quot; +
-//		&quot;    return cmn(c ^ (b | (~d)), a, b, x, s, t);&quot; +
-//		&quot;  }&quot; +
-//		&quot;  function md51(s) {&quot; +
-//		&quot;    var n = s.length,&quot; +
-//		&quot;    state = [1732584193, -271733879, -1732584194, 271733878], i;&quot; +
-//		&quot;    for (i = 64; i &lt;= s.length; i += 64) {&quot; +
-//		&quot;      md5cycle(state, md5blk(s.substring(i - 64, i)));&quot; +
-//		&quot;    }&quot; +
-//		&quot;    s = s.substring(i - 64);&quot; +
-//		&quot;    var tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];&quot; +
-//		&quot;    for (i = 0; i &lt; s.length; i++)&quot; +
-//		&quot;      tail[i &gt;&gt; 2] |= s.charCodeAt(i) &lt;&lt; ((i % 4) &lt;&lt; 3);&quot; +
-//		&quot;    tail[i &gt;&gt; 2] |= 0x80 &lt;&lt; ((i % 4) &lt;&lt; 3);&quot; +
-//		&quot;    if (i &gt; 55) {&quot; +
-//		&quot;      md5cycle(state, tail);&quot; +
-//		&quot;      for (i = 0; i &lt; 16; i++) tail[i] = 0;&quot; +
-//		&quot;    }&quot; +
-//		&quot;    tail[14] = n * 8;&quot; +
-//		&quot;    md5cycle(state, tail);&quot; +
-//		&quot;    return state;&quot; +
-//		&quot;  }&quot; +
-//		&quot;  function md5blk(s) {&quot; +
-//		&quot;    var md5blks = [], i;&quot; +
-//		&quot;    for (i = 0; i &lt; 64; i += 4) {&quot; +
-//		&quot;      md5blks[i &gt;&gt; 2] = s.charCodeAt(i) + (s.charCodeAt(i + 1) &lt;&lt; 8) +&quot; +
-//		&quot;        (s.charCodeAt(i + 2) &lt;&lt; 16) + (s.charCodeAt(i + 3) &lt;&lt; 24);&quot; +
-//		&quot;    }&quot; +
-//		&quot;    return md5blks;&quot; +
-//		&quot;  }&quot; +
-//		&quot;  var hex_chr = '0123456789abcdef'.split('');&quot; +
-//		&quot;  function rhex(n) {&quot; +
-//		&quot;    var s = '', j = 0;&quot; +
-//		&quot;    for (; j &lt; 4; j++)&quot; +
-//		&quot;      s += hex_chr[(n &gt;&gt; (j * 8 + 4)) &amp; 0x0F] + hex_chr[(n &gt;&gt; (j * 8)) &amp; 0x0F];&quot; +
-//		&quot;    return s;&quot; +
-//		&quot;  }&quot; +
-//		&quot;  function hex(x) {&quot; +
-//		&quot;    for (var i = 0; i &lt; x.length; i++)&quot; +
-//		&quot;      x[i] = rhex(x[i]);&quot; +
-//		&quot;    return x.join('');&quot; +
-//		&quot;  }&quot; +
-//		&quot;  function add32(a, b) {&quot; +
-//		&quot;    return (a + b) &amp; 0xFFFFFFFF;&quot; +
-//		&quot;  }&quot; +
-//		&quot;  return hex(md51(unescape(encodeURIComponent(string))));&quot; +
-//		&quot;}&quot; +
-//		&quot;return md5(string);&quot;)
-//	private static native String md5Native(String string);
+	// ::comment when JAVA8
+	/**
+	 * Native JavaScript MD5 implementation. Based on the well-known MD5 algorithm
+	 * adapted for browser environments.
+	 */
+	@JSBody(params = { &quot;string&quot; }, script = &quot;function md5(string) {&quot; + &quot;  function md5cycle(x, k) {&quot;
+			+ &quot;    var a = x[0], b = x[1], c = x[2], d = x[3];&quot; + &quot;    a = ff(a, b, c, d, k[0], 7, -680876936);&quot;
+			+ &quot;    d = ff(d, a, b, c, k[1], 12, -389564586);&quot; + &quot;    c = ff(c, d, a, b, k[2], 17, 606105819);&quot;
+			+ &quot;    b = ff(b, c, d, a, k[3], 22, -1044525330);&quot; + &quot;    a = ff(a, b, c, d, k[4], 7, -176418897);&quot;
+			+ &quot;    d = ff(d, a, b, c, k[5], 12, 1200080426);&quot; + &quot;    c = ff(c, d, a, b, k[6], 17, -1473231341);&quot;
+			+ &quot;    b = ff(b, c, d, a, k[7], 22, -45705983);&quot; + &quot;    a = ff(a, b, c, d, k[8], 7, 1770035416);&quot;
+			+ &quot;    d = ff(d, a, b, c, k[9], 12, -1958414417);&quot; + &quot;    c = ff(c, d, a, b, k[10], 17, -42063);&quot;
+			+ &quot;    b = ff(b, c, d, a, k[11], 22, -1990404162);&quot; + &quot;    a = ff(a, b, c, d, k[12], 7, 1804603682);&quot;
+			+ &quot;    d = ff(d, a, b, c, k[13], 12, -40341101);&quot; + &quot;    c = ff(c, d, a, b, k[14], 17, -1502002290);&quot;
+			+ &quot;    b = ff(b, c, d, a, k[15], 22, 1236535329);&quot; + &quot;    a = gg(a, b, c, d, k[1], 5, -165796510);&quot;
+			+ &quot;    d = gg(d, a, b, c, k[6], 9, -1069501632);&quot; + &quot;    c = gg(c, d, a, b, k[11], 14, 643717713);&quot;
+			+ &quot;    b = gg(b, c, d, a, k[0], 20, -373897302);&quot; + &quot;    a = gg(a, b, c, d, k[5], 5, -701558691);&quot;
+			+ &quot;    d = gg(d, a, b, c, k[10], 9, 38016083);&quot; + &quot;    c = gg(c, d, a, b, k[15], 14, -660478335);&quot;
+			+ &quot;    b = gg(b, c, d, a, k[4], 20, -405537848);&quot; + &quot;    a = gg(a, b, c, d, k[9], 5, 568446438);&quot;
+			+ &quot;    d = gg(d, a, b, c, k[14], 9, -1019803690);&quot; + &quot;    c = gg(c, d, a, b, k[3], 14, -187363961);&quot;
+			+ &quot;    b = gg(b, c, d, a, k[8], 20, 1163531501);&quot; + &quot;    a = gg(a, b, c, d, k[13], 5, -1444681467);&quot;
+			+ &quot;    d = gg(d, a, b, c, k[2], 9, -51403784);&quot; + &quot;    c = gg(c, d, a, b, k[7], 14, 1735328473);&quot;
+			+ &quot;    b = gg(b, c, d, a, k[12], 20, -1926607734);&quot; + &quot;    a = hh(a, b, c, d, k[5], 4, -378558);&quot;
+			+ &quot;    d = hh(d, a, b, c, k[8], 11, -2022574463);&quot; + &quot;    c = hh(c, d, a, b, k[11], 16, 1839030562);&quot;
+			+ &quot;    b = hh(b, c, d, a, k[14], 23, -35309556);&quot; + &quot;    a = hh(a, b, c, d, k[1], 4, -1530992060);&quot;
+			+ &quot;    d = hh(d, a, b, c, k[4], 11, 1272893353);&quot; + &quot;    c = hh(c, d, a, b, k[7], 16, -155497632);&quot;
+			+ &quot;    b = hh(b, c, d, a, k[10], 23, -1094730640);&quot; + &quot;    a = hh(a, b, c, d, k[13], 4, 681279174);&quot;
+			+ &quot;    d = hh(d, a, b, c, k[0], 11, -358537222);&quot; + &quot;    c = hh(c, d, a, b, k[3], 16, -722521979);&quot;
+			+ &quot;    b = hh(b, c, d, a, k[6], 23, 76029189);&quot; + &quot;    a = hh(a, b, c, d, k[9], 4, -640364487);&quot;
+			+ &quot;    d = hh(d, a, b, c, k[12], 11, -421815835);&quot; + &quot;    c = hh(c, d, a, b, k[15], 16, 530742520);&quot;
+			+ &quot;    b = hh(b, c, d, a, k[2], 23, -995338651);&quot; + &quot;    a = ii(a, b, c, d, k[0], 6, -198630844);&quot;
+			+ &quot;    d = ii(d, a, b, c, k[7], 10, 1126891415);&quot; + &quot;    c = ii(c, d, a, b, k[14], 15, -1416354905);&quot;
+			+ &quot;    b = ii(b, c, d, a, k[5], 21, -57434055);&quot; + &quot;    a = ii(a, b, c, d, k[12], 6, 1700485571);&quot;
+			+ &quot;    d = ii(d, a, b, c, k[3], 10, -1894986606);&quot; + &quot;    c = ii(c, d, a, b, k[10], 15, -1051523);&quot;
+			+ &quot;    b = ii(b, c, d, a, k[1], 21, -2054922799);&quot; + &quot;    a = ii(a, b, c, d, k[8], 6, 1873313359);&quot;
+			+ &quot;    d = ii(d, a, b, c, k[15], 10, -30611744);&quot; + &quot;    c = ii(c, d, a, b, k[6], 15, -1560198380);&quot;
+			+ &quot;    b = ii(b, c, d, a, k[13], 21, 1309151649);&quot; + &quot;    a = ii(a, b, c, d, k[4], 6, -145523070);&quot;
+			+ &quot;    d = ii(d, a, b, c, k[11], 10, -1120210379);&quot; + &quot;    c = ii(c, d, a, b, k[2], 15, 718787259);&quot;
+			+ &quot;    b = ii(b, c, d, a, k[9], 21, -343485551);&quot; + &quot;    x[0] = add32(a, x[0]);&quot;
+			+ &quot;    x[1] = add32(b, x[1]);&quot; + &quot;    x[2] = add32(c, x[2]);&quot; + &quot;    x[3] = add32(d, x[3]);&quot; + &quot;  }&quot;
+			+ &quot;  function cmn(q, a, b, x, s, t) {&quot; + &quot;    a = add32(add32(a, q), add32(x, t));&quot;
+			+ &quot;    return add32((a &lt;&lt; s) | (a &gt;&gt;&gt; (32 - s)), b);&quot; + &quot;  }&quot; + &quot;  function ff(a, b, c, d, x, s, t) {&quot;
+			+ &quot;    return cmn((b &amp; c) | ((~b) &amp; d), a, b, x, s, t);&quot; + &quot;  }&quot; + &quot;  function gg(a, b, c, d, x, s, t) {&quot;
+			+ &quot;    return cmn((b &amp; d) | (c &amp; (~d)), a, b, x, s, t);&quot; + &quot;  }&quot; + &quot;  function hh(a, b, c, d, x, s, t) {&quot;
+			+ &quot;    return cmn(b ^ c ^ d, a, b, x, s, t);&quot; + &quot;  }&quot; + &quot;  function ii(a, b, c, d, x, s, t) {&quot;
+			+ &quot;    return cmn(c ^ (b | (~d)), a, b, x, s, t);&quot; + &quot;  }&quot; + &quot;  function md51(s) {&quot;
+			+ &quot;    var n = s.length,&quot; + &quot;    state = [1732584193, -271733879, -1732584194, 271733878], i;&quot;
+			+ &quot;    for (i = 64; i &lt;= s.length; i += 64) {&quot; + &quot;      md5cycle(state, md5blk(s.substring(i - 64, i)));&quot;
+			+ &quot;    }&quot; + &quot;    s = s.substring(i - 64);&quot;
+			+ &quot;    var tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];&quot; + &quot;    for (i = 0; i &lt; s.length; i++)&quot;
+			+ &quot;      tail[i &gt;&gt; 2] |= s.charCodeAt(i) &lt;&lt; ((i % 4) &lt;&lt; 3);&quot; + &quot;    tail[i &gt;&gt; 2] |= 0x80 &lt;&lt; ((i % 4) &lt;&lt; 3);&quot;
+			+ &quot;    if (i &gt; 55) {&quot; + &quot;      md5cycle(state, tail);&quot; + &quot;      for (i = 0; i &lt; 16; i++) tail[i] = 0;&quot;
+			+ &quot;    }&quot; + &quot;    tail[14] = n * 8;&quot; + &quot;    md5cycle(state, tail);&quot; + &quot;    return state;&quot; + &quot;  }&quot;
+			+ &quot;  function md5blk(s) {&quot; + &quot;    var md5blks = [], i;&quot; + &quot;    for (i = 0; i &lt; 64; i += 4) {&quot;
+			+ &quot;      md5blks[i &gt;&gt; 2] = s.charCodeAt(i) + (s.charCodeAt(i + 1) &lt;&lt; 8) +&quot;
+			+ &quot;        (s.charCodeAt(i + 2) &lt;&lt; 16) + (s.charCodeAt(i + 3) &lt;&lt; 24);&quot; + &quot;    }&quot; + &quot;    return md5blks;&quot;
+			+ &quot;  }&quot; + &quot;  var hex_chr = '0123456789abcdef'.split('');&quot; + &quot;  function rhex(n) {&quot;
+			+ &quot;    var s = '', j = 0;&quot; + &quot;    for (; j &lt; 4; j++)&quot;
+			+ &quot;      s += hex_chr[(n &gt;&gt; (j * 8 + 4)) &amp; 0x0F] + hex_chr[(n &gt;&gt; (j * 8)) &amp; 0x0F];&quot; + &quot;    return s;&quot;
+			+ &quot;  }&quot; + &quot;  function hex(x) {&quot; + &quot;    for (var i = 0; i &lt; x.length; i++)&quot; + &quot;      x[i] = rhex(x[i]);&quot;
+			+ &quot;    return x.join('');&quot; + &quot;  }&quot; + &quot;  function add32(a, b) {&quot; + &quot;    return (a + b) &amp; 0xFFFFFFFF;&quot; + &quot;  }&quot;
+			+ &quot;  return hex(md51(unescape(encodeURIComponent(string))));&quot; + &quot;}&quot; + &quot;return md5(string);&quot;)
+	private static native String md5Native(String string);
 	// ::done
 
 }

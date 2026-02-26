@@ -743,7 +743,7 @@ import java.util.List;
 <span class="fc" id="L743">				return new String[] { &quot;\\cancel{&quot; + result[0] + &quot;}&quot;, result[1] };</span>
 <span class="fc bfc" id="L744" title="All 2 branches covered.">			} else if (symbol.rewriteleftright != null) { // abs, floor, ceil</span>
 <span class="fc" id="L745">				return new String[] { &quot;{\\left&quot; + symbol.rewriteleftright[0] + result[0] + &quot;\\right&quot;</span>
-<span class="fc" id="L746">						+ symbol.rewriteleftright[1] + '}', result[1] };</span>
+						+ symbol.rewriteleftright[1] + '}', result[1] };
 <span class="fc bfc" id="L747" title="All 2 branches covered.">			} else if (symbol.hasFlag(Flag.ACC)) { // accent</span>
 <span class="fc" id="L748">				return new String[] { aAMTgetTeXsymbol(symbol) + &quot;{&quot; + result[0] + &quot;}&quot;, result[1] };</span>
 			} else { // font change command
@@ -874,8 +874,8 @@ import java.util.List;
 <span class="fc bfc" id="L874" title="All 2 branches covered.">			} else if (node != null)</span>
 <span class="fc" id="L875">				newFrag += node;</span>
 
-<span class="fc bfc" id="L877" title="All 8 branches covered.">		} while ((((symbol.ttype != Ttype.RIGHTBRACKET) &amp;&amp; (symbol.ttype != Ttype.LEFTRIGHT || rightbracket))</span>
-<span class="fc bfc" id="L878" title="All 4 branches covered.">				|| aAMnestingDepth == 0) &amp;&amp; (symbol.output == null || !symbol.output.equals(&quot;&quot;)));</span>
+<span class="fc bfc" id="L877" title="All 10 branches covered.">		} while ((((symbol.ttype != Ttype.RIGHTBRACKET) &amp;&amp; (symbol.ttype != Ttype.LEFTRIGHT || rightbracket))</span>
+<span class="fc bfc" id="L878" title="All 2 branches covered.">				|| aAMnestingDepth == 0) &amp;&amp; (symbol.output == null || !symbol.output.equals(&quot;&quot;)));</span>
 
 <span class="fc bfc" id="L880" title="All 4 branches covered.">		if (symbol.ttype == Ttype.RIGHTBRACKET || symbol.ttype == Ttype.LEFTRIGHT) {</span>
 <span class="fc" id="L881">			int len = newFrag.length();</span>

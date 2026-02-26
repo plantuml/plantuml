@@ -40,67 +40,66 @@ import java.util.List;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 
 <span class="nc" id="L42">public class Html5Drawer {</span>
-    // ::remove folder when __HAXE__ or __TEAVM__
 
-<span class="nc" id="L45">	private int maxX = 10;</span>
-<span class="nc" id="L46">	private int maxY = 10;</span>
-<span class="nc" id="L47">	private String strokeStyle = &quot;black&quot;;</span>
-<span class="nc" id="L48">	private String fillStyle = &quot;black&quot;;</span>
+<span class="nc" id="L44">	private int maxX = 10;</span>
+<span class="nc" id="L45">	private int maxY = 10;</span>
+<span class="nc" id="L46">	private String strokeStyle = &quot;black&quot;;</span>
+<span class="nc" id="L47">	private String fillStyle = &quot;black&quot;;</span>
 
-<span class="nc" id="L50">	private List&lt;String&gt; data = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L49">	private List&lt;String&gt; data = new ArrayList&lt;&gt;();</span>
 
 	final protected void ensureVisible(double x, double y) {
-<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (x &gt; maxX) {</span>
-<span class="nc" id="L54">			maxX = (int) (x + 1);</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		if (x &gt; maxX) {</span>
+<span class="nc" id="L53">			maxX = (int) (x + 1);</span>
 		}
-<span class="nc bnc" id="L56" title="All 2 branches missed.">		if (y &gt; maxY) {</span>
-<span class="nc" id="L57">			maxY = (int) (y + 1);</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (y &gt; maxY) {</span>
+<span class="nc" id="L56">			maxY = (int) (y + 1);</span>
 		}
-<span class="nc" id="L59">	}</span>
+<span class="nc" id="L58">	}</span>
 
 	private static String format(double x) {
-<span class="nc" id="L62">		return TikzGraphics.format(x);</span>
+<span class="nc" id="L61">		return TikzGraphics.format(x);</span>
 	}
 
 	public final void setStrokeColor(String stroke) {
-<span class="nc" id="L66">		this.strokeStyle = stroke;</span>
-<span class="nc" id="L67">	}</span>
+<span class="nc" id="L65">		this.strokeStyle = stroke;</span>
+<span class="nc" id="L66">	}</span>
 
 	public final void setFillColor(String fill) {
-<span class="nc" id="L70">		this.fillStyle = fill;</span>
-<span class="nc" id="L71">	}</span>
+<span class="nc" id="L69">		this.fillStyle = fill;</span>
+<span class="nc" id="L70">	}</span>
 
 	public String generateHtmlCode() {
-<span class="nc" id="L74">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L75">		ap(sb, &quot;&lt;html&gt;&quot;);</span>
-<span class="nc" id="L76">		ap(sb, &quot;&lt;canvas id=\&quot;demo\&quot; width=\&quot;700\&quot; height=\&quot;350\&quot;&gt;&quot;);</span>
-<span class="nc" id="L77">		ap(sb, &quot;&lt;/canvas&gt;&quot;);</span>
-<span class="nc" id="L78">		ap(sb, &quot;&lt;/html&gt;&quot;);</span>
-<span class="nc" id="L79">		ap(sb, &quot;&lt;script&gt;&quot;);</span>
-<span class="nc" id="L80">		ap(sb, &quot;window.addEventListener('load', function () {&quot;);</span>
-<span class="nc" id="L81">		ap(sb, &quot;var elem = document.getElementById('demo');&quot;);</span>
-<span class="nc" id="L82">		ap(sb, &quot;if (!elem || !elem.getContext) { return;}&quot;);</span>
-<span class="nc" id="L83">		ap(sb, &quot;var ctx = elem.getContext('2d');&quot;);</span>
-<span class="nc" id="L84">		ap(sb, &quot;if (!ctx) { return;}&quot;);</span>
+<span class="nc" id="L73">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L74">		ap(sb, &quot;&lt;html&gt;&quot;);</span>
+<span class="nc" id="L75">		ap(sb, &quot;&lt;canvas id=\&quot;demo\&quot; width=\&quot;700\&quot; height=\&quot;350\&quot;&gt;&quot;);</span>
+<span class="nc" id="L76">		ap(sb, &quot;&lt;/canvas&gt;&quot;);</span>
+<span class="nc" id="L77">		ap(sb, &quot;&lt;/html&gt;&quot;);</span>
+<span class="nc" id="L78">		ap(sb, &quot;&lt;script&gt;&quot;);</span>
+<span class="nc" id="L79">		ap(sb, &quot;window.addEventListener('load', function () {&quot;);</span>
+<span class="nc" id="L80">		ap(sb, &quot;var elem = document.getElementById('demo');&quot;);</span>
+<span class="nc" id="L81">		ap(sb, &quot;if (!elem || !elem.getContext) { return;}&quot;);</span>
+<span class="nc" id="L82">		ap(sb, &quot;var ctx = elem.getContext('2d');&quot;);</span>
+<span class="nc" id="L83">		ap(sb, &quot;if (!ctx) { return;}&quot;);</span>
 		// ap(sb, &quot;ctx.fillStyle = 'green';&quot;);
 		// ap(sb, &quot;ctx.fillRect(30, 30, 55, 50);&quot;);
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		for (String s : data) {</span>
-<span class="nc" id="L88">			ap(sb, s);</span>
-<span class="nc" id="L89">		}</span>
-<span class="nc" id="L90">		ap(sb, &quot;}, false);&quot;);</span>
-<span class="nc" id="L91">		ap(sb, &quot;&lt;/script&gt;&quot;);</span>
-<span class="nc" id="L92">		ap(sb, &quot;&lt;/html&gt;&quot;);</span>
-<span class="nc" id="L93">		return sb.toString();</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		for (String s : data) {</span>
+<span class="nc" id="L87">			ap(sb, s);</span>
+<span class="nc" id="L88">		}</span>
+<span class="nc" id="L89">		ap(sb, &quot;}, false);&quot;);</span>
+<span class="nc" id="L90">		ap(sb, &quot;&lt;/script&gt;&quot;);</span>
+<span class="nc" id="L91">		ap(sb, &quot;&lt;/html&gt;&quot;);</span>
+<span class="nc" id="L92">		return sb.toString();</span>
 	}
 
 	private void ap(StringBuilder sb, String s) {
-<span class="nc" id="L97">		sb.append(s);</span>
-<span class="nc" id="L98">		sb.append('\n');</span>
-<span class="nc" id="L99">	}</span>
+<span class="nc" id="L96">		sb.append(s);</span>
+<span class="nc" id="L97">		sb.append('\n');</span>
+<span class="nc" id="L98">	}</span>
 
 	public void htmlRectangle(double x, double y, double width, double height, double rx, double ry) {
-<span class="nc" id="L102">		ensureVisible(x, y);</span>
-<span class="nc" id="L103">		ensureVisible(x + width, y + height);</span>
+<span class="nc" id="L101">		ensureVisible(x, y);</span>
+<span class="nc" id="L102">		ensureVisible(x + width, y + height);</span>
 		// if (fillcolor != null) {
 		// appendColor(fillcolor);
 		// epsRectangleInternal(x, y, width, height, rx, ry, true);
@@ -113,24 +112,24 @@ import net.sourceforge.plantuml.tikz.TikzGraphics;
 		// epsRectangleInternal(x, y, width, height, rx, ry, false);
 		// append(&quot;closepath stroke&quot;, true);
 		// }
-<span class="nc" id="L116">		data.add(&quot;//RECT&quot;);</span>
-<span class="nc" id="L117">		data.add(&quot;ctx.strokeStyle='&quot; + strokeStyle + &quot;';&quot;);</span>
-<span class="nc" id="L118">		data.add(&quot;ctx.fillStyle='&quot; + fillStyle + &quot;';&quot;);</span>
-<span class="nc" id="L119">		data.add(&quot;ctx.rect(&quot; + format(x) + &quot;,&quot; + format(y) + &quot;,&quot; + format(width) + &quot;,&quot; + format(height) + &quot;);&quot;);</span>
-<span class="nc" id="L120">		data.add(&quot;ctx.fill();&quot;);</span>
-<span class="nc" id="L121">		data.add(&quot;ctx.stroke();&quot;);</span>
-<span class="nc" id="L122">	}</span>
+<span class="nc" id="L115">		data.add(&quot;//RECT&quot;);</span>
+<span class="nc" id="L116">		data.add(&quot;ctx.strokeStyle='&quot; + strokeStyle + &quot;';&quot;);</span>
+<span class="nc" id="L117">		data.add(&quot;ctx.fillStyle='&quot; + fillStyle + &quot;';&quot;);</span>
+<span class="nc" id="L118">		data.add(&quot;ctx.rect(&quot; + format(x) + &quot;,&quot; + format(y) + &quot;,&quot; + format(width) + &quot;,&quot; + format(height) + &quot;);&quot;);</span>
+<span class="nc" id="L119">		data.add(&quot;ctx.fill();&quot;);</span>
+<span class="nc" id="L120">		data.add(&quot;ctx.stroke();&quot;);</span>
+<span class="nc" id="L121">	}</span>
 
 	public void htmlLine(double x1, double y1, double x2, double y2, double deltaShadow) {
-<span class="nc" id="L125">		ensureVisible(x1 + 2 * deltaShadow, y1 + 2 * deltaShadow);</span>
-<span class="nc" id="L126">		ensureVisible(x2 + 2 * deltaShadow, y2 + 2 * deltaShadow);</span>
-<span class="nc" id="L127">		data.add(&quot;ctx.strokeStyle='&quot; + strokeStyle + &quot;';&quot;);</span>
-<span class="nc" id="L128">		data.add(&quot;ctx.beginPath();&quot;);</span>
-<span class="nc" id="L129">		data.add(&quot;ctx.moveTo(&quot; + format(x1) + &quot;,&quot; + format(y1) + &quot;);&quot;);</span>
-<span class="nc" id="L130">		data.add(&quot;ctx.lineTo(&quot; + format(x2) + &quot;,&quot; + format(y2) + &quot;);&quot;);</span>
-<span class="nc" id="L131">		data.add(&quot;ctx.stroke();&quot;);</span>
-<span class="nc" id="L132">		data.add(&quot;ctx.closePath();&quot;);</span>
-<span class="nc" id="L133">	}</span>
+<span class="nc" id="L124">		ensureVisible(x1 + 2 * deltaShadow, y1 + 2 * deltaShadow);</span>
+<span class="nc" id="L125">		ensureVisible(x2 + 2 * deltaShadow, y2 + 2 * deltaShadow);</span>
+<span class="nc" id="L126">		data.add(&quot;ctx.strokeStyle='&quot; + strokeStyle + &quot;';&quot;);</span>
+<span class="nc" id="L127">		data.add(&quot;ctx.beginPath();&quot;);</span>
+<span class="nc" id="L128">		data.add(&quot;ctx.moveTo(&quot; + format(x1) + &quot;,&quot; + format(y1) + &quot;);&quot;);</span>
+<span class="nc" id="L129">		data.add(&quot;ctx.lineTo(&quot; + format(x2) + &quot;,&quot; + format(y2) + &quot;);&quot;);</span>
+<span class="nc" id="L130">		data.add(&quot;ctx.stroke();&quot;);</span>
+<span class="nc" id="L131">		data.add(&quot;ctx.closePath();&quot;);</span>
+<span class="nc" id="L132">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

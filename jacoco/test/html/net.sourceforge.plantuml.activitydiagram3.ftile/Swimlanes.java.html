@@ -194,7 +194,7 @@ import net.sourceforge.plantuml.utils.MathUtils;
 <span class="fc" id="L194">					final ConnectionCross connectionCross = new ConnectionCross(connection);</span>
 <span class="fc" id="L195">					connectionCross.drawU(getUg());</span>
 				}
-				// ::comment when __CORE__
+
 <span class="pc bpc" id="L198" title="1 of 2 branches missed.">			} else if (shape instanceof Gtile) {</span>
 <span class="nc" id="L199">				final Gtile tile = (Gtile) shape;</span>
 <span class="nc" id="L200">				tile.drawU(this);</span>
@@ -204,270 +204,265 @@ import net.sourceforge.plantuml.utils.MathUtils;
 <span class="nc" id="L204">				connection.drawTranslatable(getUg());</span>
 				// connection.drawU(this);
 				// throw new UnsupportedOperationException();
-				// ::done
 			}
-<span class="fc" id="L209">		}</span>
+<span class="fc" id="L208">		}</span>
 
 		public UGraphic apply(UChange change) {
-<span class="fc" id="L212">			return new Cross(getUg().apply(change));</span>
+<span class="fc" id="L211">			return new Cross(getUg().apply(change));</span>
 		}
 
 	}
 
 	public final void computeSize(StringBounder stringBounder) {
-<span class="fc" id="L218">		final SlotFinder ug = SlotFinder.create(CompressionMode.ON_Y, stringBounder);</span>
-<span class="fc bfc" id="L219" title="All 2 branches covered.">		if (swimlanes().size() &gt; 1) {</span>
-<span class="fc" id="L220">			TextBlock full = root.createFtile(getFtileFactory(stringBounder));</span>
-<span class="fc" id="L221">			computeSizeInternal(ug, full);</span>
+<span class="fc" id="L217">		final SlotFinder ug = SlotFinder.create(CompressionMode.ON_Y, stringBounder);</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">		if (swimlanes().size() &gt; 1) {</span>
+<span class="fc" id="L219">			TextBlock full = root.createFtile(getFtileFactory(stringBounder));</span>
+<span class="fc" id="L220">			computeSizeInternal(ug, full);</span>
 		}
 
-<span class="fc" id="L224">	}</span>
+<span class="fc" id="L223">	}</span>
 
 	public final void drawU(UGraphic ug) {
-		// ::comment when __CORE__
 		if (Gtile.USE_GTILE) {
 			drawGtile(ug);
 			return;
 		}
-		// ::done
 
-<span class="fc" id="L234">		TextBlock full = root.createFtile(getFtileFactory(ug.getStringBounder()));</span>
-<span class="fc" id="L235">		final Style style = skinParam.getCurrentStyleBuilder()</span>
-<span class="fc" id="L236">				.getMergedStyle(StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));</span>
-<span class="fc" id="L237">		final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L238">		final boolean isDebug = Boolean.parseBoolean(skinParam.options().getValue(OptionKey.DEBUG));</span>
+<span class="fc" id="L231">		TextBlock full = root.createFtile(getFtileFactory(ug.getStringBounder()));</span>
+<span class="fc" id="L232">		final Style style = skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L233">				.getMergedStyle(StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));</span>
+<span class="fc" id="L234">		final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L235">		final boolean isDebug = Boolean.parseBoolean(skinParam.options().getValue(OptionKey.DEBUG));</span>
 
-<span class="fc" id="L240">		ug = new UGraphicForSnake(ug);</span>
-<span class="fc bfc" id="L241" title="All 2 branches covered.">		if (swimlanes().size() &gt; 1) {</span>
-<span class="fc" id="L242">			drawWhenSwimlanes(ug, full);</span>
+<span class="fc" id="L237">		ug = new UGraphicForSnake(ug);</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">		if (swimlanes().size() &gt; 1) {</span>
+<span class="fc" id="L239">			drawWhenSwimlanes(ug, full);</span>
 		} else {
 			// BUG42
-<span class="fc" id="L245">			full = new TextBlockInterceptorUDrawable(full, gotoColor, isDebug);</span>
-<span class="fc" id="L246">			full.drawU(ug);</span>
-<span class="fc" id="L247">			ug.flushUg();</span>
+<span class="fc" id="L242">			full = new TextBlockInterceptorUDrawable(full, gotoColor, isDebug);</span>
+<span class="fc" id="L243">			full.drawU(ug);</span>
+<span class="fc" id="L244">			ug.flushUg();</span>
 		}
-<span class="fc" id="L249">	}</span>
+<span class="fc" id="L246">	}</span>
 
-	// ::comment when __CORE__
 	private void drawGtile(UGraphic ug) {
-<span class="nc" id="L253">		TextBlock full = root.createGtile(skinParam, ug.getStringBounder());</span>
+<span class="nc" id="L249">		TextBlock full = root.createGtile(skinParam, ug.getStringBounder());</span>
 
-<span class="nc" id="L255">		final Style style = skinParam.getCurrentStyleBuilder()</span>
-<span class="nc" id="L256">				.getMergedStyle(StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));</span>
-<span class="nc" id="L257">		final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L258">		final boolean isDebug = true;</span>
+<span class="nc" id="L251">		final Style style = skinParam.getCurrentStyleBuilder()</span>
+<span class="nc" id="L252">				.getMergedStyle(StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));</span>
+<span class="nc" id="L253">		final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L254">		final boolean isDebug = true;</span>
 
-<span class="nc" id="L260">		ug = new UGraphicForSnake(ug);</span>
-<span class="nc bnc" id="L261" title="All 2 branches missed.">		if (swimlanes().size() &gt; 1) {</span>
-<span class="nc" id="L262">			drawWhenSwimlanes(ug, full);</span>
+<span class="nc" id="L256">		ug = new UGraphicForSnake(ug);</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">		if (swimlanes().size() &gt; 1) {</span>
+<span class="nc" id="L258">			drawWhenSwimlanes(ug, full);</span>
 		} else {
-<span class="nc" id="L264">			full = new TextBlockInterceptorUDrawable(full, gotoColor, isDebug);</span>
-<span class="nc" id="L265">			full.drawU(ug);</span>
-<span class="nc" id="L266">			ug.flushUg();</span>
+<span class="nc" id="L260">			full = new TextBlockInterceptorUDrawable(full, gotoColor, isDebug);</span>
+<span class="nc" id="L261">			full.drawU(ug);</span>
+<span class="nc" id="L262">			ug.flushUg();</span>
 		}
 
-<span class="nc" id="L269">	}</span>
-	// ::done
+<span class="nc" id="L265">	}</span>
 
 	private TextBlock getTitle(Swimlane swimlane) {
-<span class="fc" id="L273">		final HorizontalAlignment horizontalAlignment = HorizontalAlignment.LEFT;</span>
-<span class="fc" id="L274">		final FontConfiguration fontConfiguration = getStyle().getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L268">		final HorizontalAlignment horizontalAlignment = HorizontalAlignment.LEFT;</span>
+<span class="fc" id="L269">		final FontConfiguration fontConfiguration = getStyle().getFontConfiguration(skinParam.getIHtmlColorSet());</span>
 
-<span class="fc" id="L276">		LineBreakStrategy wrap = getWrap();</span>
-<span class="pc bpc" id="L277" title="1 of 2 branches missed.">		if (wrap.isAuto())</span>
-<span class="nc" id="L278">			wrap = new LineBreakStrategy(&quot;&quot; + ((int) swimlane.getActualWidth()));</span>
+<span class="fc" id="L271">		LineBreakStrategy wrap = getWrap();</span>
+<span class="pc bpc" id="L272" title="1 of 2 branches missed.">		if (wrap.isAuto())</span>
+<span class="nc" id="L273">			wrap = new LineBreakStrategy(&quot;&quot; + ((int) swimlane.getActualWidth()));</span>
 
-<span class="fc" id="L280">		return swimlane.getDisplay().create9(fontConfiguration, horizontalAlignment, skinParam, wrap);</span>
+<span class="fc" id="L275">		return swimlane.getDisplay().create9(fontConfiguration, horizontalAlignment, skinParam, wrap);</span>
 	}
 
 	private LineBreakStrategy getWrap() {
-<span class="fc" id="L284">		LineBreakStrategy wrap = skinParam.swimlaneWrapTitleWidth();</span>
-<span class="pc bpc" id="L285" title="1 of 2 branches missed.">		if (wrap == LineBreakStrategy.NONE)</span>
-<span class="nc" id="L286">			wrap = style.wrapWidth();</span>
+<span class="fc" id="L279">		LineBreakStrategy wrap = skinParam.swimlaneWrapTitleWidth();</span>
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">		if (wrap == LineBreakStrategy.NONE)</span>
+<span class="nc" id="L281">			wrap = style.wrapWidth();</span>
 
-<span class="fc" id="L288">		return wrap;</span>
+<span class="fc" id="L283">		return wrap;</span>
 	}
 
 	private UTranslate getTitleHeightTranslate(final StringBounder stringBounder) {
-<span class="fc" id="L292">		double titlesHeight = getTitlesHeight(stringBounder);</span>
-<span class="pc bpc" id="L293" title="1 of 2 branches missed.">		return UTranslate.dy(titlesHeight &gt; 0 ? titlesHeight + 5 : 0);</span>
+<span class="fc" id="L287">		double titlesHeight = getTitlesHeight(stringBounder);</span>
+<span class="pc bpc" id="L288" title="1 of 2 branches missed.">		return UTranslate.dy(titlesHeight &gt; 0 ? titlesHeight + 5 : 0);</span>
 	}
 
 	private double getTitlesHeight(StringBounder stringBounder) {
-<span class="fc" id="L297">		double titlesHeight = 0;</span>
-<span class="fc bfc" id="L298" title="All 2 branches covered.">		for (Swimlane swimlane : swimlanes()) {</span>
-<span class="fc" id="L299">			final TextBlock swTitle = getTitle(swimlane);</span>
-<span class="fc" id="L300">			titlesHeight = Math.max(titlesHeight, swTitle.calculateDimension(stringBounder).getHeight());</span>
-<span class="fc" id="L301">		}</span>
-<span class="fc" id="L302">		return titlesHeight;</span>
+<span class="fc" id="L292">		double titlesHeight = 0;</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">		for (Swimlane swimlane : swimlanes()) {</span>
+<span class="fc" id="L294">			final TextBlock swTitle = getTitle(swimlane);</span>
+<span class="fc" id="L295">			titlesHeight = Math.max(titlesHeight, swTitle.calculateDimension(stringBounder).getHeight());</span>
+<span class="fc" id="L296">		}</span>
+<span class="fc" id="L297">		return titlesHeight;</span>
 	}
 
 	private void drawWhenSwimlanes(UGraphic ug, TextBlock full) {
-<span class="fc" id="L306">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L307">		final UTranslate titleHeightTranslate = getTitleHeightTranslate(stringBounder);</span>
+<span class="fc" id="L301">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L302">		final UTranslate titleHeightTranslate = getTitleHeightTranslate(stringBounder);</span>
 
-<span class="fc" id="L309">		drawTitlesBackground(ug);</span>
+<span class="fc" id="L304">		drawTitlesBackground(ug);</span>
 
-<span class="fc" id="L311">		final XDimension2D dimensionFull = full.calculateDimension(stringBounder);</span>
-<span class="fc" id="L312">		int i = 0;</span>
-<span class="pc bpc" id="L313" title="1 of 2 branches missed.">		assert dividers.size() == swimlanes().size() + 1;</span>
-<span class="fc bfc" id="L314" title="All 2 branches covered.">		for (Swimlane swimlane : swimlanesSpecial()) {</span>
-<span class="fc" id="L315">			final LaneDivider divider1 = dividers.get(i);</span>
+<span class="fc" id="L306">		final XDimension2D dimensionFull = full.calculateDimension(stringBounder);</span>
+<span class="fc" id="L307">		int i = 0;</span>
+<span class="pc bpc" id="L308" title="1 of 2 branches missed.">		assert dividers.size() == swimlanes().size() + 1;</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">		for (Swimlane swimlane : swimlanesSpecial()) {</span>
+<span class="fc" id="L310">			final LaneDivider divider1 = dividers.get(i);</span>
 
-<span class="fc" id="L317">			final double xpos = swimlane.getTranslate().getDx() + swimlane.getMinMax().getMinX();</span>
-<span class="fc" id="L318">			final HColor back = swimlane.getColors().getColor(ColorType.BACK);</span>
-<span class="pc bpc" id="L319" title="3 of 4 branches missed.">			if (back != null &amp;&amp; back.isTransparent() == false) {</span>
-<span class="nc" id="L320">				final LaneDivider divider2 = dividers.get(i + 1);</span>
-<span class="nc" id="L321">				final UGraphic background = ug.apply(back.bg()).apply(back)</span>
-<span class="nc" id="L322">						.apply(UTranslate.dx(xpos - divider1.getX2()));</span>
-<span class="nc" id="L323">				final double width = swimlane.getActualWidth() + divider1.getX2() + divider2.getX1();</span>
-<span class="nc" id="L324">				final double height = dimensionFull.getHeight() + titleHeightTranslate.getDy();</span>
-<span class="nc" id="L325">				background.draw(URectangle.build(width, height).ignoreForCompressionOnX().ignoreForCompressionOnY());</span>
+<span class="fc" id="L312">			final double xpos = swimlane.getTranslate().getDx() + swimlane.getMinMax().getMinX();</span>
+<span class="fc" id="L313">			final HColor back = swimlane.getColors().getColor(ColorType.BACK);</span>
+<span class="pc bpc" id="L314" title="3 of 4 branches missed.">			if (back != null &amp;&amp; back.isTransparent() == false) {</span>
+<span class="nc" id="L315">				final LaneDivider divider2 = dividers.get(i + 1);</span>
+<span class="nc" id="L316">				final UGraphic background = ug.apply(back.bg()).apply(back)</span>
+<span class="nc" id="L317">						.apply(UTranslate.dx(xpos - divider1.getX2()));</span>
+<span class="nc" id="L318">				final double width = swimlane.getActualWidth() + divider1.getX2() + divider2.getX1();</span>
+<span class="nc" id="L319">				final double height = dimensionFull.getHeight() + titleHeightTranslate.getDy();</span>
+<span class="nc" id="L320">				background.draw(URectangle.build(width, height).ignoreForCompressionOnX().ignoreForCompressionOnY());</span>
 			}
 
-<span class="fc" id="L328">			full.drawU(new UGraphicInterceptorOneSwimlane(ug, swimlane, swimlanes()).apply(swimlane.getTranslate())</span>
-<span class="fc" id="L329">					.apply(getTitleHeightTranslate(stringBounder)));</span>
+<span class="fc" id="L323">			full.drawU(new UGraphicInterceptorOneSwimlane(ug, swimlane, swimlanes()).apply(swimlane.getTranslate())</span>
+<span class="fc" id="L324">					.apply(getTitleHeightTranslate(stringBounder)));</span>
 
-<span class="fc" id="L331">			final double dividerWith = divider1.calculateDimension(stringBounder).getWidth();</span>
-<span class="fc" id="L332">			divider1.drawU(ug.apply(UTranslate.dx(xpos - dividerWith)));</span>
-<span class="fc" id="L333">			i++;</span>
-<span class="fc" id="L334">		}</span>
+<span class="fc" id="L326">			final double dividerWith = divider1.calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L327">			divider1.drawU(ug.apply(UTranslate.dx(xpos - dividerWith)));</span>
+<span class="fc" id="L328">			i++;</span>
+<span class="fc" id="L329">		}</span>
 
-<span class="fc" id="L336">		final Cross cross = new Cross(ug.apply(getTitleHeightTranslate(stringBounder)));</span>
-<span class="fc" id="L337">		full.drawU(cross);</span>
-<span class="fc" id="L338">		cross.flushUg();</span>
+<span class="fc" id="L331">		final Cross cross = new Cross(ug.apply(getTitleHeightTranslate(stringBounder)));</span>
+<span class="fc" id="L332">		full.drawU(cross);</span>
+<span class="fc" id="L333">		cross.flushUg();</span>
 
-<span class="fc" id="L340">		drawTitles(ug);</span>
+<span class="fc" id="L335">		drawTitles(ug);</span>
 
-<span class="fc" id="L342">	}</span>
+<span class="fc" id="L337">	}</span>
 
 	private void drawTitlesBackground(UGraphic ug) {
-<span class="fc" id="L345">		final HColor color = getStyle().value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L340">		final HColor color = getStyle().value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
 
-<span class="pc bpc" id="L347" title="1 of 2 branches missed.">		if (color != null) {</span>
-<span class="fc" id="L348">			final double titleHeight = getTitlesHeight(ug.getStringBounder());</span>
-<span class="fc" id="L349">			double fullWidth = swimlanesSpecial().get(swimlanesSpecial().size() - 1).getTranslate().getDx() - 2 * 5 - 1;</span>
-<span class="fc" id="L350">			final URectangle back = URectangle.build(fullWidth, titleHeight).ignoreForCompressionOnX()</span>
-<span class="fc" id="L351">					.ignoreForCompressionOnY();</span>
-<span class="fc" id="L352">			ug.apply(UTranslate.dx(5)).apply(color.bg()).apply(color).draw(back);</span>
+<span class="pc bpc" id="L342" title="1 of 2 branches missed.">		if (color != null) {</span>
+<span class="fc" id="L343">			final double titleHeight = getTitlesHeight(ug.getStringBounder());</span>
+<span class="fc" id="L344">			double fullWidth = swimlanesSpecial().get(swimlanesSpecial().size() - 1).getTranslate().getDx() - 2 * 5 - 1;</span>
+<span class="fc" id="L345">			final URectangle back = URectangle.build(fullWidth, titleHeight).ignoreForCompressionOnX()</span>
+<span class="fc" id="L346">					.ignoreForCompressionOnY();</span>
+<span class="fc" id="L347">			ug.apply(UTranslate.dx(5)).apply(color.bg()).apply(color).draw(back);</span>
 		}
-<span class="fc" id="L354">	}</span>
+<span class="fc" id="L349">	}</span>
 
 	private void drawTitles(UGraphic ug) {
-<span class="fc bfc" id="L357" title="All 2 branches covered.">		for (Swimlane swimlane : swimlanes()) {</span>
-<span class="fc" id="L358">			final TextBlock swTitle = getTitle(swimlane);</span>
-<span class="fc" id="L359">			final double x2 = swimlane.getTranslate().getDx() + swimlane.getMinMax().getMinX();</span>
-<span class="fc" id="L360">			final CenteredText centeredText = new CenteredText(swTitle, getWidthWithoutTitle(swimlane));</span>
-<span class="fc" id="L361">			ug.apply(UTranslate.dx(x2)).draw(centeredText);</span>
-<span class="fc" id="L362">		}</span>
-<span class="fc" id="L363">	}</span>
+<span class="fc bfc" id="L352" title="All 2 branches covered.">		for (Swimlane swimlane : swimlanes()) {</span>
+<span class="fc" id="L353">			final TextBlock swTitle = getTitle(swimlane);</span>
+<span class="fc" id="L354">			final double x2 = swimlane.getTranslate().getDx() + swimlane.getMinMax().getMinX();</span>
+<span class="fc" id="L355">			final CenteredText centeredText = new CenteredText(swTitle, getWidthWithoutTitle(swimlane));</span>
+<span class="fc" id="L356">			ug.apply(UTranslate.dx(x2)).draw(centeredText);</span>
+<span class="fc" id="L357">		}</span>
+<span class="fc" id="L358">	}</span>
 
 	private void computeDrawingWidths(UGraphic ug, TextBlock full) {
-<span class="fc" id="L366">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc bfc" id="L367" title="All 2 branches covered.">		for (Swimlane swimlane : swimlanes()) {</span>
-<span class="fc" id="L368">			final LimitFinder limitFinder = LimitFinder.create(stringBounder, false);</span>
-<span class="fc" id="L369">			final UGraphicInterceptorOneSwimlane interceptor = new UGraphicInterceptorOneSwimlane(</span>
-<span class="fc" id="L370">					new UGraphicForSnake(limitFinder), swimlane, swimlanes());</span>
-<span class="fc" id="L371">			full.drawU(interceptor);</span>
-<span class="fc" id="L372">			interceptor.flushUg();</span>
-<span class="fc" id="L373">			final MinMax minMax = limitFinder.getMinMax();</span>
-<span class="fc" id="L374">			swimlane.setMinMax(minMax);</span>
-<span class="fc" id="L375">		}</span>
-<span class="fc" id="L376">	}</span>
+<span class="fc" id="L361">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc bfc" id="L362" title="All 2 branches covered.">		for (Swimlane swimlane : swimlanes()) {</span>
+<span class="fc" id="L363">			final LimitFinder limitFinder = LimitFinder.create(stringBounder, false);</span>
+<span class="fc" id="L364">			final UGraphicInterceptorOneSwimlane interceptor = new UGraphicInterceptorOneSwimlane(</span>
+<span class="fc" id="L365">					new UGraphicForSnake(limitFinder), swimlane, swimlanes());</span>
+<span class="fc" id="L366">			full.drawU(interceptor);</span>
+<span class="fc" id="L367">			interceptor.flushUg();</span>
+<span class="fc" id="L368">			final MinMax minMax = limitFinder.getMinMax();</span>
+<span class="fc" id="L369">			swimlane.setMinMax(minMax);</span>
+<span class="fc" id="L370">		}</span>
+<span class="fc" id="L371">	}</span>
 
 	private void computeSizeInternal(UGraphic ug, TextBlock full) {
-<span class="fc" id="L379">		computeDrawingWidths(ug, full);</span>
+<span class="fc" id="L374">		computeDrawingWidths(ug, full);</span>
 
-<span class="fc" id="L381">		double min = skinParam.swimlaneWidth();</span>
+<span class="fc" id="L376">		double min = skinParam.swimlaneWidth();</span>
 
-<span class="pc bpc" id="L383" title="1 of 2 branches missed.">		if (min == ISkinParam.SWIMLANE_WIDTH_SAME)</span>
-<span class="nc bnc" id="L384" title="All 2 branches missed.">			for (Swimlane swimlane : swimlanes())</span>
-<span class="nc" id="L385">				min = Math.max(min, getWidthWithoutTitle(swimlane));</span>
+<span class="pc bpc" id="L378" title="1 of 2 branches missed.">		if (min == ISkinParam.SWIMLANE_WIDTH_SAME)</span>
+<span class="nc bnc" id="L379" title="All 2 branches missed.">			for (Swimlane swimlane : swimlanes())</span>
+<span class="nc" id="L380">				min = Math.max(min, getWidthWithoutTitle(swimlane));</span>
 
-<span class="fc" id="L387">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L382">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="fc bfc" id="L389" title="All 2 branches covered.">		for (int i = 0; i &lt; swimlanesSpecial().size(); i++) {</span>
-<span class="fc" id="L390">			final Swimlane swimlane = swimlanesSpecial().get(i);</span>
-<span class="fc" id="L391">			final double swimlaneActualWidth = MathUtils.max(min, getWidthWithoutTitle(swimlane));</span>
-<span class="fc" id="L392">			swimlane.setWidth(swimlaneActualWidth);</span>
+<span class="fc bfc" id="L384" title="All 2 branches covered.">		for (int i = 0; i &lt; swimlanesSpecial().size(); i++) {</span>
+<span class="fc" id="L385">			final Swimlane swimlane = swimlanesSpecial().get(i);</span>
+<span class="fc" id="L386">			final double swimlaneActualWidth = MathUtils.max(min, getWidthWithoutTitle(swimlane));</span>
+<span class="fc" id="L387">			swimlane.setWidth(swimlaneActualWidth);</span>
 		}
 
-<span class="fc" id="L395">		final UTranslate titleHeightTranslate = getTitleHeightTranslate(stringBounder);</span>
-<span class="fc" id="L396">		final XDimension2D dimensionFull = full.calculateDimension(stringBounder);</span>
+<span class="fc" id="L390">		final UTranslate titleHeightTranslate = getTitleHeightTranslate(stringBounder);</span>
+<span class="fc" id="L391">		final XDimension2D dimensionFull = full.calculateDimension(stringBounder);</span>
 
-<span class="fc" id="L398">		dividers.clear();</span>
-<span class="fc" id="L399">		double xpos = 0;</span>
-<span class="fc bfc" id="L400" title="All 2 branches covered.">		for (int i = 0; i &lt; swimlanesSpecial().size(); i++) {</span>
-<span class="fc" id="L401">			final Swimlane swimlane = swimlanesSpecial().get(i);</span>
-<span class="fc" id="L402">			double x1 = getHalfMissingSpace(stringBounder, i, min);</span>
-<span class="fc" id="L403">			double x2 = getHalfMissingSpace(stringBounder, i + 1, min);</span>
-<span class="fc" id="L404">			final LaneDivider laneDivider = new LaneDivider(skinParam, x1, x2,</span>
-<span class="fc" id="L405">					dimensionFull.getHeight() + titleHeightTranslate.getDy());</span>
-<span class="fc" id="L406">			dividers.add(laneDivider);</span>
+<span class="fc" id="L393">		dividers.clear();</span>
+<span class="fc" id="L394">		double xpos = 0;</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">		for (int i = 0; i &lt; swimlanesSpecial().size(); i++) {</span>
+<span class="fc" id="L396">			final Swimlane swimlane = swimlanesSpecial().get(i);</span>
+<span class="fc" id="L397">			double x1 = getHalfMissingSpace(stringBounder, i, min);</span>
+<span class="fc" id="L398">			double x2 = getHalfMissingSpace(stringBounder, i + 1, min);</span>
+<span class="fc" id="L399">			final LaneDivider laneDivider = new LaneDivider(skinParam, x1, x2,</span>
+<span class="fc" id="L400">					dimensionFull.getHeight() + titleHeightTranslate.getDy());</span>
+<span class="fc" id="L401">			dividers.add(laneDivider);</span>
 
-<span class="fc" id="L408">			final double xx = xpos + laneDivider.getWidth() - swimlane.getMinMax().getMinX()</span>
-<span class="fc" id="L409">					+ (swimlane.getActualWidth() - getWidthWithoutTitle(swimlane)) / 2.0;</span>
-<span class="fc" id="L410">			swimlane.setTranslate(UTranslate.dx(xx));</span>
+<span class="fc" id="L403">			final double xx = xpos + laneDivider.getWidth() - swimlane.getMinMax().getMinX()</span>
+<span class="fc" id="L404">					+ (swimlane.getActualWidth() - getWidthWithoutTitle(swimlane)) / 2.0;</span>
+<span class="fc" id="L405">			swimlane.setTranslate(UTranslate.dx(xx));</span>
 
-<span class="fc" id="L412">			xpos += swimlane.getActualWidth() + laneDivider.getWidth();</span>
+<span class="fc" id="L407">			xpos += swimlane.getActualWidth() + laneDivider.getWidth();</span>
 		}
-<span class="pc bpc" id="L414" title="1 of 2 branches missed.">		assert dividers.size() == swimlanes().size() + 1;</span>
-<span class="fc" id="L415">	}</span>
+<span class="pc bpc" id="L409" title="1 of 2 branches missed.">		assert dividers.size() == swimlanes().size() + 1;</span>
+<span class="fc" id="L410">	}</span>
 
 	public double getHalfMissingSpace(StringBounder stringBounder, int i, double min) {
-<span class="pc bpc" id="L418" title="1 of 4 branches missed.">		if (i == 0 || i &gt; swimlanesSpecial().size())</span>
-<span class="fc" id="L419">			return 5;</span>
+<span class="pc bpc" id="L413" title="1 of 4 branches missed.">		if (i == 0 || i &gt; swimlanesSpecial().size())</span>
+<span class="fc" id="L414">			return 5;</span>
 
-<span class="fc" id="L421">		final Swimlane swimlane = swimlanesSpecial().get(i - 1);</span>
-<span class="fc" id="L422">		final double swimlaneActualWidth = Math.max(min, getWidthWithoutTitle(swimlane));</span>
-<span class="fc" id="L423">		final double titleWidth = getTitle(swimlane).calculateDimension(stringBounder).getWidth();</span>
-<span class="fc bfc" id="L424" title="All 2 branches covered.">		if (titleWidth &lt;= swimlaneActualWidth)</span>
-<span class="fc" id="L425">			return 5;</span>
+<span class="fc" id="L416">		final Swimlane swimlane = swimlanesSpecial().get(i - 1);</span>
+<span class="fc" id="L417">		final double swimlaneActualWidth = Math.max(min, getWidthWithoutTitle(swimlane));</span>
+<span class="fc" id="L418">		final double titleWidth = getTitle(swimlane).calculateDimension(stringBounder).getWidth();</span>
+<span class="fc bfc" id="L419" title="All 2 branches covered.">		if (titleWidth &lt;= swimlaneActualWidth)</span>
+<span class="fc" id="L420">			return 5;</span>
 
-<span class="pc bpc" id="L427" title="1 of 2 branches missed.">		assert titleWidth &gt; swimlaneActualWidth;</span>
-<span class="fc" id="L428">		return Math.max(5, 5 + (titleWidth - swimlaneActualWidth) / 2);</span>
+<span class="pc bpc" id="L422" title="1 of 2 branches missed.">		assert titleWidth &gt; swimlaneActualWidth;</span>
+<span class="fc" id="L423">		return Math.max(5, 5 + (titleWidth - swimlaneActualWidth) / 2);</span>
 	}
 
 	private double getWidthWithoutTitle(Swimlane swimlane) {
-<span class="fc" id="L432">		return swimlane.getMinMax().getWidth();</span>
+<span class="fc" id="L427">		return swimlane.getMinMax().getWidth();</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L436">		return getMinMax(stringBounder).getDimension();</span>
+<span class="nc" id="L431">		return getMinMax(stringBounder).getDimension();</span>
 	}
 
 	public Instruction getCurrent() {
-<span class="fc" id="L440">		return currentInstruction;</span>
+<span class="fc" id="L435">		return currentInstruction;</span>
 	}
 
 	public void setCurrent(Instruction current) {
-<span class="fc" id="L444">		this.currentInstruction = current;</span>
-<span class="fc" id="L445">	}</span>
+<span class="fc" id="L439">		this.currentInstruction = current;</span>
+<span class="fc" id="L440">	}</span>
 
 	public LinkRendering nextLinkRenderer() {
-<span class="fc" id="L448">		return nextLinkRenderer;</span>
+<span class="fc" id="L443">		return nextLinkRenderer;</span>
 	}
 
 	public void setNextLinkRenderer(LinkRendering link) {
-<span class="fc" id="L452">		this.nextLinkRenderer = Objects.requireNonNull(link);</span>
-<span class="fc" id="L453">	}</span>
+<span class="fc" id="L447">		this.nextLinkRenderer = Objects.requireNonNull(link);</span>
+<span class="fc" id="L448">	}</span>
 
 	public Swimlane getCurrentSwimlane() {
-<span class="fc" id="L456">		return currentSwimlane;</span>
+<span class="fc" id="L451">		return currentSwimlane;</span>
 	}
 
 	private MinMax cachedMinMax;
 
 	@Override
 	public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc bnc" id="L463" title="All 2 branches missed.">		if (cachedMinMax == null)</span>
-<span class="nc" id="L464">			cachedMinMax = TextBlockUtils.getMinMax(this, stringBounder, false);</span>
+<span class="nc bnc" id="L458" title="All 2 branches missed.">		if (cachedMinMax == null)</span>
+<span class="nc" id="L459">			cachedMinMax = TextBlockUtils.getMinMax(this, stringBounder, false);</span>
 
-<span class="nc" id="L466">		return cachedMinMax;</span>
+<span class="nc" id="L461">		return cachedMinMax;</span>
 	}
 
 	public StyleBuilder getCurrentStyleBuilder() {
-<span class="fc" id="L470">		return skinParam.getCurrentStyleBuilder();</span>
+<span class="fc" id="L465">		return skinParam.getCurrentStyleBuilder();</span>
 	}
 
 }

@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
 public class PSystemKeycheck extends PlainDiagram {
-	// ::remove file when __CORE__ or __TEAVM__
+	
 
 	final private String key;
 	final private String sig;

@@ -79,12 +79,10 @@ public class Branch {
 	private Colors specialColors;
 
 	private Ftile ftile;
-	// ::comment when __CORE__
 	private Gtile gtile;
-	// ::done
 
 	public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
-<span class="nc" id="L87">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);</span>
+<span class="nc" id="L85">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.arrow);</span>
 	}
 
 //	public StyleSignatureBasic getDefaultStyleDefinitionDiamond() {
@@ -92,184 +90,178 @@ public class Branch {
 //	}
 
 	public boolean containsBreak() {
-<span class="nc" id="L95">		return list.containsBreak();</span>
+<span class="nc" id="L93">		return list.containsBreak();</span>
 	}
 
 	public Branch(Swimlane swimlane, LinkRendering labelPositive, Display labelTest, HColor color,
-<span class="nc" id="L99">			LinkRendering inlabel, Stereotype stereotype) {</span>
-<span class="nc" id="L100">		this.inlabel = Objects.requireNonNull(inlabel);</span>
-<span class="nc" id="L101">		this.labelTest = Objects.requireNonNull(labelTest);</span>
-<span class="nc" id="L102">		this.labelPositive = Objects.requireNonNull(labelPositive);</span>
+<span class="nc" id="L97">			LinkRendering inlabel, Stereotype stereotype) {</span>
+<span class="nc" id="L98">		this.inlabel = Objects.requireNonNull(inlabel);</span>
+<span class="nc" id="L99">		this.labelTest = Objects.requireNonNull(labelTest);</span>
+<span class="nc" id="L100">		this.labelPositive = Objects.requireNonNull(labelPositive);</span>
 
 		// final Style style =
 		// getDefaultStyleDefinitionDiamond().withTOBECHANGED(stereotype).getMergedStyle(styleBuilder);
 		// this.color = color == null ?
 		// style.value(PName.BackGroundColor).asColor(colorSet) : color;
-<span class="nc" id="L108">		this.color = color;</span>
+<span class="nc" id="L106">		this.color = color;</span>
 
-<span class="nc" id="L110">		this.list = new InstructionList(swimlane);</span>
-<span class="nc" id="L111">	}</span>
+<span class="nc" id="L108">		this.list = new InstructionList(swimlane);</span>
+<span class="nc" id="L109">	}</span>
 
 	public Collection&lt;WeldingPoint&gt; getWeldingPoints() {
-<span class="nc" id="L114">		return ftile.getWeldingPoints();</span>
+<span class="nc" id="L112">		return ftile.getWeldingPoints();</span>
 	}
 
 	public CommandExecutionResult add(Instruction ins) {
-<span class="nc" id="L118">		list.add(ins);</span>
-<span class="nc" id="L119">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L116">		list.add(ins);</span>
+<span class="nc" id="L117">		return CommandExecutionResult.ok();</span>
 	}
 
 	public boolean kill() {
-<span class="nc" id="L123">		return list.kill();</span>
+<span class="nc" id="L121">		return list.kill();</span>
 	}
 
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote,
 			Stereotype stereotype) {
-<span class="nc" id="L128">		return list.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+<span class="nc" id="L126">		return list.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 	}
 
 	public final void setInlinkRendering(LinkRendering inlinkRendering) {
-<span class="nc" id="L132">		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
-<span class="nc" id="L133">	}</span>
+<span class="nc" id="L130">		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
+<span class="nc" id="L131">	}</span>
 
 	public void updateFtile(FtileFactory factory) {
-<span class="nc" id="L136">		this.ftile = factory.decorateOut(list.createFtile(factory), inlinkRendering);</span>
-<span class="nc" id="L137">	}</span>
+<span class="nc" id="L134">		this.ftile = factory.decorateOut(list.createFtile(factory), inlinkRendering);</span>
+<span class="nc" id="L135">	}</span>
 
-	// ::comment when __CORE__
 	public void updateGtile(ISkinParam skinParam, StringBounder stringBounder) {
-<span class="nc" id="L141">		this.gtile = list.createGtile(skinParam, stringBounder);</span>
-<span class="nc" id="L142">	}</span>
-	// ::done
+<span class="nc" id="L138">		this.gtile = list.createGtile(skinParam, stringBounder);</span>
+<span class="nc" id="L139">	}</span>
 
 	public Collection&lt;? extends Swimlane&gt; getSwimlanes() {
-<span class="nc" id="L146">		return list.getSwimlanes();</span>
+<span class="nc" id="L142">		return list.getSwimlanes();</span>
 	}
 
 	public final Display getLabelTest() {
-<span class="nc" id="L150">		return labelTest;</span>
+<span class="nc" id="L146">		return labelTest;</span>
 	}
 
 	public final Rainbow getOut() {
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (special != null)</span>
-<span class="nc" id="L155">			return special.getRainbow();</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (special != null)</span>
+<span class="nc" id="L151">			return special.getRainbow();</span>
 
 //		if (labelPositive.getRainbow().size() &gt; 0)
 //			return labelPositive.getRainbow();
 
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (inlinkRendering == null)</span>
-<span class="nc" id="L161">			return null;</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (inlinkRendering == null)</span>
+<span class="nc" id="L157">			return null;</span>
 
-<span class="nc" id="L163">		return inlinkRendering.getRainbow();</span>
+<span class="nc" id="L159">		return inlinkRendering.getRainbow();</span>
 	}
 
 	public Rainbow getInColor(Rainbow arrowColor) {
-<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (isEmpty())</span>
-<span class="nc" id="L168">			return getFtile().getOutLinkRendering().getRainbow(arrowColor);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (isEmpty())</span>
+<span class="nc" id="L164">			return getFtile().getOutLinkRendering().getRainbow(arrowColor);</span>
 
-<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (labelPositive.getRainbow().size() &gt; 0)</span>
-<span class="nc" id="L171">			return labelPositive.getRainbow();</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (labelPositive.getRainbow().size() &gt; 0)</span>
+<span class="nc" id="L167">			return labelPositive.getRainbow();</span>
 
-<span class="nc" id="L173">		final LinkRendering linkIn = getFtile().getInLinkRendering();</span>
-<span class="nc" id="L174">		final Rainbow color = linkIn.getRainbow(arrowColor);</span>
-<span class="nc bnc" id="L175" title="All 2 branches missed.">		if (color.size() == 0)</span>
-<span class="nc" id="L176">			return arrowColor;</span>
+<span class="nc" id="L169">		final LinkRendering linkIn = getFtile().getInLinkRendering();</span>
+<span class="nc" id="L170">		final Rainbow color = linkIn.getRainbow(arrowColor);</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (color.size() == 0)</span>
+<span class="nc" id="L172">			return arrowColor;</span>
 
-<span class="nc" id="L178">		return color;</span>
+<span class="nc" id="L174">		return color;</span>
 	}
 
 	public Display getInlabel() {
-<span class="nc" id="L182">		return inlabel.getDisplay();</span>
+<span class="nc" id="L178">		return inlabel.getDisplay();</span>
 	}
 
 	public Rainbow getInRainbow(Rainbow defaultColor) {
-<span class="nc" id="L186">		return inlabel.getRainbow(defaultColor);</span>
+<span class="nc" id="L182">		return inlabel.getRainbow(defaultColor);</span>
 	}
 
 	public Rainbow getLabelPositiveRainbow(Rainbow defaultColor) {
-<span class="nc" id="L190">		return labelPositive.getRainbow(defaultColor);</span>
+<span class="nc" id="L186">		return labelPositive.getRainbow(defaultColor);</span>
 	}
 
 	public final Ftile getFtile() {
-<span class="nc" id="L194">		return ftile;</span>
+<span class="nc" id="L190">		return ftile;</span>
 	}
 
-	// ::comment when __CORE__
 	public Gtile getGtile() {
-<span class="nc" id="L199">		return gtile;</span>
+<span class="nc" id="L194">		return gtile;</span>
 	}
-	// ::done
 
 	public ISkinParam skinParam() {
-		// ::comment when __CORE__
-<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (gtile != null)</span>
-<span class="nc" id="L206">			return gtile.skinParam();</span>
-		// ::done
-<span class="nc" id="L208">		return ftile.skinParam();</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">		if (gtile != null)</span>
+<span class="nc" id="L199">			return gtile.skinParam();</span>
+<span class="nc" id="L200">		return ftile.skinParam();</span>
 	}
 
 	public final HColor getColor() {
-<span class="nc bnc" id="L212" title="All 4 branches missed.">		if (specialColors != null &amp;&amp; specialColors.getColor(ColorType.BACK) != null)</span>
-<span class="nc" id="L213">			return specialColors.getColor(ColorType.BACK);</span>
-<span class="nc" id="L214">		return color;</span>
+<span class="nc bnc" id="L204" title="All 4 branches missed.">		if (specialColors != null &amp;&amp; specialColors.getColor(ColorType.BACK) != null)</span>
+<span class="nc" id="L205">			return specialColors.getColor(ColorType.BACK);</span>
+<span class="nc" id="L206">		return color;</span>
 	}
 
 	public boolean isEmpty() {
-<span class="nc" id="L218">		return list.isEmpty();</span>
+<span class="nc" id="L210">		return list.isEmpty();</span>
 	}
 
 	public Instruction getLast() {
-<span class="nc" id="L222">		return list.getLast();</span>
+<span class="nc" id="L214">		return list.getLast();</span>
 	}
 
 	public boolean isOnlySingleStopOrSpot() {
-<span class="nc" id="L226">		return list.isOnlySingleStopOrSpot();</span>
+<span class="nc" id="L218">		return list.isOnlySingleStopOrSpot();</span>
 	}
 
 	public void setSpecial(LinkRendering link, Colors colors) {
-<span class="nc" id="L230">		this.special = link;</span>
-<span class="nc" id="L231">		this.specialColors = colors;</span>
-<span class="nc" id="L232">	}</span>
+<span class="nc" id="L222">		this.special = link;</span>
+<span class="nc" id="L223">		this.specialColors = colors;</span>
+<span class="nc" id="L224">	}</span>
 
 	public final LinkRendering getSpecial() {
-<span class="nc" id="L235">		return special;</span>
+<span class="nc" id="L227">		return special;</span>
 	}
 
 	public final Display getDisplayPositive() {
-<span class="nc bnc" id="L239" title="All 2 branches missed.">		if (ftile != null) {</span>
-<span class="nc" id="L240">			final LinkRendering in = ftile.getInLinkRendering();</span>
-<span class="nc bnc" id="L241" title="All 4 branches missed.">			if (in != null &amp;&amp; Display.isNull(in.getDisplay()) == false)</span>
-<span class="nc" id="L242">				return in.getDisplay();</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">		if (ftile != null) {</span>
+<span class="nc" id="L232">			final LinkRendering in = ftile.getInLinkRendering();</span>
+<span class="nc bnc" id="L233" title="All 4 branches missed.">			if (in != null &amp;&amp; Display.isNull(in.getDisplay()) == false)</span>
+<span class="nc" id="L234">				return in.getDisplay();</span>
 
 		}
-<span class="nc" id="L245">		return labelPositive.getDisplay();</span>
+<span class="nc" id="L237">		return labelPositive.getDisplay();</span>
 	}
 
 	public Display getSpecialDisplay() {
-<span class="nc bnc" id="L249" title="All 4 branches missed.">		if (special != null &amp;&amp; Display.isNull(special.getDisplay()) == false)</span>
-<span class="nc" id="L250">			return special.getDisplay();</span>
+<span class="nc bnc" id="L241" title="All 4 branches missed.">		if (special != null &amp;&amp; Display.isNull(special.getDisplay()) == false)</span>
+<span class="nc" id="L242">			return special.getDisplay();</span>
 
-<span class="nc" id="L252">		return null;</span>
+<span class="nc" id="L244">		return null;</span>
 	}
 
 	private TextBlock getTextBlock(Display display) {
-<span class="nc bnc" id="L256" title="All 2 branches missed.">		if (display == null)</span>
-<span class="nc" id="L257">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">		if (display == null)</span>
+<span class="nc" id="L249">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
 
-<span class="nc" id="L259">		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L260">		final LineBreakStrategy lineBreak = style.wrapWidth();</span>
-<span class="nc" id="L261">		final FontConfiguration fcArrow = style.getFontConfiguration(skinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L251">		final Style style = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L252">		final LineBreakStrategy lineBreak = style.wrapWidth();</span>
+<span class="nc" id="L253">		final FontConfiguration fcArrow = style.getFontConfiguration(skinParam().getIHtmlColorSet());</span>
 
-<span class="nc" id="L263">		return display.create0(fcArrow, HorizontalAlignment.LEFT, skinParam(), lineBreak, CreoleMode.SIMPLE_LINE, null,</span>
+<span class="nc" id="L255">		return display.create0(fcArrow, HorizontalAlignment.LEFT, skinParam(), lineBreak, CreoleMode.SIMPLE_LINE, null,</span>
 				null);
 	}
 
 	public final TextBlock getTextBlockPositive() {
-<span class="nc" id="L268">		return getTextBlock(getDisplayPositive());</span>
+<span class="nc" id="L260">		return getTextBlock(getDisplayPositive());</span>
 	}
 
 	public final TextBlock getTextBlockSpecial() {
-<span class="nc" id="L272">		return getTextBlock(getSpecialDisplay());</span>
+<span class="nc" id="L264">		return getTextBlock(getSpecialDisplay());</span>
 	}
 
 }

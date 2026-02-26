@@ -151,37 +151,35 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 <span class="nc" id="L151">				.status(status) //</span>
 <span class="nc" id="L152">				.warningOrError(warningOrError);</span>
 
-		// :: uncomment when __TEAVM__
-		// ib.udrawable.drawU(ug);
-		// :: done
+<span class="nc" id="L154">		ib.udrawable.drawU(ug);</span>
 
-<span class="nc" id="L158">	}</span>
+<span class="nc" id="L156">	}</span>
 
 	private List&lt;Link&gt; getOrderedLinks() {
-<span class="nc" id="L161">		final List&lt;Link&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">		for (Link l : diagram.getLinks())</span>
-<span class="nc" id="L163">			addLinkNew(result, l);</span>
+<span class="nc" id="L159">		final List&lt;Link&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		for (Link l : diagram.getLinks())</span>
+<span class="nc" id="L161">			addLinkNew(result, l);</span>
 
-<span class="nc" id="L165">		return result;</span>
+<span class="nc" id="L163">		return result;</span>
 	}
 
 	private void addLinkNew(List&lt;Link&gt; result, Link link) {
-<span class="nc bnc" id="L169" title="All 2 branches missed.">		for (int i = 0; i &lt; result.size(); i++) {</span>
-<span class="nc" id="L170">			final Link other = result.get(i);</span>
-<span class="nc bnc" id="L171" title="All 2 branches missed.">			if (other.sameConnections(link)) {</span>
-<span class="nc bnc" id="L172" title="All 4 branches missed.">				while (i &lt; result.size() &amp;&amp; result.get(i).sameConnections(link))</span>
-<span class="nc" id="L173">					i++;</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		for (int i = 0; i &lt; result.size(); i++) {</span>
+<span class="nc" id="L168">			final Link other = result.get(i);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">			if (other.sameConnections(link)) {</span>
+<span class="nc bnc" id="L170" title="All 4 branches missed.">				while (i &lt; result.size() &amp;&amp; result.get(i).sameConnections(link))</span>
+<span class="nc" id="L171">					i++;</span>
 
-<span class="nc bnc" id="L175" title="All 2 branches missed.">				if (i == result.size())</span>
-<span class="nc" id="L176">					result.add(link);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">				if (i == result.size())</span>
+<span class="nc" id="L174">					result.add(link);</span>
 				else
-<span class="nc" id="L178">					result.add(i, link);</span>
+<span class="nc" id="L176">					result.add(i, link);</span>
 
-<span class="nc" id="L180">				return;</span>
+<span class="nc" id="L178">				return;</span>
 			}
 		}
-<span class="nc" id="L183">		result.add(link);</span>
-<span class="nc" id="L184">	}</span>
+<span class="nc" id="L181">		result.add(link);</span>
+<span class="nc" id="L182">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

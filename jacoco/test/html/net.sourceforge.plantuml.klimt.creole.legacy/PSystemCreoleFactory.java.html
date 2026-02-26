@@ -42,29 +42,28 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemCreoleFactory extends PSystemBasicFactory&lt;PSystemCreole&gt; {
-	// ::remove file when __CORE__
 
 	public PSystemCreoleFactory() {
-<span class="fc" id="L48">		super(DiagramType.CREOLE);</span>
-<span class="fc" id="L49">	}</span>
+<span class="fc" id="L47">		super(DiagramType.CREOLE);</span>
+<span class="fc" id="L48">	}</span>
 
 	@Override
 	public PSystemCreole initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
-<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (getDiagramType() == DiagramType.CREOLE)</span>
-<span class="nc" id="L54">			return new PSystemCreole(source, preprocessing);</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		if (getDiagramType() == DiagramType.CREOLE)</span>
+<span class="nc" id="L53">			return new PSystemCreole(source, preprocessing);</span>
 
-<span class="nc" id="L56">		return null;</span>
+<span class="nc" id="L55">		return null;</span>
 	}
 
 	@Override
 	public PSystemCreole executeLine(UmlSource source, PSystemCreole system, String line, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L61">		system.doCommandLine(line);</span>
-<span class="nc" id="L62">		return system;</span>
+<span class="nc" id="L60">		system.doCommandLine(line);</span>
+<span class="nc" id="L61">		return system;</span>
 	}
 	
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L67">		return null;</span>
+<span class="nc" id="L66">		return null;</span>
 	}
 
 

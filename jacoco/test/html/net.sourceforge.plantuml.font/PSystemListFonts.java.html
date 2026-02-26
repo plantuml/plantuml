@@ -43,21 +43,19 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemListFonts extends PlainStringsDiagram {
-	// ::remove folder when __CORE__
-
 	public PSystemListFonts(UmlSource source, String text, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L49">		super(source, preprocessing);</span>
-<span class="nc" id="L50">		strings.add(&quot;   &lt;b&gt;&lt;size:16&gt;Fonts available:&quot;);</span>
-<span class="nc" id="L51">		strings.add(&quot; &quot;);</span>
-<span class="nc" id="L52">		final String name[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">		for (String n : name) {</span>
-<span class="nc" id="L54">			strings.add(n + &quot; : &lt;font:&quot; + n + &quot;&gt;&quot; + text);</span>
+<span class="nc" id="L47">		super(source, preprocessing);</span>
+<span class="nc" id="L48">		strings.add(&quot;   &lt;b&gt;&lt;size:16&gt;Fonts available:&quot;);</span>
+<span class="nc" id="L49">		strings.add(&quot; &quot;);</span>
+<span class="nc" id="L50">		final String name[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">		for (String n : name) {</span>
+<span class="nc" id="L52">			strings.add(n + &quot; : &lt;font:&quot; + n + &quot;&gt;&quot; + text);</span>
 		}
 
-<span class="nc" id="L57">	}</span>
+<span class="nc" id="L55">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L60">		return new DiagramDescription(&quot;(List fonts)&quot;);</span>
+<span class="nc" id="L58">		return new DiagramDescription(&quot;(List fonts)&quot;);</span>
 	}
 
 }

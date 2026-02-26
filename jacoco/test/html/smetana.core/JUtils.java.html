@@ -155,97 +155,91 @@ import h.ST_splines;
 <span class="fc" id="L155">					return;</span>
 			}
 		} finally {
-			
-			// ::comment when __CORE__
-<span class="fc bfc" id="L160" title="All 2 branches covered.">			for (int i = 0; i &lt; nb - 1; i++) {</span>
-<span class="fc" id="L161">				final __ptr__ element1 = array.plus_(i);</span>
-<span class="fc" id="L162">				final __ptr__ element2 = array.plus_(i + 1);</span>
-<span class="fc" id="L163">				final Integer cmp = (Integer) compare.exe(zz, element1, element2);</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">				if (cmp.intValue() &gt; 0)</span>
-<span class="nc" id="L165">					throw new IllegalStateException();</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">			for (int i = 0; i &lt; nb - 1; i++) {</span>
+<span class="fc" id="L159">				final __ptr__ element1 = array.plus_(i);</span>
+<span class="fc" id="L160">				final __ptr__ element2 = array.plus_(i + 1);</span>
+<span class="fc" id="L161">				final Integer cmp = (Integer) compare.exe(zz, element1, element2);</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">				if (cmp.intValue() &gt; 0)</span>
+<span class="nc" id="L163">					throw new IllegalStateException();</span>
 			}
-			// ::done
 		}
 
-<span class="fc" id="L170">	}</span>
+<span class="fc" id="L167">	}</span>
 
 	public static void qsortInt(Globals zz, int array[], int nb, CFunction compare) {
 		try {
-<span class="fc bfc" id="L174" title="All 2 branches covered.">			for (int pass = 0; pass &lt; nb - 1; pass++) {</span>
-<span class="fc" id="L175">				boolean change = false;</span>
-<span class="fc bfc" id="L176" title="All 2 branches covered.">				for (int i = 0; i &lt; nb - 1; i++) {</span>
-<span class="fc" id="L177">					final Integer element1 = array[i];</span>
-<span class="fc" id="L178">					final Integer element2 = array[i + 1];</span>
-<span class="fc" id="L179">					final Integer cmp = (Integer) compare.exe(zz, element1, element2);</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">					if (cmp.intValue() &gt; 0) {</span>
-<span class="fc" id="L181">						change = true;</span>
-<span class="fc" id="L182">						final int tmp = array[i];</span>
-<span class="fc" id="L183">						array[i] = array[i + 1];</span>
-<span class="fc" id="L184">						array[i + 1] = tmp;</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">			for (int pass = 0; pass &lt; nb - 1; pass++) {</span>
+<span class="fc" id="L172">				boolean change = false;</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">				for (int i = 0; i &lt; nb - 1; i++) {</span>
+<span class="fc" id="L174">					final Integer element1 = array[i];</span>
+<span class="fc" id="L175">					final Integer element2 = array[i + 1];</span>
+<span class="fc" id="L176">					final Integer cmp = (Integer) compare.exe(zz, element1, element2);</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">					if (cmp.intValue() &gt; 0) {</span>
+<span class="fc" id="L178">						change = true;</span>
+<span class="fc" id="L179">						final int tmp = array[i];</span>
+<span class="fc" id="L180">						array[i] = array[i + 1];</span>
+<span class="fc" id="L181">						array[i + 1] = tmp;</span>
 					}
 				}
-<span class="fc bfc" id="L187" title="All 2 branches covered.">				if (change == false)</span>
-<span class="fc" id="L188">					return;</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">				if (change == false)</span>
+<span class="fc" id="L185">					return;</span>
 			}
 		} finally {
-			
-			// ::comment when __CORE__
-<span class="fc bfc" id="L193" title="All 2 branches covered.">			for (int i = 0; i &lt; nb - 1; i++) {</span>
-<span class="fc" id="L194">				final Integer element1 = array[i];</span>
-<span class="fc" id="L195">				final Integer element2 = array[i + 1];</span>
-<span class="fc" id="L196">				final Integer cmp = (Integer) compare.exe(zz, element1, element2);</span>
-<span class="pc bpc" id="L197" title="1 of 2 branches missed.">				if (cmp.intValue() &gt; 0)</span>
-<span class="nc" id="L198">					throw new IllegalStateException();</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">			for (int i = 0; i &lt; nb - 1; i++) {</span>
+<span class="fc" id="L189">				final Integer element1 = array[i];</span>
+<span class="fc" id="L190">				final Integer element2 = array[i + 1];</span>
+<span class="fc" id="L191">				final Integer cmp = (Integer) compare.exe(zz, element1, element2);</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">				if (cmp.intValue() &gt; 0)</span>
+<span class="nc" id="L193">					throw new IllegalStateException();</span>
 			}
-			// ::done
 		}
 
-<span class="fc" id="L203">	}</span>
+<span class="fc" id="L197">	}</span>
 
 	static public int setjmp(jmp_buf jmp) {
 		// if (jmp.hasBeenCalled()) {
 		// throw new UnsupportedOperationException();
 		// }
-<span class="fc" id="L209">		jmp.saveCallingEnvironment();</span>
-<span class="fc" id="L210">		return 0;</span>
+<span class="fc" id="L203">		jmp.saveCallingEnvironment();</span>
+<span class="fc" id="L204">		return 0;</span>
 	}
 
 	// DEBUG
 
 	public static void printDebugEdge(ST_Agedge_s e) {
-<span class="nc" id="L216">		System.err.println(&quot;*********** PRINT EDGE ********** &quot;);</span>
-<span class="nc" id="L217">		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) e.data.castTo(ST_Agedgeinfo_t.class);</span>
-<span class="nc" id="L218">		final ST_splines splines = (ST_splines) data.spl;</span>
+<span class="nc" id="L210">		System.err.println(&quot;*********** PRINT EDGE ********** &quot;);</span>
+<span class="nc" id="L211">		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) e.data.castTo(ST_Agedgeinfo_t.class);</span>
+<span class="nc" id="L212">		final ST_splines splines = (ST_splines) data.spl;</span>
 		// ST_boxf bb = (ST_boxf) splines.bb;
-<span class="nc" id="L220">		final ST_bezier list = splines.list.get__(0);</span>
-<span class="nc" id="L221">		System.err.println(&quot;splines.size=&quot; + splines.size);</span>
+<span class="nc" id="L214">		final ST_bezier list = splines.list.get__(0);</span>
+<span class="nc" id="L215">		System.err.println(&quot;splines.size=&quot; + splines.size);</span>
 		// System.err.println(&quot;bb.LL=&quot; + pointftoString(bb.LL));
 		// System.err.println(&quot;bb.UR=&quot; + pointftoString(bb.UR));
-<span class="nc" id="L224">		printDebugBezier((ST_bezier) splines.list.get__(0));</span>
+<span class="nc" id="L218">		printDebugBezier((ST_bezier) splines.list.get__(0));</span>
 
-<span class="nc" id="L226">	}</span>
+<span class="nc" id="L220">	}</span>
 
 	private static String pointftoString(ST_pointf point) {
-<span class="nc" id="L229">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L230">		sb.append(&quot;(&quot;);</span>
-<span class="nc" id="L231">		sb.append(point.x);</span>
-<span class="nc" id="L232">		sb.append(&quot; ; &quot;);</span>
-<span class="nc" id="L233">		sb.append(point.y);</span>
-<span class="nc" id="L234">		sb.append(&quot;)&quot;);</span>
-<span class="nc" id="L235">		return sb.toString();</span>
+<span class="nc" id="L223">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L224">		sb.append(&quot;(&quot;);</span>
+<span class="nc" id="L225">		sb.append(point.x);</span>
+<span class="nc" id="L226">		sb.append(&quot; ; &quot;);</span>
+<span class="nc" id="L227">		sb.append(point.y);</span>
+<span class="nc" id="L228">		sb.append(&quot;)&quot;);</span>
+<span class="nc" id="L229">		return sb.toString();</span>
 	}
 
 	private static void printDebugBezier(ST_bezier bezier) {
-<span class="nc" id="L239">		System.err.println(&quot;bezier.size=&quot; + bezier.size);</span>
-<span class="nc" id="L240">		System.err.println(&quot;bezier.sflag=&quot; + bezier.sflag);</span>
-<span class="nc" id="L241">		System.err.println(&quot;splines.eflag=&quot; + bezier.eflag);</span>
-<span class="nc" id="L242">		System.err.println(&quot;bezier.sp=&quot; + pointftoString(bezier.sp));</span>
-<span class="nc" id="L243">		System.err.println(&quot;bezier.ep=&quot; + pointftoString(bezier.ep));</span>
-<span class="nc bnc" id="L244" title="All 2 branches missed.">		for (int i = 0; i &lt; bezier.size; i++) {</span>
-<span class="nc" id="L245">			final ST_pointf pt = bezier.list.get__(i);</span>
-<span class="nc" id="L246">			System.err.println(&quot;pt=&quot; + pointftoString(pt));</span>
+<span class="nc" id="L233">		System.err.println(&quot;bezier.size=&quot; + bezier.size);</span>
+<span class="nc" id="L234">		System.err.println(&quot;bezier.sflag=&quot; + bezier.sflag);</span>
+<span class="nc" id="L235">		System.err.println(&quot;splines.eflag=&quot; + bezier.eflag);</span>
+<span class="nc" id="L236">		System.err.println(&quot;bezier.sp=&quot; + pointftoString(bezier.sp));</span>
+<span class="nc" id="L237">		System.err.println(&quot;bezier.ep=&quot; + pointftoString(bezier.ep));</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">		for (int i = 0; i &lt; bezier.size; i++) {</span>
+<span class="nc" id="L239">			final ST_pointf pt = bezier.list.get__(i);</span>
+<span class="nc" id="L240">			System.err.println(&quot;pt=&quot; + pointftoString(pt));</span>
 		}
-<span class="nc" id="L248">	}</span>
+<span class="nc" id="L242">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

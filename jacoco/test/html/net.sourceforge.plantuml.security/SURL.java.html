@@ -74,9 +74,8 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
 import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
-//::uncomment when __CORE__ or __TEAVM__
-//import net.sourceforge.plantuml.FileUtils;
-//::done
+import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.FileUtils;
 
 /**
  * Secure replacement for java.net.URL.
@@ -123,10 +122,10 @@ public class SURL {
 	 */
 	private final String securityIdentifier;
 
-<span class="fc" id="L126">	private SURL(URL url, String securityIdentifier) {</span>
-<span class="fc" id="L127">		this.internal = Objects.requireNonNull(url);</span>
-<span class="fc" id="L128">		this.securityIdentifier = Objects.requireNonNull(securityIdentifier);</span>
-<span class="fc" id="L129">	}</span>
+<span class="fc" id="L125">	private SURL(URL url, String securityIdentifier) {</span>
+<span class="fc" id="L126">		this.internal = Objects.requireNonNull(url);</span>
+<span class="fc" id="L127">		this.securityIdentifier = Objects.requireNonNull(securityIdentifier);</span>
+<span class="fc" id="L128">	}</span>
 
 	/**
 	 * Create a secure URL from a String.
@@ -138,16 +137,16 @@ public class SURL {
 	 * @return the secure URL or null
 	 */
 	public static SURL create(String url) {
-<span class="pc bpc" id="L141" title="1 of 2 branches missed.">		if (url == null)</span>
-<span class="nc" id="L142">			return null;</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (url == null)</span>
+<span class="nc" id="L141">			return null;</span>
 
-<span class="pc bpc" id="L144" title="1 of 4 branches missed.">		if (url.startsWith(&quot;http://&quot;) || url.startsWith(&quot;https://&quot;))</span>
+<span class="pc bpc" id="L143" title="1 of 4 branches missed.">		if (url.startsWith(&quot;http://&quot;) || url.startsWith(&quot;https://&quot;))</span>
 			try {
-<span class="fc" id="L146">				return create(new URI(url).toURL());</span>
-<span class="nc" id="L147">			} catch (MalformedURLException | URISyntaxException e) {</span>
-<span class="nc" id="L148">				Logme.error(e);</span>
+<span class="fc" id="L145">				return create(new URI(url).toURL());</span>
+<span class="nc" id="L146">			} catch (MalformedURLException | URISyntaxException e) {</span>
+<span class="nc" id="L147">				Logme.error(e);</span>
 			}
-<span class="nc" id="L150">		return null;</span>
+<span class="nc" id="L149">		return null;</span>
 	}
 
 	/**
@@ -161,112 +160,92 @@ public class SURL {
 	 * @throws URISyntaxException
 	 */
 	public static SURL create(URL url) throws MalformedURLException, URISyntaxException {
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		if (url == null)</span>
-<span class="nc" id="L165">			throw new MalformedURLException(&quot;URL cannot be null&quot;);</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		if (url == null)</span>
+<span class="nc" id="L164">			throw new MalformedURLException(&quot;URL cannot be null&quot;);</span>
 
-		// ::comment when __CORE__ or __TEAVM__
-<span class="fc" id="L168">		final String credentialId = url.getUserInfo();</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L167">			return new SURL(url, WITHOUT_AUTHENTICATION);</span>
+		} else {
+<span class="fc" id="L169">			final String credentialId = url.getUserInfo();</span>
 
-<span class="fc bfc" id="L170" title="All 4 branches covered.">		if (credentialId == null || credentialId.indexOf(':') &gt; 0)</span>
-			// No user info at all, or a user with password (This is a legacy BasicAuth
-			// access, and we bypass it):
-<span class="fc" id="L173">			return new SURL(url, WITHOUT_AUTHENTICATION);</span>
-<span class="fc bfc" id="L174" title="All 2 branches covered.">		else if (SecurityUtils.existsSecurityCredentials(credentialId))</span>
-			// Given userInfo, but without a password. We try to find SecurityCredentials
-<span class="fc" id="L176">			return new SURL(removeUserInfo(url), credentialId);</span>
-		else
-			// ::done
-<span class="fc" id="L179">			return new SURL(url, WITHOUT_AUTHENTICATION);</span>
+<span class="fc bfc" id="L171" title="All 4 branches covered.">			if (credentialId == null || credentialId.indexOf(':') &gt; 0)</span>
+				// No user info at all, or a user with password (This is a legacy BasicAuth
+				// access, and we bypass it):
+<span class="fc" id="L174">				return new SURL(url, WITHOUT_AUTHENTICATION);</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">			else if (SecurityUtils.existsSecurityCredentials(credentialId))</span>
+				// Given userInfo, but without a password. We try to find SecurityCredentials
+<span class="fc" id="L177">				return new SURL(removeUserInfo(url), credentialId);</span>
+			else
+<span class="fc" id="L179">				return new SURL(url, WITHOUT_AUTHENTICATION);</span>
+		}
 	}
 
-	// ::uncomment when __CORE__ or __TEAVM__
-//	public InputStream openStream() {
-//	try {
-//		return internal.openStream();
-//	} catch (IOException e) {
-//		System.err.println(&quot;SURL::openStream &quot; + e);
-//		return null;
-//	}
-//}
-//public byte[] getBytes() {
-//	final InputStream is = openStream();
-//	if (is != null)
-//		try {
-//			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//			FileUtils.copyInternal(is, baos, true);
-//			return baos.toByteArray();
-//		} catch (IOException e) {
-//			System.err.println(&quot;SURL::getBytes &quot; + e);
-//		}
-//	return null;
-//}
-	// ::done
-
 	public PortableImage readRasterImageFromURL() {
-<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (isUrlOk())</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (isUrlOk())</span>
 			try {
-<span class="nc" id="L208">				final byte[] bytes = getBytes();</span>
-<span class="nc bnc" id="L209" title="All 4 branches missed.">				if (bytes == null || bytes.length == 0)</span>
-<span class="nc" id="L210">					return null;</span>
-<span class="nc" id="L211">				final ImageIcon tmp = new ImageIcon(bytes);</span>
-<span class="nc" id="L212">				return SecurityUtils.readRasterImage(tmp);</span>
-<span class="nc" id="L213">			} catch (Exception e) {</span>
-<span class="nc" id="L214">				Logme.error(e);</span>
+<span class="nc" id="L186">				final byte[] bytes = getBytes();</span>
+<span class="nc bnc" id="L187" title="All 4 branches missed.">				if (bytes == null || bytes.length == 0)</span>
+<span class="nc" id="L188">					return null;</span>
+<span class="nc" id="L189">				final ImageIcon tmp = new ImageIcon(bytes);</span>
+<span class="nc" id="L190">				return SecurityUtils.readRasterImage(tmp);</span>
+<span class="nc" id="L191">			} catch (Exception e) {</span>
+<span class="nc" id="L192">				Logme.error(e);</span>
 			}
-<span class="nc" id="L216">		return null;</span>
+<span class="nc" id="L194">		return null;</span>
 	}
 
 	/**
 	 * Check SecurityProfile to see if this URL can be opened.
 	 */
 	public boolean isUrlOk() {
-		// ::comment when __CORE__ or __TEAVM__
-<span class="pc bpc" id="L224" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX)</span>
-			// In SANDBOX, we cannot read any URL
-<span class="nc" id="L226">			return false;</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L202">			return true;</span>
+		} else {
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX)</span>
+				// In SANDBOX, we cannot read any URL
+<span class="nc" id="L206">				return false;</span>
 
-<span class="pc bpc" id="L228" title="1 of 2 branches missed.">		if (isInUrlAllowList())</span>
-			// ::done
-<span class="nc" id="L230">			return true;</span>
-		// ::comment when __CORE__ or __TEAVM__
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">			if (isInUrlAllowList())</span>
+<span class="nc" id="L209">				return true;</span>
 
-<span class="pc bpc" id="L233" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.LEGACY) {</span>
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">			if (URLCheck.isURLforbidden(cleanPath(internal.toString())))</span>
-<span class="nc" id="L235">				return false;</span>
-<span class="fc" id="L236">			return true;</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.LEGACY) {</span>
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">				if (URLCheck.isURLforbidden(cleanPath(internal.toString())))</span>
+<span class="nc" id="L213">					return false;</span>
+<span class="fc" id="L214">				return true;</span>
+			}
+
+<span class="nc bnc" id="L217" title="All 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
+				// We are UNSECURE anyway
+<span class="nc" id="L219">				return true;</span>
+
+<span class="nc bnc" id="L221" title="All 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET) {</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">				if (URLCheck.isURLforbidden(cleanPath(internal.toString())))</span>
+<span class="nc" id="L223">					return false;</span>
+
+<span class="nc" id="L225">				final int port = internal.getPort();</span>
+				// Using INTERNET profile, port 80 and 443 are ok
+<span class="nc bnc" id="L227" title="All 6 branches missed.">				return port == 80 || port == 443 || port == -1;</span>
+			}
+<span class="nc" id="L229">			return false;</span>
 		}
-
-<span class="nc bnc" id="L239" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
-			// We are UNSECURE anyway
-<span class="nc" id="L241">			return true;</span>
-
-<span class="nc bnc" id="L243" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET) {</span>
-<span class="nc bnc" id="L244" title="All 2 branches missed.">			if (URLCheck.isURLforbidden(cleanPath(internal.toString())))</span>
-<span class="nc" id="L245">				return false;</span>
-
-<span class="nc" id="L247">			final int port = internal.getPort();</span>
-			// Using INTERNET profile, port 80 and 443 are ok
-<span class="nc bnc" id="L249" title="All 6 branches missed.">			return port == 80 || port == 443 || port == -1;</span>
-		}
-<span class="nc" id="L251">		return false;</span>
-		// ::done
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	/**
 	 * Regex to remove the UserInfo part from a URL.
 	 */
-<span class="fc" id="L259">	private static final Pattern PATTERN_USERINFO = Pattern.compile(&quot;(^https?://)([-_0-9a-zA-Z]+@)([^@]*)$&quot;);</span>
+<span class="fc" id="L237">	private static final Pattern PATTERN_USERINFO = Pattern.compile(&quot;(^https?://)([-_0-9a-zA-Z]+@)([^@]*)$&quot;);</span>
 
-<span class="fc" id="L261">	private static final ExecutorService EXE = Executors.newCachedThreadPool(new ThreadFactory() {</span>
-		public Thread newThread(Runnable r) {
-<span class="fc" id="L263">			final Thread t = Executors.defaultThreadFactory().newThread(r);</span>
-<span class="fc" id="L264">			t.setDaemon(true);</span>
-<span class="fc" id="L265">			return t;</span>
-		}
-	});
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">	private static final ExecutorService EXE = TeaVM.isTeaVM() ? null</span>
+<span class="fc" id="L240">			: Executors.newCachedThreadPool(new ThreadFactory() {</span>
+				public Thread newThread(Runnable r) {
+<span class="fc" id="L242">					final Thread t = Executors.defaultThreadFactory().newThread(r);</span>
+<span class="fc" id="L243">					t.setDaemon(true);</span>
+<span class="fc" id="L244">					return t;</span>
+				}
+			});
 
-<span class="fc" id="L269">	private static final Map&lt;String, Long&gt; BAD_HOSTS = new ConcurrentHashMap&lt;String, Long&gt;();</span>
+<span class="fc" id="L248">	private static final Map&lt;String, Long&gt; BAD_HOSTS = new ConcurrentHashMap&lt;String, Long&gt;();</span>
 
 	/**
 	 * Creates a URL without UserInfo part and without SecurityCredentials.
@@ -277,7 +256,7 @@ public class SURL {
 	 * @throws URISyntaxException
 	 */
 	static SURL createWithoutUser(URL url) throws MalformedURLException, URISyntaxException {
-<span class="fc" id="L280">		return new SURL(removeUserInfo(url), WITHOUT_AUTHENTICATION);</span>
+<span class="fc" id="L259">		return new SURL(removeUserInfo(url), WITHOUT_AUTHENTICATION);</span>
 	}
 
 	/**
@@ -290,43 +269,43 @@ public class SURL {
 	 * or we have unpredicted results.
 	 */
 	static void resetBadHosts() {
-<span class="nc" id="L293">		BAD_HOSTS.clear();</span>
-<span class="nc" id="L294">	}</span>
+<span class="nc" id="L272">		BAD_HOSTS.clear();</span>
+<span class="nc" id="L273">	}</span>
 
 	@Override
 	public String toString() {
-<span class="fc" id="L298">		return internal.toString();</span>
+<span class="fc" id="L277">		return internal.toString();</span>
 	}
 
 	private boolean isInUrlAllowList() {
-<span class="fc" id="L302">		final String full = cleanPath(internal.toString());</span>
+<span class="fc" id="L281">		final String full = cleanPath(internal.toString());</span>
 		// Thanks to Agasthya Kasturi
-<span class="pc bpc" id="L304" title="1 of 2 branches missed.">		if (full.contains(&quot;@&quot;))</span>
-<span class="nc" id="L305">			return false;</span>
-<span class="pc bpc" id="L306" title="1 of 2 branches missed.">		for (String allow : getUrlAllowList())</span>
-<span class="nc bnc" id="L307" title="All 2 branches missed.">			if (full.startsWith(cleanPath(allow)))</span>
-<span class="nc" id="L308">				return true;</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">		if (full.contains(&quot;@&quot;))</span>
+<span class="nc" id="L284">			return false;</span>
+<span class="pc bpc" id="L285" title="1 of 2 branches missed.">		for (String allow : getUrlAllowList())</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">			if (full.startsWith(cleanPath(allow)))</span>
+<span class="nc" id="L287">				return true;</span>
 
-<span class="fc" id="L310">		return false;</span>
+<span class="fc" id="L289">		return false;</span>
 	}
 
 	private String cleanPath(String path) {
 		// Remove user information, because we don't like to store user/password or
 		// userTokens in allow-list
-<span class="fc" id="L316">		path = removeUserInfoFromUrlPath(path);</span>
-<span class="fc" id="L317">		path = path.trim().toLowerCase(Locale.US);</span>
+<span class="fc" id="L295">		path = removeUserInfoFromUrlPath(path);</span>
+<span class="fc" id="L296">		path = path.trim().toLowerCase(Locale.US);</span>
 		// We simplify/normalize the url, removing default ports
-<span class="fc" id="L319">		path = path.replace(&quot;:80/&quot;, &quot;&quot;);</span>
-<span class="fc" id="L320">		path = path.replace(&quot;:443/&quot;, &quot;&quot;);</span>
-<span class="fc" id="L321">		return path;</span>
+<span class="fc" id="L298">		path = path.replace(&quot;:80/&quot;, &quot;&quot;);</span>
+<span class="fc" id="L299">		path = path.replace(&quot;:443/&quot;, &quot;&quot;);</span>
+<span class="fc" id="L300">		return path;</span>
 	}
 
 	private List&lt;String&gt; getUrlAllowList() {
-<span class="fc" id="L325">		final String env = SecurityUtils.getenv(SecurityUtils.ALLOWLIST_URL);</span>
-<span class="pc bpc" id="L326" title="1 of 2 branches missed.">		if (env == null)</span>
-<span class="fc" id="L327">			return Collections.emptyList();</span>
+<span class="fc" id="L304">		final String env = SecurityUtils.getenv(SecurityUtils.ALLOWLIST_URL);</span>
+<span class="pc bpc" id="L305" title="1 of 2 branches missed.">		if (env == null)</span>
+<span class="fc" id="L306">			return Collections.emptyList();</span>
 
-<span class="nc" id="L329">		return Arrays.asList(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(env).split(&quot;;&quot;));</span>
+<span class="nc" id="L308">		return Arrays.asList(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(env).split(&quot;;&quot;));</span>
 	}
 
 	/**
@@ -343,38 +322,53 @@ public class SURL {
 	 * @return data loaded data from endpoint
 	 */
 	public byte[] getBytes() {
-<span class="pc bpc" id="L346" title="1 of 2 branches missed.">		if (isUrlOk() == false)</span>
-<span class="nc" id="L347">			return null;</span>
+<span class="pc bpc" id="L325" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L326">			final InputStream is = openStream();</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">			if (is != null)</span>
+				try {
+<span class="nc" id="L329">					final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L330">					FileUtils.copyInternal(is, baos, true);</span>
+<span class="nc" id="L331">					return baos.toByteArray();</span>
+<span class="nc" id="L332">				} catch (IOException e) {</span>
+<span class="nc" id="L333">					System.err.println(&quot;SURL::getBytes &quot; + e);</span>
+				}
+<span class="nc" id="L335">			return null;</span>
 
-<span class="fc" id="L349">		final SecurityCredentials credentials = SecurityUtils.loadSecurityCredentials(securityIdentifier);</span>
-<span class="fc" id="L350">		final SecurityAuthentication authentication = SecurityUtils.getAuthenticationManager(credentials)</span>
-<span class="fc" id="L351">				.create(credentials);</span>
-		try {
-<span class="fc" id="L353">			final String host = internal.getHost();</span>
-<span class="fc" id="L354">			final Long bad = BAD_HOSTS.get(host);</span>
-<span class="pc bpc" id="L355" title="1 of 2 branches missed.">			if (bad != null) {</span>
-<span class="nc bnc" id="L356" title="All 2 branches missed.">				if ((System.currentTimeMillis() - bad) &lt; 1000L * 60)</span>
-<span class="nc" id="L357">					return null;</span>
-<span class="nc" id="L358">				BAD_HOSTS.remove(host);</span>
-			}
+		} else {
+<span class="pc bpc" id="L338" title="1 of 2 branches missed.">			if (isUrlOk() == false)</span>
+<span class="nc" id="L339">				return null;</span>
 
+<span class="fc" id="L341">			final SecurityCredentials credentials = SecurityUtils.loadSecurityCredentials(securityIdentifier);</span>
+<span class="fc" id="L342">			final SecurityAuthentication authentication = SecurityUtils.getAuthenticationManager(credentials)</span>
+<span class="fc" id="L343">					.create(credentials);</span>
 			try {
-<span class="fc" id="L362">				final Future&lt;byte[]&gt; result = EXE</span>
-<span class="fc" id="L363">						.submit(requestWithGetAndResponse(internal, credentials.getProxy(), authentication, null));</span>
-<span class="fc" id="L364">				final byte[] data = result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);</span>
-<span class="pc bpc" id="L365" title="1 of 2 branches missed.">				if (data != null)</span>
-<span class="fc" id="L366">					return data;</span>
+<span class="fc" id="L345">				final String host = internal.getHost();</span>
+<span class="fc" id="L346">				final Long bad = BAD_HOSTS.get(host);</span>
+<span class="pc bpc" id="L347" title="1 of 2 branches missed.">				if (bad != null) {</span>
+<span class="nc bnc" id="L348" title="All 2 branches missed.">					if ((System.currentTimeMillis() - bad) &lt; 1000L * 60)</span>
+<span class="nc" id="L349">						return null;</span>
+<span class="nc" id="L350">					BAD_HOSTS.remove(host);</span>
+				}
 
-<span class="nc" id="L368">			} catch (Exception e) {</span>
-<span class="nc" id="L369">				System.err.println(&quot;issue &quot; + host + &quot; &quot; + e);</span>
-<span class="nc" id="L370">			}</span>
+				try {
+<span class="fc" id="L354">					final Future&lt;byte[]&gt; result = EXE</span>
+<span class="fc" id="L355">							.submit(requestWithGetAndResponse(internal, credentials.getProxy(), authentication, null));</span>
+<span class="fc" id="L356">					final byte[] data = result.get(SecurityUtils.getSecurityProfile().getTimeout(),</span>
+							TimeUnit.MILLISECONDS);
+<span class="pc bpc" id="L358" title="1 of 2 branches missed.">					if (data != null)</span>
+<span class="fc" id="L359">						return data;</span>
 
-<span class="nc" id="L372">			BAD_HOSTS.put(host, System.currentTimeMillis());</span>
-<span class="nc" id="L373">			return null;</span>
-		} finally {
-			// clean up. We don't cache tokens, no expire handling. All time a re-request.
-<span class="fc" id="L376">			credentials.eraseCredentials();</span>
-<span class="fc" id="L377">			authentication.eraseCredentials();</span>
+<span class="nc" id="L361">				} catch (Exception e) {</span>
+<span class="nc" id="L362">					System.err.println(&quot;issue &quot; + host + &quot; &quot; + e);</span>
+<span class="nc" id="L363">				}</span>
+
+<span class="nc" id="L365">				BAD_HOSTS.put(host, System.currentTimeMillis());</span>
+<span class="nc" id="L366">				return null;</span>
+			} finally {
+				// clean up. We don't cache tokens, no expire handling. All time a re-request.
+<span class="fc" id="L369">				credentials.eraseCredentials();</span>
+<span class="fc" id="L370">				authentication.eraseCredentials();</span>
+			}
 		}
 	}
 
@@ -398,16 +392,16 @@ public class SURL {
 	 * @return loaded data from endpoint
 	 */
 	private byte[] getBytes(Proxy proxy, SecurityAuthentication authentication, Map&lt;String, Object&gt; headers) {
-<span class="nc bnc" id="L401" title="All 2 branches missed.">		if (isUrlOk() == false)</span>
-<span class="nc" id="L402">			return null;</span>
+<span class="nc bnc" id="L395" title="All 2 branches missed.">		if (isUrlOk() == false)</span>
+<span class="nc" id="L396">			return null;</span>
 
-<span class="nc" id="L404">		final Future&lt;byte[]&gt; result = EXE.submit(requestWithGetAndResponse(internal, proxy, authentication, headers));</span>
+<span class="nc" id="L398">		final Future&lt;byte[]&gt; result = EXE.submit(requestWithGetAndResponse(internal, proxy, authentication, headers));</span>
 
 		try {
-<span class="nc" id="L407">			return result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);</span>
-<span class="nc" id="L408">		} catch (Exception e) {</span>
-<span class="nc" id="L409">			System.err.println(&quot;SURL response issue to &quot; + internal.getHost() + &quot; &quot; + e);</span>
-<span class="nc" id="L410">			return null;</span>
+<span class="nc" id="L401">			return result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);</span>
+<span class="nc" id="L402">		} catch (Exception e) {</span>
+<span class="nc" id="L403">			System.err.println(&quot;SURL response issue to &quot; + internal.getHost() + &quot; &quot; + e);</span>
+<span class="nc" id="L404">			return null;</span>
 		}
 	}
 
@@ -433,42 +427,43 @@ public class SURL {
 	 */
 	public byte[] getBytesOnPost(Proxy proxy, SecurityAuthentication authentication, String data,
 			Map&lt;String, Object&gt; headers) {
-<span class="nc bnc" id="L436" title="All 2 branches missed.">		if (isUrlOk() == false)</span>
-<span class="nc" id="L437">			return null;</span>
+<span class="nc bnc" id="L430" title="All 2 branches missed.">		if (isUrlOk() == false)</span>
+<span class="nc" id="L431">			return null;</span>
 
-<span class="nc" id="L439">		final Future&lt;byte[]&gt; result = EXE</span>
-<span class="nc" id="L440">				.submit(requestWithPostAndResponse(internal, proxy, authentication, data, headers));</span>
+<span class="nc" id="L433">		final Future&lt;byte[]&gt; result = EXE</span>
+<span class="nc" id="L434">				.submit(requestWithPostAndResponse(internal, proxy, authentication, data, headers));</span>
 
 		try {
-<span class="nc" id="L443">			return result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);</span>
-<span class="nc" id="L444">		} catch (Exception e) {</span>
-<span class="nc" id="L445">			System.err.println(&quot;SURL response issue to &quot; + internal.getHost() + &quot; &quot; + e);</span>
-<span class="nc" id="L446">			return null;</span>
+<span class="nc" id="L437">			return result.get(SecurityUtils.getSecurityProfile().getTimeout(), TimeUnit.MILLISECONDS);</span>
+<span class="nc" id="L438">		} catch (Exception e) {</span>
+<span class="nc" id="L439">			System.err.println(&quot;SURL response issue to &quot; + internal.getHost() + &quot; &quot; + e);</span>
+<span class="nc" id="L440">			return null;</span>
 		}
 	}
 
-    /**
-     * Configures the specified {@link URLConnection} with security-related settings.
-     * &lt;p&gt;
-     * This method disables user interactions for the connection and, if the connection 
-     * is an instance of {@link HttpURLConnection}, it also disables automatic 
-     * following of HTTP redirects, unless the security profile is set to 
-     * {@link SecurityProfile#UNSECURE}.
-     * &lt;/p&gt;
-     *
-     * @param connection the {@link URLConnection} to be configured
-     *
-     * @see URLConnection#setAllowUserInteraction(boolean)
-     * @see HttpURLConnection#setInstanceFollowRedirects(boolean)
-     * @see SecurityUtils#getSecurityProfile()
-     * @see SecurityProfile
-     */
+	/**
+	 * Configures the specified {@link URLConnection} with security-related
+	 * settings.
+	 * &lt;p&gt;
+	 * This method disables user interactions for the connection and, if the
+	 * connection is an instance of {@link HttpURLConnection}, it also disables
+	 * automatic following of HTTP redirects, unless the security profile is set to
+	 * {@link SecurityProfile#UNSECURE}.
+	 * &lt;/p&gt;
+	 *
+	 * @param connection the {@link URLConnection} to be configured
+	 *
+	 * @see URLConnection#setAllowUserInteraction(boolean)
+	 * @see HttpURLConnection#setInstanceFollowRedirects(boolean)
+	 * @see SecurityUtils#getSecurityProfile()
+	 * @see SecurityProfile
+	 */
 	protected static void configure(URLConnection connection) {
-<span class="fc" id="L467">		connection.setAllowUserInteraction(false);</span>
+<span class="fc" id="L462">		connection.setAllowUserInteraction(false);</span>
 
-<span class="pc bpc" id="L469" title="2 of 4 branches missed.">		if (SecurityUtils.getSecurityProfile() != SecurityProfile.UNSECURE &amp;&amp; connection instanceof HttpURLConnection)</span>
-<span class="fc" id="L470">			((HttpURLConnection) connection).setInstanceFollowRedirects(false);</span>
-<span class="fc" id="L471">	}</span>
+<span class="pc bpc" id="L464" title="2 of 4 branches missed.">		if (SecurityUtils.getSecurityProfile() != SecurityProfile.UNSECURE &amp;&amp; connection instanceof HttpURLConnection)</span>
+<span class="fc" id="L465">			((HttpURLConnection) connection).setInstanceFollowRedirects(false);</span>
+<span class="fc" id="L466">	}</span>
 
 	/**
 	 * Creates a GET request and response handler
@@ -481,24 +476,24 @@ public class SURL {
 	 */
 	private static Callable&lt;byte[]&gt; requestWithGetAndResponse(final URL url, final Proxy proxy,
 			final SecurityAuthentication authentication, final Map&lt;String, Object&gt; headers) {
-<span class="fc" id="L484">		return new Callable&lt;byte[]&gt;() {</span>
+<span class="fc" id="L479">		return new Callable&lt;byte[]&gt;() {</span>
 
 			private HttpURLConnection openConnection(final URL url) throws IOException {
 				// Add proxy, if passed throw parameters
-<span class="pc bpc" id="L488" title="1 of 2 branches missed.">				final URLConnection connection = proxy == null ? url.openConnection() : url.openConnection(proxy);</span>
-<span class="pc bpc" id="L489" title="1 of 2 branches missed.">				if (connection == null)</span>
-<span class="nc" id="L490">					return null;</span>
-<span class="fc" id="L491">				configure(connection);</span>
+<span class="pc bpc" id="L483" title="1 of 2 branches missed.">				final URLConnection connection = proxy == null ? url.openConnection() : url.openConnection(proxy);</span>
+<span class="pc bpc" id="L484" title="1 of 2 branches missed.">				if (connection == null)</span>
+<span class="nc" id="L485">					return null;</span>
+<span class="fc" id="L486">				configure(connection);</span>
 
-<span class="fc" id="L493">				final HttpURLConnection http = (HttpURLConnection) connection;</span>
+<span class="fc" id="L488">				final HttpURLConnection http = (HttpURLConnection) connection;</span>
 
-<span class="fc" id="L495">				applyEndpointAccessAuthentication(http, authentication);</span>
-<span class="fc" id="L496">				applyAdditionalHeaders(http, headers);</span>
-<span class="fc" id="L497">				return http;</span>
+<span class="fc" id="L490">				applyEndpointAccessAuthentication(http, authentication);</span>
+<span class="fc" id="L491">				applyAdditionalHeaders(http, headers);</span>
+<span class="fc" id="L492">				return http;</span>
 			}
 
 			public byte[] call() throws IOException, URISyntaxException {
-<span class="fc" id="L501">				final HttpURLConnection http = openConnection(url);</span>
+<span class="fc" id="L496">				final HttpURLConnection http = openConnection(url);</span>
 				// final int responseCode = http.getResponseCode();
 
 //				if (responseCode == HttpURLConnection.HTTP_MOVED_TEMP
@@ -507,7 +502,7 @@ public class SURL {
 //					http = openConnection(new URI(newUrl).toURL());
 //				}
 
-<span class="fc" id="L510">				return retrieveResponseAsBytes(http);</span>
+<span class="fc" id="L505">				return retrieveResponseAsBytes(http);</span>
 			}
 		};
 	}
@@ -526,49 +521,49 @@ public class SURL {
 	 */
 	private static Callable&lt;byte[]&gt; requestWithPostAndResponse(final URL url, final Proxy proxy,
 			final SecurityAuthentication authentication, final String data, final Map&lt;String, Object&gt; headers) {
-<span class="nc" id="L529">		return new Callable&lt;byte[]&gt;() {</span>
+<span class="nc" id="L524">		return new Callable&lt;byte[]&gt;() {</span>
 			public byte[] call() throws IOException {
 				// Add proxy, if passed throw parameters
-<span class="nc bnc" id="L532" title="All 2 branches missed.">				final URLConnection connection = proxy == null ? url.openConnection() : url.openConnection(proxy);</span>
-<span class="nc bnc" id="L533" title="All 2 branches missed.">				if (connection == null)</span>
-<span class="nc" id="L534">					return null;</span>
+<span class="nc bnc" id="L527" title="All 2 branches missed.">				final URLConnection connection = proxy == null ? url.openConnection() : url.openConnection(proxy);</span>
+<span class="nc bnc" id="L528" title="All 2 branches missed.">				if (connection == null)</span>
+<span class="nc" id="L529">					return null;</span>
 
-<span class="nc" id="L536">				configure(connection);</span>
-<span class="nc" id="L537">				final boolean withContent = StringUtils.isNotEmpty(data);</span>
+<span class="nc" id="L531">				configure(connection);</span>
+<span class="nc" id="L532">				final boolean withContent = StringUtils.isNotEmpty(data);</span>
 
-<span class="nc" id="L539">				final HttpURLConnection http = (HttpURLConnection) connection;</span>
-<span class="nc" id="L540">				http.setRequestMethod(&quot;POST&quot;);</span>
-<span class="nc bnc" id="L541" title="All 2 branches missed.">				if (withContent)</span>
-<span class="nc" id="L542">					http.setDoOutput(true);</span>
+<span class="nc" id="L534">				final HttpURLConnection http = (HttpURLConnection) connection;</span>
+<span class="nc" id="L535">				http.setRequestMethod(&quot;POST&quot;);</span>
+<span class="nc bnc" id="L536" title="All 2 branches missed.">				if (withContent)</span>
+<span class="nc" id="L537">					http.setDoOutput(true);</span>
 
-<span class="nc" id="L544">				applyEndpointAccessAuthentication(http, authentication);</span>
-<span class="nc" id="L545">				applyAdditionalHeaders(http, headers);</span>
+<span class="nc" id="L539">				applyEndpointAccessAuthentication(http, authentication);</span>
+<span class="nc" id="L540">				applyAdditionalHeaders(http, headers);</span>
 
-<span class="nc" id="L547">				final Charset charSet = extractCharset(http.getRequestProperty(&quot;Content-Type&quot;));</span>
+<span class="nc" id="L542">				final Charset charSet = extractCharset(http.getRequestProperty(&quot;Content-Type&quot;));</span>
 
-<span class="nc bnc" id="L549" title="All 2 branches missed.">				if (withContent)</span>
-<span class="nc bnc" id="L550" title="All 2 branches missed.">					sendRequestAsBytes(http, data.getBytes(charSet != null ? charSet : StandardCharsets.UTF_8));</span>
+<span class="nc bnc" id="L544" title="All 2 branches missed.">				if (withContent)</span>
+<span class="nc bnc" id="L545" title="All 2 branches missed.">					sendRequestAsBytes(http, data.getBytes(charSet != null ? charSet : StandardCharsets.UTF_8));</span>
 
-<span class="nc" id="L552">				return retrieveResponseAsBytes(http);</span>
+<span class="nc" id="L547">				return retrieveResponseAsBytes(http);</span>
 			}
 		};
 	}
 
-<span class="fc" id="L557">	private static final Pattern pattern = Pattern.compile(&quot;(?i)\\bcharset=\\s*\&quot;?([^\\s;\&quot;]*)&quot;);</span>
-	
-	private static Charset extractCharset(String contentType) {
-<span class="nc bnc" id="L560" title="All 2 branches missed.">		if (StringUtils.isEmpty(contentType))</span>
-<span class="nc" id="L561">			return null;</span>
+<span class="fc" id="L552">	private static final Pattern pattern = Pattern.compile(&quot;(?i)\\bcharset=\\s*\&quot;?([^\\s;\&quot;]*)&quot;);</span>
 
-<span class="nc" id="L563">		final Matcher matcher = pattern.matcher(contentType);</span>
-<span class="nc bnc" id="L564" title="All 2 branches missed.">		if (matcher.find())</span>
+	private static Charset extractCharset(String contentType) {
+<span class="nc bnc" id="L555" title="All 2 branches missed.">		if (StringUtils.isEmpty(contentType))</span>
+<span class="nc" id="L556">			return null;</span>
+
+<span class="nc" id="L558">		final Matcher matcher = pattern.matcher(contentType);</span>
+<span class="nc bnc" id="L559" title="All 2 branches missed.">		if (matcher.find())</span>
 			try {
-<span class="nc" id="L566">				return Charset.forName(matcher.group(1));</span>
-<span class="nc" id="L567">			} catch (Exception e) {</span>
-<span class="nc" id="L568">				Logme.error(e);</span>
+<span class="nc" id="L561">				return Charset.forName(matcher.group(1));</span>
+<span class="nc" id="L562">			} catch (Exception e) {</span>
+<span class="nc" id="L563">				Logme.error(e);</span>
 			}
 
-<span class="nc" id="L571">		return null;</span>
+<span class="nc" id="L566">		return null;</span>
 	}
 
 	/**
@@ -580,15 +575,15 @@ public class SURL {
 	 *                     download was broken
 	 */
 	private static byte[] retrieveResponseAsBytes(HttpURLConnection connection) throws IOException {
-<span class="fc" id="L583">		final int responseCode = connection.getResponseCode();</span>
-<span class="pc bpc" id="L584" title="1 of 2 branches missed.">		if (responseCode &lt; HttpURLConnection.HTTP_BAD_REQUEST) {</span>
-<span class="fc" id="L585">			try (InputStream input = connection.getInputStream()) {</span>
-<span class="fc" id="L586">				return retrieveData(input);</span>
+<span class="fc" id="L578">		final int responseCode = connection.getResponseCode();</span>
+<span class="pc bpc" id="L579" title="1 of 2 branches missed.">		if (responseCode &lt; HttpURLConnection.HTTP_BAD_REQUEST) {</span>
+<span class="fc" id="L580">			try (InputStream input = connection.getInputStream()) {</span>
+<span class="fc" id="L581">				return retrieveData(input);</span>
 			}
 		} else {
-<span class="nc" id="L589">			try (InputStream error = connection.getErrorStream()) {</span>
-<span class="nc" id="L590">				final byte[] bytes = retrieveData(error);</span>
-<span class="nc" id="L591">				throw new IOException(</span>
+<span class="nc" id="L584">			try (InputStream error = connection.getErrorStream()) {</span>
+<span class="nc" id="L585">				final byte[] bytes = retrieveData(error);</span>
+<span class="nc" id="L586">				throw new IOException(</span>
 						&quot;HTTP error &quot; + responseCode + &quot; with &quot; + new String(bytes, StandardCharsets.UTF_8));
 			}
 		}
@@ -602,14 +597,14 @@ public class SURL {
 	 * @throws IOException if something went wrong
 	 */
 	private static byte[] retrieveData(InputStream input) throws IOException {
-<span class="fc" id="L605">		final ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
-<span class="fc" id="L606">		final byte[] buffer = new byte[1024];</span>
+<span class="fc" id="L600">		final ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
+<span class="fc" id="L601">		final byte[] buffer = new byte[1024];</span>
 		int read;
-<span class="fc bfc" id="L608" title="All 2 branches covered.">		while ((read = input.read(buffer)) &gt; 0) {</span>
-<span class="fc" id="L609">			out.write(buffer, 0, read);</span>
+<span class="fc bfc" id="L603" title="All 2 branches covered.">		while ((read = input.read(buffer)) &gt; 0) {</span>
+<span class="fc" id="L604">			out.write(buffer, 0, read);</span>
 		}
-<span class="fc" id="L611">		out.close();</span>
-<span class="fc" id="L612">		return out.toByteArray();</span>
+<span class="fc" id="L606">		out.close();</span>
+<span class="fc" id="L607">		return out.toByteArray();</span>
 	}
 
 	/**
@@ -620,20 +615,29 @@ public class SURL {
 	 * @throws IOException if something went wrong
 	 */
 	private static void sendRequestAsBytes(HttpURLConnection connection, byte[] data) throws IOException {
-<span class="nc" id="L623">		connection.setFixedLengthStreamingMode(data.length);</span>
-<span class="nc" id="L624">		try (OutputStream os = connection.getOutputStream()) {</span>
-<span class="nc" id="L625">			os.write(data);</span>
+<span class="nc" id="L618">		connection.setFixedLengthStreamingMode(data.length);</span>
+<span class="nc" id="L619">		try (OutputStream os = connection.getOutputStream()) {</span>
+<span class="nc" id="L620">			os.write(data);</span>
 		}
-<span class="nc" id="L627">	}</span>
+<span class="nc" id="L622">	}</span>
 
 	public InputStream openStream() {
-<span class="pc bpc" id="L630" title="1 of 2 branches missed.">		if (isUrlOk()) {</span>
-<span class="fc" id="L631">			final byte[] data = getBytes();</span>
-<span class="pc bpc" id="L632" title="1 of 2 branches missed.">			if (data != null)</span>
-<span class="fc" id="L633">				return new ByteArrayInputStream(data);</span>
+<span class="pc bpc" id="L625" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
+			try {
+<span class="nc" id="L627">				return internal.openStream();</span>
+<span class="nc" id="L628">			} catch (IOException e) {</span>
+<span class="nc" id="L629">				System.err.println(&quot;SURL::openStream &quot; + e);</span>
+<span class="nc" id="L630">				return null;</span>
+			}
+		} else {
+<span class="pc bpc" id="L633" title="1 of 2 branches missed.">			if (isUrlOk()) {</span>
+<span class="fc" id="L634">				final byte[] data = getBytes();</span>
+<span class="pc bpc" id="L635" title="1 of 2 branches missed.">				if (data != null)</span>
+<span class="fc" id="L636">					return new ByteArrayInputStream(data);</span>
 
+			}
 		}
-<span class="nc" id="L636">		return null;</span>
+<span class="nc" id="L640">		return null;</span>
 	}
 
 	/**
@@ -642,7 +646,7 @@ public class SURL {
 	 * @return true, if credentials will be used for a connection
 	 */
 	public boolean isAuthorizationConfigured() {
-<span class="fc bfc" id="L645" title="All 2 branches covered.">		return WITHOUT_AUTHENTICATION.equals(securityIdentifier) == false;</span>
+<span class="fc bfc" id="L649" title="All 2 branches covered.">		return WITHOUT_AUTHENTICATION.equals(securityIdentifier) == false;</span>
 	}
 
 	/**
@@ -655,20 +659,20 @@ public class SURL {
 	 * @see SecurityUtils#isNonSSLAuthenticationAllowed()
 	 */
 	private static void applyEndpointAccessAuthentication(URLConnection http, SecurityAuthentication authentication) {
-<span class="pc bpc" id="L658" title="1 of 2 branches missed.">		if (authentication.isPublic())</span>
+<span class="pc bpc" id="L662" title="1 of 2 branches missed.">		if (authentication.isPublic())</span>
 			// Shortcut: No need to apply authentication.
-<span class="fc" id="L660">			return;</span>
+<span class="fc" id="L664">			return;</span>
 
-<span class="nc bnc" id="L662" title="All 4 branches missed.">		if (http instanceof HttpsURLConnection || SecurityUtils.isNonSSLAuthenticationAllowed()) {</span>
-<span class="nc" id="L663">			SecurityAccessInterceptor accessInterceptor = SecurityUtils.getAccessInterceptor(authentication);</span>
-<span class="nc" id="L664">			accessInterceptor.apply(authentication, http);</span>
-<span class="nc" id="L665">		} else {</span>
+<span class="nc bnc" id="L666" title="All 4 branches missed.">		if (http instanceof HttpsURLConnection || SecurityUtils.isNonSSLAuthenticationAllowed()) {</span>
+<span class="nc" id="L667">			SecurityAccessInterceptor accessInterceptor = SecurityUtils.getAccessInterceptor(authentication);</span>
+<span class="nc" id="L668">			accessInterceptor.apply(authentication, http);</span>
+<span class="nc" id="L669">		} else {</span>
 			// We cannot allow applying secret tokens on plain connections. Everyone can
 			// read the data.
-<span class="nc" id="L668">			throw new IllegalStateException(</span>
+<span class="nc" id="L672">			throw new IllegalStateException(</span>
 					&quot;The transport of authentication data over an unencrypted http connection is not allowed&quot;);
 		}
-<span class="nc" id="L671">	}</span>
+<span class="nc" id="L675">	}</span>
 
 	/**
 	 * Set the headers for a URL connection
@@ -676,20 +680,20 @@ public class SURL {
 	 * @param headers map Keys with values (can be String or list of String)
 	 */
 	private static void applyAdditionalHeaders(URLConnection http, Map&lt;String, Object&gt; headers) {
-<span class="pc bpc" id="L679" title="3 of 4 branches missed.">		if (headers == null || headers.isEmpty())</span>
-<span class="fc" id="L680">			return;</span>
+<span class="pc bpc" id="L683" title="3 of 4 branches missed.">		if (headers == null || headers.isEmpty())</span>
+<span class="fc" id="L684">			return;</span>
 
-<span class="nc bnc" id="L682" title="All 2 branches missed.">		for (Map.Entry&lt;String, Object&gt; header : headers.entrySet()) {</span>
-<span class="nc" id="L683">			final Object value = header.getValue();</span>
-<span class="nc bnc" id="L684" title="All 2 branches missed.">			if (value instanceof String)</span>
-<span class="nc" id="L685">				http.setRequestProperty(header.getKey(), (String) value);</span>
-<span class="nc bnc" id="L686" title="All 2 branches missed.">			else if (value instanceof List)</span>
-<span class="nc bnc" id="L687" title="All 2 branches missed.">				for (Object item : (List&lt;?&gt;) value)</span>
-<span class="nc bnc" id="L688" title="All 2 branches missed.">					if (item != null)</span>
-<span class="nc" id="L689">						http.addRequestProperty(header.getKey(), item.toString());</span>
+<span class="nc bnc" id="L686" title="All 2 branches missed.">		for (Map.Entry&lt;String, Object&gt; header : headers.entrySet()) {</span>
+<span class="nc" id="L687">			final Object value = header.getValue();</span>
+<span class="nc bnc" id="L688" title="All 2 branches missed.">			if (value instanceof String)</span>
+<span class="nc" id="L689">				http.setRequestProperty(header.getKey(), (String) value);</span>
+<span class="nc bnc" id="L690" title="All 2 branches missed.">			else if (value instanceof List)</span>
+<span class="nc bnc" id="L691" title="All 2 branches missed.">				for (Object item : (List&lt;?&gt;) value)</span>
+<span class="nc bnc" id="L692" title="All 2 branches missed.">					if (item != null)</span>
+<span class="nc" id="L693">						http.addRequestProperty(header.getKey(), item.toString());</span>
 
-<span class="nc" id="L691">		}</span>
-<span class="nc" id="L692">	}</span>
+<span class="nc" id="L695">		}</span>
+<span class="nc" id="L696">	}</span>
 
 	/**
 	 * Removes the userInfo part from the URL, because we want to use the
@@ -701,7 +705,7 @@ public class SURL {
 	 * @throws URISyntaxException
 	 */
 	private static URL removeUserInfo(URL url) throws MalformedURLException, URISyntaxException {
-<span class="fc" id="L704">		return new URI(removeUserInfoFromUrlPath(url.toExternalForm())).toURL();</span>
+<span class="fc" id="L708">		return new URI(removeUserInfoFromUrlPath(url.toExternalForm())).toURL();</span>
 	}
 
 	/**
@@ -713,11 +717,11 @@ public class SURL {
 	 */
 	private static String removeUserInfoFromUrlPath(String url) {
 		// Simple solution:
-<span class="fc" id="L716">		final Matcher matcher = PATTERN_USERINFO.matcher(url);</span>
-<span class="fc bfc" id="L717" title="All 2 branches covered.">		if (matcher.find())</span>
-<span class="fc" id="L718">			return matcher.replaceFirst(&quot;$1$3&quot;);</span>
+<span class="fc" id="L720">		final Matcher matcher = PATTERN_USERINFO.matcher(url);</span>
+<span class="fc bfc" id="L721" title="All 2 branches covered.">		if (matcher.find())</span>
+<span class="fc" id="L722">			return matcher.replaceFirst(&quot;$1$3&quot;);</span>
 
-<span class="fc" id="L720">		return url;</span>
+<span class="fc" id="L724">		return url;</span>
 	}
 	// ::done
 }

@@ -44,34 +44,33 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 
 public class DriverLineHtml5 implements UDriver&lt;ULine, Html5Drawer&gt; {
-	// ::remove folder when __CORE__
 
 	private final ClipContainer clipContainer;
 
-<span class="nc" id="L51">	public DriverLineHtml5(ClipContainer clipContainer) {</span>
-<span class="nc" id="L52">		this.clipContainer = clipContainer;</span>
-<span class="nc" id="L53">	}</span>
+<span class="nc" id="L50">	public DriverLineHtml5(ClipContainer clipContainer) {</span>
+<span class="nc" id="L51">		this.clipContainer = clipContainer;</span>
+<span class="nc" id="L52">	}</span>
 
 	public void draw(ULine shape, double x, double y, ColorMapper mapper, UParam param, Html5Drawer html) {
-<span class="nc" id="L56">		double x2 = x + shape.getDX();</span>
-<span class="nc" id="L57">		double y2 = y + shape.getDY();</span>
+<span class="nc" id="L55">		double x2 = x + shape.getDX();</span>
+<span class="nc" id="L56">		double y2 = y + shape.getDY();</span>
 
-<span class="nc" id="L59">		final UClip clip = clipContainer.getClip();</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (clip != null) {</span>
-<span class="nc" id="L61">			final Line2D.Double line = clip.getClippedLine(new Line2D.Double(x, y, x2, y2));</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">			if (line == null) {</span>
-<span class="nc" id="L63">				return;</span>
+<span class="nc" id="L58">		final UClip clip = clipContainer.getClip();</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (clip != null) {</span>
+<span class="nc" id="L60">			final Line2D.Double line = clip.getClippedLine(new Line2D.Double(x, y, x2, y2));</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">			if (line == null) {</span>
+<span class="nc" id="L62">				return;</span>
 			}
-<span class="nc" id="L65">			x = line.x1;</span>
-<span class="nc" id="L66">			y = line.y1;</span>
-<span class="nc" id="L67">			x2 = line.x2;</span>
-<span class="nc" id="L68">			y2 = line.y2;</span>
+<span class="nc" id="L64">			x = line.x1;</span>
+<span class="nc" id="L65">			y = line.y1;</span>
+<span class="nc" id="L66">			x2 = line.x2;</span>
+<span class="nc" id="L67">			y2 = line.y2;</span>
 		}
 
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		final String color = param.getColor() == null ? null : param.getColor().toRGB(mapper);</span>
-<span class="nc" id="L72">		html.setStrokeColor(color);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		final String color = param.getColor() == null ? null : param.getColor().toRGB(mapper);</span>
+<span class="nc" id="L71">		html.setStrokeColor(color);</span>
 
-<span class="nc" id="L74">		html.htmlLine(x, y, x2, y2, 0);</span>
-<span class="nc" id="L75">	}</span>
+<span class="nc" id="L73">		html.htmlLine(x, y, x2, y2, 0);</span>
+<span class="nc" id="L74">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemLicense extends PlainDiagram implements UDrawable {
-	// ::remove file when __TEAVM__
+	
 	
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
@@ -86,38 +86,34 @@ public class PSystemLicense extends PlainDiagram implements UDrawable {
 	public void drawU(UGraphic ug) {
 
 <span class="nc" id="L88">		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();</span>
-		// ::comment when __CORE__
-<span class="nc" id="L90">		final PortableImage logo = LicenseInfo.retrieveDistributorImage(licenseInfo);</span>
+<span class="nc" id="L89">		final PortableImage logo = LicenseInfo.retrieveDistributorImage(licenseInfo);</span>
 
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (logo == null) {</span>
-			// ::done
-<span class="nc" id="L94">			getTextBlock(licenseInfo).drawU(ug);</span>
-			// ::comment when __CORE__
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (logo == null) {</span>
+<span class="nc" id="L92">			getTextBlock(licenseInfo).drawU(ug);</span>
 		} else {
-<span class="nc" id="L97">			final List&lt;String&gt; strings1 = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L98">			final List&lt;String&gt; strings2 = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L94">			final List&lt;String&gt; strings1 = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L95">			final List&lt;String&gt; strings2 = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L100">			strings1.addAll(License.getCurrent().getText1(licenseInfo));</span>
-<span class="nc" id="L101">			strings2.addAll(License.getCurrent().getText2(licenseInfo));</span>
+<span class="nc" id="L97">			strings1.addAll(License.getCurrent().getText1(licenseInfo));</span>
+<span class="nc" id="L98">			strings2.addAll(License.getCurrent().getText2(licenseInfo));</span>
 
-<span class="nc" id="L103">			final TextBlock result1 = getGraphicStrings(strings1);</span>
-<span class="nc" id="L104">			result1.drawU(ug);</span>
-<span class="nc" id="L105">			ug = ug.apply(UTranslate.dy(4 + result1.calculateDimension(ug.getStringBounder()).getHeight()));</span>
-<span class="nc" id="L106">			UImage im = new UImage(new PixelImage(logo, AffineTransformType.TYPE_BILINEAR));</span>
-<span class="nc" id="L107">			ug.apply(UTranslate.dx(20)).draw(im);</span>
+<span class="nc" id="L100">			final TextBlock result1 = getGraphicStrings(strings1);</span>
+<span class="nc" id="L101">			result1.drawU(ug);</span>
+<span class="nc" id="L102">			ug = ug.apply(UTranslate.dy(4 + result1.calculateDimension(ug.getStringBounder()).getHeight()));</span>
+<span class="nc" id="L103">			UImage im = new UImage(new PixelImage(logo, AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L104">			ug.apply(UTranslate.dx(20)).draw(im);</span>
 
-<span class="nc" id="L109">			ug = ug.apply(UTranslate.dy(im.getHeight()));</span>
-<span class="nc" id="L110">			final TextBlock result2 = getGraphicStrings(strings2);</span>
-<span class="nc" id="L111">			result2.drawU(ug);</span>
+<span class="nc" id="L106">			ug = ug.apply(UTranslate.dy(im.getHeight()));</span>
+<span class="nc" id="L107">			final TextBlock result2 = getGraphicStrings(strings2);</span>
+<span class="nc" id="L108">			result2.drawU(ug);</span>
 		}
-		// ::done
-<span class="nc" id="L114">	}</span>
+<span class="nc" id="L110">	}</span>
 
 	protected TextBlock getTextBlock(final LicenseInfo licenseInfo) {
-<span class="nc" id="L117">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L118">		strings.addAll(License.getCurrent().getText1(licenseInfo));</span>
-<span class="nc" id="L119">		strings.addAll(License.getCurrent().getText2(licenseInfo));</span>
-<span class="nc" id="L120">		return getGraphicStrings(strings);</span>
+<span class="nc" id="L113">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L114">		strings.addAll(License.getCurrent().getText1(licenseInfo));</span>
+<span class="nc" id="L115">		strings.addAll(License.getCurrent().getText2(licenseInfo));</span>
+<span class="nc" id="L116">		return getGraphicStrings(strings);</span>
 	}
 
 }

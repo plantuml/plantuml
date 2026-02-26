@@ -38,57 +38,43 @@ package smetana.core.debug;
 
 <span class="nc" id="L39">public final class SmetanaDebugSlow {</span>
 
-	// ::remove file when __CORE__
-
-	// ::comment when __CORE__
-<span class="nc" id="L44">	public static boolean TRACE = false;</span>
-<span class="nc" id="L45">	public static boolean TRACE_FINAL_CALL = false;</span>
-<span class="nc" id="L46">	public static boolean VERY_VERBOSE = false;</span>
+<span class="nc" id="L41">	public static boolean TRACE = false;</span>
+<span class="nc" id="L42">	public static boolean TRACE_FINAL_CALL = false;</span>
+<span class="nc" id="L43">	public static boolean VERY_VERBOSE = false;</span>
 
 	private static Purify purify;
 
 	private static Purify purify() {
-<span class="nc bnc" id="L51" title="All 2 branches missed.">		if (purify == null)</span>
-<span class="nc" id="L52">			purify = new Purify();</span>
-<span class="nc" id="L53">		return purify;</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">		if (purify == null)</span>
+<span class="nc" id="L49">			purify = new Purify();</span>
+<span class="nc" id="L50">		return purify;</span>
 	}
-	// ::done
 
 	static public void LOG(String s) {
-		// ::comment when __CORE__
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (TRACE)</span>
-<span class="nc" id="L60">			purify().logline(s);</span>
-		// ::done
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		if (TRACE)</span>
+<span class="nc" id="L55">			purify().logline(s);</span>
 
-<span class="nc" id="L63">	}</span>
+<span class="nc" id="L57">	}</span>
 
 	static public void ENTERING(String signature, String methodName) {
-		// ::comment when __CORE__
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (TRACE)</span>
-<span class="nc" id="L68">			purify().entering(signature, methodName);</span>
-		// ::done
-<span class="nc" id="L70">	}</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (TRACE)</span>
+<span class="nc" id="L61">			purify().entering(signature, methodName);</span>
+<span class="nc" id="L62">	}</span>
 
 	static public void LEAVING(String signature, String methodName) {
-		// ::comment when __CORE__
-<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (TRACE)</span>
-<span class="nc" id="L75">			purify().leaving(signature, methodName);</span>
-		// ::done
-<span class="nc" id="L77">	}</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (TRACE)</span>
+<span class="nc" id="L66">			purify().leaving(signature, methodName);</span>
+<span class="nc" id="L67">	}</span>
 
 	public static void reset() {
-		// ::comment when __CORE__
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (TRACE)</span>
-<span class="nc" id="L82">			purify().reset();</span>
-		// ::done
-<span class="nc" id="L84">	}</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (TRACE)</span>
+<span class="nc" id="L71">			purify().reset();</span>
+<span class="nc" id="L72">	}</span>
 
 	public static void printMe() {
-		// ::comment when __CORE__
-<span class="nc bnc" id="L88" title="All 4 branches missed.">		if (TRACE &amp;&amp; TRACE_FINAL_CALL)</span>
-<span class="nc" id="L89">			purify().printMe();</span>
-		// ::done
-<span class="nc" id="L91">	}</span>
+<span class="nc bnc" id="L75" title="All 4 branches missed.">		if (TRACE &amp;&amp; TRACE_FINAL_CALL)</span>
+<span class="nc" id="L76">			purify().printMe();</span>
+<span class="nc" id="L77">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

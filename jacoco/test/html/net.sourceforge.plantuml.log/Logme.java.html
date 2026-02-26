@@ -39,25 +39,29 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-<span class="nc" id="L42">public class Logme {</span>
+import net.sourceforge.plantuml.teavm.TeaVM;
 
-	// ::comment when __TEAVM__
+<span class="nc" id="L44">public class Logme {</span>
+
 	private static final Logger logger;
 
 	static {
-<span class="fc" id="L48">		logger = Logger.getLogger(&quot;com.plantuml&quot;);</span>
-<span class="fc" id="L49">		logger.setUseParentHandlers(false);</span>
-<span class="fc" id="L50">		final ConsoleHandler handler = new ConsoleHandler();</span>
-<span class="fc" id="L51">		handler.setFormatter(new SimpleFormatter());</span>
-<span class="fc" id="L52">		logger.addHandler(handler);</span>
-<span class="fc" id="L53">	}</span>
-	// ::done
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L50">			logger = Logger.getLogger(&quot;com.plantuml&quot;);</span>
+<span class="fc" id="L51">			logger.setUseParentHandlers(false);</span>
+<span class="fc" id="L52">			final ConsoleHandler handler = new ConsoleHandler();</span>
+<span class="fc" id="L53">			handler.setFormatter(new SimpleFormatter());</span>
+<span class="fc" id="L54">			logger.addHandler(handler);</span>
+<span class="fc" id="L55">		} else {</span>
+<span class="nc" id="L56">			logger = null;</span>
+		}
+<span class="fc" id="L58">	}</span>
 
 	public static void error(Throwable thrown) {
-		// ::comment when __TEAVM__
-<span class="fc" id="L58">		logger.log(Level.SEVERE, &quot;&quot;, thrown);</span>
-		// ::done
-<span class="fc" id="L60">	}</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L62">			logger.log(Level.SEVERE, &quot;&quot;, thrown);</span>
+		}
+<span class="fc" id="L64">	}</span>
 
 	// Unused right now
 	//

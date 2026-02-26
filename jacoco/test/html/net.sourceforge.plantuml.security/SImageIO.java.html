@@ -46,24 +46,24 @@ import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="nc" id="L50">public class SImageIO {</span>
+<span class="nc" id="L52">public class SImageIO {</span>
 
 	public static PortableImage read(InputStream is) throws IOException {
-		// ::revert when __TEAVM__
-<span class="fc" id="L54">		return new PortableImage(javax.imageio.ImageIO.read(is));</span>
-		// return null;
-		// ::done
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L56">			return null;</span>
+<span class="fc" id="L57">		return PortableImageFactory.build(javax.imageio.ImageIO.read(is));</span>
 	}
 
 	public static PortableImage read(byte[] bytes) throws IOException {
-		// ::revert when __TEAVM__
-<span class="fc" id="L61">		return new PortableImage(javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes)));</span>
-		// return null;
-		// ::done
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L62">			return null;</span>
+<span class="fc" id="L63">		return PortableImageFactory.build(javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes)));</span>
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	public static ImageOutputStream createImageOutputStream(OutputStream os) throws IOException {
 <span class="fc" id="L68">		return javax.imageio.ImageIO.createImageOutputStream(os);</span>
 	}
@@ -77,11 +77,11 @@ import net.sourceforge.plantuml.klimt.awt.PortableImage;
 <span class="nc" id="L77">	}</span>
 
 	public static PortableImage read(java.io.File file) throws IOException {
-<span class="nc" id="L80">		return new PortableImage(javax.imageio.ImageIO.read(file));</span>
+<span class="nc" id="L80">		return PortableImageFactory.build(javax.imageio.ImageIO.read(file));</span>
 	}
 
 	public static PortableImage read(SFile file) throws IOException {
-<span class="fc" id="L84">		return new PortableImage(javax.imageio.ImageIO.read(file.conv()));</span>
+<span class="fc" id="L84">		return PortableImageFactory.build(javax.imageio.ImageIO.read(file.conv()));</span>
 	}
 
 	public static ImageInputStream createImageInputStream(SFile file) throws IOException {

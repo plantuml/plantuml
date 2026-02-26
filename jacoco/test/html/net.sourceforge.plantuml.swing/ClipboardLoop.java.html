@@ -47,11 +47,11 @@ import java.io.IOException;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.utils.Log;
 
-<span class="nc" id="L53">public class ClipboardLoop {</span>
-	// ::remove file when __CORE__
+<span class="nc" id="L54">public class ClipboardLoop {</span>
 
 	public static void runLoop() {
 <span class="nc" id="L57">		final ClipboardLoop clipboardLoop = new ClipboardLoop();</span>
@@ -75,7 +75,7 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="nc bnc" id="L75" title="All 2 branches missed.">			if (clipboardLoop.isTextOk(text))</span>
 <span class="nc" id="L76">				clipboardLoop.runText(text);</span>
 			else
-<span class="nc" id="L78">				clipboardLoop.setClipboardImage(new PortableImage(10, 10, BufferedImage.TYPE_INT_ARGB));</span>
+<span class="nc" id="L78">				clipboardLoop.setClipboardImage(PortableImageFactory.build(10, 10, BufferedImage.TYPE_INT_ARGB));</span>
 <span class="nc" id="L79">		} catch (InterruptedException | IOException e) {</span>
 <span class="nc" id="L80">			e.printStackTrace();</span>
 <span class="nc" id="L81">		}</span>

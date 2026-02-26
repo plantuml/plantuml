@@ -42,6 +42,7 @@ import java.io.UncheckedIOException;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 
 public class FutureImage {
 
@@ -51,34 +52,34 @@ public class FutureImage {
 	private byte[] data;
 	private PortableImage image;
 
-<span class="nc" id="L54">	public FutureImage(List&lt;Integer&gt; colors, int width, int height, byte[] data) {</span>
-<span class="nc" id="L55">		this.colors = colors;</span>
-<span class="nc" id="L56">		this.width = width;</span>
-<span class="nc" id="L57">		this.height = height;</span>
-<span class="nc" id="L58">		this.data = data;</span>
-<span class="nc" id="L59">	}</span>
+<span class="nc" id="L55">	public FutureImage(List&lt;Integer&gt; colors, int width, int height, byte[] data) {</span>
+<span class="nc" id="L56">		this.colors = colors;</span>
+<span class="nc" id="L57">		this.width = width;</span>
+<span class="nc" id="L58">		this.height = height;</span>
+<span class="nc" id="L59">		this.data = data;</span>
+<span class="nc" id="L60">	}</span>
 
 	public PortableImage getNow() {
 		// ::comment when __TEAVM__
-<span class="nc" id="L63">		synchronized (this) {</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">			if (image == null) {</span>
-<span class="nc" id="L65">				image = new PortableImage(width, height, PortableImage.TYPE_INT_ARGB);</span>
+<span class="nc" id="L64">		synchronized (this) {</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">			if (image == null) {</span>
+<span class="nc" id="L66">				image = PortableImageFactory.build(width, height, PortableImage.TYPE_INT_ARGB);</span>
 
-<span class="nc" id="L67">				try (InputStream is = new ByteArrayInputStream(data)) {</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">					for (int y = 0; y &lt; height; y++)</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">						for (int x = 0; x &lt; width; x++) {</span>
-<span class="nc" id="L70">							final int rgb = colors.get(Stdlib.read2bytes(is));</span>
-<span class="nc" id="L71">							image.setRGB(x, y, rgb);</span>
+<span class="nc" id="L68">				try (InputStream is = new ByteArrayInputStream(data)) {</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">					for (int y = 0; y &lt; height; y++)</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">						for (int x = 0; x &lt; width; x++) {</span>
+<span class="nc" id="L71">							final int rgb = colors.get(Stdlib.read2bytes(is));</span>
+<span class="nc" id="L72">							image.setRGB(x, y, rgb);</span>
 						}
-<span class="nc" id="L73">				} catch (IOException e) {</span>
-<span class="nc" id="L74">					throw new UncheckedIOException(e);</span>
-<span class="nc" id="L75">				}</span>
-<span class="nc" id="L76">				data = null; // free memory</span>
+<span class="nc" id="L74">				} catch (IOException e) {</span>
+<span class="nc" id="L75">					throw new UncheckedIOException(e);</span>
+<span class="nc" id="L76">				}</span>
+<span class="nc" id="L77">				data = null; // free memory</span>
 			}
 
-<span class="nc" id="L79">		}</span>
+<span class="nc" id="L80">		}</span>
 		// ::done
-<span class="nc" id="L81">		return image;</span>
+<span class="nc" id="L82">		return image;</span>
 	}
 
 }

@@ -41,47 +41,45 @@ import java.lang.reflect.Method;
 import net.sourceforge.plantuml.log.Logme;
 
 <span class="nc" id="L43">public class PdfConverter {</span>
-    // ::remove folder when __HAXE__
-	// ::remove folder when __CORE__
 
 	public static void convert(File svgFile, File pdfFile) {
 
-<span class="nc bnc" id="L49" title="All 2 branches missed.">		if (svgFile.exists() == false) {</span>
-<span class="nc" id="L50">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		if (svgFile.exists() == false) {</span>
+<span class="nc" id="L48">			throw new IllegalArgumentException();</span>
 		}
-<span class="nc" id="L52">		pdfFile.delete();</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (pdfFile.exists()) {</span>
-<span class="nc" id="L54">			throw new IllegalStateException();</span>
+<span class="nc" id="L50">		pdfFile.delete();</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">		if (pdfFile.exists()) {</span>
+<span class="nc" id="L52">			throw new IllegalStateException();</span>
 		}
 
 		try {
 			// https://stackoverflow.com/questions/12579468/how-to-set-log4j-property-file
-<span class="nc" id="L59">			System.setProperty(&quot;log4j.debug&quot;, &quot;false&quot;);</span>
+<span class="nc" id="L57">			System.setProperty(&quot;log4j.debug&quot;, &quot;false&quot;);</span>
 
-<span class="nc" id="L61">			final Class&lt;?&gt; clSVGConverter = Class.forName(&quot;org.apache.batik.apps.rasterizer.SVGConverter&quot;);</span>
+<span class="nc" id="L59">			final Class&lt;?&gt; clSVGConverter = Class.forName(&quot;org.apache.batik.apps.rasterizer.SVGConverter&quot;);</span>
 
-<span class="nc" id="L63">			final Object converter = clSVGConverter.newInstance();</span>
+<span class="nc" id="L61">			final Object converter = clSVGConverter.newInstance();</span>
 
-<span class="nc" id="L65">			final Class&lt;?&gt; clDestinationType = Class.forName(&quot;org.apache.batik.apps.rasterizer.DestinationType&quot;);</span>
-<span class="nc" id="L66">			final Object pdf = clDestinationType.getField(&quot;PDF&quot;).get(null);</span>
-<span class="nc" id="L67">			final Method setDestinationType = clSVGConverter.getMethod(&quot;setDestinationType&quot;, clDestinationType);</span>
+<span class="nc" id="L63">			final Class&lt;?&gt; clDestinationType = Class.forName(&quot;org.apache.batik.apps.rasterizer.DestinationType&quot;);</span>
+<span class="nc" id="L64">			final Object pdf = clDestinationType.getField(&quot;PDF&quot;).get(null);</span>
+<span class="nc" id="L65">			final Method setDestinationType = clSVGConverter.getMethod(&quot;setDestinationType&quot;, clDestinationType);</span>
 
-<span class="nc" id="L69">			setDestinationType.invoke(converter, pdf);</span>
+<span class="nc" id="L67">			setDestinationType.invoke(converter, pdf);</span>
 
-<span class="nc" id="L71">			final String[] path = new String[] { svgFile.getAbsolutePath() };</span>
-<span class="nc" id="L72">			final Method setSources = clSVGConverter.getMethod(&quot;setSources&quot;, path.getClass());</span>
-<span class="nc" id="L73">			setSources.invoke(converter, new Object[] { path });</span>
-<span class="nc" id="L74">			final Method setDst = clSVGConverter.getMethod(&quot;setDst&quot;, pdfFile.getClass());</span>
-<span class="nc" id="L75">			setDst.invoke(converter, new Object[] { pdfFile });</span>
-<span class="nc" id="L76">			final Method execute = clSVGConverter.getMethod(&quot;execute&quot;);</span>
-<span class="nc" id="L77">			execute.invoke(converter);</span>
-<span class="nc" id="L78">		} catch (Exception e) {</span>
-<span class="nc" id="L79">			Logme.error(e);</span>
-<span class="nc" id="L80">			throw new UnsupportedOperationException();</span>
-<span class="nc" id="L81">		}</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (pdfFile.exists() == false) {</span>
-<span class="nc" id="L83">			throw new IllegalStateException();</span>
+<span class="nc" id="L69">			final String[] path = new String[] { svgFile.getAbsolutePath() };</span>
+<span class="nc" id="L70">			final Method setSources = clSVGConverter.getMethod(&quot;setSources&quot;, path.getClass());</span>
+<span class="nc" id="L71">			setSources.invoke(converter, new Object[] { path });</span>
+<span class="nc" id="L72">			final Method setDst = clSVGConverter.getMethod(&quot;setDst&quot;, pdfFile.getClass());</span>
+<span class="nc" id="L73">			setDst.invoke(converter, new Object[] { pdfFile });</span>
+<span class="nc" id="L74">			final Method execute = clSVGConverter.getMethod(&quot;execute&quot;);</span>
+<span class="nc" id="L75">			execute.invoke(converter);</span>
+<span class="nc" id="L76">		} catch (Exception e) {</span>
+<span class="nc" id="L77">			Logme.error(e);</span>
+<span class="nc" id="L78">			throw new UnsupportedOperationException();</span>
+<span class="nc" id="L79">		}</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (pdfFile.exists() == false) {</span>
+<span class="nc" id="L81">			throw new IllegalStateException();</span>
 		}
-<span class="nc" id="L85">	}</span>
+<span class="nc" id="L83">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

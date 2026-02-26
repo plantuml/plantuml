@@ -153,7 +153,8 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>protected static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#configure(java.net.URLConnection)" class="member-name-link">configure</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/URLConnection.html" title="class or interface in java.net" class="external-link">URLConnection</a>&nbsp;connection)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Configures the specified <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/URLConnection.html" title="class or interface in java.net" class="external-link"><code>URLConnection</code></a> with security-related settings.</div>
+<div class="block">Configures the specified <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/URLConnection.html" title="class or interface in java.net" class="external-link"><code>URLConnection</code></a> with security-related
+ settings.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SURL.html" title="class in net.sourceforge.plantuml.security">SURL</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(java.lang.String)" class="member-name-link">create</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;url)</code></div>
@@ -193,7 +194,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#openStream()" class="member-name-link">openStream</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/awt/PortableImage.html" title="class in net.sourceforge.plantuml.klimt.awt">PortableImage</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/awt/PortableImage.html" title="interface in net.sourceforge.plantuml.klimt.awt">PortableImage</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readRasterImageFromURL()" class="member-name-link">readRasterImageFromURL</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
@@ -278,7 +279,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="readRasterImageFromURL()">
 <h3>readRasterImageFromURL</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../klimt/awt/PortableImage.html" title="class in net.sourceforge.plantuml.klimt.awt">PortableImage</a></span>&nbsp;<span class="element-name">readRasterImageFromURL</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../klimt/awt/PortableImage.html" title="interface in net.sourceforge.plantuml.klimt.awt">PortableImage</a></span>&nbsp;<span class="element-name">readRasterImageFromURL</span>()</div>
 </section>
 </li>
 <li>
@@ -351,11 +352,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="configure(java.net.URLConnection)">
 <h3>configure</h3>
 <div class="member-signature"><span class="modifiers">protected static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">configure</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/URLConnection.html" title="class or interface in java.net" class="external-link">URLConnection</a>&nbsp;connection)</span></div>
-<div class="block">Configures the specified <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/URLConnection.html" title="class or interface in java.net" class="external-link"><code>URLConnection</code></a> with security-related settings.
+<div class="block">Configures the specified <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/URLConnection.html" title="class or interface in java.net" class="external-link"><code>URLConnection</code></a> with security-related
+ settings.
  <p>
- This method disables user interactions for the connection and, if the connection 
- is an instance of <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/HttpURLConnection.html" title="class or interface in java.net" class="external-link"><code>HttpURLConnection</code></a>, it also disables automatic 
- following of HTTP redirects, unless the security profile is set to 
+ This method disables user interactions for the connection and, if the
+ connection is an instance of <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/HttpURLConnection.html" title="class or interface in java.net" class="external-link"><code>HttpURLConnection</code></a>, it also disables
+ automatic following of HTTP redirects, unless the security profile is set to
  <a href="SecurityProfile.html#UNSECURE"><code>SecurityProfile.UNSECURE</code></a>.
  </p></div>
 <dl class="notes">

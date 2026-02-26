@@ -80,29 +80,27 @@ public class InstructionSpot extends MonoSwimable implements Instruction {
 <span class="nc" id="L80">		return result;</span>
 	}
 
-	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
-<span class="nc" id="L86">		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);</span>
-<span class="nc" id="L87">		return new GtileCircleSpot(stringBounder, skinParam, color, getSwimlaneIn(), spot, font);</span>
+<span class="nc" id="L85">		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);</span>
+<span class="nc" id="L86">		return new GtileCircleSpot(stringBounder, skinParam, color, getSwimlaneIn(), spot, font);</span>
 
 	}
-	// ::done
 
 	@Override
 	public CommandExecutionResult add(Instruction other) {
-<span class="nc" id="L94">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L92">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	final public boolean kill() {
-<span class="nc" id="L99">		this.killed = true;</span>
-<span class="nc" id="L100">		return true;</span>
+<span class="nc" id="L97">		this.killed = true;</span>
+<span class="nc" id="L98">		return true;</span>
 	}
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="nc" id="L105">		return inlinkRendering;</span>
+<span class="nc" id="L103">		return inlinkRendering;</span>
 	}
 
 }

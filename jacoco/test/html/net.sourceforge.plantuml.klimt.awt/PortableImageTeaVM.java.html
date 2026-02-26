@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PortableImageTeaVM.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.awt</a> &gt; <span class="el_source">PortableImageTeaVM.java</span></div><h1>PortableImageTeaVM.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.klimt.awt;
+
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
+// ::comment when JAVA8
+import org.teavm.jso.JSBody;
+import org.teavm.jso.canvas.CanvasRenderingContext2D;
+import org.teavm.jso.canvas.ImageData;
+import org.teavm.jso.dom.html.HTMLCanvasElement;
+import org.teavm.jso.dom.html.HTMLDocument;
+import org.teavm.jso.typedarrays.Uint8ClampedArray;
+// ::done
+
+/**
+ * Portable image abstraction that works both in standard Java (using
+ * BufferedImage) and in TeaVM (using an in-memory pixel array with browser
+ * canvas for PNG export).
+ */
+class PortableImageTeaVM implements PortableImage {
+	// ::remove file when JAVA8
+
+	private final int width;
+	private final int height;
+	private final int imageType;
+	private final int[] pixels;
+
+<span class="nc" id="L29">	PortableImageTeaVM(int width, int height, int imageType) {</span>
+<span class="nc" id="L30">		this.width = width;</span>
+<span class="nc" id="L31">		this.height = height;</span>
+<span class="nc" id="L32">		this.imageType = imageType;</span>
+<span class="nc" id="L33">		this.pixels = new int[width * height];</span>
+		// Initialize with default color based on type
+<span class="nc bnc" id="L35" title="All 2 branches missed.">		if (imageType == TYPE_INT_RGB) {</span>
+			// Default to white for RGB
+<span class="nc" id="L37">			java.util.Arrays.fill(pixels, 0xFFFFFFFF);</span>
+		} else {
+			// Default to transparent for ARGB
+<span class="nc" id="L40">			java.util.Arrays.fill(pixels, 0x00000000);</span>
+		}
+<span class="nc" id="L42">	}</span>
+
+	/**
+	 * Creates a PortableImage from an existing pixel array. The array is copied,
+	 * not referenced.
+	 */
+<span class="nc" id="L48">	PortableImageTeaVM(int width, int height, int imageType, int[] sourcePixels) {</span>
+<span class="nc" id="L49">		this.width = width;</span>
+<span class="nc" id="L50">		this.height = height;</span>
+<span class="nc" id="L51">		this.imageType = imageType;</span>
+<span class="nc" id="L52">		this.pixels = new int[width * height];</span>
+<span class="nc" id="L53">		System.arraycopy(sourcePixels, 0, this.pixels, 0, Math.min(sourcePixels.length, this.pixels.length));</span>
+<span class="nc" id="L54">	}</span>
+
+	public int getWidth() {
+<span class="nc" id="L57">		return width;</span>
+	}
+
+	public int getHeight() {
+<span class="nc" id="L61">		return height;</span>
+	}
+
+	public int getRGB(int x, int y) {
+<span class="nc bnc" id="L65" title="All 8 branches missed.">		if (x &lt; 0 || x &gt;= width || y &lt; 0 || y &gt;= height)</span>
+<span class="nc" id="L66">			return 0;</span>
+<span class="nc" id="L67">		return pixels[y * width + x];</span>
+	}
+
+	public void setRGB(int x, int y, int rgb) {
+<span class="nc bnc" id="L71" title="All 8 branches missed.">		if (x &lt; 0 || x &gt;= width || y &lt; 0 || y &gt;= height)</span>
+<span class="nc" id="L72">			return;</span>
+<span class="nc" id="L73">		pixels[y * width + x] = rgb;</span>
+<span class="nc" id="L74">	}</span>
+
+	public int getType() {
+<span class="nc" id="L77">		return imageType;</span>
+	}
+
+	public PortableImage getSubimage(int x, int y, int w, int h) {
+		// Clamp bounds
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (x &lt; 0) {</span>
+<span class="nc" id="L83">			w += x;</span>
+<span class="nc" id="L84">			x = 0;</span>
+		}
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (y &lt; 0) {</span>
+<span class="nc" id="L87">			h += y;</span>
+<span class="nc" id="L88">			y = 0;</span>
+		}
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (x + w &gt; width)</span>
+<span class="nc" id="L91">			w = width - x;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (y + h &gt; height)</span>
+<span class="nc" id="L93">			h = height - y;</span>
+<span class="nc bnc" id="L94" title="All 4 branches missed.">		if (w &lt;= 0 || h &lt;= 0)</span>
+<span class="nc" id="L95">			return new PortableImageTeaVM(1, 1, imageType);</span>
+
+<span class="nc" id="L97">		int[] subPixels = new int[w * h];</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		for (int row = 0; row &lt; h; row++) {</span>
+<span class="nc" id="L99">			int srcOffset = (y + row) * width + x;</span>
+<span class="nc" id="L100">			int dstOffset = row * w;</span>
+<span class="nc" id="L101">			System.arraycopy(pixels, srcOffset, subPixels, dstOffset, w);</span>
+		}
+<span class="nc" id="L103">		return new PortableImageTeaVM(w, h, imageType, subPixels);</span>
+	}
+
+	public int getTransparency() {
+		// 1 = OPAQUE, 2 = BITMASK, 3 = TRANSLUCENT
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		return (imageType == TYPE_INT_RGB) ? 1 : 3;</span>
+	}
+
+	/**
+	 * Returns all pixels as an ARGB int array (row-major order). Returns a copy to
+	 * prevent external modification.
+	 * 
+	 * @return pixel array of size width * height
+	 */
+	public int[] getPixels() {
+<span class="nc" id="L118">		int[] copy = new int[pixels.length];</span>
+<span class="nc" id="L119">		System.arraycopy(pixels, 0, copy, 0, pixels.length);</span>
+<span class="nc" id="L120">		return copy;</span>
+	}
+
+	/**
+	 * Converts this image to a PNG data URL using browser's canvas API. Creates an
+	 * offscreen canvas, writes pixels via ImageData, and exports as PNG.
+	 * 
+	 * @return PNG data URL string (data:image/png;base64,...)
+	 */
+	public String toPngDataUrl() {
+<span class="nc" id="L130">		HTMLDocument doc = HTMLDocument.current();</span>
+<span class="nc" id="L131">		HTMLCanvasElement canvas = (HTMLCanvasElement) doc.createElement(&quot;canvas&quot;);</span>
+<span class="nc" id="L132">		canvas.setWidth(width);</span>
+<span class="nc" id="L133">		canvas.setHeight(height);</span>
+
+<span class="nc" id="L135">		CanvasRenderingContext2D ctx = (CanvasRenderingContext2D) canvas.getContext(&quot;2d&quot;);</span>
+<span class="nc" id="L136">		ImageData imageData = ctx.createImageData(width, height);</span>
+<span class="nc" id="L137">		Uint8ClampedArray data = imageData.getData();</span>
+
+		// Convert ARGB (0xAARRGGBB) to RGBA bytes
+<span class="nc" id="L140">		int p = 0;</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		for (int i = 0; i &lt; pixels.length; i++) {</span>
+<span class="nc" id="L142">			int c = pixels[i];</span>
+<span class="nc" id="L143">			int a = (c &gt;&gt;&gt; 24) &amp; 0xFF;</span>
+<span class="nc" id="L144">			int r = (c &gt;&gt;&gt; 16) &amp; 0xFF;</span>
+<span class="nc" id="L145">			int g = (c &gt;&gt;&gt; 8) &amp; 0xFF;</span>
+<span class="nc" id="L146">			int b = c &amp; 0xFF;</span>
+
+<span class="nc" id="L148">			data.set(p++, r);</span>
+<span class="nc" id="L149">			data.set(p++, g);</span>
+<span class="nc" id="L150">			data.set(p++, b);</span>
+<span class="nc" id="L151">			data.set(p++, a);</span>
+		}
+
+<span class="nc" id="L154">		ctx.putImageData(imageData, 0, 0);</span>
+<span class="nc" id="L155">		return canvasToDataUrl(canvas);</span>
+	}
+
+	@JSBody(params = { &quot;canvas&quot; }, script = &quot;return canvas.toDataURL('image/png');&quot;)
+	private static native String canvasToDataUrl(HTMLCanvasElement canvas);
+
+	/**
+	 * Scales this image by the given factor using the specified interpolation type.
+	 * 
+	 * @param scaleFactor       the scale factor (e.g., 2.0 for double size)
+	 * @param interpolationType 1=nearest-neighbor, 2=bilinear
+	 * @return a new scaled PortableImage
+	 */
+	public PortableImage scale(double scaleFactor, int interpolationType) {
+<span class="nc" id="L169">		final int dstW = (int) Math.round(width * scaleFactor);</span>
+<span class="nc" id="L170">		final int dstH = (int) Math.round(height * scaleFactor);</span>
+
+<span class="nc bnc" id="L172" title="All 4 branches missed.">		if (dstW &lt;= 0 || dstH &lt;= 0)</span>
+<span class="nc" id="L173">			return new PortableImageTeaVM(1, 1, imageType);</span>
+
+<span class="nc" id="L175">		final int[] dstPixels = new int[dstW * dstH];</span>
+
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		if (interpolationType == 2)</span>
+<span class="nc" id="L178">			scaleBilinear(pixels, width, height, dstPixels, dstW, dstH);</span>
+		else
+<span class="nc" id="L180">			scaleNearestNeighbor(pixels, width, height, dstPixels, dstW, dstH);</span>
+
+<span class="nc" id="L182">		return new PortableImageTeaVM(dstW, dstH, imageType, dstPixels);</span>
+	}
+
+	/**
+	 * Nearest-neighbor scaling - fast but can be blocky.
+	 */
+	private static void scaleNearestNeighbor(int[] src, int srcW, int srcH, int[] dst, int dstW, int dstH) {
+<span class="nc bnc" id="L189" title="All 2 branches missed.">		for (int y = 0; y &lt; dstH; y++) {</span>
+<span class="nc" id="L190">			final int srcY = y * srcH / dstH;</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">			for (int x = 0; x &lt; dstW; x++) {</span>
+<span class="nc" id="L192">				final int srcX = x * srcW / dstW;</span>
+<span class="nc" id="L193">				dst[y * dstW + x] = src[srcY * srcW + srcX];</span>
+			}
+		}
+<span class="nc" id="L196">	}</span>
+
+	/**
+	 * Bilinear interpolation scaling - smoother results.
+	 */
+	private static void scaleBilinear(int[] src, int srcW, int srcH, int[] dst, int dstW, int dstH) {
+<span class="nc" id="L202">		final double xRatio = (double) (srcW - 1) / dstW;</span>
+<span class="nc" id="L203">		final double yRatio = (double) (srcH - 1) / dstH;</span>
+
+<span class="nc bnc" id="L205" title="All 2 branches missed.">		for (int y = 0; y &lt; dstH; y++) {</span>
+<span class="nc" id="L206">			final double srcYf = y * yRatio;</span>
+<span class="nc" id="L207">			final int y0 = (int) srcYf;</span>
+<span class="nc" id="L208">			final int y1 = Math.min(y0 + 1, srcH - 1);</span>
+<span class="nc" id="L209">			final double yFrac = srcYf - y0;</span>
+
+<span class="nc bnc" id="L211" title="All 2 branches missed.">			for (int x = 0; x &lt; dstW; x++) {</span>
+<span class="nc" id="L212">				final double srcXf = x * xRatio;</span>
+<span class="nc" id="L213">				final int x0 = (int) srcXf;</span>
+<span class="nc" id="L214">				final int x1 = Math.min(x0 + 1, srcW - 1);</span>
+<span class="nc" id="L215">				final double xFrac = srcXf - x0;</span>
+
+				// Get 4 neighboring pixels
+<span class="nc" id="L218">				final int c00 = src[y0 * srcW + x0];</span>
+<span class="nc" id="L219">				final int c10 = src[y0 * srcW + x1];</span>
+<span class="nc" id="L220">				final int c01 = src[y1 * srcW + x0];</span>
+<span class="nc" id="L221">				final int c11 = src[y1 * srcW + x1];</span>
+
+				// Interpolate each channel
+<span class="nc" id="L224">				final int a = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 24);</span>
+<span class="nc" id="L225">				final int r = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 16);</span>
+<span class="nc" id="L226">				final int g = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 8);</span>
+<span class="nc" id="L227">				final int b = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 0);</span>
+
+<span class="nc" id="L229">				dst[y * dstW + x] = (a &lt;&lt; 24) | (r &lt;&lt; 16) | (g &lt;&lt; 8) | b;</span>
+			}
+		}
+<span class="nc" id="L232">	}</span>
+
+	/**
+	 * Bilinear interpolation for a single color channel.
+	 */
+	private static int interpolateChannel(int c00, int c10, int c01, int c11, double xFrac, double yFrac, int shift) {
+<span class="nc" id="L238">		final int v00 = (c00 &gt;&gt; shift) &amp; 0xFF;</span>
+<span class="nc" id="L239">		final int v10 = (c10 &gt;&gt; shift) &amp; 0xFF;</span>
+<span class="nc" id="L240">		final int v01 = (c01 &gt;&gt; shift) &amp; 0xFF;</span>
+<span class="nc" id="L241">		final int v11 = (c11 &gt;&gt; shift) &amp; 0xFF;</span>
+
+<span class="nc" id="L243">		final double top = v00 + xFrac * (v10 - v00);</span>
+<span class="nc" id="L244">		final double bottom = v01 + xFrac * (v11 - v01);</span>
+<span class="nc" id="L245">		final double result = top + yFrac * (bottom - top);</span>
+
+<span class="nc" id="L247">		return Math.min(255, Math.max(0, (int) Math.round(result)));</span>
+	}
+
+	@Override
+	public BufferedImage getBufferedImage() {
+<span class="nc" id="L252">		throw new UnsupportedOperationException(&quot;TEAVM9834&quot;);</span>
+	}
+
+	@Override
+	public Graphics2D createGraphics() {
+<span class="nc" id="L257">		throw new UnsupportedOperationException(&quot;TEAVM9834&quot;);</span>
+	}
+
+	@Override
+	public Graphics getGraphics() {
+<span class="nc" id="L262">		throw new UnsupportedOperationException(&quot;TEAVM9834&quot;);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

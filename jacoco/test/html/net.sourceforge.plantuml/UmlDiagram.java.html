@@ -61,10 +61,10 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
 import net.sourceforge.plantuml.svek.EmptySvgException;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.version.Version;
 
 public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annotated, WithSprite {
-	// ::remove file when __HAXE__
 
 	private boolean rotation;
 
@@ -111,10 +111,10 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 <span class="fc" id="L111">		fileFormatOption = fileFormatOption.withTikzFontDistortion(getSkinParam().getTikzFontDistortion());</span>
 <span class="fc" id="L112">		fileFormatOption.getTikzFontDistortion().updateFromPragma(getPragma());</span>
 
-		// ::comment when __CORE__ or __TEAVM__
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (fileFormatOption.getFileFormat() == FileFormat.PDF)</span>
-<span class="nc" id="L116">			return exportDiagramInternalPdf(os, index);</span>
-		// ::done
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">			if (fileFormatOption.getFileFormat() == FileFormat.PDF)</span>
+<span class="nc" id="L116">				return exportDiagramInternalPdf(os, index);</span>
+		}
 
 		try {
 <span class="fc" id="L120">			final ImageData imageData = exportDiagramInternal(os, index, fileFormatOption);</span>
@@ -169,71 +169,69 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		}
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
 	private ImageData exportDiagramInternalPdf(OutputStream os, int index) throws IOException {
-<span class="nc" id="L174">		final File svg = FileUtils.createTempFileLegacy(&quot;pdf&quot;, &quot;.svf&quot;);</span>
-<span class="nc" id="L175">		final File pdfFile = FileUtils.createTempFileLegacy(&quot;pdf&quot;, &quot;.pdf&quot;);</span>
+<span class="nc" id="L173">		final File svg = FileUtils.createTempFileLegacy(&quot;pdf&quot;, &quot;.svf&quot;);</span>
+<span class="nc" id="L174">		final File pdfFile = FileUtils.createTempFileLegacy(&quot;pdf&quot;, &quot;.pdf&quot;);</span>
 		final ImageData result;
-<span class="nc" id="L177">		try (OutputStream fos = new BufferedOutputStream(new FileOutputStream(svg))) {</span>
-<span class="nc" id="L178">			result = exportDiagram(fos, index, new FileFormatOption(FileFormat.SVG));</span>
+<span class="nc" id="L176">		try (OutputStream fos = new BufferedOutputStream(new FileOutputStream(svg))) {</span>
+<span class="nc" id="L177">			result = exportDiagram(fos, index, new FileFormatOption(FileFormat.SVG));</span>
 		}
-<span class="nc" id="L180">		PdfConverter.convert(svg, pdfFile);</span>
-<span class="nc" id="L181">		FileUtils.copyToStream(pdfFile, os);</span>
-<span class="nc" id="L182">		return result;</span>
+<span class="nc" id="L179">		PdfConverter.convert(svg, pdfFile);</span>
+<span class="nc" id="L180">		FileUtils.copyToStream(pdfFile, os);</span>
+<span class="nc" id="L181">		return result;</span>
 	}
 
 	final protected void exportCmap(SuggestedFile suggestedFile, int index, final ImageData cmapdata)
 			throws FileNotFoundException {
-<span class="fc" id="L187">		final String name = changeName(suggestedFile.getFile(index).getAbsolutePath());</span>
-<span class="fc" id="L188">		final SFile cmapFile = new SFile(name);</span>
-<span class="fc" id="L189">		try (PrintWriter pw = cmapFile.createPrintWriter()) {</span>
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">			if (PSystemUtils.canFileBeWritten(cmapFile) == false)</span>
-<span class="nc" id="L191">				return;</span>
+<span class="fc" id="L186">		final String name = changeName(suggestedFile.getFile(index).getAbsolutePath());</span>
+<span class="fc" id="L187">		final SFile cmapFile = new SFile(name);</span>
+<span class="fc" id="L188">		try (PrintWriter pw = cmapFile.createPrintWriter()) {</span>
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">			if (PSystemUtils.canFileBeWritten(cmapFile) == false)</span>
+<span class="nc" id="L190">				return;</span>
 
-<span class="fc" id="L193">			pw.print(cmapdata.getCMapData(cmapFile.getName().substring(0, cmapFile.getName().length() - 6)));</span>
-<span class="nc bnc" id="L194" title="All 2 branches missed.">		}</span>
-<span class="fc" id="L195">	}</span>
+<span class="fc" id="L192">			pw.print(cmapdata.getCMapData(cmapFile.getName().substring(0, cmapFile.getName().length() - 6)));</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		}</span>
+<span class="fc" id="L194">	}</span>
 
 	static String changeName(String name) {
-<span class="fc" id="L198">		return name.replaceAll(&quot;(?i)\\.\\w{3}$&quot;, &quot;.cmapx&quot;);</span>
+<span class="fc" id="L197">		return name.replaceAll(&quot;(?i)\\.\\w{3}$&quot;, &quot;.cmapx&quot;);</span>
 	}
-	// ::done
 
 	private XDimension2D lastInfo;
 
 	protected abstract ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException;
 
-<span class="fc" id="L207">	private static final Pattern DIGITS = Pattern.compile(&quot;\\d+&quot;);</span>
+<span class="fc" id="L205">	private static final Pattern DIGITS = Pattern.compile(&quot;\\d+&quot;);</span>
 
 	@Override
 	public String getWarningOrError() {
-<span class="fc bfc" id="L211" title="All 2 branches covered.">		if (lastInfo == null)</span>
-<span class="fc" id="L212">			return null;</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">		if (lastInfo == null)</span>
+<span class="fc" id="L210">			return null;</span>
 
-<span class="fc" id="L214">		final double actualWidth = lastInfo.getWidth();</span>
-<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if (actualWidth == 0)</span>
-<span class="nc" id="L216">			return null;</span>
+<span class="fc" id="L212">		final double actualWidth = lastInfo.getWidth();</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">		if (actualWidth == 0)</span>
+<span class="nc" id="L214">			return null;</span>
 
-<span class="fc" id="L218">		final String value = getSkinParam().getValue(&quot;widthwarning&quot;);</span>
-<span class="pc bpc" id="L219" title="1 of 2 branches missed.">		if (value == null)</span>
-<span class="fc" id="L220">			return null;</span>
+<span class="fc" id="L216">		final String value = getSkinParam().getValue(&quot;widthwarning&quot;);</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">		if (value == null)</span>
+<span class="fc" id="L218">			return null;</span>
 
-<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (!DIGITS.matcher(value).matches())</span>
-<span class="nc" id="L223">			return null;</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">		if (!DIGITS.matcher(value).matches())</span>
+<span class="nc" id="L221">			return null;</span>
 
-<span class="nc" id="L225">		final int widthwarning = Integer.parseInt(value);</span>
-<span class="nc bnc" id="L226" title="All 2 branches missed.">		if (actualWidth &gt; widthwarning)</span>
-<span class="nc" id="L227">			return &quot;The image is &quot; + ((int) actualWidth) + &quot; pixel width. (Warning limit is &quot; + widthwarning + &quot;)&quot;;</span>
+<span class="nc" id="L223">		final int widthwarning = Integer.parseInt(value);</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">		if (actualWidth &gt; widthwarning)</span>
+<span class="nc" id="L225">			return &quot;The image is &quot; + ((int) actualWidth) + &quot; pixel width. (Warning limit is &quot; + widthwarning + &quot;)&quot;;</span>
 
-<span class="nc" id="L229">		return null;</span>
+<span class="nc" id="L227">		return null;</span>
 	}
 
 	public void setHideEmptyDescription(boolean hideEmptyDescription) {
-<span class="nc" id="L233">	}</span>
+<span class="nc" id="L231">	}</span>
 
 	public Previous getPrevious() {
-<span class="nc" id="L236">		return Previous.createFrom(getSkinParam().values());</span>
+<span class="nc" id="L234">		return Previous.createFrom(getSkinParam().values());</span>
 	}
 
 }

@@ -83,6 +83,7 @@ import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.image.EntityImageClass;
 import net.sourceforge.plantuml.svek.image.EntityImageNote;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.utils.Log;
 
@@ -100,169 +101,168 @@ public final class GraphvizImageBuilder {
 	private final ClusterManager clusterManager;
 
 	public GraphvizImageBuilder(DotData dotData, UmlSource source, Pragma pragma, SName styleName, DotMode dotMode,
-<span class="fc" id="L103">			DotStringFactory dotStringFactory, ClusterManager clusterManager) {</span>
-<span class="fc" id="L104">		this.dotData = dotData;</span>
-<span class="fc" id="L105">		this.dotMode = dotMode;</span>
-<span class="fc" id="L106">		this.styleName = styleName;</span>
-<span class="fc" id="L107">		this.source = source;</span>
-<span class="fc" id="L108">		this.pragma = pragma;</span>
-<span class="fc" id="L109">		this.dotStringFactory = dotStringFactory;</span>
-<span class="fc" id="L110">		this.clusterManager = clusterManager;</span>
+<span class="fc" id="L104">			DotStringFactory dotStringFactory, ClusterManager clusterManager) {</span>
+<span class="fc" id="L105">		this.dotData = dotData;</span>
+<span class="fc" id="L106">		this.dotMode = dotMode;</span>
+<span class="fc" id="L107">		this.styleName = styleName;</span>
+<span class="fc" id="L108">		this.source = source;</span>
+<span class="fc" id="L109">		this.pragma = pragma;</span>
+<span class="fc" id="L110">		this.dotStringFactory = dotStringFactory;</span>
+<span class="fc" id="L111">		this.clusterManager = clusterManager;</span>
 
-<span class="fc" id="L112">	}</span>
+<span class="fc" id="L113">	}</span>
 
 	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype) {
-<span class="nc" id="L115">		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L117">			result = result.withTOBECHANGED(stereotype);</span>
+<span class="nc" id="L116">		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L118">			result = result.withTOBECHANGED(stereotype);</span>
 
-<span class="nc" id="L119">		return result;</span>
+<span class="nc" id="L120">		return result;</span>
 	}
 
 	final public StyleSignature getStyleArrowCardinality(Stereotype stereotype) {
-<span class="nc" id="L123">		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow,</span>
+<span class="nc" id="L124">		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow,</span>
 				SName.cardinality);
-<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L126">			result = result.withTOBECHANGED(stereotype);</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L127">			result = result.withTOBECHANGED(stereotype);</span>
 
-<span class="nc" id="L128">		return result;</span>
+<span class="nc" id="L129">		return result;</span>
 	}
 
 	private boolean isOpalisable(Entity entity) {
-<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (dotData.getSkinParam().strictUmlStyle())</span>
-<span class="nc" id="L133">			return false;</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (dotData.getSkinParam().strictUmlStyle())</span>
+<span class="nc" id="L134">			return false;</span>
 
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (entity.isGroup())</span>
-<span class="nc" id="L136">			return false;</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (entity.isGroup())</span>
+<span class="nc" id="L137">			return false;</span>
 
-<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (entity.getLeafType() != LeafType.NOTE)</span>
-<span class="nc" id="L139">			return false;</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (entity.getLeafType() != LeafType.NOTE)</span>
+<span class="nc" id="L140">			return false;</span>
 
-<span class="nc" id="L141">		final Link single = onlyOneLink(entity);</span>
-<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (single == null)</span>
-<span class="nc" id="L143">			return false;</span>
+<span class="nc" id="L142">		final Link single = onlyOneLink(entity);</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (single == null)</span>
+<span class="nc" id="L144">			return false;</span>
 
-<span class="nc bnc" id="L145" title="All 2 branches missed.">		return single.getOther(entity).getLeafType() != LeafType.NOTE;</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		return single.getOther(entity).getLeafType() != LeafType.NOTE;</span>
 	}
 
 	static class EntityImageSimpleEmpty implements IEntityImage {
 
 		private final HColor backColor;
 
-<span class="nc" id="L152">		EntityImageSimpleEmpty(HColor backColor) {</span>
-<span class="nc" id="L153">			this.backColor = backColor;</span>
-<span class="nc" id="L154">		}</span>
+<span class="nc" id="L153">		EntityImageSimpleEmpty(HColor backColor) {</span>
+<span class="nc" id="L154">			this.backColor = backColor;</span>
+<span class="nc" id="L155">		}</span>
 
 		public boolean isHidden() {
-<span class="nc" id="L157">			return false;</span>
+<span class="nc" id="L158">			return false;</span>
 		}
 
 		public HColor getBackcolor() {
-<span class="nc" id="L161">			return backColor;</span>
+<span class="nc" id="L162">			return backColor;</span>
 		}
 
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L165">			return new XDimension2D(10, 10);</span>
+<span class="nc" id="L166">			return new XDimension2D(10, 10);</span>
 		}
 
 		public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L169">			return MinMax.fromDim(calculateDimension(stringBounder));</span>
+<span class="nc" id="L170">			return MinMax.fromDim(calculateDimension(stringBounder));</span>
 		}
 
 		public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
-<span class="nc" id="L173">			return null;</span>
+<span class="nc" id="L174">			return null;</span>
 		}
 
 		public void drawU(UGraphic ug) {
-<span class="nc" id="L177">		}</span>
+<span class="nc" id="L178">		}</span>
 
 		public ShapeType getShapeType() {
-<span class="nc" id="L180">			return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L181">			return ShapeType.RECTANGLE;</span>
 		}
 
 		public Margins getShield(StringBounder stringBounder) {
-<span class="nc" id="L184">			return Margins.NONE;</span>
+<span class="nc" id="L185">			return Margins.NONE;</span>
 		}
 
 		public double getOverscanX(StringBounder stringBounder) {
-<span class="nc" id="L188">			return 0;</span>
+<span class="nc" id="L189">			return 0;</span>
 		}
 
 		@Override
 		public MagneticBorder getMagneticBorder() {
-<span class="nc" id="L193">			return new MagneticBorderNone();</span>
+<span class="nc" id="L194">			return new MagneticBorderNone();</span>
 		}
 
 	}
 
 	// Duplicate SvekResult / GeneralImageBuilder
 	private HColor getBackcolor() {
-<span class="fc" id="L200">		final Style style = StyleSignatureBasic.of(SName.root, SName.document)</span>
-<span class="fc" id="L201">				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());</span>
-<span class="fc" id="L202">		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L201">		final Style style = StyleSignatureBasic.of(SName.root, SName.document)</span>
+<span class="fc" id="L202">				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L203">		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());</span>
 	}
 
 	public IEntityImage buildImage(StringBounder stringBounder, BaseFile basefile, String dotStrings[],
 			boolean fileFormatOptionIsDebugSvek) {
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (dotData.isDegeneratedWithFewEntities(0))</span>
-<span class="nc" id="L208">			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor());</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (dotData.isDegeneratedWithFewEntities(0))</span>
+<span class="nc" id="L209">			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor());</span>
 
-<span class="pc bpc" id="L210" title="1 of 4 branches missed.">		if (dotData.isDegeneratedWithFewEntities(1) &amp;&amp; dotData.getUmlDiagramType() != UmlDiagramType.STATE) {</span>
-<span class="fc" id="L211">			final Entity single = dotData.getLeafs().iterator().next();</span>
-<span class="fc" id="L212">			final Entity group = single.getParentContainer();</span>
-<span class="pc bpc" id="L213" title="2 of 4 branches missed.">			if (group.isRoot() &amp;&amp; single.getUSymbol() instanceof USymbolHexagon == false) {</span>
-<span class="fc" id="L214">				final IEntityImage tmp = GeneralImageBuilder.createEntityImageBlock(single,</span>
-<span class="fc" id="L215">						dotData.isHideEmptyDescriptionForState(), dotData.getPortionShower(), null, null,</span>
-<span class="fc" id="L216">						dotData.getLinks());</span>
-<span class="fc" id="L217">				return new EntityImageDegenerated(tmp, getBackcolor());</span>
+<span class="pc bpc" id="L211" title="1 of 4 branches missed.">		if (dotData.isDegeneratedWithFewEntities(1) &amp;&amp; dotData.getUmlDiagramType() != UmlDiagramType.STATE) {</span>
+<span class="fc" id="L212">			final Entity single = dotData.getLeafs().iterator().next();</span>
+<span class="fc" id="L213">			final Entity group = single.getParentContainer();</span>
+<span class="pc bpc" id="L214" title="2 of 4 branches missed.">			if (group.isRoot() &amp;&amp; single.getUSymbol() instanceof USymbolHexagon == false) {</span>
+<span class="fc" id="L215">				final IEntityImage tmp = GeneralImageBuilder.createEntityImageBlock(single,</span>
+<span class="fc" id="L216">						dotData.isHideEmptyDescriptionForState(), dotData.getPortionShower(), null, null,</span>
+<span class="fc" id="L217">						dotData.getLinks());</span>
+<span class="fc" id="L218">				return new EntityImageDegenerated(tmp, getBackcolor());</span>
 			}
 		}
-<span class="fc" id="L220">		dotData.removeIrrelevantSametail();</span>
+<span class="fc" id="L221">		dotData.removeIrrelevantSametail();</span>
 
-<span class="fc" id="L222">		printGroups(stringBounder, dotData.getRootGroup());</span>
-<span class="fc" id="L223">		printEntities(stringBounder, getUnpackagedEntities());</span>
+<span class="fc" id="L223">		printGroups(stringBounder, dotData.getRootGroup());</span>
+<span class="fc" id="L224">		printEntities(stringBounder, getUnpackagedEntities());</span>
 
-<span class="pc bpc" id="L225" title="1 of 2 branches missed.">		for (Link link : dotData.getLinks()) {</span>
-<span class="nc bnc" id="L226" title="All 2 branches missed.">			if (link.isRemoved())</span>
-<span class="nc" id="L227">				continue;</span>
+<span class="pc bpc" id="L226" title="1 of 2 branches missed.">		for (Link link : dotData.getLinks()) {</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">			if (link.isRemoved())</span>
+<span class="nc" id="L228">				continue;</span>
 
 			try {
-<span class="nc" id="L230">				final ISkinParam skinParam = dotData.getSkinParam();</span>
-<span class="nc" id="L231">				final FontConfiguration labelFont = getDefaultStyleDefinitionArrow(link.getStereotype())</span>
-<span class="nc" id="L232">						.getMergedStyle(link.getStyleBuilder()).getFontConfiguration(skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L233">				final FontConfiguration cardinalityFont = getStyleArrowCardinality(link.getStereotype())</span>
-<span class="nc" id="L234">						.getMergedStyle(link.getStyleBuilder()).getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L231">				final ISkinParam skinParam = dotData.getSkinParam();</span>
+<span class="nc" id="L232">				final FontConfiguration labelFont = getDefaultStyleDefinitionArrow(link.getStereotype())</span>
+<span class="nc" id="L233">						.getMergedStyle(link.getStyleBuilder()).getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L234">				final FontConfiguration cardinalityFont = getStyleArrowCardinality(link.getStereotype())</span>
+<span class="nc" id="L235">						.getMergedStyle(link.getStyleBuilder()).getFontConfiguration(skinParam.getIHtmlColorSet());</span>
 
-<span class="nc" id="L236">				final SvekEdge line = new SvekEdge(link, skinParam, stringBounder, labelFont, cardinalityFont,</span>
-<span class="nc" id="L237">						dotStringFactory.getBibliotekon(), pragma, dotStringFactory.getGraphvizVersion());</span>
+<span class="nc" id="L237">				final SvekEdge line = new SvekEdge(link, skinParam, stringBounder, labelFont, cardinalityFont,</span>
+<span class="nc" id="L238">						dotStringFactory.getBibliotekon(), pragma, dotStringFactory.getGraphvizVersion());</span>
 
-<span class="nc" id="L239">				dotStringFactory.getBibliotekon().addLine(line);</span>
+<span class="nc" id="L240">				dotStringFactory.getBibliotekon().addLine(line);</span>
 
-<span class="nc bnc" id="L241" title="All 2 branches missed.">				if (isOpalisable(link.getEntity1())) {</span>
-<span class="nc" id="L242">					final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity1());</span>
-<span class="nc" id="L243">					final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity2());</span>
-<span class="nc bnc" id="L244" title="All 2 branches missed.">					if (other != null) {</span>
-<span class="nc" id="L245">						((EntityImageNote) node.getImage()).setOpaleLine(line, node, other);</span>
-<span class="nc" id="L246">						line.setOpale(true);</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">				if (isOpalisable(link.getEntity1())) {</span>
+<span class="nc" id="L243">					final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity1());</span>
+<span class="nc" id="L244">					final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity2());</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">					if (other != null) {</span>
+<span class="nc" id="L246">						((EntityImageNote) node.getImage()).setOpaleLine(line, node, other);</span>
+<span class="nc" id="L247">						line.setOpale(true);</span>
 					}
-<span class="nc bnc" id="L248" title="All 2 branches missed.">				} else if (isOpalisable(link.getEntity2())) {</span>
-<span class="nc" id="L249">					final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity2());</span>
-<span class="nc" id="L250">					final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity1());</span>
-<span class="nc bnc" id="L251" title="All 2 branches missed.">					if (other != null) {</span>
-<span class="nc" id="L252">						((EntityImageNote) node.getImage()).setOpaleLine(line, node, other);</span>
-<span class="nc" id="L253">						line.setOpale(true);</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">				} else if (isOpalisable(link.getEntity2())) {</span>
+<span class="nc" id="L250">					final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity2());</span>
+<span class="nc" id="L251">					final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity1());</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">					if (other != null) {</span>
+<span class="nc" id="L253">						((EntityImageNote) node.getImage()).setOpaleLine(line, node, other);</span>
+<span class="nc" id="L254">						line.setOpale(true);</span>
 					}
 				}
-<span class="nc" id="L256">			} catch (IllegalStateException e) {</span>
-<span class="nc" id="L257">				Logme.error(e);</span>
-<span class="nc" id="L258">			}</span>
-<span class="nc" id="L259">		}</span>
+<span class="nc" id="L257">			} catch (IllegalStateException e) {</span>
+<span class="nc" id="L258">				Logme.error(e);</span>
+<span class="nc" id="L259">			}</span>
+<span class="nc" id="L260">		}</span>
 
-		// ::comment when __TEAVM__
-<span class="pc bpc" id="L262" title="1 of 2 branches missed.">		if (dotStringFactory.illegalDotExe())</span>
-<span class="fc" id="L263">			return error(dotStringFactory.getDotExe());</span>
-		// ::done
-
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">			if (dotStringFactory.illegalDotExe())</span>
+<span class="fc" id="L264">				return error(dotStringFactory.getDotExe());</span>
+		}
 <span class="nc bnc" id="L266" title="All 6 branches missed.">		if (basefile == null &amp;&amp; (fileFormatOptionIsDebugSvek || isSvekTrace())</span>
 <span class="nc bnc" id="L267" title="All 2 branches missed.">				&amp;&amp; (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE</span>
 <span class="nc bnc" id="L268" title="All 2 branches missed.">						|| SecurityUtils.getSecurityProfile() == SecurityProfile.LEGACY</span>
@@ -322,7 +322,7 @@ public final class GraphvizImageBuilder {
 <span class="nc" id="L322">		return single;</span>
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	private IEntityImage error(File dotExe) {
 <span class="fc" id="L327">		final List&lt;String&gt; msg = new ArrayList&lt;&gt;();</span>
 <span class="fc" id="L328">		msg.add(&quot;Dot Executable: &quot; + dotExe);</span>

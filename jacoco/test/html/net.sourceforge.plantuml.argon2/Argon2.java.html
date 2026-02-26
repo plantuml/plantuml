@@ -25,9 +25,7 @@ import net.sourceforge.plantuml.argon2.model.Argon2Type;
 import net.sourceforge.plantuml.argon2.model.Instance;
 
 <span class="nc" id="L27">public class Argon2 {</span>
-	// ::remove folder when __TEAVM__
-	// ::remove folder when __HAXE__
-	// ::remove folder when __CORE__
+	
 
 	private byte[] output;
 	private int outputLength; // -l N
@@ -45,231 +43,231 @@ import net.sourceforge.plantuml.argon2.model.Instance;
 	private int version; // -v (10/13)
 	private Argon2Type type;
 
-<span class="nc" id="L48">	private boolean clearMemory = true;</span>
+<span class="nc" id="L46">	private boolean clearMemory = true;</span>
 
-<span class="nc" id="L50">	private boolean encodedOnly = false;</span>
-<span class="nc" id="L51">	private boolean rawOnly = false;</span>
+<span class="nc" id="L48">	private boolean encodedOnly = false;</span>
+<span class="nc" id="L49">	private boolean rawOnly = false;</span>
 
-<span class="nc" id="L53">	Argon2() {</span>
-<span class="nc" id="L54">		this.lanes = LANES_DEF;</span>
-<span class="nc" id="L55">		this.outputLength = OUTLEN_DEF;</span>
-<span class="nc" id="L56">		this.memory = 1 &lt;&lt; LOG_M_COST_DEF;</span>
-<span class="nc" id="L57">		this.iterations = T_COST_DEF;</span>
-<span class="nc" id="L58">		this.version = VERSION_DEF;</span>
-<span class="nc" id="L59">		this.type = TYPE_DEF;</span>
-<span class="nc" id="L60">	}</span>
+<span class="nc" id="L51">	Argon2() {</span>
+<span class="nc" id="L52">		this.lanes = LANES_DEF;</span>
+<span class="nc" id="L53">		this.outputLength = OUTLEN_DEF;</span>
+<span class="nc" id="L54">		this.memory = 1 &lt;&lt; LOG_M_COST_DEF;</span>
+<span class="nc" id="L55">		this.iterations = T_COST_DEF;</span>
+<span class="nc" id="L56">		this.version = VERSION_DEF;</span>
+<span class="nc" id="L57">		this.type = TYPE_DEF;</span>
+<span class="nc" id="L58">	}</span>
 
 	private static byte[] toByteArray(char[] chars, Charset charset) {
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		assert chars != null;</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">		assert chars != null;</span>
 
-<span class="nc" id="L65">		CharBuffer charBuffer = CharBuffer.wrap(chars);</span>
-<span class="nc" id="L66">		ByteBuffer byteBuffer = charset.encode(charBuffer);</span>
-<span class="nc" id="L67">		byte[] bytes = Arrays.copyOfRange(byteBuffer.array(), byteBuffer.position(), byteBuffer.limit());</span>
-<span class="nc" id="L68">		Arrays.fill(byteBuffer.array(), (byte) 0);</span>
-<span class="nc" id="L69">		return bytes;</span>
+<span class="nc" id="L63">		CharBuffer charBuffer = CharBuffer.wrap(chars);</span>
+<span class="nc" id="L64">		ByteBuffer byteBuffer = charset.encode(charBuffer);</span>
+<span class="nc" id="L65">		byte[] bytes = Arrays.copyOfRange(byteBuffer.array(), byteBuffer.position(), byteBuffer.limit());</span>
+<span class="nc" id="L66">		Arrays.fill(byteBuffer.array(), (byte) 0);</span>
+<span class="nc" id="L67">		return bytes;</span>
 	}
 
 	public void hashNow() {
 		try {
-<span class="nc" id="L74">			Validation.validateInput(this);</span>
+<span class="nc" id="L72">			Validation.validateInput(this);</span>
 
-<span class="nc" id="L76">			long start = System.nanoTime();</span>
+<span class="nc" id="L74">			long start = System.nanoTime();</span>
 
-<span class="nc" id="L78">			Instance instance = new Instance(this);</span>
+<span class="nc" id="L76">			Instance instance = new Instance(this);</span>
 
-<span class="nc" id="L80">			Initialize.initialize(instance, this);</span>
-<span class="nc" id="L81">			FillMemory.fillMemoryBlocks(instance);</span>
-<span class="nc" id="L82">			Finalize.finalize(instance, this);</span>
+<span class="nc" id="L78">			Initialize.initialize(instance, this);</span>
+<span class="nc" id="L79">			FillMemory.fillMemoryBlocks(instance);</span>
+<span class="nc" id="L80">			Finalize.finalize(instance, this);</span>
 
-<span class="nc" id="L84">			duration = (System.nanoTime() - start) / 1000000000.0;</span>
+<span class="nc" id="L82">			duration = (System.nanoTime() - start) / 1000000000.0;</span>
 		} finally {
-<span class="nc" id="L86">			clear();</span>
+<span class="nc" id="L84">			clear();</span>
 		}
-<span class="nc" id="L88">	}</span>
+<span class="nc" id="L86">	}</span>
 
 	public void clear() {
-<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (password != null)</span>
-<span class="nc" id="L92">			Arrays.fill(password, 0, password.length - 1, (byte) 0);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (password != null)</span>
+<span class="nc" id="L90">			Arrays.fill(password, 0, password.length - 1, (byte) 0);</span>
 
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (salt != null)</span>
-<span class="nc" id="L95">			Arrays.fill(salt, 0, salt.length - 1, (byte) 0);</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (salt != null)</span>
+<span class="nc" id="L93">			Arrays.fill(salt, 0, salt.length - 1, (byte) 0);</span>
 
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (secret != null)</span>
-<span class="nc" id="L98">			Arrays.fill(secret, 0, secret.length - 1, (byte) 0);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (secret != null)</span>
+<span class="nc" id="L96">			Arrays.fill(secret, 0, secret.length - 1, (byte) 0);</span>
 
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (additional != null)</span>
-<span class="nc" id="L101">			Arrays.fill(additional, 0, additional.length - 1, (byte) 0);</span>
-<span class="nc" id="L102">	}</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (additional != null)</span>
+<span class="nc" id="L99">			Arrays.fill(additional, 0, additional.length - 1, (byte) 0);</span>
+<span class="nc" id="L100">	}</span>
 
 	void printSummary() {
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (encodedOnly)</span>
-<span class="nc" id="L106">			System.out.println(getEncoded());</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		else if (rawOnly)</span>
-<span class="nc" id="L108">			System.out.println(getOutputString());</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (encodedOnly)</span>
+<span class="nc" id="L104">			System.out.println(getEncoded());</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		else if (rawOnly)</span>
+<span class="nc" id="L106">			System.out.println(getOutputString());</span>
 		else {
-<span class="nc" id="L110">			System.out.println(&quot;Type:\t\t&quot; + type);</span>
-<span class="nc" id="L111">			System.out.println(&quot;Iterations:\t&quot; + iterations);</span>
-<span class="nc" id="L112">			System.out.println(&quot;Memory:\t\t&quot; + memory + &quot; KiB&quot;);</span>
-<span class="nc" id="L113">			System.out.println(&quot;Parallelism:\t&quot; + lanes);</span>
-<span class="nc" id="L114">			System.out.println(&quot;Hash:\t\t&quot; + getOutputString());</span>
-<span class="nc" id="L115">			System.out.println(&quot;Encoded:\t &quot; + getEncoded());</span>
-<span class="nc" id="L116">			System.out.println(duration + &quot; seconds&quot;);</span>
+<span class="nc" id="L108">			System.out.println(&quot;Type:\t\t&quot; + type);</span>
+<span class="nc" id="L109">			System.out.println(&quot;Iterations:\t&quot; + iterations);</span>
+<span class="nc" id="L110">			System.out.println(&quot;Memory:\t\t&quot; + memory + &quot; KiB&quot;);</span>
+<span class="nc" id="L111">			System.out.println(&quot;Parallelism:\t&quot; + lanes);</span>
+<span class="nc" id="L112">			System.out.println(&quot;Hash:\t\t&quot; + getOutputString());</span>
+<span class="nc" id="L113">			System.out.println(&quot;Encoded:\t &quot; + getEncoded());</span>
+<span class="nc" id="L114">			System.out.println(duration + &quot; seconds&quot;);</span>
 		}
-<span class="nc" id="L118">	}</span>
+<span class="nc" id="L116">	}</span>
 
 	public Argon2 setMemoryInKiB(int memory) {
-<span class="nc" id="L121">		this.memory = memory;</span>
-<span class="nc" id="L122">		return this;</span>
+<span class="nc" id="L119">		this.memory = memory;</span>
+<span class="nc" id="L120">		return this;</span>
 	}
 
 	public Argon2 setParallelism(int parallelism) {
-<span class="nc" id="L126">		this.lanes = parallelism;</span>
-<span class="nc" id="L127">		return this;</span>
+<span class="nc" id="L124">		this.lanes = parallelism;</span>
+<span class="nc" id="L125">		return this;</span>
 	}
 
 	public Argon2 setPassword(char[] password) {
-<span class="nc" id="L131">		return setPassword(toByteArray(password, UTF_8));</span>
+<span class="nc" id="L129">		return setPassword(toByteArray(password, UTF_8));</span>
 	}
 
 	public Argon2 setSalt(String salt) {
-<span class="nc" id="L135">		return setSalt(salt.getBytes(UTF_8));</span>
+<span class="nc" id="L133">		return setSalt(salt.getBytes(UTF_8));</span>
 	}
 
 	public byte[] getOutput() {
-<span class="nc" id="L139">		return output;</span>
+<span class="nc" id="L137">		return output;</span>
 	}
 
 	public void setOutput(byte[] finalResult) {
-<span class="nc" id="L143">		this.output = finalResult;</span>
-<span class="nc" id="L144">	}</span>
+<span class="nc" id="L141">		this.output = finalResult;</span>
+<span class="nc" id="L142">	}</span>
 
 	public String getOutputString() {
-<span class="nc" id="L147">		return Util.bytesToHexString(output);</span>
+<span class="nc" id="L145">		return Util.bytesToHexString(output);</span>
 	}
 
 	public int getOutputLength() {
-<span class="nc" id="L151">		return outputLength;</span>
+<span class="nc" id="L149">		return outputLength;</span>
 	}
 
 	public Argon2 setOutputLength(int outputLength) {
-<span class="nc" id="L155">		this.outputLength = outputLength;</span>
-<span class="nc" id="L156">		return this;</span>
+<span class="nc" id="L153">		this.outputLength = outputLength;</span>
+<span class="nc" id="L154">		return this;</span>
 	}
 
 	public byte[] getPassword() {
-<span class="nc" id="L160">		return password;</span>
+<span class="nc" id="L158">		return password;</span>
 	}
 
 	public Argon2 setPassword(byte[] password) {
-<span class="nc" id="L164">		this.password = password;</span>
-<span class="nc" id="L165">		return this;</span>
+<span class="nc" id="L162">		this.password = password;</span>
+<span class="nc" id="L163">		return this;</span>
 	}
 
 	public int getPasswordLength() {
-<span class="nc" id="L169">		return password.length;</span>
+<span class="nc" id="L167">		return password.length;</span>
 	}
 
 	public byte[] getSalt() {
-<span class="nc" id="L173">		return salt;</span>
+<span class="nc" id="L171">		return salt;</span>
 	}
 
 	public Argon2 setSalt(byte[] salt) {
-<span class="nc" id="L177">		this.salt = salt;</span>
-<span class="nc" id="L178">		return this;</span>
+<span class="nc" id="L175">		this.salt = salt;</span>
+<span class="nc" id="L176">		return this;</span>
 	}
 
 	public int getSaltLength() {
-<span class="nc" id="L182">		return salt.length;</span>
+<span class="nc" id="L180">		return salt.length;</span>
 	}
 
 	public byte[] getSecret() {
-<span class="nc" id="L186">		return secret;</span>
+<span class="nc" id="L184">		return secret;</span>
 	}
 
 	public Argon2 setSecret(byte[] secret) {
-<span class="nc" id="L190">		this.secret = secret;</span>
-<span class="nc" id="L191">		return this;</span>
+<span class="nc" id="L188">		this.secret = secret;</span>
+<span class="nc" id="L189">		return this;</span>
 	}
 
 	public int getSecretLength() {
-<span class="nc bnc" id="L195" title="All 2 branches missed.">		return secret != null ? secret.length : 0;</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		return secret != null ? secret.length : 0;</span>
 	}
 
 	public byte[] getAdditional() {
-<span class="nc" id="L199">		return additional;</span>
+<span class="nc" id="L197">		return additional;</span>
 	}
 
 	public Argon2 setAdditional(byte[] additional) {
-<span class="nc" id="L203">		this.additional = additional;</span>
-<span class="nc" id="L204">		return this;</span>
+<span class="nc" id="L201">		this.additional = additional;</span>
+<span class="nc" id="L202">		return this;</span>
 	}
 
 	public int getAdditionalLength() {
-<span class="nc bnc" id="L208" title="All 2 branches missed.">		return additional != null ? additional.length : 0;</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		return additional != null ? additional.length : 0;</span>
 	}
 
 	public int getIterations() {
-<span class="nc" id="L212">		return iterations;</span>
+<span class="nc" id="L210">		return iterations;</span>
 	}
 
 	public Argon2 setIterations(int iterations) {
-<span class="nc" id="L216">		this.iterations = iterations;</span>
-<span class="nc" id="L217">		return this;</span>
+<span class="nc" id="L214">		this.iterations = iterations;</span>
+<span class="nc" id="L215">		return this;</span>
 	}
 
 	public int getMemory() {
-<span class="nc" id="L221">		return memory;</span>
+<span class="nc" id="L219">		return memory;</span>
 	}
 
 	public Argon2 setMemory(int memory) {
-<span class="nc" id="L225">		this.memory = 1 &lt;&lt; memory;</span>
-<span class="nc" id="L226">		return this;</span>
+<span class="nc" id="L223">		this.memory = 1 &lt;&lt; memory;</span>
+<span class="nc" id="L224">		return this;</span>
 	}
 
 	public int getLanes() {
-<span class="nc" id="L230">		return lanes;</span>
+<span class="nc" id="L228">		return lanes;</span>
 	}
 
 	public int getVersion() {
-<span class="nc" id="L234">		return version;</span>
+<span class="nc" id="L232">		return version;</span>
 	}
 
 	public Argon2 setVersion(int version) {
-<span class="nc" id="L238">		this.version = version;</span>
-<span class="nc" id="L239">		return this;</span>
+<span class="nc" id="L236">		this.version = version;</span>
+<span class="nc" id="L237">		return this;</span>
 	}
 
 	public Argon2Type getType() {
-<span class="nc" id="L243">		return type;</span>
+<span class="nc" id="L241">		return type;</span>
 	}
 
 	public Argon2 setType(Argon2Type type) {
-<span class="nc" id="L247">		this.type = type;</span>
-<span class="nc" id="L248">		return this;</span>
+<span class="nc" id="L245">		this.type = type;</span>
+<span class="nc" id="L246">		return this;</span>
 	}
 
 	public boolean isClearMemory() {
-<span class="nc" id="L252">		return clearMemory;</span>
+<span class="nc" id="L250">		return clearMemory;</span>
 	}
 
 	public void setClearMemory(boolean clearMemory) {
-<span class="nc" id="L256">		this.clearMemory = clearMemory;</span>
-<span class="nc" id="L257">	}</span>
+<span class="nc" id="L254">		this.clearMemory = clearMemory;</span>
+<span class="nc" id="L255">	}</span>
 
 	public Charset getCharset() {
-<span class="nc" id="L260">		return UTF_8;</span>
+<span class="nc" id="L258">		return UTF_8;</span>
 	}
 
 	public void setEncodedOnly(boolean encodedOnly) {
-<span class="nc" id="L264">		this.encodedOnly = encodedOnly;</span>
-<span class="nc" id="L265">	}</span>
+<span class="nc" id="L262">		this.encodedOnly = encodedOnly;</span>
+<span class="nc" id="L263">	}</span>
 
 	public void setRawOnly(boolean rawOnly) {
-<span class="nc" id="L268">		this.rawOnly = rawOnly;</span>
-<span class="nc" id="L269">	}</span>
+<span class="nc" id="L266">		this.rawOnly = rawOnly;</span>
+<span class="nc" id="L267">	}</span>
 
 	public String getEncoded() {
-<span class="nc" id="L272">		return &quot;&quot;; // TODO</span>
+<span class="nc" id="L270">		return &quot;&quot;; // TODO</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

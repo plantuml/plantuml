@@ -102,7 +102,7 @@ public class CreoleParser implements SheetBuilder {
 <span class="nc" id="L102">			return Arrays.asList(new StripeTree(fontConfiguration, skinParam, line));</span>
 <span class="fc bfc" id="L103" title="All 2 branches covered.">		} else if (Parser.isCodeStart(line)) {</span>
 <span class="fc" id="L104">			return Arrays.asList(new StripeCode(fontConfiguration.changeFamily(Parser.MONOSPACED)));</span>
-			// ::comment when __CORE__ or __TEAVM__
+			// ::comment when __TEAVM__
 <span class="pc bpc" id="L106" title="1 of 2 branches missed.">		} else if (Parser.isLatexStart(line)) {</span>
 <span class="nc" id="L107">			return Arrays.asList(new StripeLatex(fontConfiguration));</span>
 			// ::done

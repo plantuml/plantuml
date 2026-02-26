@@ -65,33 +65,31 @@ public class InstructionStart extends MonoSwimable implements Instruction {
 <span class="nc" id="L65">		return false;</span>
 	}
 
-	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
-<span class="nc" id="L71">		return new GtileCircleStart(stringBounder, skinParam, HColors.BLACK, getSwimlaneIn());</span>
+<span class="nc" id="L70">		return new GtileCircleStart(stringBounder, skinParam, HColors.BLACK, getSwimlaneIn());</span>
 	}
-	// ::done
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
-<span class="fc" id="L77">		Ftile result = factory.start(getSwimlaneIn(), colors);</span>
-<span class="fc" id="L78">		result = eventuallyAddNote(factory, result, result.getSwimlaneIn(), VerticalAlignment.CENTER);</span>
-<span class="fc" id="L79">		return result;</span>
+<span class="fc" id="L75">		Ftile result = factory.start(getSwimlaneIn(), colors);</span>
+<span class="fc" id="L76">		result = eventuallyAddNote(factory, result, result.getSwimlaneIn(), VerticalAlignment.CENTER);</span>
+<span class="fc" id="L77">		return result;</span>
 	}
 
 	@Override
 	public CommandExecutionResult add(Instruction other) {
-<span class="nc" id="L84">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L82">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	final public boolean kill() {
-<span class="nc" id="L89">		return false;</span>
+<span class="nc" id="L87">		return false;</span>
 	}
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="fc" id="L94">		return inlinkRendering;</span>
+<span class="fc" id="L92">		return inlinkRendering;</span>
 	}
 
 }

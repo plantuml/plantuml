@@ -53,134 +53,136 @@ import net.sourceforge.plantuml.syntax.LanguageDescriptor;
 import net.sourceforge.plantuml.version.CompilationInfo;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.PSystemVersion;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.version.Version;
 
-<span class="nc" id="L58">public class OptionPrint {</span>
+<span class="nc" id="L59">public class OptionPrint {</span>
 
 	public static Collection&lt;String&gt; interestingProperties() {
-		// ::revert when __TEAVM__
-		// return Collections.emptyList();
-<span class="nc" id="L63">		final Properties p = System.getProperties();</span>
-		final List&lt;String&gt; all;
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
-<span class="nc" id="L66">			all = Arrays.asList(&quot;java.runtime.name&quot;, &quot;Java Runtime&quot;, &quot;java.vm.name&quot;, &quot;JVM&quot;, &quot;java.runtime.version&quot;,</span>
-					&quot;Java Version&quot;, &quot;os.name&quot;, &quot;Operating System&quot;, &quot;os.version&quot;, &quot;OS Version&quot;, &quot;file.encoding&quot;,
-					&quot;Default Encoding&quot;, &quot;user.language&quot;, &quot;Language&quot;, &quot;user.country&quot;, &quot;Country&quot;);
-		} else {
-<span class="nc" id="L70">			all = Arrays.asList(&quot;java.runtime.name&quot;, &quot;Java Runtime&quot;, &quot;java.vm.name&quot;, &quot;JVM&quot;, &quot;file.encoding&quot;,</span>
-					&quot;Default Encoding&quot;, &quot;user.language&quot;, &quot;Language&quot;, &quot;user.country&quot;, &quot;Country&quot;);
-		}
-<span class="nc" id="L73">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">		for (int i = 0; i &lt; all.size(); i += 2)</span>
-<span class="nc" id="L75">			result.add(all.get(i + 1) + &quot;: &quot; + p.getProperty(all.get(i)));</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L63">			return Collections.emptyList();</span>
+		else {
+<span class="nc" id="L65">			final Properties p = System.getProperties();</span>
+			final List&lt;String&gt; all;
+<span class="nc bnc" id="L67" title="All 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+<span class="nc" id="L68">				all = Arrays.asList(&quot;java.runtime.name&quot;, &quot;Java Runtime&quot;, &quot;java.vm.name&quot;, &quot;JVM&quot;, &quot;java.runtime.version&quot;,</span>
+						&quot;Java Version&quot;, &quot;os.name&quot;, &quot;Operating System&quot;, &quot;os.version&quot;, &quot;OS Version&quot;, &quot;file.encoding&quot;,
+						&quot;Default Encoding&quot;, &quot;user.language&quot;, &quot;Language&quot;, &quot;user.country&quot;, &quot;Country&quot;);
+			} else {
+<span class="nc" id="L72">				all = Arrays.asList(&quot;java.runtime.name&quot;, &quot;Java Runtime&quot;, &quot;java.vm.name&quot;, &quot;JVM&quot;, &quot;file.encoding&quot;,</span>
+						&quot;Default Encoding&quot;, &quot;user.language&quot;, &quot;Language&quot;, &quot;user.country&quot;, &quot;Country&quot;);
+			}
+<span class="nc" id="L75">			final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">			for (int i = 0; i &lt; all.size(); i += 2)</span>
+<span class="nc" id="L77">				result.add(all.get(i + 1) + &quot;: &quot; + p.getProperty(all.get(i)));</span>
 
-<span class="nc" id="L77">		return result;</span>
-		// ::done
+<span class="nc" id="L79">			return result;</span>
+		}
 	}
 
 	public static Collection&lt;String&gt; interestingValues() {
-<span class="nc" id="L82">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
-		// ::comment when __CORE__ or __TEAVM__
-<span class="nc" id="L84">		strings.add(&quot; &quot;);</span>
-<span class="nc" id="L85">		strings.add(&quot;PLANTUML_LIMIT_SIZE: &quot; + GraphvizUtils.getenvImageLimit());</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
-<span class="nc" id="L87">			strings.add(&quot;Processors: &quot; + Runtime.getRuntime().availableProcessors());</span>
-<span class="nc" id="L88">			final long freeMemory = Runtime.getRuntime().freeMemory();</span>
-<span class="nc" id="L89">			final long maxMemory = Runtime.getRuntime().maxMemory();</span>
-<span class="nc" id="L90">			final long totalMemory = Runtime.getRuntime().totalMemory();</span>
-<span class="nc" id="L91">			final long usedMemory = totalMemory - freeMemory;</span>
-<span class="nc" id="L92">			final int threadActiveCount = Thread.activeCount();</span>
-<span class="nc" id="L93">			strings.add(&quot;Max Memory: &quot; + format(maxMemory));</span>
-<span class="nc" id="L94">			strings.add(&quot;Total Memory: &quot; + format(totalMemory));</span>
-<span class="nc" id="L95">			strings.add(&quot;Free Memory: &quot; + format(freeMemory));</span>
-<span class="nc" id="L96">			strings.add(&quot;Used Memory: &quot; + format(usedMemory));</span>
-<span class="nc" id="L97">			strings.add(&quot;Thread Active Count: &quot; + threadActiveCount);</span>
+<span class="nc" id="L84">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L86">			strings.add(&quot; &quot;);</span>
+<span class="nc" id="L87">			strings.add(&quot;PLANTUML_LIMIT_SIZE: &quot; + GraphvizUtils.getenvImageLimit());</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+<span class="nc" id="L89">				strings.add(&quot;Processors: &quot; + Runtime.getRuntime().availableProcessors());</span>
+<span class="nc" id="L90">				final long freeMemory = Runtime.getRuntime().freeMemory();</span>
+<span class="nc" id="L91">				final long maxMemory = Runtime.getRuntime().maxMemory();</span>
+<span class="nc" id="L92">				final long totalMemory = Runtime.getRuntime().totalMemory();</span>
+<span class="nc" id="L93">				final long usedMemory = totalMemory - freeMemory;</span>
+<span class="nc" id="L94">				final int threadActiveCount = Thread.activeCount();</span>
+<span class="nc" id="L95">				strings.add(&quot;Max Memory: &quot; + format(maxMemory));</span>
+<span class="nc" id="L96">				strings.add(&quot;Total Memory: &quot; + format(totalMemory));</span>
+<span class="nc" id="L97">				strings.add(&quot;Free Memory: &quot; + format(freeMemory));</span>
+<span class="nc" id="L98">				strings.add(&quot;Used Memory: &quot; + format(usedMemory));</span>
+<span class="nc" id="L99">				strings.add(&quot;Thread Active Count: &quot; + threadActiveCount);</span>
+			}
 		}
-		// ::done
-<span class="nc" id="L100">		return Collections.unmodifiableCollection(strings);</span>
+<span class="nc" id="L102">		return Collections.unmodifiableCollection(strings);</span>
 	}
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 
 	static public void printCheckGraphviz() {
-<span class="nc" id="L106">		final ReportLog result = new ReportLog();</span>
-<span class="nc" id="L107">		final int errorCode = GraphvizUtils.addDotStatus(result, false);</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">		for (String s : result)</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (errorCode == 0)</span>
-<span class="nc" id="L110">				System.out.println(s);</span>
+<span class="nc" id="L108">		final ReportLog result = new ReportLog();</span>
+<span class="nc" id="L109">		final int errorCode = GraphvizUtils.addDotStatus(result, false);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		for (String s : result)</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">			if (errorCode == 0)</span>
+<span class="nc" id="L112">				System.out.println(s);</span>
 			else
-<span class="nc" id="L112">				System.err.println(s);</span>
+<span class="nc" id="L114">				System.err.println(s);</span>
 
-<span class="nc" id="L114">		Exit.exit(errorCode);</span>
-<span class="nc" id="L115">	}</span>
+<span class="nc" id="L116">		Exit.exit(errorCode);</span>
+<span class="nc" id="L117">	}</span>
 
 	public static void printLicense() {
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		for (String s : License.getCurrent().getTextFull())</span>
-<span class="nc" id="L119">			System.out.println(s);</span>
-<span class="nc" id="L120">	}</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		for (String s : License.getCurrent().getTextFull())</span>
+<span class="nc" id="L121">			System.out.println(s);</span>
+<span class="nc" id="L122">	}</span>
 
 	public static void printVersion() {
-<span class="nc" id="L123">		System.out.println(Version.fullDescription());</span>
-<span class="nc" id="L124">		System.out.println(&quot;(&quot; + License.getCurrent() + &quot; source distribution)&quot;);</span>
-<span class="nc" id="L125">		System.out.println();</span>
-<span class="nc" id="L126">		System.out.println(&quot;Build Version: &quot; + CompilationInfo.VERSION);</span>
-<span class="nc" id="L127">		System.out.println(&quot;Git Commit: &quot; + CompilationInfo.COMMIT);</span>
+<span class="nc" id="L125">		System.out.println(Version.fullDescription());</span>
+<span class="nc" id="L126">		System.out.println(&quot;(&quot; + License.getCurrent() + &quot; source distribution)&quot;);</span>
+<span class="nc" id="L127">		System.out.println();</span>
+<span class="nc" id="L128">		System.out.println(&quot;Build Version: &quot; + CompilationInfo.VERSION);</span>
+<span class="nc" id="L129">		System.out.println(&quot;Git Commit: &quot; + CompilationInfo.COMMIT);</span>
 		if (CompilationInfo.COMPILE_TIMESTAMP != 0)
-<span class="nc" id="L129">			System.out.println(&quot;Compile Time: &quot; + Version.compileTimeString());</span>
+<span class="nc" id="L131">			System.out.println(&quot;Compile Time: &quot; + Version.compileTimeString());</span>
 
-<span class="nc" id="L131">		System.out.println();</span>
-<span class="nc bnc" id="L132" title="All 2 branches missed.">		for (String v : interestingProperties())</span>
-<span class="nc" id="L133">			System.out.println(v);</span>
+<span class="nc" id="L133">		System.out.println();</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		for (String v : interestingProperties())</span>
+<span class="nc" id="L135">			System.out.println(v);</span>
 
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		for (String v : interestingValues())</span>
-<span class="nc" id="L136">			System.out.println(v);</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		for (String v : interestingValues())</span>
+<span class="nc" id="L138">			System.out.println(v);</span>
 
-<span class="nc" id="L138">		System.out.println();</span>
-<span class="nc" id="L139">		final ReportLog result = new ReportLog();</span>
-<span class="nc" id="L140">		final int errorCode = GraphvizUtils.addDotStatus(result, false);</span>
-<span class="nc bnc" id="L141" title="All 2 branches missed.">		for (String s : result)</span>
-<span class="nc" id="L142">			System.out.println(s);</span>
+<span class="nc" id="L140">		System.out.println();</span>
+<span class="nc" id="L141">		final ReportLog result = new ReportLog();</span>
+<span class="nc" id="L142">		final int errorCode = GraphvizUtils.addDotStatus(result, false);</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		for (String s : result)</span>
+<span class="nc" id="L144">			System.out.println(s);</span>
 
-<span class="nc" id="L144">		Exit.exit(errorCode);</span>
-<span class="nc" id="L145">	}</span>
+<span class="nc" id="L146">		Exit.exit(errorCode);</span>
+<span class="nc" id="L147">	}</span>
 
 	private static String hostname;
 
 	public static synchronized String getHostName() {
-<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (hostname == null)</span>
-<span class="nc" id="L151">			hostname = getHostNameSlow();</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (hostname == null)</span>
+<span class="nc" id="L153">			hostname = getHostNameSlow();</span>
 
-<span class="nc" id="L153">		return hostname;</span>
+<span class="nc" id="L155">		return hostname;</span>
 	}
 
 	private static String getHostNameSlow() {
 		try {
-<span class="nc" id="L158">			final InetAddress addr = InetAddress.getLocalHost();</span>
-<span class="nc" id="L159">			return addr.getHostName();</span>
-<span class="nc" id="L160">		} catch (Throwable e) {</span>
-<span class="nc" id="L161">			final Map&lt;String, String&gt; env = System.getenv();</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">			if (env.containsKey(&quot;COMPUTERNAME&quot;))</span>
-<span class="nc" id="L163">				return env.get(&quot;COMPUTERNAME&quot;);</span>
-<span class="nc bnc" id="L164" title="All 2 branches missed.">			else if (env.containsKey(&quot;HOSTNAME&quot;))</span>
-<span class="nc" id="L165">				return env.get(&quot;HOSTNAME&quot;);</span>
+<span class="nc" id="L160">			final InetAddress addr = InetAddress.getLocalHost();</span>
+<span class="nc" id="L161">			return addr.getHostName();</span>
+<span class="nc" id="L162">		} catch (Throwable e) {</span>
+<span class="nc" id="L163">			final Map&lt;String, String&gt; env = System.getenv();</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">			if (env.containsKey(&quot;COMPUTERNAME&quot;))</span>
+<span class="nc" id="L165">				return env.get(&quot;COMPUTERNAME&quot;);</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">			else if (env.containsKey(&quot;HOSTNAME&quot;))</span>
+<span class="nc" id="L167">				return env.get(&quot;HOSTNAME&quot;);</span>
 
 		}
-<span class="nc" id="L168">		return &quot;Unknown Computer&quot;;</span>
+<span class="nc" id="L170">		return &quot;Unknown Computer&quot;;</span>
 	}
 
 	private static String format(final long value) {
-<span class="nc" id="L172">		return String.format(Locale.US, &quot;%,d&quot;, value);</span>
+<span class="nc" id="L174">		return String.format(Locale.US, &quot;%,d&quot;, value);</span>
 	}
 
 	public static void printAbout() {
-<span class="nc bnc" id="L176" title="All 2 branches missed.">		for (String s : PSystemVersion.getAuthorsStrings(false))</span>
-<span class="nc" id="L177">			System.out.println(s);</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		for (String s : PSystemVersion.getAuthorsStrings(false))</span>
+<span class="nc" id="L179">			System.out.println(s);</span>
 
-<span class="nc" id="L179">	}</span>
+<span class="nc" id="L181">	}</span>
 
 	public static void printListKeywords() {
-<span class="nc" id="L182">		new LanguageDescriptor().print(System.out);</span>
-<span class="nc" id="L183">	}</span>
+<span class="nc" id="L184">		new LanguageDescriptor().print(System.out);</span>
+<span class="nc" id="L185">	}</span>
 	// ::done
 
 }

@@ -47,65 +47,69 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class StripeLatex implements StripeRaw {
-	// ::remove file when __CORE__ or __TEAVM__
+
 	final private FontConfiguration fontConfiguration;
-<span class="nc" id="L54">	final private StringBuilder formula = new StringBuilder();</span>
+<span class="nc" id="L55">	final private StringBuilder formula = new StringBuilder();</span>
 	private AtomMath atom;
 
 	private boolean terminated;
 
-<span class="nc" id="L59">	public StripeLatex(FontConfiguration fontConfiguration) {</span>
-<span class="nc" id="L60">		this.fontConfiguration = fontConfiguration;</span>
-<span class="nc" id="L61">	}</span>
+<span class="nc" id="L60">	public StripeLatex(FontConfiguration fontConfiguration) {</span>
+<span class="nc" id="L61">		this.fontConfiguration = fontConfiguration;</span>
+<span class="nc" id="L62">	}</span>
 
 	public List&lt;Atom&gt; getAtoms() {
-<span class="nc" id="L64">		return Collections.&lt;Atom&gt;singletonList(this);</span>
+<span class="nc" id="L65">		return Collections.&lt;Atom&gt;singletonList(this);</span>
 	}
 
 	public Atom getLHeader() {
-<span class="nc" id="L68">		return null;</span>
+<span class="nc" id="L69">		return null;</span>
 	}
 
 	@Override
 	public boolean addAndCheckTermination(String line) {
-<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (Parser.isLatexEnd(line)) {</span>
-<span class="nc" id="L74">			this.terminated = true;</span>
-<span class="nc" id="L75">			return true;</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (Parser.isLatexEnd(line)) {</span>
+<span class="nc" id="L75">			this.terminated = true;</span>
+<span class="nc" id="L76">			return true;</span>
 		}
-<span class="nc" id="L77">		this.formula.append(line);</span>
-<span class="nc" id="L78">		return false;</span>
+<span class="nc" id="L78">		this.formula.append(line);</span>
+<span class="nc" id="L79">		return false;</span>
 	}
 
 	@Override
 	public final boolean isTerminated() {
-<span class="nc" id="L83">		return terminated;</span>
+<span class="nc" id="L84">		return terminated;</span>
 	}
 
 	private Atom getAtom() {
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (atom == null) {</span>
-<span class="nc" id="L88">			final ScientificEquationSafe math = ScientificEquationSafe.fromLatex(formula.toString());</span>
-<span class="nc" id="L89">			atom = new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor());</span>
-		}
-<span class="nc" id="L91">		return atom;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			if (atom == null) {</span>
+<span class="nc" id="L90">				final ScientificEquationSafe math = ScientificEquationSafe.fromLatex(formula.toString());</span>
+<span class="nc" id="L91">				atom = new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor());</span>
+			}
+<span class="nc" id="L93">			return atom;</span>
+		} else
+<span class="nc" id="L95">			return null;</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L95">		return getAtom().calculateDimension(stringBounder);</span>
+<span class="nc" id="L99">		return getAtom().calculateDimension(stringBounder);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L99">		return 0;</span>
+<span class="nc" id="L103">		return 0;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L103">		getAtom().drawU(ug);</span>
-<span class="nc" id="L104">	}</span>
+<span class="nc" id="L107">		getAtom().drawU(ug);</span>
+<span class="nc" id="L108">	}</span>
 
 	@Override
 	public List&lt;Neutron&gt; getNeutrons() {
-<span class="nc" id="L108">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L112">		throw new UnsupportedOperationException();</span>
 	}
 
 }

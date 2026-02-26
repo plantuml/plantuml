@@ -57,95 +57,94 @@ import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public final class SvekResult extends AbstractTextBlock implements IEntityImage {
-	// ::remove file when __CORE__
 
 	private final DotData dotData;
 	private final DotStringFactory clusterManager;
 
-<span class="nc" id="L65">	public SvekResult(DotData dotData, DotStringFactory clusterManager) {</span>
-<span class="nc" id="L66">		this.dotData = dotData;</span>
-<span class="nc" id="L67">		this.clusterManager = clusterManager;</span>
-<span class="nc" id="L68">	}</span>
+<span class="nc" id="L64">	public SvekResult(DotData dotData, DotStringFactory clusterManager) {</span>
+<span class="nc" id="L65">		this.dotData = dotData;</span>
+<span class="nc" id="L66">		this.clusterManager = clusterManager;</span>
+<span class="nc" id="L67">	}</span>
 
 	public void drawU(UGraphic ug) {
 
-<span class="nc bnc" id="L72" title="All 2 branches missed.">		for (Cluster cluster : clusterManager.getBibliotekon().allCluster())</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">			if (cluster.getGroup().isPacked() == false)</span>
-<span class="nc" id="L74">				cluster.drawU(ug);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		for (Cluster cluster : clusterManager.getBibliotekon().allCluster())</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">			if (cluster.getGroup().isPacked() == false)</span>
+<span class="nc" id="L73">				cluster.drawU(ug);</span>
 
-<span class="nc" id="L76">		final Style style2 = getDefaultStyleDefinition(null)</span>
-<span class="nc" id="L77">				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L75">		final Style style2 = getDefaultStyleDefinition(null)</span>
+<span class="nc" id="L76">				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());</span>
 
-<span class="nc" id="L79">		final HColor borderColor = HColors</span>
-<span class="nc" id="L80">				.noGradient(style2.value(PName.LineColor).asColor(dotData.getSkinParam().getIHtmlColorSet()));</span>
+<span class="nc" id="L78">		final HColor borderColor = HColors</span>
+<span class="nc" id="L79">				.noGradient(style2.value(PName.LineColor).asColor(dotData.getSkinParam().getIHtmlColorSet()));</span>
 
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		for (SvekNode node : clusterManager.getBibliotekon().allNodes()) {</span>
-<span class="nc" id="L83">			final double minX = node.getMinX();</span>
-<span class="nc" id="L84">			final double minY = node.getMinY();</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">			final UGraphic ug2 = node.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;</span>
-<span class="nc" id="L86">			final IEntityImage image = node.getImage();</span>
-<span class="nc" id="L87">			image.drawU(ug2.apply(new UTranslate(minX, minY)));</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">			if (image instanceof Untranslated)</span>
-<span class="nc" id="L89">				((Untranslated) image).drawUntranslated(ug.apply(borderColor), minX, minY);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		for (SvekNode node : clusterManager.getBibliotekon().allNodes()) {</span>
+<span class="nc" id="L82">			final double minX = node.getMinX();</span>
+<span class="nc" id="L83">			final double minY = node.getMinY();</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			final UGraphic ug2 = node.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;</span>
+<span class="nc" id="L85">			final IEntityImage image = node.getImage();</span>
+<span class="nc" id="L86">			image.drawU(ug2.apply(new UTranslate(minX, minY)));</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">			if (image instanceof Untranslated)</span>
+<span class="nc" id="L88">				((Untranslated) image).drawUntranslated(ug.apply(borderColor), minX, minY);</span>
 
-<span class="nc" id="L91">		}</span>
+<span class="nc" id="L90">		}</span>
 
-<span class="nc" id="L93">		final Set&lt;String&gt; ids = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L92">		final Set&lt;String&gt; ids = new HashSet&lt;&gt;();</span>
 
-<span class="nc" id="L95">		computeKal();</span>
+<span class="nc" id="L94">		computeKal();</span>
 
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		for (SvekEdge svekEdge : clusterManager.getBibliotekon().allLines()) {</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">			final UGraphic ug2 = svekEdge.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;</span>
-<span class="nc" id="L99">			svekEdge.setSharedIds(ids);</span>
-<span class="nc" id="L100">			svekEdge.drawU(ug2);</span>
-<span class="nc" id="L101">		}</span>
-<span class="nc" id="L102">	}</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		for (SvekEdge svekEdge : clusterManager.getBibliotekon().allLines()) {</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			final UGraphic ug2 = svekEdge.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;</span>
+<span class="nc" id="L98">			svekEdge.setSharedIds(ids);</span>
+<span class="nc" id="L99">			svekEdge.drawU(ug2);</span>
+<span class="nc" id="L100">		}</span>
+<span class="nc" id="L101">	}</span>
 
 	private void computeKal() {
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (SvekEdge line : clusterManager.getBibliotekon().allLines())</span>
-<span class="nc" id="L106">			line.computeKal();</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		for (SvekNode node : clusterManager.getBibliotekon().allNodes())</span>
-<span class="nc" id="L108">			node.fixOverlap();</span>
-<span class="nc" id="L109">	}</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		for (SvekEdge line : clusterManager.getBibliotekon().allLines())</span>
+<span class="nc" id="L105">			line.computeKal();</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		for (SvekNode node : clusterManager.getBibliotekon().allNodes())</span>
+<span class="nc" id="L107">			node.fixOverlap();</span>
+<span class="nc" id="L108">	}</span>
 
 	private StyleSignature getDefaultStyleDefinition(Stereotype stereotype) {
-<span class="nc" id="L112">		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element,</span>
-<span class="nc" id="L113">				dotData.getUmlDiagramType().getStyleName(), SName.arrow);</span>
+<span class="nc" id="L111">		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element,</span>
+<span class="nc" id="L112">				dotData.getUmlDiagramType().getStyleName(), SName.arrow);</span>
 
-<span class="nc" id="L115">		return result.withTOBECHANGED(stereotype);</span>
+<span class="nc" id="L114">		return result.withTOBECHANGED(stereotype);</span>
 	}
 
 	// Duplicate SvekResult / GeneralImageBuilder
 	public HColor getBackcolor() {
-<span class="nc" id="L120">		final Style style = StyleSignatureBasic.of(SName.root, SName.document)</span>
-<span class="nc" id="L121">				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L122">		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L119">		final Style style = StyleSignatureBasic.of(SName.root, SName.document)</span>
+<span class="nc" id="L120">				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L121">		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());</span>
 	}
 
 	private MinMax minMax;
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (minMax == null) {</span>
-<span class="nc" id="L129">			minMax = TextBlockUtils.getMinMax(this, stringBounder, false);</span>
-<span class="nc" id="L130">			clusterManager.moveDelta(6 - minMax.getMinX(), 6 - minMax.getMinY());</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (minMax == null) {</span>
+<span class="nc" id="L128">			minMax = TextBlockUtils.getMinMax(this, stringBounder, false);</span>
+<span class="nc" id="L129">			clusterManager.moveDelta(6 - minMax.getMinX(), 6 - minMax.getMinY());</span>
 		}
-<span class="nc" id="L132">		return minMax.getDimension().delta(0, 12);</span>
+<span class="nc" id="L131">		return minMax.getDimension().delta(0, 12);</span>
 	}
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L136">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L135">		return ShapeType.RECTANGLE;</span>
 	}
 
 	public Margins getShield(StringBounder stringBounder) {
-<span class="nc" id="L140">		return Margins.NONE;</span>
+<span class="nc" id="L139">		return Margins.NONE;</span>
 	}
 
 	public boolean isHidden() {
-<span class="nc" id="L144">		return false;</span>
+<span class="nc" id="L143">		return false;</span>
 	}
 
 	public double getOverscanX(StringBounder stringBounder) {
-<span class="nc" id="L148">		return 0;</span>
+<span class="nc" id="L147">		return 0;</span>
 	}
 
 }

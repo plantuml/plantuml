@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.security;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 /**
  * There are 4 different security profile defined.
  * &lt;p&gt;
@@ -54,7 +56,7 @@ package net.sourceforge.plantuml.security;
  * implementation.
  * 
  */
-<span class="fc" id="L57">public enum SecurityProfile {</span>
+<span class="fc" id="L59">public enum SecurityProfile {</span>
 	// ::remove folder when __HAXE__
 
 	/**
@@ -65,18 +67,18 @@ package net.sourceforge.plantuml.security;
 	 * This mode is defined for test and debug, since it's not very useful for
 	 * users. However, you can use it if you need to.
 	 */
-<span class="fc" id="L68">	SANDBOX,</span>
+<span class="fc" id="L70">	SANDBOX,</span>
 
 	/**
 	 * 
 	 */
-<span class="fc" id="L73">	ALLOWLIST,</span>
+<span class="fc" id="L75">	ALLOWLIST,</span>
 
 	/**
 	 * This mode is designed for PlantUML running in a web server.
 	 * 
 	 */
-<span class="fc" id="L79">	INTERNET,</span>
+<span class="fc" id="L81">	INTERNET,</span>
 
 	/**
 	 * This mode reproduce old PlantUML version behaviour.
@@ -84,7 +86,7 @@ package net.sourceforge.plantuml.security;
 	 * Right now, this is the default Security Profile but this will be removed from
 	 * future version because it is now full secure, especially on Internet server.
 	 */
-<span class="fc" id="L87">	LEGACY,</span>
+<span class="fc" id="L89">	LEGACY,</span>
 
 	/**
 	 * Running in UNSECURE mode means that PlantUML can access to any local file and
@@ -95,7 +97,7 @@ package net.sourceforge.plantuml.security;
 	 * you should not use this mode if PlantUML is running on some server,
 	 * especially if the server is accessible from Internet.
 	 */
-<span class="fc" id="L98">	UNSECURE;</span>
+<span class="fc" id="L100">	UNSECURE;</span>
 
 	/**
 	 * Initialize the default value.
@@ -106,76 +108,75 @@ package net.sourceforge.plantuml.security;
 	 * @return the value
 	 */
 	static SecurityProfile init() {
-		// ::comment when __CORE__ or __TEAVM__
-<span class="fc" id="L110">		final String env = SecurityUtils.getenv(&quot;PLANTUML_SECURITY_PROFILE&quot;);</span>
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (&quot;SANDBOX&quot;.equalsIgnoreCase(env))</span>
-<span class="nc" id="L112">			return SANDBOX;</span>
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		else if (&quot;ALLOWLIST&quot;.equalsIgnoreCase(env))</span>
-<span class="nc" id="L114">			return ALLOWLIST;</span>
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		else if (&quot;INTERNET&quot;.equalsIgnoreCase(env))</span>
-<span class="nc" id="L116">			return INTERNET;</span>
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		else if (&quot;UNSECURE&quot;.equalsIgnoreCase(env))</span>
-			// ::done
-<span class="nc" id="L119">			return UNSECURE;</span>
-		// ::comment when __CORE__ or __TEAVM__
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L112">			return UNSECURE;</span>
 
-<span class="fc" id="L122">		return LEGACY;</span>
-		// ::done
+<span class="fc" id="L114">		final String env = SecurityUtils.getenv(&quot;PLANTUML_SECURITY_PROFILE&quot;);</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (&quot;SANDBOX&quot;.equalsIgnoreCase(env))</span>
+<span class="nc" id="L116">			return SANDBOX;</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		else if (&quot;ALLOWLIST&quot;.equalsIgnoreCase(env))</span>
+<span class="nc" id="L118">			return ALLOWLIST;</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		else if (&quot;INTERNET&quot;.equalsIgnoreCase(env))</span>
+<span class="nc" id="L120">			return INTERNET;</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		else if (&quot;UNSECURE&quot;.equalsIgnoreCase(env))</span>
+<span class="nc" id="L122">			return UNSECURE;</span>
+
+<span class="fc" id="L124">		return LEGACY;</span>
 	}
 
 	/**
 	 * A Human understandable description.
 	 */
 	public String longDescription() {
-<span class="nc bnc" id="L130" title="All 6 branches missed.">		switch (this) {</span>
+<span class="nc bnc" id="L131" title="All 6 branches missed.">		switch (this) {</span>
 		case SANDBOX:
-<span class="nc" id="L132">			return &quot;This is completely safe: no access to local files or to distant URL.&quot;;</span>
+<span class="nc" id="L133">			return &quot;This is completely safe: no access to local files or to distant URL.&quot;;</span>
 		case ALLOWLIST:
-<span class="nc" id="L134">			return &quot;Some local resource may be accessible.&quot;;</span>
+<span class="nc" id="L135">			return &quot;Some local resource may be accessible.&quot;;</span>
 		case INTERNET:
-<span class="nc" id="L136">			return &quot;&lt;i&gt;Mode designed for server connected to Internet.&quot;;</span>
+<span class="nc" id="L137">			return &quot;&lt;i&gt;Mode designed for server connected to Internet.&quot;;</span>
 		case LEGACY:
-<span class="nc" id="L138">			return &quot;&lt;b&gt;Warning: this mode will be removed in future version&quot;;</span>
+<span class="nc" id="L139">			return &quot;&lt;b&gt;Warning: this mode will be removed in future version&quot;;</span>
 		case UNSECURE:
-<span class="nc" id="L140">			return &quot;&lt;b&gt;Make sure that this server is not accessible from Internet&quot;;</span>
+<span class="nc" id="L141">			return &quot;&lt;b&gt;Make sure that this server is not accessible from Internet&quot;;</span>
 		}
-<span class="nc" id="L142">		return &quot;&lt;i&gt;This is completely safe: no access on local files or on distant URL.&quot;;</span>
+<span class="nc" id="L143">		return &quot;&lt;i&gt;This is completely safe: no access on local files or on distant URL.&quot;;</span>
 	}
 
 	/**
 	 * Retrieve the timeout for URL.
 	 */
 	public long getTimeout() {
-<span class="pc bpc" id="L149" title="5 of 6 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L150" title="5 of 6 branches missed.">		switch (this) {</span>
 		case SANDBOX:
-<span class="nc" id="L151">			return 1000L;</span>
+<span class="nc" id="L152">			return 1000L;</span>
 		case ALLOWLIST:
-<span class="nc" id="L153">			return 1000L * 60 * 5;</span>
+<span class="nc" id="L154">			return 1000L * 60 * 5;</span>
 		case INTERNET:
-<span class="nc" id="L155">			return 1000L * 10;</span>
+<span class="nc" id="L156">			return 1000L * 10;</span>
 		case LEGACY:
-<span class="fc" id="L157">			return 1000L * 60;</span>
+<span class="fc" id="L158">			return 1000L * 60;</span>
 		case UNSECURE:
-<span class="nc" id="L159">			return 1000L * 60 * 5;</span>
+<span class="nc" id="L160">			return 1000L * 60 * 5;</span>
 		}
-<span class="nc" id="L161">		throw new AssertionError();</span>
+<span class="nc" id="L162">		throw new AssertionError();</span>
 	}
 
 	public boolean canWeReadThisEnvironmentVariable(String name) {
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (name == null)</span>
-<span class="nc" id="L166">			return false;</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (name == null)</span>
+<span class="nc" id="L167">			return false;</span>
 
-<span class="fc" id="L168">		final String lname = name.toLowerCase();</span>
-<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (lname.startsWith(&quot;plantuml.security&quot;))</span>
-<span class="fc" id="L170">			return false;</span>
+<span class="fc" id="L169">		final String lname = name.toLowerCase();</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (lname.startsWith(&quot;plantuml.security&quot;))</span>
+<span class="fc" id="L171">			return false;</span>
 
-<span class="fc bfc" id="L172" title="All 2 branches covered.">		if (lname.startsWith(&quot;plantuml&quot;))</span>
-<span class="fc" id="L173">			return true;</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">		if (lname.startsWith(&quot;plantuml&quot;))</span>
+<span class="fc" id="L174">			return true;</span>
 
-<span class="fc bfc" id="L175" title="All 4 branches covered.">		if (lname.equals(&quot;path.separator&quot;) || lname.equals(&quot;line.separator&quot;))</span>
-<span class="fc" id="L176">			return true;</span>
+<span class="fc bfc" id="L176" title="All 4 branches covered.">		if (lname.equals(&quot;path.separator&quot;) || lname.equals(&quot;line.separator&quot;))</span>
+<span class="fc" id="L177">			return true;</span>
 
-<span class="fc bfc" id="L178" title="All 2 branches covered.">		return this == UNSECURE;</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		return this == UNSECURE;</span>
 	}
 
 }

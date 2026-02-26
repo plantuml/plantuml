@@ -1,39 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BrowserLog.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.teavm.browser</a> &gt; <span class="el_source">BrowserLog.java</span></div><h1>BrowserLog.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.teavm.browser;
 
+// ::comment when JAVA8
 import org.teavm.jso.JSBody;
+// ::done
 
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.version.Version;
 
-<span class="nc" id="L7">public class BrowserLog {</span>
+<span class="nc" id="L10">public class BrowserLog {</span>
 
-<span class="fc" id="L9">	private static long START = System.currentTimeMillis();</span>
+<span class="fc" id="L12">	private static long START = System.currentTimeMillis();</span>
 
 	public static void reset() {
-<span class="nc" id="L12">		START = System.currentTimeMillis();</span>
-<span class="nc" id="L13">		consoleMessage(&quot;==============================&quot;);</span>
-<span class="nc" id="L14">	}</span>
+<span class="nc" id="L15">		START = System.currentTimeMillis();</span>
+<span class="nc" id="L16">		consoleMessage(&quot;==============================&quot;);</span>
+<span class="nc" id="L17">	}</span>
 
 	public static void consoleLog(Class&lt;?&gt; clazz, String msg) {
-<span class="fc" id="L17">		consoleMessage(&quot;[&quot; + clazz.getSimpleName() + &quot;] &quot; + msg);</span>
-<span class="fc" id="L18">	}</span>
+<span class="fc" id="L20">		consoleMessage(&quot;[&quot; + clazz.getSimpleName() + &quot;] &quot; + msg);</span>
+<span class="fc" id="L21">	}</span>
 
 	private static void consoleMessage(String msg) {
-		// ::uncomment when __TEAVM__
-		// final String message = getMessage(msg);
-		// jsLog(message);
+		// ::comment when JAVA8
+<span class="pc bpc" id="L25" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L26">			final String message = getMessage(msg);</span>
+<span class="nc" id="L27">			jsLog(message);</span>
+		}
 		// ::done
-<span class="fc" id="L25">	}</span>
+<span class="fc" id="L30">	}</span>
 
 	private static String getMessage(String msg) {
-<span class="nc" id="L28">		final long durationMs = System.currentTimeMillis() - START;</span>
-<span class="nc" id="L29">		return String.format(&quot;[%6d ms] %s&quot;, durationMs, msg);</span>
+<span class="nc" id="L33">		final long durationMs = System.currentTimeMillis() - START;</span>
+<span class="nc" id="L34">		return String.format(&quot;[%6d ms] %s&quot;, durationMs, msg);</span>
 	}
 
 	public static void jsStatusDuration() {
-<span class="nc bnc" id="L33" title="All 2 branches missed.">		final String msg = START == 0 ? &quot;&quot; : Version.fullDescription();</span>
-<span class="nc" id="L34">		jsStatus(getMessage(msg));</span>
-<span class="nc" id="L35">	}</span>
+		// ::comment when JAVA8
+<span class="nc bnc" id="L39" title="All 2 branches missed.">		final String msg = START == 0 ? &quot;&quot; : Version.fullDescription();</span>
+<span class="nc" id="L40">		jsStatus(getMessage(msg));</span>
+		// ::done
+<span class="nc" id="L42">	}</span>
 
+	// ::comment when JAVA8
 	@JSBody(params = &quot;msg&quot;, script = &quot;console.log(msg);&quot;)
 	public static native void jsLog(String msg);
 
@@ -43,6 +51,7 @@ import net.sourceforge.plantuml.version.Version;
 			&quot;if (el) { el.textContent = msg; }&quot; //
 	)
 	public static native void jsStatus(String msg);
+	// ::done
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

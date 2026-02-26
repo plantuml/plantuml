@@ -98,104 +98,102 @@ public class InstructionFork extends WithNote implements Instruction {
 <span class="nc" id="L98">		return getLastList().add(ins);</span>
 	}
 
-	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
-<span class="nc" id="L104">		final List&lt;Gtile&gt; all = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (InstructionList list : forks) {</span>
-<span class="nc" id="L106">			Gtile tmp = list.createGtile(skinParam, stringBounder);</span>
-<span class="nc" id="L107">			tmp = Gtiles.withIncomingArrow(tmp, 20);</span>
-<span class="nc" id="L108">			tmp = Gtiles.withOutgoingArrow(tmp, 20);</span>
-<span class="nc" id="L109">			all.add(tmp);</span>
-<span class="nc" id="L110">		}</span>
+<span class="nc" id="L103">		final List&lt;Gtile&gt; all = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		for (InstructionList list : forks) {</span>
+<span class="nc" id="L105">			Gtile tmp = list.createGtile(skinParam, stringBounder);</span>
+<span class="nc" id="L106">			tmp = Gtiles.withIncomingArrow(tmp, 20);</span>
+<span class="nc" id="L107">			tmp = Gtiles.withOutgoingArrow(tmp, 20);</span>
+<span class="nc" id="L108">			all.add(tmp);</span>
+<span class="nc" id="L109">		}</span>
 
-<span class="nc" id="L112">		return new GtileSplit(all, swimlaneIn, getInLinkRenderingColor(skinParam).getColor());</span>
+<span class="nc" id="L111">		return new GtileSplit(all, swimlaneIn, getInLinkRenderingColor(skinParam).getColor());</span>
 	}
-	// ::done
 
 	private Rainbow getInLinkRenderingColor(ISkinParam skinParam) {
 		Rainbow color;
-<span class="nc" id="L118">		color = Rainbow.build(skinParam);</span>
-<span class="nc" id="L119">		return color;</span>
+<span class="nc" id="L116">		color = Rainbow.build(skinParam);</span>
+<span class="nc" id="L117">		return color;</span>
 	}
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
-<span class="nc" id="L124">		final List&lt;Ftile&gt; all = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">		for (InstructionList list : forks)</span>
-<span class="nc" id="L126">			all.add(list.createFtile(factory));</span>
+<span class="nc" id="L122">		final List&lt;Ftile&gt; all = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		for (InstructionList list : forks)</span>
+<span class="nc" id="L124">			all.add(list.createFtile(factory));</span>
 
-<span class="nc" id="L128">		Ftile result = factory.createParallel(all, style, label, swimlaneIn, swimlaneOut, colors);</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (getPositionedNotes().size() &gt; 0)</span>
-<span class="nc" id="L130">			result = FtileWithNoteOpale.create(result, getPositionedNotes(), false, VerticalAlignment.CENTER);</span>
+<span class="nc" id="L126">		Ftile result = factory.createParallel(all, style, label, swimlaneIn, swimlaneOut, colors);</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (getPositionedNotes().size() &gt; 0)</span>
+<span class="nc" id="L128">			result = FtileWithNoteOpale.create(result, getPositionedNotes(), false, VerticalAlignment.CENTER);</span>
 
-<span class="nc" id="L132">		return result;</span>
+<span class="nc" id="L130">		return result;</span>
 	}
 
 	public Instruction getParent() {
-<span class="nc" id="L136">		return parent;</span>
+<span class="nc" id="L134">		return parent;</span>
 	}
 
 	public void forkAgain(Swimlane swimlane) {
-<span class="nc" id="L140">		this.swimlaneOut = swimlane;</span>
-<span class="nc" id="L141">		this.forks.add(InstructionList.empty());</span>
-<span class="nc" id="L142">	}</span>
+<span class="nc" id="L138">		this.swimlaneOut = swimlane;</span>
+<span class="nc" id="L139">		this.forks.add(InstructionList.empty());</span>
+<span class="nc" id="L140">	}</span>
 
 	@Override
 	final public boolean kill() {
-<span class="nc" id="L146">		return getLastList().kill();</span>
+<span class="nc" id="L144">		return getLastList().kill();</span>
 	}
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="nc" id="L151">		return inlinkRendering;</span>
+<span class="nc" id="L149">		return inlinkRendering;</span>
 	}
 
 	@Override
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote,
 			Stereotype stereotype) {
-<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (finished)</span>
-<span class="nc" id="L158">			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (finished)</span>
+<span class="nc" id="L156">			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (getLastList().getLast() == null)</span>
-<span class="nc" id="L161">			return getLastList().addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (getLastList().getLast() == null)</span>
+<span class="nc" id="L159">			return getLastList().addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 
-<span class="nc" id="L163">		return getLastList().addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+<span class="nc" id="L161">		return getLastList().addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 	}
 
 	@Override
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc" id="L168">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;(InstructionList.getSwimlanes2(forks));</span>
-<span class="nc" id="L169">		result.add(swimlaneIn);</span>
-<span class="nc" id="L170">		result.add(swimlaneOut);</span>
-<span class="nc" id="L171">		return result;</span>
+<span class="nc" id="L166">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;(InstructionList.getSwimlanes2(forks));</span>
+<span class="nc" id="L167">		result.add(swimlaneIn);</span>
+<span class="nc" id="L168">		result.add(swimlaneOut);</span>
+<span class="nc" id="L169">		return result;</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneIn() {
-<span class="nc" id="L176">		return swimlaneIn;</span>
+<span class="nc" id="L174">		return swimlaneIn;</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneOut() {
-<span class="nc" id="L181">		return swimlaneOut;</span>
+<span class="nc" id="L179">		return swimlaneOut;</span>
 	}
 
 	public void manageOutRendering(LinkRendering nextLinkRenderer, boolean endFork) {
-<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (endFork)</span>
-<span class="nc" id="L186">			this.finished = true;</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		if (endFork)</span>
+<span class="nc" id="L184">			this.finished = true;</span>
 
-<span class="nc bnc" id="L188" title="All 2 branches missed.">		if (nextLinkRenderer == null)</span>
-<span class="nc" id="L189">			return;</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (nextLinkRenderer == null)</span>
+<span class="nc" id="L187">			return;</span>
 
-<span class="nc" id="L191">		getLastList().setOutRendering(nextLinkRenderer);</span>
-<span class="nc" id="L192">	}</span>
+<span class="nc" id="L189">		getLastList().setOutRendering(nextLinkRenderer);</span>
+<span class="nc" id="L190">	}</span>
 
 	public void setStyle(ForkStyle style, String label, Swimlane swimlane) {
-<span class="nc" id="L195">		this.style = style;</span>
-<span class="nc" id="L196">		this.label = label;</span>
-<span class="nc" id="L197">		this.swimlaneOut = swimlane;</span>
-<span class="nc" id="L198">	}</span>
+<span class="nc" id="L193">		this.style = style;</span>
+<span class="nc" id="L194">		this.label = label;</span>
+<span class="nc" id="L195">		this.swimlaneOut = swimlane;</span>
+<span class="nc" id="L196">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

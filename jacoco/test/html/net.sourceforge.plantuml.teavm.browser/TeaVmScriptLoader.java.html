@@ -5,8 +5,9 @@ import org.teavm.jso.JSFunctor;
 import org.teavm.jso.JSObject;
 
 public final class TeaVmScriptLoader {
+	// ::remove file when JAVA8
 
-<span class="nc" id="L9">	private static final Object LOCK = new Object();</span>
+<span class="nc" id="L10">	private static final Object LOCK = new Object();</span>
 	private static volatile boolean loadSuccess;
 	private static volatile String loadError;
 	private static volatile boolean loadComplete;
@@ -63,41 +64,41 @@ public final class TeaVmScriptLoader {
 	 */
 	public static void loadOnceSync(String url) {
 		// Fast path: already loaded
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (isLoaded(url))</span>
-<span class="nc" id="L67">			return;</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (isLoaded(url))</span>
+<span class="nc" id="L68">			return;</span>
 
-<span class="nc" id="L69">		synchronized (LOCK) {</span>
-<span class="nc" id="L70">			loadComplete = false;</span>
-<span class="nc" id="L71">			loadSuccess = false;</span>
-<span class="nc" id="L72">			loadError = null;</span>
+<span class="nc" id="L70">		synchronized (LOCK) {</span>
+<span class="nc" id="L71">			loadComplete = false;</span>
+<span class="nc" id="L72">			loadSuccess = false;</span>
+<span class="nc" id="L73">			loadError = null;</span>
 
-<span class="nc" id="L74">			loadOnce(url, () -&gt; {</span>
-<span class="nc" id="L75">				synchronized (LOCK) {</span>
-<span class="nc" id="L76">					loadSuccess = true;</span>
-<span class="nc" id="L77">					loadComplete = true;</span>
-<span class="nc" id="L78">					LOCK.notify();</span>
-<span class="nc" id="L79">				}</span>
-<span class="nc" id="L80">			}, (msg) -&gt; {</span>
-<span class="nc" id="L81">				synchronized (LOCK) {</span>
-<span class="nc" id="L82">					loadSuccess = false;</span>
-<span class="nc" id="L83">					loadError = msg;</span>
-<span class="nc" id="L84">					loadComplete = true;</span>
-<span class="nc" id="L85">					LOCK.notify();</span>
-<span class="nc" id="L86">				}</span>
-<span class="nc" id="L87">			});</span>
+<span class="nc" id="L75">			loadOnce(url, () -&gt; {</span>
+<span class="nc" id="L76">				synchronized (LOCK) {</span>
+<span class="nc" id="L77">					loadSuccess = true;</span>
+<span class="nc" id="L78">					loadComplete = true;</span>
+<span class="nc" id="L79">					LOCK.notify();</span>
+<span class="nc" id="L80">				}</span>
+<span class="nc" id="L81">			}, (msg) -&gt; {</span>
+<span class="nc" id="L82">				synchronized (LOCK) {</span>
+<span class="nc" id="L83">					loadSuccess = false;</span>
+<span class="nc" id="L84">					loadError = msg;</span>
+<span class="nc" id="L85">					loadComplete = true;</span>
+<span class="nc" id="L86">					LOCK.notify();</span>
+<span class="nc" id="L87">				}</span>
+<span class="nc" id="L88">			});</span>
 
-<span class="nc bnc" id="L89" title="All 2 branches missed.">			while (!loadComplete) {</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">			while (!loadComplete) {</span>
 				try {
-<span class="nc" id="L91">					LOCK.wait();</span>
-<span class="nc" id="L92">				} catch (InterruptedException e) {</span>
+<span class="nc" id="L92">					LOCK.wait();</span>
+<span class="nc" id="L93">				} catch (InterruptedException e) {</span>
 					// retry
-<span class="nc" id="L94">				}</span>
+<span class="nc" id="L95">				}</span>
 			}
 
-<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (!loadSuccess)</span>
-<span class="nc" id="L98">				throw new RuntimeException(loadError);</span>
-<span class="nc" id="L99">		}</span>
-<span class="nc" id="L100">	}</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (!loadSuccess)</span>
+<span class="nc" id="L99">				throw new RuntimeException(loadError);</span>
+<span class="nc" id="L100">		}</span>
+<span class="nc" id="L101">	}</span>
 
 	private TeaVmScriptLoader() {
 	}

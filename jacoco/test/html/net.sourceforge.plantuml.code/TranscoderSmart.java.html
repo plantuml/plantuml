@@ -43,7 +43,7 @@ import java.io.IOException;
 			new CompressionZlib());
 <span class="fc" id="L44">	private final Transcoder hexOnly = TranscoderImpl.utf8(new AsciiEncoderHex(), new ArobaseStringCompressor(),</span>
 			new CompressionNone());
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	// Legacy encoder
 <span class="fc" id="L48">	private final Transcoder oldOne = TranscoderImpl.utf8(new AsciiEncoder(), new ArobaseStringCompressor(),</span>
 			new CompressionHuffman());
@@ -60,7 +60,7 @@ import java.io.IOException;
 <span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~0&quot;))</span>
 <span class="nc" id="L61">			return zlib.decode(code.substring(2));</span>
 
-		// ::comment when __CORE__ or __TEAVM__
+		// ::comment when __TEAVM__
 <span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~1&quot;))</span>
 <span class="nc" id="L65">			return oldOne.decode(code.substring(2));</span>
 
@@ -74,11 +74,11 @@ import java.io.IOException;
 <span class="nc" id="L74">			return zip.decode(code.substring(5));</span>
 		// ::done
 
-		// ::comment when __CORE__ or __TEAVM__
+		// ::comment when __TEAVM__
 		try {
 			// ::done
 <span class="fc" id="L80">			return zlib.decode(code);</span>
-			// ::comment when __CORE__ or __TEAVM__
+			// ::comment when __TEAVM__
 <span class="fc" id="L82">		} catch (Exception ex) {</span>
 <span class="nc" id="L83">			return oldOne.decode(code);</span>
 		}

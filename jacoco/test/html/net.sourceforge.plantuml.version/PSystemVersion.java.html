@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.NFolder;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -61,147 +62,146 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class PSystemVersion extends PlainStringsDiagram {
 
 	PSystemVersion(UmlSource source, boolean withImage, List&lt;String&gt; args, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L68">		super(source, preprocessing);</span>
-<span class="fc" id="L69">		this.strings.addAll(args);</span>
-		// ::comment when __CORE__ or __TEAVM__
-		try {
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">			if (withImage) {</span>
-<span class="fc" id="L73">				this.image = getPlantumlImage();</span>
-<span class="fc" id="L74">				this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;</span>
-			}
-<span class="nc" id="L76">		} catch (Exception e) {</span>
-<span class="nc" id="L77">			e.printStackTrace();</span>
-<span class="fc" id="L78">		}</span>
-		// ::done
-<span class="fc" id="L80">	}</span>
+<span class="fc" id="L70">		super(source, preprocessing);</span>
+<span class="fc" id="L71">		this.strings.addAll(args);</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM())</span>
+			try {
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">				if (withImage) {</span>
+<span class="fc" id="L75">					this.image = getPlantumlImage();</span>
+<span class="fc" id="L76">					this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;</span>
+				}
+<span class="nc" id="L78">			} catch (Exception e) {</span>
+<span class="nc" id="L79">				e.printStackTrace();</span>
+<span class="fc" id="L80">			}</span>
+<span class="fc" id="L81">	}</span>
 
 	private PSystemVersion(UmlSource source, List&lt;String&gt; args, PortableImage image,
 			PreprocessingArtifact preprocessing) {
-<span class="nc" id="L84">		super(source, preprocessing);</span>
-<span class="nc" id="L85">		this.strings.addAll(args);</span>
-<span class="nc" id="L86">		this.image = image;</span>
-<span class="nc" id="L87">		this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;</span>
-<span class="nc" id="L88">	}</span>
+<span class="nc" id="L85">		super(source, preprocessing);</span>
+<span class="nc" id="L86">		this.strings.addAll(args);</span>
+<span class="nc" id="L87">		this.image = image;</span>
+<span class="nc" id="L88">		this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;</span>
+<span class="nc" id="L89">	}</span>
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	public static PortableImage getPlantumlImage() {
-<span class="fc" id="L92">		return getImage(&quot;logo.png&quot;);</span>
+<span class="fc" id="L93">		return getImage(&quot;logo.png&quot;);</span>
 	}
 
 	public static PortableImage getTime01() {
-<span class="nc" id="L96">		return getImage(&quot;time01.png&quot;);</span>
+<span class="nc" id="L97">		return getImage(&quot;time01.png&quot;);</span>
 	}
 
 	public static PortableImage getTime15() {
-<span class="nc" id="L100">		return getImage(&quot;time15.png&quot;);</span>
+<span class="nc" id="L101">		return getImage(&quot;time15.png&quot;);</span>
 	}
 
 	public static PortableImage getCharlieImage() {
-<span class="nc" id="L104">		return getImage(&quot;charlie.png&quot;);</span>
+<span class="nc" id="L105">		return getImage(&quot;charlie.png&quot;);</span>
 	}
 
 	public static PortableImage getPlantumlSmallIcon() {
-<span class="nc" id="L108">		return getImage(&quot;favicon.png&quot;);</span>
+<span class="nc" id="L109">		return getImage(&quot;favicon.png&quot;);</span>
 	}
 
 	public static PortableImage getArecibo() {
-<span class="nc" id="L112">		return getImage(&quot;arecibo.png&quot;);</span>
+<span class="nc" id="L113">		return getImage(&quot;arecibo.png&quot;);</span>
 	}
 
 	public static PortableImage getDotc() {
-<span class="nc" id="L116">		return getImage(&quot;dotc.png&quot;);</span>
+<span class="nc" id="L117">		return getImage(&quot;dotc.png&quot;);</span>
 	}
 
 	public static PortableImage getDotd() {
-<span class="nc" id="L120">		return getImage(&quot;dotd.png&quot;);</span>
+<span class="nc" id="L121">		return getImage(&quot;dotd.png&quot;);</span>
 	}
 
 	public static PortableImage getApple2Image() {
-<span class="nc" id="L124">		return getImageWebp(&quot;apple2.png&quot;);</span>
+<span class="nc" id="L125">		return getImageWebp(&quot;apple2.png&quot;);</span>
 	}
 
 	private static PortableImage getImage(final String name) {
 		try {
-<span class="fc" id="L129">			final InputStream is = PSystemVersion.class.getResourceAsStream(name);</span>
-<span class="fc" id="L130">			final PortableImage image = SImageIO.read(is);</span>
-<span class="fc" id="L131">			is.close();</span>
-<span class="fc" id="L132">			return image;</span>
-<span class="nc" id="L133">		} catch (IOException e) {</span>
-<span class="nc" id="L134">			Logme.error(e);</span>
+<span class="fc" id="L130">			final InputStream is = PSystemVersion.class.getResourceAsStream(name);</span>
+<span class="fc" id="L131">			final PortableImage image = SImageIO.read(is);</span>
+<span class="fc" id="L132">			is.close();</span>
+<span class="fc" id="L133">			return image;</span>
+<span class="nc" id="L134">		} catch (IOException e) {</span>
+<span class="nc" id="L135">			Logme.error(e);</span>
 		}
-<span class="nc" id="L136">		return new PortableImage(10, 10, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="nc" id="L137">		return PortableImageFactory.build(10, 10, BufferedImage.TYPE_INT_ARGB);</span>
 	}
 
 	private static PortableImage getImageWebp(final String name) {
-<span class="nc" id="L140">		try (InputStream is = PSystemVersion.class.getResourceAsStream(name)) {</span>
-<span class="nc" id="L141">			return SFile.getImageFromWebpButHeader(is);</span>
-<span class="nc" id="L142">		} catch (IOException e) {</span>
-<span class="nc" id="L143">			Logme.error(e);</span>
+<span class="nc" id="L141">		try (InputStream is = PSystemVersion.class.getResourceAsStream(name)) {</span>
+<span class="nc" id="L142">			return SFile.getImageFromWebpButHeader(is);</span>
+<span class="nc" id="L143">		} catch (IOException e) {</span>
+<span class="nc" id="L144">			Logme.error(e);</span>
 		}
-<span class="nc" id="L145">		return new PortableImage(10, 10, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="nc" id="L146">		return PortableImageFactory.build(10, 10, BufferedImage.TYPE_INT_ARGB);</span>
 	}
 
 	private static BufferedImage transparentIcon;
 
 	public static BufferedImage getPlantumlSmallIcon2() {
-<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (transparentIcon != null) {</span>
-<span class="nc" id="L152">			return transparentIcon;</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (transparentIcon != null) {</span>
+<span class="nc" id="L153">			return transparentIcon;</span>
 		}
-<span class="nc" id="L154">		final PortableImage ico = getPlantumlSmallIcon();</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (ico == null) {</span>
-<span class="nc" id="L156">			return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="nc" id="L155">		final PortableImage ico = getPlantumlSmallIcon();</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (ico == null) {</span>
+<span class="nc" id="L157">			return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);</span>
 		}
-<span class="nc" id="L158">		transparentIcon = new BufferedImage(ico.getWidth(), ico.getHeight(), BufferedImage.TYPE_INT_ARGB_PRE);</span>
-<span class="nc bnc" id="L159" title="All 2 branches missed.">		for (int i = 0; i &lt; ico.getWidth(); i++) {</span>
-<span class="nc bnc" id="L160" title="All 2 branches missed.">			for (int j = 0; j &lt; ico.getHeight(); j++) {</span>
-<span class="nc" id="L161">				final int col = ico.getRGB(i, j);</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">				if (col != ico.getRGB(0, 0)) {</span>
-<span class="nc" id="L163">					transparentIcon.setRGB(i, j, col);</span>
+<span class="nc" id="L159">		transparentIcon = new BufferedImage(ico.getWidth(), ico.getHeight(), BufferedImage.TYPE_INT_ARGB_PRE);</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		for (int i = 0; i &lt; ico.getWidth(); i++) {</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">			for (int j = 0; j &lt; ico.getHeight(); j++) {</span>
+<span class="nc" id="L162">				final int col = ico.getRGB(i, j);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">				if (col != ico.getRGB(0, 0)) {</span>
+<span class="nc" id="L164">					transparentIcon.setRGB(i, j, col);</span>
 				}
 			}
 		}
-<span class="nc" id="L167">		return transparentIcon;</span>
+<span class="nc" id="L168">		return transparentIcon;</span>
 	}
 	// ::done
 
 	public static PSystemVersion createShowVersion(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L172">		final ReportLog strings = new ReportLog();</span>
-<span class="nc" id="L173">		strings.add(&quot;&lt;b&gt;PlantUML&lt;/b&gt; \&quot;\&quot;&quot; + Version.versionString() + &quot;\&quot;\&quot;&quot;);</span>
-<span class="nc" id="L174">		strings.add(&quot;&lt;b&gt;Git Commit&lt;/b&gt; \&quot;\&quot;&quot; + CompilationInfo.COMMIT + &quot;\&quot;\&quot;&quot;);</span>
-<span class="nc" id="L175">		strings.add(&quot;&lt;b&gt;Build Time&lt;/b&gt; \&quot;\&quot;&quot; + Version.compileTimeString() + &quot;\&quot;\&quot;&quot;);</span>
+<span class="nc" id="L173">		final ReportLog strings = new ReportLog();</span>
+<span class="nc" id="L174">		strings.add(&quot;&lt;b&gt;PlantUML&lt;/b&gt; \&quot;\&quot;&quot; + Version.versionString() + &quot;\&quot;\&quot;&quot;);</span>
+<span class="nc" id="L175">		strings.add(&quot;&lt;b&gt;Git Commit&lt;/b&gt; \&quot;\&quot;&quot; + CompilationInfo.COMMIT + &quot;\&quot;\&quot;&quot;);</span>
+<span class="nc" id="L176">		strings.add(&quot;&lt;b&gt;Build Time&lt;/b&gt; \&quot;\&quot;&quot; + Version.compileTimeString() + &quot;\&quot;\&quot;&quot;);</span>
 
-		// ::revert when __TEAVM__
-<span class="nc" id="L178">		strings.add(&quot;&lt;b&gt;License&lt;/b&gt; \&quot;\&quot;&quot; + License.getCurrent() + &quot;\&quot;\&quot;&quot;);</span>
-<span class="nc" id="L179">		strings.checkOldVersionWarning();</span>
-<span class="nc bnc" id="L180" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
-<span class="nc" id="L181">			strings.add(&quot;Loaded from &quot; + Version.getJarPath());</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L179">			strings.add(&quot;&lt;b&gt;License&lt;/b&gt; \&quot;\&quot;&quot; + License.getCurrent() + &quot;\&quot;\&quot;&quot;);</span>
+<span class="nc" id="L180">			strings.checkOldVersionWarning();</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+<span class="nc" id="L182">				strings.add(&quot;Loaded from &quot; + Version.getJarPath());</span>
 
-<span class="nc bnc" id="L183" title="All 2 branches missed.">			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD)) {</span>
-<span class="nc" id="L184">				strings.add(&quot;Word Mode&quot;);</span>
-<span class="nc" id="L185">				strings.add(&quot;Current Dir: &quot; + new SFile(&quot;.&quot;).getAbsolutePath());</span>
-<span class="nc" id="L186">				strings.add(&quot;plantuml.include.path: &quot; + PreprocessorUtils.getenv(NFolder.PATHS_INCLUDES));</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD)) {</span>
+<span class="nc" id="L185">					strings.add(&quot;Word Mode&quot;);</span>
+<span class="nc" id="L186">					strings.add(&quot;Current Dir: &quot; + new SFile(&quot;.&quot;).getAbsolutePath());</span>
+<span class="nc" id="L187">					strings.add(&quot;plantuml.include.path: &quot; + PreprocessorUtils.getenv(NFolder.PATHS_INCLUDES));</span>
+				}
 			}
+<span class="nc" id="L190">			strings.add(&quot; &quot;);</span>
+
+<span class="nc" id="L192">			GraphvizUtils.addDotStatus(strings, true);</span>
+<span class="nc" id="L193">			strings.add(&quot; &quot;);</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">			for (String name : OptionPrint.interestingProperties())</span>
+<span class="nc" id="L195">				strings.add(name);</span>
+
+<span class="nc bnc" id="L197" title="All 2 branches missed.">			for (String v : OptionPrint.interestingValues())</span>
+<span class="nc" id="L198">				strings.add(v);</span>
 		}
-<span class="nc" id="L189">		strings.add(&quot; &quot;);</span>
-
-<span class="nc" id="L191">		GraphvizUtils.addDotStatus(strings, true);</span>
-<span class="nc" id="L192">		strings.add(&quot; &quot;);</span>
-<span class="nc bnc" id="L193" title="All 2 branches missed.">		for (String name : OptionPrint.interestingProperties())</span>
-<span class="nc" id="L194">			strings.add(name);</span>
-
-<span class="nc bnc" id="L196" title="All 2 branches missed.">		for (String v : OptionPrint.interestingValues())</span>
-<span class="nc" id="L197">			strings.add(v);</span>
-
-		// ::done
 
 <span class="nc" id="L201">		return new PSystemVersion(source, true, strings.asList(), preprocessing);</span>
 	}
 
-	// :: comment when __CORE__ or __TEAVM__
+	// :: comment when __TEAVM__
 	public static PSystemVersion createStdLib(UmlSource source, PreprocessingArtifact preprocessing) {
 <span class="fc" id="L206">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
 <span class="fc" id="L207">		Stdlib.addInfoVersion(strings, true);</span>
@@ -220,7 +220,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 <span class="nc" id="L220">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
 <span class="nc" id="L221">		add(strings, &quot;&lt;b&gt;PlantUML version &quot; + Version.versionString() + &quot;&lt;/b&gt; (&quot; + Version.compileTimeString() + &quot;)&quot;,</span>
 				withTag);
-		// :: comment when __CORE__ or __TEAVM__
+		// :: comment when __TEAVM__
 <span class="nc" id="L224">		add(strings, &quot;(&quot; + License.getCurrent() + &quot; source distribution)&quot;, withTag);</span>
 <span class="nc" id="L225">		add(strings, &quot; &quot;, withTag);</span>
 		// ::done
@@ -252,7 +252,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 
 <span class="nc" id="L253">	}</span>
 
-	// ::comment when __CORE__ or __TEAVM__
+	// ::comment when __TEAVM__
 	public static PSystemVersion createTestDot(UmlSource source, PreprocessingArtifact preprocessing)
 			throws IOException {
 <span class="nc" id="L258">		final ReportLog strings = new ReportLog();</span>

@@ -59,31 +59,29 @@ public class InstructionLabel extends MonoSwimable implements Instruction {
 <span class="nc" id="L59">		return new FtileLabel(factory.skinParam(), getSwimlaneIn(), name);</span>
 	}
 
-	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
-<span class="nc" id="L65">		return new GtileEmpty(stringBounder, skinParam);</span>
+<span class="nc" id="L64">		return new GtileEmpty(stringBounder, skinParam);</span>
 	}
-	// ::done
 
 	@Override
 	public CommandExecutionResult add(Instruction other) {
-<span class="nc" id="L71">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L69">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	final public boolean kill() {
-<span class="nc" id="L76">		return false;</span>
+<span class="nc" id="L74">		return false;</span>
 	}
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="nc" id="L81">		return LinkRendering.none();</span>
+<span class="nc" id="L79">		return LinkRendering.none();</span>
 	}
 
 	@Override
 	public boolean containsBreak() {
-<span class="nc" id="L86">		return false;</span>
+<span class="nc" id="L84">		return false;</span>
 	}
 
 }

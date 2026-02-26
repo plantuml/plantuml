@@ -73,57 +73,56 @@ public class UGraphicInterceptorOneSwimlane extends UGraphicDelegator {
 <span class="fc" id="L73">				tile.drawU(this);</span>
 				// drawGoto();
 			}
-			// ::comment when __CORE__
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		} else if (shape instanceof Gtile) {</span>
-<span class="nc" id="L78">			final Gtile tile = (Gtile) shape;</span>
-<span class="nc" id="L79">			final Set&lt;Swimlane&gt; swimlanes = tile.getSwimlanes();</span>
-<span class="nc" id="L80">			final boolean contained = swimlanes.contains(swimlane);</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">			if (contained)</span>
-<span class="nc" id="L82">				tile.drawU(this);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		} else if (shape instanceof Gtile) {</span>
+<span class="nc" id="L77">			final Gtile tile = (Gtile) shape;</span>
+<span class="nc" id="L78">			final Set&lt;Swimlane&gt; swimlanes = tile.getSwimlanes();</span>
+<span class="nc" id="L79">			final boolean contained = swimlanes.contains(swimlane);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (contained)</span>
+<span class="nc" id="L81">				tile.drawU(this);</span>
 
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		} else if (shape instanceof GConnection) {</span>
-<span class="nc" id="L85">			final GConnection connection = (GConnection) shape;</span>
-<span class="nc" id="L86">			final List&lt;GPoint&gt; hooks = connection.getHooks();</span>
-<span class="nc" id="L87">			final GPoint point0 = hooks.get(0);</span>
-<span class="nc" id="L88">			final GPoint point1 = hooks.get(1);</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		} else if (shape instanceof GConnection) {</span>
+<span class="nc" id="L84">			final GConnection connection = (GConnection) shape;</span>
+<span class="nc" id="L85">			final List&lt;GPoint&gt; hooks = connection.getHooks();</span>
+<span class="nc" id="L86">			final GPoint point0 = hooks.get(0);</span>
+<span class="nc" id="L87">			final GPoint point1 = hooks.get(1);</span>
 
-<span class="nc bnc" id="L90" title="All 4 branches missed.">			if (point0.match(swimlane) &amp;&amp; point1.match(swimlane))</span>
-<span class="nc" id="L91">				connection.drawU(this);</span>
-			// ::done
-<span class="pc bfc" id="L93" title="All 2 branches covered.">		} else if (shape instanceof Connection) {</span>
-<span class="fc" id="L94">			final Connection connection = (Connection) shape;</span>
-<span class="fc" id="L95">			final Ftile tile1 = connection.getFtile1();</span>
-<span class="fc" id="L96">			final Ftile tile2 = connection.getFtile2();</span>
-<span class="pc bpc" id="L97" title="2 of 4 branches missed.">			final boolean contained1 = tile1 == null || tile1.getSwimlaneOut() == null</span>
-<span class="fc bfc" id="L98" title="All 2 branches covered.">					|| tile1.getSwimlaneOut() == swimlane;</span>
-<span class="pc bpc" id="L99" title="2 of 4 branches missed.">			final boolean contained2 = tile2 == null || tile2.getSwimlaneIn() == null</span>
-<span class="fc bfc" id="L100" title="All 2 branches covered.">					|| tile2.getSwimlaneIn() == swimlane;</span>
+<span class="nc bnc" id="L89" title="All 4 branches missed.">			if (point0.match(swimlane) &amp;&amp; point1.match(swimlane))</span>
+<span class="nc" id="L90">				connection.drawU(this);</span>
 
-<span class="fc bfc" id="L102" title="All 4 branches covered.">			if (contained1 &amp;&amp; contained2) {</span>
-<span class="fc" id="L103">				connection.drawU(this);</span>
+<span class="pc bfc" id="L92" title="All 2 branches covered.">		} else if (shape instanceof Connection) {</span>
+<span class="fc" id="L93">			final Connection connection = (Connection) shape;</span>
+<span class="fc" id="L94">			final Ftile tile1 = connection.getFtile1();</span>
+<span class="fc" id="L95">			final Ftile tile2 = connection.getFtile2();</span>
+<span class="pc bpc" id="L96" title="2 of 4 branches missed.">			final boolean contained1 = tile1 == null || tile1.getSwimlaneOut() == null</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">					|| tile1.getSwimlaneOut() == swimlane;</span>
+<span class="pc bpc" id="L98" title="2 of 4 branches missed.">			final boolean contained2 = tile2 == null || tile2.getSwimlaneIn() == null</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">					|| tile2.getSwimlaneIn() == swimlane;</span>
+
+<span class="fc bfc" id="L101" title="All 4 branches covered.">			if (contained1 &amp;&amp; contained2) {</span>
+<span class="fc" id="L102">				connection.drawU(this);</span>
 			}
-<span class="fc" id="L105">		} else {</span>
-<span class="fc" id="L106">			getUg().draw(shape);</span>
+<span class="fc" id="L104">		} else {</span>
+<span class="fc" id="L105">			getUg().draw(shape);</span>
 			// System.err.println(&quot;Drawing &quot; + shape);
 		}
 
-<span class="fc" id="L110">	}</span>
+<span class="fc" id="L109">	}</span>
 
 	private void drawGoto() {
-<span class="nc" id="L113">		final UGraphic ugGoto = getUg().apply(HColors.GREEN).apply(HColors.GREEN.bg());</span>
-<span class="nc" id="L114">		ugGoto.draw(new ULine(100, 100));</span>
-<span class="nc" id="L115">	}</span>
+<span class="nc" id="L112">		final UGraphic ugGoto = getUg().apply(HColors.GREEN).apply(HColors.GREEN.bg());</span>
+<span class="nc" id="L113">		ugGoto.draw(new ULine(100, 100));</span>
+<span class="nc" id="L114">	}</span>
 
 	public UGraphic apply(UChange change) {
-<span class="fc" id="L118">		return new UGraphicInterceptorOneSwimlane(getUg().apply(change), swimlane, orderedList);</span>
+<span class="fc" id="L117">		return new UGraphicInterceptorOneSwimlane(getUg().apply(change), swimlane, orderedList);</span>
 	}
 
 	public final Swimlane getSwimlane() {
-<span class="fc" id="L122">		return swimlane;</span>
+<span class="fc" id="L121">		return swimlane;</span>
 	}
 
 	public final List&lt;Swimlane&gt; getOrderedListOfAllSwimlanes() {
-<span class="nc" id="L126">		return Collections.unmodifiableList(orderedList);</span>
+<span class="nc" id="L125">		return Collections.unmodifiableList(orderedList);</span>
 	}
 
 }

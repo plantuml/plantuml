@@ -48,10 +48,8 @@ import jcckit.util.Factory;
  * @author Franz-Josef Elmer
  */
 public class GraphicsPlotCanvas extends PlotCanvas {
-	// ::remove folder when __CORE__
-	// ::remove folder when __TEAVM__
-	// ::remove folder when __HAXE__
-	// ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+	
+	// ::remove folder when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
 	/** Key of a configuration parameter. */
 	public static final String BACKGROUND_KEY = &quot;background&quot;;
 	public static final String FOREGROUND_KEY = &quot;foreground&quot;;
@@ -69,7 +67,7 @@ public class GraphicsPlotCanvas extends PlotCanvas {
 	private final Graphics2D g3;
 
 	private Transformation _transformation;
-<span class="nc" id="L72">	private String _renderer = &quot;jcckit.renderer.GraphicsRenderer&quot;;</span>
+<span class="nc" id="L70">	private String _renderer = &quot;jcckit.renderer.GraphicsRenderer&quot;;</span>
 
 	private GraphicalElement _marker;
 
@@ -108,17 +106,17 @@ public class GraphicsPlotCanvas extends PlotCanvas {
 	 * constructor&lt;/a&gt; of the superclass {@link jcckit.plot.PlotCanvas} apply.
 	 */
 	public GraphicsPlotCanvas(ConfigParameters config, BufferedImage img3) {
-<span class="nc" id="L111">		super(config);</span>
-<span class="nc" id="L112">		this.img3 = img3;</span>
-<span class="nc" id="L113">		setRenderer(&quot;jcckit.renderer.Graphics2DRenderer&quot;);</span>
+<span class="nc" id="L109">		super(config);</span>
+<span class="nc" id="L110">		this.img3 = img3;</span>
+<span class="nc" id="L111">		setRenderer(&quot;jcckit.renderer.Graphics2DRenderer&quot;);</span>
 
-<span class="nc" id="L115">		g3 = img3.createGraphics();</span>
-<span class="nc" id="L116">		g3.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);</span>
+<span class="nc" id="L113">		g3 = img3.createGraphics();</span>
+<span class="nc" id="L114">		g3.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);</span>
 
 		// _doubleBuffering = config.getBoolean(DOUBLE_BUFFERING_KEY, true);
-<span class="nc" id="L119">		background = config.getColor(BACKGROUND_KEY, Color.WHITE);</span>
-<span class="nc" id="L120">		foreground = config.getColor(FOREGROUND_KEY, Color.BLACK);</span>
-<span class="nc" id="L121">	}</span>
+<span class="nc" id="L117">		background = config.getColor(BACKGROUND_KEY, Color.WHITE);</span>
+<span class="nc" id="L118">		foreground = config.getColor(FOREGROUND_KEY, Color.BLACK);</span>
+<span class="nc" id="L119">	}</span>
 
 	private final Color background;
 	private final Color foreground;
@@ -128,68 +126,68 @@ public class GraphicsPlotCanvas extends PlotCanvas {
 	 * double-buffering and pre-rendered view of the coordinate system is used.
 	 */
 	public void paint() {
-<span class="nc" id="L131">		Dimension size = new Dimension(img3.getWidth(), img3.getHeight());</span>
-<span class="nc" id="L132">		g3.setColor(background);</span>
-<span class="nc" id="L133">		g3.fillRect(0, 0, size.width + 1, size.height + 1);</span>
+<span class="nc" id="L129">		Dimension size = new Dimension(img3.getWidth(), img3.getHeight());</span>
+<span class="nc" id="L130">		g3.setColor(background);</span>
+<span class="nc" id="L131">		g3.fillRect(0, 0, size.width + 1, size.height + 1);</span>
 
-<span class="nc" id="L135">		init(size);</span>
+<span class="nc" id="L133">		init(size);</span>
 
-<span class="nc" id="L137">		_transformation.apply(g3);</span>
-<span class="nc" id="L138">		Plot plot = getPlot();</span>
-<span class="nc" id="L139">		drawCoordinateSystem(size, plot);</span>
-<span class="nc" id="L140">		drawPlot(plot);</span>
-<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (_marker != null) {</span>
-<span class="nc" id="L142">			_marker.renderWith(createRenderer());</span>
+<span class="nc" id="L135">		_transformation.apply(g3);</span>
+<span class="nc" id="L136">		Plot plot = getPlot();</span>
+<span class="nc" id="L137">		drawCoordinateSystem(size, plot);</span>
+<span class="nc" id="L138">		drawPlot(plot);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (_marker != null) {</span>
+<span class="nc" id="L140">			_marker.renderWith(createRenderer());</span>
 		}
-<span class="nc" id="L144">	}</span>
+<span class="nc" id="L142">	}</span>
 
 	private void drawPlot(Plot plot) {
-<span class="nc" id="L147">		prepare();</span>
-<span class="nc" id="L148">		Renderer renderer = createRenderer();</span>
-<span class="nc" id="L149">		GraphicalElement[] curves = plot.getCurves();</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">		for (int i = 0; i &lt; curves.length; i++) {</span>
-<span class="nc" id="L151">			curves[i].renderWith(renderer);</span>
+<span class="nc" id="L145">		prepare();</span>
+<span class="nc" id="L146">		Renderer renderer = createRenderer();</span>
+<span class="nc" id="L147">		GraphicalElement[] curves = plot.getCurves();</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		for (int i = 0; i &lt; curves.length; i++) {</span>
+<span class="nc" id="L149">			curves[i].renderWith(renderer);</span>
 		}
-<span class="nc" id="L153">		GraphicalElement annotation = plot.getAnnotation();</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (annotation != null) {</span>
-<span class="nc" id="L155">			annotation.renderWith(renderer);</span>
+<span class="nc" id="L151">		GraphicalElement annotation = plot.getAnnotation();</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (annotation != null) {</span>
+<span class="nc" id="L153">			annotation.renderWith(renderer);</span>
 		}
-<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (plot.isLegendVisible()) {</span>
-<span class="nc" id="L158">			plot.getLegend().renderWith(renderer);</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (plot.isLegendVisible()) {</span>
+<span class="nc" id="L156">			plot.getLegend().renderWith(renderer);</span>
 		}
-<span class="nc" id="L160">	}</span>
+<span class="nc" id="L158">	}</span>
 
 	private void init(Dimension size) {
-<span class="nc" id="L163">		calculateTransformation(size);</span>
-<span class="nc" id="L164">	}</span>
+<span class="nc" id="L161">		calculateTransformation(size);</span>
+<span class="nc" id="L162">	}</span>
 
 	private void drawCoordinateSystem(Dimension size, Plot plot) {
-<span class="nc" id="L167">		g3.setColor(foreground);</span>
-<span class="nc" id="L168">		plot.getCoordinateSystem().renderWith(createRenderer());</span>
-<span class="nc" id="L169">	}</span>
+<span class="nc" id="L165">		g3.setColor(foreground);</span>
+<span class="nc" id="L166">		plot.getCoordinateSystem().renderWith(createRenderer());</span>
+<span class="nc" id="L167">	}</span>
 
 	/**
 	 * Prepare graphics context before drawing the pre-rendered view of the
 	 * coordinate system. Does nothing but will be used in subclasses.
 	 */
 	protected void prepare() {
-<span class="nc" id="L176">	}</span>
+<span class="nc" id="L174">	}</span>
 
 	/**
 	 * Calculate the transformation form device-independent coordinates into
 	 * device-dependent coordinates according to the specified canvas size.
 	 */
 	protected void calculateTransformation(Dimension size) {
-<span class="nc" id="L183">		_transformation = new Transformation(size.width, size.height, getPaper(), getHorizontalAnchor(),</span>
-<span class="nc" id="L184">				getVerticalAnchor());</span>
-<span class="nc" id="L185">	}</span>
+<span class="nc" id="L181">		_transformation = new Transformation(size.width, size.height, getPaper(), getHorizontalAnchor(),</span>
+<span class="nc" id="L182">				getVerticalAnchor());</span>
+<span class="nc" id="L183">	}</span>
 
 	/**
 	 * Creates an appropriated {@link Renderer} for the specified
 	 * &lt;tt&gt;Graphics&lt;/tt&gt; context.
 	 */
 	protected Renderer createRenderer() {
-<span class="nc" id="L192">		return ((Graphics2DRenderer) Factory.create(_renderer)).init(g3);</span>
+<span class="nc" id="L190">		return ((Graphics2DRenderer) Factory.create(_renderer)).init(g3);</span>
 		// return ((GraphicsRenderer) Factory.create(_renderer)).init(g, null,
 		// _transformation);
 	}
@@ -202,8 +200,8 @@ public class GraphicsPlotCanvas extends PlotCanvas {
 	 *            Fully qualified name of the renderer class.
 	 */
 	public void setRenderer(String className) {
-<span class="nc" id="L205">		_renderer = className;</span>
-<span class="nc" id="L206">	}</span>
+<span class="nc" id="L203">		_renderer = className;</span>
+<span class="nc" id="L204">	}</span>
 
 	// /**
 	// * Maps the cursor position onto a point in device-independent
@@ -226,8 +224,8 @@ public class GraphicsPlotCanvas extends PlotCanvas {
 	 *            Marker element. Can be &lt;tt&gt;null&lt;/tt&gt;.
 	 */
 	public void setMarker(GraphicalElement marker) {
-<span class="nc" id="L229">		_marker = marker;</span>
-<span class="nc" id="L230">	}</span>
+<span class="nc" id="L227">		_marker = marker;</span>
+<span class="nc" id="L228">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

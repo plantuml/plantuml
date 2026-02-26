@@ -46,36 +46,35 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 // This class doesnt feel like a wonderful idea, just a stepping stone towards something
 public abstract class PlainDiagram extends AbstractPSystem {
-	// ::remove file when __HAXE__
 
 	public PlainDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L52">		super(source, preprocessing);</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L51">		super(source, preprocessing);</span>
+<span class="fc" id="L52">	}</span>
 
 	@Override
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-<span class="fc" id="L57">		return super.createImageBuilder(fileFormatOption).margin(getDefaultMargins())</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">				.metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null).seed(seed());</span>
+<span class="fc" id="L56">		return super.createImageBuilder(fileFormatOption).margin(getDefaultMargins())</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">				.metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null).seed(seed());</span>
 	}
 
 	@Override
 	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-<span class="fc" id="L65">		final UDrawable rootDrawable = getRootDrawable(fileFormatOption);</span>
-<span class="fc" id="L66">		return createImageBuilder(fileFormatOption).drawable(rootDrawable).write(os);</span>
+<span class="fc" id="L64">		final UDrawable rootDrawable = getRootDrawable(fileFormatOption);</span>
+<span class="fc" id="L65">		return createImageBuilder(fileFormatOption).drawable(rootDrawable).write(os);</span>
 	}
 
 	@Override
 	public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
 		try {
-<span class="nc" id="L72">			final UDrawable rootDrawable = getRootDrawable(fileFormatOption);</span>
-<span class="nc" id="L73">			rootDrawable.drawU(ug);</span>
-<span class="nc" id="L74">		} catch (IOException e) {</span>
-<span class="nc" id="L75">			e.printStackTrace();</span>
-<span class="nc" id="L76">			super.exportDiagramGraphic(ug, fileFormatOption);</span>
-<span class="nc" id="L77">		}</span>
-<span class="nc" id="L78">	}</span>
+<span class="nc" id="L71">			final UDrawable rootDrawable = getRootDrawable(fileFormatOption);</span>
+<span class="nc" id="L72">			rootDrawable.drawU(ug);</span>
+<span class="nc" id="L73">		} catch (IOException e) {</span>
+<span class="nc" id="L74">			e.printStackTrace();</span>
+<span class="nc" id="L75">			super.exportDiagramGraphic(ug, fileFormatOption);</span>
+<span class="nc" id="L76">		}</span>
+<span class="nc" id="L77">	}</span>
 
 	protected abstract UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException;
 }

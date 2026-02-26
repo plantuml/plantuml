@@ -42,54 +42,53 @@ import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.utils.Log;
 
 abstract class AbstractGraphviz implements Graphviz {
-	// ::remove file when __CORE__ or __TEAVM__
+	
 	
 	private final File dotExe;
 	private final String dotString;
 	private final String[] type;
 
 	static boolean isWindows() {
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		return File.separatorChar == '\\';</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		return File.separatorChar == '\\';</span>
 	}
 
 	private static String findExecutableOnPath(String name) {
-<span class="nc" id="L63">		final String path = System.getenv(&quot;PATH&quot;);</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (path != null)</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">			for (String dirname : path.split(SFile.pathSeparator)) {</span>
-<span class="nc" id="L66">				final File file = new File(dirname, name);</span>
-<span class="nc bnc" id="L67" title="All 4 branches missed.">				if (file.isFile() &amp;&amp; file.canExecute())</span>
-<span class="nc" id="L68">					return file.getAbsolutePath();</span>
+<span class="nc" id="L62">		final String path = System.getenv(&quot;PATH&quot;);</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (path != null)</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">			for (String dirname : path.split(SFile.pathSeparator)) {</span>
+<span class="nc" id="L65">				final File file = new File(dirname, name);</span>
+<span class="nc bnc" id="L66" title="All 4 branches missed.">				if (file.isFile() &amp;&amp; file.canExecute())</span>
+<span class="nc" id="L67">					return file.getAbsolutePath();</span>
 			}
 
-<span class="nc" id="L71">		return null;</span>
+<span class="nc" id="L70">		return null;</span>
 	}
 
-<span class="fc" id="L74">	AbstractGraphviz(ISkinParam skinParam, String dotString, String... type) {</span>
-<span class="fc" id="L75">		this.dotExe = searchDotExe();</span>
-<span class="fc" id="L76">		this.dotString = dotString;</span>
-<span class="fc" id="L77">		this.type = Objects.requireNonNull(type);</span>
-<span class="fc" id="L78">	}</span>
+<span class="fc" id="L73">	AbstractGraphviz(ISkinParam skinParam, String dotString, String... type) {</span>
+<span class="fc" id="L74">		this.dotExe = searchDotExe();</span>
+<span class="fc" id="L75">		this.dotString = dotString;</span>
+<span class="fc" id="L76">		this.type = Objects.requireNonNull(type);</span>
+<span class="fc" id="L77">	}</span>
 
 	protected boolean findExecutableOnPath() {
-<span class="fc" id="L81">		return true;</span>
+<span class="fc" id="L80">		return true;</span>
 	}
 
 	final protected File searchDotExe() {
-<span class="fc" id="L85">		String getenv = GraphvizRuntimeEnvironment.getInstance().getenvGraphvizDot();</span>
-<span class="pc bpc" id="L86" title="2 of 4 branches missed.">		if (findExecutableOnPath() &amp;&amp; getenv == null)</span>
-<span class="nc" id="L87">			getenv = findExecutableOnPath(getExeName());</span>
+<span class="fc" id="L84">		String getenv = GraphvizRuntimeEnvironment.getInstance().getenvGraphvizDot();</span>
+<span class="pc bpc" id="L85" title="2 of 4 branches missed.">		if (findExecutableOnPath() &amp;&amp; getenv == null)</span>
+<span class="nc" id="L86">			getenv = findExecutableOnPath(getExeName());</span>
 
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (getenv == null)</span>
-<span class="nc" id="L90">			return specificDotExe();</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (getenv == null)</span>
+<span class="nc" id="L89">			return specificDotExe();</span>
 
-<span class="fc" id="L92">		return new File(getenv);</span>
+<span class="fc" id="L91">		return new File(getenv);</span>
 	}
 
 	abstract protected File specificDotExe();
@@ -97,29 +96,29 @@ abstract class AbstractGraphviz implements Graphviz {
 	abstract protected String getExeName();
 
 	final public ProcessState createFile3(OutputStream os) {
-<span class="nc" id="L100">		Objects.requireNonNull(dotString);</span>
+<span class="nc" id="L99">		Objects.requireNonNull(dotString);</span>
 
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (getExeState() != ExeState.OK)</span>
-<span class="nc" id="L103">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (getExeState() != ExeState.OK)</span>
+<span class="nc" id="L102">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L105">		final String cmd[] = getCommandLine();</span>
-<span class="nc" id="L106">		ProcessRunner p = null;</span>
-<span class="nc" id="L107">		ProcessState state = null;</span>
+<span class="nc" id="L104">		final String cmd[] = getCommandLine();</span>
+<span class="nc" id="L105">		ProcessRunner p = null;</span>
+<span class="nc" id="L106">		ProcessState state = null;</span>
 		try {
-<span class="nc" id="L109">			Log.info(() -&gt; &quot;Starting Graphviz process &quot; + Arrays.asList(cmd));</span>
-<span class="nc" id="L110">			Log.info(() -&gt; &quot;DotString size: &quot; + dotString.length());</span>
-<span class="nc" id="L111">			p = new ProcessRunner(cmd);</span>
-<span class="nc" id="L112">			state = p.run(dotString.getBytes(), os);</span>
-<span class="nc" id="L113">			Log.info(() -&gt; &quot;Ending process ok&quot;);</span>
-<span class="nc" id="L114">		} catch (Throwable e) {</span>
-<span class="nc" id="L115">			Logme.error(e);</span>
-<span class="nc" id="L116">			Log.error(&quot;Error: &quot; + e);</span>
-<span class="nc" id="L117">			Log.error(&quot;The command was &quot; + cmd);</span>
-<span class="nc" id="L118">			Log.error(&quot;&quot;);</span>
-<span class="nc" id="L119">			Log.error(&quot;Try java -jar plantuml.jar -testdot to figure out the issue&quot;);</span>
-<span class="nc" id="L120">			Log.error(&quot;&quot;);</span>
+<span class="nc" id="L108">			Log.info(() -&gt; &quot;Starting Graphviz process &quot; + Arrays.asList(cmd));</span>
+<span class="nc" id="L109">			Log.info(() -&gt; &quot;DotString size: &quot; + dotString.length());</span>
+<span class="nc" id="L110">			p = new ProcessRunner(cmd);</span>
+<span class="nc" id="L111">			state = p.run(dotString.getBytes(), os);</span>
+<span class="nc" id="L112">			Log.info(() -&gt; &quot;Ending process ok&quot;);</span>
+<span class="nc" id="L113">		} catch (Throwable e) {</span>
+<span class="nc" id="L114">			Logme.error(e);</span>
+<span class="nc" id="L115">			Log.error(&quot;Error: &quot; + e);</span>
+<span class="nc" id="L116">			Log.error(&quot;The command was &quot; + cmd);</span>
+<span class="nc" id="L117">			Log.error(&quot;&quot;);</span>
+<span class="nc" id="L118">			Log.error(&quot;Try java -jar plantuml.jar -testdot to figure out the issue&quot;);</span>
+<span class="nc" id="L119">			Log.error(&quot;&quot;);</span>
 		} finally {
-<span class="nc" id="L122">			Log.info(() -&gt; &quot;Ending Graphviz process&quot;);</span>
+<span class="nc" id="L121">			Log.info(() -&gt; &quot;Ending Graphviz process&quot;);</span>
 		}
 //		if (OptionFlags.getInstance().isCheckDotError() &amp;&amp; p != null &amp;&amp; p.getError().length() &gt; 0) {
 //			Log.error(&quot;GraphViz error stream : &quot; + p.getError());
@@ -132,35 +131,35 @@ abstract class AbstractGraphviz implements Graphviz {
 //			if (OptionFlags.getInstance().isCheckDotError())
 //				throw new IllegalStateException(&quot;Dot out &quot; + p.getOut());
 //		}
-<span class="nc" id="L135">		return state;</span>
+<span class="nc" id="L134">		return state;</span>
 	}
 
 	final public ExeState getExeState() {
-<span class="fc" id="L139">		return ExeState.checkFile(dotExe);</span>
+<span class="fc" id="L138">		return ExeState.checkFile(dotExe);</span>
 	}
 
 	final public String dotVersion() {
-<span class="nc" id="L143">		final String cmd[] = getCommandLineVersion();</span>
-<span class="nc" id="L144">		return executeCmd(cmd);</span>
+<span class="nc" id="L142">		final String cmd[] = getCommandLineVersion();</span>
+<span class="nc" id="L143">		return executeCmd(cmd);</span>
 	}
 
 	private String executeCmd(final String cmd[]) {
-<span class="nc" id="L148">		final ProcessRunner p = new ProcessRunner(cmd);</span>
-<span class="nc" id="L149">		final ProcessState state = p.run(null, null);</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (state.differs(ProcessState.TERMINATED_OK()))</span>
-<span class="nc" id="L151">			return &quot;?&quot;;</span>
+<span class="nc" id="L147">		final ProcessRunner p = new ProcessRunner(cmd);</span>
+<span class="nc" id="L148">		final ProcessState state = p.run(null, null);</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (state.differs(ProcessState.TERMINATED_OK()))</span>
+<span class="nc" id="L150">			return &quot;?&quot;;</span>
 
-<span class="nc" id="L153">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(p.getOut()))</span>
-<span class="nc" id="L155">			sb.append(p.getOut());</span>
+<span class="nc" id="L152">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(p.getOut()))</span>
+<span class="nc" id="L154">			sb.append(p.getOut());</span>
 
-<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(p.getError())) {</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
-<span class="nc" id="L159">				sb.append(' ');</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(p.getError())) {</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
+<span class="nc" id="L158">				sb.append(' ');</span>
 
-<span class="nc" id="L161">			sb.append(p.getError());</span>
+<span class="nc" id="L160">			sb.append(p.getError());</span>
 		}
-<span class="nc" id="L163">		return StringUtils.trin(sb.toString().replace('\n', ' '));</span>
+<span class="nc" id="L162">		return StringUtils.trin(sb.toString().replace('\n', ' '));</span>
 	}
 
 	final String[] getCommandLine() {
@@ -175,28 +174,28 @@ abstract class AbstractGraphviz implements Graphviz {
 //
 //			return result;
 //		}
-<span class="nc" id="L178">		final String[] result = new String[type.length + 1];</span>
-<span class="nc" id="L179">		result[0] = getDotExe().getAbsolutePath();</span>
-<span class="nc bnc" id="L180" title="All 2 branches missed.">		for (int i = 0; i &lt; type.length; i++)</span>
-<span class="nc" id="L181">			result[i + 1] = &quot;-T&quot; + type[i];</span>
+<span class="nc" id="L177">		final String[] result = new String[type.length + 1];</span>
+<span class="nc" id="L178">		result[0] = getDotExe().getAbsolutePath();</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		for (int i = 0; i &lt; type.length; i++)</span>
+<span class="nc" id="L180">			result[i + 1] = &quot;-T&quot; + type[i];</span>
 
-<span class="nc" id="L183">		return result;</span>
+<span class="nc" id="L182">		return result;</span>
 	}
 
 	final String[] getCommandLineVersion() {
-<span class="nc" id="L187">		return new String[] { getDotExe().getAbsolutePath(), &quot;-V&quot; };</span>
+<span class="nc" id="L186">		return new String[] { getDotExe().getAbsolutePath(), &quot;-V&quot; };</span>
 	}
 
 	public final File getDotExe() {
-<span class="fc" id="L191">		return dotExe;</span>
+<span class="fc" id="L190">		return dotExe;</span>
 	}
 
 	public final String getDotString() {
-<span class="nc" id="L195">		return dotString;</span>
+<span class="nc" id="L194">		return dotString;</span>
 	}
 
 	public final List&lt;String&gt; getType() {
-<span class="nc" id="L199">		return Arrays.asList(type);</span>
+<span class="nc" id="L198">		return Arrays.asList(type);</span>
 	}
 
 }

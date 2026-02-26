@@ -91,64 +91,62 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 <span class="nc" id="L91">		return list.add(ins);</span>
 	}
 
-	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
-<span class="nc" id="L97">		Gtile tmp = list.createGtile(skinParam, stringBounder);</span>
-<span class="nc" id="L98">		return new GtileGroup(tmp, title, null, HColors.BLUE, backColor, tmp.skinParam(), type, style);</span>
+<span class="nc" id="L96">		Gtile tmp = list.createGtile(skinParam, stringBounder);</span>
+<span class="nc" id="L97">		return new GtileGroup(tmp, title, null, HColors.BLUE, backColor, tmp.skinParam(), type, style);</span>
 	}
-	// ::done
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
-<span class="nc" id="L104">		Ftile tmp = list.createFtile(factory);</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (note != null)</span>
-<span class="nc" id="L106">			tmp = new FtileWithNotes(tmp, Collections.singleton(note), VerticalAlignment.CENTER);</span>
+<span class="nc" id="L102">		Ftile tmp = list.createFtile(factory);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (note != null)</span>
+<span class="nc" id="L104">			tmp = new FtileWithNotes(tmp, Collections.singleton(note), VerticalAlignment.CENTER);</span>
 
-<span class="nc" id="L108">		return factory.createGroup(tmp, title, backColor, null, type, style);</span>
+<span class="nc" id="L106">		return factory.createGroup(tmp, title, backColor, null, type, style);</span>
 	}
 
 	public Instruction getParent() {
-<span class="nc" id="L112">		return parent;</span>
+<span class="nc" id="L110">		return parent;</span>
 	}
 
 	@Override
 	final public boolean kill() {
-<span class="nc" id="L117">		return list.kill();</span>
+<span class="nc" id="L115">		return list.kill();</span>
 	}
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="nc" id="L122">		return linkRendering;</span>
+<span class="nc" id="L120">		return linkRendering;</span>
 	}
 
 	@Override
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (list.isEmpty()) {</span>
-<span class="nc" id="L128">			this.note = new PositionedNote(note, position, type, swimlaneNote, colors, stereotype);</span>
-<span class="nc" id="L129">			return true;</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (list.isEmpty()) {</span>
+<span class="nc" id="L126">			this.note = new PositionedNote(note, position, type, swimlaneNote, colors, stereotype);</span>
+<span class="nc" id="L127">			return true;</span>
 		}
-<span class="nc" id="L131">		return list.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+<span class="nc" id="L129">		return list.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 	}
 
 	@Override
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc" id="L136">		return list.getSwimlanes();</span>
+<span class="nc" id="L134">		return list.getSwimlanes();</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneIn() {
-<span class="nc" id="L141">		return list.getSwimlaneIn();</span>
+<span class="nc" id="L139">		return list.getSwimlaneIn();</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneOut() {
-<span class="nc" id="L146">		return list.getSwimlaneOut();</span>
+<span class="nc" id="L144">		return list.getSwimlaneOut();</span>
 	}
 
 	@Override
 	public Instruction getLast() {
-<span class="nc" id="L151">		return list.getLast();</span>
+<span class="nc" id="L149">		return list.getLast();</span>
 	}
 
 }

@@ -55,7 +55,7 @@ public class PSystemSudoku extends AbstractPSystem {
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
 <span class="nc" id="L57">		final GraphicsSudoku sud = new GraphicsSudoku(sudoku);</span>
-		// ::comment when __CORE__ or __TEAVM__
+		// ::comment when __TEAVM__
 <span class="nc bnc" id="L59" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.EPS)</span>
 <span class="nc" id="L60">			return sud.writeImageEps(os);</span>
 

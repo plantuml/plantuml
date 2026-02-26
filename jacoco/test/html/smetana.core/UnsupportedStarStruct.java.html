@@ -40,44 +40,39 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class UnsupportedStarStruct implements __struct__, __ptr__ {
 
-	// ::revert when __CORE__
-<span class="fc" id="L44">	public final static AtomicInteger CPT = new AtomicInteger();</span>
-	// public static int CPT;
-	// ::done
+<span class="fc" id="L43">	public final static AtomicInteger CPT = new AtomicInteger();</span>
+
 	public final int UID;
 
 	public static UnsupportedStarStruct SPY_ME;
 
-<span class="fc" id="L51">	public UnsupportedStarStruct() {</span>
-		// ::revert when __CORE__
-<span class="fc" id="L53">		this.UID = CPT.incrementAndGet();</span>
-		// this.UID = CPT++;
-		// ::done
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L49">	public UnsupportedStarStruct() {</span>
+<span class="fc" id="L50">		this.UID = CPT.incrementAndGet();</span>
+<span class="fc" id="L51">	}</span>
 
 	final public __ptr__ unsupported() {
-<span class="nc" id="L59">		throw new UnsupportedOperationException(getClass().toString());</span>
+<span class="nc" id="L54">		throw new UnsupportedOperationException(getClass().toString());</span>
 	}
 
 	public boolean isSameThan(__ptr__ other) {
-<span class="nc" id="L63">		throw new UnsupportedOperationException(getClass().toString());</span>
+<span class="nc" id="L58">		throw new UnsupportedOperationException(getClass().toString());</span>
 	}
 
 	public __ptr__ castTo(Class dest) {
-<span class="nc" id="L67">		System.err.println(&quot;I am &quot; + toString() + &quot; &quot; + UID);</span>
-<span class="nc" id="L68">		throw new UnsupportedOperationException(dest + &quot; &quot; + getClass().toString());</span>
+<span class="nc" id="L62">		System.err.println(&quot;I am &quot; + toString() + &quot; &quot; + UID);</span>
+<span class="nc" id="L63">		throw new UnsupportedOperationException(dest + &quot; &quot; + getClass().toString());</span>
 	}
 
 	public Object getTheField(FieldOffset virtualBytes) {
-<span class="nc" id="L72">		throw new UnsupportedOperationException(getClass().toString());</span>
+<span class="nc" id="L67">		throw new UnsupportedOperationException(getClass().toString());</span>
 	}
 
 	public __struct__ copy() {
-<span class="nc" id="L76">		throw new UnsupportedOperationException(getClass().toString());</span>
+<span class="nc" id="L71">		throw new UnsupportedOperationException(getClass().toString());</span>
 	}
 
 	public void ___(__struct__ other) {
-<span class="nc" id="L80">		throw new UnsupportedOperationException(getClass().toString());</span>
+<span class="nc" id="L75">		throw new UnsupportedOperationException(getClass().toString());</span>
 	}
 
 }

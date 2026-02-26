@@ -227,10 +227,6 @@ net.sourceforge.plantuml.zopfli
 org.stathissideris.ascii2image.core
 org.stathissideris.ascii2image.graphics
 org.stathissideris.ascii2image.text
-org.teavm.interop
-org.teavm.jso
-org.teavm.jso.dom.html
-org.teavm.jso.dom.xml
 smetana.core
 smetana.core.debug
 zext.plantuml.com.google.zxing

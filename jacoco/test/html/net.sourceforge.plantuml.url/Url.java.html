@@ -85,50 +85,46 @@ public class Url implements EnsureVisible {
 <span class="fc" id="L85">		return label;</span>
 	}
 
-	// ::comment when __HAXE__
 	@Override
 	public String toString() {
-<span class="nc" id="L91">		return super.toString() + &quot; &quot; + url + &quot; &quot; + visible.getCoords(1.0);</span>
+<span class="nc" id="L90">		return super.toString() + &quot; &quot; + url + &quot; &quot; + visible.getCoords(1.0);</span>
 	}
-	// ::done
 
 	public String getCoords(double scale) {
-		// ::comment when __CORE__ or __HAXE__
-<span class="pc bpc" id="L97" title="3 of 4 branches missed.">		if (Check.isJunit() &amp;&amp; visible.getCoords(1.0).contains(&quot;0,0,0,0&quot;))</span>
-<span class="nc" id="L98">			throw new IllegalStateException(toString());</span>
-		// ::done
+<span class="pc bpc" id="L94" title="3 of 4 branches missed.">		if (Check.isJunit() &amp;&amp; visible.getCoords(1.0).contains(&quot;0,0,0,0&quot;))</span>
+<span class="nc" id="L95">			throw new IllegalStateException(toString());</span>
 
-<span class="fc" id="L101">		return visible.getCoords(scale);</span>
+<span class="fc" id="L97">		return visible.getCoords(scale);</span>
 	}
 
 	public void setMember(boolean member) {
-<span class="nc" id="L105">		this.member = member;</span>
-<span class="nc" id="L106">	}</span>
+<span class="nc" id="L101">		this.member = member;</span>
+<span class="nc" id="L102">	}</span>
 
 	public final boolean isMember() {
-<span class="nc" id="L109">		return member;</span>
+<span class="nc" id="L105">		return member;</span>
 	}
 
-<span class="fc" id="L112">	private final BasicEnsureVisible visible = new BasicEnsureVisible();</span>
+<span class="fc" id="L108">	private final BasicEnsureVisible visible = new BasicEnsureVisible();</span>
 
 	public void ensureVisible(double x, double y) {
-<span class="fc" id="L115">		visible.ensureVisible(x, y);</span>
-<span class="fc" id="L116">	}</span>
+<span class="fc" id="L111">		visible.ensureVisible(x, y);</span>
+<span class="fc" id="L112">	}</span>
 
 	public boolean hasData() {
-<span class="fc" id="L119">		return visible.hasData();</span>
+<span class="fc" id="L115">		return visible.hasData();</span>
 	}
 
-<span class="fc" id="L122">	public static final Comparator&lt;Url&gt; SURFACE_COMPARATOR = new Comparator&lt;Url&gt;() {</span>
+<span class="fc" id="L118">	public static final Comparator&lt;Url&gt; SURFACE_COMPARATOR = new Comparator&lt;Url&gt;() {</span>
 		public int compare(Url url1, Url url2) {
-<span class="fc" id="L124">			final double surface1 = url1.visible.getSurface();</span>
-<span class="fc" id="L125">			final double surface2 = url2.visible.getSurface();</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">			if (surface1 &gt; surface2)</span>
-<span class="fc" id="L127">				return 1;</span>
-<span class="fc bfc" id="L128" title="All 2 branches covered.">			else if (surface1 &lt; surface2)</span>
-<span class="fc" id="L129">				return -1;</span>
+<span class="fc" id="L120">			final double surface1 = url1.visible.getSurface();</span>
+<span class="fc" id="L121">			final double surface2 = url2.visible.getSurface();</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">			if (surface1 &gt; surface2)</span>
+<span class="fc" id="L123">				return 1;</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">			else if (surface1 &lt; surface2)</span>
+<span class="fc" id="L125">				return -1;</span>
 
-<span class="fc" id="L131">			return 0;</span>
+<span class="fc" id="L127">			return 0;</span>
 		}
 	};
 

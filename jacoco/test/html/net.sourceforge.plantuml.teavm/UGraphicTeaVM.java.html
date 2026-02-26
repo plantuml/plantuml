@@ -59,85 +59,86 @@ import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.url.Url;
 
 public class UGraphicTeaVM extends AbstractUGraphic&lt;SvgGraphicsTeaVM&gt; implements ClipContainer {
+	// ::remove file when JAVA8
 
 	private UGraphicTeaVM(StringBounder stringBounder) {
-<span class="nc" id="L64">		super(stringBounder);</span>
-<span class="nc" id="L65">		register();</span>
-<span class="nc" id="L66">	}</span>
+<span class="nc" id="L65">		super(stringBounder);</span>
+<span class="nc" id="L66">		register();</span>
+<span class="nc" id="L67">	}</span>
 
 	public static UGraphicTeaVM build(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder,
 			SvgGraphicsTeaVM svg) {
-<span class="nc" id="L70">		final UGraphicTeaVM result = new UGraphicTeaVM(stringBounder);</span>
-<span class="nc" id="L71">		result.copy(defaultBackground, colorMapper, svg);</span>
-<span class="nc" id="L72">		return result;</span>
+<span class="nc" id="L71">		final UGraphicTeaVM result = new UGraphicTeaVM(stringBounder);</span>
+<span class="nc" id="L72">		result.copy(defaultBackground, colorMapper, svg);</span>
+<span class="nc" id="L73">		return result;</span>
 	}
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-<span class="nc" id="L77">		final UGraphicTeaVM result = new UGraphicTeaVM(getStringBounder());</span>
-<span class="nc" id="L78">		result.copy(this);</span>
-<span class="nc" id="L79">		return result;</span>
+<span class="nc" id="L78">		final UGraphicTeaVM result = new UGraphicTeaVM(getStringBounder());</span>
+<span class="nc" id="L79">		result.copy(this);</span>
+<span class="nc" id="L80">		return result;</span>
 	}
 
 	private void register() {
-<span class="nc" id="L83">		registerDriver(URectangle.class, new DriverRectangleTeaVM(this));</span>
-<span class="nc" id="L84">		registerDriver(ULine.class, new DriverLineTeaVM(this));</span>
-<span class="nc" id="L85">		registerDriver(UPolygon.class, new DriverPolygonTeaVM(this));</span>
-<span class="nc" id="L86">		registerDriver(UEllipse.class, new DriverEllipseTeaVM(this));</span>
-<span class="nc" id="L87">		registerDriver(UText.class, new DriverTextTeaVM(this));</span>
-<span class="nc" id="L88">		registerDriver(UPath.class, new DriverPathTeaVM(this));</span>
+<span class="nc" id="L84">		registerDriver(URectangle.class, new DriverRectangleTeaVM(this));</span>
+<span class="nc" id="L85">		registerDriver(ULine.class, new DriverLineTeaVM(this));</span>
+<span class="nc" id="L86">		registerDriver(UPolygon.class, new DriverPolygonTeaVM(this));</span>
+<span class="nc" id="L87">		registerDriver(UEllipse.class, new DriverEllipseTeaVM(this));</span>
+<span class="nc" id="L88">		registerDriver(UText.class, new DriverTextTeaVM(this));</span>
+<span class="nc" id="L89">		registerDriver(UPath.class, new DriverPathTeaVM(this));</span>
 
-<span class="nc" id="L90">		registerDriver(UImage.class, new DriverImageTeaVM(this));</span>
-<span class="nc" id="L91">		registerDriver(UImageSvg.class, new DriverImageSvgTeaVM());</span>
-<span class="nc" id="L92">		registerDriver(DotPath.class, new DriverDotPathTeaVM());</span>
+<span class="nc" id="L91">		registerDriver(UImage.class, new DriverImageTeaVM(this));</span>
+<span class="nc" id="L92">		registerDriver(UImageSvg.class, new DriverImageSvgTeaVM());</span>
+<span class="nc" id="L93">		registerDriver(DotPath.class, new DriverDotPathTeaVM());</span>
 
-<span class="nc" id="L94">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTeaVM());</span>
+<span class="nc" id="L95">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTeaVM());</span>
 
 		// NOP drivers for shapes not yet implemented
-<span class="nc" id="L97">		ignoreShape(UPixel.class);</span>
-<span class="nc" id="L98">	}</span>
+<span class="nc" id="L98">		ignoreShape(UPixel.class);</span>
+<span class="nc" id="L99">	}</span>
 
 	public SvgGraphicsTeaVM getSvgGraphics() {
-<span class="nc" id="L101">		return getGraphicObject();</span>
+<span class="nc" id="L102">		return getGraphicObject();</span>
 	}
 
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
-<span class="nc" id="L106">		throw new UnsupportedOperationException(&quot;TEAVM442&quot;);</span>
+<span class="nc" id="L107">		throw new UnsupportedOperationException(&quot;TEAVM442&quot;);</span>
 	}
 
 	@Override
 	public void startGroup(UGroup group) {
 		// TODO: implement group support
-<span class="nc" id="L112">	}</span>
+<span class="nc" id="L113">	}</span>
 
 	@Override
 	public void closeGroup() {
 		// TODO: implement group support
-<span class="nc" id="L117">	}</span>
+<span class="nc" id="L118">	}</span>
 
 	@Override
 	public void startUrl(Url url) {
 		// TODO: implement URL/link support
-<span class="nc" id="L122">	}</span>
+<span class="nc" id="L123">	}</span>
 
 	@Override
 	public void closeUrl() {
 		// TODO: implement URL/link support
-<span class="nc" id="L127">	}</span>
+<span class="nc" id="L128">	}</span>
 
 	@Override
 	protected void drawComment(UComment comment) {
 		// TODO: implement comment support
-<span class="nc" id="L132">	}</span>
+<span class="nc" id="L133">	}</span>
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (propertyName.equalsIgnoreCase(&quot;TEAVM&quot;))</span>
-<span class="nc" id="L137">			return true;</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (propertyName.equalsIgnoreCase(&quot;SVG&quot;))</span>
-<span class="nc" id="L139">			return true;</span>
-<span class="nc" id="L140">		return super.matchesProperty(propertyName);</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (propertyName.equalsIgnoreCase(&quot;TEAVM&quot;))</span>
+<span class="nc" id="L138">			return true;</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (propertyName.equalsIgnoreCase(&quot;SVG&quot;))</span>
+<span class="nc" id="L140">			return true;</span>
+<span class="nc" id="L141">		return super.matchesProperty(propertyName);</span>
 	}
 
 }

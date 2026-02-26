@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.CrashReportHandler;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SImageIO;
@@ -61,32 +62,32 @@ import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class PSystemDitaa extends AbstractPSystem {
-	// ::remove folder when __CORE__ or __TEAVM__
+	
 
-<span class="nc" id="L66">	private final ConversionOptions options = new ConversionOptions();</span>
-<span class="nc" id="L67">	private final List&lt;String&gt; data = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L68">	private int nbStartingSpace = Integer.MAX_VALUE;</span>
+<span class="nc" id="L67">	private final ConversionOptions options = new ConversionOptions();</span>
+<span class="nc" id="L68">	private final List&lt;String&gt; data = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L69">	private int nbStartingSpace = Integer.MAX_VALUE;</span>
 
 	public PSystemDitaa(UmlSource source, boolean performSeparationOfCommonEdges, boolean dropShadows,
 			boolean allCornersAreRound, boolean transparentBackground, float scale,
 			PreprocessingArtifact preprocessing) {
-<span class="nc" id="L73">		super(source, preprocessing);</span>
+<span class="nc" id="L74">		super(source, preprocessing);</span>
 
-<span class="nc" id="L75">		options.setDropShadows(dropShadows);</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		options.renderingOptions.setBackgroundColor(transparentBackground ? new XColor(0, 0, 0, 0).toAwtColor() : XColor.WHITE.toAwtColor());</span>
-<span class="nc" id="L77">		options.renderingOptions.setScale(scale);</span>
-<span class="nc" id="L78">		options.processingOptions.setPerformSeparationOfCommonEdges(performSeparationOfCommonEdges);</span>
-<span class="nc" id="L79">		options.processingOptions.setAllCornersAreRound(allCornersAreRound);</span>
+<span class="nc" id="L76">		options.setDropShadows(dropShadows);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		options.renderingOptions.setBackgroundColor(transparentBackground ? new XColor(0, 0, 0, 0).toAwtColor() : XColor.WHITE.toAwtColor());</span>
+<span class="nc" id="L78">		options.renderingOptions.setScale(scale);</span>
+<span class="nc" id="L79">		options.processingOptions.setPerformSeparationOfCommonEdges(performSeparationOfCommonEdges);</span>
+<span class="nc" id="L80">		options.processingOptions.setAllCornersAreRound(allCornersAreRound);</span>
 
-<span class="nc" id="L81">	}</span>
+<span class="nc" id="L82">	}</span>
 
 	void add(String line) {
-<span class="nc" id="L84">		data.add(line);</span>
-<span class="nc" id="L85">		nbStartingSpace = Math.min(nbStartingSpace, BlocLines.nbStartingSpace(line));</span>
-<span class="nc" id="L86">	}</span>
+<span class="nc" id="L85">		data.add(line);</span>
+<span class="nc" id="L86">		nbStartingSpace = Math.min(nbStartingSpace, BlocLines.nbStartingSpace(line));</span>
+<span class="nc" id="L87">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L89">		return new DiagramDescription(&quot;(Ditaa)&quot;);</span>
+<span class="nc" id="L90">		return new DiagramDescription(&quot;(Ditaa)&quot;);</span>
 	}
 
 	@Override
@@ -94,34 +95,34 @@ public class PSystemDitaa extends AbstractPSystem {
 			throws IOException {
 
 		try {
-<span class="nc" id="L97">			final TextGrid grid = new TextGrid();</span>
+<span class="nc" id="L98">			final TextGrid grid = new TextGrid();</span>
 
-<span class="nc" id="L99">			final ArrayList&lt;StringBuilder&gt; lines = new ArrayList&lt;StringBuilder&gt;();</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">			for (String s : data)</span>
-<span class="nc" id="L101">				lines.add(new StringBuilder(s.substring(nbStartingSpace)));</span>
+<span class="nc" id="L100">			final ArrayList&lt;StringBuilder&gt; lines = new ArrayList&lt;StringBuilder&gt;();</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			for (String s : data)</span>
+<span class="nc" id="L102">				lines.add(new StringBuilder(s.substring(nbStartingSpace)));</span>
 
-<span class="nc" id="L103">			grid.initialiseWithLines(lines, null);</span>
+<span class="nc" id="L104">			grid.initialiseWithLines(lines, null);</span>
 
-<span class="nc" id="L105">			final Diagram diagram = new Diagram(grid, options);</span>
-<span class="nc" id="L106">			final BitmapRenderer bitmapRenderer = new BitmapRenderer();</span>
+<span class="nc" id="L106">			final Diagram diagram = new Diagram(grid, options);</span>
+<span class="nc" id="L107">			final BitmapRenderer bitmapRenderer = new BitmapRenderer();</span>
 
-<span class="nc" id="L108">			final BufferedImage image = (BufferedImage) bitmapRenderer.renderToImage(diagram, options.renderingOptions);</span>
+<span class="nc" id="L109">			final BufferedImage image = (BufferedImage) bitmapRenderer.renderToImage(diagram, options.renderingOptions);</span>
 
-<span class="nc bnc" id="L110" title="All 2 branches missed.">			if (fileFormat.getFileFormat() == FileFormat.ATXT) {</span>
-<span class="nc" id="L111">				os.write(getSource().getPlainString(BackSlash.lineSeparator()).getBytes());</span>
-<span class="nc" id="L112">				return ImageDataSimple.ok();</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">			if (fileFormat.getFileFormat() == FileFormat.ATXT) {</span>
+<span class="nc" id="L112">				os.write(getSource().getPlainString(BackSlash.lineSeparator()).getBytes());</span>
+<span class="nc" id="L113">				return ImageDataSimple.ok();</span>
 			}
 
-<span class="nc" id="L115">			SImageIO.write(new PortableImage(image), &quot;png&quot;, os);</span>
-<span class="nc" id="L116">			return new ImageDataSimple(image.getWidth(), image.getHeight());</span>
-<span class="nc" id="L117">		} catch (Throwable e) {</span>
-<span class="nc" id="L118">			final CrashReportHandler report = new CrashReportHandler(e, null, null);</span>
-<span class="nc" id="L119">			report.add(&quot;DITAA has crashed&quot;);</span>
-<span class="nc" id="L120">			report.addEmptyLine();</span>
-<span class="nc" id="L121">			report.youShouldSendThisDiagram();</span>
-<span class="nc" id="L122">			report.addEmptyLine();</span>
-<span class="nc" id="L123">			report.exportDiagramError(fileFormat, seed(), os);</span>
-<span class="nc" id="L124">			return ImageDataSimple.error();</span>
+<span class="nc" id="L116">			SImageIO.write(PortableImageFactory.build(image), &quot;png&quot;, os);</span>
+<span class="nc" id="L117">			return new ImageDataSimple(image.getWidth(), image.getHeight());</span>
+<span class="nc" id="L118">		} catch (Throwable e) {</span>
+<span class="nc" id="L119">			final CrashReportHandler report = new CrashReportHandler(e, null, null);</span>
+<span class="nc" id="L120">			report.add(&quot;DITAA has crashed&quot;);</span>
+<span class="nc" id="L121">			report.addEmptyLine();</span>
+<span class="nc" id="L122">			report.youShouldSendThisDiagram();</span>
+<span class="nc" id="L123">			report.addEmptyLine();</span>
+<span class="nc" id="L124">			report.exportDiagramError(fileFormat, seed(), os);</span>
+<span class="nc" id="L125">			return ImageDataSimple.error();</span>
 		}
 	}
 }

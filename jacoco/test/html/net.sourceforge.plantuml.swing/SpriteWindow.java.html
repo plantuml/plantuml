@@ -53,6 +53,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 import net.sourceforge.plantuml.klimt.sprite.SpriteGrayLevel;
 import net.sourceforge.plantuml.klimt.sprite.SpriteUtils;
 import net.sourceforge.plantuml.utils.Log;
@@ -61,115 +62,115 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 public class SpriteWindow extends JFrame {
 
 	// private final JButton encode = new JButton(&quot;Encode&quot;);
-<span class="nc" id="L64">	private final JTextArea area = new JTextArea();</span>
+<span class="nc" id="L65">	private final JTextArea area = new JTextArea();</span>
 
 	public SpriteWindow() {
-<span class="nc" id="L67">		super(&quot;SpriteWindows&quot;);</span>
-<span class="nc" id="L68">		setIconImage(PSystemVersion.getPlantumlSmallIcon2());</span>
+<span class="nc" id="L68">		super(&quot;SpriteWindows&quot;);</span>
+<span class="nc" id="L69">		setIconImage(PSystemVersion.getPlantumlSmallIcon2());</span>
 		// encode.addActionListener(new ActionListener() {
 		// public void actionPerformed(ActionEvent ae) {
 		// encode();
 		// }
 		// });
 
-<span class="nc" id="L75">		area.setFont(new Font(&quot;Courier&quot;, Font.PLAIN, 14));</span>
-<span class="nc" id="L76">		area.setText(&quot;Copy an image to the clipboard.\nIt will be converted inside this window.\n&quot;);</span>
+<span class="nc" id="L76">		area.setFont(new Font(&quot;Courier&quot;, Font.PLAIN, 14));</span>
+<span class="nc" id="L77">		area.setText(&quot;Copy an image to the clipboard.\nIt will be converted inside this window.\n&quot;);</span>
 
-<span class="nc" id="L78">		final JScrollPane scroll = new JScrollPane(area);</span>
+<span class="nc" id="L79">		final JScrollPane scroll = new JScrollPane(area);</span>
 
 		// getContentPane().add(encode, BorderLayout.SOUTH);
-<span class="nc" id="L81">		getContentPane().add(scroll, BorderLayout.CENTER);</span>
-<span class="nc" id="L82">		setSize(400, 320);</span>
-<span class="nc" id="L83">		setVisible(true);</span>
-<span class="nc" id="L84">		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L82">		getContentPane().add(scroll, BorderLayout.CENTER);</span>
+<span class="nc" id="L83">		setSize(400, 320);</span>
+<span class="nc" id="L84">		setVisible(true);</span>
+<span class="nc" id="L85">		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
 
-<span class="nc" id="L86">		startTimer();</span>
-<span class="nc" id="L87">	}</span>
+<span class="nc" id="L87">		startTimer();</span>
+<span class="nc" id="L88">	}</span>
 
 	private void startTimer() {
-<span class="nc" id="L90">		Log.info(() -&gt; &quot;Init done&quot;);</span>
-<span class="nc" id="L91">		final Timer timer = new Timer(10000, new ActionListener() {</span>
+<span class="nc" id="L91">		Log.info(() -&gt; &quot;Init done&quot;);</span>
+<span class="nc" id="L92">		final Timer timer = new Timer(10000, new ActionListener() {</span>
 			public void actionPerformed(ActionEvent e) {
-<span class="nc" id="L93">				tick();</span>
-<span class="nc" id="L94">			}</span>
+<span class="nc" id="L94">				tick();</span>
+<span class="nc" id="L95">			}</span>
 		});
-<span class="nc" id="L96">		timer.setInitialDelay(0);</span>
-<span class="nc" id="L97">		timer.start();</span>
-<span class="nc" id="L98">		Log.info(() -&gt; &quot;Timer started&quot;);</span>
-<span class="nc" id="L99">	}</span>
+<span class="nc" id="L97">		timer.setInitialDelay(0);</span>
+<span class="nc" id="L98">		timer.start();</span>
+<span class="nc" id="L99">		Log.info(() -&gt; &quot;Timer started&quot;);</span>
+<span class="nc" id="L100">	}</span>
 
 	private void tick() {
-<span class="nc" id="L102">		SwingUtilities.invokeLater(new Runnable() {</span>
+<span class="nc" id="L103">		SwingUtilities.invokeLater(new Runnable() {</span>
 			public void run() {
-<span class="nc" id="L104">				encode();</span>
-<span class="nc" id="L105">			}</span>
+<span class="nc" id="L105">				encode();</span>
+<span class="nc" id="L106">			}</span>
 		});
-<span class="nc" id="L107">	}</span>
+<span class="nc" id="L108">	}</span>
 
 	private void encode() {
-<span class="nc" id="L110">		final PortableImage img = getClipboard();</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (img == null) {</span>
-<span class="nc" id="L112">			return;</span>
+<span class="nc" id="L111">		final PortableImage img = getClipboard();</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (img == null) {</span>
+<span class="nc" id="L113">			return;</span>
 		}
-<span class="nc" id="L114">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L115">		encodeColor(img, sb);</span>
-<span class="nc" id="L116">		encode(img, SpriteGrayLevel.GRAY_16, sb);</span>
-<span class="nc" id="L117">		encodeCompressed(img, SpriteGrayLevel.GRAY_16, sb);</span>
-<span class="nc" id="L118">		encode(img, SpriteGrayLevel.GRAY_8, sb);</span>
-<span class="nc" id="L119">		encodeCompressed(img, SpriteGrayLevel.GRAY_8, sb);</span>
-<span class="nc" id="L120">		encode(img, SpriteGrayLevel.GRAY_4, sb);</span>
-<span class="nc" id="L121">		encodeCompressed(img, SpriteGrayLevel.GRAY_4, sb);</span>
-<span class="nc" id="L122">		printData(sb.toString());</span>
-<span class="nc" id="L123">	}</span>
+<span class="nc" id="L115">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L116">		encodeColor(img, sb);</span>
+<span class="nc" id="L117">		encode(img, SpriteGrayLevel.GRAY_16, sb);</span>
+<span class="nc" id="L118">		encodeCompressed(img, SpriteGrayLevel.GRAY_16, sb);</span>
+<span class="nc" id="L119">		encode(img, SpriteGrayLevel.GRAY_8, sb);</span>
+<span class="nc" id="L120">		encodeCompressed(img, SpriteGrayLevel.GRAY_8, sb);</span>
+<span class="nc" id="L121">		encode(img, SpriteGrayLevel.GRAY_4, sb);</span>
+<span class="nc" id="L122">		encodeCompressed(img, SpriteGrayLevel.GRAY_4, sb);</span>
+<span class="nc" id="L123">		printData(sb.toString());</span>
+<span class="nc" id="L124">	}</span>
 
 	private void encodeColor(PortableImage img, StringBuilder sb) {
-<span class="nc" id="L126">		sb.append(&quot;\n&quot;);</span>
-<span class="nc" id="L127">		sb.append(SpriteUtils.encodeColor(img, &quot;demo&quot;));</span>
+<span class="nc" id="L127">		sb.append(&quot;\n&quot;);</span>
+<span class="nc" id="L128">		sb.append(SpriteUtils.encodeColor(img, &quot;demo&quot;));</span>
 
-<span class="nc" id="L129">	}</span>
+<span class="nc" id="L130">	}</span>
 
 	private void encodeCompressed(PortableImage img, SpriteGrayLevel level, StringBuilder sb) {
-<span class="nc" id="L132">		sb.append(&quot;\n&quot;);</span>
-<span class="nc" id="L133">		sb.append(SpriteUtils.encodeCompressed(img, &quot;demo&quot;, level));</span>
+<span class="nc" id="L133">		sb.append(&quot;\n&quot;);</span>
+<span class="nc" id="L134">		sb.append(SpriteUtils.encodeCompressed(img, &quot;demo&quot;, level));</span>
 
-<span class="nc" id="L135">	}</span>
+<span class="nc" id="L136">	}</span>
 
 	private void encode(PortableImage img, SpriteGrayLevel level, StringBuilder sb) {
-<span class="nc" id="L138">		sb.append(&quot;\n&quot;);</span>
-<span class="nc" id="L139">		sb.append(SpriteUtils.encode(img, &quot;demo&quot;, level));</span>
-<span class="nc" id="L140">	}</span>
+<span class="nc" id="L139">		sb.append(&quot;\n&quot;);</span>
+<span class="nc" id="L140">		sb.append(SpriteUtils.encode(img, &quot;demo&quot;, level));</span>
+<span class="nc" id="L141">	}</span>
 
 	private String last;
 
 	private void printData(final String s) {
-<span class="nc bnc" id="L145" title="All 2 branches missed.">		if (s.equals(last) == false) {</span>
-<span class="nc" id="L146">			area.setText(s);</span>
-<span class="nc" id="L147">			last = s;</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (s.equals(last) == false) {</span>
+<span class="nc" id="L147">			area.setText(s);</span>
+<span class="nc" id="L148">			last = s;</span>
 		}
-<span class="nc" id="L149">	}</span>
+<span class="nc" id="L150">	}</span>
 
 	public static PortableImage getClipboard() {
-<span class="nc" id="L152">		final Transferable t = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);</span>
+<span class="nc" id="L153">		final Transferable t = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);</span>
 
 		try {
-<span class="nc bnc" id="L155" title="All 4 branches missed.">			if (t != null &amp;&amp; t.isDataFlavorSupported(DataFlavor.imageFlavor)) {</span>
-<span class="nc" id="L156">				final PortableImage text = new PortableImage(</span>
-<span class="nc" id="L157">						(BufferedImage) t.getTransferData(DataFlavor.imageFlavor));</span>
-<span class="nc" id="L158">				return text;</span>
+<span class="nc bnc" id="L156" title="All 4 branches missed.">			if (t != null &amp;&amp; t.isDataFlavorSupported(DataFlavor.imageFlavor)) {</span>
+<span class="nc" id="L157">				final PortableImage text = PortableImageFactory.build(</span>
+<span class="nc" id="L158">						(BufferedImage) t.getTransferData(DataFlavor.imageFlavor));</span>
+<span class="nc" id="L159">				return text;</span>
 			}
 
-<span class="nc" id="L161">		} catch (UnsupportedFlavorException e) {</span>
-<span class="nc" id="L162">			Log.error(e.toString());</span>
-<span class="nc" id="L163">		} catch (IOException e) {</span>
-<span class="nc" id="L164">			Log.error(e.toString());</span>
-<span class="nc" id="L165">		}</span>
-<span class="nc" id="L166">		return null;</span>
+<span class="nc" id="L162">		} catch (UnsupportedFlavorException e) {</span>
+<span class="nc" id="L163">			Log.error(e.toString());</span>
+<span class="nc" id="L164">		} catch (IOException e) {</span>
+<span class="nc" id="L165">			Log.error(e.toString());</span>
+<span class="nc" id="L166">		}</span>
+<span class="nc" id="L167">		return null;</span>
 	}
 
 	public static void main(String[] args) {
-<span class="nc" id="L170">		new SpriteWindow();</span>
+<span class="nc" id="L171">		new SpriteWindow();</span>
 
-<span class="nc" id="L172">	}</span>
+<span class="nc" id="L173">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

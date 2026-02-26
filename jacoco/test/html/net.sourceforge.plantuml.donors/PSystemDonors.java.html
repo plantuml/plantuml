@@ -67,7 +67,7 @@ import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemDonors extends PlainDiagram {
-	// ::remove file when __CORE__ or __TEAVM__
+	
 
 	private static final int COLS = 6;
 	private static final int FREE_LINES = 6;
@@ -145,28 +145,26 @@ public class PSystemDonors extends PlainDiagram {
 
 	private List&lt;String&gt; getDonors() throws IOException {
 <span class="nc" id="L147">		final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
-		// ::comment when __CORE__
-<span class="nc" id="L149">		final Transcoder t = TranscoderImpl.utf8(new AsciiEncoder(), new StringCompressorNone(),</span>
+<span class="nc" id="L148">		final Transcoder t = TranscoderImpl.utf8(new AsciiEncoder(), new StringCompressorNone(),</span>
 				new CompressionBrotli());
 		try {
-<span class="nc" id="L152">			final String s = t.decode(DONORS).replace('*', '.');</span>
-<span class="nc" id="L153">			final StringTokenizer st = new StringTokenizer(s, BackSlash.NEWLINE);</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">			while (st.hasMoreTokens()) {</span>
-<span class="nc" id="L155">				lines.add(st.nextToken());</span>
+<span class="nc" id="L151">			final String s = t.decode(DONORS).replace('*', '.');</span>
+<span class="nc" id="L152">			final StringTokenizer st = new StringTokenizer(s, BackSlash.NEWLINE);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">			while (st.hasMoreTokens()) {</span>
+<span class="nc" id="L154">				lines.add(st.nextToken());</span>
 			}
-<span class="nc" id="L157">		} catch (NoPlantumlCompressionException e) {</span>
-<span class="nc" id="L158">			Logme.error(e);</span>
-<span class="nc" id="L159">		}</span>
-		// ::done
-<span class="nc" id="L161">		return lines;</span>
+<span class="nc" id="L156">		} catch (NoPlantumlCompressionException e) {</span>
+<span class="nc" id="L157">			Logme.error(e);</span>
+<span class="nc" id="L158">		}</span>
+<span class="nc" id="L159">		return lines;</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L165">		return new DiagramDescription(&quot;(Donors)&quot;);</span>
+<span class="nc" id="L163">		return new DiagramDescription(&quot;(Donors)&quot;);</span>
 	}
 
 	public static PSystemDonors create(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L169">		return new PSystemDonors(source, preprocessing);</span>
+<span class="nc" id="L167">		return new PSystemDonors(source, preprocessing);</span>
 	}
 
 }

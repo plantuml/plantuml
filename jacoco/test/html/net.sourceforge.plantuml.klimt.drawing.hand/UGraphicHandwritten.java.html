@@ -47,71 +47,72 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class UGraphicHandwritten extends UGraphicDelegator implements UGraphic {
 
-<span class="nc" id="L53">	private final Random rnd = new Random(424242L);</span>
+<span class="nc" id="L54">	private final Random rnd = new Random(424242L);</span>
 
 	public UGraphicHandwritten(UGraphic ug) {
-<span class="nc" id="L56">		super(ug);</span>
-		// ::comment when __TEAVM__
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (ug instanceof UGraphicSvg)</span>
-<span class="nc" id="L59">			((UGraphicSvg) ug).enlargeClip();</span>
-		// ::done
-<span class="nc" id="L61">	}</span>
+<span class="nc" id="L57">		super(ug);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">			if (ug instanceof UGraphicSvg)</span>
+<span class="nc" id="L60">				((UGraphicSvg) ug).enlargeClip();</span>
+		}
+<span class="nc" id="L62">	}</span>
 
 	public void draw(UShape shape) {
 		// http://www.ufonts.com/fonts/felt-tip-roman.html
 		// http://webdesignledger.com/freebies/20-amazing-free-handwritten-fonts-for-your-designs
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (shape instanceof ULine)</span>
-<span class="nc" id="L67">			drawHand((ULine) shape);</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		else if (shape instanceof URectangle)</span>
-<span class="nc" id="L69">			drawHand((URectangle) shape);</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		else if (shape instanceof UPolygon)</span>
-<span class="nc" id="L71">			drawHand((UPolygon) shape);</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">		else if (shape instanceof UEllipse)</span>
-<span class="nc" id="L73">			drawHand((UEllipse) shape);</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">		else if (shape instanceof DotPath)</span>
-<span class="nc" id="L75">			drawHand((DotPath) shape);</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		else if (shape instanceof UPath)</span>
-<span class="nc" id="L77">			drawHand((UPath) shape);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (shape instanceof ULine)</span>
+<span class="nc" id="L68">			drawHand((ULine) shape);</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		else if (shape instanceof URectangle)</span>
+<span class="nc" id="L70">			drawHand((URectangle) shape);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		else if (shape instanceof UPolygon)</span>
+<span class="nc" id="L72">			drawHand((UPolygon) shape);</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		else if (shape instanceof UEllipse)</span>
+<span class="nc" id="L74">			drawHand((UEllipse) shape);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		else if (shape instanceof DotPath)</span>
+<span class="nc" id="L76">			drawHand((DotPath) shape);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		else if (shape instanceof UPath)</span>
+<span class="nc" id="L78">			drawHand((UPath) shape);</span>
 		else
-<span class="nc" id="L79">			getUg().draw(shape);</span>
+<span class="nc" id="L80">			getUg().draw(shape);</span>
 
-<span class="nc" id="L81">	}</span>
+<span class="nc" id="L82">	}</span>
 
 	private void drawHand(UPath shape) {
-<span class="nc" id="L84">		final UPathHand uline = new UPathHand(shape, rnd);</span>
-<span class="nc" id="L85">		getUg().draw(uline.getHanddrawn());</span>
-<span class="nc" id="L86">	}</span>
+<span class="nc" id="L85">		final UPathHand uline = new UPathHand(shape, rnd);</span>
+<span class="nc" id="L86">		getUg().draw(uline.getHanddrawn());</span>
+<span class="nc" id="L87">	}</span>
 
 	private void drawHand(DotPath shape) {
-<span class="nc" id="L89">		final UDotPathHand uline = new UDotPathHand(shape, rnd);</span>
-<span class="nc" id="L90">		getUg().draw(uline.getHanddrawn());</span>
-<span class="nc" id="L91">	}</span>
+<span class="nc" id="L90">		final UDotPathHand uline = new UDotPathHand(shape, rnd);</span>
+<span class="nc" id="L91">		getUg().draw(uline.getHanddrawn());</span>
+<span class="nc" id="L92">	}</span>
 
 	private void drawHand(UPolygon shape) {
-<span class="nc" id="L94">		final UPolygonHand hand = new UPolygonHand(shape, rnd);</span>
-<span class="nc" id="L95">		getUg().draw(hand.getHanddrawn());</span>
-<span class="nc" id="L96">	}</span>
+<span class="nc" id="L95">		final UPolygonHand hand = new UPolygonHand(shape, rnd);</span>
+<span class="nc" id="L96">		getUg().draw(hand.getHanddrawn());</span>
+<span class="nc" id="L97">	}</span>
 
 	private void drawHand(URectangle shape) {
-<span class="nc" id="L99">		final URectangleHand hand = new URectangleHand(shape, rnd);</span>
-<span class="nc" id="L100">		getUg().draw(hand.getHanddrawn());</span>
-<span class="nc" id="L101">	}</span>
+<span class="nc" id="L100">		final URectangleHand hand = new URectangleHand(shape, rnd);</span>
+<span class="nc" id="L101">		getUg().draw(hand.getHanddrawn());</span>
+<span class="nc" id="L102">	}</span>
 
 	private void drawHand(ULine shape) {
-<span class="nc" id="L104">		final ULineHand uline = new ULineHand(shape, rnd);</span>
-<span class="nc" id="L105">		getUg().draw(uline.getHanddrawn());</span>
-<span class="nc" id="L106">	}</span>
+<span class="nc" id="L105">		final ULineHand uline = new ULineHand(shape, rnd);</span>
+<span class="nc" id="L106">		getUg().draw(uline.getHanddrawn());</span>
+<span class="nc" id="L107">	}</span>
 
 	private void drawHand(UEllipse shape) {
-<span class="nc" id="L109">		final UEllipseHand uline = new UEllipseHand(shape, rnd);</span>
-<span class="nc" id="L110">		getUg().draw(uline.getHanddrawn());</span>
-<span class="nc" id="L111">	}</span>
+<span class="nc" id="L110">		final UEllipseHand uline = new UEllipseHand(shape, rnd);</span>
+<span class="nc" id="L111">		getUg().draw(uline.getHanddrawn());</span>
+<span class="nc" id="L112">	}</span>
 
 	public UGraphic apply(UChange change) {
-<span class="nc" id="L114">		return new UGraphicHandwritten(getUg().apply(change));</span>
+<span class="nc" id="L115">		return new UGraphicHandwritten(getUg().apply(change));</span>
 	}
 
 }

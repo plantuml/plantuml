@@ -67,6 +67,7 @@ import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.openiconic.OpenIcon;
 import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.CharHidder;
 
@@ -74,18 +75,18 @@ public class StripeSimple implements Stripe {
 
 	final private Atom header;
 
-<span class="fc" id="L77">	final private List&lt;Atom&gt; atoms = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L78">	final private List&lt;Atom&gt; atoms = new ArrayList&lt;&gt;();</span>
 
 	final private Map&lt;Character, List&lt;Command&gt;&gt; commands;
 
-<span class="fc" id="L81">	private HorizontalAlignment align = HorizontalAlignment.LEFT;</span>
+<span class="fc" id="L82">	private HorizontalAlignment align = HorizontalAlignment.LEFT;</span>
 
 	public void setCellAlignment(HorizontalAlignment align) {
-<span class="fc" id="L84">		this.align = align;</span>
-<span class="fc" id="L85">	}</span>
+<span class="fc" id="L85">		this.align = align;</span>
+<span class="fc" id="L86">	}</span>
 
 	public HorizontalAlignment getCellAlignment() {
-<span class="fc" id="L88">		return align;</span>
+<span class="fc" id="L89">		return align;</span>
 	}
 
 	private FontConfiguration fontConfiguration;
@@ -95,45 +96,45 @@ public class StripeSimple implements Stripe {
 
 	@Override
 	public String toString() {
-<span class="nc" id="L98">		return super.toString() + &quot; &quot; + atoms.toString();</span>
+<span class="nc" id="L99">		return super.toString() + &quot; &quot; + atoms.toString();</span>
 	}
 
 	public Atom getLHeader() {
-<span class="fc" id="L102">		return header;</span>
+<span class="fc" id="L103">		return header;</span>
 	}
 
 	public StripeSimple(FontConfiguration fontConfiguration, StripeStyle style, CreoleContext context,
-<span class="fc" id="L106">			ISkinSimple skinParam, CreoleMode modeSimpleLine) {</span>
-<span class="fc" id="L107">		this.fontConfiguration = fontConfiguration;</span>
-<span class="fc" id="L108">		this.style = style;</span>
-<span class="fc" id="L109">		this.skinParam = skinParam;</span>
+<span class="fc" id="L107">			ISkinSimple skinParam, CreoleMode modeSimpleLine) {</span>
+<span class="fc" id="L108">		this.fontConfiguration = fontConfiguration;</span>
+<span class="fc" id="L109">		this.style = style;</span>
+<span class="fc" id="L110">		this.skinParam = skinParam;</span>
 
-<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (modeSimpleLine == CreoleMode.FULL)</span>
-<span class="fc" id="L112">			this.commands = CommandCreoleBuilder.FULL.getMap();</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (modeSimpleLine == CreoleMode.FULL)</span>
+<span class="fc" id="L113">			this.commands = CommandCreoleBuilder.FULL.getMap();</span>
 		else
-<span class="fc" id="L114">			this.commands = CommandCreoleBuilder.OTHER.getMap();</span>
+<span class="fc" id="L115">			this.commands = CommandCreoleBuilder.OTHER.getMap();</span>
 
-<span class="fc" id="L116">		this.header = style.getHeader(fontConfiguration, context);</span>
+<span class="fc" id="L117">		this.header = style.getHeader(fontConfiguration, context);</span>
 
-<span class="fc bfc" id="L118" title="All 2 branches covered.">		if (this.header != null)</span>
-<span class="fc" id="L119">			this.atoms.add(this.header);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (this.header != null)</span>
+<span class="fc" id="L120">			this.atoms.add(this.header);</span>
 
-<span class="fc" id="L121">	}</span>
+<span class="fc" id="L122">	}</span>
 
 	public List&lt;Atom&gt; getAtoms() {
-<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (atoms.size() == 0)</span>
-<span class="fc" id="L125">			atoms.add(AtomTextUtils.createLegacy(&quot; &quot;, fontConfiguration));</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (atoms.size() == 0)</span>
+<span class="fc" id="L126">			atoms.add(AtomTextUtils.createLegacy(&quot; &quot;, fontConfiguration));</span>
 
-<span class="fc" id="L127">		return Collections.unmodifiableList(atoms);</span>
+<span class="fc" id="L128">		return Collections.unmodifiableList(atoms);</span>
 	}
 
 	public FontConfiguration getActualFontConfiguration() {
-<span class="fc" id="L131">		return fontConfiguration;</span>
+<span class="fc" id="L132">		return fontConfiguration;</span>
 	}
 
 	public void setActualFontConfiguration(FontConfiguration fontConfiguration) {
-<span class="fc" id="L135">		this.fontConfiguration = fontConfiguration;</span>
-<span class="fc" id="L136">	}</span>
+<span class="fc" id="L136">		this.fontConfiguration = fontConfiguration;</span>
+<span class="fc" id="L137">	}</span>
 
 	public void analyzeAndAdd(String line) {
 //		if (Objects.requireNonNull(line).contains(&quot;&quot; + BackSlash.hiddenNewLine()))
@@ -141,21 +142,21 @@ public class StripeSimple implements Stripe {
 
 		if (Jaws.TRACE)
 			System.err.println(&quot;analyzeAndAdd &quot; + line);
-<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		if (line.indexOf(Jaws.BLOCK_E1_NEWLINE) != -1)</span>
-<span class="nc" id="L145">			throw new IllegalArgumentException(line);</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		if (line.indexOf(Jaws.BLOCK_E1_NEWLINE) != -1)</span>
+<span class="nc" id="L146">			throw new IllegalArgumentException(line);</span>
 
-<span class="fc" id="L147">		line = manageCellAlignment(line);</span>
+<span class="fc" id="L148">		line = manageCellAlignment(line);</span>
 
-<span class="fc" id="L149">		line = CharHidder.hide(line);</span>
-<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (style.getType() == StripeStyleType.HEADING) {</span>
-<span class="fc" id="L151">			fontConfiguration = fontConfigurationForHeading(fontConfiguration, style.getOrder());</span>
-<span class="fc" id="L152">			modifyStripe(line);</span>
-<span class="fc bfc" id="L153" title="All 2 branches covered.">		} else if (style.getType() == StripeStyleType.HORIZONTAL_LINE) {</span>
-<span class="fc" id="L154">			atoms.add(CreoleHorizontalLine.create(fontConfiguration, line, style.getStyle(), skinParam));</span>
+<span class="fc" id="L150">		line = CharHidder.hide(line);</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (style.getType() == StripeStyleType.HEADING) {</span>
+<span class="fc" id="L152">			fontConfiguration = fontConfigurationForHeading(fontConfiguration, style.getOrder());</span>
+<span class="fc" id="L153">			modifyStripe(line);</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		} else if (style.getType() == StripeStyleType.HORIZONTAL_LINE) {</span>
+<span class="fc" id="L155">			atoms.add(CreoleHorizontalLine.create(fontConfiguration, line, style.getStyle(), skinParam));</span>
 		} else {
-<span class="fc" id="L156">			modifyStripe(line);</span>
+<span class="fc" id="L157">			modifyStripe(line);</span>
 		}
-<span class="fc" id="L158">	}</span>
+<span class="fc" id="L159">	}</span>
 
 	private static final String LEFT_LONG = &quot;&lt;left&gt;&quot;;
 	private static final String LEFT_SHORT = &quot;&lt;l&gt;&quot;;
@@ -165,109 +166,108 @@ public class StripeSimple implements Stripe {
 	private static final String RIGHT_SHORT = &quot;&lt;r&gt;&quot;;
 
 	private String manageCellAlignment(String line) {
-<span class="fc bfc" id="L168" title="All 2 branches covered.">		if (line.startsWith(&quot;&lt;&quot;))</span>
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">			if (line.startsWith(LEFT_SHORT)) {</span>
-<span class="nc" id="L170">				setCellAlignment(HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L171">				line = line.substring(LEFT_SHORT.length());</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (line.startsWith(&quot;&lt;&quot;))</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">			if (line.startsWith(LEFT_SHORT)) {</span>
+<span class="nc" id="L171">				setCellAlignment(HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L172">				line = line.substring(LEFT_SHORT.length());</span>
 
-<span class="pc bpc" id="L173" title="1 of 2 branches missed.">			} else if (line.startsWith(LEFT_LONG)) {</span>
-<span class="nc" id="L174">				setCellAlignment(HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L175">				line = line.substring(LEFT_LONG.length());</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">			} else if (line.startsWith(LEFT_LONG)) {</span>
+<span class="nc" id="L175">				setCellAlignment(HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L176">				line = line.substring(LEFT_LONG.length());</span>
 
-<span class="pc bpc" id="L177" title="1 of 2 branches missed.">			} else if (line.startsWith(CENTER_LONG)) {</span>
-<span class="nc" id="L178">				setCellAlignment(HorizontalAlignment.CENTER);</span>
-<span class="nc" id="L179">				line = line.substring(CENTER_LONG.length());</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">			} else if (line.startsWith(CENTER_LONG)) {</span>
+<span class="nc" id="L179">				setCellAlignment(HorizontalAlignment.CENTER);</span>
+<span class="nc" id="L180">				line = line.substring(CENTER_LONG.length());</span>
 
-<span class="pc bpc" id="L181" title="1 of 2 branches missed.">			} else if (line.startsWith(CENTER_SHORT)) {</span>
-<span class="nc" id="L182">				setCellAlignment(HorizontalAlignment.CENTER);</span>
-<span class="nc" id="L183">				line = line.substring(CENTER_SHORT.length());</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">			} else if (line.startsWith(CENTER_SHORT)) {</span>
+<span class="nc" id="L183">				setCellAlignment(HorizontalAlignment.CENTER);</span>
+<span class="nc" id="L184">				line = line.substring(CENTER_SHORT.length());</span>
 
-<span class="pc bpc" id="L185" title="1 of 2 branches missed.">			} else if (line.startsWith(RIGHT_LONG)) {</span>
-<span class="nc" id="L186">				setCellAlignment(HorizontalAlignment.RIGHT);</span>
-<span class="nc" id="L187">				line = line.substring(RIGHT_LONG.length());</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">			} else if (line.startsWith(RIGHT_LONG)) {</span>
+<span class="nc" id="L187">				setCellAlignment(HorizontalAlignment.RIGHT);</span>
+<span class="nc" id="L188">				line = line.substring(RIGHT_LONG.length());</span>
 
-<span class="pc bpc" id="L189" title="1 of 2 branches missed.">			} else if (line.startsWith(RIGHT_SHORT)) {</span>
-<span class="nc" id="L190">				setCellAlignment(HorizontalAlignment.RIGHT);</span>
-<span class="nc" id="L191">				line = line.substring(RIGHT_SHORT.length());</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">			} else if (line.startsWith(RIGHT_SHORT)) {</span>
+<span class="nc" id="L191">				setCellAlignment(HorizontalAlignment.RIGHT);</span>
+<span class="nc" id="L192">				line = line.substring(RIGHT_SHORT.length());</span>
 
 			}
 
-<span class="fc" id="L195">		return line;</span>
+<span class="fc" id="L196">		return line;</span>
 	}
 
 	private static FontConfiguration fontConfigurationForHeading(FontConfiguration fontConfiguration, int order) {
-<span class="pc bpc" id="L199" title="3 of 4 branches missed.">		switch (order) {</span>
+<span class="pc bpc" id="L200" title="3 of 4 branches missed.">		switch (order) {</span>
 		case 0:
-<span class="nc" id="L201">			return fontConfiguration.bigger(4).bold();</span>
+<span class="nc" id="L202">			return fontConfiguration.bigger(4).bold();</span>
 		case 1:
-<span class="fc" id="L203">			return fontConfiguration.bigger(2).bold();</span>
+<span class="fc" id="L204">			return fontConfiguration.bigger(2).bold();</span>
 		case 2:
-<span class="nc" id="L205">			return fontConfiguration.bigger(1).bold();</span>
+<span class="nc" id="L206">			return fontConfiguration.bigger(1).bold();</span>
 		default:
-<span class="nc" id="L207">			return fontConfiguration.italic();</span>
+<span class="nc" id="L208">			return fontConfiguration.italic();</span>
 		}
 	}
 
 	public void addImage(String src, double scale) {
-<span class="nc" id="L212">		atoms.add(AtomImg.create(src, ImgValign.TOP, 0, scale, null));</span>
-<span class="nc" id="L213">	}</span>
+<span class="nc" id="L213">		atoms.add(AtomImg.create(src, ImgValign.TOP, 0, scale, null));</span>
+<span class="nc" id="L214">	}</span>
 
 	public void addQrcode(String src, double scale) {
-<span class="nc" id="L216">		atoms.add(AtomImg.createQrcode(src, scale));</span>
-<span class="nc" id="L217">	}</span>
+<span class="nc" id="L217">		atoms.add(AtomImg.createQrcode(src, scale));</span>
+<span class="nc" id="L218">	}</span>
 
 	public void addSpace(int size) {
-<span class="nc" id="L220">		atoms.add(AtomSpace.create(size));</span>
-<span class="nc" id="L221">	}</span>
+<span class="nc" id="L221">		atoms.add(AtomSpace.create(size));</span>
+<span class="nc" id="L222">	}</span>
 
 	public void addUrl(Url url) {
-<span class="fc" id="L224">		atoms.add(AtomTextUtils.createUrl(url, fontConfiguration, skinParam));</span>
-<span class="fc" id="L225">	}</span>
+<span class="fc" id="L225">		atoms.add(AtomTextUtils.createUrl(url, fontConfiguration, skinParam));</span>
+<span class="fc" id="L226">	}</span>
 
 	public void addSprite(String src, double scale, HColor forcedColor) {
-<span class="fc" id="L228">		final Sprite sprite = skinParam.getSprite(src);</span>
-<span class="pc bpc" id="L229" title="1 of 2 branches missed.">		if (sprite != null) {</span>
-<span class="pc bpc" id="L230" title="1 of 2 branches missed.">			final HColor backColor = fontConfiguration.containsStyle(FontStyle.BACKCOLOR)</span>
-<span class="nc" id="L231">					? fontConfiguration.getExtendedColor()</span>
-<span class="fc" id="L232">					: null;</span>
-<span class="fc" id="L233">			atoms.add(new AtomSprite(fontConfiguration.getColor(), forcedColor, scale, sprite, null, backColor));</span>
+<span class="fc" id="L229">		final Sprite sprite = skinParam.getSprite(src);</span>
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">		if (sprite != null) {</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">			final HColor backColor = fontConfiguration.containsStyle(FontStyle.BACKCOLOR)</span>
+<span class="nc" id="L232">					? fontConfiguration.getExtendedColor()</span>
+<span class="fc" id="L233">					: null;</span>
+<span class="fc" id="L234">			atoms.add(new AtomSprite(fontConfiguration.getColor(), forcedColor, scale, sprite, null, backColor));</span>
 		}
 
-<span class="fc" id="L236">	}</span>
+<span class="fc" id="L237">	}</span>
 
 	public void addOpenIcon(String src, double scale, HColor color) {
-<span class="nc" id="L239">		final OpenIcon openIcon = OpenIcon.retrieve(src);</span>
-<span class="nc bnc" id="L240" title="All 2 branches missed.">		if (openIcon != null)</span>
-<span class="nc" id="L241">			atoms.add(new AtomOpenIcon(color, scale, openIcon, fontConfiguration, null));</span>
-<span class="nc" id="L242">	}</span>
+<span class="nc" id="L240">		final OpenIcon openIcon = OpenIcon.retrieve(src);</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">		if (openIcon != null)</span>
+<span class="nc" id="L242">			atoms.add(new AtomOpenIcon(color, scale, openIcon, fontConfiguration, null));</span>
+<span class="nc" id="L243">	}</span>
 
 	public void addEmoji(String emojiName, double scale, String forcedColor) {
-<span class="nc" id="L245">		final Emoji emoji = Emoji.retrieve(emojiName);</span>
-<span class="nc bnc" id="L246" title="All 2 branches missed.">		if (emoji == null) {</span>
-<span class="nc" id="L247">			atoms.add(AtomTextUtils.create(&quot;\u00BF&quot; + emojiName + &quot;?&quot;, fontConfiguration.changeColor(HColors.RED)));</span>
-<span class="nc" id="L248">			return;</span>
+<span class="nc" id="L246">		final Emoji emoji = Emoji.retrieve(emojiName);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">		if (emoji == null) {</span>
+<span class="nc" id="L248">			atoms.add(AtomTextUtils.create(&quot;\u00BF&quot; + emojiName + &quot;?&quot;, fontConfiguration.changeColor(HColors.RED)));</span>
+<span class="nc" id="L249">			return;</span>
 		}
 
-<span class="nc" id="L251">		HColor col = null;</span>
-<span class="nc bnc" id="L252" title="All 2 branches missed.">		if (forcedColor == null)</span>
-<span class="nc" id="L253">			col = null;</span>
-<span class="nc bnc" id="L254" title="All 6 branches missed.">		else if (forcedColor.equals(&quot;#0&quot;) || forcedColor.equals(&quot;#000&quot;) || forcedColor.equals(&quot;#black&quot;))</span>
-<span class="nc" id="L255">			col = fontConfiguration.getColor();</span>
+<span class="nc" id="L252">		HColor col = null;</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">		if (forcedColor == null)</span>
+<span class="nc" id="L254">			col = null;</span>
+<span class="nc bnc" id="L255" title="All 6 branches missed.">		else if (forcedColor.equals(&quot;#0&quot;) || forcedColor.equals(&quot;#000&quot;) || forcedColor.equals(&quot;#black&quot;))</span>
+<span class="nc" id="L256">			col = fontConfiguration.getColor();</span>
 		else
 			try {
-<span class="nc" id="L258">				col = skinParam.getIHtmlColorSet().getColor(forcedColor);</span>
-<span class="nc" id="L259">			} catch (NoSuchColorException e) {</span>
-<span class="nc" id="L260">				col = null;</span>
-<span class="nc" id="L261">			}</span>
+<span class="nc" id="L259">				col = skinParam.getIHtmlColorSet().getColor(forcedColor);</span>
+<span class="nc" id="L260">			} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L261">				col = null;</span>
+<span class="nc" id="L262">			}</span>
 
-<span class="nc" id="L263">		atoms.add(new AtomEmoji(emoji, scale, fontConfiguration.getSize2D(), col));</span>
-<span class="nc" id="L264">	}</span>
+<span class="nc" id="L264">		atoms.add(new AtomEmoji(emoji, scale, fontConfiguration.getSize2D(), col));</span>
+<span class="nc" id="L265">	}</span>
 
-	// ::comment when __CORE__  or __TEAVM__
 	public void addMath(ScientificEquationSafe math) {
-<span class="nc" id="L268">		atoms.add(new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor()));</span>
-<span class="nc" id="L269">	}</span>
-	// ::done
+<span class="nc bnc" id="L268" title="All 2 branches missed.">		if (!TeaVM.isTeaVM())</span>
+<span class="nc" id="L269">			atoms.add(new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor()));</span>
+<span class="nc" id="L270">	}</span>
 
 	private void modifyStripe(String line) {
 <span class="fc" id="L273">		final StringBuilder pending = new StringBuilder();</span>

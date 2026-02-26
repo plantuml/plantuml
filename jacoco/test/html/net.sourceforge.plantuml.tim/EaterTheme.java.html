@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.theme.ThemeUtils;
 
 public class EaterTheme extends Eater {
 	// ::remove folder when __HAXE__
-	// ::remove file when __TEAVM__
+	
 	
 	private String realName;
 	private String name;

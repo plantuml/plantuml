@@ -36,11 +36,9 @@
 package net.sourceforge.plantuml.emoji;
 
 import java.io.BufferedReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -48,135 +46,143 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+// ::comment when JAVA8
+import org.teavm.jso.JSBody;
+// ::done
+
 import net.sourceforge.plantuml.emoji.data.Dummy;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.log.Logme;
-
-// ::uncomment when __TEAVM__
-//import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
-//import org.teavm.jso.JSBody;
-// ::done
+import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
 
 // Emojji from https://twemoji.twitter.com/
 // Shorcut from https://api.github.com/emojis
 
 public class Emoji {
 
-	// ::comment when __TEAVM__
-<span class="nc" id="L67">	private final static Map&lt;String, Emoji&gt; ALL = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L65">	private final static Map&lt;String, Emoji&gt; ALL = new HashMap&lt;&gt;();</span>
 
 	static {
-<span class="nc" id="L70">		final InputStream is = Dummy.class.getResourceAsStream(&quot;emoji.txt&quot;);</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (is != null)</span>
-<span class="nc" id="L72">			try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {</span>
-<span class="nc" id="L73">				String s = null;</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">				while ((s = br.readLine()) != null)</span>
-<span class="nc" id="L75">					new Emoji(s);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L69">			final InputStream is = Dummy.class.getResourceAsStream(&quot;emoji.txt&quot;);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">			if (is != null)</span>
+<span class="nc" id="L71">				try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {</span>
+<span class="nc" id="L72">					String s = null;</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">					while ((s = br.readLine()) != null)</span>
+<span class="nc" id="L74">						new Emoji(s);</span>
 
-<span class="nc" id="L77">			} catch (IOException e) {</span>
-<span class="nc" id="L78">				Logme.error(e);</span>
-<span class="nc" id="L79">			}</span>
-<span class="nc" id="L80">	}</span>
+<span class="nc" id="L76">				} catch (IOException e) {</span>
+<span class="nc" id="L77">					Logme.error(e);</span>
+<span class="nc" id="L78">				}</span>
+		}
+	}
 
 	public static Map&lt;String, Emoji&gt; getAll() {
 <span class="nc" id="L83">		return Collections.unmodifiableMap(new TreeMap&lt;&gt;(ALL));</span>
 	}
-	//::done
 
 	private SvgNanoParser nano;
 
 	private final String unicode;
 	private final String shortcut;
 
-<span class="nc" id="L92">	private Emoji(String unicode) {</span>
-<span class="nc" id="L93">		final int x = unicode.indexOf(';');</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (x == -1) {</span>
-<span class="nc" id="L95">			this.shortcut = null;</span>
+<span class="nc" id="L91">	private Emoji(String unicode) {</span>
+<span class="nc" id="L92">		final int x = unicode.indexOf(';');</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (x == -1) {</span>
+<span class="nc" id="L94">			this.shortcut = null;</span>
 		} else {
-<span class="nc" id="L97">			this.shortcut = unicode.substring(x + 1);</span>
-			// ::comment when __TEAVM__
-<span class="nc" id="L99">			ALL.put(this.shortcut, this);</span>
-			//::done
-<span class="nc" id="L101">			unicode = unicode.substring(0, x);</span>
+<span class="nc" id="L96">			this.shortcut = unicode.substring(x + 1);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L98">				ALL.put(this.shortcut, this);</span>
+			}
+<span class="nc" id="L100">			unicode = unicode.substring(0, x);</span>
 		}
-<span class="nc" id="L103">		this.unicode = unicode;</span>
-		// ::comment when __TEAVM__
-<span class="nc" id="L105">		ALL.put(unicode, this);</span>
-		//::done
-<span class="nc" id="L107">	}</span>
+<span class="nc" id="L102">		this.unicode = unicode;</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L104">			ALL.put(unicode, this);</span>
+		}
+<span class="nc" id="L106">	}</span>
 
 	public static Emoji retrieve(String name) {
-		// ::revert when __TEAVM__
-<span class="nc" id="L111">		return ALL.get(name.toLowerCase());</span>
-		// return retrieveFromJs(name.toLowerCase());
-		//::done
+		// ::comment when JAVA8
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L111">			return retrieveFromJs(name.toLowerCase());</span>
+		else
+			// ::done
+<span class="nc" id="L114">			return ALL.get(name.toLowerCase());</span>
 	}
 
-	// ::uncomment when __TEAVM__
-	// private static Emoji retrieveFromJs(String name) {
-	// 	loadEmojiJsIfNeeded();
-	// 	String unicode = jsGetShortcut(name);
-	// 	if (unicode == null)
-	// 		unicode = name;
-	// 	final String svgData = jsGetEmojiSvg(unicode);
-	// 	if (svgData == null)
-	// 		return null;
-	// 	return new Emoji(unicode);
-	// }
-	//
-	// private static volatile boolean emojiJsLoaded = false;
-	//
-	// private static void loadEmojiJsIfNeeded() {
-	// 	if (emojiJsLoaded)
-	// 		return;
-	// 	TeaVmScriptLoader.loadOnceSync(&quot;emoji.js&quot;);
-	// 	emojiJsLoaded = true;
-	// }
-	//
-	// @JSBody(params = &quot;name&quot;, script =
-	// 		&quot;var s = window.PLANTUML_EMOJI_SHORTCUT;&quot; +
-	// 		&quot;return (s &amp;&amp; s[name]) ? s[name] : null;&quot;)
-	// private static native String jsGetShortcut(String name);
-	//
-	// @JSBody(params = &quot;unicode&quot;, script =
-	// 		&quot;var e = window.PLANTUML_EMOJI;&quot; +
-	// 		&quot;return (e &amp;&amp; e[unicode]) ? e[unicode] : null;&quot;)
-	// private static native String jsGetEmojiSvg(String unicode);
+	// ::comment when JAVA8
+	private static Emoji retrieveFromJs(String name) {
+<span class="nc" id="L119">		loadEmojiJsIfNeeded();</span>
+<span class="nc" id="L120">		String unicode = jsGetShortcut(name);</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (unicode == null)</span>
+<span class="nc" id="L122">			unicode = name;</span>
+<span class="nc" id="L123">		final String svgData = jsGetEmojiSvg(unicode);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (svgData == null)</span>
+<span class="nc" id="L125">			return null;</span>
+<span class="nc" id="L126">		return new Emoji(unicode);</span>
+	}
+	// ::done
+
+<span class="nc" id="L130">	private static volatile boolean emojiJsLoaded = false;</span>
+
+	private static void loadEmojiJsIfNeeded() {
+		// ::comment when JAVA8
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (emojiJsLoaded)</span>
+<span class="nc" id="L135">			return;</span>
+<span class="nc" id="L136">		TeaVmScriptLoader.loadOnceSync(&quot;emoji.js&quot;);</span>
+<span class="nc" id="L137">		emojiJsLoaded = true;</span>
+		// ::done
+<span class="nc" id="L139">	}</span>
+
+	// ::comment when JAVA8
+	@JSBody(params = &quot;name&quot;, script = &quot;var s = window.PLANTUML_EMOJI_SHORTCUT;&quot;
+			+ &quot;return (s &amp;&amp; s[name]) ? s[name] : null;&quot;)
+	private static native String jsGetShortcut(String name);
+
+	@JSBody(params = &quot;unicode&quot;, script = &quot;var e = window.PLANTUML_EMOJI;&quot;
+			+ &quot;return (e &amp;&amp; e[unicode]) ? e[unicode] : null;&quot;)
+	private static native String jsGetEmojiSvg(String unicode);
 	// ::done
 
 	private synchronized void loadIfNeed() throws IOException {
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (nano != null)</span>
-<span class="nc" id="L150">			return;</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (nano != null)</span>
+<span class="nc" id="L153">			return;</span>
 
-<span class="nc" id="L152">		final List&lt;String&gt; data = new ArrayList&lt;String&gt;();</span>
-		// ::revert when __TEAVM__
-		// final String svgData = jsGetEmojiSvg(unicode);
-		// if (svgData != null)
-		// 	data.add(svgData);
-<span class="nc" id="L157">		try (BufferedReader br = new BufferedReader(</span>
-<span class="nc" id="L158">				new InputStreamReader(Dummy.class.getResourceAsStream(unicode + &quot;.svg&quot;)))) {</span>
-<span class="nc" id="L159">			final String singleLine = br.readLine();</span>
-<span class="nc" id="L160">			data.add(singleLine);</span>
+<span class="nc" id="L155">		final List&lt;String&gt; data = new ArrayList&lt;String&gt;();</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
+			// ::comment when JAVA8
+<span class="nc" id="L158">			final String svgData = jsGetEmojiSvg(unicode);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">			if (svgData != null)</span>
+<span class="nc" id="L160">				data.add(svgData);</span>
+			// ::done
+<span class="nc" id="L162">		} else {</span>
+<span class="nc" id="L163">			try (BufferedReader br = new BufferedReader(</span>
+<span class="nc" id="L164">					new InputStreamReader(Dummy.class.getResourceAsStream(unicode + &quot;.svg&quot;)))) {</span>
+<span class="nc" id="L165">				final String singleLine = br.readLine();</span>
+<span class="nc" id="L166">				data.add(singleLine);</span>
+			}
 		}
-		// ::done
-		
-<span class="nc" id="L164">		this.nano = new SvgNanoParser(data);</span>
-<span class="nc" id="L165">	}</span>
+
+<span class="nc" id="L170">		this.nano = new SvgNanoParser(data);</span>
+<span class="nc" id="L171">	}</span>
 
 	public void drawU(UGraphic ug, double scale, HColor colorForMonochrome) {
 		try {
-<span class="nc" id="L169">			loadIfNeed();</span>
-<span class="nc" id="L170">		} catch (IOException e) {</span>
-<span class="nc" id="L171">			Logme.error(e);</span>
-<span class="nc" id="L172">		}</span>
-<span class="nc" id="L173">		nano.drawU(ug, scale, colorForMonochrome, colorForMonochrome);</span>
-<span class="nc" id="L174">	}</span>
+<span class="nc" id="L175">			loadIfNeed();</span>
+<span class="nc" id="L176">		} catch (IOException e) {</span>
+<span class="nc" id="L177">			Logme.error(e);</span>
+<span class="nc" id="L178">		}</span>
+<span class="nc" id="L179">		nano.drawU(ug, scale, colorForMonochrome, colorForMonochrome);</span>
+<span class="nc" id="L180">	}</span>
 
 	public String getShortcut() {
-<span class="nc" id="L177">		return shortcut;</span>
+<span class="nc" id="L183">		return shortcut;</span>
 	}
-	
+
 //	public static void main(String[] args) throws IOException {
 //		final String outputFile = (args.length &gt; 0) ? args[0]
 //				: &quot;src/main/resources/teavm/emoji.js&quot;;

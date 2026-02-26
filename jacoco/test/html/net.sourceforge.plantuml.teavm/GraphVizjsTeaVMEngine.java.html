@@ -54,6 +54,7 @@ import org.teavm.jso.JSObject;
  * &lt;/pre&gt;
  */
 <span class="nc" id="L56">public class GraphVizjsTeaVMEngine {</span>
+	// ::remove file when JAVA8
 
 	/**
 	 * Renders a DOT graph description to SVG format.
@@ -72,8 +73,8 @@ import org.teavm.jso.JSObject;
 	 * Sets up the JavaScript Promise handling and calls the callback when complete.
 	 */
 	private static void renderDotToSvg(String dotSource, AsyncCallback&lt;String&gt; callback) {
-<span class="nc" id="L75">		renderDotToSvgAsync(dotSource, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));</span>
-<span class="nc" id="L76">	}</span>
+<span class="nc" id="L76">		renderDotToSvgAsync(dotSource, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));</span>
+<span class="nc" id="L77">	}</span>
 
 	/**
 	 * JavaScript bridge that calls Viz.instance() and renders the DOT source.
@@ -106,8 +107,8 @@ import org.teavm.jso.JSObject;
 	 * Internal implementation for engine-specific rendering.
 	 */
 	private static void renderDotToSvg(String dotSource, String engine, AsyncCallback&lt;String&gt; callback) {
-<span class="nc" id="L109">		renderDotToSvgWithEngineAsync(dotSource, engine, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));</span>
-<span class="nc" id="L110">	}</span>
+<span class="nc" id="L110">		renderDotToSvgWithEngineAsync(dotSource, engine, result -&gt; callback.complete(result), error -&gt; callback.error(new RuntimeException(error)));</span>
+<span class="nc" id="L111">	}</span>
 
 	/**
 	 * JavaScript bridge for engine-specific rendering.

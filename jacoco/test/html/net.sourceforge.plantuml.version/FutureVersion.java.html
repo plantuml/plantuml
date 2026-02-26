@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.utils.SignatureUtils;
 
 <span class="nc" id="L49">public class FutureVersion {</span>
 	// ::remove folder when __HAXE__
-	// ::remove file when __TEAVM__
+	
 	
 	public static String versionString() {
 <span class="nc" id="L54">		readVersionTxtIfNeeded();</span>
@@ -111,26 +111,24 @@ import net.sourceforge.plantuml.utils.SignatureUtils;
 <span class="nc" id="L111">		return new Date(FutureVersion.compileTime()).toString();</span>
 	}
 
-	// ::comment when __CORE__
 	public static String getJarPath() {
 		try {
-<span class="nc" id="L117">			final ClassLoader loader = FutureVersion.class.getClassLoader();</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">			if (loader == null)</span>
-<span class="nc" id="L119">				return &quot;No ClassLoader?&quot;;</span>
+<span class="nc" id="L116">			final ClassLoader loader = FutureVersion.class.getClassLoader();</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">			if (loader == null)</span>
+<span class="nc" id="L118">				return &quot;No ClassLoader?&quot;;</span>
 
-<span class="nc" id="L121">			final SURL url = SURL.create(loader.getResource(&quot;net/sourceforge/plantuml/version/Version.class&quot;));</span>
-<span class="nc bnc" id="L122" title="All 2 branches missed.">			if (url == null)</span>
-<span class="nc" id="L123">				return &quot;No URL?&quot;;</span>
+<span class="nc" id="L120">			final SURL url = SURL.create(loader.getResource(&quot;net/sourceforge/plantuml/version/Version.class&quot;));</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (url == null)</span>
+<span class="nc" id="L122">				return &quot;No URL?&quot;;</span>
 
-<span class="nc" id="L125">			String fullpath = url.toString();</span>
-<span class="nc" id="L126">			fullpath = fullpath.replaceAll(&quot;net/sourceforge/plantuml/version/Version\\.class&quot;, &quot;&quot;);</span>
-<span class="nc" id="L127">			return fullpath;</span>
-<span class="nc" id="L128">		} catch (Throwable t) {</span>
-<span class="nc" id="L129">			Logme.error(t);</span>
-<span class="nc" id="L130">			return t.toString();</span>
+<span class="nc" id="L124">			String fullpath = url.toString();</span>
+<span class="nc" id="L125">			fullpath = fullpath.replaceAll(&quot;net/sourceforge/plantuml/version/Version\\.class&quot;, &quot;&quot;);</span>
+<span class="nc" id="L126">			return fullpath;</span>
+<span class="nc" id="L127">		} catch (Throwable t) {</span>
+<span class="nc" id="L128">			Logme.error(t);</span>
+<span class="nc" id="L129">			return t.toString();</span>
 		}
 	}
-	// ::done
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

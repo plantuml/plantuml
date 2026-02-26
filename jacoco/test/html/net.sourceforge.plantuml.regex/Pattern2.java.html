@@ -44,31 +44,32 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class Pattern2 {
 
-<span class="fc" id="L50">	private static final Map&lt;String, String&gt; QUOTED_REPLACEMENTS = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L51">	private static final Map&lt;String, String&gt; QUOTED_REPLACEMENTS = new HashMap&lt;&gt;();</span>
 	static {
-		// ::revert when __TEAVM__
-<span class="fc" id="L53">		QUOTED_REPLACEMENTS.put(&quot;%pLN&quot;, Matcher.quoteReplacement(&quot;\\p{L}\\p{N}&quot;)); // Unicode Letter or digit</span>
-		// QUOTED_REPLACEMENTS.put(&quot;%pLN&quot;, Matcher.quoteReplacement(&quot;\\p{L}[0-9]&quot;)); // Unicode Letter or digit
-		// ::done
-<span class="fc" id="L56">		QUOTED_REPLACEMENTS.put(&quot;%s&quot;, Matcher.quoteReplacement(&quot;\\s\u00A0&quot;)); // normal or non-breaking space</span>
-<span class="fc" id="L57">		QUOTED_REPLACEMENTS.put(&quot;%q&quot;, Matcher.quoteReplacement(&quot;'\u2018\u2019&quot;)); // single quotes</span>
-<span class="fc" id="L58">		QUOTED_REPLACEMENTS.put(&quot;%g&quot;, Matcher.quoteReplacement(&quot;\&quot;\u201c\u201d&quot; + Jaws.BLOCK_E1_INVISIBLE_QUOTE));</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L54">			QUOTED_REPLACEMENTS.put(&quot;%pLN&quot;, Matcher.quoteReplacement(&quot;\\p{L}[0-9]&quot;)); // Unicode Letter or digit (TeaVM)</span>
+		else
+<span class="fc" id="L56">			QUOTED_REPLACEMENTS.put(&quot;%pLN&quot;, Matcher.quoteReplacement(&quot;\\p{L}\\p{N}&quot;)); // Unicode Letter or digit</span>
+<span class="fc" id="L57">		QUOTED_REPLACEMENTS.put(&quot;%s&quot;, Matcher.quoteReplacement(&quot;\\s\u00A0&quot;)); // normal or non-breaking space</span>
+<span class="fc" id="L58">		QUOTED_REPLACEMENTS.put(&quot;%q&quot;, Matcher.quoteReplacement(&quot;'\u2018\u2019&quot;)); // single quotes</span>
+<span class="fc" id="L59">		QUOTED_REPLACEMENTS.put(&quot;%g&quot;, Matcher.quoteReplacement(&quot;\&quot;\u201c\u201d&quot; + Jaws.BLOCK_E1_INVISIBLE_QUOTE));</span>
 	}
 
-<span class="fc" id="L61">	private static final Pattern TRANSFORM_PATTERN = Pattern.compile(&quot;%(pLN|s|q|g)&quot;);</span>
+<span class="fc" id="L62">	private static final Pattern TRANSFORM_PATTERN = Pattern.compile(&quot;%(pLN|s|q|g)&quot;);</span>
 
-<span class="fc" id="L63">	private static final ConcurrentHashMap&lt;String, AtomicInteger&gt; COUNT = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L64">	private static final ConcurrentHashMap&lt;String, AtomicInteger&gt; COUNT = new ConcurrentHashMap&lt;&gt;();</span>
 
-<span class="fc" id="L65">	private static final Pattern2 EMPTY = new Pattern2(&quot;&quot;);</span>
+<span class="fc" id="L66">	private static final Pattern2 EMPTY = new Pattern2(&quot;&quot;);</span>
 
 	private final String patternString;
 	private final Lazy&lt;Pattern&gt; pattern;
 
-<span class="fc" id="L70">	private Pattern2(String s) {</span>
-<span class="fc" id="L71">		this.patternString = s;</span>
+<span class="fc" id="L71">	private Pattern2(String s) {</span>
+<span class="fc" id="L72">		this.patternString = s;</span>
 		// ::uncomment when __TEAVM__
 		// //System.out.println(&quot;=====================&quot;);
 		// //System.out.println(&quot;Pattern2 begin &quot; + s);
@@ -76,64 +77,62 @@ public class Pattern2 {
 		// //System.out.println(&quot;Pattern2 ok &quot; + s);
 		// //System.out.println(&quot;=====================&quot;);
 		// ::done
-<span class="fc" id="L79">		this.pattern = new Lazy&lt;&gt;(() -&gt; compileInternal(patternString));</span>
+<span class="fc" id="L80">		this.pattern = new Lazy&lt;&gt;(() -&gt; compileInternal(patternString));</span>
 
-<span class="fc" id="L81">	}</span>
+<span class="fc" id="L82">	}</span>
 
 	public Matcher2 matcher(CharSequence input) {
-<span class="fc" id="L84">		return Matcher2.build(pattern.get(), input);</span>
+<span class="fc" id="L85">		return Matcher2.build(pattern.get(), input);</span>
 	}
 
 	public String pattern() {
-<span class="fc" id="L88">		return patternString;</span>
+<span class="fc" id="L89">		return patternString;</span>
 	}
 
 	public static Pattern2 cmpile(final String p) {
-<span class="pc bpc" id="L92" title="2 of 4 branches missed.">		if (p == null || p.length() == 0)</span>
-<span class="nc" id="L93">			return EMPTY;</span>
+<span class="pc bpc" id="L93" title="2 of 4 branches missed.">		if (p == null || p.length() == 0)</span>
+<span class="nc" id="L94">			return EMPTY;</span>
 
 		// Assert that the number of compilations for the pattern 'p' remains below the
 		// threshold (5);
 		// this helps detect potential excessive or unintended pattern compilations.
 		// Note: using 'assert' does not impact performance in production, as assertions
 		// are typically disabled by default.
-		// assert COUNT.computeIfAbsent(p, k -&gt; new AtomicInteger()).incrementAndGet() &lt; 5;
+		// assert COUNT.computeIfAbsent(p, k -&gt; new AtomicInteger()).incrementAndGet() &lt;
+		// 5;
 
-<span class="fc" id="L102">		return new Pattern2(p);</span>
+<span class="fc" id="L104">		return new Pattern2(p);</span>
 
 	}
 
 	public static Pattern compileInternal(String patternString) {
-		// ::revert when __TEAVM__
-<span class="fc" id="L108">		final String regex = transform(patternString);</span>
-		// final String regex = transform(patternString) + &quot;&quot;;
-		// ::done
-		
+<span class="fc" id="L109">		final String regex = transform(patternString);</span>
+
 		// ::uncomment when __TEAVM__
 		// //System.out.println(&quot;compileInternal in &quot;+regex);
 		// ::done
-<span class="fc" id="L115">		final Pattern result = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);</span>
+<span class="fc" id="L114">		final Pattern result = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);</span>
 		// ::uncomment when __TEAVM__
 		// //System.out.println(&quot;compileInternal ok &quot;+result);
 		// ::done
-<span class="fc" id="L119">		return result;</span>
+<span class="fc" id="L118">		return result;</span>
 	}
 
 	public static String transform(String input) {
 		// ::uncomment when __TEAVM__
 		// //System.out.println(&quot;transform10 &quot;+input);
 		// ::done
-<span class="fc" id="L126">		final Matcher m = TRANSFORM_PATTERN.matcher(input);</span>
-<span class="fc" id="L127">		final StringBuffer sb = new StringBuffer(input.length());</span>
-<span class="fc bfc" id="L128" title="All 2 branches covered.">		while (m.find()) {</span>
-<span class="fc" id="L129">			final String replacement = QUOTED_REPLACEMENTS.get(m.group());</span>
-<span class="fc" id="L130">			m.appendReplacement(sb, replacement);</span>
-<span class="fc" id="L131">		}</span>
-<span class="fc" id="L132">		m.appendTail(sb);</span>
+<span class="fc" id="L125">		final Matcher m = TRANSFORM_PATTERN.matcher(input);</span>
+<span class="fc" id="L126">		final StringBuffer sb = new StringBuffer(input.length());</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		while (m.find()) {</span>
+<span class="fc" id="L128">			final String replacement = QUOTED_REPLACEMENTS.get(m.group());</span>
+<span class="fc" id="L129">			m.appendReplacement(sb, replacement);</span>
+<span class="fc" id="L130">		}</span>
+<span class="fc" id="L131">		m.appendTail(sb);</span>
 		// ::uncomment when __TEAVM__
 		// //System.out.println(&quot;transform80 &quot;+sb);
 		// ::done
-<span class="fc" id="L136">		return sb.toString();</span>
+<span class="fc" id="L135">		return sb.toString();</span>
 	}
 
 }

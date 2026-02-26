@@ -67,9 +67,9 @@ import net.sourceforge.plantuml.posimo.Path;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public final class CucaDiagramTxtMaker {
-	// ::remove file when __CORE__ or __TEAVM__
 
 	// private final CucaDiagram diagram;
 	private final FileFormat fileFormat;
@@ -92,86 +92,89 @@ public final class CucaDiagramTxtMaker {
 	}
 
 <span class="nc" id="L94">	public CucaDiagramTxtMaker(CucaDiagram diagram, FileFormat fileFormat) throws IOException {</span>
-<span class="nc" id="L95">		this.fileFormat = fileFormat;</span>
-<span class="nc" id="L96">		this.portionShower = diagram;</span>
-<span class="nc" id="L97">		this.pragma = diagram.getPragma();</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L96">			this.fileFormat = fileFormat;</span>
+<span class="nc" id="L97">			this.portionShower = diagram;</span>
+<span class="nc" id="L98">			this.pragma = diagram.getPragma();</span>
 
-<span class="nc" id="L99">		final Cluster root = new Cluster(null, 0, 0);</span>
-<span class="nc" id="L100">		int uid = 0;</span>
+<span class="nc" id="L100">			final Cluster root = new Cluster(null, 0, 0);</span>
+<span class="nc" id="L101">			int uid = 0;</span>
 
-<span class="nc" id="L102">		final Map&lt;Entity, Block&gt; blocks = new HashMap&lt;Entity, Block&gt;();</span>
+<span class="nc" id="L103">			final Map&lt;Entity, Block&gt; blocks = new HashMap&lt;Entity, Block&gt;();</span>
 
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		for (Entity ent : diagram.leafs()) {</span>
-			// printClass(ent);
-			// ug.translate(0, getHeight(ent) + 1);
-<span class="nc" id="L107">			final double width = getWidth(ent) * getXPixelPerChar();</span>
-<span class="nc" id="L108">			final double height = getHeight(ent) * getYPixelPerChar();</span>
-<span class="nc" id="L109">			final Block b = new Block(uid++, width, height, null);</span>
-<span class="nc" id="L110">			root.addBloc(b);</span>
-<span class="nc" id="L111">			blocks.put(ent, b);</span>
-<span class="nc" id="L112">		}</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			for (Entity ent : diagram.leafs()) {</span>
+				// printClass(ent);
+				// ug.translate(0, getHeight(ent) + 1);
+<span class="nc" id="L108">				final double width = getWidth(ent) * getXPixelPerChar();</span>
+<span class="nc" id="L109">				final double height = getHeight(ent) * getYPixelPerChar();</span>
+<span class="nc" id="L110">				final Block b = new Block(uid++, width, height, null);</span>
+<span class="nc" id="L111">				root.addBloc(b);</span>
+<span class="nc" id="L112">				blocks.put(ent, b);</span>
+<span class="nc" id="L113">			}</span>
 
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (blocks.size() &gt; 1) {</span>
-<span class="nc" id="L115">			final GraphvizSolverB solver = new GraphvizSolverB();</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">			if (blocks.size() &gt; 1) {</span>
+<span class="nc" id="L116">				final GraphvizSolverB solver = new GraphvizSolverB();</span>
 
-<span class="nc" id="L117">			final Collection&lt;Path&gt; paths = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">			for (Link link : diagram.getLinks()) {</span>
-<span class="nc" id="L119">				final Block b1 = blocks.get(link.getEntity1());</span>
-<span class="nc" id="L120">				final Block b2 = blocks.get(link.getEntity2());</span>
-<span class="nc bnc" id="L121" title="All 4 branches missed.">				if (b1 != null &amp;&amp; b2 != null)</span>
-<span class="nc" id="L122">					paths.add(new Path(b1, b2, null, link.getLength(), link.isInvis()));</span>
-<span class="nc" id="L123">			}</span>
-<span class="nc" id="L124">			solver.solve(root, paths);</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">			for (Path p : paths) {</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">				if (p.isInvis())</span>
-<span class="nc" id="L127">					continue;</span>
+<span class="nc" id="L118">				final Collection&lt;Path&gt; paths = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">				for (Link link : diagram.getLinks()) {</span>
+<span class="nc" id="L120">					final Block b1 = blocks.get(link.getEntity1());</span>
+<span class="nc" id="L121">					final Block b2 = blocks.get(link.getEntity2());</span>
+<span class="nc bnc" id="L122" title="All 4 branches missed.">					if (b1 != null &amp;&amp; b2 != null)</span>
+<span class="nc" id="L123">						paths.add(new Path(b1, b2, null, link.getLength(), link.isInvis()));</span>
+<span class="nc" id="L124">				}</span>
+<span class="nc" id="L125">				solver.solve(root, paths);</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">				for (Path p : paths) {</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">					if (p.isInvis())</span>
+<span class="nc" id="L128">						continue;</span>
 
-<span class="nc" id="L129">				drawDotPath(p.getDotPath(), globalUg.getCharArea(), getXPixelPerChar(), getYPixelPerChar());</span>
-<span class="nc" id="L130">			}</span>
+<span class="nc" id="L130">					drawDotPath(p.getDotPath(), globalUg.getCharArea(), getXPixelPerChar(), getYPixelPerChar());</span>
+<span class="nc" id="L131">				}</span>
 
+			}
+
+<span class="nc bnc" id="L135" title="All 2 branches missed.">			for (Entity ent : diagram.leafs()) {</span>
+<span class="nc" id="L136">				final Block b = blocks.get(ent);</span>
+<span class="nc" id="L137">				final XPoint2D p = b.getPosition();</span>
+<span class="nc" id="L138">				printClass(ent, (UGraphicTxt) globalUg</span>
+<span class="nc" id="L139">						.apply(new UTranslate(p.getX() / getXPixelPerChar(), p.getY() / getYPixelPerChar())));</span>
+<span class="nc" id="L140">			}</span>
+<span class="nc" id="L141">		} else {</span>
+<span class="nc" id="L142">			throw new UnsupportedOperationException(&quot;TEAV3423&quot;);</span>
 		}
-
-<span class="nc bnc" id="L134" title="All 2 branches missed.">		for (Entity ent : diagram.leafs()) {</span>
-<span class="nc" id="L135">			final Block b = blocks.get(ent);</span>
-<span class="nc" id="L136">			final XPoint2D p = b.getPosition();</span>
-<span class="nc" id="L137">			printClass(ent, (UGraphicTxt) globalUg</span>
-<span class="nc" id="L138">					.apply(new UTranslate(p.getX() / getXPixelPerChar(), p.getY() / getYPixelPerChar())));</span>
-<span class="nc" id="L139">		}</span>
-
-<span class="nc" id="L141">	}</span>
+<span class="nc" id="L144">	}</span>
 
 	private void drawDotPath(DotPath dotPath, BasicCharArea area, double pixelXPerChar, double pixelYPerChar) {
-<span class="nc bnc" id="L144" title="All 2 branches missed.">		for (XCubicCurve2D bez : dotPath.getBeziers())</span>
-<span class="nc bnc" id="L145" title="All 2 branches missed.">			if (bez.x1 == bez.x2)</span>
-<span class="nc" id="L146">				area.drawVLine('|', (int) (bez.x1 / pixelXPerChar), (int) (bez.y1 / pixelYPerChar),</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		for (XCubicCurve2D bez : dotPath.getBeziers())</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">			if (bez.x1 == bez.x2)</span>
+<span class="nc" id="L149">				area.drawVLine('|', (int) (bez.x1 / pixelXPerChar), (int) (bez.y1 / pixelYPerChar),</span>
 						(int) (bez.y2 / pixelYPerChar));
-<span class="nc bnc" id="L148" title="All 2 branches missed.">			else if (bez.y1 == bez.y2)</span>
-<span class="nc" id="L149">				area.drawHLine('-', (int) (bez.y1 / pixelYPerChar), (int) (bez.x1 / pixelXPerChar),</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">			else if (bez.y1 == bez.y2)</span>
+<span class="nc" id="L152">				area.drawHLine('-', (int) (bez.y1 / pixelYPerChar), (int) (bez.x1 / pixelXPerChar),</span>
 						(int) (bez.x2 / pixelXPerChar));
 
-<span class="nc" id="L152">	}</span>
+<span class="nc" id="L155">	}</span>
 
 	private void printClass(final Entity ent, UGraphicTxt ug) {
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (fileFormat == FileFormat.UTXT)</span>
-<span class="nc" id="L156">			drawClassUnicode(ent, ug);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (fileFormat == FileFormat.UTXT)</span>
+<span class="nc" id="L159">			drawClassUnicode(ent, ug);</span>
 		else
-<span class="nc" id="L158">			drawClassSimple(ent, ug);</span>
-<span class="nc" id="L159">	}</span>
+<span class="nc" id="L161">			drawClassSimple(ent, ug);</span>
+<span class="nc" id="L162">	}</span>
 
 	private void drawClassSimple(final Entity ent, UGraphicTxt ug) {
-<span class="nc" id="L162">		final int w = getWidth(ent);</span>
-<span class="nc" id="L163">		final int h = getHeight(ent);</span>
-<span class="nc" id="L164">		ug.getCharArea().drawBoxSimple(0, 0, w, h);</span>
-<span class="nc" id="L165">		ug.getCharArea().drawStringsLRSimple(ent.getDisplay().asList(), 1, 1);</span>
-<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (showMember(ent)) {</span>
-<span class="nc" id="L167">			int y = 2;</span>
-<span class="nc" id="L168">			ug.getCharArea().drawHLine('-', y, 1, w - 1);</span>
-<span class="nc" id="L169">			y++;</span>
-<span class="nc bnc" id="L170" title="All 2 branches missed.">			for (CharSequence att : ent.getBodier().getRawBody()) {</span>
-<span class="nc" id="L171">				final List&lt;String&gt; disp = Display.getWithNewlines3(att.toString());</span>
-<span class="nc" id="L172">				ug.getCharArea().drawStringsLRSimple(disp, 1, y);</span>
-<span class="nc" id="L173">				y += StringUtils.getHeight(disp);</span>
-<span class="nc" id="L174">			}</span>
+<span class="nc" id="L165">		final int w = getWidth(ent);</span>
+<span class="nc" id="L166">		final int h = getHeight(ent);</span>
+<span class="nc" id="L167">		ug.getCharArea().drawBoxSimple(0, 0, w, h);</span>
+<span class="nc" id="L168">		ug.getCharArea().drawStringsLRSimple(ent.getDisplay().asList(), 1, 1);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (showMember(ent)) {</span>
+<span class="nc" id="L170">			int y = 2;</span>
+<span class="nc" id="L171">			ug.getCharArea().drawHLine('-', y, 1, w - 1);</span>
+<span class="nc" id="L172">			y++;</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">			for (CharSequence att : ent.getBodier().getRawBody()) {</span>
+<span class="nc" id="L174">				final List&lt;String&gt; disp = Display.getWithNewlines3(att.toString());</span>
+<span class="nc" id="L175">				ug.getCharArea().drawStringsLRSimple(disp, 1, y);</span>
+<span class="nc" id="L176">				y += StringUtils.getHeight(disp);</span>
+<span class="nc" id="L177">			}</span>
 //			for (Member att : ent.getBodier().getFieldsToDisplay()) {
 //				final List&lt;String&gt; disp = BackSlash.getWithNewlines(att.getDisplay(true));
 //				ug.getCharArea().drawStringsLR(disp, 1, y);
@@ -185,41 +188,41 @@ public final class CucaDiagramTxtMaker {
 //				y += StringUtils.getHeight(disp);
 //			}
 		}
-<span class="nc" id="L188">	}</span>
+<span class="nc" id="L191">	}</span>
 
 	private void drawClassUnicode(final Entity ent, UGraphicTxt ug) {
-<span class="nc" id="L191">		final int w = getWidth(ent);</span>
-<span class="nc" id="L192">		final int h = getHeight(ent);</span>
-<span class="nc" id="L193">		ug.getCharArea().drawBoxSimpleUnicode(0, 0, w, h);</span>
-<span class="nc" id="L194">		ug.getCharArea().drawStringsLRUnicode(ent.getDisplay().asList(), 1, 1);</span>
-<span class="nc bnc" id="L195" title="All 2 branches missed.">		if (showMember(ent)) {</span>
-<span class="nc" id="L196">			int y = 2;</span>
-<span class="nc" id="L197">			ug.getCharArea().drawHLine('\u2500', y, 1, w - 1);</span>
-<span class="nc" id="L198">			ug.getCharArea().drawChar('\u251C', 0, y);</span>
-<span class="nc" id="L199">			ug.getCharArea().drawChar('\u2524', w - 1, y);</span>
-<span class="nc" id="L200">			y++;</span>
-<span class="nc bnc" id="L201" title="All 2 branches missed.">			for (CharSequence att : ent.getBodier().getRawBody()) {</span>
-<span class="nc" id="L202">				final List&lt;String&gt; disp = Display.getWithNewlines3(att.toString());</span>
-<span class="nc" id="L203">				ug.getCharArea().drawStringsLRUnicode(disp, 1, y);</span>
-<span class="nc" id="L204">				y += StringUtils.getHeight(disp);</span>
-<span class="nc" id="L205">			}</span>
+<span class="nc" id="L194">		final int w = getWidth(ent);</span>
+<span class="nc" id="L195">		final int h = getHeight(ent);</span>
+<span class="nc" id="L196">		ug.getCharArea().drawBoxSimpleUnicode(0, 0, w, h);</span>
+<span class="nc" id="L197">		ug.getCharArea().drawStringsLRUnicode(ent.getDisplay().asList(), 1, 1);</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">		if (showMember(ent)) {</span>
+<span class="nc" id="L199">			int y = 2;</span>
+<span class="nc" id="L200">			ug.getCharArea().drawHLine('\u2500', y, 1, w - 1);</span>
+<span class="nc" id="L201">			ug.getCharArea().drawChar('\u251C', 0, y);</span>
+<span class="nc" id="L202">			ug.getCharArea().drawChar('\u2524', w - 1, y);</span>
+<span class="nc" id="L203">			y++;</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">			for (CharSequence att : ent.getBodier().getRawBody()) {</span>
+<span class="nc" id="L205">				final List&lt;String&gt; disp = Display.getWithNewlines3(att.toString());</span>
+<span class="nc" id="L206">				ug.getCharArea().drawStringsLRUnicode(disp, 1, y);</span>
+<span class="nc" id="L207">				y += StringUtils.getHeight(disp);</span>
+<span class="nc" id="L208">			}</span>
 		}
-<span class="nc" id="L207">	}</span>
+<span class="nc" id="L210">	}</span>
 
 	public List&lt;SFile&gt; createFiles(SFile suggestedFile) throws IOException {
-<span class="nc bnc" id="L210" title="All 2 branches missed.">		if (fileFormat == FileFormat.UTXT)</span>
-<span class="nc" id="L211">			globalUg.getCharArea().print(suggestedFile.createPrintStream(UTF_8));</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">		if (fileFormat == FileFormat.UTXT)</span>
+<span class="nc" id="L214">			globalUg.getCharArea().print(suggestedFile.createPrintStream(UTF_8));</span>
 		else
-<span class="nc" id="L213">			globalUg.getCharArea().print(suggestedFile.createPrintStream());</span>
+<span class="nc" id="L216">			globalUg.getCharArea().print(suggestedFile.createPrintStream());</span>
 
-<span class="nc" id="L215">		return Collections.singletonList(suggestedFile);</span>
+<span class="nc" id="L218">		return Collections.singletonList(suggestedFile);</span>
 	}
 
 	private int getHeight(Entity entity) {
-<span class="nc" id="L219">		int result = StringUtils.getHeight(entity.getDisplay());</span>
-<span class="nc bnc" id="L220" title="All 2 branches missed.">		if (showMember(entity)) {</span>
-<span class="nc bnc" id="L221" title="All 2 branches missed.">			for (CharSequence att : entity.getBodier().getRawBody())</span>
-<span class="nc" id="L222">				result += StringUtils.getHeight(Display.getWithNewlines(pragma, att.toString()));</span>
+<span class="nc" id="L222">		int result = StringUtils.getHeight(entity.getDisplay());</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (showMember(entity)) {</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">			for (CharSequence att : entity.getBodier().getRawBody())</span>
+<span class="nc" id="L225">				result += StringUtils.getHeight(Display.getWithNewlines(pragma, att.toString()));</span>
 
 //			for (Member att : entity.getBodier().getMethodsToDisplay()) {
 //				result += StringUtils.getHeight(Display.getWithNewlines(att.getDisplay(true)));
@@ -230,18 +233,18 @@ public final class CucaDiagramTxtMaker {
 //			}
 //			result++;
 		}
-<span class="nc" id="L233">		return result + 3;</span>
+<span class="nc" id="L236">		return result + 3;</span>
 	}
 
 	private int getWidth(Entity entity) {
-<span class="nc" id="L237">		int result = StringUtils.getWcWidth(entity.getDisplay());</span>
-<span class="nc bnc" id="L238" title="All 2 branches missed.">		if (showMember(entity)) {</span>
-<span class="nc bnc" id="L239" title="All 2 branches missed.">			for (CharSequence att : entity.getBodier().getRawBody()) {</span>
-<span class="nc" id="L240">				final int w = StringUtils.getWcWidth(Display.getWithNewlines(pragma, att.toString()));</span>
-<span class="nc bnc" id="L241" title="All 2 branches missed.">				if (w &gt; result)</span>
-<span class="nc" id="L242">					result = w;</span>
+<span class="nc" id="L240">		int result = StringUtils.getWcWidth(entity.getDisplay());</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">		if (showMember(entity)) {</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">			for (CharSequence att : entity.getBodier().getRawBody()) {</span>
+<span class="nc" id="L243">				final int w = StringUtils.getWcWidth(Display.getWithNewlines(pragma, att.toString()));</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">				if (w &gt; result)</span>
+<span class="nc" id="L245">					result = w;</span>
 
-<span class="nc" id="L244">			}</span>
+<span class="nc" id="L247">			}</span>
 //			for (Member att : entity.getBodier().getMethodsToDisplay()) {
 //			final int w = StringUtils.getWcWidth(Display.getWithNewlines(att.getDisplay(true)));
 //			if (w &gt; result) {
@@ -255,12 +258,12 @@ public final class CucaDiagramTxtMaker {
 //				}
 //			}
 		}
-<span class="nc" id="L258">		return result + 2;</span>
+<span class="nc" id="L261">		return result + 2;</span>
 	}
 
 	public void createFiles(OutputStream os, int index) {
-<span class="nc" id="L262">		globalUg.getCharArea().print(SecurityUtils.createPrintStream(os));</span>
-<span class="nc" id="L263">	}</span>
+<span class="nc" id="L265">		globalUg.getCharArea().print(SecurityUtils.createPrintStream(os));</span>
+<span class="nc" id="L266">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

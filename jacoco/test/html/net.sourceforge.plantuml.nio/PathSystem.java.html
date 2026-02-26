@@ -39,20 +39,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Objects;
-
-import org.teavm.jso.JSObject;
 
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
 
-//::uncomment when __TEAVM__
-//import java.io.InputStream;
-//import org.teavm.jso.JSObject;
-//import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
+
+//::comment when JAVA8
+import org.teavm.jso.JSObject;
 //::done
+
+
 
 // Replacement for FileSystem
 //See ImportedFiles
@@ -62,61 +61,62 @@ import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
 public class PathSystem {
 
 	public static PathSystem fetch() {
-		// ::revert when __TEAVM__
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L65">			return new PathSystem(null);</span>
 <span class="fc" id="L66">		return new PathSystem(new NFolderRegular(Paths.get(&quot;&quot;)));</span>
-		// return new PathSystem();
-		// ::done
 	}
-
-	// ::uncomment when __TEAVM__
-//	public PathSystem changeCurrentDirectory(Object... foo) {
-//		return this;
-//	}
-//	public PathSystem withCurrentDir(Object... foo) {
-//		return this;
-//	}
-	// ::done
 
 	public InputStream getTeaVMInputStream(String path) {
-		// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
+		// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
 		// return null;
-<span class="nc" id="L83">		final String full = path.substring(1, path.length() - 1).toLowerCase();</span>
-<span class="nc" id="L84">		final String libname = full.substring(0, full.indexOf('/'));</span>
-<span class="nc" id="L85">		final String filepath = full.substring(libname.length() + 1);</span>
-<span class="nc" id="L86">		TeaVmScriptLoader.loadOnceSync(libname + &quot;.min.js&quot;);</span>
-<span class="nc" id="L87">		JSObject data = TeaVmScriptLoader.getRaw(libname, filepath);</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (data == null)</span>
-<span class="nc" id="L89">			return null;</span>
-<span class="nc" id="L90">		String content = TeaVmScriptLoader.joinLines(data);</span>
-<span class="nc" id="L91">		return new java.io.ByteArrayInputStream(content.getBytes(java.nio.charset.StandardCharsets.UTF_8));</span>
+<span class="nc" id="L72">		final String full = path.substring(1, path.length() - 1).toLowerCase();</span>
+<span class="nc" id="L73">		final String libname = full.substring(0, full.indexOf('/'));</span>
+<span class="nc" id="L74">		final String filepath = full.substring(libname.length() + 1);</span>
+<span class="nc" id="L75">		TeaVmScriptLoader.loadOnceSync(libname + &quot;.min.js&quot;);</span>
+<span class="nc" id="L76">		JSObject data = TeaVmScriptLoader.getRaw(libname, filepath);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (data == null)</span>
+<span class="nc" id="L78">			return null;</span>
+<span class="nc" id="L79">		String content = TeaVmScriptLoader.joinLines(data);</span>
+<span class="nc" id="L80">		return new java.io.ByteArrayInputStream(content.getBytes(java.nio.charset.StandardCharsets.UTF_8));</span>
 		// ::done
 	}
 
-	// ::comment when __TEAVM__
 	private final NFolder currentFolder;
 
-<span class="fc" id="L98">	private PathSystem(NFolder currentFolder) {</span>
-<span class="fc" id="L99">		this.currentFolder = Objects.requireNonNull(currentFolder);</span>
-<span class="fc" id="L100">	}</span>
+<span class="fc" id="L86">	private PathSystem(NFolder currentFolder) {</span>
+<span class="fc" id="L87">		this.currentFolder = currentFolder;</span>
+<span class="fc" id="L88">	}</span>
 
 	public PathSystem changeCurrentDirectory(Path newCurrentDir) throws IOException {
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (newCurrentDir == null)</span>
-<span class="nc" id="L104">			return this;</span>
-<span class="fc" id="L105">		final NFolder folder = currentFolder.getSubfolder(newCurrentDir);</span>
-<span class="fc" id="L106">		return new PathSystem(folder);</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L92">			return this;</span>
+		
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (newCurrentDir == null)</span>
+<span class="nc" id="L95">			return this;</span>
+<span class="fc" id="L96">		final NFolder folder = currentFolder.getSubfolder(newCurrentDir);</span>
+<span class="fc" id="L97">		return new PathSystem(folder);</span>
 	}
 
 	public PathSystem changeCurrentDirectory(NFolder newCurrentDir) {
-<span class="fc" id="L110">		return new PathSystem(newCurrentDir);</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L102">			return this;</span>
+		
+<span class="fc" id="L104">		return new PathSystem(newCurrentDir);</span>
 	}
 
 	public PathSystem changeCurrentDirectory(SFile newCurrentDir) throws IOException {
-<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (newCurrentDir == null)</span>
-<span class="fc" id="L115">			return this;</span>
-<span class="fc" id="L116">		return changeCurrentDirectory(newCurrentDir.toPath());</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L109">			return this;</span>
+		
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (newCurrentDir == null)</span>
+<span class="fc" id="L112">			return this;</span>
+<span class="fc" id="L113">		return changeCurrentDirectory(newCurrentDir.toPath());</span>
 	}
 
 	public PathSystem withCurrentDir(NFolder parentFile) {
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L118">			return this;</span>
+
 <span class="fc" id="L120">		return new PathSystem(parentFile);</span>
 	}
 
@@ -181,7 +181,6 @@ public class PathSystem {
 		// Nothing right now
 
 <span class="nc" id="L183">	}</span>
-	// ::done
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

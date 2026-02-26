@@ -54,91 +54,90 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 
 <span class="nc" id="L56">public class CheckZipTask extends Task {</span>
-	// ::remove folder when __CORE__
 
-<span class="nc" id="L59">	private String zipfile = null;</span>
-<span class="nc" id="L60">	private List&lt;FileSet&gt; filesets = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L61">	private List&lt;FileList&gt; filelists = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L58">	private String zipfile = null;</span>
+<span class="nc" id="L59">	private List&lt;FileSet&gt; filesets = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L60">	private List&lt;FileList&gt; filelists = new ArrayList&lt;&gt;();</span>
 
 	/**
 	 * Add a set of files to touch
 	 */
 	public void addFileset(FileSet set) {
-<span class="nc" id="L67">		filesets.add(set);</span>
-<span class="nc" id="L68">	}</span>
+<span class="nc" id="L66">		filesets.add(set);</span>
+<span class="nc" id="L67">	}</span>
 
 	/**
 	 * Add a filelist to touch
 	 */
 	public void addFilelist(FileList list) {
-<span class="nc" id="L74">		filelists.add(list);</span>
-<span class="nc" id="L75">	}</span>
+<span class="nc" id="L73">		filelists.add(list);</span>
+<span class="nc" id="L74">	}</span>
 
 	// The method executing the task
 	@Override
 	public void execute() throws BuildException {
 
-<span class="nc" id="L81">		myLog(&quot;Check &quot; + zipfile);</span>
+<span class="nc" id="L80">		myLog(&quot;Check &quot; + zipfile);</span>
 
 		try {
-<span class="nc" id="L84">			loadZipFile(new SFile(zipfile));</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">			for (FileList fileList : filelists) {</span>
-<span class="nc" id="L86">				manageFileList(fileList);</span>
-<span class="nc" id="L87">			}</span>
-<span class="nc" id="L88">		} catch (IOException e) {</span>
-<span class="nc" id="L89">			Logme.error(e);</span>
-<span class="nc" id="L90">			throw new BuildException(e.toString());</span>
-<span class="nc" id="L91">		}</span>
-<span class="nc" id="L92">	}</span>
+<span class="nc" id="L83">			loadZipFile(new SFile(zipfile));</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			for (FileList fileList : filelists) {</span>
+<span class="nc" id="L85">				manageFileList(fileList);</span>
+<span class="nc" id="L86">			}</span>
+<span class="nc" id="L87">		} catch (IOException e) {</span>
+<span class="nc" id="L88">			Logme.error(e);</span>
+<span class="nc" id="L89">			throw new BuildException(e.toString());</span>
+<span class="nc" id="L90">		}</span>
+<span class="nc" id="L91">	}</span>
 
 	private void manageFileList(FileList fileList) {
-<span class="nc" id="L95">		boolean error = false;</span>
-<span class="nc" id="L96">		final String[] srcFiles = fileList.getFiles(getProject());</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		for (String s : srcFiles) {</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (isPresentInFile(s) == false) {</span>
-<span class="nc" id="L99">				myLog(&quot;Missing &quot; + s);</span>
-<span class="nc" id="L100">				error = true;</span>
+<span class="nc" id="L94">		boolean error = false;</span>
+<span class="nc" id="L95">		final String[] srcFiles = fileList.getFiles(getProject());</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		for (String s : srcFiles) {</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (isPresentInFile(s) == false) {</span>
+<span class="nc" id="L98">				myLog(&quot;Missing &quot; + s);</span>
+<span class="nc" id="L99">				error = true;</span>
 			}
 		}
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (error) {</span>
-<span class="nc" id="L104">			throw new BuildException(&quot;Some entries are missing in the zipfile&quot;);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (error) {</span>
+<span class="nc" id="L103">			throw new BuildException(&quot;Some entries are missing in the zipfile&quot;);</span>
 		}
-<span class="nc" id="L106">	}</span>
+<span class="nc" id="L105">	}</span>
 
 	private boolean isPresentInFile(String s) {
-<span class="nc" id="L109">		return entries.contains(s);</span>
+<span class="nc" id="L108">		return entries.contains(s);</span>
 	}
 
-<span class="nc" id="L112">	private final List&lt;String&gt; entries = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L111">	private final List&lt;String&gt; entries = new ArrayList&lt;&gt;();</span>
 
 	private void loadZipFile(SFile file) throws IOException {
 
-<span class="nc" id="L116">		this.entries.clear();</span>
-<span class="nc" id="L117">		final InputStream tmp = file.openFile();</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (tmp == null) {</span>
-<span class="nc" id="L119">			throw new FileNotFoundException();</span>
+<span class="nc" id="L115">		this.entries.clear();</span>
+<span class="nc" id="L116">		final InputStream tmp = file.openFile();</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (tmp == null) {</span>
+<span class="nc" id="L118">			throw new FileNotFoundException();</span>
 		}
-<span class="nc" id="L121">		try (final PrintWriter pw = SecurityUtils.createPrintWriter(&quot;tmp.txt&quot;);</span>
-<span class="nc" id="L122">				final ZipInputStream zis = new ZipInputStream(tmp);) {</span>
-<span class="nc" id="L123">			ZipEntry ze = zis.getNextEntry();</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">			while (ze != null) {</span>
-<span class="nc" id="L125">				final String fileName = ze.getName();</span>
-<span class="nc" id="L126">				this.entries.add(fileName);</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">				if (fileName.endsWith(&quot;/&quot;) == false) {</span>
-<span class="nc" id="L128">					pw.println(&quot;&lt;file name=\&quot;&quot; + fileName + &quot;\&quot; /&gt;&quot;);</span>
+<span class="nc" id="L120">		try (final PrintWriter pw = SecurityUtils.createPrintWriter(&quot;tmp.txt&quot;);</span>
+<span class="nc" id="L121">				final ZipInputStream zis = new ZipInputStream(tmp);) {</span>
+<span class="nc" id="L122">			ZipEntry ze = zis.getNextEntry();</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">			while (ze != null) {</span>
+<span class="nc" id="L124">				final String fileName = ze.getName();</span>
+<span class="nc" id="L125">				this.entries.add(fileName);</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">				if (fileName.endsWith(&quot;/&quot;) == false) {</span>
+<span class="nc" id="L127">					pw.println(&quot;&lt;file name=\&quot;&quot; + fileName + &quot;\&quot; /&gt;&quot;);</span>
 				}
-<span class="nc" id="L130">				ze = zis.getNextEntry();</span>
-<span class="nc" id="L131">			}</span>
+<span class="nc" id="L129">				ze = zis.getNextEntry();</span>
+<span class="nc" id="L130">			}</span>
 		}
-<span class="nc" id="L133">	}</span>
+<span class="nc" id="L132">	}</span>
 
 	private synchronized void myLog(String s) {
-<span class="nc" id="L136">		this.log(s);</span>
-<span class="nc" id="L137">	}</span>
+<span class="nc" id="L135">		this.log(s);</span>
+<span class="nc" id="L136">	}</span>
 
 	public void setZipfile(String s) {
-<span class="nc" id="L140">		this.zipfile = s;</span>
-<span class="nc" id="L141">	}</span>
+<span class="nc" id="L139">		this.zipfile = s;</span>
+<span class="nc" id="L140">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

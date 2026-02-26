@@ -94,7 +94,7 @@ import net.sourceforge.plantuml.tim.expression.TValue;
  * @author Aljoscha Rittner
  */
 <span class="fc" id="L96">public class LoadJson extends SimpleReturnFunction {</span>
-	// ::remove file when __TEAVM__
+	
 	
 <span class="fc" id="L99">	private static final TFunctionSignature SIGNATURE = new TFunctionSignature(&quot;%load_json&quot;, 3);</span>
 
@@ -178,25 +178,23 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 <span class="nc" id="L178">			final SURL url = SURL.create(path);</span>
 <span class="nc bnc" id="L179" title="All 2 branches missed.">			if (url != null)</span>
 <span class="nc" id="L180">				byteData = url.getBytes();</span>
-			// ::comment when __CORE__
-<span class="nc" id="L182">		} else {</span>
+<span class="nc" id="L181">		} else {</span>
 			try {
-<span class="fc" id="L184">				final SFile file = FileSystem.getInstance().getFile(path);</span>
-<span class="pc bpc" id="L185" title="3 of 8 branches missed.">				if (file != null &amp;&amp; file.exists() &amp;&amp; file.canRead() &amp;&amp; !file.isDirectory()) {</span>
-<span class="fc" id="L186">					final ByteArrayOutputStream out = new ByteArrayOutputStream(1024 * 8);</span>
-<span class="fc" id="L187">					FileUtils.copyToStream(file, out);</span>
-<span class="fc" id="L188">					byteData = out.toByteArray();</span>
+<span class="fc" id="L183">				final SFile file = FileSystem.getInstance().getFile(path);</span>
+<span class="pc bpc" id="L184" title="3 of 8 branches missed.">				if (file != null &amp;&amp; file.exists() &amp;&amp; file.canRead() &amp;&amp; !file.isDirectory()) {</span>
+<span class="fc" id="L185">					final ByteArrayOutputStream out = new ByteArrayOutputStream(1024 * 8);</span>
+<span class="fc" id="L186">					FileUtils.copyToStream(file, out);</span>
+<span class="fc" id="L187">					byteData = out.toByteArray();</span>
 				}
-<span class="nc" id="L190">			} catch (IOException e) {</span>
-<span class="nc" id="L191">				Logme.error(e);</span>
-<span class="fc" id="L192">			}</span>
-			// ::done
+<span class="nc" id="L189">			} catch (IOException e) {</span>
+<span class="nc" id="L190">				Logme.error(e);</span>
+<span class="fc" id="L191">			}</span>
 		}
 
-<span class="pc bpc" id="L196" title="1 of 4 branches missed.">		if (byteData == null || byteData.length == 0)</span>
-<span class="fc" id="L197">			return null; // no length, no data (we want the default)</span>
+<span class="pc bpc" id="L194" title="1 of 4 branches missed.">		if (byteData == null || byteData.length == 0)</span>
+<span class="fc" id="L195">			return null; // no length, no data (we want the default)</span>
 
-<span class="fc" id="L199">		return new String(byteData, charset);</span>
+<span class="fc" id="L197">		return new String(byteData, charset);</span>
 
 	}
 }
