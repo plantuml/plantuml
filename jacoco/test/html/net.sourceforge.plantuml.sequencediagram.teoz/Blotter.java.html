@@ -128,10 +128,10 @@ public class Blotter implements UDrawable {
 <span class="fc" id="L128">	}</span>
 
 	public void addChange(double ypos, HColor color) {
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (color == null)</span>
-<span class="fc" id="L132">			color = HColors.transparent();</span>
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (color.equals(last))</span>
-<span class="fc" id="L134">			return;</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (color == null)</span>
+<span class="nc" id="L132">			color = HColors.transparent();</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (color.equals(last))</span>
+<span class="nc" id="L134">			return;</span>
 <span class="nc" id="L135">		changes.put(ypos, color);</span>
 <span class="nc" id="L136">		last = color;</span>
 <span class="nc" id="L137">	}</span>

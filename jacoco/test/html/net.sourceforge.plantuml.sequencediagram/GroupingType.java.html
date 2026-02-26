@@ -41,7 +41,7 @@ import java.util.Locale;
 <span class="fc" id="L41">	START, START_PARTITION, ELSE, END;</span>
 
 	public static GroupingType getType(String s) {
-<span class="pc bpc" id="L44" title="2 of 5 branches missed.">		switch (s.toLowerCase(Locale.US)) {</span>
+<span class="pc bpc" id="L44" title="3 of 5 branches missed.">		switch (s.toLowerCase(Locale.US)) {</span>
 		case &quot;opt&quot;:
 		case &quot;alt&quot;:
 		case &quot;loop&quot;:
@@ -57,7 +57,7 @@ import java.util.Locale;
 
 		case &quot;also&quot;:
 		case &quot;else&quot;:
-<span class="fc" id="L60">			return GroupingType.ELSE;</span>
+<span class="nc" id="L60">			return GroupingType.ELSE;</span>
 
 		case &quot;end&quot;:
 <span class="fc" id="L63">			return GroupingType.END;</span>

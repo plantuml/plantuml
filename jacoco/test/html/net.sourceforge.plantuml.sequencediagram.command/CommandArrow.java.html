@@ -306,7 +306,7 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 <span class="fc" id="L307">		final String activationSpec = arg.get(&quot;ACTIVATION&quot;, 0);</span>
 
-<span class="pc bpc" id="L309" title="1 of 4 branches missed.">		if (activationSpec != null &amp;&amp; activationSpec.charAt(0) == '*')</span>
+<span class="pc bpc" id="L309" title="3 of 4 branches missed.">		if (activationSpec != null &amp;&amp; activationSpec.charAt(0) == '*')</span>
 <span class="nc" id="L310">			diagram.activate(p2, LifeEventType.CREATE, null);</span>
 
 <span class="fc" id="L312">		final String messageNumber = diagram.getNextMessageNumber();</span>
@@ -325,9 +325,9 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 <span class="nc" id="L325">			msg.getStereotype(stereotype);</span>
 		}
 
-<span class="fc bfc" id="L328" title="All 2 branches covered.">		final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
-<span class="fc bfc" id="L329" title="All 2 branches covered.">		if (parallel)</span>
-<span class="fc" id="L330">			msg.goParallel();</span>
+<span class="pc bpc" id="L328" title="1 of 2 branches missed.">		final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
+<span class="pc bpc" id="L329" title="1 of 2 branches missed.">		if (parallel)</span>
+<span class="nc" id="L330">			msg.goParallel();</span>
 
 <span class="fc" id="L332">		msg.setAnchor(arg.get(&quot;ANCHOR&quot;, 1));</span>
 <span class="fc" id="L333">		msg.setPart1Anchor(arg.get(&quot;PART1ANCHOR&quot;, 1));</span>
@@ -339,10 +339,10 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 <span class="fc" id="L340">		final String s = arg.get(&quot;LIFECOLOR&quot;, 0);</span>
 
-<span class="fc bfc" id="L342" title="All 2 branches covered.">		final HColor activationColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+<span class="pc bpc" id="L342" title="1 of 2 branches missed.">		final HColor activationColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
 
-<span class="fc bfc" id="L344" title="All 2 branches covered.">		if (activationSpec != null)</span>
-<span class="fc" id="L345">			return manageActivations(activationSpec, diagram, p1, p2, activationColor);</span>
+<span class="pc bpc" id="L344" title="1 of 2 branches missed.">		if (activationSpec != null)</span>
+<span class="nc" id="L345">			return manageActivations(activationSpec, diagram, p1, p2, activationColor);</span>
 
 <span class="pc bpc" id="L347" title="5 of 6 branches missed.">		if (diagram.isAutoactivate() &amp;&amp; (config.getHead() == ArrowHead.NORMAL || config.getHead() == ArrowHead.ASYNC))</span>
 <span class="nc bnc" id="L348" title="All 2 branches missed.">			if (config.isDotted())</span>
@@ -355,18 +355,18 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	private CommandExecutionResult manageActivations(String spec, SequenceDiagram diagram, Participant p1,
 			Participant p2, HColor activationColor) {
-<span class="pc bpc" id="L358" title="2 of 4 branches missed.">		switch (spec.charAt(0)) {</span>
+<span class="nc bnc" id="L358" title="All 4 branches missed.">		switch (spec.charAt(0)) {</span>
 		case '+':
-<span class="fc" id="L360">			diagram.activate(p2, LifeEventType.ACTIVATE, activationColor);</span>
-<span class="fc" id="L361">			break;</span>
+<span class="nc" id="L360">			diagram.activate(p2, LifeEventType.ACTIVATE, activationColor);</span>
+<span class="nc" id="L361">			break;</span>
 		case '-':
-<span class="fc" id="L363">			diagram.activate(p1, LifeEventType.DEACTIVATE, null);</span>
-<span class="fc" id="L364">			break;</span>
+<span class="nc" id="L363">			diagram.activate(p1, LifeEventType.DEACTIVATE, null);</span>
+<span class="nc" id="L364">			break;</span>
 		case '!':
 <span class="nc" id="L366">			diagram.activate(p2, LifeEventType.DESTROY, null);</span>
 			break;
 		}
-<span class="pc bpc" id="L369" title="1 of 2 branches missed.">		if (spec.length() == 4) {</span>
+<span class="nc bnc" id="L369" title="All 2 branches missed.">		if (spec.length() == 4) {</span>
 <span class="nc bnc" id="L370" title="All 3 branches missed.">			switch (spec.charAt(2)) {</span>
 			case '+':
 <span class="nc" id="L372">				diagram.activate(p2, LifeEventType.ACTIVATE, activationColor);</span>
@@ -376,7 +376,7 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 				break;
 			}
 		}
-<span class="fc" id="L379">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L379">		return CommandExecutionResult.ok();</span>
 	}
 
 	private int getLength(RegexResult arg2) {
@@ -404,8 +404,8 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 <span class="pc bpc" id="L404" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;bold&quot;)) {</span>
 <span class="pc bpc" id="L405" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;dotted&quot;)) {</span>
 <span class="nc" id="L406">				config = config.withBody(ArrowBody.DOTTED);</span>
-<span class="fc bfc" id="L407" title="All 2 branches covered.">			} else if (s.equalsIgnoreCase(&quot;hidden&quot;)) {</span>
-<span class="fc" id="L408">				config = config.withBody(ArrowBody.HIDDEN);</span>
+<span class="pc bpc" id="L407" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;hidden&quot;)) {</span>
+<span class="nc" id="L408">				config = config.withBody(ArrowBody.HIDDEN);</span>
 			} else {
 <span class="fc" id="L410">				config = config.withColor(HColorSet.instance().getColor(s));</span>
 			}

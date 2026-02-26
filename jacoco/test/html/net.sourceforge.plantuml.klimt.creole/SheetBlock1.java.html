@@ -181,58 +181,61 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 	}
 
 	private int getCoef(HorizontalAlignment alignment) {
-<span class="fc bfc" id="L184" title="All 3 branches covered.">		switch (alignment) {</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (alignment == null)</span>
+<span class="nc" id="L185">			return 0;</span>
+
+<span class="fc bfc" id="L187" title="All 3 branches covered.">		switch (alignment) {</span>
 		case CENTER:
-<span class="fc" id="L186">			return 2;</span>
+<span class="fc" id="L189">			return 2;</span>
 		case RIGHT:
-<span class="fc" id="L188">			return 1;</span>
+<span class="fc" id="L191">			return 1;</span>
 		default:
-<span class="fc" id="L190">			return 0;</span>
+<span class="fc" id="L193">			return 0;</span>
 		}
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L195">		initMap(stringBounder);</span>
-<span class="fc" id="L196">		return minMax.getDimension().delta(padding.getBottom() + padding.getTop());</span>
+<span class="fc" id="L198">		initMap(stringBounder);</span>
+<span class="fc" id="L199">		return minMax.getDimension().delta(padding.getBottom() + padding.getTop());</span>
 	}
 
 	@Override
 	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
-<span class="nc" id="L201">		return null;</span>
+<span class="nc" id="L204">		return null;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L205">		initMap(ug.getStringBounder());</span>
-<span class="pc bpc" id="L206" title="1 of 4 branches missed.">		if (padding.getLeft() &gt; 0 || padding.getTop() &gt; 0)</span>
-<span class="fc" id="L207">			ug = ug.apply(new UTranslate(padding.getLeft(), padding.getTop()));</span>
+<span class="fc" id="L208">		initMap(ug.getStringBounder());</span>
+<span class="pc bpc" id="L209" title="1 of 4 branches missed.">		if (padding.getLeft() &gt; 0 || padding.getTop() &gt; 0)</span>
+<span class="fc" id="L210">			ug = ug.apply(new UTranslate(padding.getLeft(), padding.getTop()));</span>
 
-<span class="fc bfc" id="L209" title="All 2 branches covered.">		for (Stripe stripe : stripes)</span>
-<span class="fc bfc" id="L210" title="All 2 branches covered.">			for (Atom atom : stripe.getAtoms()) {</span>
-<span class="fc" id="L211">				final Position position = positions.get(atom);</span>
-<span class="fc" id="L212">				atom.drawU(position.translate(ug));</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">		for (Stripe stripe : stripes)</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">			for (Atom atom : stripe.getAtoms()) {</span>
+<span class="fc" id="L214">				final Position position = positions.get(atom);</span>
+<span class="fc" id="L215">				atom.drawU(position.translate(ug));</span>
 				// position.drawDebug(ug);
-<span class="fc" id="L214">			}</span>
-<span class="fc" id="L215">	}</span>
+<span class="fc" id="L217">			}</span>
+<span class="fc" id="L218">	}</span>
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L218">		return 0;</span>
+<span class="nc" id="L221">		return 0;</span>
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L222">		return -marginX1;</span>
+<span class="fc" id="L225">		return -marginX1;</span>
 	}
 
 	public double getEndingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L226">		return calculateDimension(stringBounder).getWidth() + marginX2;</span>
+<span class="fc" id="L229">		return calculateDimension(stringBounder).getWidth() + marginX2;</span>
 	}
 
 	public final double getMinimumWidth() {
-<span class="fc" id="L230">		return minimumWidth;</span>
+<span class="fc" id="L233">		return minimumWidth;</span>
 	}
 
 	@Override
 	public List&lt;Neutron&gt; getNeutrons() {
-<span class="nc" id="L235">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L238">		throw new UnsupportedOperationException();</span>
 	}
 
 }
