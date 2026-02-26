@@ -15763,39 +15763,51 @@ h
 jcckit
     |
     |   jcckit.plot
+    |   jcckit.transformation
+    |   jcckit.data
     |   jcckit.util
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 jcckit.data
     |
     |   jcckit.util
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 jcckit.graphic
     |
     |   jcckit.util
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 jcckit.plot
     |
+    |   jcckit.transformation
+    |   jcckit.data
     |   jcckit.util
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 jcckit.renderer
     |
@@ -15803,9 +15815,11 @@ jcckit.renderer
     |   jcckit.util
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 jcckit.transformation
     |
@@ -15813,255 +15827,270 @@ jcckit.transformation
     |   jcckit.util
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 jcckit.util
     |
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.atmp
     |
-    |   net.sourceforge.plantuml.cucadiagram
+    |   net.sourceforge.plantuml
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.abel
     |
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.cucadiagram
+    |-> net.sourceforge.plantuml.abel
 
 net.sourceforge.plantuml.activitydiagram
     |
+    |   net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.version
     |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.activitydiagram.command
     |
-    |   net.sourceforge.plantuml.decoration
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.url
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.activitydiagram3
     |
-    |   net.sourceforge.plantuml.url
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.activitydiagram3.command
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.activitydiagram3.ftile
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.activitydiagram3.ftile.vcompact
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.activitydiagram3.ftile.vertical
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.activitydiagram3.gtile
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.ant
     |
+    |   net.sourceforge.plantuml.security
+    |   net.sourceforge.plantuml.security.authentication
     |   net.sourceforge.plantuml
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.api
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.api.mda.option2
     |
     |   net.sourceforge.plantuml.mda
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.cucadiagram
+    |-> net.sourceforge.plantuml.abel
 
 net.sourceforge.plantuml.api.v2
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.argon2
     |
+    |   net.sourceforge.plantuml.argon2.algorithm
     |   net.sourceforge.plantuml.argon2.model
     |-> net.sourceforge.plantuml.argon2
 
 net.sourceforge.plantuml.argon2.algorithm
     |
-    |-> net.sourceforge.plantuml.argon2.model
+    |   net.sourceforge.plantuml.argon2.model
     |   net.sourceforge.plantuml.argon2
-    |-> net.sourceforge.plantuml.argon2.model
+    |-> net.sourceforge.plantuml.argon2.algorithm
 
 net.sourceforge.plantuml.argon2.model
     |
     |   net.sourceforge.plantuml.argon2
+    |   net.sourceforge.plantuml.argon2.algorithm
     |-> net.sourceforge.plantuml.argon2.model
 
 net.sourceforge.plantuml.asciiart
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.board
     |
-    |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.style
+    |   net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.bpm
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.braille
     |
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.chart
     |
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.style
+    |   net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.chart.command
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.cheneer
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.cheneer.command
     |
-    |   net.sourceforge.plantuml.decoration
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.chronology
     |
-    |   net.sourceforge.plantuml.klimt.sprite
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.classdiagram
     |
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.classdiagram.command
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.cli
     |
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.code
     |
@@ -16073,288 +16102,313 @@ net.sourceforge.plantuml.code
 net.sourceforge.plantuml.command
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.command.note
     |
-    |   net.sourceforge.plantuml.command
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.command.note.sequence
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.compositediagram
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.compositediagram.command
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.core
     |
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.crash
     |
-    |   net.sourceforge.plantuml.eggs
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.cruise
     |
-    |   net.sourceforge.plantuml.abel
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.svek
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.cucadiagram
     |
-    |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.abel
+    |-> net.sourceforge.plantuml.cucadiagram
 
 net.sourceforge.plantuml.decoration
     |
-    |   net.sourceforge.plantuml.style
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.geom
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.decoration.symbol
     |
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.geom
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.dedication
     |
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.definition
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.descdiagram
     |
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.cucadiagram
+    |   net.sourceforge.plantuml.abel
+    |-> net.sourceforge.plantuml.cucadiagram
 
 net.sourceforge.plantuml.descdiagram.command
     |
-    |   net.sourceforge.plantuml.url
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.decoration
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.directdot
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.ditaa
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.donors
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.dot
     |
-    |   net.sourceforge.plantuml.cucadiagram
-    |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.cucadiagram
+    |   net.sourceforge.plantuml.abel
+    |-> net.sourceforge.plantuml.cucadiagram
 
 net.sourceforge.plantuml.ebnf
     |
-    |   net.sourceforge.plantuml.preproc
+    |   net.sourceforge.plantuml.klimt.font
     |-> net.sourceforge.plantuml.text
     |   net.sourceforge.plantuml.jaws
     |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.eggs
     |
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
     |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.elk
     |
-    |   net.sourceforge.plantuml.skin.rose
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.emoji
     |
+    |   net.sourceforge.plantuml.klimt.sprite
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.geom
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.error
     |
-    |   net.sourceforge.plantuml.eggs
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.file
     |
     |   net.sourceforge.plantuml.cli
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.filesdiagram
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.preproc
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.flashcode
     |
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.flowdiagram
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.font
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.ftp
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.security
+    |   net.sourceforge.plantuml.security.authentication
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.fun
     |
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.gitlog
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.golem
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.graphml
     |
     |   net.sourceforge.plantuml.descdiagram
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.cucadiagram
+    |   net.sourceforge.plantuml.abel
+    |-> net.sourceforge.plantuml.cucadiagram
 
 net.sourceforge.plantuml.hcl
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.help
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.html
     |
-    |   net.sourceforge.plantuml.cucadiagram
-    |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.cucadiagram
+    |   net.sourceforge.plantuml.abel
+    |-> net.sourceforge.plantuml.cucadiagram
 
 net.sourceforge.plantuml.jaws
     |
@@ -16364,190 +16418,234 @@ net.sourceforge.plantuml.jaws
 net.sourceforge.plantuml.jcckit
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.jsondiagram
     |
-    |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.preproc
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt
     |
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.awt
     |
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.color
     |
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.compress
     |
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.creole
     |
+    |   net.sourceforge.plantuml.klimt.creole.atom
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.geom
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.creole.atom
     |
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.geom
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.creole.command
     |
+    |   net.sourceforge.plantuml.klimt.creole.legacy
+    |   net.sourceforge.plantuml.klimt.creole.atom
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.geom
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.creole.legacy
     |
+    |   net.sourceforge.plantuml.klimt.creole.atom
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.geom
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.drawing
     |
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.drawing.debug
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.drawing.eps
     |
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.drawing.g2d
     |
+    |   net.sourceforge.plantuml.klimt.geom
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.drawing.hand
     |
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.drawing.html5
     |
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.drawing.svg
     |
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.drawing.tikz
     |
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.drawing.txt
     |
     |   net.sourceforge.plantuml.asciiart
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.drawing.visio
     |
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.font
     |
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.geom
     |
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.shape
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.klimt.sprite
     |
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.math
     |
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.mda
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |-> net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.cucadiagram
+    |-> net.sourceforge.plantuml.abel
 
 net.sourceforge.plantuml.mindmap
     |
-    |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.preproc
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.nio
     |
@@ -16559,83 +16657,95 @@ net.sourceforge.plantuml.nio
 net.sourceforge.plantuml.nwdiag
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.nwdiag.core
     |
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.nwdiag.next
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.objectdiagram
     |
-    |   net.sourceforge.plantuml.style
+    |   net.sourceforge.plantuml.decoration
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.geom
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.objectdiagram.command
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.url
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.openiconic
     |
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.oregon
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.packetdiag
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.picoweb
     |
     |   net.sourceforge.plantuml.eggs
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
     |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.png
     |
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.posimo
     |
     |   net.sourceforge.plantuml.svek
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.preproc
     |
@@ -16652,74 +16762,71 @@ net.sourceforge.plantuml.preproc.spm
 
 net.sourceforge.plantuml.preproc2
     |
-    |   net.sourceforge.plantuml.preproc
+    |   net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
     |-> net.sourceforge.plantuml.text
     |   net.sourceforge.plantuml.jaws
     |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.project
     |
-    |   net.sourceforge.plantuml.project.data
-    |   net.sourceforge.plantuml.project.core
-    |   net.sourceforge.plantuml.project.draw
-    |   net.sourceforge.plantuml.klimt.sprite
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.style
+    |   net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.project.command
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.project.core
     |
-    |   net.sourceforge.plantuml.project.draw
-    |   net.sourceforge.plantuml.klimt.sprite
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.project.ngm
+    |   net.sourceforge.plantuml.project.ngm.math
+    |-> net.sourceforge.plantuml.project.ngm
 
 net.sourceforge.plantuml.project.data
     |
-    |   net.sourceforge.plantuml.project.core
-    |   net.sourceforge.plantuml.project.draw
-    |   net.sourceforge.plantuml.klimt.sprite
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.project.draw
     |
     |   net.sourceforge.plantuml.klimt.sprite
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.project.draw.header
     |
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.project.lang
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.project.ngm
     |
@@ -16739,30 +16846,20 @@ net.sourceforge.plantuml.project.solver
 
 net.sourceforge.plantuml.project.time
     |
-    |   net.sourceforge.plantuml.project
-    |   net.sourceforge.plantuml.project.data
-    |   net.sourceforge.plantuml.project.core
-    |   net.sourceforge.plantuml.project.draw
-    |   net.sourceforge.plantuml.klimt.sprite
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.project.timescale
     |
     |   net.sourceforge.plantuml.project.time
-    |   net.sourceforge.plantuml.project
-    |   net.sourceforge.plantuml.project.data
-    |   net.sourceforge.plantuml.project.core
-    |   net.sourceforge.plantuml.project.draw
-    |   net.sourceforge.plantuml.klimt.sprite
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.regex
     |
@@ -16773,151 +16870,151 @@ net.sourceforge.plantuml.regex
 net.sourceforge.plantuml.regexdiagram
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.salt
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.salt.element
     |
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.salt.factory
     |
     |   net.sourceforge.plantuml.salt
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.sdot
     |
-    |   net.sourceforge.plantuml.url
-    |-> net.sourceforge.plantuml.klimt.geom
     |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.security
     |
     |   net.sourceforge.plantuml.security.authentication
     |   net.sourceforge.plantuml
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.security.authentication
     |
     |   net.sourceforge.plantuml
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.security.authentication.basicauth
     |
-    |   net.sourceforge.plantuml.security.authentication
-    |   net.sourceforge.plantuml
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.security.authentication.oauth
     |
     |   net.sourceforge.plantuml.security.authentication
     |   net.sourceforge.plantuml
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.security.authentication.token
     |
     |   net.sourceforge.plantuml.security.authentication
     |   net.sourceforge.plantuml
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.sequencediagram
     |
-    |   net.sourceforge.plantuml.style
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.sequencediagram.command
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.sequencediagram.graphic
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.sequencediagram.teoz
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.skin
     |
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.skin.rose
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.statediagram
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.statediagram.command
     |
-    |   net.sourceforge.plantuml.decoration
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.cucadiagram
+    |   net.sourceforge.plantuml.abel
+    |-> net.sourceforge.plantuml.cucadiagram
 
 net.sourceforge.plantuml.stats
     |
+    |   net.sourceforge.plantuml.api
+    |   net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
     |-> net.sourceforge.plantuml.text
     |   net.sourceforge.plantuml.jaws
     |-> net.sourceforge.plantuml.text
@@ -16926,102 +17023,103 @@ net.sourceforge.plantuml.stereo
     |
     |   net.sourceforge.plantuml.klimt.color
     |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.style
     |
-    |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.style.parser
     |
     |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.sudoku
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.sprite
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
     |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.svek
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.svek.extremity
     |
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.svek.image
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.swing
     |
     |   net.sourceforge.plantuml.version
     |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.syntax
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.teavm
     |
-    |   net.sourceforge.plantuml.klimt.shape
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.geom
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.teavm.browser
     |
     |   net.sourceforge.plantuml.version
     |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.telnet
     |
     |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.text
     |
@@ -17038,21 +17136,15 @@ net.sourceforge.plantuml.theme
 net.sourceforge.plantuml.tikz
     |
     |   net.sourceforge.plantuml.url
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.tim
     |
-    |   net.sourceforge.plantuml.teavm.browser
-    |   net.sourceforge.plantuml.version
-    |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.tim.builtin
     |
@@ -17074,127 +17166,126 @@ net.sourceforge.plantuml.tim.iterator
 
 net.sourceforge.plantuml.timingdiagram
     |
+    |   net.sourceforge.plantuml.style
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.timingdiagram.command
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.timingdiagram.graphic
     |
-    |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.style
+    |   net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.url
     |
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.utils
     |
-    |   net.sourceforge.plantuml.cli
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.version
     |
     |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.vizjs
     |
     |   net.sourceforge.plantuml.dot
-    |   net.sourceforge.plantuml.cucadiagram
-    |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.cucadiagram
+    |   net.sourceforge.plantuml.abel
+    |-> net.sourceforge.plantuml.cucadiagram
 
 net.sourceforge.plantuml.wbs
     |
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.wire
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.xmi
     |
-    |   net.sourceforge.plantuml.cucadiagram
+    |   net.sourceforge.plantuml.decoration
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.geom
     |   net.sourceforge.plantuml.klimt.font
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.xmlsc
     |
     |   net.sourceforge.plantuml.statediagram
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.version
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.yaml
     |
     |   net.sourceforge.plantuml
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.klimt.drawing
-    |-> net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 net.sourceforge.plantuml.yaml.parser
     |
     |   net.sourceforge.plantuml.utils
-    |   net.sourceforge.plantuml.cli
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |-> net.sourceforge.plantuml.klimt.geom
-    |   net.sourceforge.plantuml.klimt
-    |-> net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.jaws
+    |-> net.sourceforge.plantuml.text
 
 org.stathissideris.ascii2image.core
     |
     |   org.stathissideris.ascii2image.graphics
+    |   org.stathissideris.ascii2image.text
     |-> org.stathissideris.ascii2image.core
 
 org.stathissideris.ascii2image.graphics
     |
+    |   org.stathissideris.ascii2image.text
     |   org.stathissideris.ascii2image.core
     |-> org.stathissideris.ascii2image.graphics
 
 org.stathissideris.ascii2image.text
     |
-    |-> org.stathissideris.ascii2image.core
+    |   org.stathissideris.ascii2image.core
     |   org.stathissideris.ascii2image.graphics
-    |-> org.stathissideris.ascii2image.core
+    |-> org.stathissideris.ascii2image.text
 
 smetana.core
     |
@@ -17204,16 +17295,19 @@ smetana.core
 zext.plantuml.com.google.zxing
     |
     |   zext.plantuml.com.google.zxing.common
+    |   zext.plantuml.com.google.zxing.qrcode.decoder
     |-> zext.plantuml.com.google.zxing
 
 zext.plantuml.com.google.zxing.client.j2se
     |
     |-> zext.plantuml.com.google.zxing.common
+    |   zext.plantuml.com.google.zxing.qrcode.decoder
     |   zext.plantuml.com.google.zxing
     |-> zext.plantuml.com.google.zxing.common
 
 zext.plantuml.com.google.zxing.common
     |
+    |   zext.plantuml.com.google.zxing.qrcode.decoder
     |   zext.plantuml.com.google.zxing
     |-> zext.plantuml.com.google.zxing.common
 
@@ -17221,26 +17315,28 @@ zext.plantuml.com.google.zxing.datamatrix.decoder
     |
     |-> zext.plantuml.com.google.zxing
     |   zext.plantuml.com.google.zxing.common
+    |   zext.plantuml.com.google.zxing.qrcode.decoder
     |-> zext.plantuml.com.google.zxing
 
 zext.plantuml.com.google.zxing.qrcode
     |
     |-> zext.plantuml.com.google.zxing
     |   zext.plantuml.com.google.zxing.common
+    |   zext.plantuml.com.google.zxing.qrcode.decoder
     |-> zext.plantuml.com.google.zxing
 
 zext.plantuml.com.google.zxing.qrcode.decoder
     |
-    |-> zext.plantuml.com.google.zxing
+    |   zext.plantuml.com.google.zxing
     |   zext.plantuml.com.google.zxing.common
-    |-> zext.plantuml.com.google.zxing
+    |-> zext.plantuml.com.google.zxing.qrcode.decoder
 
 zext.plantuml.com.google.zxing.qrcode.encoder
     |
-    |   zext.plantuml.com.google.zxing.qrcode.decoder
-    |-> zext.plantuml.com.google.zxing
+    |-> zext.plantuml.com.google.zxing.qrcode.decoder
+    |   zext.plantuml.com.google.zxing
     |   zext.plantuml.com.google.zxing.common
-    |-> zext.plantuml.com.google.zxing
+    |-> zext.plantuml.com.google.zxing.qrcode.decoder
 
 
 --------------------------------------------------
