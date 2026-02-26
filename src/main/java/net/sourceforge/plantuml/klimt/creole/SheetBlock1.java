@@ -181,6 +181,9 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 	}
 
 	private int getCoef(HorizontalAlignment alignment) {
+		if (alignment == null)
+			return 0;
+
 		switch (alignment) {
 		case CENTER:
 			return 2;
