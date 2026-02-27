@@ -132,14 +132,14 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 
 	@DuplicateCode(reference = &quot;StyleExtractor&quot;)
 	public CommandExecutionResult loadSkin(String newSkin) throws IOException {
-<span class="nc" id="L135">		final String filename = newSkin + &quot;.skin&quot;;</span>
-<span class="nc" id="L136">		final InputStream is = StyleLoader.getInputStreamForStyle(filename);</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (is == null)</span>
+<span class="fc" id="L135">		final String filename = newSkin + &quot;.skin&quot;;</span>
+<span class="fc" id="L136">		final InputStream is = StyleLoader.getInputStreamForStyle(filename);</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (is == null)</span>
 <span class="nc" id="L138">			return CommandExecutionResult.error(&quot;Cannot find style &quot; + newSkin);</span>
-<span class="nc" id="L139">		is.close();</span>
+<span class="fc" id="L139">		is.close();</span>
 
-<span class="nc" id="L141">		getSkinParam().setDefaultSkin(filename);</span>
-<span class="nc" id="L142">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L141">		getSkinParam().setDefaultSkin(filename);</span>
+<span class="fc" id="L142">		return CommandExecutionResult.ok();</span>
 	}
 
 	final public void setTitle(DisplayPositioned title) {

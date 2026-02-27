@@ -45,30 +45,30 @@ public class DottedNumber {
 	private final List&lt;Integer&gt; nums;
 	private final List&lt;String&gt; separators;
 
-<span class="nc" id="L48">	private DottedNumber(List&lt;Integer&gt; nums, List&lt;String&gt; separators) {</span>
-<span class="nc" id="L49">		this.nums = nums;</span>
-<span class="nc" id="L50">		this.separators = separators;</span>
-<span class="nc" id="L51">	}</span>
+<span class="fc" id="L48">	private DottedNumber(List&lt;Integer&gt; nums, List&lt;String&gt; separators) {</span>
+<span class="fc" id="L49">		this.nums = nums;</span>
+<span class="fc" id="L50">		this.separators = separators;</span>
+<span class="fc" id="L51">	}</span>
 
-<span class="nc" id="L53">	private static final Pattern p = Pattern.compile(&quot;(\\d+)|(\\D+)&quot;);</span>
+<span class="fc" id="L53">	private static final Pattern p = Pattern.compile(&quot;(\\d+)|(\\D+)&quot;);</span>
 
 	public static DottedNumber create(String value) {
-<span class="nc" id="L56">		final Matcher m = p.matcher(value);</span>
-<span class="nc" id="L57">		final List&lt;Integer&gt; nums = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L58">		final List&lt;String&gt; separators = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		while (m.find()) {</span>
-<span class="nc" id="L60">			final String part = m.group();</span>
-<span class="nc bnc" id="L61" title="All 2 branches missed.">			if (isDigit(part.charAt(0))) {</span>
-<span class="nc" id="L62">				nums.add(Integer.parseInt(part));</span>
+<span class="fc" id="L56">		final Matcher m = p.matcher(value);</span>
+<span class="fc" id="L57">		final List&lt;Integer&gt; nums = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L58">		final List&lt;String&gt; separators = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		while (m.find()) {</span>
+<span class="fc" id="L60">			final String part = m.group();</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">			if (isDigit(part.charAt(0))) {</span>
+<span class="fc" id="L62">				nums.add(Integer.parseInt(part));</span>
 			} else {
 <span class="nc" id="L64">				separators.add(part);</span>
 			}
-<span class="nc" id="L66">		}</span>
-<span class="nc" id="L67">		return new DottedNumber(nums, separators);</span>
+<span class="fc" id="L66">		}</span>
+<span class="fc" id="L67">		return new DottedNumber(nums, separators);</span>
 	}
 
 	private static boolean isDigit(final char c) {
-<span class="nc bnc" id="L71" title="All 4 branches missed.">		return c &gt;= '0' &amp;&amp; c &lt;= '9';</span>
+<span class="pc bpc" id="L71" title="2 of 4 branches missed.">		return c &gt;= '0' &amp;&amp; c &lt;= '9';</span>
 	}
 
 	@Override
@@ -84,10 +84,10 @@ public class DottedNumber {
 	}
 
 	public void incrementMinor(int step) {
-<span class="nc" id="L87">		final int last = nums.size() - 1;</span>
-<span class="nc" id="L88">		final int newValue = nums.get(last) + step;</span>
-<span class="nc" id="L89">		nums.set(last, newValue);</span>
-<span class="nc" id="L90">	}</span>
+<span class="fc" id="L87">		final int last = nums.size() - 1;</span>
+<span class="fc" id="L88">		final int newValue = nums.get(last) + step;</span>
+<span class="fc" id="L89">		nums.set(last, newValue);</span>
+<span class="fc" id="L90">	}</span>
 
 	public void incrementIntermediate() {
 <span class="nc bnc" id="L93" title="All 2 branches missed.">		final int intermediate = nums.size() == 1 ? 0 : nums.size() - 2;</span>
@@ -104,8 +104,8 @@ public class DottedNumber {
 <span class="nc" id="L104">	}</span>
 
 	public String format(DecimalFormat format) {
-<span class="nc bnc" id="L107" title="All 4 branches missed.">		if (nums.size() == 1 &amp;&amp; separators.size() == 0) {</span>
-<span class="nc" id="L108">			return format.format(nums.get(0));</span>
+<span class="pc bpc" id="L107" title="2 of 4 branches missed.">		if (nums.size() == 1 &amp;&amp; separators.size() == 0) {</span>
+<span class="fc" id="L108">			return format.format(nums.get(0));</span>
 		}
 <span class="nc" id="L110">		return &quot;&lt;b&gt;&quot; + toString() + &quot;&lt;/b&gt;&quot;;</span>
 	}
