@@ -48,13 +48,13 @@ public class EmptyTile extends AbstractTile implements Tile {
 	private final YGauge yGauge;
 
 	public EmptyTile(double height, Tile position, YGauge currentY) {
-<span class="fc" id="L51">		super(((AbstractTile) position).getStringBounder(), currentY);</span>
+<span class="nc" id="L51">		super(((AbstractTile) position).getStringBounder(), currentY);</span>
 		if (YGauge.USE_ME)
 			throw new UnsupportedOperationException();
-<span class="fc" id="L54">		this.height = height;</span>
-<span class="fc" id="L55">		this.position = position;</span>
-<span class="fc" id="L56">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
-<span class="fc" id="L57">	}</span>
+<span class="nc" id="L54">		this.height = height;</span>
+<span class="nc" id="L55">		this.position = position;</span>
+<span class="nc" id="L56">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
+<span class="nc" id="L57">	}</span>
 
 	@Override
 	public YGauge getYGauge() {
@@ -62,26 +62,26 @@ public class EmptyTile extends AbstractTile implements Tile {
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L65">	}</span>
+<span class="nc" id="L65">	}</span>
 
 	@Override
 	public double getPreferredHeight() {
-<span class="fc" id="L69">		return height;</span>
+<span class="nc" id="L69">		return height;</span>
 	}
 
 	public void addConstraints() {
-<span class="fc" id="L73">	}</span>
+<span class="nc" id="L73">	}</span>
 
 	public Real getMinX() {
-<span class="fc" id="L76">		return position.getMinX();</span>
+<span class="nc" id="L76">		return position.getMinX();</span>
 	}
 
 	public Real getMaxX() {
-<span class="fc" id="L80">		return position.getMaxX();</span>
+<span class="nc" id="L80">		return position.getMaxX();</span>
 	}
 
 	public Event getEvent() {
-<span class="fc" id="L84">		return new AbstractEvent() {</span>
+<span class="nc" id="L84">		return new AbstractEvent() {</span>
 			public boolean dealWith(Participant someone) {
 <span class="nc" id="L86">				return false;</span>
 			}
