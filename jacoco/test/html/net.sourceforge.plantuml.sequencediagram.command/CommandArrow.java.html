@@ -366,13 +366,13 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 <span class="nc" id="L366">			diagram.activate(p2, LifeEventType.DESTROY, null);</span>
 			break;
 		}
-<span class="pc bpc" id="L369" title="1 of 2 branches missed.">		if (spec.length() == 4) {</span>
-<span class="nc bnc" id="L370" title="All 3 branches missed.">			switch (spec.charAt(2)) {</span>
+<span class="fc bfc" id="L369" title="All 2 branches covered.">		if (spec.length() == 4) {</span>
+<span class="pc bpc" id="L370" title="1 of 3 branches missed.">			switch (spec.charAt(2)) {</span>
 			case '+':
-<span class="nc" id="L372">				diagram.activate(p2, LifeEventType.ACTIVATE, activationColor);</span>
-<span class="nc" id="L373">				break;</span>
+<span class="fc" id="L372">				diagram.activate(p2, LifeEventType.ACTIVATE, activationColor);</span>
+<span class="fc" id="L373">				break;</span>
 			case '-':
-<span class="nc" id="L375">				diagram.activate(p1, LifeEventType.DEACTIVATE, null);</span>
+<span class="fc" id="L375">				diagram.activate(p1, LifeEventType.DEACTIVATE, null);</span>
 				break;
 			}
 		}
@@ -404,8 +404,8 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 <span class="pc bpc" id="L404" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;bold&quot;)) {</span>
 <span class="pc bpc" id="L405" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;dotted&quot;)) {</span>
 <span class="nc" id="L406">				config = config.withBody(ArrowBody.DOTTED);</span>
-<span class="pc bpc" id="L407" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;hidden&quot;)) {</span>
-<span class="nc" id="L408">				config = config.withBody(ArrowBody.HIDDEN);</span>
+<span class="fc bfc" id="L407" title="All 2 branches covered.">			} else if (s.equalsIgnoreCase(&quot;hidden&quot;)) {</span>
+<span class="fc" id="L408">				config = config.withBody(ArrowBody.HIDDEN);</span>
 			} else {
 <span class="fc" id="L410">				config = config.withColor(HColorSet.instance().getColor(s));</span>
 			}

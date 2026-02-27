@@ -145,7 +145,7 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 
 	public EventWithNote getLastEventWithNote() {
 <span class="pc bpc" id="L147" title="1 of 2 branches missed.">		for (int i = events.size() - 1; i &gt;= 0; i--)</span>
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">			if (events.get(i) instanceof EventWithNote)</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">			if (events.get(i) instanceof EventWithNote)</span>
 <span class="fc" id="L149">				return (EventWithNote) events.get(i);</span>
 <span class="nc" id="L150">		return null;</span>
 	}
@@ -426,8 +426,8 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="fc" id="L426">	private final AutoNumber autoNumber = new AutoNumber();</span>
 
 	public final void autonumberGo(DottedNumber startingNumber, int increment, DecimalFormat decimalFormat) {
-<span class="nc" id="L429">		autoNumber.go(startingNumber, increment, decimalFormat);</span>
-<span class="nc" id="L430">	}</span>
+<span class="fc" id="L429">		autoNumber.go(startingNumber, increment, decimalFormat);</span>
+<span class="fc" id="L430">	}</span>
 
 	public final void autonumberStop() {
 <span class="nc" id="L433">		autoNumber.stop();</span>

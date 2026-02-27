@@ -75,30 +75,30 @@ public class CommandAutonumber extends SingleLineCommand2&lt;SequenceDiagram&gt;
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L78">		DottedNumber start = DottedNumber.create(&quot;1&quot;);</span>
-<span class="nc" id="L79">		final String arg0 = arg.get(&quot;START&quot;, 0);</span>
+<span class="fc" id="L78">		DottedNumber start = DottedNumber.create(&quot;1&quot;);</span>
+<span class="fc" id="L79">		final String arg0 = arg.get(&quot;START&quot;, 0);</span>
 		// System.err.println(&quot;arg0=&quot; + arg0);
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (arg0 != null) {</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (arg0 != null) {</span>
 <span class="nc" id="L82">			start = DottedNumber.create(arg0);</span>
 		}
 		// System.err.println(&quot;start=&quot; + start);
-<span class="nc" id="L85">		int inc = 1;</span>
-<span class="nc" id="L86">		final String arg1 = arg.get(&quot;STEP&quot;, 0);</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (arg1 != null) {</span>
+<span class="fc" id="L85">		int inc = 1;</span>
+<span class="fc" id="L86">		final String arg1 = arg.get(&quot;STEP&quot;, 0);</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (arg1 != null) {</span>
 <span class="nc" id="L88">			inc = Integer.parseInt(arg1);</span>
 		}
 
-<span class="nc" id="L91">		final String arg2 = arg.get(&quot;FORMAT&quot;, 0);</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		final String df = arg2 == null ? &quot;&lt;b&gt;0&lt;/b&gt;&quot; : arg2;</span>
+<span class="fc" id="L91">		final String arg2 = arg.get(&quot;FORMAT&quot;, 0);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		final String df = arg2 == null ? &quot;&lt;b&gt;0&lt;/b&gt;&quot; : arg2;</span>
 		final DecimalFormat decimalFormat;
 		try {
-<span class="nc" id="L95">			decimalFormat = new DecimalFormat(df);</span>
+<span class="fc" id="L95">			decimalFormat = new DecimalFormat(df);</span>
 <span class="nc" id="L96">		} catch (IllegalArgumentException e) {</span>
 <span class="nc" id="L97">			return CommandExecutionResult.error(&quot;Error in pattern : &quot; + df);</span>
-<span class="nc" id="L98">		}</span>
+<span class="fc" id="L98">		}</span>
 
-<span class="nc" id="L100">		diagram.autonumberGo(start, inc, decimalFormat);</span>
-<span class="nc" id="L101">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L100">		diagram.autonumberGo(start, inc, decimalFormat);</span>
+<span class="fc" id="L101">		return CommandExecutionResult.ok();</span>
 	}
 
 }
