@@ -86,15 +86,15 @@ import net.sourceforge.plantuml.version.Version;
 
 	public void checkOldVersionWarning(String lineFormating) {
 <span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (Version.versionString().contains(&quot;beta&quot;))</span>
-<span class="fc" id="L89">			return;</span>
+<span class="nc" id="L89">			return;</span>
 
-<span class="nc" id="L91">		final long days = (System.currentTimeMillis() - Version.compileTime()) / 1000L / 3600 / 24;</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (days &gt;= 140) {</span>
+<span class="fc" id="L91">		final long days = (System.currentTimeMillis() - Version.compileTime()) / 1000L / 3600 / 24;</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (days &gt;= 140) {</span>
 <span class="nc" id="L93">			addEmptyLine();</span>
 <span class="nc" id="L94">			add(lineFormating + &quot;This version of PlantUML is &quot; + days + &quot; days old, so you should&quot;);</span>
 <span class="nc" id="L95">			add(lineFormating + &quot;consider upgrading from https://plantuml.com/download&quot;);</span>
 		}
-<span class="nc" id="L97">	}</span>
+<span class="fc" id="L97">	}</span>
 
 	public void addEmptyLine() {
 <span class="nc" id="L100">		add(&quot; &quot;);</span>

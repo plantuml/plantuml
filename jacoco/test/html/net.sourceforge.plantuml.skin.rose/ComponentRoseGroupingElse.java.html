@@ -61,13 +61,13 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 	private final boolean teoz;
 
 	public ComponentRoseGroupingElse(boolean teoz, Style style, CharSequence comment, ISkinParam skinParam) {
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		super(style, LineBreakStrategy.NONE, 5, 5, 1, skinParam, comment == null ? null : &quot;[&quot; + comment + &quot;]&quot;);</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		super(style, LineBreakStrategy.NONE, 5, 5, 1, skinParam, comment == null ? null : &quot;[&quot; + comment + &quot;]&quot;);</span>
 
-<span class="nc" id="L66">		this.teoz = teoz;</span>
-<span class="nc" id="L67">		this.roundCorner = getRoundCorner();</span>
-<span class="nc" id="L68">		this.groupBorder = getColorLine();</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		this.backgroundColor = teoz ? HColors.transparent() : getColorBackGround();</span>
-<span class="nc" id="L70">	}</span>
+<span class="fc" id="L66">		this.teoz = teoz;</span>
+<span class="fc" id="L67">		this.roundCorner = getRoundCorner();</span>
+<span class="fc" id="L68">		this.groupBorder = getColorLine();</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		this.backgroundColor = teoz ? HColors.transparent() : getColorBackGround();</span>
+<span class="fc" id="L70">	}</span>
 
 	@Override
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
@@ -112,15 +112,15 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (teoz)</span>
-<span class="nc" id="L116">			return getTextHeight(stringBounder) + 16;</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (teoz)</span>
+<span class="fc" id="L116">			return getTextHeight(stringBounder) + 16;</span>
 		else
 <span class="nc" id="L118">			return getTextHeight(stringBounder);</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L123">		return getTextWidth(stringBounder);</span>
+<span class="fc" id="L123">		return getTextWidth(stringBounder);</span>
 	}
 
 }

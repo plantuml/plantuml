@@ -181,12 +181,12 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 <span class="fc" id="L181">		double x1 = 0;</span>
 <span class="fc" id="L182">		double x2 = 1;</span>
 <span class="fc" id="L183">		double extraLiveDeltaIndent = level * deltaSize;</span>
-<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (dx &lt; 0) {</span>
-<span class="nc" id="L185">			x1 += 0;</span>
-<span class="nc bnc" id="L186" title="All 2 branches missed.">			x2 +=  (level &gt; 0 ? -extraLiveDeltaIndent : deltaSize) ;</span>
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		} else if (dx &gt; 0) {</span>
-<span class="nc bnc" id="L188" title="All 2 branches missed.">			x1 += (level &gt; 1) ? deltaSize - extraLiveDeltaIndent : 0;</span>
-<span class="nc bnc" id="L189" title="All 2 branches missed.">			x2 += (level == 1 ? -deltaSize : 0);</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">		if (dx &lt; 0) {</span>
+<span class="fc" id="L185">			x1 += 0;</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">			x2 +=  (level &gt; 0 ? -extraLiveDeltaIndent : deltaSize) ;</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">		} else if (dx &gt; 0) {</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">			x1 += (level &gt; 1) ? deltaSize - extraLiveDeltaIndent : 0;</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">			x2 += (level == 1 ? -deltaSize : 0);</span>
 <span class="fc bfc" id="L190" title="All 2 branches covered.">		} else if (level &gt; 1) {</span>
 <span class="fc" id="L191">			x1 -= extraLiveDeltaIndent - deltaSize;</span>
 <span class="fc" id="L192">			x2 -= extraLiveDeltaIndent - deltaSize;</span>
