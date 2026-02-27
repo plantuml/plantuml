@@ -282,7 +282,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v5
 
       - name: Download pre-built js-plantuml ZIP
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: js-plantuml-zip
           path: build/libs
@@ -325,7 +325,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v5
 
       - name: Download Java 8 JAR (built by Ant)
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: plantuml-jdk8-jar
           path: build/java8
