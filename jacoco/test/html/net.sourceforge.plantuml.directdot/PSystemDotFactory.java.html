@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 public class PSystemDotFactory extends PSystemBasicFactory&lt;PSystemDot&gt; {
 
 	private StringBuilder data;
-<span class="fc" id="L49">	private static final Pattern GRAPHVIZ_DOT_HEADER_PATTERN = Pattern.compile(</span>
+<span class="nc" id="L49">	private static final Pattern GRAPHVIZ_DOT_HEADER_PATTERN = Pattern.compile(</span>
 		  &quot;\\s*&quot;                            // optional leading whitespace
 		+ &quot;(strict\\s+)?&quot;                   // optional 'strict'
 		+ &quot;(di)?&quot;                           // optional 'di'
@@ -62,24 +62,24 @@ public class PSystemDotFactory extends PSystemBasicFactory&lt;PSystemDot&gt; {
 	);
 
 	public PSystemDotFactory(DiagramType diagramType) {
-<span class="fc" id="L65">		super(diagramType);</span>
-<span class="fc" id="L66">	}</span>
+<span class="nc" id="L65">		super(diagramType);</span>
+<span class="nc" id="L66">	}</span>
 
 	@Override
 	public PSystemDot initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L70">		data = null;</span>
-<span class="fc" id="L71">		return null;</span>
+<span class="nc" id="L70">		data = null;</span>
+<span class="nc" id="L71">		return null;</span>
 	}
 
 	@Override
 	public PSystemDot executeLine(UmlSource source, PSystemDot system, String line, PreprocessingArtifact preprocessing) {
-<span class="pc bpc" id="L76" title="2 of 4 branches missed.">		if (system == null &amp;&amp; isGraphvizDotHeader(line)) {</span>
+<span class="nc bnc" id="L76" title="All 4 branches missed.">		if (system == null &amp;&amp; isGraphvizDotHeader(line)) {</span>
 <span class="nc" id="L77">			data = new StringBuilder(line);</span>
 <span class="nc" id="L78">			data.append(&quot;\n&quot;);</span>
 <span class="nc" id="L79">			return new PSystemDot(source, data.toString(), preprocessing);</span>
 		}
-<span class="pc bpc" id="L81" title="3 of 4 branches missed.">		if (data == null || system == null)</span>
-<span class="fc" id="L82">			return null;</span>
+<span class="nc bnc" id="L81" title="All 4 branches missed.">		if (data == null || system == null)</span>
+<span class="nc" id="L82">			return null;</span>
 
 <span class="nc" id="L84">		data.append(line);</span>
 <span class="nc" id="L85">		data.append(&quot;\n&quot;);</span>
@@ -87,13 +87,13 @@ public class PSystemDotFactory extends PSystemBasicFactory&lt;PSystemDot&gt; {
 	}
 
     private boolean isGraphvizDotHeader(String line) {
-<span class="fc" id="L90">        Matcher matcher = GRAPHVIZ_DOT_HEADER_PATTERN.matcher(line);</span>
-<span class="fc" id="L91">        return matcher.matches();</span>
+<span class="nc" id="L90">        Matcher matcher = GRAPHVIZ_DOT_HEADER_PATTERN.matcher(line);</span>
+<span class="nc" id="L91">        return matcher.matches();</span>
     }
 
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
-<span class="fc" id="L96">		return null;</span>
+<span class="nc" id="L96">		return null;</span>
 	}
 
 }

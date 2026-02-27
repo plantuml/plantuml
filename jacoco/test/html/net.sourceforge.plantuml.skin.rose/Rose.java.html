@@ -252,14 +252,14 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="pc bpc" id="L252" title="1 of 2 branches missed.">		if (type == ComponentType.DELAY_TEXT)</span>
 <span class="nc" id="L253">			return new ComponentRoseDelayText(styles[0], stringsToDisplay, param);</span>
 
-<span class="fc bfc" id="L255" title="All 2 branches covered.">		if (type == ComponentType.DESTROY)</span>
+<span class="pc bpc" id="L255" title="1 of 2 branches missed.">		if (type == ComponentType.DESTROY)</span>
 <span class="fc" id="L256">			return new ComponentRoseDestroy(styles[0], param);</span>
 
-<span class="pc bpc" id="L258" title="1 of 2 branches missed.">		if (type == ComponentType.NEWPAGE)</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">		if (type == ComponentType.NEWPAGE)</span>
 <span class="nc" id="L259">			throw new UnsupportedOperationException();</span>
 
-<span class="pc bpc" id="L261" title="1 of 2 branches missed.">		if (type == ComponentType.DIVIDER)</span>
-<span class="fc" id="L262">			return new ComponentRoseDivider(styles[0], stringsToDisplay, param);</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">		if (type == ComponentType.DIVIDER)</span>
+<span class="nc" id="L262">			return new ComponentRoseDivider(styles[0], stringsToDisplay, param);</span>
 
 <span class="nc bnc" id="L264" title="All 2 branches missed.">		if (type == ComponentType.REFERENCE)</span>
 <span class="nc" id="L265">			return new ComponentRoseReference(styles[0], styles[1], stringsToDisplay, param);</span>

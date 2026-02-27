@@ -362,14 +362,14 @@ public class GroupingTile extends AbstractTile {
 <span class="fc" id="L362">				result.add(tile);</span>
 <span class="fc bfc" id="L363" title="All 2 branches covered.">				if (tile instanceof LifeEventTile == false)</span>
 <span class="fc" id="L364">					pending = null;</span>
-<span class="fc bfc" id="L365" title="All 2 branches covered.">			} else if (pending == null) {</span>
+<span class="pc bpc" id="L365" title="1 of 2 branches missed.">			} else if (pending == null) {</span>
 <span class="fc" id="L366">				pending = new TileParallel(stringBounder, null);</span>
 <span class="fc" id="L367">				moveRecentParallelTilesToPending(result, pending);</span>
 <span class="fc" id="L368">				pending.add(tile);</span>
 <span class="fc" id="L369">				result.add(pending);</span>
 			} else {
-<span class="fc" id="L371">				moveRecentParallelTilesToPending(result, pending);</span>
-<span class="fc" id="L372">				pending.add(tile);</span>
+<span class="nc" id="L371">				moveRecentParallelTilesToPending(result, pending);</span>
+<span class="nc" id="L372">				pending.add(tile);</span>
 			}
 <span class="fc" id="L374">		}</span>
 <span class="fc" id="L375">		return result;</span>
@@ -380,11 +380,11 @@ public class GroupingTile extends AbstractTile {
 <span class="nc" id="L380">			return;</span>
 
 <span class="fc" id="L382">		int capture = 1;</span>
-<span class="fc bfc" id="L383" title="All 2 branches covered.">		while (result.get(result.size() - capture) instanceof LifeEventTile)</span>
-<span class="fc" id="L384">			capture++;</span>
+<span class="pc bpc" id="L383" title="1 of 2 branches missed.">		while (result.get(result.size() - capture) instanceof LifeEventTile)</span>
+<span class="nc" id="L384">			capture++;</span>
 
-<span class="fc bfc" id="L386" title="All 2 branches covered.">		if (result.get(result.size() - capture) == pending)</span>
-<span class="fc" id="L387">			capture--;</span>
+<span class="pc bpc" id="L386" title="1 of 2 branches missed.">		if (result.get(result.size() - capture) == pending)</span>
+<span class="nc" id="L387">			capture--;</span>
 
 <span class="fc bfc" id="L389" title="All 2 branches covered.">		for (int i = result.size() - capture; i &lt; result.size(); i++)</span>
 <span class="fc" id="L390">			pending.add(result.get(i));</span>

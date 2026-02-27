@@ -84,13 +84,13 @@ public class CommunicationExoTile extends AbstractTile {
 
 	@Override
 	public double getContactPointRelative() {
-<span class="fc" id="L87">		return getComponent(getStringBounder()).getYPoint(getStringBounder());</span>
+<span class="nc" id="L87">		return getComponent(getStringBounder()).getYPoint(getStringBounder());</span>
 	}
 
 	private ArrowComponent getComponent(StringBounder stringBounder) {
 <span class="fc" id="L91">		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();</span>
-<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (message.getType().getDirection() == -1)</span>
-<span class="fc" id="L93">			arrowConfiguration = arrowConfiguration.reverse();</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (message.getType().getDirection() == -1)</span>
+<span class="nc" id="L93">			arrowConfiguration = arrowConfiguration.reverse();</span>
 
 <span class="fc" id="L95">		final ArrowComponent comp = skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,</span>
 <span class="fc" id="L96">				message.getLabelNumbered());</span>
@@ -131,8 +131,8 @@ public class CommunicationExoTile extends AbstractTile {
 <span class="fc bfc" id="L131" title="All 4 branches covered.">		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.TO_RIGHT)</span>
 <span class="fc" id="L132">			x2 -= ComponentRoseArrow.diamCircle / 2 + 2;</span>
 
-<span class="fc bfc" id="L134" title="All 4 branches covered.">		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.FROM_RIGHT)</span>
-<span class="fc" id="L135">			x2 -= ComponentRoseArrow.diamCircle / 2 + 2;</span>
+<span class="pc bpc" id="L134" title="1 of 4 branches missed.">		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE &amp;&amp; type == MessageExoType.FROM_RIGHT)</span>
+<span class="nc" id="L135">			x2 -= ComponentRoseArrow.diamCircle / 2 + 2;</span>
 
 <span class="fc" id="L137">		final Area area = Area.create(x2 - x1, dim.getHeight());</span>
 <span class="fc" id="L138">		area.setTextDeltaX(textDeltaX);</span>

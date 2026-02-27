@@ -46,11 +46,11 @@ import java.text.DecimalFormat;
 <span class="fc" id="L46">	private String last = &quot;&quot;;</span>
 
 	public final void go(DottedNumber startingNumber, int increment, DecimalFormat format) {
-<span class="fc" id="L49">		this.running = true;</span>
-<span class="fc" id="L50">		this.current = startingNumber;</span>
-<span class="fc" id="L51">		this.increment = increment;</span>
-<span class="fc" id="L52">		this.format = format;</span>
-<span class="fc" id="L53">	}</span>
+<span class="nc" id="L49">		this.running = true;</span>
+<span class="nc" id="L50">		this.current = startingNumber;</span>
+<span class="nc" id="L51">		this.increment = increment;</span>
+<span class="nc" id="L52">		this.format = format;</span>
+<span class="nc" id="L53">	}</span>
 
 	public final void stop() {
 <span class="nc" id="L56">		this.running = false;</span>
@@ -80,12 +80,12 @@ import java.text.DecimalFormat;
 <span class="nc" id="L80">	}</span>
 
 	public String getNextMessageNumber() {
-<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (running == false) {</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (running == false) {</span>
 <span class="fc" id="L84">			return null;</span>
 		}
-<span class="fc" id="L86">		last = current.format(format);</span>
-<span class="fc" id="L87">		current.incrementMinor(increment);</span>
-<span class="fc" id="L88">		return last;</span>
+<span class="nc" id="L86">		last = current.format(format);</span>
+<span class="nc" id="L87">		current.incrementMinor(increment);</span>
+<span class="nc" id="L88">		return last;</span>
 	}
 
 	public String getCurrentMessageNumber(boolean formatted) {

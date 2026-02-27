@@ -41,12 +41,12 @@ public class MessageNumber implements CharSequence {
 
 	@Override
 	public String toString() {
-<span class="fc" id="L44">		return representation;</span>
+<span class="nc" id="L44">		return representation;</span>
 	}
 
-<span class="fc" id="L47">	public MessageNumber(String s) {</span>
-<span class="fc" id="L48">		this.representation = s;</span>
-<span class="fc" id="L49">	}</span>
+<span class="nc" id="L47">	public MessageNumber(String s) {</span>
+<span class="nc" id="L48">		this.representation = s;</span>
+<span class="nc" id="L49">	}</span>
 
 	public String getNumberRaw() {
 <span class="nc" id="L52">		return representation.replaceAll(&quot;\\&lt;/?b\\&gt;&quot;, &quot;&quot;);</span>

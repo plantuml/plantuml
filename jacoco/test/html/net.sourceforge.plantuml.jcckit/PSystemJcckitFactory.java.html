@@ -59,8 +59,8 @@ public class PSystemJcckitFactory extends PSystemBasicFactory&lt;PSystemJcckit&g
 	private int height;
 
 	public PSystemJcckitFactory() {
-<span class="fc" id="L62">		super(DiagramType.JCCKIT);</span>
-<span class="fc" id="L63">	}</span>
+<span class="nc" id="L62">		super(DiagramType.JCCKIT);</span>
+<span class="nc" id="L63">	}</span>
 
 	@Override
 	public PSystemJcckit initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
@@ -73,7 +73,7 @@ public class PSystemJcckitFactory extends PSystemBasicFactory&lt;PSystemJcckit&g
 
 	}
 
-<span class="fc" id="L76">	private static final Pattern2 p = Pattern2.cmpile(&quot;\\((\\d+),(\\d+)\\)&quot;);</span>
+<span class="nc" id="L76">	private static final Pattern2 p = Pattern2.cmpile(&quot;\\((\\d+),(\\d+)\\)&quot;);</span>
 
 	private void extractDimension(String startLine) {
 <span class="nc" id="L79">		final Matcher2 m = p.matcher(startLine);</span>
