@@ -247,7 +247,7 @@ public class PSystemBuilder {
 		factories.add(new PSystemCharlieFactory());
 
 		factories.add(new GanttDiagramFactory());
-		factories.add(new ChronologyDiagramFactory());
+		// factories.add(new ChronologyDiagramFactory());
 		factories.add(new FlowDiagramFactory());
 		factories.add(new PSystemDedicationFactory());
 		factories.add(new TimingDiagramFactory());
