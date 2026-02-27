@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.board.BoardDiagramFactory;
 import net.sourceforge.plantuml.bpm.BpmDiagramFactory;
 import net.sourceforge.plantuml.chart.ChartDiagramFactory;
 import net.sourceforge.plantuml.cheneer.ChenEerDiagramFactory;
-import net.sourceforge.plantuml.chronology.ChronologyDiagramFactory;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
@@ -56,7 +55,6 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.dedication.PSystemDedicationFactory;
 import net.sourceforge.plantuml.definition.PSystemDefinitionFactory;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
-import net.sourceforge.plantuml.directdot.PSystemDotFactory;
 import net.sourceforge.plantuml.ditaa.PSystemDitaaFactory;
 import net.sourceforge.plantuml.donors.PSystemDonorsFactory;
 import net.sourceforge.plantuml.donors.PSystemSkinparameterListFactory;
@@ -78,7 +76,6 @@ import net.sourceforge.plantuml.font.PSystemListFontsFactory;
 import net.sourceforge.plantuml.gitlog.GitDiagramFactory;
 import net.sourceforge.plantuml.hcl.HclDiagramFactory;
 import net.sourceforge.plantuml.help.HelpFactory;
-import net.sourceforge.plantuml.jcckit.PSystemJcckitFactory;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory;
 import net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreoleFactory;
 import net.sourceforge.plantuml.klimt.sprite.ListSpriteDiagramFactory;
@@ -214,9 +211,9 @@ public class PSystemBuilder {
 		factories.add(new PSystemListOpenIconicFactory());
 		factories.add(new PSystemListArchimateSpritesFactory());
 		factories.add(new PSystemSaltFactory(DiagramType.UML));
-		factories.add(new PSystemSaltFactory(DiagramType.SALT));
-		factories.add(new PSystemDotFactory(DiagramType.DOT));
-		factories.add(new PSystemDotFactory(DiagramType.UML));
+//		factories.add(new PSystemSaltFactory(DiagramType.SALT));
+//		factories.add(new PSystemDotFactory(DiagramType.DOT));
+//		factories.add(new PSystemDotFactory(DiagramType.UML));
 		factories.add(new NwDiagramFactory());
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
@@ -224,7 +221,7 @@ public class PSystemBuilder {
 		factories.add(new PacketDiagramFactory());
 
 		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
-		factories.add(new PSystemJcckitFactory());
+//		factories.add(new PSystemJcckitFactory());
 		factories.add(new PSystemSudokuFactory());
 		// ::done
 		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__
