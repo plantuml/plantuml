@@ -35,40 +35,8 @@
  */
 package net.sourceforge.plantuml.klimt.font;
 
-public interface UFont {
+public enum UFontStyle {
 
-	@Deprecated
-	public UFont withStyle(int style);
-
-	@Deprecated
-	public UFont bold();
-
-	@Deprecated
-	public UFont italic();
-
-	@Deprecated
-	public int getStyle();
-
-	@Deprecated
-	public boolean isBold();
-
-	@Deprecated
-	public boolean isItalic();
-
-	public default UFontFace getFontFace() {
-		throw new UnsupportedOperationException("Work In Progress");
-	}
-
-	public default UFont withFontFace(UFontFace face) {
-		throw new UnsupportedOperationException("Work In Progress");
-	}
-
-	public int getSize();
-
-	public double getSize2D();
-
-	public UFont withSize(float size);
-
-	public String getFamily(String text, UFontContext context);
+	NORMAL, ITALIC
 
 }
