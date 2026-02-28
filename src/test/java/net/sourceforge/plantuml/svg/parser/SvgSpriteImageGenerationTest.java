@@ -36,7 +36,6 @@ public class SvgSpriteImageGenerationTest {
 
     @BeforeAll
     static void setup() throws IOException {
-        System.setProperty("plantuml.svg.parser", "sax");
         // Create output directory if it doesn't exist
         if (!Files.exists(OUTPUT_DIR)) {
             Files.createDirectories(OUTPUT_DIR);

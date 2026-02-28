@@ -59,6 +59,7 @@ public enum PragmaKey {
 	SHOW_DEPRECATION, //
 	SVG_FONT, //
 	SVG_INTERACTIVE, //
+	SVG_PARSER, //
 	SVEK_TRACE("true"), //
 	TEOZ("true"), //
 	TEX_SYSTEM, //

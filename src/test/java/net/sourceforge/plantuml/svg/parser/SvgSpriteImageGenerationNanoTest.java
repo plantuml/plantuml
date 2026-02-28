@@ -33,7 +33,6 @@ public class SvgSpriteImageGenerationNanoTest {
 
 	@BeforeAll
 	static void setup() throws IOException {
-		System.setProperty("plantuml.svg.parser", "nano");
 		if (!Files.exists(OUTPUT_DIR))
 			Files.createDirectories(OUTPUT_DIR);
 	}

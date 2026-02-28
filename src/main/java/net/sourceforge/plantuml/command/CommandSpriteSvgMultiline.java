@@ -82,7 +82,7 @@ public class CommandSpriteSvgMultiline extends CommandMultilines2<TitledDiagram>
 		for (StringLocated sl : lines)
 			svg.append(sl.getString());
 
-		final ISvgSpriteParser parser = SvgSpriteParserFactory.create(svg.toString());
+		final ISvgSpriteParser parser = SvgSpriteParserFactory.create(svg.toString(), system.getPragma());
 		system.addSprite(line0.get("NAME", 0), parser);
 
 		return CommandExecutionResult.ok();

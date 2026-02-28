@@ -16,53 +16,23 @@ public class SvgSpriteParserFactoryTest {
 
 	@Test
 	public void testDefaultParserIsNano() {
-		String original = System.getProperty("plantuml.svg.parser");
-		try {
-			System.clearProperty("plantuml.svg.parser");
-			ISvgSpriteParser parser = SvgSpriteParserFactory.create(SAMPLE_SVG);
-			assertTrue(parser instanceof SvgNanoParser, "Default parser should be Nano");
-		} finally {
-			restoreProperty(original);
-		}
+		ISvgSpriteParser parser = SvgSpriteParserFactory.create(SAMPLE_SVG);
+		assertTrue(parser instanceof SvgNanoParser, "Default parser should be Nano");
 	}
 
 	@Test
-	public void testExplicitSaxParser() {
-		String original = System.getProperty("plantuml.svg.parser");
-		try {
-			System.setProperty("plantuml.svg.parser", "sax");
-			ISvgSpriteParser parser = SvgSpriteParserFactory.create(SAMPLE_SVG);
-			assertTrue(parser instanceof SvgSaxParser, "Property 'sax' should select SAX parser");
-		} finally {
-			restoreProperty(original);
-		}
-	}
-
-	@Test
-	public void testExplicitNanoParser() {
-		String original = System.getProperty("plantuml.svg.parser");
-		try {
-			System.setProperty("plantuml.svg.parser", "nano");
-			ISvgSpriteParser parser = SvgSpriteParserFactory.create(SAMPLE_SVG);
-			assertTrue(parser instanceof SvgNanoParser, "Property 'nano' should select Nano parser");
-		} finally {
-			restoreProperty(original);
-		}
-	}
-
-	@Test
-	public void testPragmaParserOverridesDefault() {
+	public void testPragmaSaxParser() {
 		Pragma pragma = Pragma.createEmpty();
 		pragma.define("svgparser", "sax");
 		ISvgSpriteParser parser = SvgSpriteParserFactory.create(SAMPLE_SVG, pragma);
 		assertTrue(parser instanceof SvgSaxParser, "Pragma 'svgparser sax' should select SAX parser");
 	}
 
-	private void restoreProperty(String original) {
-		if (original == null) {
-			System.clearProperty("plantuml.svg.parser");
-		} else {
-			System.setProperty("plantuml.svg.parser", original);
-		}
+	@Test
+	public void testPragmaNanoParser() {
+		Pragma pragma = Pragma.createEmpty();
+		pragma.define("svgparser", "nano");
+		ISvgSpriteParser parser = SvgSpriteParserFactory.create(SAMPLE_SVG, pragma);
+		assertTrue(parser instanceof SvgNanoParser, "Pragma 'svgparser nano' should select Nano parser");
 	}
 }
