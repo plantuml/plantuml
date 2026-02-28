@@ -27,6 +27,12 @@ Or to reassert Nano:
 - Embedded raster images via data URIs (PNG/JPEG) are supported.
 - External image URLs and embedded SVG images are not supported.
 
+## SAX parser additional features
+- Broader SVG element coverage: rect, circle, ellipse, line, polyline, polygon, path, text, image, group, defs, symbol, use.
+- Transforms are parsed (translate, rotate, scale, matrix).
+- Inline style attributes are applied consistently across element types.
+- Gradient fills are supported (linear gradients, with simplified stops).
+
 ## SAX gradient constraints
 - Linear gradients are supported, but only the first and last stops are used.
 - Intermediate stops, offsets, and `stop-opacity` are ignored.

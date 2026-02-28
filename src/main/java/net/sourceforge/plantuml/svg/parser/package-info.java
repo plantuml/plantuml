@@ -30,6 +30,15 @@
  *   and embedded SVG images are not.</li>
  * </ul>
  *
+ * <p><strong>SAX parser additional features:</strong>
+ * <ul>
+ *   <li>Broader SVG element coverage including rect, circle, ellipse, line, polyline,
+ *   polygon, path, text, image, group, defs, symbol, and use.</li>
+ *   <li>Transform parsing for translate, rotate, scale, and matrix.</li>
+ *   <li>Consistent inline styling across supported elements.</li>
+ *   <li>Linear gradient fills (with simplified stop handling).</li>
+ * </ul>
+ *
  * <p><strong>SAX gradient constraints:</strong>
  * <ul>
  *   <li>Linear gradients are supported, but only the first and last stops are used.</li>
