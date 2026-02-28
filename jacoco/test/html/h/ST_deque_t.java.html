@@ -59,15 +59,15 @@ import smetana.core.UnsupportedStarStruct;
 	}
 
 	public boolean realloc(int newdqn) {
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (pnlps.length &gt;= newdqn) {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (pnlps.length &gt;= newdqn) {</span>
 <span class="nc" id="L63">			return true;</span>
 		}
-<span class="fc" id="L65">		ST_pointnlink_t pnlps2[] = new ST_pointnlink_t[newdqn];</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">		for (int i = 0; i &lt; pnlps.length; i++) {</span>
-<span class="fc" id="L67">			pnlps2[i] = pnlps[i];</span>
+<span class="nc" id="L65">		ST_pointnlink_t pnlps2[] = new ST_pointnlink_t[newdqn];</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		for (int i = 0; i &lt; pnlps.length; i++) {</span>
+<span class="nc" id="L67">			pnlps2[i] = pnlps[i];</span>
 		}
-<span class="fc" id="L69">		this.pnlps = pnlps2;</span>
-<span class="fc" id="L70">		return true;</span>
+<span class="nc" id="L69">		this.pnlps = pnlps2;</span>
+<span class="nc" id="L70">		return true;</span>
 	}
 	// ---------------
 

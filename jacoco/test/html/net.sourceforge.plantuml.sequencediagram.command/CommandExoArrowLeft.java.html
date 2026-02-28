@@ -87,10 +87,10 @@ public class CommandExoArrowLeft extends CommandExoArrowAny {
 
 	@Override
 	MessageExoType getMessageExoType(RegexResult arg2) {
-<span class="fc" id="L90">		final String start = arg2.get(ARROW_SUPPCIRCLE2, 0);</span>
-<span class="fc" id="L91">		final String dressing1 = arg2.get(&quot;ARROW_DRESSING1&quot;, 0);</span>
-<span class="fc" id="L92">		final String dressing2 = arg2.get(&quot;ARROW_DRESSING2&quot;, 0);</span>
-<span class="pc bpc" id="L93" title="2 of 4 branches missed.">		if (start != null &amp;&amp; start.contains(&quot;]&quot;)) {</span>
+<span class="nc" id="L90">		final String start = arg2.get(ARROW_SUPPCIRCLE2, 0);</span>
+<span class="nc" id="L91">		final String dressing1 = arg2.get(&quot;ARROW_DRESSING1&quot;, 0);</span>
+<span class="nc" id="L92">		final String dressing2 = arg2.get(&quot;ARROW_DRESSING2&quot;, 0);</span>
+<span class="nc bnc" id="L93" title="All 4 branches missed.">		if (start != null &amp;&amp; start.contains(&quot;]&quot;)) {</span>
 <span class="nc bnc" id="L94" title="All 2 branches missed.">			if (dressing1 != null)</span>
 <span class="nc" id="L95">				return MessageExoType.FROM_RIGHT;</span>
 
@@ -99,8 +99,8 @@ public class CommandExoArrowLeft extends CommandExoArrowAny {
 
 <span class="nc" id="L100">			throw new IllegalArgumentException();</span>
 		}
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (dressing1 != null)</span>
-<span class="fc" id="L103">			return MessageExoType.FROM_LEFT;</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (dressing1 != null)</span>
+<span class="nc" id="L103">			return MessageExoType.FROM_LEFT;</span>
 
 <span class="nc bnc" id="L105" title="All 2 branches missed.">		if (dressing2 != null)</span>
 <span class="nc" id="L106">			return MessageExoType.TO_LEFT;</span>

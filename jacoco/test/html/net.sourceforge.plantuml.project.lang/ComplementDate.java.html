@@ -100,11 +100,11 @@ public class ComplementDate implements Something&lt;GanttDiagram&gt; {
 	}
 
 	public Failable&lt;LocalDate&gt; getMe(GanttDiagram system, RegexResult arg, String suffix) {
-<span class="fc" id="L103">		final DayPattern dayPattern = new DayPattern(suffix);</span>
-<span class="fc" id="L104">		final LocalDate result = dayPattern.getDay(arg);</span>
+<span class="nc" id="L103">		final DayPattern dayPattern = new DayPattern(suffix);</span>
+<span class="nc" id="L104">		final LocalDate result = dayPattern.getDay(arg);</span>
 
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (result != null)</span>
-<span class="fc" id="L107">			return Failable.ok(result);</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (result != null)</span>
+<span class="nc" id="L107">			return Failable.ok(result);</span>
 
 <span class="nc bnc" id="L109" title="All 2 branches missed.">		if (arg.get(&quot;DCOUNT&quot; + suffix, 0) != null)</span>
 <span class="nc" id="L110">			return Failable.ok(resultD(system, arg, suffix));</span>

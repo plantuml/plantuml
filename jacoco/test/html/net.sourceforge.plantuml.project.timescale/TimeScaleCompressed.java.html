@@ -44,18 +44,18 @@ public class TimeScaleCompressed implements TimeScale {
 
 	private final TimeScale daily;
 
-<span class="fc" id="L47">	public TimeScaleCompressed(double size, TimePoint calendar, double scale, LocalDate zeroDay) {</span>
-<span class="fc" id="L48">		this.daily = new TimeScaleDaily(size, calendar, scale, zeroDay);</span>
-<span class="fc" id="L49">	}</span>
+<span class="nc" id="L47">	public TimeScaleCompressed(double size, TimePoint calendar, double scale, LocalDate zeroDay) {</span>
+<span class="nc" id="L48">		this.daily = new TimeScaleDaily(size, calendar, scale, zeroDay);</span>
+<span class="nc" id="L49">	}</span>
 
 	@Override
 	public double getPosition(TimePoint instant) {
-<span class="fc" id="L53">		return daily.getPosition(instant);</span>
+<span class="nc" id="L53">		return daily.getPosition(instant);</span>
 	}
 
 	@Override
 	public double getWidth(TimePoint instant) {
-<span class="fc" id="L58">		return daily.getWidth(instant);</span>
+<span class="nc" id="L58">		return daily.getWidth(instant);</span>
 	}
 
 	@Override

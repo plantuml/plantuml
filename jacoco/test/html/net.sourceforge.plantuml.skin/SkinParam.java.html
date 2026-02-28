@@ -449,7 +449,7 @@ public class SkinParam implements ISkinParam {
 	@Override
 	public HColor getFontHtmlColor(Stereotype stereotype, FontParam... param) {
 <span class="fc" id="L451">		String value = null;</span>
-<span class="fc bfc" id="L452" title="All 2 branches covered.">		if (stereotype != null) {</span>
+<span class="pc bpc" id="L452" title="1 of 2 branches missed.">		if (stereotype != null) {</span>
 <span class="fc" id="L453">			checkStereotype(stereotype);</span>
 <span class="fc" id="L454">			value = getFirstValueNonNullWithSuffix(&quot;fontcolor&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR),</span>
 					param);

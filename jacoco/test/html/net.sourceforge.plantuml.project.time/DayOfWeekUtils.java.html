@@ -55,10 +55,10 @@ import net.sourceforge.plantuml.StringUtils;
 	}
 
 	public static DayOfWeek fromString(String value) {
-<span class="fc" id="L58">		value = StringUtils.goUpperCase(value).substring(0, 3);</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		for (DayOfWeek day : DayOfWeek.values()) {</span>
-<span class="fc bfc" id="L60" title="All 2 branches covered.">			if (day.name().startsWith(value))</span>
-<span class="fc" id="L61">				return day;</span>
+<span class="nc" id="L58">		value = StringUtils.goUpperCase(value).substring(0, 3);</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		for (DayOfWeek day : DayOfWeek.values()) {</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">			if (day.name().startsWith(value))</span>
+<span class="nc" id="L61">				return day;</span>
 
 		}
 <span class="nc" id="L64">		throw new IllegalArgumentException();</span>

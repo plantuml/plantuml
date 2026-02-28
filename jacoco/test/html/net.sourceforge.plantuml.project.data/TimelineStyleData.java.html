@@ -63,7 +63,7 @@ public class TimelineStyleData {
 <span class="fc" id="L63">	}</span>
 
 	public ISkinParam getSkinParam() {
-<span class="fc" id="L66">		return skinParam;</span>
+<span class="nc" id="L66">		return skinParam;</span>
 	}
 
 	public Pragma getPragma() {
@@ -71,11 +71,11 @@ public class TimelineStyleData {
 	}
 
 	public double getFontSizeDay() {
-<span class="fc" id="L74">		return getStyleDay().value(PName.FontSize).asDouble();</span>
+<span class="nc" id="L74">		return getStyleDay().value(PName.FontSize).asDouble();</span>
 	}
 
 	public double getFontSizeMonth() {
-<span class="fc" id="L78">		return ganttStyle.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();</span>
+<span class="nc" id="L78">		return ganttStyle.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();</span>
 	}
 
 	public double getFontSizeYear() {
@@ -83,11 +83,11 @@ public class TimelineStyleData {
 	}
 
 	public UFont getFont(SName param) {
-<span class="fc" id="L86">		return ganttStyle.getStyle(SName.timeline, param).getUFont();</span>
+<span class="nc" id="L86">		return ganttStyle.getStyle(SName.timeline, param).getUFont();</span>
 	}
 
 	public HColor getClosedBackgroundColor() {
-<span class="fc" id="L90">		return ganttStyle.getStyle(SName.closed).value(PName.BackGroundColor).asColor(colorSet);</span>
+<span class="nc" id="L90">		return ganttStyle.getStyle(SName.closed).value(PName.BackGroundColor).asColor(colorSet);</span>
 	}
 
 	public HColor getClosedFontColor() {
@@ -95,31 +95,31 @@ public class TimelineStyleData {
 	}
 
 	public HColor getOpenFontColor() {
-<span class="fc" id="L98">		return ganttStyle.getStyle(SName.timeline).value(PName.FontColor).asColor(colorSet);</span>
+<span class="nc" id="L98">		return ganttStyle.getStyle(SName.timeline).value(PName.FontColor).asColor(colorSet);</span>
 	}
 
 	public HColor getLineColor() {
-<span class="fc" id="L102">		return ganttStyle.getStyle(SName.timeline).value(PName.LineColor).asColor(colorSet);</span>
+<span class="nc" id="L102">		return ganttStyle.getStyle(SName.timeline).value(PName.LineColor).asColor(colorSet);</span>
 	}
 
 	public HColorSet getColorSet() {
-<span class="fc" id="L106">		return colorSet;</span>
+<span class="nc" id="L106">		return colorSet;</span>
 	}
 
 	public UGraphic applyVerticalSeparatorStyle(UGraphic ug) {
-<span class="fc" id="L110">		final Style style = ganttStyle.getStyle(SName.verticalSeparator);</span>
-<span class="fc" id="L111">		final HColor color = style.value(PName.LineColor).asColor(colorSet);</span>
-<span class="fc" id="L112">		final UStroke stroke = style.getStroke();</span>
-<span class="fc" id="L113">		return ug.apply(color).apply(stroke);</span>
+<span class="nc" id="L110">		final Style style = ganttStyle.getStyle(SName.verticalSeparator);</span>
+<span class="nc" id="L111">		final HColor color = style.value(PName.LineColor).asColor(colorSet);</span>
+<span class="nc" id="L112">		final UStroke stroke = style.getStroke();</span>
+<span class="nc" id="L113">		return ug.apply(color).apply(stroke);</span>
 	}
 
 	public double getCellWidth() {
-<span class="fc" id="L117">		final double w = getStyleDay().value(PName.FontSize).asDouble();</span>
-<span class="fc" id="L118">		return w * 1.6;</span>
+<span class="nc" id="L117">		final double w = getStyleDay().value(PName.FontSize).asDouble();</span>
+<span class="nc" id="L118">		return w * 1.6;</span>
 	}
 
 	private Style getStyleDay() {
-<span class="fc" id="L122">		return ganttStyle.getStyle(SName.timeline, SName.day);</span>
+<span class="nc" id="L122">		return ganttStyle.getStyle(SName.timeline, SName.day);</span>
 	}
 
 }

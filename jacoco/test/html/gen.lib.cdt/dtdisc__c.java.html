@@ -67,25 +67,25 @@ import smetana.core.size_t;
 <span class="fc" id="L67">public static CFunction dtmemory = new CFunctionAbstract(&quot;dtmemory&quot;) {</span>
 	
 	public Object exe(Globals zz, Object... args) {
-<span class="fc" id="L70">		return dtmemory((ST_dt_s)args[0], (Object)args[1], (size_t)args[2], (ST_dtdisc_s)args[3]);</span>
+<span class="nc" id="L70">		return dtmemory((ST_dt_s)args[0], (Object)args[1], (size_t)args[2], (ST_dtdisc_s)args[3]);</span>
 	}};
 
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/cdt/dtdisc.c&quot;, name=&quot;dtmemory&quot;, key=&quot;507t9jcy6v9twvl30rs9i2nwi&quot;, definition=&quot;static void* dtmemory(Dt_t* dt,void* addr,size_t size,Dtdisc_t* disc)&quot;)
 public static Object dtmemory(ST_dt_s dt, Object addr, size_t size, ST_dtdisc_s disc) {
-<span class="fc" id="L76">ENTERING(&quot;507t9jcy6v9twvl30rs9i2nwi&quot;,&quot;dtmemory&quot;);</span>
+<span class="nc" id="L76">ENTERING(&quot;507t9jcy6v9twvl30rs9i2nwi&quot;,&quot;dtmemory&quot;);</span>
 try {
-<span class="fc bfc" id="L78" title="All 2 branches covered.">if(addr!=null) {</span>
-<span class="pc bpc" id="L79" title="1 of 2 branches missed."> 		if(size == null) {</span>
-<span class="fc" id="L80">	Memory.free(addr);</span>
-<span class="fc" id="L81"> 			return null;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">if(addr!=null) {</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed."> 		if(size == null) {</span>
+<span class="nc" id="L80">	Memory.free(addr);</span>
+<span class="nc" id="L81"> 			return null;</span>
  		}
 <span class="nc" id="L83">UNSUPPORTED(&quot;9ed8imo9cbvwtwe92qmavoqko&quot;); // 		else	return realloc(addr,size);</span>
 }
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">else	return size.isStrictPositive() ? size.malloc() : null;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">else	return size.isStrictPositive() ? size.malloc() : null;</span>
 <span class="nc" id="L86">throw new UnsupportedOperationException();</span>
 } finally {
-<span class="fc" id="L88">LEAVING(&quot;507t9jcy6v9twvl30rs9i2nwi&quot;,&quot;dtmemory&quot;);</span>
+<span class="nc" id="L88">LEAVING(&quot;507t9jcy6v9twvl30rs9i2nwi&quot;,&quot;dtmemory&quot;);</span>
 }
 }
 
@@ -105,8 +105,8 @@ try {
 	ST_dtdisc_s	old;
 <span class="fc bfc" id="L106" title="All 2 branches covered.">	if((old = (ST_dtdisc_s) dt.disc) == null )	/* initialization call from dtopen() */</span>
 <span class="fc" id="L107">	{	dt.disc = disc;</span>
-<span class="fc bfc" id="L108" title="All 2 branches covered.">		if((dt.memoryf = disc.memoryf ) == null)</span>
-<span class="fc" id="L109">			dt.memoryf = dtdisc__c.dtmemory;</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if((dt.memoryf = disc.memoryf ) == null)</span>
+<span class="nc" id="L109">			dt.memoryf = dtdisc__c.dtmemory;</span>
 <span class="fc" id="L110">		return disc;</span>
 	}
 <span class="pc bpc" id="L112" title="1 of 2 branches missed.">	if((disc) == null)	/* only want to know current discipline */</span>

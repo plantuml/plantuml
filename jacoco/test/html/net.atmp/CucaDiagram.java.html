@@ -112,11 +112,11 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		private final EntityPortion portion;
 		private final boolean show;
 
-<span class="fc" id="L115">		EntityHideOrShow(EntityGender gender, EntityPortion portion, boolean show) {</span>
-<span class="fc" id="L116">			this.gender = gender;</span>
-<span class="fc" id="L117">			this.portion = portion;</span>
-<span class="fc" id="L118">			this.show = show;</span>
-<span class="fc" id="L119">		}</span>
+<span class="nc" id="L115">		EntityHideOrShow(EntityGender gender, EntityPortion portion, boolean show) {</span>
+<span class="nc" id="L116">			this.gender = gender;</span>
+<span class="nc" id="L117">			this.portion = portion;</span>
+<span class="nc" id="L118">			this.show = show;</span>
+<span class="nc" id="L119">		}</span>
 	}
 
 <span class="fc" id="L122">	private final List&lt;EntityHideOrShow&gt; hideOrShows = new ArrayList&lt;&gt;();</span>
@@ -323,16 +323,16 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	private void eventuallyBuildPhantomGroups(LineLocation location) {
 <span class="fc bfc" id="L325" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; quark : this.quarks()) {</span>
-<span class="fc bfc" id="L326" title="All 2 branches covered.">			if (quark.getData() != null)</span>
+<span class="pc bpc" id="L326" title="1 of 2 branches missed.">			if (quark.getData() != null)</span>
 <span class="fc" id="L327">				continue;</span>
-<span class="fc" id="L328">			int countChildren = quark.countChildren();</span>
-<span class="pc bpc" id="L329" title="1 of 2 branches missed.">			if (countChildren &gt; 0) {</span>
+<span class="nc" id="L328">			int countChildren = quark.countChildren();</span>
+<span class="nc bnc" id="L329" title="All 2 branches missed.">			if (countChildren &gt; 0) {</span>
 				// final Display display = Display.getWithNewlines(quark.getQualifiedName());
 <span class="nc" id="L331">				final Display display = Display.getWithNewlines(getPragma(), quark.getName());</span>
 <span class="nc" id="L332">				final Entity result = this.createGroup(location, quark, GroupType.PACKAGE);</span>
 <span class="nc" id="L333">				result.setDisplay(display);</span>
 			}
-<span class="fc" id="L335">		}</span>
+<span class="nc" id="L335">		}</span>
 <span class="fc" id="L336">	}</span>
 
 	final public CommandExecutionResult gotoTogether() {
@@ -342,19 +342,19 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	final public CommandExecutionResult gotoGroup(LineLocation location, Quark&lt;Entity&gt; quark, Display display,
 			GroupType type) {
-<span class="fc" id="L345">		return gotoGroup(location, quark, display, type, null);</span>
+<span class="nc" id="L345">		return gotoGroup(location, quark, display, type, null);</span>
 	}
 
 	final public CommandExecutionResult gotoGroup(LineLocation location, Quark&lt;Entity&gt; quark, Display display,
 			GroupType type, USymbol usymbol) {
-<span class="fc bfc" id="L350" title="All 2 branches covered.">		if (quark.getData() == null) {</span>
+<span class="pc bpc" id="L350" title="1 of 2 branches missed.">		if (quark.getData() == null) {</span>
 <span class="fc" id="L351">			final Entity result = this.createGroup(location, quark, type);</span>
 <span class="fc" id="L352">			result.setTogether(currentTogether());</span>
 <span class="fc" id="L353">			result.setDisplay(display);</span>
 		}
 <span class="fc" id="L355">		final Entity ent = quark.getData();</span>
 <span class="fc" id="L356">		ent.muteToGroupType(type);</span>
-<span class="fc bfc" id="L357" title="All 2 branches covered.">		if (usymbol != null)</span>
+<span class="pc bpc" id="L357" title="1 of 2 branches missed.">		if (usymbol != null)</span>
 <span class="fc" id="L358">			ent.setUSymbol(usymbol);</span>
 
 <span class="fc" id="L360">		this.stacks.add(quark.getData());</span>
@@ -415,9 +415,9 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	// ::comment when __TEAVM__
 	private void createFilesGraphml(OutputStream suggestedFile) throws IOException {
-<span class="fc" id="L418">		final CucaDiagramGraphmlMaker maker = new CucaDiagramGraphmlMaker(this);</span>
-<span class="fc" id="L419">		maker.createFiles(suggestedFile);</span>
-<span class="fc" id="L420">	}</span>
+<span class="nc" id="L418">		final CucaDiagramGraphmlMaker maker = new CucaDiagramGraphmlMaker(this);</span>
+<span class="nc" id="L419">		maker.createFiles(suggestedFile);</span>
+<span class="nc" id="L420">	}</span>
 
 	private void createFilesXmi(OutputStream suggestedFile, FileFormat fileFormat) throws IOException {
 <span class="nc" id="L423">		final CucaDiagramXmiMaker maker = new CucaDiagramXmiMaker(this, fileFormat);</span>
@@ -467,9 +467,9 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 <span class="nc" id="L467">				return ImageDataSimple.ok();</span>
 			}
 
-<span class="fc bfc" id="L470" title="All 2 branches covered.">			if (fileFormat == FileFormat.GRAPHML) {</span>
-<span class="fc" id="L471">				createFilesGraphml(os);</span>
-<span class="fc" id="L472">				return ImageDataSimple.ok();</span>
+<span class="pc bpc" id="L470" title="1 of 2 branches missed.">			if (fileFormat == FileFormat.GRAPHML) {</span>
+<span class="nc" id="L471">				createFilesGraphml(os);</span>
+<span class="nc" id="L472">				return ImageDataSimple.ok();</span>
 			}
 
 <span class="pc bpc" id="L475" title="1 of 2 branches missed.">			if (fileFormat.name().startsWith(&quot;XMI&quot;)) {</span>
@@ -579,9 +579,9 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 <span class="nc" id="L579">			return false;</span>
 
 <span class="fc" id="L581">		boolean result = true;</span>
-<span class="fc bfc" id="L582" title="All 2 branches covered.">		for (EntityHideOrShow cmd : hideOrShows)</span>
-<span class="fc bfc" id="L583" title="All 4 branches covered.">			if (cmd.portion == portion &amp;&amp; cmd.gender.contains(entity))</span>
-<span class="fc" id="L584">				result = cmd.show;</span>
+<span class="pc bpc" id="L582" title="1 of 2 branches missed.">		for (EntityHideOrShow cmd : hideOrShows)</span>
+<span class="nc bnc" id="L583" title="All 4 branches missed.">			if (cmd.portion == portion &amp;&amp; cmd.gender.contains(entity))</span>
+<span class="nc" id="L584">				result = cmd.show;</span>
 
 <span class="fc" id="L586">		return result;</span>
 	}
@@ -602,7 +602,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 <span class="fc" id="L603">		final List&lt;String&gt; visibleStereotypeLabels = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L604" title="All 2 branches covered.">		for (String stereoTypeLabel : entity.getStereotype().getLabels(Guillemet.DOUBLE_COMPARATOR))</span>
-<span class="fc bfc" id="L605" title="All 2 branches covered.">			if (isStereotypeLabelShown(stereoTypeLabel))</span>
+<span class="pc bpc" id="L605" title="1 of 2 branches missed.">			if (isStereotypeLabelShown(stereoTypeLabel))</span>
 <span class="fc" id="L606">				visibleStereotypeLabels.add(stereoTypeLabel);</span>
 
 <span class="fc" id="L608">		return visibleStereotypeLabels;</span>
@@ -610,21 +610,21 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	private boolean isStereotypeLabelShown(String stereoTypeLabel) {
 <span class="fc" id="L612">		boolean result = true;</span>
-<span class="fc bfc" id="L613" title="All 2 branches covered.">		for (EntityHideOrShow cmd : hideOrShows) {</span>
-<span class="pc bpc" id="L614" title="1 of 2 branches missed.">			if (cmd.portion != EntityPortion.STEREOTYPE)</span>
+<span class="pc bpc" id="L613" title="1 of 2 branches missed.">		for (EntityHideOrShow cmd : hideOrShows) {</span>
+<span class="nc bnc" id="L614" title="All 2 branches missed.">			if (cmd.portion != EntityPortion.STEREOTYPE)</span>
 <span class="nc" id="L615">				continue;</span>
-<span class="fc" id="L616">			final String gender = cmd.gender.getGender();</span>
-<span class="fc bfc" id="L617" title="All 4 branches covered.">			if (gender == null || gender.equals(stereoTypeLabel))</span>
-<span class="fc" id="L618">				result = cmd.show;</span>
-<span class="fc" id="L619">		}</span>
+<span class="nc" id="L616">			final String gender = cmd.gender.getGender();</span>
+<span class="nc bnc" id="L617" title="All 4 branches missed.">			if (gender == null || gender.equals(stereoTypeLabel))</span>
+<span class="nc" id="L618">				result = cmd.show;</span>
+<span class="nc" id="L619">		}</span>
 <span class="fc" id="L620">		return result;</span>
 	}
 
 	public final void hideOrShow(EntityGender gender, EntityPortion portions, boolean show) {
-<span class="fc bfc" id="L624" title="All 2 branches covered.">		for (EntityPortion portion : portions.asSet())</span>
-<span class="fc" id="L625">			this.hideOrShows.add(new EntityHideOrShow(gender, portion, show));</span>
+<span class="nc bnc" id="L624" title="All 2 branches missed.">		for (EntityPortion portion : portions.asSet())</span>
+<span class="nc" id="L625">			this.hideOrShows.add(new EntityHideOrShow(gender, portion, show));</span>
 
-<span class="fc" id="L627">	}</span>
+<span class="nc" id="L627">	}</span>
 
 	public void hideOrShow2(String what, boolean show) {
 <span class="nc" id="L630">		what = fixWhat(what);</span>
@@ -875,8 +875,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 <span class="fc" id="L875">				continue;</span>
 
 <span class="fc" id="L877">			final Entity data = quark.getData();</span>
-<span class="pc bpc" id="L878" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup())</span>
-<span class="fc" id="L879">				result.add(data);</span>
+<span class="pc bpc" id="L878" title="2 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup())</span>
+<span class="nc" id="L879">				result.add(data);</span>
 <span class="fc" id="L880">		}</span>
 <span class="fc" id="L881">		return Collections.unmodifiableCollection(result);</span>
 	}

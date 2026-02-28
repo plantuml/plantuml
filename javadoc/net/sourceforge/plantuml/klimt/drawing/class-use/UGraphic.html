@@ -159,7 +159,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.emoji">net.sourceforge.plantuml.emoji</a></div>
 <div class="col-last even-row-color">
-<div class="block">Provides classes used to manage 
+<div class="block">Provides classes used to manage the
  <a href="https://plantuml.com/en/creole#68305e25f5788db0" target="_top">
  PlantUML Emoji</a> icon set.</div>
 </div>
@@ -333,32 +333,36 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.svek.image">net.sourceforge.plantuml.svek.image</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.teavm">net.sourceforge.plantuml.teavm</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.timingdiagram">net.sourceforge.plantuml.timingdiagram</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.svg.parser">net.sourceforge.plantuml.svg.parser</a></div>
+<div class="col-last even-row-color">
+<div class="block">SVG sprite parsing support.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.teavm">net.sourceforge.plantuml.teavm</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.timingdiagram">net.sourceforge.plantuml.timingdiagram</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/timing-diagram" target="_top">
  Timing Diagram</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.timingdiagram.graphic">net.sourceforge.plantuml.timingdiagram.graphic</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.version">net.sourceforge.plantuml.version</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.timingdiagram.graphic">net.sourceforge.plantuml.timingdiagram.graphic</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.version">net.sourceforge.plantuml.version</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/versioning-scheme" target="_top">
  PlantUML Version</a> and
  <a href="https://plantuml.com/professional" target="_top">
  PlantUML License</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.wire">net.sourceforge.plantuml.wire</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.wire">net.sourceforge.plantuml.wire</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides classes used to manage 
  <a href="http://alphadoc.plantuml.com/doc/markdown/en/wire-diagram" target="_top">
  Wire or Block Diagram</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.xmi">net.sourceforge.plantuml.xmi</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.xmi">net.sourceforge.plantuml.xmi</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/xmi" target="_top">
  XML Metadata Interchange (XMI) output format</a>.</div>
@@ -1410,12 +1414,6 @@ loadScripts(document, 'script');</script>
  double&nbsp;scale,
  <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;colorForMonochrome)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SvgNanoParser.</span><code><a href="../../../emoji/SvgNanoParser.html#drawU(net.sourceforge.plantuml.klimt.drawing.UGraphic,double,net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">drawU</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
- double&nbsp;scale,
- <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;fontColor,
- <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;forcedColor)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Constructors in <a href="../../../emoji/package-summary.html">net.sourceforge.plantuml.emoji</a> with parameters of type <a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a></span></div>
 <div class="summary-table three-column-summary">
@@ -3558,6 +3556,37 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>final void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">Opale.</span><code><a href="../../../svek/image/Opale.html#drawU(net.sourceforge.plantuml.klimt.drawing.UGraphic)" class="member-name-link">drawU</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.svg.parser">
+<h2>Uses of <a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a> in <a href="../../../svg/parser/package-summary.html">net.sourceforge.plantuml.svg.parser</a></h2>
+<div class="caption"><span>Methods in <a href="../../../svg/parser/package-summary.html">net.sourceforge.plantuml.svg.parser</a> with parameters of type <a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ISvgSpriteParser.</span><code><a href="../../../svg/parser/ISvgSpriteParser.html#drawU(net.sourceforge.plantuml.klimt.drawing.UGraphic,double,net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">drawU</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ double&nbsp;scale,
+ <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;fontColor,
+ <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;forcedColor)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Render the sprite into the provided graphics context.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SvgNanoParser.</span><code><a href="../../../svg/parser/SvgNanoParser.html#drawU(net.sourceforge.plantuml.klimt.drawing.UGraphic,double,net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">drawU</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ double&nbsp;scale,
+ <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;fontColor,
+ <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;forcedColor)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SvgSaxParser.</span><code><a href="../../../svg/parser/SvgSaxParser.html#drawU(net.sourceforge.plantuml.klimt.drawing.UGraphic,double,net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">drawU</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ double&nbsp;scale,
+ <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;fontColor,
+ <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;forcedColor)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>

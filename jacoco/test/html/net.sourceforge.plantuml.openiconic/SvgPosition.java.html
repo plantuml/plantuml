@@ -45,56 +45,56 @@ public class SvgPosition {
 	final private SvgCommandNumber y;
 
 	public SvgPosition() {
-<span class="nc" id="L48">		this(new SvgCommandNumber(0), new SvgCommandNumber(0));</span>
-<span class="nc" id="L49">	}</span>
+<span class="fc" id="L48">		this(new SvgCommandNumber(0), new SvgCommandNumber(0));</span>
+<span class="fc" id="L49">	}</span>
 
-<span class="nc" id="L51">	public SvgPosition(SvgCommandNumber x, SvgCommandNumber y) {</span>
-<span class="nc" id="L52">		this.x = x;</span>
-<span class="nc" id="L53">		this.y = y;</span>
-<span class="nc" id="L54">	}</span>
+<span class="fc" id="L51">	public SvgPosition(SvgCommandNumber x, SvgCommandNumber y) {</span>
+<span class="fc" id="L52">		this.x = x;</span>
+<span class="fc" id="L53">		this.y = y;</span>
+<span class="fc" id="L54">	}</span>
 
 	@Override
 	public String toString() {
 <span class="nc" id="L58">		return x.toSvg() + &quot;,&quot; + y.toSvg();</span>
 	}
 
-<span class="nc" id="L61">	public SvgPosition(double x, double y) {</span>
-<span class="nc" id="L62">		this.x = new SvgCommandNumber(x);</span>
-<span class="nc" id="L63">		this.y = new SvgCommandNumber(y);</span>
-<span class="nc" id="L64">	}</span>
+<span class="fc" id="L61">	public SvgPosition(double x, double y) {</span>
+<span class="fc" id="L62">		this.x = new SvgCommandNumber(x);</span>
+<span class="fc" id="L63">		this.y = new SvgCommandNumber(y);</span>
+<span class="fc" id="L64">	}</span>
 
 	public SvgCommandNumber getX() {
-<span class="nc" id="L67">		return x;</span>
+<span class="fc" id="L67">		return x;</span>
 	}
 
 	public SvgCommandNumber getY() {
-<span class="nc" id="L71">		return y;</span>
+<span class="fc" id="L71">		return y;</span>
 	}
 
 	public double getXDouble() {
-<span class="nc" id="L75">		return x.getDouble();</span>
+<span class="fc" id="L75">		return x.getDouble();</span>
 	}
 
 	public double getYDouble() {
-<span class="nc" id="L79">		return y.getDouble();</span>
+<span class="fc" id="L79">		return y.getDouble();</span>
 	}
 
 	public SvgPosition add(SvgPosition other) {
-<span class="nc" id="L83">		return new SvgPosition(x.add(other.x), y.add(other.y));</span>
+<span class="fc" id="L83">		return new SvgPosition(x.add(other.x), y.add(other.y));</span>
 	}
 
 	public SvgPosition getMirror(SvgPosition tobeMirrored) {
-<span class="nc" id="L87">		final double centerX = getXDouble();</span>
-<span class="nc" id="L88">		final double centerY = getYDouble();</span>
+<span class="fc" id="L87">		final double centerX = getXDouble();</span>
+<span class="fc" id="L88">		final double centerY = getYDouble();</span>
 		// x1+x2 = 2*xc
-<span class="nc" id="L90">		final double x = 2 * centerX - tobeMirrored.getXDouble();</span>
-<span class="nc" id="L91">		final double y = 2 * centerY - tobeMirrored.getYDouble();</span>
-<span class="nc" id="L92">		return new SvgPosition(x, y);</span>
+<span class="fc" id="L90">		final double x = 2 * centerX - tobeMirrored.getXDouble();</span>
+<span class="fc" id="L91">		final double y = 2 * centerY - tobeMirrored.getYDouble();</span>
+<span class="fc" id="L92">		return new SvgPosition(x, y);</span>
 	}
 
 	public XPoint2D affine(XAffineTransform at) {
-<span class="nc" id="L96">		final XPoint2D tmp = new XPoint2D(getXDouble(), getYDouble()).transform(at);</span>
-<span class="nc" id="L97">		return tmp;</span>
+<span class="fc" id="L96">		final XPoint2D tmp = new XPoint2D(getXDouble(), getYDouble()).transform(at);</span>
+<span class="fc" id="L97">		return tmp;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

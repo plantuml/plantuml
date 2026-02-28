@@ -128,36 +128,36 @@ import smetana.core.Memory;
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/cdt/dtclose.c&quot;, name=&quot;dtclose&quot;, key=&quot;7ggbhlblmrfr1wq1k20npwyxb&quot;, definition=&quot;int dtclose(register Dt_t* dt)&quot;)
 public static int dtclose(Globals zz, ST_dt_s dt) {
-<span class="fc" id="L131">ENTERING(&quot;7ggbhlblmrfr1wq1k20npwyxb&quot;,&quot;dtclose&quot;);</span>
+<span class="nc" id="L131">ENTERING(&quot;7ggbhlblmrfr1wq1k20npwyxb&quot;,&quot;dtclose&quot;);</span>
 	try {
  	ST_dtdisc_s	disc;
-<span class="fc" id="L134"> 	int		ev = 0;</span>
-<span class="pc bpc" id="L135" title="2 of 4 branches missed."> 	if((dt) == null || dt.nview &gt; 0 ) /* can't close if being viewed */</span>
+<span class="nc" id="L134"> 	int		ev = 0;</span>
+<span class="nc bnc" id="L135" title="All 4 branches missed."> 	if((dt) == null || dt.nview &gt; 0 ) /* can't close if being viewed */</span>
 <span class="nc" id="L136"> 		return -1;</span>
  	/* announce the close event to see if we should continue */
-<span class="fc" id="L138"> 	disc = (ST_dtdisc_s) dt.disc;</span>
-<span class="pc bpc" id="L139" title="1 of 2 branches missed."> 	if(disc.eventf!=null &amp;&amp;</span>
+<span class="nc" id="L138"> 	disc = (ST_dtdisc_s) dt.disc;</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed."> 	if(disc.eventf!=null &amp;&amp;</span>
 <span class="nc bnc" id="L140" title="All 2 branches missed."> 	   (ev = (Integer)disc.eventf.exe(zz, dt, 2, null, disc)) &lt; 0)</span>
 <span class="nc" id="L141"> 		return -1;</span>
-<span class="pc bpc" id="L142" title="1 of 2 branches missed."> 	if(dt.view!=null)	/* turn off viewing */</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed."> 	if(dt.view!=null)	/* turn off viewing */</span>
 <span class="nc" id="L143">UNSUPPORTED(&quot;1xbo7gf92fmqmu2tzpfeuc0wk&quot;); // 		dtview(dt,((Dt_t*)0));</span>
-<span class="pc bpc" id="L144" title="1 of 2 branches missed."> 	if(ev == 0) /* release all allocated data */ {</span>
-<span class="fc" id="L145"> 		dt.meth.searchf.exe(zz, dt, null, 0000100);</span>
-<span class="pc bpc" id="L146" title="1 of 2 branches missed."> 		if(dtsize_(dt) &gt; 0)</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed."> 	if(ev == 0) /* release all allocated data */ {</span>
+<span class="nc" id="L145"> 		dt.meth.searchf.exe(zz, dt, null, 0000100);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed."> 		if(dtsize_(dt) &gt; 0)</span>
 <span class="nc" id="L147"> 			return -1;</span>
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">if(dt.data.ntab &gt; 0)</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">if(dt.data.ntab &gt; 0)</span>
 <span class="nc" id="L149">UNSUPPORTED(&quot;4ugmcpi8vkb013vuo4wykn0a3&quot;); // 			(*dt-&gt;memoryf)(dt,(void*)dt-&gt;data-&gt;hh._htab,0,disc);</span>
-<span class="fc" id="L150">dt.memoryf.exe(zz, dt, dt.data, null, disc);</span>
+<span class="nc" id="L150">dt.memoryf.exe(zz, dt, dt.data, null, disc);</span>
  	}
-<span class="pc bpc" id="L152" title="1 of 2 branches missed."> 	if(dt.type == 0)</span>
-<span class="fc" id="L153"> 		Memory.free(dt);</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed."> 	if(dt.type == 0)</span>
+<span class="nc" id="L153"> 		Memory.free(dt);</span>
 <span class="nc bnc" id="L154" title="All 4 branches missed."> 	else if(ev == 0 &amp;&amp; dt.type == 1)</span>
 <span class="nc" id="L155">UNSUPPORTED(&quot;6wqxv1f7tzvjk0lwmqdrcq8la&quot;); // 		(*dt-&gt;memoryf)(dt, (void*)dt, 0, disc);</span>
-<span class="pc bpc" id="L156" title="1 of 2 branches missed."> 	if(disc.eventf!=null)</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed."> 	if(disc.eventf!=null)</span>
 <span class="nc" id="L157">UNSUPPORTED(&quot;8bce06bdd64ypwb17ddloqzu8&quot;); // 		(void)(*disc-&gt;eventf)(dt, 6, ((void*)0), disc);</span>
-<span class="fc" id="L158"> 	return 0;</span>
+<span class="nc" id="L158"> 	return 0;</span>
 } finally {
-<span class="fc" id="L160">LEAVING(&quot;7ggbhlblmrfr1wq1k20npwyxb&quot;,&quot;dtclose&quot;);</span>
+<span class="nc" id="L160">LEAVING(&quot;7ggbhlblmrfr1wq1k20npwyxb&quot;,&quot;dtclose&quot;);</span>
 }
 }
 

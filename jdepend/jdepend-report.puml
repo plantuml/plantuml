@@ -1005,7 +1005,6 @@ Total Classes: 51
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.classdiagram.command"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.decoration.symbol"
-"net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.emoji"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.error"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.jaws"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.klimt.color"
@@ -1021,6 +1020,7 @@ Total Classes: 51
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.statediagram.command"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.stereo"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.style"
+"net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.svg.parser"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.teavm.browser"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.url"
@@ -1501,13 +1501,11 @@ Total Classes: 1
 "net.sourceforge.plantuml.elk.proxy.graph.util" --> "net.sourceforge.plantuml.elk.proxy"
 "net.sourceforge.plantuml.elk.proxy.graph.util" --> "net.sourceforge.plantuml.elk.proxy.graph"
 
-class "net.sourceforge.plantuml.emoji" %lighten("red", 99) {
-Total Classes: 8
+class "net.sourceforge.plantuml.emoji" %lighten("red", 88) {
+Total Classes: 5
 }
 "net.sourceforge.plantuml.emoji" --> "java.io"
 "net.sourceforge.plantuml.emoji" --> "java.lang"
-"net.sourceforge.plantuml.emoji" --> "java.util"
-"net.sourceforge.plantuml.emoji" --> "net.atmp"
 "net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.command"
 "net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.core"
@@ -1515,10 +1513,7 @@ Total Classes: 8
 "net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.klimt.awt"
 "net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.klimt.drawing"
-"net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.klimt.font"
-"net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.klimt.shape"
-"net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.klimt.sprite"
 "net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.preproc"
 
 class "net.sourceforge.plantuml.emoji.data" %lighten("red", 100) {
@@ -1778,7 +1773,7 @@ Total Classes: 7
 "net.sourceforge.plantuml.jsondiagram" --> "net.sourceforge.plantuml.yaml"
 "net.sourceforge.plantuml.jsondiagram" --> "smetana.core"
 
-class "net.sourceforge.plantuml.klimt" %lighten("red", 67) {
+class "net.sourceforge.plantuml.klimt" %lighten("red", 66) {
 Total Classes: 21
 }
 "net.sourceforge.plantuml.klimt" --> "java.awt"
@@ -1925,7 +1920,7 @@ Total Classes: 16
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.klimt.drawing" %lighten("red", 51) {
+class "net.sourceforge.plantuml.klimt.drawing" %lighten("red", 50) {
 Total Classes: 14
 }
 "net.sourceforge.plantuml.klimt.drawing" --> "java.io"
@@ -3185,6 +3180,25 @@ Total Classes: 37
 "net.sourceforge.plantuml.svek.image" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.svek.image" --> "net.sourceforge.plantuml.utils"
 
+class "net.sourceforge.plantuml.svg.parser" %lighten("red", 98) {
+Total Classes: 12
+}
+"net.sourceforge.plantuml.svg.parser" --> "java.lang"
+"net.sourceforge.plantuml.svg.parser" --> "java.util"
+"net.sourceforge.plantuml.svg.parser" --> "net.atmp"
+"net.sourceforge.plantuml.svg.parser" --> "net.sourceforge.plantuml.klimt"
+"net.sourceforge.plantuml.svg.parser" --> "net.sourceforge.plantuml.klimt.awt"
+"net.sourceforge.plantuml.svg.parser" --> "net.sourceforge.plantuml.klimt.color"
+"net.sourceforge.plantuml.svg.parser" --> "net.sourceforge.plantuml.klimt.drawing"
+"net.sourceforge.plantuml.svg.parser" --> "net.sourceforge.plantuml.klimt.font"
+"net.sourceforge.plantuml.svg.parser" --> "net.sourceforge.plantuml.klimt.geom"
+"net.sourceforge.plantuml.svg.parser" --> "net.sourceforge.plantuml.klimt.shape"
+"net.sourceforge.plantuml.svg.parser" --> "net.sourceforge.plantuml.klimt.sprite"
+"net.sourceforge.plantuml.svg.parser" --> "net.sourceforge.plantuml.skin"
+"net.sourceforge.plantuml.svg.parser" --> "net.sourceforge.plantuml.teavm"
+"net.sourceforge.plantuml.svg.parser" --> "org.xml.sax"
+"net.sourceforge.plantuml.svg.parser" --> "org.xml.sax.helpers"
+
 class "net.sourceforge.plantuml.swing" %lighten("red", 100) {
 Total Classes: 36
 }
@@ -3218,7 +3232,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.teavm" %lighten("red", 54) {
+class "net.sourceforge.plantuml.teavm" %lighten("red", 52) {
 Total Classes: 16
 }
 "net.sourceforge.plantuml.teavm" --> "java.io"

@@ -241,16 +241,16 @@ import net.sourceforge.plantuml.utils.Log;
 	}
 
 	public static String manageArrowForCuca(String s) {
-<span class="fc" id="L244">		final Direction dir = getArrowDirection(s);</span>
-<span class="fc" id="L245">		s = s.replace('=', '-');</span>
-<span class="fc" id="L246">		s = s.replaceAll(&quot;\\w*&quot;, &quot;&quot;);</span>
-<span class="pc bpc" id="L247" title="1 of 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.RIGHT)</span>
-<span class="fc" id="L248">			s = s.replaceAll(&quot;-+&quot;, &quot;-&quot;);</span>
+<span class="nc" id="L244">		final Direction dir = getArrowDirection(s);</span>
+<span class="nc" id="L245">		s = s.replace('=', '-');</span>
+<span class="nc" id="L246">		s = s.replaceAll(&quot;\\w*&quot;, &quot;&quot;);</span>
+<span class="nc bnc" id="L247" title="All 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.RIGHT)</span>
+<span class="nc" id="L248">			s = s.replaceAll(&quot;-+&quot;, &quot;-&quot;);</span>
 
-<span class="pc bpc" id="L250" title="2 of 6 branches missed.">		if (s.length() == 2 &amp;&amp; (dir == Direction.UP || dir == Direction.DOWN))</span>
+<span class="nc bnc" id="L250" title="All 6 branches missed.">		if (s.length() == 2 &amp;&amp; (dir == Direction.UP || dir == Direction.DOWN))</span>
 <span class="nc" id="L251">			s = s.replaceFirst(&quot;-&quot;, &quot;--&quot;);</span>
 
-<span class="fc" id="L253">		return s;</span>
+<span class="nc" id="L253">		return s;</span>
 	}
 
 	public static String manageQueueForCuca(String s) {
@@ -267,8 +267,8 @@ import net.sourceforge.plantuml.utils.Log;
 	}
 
 	public static Direction getArrowDirection(String s) {
-<span class="pc bpc" id="L270" title="1 of 2 branches missed.">		if (s.endsWith(&quot;&gt;&quot;))</span>
-<span class="fc" id="L271">			return getQueueDirection(s.substring(0, s.length() - 1));</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">		if (s.endsWith(&quot;&gt;&quot;))</span>
+<span class="nc" id="L271">			return getQueueDirection(s.substring(0, s.length() - 1));</span>
 
 <span class="nc bnc" id="L273" title="All 2 branches missed.">		if (s.startsWith(&quot;&lt;&quot;)) {</span>
 <span class="nc bnc" id="L274" title="All 2 branches missed.">			if (s.length() == 2)</span>
@@ -284,29 +284,29 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="nc" id="L284">			throw new IllegalArgumentException(s);</span>
 
 <span class="fc" id="L286">		s = s.toLowerCase();</span>
-<span class="fc bfc" id="L287" title="All 2 branches covered.">		if (s.contains(&quot;left&quot;))</span>
-<span class="fc" id="L288">			return Direction.LEFT;</span>
+<span class="pc bpc" id="L287" title="1 of 2 branches missed.">		if (s.contains(&quot;left&quot;))</span>
+<span class="nc" id="L288">			return Direction.LEFT;</span>
 
-<span class="fc bfc" id="L290" title="All 2 branches covered.">		if (s.contains(&quot;right&quot;))</span>
-<span class="fc" id="L291">			return Direction.RIGHT;</span>
+<span class="pc bpc" id="L290" title="1 of 2 branches missed.">		if (s.contains(&quot;right&quot;))</span>
+<span class="nc" id="L291">			return Direction.RIGHT;</span>
 
-<span class="fc bfc" id="L293" title="All 2 branches covered.">		if (s.contains(&quot;up&quot;))</span>
-<span class="fc" id="L294">			return Direction.UP;</span>
+<span class="pc bpc" id="L293" title="1 of 2 branches missed.">		if (s.contains(&quot;up&quot;))</span>
+<span class="nc" id="L294">			return Direction.UP;</span>
 
-<span class="fc bfc" id="L296" title="All 2 branches covered.">		if (s.contains(&quot;down&quot;)) {</span>
-<span class="fc" id="L297">			return Direction.DOWN;</span>
+<span class="pc bpc" id="L296" title="1 of 2 branches missed.">		if (s.contains(&quot;down&quot;)) {</span>
+<span class="nc" id="L297">			return Direction.DOWN;</span>
 		}
-<span class="fc bfc" id="L299" title="All 2 branches covered.">		if (s.contains(&quot;l&quot;))</span>
-<span class="fc" id="L300">			return Direction.LEFT;</span>
+<span class="pc bpc" id="L299" title="1 of 2 branches missed.">		if (s.contains(&quot;l&quot;))</span>
+<span class="nc" id="L300">			return Direction.LEFT;</span>
 
-<span class="fc bfc" id="L302" title="All 2 branches covered.">		if (s.contains(&quot;r&quot;))</span>
-<span class="fc" id="L303">			return Direction.RIGHT;</span>
+<span class="pc bpc" id="L302" title="1 of 2 branches missed.">		if (s.contains(&quot;r&quot;))</span>
+<span class="nc" id="L303">			return Direction.RIGHT;</span>
 
-<span class="fc bfc" id="L305" title="All 2 branches covered.">		if (s.contains(&quot;u&quot;))</span>
-<span class="fc" id="L306">			return Direction.UP;</span>
+<span class="pc bpc" id="L305" title="1 of 2 branches missed.">		if (s.contains(&quot;u&quot;))</span>
+<span class="nc" id="L306">			return Direction.UP;</span>
 
-<span class="fc bfc" id="L308" title="All 2 branches covered.">		if (s.contains(&quot;d&quot;))</span>
-<span class="fc" id="L309">			return Direction.DOWN;</span>
+<span class="pc bpc" id="L308" title="1 of 2 branches missed.">		if (s.contains(&quot;d&quot;))</span>
+<span class="nc" id="L309">			return Direction.DOWN;</span>
 
 <span class="fc bfc" id="L311" title="All 2 branches covered.">		if (s.length() == 1)</span>
 <span class="fc" id="L312">			return Direction.RIGHT;</span>

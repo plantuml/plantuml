@@ -45,26 +45,26 @@ class RealImpl extends RealMoveable implements RealOrigin {
 <span class="fc" id="L45">	}</span>
 
 	void move(double delta) {
-<span class="fc" id="L48">		this.currentValue += delta;</span>
-<span class="fc" id="L49">	}</span>
+<span class="nc" id="L48">		this.currentValue += delta;</span>
+<span class="nc" id="L49">	}</span>
 
 	@Override
 	double getCurrentValueInternal() {
-<span class="fc" id="L53">		return currentValue;</span>
+<span class="nc" id="L53">		return currentValue;</span>
 	}
 
 	public Real addAtLeast(double delta) {
-<span class="fc" id="L57">		final RealImpl result = new RealImpl(getName() + &quot;.addAtLeast&quot; + delta, getLine(), this.currentValue + delta);</span>
-<span class="fc" id="L58">		getLine().addForce(new PositiveForce(this, result, delta));</span>
-<span class="fc" id="L59">		return result;</span>
+<span class="nc" id="L57">		final RealImpl result = new RealImpl(getName() + &quot;.addAtLeast&quot; + delta, getLine(), this.currentValue + delta);</span>
+<span class="nc" id="L58">		getLine().addForce(new PositiveForce(this, result, delta));</span>
+<span class="nc" id="L59">		return result;</span>
 	}
 
 	public void ensureBiggerThan(Real other) {
-<span class="fc" id="L63">		getLine().addForce(new PositiveForce(other, this, 0));</span>
-<span class="fc" id="L64">	}</span>
+<span class="nc" id="L63">		getLine().addForce(new PositiveForce(other, this, 0));</span>
+<span class="nc" id="L64">	}</span>
 
 	public void compileNow() {
-<span class="fc" id="L67">		getLine().compile();</span>
-<span class="fc" id="L68">	}</span>
+<span class="nc" id="L67">		getLine().compile();</span>
+<span class="nc" id="L68">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

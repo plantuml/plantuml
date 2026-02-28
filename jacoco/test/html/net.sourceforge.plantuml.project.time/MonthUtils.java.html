@@ -64,8 +64,8 @@ import net.sourceforge.plantuml.StringUtils;
 	}
 
 	public static String shortName(Month month, Locale locale) {
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (locale == Locale.ENGLISH)</span>
-<span class="fc" id="L68">			return StringUtils.capitalize(month.name()).substring(0, 3);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (locale == Locale.ENGLISH)</span>
+<span class="nc" id="L68">			return StringUtils.capitalize(month.name()).substring(0, 3);</span>
 
 <span class="nc" id="L70">		return StringUtils.capitalize(month.getDisplayName(TextStyle.SHORT_STANDALONE, locale));</span>
 	}

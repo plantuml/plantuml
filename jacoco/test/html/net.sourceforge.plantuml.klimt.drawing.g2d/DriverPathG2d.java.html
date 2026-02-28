@@ -78,7 +78,7 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver&lt;UPath
 <span class="fc" id="L78">				p.curveTo(x + coord[0], y + coord[1], x + coord[2], y + coord[3], x + coord[4], y + coord[5]);</span>
 <span class="fc" id="L79">				minMax = minMax.addPoint(x + coord[4], y + coord[5]);</span>
 <span class="pc bpc" id="L80" title="1 of 2 branches missed.">			} else if (type == USegmentType.SEG_ARCTO) {</span>
-<span class="pc bpc" id="L81" title="2 of 4 branches missed.">				p.arcTo(coord[0], coord[1], coord[2], coord[3] != 0, coord[4] != 0, x + coord[5], y + coord[6]);</span>
+<span class="fc bfc" id="L81" title="All 4 branches covered.">				p.arcTo(coord[0], coord[1], coord[2], coord[3] != 0, coord[4] != 0, x + coord[5], y + coord[6]);</span>
 			} else {
 <span class="nc" id="L83">				throw new UnsupportedOperationException();</span>
 			}
@@ -91,30 +91,30 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver&lt;UPath
 			else
 <span class="nc" id="L92">				drawShadow(g2d, p, shape.getDeltaShadow(), dpiFactor);</span>
 
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (back instanceof HColorGradient) {</span>
-<span class="nc" id="L95">			final HColorGradient gr = (HColorGradient) back;</span>
-<span class="nc" id="L96">			final char policy = gr.getPolicy();</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (back instanceof HColorGradient) {</span>
+<span class="fc" id="L95">			final HColorGradient gr = (HColorGradient) back;</span>
+<span class="fc" id="L96">			final char policy = gr.getPolicy();</span>
 			final GradientPaint paint;
-<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (policy == '|') {</span>
-<span class="nc" id="L99">				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY() / 2,</span>
-<span class="nc" id="L100">						gr.getColor1().toColor(mapper).toAwtColor(), (float) minMax.getMaxX(), (float) minMax.getMaxY() / 2,</span>
-<span class="nc" id="L101">						gr.getColor2().toColor(mapper).toAwtColor());</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">			} else if (policy == '\\') {</span>
-<span class="nc" id="L103">				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY(),</span>
-<span class="nc" id="L104">						gr.getColor1().toColor(mapper).toAwtColor(), (float) minMax.getMaxX(), (float) minMax.getMinY(),</span>
-<span class="nc" id="L105">						gr.getColor2().toColor(mapper).toAwtColor());</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">			} else if (policy == '-') {</span>
-<span class="nc" id="L107">				paint = new GradientPaint((float) minMax.getMaxX() / 2, (float) minMax.getMinY(),</span>
-<span class="nc" id="L108">						gr.getColor1().toColor(mapper).toAwtColor(), (float) minMax.getMaxX() / 2, (float) minMax.getMaxY(),</span>
-<span class="nc" id="L109">						gr.getColor2().toColor(mapper).toAwtColor());</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">			if (policy == '|') {</span>
+<span class="fc" id="L99">				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY() / 2,</span>
+<span class="fc" id="L100">						gr.getColor1().toColor(mapper).toAwtColor(), (float) minMax.getMaxX(), (float) minMax.getMaxY() / 2,</span>
+<span class="fc" id="L101">						gr.getColor2().toColor(mapper).toAwtColor());</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">			} else if (policy == '\\') {</span>
+<span class="fc" id="L103">				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY(),</span>
+<span class="fc" id="L104">						gr.getColor1().toColor(mapper).toAwtColor(), (float) minMax.getMaxX(), (float) minMax.getMinY(),</span>
+<span class="fc" id="L105">						gr.getColor2().toColor(mapper).toAwtColor());</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			} else if (policy == '-') {</span>
+<span class="fc" id="L107">				paint = new GradientPaint((float) minMax.getMaxX() / 2, (float) minMax.getMinY(),</span>
+<span class="fc" id="L108">						gr.getColor1().toColor(mapper).toAwtColor(), (float) minMax.getMaxX() / 2, (float) minMax.getMaxY(),</span>
+<span class="fc" id="L109">						gr.getColor2().toColor(mapper).toAwtColor());</span>
 			} else {
 				// for /
-<span class="nc" id="L112">				paint = new GradientPaint((float) x, (float) y, gr.getColor1().toColor(mapper).toAwtColor(),</span>
-<span class="nc" id="L113">						(float) minMax.getMaxX(), (float) minMax.getMaxY(), gr.getColor2().toColor(mapper).toAwtColor());</span>
+<span class="fc" id="L112">				paint = new GradientPaint((float) x, (float) y, gr.getColor1().toColor(mapper).toAwtColor(),</span>
+<span class="fc" id="L113">						(float) minMax.getMaxX(), (float) minMax.getMaxY(), gr.getColor2().toColor(mapper).toAwtColor());</span>
 			}
-<span class="nc" id="L115">			g2d.setPaint(paint);</span>
-<span class="nc" id="L116">			g2d.fill(p);</span>
-<span class="pc bfc" id="L117" title="All 2 branches covered.">		} else if (back.isTransparent() == false) {</span>
+<span class="fc" id="L115">			g2d.setPaint(paint);</span>
+<span class="fc" id="L116">			g2d.fill(p);</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		} else if (back.isTransparent() == false) {</span>
 <span class="fc" id="L118">			g2d.setColor(back.toColor(mapper).toAwtColor());</span>
 <span class="fc" id="L119">			g2d.fill(p);</span>
 		}

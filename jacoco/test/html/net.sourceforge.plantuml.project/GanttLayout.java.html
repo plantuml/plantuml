@@ -56,14 +56,14 @@ public final class GanttLayout {
 
 	public GanttLayout(GanttModelData modelData, DisplayConfigData displayConfig, TimeBoundsData timeBounds,
 			TimelineStyleData timelineStyle, TaskDrawRegistryData drawRegistry, StringBounder stringBounder,
-<span class="fc" id="L59">			TimeHeader timeHeader) {</span>
+<span class="nc" id="L59">			TimeHeader timeHeader) {</span>
 
-<span class="fc" id="L61">		drawRegistry.buildTaskAndResourceDraws(stringBounder, timeHeader, modelData, displayConfig, timeBounds,</span>
+<span class="nc" id="L61">		drawRegistry.buildTaskAndResourceDraws(stringBounder, timeHeader, modelData, displayConfig, timeBounds,</span>
 				timelineStyle);
 
 		final double computedTitlesWidth;
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (displayConfig.getLabelStrategy().titleInside()) {</span>
-<span class="fc" id="L66">			computedTitlesWidth = 0;</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (displayConfig.getLabelStrategy().titleInside()) {</span>
+<span class="nc" id="L66">			computedTitlesWidth = 0;</span>
 		} else {
 <span class="nc" id="L68">			double w = 0;</span>
 <span class="nc bnc" id="L69" title="All 2 branches missed.">			for (Task task : modelData.getTasks()) {</span>
@@ -79,12 +79,12 @@ public final class GanttLayout {
 <span class="nc" id="L79">			computedTitlesWidth = w;</span>
 		}
 
-<span class="fc" id="L82">		this.titlesWidth = computedTitlesWidth;</span>
-<span class="fc" id="L83">		this.barsWidth = timeBounds.getBarsColumnWidth(timeHeader);</span>
-<span class="fc" id="L84">		this.headerHeight = timeHeader.getTimeHeaderHeight(stringBounder);</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		this.footerHeight = displayConfig.isShowFootbox() ? timeHeader.getTimeFooterHeight(stringBounder) : 0;</span>
-<span class="fc" id="L86">		this.totalHeight = drawRegistry.getTotalHeightWithoutFooter() + this.footerHeight;</span>
-<span class="fc" id="L87">	}</span>
+<span class="nc" id="L82">		this.titlesWidth = computedTitlesWidth;</span>
+<span class="nc" id="L83">		this.barsWidth = timeBounds.getBarsColumnWidth(timeHeader);</span>
+<span class="nc" id="L84">		this.headerHeight = timeHeader.getTimeHeaderHeight(stringBounder);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		this.footerHeight = displayConfig.isShowFootbox() ? timeHeader.getTimeFooterHeight(stringBounder) : 0;</span>
+<span class="nc" id="L86">		this.totalHeight = drawRegistry.getTotalHeightWithoutFooter() + this.footerHeight;</span>
+<span class="nc" id="L87">	}</span>
 
 	public XDimension2D calculateDimension() {
 <span class="nc" id="L90">		final double width = titlesWidth + barsWidth;</span>
@@ -92,11 +92,11 @@ public final class GanttLayout {
 	}
 
 	public double getTitlesWidth() {
-<span class="fc" id="L95">		return titlesWidth;</span>
+<span class="nc" id="L95">		return titlesWidth;</span>
 	}
 
 	public double getBarsWidth() {
-<span class="fc" id="L99">		return barsWidth;</span>
+<span class="nc" id="L99">		return barsWidth;</span>
 	}
 
 	public double getTotalHeight() {

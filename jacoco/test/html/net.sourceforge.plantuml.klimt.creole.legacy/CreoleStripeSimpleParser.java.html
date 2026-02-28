@@ -97,10 +97,10 @@ public class CreoleStripeSimpleParser {
 		}
 
 <span class="fc" id="L99">		final Matcher2 m5 = SECTION_TITLE_PATTERN.matcher(line);</span>
-<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (m5.find()) {</span>
-<span class="fc" id="L101">			this.line = m5.group(1);</span>
-<span class="fc" id="L102">			this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '=');</span>
-<span class="fc" id="L103">			return;</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (m5.find()) {</span>
+<span class="nc" id="L101">			this.line = m5.group(1);</span>
+<span class="nc" id="L102">			this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '=');</span>
+<span class="nc" id="L103">			return;</span>
 		}
 <span class="fc" id="L105">		final Matcher2 m5b = SECTION_SEPARATOR_PATTERN.matcher(line);</span>
 <span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (m5b.find()) {</span>

@@ -178,13 +178,13 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 <span class="fc" id="L178">		area.initHeader(getPngTitler(FontParam.HEADER, index), stringBounder);</span>
 
 		final TextBlock legendBlock;
-<span class="fc bfc" id="L181" title="All 2 branches covered.">		if (diagram.getLegend().isNull()) {</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (diagram.getLegend().isNull()) {</span>
 <span class="fc" id="L182">			legendBlock = TextBlockUtils.empty(0, 0);</span>
 		} else {
-<span class="fc" id="L184">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.legend)</span>
-<span class="fc" id="L185">					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
-<span class="fc" id="L186">			legendBlock = style.createTextBlockBordered(diagram.getLegend().getDisplay(),</span>
-<span class="fc" id="L187">					diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam(), Style.ID_LEGEND,</span>
+<span class="nc" id="L184">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.legend)</span>
+<span class="nc" id="L185">					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L186">			legendBlock = style.createTextBlockBordered(diagram.getLegend().getDisplay(),</span>
+<span class="nc" id="L187">					diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam(), Style.ID_LEGEND,</span>
 					LineBreakStrategy.NONE);
 		}
 <span class="fc" id="L190">		final XDimension2D dimLegend = legendBlock.calculateDimension(stringBounder);</span>
@@ -218,8 +218,8 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 <span class="fc" id="L218">				drawHeader(area, ug, index);</span>
 <span class="fc" id="L219">				drawFooter(area, ug, index);</span>
 
-<span class="fc bfc" id="L221" title="All 2 branches covered.">				if (area.hasLegend())</span>
-<span class="fc" id="L222">					legendBlock.drawU(ug.apply(new UTranslate(area.getLegendX(), area.getLegendY())));</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">				if (area.hasLegend())</span>
+<span class="nc" id="L222">					legendBlock.drawU(ug.apply(new UTranslate(area.getLegendX(), area.getLegendY())));</span>
 
 <span class="fc" id="L224">			}</span>
 
@@ -240,12 +240,12 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 	private void drawHeader(SequenceDiagramArea area, UGraphic ug, int page) {
 <span class="fc" id="L241">		final PngTitler pngTitler = getPngTitler(FontParam.HEADER, page);</span>
 <span class="fc" id="L242">		final TextBlock text = pngTitler.getRibbonBlock();</span>
-<span class="fc bfc" id="L243" title="All 2 branches covered.">		if (text == null)</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">		if (text == null)</span>
 <span class="fc" id="L244">			return;</span>
 
-<span class="fc" id="L246">		text.drawU(ug.apply(</span>
-<span class="fc" id="L247">				new UTranslate(area.getHeaderX(diagram.getHeader().getHorizontalAlignment()), area.getHeaderY())));</span>
-<span class="fc" id="L248">	}</span>
+<span class="nc" id="L246">		text.drawU(ug.apply(</span>
+<span class="nc" id="L247">				new UTranslate(area.getHeaderX(diagram.getHeader().getHorizontalAlignment()), area.getHeaderY())));</span>
+<span class="nc" id="L248">	}</span>
 
 	private PngTitler getPngTitler(final FontParam fontParam, int page) {
 <span class="fc" id="L251">		final ISkinParam skinParam = diagram.getSkinParam();</span>
@@ -257,8 +257,8 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 	}
 
 	private boolean isLegendTop() {
-<span class="fc bfc" id="L260" title="All 2 branches covered.">		return diagram.getLegend().isNull() == false</span>
-<span class="pc bpc" id="L261" title="1 of 2 branches missed.">				&amp;&amp; diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP;</span>
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">		return diagram.getLegend().isNull() == false</span>
+<span class="pc bnc" id="L261" title="All 2 branches missed.">				&amp;&amp; diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP;</span>
 	}
 
 }

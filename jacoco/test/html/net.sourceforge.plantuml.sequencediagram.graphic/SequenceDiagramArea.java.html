@@ -77,16 +77,16 @@ public class SequenceDiagramArea {
 	}
 
 	public boolean hasLegend() {
-<span class="pc bpc" id="L80" title="1 of 4 branches missed.">		return legendHeight &gt; 0 &amp;&amp; legendWidth &gt; 0;</span>
+<span class="pc bpc" id="L80" title="3 of 4 branches missed.">		return legendHeight &gt; 0 &amp;&amp; legendWidth &gt; 0;</span>
 	}
 
 	public double getLegendX() {
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (legendHorizontalAlignment == HorizontalAlignment.LEFT)</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (legendHorizontalAlignment == HorizontalAlignment.LEFT)</span>
 <span class="nc" id="L85">			return 0;</span>
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		else if (legendHorizontalAlignment == HorizontalAlignment.RIGHT)</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		else if (legendHorizontalAlignment == HorizontalAlignment.RIGHT)</span>
 <span class="nc" id="L87">			return Math.max(0, getWidth() - legendWidth);</span>
 		else
-<span class="fc" id="L89">			return Math.max(0, getWidth() - legendWidth) / 2;</span>
+<span class="nc" id="L89">			return Math.max(0, getWidth() - legendWidth) / 2;</span>
 
 	}
 
@@ -110,10 +110,10 @@ public class SequenceDiagramArea {
 <span class="fc" id="L110">	}</span>
 
 	public void setHeaderArea(double headerWidth, double headerHeight, double headerMargin) {
-<span class="fc" id="L113">		this.headerWidth = headerWidth;</span>
-<span class="fc" id="L114">		this.headerHeight = headerHeight;</span>
-<span class="fc" id="L115">		this.headerMargin = headerMargin;</span>
-<span class="fc" id="L116">	}</span>
+<span class="nc" id="L113">		this.headerWidth = headerWidth;</span>
+<span class="nc" id="L114">		this.headerHeight = headerHeight;</span>
+<span class="nc" id="L115">		this.headerMargin = headerMargin;</span>
+<span class="nc" id="L116">	}</span>
 
 	public void setFooterArea(double footerWidth, double footerHeight, double footerMargin) {
 <span class="fc" id="L119">		this.footerWidth = footerWidth;</span>
@@ -139,10 +139,10 @@ public class SequenceDiagramArea {
 	}
 
 	public double getLegendY() {
-<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if (isLegendTop)</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (isLegendTop)</span>
 <span class="nc" id="L143">			return titleHeight + headerHeight + headerMargin;</span>
 
-<span class="fc" id="L145">		return sequenceHeight + headerHeight + headerMargin + titleHeight;</span>
+<span class="nc" id="L145">		return sequenceHeight + headerHeight + headerMargin + titleHeight;</span>
 
 	}
 
@@ -174,7 +174,7 @@ public class SequenceDiagramArea {
 	}
 
 	public double getHeaderY() {
-<span class="fc" id="L177">		return 0;</span>
+<span class="nc" id="L177">		return 0;</span>
 	}
 
 	public double getFooterX(HorizontalAlignment align) {
@@ -191,11 +191,11 @@ public class SequenceDiagramArea {
 	}
 
 	public double getHeaderX(HorizontalAlignment align) {
-<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		if (align == HorizontalAlignment.LEFT)</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		if (align == HorizontalAlignment.LEFT)</span>
 <span class="nc" id="L195">			return 0;</span>
 
-<span class="pc bpc" id="L197" title="1 of 2 branches missed.">		if (align == HorizontalAlignment.RIGHT)</span>
-<span class="fc" id="L198">			return getWidth() - headerWidth;</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		if (align == HorizontalAlignment.RIGHT)</span>
+<span class="nc" id="L198">			return getWidth() - headerWidth;</span>
 
 <span class="nc bnc" id="L200" title="All 2 branches missed.">		if (align == HorizontalAlignment.CENTER)</span>
 <span class="nc" id="L201">			return (getWidth() - headerWidth) / 2;</span>
@@ -212,8 +212,8 @@ public class SequenceDiagramArea {
 
 	public void initHeader(PngTitler pngTitler, StringBounder stringBounder) {
 <span class="fc" id="L214">		final XDimension2D dim = pngTitler.getTextDimension(stringBounder);</span>
-<span class="fc bfc" id="L215" title="All 2 branches covered.">		if (dim != null)</span>
-<span class="fc" id="L216">			setHeaderArea(dim.getWidth(), dim.getHeight(), 0);</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if (dim != null)</span>
+<span class="nc" id="L216">			setHeaderArea(dim.getWidth(), dim.getHeight(), 0);</span>
 
 <span class="fc" id="L218">	}</span>
 

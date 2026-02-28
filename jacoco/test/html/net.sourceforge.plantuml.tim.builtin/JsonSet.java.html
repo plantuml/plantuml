@@ -63,38 +63,38 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L66">		final TValue data = values.get(0);</span>
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (!data.isJson())</span>
+<span class="nc" id="L66">		final TValue data = values.get(0);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (!data.isJson())</span>
 <span class="nc" id="L68">			throw new EaterException(&quot;Not JSON data&quot;, location);</span>
 
-<span class="fc" id="L70">		final JsonValue json = data.toJson().cloneMe();</span>
+<span class="nc" id="L70">		final JsonValue json = data.toJson().cloneMe();</span>
 
-<span class="pc bpc" id="L72" title="1 of 4 branches missed.">		if (!json.isArray() &amp;&amp; !json.isObject())</span>
+<span class="nc bnc" id="L72" title="All 4 branches missed.">		if (!json.isArray() &amp;&amp; !json.isObject())</span>
 <span class="nc" id="L73">			return data;</span>
 
-<span class="pc bpc" id="L75" title="1 of 3 branches missed.">		switch (values.size()) {</span>
+<span class="nc bnc" id="L75" title="All 3 branches missed.">		switch (values.size()) {</span>
 		case 2:
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">			if (json.isObject()) {</span>
-<span class="fc" id="L78">				final JsonValue value = values.get(1).toJsonValue();</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">				if (value.isObject())</span>
-<span class="fc" id="L80">					json.asObject().deepMerge(value.asObject());</span>
-<span class="fc" id="L81">				return TValue.fromJson(json);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">			if (json.isObject()) {</span>
+<span class="nc" id="L78">				final JsonValue value = values.get(1).toJsonValue();</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">				if (value.isObject())</span>
+<span class="nc" id="L80">					json.asObject().deepMerge(value.asObject());</span>
+<span class="nc" id="L81">				return TValue.fromJson(json);</span>
 			}
 		case 3:
-<span class="fc bfc" id="L84" title="All 2 branches covered.">			if (json.isArray()) {</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">				if (values.get(1).isNumber()) {</span>
-<span class="fc" id="L86">					final Integer index = values.get(1).toInt();</span>
-<span class="fc" id="L87">					final JsonValue value = values.get(2).toJsonValue();</span>
-<span class="pc bpc" id="L88" title="2 of 4 branches missed.">					if (0 &lt;= index &amp;&amp; index &lt; json.asArray().size())</span>
-<span class="fc" id="L89">						json.asArray().set(index, value);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			if (json.isArray()) {</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">				if (values.get(1).isNumber()) {</span>
+<span class="nc" id="L86">					final Integer index = values.get(1).toInt();</span>
+<span class="nc" id="L87">					final JsonValue value = values.get(2).toJsonValue();</span>
+<span class="nc bnc" id="L88" title="All 4 branches missed.">					if (0 &lt;= index &amp;&amp; index &lt; json.asArray().size())</span>
+<span class="nc" id="L89">						json.asArray().set(index, value);</span>
 				}
-<span class="fc" id="L91">				return TValue.fromJson(json);</span>
+<span class="nc" id="L91">				return TValue.fromJson(json);</span>
 			}
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">			if (json.isObject()) {</span>
-<span class="fc" id="L94">				final String name = values.get(1).toString();</span>
-<span class="fc" id="L95">				final JsonValue value = values.get(2).toJsonValue();</span>
-<span class="fc" id="L96">				json.asObject().set(name, value);</span>
-<span class="fc" id="L97">				return TValue.fromJson(json);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">			if (json.isObject()) {</span>
+<span class="nc" id="L94">				final String name = values.get(1).toString();</span>
+<span class="nc" id="L95">				final JsonValue value = values.get(2).toJsonValue();</span>
+<span class="nc" id="L96">				json.asObject().set(name, value);</span>
+<span class="nc" id="L97">				return TValue.fromJson(json);</span>
 			}
 
 		default:

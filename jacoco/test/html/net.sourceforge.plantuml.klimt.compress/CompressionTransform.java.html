@@ -56,10 +56,10 @@ public class CompressionTransform implements PiecewiseAffineTransform {
 <span class="fc bfc" id="L56" title="All 2 branches covered.">			if (s.getStart() &gt; v) {</span>
 <span class="fc" id="L57">				continue;</span>
 			}
-<span class="fc bfc" id="L59" title="All 2 branches covered.">			if (v &gt; s.getEnd()) {</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">			if (v &gt; s.getEnd()) {</span>
 <span class="fc" id="L60">				result += s.size();</span>
 			} else {
-<span class="fc" id="L62">				result += v - s.getStart();</span>
+<span class="nc" id="L62">				result += v - s.getStart();</span>
 			}
 <span class="fc" id="L64">		}</span>
 <span class="fc" id="L65">		return result;</span>

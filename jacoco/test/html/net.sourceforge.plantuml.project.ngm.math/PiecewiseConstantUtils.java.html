@@ -42,23 +42,23 @@ import java.util.Iterator;
 <span class="nc" id="L42">public class PiecewiseConstantUtils {</span>
 
 	public static boolean isZeroOnDay(PiecewiseConstant value, LocalDate day) {
-<span class="fc" id="L45">		final LocalDateTime startOfDay = day.atStartOfDay();</span>
-<span class="fc" id="L46">		final LocalDateTime startOfNextDay = day.plusDays(1).atStartOfDay();</span>
+<span class="nc" id="L45">		final LocalDateTime startOfDay = day.atStartOfDay();</span>
+<span class="nc" id="L46">		final LocalDateTime startOfNextDay = day.plusDays(1).atStartOfDay();</span>
 
-<span class="fc" id="L48">		final Iterator&lt;Segment&gt; iterator = value.iterateSegmentsFrom(startOfDay, TimeDirection.FORWARD);</span>
+<span class="nc" id="L48">		final Iterator&lt;Segment&gt; iterator = value.iterateSegmentsFrom(startOfDay, TimeDirection.FORWARD);</span>
 
-<span class="pc bpc" id="L50" title="1 of 2 branches missed.">		while (iterator.hasNext()) {</span>
-<span class="fc" id="L51">			final Segment segment = iterator.next();</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">		while (iterator.hasNext()) {</span>
+<span class="nc" id="L51">			final Segment segment = iterator.next();</span>
 
-<span class="fc bfc" id="L53" title="All 2 branches covered.">			if (segment.startExclusive().isBefore(startOfNextDay) == false)</span>
-<span class="fc" id="L54">				break;</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">			if (segment.startExclusive().isBefore(startOfNextDay) == false)</span>
+<span class="nc" id="L54">				break;</span>
 
-<span class="fc bfc" id="L56" title="All 2 branches covered.">			if (segment.getValue().isZero() == false)</span>
-<span class="fc" id="L57">				return false;</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">			if (segment.getValue().isZero() == false)</span>
+<span class="nc" id="L57">				return false;</span>
 
-<span class="fc" id="L59">		}</span>
+<span class="nc" id="L59">		}</span>
 
-<span class="fc" id="L61">		return true;</span>
+<span class="nc" id="L61">		return true;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

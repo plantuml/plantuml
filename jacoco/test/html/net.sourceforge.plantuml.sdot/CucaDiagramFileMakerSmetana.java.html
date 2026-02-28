@@ -182,9 +182,9 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 <span class="fc" id="L182">				final TextBlock role1 = getRoleLabel(ug.getStringBounder(), link, 1);</span>
 <span class="fc" id="L183">				final TextBlock role2 = getRoleLabel(ug.getStringBounder(), link, 2);</span>
 <span class="pc bpc" id="L184" title="1 of 2 branches missed.">				final TextBlock tailLabel = quantifier1 != null ? quantifier1 : role1;</span>
-<span class="fc bfc" id="L185" title="All 2 branches covered.">				final TextBlock headLabel = quantifier2 != null ? quantifier2 : role2;</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">				final TextBlock headLabel = quantifier2 != null ? quantifier2 : role2;</span>
 <span class="pc bpc" id="L186" title="1 of 2 branches missed.">				final TextBlock tailRole = quantifier1 != null ? role1 : null;</span>
-<span class="fc bfc" id="L187" title="All 2 branches covered.">				final TextBlock headRole = quantifier2 != null ? role2 : null;</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">				final TextBlock headRole = quantifier2 != null ? role2 : null;</span>
 <span class="fc" id="L188">				final SmetanaEdge smetanaPath = new SmetanaEdge(link, edge, ymirror,</span>
 <span class="fc" id="L189">						getLabel(ug.getStringBounder(), link), tailLabel,</span>
 						headLabel, tailRole, headRole,
@@ -493,8 +493,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 <span class="fc" id="L494">		final ST_GVC_s gvc = gvContext(zz);</span>
 <span class="fc" id="L495">		SmetanaDebug.reset();</span>
-<span class="fc bfc" id="L496" title="All 2 branches covered.">		if (rankdir == Rankdir.LEFT_TO_RIGHT)</span>
-<span class="fc" id="L497">			agsafeset(zz, g, new CString(&quot;rankdir&quot;), new CString(&quot;LR&quot;), new CString(&quot;LR&quot;));</span>
+<span class="pc bpc" id="L496" title="1 of 2 branches missed.">		if (rankdir == Rankdir.LEFT_TO_RIGHT)</span>
+<span class="nc" id="L497">			agsafeset(zz, g, new CString(&quot;rankdir&quot;), new CString(&quot;LR&quot;), new CString(&quot;LR&quot;));</span>
 <span class="fc" id="L498">		gvLayoutJobs(zz, gvc, g);</span>
 <span class="fc" id="L499">		SmetanaDebug.printMe();</span>
 
@@ -544,9 +544,9 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	}
 
 	private Style getStyle() {
-<span class="fc" id="L547">		return StyleSignatureBasic</span>
-<span class="fc" id="L548">				.of(SName.root, SName.element, diagram.getUmlDiagramType().getStyleName(), SName.arrow)</span>
-<span class="fc" id="L549">				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L547">		return StyleSignatureBasic</span>
+<span class="nc" id="L548">				.of(SName.root, SName.element, diagram.getUmlDiagramType().getStyleName(), SName.arrow)</span>
+<span class="nc" id="L549">				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
 	// Duplication from SvekEdge
@@ -622,7 +622,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 					CreoleMode.SIMPLE_LINE, null, null);
 
 <span class="fc" id="L624">			labelOnly = addVisibilityModifier(block, link, skinParam);</span>
-<span class="pc bpc" id="L625" title="1 of 4 branches missed.">			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL &amp;&amp; hasSeveralGuideLines == false) {</span>
+<span class="pc bpc" id="L625" title="3 of 4 branches missed.">			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL &amp;&amp; hasSeveralGuideLines == false) {</span>
 				// labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);
 			}
 
@@ -650,19 +650,19 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	private TextBlock getQuantifier(StringBounder stringBounder, Link link, int n) {
 <span class="fc bfc" id="L652" title="All 2 branches covered.">		final String tmp = n == 1 ? link.getQuantifier1() : link.getQuantifier2();</span>
-<span class="fc bfc" id="L653" title="All 2 branches covered.">		if (tmp == null)</span>
+<span class="pc bpc" id="L653" title="1 of 2 branches missed.">		if (tmp == null)</span>
 <span class="fc" id="L654">			return null;</span>
 
-<span class="fc" id="L656">		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;</span>
-<span class="fc" id="L657">		ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="fc" id="L658">		final Style style = getStyle();</span>
-<span class="fc" id="L659">		final FontConfiguration labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L660">		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), tmp).create(labelFont,</span>
-<span class="fc" id="L661">				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);</span>
-<span class="pc bpc" id="L662" title="1 of 2 branches missed.">		if (TextBlockUtils.isEmpty(label, stringBounder))</span>
+<span class="nc" id="L656">		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;</span>
+<span class="nc" id="L657">		ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L658">		final Style style = getStyle();</span>
+<span class="nc" id="L659">		final FontConfiguration labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L660">		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), tmp).create(labelFont,</span>
+<span class="nc" id="L661">				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);</span>
+<span class="nc bnc" id="L662" title="All 2 branches missed.">		if (TextBlockUtils.isEmpty(label, stringBounder))</span>
 <span class="nc" id="L663">			return label;</span>
 
-<span class="fc" id="L665">		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);</span>
+<span class="nc" id="L665">		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);</span>
 	}
 
 	private TextBlock getRoleLabel(StringBounder stringBounder, Link link, int n) {
@@ -742,11 +742,11 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		}
 <span class="fc" id="L743">		final TextBlock q2 = getQuantifier(stringBounder, link, 2);</span>
 <span class="fc" id="L744">		final TextBlock r2 = getRoleLabel(stringBounder, link, 2);</span>
-<span class="fc bfc" id="L745" title="All 2 branches covered.">		final TextBlock headForLayout = q2 != null ? q2 : r2;</span>
-<span class="fc bfc" id="L746" title="All 2 branches covered.">		if (headForLayout != null) {</span>
-<span class="fc" id="L747">			final XDimension2D dimLabel = headForLayout.calculateDimension(stringBounder);</span>
-<span class="fc" id="L748">			final CString hackDim = createLabelDim(dimLabel.getWidth(), dimLabel.getHeight());</span>
-<span class="fc" id="L749">			agsafeset(zz, e, new CString(&quot;headlabel&quot;), hackDim, new CString(&quot;&quot;));</span>
+<span class="pc bpc" id="L745" title="1 of 2 branches missed.">		final TextBlock headForLayout = q2 != null ? q2 : r2;</span>
+<span class="pc bpc" id="L746" title="1 of 2 branches missed.">		if (headForLayout != null) {</span>
+<span class="nc" id="L747">			final XDimension2D dimLabel = headForLayout.calculateDimension(stringBounder);</span>
+<span class="nc" id="L748">			final CString hackDim = createLabelDim(dimLabel.getWidth(), dimLabel.getHeight());</span>
+<span class="nc" id="L749">			agsafeset(zz, e, new CString(&quot;headlabel&quot;), hackDim, new CString(&quot;&quot;));</span>
 		}
 <span class="fc" id="L751">		return e;</span>
 	}

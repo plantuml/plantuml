@@ -256,7 +256,7 @@ public class ImageBuilder {
 <span class="nc" id="L256">			dim = dim.delta(15, dimWarning.getHeight() + 20);</span>
 		}
 <span class="fc bfc" id="L258" title="All 2 branches covered.">		final Scale scale = diagram == null ? null : diagram.getScale();</span>
-<span class="fc bfc" id="L259" title="All 2 branches covered.">		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * getDpi()</span>
+<span class="pc bpc" id="L259" title="1 of 2 branches missed.">		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * getDpi()</span>
 				/ 96.0;
 <span class="pc bpc" id="L261" title="1 of 2 branches missed.">		if (scaleFactor &lt;= 0)</span>
 <span class="nc" id="L262">			throw new IllegalStateException(&quot;Bad scaleFactor&quot;);</span>
@@ -380,7 +380,7 @@ public class ImageBuilder {
 	private UGraphic createUGraphic(final XDimension2D dim, double scaleFactor, Pragma pragma) {
 <span class="pc bpc" id="L381" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
 <span class="fc" id="L382">			final ColorMapper colorMapper = fileFormatOption.getColorMapper();</span>
-<span class="pc bpc" id="L383" title="6 of 12 branches missed.">			switch (fileFormatOption.getFileFormat()) {</span>
+<span class="pc bpc" id="L383" title="7 of 12 branches missed.">			switch (fileFormatOption.getFileFormat()) {</span>
 			case PNG:
 			case PNG_EMPTY:
 			case RAW:
@@ -406,8 +406,8 @@ public class ImageBuilder {
 			case ATXT:
 <span class="fc" id="L407">				return new UGraphicTxt();</span>
 			case DEBUG:
-<span class="fc" id="L409">				return new UGraphicDebug(scaleFactor, dim, getSvgLinkTarget(), getHoverPathColorRGB(), seed,</span>
-<span class="fc" id="L410">						getPreserveAspectRatio());</span>
+<span class="nc" id="L409">				return new UGraphicDebug(scaleFactor, dim, getSvgLinkTarget(), getHoverPathColorRGB(), seed,</span>
+<span class="nc" id="L410">						getPreserveAspectRatio());</span>
 			default:
 <span class="nc" id="L412">				throw new UnsupportedOperationException(fileFormatOption.getFileFormat().toString());</span>
 			}
@@ -499,8 +499,8 @@ public class ImageBuilder {
 	}
 
 	public String getPreserveAspectRatio() {
-<span class="fc bfc" id="L502" title="All 2 branches covered.">		if (fileFormatOption.getPreserveAspectRatio() != null)</span>
-<span class="fc" id="L503">			return fileFormatOption.getPreserveAspectRatio();</span>
+<span class="pc bpc" id="L502" title="1 of 2 branches missed.">		if (fileFormatOption.getPreserveAspectRatio() != null)</span>
+<span class="nc" id="L503">			return fileFormatOption.getPreserveAspectRatio();</span>
 <span class="fc bfc" id="L504" title="All 2 branches covered.">		else if (skinParam != null)</span>
 <span class="fc" id="L505">			return skinParam.getPreserveAspectRatio();</span>
 		else

@@ -95,13 +95,13 @@ public class UPath extends AbstractShadowable implements Iterable&lt;USegment&gt
 <span class="fc" id="L95">	}</span>
 
 	public UPath translate(double dx, double dy) {
-<span class="nc bnc" id="L98" title="All 4 branches missed.">		if (dx == 0 &amp;&amp; dy == 0)</span>
-<span class="nc" id="L99">			return this;</span>
-<span class="nc" id="L100">		final UPath result = new UPath(comment, codeLine);</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		for (USegment seg : segments)</span>
-<span class="nc" id="L102">			result.addInternal(seg.translate(dx, dy));</span>
+<span class="pc bpc" id="L98" title="1 of 4 branches missed.">		if (dx == 0 &amp;&amp; dy == 0)</span>
+<span class="fc" id="L99">			return this;</span>
+<span class="fc" id="L100">		final UPath result = new UPath(comment, codeLine);</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		for (USegment seg : segments)</span>
+<span class="fc" id="L102">			result.addInternal(seg.translate(dx, dy));</span>
 
-<span class="nc" id="L104">		return result;</span>
+<span class="fc" id="L104">		return result;</span>
 	}
 
 	// ::comment when __HAXE__
@@ -114,11 +114,11 @@ public class UPath extends AbstractShadowable implements Iterable&lt;USegment&gt
 	}
 
 	public UPath affine(XAffineTransform transform, double angle, double scale) {
-<span class="nc" id="L117">		final UPath result = new UPath(comment, codeLine);</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		for (USegment seg : segments)</span>
-<span class="nc" id="L119">			result.addInternal(seg.affine(transform, angle, scale));</span>
+<span class="fc" id="L117">		final UPath result = new UPath(comment, codeLine);</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		for (USegment seg : segments)</span>
+<span class="fc" id="L119">			result.addInternal(seg.affine(transform, angle, scale));</span>
 
-<span class="nc" id="L121">		return result;</span>
+<span class="fc" id="L121">		return result;</span>
 	}
 	// ::done
 
@@ -156,9 +156,9 @@ public class UPath extends AbstractShadowable implements Iterable&lt;USegment&gt
 
 	public void arcTo(double rx, double ry, double x_axis_rotation, double large_arc_flag, double sweep_flag, double x,
 			double y) {
-<span class="nc" id="L159">		add(new double[] { rx, ry, x_axis_rotation, large_arc_flag, sweep_flag, x, y }, USegmentType.SEG_ARCTO);</span>
+<span class="fc" id="L159">		add(new double[] { rx, ry, x_axis_rotation, large_arc_flag, sweep_flag, x, y }, USegmentType.SEG_ARCTO);</span>
 		// lineTo(x, y);
-<span class="nc" id="L161">	}</span>
+<span class="fc" id="L161">	}</span>
 
 	public void arcTo(XPoint2D pt, double radius, double large_arc_flag, double sweep_flag) {
 <span class="fc" id="L164">		add(new double[] { radius, radius, 0, large_arc_flag, sweep_flag, pt.getX(), pt.getY() },</span>

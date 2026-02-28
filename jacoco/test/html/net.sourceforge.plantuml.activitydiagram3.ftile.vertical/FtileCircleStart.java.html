@@ -57,10 +57,10 @@ public class FtileCircleStart extends AbstractFtile {
 	private final Swimlane swimlane;
 
 	public FtileCircleStart(ISkinParam skinParam, Swimlane swimlane, Style style, Colors colors) {
-<span class="fc" id="L60">		super(skinParam);</span>
-<span class="fc" id="L61">		this.swimlane = swimlane;</span>
-<span class="fc" id="L62">		this.circle = new CircleStart(skinParam, style, colors);</span>
-<span class="fc" id="L63">	}</span>
+<span class="nc" id="L60">		super(skinParam);</span>
+<span class="nc" id="L61">		this.swimlane = swimlane;</span>
+<span class="nc" id="L62">		this.circle = new CircleStart(skinParam, style, colors);</span>
+<span class="nc" id="L63">	}</span>
 
 	@Override
 	public Collection&lt;Ftile&gt; getMyChildren() {
@@ -68,28 +68,28 @@ public class FtileCircleStart extends AbstractFtile {
 	}
 
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (swimlane == null)</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (swimlane == null)</span>
 <span class="nc" id="L72">			return PatchUtils.emptySet();</span>
 
-<span class="fc" id="L74">		return Collections.singleton(swimlane);</span>
+<span class="nc" id="L74">		return Collections.singleton(swimlane);</span>
 	}
 
 	public Swimlane getSwimlaneIn() {
-<span class="fc" id="L78">		return swimlane;</span>
+<span class="nc" id="L78">		return swimlane;</span>
 	}
 
 	public Swimlane getSwimlaneOut() {
-<span class="fc" id="L82">		return swimlane;</span>
+<span class="nc" id="L82">		return swimlane;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L86">		circle.drawU(ug);</span>
-<span class="fc" id="L87">	}</span>
+<span class="nc" id="L86">		circle.drawU(ug);</span>
+<span class="nc" id="L87">	}</span>
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="fc" id="L91">		final double size = circle.calculateDimension(stringBounder).getWidth();</span>
-<span class="fc" id="L92">		return new FtileGeometry(size, size, size / 2, 0, size);</span>
+<span class="nc" id="L91">		final double size = circle.calculateDimension(stringBounder).getWidth();</span>
+<span class="nc" id="L92">		return new FtileGeometry(size, size, size / 2, 0, size);</span>
 	}
 
 }

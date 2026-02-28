@@ -41,9 +41,9 @@ public class SvgCommandLetter implements SvgCommand {
 
 	final private char letter;
 
-<span class="nc" id="L44">	public SvgCommandLetter(char letter) {</span>
-<span class="nc" id="L45">		this.letter = letter;</span>
-<span class="nc" id="L46">	}</span>
+<span class="fc" id="L44">	public SvgCommandLetter(char letter) {</span>
+<span class="fc" id="L45">		this.letter = letter;</span>
+<span class="fc" id="L46">	}</span>
 
 	@Override
 	public String toString() {
@@ -55,48 +55,48 @@ public class SvgCommandLetter implements SvgCommand {
 	}
 
 	public int argumentNumber() {
-<span class="nc bnc" id="L58" title="All 7 branches missed.">		switch (StringUtils.goLowerCase(letter)) {</span>
+<span class="pc bpc" id="L58" title="1 of 7 branches missed.">		switch (StringUtils.goLowerCase(letter)) {</span>
 		case 'm':
 		case 'l':
 		case 't':
-<span class="nc" id="L62">			return 2;</span>
+<span class="fc" id="L62">			return 2;</span>
 		case 'h':
 		case 'v':
-<span class="nc" id="L65">			return 1;</span>
+<span class="fc" id="L65">			return 1;</span>
 		case 'z':
-<span class="nc" id="L67">			return 0;</span>
+<span class="fc" id="L67">			return 0;</span>
 		case 'c':
-<span class="nc" id="L69">			return 6;</span>
+<span class="fc" id="L69">			return 6;</span>
 		case 'q':
 		case 's':
-<span class="nc" id="L72">			return 4;</span>
+<span class="fc" id="L72">			return 4;</span>
 		case 'a':
-<span class="nc" id="L74">			return 7;</span>
+<span class="fc" id="L74">			return 7;</span>
 		}
 <span class="nc" id="L76">		throw new UnsupportedOperationException(&quot;&quot; + letter);</span>
 	}
 
 	public boolean isUpperCase() {
-<span class="nc" id="L80">		return Character.isUpperCase(letter);</span>
+<span class="fc" id="L80">		return Character.isUpperCase(letter);</span>
 	}
 
 	public boolean is(char c) {
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		return this.letter == c;</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		return this.letter == c;</span>
 	}
 
 	public char getLetter() {
-<span class="nc" id="L88">		return letter;</span>
+<span class="fc" id="L88">		return letter;</span>
 	}
 
 	public SvgCommandLetter implicit() {
 		// https://stackoverflow.com/questions/29251389/svg-path-spec-moveto-and-implicit-lineto
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (letter == 'm')</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (letter == 'm')</span>
 <span class="nc" id="L94">			return new SvgCommandLetter('l');</span>
 
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (letter == 'M')</span>
-<span class="nc" id="L97">			return new SvgCommandLetter('L');</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (letter == 'M')</span>
+<span class="fc" id="L97">			return new SvgCommandLetter('L');</span>
 
-<span class="nc" id="L99">		return this;</span>
+<span class="fc" id="L99">		return this;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

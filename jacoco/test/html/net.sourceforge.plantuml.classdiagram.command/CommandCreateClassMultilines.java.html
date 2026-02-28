@@ -230,7 +230,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2&lt;ClassDia
 			// lines = lines.subExtract(1, 0);
 			// }
 <span class="fc bfc" id="L232" title="All 2 branches covered.">			for (StringLocated s : lines) {</span>
-<span class="pc bpc" id="L233" title="1 of 4 branches missed.">				if (s.getString().length() &gt; 0 &amp;&amp; VisibilityModifier.isVisibilityCharacter(s.getString()))</span>
+<span class="pc bpc" id="L233" title="2 of 4 branches missed.">				if (s.getString().length() &gt; 0 &amp;&amp; VisibilityModifier.isVisibilityCharacter(s.getString()))</span>
 <span class="fc" id="L234">					diagram.setVisibilityModifierPresent(true);</span>
 
 <span class="fc" id="L236">				entity.getBodier().addFieldOrMethod(s.getString());</span>

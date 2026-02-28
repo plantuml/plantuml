@@ -307,9 +307,9 @@ import net.sourceforge.plantuml.utils.Position;
 <span class="fc" id="L307">	}</span>
 
 	public final void setGeneric(String generic) {
-<span class="fc" id="L310">		checkNotGroup();</span>
-<span class="fc" id="L311">		this.generic = generic;</span>
-<span class="fc" id="L312">	}</span>
+<span class="nc" id="L310">		checkNotGroup();</span>
+<span class="nc" id="L311">		this.generic = generic;</span>
+<span class="nc" id="L312">	}</span>
 
 	public final String getGeneric() {
 <span class="fc" id="L315">		checkNotGroup();</span>
@@ -520,10 +520,10 @@ import net.sourceforge.plantuml.utils.Position;
 <span class="fc" id="L520">	}</span>
 
 	public void setSpecificColorTOBEREMOVED(ColorType type, HColor color) {
-<span class="pc bpc" id="L523" title="1 of 2 branches missed.">		if (color != null)</span>
+<span class="nc bnc" id="L523" title="All 2 branches missed.">		if (color != null)</span>
 <span class="nc" id="L524">			this.colors = colors.add(type, color);</span>
 
-<span class="fc" id="L526">	}</span>
+<span class="nc" id="L526">	}</span>
 
 	public Collection&lt;String&gt; getPortShortNames() {
 <span class="fc" id="L529">		checkNotGroup();</span>

@@ -409,7 +409,7 @@ try {
 	do {
 <span class="fc" id="L410">	    ED_adjacent(e, 1);</span>
 <span class="fc" id="L411">	    e = ED_to_virt(e);</span>
-<span class="fc bfc" id="L412" title="All 2 branches covered.">	} while (e!=null); </span>
+<span class="pc bpc" id="L412" title="1 of 2 branches missed.">	} while (e!=null); </span>
     }
 } finally {
 <span class="fc" id="L415">LEAVING(&quot;ctujx6e8k3rzv08h6gswdcaqs&quot;,&quot;checkFlatAdjacent&quot;);</span>
@@ -452,17 +452,17 @@ try {
 <span class="fc" id="L452">		checkFlatAdjacent (e);</span>
 	    }
 	}
-<span class="fc bfc" id="L455" title="All 2 branches covered.">	for (j = 0; j &lt; ND_other(n).size; j++) {</span>
-<span class="fc" id="L456">	    e = ND_other(n).list.get_(j);</span>
-<span class="pc bpc" id="L457" title="1 of 2 branches missed.">	    if (ND_rank(aghead(e)) == ND_rank(agtail(e)))</span>
-<span class="fc" id="L458">		checkFlatAdjacent (e);</span>
+<span class="pc bpc" id="L455" title="1 of 2 branches missed.">	for (j = 0; j &lt; ND_other(n).size; j++) {</span>
+<span class="nc" id="L456">	    e = ND_other(n).list.get_(j);</span>
+<span class="nc bnc" id="L457" title="All 2 branches missed.">	    if (ND_rank(aghead(e)) == ND_rank(agtail(e)))</span>
+<span class="nc" id="L458">		checkFlatAdjacent (e);</span>
 	}
     }
     
 <span class="fc bfc" id="L462" title="All 4 branches covered.">    if ((GD_rank(g).get__(0).flat!=null) || (GD_n_cluster(g) &gt; 0)) {</span>
 <span class="fc bfc" id="L463" title="All 2 branches covered.">	for (i = 0; (n = GD_rank(g).get__(0).v.get_(i))!=null; i++) {</span>
 <span class="fc bfc" id="L464" title="All 2 branches covered.">	    for (j = 0; (e = ND_flat_in(n).list.get_(j))!=null; j++) {</span>
-<span class="pc bpc" id="L465" title="1 of 4 branches missed.">		if ((ED_label(e)!=null) &amp;&amp; ED_adjacent(e) == 0) {</span>
+<span class="pc bpc" id="L465" title="3 of 4 branches missed.">		if ((ED_label(e)!=null) &amp;&amp; ED_adjacent(e) == 0) {</span>
 <span class="nc" id="L466">		    abomination(g);</span>
 <span class="nc" id="L467">		    found = true;</span>
 <span class="nc" id="L468">		    break;</span>
@@ -478,11 +478,11 @@ try {
           /* if n is the tail of any flat edge, one will be in flat_out */
 <span class="fc bfc" id="L479" title="All 2 branches covered.">	if (ND_flat_out(n).list!=null) {</span>
 <span class="fc bfc" id="L480" title="All 2 branches covered.">	    for (i = 0; (e = ND_flat_out(n).list.get_(i))!=null; i++) {</span>
-<span class="fc bfc" id="L481" title="All 2 branches covered.">		if (ED_label(e)!=null) {</span>
-<span class="fc" id="L482">			SmetanaDebug.LOG(&quot;Aie1 for &quot;+e.NAME+&quot; &quot;+ED_adjacent(e));</span>
-<span class="pc bpc" id="L483" title="1 of 2 branches missed.">		    if (ED_adjacent(e)!=0) {</span>
-<span class="pc bpc" id="L484" title="1 of 2 branches missed.">			if (GD_flip(g)) ED_dist(e, ED_label(e).dimen.y);</span>
-<span class="fc" id="L485">			else ED_dist(e, ED_label(e).dimen.x); </span>
+<span class="pc bpc" id="L481" title="1 of 2 branches missed.">		if (ED_label(e)!=null) {</span>
+<span class="nc" id="L482">			SmetanaDebug.LOG(&quot;Aie1 for &quot;+e.NAME+&quot; &quot;+ED_adjacent(e));</span>
+<span class="nc bnc" id="L483" title="All 2 branches missed.">		    if (ED_adjacent(e)!=0) {</span>
+<span class="nc bnc" id="L484" title="All 2 branches missed.">			if (GD_flip(g)) ED_dist(e, ED_label(e).dimen.y);</span>
+<span class="nc" id="L485">			else ED_dist(e, ED_label(e).dimen.x); </span>
 		    }
 		    else {
 <span class="nc" id="L488">		    	SmetanaDebug.LOG(&quot;reset1 true&quot;);</span>
@@ -492,25 +492,25 @@ try {
 		}
 	    }
 		/* look for other flat edges with labels */
-<span class="fc bfc" id="L495" title="All 2 branches covered.">	    for (j = 0; j &lt; ND_other(n).size; j++) {</span>
+<span class="pc bpc" id="L495" title="1 of 2 branches missed.">	    for (j = 0; j &lt; ND_other(n).size; j++) {</span>
 		ST_Agedge_s le;
-<span class="fc" id="L497">		e = ND_other(n).list.get_(j);</span>
-<span class="fc" id="L498">		SmetanaDebug.LOG(&quot;e=&quot;+e.NAME);</span>
-<span class="pc bpc" id="L499" title="1 of 2 branches missed.">		if (ND_rank(agtail(e)) != ND_rank(aghead(e))) continue;</span>
-<span class="pc bpc" id="L500" title="1 of 2 branches missed.">		if (agtail(e) == aghead(e)) continue; /* skip loops */</span>
-<span class="fc" id="L501">		le = e;</span>
-<span class="fc bfc" id="L502" title="All 2 branches covered.">		while (ED_to_virt(le)!=null) le = ED_to_virt(le);</span>
-<span class="fc" id="L503">		ED_adjacent(e, ED_adjacent(le)); </span>
-<span class="pc bpc" id="L504" title="1 of 2 branches missed.">		if (ED_label(e)!=null) {</span>
-<span class="fc" id="L505">			SmetanaDebug.LOG(&quot;Aie2 for &quot;+e.NAME+&quot; &quot;+ED_adjacent(e));</span>
-<span class="fc" id="L506">			SmetanaDebug.LOG(&quot;e2=&quot;+le.NAME);</span>
-<span class="fc" id="L507">			SmetanaDebug.LOG(&quot;le2=&quot;+le.NAME);</span>
-<span class="pc bpc" id="L508" title="1 of 2 branches missed.">		    if (ED_adjacent(e)!=0) {</span>
+<span class="nc" id="L497">		e = ND_other(n).list.get_(j);</span>
+<span class="nc" id="L498">		SmetanaDebug.LOG(&quot;e=&quot;+e.NAME);</span>
+<span class="nc bnc" id="L499" title="All 2 branches missed.">		if (ND_rank(agtail(e)) != ND_rank(aghead(e))) continue;</span>
+<span class="nc bnc" id="L500" title="All 2 branches missed.">		if (agtail(e) == aghead(e)) continue; /* skip loops */</span>
+<span class="nc" id="L501">		le = e;</span>
+<span class="nc bnc" id="L502" title="All 2 branches missed.">		while (ED_to_virt(le)!=null) le = ED_to_virt(le);</span>
+<span class="nc" id="L503">		ED_adjacent(e, ED_adjacent(le)); </span>
+<span class="nc bnc" id="L504" title="All 2 branches missed.">		if (ED_label(e)!=null) {</span>
+<span class="nc" id="L505">			SmetanaDebug.LOG(&quot;Aie2 for &quot;+e.NAME+&quot; &quot;+ED_adjacent(e));</span>
+<span class="nc" id="L506">			SmetanaDebug.LOG(&quot;e2=&quot;+le.NAME);</span>
+<span class="nc" id="L507">			SmetanaDebug.LOG(&quot;le2=&quot;+le.NAME);</span>
+<span class="nc bnc" id="L508" title="All 2 branches missed.">		    if (ED_adjacent(e)!=0) {</span>
 			double lw;
-<span class="pc bpc" id="L510" title="1 of 2 branches missed.">			if (GD_flip(g)) lw = ED_label(e).dimen.y;</span>
-<span class="fc" id="L511">			else lw = ED_label(e).dimen.x; </span>
-<span class="fc" id="L512">			ED_dist(le, Math.max(lw,ED_dist(le)));</span>
-<span class="fc" id="L513">		    }</span>
+<span class="nc bnc" id="L510" title="All 2 branches missed.">			if (GD_flip(g)) lw = ED_label(e).dimen.y;</span>
+<span class="nc" id="L511">			else lw = ED_label(e).dimen.x; </span>
+<span class="nc" id="L512">			ED_dist(le, Math.max(lw,ED_dist(le)));</span>
+<span class="nc" id="L513">		    }</span>
 		    else {
 <span class="nc" id="L515">		    	SmetanaDebug.LOG(&quot;reset2 true&quot;);</span>
 <span class="nc" id="L516">			reset = true;</span>

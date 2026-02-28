@@ -71,9 +71,23 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="package-signature">package <span class="element-name">net.sourceforge.plantuml.emoji</span></div>
 <section class="package-description" id="package-description">
-<div class="block">Provides classes used to manage 
+<div class="block">Provides classes used to manage the
  <a href="https://plantuml.com/en/creole#68305e25f5788db0" target="_top">
- PlantUML Emoji</a> icon set.</div>
+ PlantUML Emoji</a> icon set.
+
+ <p>Key responsibilities:
+ <ul>
+   <li><a href="Emoji.html" title="class in net.sourceforge.plantuml.emoji"><code>Emoji</code></a> loads emoji SVG data and
+   exposes draw helpers for sprites and shortcuts.</li>
+   <li><a href="ColorResolver.html" title="class in net.sourceforge.plantuml.emoji"><code>ColorResolver</code></a> resolves color and
+   monochrome transformations using <a href="GrayLevelRange.html" title="interface in net.sourceforge.plantuml.emoji"><code>GrayLevelRange</code></a>.</li>
+   <li><a href="UGraphicWithScale.html" title="class in net.sourceforge.plantuml.emoji"><code>UGraphicWithScale</code></a> provides a scaled
+   drawing context for emoji rendering.</li>
+ </ul>
+
+ <p>Sub-package <code>net.sourceforge.plantuml.emoji.data</code> contains bundled
+ emoji resources (such as the emoji list and SVG files) and a marker class
+ used for resource loading.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -116,10 +130,6 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PSystemListEmoji.html" title="class in net.sourceforge.plantuml.emoji">PSystemListEmoji</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="PSystemListEmojiFactory.html" title="class in net.sourceforge.plantuml.emoji">PSystemListEmojiFactory</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SpriteSvgNanoParser.html" title="class in net.sourceforge.plantuml.emoji">SpriteSvgNanoParser</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SvgNanoParser.html" title="class in net.sourceforge.plantuml.emoji">SvgNanoParser</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="UGraphicWithScale.html" title="class in net.sourceforge.plantuml.emoji">UGraphicWithScale</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>

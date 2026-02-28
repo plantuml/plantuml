@@ -71,10 +71,10 @@ public class FtileCircleStop extends AbstractFtile {
 <span class="fc" id="L71">	}</span>
 
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (swimlane == null)</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (swimlane == null)</span>
 <span class="nc" id="L75">			return PatchUtils.emptySet();</span>
 
-<span class="fc" id="L77">		return Collections.singleton(swimlane);</span>
+<span class="nc" id="L77">		return Collections.singleton(swimlane);</span>
 	}
 
 	public Swimlane getSwimlaneIn() {

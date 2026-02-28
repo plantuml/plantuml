@@ -48,19 +48,19 @@ package h;
 import smetana.core.FieldOffset;
 import smetana.core.UnsupportedStarStruct;
 
-<span class="fc" id="L51">final public class ST_HDict_t extends UnsupportedStarStruct {</span>
+<span class="nc" id="L51">final public class ST_HDict_t extends UnsupportedStarStruct {</span>
 
-<span class="fc" id="L53">	public final ST_dtlink_s link = new ST_dtlink_s(this);</span>
+<span class="nc" id="L53">	public final ST_dtlink_s link = new ST_dtlink_s(this);</span>
 	public int key;
-<span class="fc" id="L55">	public final ST_Branch_t d = new ST_Branch_t(); /* Should be ST_Leaf_t */</span>
+<span class="nc" id="L55">	public final ST_Branch_t d = new ST_Branch_t(); /* Should be ST_Leaf_t */</span>
 
 	@Override
 	public Object getTheField(FieldOffset offset) {
-<span class="pc bpc" id="L59" title="2 of 4 branches missed.">		if (offset == null || offset.getSign() == 0)</span>
+<span class="nc bnc" id="L59" title="All 4 branches missed.">		if (offset == null || offset.getSign() == 0)</span>
 <span class="nc" id="L60">			return this;</span>
 
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (offset == FieldOffset.key)</span>
-<span class="fc" id="L63">			return key;</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (offset == FieldOffset.key)</span>
+<span class="nc" id="L63">			return key;</span>
 
 <span class="nc" id="L65">		throw new UnsupportedOperationException();</span>
 	}

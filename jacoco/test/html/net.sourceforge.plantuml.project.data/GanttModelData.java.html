@@ -65,18 +65,18 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 	}
 
 	public Collection&lt;Resource&gt; getResources() {
-<span class="fc" id="L68">		return Collections.unmodifiableCollection(resources.values());</span>
+<span class="nc" id="L68">		return Collections.unmodifiableCollection(resources.values());</span>
 	}
 
 	public Collection&lt;GanttConstraint&gt; getConstraints() {
-<span class="fc" id="L72">		return Collections.unmodifiableCollection(constraints);</span>
+<span class="nc" id="L72">		return Collections.unmodifiableCollection(constraints);</span>
 	}
 
 	// Mutators for building the model
 
 	public void addConstraint(GanttConstraint constraint) {
-<span class="fc" id="L78">		constraints.add(constraint);</span>
-<span class="fc" id="L79">	}</span>
+<span class="nc" id="L78">		constraints.add(constraint);</span>
+<span class="nc" id="L79">	}</span>
 
 	public void putTask(TaskCode code, Task task) {
 <span class="fc" id="L82">		tasks.put(code, task);</span>
@@ -107,12 +107,12 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 	}
 
 	public Collection&lt;GanttConstraint&gt; getConstraintsForTask(Task task) {
-<span class="fc" id="L110">		final List&lt;GanttConstraint&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">		for (GanttConstraint constraint : getConstraints())</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">			if (constraint.isOn(task))</span>
-<span class="fc" id="L113">				result.add(constraint);</span>
+<span class="nc" id="L110">		final List&lt;GanttConstraint&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		for (GanttConstraint constraint : getConstraints())</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">			if (constraint.isOn(task))</span>
+<span class="nc" id="L113">				result.add(constraint);</span>
 
-<span class="fc" id="L115">		return Collections.unmodifiableCollection(result);</span>
+<span class="nc" id="L115">		return Collections.unmodifiableCollection(result);</span>
 	}
 
 }

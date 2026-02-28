@@ -64,9 +64,9 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 <span class="nc" id="L64">				throw new IllegalArgumentException(value.toString());</span>
 		}
 <span class="fc" id="L66">		final PValue previous = values.remove(attribute);</span>
-<span class="fc bfc" id="L67" title="All 4 branches covered.">		if (previous != null &amp;&amp; attribute == TaskAttribute.START) {</span>
-<span class="fc" id="L68">			final TimePoint previousInstant = (TimePoint) previous;</span>
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">			if (previousInstant.compareTo((TimePoint) value) &gt; 0)</span>
+<span class="pc bpc" id="L67" title="1 of 4 branches missed.">		if (previous != null &amp;&amp; attribute == TaskAttribute.START) {</span>
+<span class="nc" id="L68">			final TimePoint previousInstant = (TimePoint) previous;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">			if (previousInstant.compareTo((TimePoint) value) &gt; 0)</span>
 <span class="nc" id="L70">				value = previous;</span>
 
 		}
@@ -86,7 +86,7 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 
 	public final PValue getData(NGMAllocation allocation, TaskAttribute attribute) {
 <span class="fc" id="L88">		PValue result = values.get(attribute);</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (result == null) {</span>
 <span class="pc bpc" id="L90" title="1 of 2 branches missed.">			if (attribute == TaskAttribute.END)</span>
 <span class="fc" id="L91">				return computeEnd(allocation);</span>
 
@@ -96,7 +96,7 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 <span class="nc" id="L96">			return Load.ofDays(1);</span>
 			// throw new UnsupportedOperationException(attribute.toString());
 		}
-<span class="fc" id="L99">		return result;</span>
+<span class="nc" id="L99">		return result;</span>
 	}
 
 	private TimePoint computeEnd(NGMAllocation allocation) {

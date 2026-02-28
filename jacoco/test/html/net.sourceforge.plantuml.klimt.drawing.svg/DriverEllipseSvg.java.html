@@ -55,11 +55,11 @@ public class DriverEllipseSvg implements UDriver&lt;UEllipse, SvgGraphics&gt; {
 <span class="fc" id="L55">		final double height = shape.getHeight();</span>
 
 <span class="fc" id="L57">		final UClip clip = clipContainer.getClip();</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (clip != null) {</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">			if (clip.isInside(x, y) == false) {</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (clip != null) {</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">			if (clip.isInside(x, y) == false) {</span>
 <span class="nc" id="L60">				return;</span>
 			}
-<span class="nc bnc" id="L62" title="All 2 branches missed.">			if (clip.isInside(x + width, y + height) == false) {</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">			if (clip.isInside(x + width, y + height) == false) {</span>
 <span class="nc" id="L63">				return;</span>
 			}
 		}

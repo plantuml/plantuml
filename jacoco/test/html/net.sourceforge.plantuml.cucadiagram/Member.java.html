@@ -79,7 +79,7 @@ public class Member implements CharSequence {
 	}
 
 	public static Member field(CharSequence tmpDisplay) {
-<span class="fc" id="L82">		return new Member(true, tmpDisplay, false);</span>
+<span class="nc" id="L82">		return new Member(true, tmpDisplay, false);</span>
 	}
 
 	public static Member method(CharSequence tmpDisplay, boolean manageModifier) {
@@ -130,12 +130,12 @@ public class Member implements CharSequence {
 <span class="pc bpc" id="L130" title="1 of 2 branches missed.">			if (displayClean.length() == 0)</span>
 <span class="nc" id="L131">				displayClean = &quot; &quot;;</span>
 
-<span class="fc bfc" id="L133" title="All 2 branches covered.">			if (VisibilityModifier.isVisibilityCharacter(displayClean)) {</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">				visibilityModifier = VisibilityModifier.getVisibilityModifier(displayClean, isMethod == false);</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">			if (VisibilityModifier.isVisibilityCharacter(displayClean)) {</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">				visibilityModifier = VisibilityModifier.getVisibilityModifier(displayClean, isMethod == false);</span>
 <span class="fc" id="L135">				this.display = StringUtils.trin(Guillemet.GUILLEMET.manageGuillemet(displayClean.substring(1)));</span>
 			} else {
-<span class="fc" id="L137">				this.display = Guillemet.GUILLEMET.manageGuillemet(displayClean);</span>
-<span class="fc" id="L138">				visibilityModifier = null;</span>
+<span class="nc" id="L137">				this.display = Guillemet.GUILLEMET.manageGuillemet(displayClean);</span>
+<span class="nc" id="L138">				visibilityModifier = null;</span>
 			}
 <span class="fc" id="L140">		} else {</span>
 <span class="nc" id="L141">			this.staticModifier = false;</span>

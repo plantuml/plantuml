@@ -44,18 +44,18 @@ public class Circle {
 	private double radius;
 
 	public Circle() {
-<span class="fc" id="L47">		this(new XPoint2D(0, 0));</span>
-<span class="fc" id="L48">	}</span>
+<span class="nc" id="L47">		this(new XPoint2D(0, 0));</span>
+<span class="nc" id="L48">	}</span>
 
-<span class="fc" id="L50">	public Circle(XPoint2D center) {</span>
-<span class="fc" id="L51">		this.center = center;</span>
-<span class="fc" id="L52">		this.radius = 0;</span>
-<span class="fc" id="L53">	}</span>
+<span class="nc" id="L50">	public Circle(XPoint2D center) {</span>
+<span class="nc" id="L51">		this.center = center;</span>
+<span class="nc" id="L52">		this.radius = 0;</span>
+<span class="nc" id="L53">	}</span>
 
-<span class="fc" id="L55">	public Circle(XPoint2D p1, XPoint2D p2) {</span>
-<span class="fc" id="L56">		center = new XPoint2D((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);</span>
-<span class="fc" id="L57">		radius = p1.distance(center);</span>
-<span class="fc" id="L58">	}</span>
+<span class="nc" id="L55">	public Circle(XPoint2D p1, XPoint2D p2) {</span>
+<span class="nc" id="L56">		center = new XPoint2D((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);</span>
+<span class="nc" id="L57">		radius = p1.distance(center);</span>
+<span class="nc" id="L58">	}</span>
 
 	public static Circle getCircle(XPoint2D p1, XPoint2D p2, XPoint2D p3) {
 <span class="nc bnc" id="L61" title="All 2 branches missed.">		if (p3.getY() != p2.getY()) {</span>
@@ -83,15 +83,15 @@ public class Circle {
 	}
 
 	public double getRadius() {
-<span class="fc" id="L86">		return radius;</span>
+<span class="nc" id="L86">		return radius;</span>
 	}
 
 	public boolean isOutside(XPoint2D point) {
-<span class="fc" id="L90">		final double d = center.distance(point);</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (d &gt; radius) {</span>
-<span class="fc" id="L92">			return true;</span>
+<span class="nc" id="L90">		final double d = center.distance(point);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (d &gt; radius) {</span>
+<span class="nc" id="L92">			return true;</span>
 		}
-<span class="fc" id="L94">		return false;</span>
+<span class="nc" id="L94">		return false;</span>
 	}
 
 }

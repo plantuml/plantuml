@@ -398,12 +398,12 @@ try {
 	ST_Agattr_s attr;
 <span class="fc" id="L399">    attr = (ST_Agattr_s) agattrrec(obj);</span>
 
-<span class="fc bfc" id="L401" title="All 2 branches covered.">    if (sym.id &gt;= MINATTR)</span>
+<span class="pc bpc" id="L401" title="1 of 2 branches missed.">    if (sym.id &gt;= MINATTR)</span>
 //	attr.str = (StarArrayOfCString) g.clos.disc.mem.call(&quot;resize&quot;, g.clos.state.mem,
 //						     attr.str,
 //						     sizeof(&quot;char*&quot;, sym.id),
 //						     sizeof(&quot;char*&quot;, sym.id + 1));
-<span class="fc" id="L406">    attr.str.add(null);</span>
+<span class="nc" id="L406">    attr.str.add(null);</span>
 <span class="fc" id="L407">	attr.str.set(sym.id, agstrdup(zz, g, sym.defval));</span>
     /* agmethod_upd(g,obj,sym);  JCE and GN didn't like this. */
 } finally {

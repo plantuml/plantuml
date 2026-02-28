@@ -208,7 +208,7 @@ public class ParticipantBox implements Pushable {
 	}
 
 	public double getStartingX() {
-<span class="fc" id="L211">		return startingX;</span>
+<span class="nc" id="L211">		return startingX;</span>
 	}
 
 <span class="fc" id="L214">	private final List&lt;GraphicalDelayText&gt; delays = new ArrayList&lt;&gt;();</span>
@@ -222,16 +222,16 @@ public class ParticipantBox implements Pushable {
 	}
 
 	public Collection&lt;Segment&gt; getDelays(final StringBounder stringBounder) {
-<span class="fc" id="L225">		return new AbstractCollection&lt;Segment&gt;() {</span>
+<span class="nc" id="L225">		return new AbstractCollection&lt;Segment&gt;() {</span>
 
 			@Override
 			public Iterator&lt;Segment&gt; iterator() {
-<span class="fc" id="L229">				return new Iterator&lt;Segment&gt;() {</span>
+<span class="nc" id="L229">				return new Iterator&lt;Segment&gt;() {</span>
 
-<span class="fc" id="L231">					private final Iterator&lt;GraphicalDelayText&gt; it = delays.iterator();</span>
+<span class="nc" id="L231">					private final Iterator&lt;GraphicalDelayText&gt; it = delays.iterator();</span>
 
 					public boolean hasNext() {
-<span class="fc" id="L234">						return it.hasNext();</span>
+<span class="nc" id="L234">						return it.hasNext();</span>
 					}
 
 					public Segment next() {
@@ -247,14 +247,14 @@ public class ParticipantBox implements Pushable {
 
 			@Override
 			public int size() {
-<span class="fc" id="L250">				return delays.size();</span>
+<span class="nc" id="L250">				return delays.size();</span>
 			}
 		};
 	}
 
 	@Override
 	public Stereotype getStereotype() {
-<span class="fc" id="L257">		return p.getStereotype();</span>
+<span class="nc" id="L257">		return p.getStereotype();</span>
 	}
 
 }

@@ -43,11 +43,11 @@ public class TaskCode {
 	private final String display;
 
 	public static TaskCode fromId(String id) {
-<span class="fc" id="L46">		return new TaskCode(id, id);</span>
+<span class="nc" id="L46">		return new TaskCode(id, id);</span>
 	}
 
 	public static TaskCode fromIdAndDisplay(String id, String display) {
-<span class="fc bfc" id="L50" title="All 2 branches covered.">		if (id == null)</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">		if (id == null)</span>
 <span class="fc" id="L51">			id = display;</span>
 <span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if (display == null)</span>
 <span class="nc" id="L53">			return fromId(id);</span>
@@ -66,12 +66,12 @@ public class TaskCode {
 
 	@Override
 	public boolean equals(Object arg) {
-<span class="fc" id="L69">		final TaskCode other = (TaskCode) arg;</span>
-<span class="fc" id="L70">		return this.id.equals(other.id);</span>
+<span class="nc" id="L69">		final TaskCode other = (TaskCode) arg;</span>
+<span class="nc" id="L70">		return this.id.equals(other.id);</span>
 	}
 
 	public String getDisplay() {
-<span class="fc" id="L74">		return display;</span>
+<span class="nc" id="L74">		return display;</span>
 	}
 
 	public String getId() {

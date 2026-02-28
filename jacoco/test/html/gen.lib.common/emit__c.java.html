@@ -107,16 +107,16 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/emit.c&quot;, name=&quot;check_control_points&quot;, key=&quot;7nqmdkcnal35ollpstkk707t8&quot;, definition=&quot;static int check_control_points(pointf *cp)&quot;)
 public static boolean check_control_points(CArray&lt;ST_pointf&gt; cp) {
-<span class="fc" id="L110">ENTERING(&quot;7nqmdkcnal35ollpstkk707t8&quot;,&quot;check_control_points&quot;);</span>
+<span class="nc" id="L110">ENTERING(&quot;7nqmdkcnal35ollpstkk707t8&quot;,&quot;check_control_points&quot;);</span>
 try {
-<span class="fc" id="L112">    double dis1 = ptToLine2 (cp.get__(0), cp.get__(3), cp.get__(1));</span>
-<span class="fc" id="L113">    double dis2 = ptToLine2 (cp.get__(0), cp.get__(3), cp.get__(2));</span>
-<span class="fc bfc" id="L114" title="All 4 branches covered.">    if (dis1 &lt; 2.0*2.0 &amp;&amp; dis2 &lt; 2.0*2.0)</span>
-<span class="fc" id="L115">        return true;</span>
+<span class="nc" id="L112">    double dis1 = ptToLine2 (cp.get__(0), cp.get__(3), cp.get__(1));</span>
+<span class="nc" id="L113">    double dis2 = ptToLine2 (cp.get__(0), cp.get__(3), cp.get__(2));</span>
+<span class="nc bnc" id="L114" title="All 4 branches missed.">    if (dis1 &lt; 2.0*2.0 &amp;&amp; dis2 &lt; 2.0*2.0)</span>
+<span class="nc" id="L115">        return true;</span>
     else
-<span class="fc" id="L117">        return false;</span>
+<span class="nc" id="L117">        return false;</span>
 } finally {
-<span class="fc" id="L119">LEAVING(&quot;7nqmdkcnal35ollpstkk707t8&quot;,&quot;check_control_points&quot;);</span>
+<span class="nc" id="L119">LEAVING(&quot;7nqmdkcnal35ollpstkk707t8&quot;,&quot;check_control_points&quot;);</span>
 }
 }
 
@@ -134,34 +134,34 @@ try {
     /* if any control point of the segment is outside the bounding box */
 <span class="pc bpc" id="L135" title="2 of 4 branches missed.">    if (cp.get__(0).x &gt; bb.UR.x || cp.get__(0).x &lt; bb.LL.x ||</span>
 <span class="pc bpc" id="L136" title="2 of 4 branches missed.">        cp.get__(0).y &gt; bb.UR.y || cp.get__(0).y &lt; bb.LL.y ||</span>
-<span class="fc bfc" id="L137" title="All 4 branches covered.">        cp.get__(1).x &gt; bb.UR.x || cp.get__(1).x &lt; bb.LL.x ||</span>
-<span class="pc bpc" id="L138" title="1 of 4 branches missed.">        cp.get__(1).y &gt; bb.UR.y || cp.get__(1).y &lt; bb.LL.y ||</span>
-<span class="pc bpc" id="L139" title="1 of 4 branches missed.">        cp.get__(2).x &gt; bb.UR.x || cp.get__(2).x &lt; bb.LL.x ||</span>
-<span class="pc bpc" id="L140" title="1 of 4 branches missed.">        cp.get__(2).y &gt; bb.UR.y || cp.get__(2).y &lt; bb.LL.y ||</span>
-<span class="pc bpc" id="L141" title="1 of 4 branches missed.">        cp.get__(3).x &gt; bb.UR.x || cp.get__(3).x &lt; bb.LL.x ||</span>
+<span class="pc bpc" id="L137" title="2 of 4 branches missed.">        cp.get__(1).x &gt; bb.UR.x || cp.get__(1).x &lt; bb.LL.x ||</span>
+<span class="pc bpc" id="L138" title="2 of 4 branches missed.">        cp.get__(1).y &gt; bb.UR.y || cp.get__(1).y &lt; bb.LL.y ||</span>
+<span class="pc bpc" id="L139" title="2 of 4 branches missed.">        cp.get__(2).x &gt; bb.UR.x || cp.get__(2).x &lt; bb.LL.x ||</span>
+<span class="pc bpc" id="L140" title="2 of 4 branches missed.">        cp.get__(2).y &gt; bb.UR.y || cp.get__(2).y &lt; bb.LL.y ||</span>
+<span class="pc bpc" id="L141" title="2 of 4 branches missed.">        cp.get__(3).x &gt; bb.UR.x || cp.get__(3).x &lt; bb.LL.x ||</span>
 <span class="pc bpc" id="L142" title="2 of 4 branches missed.">        cp.get__(3).y &gt; bb.UR.y || cp.get__(3).y &lt; bb.LL.y) {</span>
     	
         /* if the segment is sufficiently refined */
-<span class="fc bfc" id="L145" title="All 2 branches covered.">        if (check_control_points(cp)) {        </span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        if (check_control_points(cp)) {        </span>
             int i;
             /* expand the bounding box */
-<span class="fc bfc" id="L148" title="All 2 branches covered.">            for (i = 0; i &lt; 4; i++) {</span>
-<span class="fc bfc" id="L149" title="All 2 branches covered.">                if (cp.get__(i).x &gt; bb.UR.x)</span>
-<span class="fc" id="L150">                    bb.UR.x = cp.get__(i).x;</span>
-<span class="fc bfc" id="L151" title="All 2 branches covered.">                else if (cp.get__(i).x &lt; bb.LL.x)</span>
-<span class="fc" id="L152">                    bb.LL.x = cp.get__(i).x;</span>
-<span class="pc bpc" id="L153" title="1 of 2 branches missed.">                if (cp.get__(i).y &gt; bb.UR.y)</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">            for (i = 0; i &lt; 4; i++) {</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">                if (cp.get__(i).x &gt; bb.UR.x)</span>
+<span class="nc" id="L150">                    bb.UR.x = cp.get__(i).x;</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">                else if (cp.get__(i).x &lt; bb.LL.x)</span>
+<span class="nc" id="L152">                    bb.LL.x = cp.get__(i).x;</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">                if (cp.get__(i).y &gt; bb.UR.y)</span>
 <span class="nc" id="L154">                    bb.UR.y = cp.get__(i).y;</span>
-<span class="fc bfc" id="L155" title="All 2 branches covered.">                else if (cp.get__(i).y &lt; bb.LL.y)</span>
-<span class="fc" id="L156">                    bb.LL.y = cp.get__(i).y;</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">                else if (cp.get__(i).y &lt; bb.LL.y)</span>
+<span class="nc" id="L156">                    bb.LL.y = cp.get__(i).y;</span>
             }
-<span class="fc" id="L158">        }</span>
+<span class="nc" id="L158">        }</span>
         else { /* else refine the segment */
-<span class="fc" id="L160">		    final CArray&lt;ST_pointf&gt; left = CArray.&lt;ST_pointf&gt;ALLOC__(4, ZType.ST_pointf);</span>
-<span class="fc" id="L161">		    final CArray&lt;ST_pointf&gt; right = CArray.&lt;ST_pointf&gt;ALLOC__(4, ZType.ST_pointf);</span>
-<span class="fc" id="L162">            Bezier (cp, 3, 0.5, left, right);</span>
-<span class="fc" id="L163">            update_bb_bz(bb, left);</span>
-<span class="fc" id="L164">            update_bb_bz(bb, right);</span>
+<span class="nc" id="L160">		    final CArray&lt;ST_pointf&gt; left = CArray.&lt;ST_pointf&gt;ALLOC__(4, ZType.ST_pointf);</span>
+<span class="nc" id="L161">		    final CArray&lt;ST_pointf&gt; right = CArray.&lt;ST_pointf&gt;ALLOC__(4, ZType.ST_pointf);</span>
+<span class="nc" id="L162">            Bezier (cp, 3, 0.5, left, right);</span>
+<span class="nc" id="L163">            update_bb_bz(bb, left);</span>
+<span class="nc" id="L164">            update_bb_bz(bb, right);</span>
         }
     }
 } finally {

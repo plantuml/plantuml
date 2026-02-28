@@ -166,8 +166,8 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 <span class="fc" id="L166">		values[numVals++] = rx;</span>
 <span class="fc" id="L167">		values[numVals++] = ry;</span>
 <span class="fc" id="L168">		values[numVals++] = angle;</span>
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		values[numVals++] = largeArcFlag ? 1 : 0;</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		values[numVals++] = sweepFlag ? 1 : 0;</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		values[numVals++] = largeArcFlag ? 1 : 0;</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		values[numVals++] = sweepFlag ? 1 : 0;</span>
 <span class="fc" id="L171">		cx = values[numVals++] = x;</span>
 <span class="fc" id="L172">		cy = values[numVals++] = y;</span>
 <span class="fc" id="L173">	}</span>
@@ -218,7 +218,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 		//
 		// Step 2 : Compute (cx1, cy1)
 		//
-<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		double sign = (largeArcFlag == sweepFlag) ? -1 : 1;</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">		double sign = (largeArcFlag == sweepFlag) ? -1 : 1;</span>
 <span class="fc" id="L222">		double sq = ((prx * pry) - (prx * py1) - (pry * px1)) / ((prx * py1) + (pry * px1));</span>
 <span class="pc bpc" id="L223" title="1 of 2 branches missed.">		sq = (sq &lt; 0) ? 0 : sq;</span>
 <span class="fc" id="L224">		final double coef = sign * Math.sqrt(sq);</span>
@@ -249,12 +249,12 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 		// Compute the angle extent
 <span class="fc" id="L250">		n = Math.sqrt((ux * ux + uy * uy) * (vx * vx + vy * vy));</span>
 <span class="fc" id="L251">		p = ux * vx + uy * vy;</span>
-<span class="pc bpc" id="L252" title="1 of 2 branches missed.">		sign = (ux * vy - uy * vx &lt; 0) ? -1.0 : 1.0;</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">		sign = (ux * vy - uy * vx &lt; 0) ? -1.0 : 1.0;</span>
 <span class="fc" id="L253">		double angleExtent = Math.toDegrees(sign * Math.acos(p / n));</span>
-<span class="pc bpc" id="L254" title="2 of 4 branches missed.">		if (!sweepFlag &amp;&amp; angleExtent &gt; 0) {</span>
+<span class="pc bpc" id="L254" title="1 of 4 branches missed.">		if (!sweepFlag &amp;&amp; angleExtent &gt; 0) {</span>
 <span class="nc" id="L255">			angleExtent -= 360f;</span>
-<span class="pc bpc" id="L256" title="3 of 4 branches missed.">		} else if (sweepFlag &amp;&amp; angleExtent &lt; 0) {</span>
-<span class="nc" id="L257">			angleExtent += 360f;</span>
+<span class="fc bfc" id="L256" title="All 4 branches covered.">		} else if (sweepFlag &amp;&amp; angleExtent &lt; 0) {</span>
+<span class="fc" id="L257">			angleExtent += 360f;</span>
 		}
 <span class="fc" id="L259">		angleExtent %= 360f;</span>
 <span class="fc" id="L260">		angleStart %= 360f;</span>
@@ -549,7 +549,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 	 * Delegates to the enclosed &lt;code&gt;GeneralPath&lt;/code&gt;.
 	 */
 	public Rectangle2D getBounds2D() {
-<span class="nc" id="L552">		return path.getBounds2D();</span>
+<span class="fc" id="L552">		return path.getBounds2D();</span>
 	}
 
 	/**

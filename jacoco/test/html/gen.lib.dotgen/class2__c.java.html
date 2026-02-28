@@ -127,9 +127,9 @@ try {
 <span class="fc" id="L127">    ND_label(v, ED_label(orig));</span>
 <span class="fc" id="L128">    ND_lw(v, GD_nodesep(agroot(v)));</span>
 <span class="pc bpc" id="L129" title="1 of 2 branches missed.">    if (!ED_label_ontop(orig)) {</span>
-<span class="fc bfc" id="L130" title="All 2 branches covered.">	if (GD_flip(agroot(g))) {</span>
-<span class="fc" id="L131">	    ND_ht(v, dimen.x);</span>
-<span class="fc" id="L132">	    ND_rw(v, dimen.y);</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">	if (GD_flip(agroot(g))) {</span>
+<span class="nc" id="L131">	    ND_ht(v, dimen.x);</span>
+<span class="nc" id="L132">	    ND_rw(v, dimen.y);</span>
 	} else {
 <span class="fc" id="L134">	    ND_ht(v, dimen.y);</span>
 <span class="fc" id="L135">	    ND_rw(v, dimen.x);</span>
@@ -149,15 +149,15 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/class2.c&quot;, name=&quot;incr_width&quot;, key=&quot;49tji49jdm9uges7v8lf2j2rn&quot;, definition=&quot;static void  incr_width(graph_t * g, node_t * v)&quot;)
 public static void incr_width(ST_Agraph_s g, ST_Agnode_s v) {
-<span class="fc" id="L152">ENTERING(&quot;49tji49jdm9uges7v8lf2j2rn&quot;,&quot;incr_width&quot;);</span>
+<span class="nc" id="L152">ENTERING(&quot;49tji49jdm9uges7v8lf2j2rn&quot;,&quot;incr_width&quot;);</span>
 try {
-<span class="fc" id="L154">    int width = GD_nodesep(g) / 2;</span>
-<span class="fc" id="L155">    ND_lw(v, ND_lw(v) + width);</span>
-<span class="fc" id="L156">    ND_rw(v, ND_rw(v) + width);</span>
+<span class="nc" id="L154">    int width = GD_nodesep(g) / 2;</span>
+<span class="nc" id="L155">    ND_lw(v, ND_lw(v) + width);</span>
+<span class="nc" id="L156">    ND_rw(v, ND_rw(v) + width);</span>
 } finally {
-<span class="fc" id="L158">LEAVING(&quot;49tji49jdm9uges7v8lf2j2rn&quot;,&quot;incr_width&quot;);</span>
+<span class="nc" id="L158">LEAVING(&quot;49tji49jdm9uges7v8lf2j2rn&quot;,&quot;incr_width&quot;);</span>
 }
-<span class="fc" id="L160">}</span>
+<span class="nc" id="L160">}</span>
 
 
 
@@ -167,15 +167,15 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/class2.c&quot;, name=&quot;plain_vnode&quot;, key=&quot;xujihq6vep3ez275shtrbilo&quot;, definition=&quot;static node_t* plain_vnode(graph_t * g, edge_t * orig)&quot;)
 public static ST_Agnode_s plain_vnode(ST_Agraph_s g, ST_Agedge_s orig) {
-<span class="fc" id="L170">ENTERING(&quot;xujihq6vep3ez275shtrbilo&quot;,&quot;plain_vnode&quot;);</span>
+<span class="nc" id="L170">ENTERING(&quot;xujihq6vep3ez275shtrbilo&quot;,&quot;plain_vnode&quot;);</span>
 try {
     ST_Agnode_s v;
-<span class="fc" id="L173">    orig = orig;</span>
-<span class="fc" id="L174">    v = virtual_node(g);</span>
-<span class="fc" id="L175">    incr_width(g, v);</span>
-<span class="fc" id="L176">    return v;</span>
+<span class="nc" id="L173">    orig = orig;</span>
+<span class="nc" id="L174">    v = virtual_node(g);</span>
+<span class="nc" id="L175">    incr_width(g, v);</span>
+<span class="nc" id="L176">    return v;</span>
 } finally {
-<span class="fc" id="L178">LEAVING(&quot;xujihq6vep3ez275shtrbilo&quot;,&quot;plain_vnode&quot;);</span>
+<span class="nc" id="L178">LEAVING(&quot;xujihq6vep3ez275shtrbilo&quot;,&quot;plain_vnode&quot;);</span>
 }
 }
 
@@ -225,10 +225,10 @@ try {
     //assert(ED_to_virt(orig) == NULL);
 <span class="fc bfc" id="L226" title="All 2 branches covered.">    for (r = ND_rank(from) + 1; r &lt;= ND_rank(to); r++) {</span>
 <span class="fc bfc" id="L227" title="All 2 branches covered.">	if (r &lt; ND_rank(to)) {</span>
-<span class="fc bfc" id="L228" title="All 2 branches covered.">	    if (r == label_rank)</span>
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">	    if (r == label_rank)</span>
 <span class="fc" id="L229">		v = label_vnode(g, orig);</span>
 	    else
-<span class="fc" id="L231">		v = plain_vnode(g, orig);</span>
+<span class="nc" id="L231">		v = plain_vnode(g, orig);</span>
 <span class="fc" id="L232">	    ND_rank(v, r);</span>
 	} else
 <span class="fc" id="L234">	    v = to;</span>
@@ -335,7 +335,7 @@ try {
 public static boolean mergeable(ST_Agedge_s e, ST_Agedge_s f) {
 <span class="fc" id="L336">ENTERING(&quot;bg5r9wlego0d8pv0hr96zt45c&quot;,&quot;mergeable&quot;);</span>
 try {
-<span class="pc bpc" id="L338" title="2 of 8 branches missed.">    if (e!=null &amp;&amp; f!=null &amp;&amp; agtail(e) == agtail(f) &amp;&amp; aghead(e) == aghead(f) &amp;&amp;</span>
+<span class="pc bpc" id="L338" title="4 of 8 branches missed.">    if (e!=null &amp;&amp; f!=null &amp;&amp; agtail(e) == agtail(f) &amp;&amp; aghead(e) == aghead(f) &amp;&amp;</span>
 <span class="nc bnc" id="L339" title="All 4 branches missed.">	ED_label(e) == ED_label(f) &amp;&amp; ports_eq(e, f))</span>
 <span class="nc" id="L340">	return true;</span>
 <span class="fc" id="L341">    return false;</span>
@@ -367,9 +367,9 @@ try {
 <span class="fc" id="L367">	build_skeleton(zz, g, GD_clust(g).get_(c));</span>
 <span class="fc bfc" id="L368" title="All 2 branches covered.">    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n))</span>
 <span class="fc bfc" id="L369" title="All 2 branches covered.">	for (e = agfstout(zz, g, n); e!=null; e = agnxtout(zz, g, e)) {</span>
-<span class="fc bfc" id="L370" title="All 2 branches covered.">	    if (ND_weight_class(aghead(e)) &lt;= 2)</span>
+<span class="pc bpc" id="L370" title="1 of 2 branches missed.">	    if (ND_weight_class(aghead(e)) &lt;= 2)</span>
 <span class="fc" id="L371">		ND_weight_class(aghead(e), ND_weight_class(aghead(e)) + 1);</span>
-<span class="fc bfc" id="L372" title="All 2 branches covered.">	    if (ND_weight_class(agtail(e)) &lt;= 2)</span>
+<span class="pc bpc" id="L372" title="1 of 2 branches missed.">	    if (ND_weight_class(agtail(e)) &lt;= 2)</span>
 <span class="fc" id="L373">		ND_weight_class(agtail(e), ND_weight_class(agtail(e)) + 1);</span>
 	}
     
@@ -407,13 +407,13 @@ try {
 <span class="fc" id="L407">		continue;</span>
 	    }
 	    /* merge multi-edges */
-<span class="pc bpc" id="L410" title="1 of 6 branches missed.">	    if (prev!=null &amp;&amp; agtail(e) == agtail(prev) &amp;&amp; aghead(e) == aghead(prev)) {</span>
-<span class="fc bfc" id="L411" title="All 2 branches covered.">		if (ND_rank(agtail(e)) == ND_rank(aghead(e))) {</span>
-<span class="fc" id="L412">		    merge_oneway(e, prev);</span>
-<span class="fc" id="L413">		    other_edge(e);</span>
-<span class="fc" id="L414">		    continue;</span>
+<span class="pc bpc" id="L410" title="2 of 6 branches missed.">	    if (prev!=null &amp;&amp; agtail(e) == agtail(prev) &amp;&amp; aghead(e) == aghead(prev)) {</span>
+<span class="nc bnc" id="L411" title="All 2 branches missed.">		if (ND_rank(agtail(e)) == ND_rank(aghead(e))) {</span>
+<span class="nc" id="L412">		    merge_oneway(e, prev);</span>
+<span class="nc" id="L413">		    other_edge(e);</span>
+<span class="nc" id="L414">		    continue;</span>
 		}
-<span class="pc bpc" id="L416" title="3 of 4 branches missed.">		if ((ED_label(e) == null) &amp;&amp; (ED_label(prev) == null)</span>
+<span class="nc bnc" id="L416" title="All 4 branches missed.">		if ((ED_label(e) == null) &amp;&amp; (ED_label(prev) == null)</span>
 <span class="nc bnc" id="L417" title="All 2 branches missed.">		    &amp;&amp; ports_eq(e, prev)) {</span>
 <span class="nc bnc" id="L418" title="All 2 branches missed.">		    if (zz.Concentrate)</span>
 <span class="nc" id="L419">			ED_edge_type(e, IGNORED);</span>

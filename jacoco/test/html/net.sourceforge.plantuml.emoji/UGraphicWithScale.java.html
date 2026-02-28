@@ -35,10 +35,9 @@
  */
 package net.sourceforge.plantuml.emoji;
 
-import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
-
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 
@@ -51,79 +50,79 @@ public class UGraphicWithScale {
 	final private ColorResolver colorResolver;
 
 	public UGraphicWithScale(UGraphic ug, ColorResolver colorResolver, double scale) {
-<span class="nc" id="L54">		this(updateColor(ug, colorResolver), colorResolver, XAffineTransform.getScaleInstance(scale, scale), 0, scale);</span>
-<span class="nc" id="L55">	}</span>
+<span class="fc" id="L53">		this(updateColor(ug, colorResolver), colorResolver, XAffineTransform.getScaleInstance(scale, scale), 0, scale);</span>
+<span class="fc" id="L54">	}</span>
 
 	private static UGraphic updateColor(UGraphic ug, ColorResolver colorResolver) {
-<span class="nc" id="L58">		final HColor color = colorResolver.getDefaultColor();</span>
-<span class="nc" id="L59">		return ug.apply(color).apply(color.bg());</span>
+<span class="fc" id="L57">		final HColor color = colorResolver.getDefaultColor();</span>
+<span class="fc" id="L58">		return ug.apply(color).apply(color.bg());</span>
 	}
 
 	private UGraphicWithScale(UGraphic ug, ColorResolver colorResolver, XAffineTransform at, double angle,
-<span class="nc" id="L63">			double scale) {</span>
-<span class="nc" id="L64">		this.ug = ug;</span>
-<span class="nc" id="L65">		this.colorResolver = colorResolver;</span>
-<span class="nc" id="L66">		this.at = at;</span>
-<span class="nc" id="L67">		this.angle = angle;</span>
-<span class="nc" id="L68">		this.scale = scale;</span>
-<span class="nc" id="L69">	}</span>
+<span class="fc" id="L62">			double scale) {</span>
+<span class="fc" id="L63">		this.ug = ug;</span>
+<span class="fc" id="L64">		this.colorResolver = colorResolver;</span>
+<span class="fc" id="L65">		this.at = at;</span>
+<span class="fc" id="L66">		this.angle = angle;</span>
+<span class="fc" id="L67">		this.scale = scale;</span>
+<span class="fc" id="L68">	}</span>
 
 	public UGraphic getUg() {
-<span class="nc" id="L72">		return ug;</span>
+<span class="fc" id="L71">		return ug;</span>
 	}
 
 	public UGraphicWithScale apply(UChange change) {
-<span class="nc" id="L76">		return new UGraphicWithScale(ug.apply(change), colorResolver, at, angle, scale);</span>
+<span class="fc" id="L75">		return new UGraphicWithScale(ug.apply(change), colorResolver, at, angle, scale);</span>
 	}
 
 	public HColor getTrueColor(String code) {
-<span class="nc" id="L80">		return colorResolver.getTrueColor(code);</span>
+<span class="fc" id="L79">		return colorResolver.getTrueColor(code);</span>
 	}
 
 	public HColor getDefaultColor() {
-<span class="nc" id="L84">		return colorResolver.getDefaultColor();</span>
+<span class="fc" id="L83">		return colorResolver.getDefaultColor();</span>
 	}
 
 	public UGraphicWithScale applyScale(double changex, double changey) {
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (changex != changey)</span>
-<span class="nc" id="L89">			throw new IllegalArgumentException();</span>
-<span class="nc" id="L90">		final XAffineTransform copy = new XAffineTransform(at);</span>
-<span class="nc" id="L91">		copy.scale(changex, changey);</span>
-<span class="nc" id="L92">		return new UGraphicWithScale(ug, colorResolver, copy, angle, 1 * changex);</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (changex != changey)</span>
+<span class="nc" id="L88">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L89">		final XAffineTransform copy = new XAffineTransform(at);</span>
+<span class="fc" id="L90">		copy.scale(changex, changey);</span>
+<span class="fc" id="L91">		return new UGraphicWithScale(ug, colorResolver, copy, angle, 1 * changex);</span>
 	}
 
 	public void draw(UShape shape) {
-<span class="nc" id="L96">		ug.draw(shape);</span>
-<span class="nc" id="L97">	}</span>
+<span class="fc" id="L95">		ug.draw(shape);</span>
+<span class="fc" id="L96">	}</span>
 
 	public UGraphicWithScale applyRotate(double delta_angle, double x, double y) {
-<span class="nc" id="L100">		final XAffineTransform copy = new XAffineTransform(at);</span>
-<span class="nc" id="L101">		copy.rotate(delta_angle * Math.PI / 180, x, y);</span>
-<span class="nc" id="L102">		return new UGraphicWithScale(ug, colorResolver, copy, this.angle + delta_angle, this.scale);</span>
+<span class="fc" id="L99">		final XAffineTransform copy = new XAffineTransform(at);</span>
+<span class="fc" id="L100">		copy.rotate(delta_angle * Math.PI / 180, x, y);</span>
+<span class="fc" id="L101">		return new UGraphicWithScale(ug, colorResolver, copy, this.angle + delta_angle, this.scale);</span>
 	}
 
 	public UGraphicWithScale applyTranslate(double x, double y) {
-<span class="nc" id="L106">		final XAffineTransform copy = new XAffineTransform(at);</span>
-<span class="nc" id="L107">		copy.translate(x, y);</span>
-<span class="nc" id="L108">		return new UGraphicWithScale(ug, colorResolver, copy, angle, this.scale);</span>
+<span class="fc" id="L105">		final XAffineTransform copy = new XAffineTransform(at);</span>
+<span class="fc" id="L106">		copy.translate(x, y);</span>
+<span class="fc" id="L107">		return new UGraphicWithScale(ug, colorResolver, copy, angle, this.scale);</span>
 	}
 
 	public XAffineTransform getAffineTransform() {
-<span class="nc" id="L112">		return at;</span>
+<span class="fc" id="L111">		return at;</span>
 	}
 
 	public UGraphicWithScale applyMatrix(double v1, double v2, double v3, double v4, double v5, double v6) {
-<span class="nc" id="L116">		final XAffineTransform copy = new XAffineTransform(at);</span>
-<span class="nc" id="L117">		copy.concatenate(new XAffineTransform(new double[] { v1, v2, v3, v4, v5, v6 }));</span>
-<span class="nc" id="L118">		return new UGraphicWithScale(ug, colorResolver, copy, angle, this.scale);</span>
+<span class="fc" id="L115">		final XAffineTransform copy = new XAffineTransform(at);</span>
+<span class="fc" id="L116">		copy.concatenate(new XAffineTransform(new double[] { v1, v2, v3, v4, v5, v6 }));</span>
+<span class="fc" id="L117">		return new UGraphicWithScale(ug, colorResolver, copy, angle, this.scale);</span>
 	}
 
 	public final double getAngle() {
-<span class="nc" id="L122">		return angle;</span>
+<span class="fc" id="L121">		return angle;</span>
 	}
 
 	public double getInitialScale() {
-<span class="nc" id="L126">		return scale;</span>
+<span class="fc" id="L125">		return scale;</span>
 	}
 
 }

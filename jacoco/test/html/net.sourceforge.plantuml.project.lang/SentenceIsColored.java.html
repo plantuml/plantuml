@@ -47,10 +47,10 @@ public class SentenceIsColored extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="fc" id="L50">		final Task task = (Task) subject;</span>
-<span class="fc" id="L51">		final CenterBorderColor colors = (CenterBorderColor) complement;</span>
-<span class="fc" id="L52">		task.setColors(colors);</span>
-<span class="fc" id="L53">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L50">		final Task task = (Task) subject;</span>
+<span class="nc" id="L51">		final CenterBorderColor colors = (CenterBorderColor) complement;</span>
+<span class="nc" id="L52">		task.setColors(colors);</span>
+<span class="nc" id="L53">		return CommandExecutionResult.ok();</span>
 	}
 
 }

@@ -45,15 +45,15 @@ abstract class AbstractReal implements Real {
 <span class="fc" id="L45">	}</span>
 
 	final RealLine getLine() {
-<span class="fc" id="L48">		return line;</span>
+<span class="nc" id="L48">		return line;</span>
 	}
 
 	abstract double getCurrentValueInternal();
 
 	final public double getCurrentValue() {
-<span class="fc" id="L54">		final double result = getCurrentValueInternal();</span>
-<span class="fc" id="L55">		line.register(result);</span>
-<span class="fc" id="L56">		return result;</span>
+<span class="nc" id="L54">		final double result = getCurrentValueInternal();</span>
+<span class="nc" id="L55">		line.register(result);</span>
+<span class="nc" id="L56">		return result;</span>
 	}
 
 	public Real getMaxAbsolute() {

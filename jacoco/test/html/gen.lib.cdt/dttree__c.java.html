@@ -131,23 +131,23 @@ try {
 <span class="pc bpc" id="L131" title="1 of 4 branches missed.">	{	if((root) == null || (type&amp;(DT_CLEAR|DT_FIRST|DT_LAST)) == 0 )</span>
 <span class="fc" id="L132">			return null;</span>
 	
-<span class="fc bfc" id="L134" title="All 2 branches covered.">		if((type&amp;DT_CLEAR)!=0) /* delete all objects */</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if((type&amp;DT_CLEAR)!=0) /* delete all objects */</span>
 		{
-<span class="pc bpc" id="L136" title="2 of 4 branches missed.">			if(disc.freef!=null || disc.link.getSign() &lt; 0) {</span>
+<span class="nc bnc" id="L136" title="All 4 branches missed.">			if(disc.freef!=null || disc.link.getSign() &lt; 0) {</span>
 				do {
-<span class="fc bfc" id="L138" title="All 2 branches covered.">					while((t = root._left)!=null )</span>
-<span class="fc" id="L139">						{ rrotate(root, t); root = t; }</span>
-<span class="fc" id="L140">					t = root.right;</span>
-<span class="pc bpc" id="L141" title="1 of 2 branches missed.">					if(disc.freef!=null)</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">					while((t = root._left)!=null )</span>
+<span class="nc" id="L139">						{ rrotate(root, t); root = t; }</span>
+<span class="nc" id="L140">					t = root.right;</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">					if(disc.freef!=null)</span>
 <span class="nc" id="L142">						throw new UnsupportedOperationException();</span>
 //						(*disc-&gt;freef)(dt,(lk &lt; 0 ? ((Dthold_t*)(root))-&gt;obj : (void*)((char*)(root) - lk) ),disc);
-<span class="pc bpc" id="L144" title="1 of 2 branches missed.">					if(disc.link.getSign() &lt; 0)</span>
-<span class="fc" id="L145">						dt.memoryf.exe(zz, dt, root, null, disc);</span>
-<span class="fc bfc" id="L146" title="All 2 branches covered.">				} while((root = t)!=null );</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">					if(disc.link.getSign() &lt; 0)</span>
+<span class="nc" id="L145">						dt.memoryf.exe(zz, dt, root, null, disc);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">				} while((root = t)!=null );</span>
 			}
-<span class="fc" id="L148">			dt.data.size = 0;</span>
-<span class="fc" id="L149">			dt.data.here = null;</span>
-<span class="fc" id="L150">			return null;</span>
+<span class="nc" id="L148">			dt.data.size = 0;</span>
+<span class="nc" id="L149">			dt.data.here = null;</span>
+<span class="nc" id="L150">			return null;</span>
 		}
 		else /* computing largest/smallest element */
 <span class="pc bpc" id="L153" title="1 of 2 branches missed.">		{	if((type&amp;DT_LAST)!=0)</span>
@@ -170,7 +170,7 @@ try {
 <span class="fc" id="L170">	l = r = link;</span>
 	/* allow apps to delete an object &quot;actually&quot; in the dictionary */
 	try {
-<span class="pc bpc" id="L173" title="1 of 4 branches missed.">	if(dt.meth.type == DT_OBAG &amp;&amp; ((type&amp;(DT_DELETE|DT_DETACH))!=0) ) {</span>
+<span class="pc bpc" id="L173" title="3 of 4 branches missed.">	if(dt.meth.type == DT_OBAG &amp;&amp; ((type&amp;(DT_DELETE|DT_DETACH))!=0) ) {</span>
 <span class="nc" id="L174">		throw new UnsupportedOperationException();</span>
 //	{	key = (void*)(sz &lt; 0 ? *((char**)((char*)(obj)+ky)) : ((char*)(obj)+ky));
 //		for(o = (*(((Dt_t*)(dt))-&gt;searchf))((dt),(void*)(obj),0000004); o; o = (*(((Dt_t*)(dt))-&gt;searchf))((dt),(void*)(o),0000010) )
@@ -205,7 +205,7 @@ try {
 	}
 <span class="fc" id="L206">	} catch (do_search do_search) {</span>
 //		do_search:
-<span class="pc bpc" id="L208" title="3 of 6 branches missed.">		if(dt.meth.type == DT_OSET &amp;&amp;</span>
+<span class="pc bpc" id="L208" title="4 of 6 branches missed.">		if(dt.meth.type == DT_OSET &amp;&amp;</span>
 		   (minp = dt.data.minp) != 0 &amp;&amp; (type&amp;(DT_MATCH|DT_SEARCH))!=0)
 		{	/* simple search, note that minp should be even */
 //			for(t = root, n = 0; n &lt; minp; ++n)
@@ -480,7 +480,7 @@ try {
 <span class="fc" id="L480">	} catch (has_root has_root) {</span>
 <span class="fc" id="L481">		root._left = link.right;</span>
 <span class="fc" id="L482">		root.right = link._left;</span>
-<span class="pc bpc" id="L483" title="1 of 4 branches missed.">		if((dt.meth.type&amp;DT_OBAG)!=0 &amp;&amp; (type&amp;(DT_SEARCH|DT_MATCH))!=0 )</span>
+<span class="pc bpc" id="L483" title="3 of 4 branches missed.">		if((dt.meth.type&amp;DT_OBAG)!=0 &amp;&amp; (type&amp;(DT_SEARCH|DT_MATCH))!=0 )</span>
 		{	//key = (lk &lt; 0 ? ((Dthold_t*)(root))-&gt;obj : (void*)((char*)(root) - lk) ); key = (void*)(sz &lt; 0 ? *((char**)((char*)(key)+ky)) : ((char*)(key)+ky));
 <span class="nc" id="L485">			throw new UnsupportedOperationException();</span>
 //			while((t = root-&gt;hl._left) )

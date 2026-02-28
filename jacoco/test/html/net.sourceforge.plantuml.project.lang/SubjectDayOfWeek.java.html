@@ -60,8 +60,8 @@ public class SubjectDayOfWeek implements Subject&lt;GanttDiagram&gt; {
 	}
 
 	public Failable&lt;? extends Object&gt; getMe(GanttDiagram project, RegexResult arg) {
-<span class="fc" id="L63">		final String s = arg.get(&quot;SUBJECT&quot;, 0);</span>
-<span class="fc" id="L64">		return Failable.ok(DayOfWeekUtils.fromString(s));</span>
+<span class="nc" id="L63">		final String s = arg.get(&quot;SUBJECT&quot;, 0);</span>
+<span class="nc" id="L64">		return Failable.ok(DayOfWeekUtils.fromString(s));</span>
 	}
 
 	public Collection&lt;? extends SentenceSimple&lt;GanttDiagram&gt;&gt; getSentences() {
@@ -89,9 +89,9 @@ public class SubjectDayOfWeek implements Subject&lt;GanttDiagram&gt; {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="fc" id="L92">			final DayOfWeek day = (DayOfWeek) subject;</span>
-<span class="fc" id="L93">			project.closeDayOfWeek(day, (String) complement);</span>
-<span class="fc" id="L94">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L92">			final DayOfWeek day = (DayOfWeek) subject;</span>
+<span class="nc" id="L93">			project.closeDayOfWeek(day, (String) complement);</span>
+<span class="nc" id="L94">			return CommandExecutionResult.ok();</span>
 		}
 
 	}

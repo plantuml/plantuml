@@ -67,15 +67,15 @@ import h.ST_Rect_t;
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/node.c&quot;, name=&quot;&quot;, key=&quot;9uj7ni1m6q6drtoh56w82d6m4&quot;, definition=&quot;Node_t *RTreeNewNode(RTree_t * rtp)&quot;)
 public static ST_Node_t___ RTreeNewNode(ST_RTree rtp) {
-<span class="fc" id="L70">ENTERING(&quot;9uj7ni1m6q6drtoh56w82d6m4&quot;,&quot;RTreeNewNode&quot;);</span>
+<span class="nc" id="L70">ENTERING(&quot;9uj7ni1m6q6drtoh56w82d6m4&quot;,&quot;RTreeNewNode&quot;);</span>
 try {
 	ST_Node_t___ n;
-<span class="fc" id="L73">	rtp.NodeCount = rtp.NodeCount + 1;</span>
-<span class="fc" id="L74">	n = new ST_Node_t___();</span>
-<span class="fc" id="L75">     InitNode(n);</span>
-<span class="fc" id="L76">     return n;</span>
+<span class="nc" id="L73">	rtp.NodeCount = rtp.NodeCount + 1;</span>
+<span class="nc" id="L74">	n = new ST_Node_t___();</span>
+<span class="nc" id="L75">     InitNode(n);</span>
+<span class="nc" id="L76">     return n;</span>
 } finally {
-<span class="fc" id="L78">LEAVING(&quot;9uj7ni1m6q6drtoh56w82d6m4&quot;,&quot;RTreeNewNode&quot;);</span>
+<span class="nc" id="L78">LEAVING(&quot;9uj7ni1m6q6drtoh56w82d6m4&quot;,&quot;RTreeNewNode&quot;);</span>
 }
 }
 
@@ -88,18 +88,18 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/node.c&quot;, name=&quot;InitNode&quot;, key=&quot;4qk9wkm05q2pwf20ud6g2tufg&quot;, definition=&quot;void InitNode(Node_t * n)&quot;)
 public static void InitNode(ST_Node_t___ n) {
-<span class="fc" id="L91">ENTERING(&quot;4qk9wkm05q2pwf20ud6g2tufg&quot;,&quot;InitNode&quot;);</span>
+<span class="nc" id="L91">ENTERING(&quot;4qk9wkm05q2pwf20ud6g2tufg&quot;,&quot;InitNode&quot;);</span>
 try {
      int i;
-<span class="fc" id="L94">     n.count = 0;</span>
-<span class="fc" id="L95">     n.level = -1;</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">     for (i = 0; i &lt; 64; i++)</span>
-<span class="fc" id="L97">    	 InitBranch(n.branch[i]);</span>
+<span class="nc" id="L94">     n.count = 0;</span>
+<span class="nc" id="L95">     n.level = -1;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">     for (i = 0; i &lt; 64; i++)</span>
+<span class="nc" id="L97">    	 InitBranch(n.branch[i]);</span>
      // InitBranch(&amp;(n-&gt;branch[i]));
 } finally {
-<span class="fc" id="L100">LEAVING(&quot;4qk9wkm05q2pwf20ud6g2tufg&quot;,&quot;InitNode&quot;);</span>
+<span class="nc" id="L100">LEAVING(&quot;4qk9wkm05q2pwf20ud6g2tufg&quot;,&quot;InitNode&quot;);</span>
 }
-<span class="fc" id="L102">}</span>
+<span class="nc" id="L102">}</span>
 
 
 
@@ -109,14 +109,14 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/node.c&quot;, name=&quot;InitBranch&quot;, key=&quot;ruhxixxei7au9z1iaj0zggwo&quot;, definition=&quot;void InitBranch(Branch_t * b)&quot;)
 public static void InitBranch(ST_Branch_t b) {
-<span class="fc" id="L112">ENTERING(&quot;ruhxixxei7au9z1iaj0zggwo&quot;,&quot;InitBranch&quot;);</span>
+<span class="nc" id="L112">ENTERING(&quot;ruhxixxei7au9z1iaj0zggwo&quot;,&quot;InitBranch&quot;);</span>
 try {
-<span class="fc" id="L114">	InitRect(b.rect);</span>
-<span class="fc" id="L115">	b.child = null;</span>
+<span class="nc" id="L114">	InitRect(b.rect);</span>
+<span class="nc" id="L115">	b.child = null;</span>
 } finally {
-<span class="fc" id="L117">LEAVING(&quot;ruhxixxei7au9z1iaj0zggwo&quot;,&quot;InitBranch&quot;);</span>
+<span class="nc" id="L117">LEAVING(&quot;ruhxixxei7au9z1iaj0zggwo&quot;,&quot;InitBranch&quot;);</span>
 }
-<span class="fc" id="L119">}</span>
+<span class="nc" id="L119">}</span>
 
 
 
@@ -195,21 +195,21 @@ public static int PickBranch(ST_Rect_t r, ST_Node_t___ n) {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/node.c&quot;, name=&quot;AddBranch&quot;, key=&quot;2njctcrpeff95ysmv9ji34x4s&quot;, definition=&quot;int AddBranch(RTree_t * rtp, Branch_t * b, Node_t * n, Node_t ** new)&quot;)
 public static int AddBranch(ST_RTree rtp, ST_Branch_t b, ST_Node_t___ n, ST_Node_t___ new_[]) {
-<span class="fc" id="L198">ENTERING(&quot;2njctcrpeff95ysmv9ji34x4s&quot;,&quot;AddBranch&quot;);</span>
+<span class="nc" id="L198">ENTERING(&quot;2njctcrpeff95ysmv9ji34x4s&quot;,&quot;AddBranch&quot;);</span>
 try {
      int i;
 //     assert(b);
 //     assert(n);
-<span class="pc bpc" id="L203" title="1 of 2 branches missed.">     if (n.count &lt; 64) {	/* split won't be necessary */</span>
-<span class="pc bpc" id="L204" title="1 of 2 branches missed."> 	for (i = 0; i &lt; 64; i++) {	/* find empty branch */</span>
-<span class="fc bfc" id="L205" title="All 2 branches covered."> 	    if (n.branch[i].child == null) {</span>
-<span class="fc" id="L206"> 		n.branch[i].___(b);</span>
-<span class="fc" id="L207"> 		n.count = n.count+1;</span>
-<span class="fc" id="L208"> 		break;</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">     if (n.count &lt; 64) {	/* split won't be necessary */</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed."> 	for (i = 0; i &lt; 64; i++) {	/* find empty branch */</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed."> 	    if (n.branch[i].child == null) {</span>
+<span class="nc" id="L206"> 		n.branch[i].___(b);</span>
+<span class="nc" id="L207"> 		n.count = n.count+1;</span>
+<span class="nc" id="L208"> 		break;</span>
  	    }
 }
 // 	assert(i &lt; 64);
-<span class="fc" id="L212"> 	return 0;</span>
+<span class="nc" id="L212"> 	return 0;</span>
      } else {
 <span class="nc bnc" id="L214" title="All 2 branches missed."> 	if (rtp.StatFlag!=0) {</span>
 <span class="nc" id="L215">UNSUPPORTED(&quot;2y8kv6b3ysrr61q7tqn76rhhc&quot;); // 	    if (rtp-&gt;Deleting)</span>
@@ -226,7 +226,7 @@ try {
 <span class="nc" id="L226"> 	return 1;</span>
      }
 } finally {
-<span class="fc" id="L229">LEAVING(&quot;2njctcrpeff95ysmv9ji34x4s&quot;,&quot;AddBranch&quot;);</span>
+<span class="nc" id="L229">LEAVING(&quot;2njctcrpeff95ysmv9ji34x4s&quot;,&quot;AddBranch&quot;);</span>
 }
 }
 
@@ -238,16 +238,16 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/node.c&quot;, name=&quot;DisconBranch&quot;, key=&quot;eqzamflj58f43cflwns9cemnk&quot;, definition=&quot;void DisconBranch(Node_t * n, int i)&quot;)
 public static void DisconBranch(ST_Node_t___ n, int i) {
-<span class="fc" id="L241">ENTERING(&quot;eqzamflj58f43cflwns9cemnk&quot;,&quot;DisconBranch&quot;);</span>
+<span class="nc" id="L241">ENTERING(&quot;eqzamflj58f43cflwns9cemnk&quot;,&quot;DisconBranch&quot;);</span>
 try {
 //     assert(n &amp;&amp; i &gt;= 0 &amp;&amp; i &lt; 64);
 //     assert(n-&gt;branch[i].child);
-<span class="fc" id="L245">     InitBranch(n.branch[i]);</span>
-<span class="fc" id="L246">     n.count = n.count-1;</span>
+<span class="nc" id="L245">     InitBranch(n.branch[i]);</span>
+<span class="nc" id="L246">     n.count = n.count-1;</span>
 } finally {
-<span class="fc" id="L248">LEAVING(&quot;eqzamflj58f43cflwns9cemnk&quot;,&quot;DisconBranch&quot;);</span>
+<span class="nc" id="L248">LEAVING(&quot;eqzamflj58f43cflwns9cemnk&quot;,&quot;DisconBranch&quot;);</span>
 }
-<span class="fc" id="L250">}</span>
+<span class="nc" id="L250">}</span>
 
 
 }

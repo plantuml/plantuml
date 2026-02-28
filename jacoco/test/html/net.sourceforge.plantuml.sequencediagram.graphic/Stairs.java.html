@@ -60,22 +60,22 @@ import java.util.Map;
 	}
 
 	public void addStep(double y, int value) {
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		assert ys.size() == values.size();</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (ys.size() &gt; 0) {</span>
-<span class="fc" id="L65">			final double lastY = ys.get(ys.size() - 1);</span>
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">			if (y &lt; lastY) {</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		assert ys.size() == values.size();</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (ys.size() &gt; 0) {</span>
+<span class="nc" id="L65">			final double lastY = ys.get(ys.size() - 1);</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">			if (y &lt; lastY) {</span>
 <span class="nc" id="L67">				throw new IllegalArgumentException();</span>
 			}
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">			if (lastY == y) {</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">			if (lastY == y) {</span>
 <span class="nc" id="L70">				values.set(ys.size() - 1, value);</span>
 <span class="nc" id="L71">				cache.clear();</span>
 <span class="nc" id="L72">				return;</span>
 			}
 		}
-<span class="fc" id="L75">		ys.add(y);</span>
-<span class="fc" id="L76">		values.add(value);</span>
-<span class="fc" id="L77">		cache.clear();</span>
-<span class="fc" id="L78">	}</span>
+<span class="nc" id="L75">		ys.add(y);</span>
+<span class="nc" id="L76">		values.add(value);</span>
+<span class="nc" id="L77">		cache.clear();</span>
+<span class="nc" id="L78">	}</span>
 
 	public int getMaxValue() {
 <span class="nc" id="L81">		int max = Integer.MIN_VALUE;</span>
@@ -109,22 +109,22 @@ import java.util.Map;
 
 	private int getValueSlow(double y) {
 <span class="fc" id="L111">		final int idx = Collections.binarySearch(ys, y);</span>
-<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (idx &gt;= 0) {</span>
-<span class="fc" id="L113">			return values.get(idx);</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (idx &gt;= 0) {</span>
+<span class="nc" id="L113">			return values.get(idx);</span>
 		}
 <span class="fc" id="L115">		final int insertPoint = -idx - 1;</span>
-<span class="fc bfc" id="L116" title="All 2 branches covered.">		if (insertPoint == 0) {</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (insertPoint == 0) {</span>
 <span class="fc" id="L117">			return 0;</span>
 		}
-<span class="fc" id="L119">		return values.get(insertPoint - 1);</span>
+<span class="nc" id="L119">		return values.get(insertPoint - 1);</span>
 	}
 
 	public int getLastValue() {
-<span class="fc" id="L123">		final int size = values.size();</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (size == 0) {</span>
-<span class="fc" id="L125">			return 0;</span>
+<span class="nc" id="L123">		final int size = values.size();</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (size == 0) {</span>
+<span class="nc" id="L125">			return 0;</span>
 		}
-<span class="fc" id="L127">		return values.get(size - 1);</span>
+<span class="nc" id="L127">		return values.get(size - 1);</span>
 	}
 
 }

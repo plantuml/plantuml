@@ -109,10 +109,10 @@ public class FtileBox extends AbstractFtile {
 	}
 
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (swimlane == null)</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (swimlane == null)</span>
 <span class="nc" id="L113">			return PatchUtils.emptySet();</span>
 
-<span class="fc" id="L115">		return Collections.singleton(swimlane);</span>
+<span class="nc" id="L115">		return Collections.singleton(swimlane);</span>
 	}
 
 	public Swimlane getSwimlaneIn() {
@@ -120,7 +120,7 @@ public class FtileBox extends AbstractFtile {
 	}
 
 	public Swimlane getSwimlaneOut() {
-<span class="fc" id="L123">		return swimlane;</span>
+<span class="nc" id="L123">		return swimlane;</span>
 	}
 
 <span class="fc" id="L126">	class MyStencil implements Stencil {</span>

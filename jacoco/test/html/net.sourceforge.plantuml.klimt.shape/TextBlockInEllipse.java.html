@@ -49,22 +49,22 @@ public class TextBlockInEllipse extends AbstractTextBlock implements TextBlock {
 	private final TextBlock text;
 	private final ContainingEllipse ellipse;
 
-<span class="fc" id="L52">	public TextBlockInEllipse(TextBlock text, StringBounder stringBounder) {</span>
-<span class="fc" id="L53">		this.text = text;</span>
-<span class="fc" id="L54">		final XDimension2D textDim = text.calculateDimension(stringBounder);</span>
-<span class="fc" id="L55">		double alpha = textDim.getHeight() / textDim.getWidth();</span>
-<span class="fc bfc" id="L56" title="All 2 branches covered.">		if (alpha &lt; .2) {</span>
-<span class="fc" id="L57">			alpha = .2;</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		} else if (alpha &gt; .8) {</span>
+<span class="nc" id="L52">	public TextBlockInEllipse(TextBlock text, StringBounder stringBounder) {</span>
+<span class="nc" id="L53">		this.text = text;</span>
+<span class="nc" id="L54">		final XDimension2D textDim = text.calculateDimension(stringBounder);</span>
+<span class="nc" id="L55">		double alpha = textDim.getHeight() / textDim.getWidth();</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		if (alpha &lt; .2) {</span>
+<span class="nc" id="L57">			alpha = .2;</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		} else if (alpha &gt; .8) {</span>
 <span class="nc" id="L59">			alpha = .8;</span>
 		}
-<span class="fc" id="L61">		final Footprint footprint = new Footprint(stringBounder);</span>
-<span class="fc" id="L62">		ellipse = footprint.getEllipse(text, alpha);</span>
+<span class="nc" id="L61">		final Footprint footprint = new Footprint(stringBounder);</span>
+<span class="nc" id="L62">		ellipse = footprint.getEllipse(text, alpha);</span>
 
-<span class="fc" id="L64">	}</span>
+<span class="nc" id="L64">	}</span>
 
 	public UEllipse getUEllipse() {
-<span class="fc" id="L67">		return ellipse.asUEllipse().bigger(6);</span>
+<span class="nc" id="L67">		return ellipse.asUEllipse().bigger(6);</span>
 	}
 
 	public void drawU(UGraphic ug) {
@@ -80,7 +80,7 @@ public class TextBlockInEllipse extends AbstractTextBlock implements TextBlock {
 <span class="nc" id="L80">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L83">		return getUEllipse().getDimension();</span>
+<span class="nc" id="L83">		return getUEllipse().getDimension();</span>
 	}
 
 	public void setDeltaShadow(double deltaShadow) {

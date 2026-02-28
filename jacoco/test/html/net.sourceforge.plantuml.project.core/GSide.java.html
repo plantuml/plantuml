@@ -35,15 +35,15 @@
  */
 package net.sourceforge.plantuml.project.core;
 
-<span class="fc" id="L38">public enum GSide {</span>
-<span class="fc" id="L39">	LEFT, RIGHT, TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT;</span>
+<span class="nc" id="L38">public enum GSide {</span>
+<span class="nc" id="L39">	LEFT, RIGHT, TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT;</span>
 
 	public boolean isBottom() {
-<span class="pc bpc" id="L42" title="1 of 4 branches missed.">		return this == BOTTOM_LEFT || this == BOTTOM_RIGHT;</span>
+<span class="nc bnc" id="L42" title="All 4 branches missed.">		return this == BOTTOM_LEFT || this == BOTTOM_RIGHT;</span>
 	}
 
 	public boolean isTop() {
-<span class="pc bpc" id="L46" title="2 of 4 branches missed.">		return this == TOP_LEFT || this == TOP_RIGHT;</span>
+<span class="nc bnc" id="L46" title="All 4 branches missed.">		return this == TOP_LEFT || this == TOP_RIGHT;</span>
 	}
 	
 	public GSide reverseBottomTop() {

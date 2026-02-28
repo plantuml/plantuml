@@ -48,27 +48,27 @@ package h;
 import smetana.core.UnsupportedStarStruct;
 import smetana.core.__struct__;
 
-<span class="fc" id="L51">final public class ST_BestPos_t extends UnsupportedStarStruct {</span>
+<span class="nc" id="L51">final public class ST_BestPos_t extends UnsupportedStarStruct {</span>
 
 	public int n;
 	public double area;
-<span class="fc" id="L55">	public final ST_pointf pos = new ST_pointf();</span>
+<span class="nc" id="L55">	public final ST_pointf pos = new ST_pointf();</span>
 
 	@Override
 	public __struct__ copy() {
-<span class="fc" id="L59">		final ST_BestPos_t result = new ST_BestPos_t();</span>
-<span class="fc" id="L60">		result.n = this.n;</span>
-<span class="fc" id="L61">		result.area = this.area;</span>
-<span class="fc" id="L62">		result.pos.___((__struct__) this.pos);</span>
-<span class="fc" id="L63">		return result;</span>
+<span class="nc" id="L59">		final ST_BestPos_t result = new ST_BestPos_t();</span>
+<span class="nc" id="L60">		result.n = this.n;</span>
+<span class="nc" id="L61">		result.area = this.area;</span>
+<span class="nc" id="L62">		result.pos.___((__struct__) this.pos);</span>
+<span class="nc" id="L63">		return result;</span>
 	}
 	
 	public void ___(__struct__ other) {
-<span class="fc" id="L67">		ST_BestPos_t this2 = (ST_BestPos_t) other;</span>
-<span class="fc" id="L68">		this.n = this2.n;</span>
-<span class="fc" id="L69">		this.area = this2.area;</span>
-<span class="fc" id="L70">		this.pos.___((__struct__) this2.pos);</span>
-<span class="fc" id="L71">	}</span>
+<span class="nc" id="L67">		ST_BestPos_t this2 = (ST_BestPos_t) other;</span>
+<span class="nc" id="L68">		this.n = this2.n;</span>
+<span class="nc" id="L69">		this.area = this2.area;</span>
+<span class="nc" id="L70">		this.pos.___((__struct__) this2.pos);</span>
+<span class="nc" id="L71">	}</span>
 
 
 

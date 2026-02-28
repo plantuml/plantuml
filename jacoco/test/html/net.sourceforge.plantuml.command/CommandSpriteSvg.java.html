@@ -36,38 +36,39 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.emoji.SvgNanoParser;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.svg.parser.ISvgSpriteParser;
+import net.sourceforge.plantuml.svg.parser.SvgSpriteParserFactory;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandSpriteSvg extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L48">	public static final CommandSpriteSvg ME = new CommandSpriteSvg();</span>
+<span class="fc" id="L49">	public static final CommandSpriteSvg ME = new CommandSpriteSvg();</span>
 
 	private CommandSpriteSvg() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L52">		super(getRegexConcat());</span>
+<span class="fc" id="L53">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandSpriteSvg.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L56">		return RegexConcat.build(CommandSpriteSvg.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;sprite&quot;), //
-<span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;\\$?&quot;), //
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;([-%pLN_]+)&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L61">				new RegexLeaf(1, &quot;SVG&quot;, &quot;(\\&lt;svg\\b.*\\&lt;/svg\\&gt;)&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L62">				new RegexLeaf(1, &quot;SVG&quot;, &quot;(\\&lt;svg\\b.*\\&lt;/svg\\&gt;)&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L66">		final String svg = arg.get(&quot;SVG&quot;, 0);</span>
-<span class="nc" id="L67">		final SvgNanoParser nanoParser = new SvgNanoParser(svg);</span>
-<span class="nc" id="L68">		system.addSprite(arg.get(&quot;NAME&quot;, 0), nanoParser);</span>
+<span class="nc" id="L67">		final String svg = arg.get(&quot;SVG&quot;, 0);</span>
+<span class="nc" id="L68">		final ISvgSpriteParser parser = SvgSpriteParserFactory.create(svg, system.getPragma());</span>
+<span class="nc" id="L69">		system.addSprite(arg.get(&quot;NAME&quot;, 0), parser);</span>
 
-<span class="nc" id="L70">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L71">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

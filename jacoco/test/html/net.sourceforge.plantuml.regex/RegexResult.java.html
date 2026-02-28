@@ -51,10 +51,10 @@ public class RegexResult {
 <span class="fc" id="L51">		this.matcher = null;</span>
 <span class="fc" id="L52">	}</span>
 
-<span class="fc" id="L54">	public RegexResult(UMatcher matcher) {</span>
-<span class="fc" id="L55">		this.data = Collections.emptyMap();</span>
-<span class="fc" id="L56">		this.matcher = matcher;</span>
-<span class="fc" id="L57">	}</span>
+<span class="nc" id="L54">	public RegexResult(UMatcher matcher) {</span>
+<span class="nc" id="L55">		this.data = Collections.emptyMap();</span>
+<span class="nc" id="L56">		this.matcher = matcher;</span>
+<span class="nc" id="L57">	}</span>
 
 	@Override
 	public String toString() {
@@ -64,17 +64,17 @@ public class RegexResult {
 	}
 
 	public RegexPartialMatch get(String key) {
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (matcher != null)</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (matcher != null)</span>
 <span class="nc" id="L68">			throw new UnsupportedOperationException();</span>
-<span class="fc" id="L69">		return data.get(key);</span>
+<span class="nc" id="L69">		return data.get(key);</span>
 	}
 
 	public String get(String key, int num) {
-<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (matcher != null) {</span>
-<span class="fc" id="L74">			final List&lt;String&gt; list = matcher.getCapture(key);</span>
-<span class="pc bpc" id="L75" title="1 of 4 branches missed.">			if (list == null || list.size() == 0)</span>
-<span class="fc" id="L76">				return null;</span>
-<span class="fc" id="L77">			return list.get(num);</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (matcher != null) {</span>
+<span class="nc" id="L74">			final List&lt;String&gt; list = matcher.getCapture(key);</span>
+<span class="nc bnc" id="L75" title="All 4 branches missed.">			if (list == null || list.size() == 0)</span>
+<span class="nc" id="L76">				return null;</span>
+<span class="nc" id="L77">			return list.get(num);</span>
 
 		}
 <span class="fc" id="L80">		final RegexPartialMatch reg = data.get(key);</span>
@@ -85,17 +85,17 @@ public class RegexResult {
 	}
 
 	public String getLazzy(String key, int num) {
-<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (matcher != null) {</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">			for (String candidate : matcher.getKeysToBeRefactored()) {</span>
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">				if (candidate.startsWith(key) == false)</span>
-<span class="fc" id="L91">					continue;</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (matcher != null) {</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			for (String candidate : matcher.getKeysToBeRefactored()) {</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">				if (candidate.startsWith(key) == false)</span>
+<span class="nc" id="L91">					continue;</span>
 <span class="nc" id="L92">				final List&lt;String&gt; list = matcher.getCapture(candidate);</span>
 <span class="nc bnc" id="L93" title="All 4 branches missed.">				if (list == null || list.size() == 0)</span>
 <span class="nc" id="L94">					return null;</span>
 <span class="nc" id="L95">				return list.get(num);</span>
 
 			}
-<span class="fc" id="L98">			return null;</span>
+<span class="nc" id="L98">			return null;</span>
 		}
 
 <span class="fc bfc" id="L101" title="All 2 branches covered.">		for (Map.Entry&lt;String, RegexPartialMatch&gt; ent : data.entrySet()) {</span>

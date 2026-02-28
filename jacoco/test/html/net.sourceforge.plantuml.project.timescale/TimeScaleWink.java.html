@@ -43,20 +43,20 @@ public class TimeScaleWink implements TimeScale {
 	private final double cellWidth;
 	private final PrintScale printScale;
 
-<span class="fc" id="L46">	public TimeScaleWink(double size, double scale, PrintScale printScale) {</span>
-<span class="fc" id="L47">		this.cellWidth = size * scale;</span>
-<span class="fc" id="L48">		this.printScale = printScale;</span>
-<span class="fc" id="L49">	}</span>
+<span class="nc" id="L46">	public TimeScaleWink(double size, double scale, PrintScale printScale) {</span>
+<span class="nc" id="L47">		this.cellWidth = size * scale;</span>
+<span class="nc" id="L48">		this.printScale = printScale;</span>
+<span class="nc" id="L49">	}</span>
 
 	@Override
 	public double getPosition(TimePoint instant) {
-<span class="fc" id="L53">		final long wink = instant.getMillis();</span>
-<span class="fc" id="L54">		return wink * cellWidth / TimePoint.MILLISECONDS_PER_DAY;</span>
+<span class="nc" id="L53">		final long wink = instant.getMillis();</span>
+<span class="nc" id="L54">		return wink * cellWidth / TimePoint.MILLISECONDS_PER_DAY;</span>
 	}
 
 	@Override
 	public double getWidth(TimePoint instant) {
-<span class="fc" id="L59">		return cellWidth;</span>
+<span class="nc" id="L59">		return cellWidth;</span>
 	}
 
 	@Override

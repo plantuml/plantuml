@@ -41,23 +41,23 @@ public class YTransformer {
 
 	private final double alpha;
 
-<span class="fc" id="L44">	public YTransformer(double alpha) {</span>
-<span class="pc bpc" id="L45" title="1 of 2 branches missed.">		if (Double.isNaN(alpha))</span>
+<span class="nc" id="L44">	public YTransformer(double alpha) {</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">		if (Double.isNaN(alpha))</span>
 <span class="nc" id="L46">			this.alpha = 1;</span>
 		else
-<span class="fc" id="L48">			this.alpha = alpha;</span>
-<span class="fc" id="L49">	}</span>
+<span class="nc" id="L48">			this.alpha = alpha;</span>
+<span class="nc" id="L49">	}</span>
 
 	public XPoint2D getPoint2D(XPoint2D pt) {
 <span class="nc" id="L52">		return new XPoint2D(pt.getX(), pt.getY() * alpha);</span>
 	}
 
 	public XPoint2D getReversePoint2D(XPoint2D pt) {
-<span class="fc" id="L56">		return new XPoint2D(pt.getX(), pt.getY() / alpha);</span>
+<span class="nc" id="L56">		return new XPoint2D(pt.getX(), pt.getY() / alpha);</span>
 	}
 
 	public double getAlpha() {
-<span class="fc" id="L60">		return alpha;</span>
+<span class="nc" id="L60">		return alpha;</span>
 	}
 
 }

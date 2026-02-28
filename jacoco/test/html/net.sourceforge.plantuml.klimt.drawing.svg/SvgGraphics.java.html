@@ -381,47 +381,47 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 <span class="fc" id="L381">	private Map&lt;List&lt;Object&gt;, String&gt; gradients = new HashMap&lt;List&lt;Object&gt;, String&gt;();</span>
 
 	public String createSvgGradient(String color1, String color2, char policy) {
-<span class="nc" id="L384">		final List&lt;Object&gt; key = Arrays.asList((Object) color1, color2, policy);</span>
-<span class="nc" id="L385">		String id = gradients.get(key);</span>
-<span class="nc bnc" id="L386" title="All 2 branches missed.">		if (id == null) {</span>
-<span class="nc" id="L387">			final Element elt = document.createElement(&quot;linearGradient&quot;);</span>
-<span class="nc bnc" id="L388" title="All 2 branches missed.">			if (policy == '|') {</span>
-<span class="nc" id="L389">				elt.setAttribute(&quot;x1&quot;, &quot;0%&quot;);</span>
-<span class="nc" id="L390">				elt.setAttribute(&quot;y1&quot;, &quot;50%&quot;);</span>
-<span class="nc" id="L391">				elt.setAttribute(&quot;x2&quot;, &quot;100%&quot;);</span>
-<span class="nc" id="L392">				elt.setAttribute(&quot;y2&quot;, &quot;50%&quot;);</span>
-<span class="nc bnc" id="L393" title="All 2 branches missed.">			} else if (policy == '\\') {</span>
-<span class="nc" id="L394">				elt.setAttribute(&quot;x1&quot;, &quot;0%&quot;);</span>
-<span class="nc" id="L395">				elt.setAttribute(&quot;y1&quot;, &quot;100%&quot;);</span>
-<span class="nc" id="L396">				elt.setAttribute(&quot;x2&quot;, &quot;100%&quot;);</span>
-<span class="nc" id="L397">				elt.setAttribute(&quot;y2&quot;, &quot;0%&quot;);</span>
-<span class="nc bnc" id="L398" title="All 2 branches missed.">			} else if (policy == '-') {</span>
-<span class="nc" id="L399">				elt.setAttribute(&quot;x1&quot;, &quot;50%&quot;);</span>
-<span class="nc" id="L400">				elt.setAttribute(&quot;y1&quot;, &quot;0%&quot;);</span>
-<span class="nc" id="L401">				elt.setAttribute(&quot;x2&quot;, &quot;50%&quot;);</span>
-<span class="nc" id="L402">				elt.setAttribute(&quot;y2&quot;, &quot;100%&quot;);</span>
+<span class="fc" id="L384">		final List&lt;Object&gt; key = Arrays.asList((Object) color1, color2, policy);</span>
+<span class="fc" id="L385">		String id = gradients.get(key);</span>
+<span class="fc bfc" id="L386" title="All 2 branches covered.">		if (id == null) {</span>
+<span class="fc" id="L387">			final Element elt = document.createElement(&quot;linearGradient&quot;);</span>
+<span class="fc bfc" id="L388" title="All 2 branches covered.">			if (policy == '|') {</span>
+<span class="fc" id="L389">				elt.setAttribute(&quot;x1&quot;, &quot;0%&quot;);</span>
+<span class="fc" id="L390">				elt.setAttribute(&quot;y1&quot;, &quot;50%&quot;);</span>
+<span class="fc" id="L391">				elt.setAttribute(&quot;x2&quot;, &quot;100%&quot;);</span>
+<span class="fc" id="L392">				elt.setAttribute(&quot;y2&quot;, &quot;50%&quot;);</span>
+<span class="fc bfc" id="L393" title="All 2 branches covered.">			} else if (policy == '\\') {</span>
+<span class="fc" id="L394">				elt.setAttribute(&quot;x1&quot;, &quot;0%&quot;);</span>
+<span class="fc" id="L395">				elt.setAttribute(&quot;y1&quot;, &quot;100%&quot;);</span>
+<span class="fc" id="L396">				elt.setAttribute(&quot;x2&quot;, &quot;100%&quot;);</span>
+<span class="fc" id="L397">				elt.setAttribute(&quot;y2&quot;, &quot;0%&quot;);</span>
+<span class="fc bfc" id="L398" title="All 2 branches covered.">			} else if (policy == '-') {</span>
+<span class="fc" id="L399">				elt.setAttribute(&quot;x1&quot;, &quot;50%&quot;);</span>
+<span class="fc" id="L400">				elt.setAttribute(&quot;y1&quot;, &quot;0%&quot;);</span>
+<span class="fc" id="L401">				elt.setAttribute(&quot;x2&quot;, &quot;50%&quot;);</span>
+<span class="fc" id="L402">				elt.setAttribute(&quot;y2&quot;, &quot;100%&quot;);</span>
 			} else {
-<span class="nc" id="L404">				elt.setAttribute(&quot;x1&quot;, &quot;0%&quot;);</span>
-<span class="nc" id="L405">				elt.setAttribute(&quot;y1&quot;, &quot;0%&quot;);</span>
-<span class="nc" id="L406">				elt.setAttribute(&quot;x2&quot;, &quot;100%&quot;);</span>
-<span class="nc" id="L407">				elt.setAttribute(&quot;y2&quot;, &quot;100%&quot;);</span>
+<span class="fc" id="L404">				elt.setAttribute(&quot;x1&quot;, &quot;0%&quot;);</span>
+<span class="fc" id="L405">				elt.setAttribute(&quot;y1&quot;, &quot;0%&quot;);</span>
+<span class="fc" id="L406">				elt.setAttribute(&quot;x2&quot;, &quot;100%&quot;);</span>
+<span class="fc" id="L407">				elt.setAttribute(&quot;y2&quot;, &quot;100%&quot;);</span>
 			}
-<span class="nc" id="L409">			id = gradientId + gradients.size();</span>
-<span class="nc" id="L410">			gradients.put(key, id);</span>
-<span class="nc" id="L411">			elt.setAttribute(&quot;id&quot;, id);</span>
+<span class="fc" id="L409">			id = gradientId + gradients.size();</span>
+<span class="fc" id="L410">			gradients.put(key, id);</span>
+<span class="fc" id="L411">			elt.setAttribute(&quot;id&quot;, id);</span>
 
-<span class="nc" id="L413">			final Element stop1 = document.createElement(&quot;stop&quot;);</span>
-<span class="nc" id="L414">			stop1.setAttribute(&quot;stop-color&quot;, color1);</span>
-<span class="nc" id="L415">			stop1.setAttribute(&quot;offset&quot;, &quot;0%&quot;);</span>
-<span class="nc" id="L416">			final Element stop2 = document.createElement(&quot;stop&quot;);</span>
-<span class="nc" id="L417">			stop2.setAttribute(&quot;stop-color&quot;, color2);</span>
-<span class="nc" id="L418">			stop2.setAttribute(&quot;offset&quot;, &quot;100%&quot;);</span>
+<span class="fc" id="L413">			final Element stop1 = document.createElement(&quot;stop&quot;);</span>
+<span class="fc" id="L414">			stop1.setAttribute(&quot;stop-color&quot;, color1);</span>
+<span class="fc" id="L415">			stop1.setAttribute(&quot;offset&quot;, &quot;0%&quot;);</span>
+<span class="fc" id="L416">			final Element stop2 = document.createElement(&quot;stop&quot;);</span>
+<span class="fc" id="L417">			stop2.setAttribute(&quot;stop-color&quot;, color2);</span>
+<span class="fc" id="L418">			stop2.setAttribute(&quot;offset&quot;, &quot;100%&quot;);</span>
 
-<span class="nc" id="L420">			elt.appendChild(stop1);</span>
-<span class="nc" id="L421">			elt.appendChild(stop2);</span>
-<span class="nc" id="L422">			defs.appendChild(elt);</span>
+<span class="fc" id="L420">			elt.appendChild(stop1);</span>
+<span class="fc" id="L421">			elt.appendChild(stop2);</span>
+<span class="fc" id="L422">			defs.appendChild(elt);</span>
 		}
-<span class="nc" id="L424">		return id;</span>
+<span class="fc" id="L424">		return id;</span>
 	}
 
 	public final void setFillColor(String fill) {
@@ -615,7 +615,7 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 
 <span class="fc" id="L616">				elt.setAttribute(&quot;font-family&quot;, fontFamily);</span>
 
-<span class="pc bpc" id="L618" title="1 of 4 branches missed.">				if (fontFamily.equalsIgnoreCase(&quot;monospace&quot;) || fontFamily.equalsIgnoreCase(&quot;courier&quot;))</span>
+<span class="fc bfc" id="L618" title="All 4 branches covered.">				if (fontFamily.equalsIgnoreCase(&quot;monospace&quot;) || fontFamily.equalsIgnoreCase(&quot;courier&quot;))</span>
 <span class="fc" id="L619">					text = text.replace(' ', (char) 160);</span>
 
 			}
@@ -753,26 +753,26 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 <span class="fc bfc" id="L753" title="All 2 branches covered.">			if (type == USegmentType.SEG_MOVETO) {</span>
 <span class="fc" id="L754">				sb.append(&quot;M&quot; + format(coord[0] + x) + &quot;,&quot; + format(coord[1] + y) + &quot; &quot;);</span>
 <span class="fc" id="L755">				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);</span>
-<span class="pc bpc" id="L756" title="1 of 2 branches missed.">			} else if (type == USegmentType.SEG_LINETO) {</span>
+<span class="fc bfc" id="L756" title="All 2 branches covered.">			} else if (type == USegmentType.SEG_LINETO) {</span>
 <span class="fc" id="L757">				sb.append(&quot;L&quot; + format(coord[0] + x) + &quot;,&quot; + format(coord[1] + y) + &quot; &quot;);</span>
 <span class="fc" id="L758">				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);</span>
-<span class="nc bnc" id="L759" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_QUADTO) {</span>
+<span class="pc bpc" id="L759" title="1 of 2 branches missed.">			} else if (type == USegmentType.SEG_QUADTO) {</span>
 <span class="nc" id="L760">				sb.append(&quot;Q&quot; + format(coord[0] + x) + &quot;,&quot; + format(coord[1] + y) + &quot; &quot; + format(coord[2] + x) + &quot;,&quot;</span>
 <span class="nc" id="L761">						+ format(coord[3] + y) + &quot; &quot;);</span>
 <span class="nc" id="L762">				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);</span>
 <span class="nc" id="L763">				ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);</span>
-<span class="nc bnc" id="L764" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CUBICTO) {</span>
-<span class="nc" id="L765">				sb.append(&quot;C&quot; + format(coord[0] + x) + &quot;,&quot; + format(coord[1] + y) + &quot; &quot; + format(coord[2] + x) + &quot;,&quot;</span>
-<span class="nc" id="L766">						+ format(coord[3] + y) + &quot; &quot; + format(coord[4] + x) + &quot;,&quot; + format(coord[5] + y) + &quot; &quot;);</span>
-<span class="nc" id="L767">				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);</span>
-<span class="nc" id="L768">				ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);</span>
-<span class="nc" id="L769">				ensureVisible(coord[4] + x + 2 * deltaShadow, coord[5] + y + 2 * deltaShadow);</span>
-<span class="nc bnc" id="L770" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_ARCTO) {</span>
+<span class="fc bfc" id="L764" title="All 2 branches covered.">			} else if (type == USegmentType.SEG_CUBICTO) {</span>
+<span class="fc" id="L765">				sb.append(&quot;C&quot; + format(coord[0] + x) + &quot;,&quot; + format(coord[1] + y) + &quot; &quot; + format(coord[2] + x) + &quot;,&quot;</span>
+<span class="fc" id="L766">						+ format(coord[3] + y) + &quot; &quot; + format(coord[4] + x) + &quot;,&quot; + format(coord[5] + y) + &quot; &quot;);</span>
+<span class="fc" id="L767">				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);</span>
+<span class="fc" id="L768">				ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);</span>
+<span class="fc" id="L769">				ensureVisible(coord[4] + x + 2 * deltaShadow, coord[5] + y + 2 * deltaShadow);</span>
+<span class="pc bpc" id="L770" title="1 of 2 branches missed.">			} else if (type == USegmentType.SEG_ARCTO) {</span>
 				// A25,25 0,0 5,395,40
-<span class="nc" id="L772">				sb.append(&quot;A&quot; + format(coord[0]) + &quot;,&quot; + format(coord[1]) + &quot; &quot; + format(coord[2]) + &quot; &quot;</span>
-<span class="nc" id="L773">						+ formatBoolean(coord[3]) + &quot; &quot; + formatBoolean(coord[4]) + &quot; &quot; + format(coord[5] + x) + &quot;,&quot;</span>
-<span class="nc" id="L774">						+ format(coord[6] + y) + &quot; &quot;);</span>
-<span class="nc" id="L775">				ensureVisible(coord[5] + coord[0] + x + 2 * deltaShadow, coord[6] + coord[1] + y + 2 * deltaShadow);</span>
+<span class="fc" id="L772">				sb.append(&quot;A&quot; + format(coord[0]) + &quot;,&quot; + format(coord[1]) + &quot; &quot; + format(coord[2]) + &quot; &quot;</span>
+<span class="fc" id="L773">						+ formatBoolean(coord[3]) + &quot; &quot; + formatBoolean(coord[4]) + &quot; &quot; + format(coord[5] + x) + &quot;,&quot;</span>
+<span class="fc" id="L774">						+ format(coord[6] + y) + &quot; &quot;);</span>
+<span class="fc" id="L775">				ensureVisible(coord[5] + coord[0] + x + 2 * deltaShadow, coord[6] + coord[1] + y + 2 * deltaShadow);</span>
 <span class="nc bnc" id="L776" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CLOSE) {</span>
 				// Nothing
 			} else {
@@ -786,8 +786,8 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 <span class="fc" id="L786">			styleMe(elt);</span>
 <span class="fc" id="L787">			fillMe(elt);</span>
 <span class="fc" id="L788">			final String id = path.getComment();</span>
-<span class="pc bpc" id="L789" title="1 of 2 branches missed.">			if (id != null)</span>
-<span class="nc" id="L790">				elt.setAttribute(&quot;id&quot;, id);</span>
+<span class="fc bfc" id="L789" title="All 2 branches covered.">			if (id != null)</span>
+<span class="fc" id="L790">				elt.setAttribute(&quot;id&quot;, id);</span>
 
 <span class="fc" id="L792">			final String codeLine = path.getCodeLine();</span>
 <span class="pc bpc" id="L793" title="1 of 2 branches missed.">			if (codeLine != null)</span>
@@ -873,7 +873,7 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 	}
 
 	private String formatBoolean(double x) {
-<span class="nc bnc" id="L876" title="All 2 branches missed.">		return x == 0 ? &quot;0&quot; : &quot;1&quot;;</span>
+<span class="fc bfc" id="L876" title="All 2 branches covered.">		return x == 0 ? &quot;0&quot; : &quot;1&quot;;</span>
 	}
 
 	public void fill(int windingRule) {
@@ -945,46 +945,46 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 <span class="nc" id="L945">	}</span>
 
 	public void svgImage(UImageSvg image, double x, double y) {
-<span class="nc bnc" id="L948" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+<span class="pc bpc" id="L948" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
 <span class="nc" id="L949">			svgImageUnsecure(image, x, y);</span>
 <span class="nc" id="L950">			return;</span>
 		}
 
 		// https://developer.mozilla.org/fr/docs/Web/SVG/Element/image
-<span class="nc bnc" id="L954" title="All 2 branches missed.">		if (hidden == false) {</span>
-<span class="nc" id="L955">			final Element elt = document.createElement(&quot;image&quot;);</span>
-<span class="nc" id="L956">			elt.setAttribute(&quot;width&quot;, format(image.getWidth()));</span>
-<span class="nc" id="L957">			elt.setAttribute(&quot;height&quot;, format(image.getHeight()));</span>
-<span class="nc" id="L958">			elt.setAttribute(&quot;x&quot;, format(x));</span>
-<span class="nc" id="L959">			elt.setAttribute(&quot;y&quot;, format(y));</span>
+<span class="pc bpc" id="L954" title="1 of 2 branches missed.">		if (hidden == false) {</span>
+<span class="fc" id="L955">			final Element elt = document.createElement(&quot;image&quot;);</span>
+<span class="fc" id="L956">			elt.setAttribute(&quot;width&quot;, format(image.getWidth()));</span>
+<span class="fc" id="L957">			elt.setAttribute(&quot;height&quot;, format(image.getHeight()));</span>
+<span class="fc" id="L958">			elt.setAttribute(&quot;x&quot;, format(x));</span>
+<span class="fc" id="L959">			elt.setAttribute(&quot;y&quot;, format(y));</span>
 
-<span class="nc" id="L961">			String svg = manageScale(image);</span>
+<span class="fc" id="L961">			String svg = manageScale(image);</span>
 
 			final String svgHeader;
-<span class="nc bnc" id="L964" title="All 2 branches missed.">			if (image.containsXlink())</span>
-<span class="nc" id="L965">				svgHeader = &quot;&lt;svg height=\&quot;&quot; + (int) (image.getHeight() * option.getScale()) + &quot;\&quot; width=\&quot;&quot;</span>
-<span class="nc" id="L966">						+ (int) (image.getWidth() * option.getScale())</span>
+<span class="pc bpc" id="L964" title="1 of 2 branches missed.">			if (image.containsXlink())</span>
+<span class="fc" id="L965">				svgHeader = &quot;&lt;svg height=\&quot;&quot; + (int) (image.getHeight() * option.getScale()) + &quot;\&quot; width=\&quot;&quot;</span>
+<span class="fc" id="L966">						+ (int) (image.getWidth() * option.getScale())</span>
 						+ &quot;\&quot; xmlns:xlink=\&quot;http://www.w3.org/1999/xlink\&quot; xmlns=\&quot;http://www.w3.org/2000/svg\&quot; &gt;&quot;;
 			else
 <span class="nc" id="L969">				svgHeader = &quot;&lt;svg height=\&quot;&quot; + (int) (image.getHeight() * option.getScale()) + &quot;\&quot; width=\&quot;&quot;</span>
 <span class="nc" id="L970">						+ (int) (image.getWidth() * option.getScale()) + &quot;\&quot; xmlns=\&quot;http://www.w3.org/2000/svg\&quot; &gt;&quot;;</span>
 
-<span class="nc" id="L972">			svg = svgHeader + svg.substring(5);</span>
+<span class="fc" id="L972">			svg = svgHeader + svg.substring(5);</span>
 
-<span class="nc" id="L974">			final String s = toBase64(svg);</span>
-<span class="nc" id="L975">			elt.setAttribute(&quot;xlink:href&quot;, &quot;data:image/svg+xml;base64,&quot; + s);</span>
+<span class="fc" id="L974">			final String s = toBase64(svg);</span>
+<span class="fc" id="L975">			elt.setAttribute(&quot;xlink:href&quot;, &quot;data:image/svg+xml;base64,&quot; + s);</span>
 
-<span class="nc" id="L977">			getG().appendChild(elt);</span>
+<span class="fc" id="L977">			getG().appendChild(elt);</span>
 		}
-<span class="nc" id="L979">		ensureVisible(x, y);</span>
-<span class="nc" id="L980">		ensureVisible(x + image.getData(&quot;width&quot;), y + image.getData(&quot;height&quot;));</span>
-<span class="nc" id="L981">	}</span>
+<span class="fc" id="L979">		ensureVisible(x, y);</span>
+<span class="fc" id="L980">		ensureVisible(x + image.getData(&quot;width&quot;), y + image.getData(&quot;height&quot;));</span>
+<span class="fc" id="L981">	}</span>
 
 	private String manageScale(UImageSvg svgImage) {
-<span class="nc" id="L984">		final double svgScale = svgImage.getScale();</span>
-<span class="nc" id="L985">		String svg = svgImage.getSvg(false);</span>
-<span class="nc bnc" id="L986" title="All 2 branches missed.">		if (svgScale * option.getScale() == 1)</span>
-<span class="nc" id="L987">			return svg;</span>
+<span class="fc" id="L984">		final double svgScale = svgImage.getScale();</span>
+<span class="fc" id="L985">		String svg = svgImage.getSvg(false);</span>
+<span class="pc bpc" id="L986" title="1 of 2 branches missed.">		if (svgScale * option.getScale() == 1)</span>
+<span class="fc" id="L987">			return svg;</span>
 
 <span class="nc" id="L989">		final String svg2 = svg.replace('\n', ' ').replace('\r', ' ');</span>
 <span class="nc bnc" id="L990" title="All 4 branches missed.">		if (svg2.contains(&quot;&lt;g &quot;) == false &amp;&amp; svg2.contains(&quot;&lt;g&gt;&quot;) == false) {</span>
@@ -1006,8 +1006,8 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 	}
 
 	private String toBase64(String s) {
-<span class="nc" id="L1009">		final byte data[] = s.getBytes(Charset.forName(&quot;UTF8&quot;));</span>
-<span class="nc" id="L1010">		return new String(Base64Coder.encode(data));</span>
+<span class="fc" id="L1009">		final byte data[] = s.getBytes(Charset.forName(&quot;UTF8&quot;));</span>
+<span class="fc" id="L1010">		return new String(Base64Coder.encode(data));</span>
 	}
 
 	// Shadow

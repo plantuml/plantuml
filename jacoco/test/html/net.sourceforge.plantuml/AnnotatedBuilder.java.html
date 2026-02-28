@@ -188,34 +188,34 @@ public class AnnotatedBuilder {
 	public TextBlock addHeaderAndFooter(TextBlock original) {
 <span class="fc" id="L189">		final DisplayPositioned header = annotated.getHeader();</span>
 <span class="fc" id="L190">		final DisplayPositioned footer = annotated.getFooter();</span>
-<span class="pc bpc" id="L191" title="1 of 4 branches missed.">		if (footer.isNull() &amp;&amp; header.isNull())</span>
+<span class="pc bpc" id="L191" title="2 of 4 branches missed.">		if (footer.isNull() &amp;&amp; header.isNull())</span>
 <span class="fc" id="L192">			return original;</span>
 
-<span class="fc" id="L194">		final UGroup group1 = new UGroup(header.getLineLocation());</span>
-<span class="fc" id="L195">		group1.put(UGroupType.CLASS, &quot;header&quot;);</span>
+<span class="nc" id="L194">		final UGroup group1 = new UGroup(header.getLineLocation());</span>
+<span class="nc" id="L195">		group1.put(UGroupType.CLASS, &quot;header&quot;);</span>
 
-<span class="fc" id="L197">		TextBlock textHeader = null;</span>
-<span class="pc bpc" id="L198" title="1 of 2 branches missed.">		if (header.isNull() == false) {</span>
-<span class="fc" id="L199">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.header)</span>
-<span class="fc" id="L200">					.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L201">			textHeader = header.createRibbon(FontConfiguration.create(getSkinParam(), FontParam.HEADER, null),</span>
-<span class="fc" id="L202">					getSkinParam(), style);</span>
+<span class="nc" id="L197">		TextBlock textHeader = null;</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">		if (header.isNull() == false) {</span>
+<span class="nc" id="L199">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.header)</span>
+<span class="nc" id="L200">					.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L201">			textHeader = header.createRibbon(FontConfiguration.create(getSkinParam(), FontParam.HEADER, null),</span>
+<span class="nc" id="L202">					getSkinParam(), style);</span>
 		}
 
-<span class="fc" id="L205">		final UGroup group2 = new UGroup(footer.getLineLocation());</span>
-<span class="fc" id="L206">		group2.put(UGroupType.CLASS, &quot;footer&quot;);</span>
+<span class="nc" id="L205">		final UGroup group2 = new UGroup(footer.getLineLocation());</span>
+<span class="nc" id="L206">		group2.put(UGroupType.CLASS, &quot;footer&quot;);</span>
 
-<span class="fc" id="L208">		TextBlock textFooter = null;</span>
-<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (footer.isNull() == false) {</span>
+<span class="nc" id="L208">		TextBlock textFooter = null;</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">		if (footer.isNull() == false) {</span>
 
-<span class="fc" id="L211">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.footer)</span>
-<span class="fc" id="L212">					.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L213">			textFooter = footer.createRibbon(FontConfiguration.create(getSkinParam(), FontParam.FOOTER, null),</span>
-<span class="fc" id="L214">					getSkinParam(), style);</span>
+<span class="nc" id="L211">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.footer)</span>
+<span class="nc" id="L212">					.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L213">			textFooter = footer.createRibbon(FontConfiguration.create(getSkinParam(), FontParam.FOOTER, null),</span>
+<span class="nc" id="L214">					getSkinParam(), style);</span>
 		}
 
-<span class="fc" id="L217">		return DecorateEntityImage.addTopAndBottom(original, group1, textHeader, header.getHorizontalAlignment(),</span>
-<span class="fc" id="L218">				group2, textFooter, footer.getHorizontalAlignment());</span>
+<span class="nc" id="L217">		return DecorateEntityImage.addTopAndBottom(original, group1, textHeader, header.getHorizontalAlignment(),</span>
+<span class="nc" id="L218">				group2, textFooter, footer.getHorizontalAlignment());</span>
 	}
 
 }

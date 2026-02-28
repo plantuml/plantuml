@@ -49,27 +49,27 @@ public class TaskInstant {
 	private final PiecewiseConstant calendar;
 
 	public TaskInstant(Moment task, TaskAttribute attribute) {
-<span class="fc" id="L52">		this(task, attribute, 0, GanttConstraintMode.IGNORE_CALENDAR, null);</span>
-<span class="fc" id="L53">	}</span>
+<span class="nc" id="L52">		this(task, attribute, 0, GanttConstraintMode.IGNORE_CALENDAR, null);</span>
+<span class="nc" id="L53">	}</span>
 
 	private TaskInstant(Moment task, TaskAttribute attribute, int delta, GanttConstraintMode mode,
-<span class="fc" id="L56">			PiecewiseConstant calendar) {</span>
-<span class="fc" id="L57">		this.task = task;</span>
-<span class="fc" id="L58">		this.attribute = attribute;</span>
-<span class="fc" id="L59">		this.delta = delta;</span>
-<span class="fc" id="L60">		this.mode = mode;</span>
-<span class="fc" id="L61">		this.calendar = calendar;</span>
-<span class="pc bpc" id="L62" title="1 of 4 branches missed.">		if (attribute != TaskAttribute.START &amp;&amp; attribute != TaskAttribute.END)</span>
+<span class="nc" id="L56">			PiecewiseConstant calendar) {</span>
+<span class="nc" id="L57">		this.task = task;</span>
+<span class="nc" id="L58">		this.attribute = attribute;</span>
+<span class="nc" id="L59">		this.delta = delta;</span>
+<span class="nc" id="L60">		this.mode = mode;</span>
+<span class="nc" id="L61">		this.calendar = calendar;</span>
+<span class="nc bnc" id="L62" title="All 4 branches missed.">		if (attribute != TaskAttribute.START &amp;&amp; attribute != TaskAttribute.END)</span>
 <span class="nc" id="L63">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L65">	}</span>
+<span class="nc" id="L65">	}</span>
 
 	public TaskInstant withDelta(int newDelta, GanttConstraintMode mode, PiecewiseConstant calendar) {
 <span class="nc" id="L68">		return new TaskInstant(task, attribute, newDelta, mode, calendar);</span>
 	}
 
 	private TimePoint manageDelta(TimePoint value) {
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (delta &gt; 0)</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (delta &gt; 0)</span>
 <span class="nc bnc" id="L73" title="All 2 branches missed.">			for (int i = 0; i &lt; delta; i++) {</span>
 <span class="nc bnc" id="L74" title="All 2 branches missed.">				if (mode == GanttConstraintMode.DO_NOT_COUNT_CLOSE_DAY) {</span>
 <span class="nc" id="L75">					int tmp = 0;</span>
@@ -80,19 +80,19 @@ public class TaskInstant {
 <span class="nc" id="L80">				value = value.increment();</span>
 			}
 
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (delta &lt; 0)</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (delta &lt; 0)</span>
 <span class="nc bnc" id="L84" title="All 2 branches missed.">			for (int i = 0; i &lt; -delta; i++)</span>
 <span class="nc" id="L85">				value = value.decrement();</span>
 
-<span class="fc" id="L87">		return value;</span>
+<span class="nc" id="L87">		return value;</span>
 	}
 
 	public TimePoint getInstantPrecise() {
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (attribute == TaskAttribute.START)</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (attribute == TaskAttribute.START)</span>
 <span class="nc" id="L92">			return manageDelta(task.getStart());</span>
 
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (attribute == TaskAttribute.END)</span>
-<span class="fc" id="L95">			return manageDelta(task.getEnd());</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (attribute == TaskAttribute.END)</span>
+<span class="nc" id="L95">			return manageDelta(task.getEnd());</span>
 
 <span class="nc" id="L97">		throw new IllegalStateException();</span>
 	}
@@ -103,26 +103,26 @@ public class TaskInstant {
 	}
 
 	public final Moment getMoment() {
-<span class="fc" id="L106">		return task;</span>
+<span class="nc" id="L106">		return task;</span>
 	}
 
 	public final boolean isTask() {
-<span class="fc" id="L110">		return task instanceof AbstractTask;</span>
+<span class="nc" id="L110">		return task instanceof AbstractTask;</span>
 	}
 
 	public final TaskAttribute getAttribute() {
-<span class="fc" id="L114">		return attribute;</span>
+<span class="nc" id="L114">		return attribute;</span>
 	}
 
 	public boolean sameRowAs(TaskInstant dest) {
-<span class="pc bpc" id="L118" title="2 of 4 branches missed.">		if (this.isTask() &amp;&amp; dest.isTask()) {</span>
-<span class="fc" id="L119">			final AbstractTask t1 = (AbstractTask) this.getMoment();</span>
-<span class="fc" id="L120">			final AbstractTask t2 = (AbstractTask) dest.getMoment();</span>
-<span class="pc bpc" id="L121" title="2 of 4 branches missed.">			if (t1 == t2.getRow() || t2 == t1.getRow())</span>
+<span class="nc bnc" id="L118" title="All 4 branches missed.">		if (this.isTask() &amp;&amp; dest.isTask()) {</span>
+<span class="nc" id="L119">			final AbstractTask t1 = (AbstractTask) this.getMoment();</span>
+<span class="nc" id="L120">			final AbstractTask t2 = (AbstractTask) dest.getMoment();</span>
+<span class="nc bnc" id="L121" title="All 4 branches missed.">			if (t1 == t2.getRow() || t2 == t1.getRow())</span>
 <span class="nc" id="L122">				return true;</span>
 
 		}
-<span class="fc" id="L125">		return false;</span>
+<span class="nc" id="L125">		return false;</span>
 	}
 
 }

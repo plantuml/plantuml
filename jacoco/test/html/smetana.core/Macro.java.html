@@ -375,7 +375,7 @@ import smetana.core.debug.SmetanaDebug;
 
 	// #define GD_flip(g) (GD_rankdir(g) &amp; 1)
 	public static boolean GD_flip(ST_Agraph_s g) {
-<span class="fc bfc" id="L378" title="All 2 branches covered.">		return (GD_rankdir(g) &amp; 1) != 0;</span>
+<span class="pc bpc" id="L378" title="1 of 2 branches missed.">		return (GD_rankdir(g) &amp; 1) != 0;</span>
 	}
 
 	// #define GD_realrankdir(g) ((((Agraphinfo_t*)AGDATA(g))-&gt;rankdir) &gt;&gt; 2)
@@ -958,8 +958,8 @@ import smetana.core.debug.SmetanaDebug;
 	}
 
 	public static void ED_head_label(ST_Agedge_s e, ST_textlabel_t v) {
-<span class="fc" id="L961">		((ST_Agedgeinfo_t) e.data).head_label = v;</span>
-<span class="fc" id="L962">	}</span>
+<span class="nc" id="L961">		((ST_Agedgeinfo_t) e.data).head_label = v;</span>
+<span class="nc" id="L962">	}</span>
 
 	// #define ED_head_port(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;head_port)
 	public static ST_port ED_head_port(ST_Agedge_s e) {
@@ -1081,8 +1081,8 @@ import smetana.core.debug.SmetanaDebug;
 	}
 
 	public static void ED_dist(ST_Agedge_s e, double v) {
-<span class="fc" id="L1084">		((ST_Agedgeinfo_t) e.data).dist = v;</span>
-<span class="fc" id="L1085">	}</span>
+<span class="nc" id="L1084">		((ST_Agedgeinfo_t) e.data).dist = v;</span>
+<span class="nc" id="L1085">	}</span>
 
 	// #define ED_weight(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;weight)
 	public static int ED_weight(ST_Agedge_s e) {
@@ -1102,17 +1102,17 @@ import smetana.core.debug.SmetanaDebug;
 <span class="fc" id="L1102">	}</span>
 
 	public static int[] ALLOC_INT(int size, int[] old) {
-<span class="fc bfc" id="L1105" title="All 2 branches covered.">		if (old == null)</span>
+<span class="pc bpc" id="L1105" title="1 of 2 branches missed.">		if (old == null)</span>
 <span class="fc" id="L1106">			return new int[size];</span>
 
-<span class="pc bpc" id="L1108" title="1 of 2 branches missed.">		if (old.length &gt; size)</span>
+<span class="nc bnc" id="L1108" title="All 2 branches missed.">		if (old.length &gt; size)</span>
 <span class="nc" id="L1109">			return old;</span>
 
-<span class="fc" id="L1111">		final int result[] = new int[size];</span>
+<span class="nc" id="L1111">		final int result[] = new int[size];</span>
 
-<span class="fc bfc" id="L1113" title="All 2 branches covered.">		for (int i = 0; i &lt; old.length; i++)</span>
-<span class="fc" id="L1114">			result[i] = old[i];</span>
-<span class="fc" id="L1115">		return result;</span>
+<span class="nc bnc" id="L1113" title="All 2 branches missed.">		for (int i = 0; i &lt; old.length; i++)</span>
+<span class="nc" id="L1114">			result[i] = old[i];</span>
+<span class="nc" id="L1115">		return result;</span>
 //		return (__ptr__) (ptr != null ? JUtils.size_t_array_of_integer(size).realloc(ptr) : JUtils
 //				.size_t_array_of_integer(size).malloc());
 	}
@@ -1241,7 +1241,7 @@ import smetana.core.debug.SmetanaDebug;
 
 	// #define APPROXEQPT(p,q,tol) (DIST2((p),(q)) &lt; SQR(tol))
 	public static boolean APPROXEQPT(ST_pointf p, ST_pointf q, double tol) {
-<span class="pc bpc" id="L1244" title="1 of 2 branches missed.">		return (DIST2((p), (q)) &lt; SQR(tol));</span>
+<span class="nc bnc" id="L1244" title="All 2 branches missed.">		return (DIST2((p), (q)) &lt; SQR(tol));</span>
 	}
 
 	// #define LEN2(a,b) (SQR(a) + SQR(b))
@@ -1286,7 +1286,7 @@ import smetana.core.debug.SmetanaDebug;
 	// )
 
 	public static double DISTSQ(ST_pointf a, ST_pointf b) {
-<span class="fc" id="L1289">		return (((a).x - (b).x) * ((a).x - (b).x)) + (((a).y - (b).y) * ((a).y - (b).y));</span>
+<span class="nc" id="L1289">		return (((a).x - (b).x) * ((a).x - (b).x)) + (((a).y - (b).y) * ((a).y - (b).y));</span>
 	}
 
 <span class="fc" id="L1292">	private static final Pattern p = Pattern.compile(&quot;_dim_([.\\d]+)_([\\d.]+)_&quot;);</span>
@@ -1707,11 +1707,11 @@ import smetana.core.debug.SmetanaDebug;
 
 	// #define streq(a,b) (*(a)==*(b)&amp;&amp;!strcmp(a,b))
 	public static boolean streq(CString a, CString b) {
-<span class="pc bpc" id="L1710" title="2 of 4 branches missed.">		return a.charAt(0) == b.charAt(0) &amp;&amp; strcmp(a, b) == 0;</span>
+<span class="nc bnc" id="L1710" title="All 4 branches missed.">		return a.charAt(0) == b.charAt(0) &amp;&amp; strcmp(a, b) == 0;</span>
 	}
 
 	public static boolean streq(CString a, String b) {
-<span class="fc" id="L1714">		return streq(a, new CString(b));</span>
+<span class="nc" id="L1714">		return streq(a, new CString(b));</span>
 	}
 
 	public static final int ARR_NONE = 0;

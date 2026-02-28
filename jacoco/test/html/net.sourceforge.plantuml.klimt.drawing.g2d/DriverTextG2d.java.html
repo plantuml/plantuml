@@ -179,15 +179,15 @@ public class DriverTextG2d implements UDriver&lt;UText, Graphics2D&gt; {
 <span class="fc" id="L179">					g2d.drawLine(i + 3, ypos + 1, i + 6, ypos - 0);</span>
 				}
 			}
-<span class="pc bpc" id="L182" title="1 of 2 branches missed.">			if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {</span>
-<span class="nc" id="L183">				final FontMetrics fm = g2d.getFontMetrics(UFontImpl.getUnderlayingFont(font, text));</span>
-<span class="nc" id="L184">				final int ypos = (int) (y - fm.getDescent() - 0.5);</span>
-<span class="nc bnc" id="L185" title="All 2 branches missed.">				if (extended != null)</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">			if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {</span>
+<span class="fc" id="L183">				final FontMetrics fm = g2d.getFontMetrics(UFontImpl.getUnderlayingFont(font, text));</span>
+<span class="fc" id="L184">				final int ypos = (int) (y - fm.getDescent() - 0.5);</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">				if (extended != null)</span>
 <span class="nc" id="L186">					g2d.setColor(extended.toColor(mapper).toAwtColor());</span>
 
-<span class="nc" id="L188">				g2d.setStroke(new BasicStroke((float) 1.5));</span>
-<span class="nc" id="L189">				g2d.drawLine((int) x, ypos, (int) (x + width), ypos);</span>
-<span class="nc" id="L190">				g2d.setStroke(new BasicStroke());</span>
+<span class="fc" id="L188">				g2d.setStroke(new BasicStroke((float) 1.5));</span>
+<span class="fc" id="L189">				g2d.drawLine((int) x, ypos, (int) (x + width), ypos);</span>
+<span class="fc" id="L190">				g2d.setStroke(new BasicStroke());</span>
 			}
 		}
 <span class="fc" id="L193">		return width;</span>

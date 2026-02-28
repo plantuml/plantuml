@@ -47,25 +47,25 @@ public class ConditionalContext {
 	private final Direction direction;
 	private final ConditionalContext parent;
 
-<span class="fc" id="L50">	public ConditionalContext(ConditionalContext parent, Entity branch, Direction direction) {</span>
-<span class="fc" id="L51">		this.branch = Objects.requireNonNull(branch);</span>
-<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if (branch.getLeafType() != LeafType.BRANCH) {</span>
+<span class="nc" id="L50">	public ConditionalContext(ConditionalContext parent, Entity branch, Direction direction) {</span>
+<span class="nc" id="L51">		this.branch = Objects.requireNonNull(branch);</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		if (branch.getLeafType() != LeafType.BRANCH) {</span>
 <span class="nc" id="L53">			throw new IllegalArgumentException();</span>
 		}
-<span class="fc" id="L55">		this.direction = direction;</span>
-<span class="fc" id="L56">		this.parent = parent;</span>
-<span class="fc" id="L57">	}</span>
+<span class="nc" id="L55">		this.direction = direction;</span>
+<span class="nc" id="L56">		this.parent = parent;</span>
+<span class="nc" id="L57">	}</span>
 
 	public Direction getDirection() {
 <span class="nc" id="L60">		return direction;</span>
 	}
 
 	public final ConditionalContext getParent() {
-<span class="fc" id="L64">		return parent;</span>
+<span class="nc" id="L64">		return parent;</span>
 	}
 
 	public final Entity getBranch() {
-<span class="fc" id="L68">		return branch;</span>
+<span class="nc" id="L68">		return branch;</span>
 	}
 
 }

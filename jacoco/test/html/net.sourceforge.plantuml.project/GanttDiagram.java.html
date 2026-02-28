@@ -156,12 +156,12 @@ public class GanttDiagram extends TitledDiagram implements WithSprite, GanttStyl
 	@Override
 	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-<span class="fc" id="L159">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);</span>
+<span class="nc" id="L159">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);</span>
 	}
 
 	public void setPrintScale(PrintScale printScale) {
-<span class="fc" id="L163">		this.scaleConfig.setPrintScale(printScale);</span>
-<span class="fc" id="L164">	}</span>
+<span class="nc" id="L163">		this.scaleConfig.setPrintScale(printScale);</span>
+<span class="nc" id="L164">	}</span>
 
 	public void setFactorScale(double factorScale) {
 <span class="nc" id="L167">		this.scaleConfig.setFactorScale(factorScale);</span>
@@ -179,19 +179,19 @@ public class GanttDiagram extends TitledDiagram implements WithSprite, GanttStyl
 
 	@Override
 	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
-<span class="fc" id="L182">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());</span>
-<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		if (this.timeBounds.getPrintStart() == null) {</span>
-<span class="fc" id="L184">			initMinMax();</span>
+<span class="nc" id="L182">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		if (this.timeBounds.getPrintStart() == null) {</span>
+<span class="nc" id="L184">			initMinMax();</span>
 		} else {
 <span class="nc" id="L186">			this.timeBounds.setMinDay(this.timeBounds.getPrintStart());</span>
 <span class="nc" id="L187">			this.timeBounds.setMaxDay(this.timeBounds.getPrintEnd());</span>
 		}
-<span class="fc" id="L189">		final TimeHeaderFactory factory = new TimeHeaderFactory(this.weekConfig, this.dayCalendar, this.timeBounds,</span>
+<span class="nc" id="L189">		final TimeHeaderFactory factory = new TimeHeaderFactory(this.weekConfig, this.dayCalendar, this.timeBounds,</span>
 				this.scaleConfig, this.timelineStyle);
 
-<span class="fc" id="L192">		final TimeHeader timeHeader = factory.createTimeHeader();</span>
+<span class="nc" id="L192">		final TimeHeader timeHeader = factory.createTimeHeader();</span>
 
-<span class="fc" id="L194">		return new GanttDiagramMainBlock(this.timeBounds, this.modelData, this.drawRegistry, this.displayConfig,</span>
+<span class="nc" id="L194">		return new GanttDiagramMainBlock(this.timeBounds, this.modelData, this.drawRegistry, this.displayConfig,</span>
 				this.timelineStyle, this, timeHeader, stringBounder);
 	}
 
@@ -201,14 +201,14 @@ public class GanttDiagram extends TitledDiagram implements WithSprite, GanttStyl
 
 	@Override
 	public final Style getStyle(SName param) {
-<span class="fc" id="L204">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, param)</span>
-<span class="fc" id="L205">				.getMergedStyle(getCurrentStyleBuilder());</span>
+<span class="nc" id="L204">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, param)</span>
+<span class="nc" id="L205">				.getMergedStyle(getCurrentStyleBuilder());</span>
 	}
 
 	@Override
 	public final Style getStyle(SName param1, SName param2) {
-<span class="fc" id="L210">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, param1, param2)</span>
-<span class="fc" id="L211">				.getMergedStyle(getCurrentStyleBuilder());</span>
+<span class="nc" id="L210">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, param1, param2)</span>
+<span class="nc" id="L211">				.getMergedStyle(getCurrentStyleBuilder());</span>
 	}
 
 	public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
@@ -216,8 +216,8 @@ public class GanttDiagram extends TitledDiagram implements WithSprite, GanttStyl
 	}
 
 	public void closeDayOfWeek(DayOfWeek day, String task) {
-<span class="fc" id="L219">		this.dayCalendar.getOpenClose().close(day);</span>
-<span class="fc" id="L220">	}</span>
+<span class="nc" id="L219">		this.dayCalendar.getOpenClose().close(day);</span>
+<span class="nc" id="L220">	}</span>
 
 	public void openDayOfWeek(DayOfWeek day, String task) {
 <span class="nc bnc" id="L223" title="All 2 branches missed.">		if (task.length() == 0)</span>
@@ -261,17 +261,17 @@ public class GanttDiagram extends TitledDiagram implements WithSprite, GanttStyl
 	}
 
 	public GanttConstraint forceTaskOrder(Task task1, Task task2) {
-<span class="fc" id="L264">		final TaskInstant end1 = new TaskInstant(task1, TaskAttribute.END);</span>
-<span class="fc" id="L265">		task2.setStart(end1.getInstantPrecise());</span>
-<span class="fc" id="L266">		final GanttConstraint result = new GanttConstraint(this.getIHtmlColorSet(),</span>
-<span class="fc" id="L267">				getSkinParam().getCurrentStyleBuilder(), end1, new TaskInstant(task2, TaskAttribute.START));</span>
-<span class="fc" id="L268">		addContraint(result);</span>
-<span class="fc" id="L269">		return result;</span>
+<span class="nc" id="L264">		final TaskInstant end1 = new TaskInstant(task1, TaskAttribute.END);</span>
+<span class="nc" id="L265">		task2.setStart(end1.getInstantPrecise());</span>
+<span class="nc" id="L266">		final GanttConstraint result = new GanttConstraint(this.getIHtmlColorSet(),</span>
+<span class="nc" id="L267">				getSkinParam().getCurrentStyleBuilder(), end1, new TaskInstant(task2, TaskAttribute.START));</span>
+<span class="nc" id="L268">		addContraint(result);</span>
+<span class="nc" id="L269">		return result;</span>
 	}
 
 	public Task getOrCreateTask(TaskCode code, boolean linkedToPrevious) {
 <span class="fc" id="L273">		Task result = this.modelData.getTask(Objects.requireNonNull(code));</span>
-<span class="fc bfc" id="L274" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="pc bpc" id="L274" title="1 of 2 branches missed.">		if (result == null) {</span>
 <span class="fc" id="L275">			Task previous = null;</span>
 <span class="pc bpc" id="L276" title="1 of 2 branches missed.">			if (linkedToPrevious)</span>
 <span class="nc" id="L277">				previous = getLastCreatedTask();</span>
@@ -331,15 +331,15 @@ public class GanttDiagram extends TitledDiagram implements WithSprite, GanttStyl
 	}
 
 	public void addContraint(GanttConstraint constraint) {
-<span class="fc" id="L334">		this.modelData.addConstraint(constraint);</span>
-<span class="fc" id="L335">	}</span>
+<span class="nc" id="L334">		this.modelData.addConstraint(constraint);</span>
+<span class="nc" id="L335">	}</span>
 
 	public CommandExecutionResult updateStartingPoint(LocalDate start) {
-<span class="pc bpc" id="L338" title="1 of 2 branches missed.">		if (this.modelData.getTasks().size() &gt; 0)</span>
+<span class="nc bnc" id="L338" title="All 2 branches missed.">		if (this.modelData.getTasks().size() &gt; 0)</span>
 <span class="nc" id="L339">			return CommandExecutionResult.error(&quot;Starting point must be set before task definition&quot;);</span>
 
-<span class="fc" id="L341">		this.timeBounds.setMinDay(start);</span>
-<span class="fc" id="L342">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L341">		this.timeBounds.setMinDay(start);</span>
+<span class="nc" id="L342">		return CommandExecutionResult.ok();</span>
 	}
 
 	public LocalDate getMinDay() {
@@ -438,8 +438,8 @@ public class GanttDiagram extends TitledDiagram implements WithSprite, GanttStyl
 	}
 
 	public void colorDay(LocalDate day, HColor color) {
-<span class="fc" id="L441">		this.dayCalendar.putColorDay(TimePoint.ofStartOfDay(day), color);</span>
-<span class="fc" id="L442">	}</span>
+<span class="nc" id="L441">		this.dayCalendar.putColorDay(TimePoint.ofStartOfDay(day), color);</span>
+<span class="nc" id="L442">	}</span>
 
 	public void colorDay(DayOfWeek day, HColor color) {
 <span class="nc" id="L445">		this.dayCalendar.putColorDayOfWeek(day, color);</span>
@@ -495,7 +495,7 @@ public class GanttDiagram extends TitledDiagram implements WithSprite, GanttStyl
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="fc" id="L498">		return ClockwiseTopRightBottomLeft.none();</span>
+<span class="nc" id="L498">		return ClockwiseTopRightBottomLeft.none();</span>
 	}
 
 	public void setLabelStrategy(LabelStrategy strategy) {
@@ -561,7 +561,7 @@ public class GanttDiagram extends TitledDiagram implements WithSprite, GanttStyl
 	}
 
 	public HColorSet getIHtmlColorSet() {
-<span class="fc" id="L564">		return this.timelineStyle.getColorSet();</span>
+<span class="nc" id="L564">		return this.timelineStyle.getColorSet();</span>
 	}
 
 }

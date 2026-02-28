@@ -68,11 +68,11 @@ public class CommandSwimlane extends SingleLineCommand2&lt;ActivityDiagram3&gt; 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L71">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
-<span class="fc" id="L73">		final String name = arg.get(&quot;SWIMLANE&quot;, 0);</span>
-<span class="fc" id="L74">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
-<span class="fc" id="L75">		return diagram.swimlane(name, color, label);</span>
+<span class="nc" id="L71">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+<span class="nc" id="L73">		final String name = arg.get(&quot;SWIMLANE&quot;, 0);</span>
+<span class="nc" id="L74">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
+<span class="nc" id="L75">		return diagram.swimlane(name, color, label);</span>
 	}
 
 }

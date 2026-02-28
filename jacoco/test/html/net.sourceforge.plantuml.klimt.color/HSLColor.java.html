@@ -48,8 +48,8 @@ public class HSLColor {
 	 * @param l is the Lumanance percentage between 0 - 100
 	 */
 	public HSLColor(float h, float s, float l) {
-<span class="fc" id="L51">		this(h, s, l, 1.0f);</span>
-<span class="fc" id="L52">	}</span>
+<span class="nc" id="L51">		this(h, s, l, 1.0f);</span>
+<span class="nc" id="L52">	}</span>
 
 	/**
 	 * Create a HSLColor object using individual HSL values.
@@ -59,11 +59,11 @@ public class HSLColor {
 	 * @param l     the Lumanance percentage between 0 - 100
 	 * @param alpha the alpha value between 0 - 1
 	 */
-<span class="fc" id="L62">	public HSLColor(float h, float s, float l, float alpha) {</span>
-<span class="fc" id="L63">		hsl = new float[] { h, s, l };</span>
-<span class="fc" id="L64">		this.alpha = alpha;</span>
-<span class="fc" id="L65">		rgb = toRGB(hsl, alpha);</span>
-<span class="fc" id="L66">	}</span>
+<span class="nc" id="L62">	public HSLColor(float h, float s, float l, float alpha) {</span>
+<span class="nc" id="L63">		hsl = new float[] { h, s, l };</span>
+<span class="nc" id="L64">		this.alpha = alpha;</span>
+<span class="nc" id="L65">		rgb = toRGB(hsl, alpha);</span>
+<span class="nc" id="L66">	}</span>
 
 	/**
 	 * Create a HSLColor object using an an array containing the individual HSL
@@ -245,8 +245,8 @@ public class HSLColor {
 
 <span class="fc" id="L246">		float h = 0;</span>
 
-<span class="fc bfc" id="L248" title="All 2 branches covered.">		if (max == min)</span>
-<span class="fc" id="L249">			h = 0;</span>
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">		if (max == min)</span>
+<span class="nc" id="L249">			h = 0;</span>
 <span class="fc bfc" id="L250" title="All 2 branches covered.">		else if (max == r)</span>
 <span class="fc" id="L251">			h = ((60 * (g - b) / (max - min)) + 360) % 360;</span>
 <span class="fc bfc" id="L252" title="All 2 branches covered.">		else if (max == g)</span>
@@ -262,12 +262,12 @@ public class HSLColor {
 
 <span class="fc" id="L263">		float s = 0;</span>
 
-<span class="fc bfc" id="L265" title="All 2 branches covered.">		if (max == min)</span>
-<span class="fc" id="L266">			s = 0;</span>
-<span class="fc bfc" id="L267" title="All 2 branches covered.">		else if (l &lt;= .5f)</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">		if (max == min)</span>
+<span class="nc" id="L266">			s = 0;</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		else if (l &lt;= .5f)</span>
 <span class="fc" id="L268">			s = (max - min) / (max + min);</span>
 		else
-<span class="fc" id="L270">			s = (max - min) / (2 - max - min);</span>
+<span class="nc" id="L270">			s = (max - min) / (2 - max - min);</span>
 
 <span class="fc" id="L272">		return new float[] { h, s * 100, l * 100 };</span>
 	}
@@ -331,8 +331,8 @@ public class HSLColor {
 <span class="nc" id="L331">			s = 100;</span>
 <span class="pc bpc" id="L332" title="1 of 2 branches missed.">		if (l &lt; 0)</span>
 <span class="nc" id="L333">			l = 0;</span>
-<span class="fc bfc" id="L334" title="All 2 branches covered.">		if (l &gt; 100)</span>
-<span class="fc" id="L335">			l = 100;</span>
+<span class="pc bpc" id="L334" title="1 of 2 branches missed.">		if (l &gt; 100)</span>
+<span class="nc" id="L335">			l = 100;</span>
 <span class="pc bpc" id="L336" title="1 of 2 branches missed.">		if (alpha &lt; 0)</span>
 <span class="nc" id="L337">			alpha = 0;</span>
 <span class="pc bpc" id="L338" title="1 of 2 branches missed.">		if (alpha &gt; 1)</span>
@@ -369,8 +369,8 @@ public class HSLColor {
 <span class="fc bfc" id="L369" title="All 2 branches covered.">		if (h &lt; 0)</span>
 <span class="fc" id="L370">			h += 1;</span>
 
-<span class="fc bfc" id="L372" title="All 2 branches covered.">		if (h &gt; 1)</span>
-<span class="fc" id="L373">			h -= 1;</span>
+<span class="pc bpc" id="L372" title="1 of 2 branches missed.">		if (h &gt; 1)</span>
+<span class="nc" id="L373">			h -= 1;</span>
 
 <span class="fc bfc" id="L375" title="All 2 branches covered.">		if (6 * h &lt; 1)</span>
 <span class="fc" id="L376">			return p + ((q - p) * 6 * h);</span>

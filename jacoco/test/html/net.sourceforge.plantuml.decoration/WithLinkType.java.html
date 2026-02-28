@@ -58,20 +58,20 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 <span class="fc" id="L58">	private List&lt;Colors&gt; supplementary = new ArrayList&lt;&gt;();</span>
 
 	public final HColor getSpecificColor() {
-<span class="fc" id="L61">		return colors.getColor(ColorType.LINE);</span>
+<span class="nc" id="L61">		return colors.getColor(ColorType.LINE);</span>
 	}
 
 	public final void setSpecificColor(HColor specificColor) {
-<span class="fc" id="L65">		setSpecificColor(specificColor, 0);</span>
-<span class="fc" id="L66">	}</span>
+<span class="nc" id="L65">		setSpecificColor(specificColor, 0);</span>
+<span class="nc" id="L66">	}</span>
 
 	public final void setSpecificColor(HColor specificColor, int i) {
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (i == 0) {</span>
-<span class="fc" id="L70">			colors = colors.add(ColorType.LINE, specificColor);</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (i == 0) {</span>
+<span class="nc" id="L70">			colors = colors.add(ColorType.LINE, specificColor);</span>
 		} else {
 <span class="nc" id="L72">			supplementary.add(colors.add(ColorType.LINE, specificColor));</span>
 		}
-<span class="fc" id="L74">	}</span>
+<span class="nc" id="L74">	}</span>
 
 	public List&lt;Colors&gt; getSupplementaryColors() {
 <span class="nc" id="L77">		return Collections.unmodifiableList(supplementary);</span>
@@ -166,7 +166,7 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 <span class="nc" id="L166">	}</span>
 
 	public LinkType getType() {
-<span class="fc" id="L169">		return type;</span>
+<span class="nc" id="L169">		return type;</span>
 	}
 
 	public UStroke getUStroke() {

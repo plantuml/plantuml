@@ -47,13 +47,13 @@ package net.sourceforge.plantuml.klimt.geom;
 	final public static int SEG_ARCTO_VALUE = 4321;
 
 	public int getNbPoints() {
-<span class="pc bpc" id="L50" title="2 of 5 branches missed.">		switch (this) {</span>
+<span class="nc bnc" id="L50" title="All 5 branches missed.">		switch (this) {</span>
 		case SEG_MOVETO:
-<span class="fc" id="L52">			return 1;</span>
+<span class="nc" id="L52">			return 1;</span>
 		case SEG_LINETO:
-<span class="fc" id="L54">			return 1;</span>
+<span class="nc" id="L54">			return 1;</span>
 		case SEG_CUBICTO:
-<span class="fc" id="L56">			return 3;</span>
+<span class="nc" id="L56">			return 3;</span>
 		case SEG_CLOSE:
 <span class="nc" id="L58">			return 0;</span>
 		}

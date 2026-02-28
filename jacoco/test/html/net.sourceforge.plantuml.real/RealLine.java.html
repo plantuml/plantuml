@@ -54,7 +54,7 @@ import java.util.Set;
 		// System.err.println(&quot;RealLine::register &quot; + v);
 		// min = Math.min(min, v);
 		// max = Math.max(max, v);
-<span class="fc" id="L57">	}</span>
+<span class="nc" id="L57">	}</span>
 
 	void register2(AbstractReal abstractReal) {
 <span class="fc" id="L60">		all.add(abstractReal);</span>
@@ -69,50 +69,50 @@ import java.util.Set;
 	}
 
 	public void addForce(PositiveForce force) {
-<span class="fc" id="L72">		this.forces.add(force);</span>
-<span class="fc" id="L73">	}</span>
+<span class="nc" id="L72">		this.forces.add(force);</span>
+<span class="nc" id="L73">	}</span>
 
 	static private int CPT;
 
 	public void compile() {
-<span class="fc" id="L78">		int cpt = 0;</span>
-<span class="fc" id="L79">		final Map&lt;PositiveForce, Integer&gt; counter = new HashMap&lt;PositiveForce, Integer&gt;();</span>
+<span class="nc" id="L78">		int cpt = 0;</span>
+<span class="nc" id="L79">		final Map&lt;PositiveForce, Integer&gt; counter = new HashMap&lt;PositiveForce, Integer&gt;();</span>
 		do {
-<span class="fc" id="L81">			boolean done = true;</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">			for (PositiveForce f : forces) {</span>
+<span class="nc" id="L81">			boolean done = true;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">			for (PositiveForce f : forces) {</span>
 				// System.err.println(&quot;force=&quot; + f);
-<span class="fc" id="L84">				final boolean change = f.apply();</span>
-<span class="fc bfc" id="L85" title="All 2 branches covered.">				if (change) {</span>
-<span class="fc" id="L86">					incCounter(counter, f);</span>
+<span class="nc" id="L84">				final boolean change = f.apply();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">				if (change) {</span>
+<span class="nc" id="L86">					incCounter(counter, f);</span>
 					// System.err.println(&quot;changed! &quot; + f);
-<span class="fc" id="L88">					done = false;</span>
+<span class="nc" id="L88">					done = false;</span>
 				}
-<span class="fc" id="L90">			}</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">			if (done) {</span>
+<span class="nc" id="L90">			}</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">			if (done) {</span>
 				// System.err.println(&quot;cpt=&quot; + cpt + &quot; size=&quot; + forces.size());
-<span class="fc" id="L93">				CPT += cpt;</span>
+<span class="nc" id="L93">				CPT += cpt;</span>
 				// System.err.println(&quot;CPT=&quot; + CPT);
-<span class="fc" id="L95">				min = 0;</span>
-<span class="fc" id="L96">				max = 0;</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">				for (AbstractReal real : all) {</span>
-<span class="fc" id="L98">					final double v = real.getCurrentValue();</span>
+<span class="nc" id="L95">				min = 0;</span>
+<span class="nc" id="L96">				max = 0;</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">				for (AbstractReal real : all) {</span>
+<span class="nc" id="L98">					final double v = real.getCurrentValue();</span>
 					// System.err.println(&quot;RealLine::compile v=&quot; + v);
-<span class="fc bfc" id="L100" title="All 2 branches covered.">					if (v &gt; max)</span>
-<span class="fc" id="L101">						max = v;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">					if (v &gt; max)</span>
+<span class="nc" id="L101">						max = v;</span>
 
-<span class="fc bfc" id="L103" title="All 2 branches covered.">					if (v &lt; min)</span>
-<span class="fc" id="L104">						min = v;</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">					if (v &lt; min)</span>
+<span class="nc" id="L104">						min = v;</span>
 
-<span class="fc" id="L106">				}</span>
+<span class="nc" id="L106">				}</span>
 				// System.err.println(&quot;RealLine::compile min=&quot; + min + &quot; max=&quot; + max);
-<span class="fc" id="L108">				return;</span>
+<span class="nc" id="L108">				return;</span>
 			}
-<span class="fc" id="L110">			cpt++;</span>
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">			if (cpt &gt; 99999) {</span>
+<span class="nc" id="L110">			cpt++;</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">			if (cpt &gt; 99999) {</span>
 <span class="nc" id="L112">				printCounter(counter);</span>
 <span class="nc" id="L113">				throw new IllegalStateException(&quot;Inifinite Loop?&quot;);</span>
 			}
-<span class="fc" id="L115">		} while (true);</span>
+<span class="nc" id="L115">		} while (true);</span>
 
 	}
 
@@ -126,9 +126,9 @@ import java.util.Set;
 <span class="nc" id="L126">	}</span>
 
 	private static void incCounter(Map&lt;PositiveForce, Integer&gt; counter, PositiveForce f) {
-<span class="fc" id="L129">		final Integer v = counter.get(f);</span>
-<span class="fc bfc" id="L130" title="All 2 branches covered.">		counter.put(f, v == null ? 1 : v + 1);</span>
-<span class="fc" id="L131">	}</span>
+<span class="nc" id="L129">		final Integer v = counter.get(f);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		counter.put(f, v == null ? 1 : v + 1);</span>
+<span class="nc" id="L131">	}</span>
 
 	Real asMaxAbsolute() {
 <span class="nc" id="L134">		return new MaxAbsolute();</span>

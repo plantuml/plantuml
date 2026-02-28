@@ -42,46 +42,46 @@ import net.sourceforge.plantuml.json.JsonValue;
 <span class="nc" id="L42">public class MonomorphToJson {</span>
 
 	public static JsonValue convert(Monomorph input) {
-<span class="pc bpc" id="L45" title="1 of 2 branches missed.">		if (input.getType() == MonomorphType.SCALAR)</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">		if (input.getType() == MonomorphType.SCALAR)</span>
 <span class="nc" id="L46">			return Json.value(input.getValue());</span>
-<span class="fc bfc" id="L47" title="All 2 branches covered.">		if (input.getType() == MonomorphType.LIST)</span>
-<span class="fc" id="L48">			return convertToArray(input);</span>
-<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if (input.getType() == MonomorphType.MAP)</span>
-<span class="fc" id="L50">			return convertToObject(input);</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		if (input.getType() == MonomorphType.LIST)</span>
+<span class="nc" id="L48">			return convertToArray(input);</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		if (input.getType() == MonomorphType.MAP)</span>
+<span class="nc" id="L50">			return convertToObject(input);</span>
 <span class="nc" id="L51">		return null;</span>
 
 	}
 
 	private static JsonArray convertToArray(Monomorph input) {
-<span class="fc" id="L56">		final JsonArray result = new JsonArray();</span>
-<span class="fc bfc" id="L57" title="All 2 branches covered.">		for (int i = 0; i &lt; input.size(); i++) {</span>
-<span class="fc" id="L58">			final Monomorph element = input.getElementAt(i);</span>
-<span class="fc bfc" id="L59" title="All 2 branches covered.">			if (element.getType() == MonomorphType.SCALAR)</span>
-<span class="fc" id="L60">				result.add(element.getValue());</span>
-<span class="pc bpc" id="L61" title="1 of 2 branches missed.">			else if (element.getType() == MonomorphType.MAP)</span>
-<span class="fc" id="L62">				result.add(convertToObject(element));</span>
+<span class="nc" id="L56">		final JsonArray result = new JsonArray();</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		for (int i = 0; i &lt; input.size(); i++) {</span>
+<span class="nc" id="L58">			final Monomorph element = input.getElementAt(i);</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">			if (element.getType() == MonomorphType.SCALAR)</span>
+<span class="nc" id="L60">				result.add(element.getValue());</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">			else if (element.getType() == MonomorphType.MAP)</span>
+<span class="nc" id="L62">				result.add(convertToObject(element));</span>
 			else
 <span class="nc" id="L64">				throw new UnsupportedOperationException();</span>
 		}
-<span class="fc" id="L66">		return result;</span>
+<span class="nc" id="L66">		return result;</span>
 	}
 
 	private static JsonObject convertToObject(Monomorph input) {
-<span class="fc" id="L70">		final JsonObject result = new JsonObject();</span>
+<span class="nc" id="L70">		final JsonObject result = new JsonObject();</span>
 
-<span class="fc bfc" id="L72" title="All 2 branches covered.">		for (String key : input.keys()) {</span>
-<span class="fc" id="L73">			final Monomorph element = input.getMapValue(key);</span>
-<span class="fc bfc" id="L74" title="All 2 branches covered.">			if (element.getType() == MonomorphType.SCALAR)</span>
-<span class="fc" id="L75">				result.add(key, element.getValue());</span>
-<span class="fc bfc" id="L76" title="All 2 branches covered.">			else if (element.getType() == MonomorphType.MAP)</span>
-<span class="fc" id="L77">				result.add(key, convertToObject(element));</span>
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">			else if (element.getType() == MonomorphType.LIST)</span>
-<span class="fc" id="L79">				result.add(key, convertToArray(element));</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		for (String key : input.keys()) {</span>
+<span class="nc" id="L73">			final Monomorph element = input.getMapValue(key);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (element.getType() == MonomorphType.SCALAR)</span>
+<span class="nc" id="L75">				result.add(key, element.getValue());</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">			else if (element.getType() == MonomorphType.MAP)</span>
+<span class="nc" id="L77">				result.add(key, convertToObject(element));</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			else if (element.getType() == MonomorphType.LIST)</span>
+<span class="nc" id="L79">				result.add(key, convertToArray(element));</span>
 			else
 <span class="nc" id="L81">				throw new UnsupportedOperationException();</span>
 
-<span class="fc" id="L83">		}</span>
-<span class="fc" id="L84">		return result;</span>
+<span class="nc" id="L83">		}</span>
+<span class="nc" id="L84">		return result;</span>
 	}
 
 }

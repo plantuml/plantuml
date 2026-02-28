@@ -57,19 +57,19 @@ public class UPolygon extends AbstractShadowable {
 <span class="fc" id="L57">	}</span>
 
 	public UPolygon(List&lt;XPoint2D&gt; points) {
-<span class="fc" id="L60">		this((String) null);</span>
-<span class="fc" id="L61">		all.addAll(points);</span>
-<span class="fc bfc" id="L62" title="All 2 branches covered.">		for (XPoint2D pt : all)</span>
-<span class="fc" id="L63">			manageMinMax(pt.getX(), pt.getY());</span>
+<span class="nc" id="L60">		this((String) null);</span>
+<span class="nc" id="L61">		all.addAll(points);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		for (XPoint2D pt : all)</span>
+<span class="nc" id="L63">			manageMinMax(pt.getX(), pt.getY());</span>
 
-<span class="fc" id="L65">	}</span>
+<span class="nc" id="L65">	}</span>
 
 <span class="fc" id="L67">	public UPolygon(String name) {</span>
 <span class="fc" id="L68">		this.name = name;</span>
 <span class="fc" id="L69">	}</span>
 
 	public XPoint2D getPoint(int idx) {
-<span class="fc" id="L72">		return all.get(idx);</span>
+<span class="nc" id="L72">		return all.get(idx);</span>
 	}
 
 	public XPoint2D checkMiddleContactForSpecificTriangle(XPoint2D center) {

@@ -151,9 +151,9 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 <span class="pc bpc" id="L152" title="1 of 2 branches missed.">			if (this.link.getColors() != null) {</span>
 <span class="fc" id="L153">				final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);</span>
-<span class="fc bfc" id="L154" title="All 2 branches covered.">				if (newColor != null) {</span>
-<span class="fc" id="L155">					color = newColor;</span>
-<span class="fc" id="L156">					arrowHeadColor = color;</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">				if (newColor != null) {</span>
+<span class="nc" id="L155">					color = newColor;</span>
+<span class="nc" id="L156">					arrowHeadColor = color;</span>
 				}
 <span class="pc bnc" id="L158" title="All 2 branches missed.">			} else if (this.link.getSpecificColor() != null) {</span>
 <span class="nc" id="L159">				color = this.link.getSpecificColor();</span>
@@ -166,8 +166,8 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 <span class="fc" id="L166">			final UStroke defaultThickness = skinParam.getThickness(LineParam.arrow, null);</span>
 
 			UStroke stroke;
-<span class="pc bpc" id="L169" title="1 of 4 branches missed.">			if (suggestedStroke == null || linkType.getStyle().isNormal() == false)</span>
-<span class="fc" id="L170">				stroke = linkType.getStroke3(defaultThickness);</span>
+<span class="pc bpc" id="L169" title="2 of 4 branches missed.">			if (suggestedStroke == null || linkType.getStyle().isNormal() == false)</span>
+<span class="nc" id="L170">				stroke = linkType.getStroke3(defaultThickness);</span>
 			else
 <span class="fc" id="L172">				stroke = linkType.getStroke3(suggestedStroke);</span>
 
@@ -189,8 +189,8 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 <span class="fc bfc" id="L189" title="All 2 branches covered.">		if (getLabelRectangleTranslate(&quot;label&quot;) != null)</span>
 <span class="fc" id="L190">			label.drawU(ug.apply(getLabelRectangleTranslate(&quot;label&quot;)));</span>
 
-<span class="fc bfc" id="L192" title="All 2 branches covered.">		if (getLabelRectangleTranslate(&quot;head_label&quot;) != null)</span>
-<span class="fc" id="L193">			headLabel.drawU(ug.apply(getLabelRectangleTranslate(&quot;head_label&quot;)));</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (getLabelRectangleTranslate(&quot;head_label&quot;) != null)</span>
+<span class="nc" id="L193">			headLabel.drawU(ug.apply(getLabelRectangleTranslate(&quot;head_label&quot;)));</span>
 
 <span class="pc bpc" id="L195" title="1 of 2 branches missed.">		if (getLabelRectangleTranslate(&quot;tail_label&quot;) != null)</span>
 <span class="nc" id="L196">			tailLabel.drawU(ug.apply(getLabelRectangleTranslate(&quot;tail_label&quot;)));</span>
@@ -246,27 +246,27 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 	private void printExtremityAtStart(DotPath dotPath, UGraphic ug) {
 <span class="fc" id="L247">		final ExtremityFactory extremityFactory2 = link.getType().getDecor2()</span>
 <span class="fc" id="L248">				.getExtremityFactoryComplete(skinParam.getBackgroundColor());</span>
-<span class="fc bfc" id="L249" title="All 2 branches covered.">		if (extremityFactory2 == null)</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">		if (extremityFactory2 == null)</span>
 <span class="fc" id="L250">			return;</span>
 
-<span class="fc" id="L252">		final XPoint2D p0 = dotPath.getStartPoint();</span>
-<span class="fc" id="L253">		final double startAngle = dotPath.getStartAngle() + Math.PI;</span>
+<span class="nc" id="L252">		final XPoint2D p0 = dotPath.getStartPoint();</span>
+<span class="nc" id="L253">		final double startAngle = dotPath.getStartAngle() + Math.PI;</span>
 
 		try {
-<span class="fc" id="L256">			final Extremity extremity2 = (Extremity) extremityFactory2.createUDrawable(p0, startAngle, null);</span>
-<span class="pc bpc" id="L257" title="1 of 2 branches missed.">			if (extremity2 != null) {</span>
-<span class="pc bpc" id="L258" title="1 of 2 branches missed.">				if (getLinkStrategy() == LinkStrategy.SIMPLIER) {</span>
-<span class="fc" id="L259">					final double decorationLength = extremity2.getDecorationLength();</span>
-<span class="fc" id="L260">					dotPath.moveStartPoint(new UTranslate(decorationLength, 0).rotate(startAngle - Math.PI));</span>
+<span class="nc" id="L256">			final Extremity extremity2 = (Extremity) extremityFactory2.createUDrawable(p0, startAngle, null);</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">			if (extremity2 != null) {</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">				if (getLinkStrategy() == LinkStrategy.SIMPLIER) {</span>
+<span class="nc" id="L259">					final double decorationLength = extremity2.getDecorationLength();</span>
+<span class="nc" id="L260">					dotPath.moveStartPoint(new UTranslate(decorationLength, 0).rotate(startAngle - Math.PI));</span>
 				}
-<span class="fc" id="L262">				extremity2.drawU(ug);</span>
+<span class="nc" id="L262">				extremity2.drawU(ug);</span>
 			}
 
 <span class="nc" id="L265">		} catch (UnsupportedOperationException e) {</span>
 <span class="nc" id="L266">			e.printStackTrace();</span>
 <span class="nc" id="L267">			System.err.println(&quot;CANNOT DRAW printExtremityAtStart&quot;);</span>
-<span class="fc" id="L268">		}</span>
-<span class="fc" id="L269">	}</span>
+<span class="nc" id="L268">		}</span>
+<span class="nc" id="L269">	}</span>
 
 	private void printExtremityAtEnd(DotPath dotPath, UGraphic ug) {
 <span class="fc" id="L272">		final ExtremityFactory extremityFactory1 = link.getType().getDecor1()</span>
@@ -360,11 +360,11 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 <span class="fc" id="L360">		final XPoint2D pt4 = getPoint(splines, 3);</span>
 <span class="fc" id="L361">		dotPath = dotPath.addCurve(pt1, pt2, pt3, pt4);</span>
 <span class="fc" id="L362">		final int n = beziers.size;</span>
-<span class="fc bfc" id="L363" title="All 2 branches covered.">		for (int i = 4; i &lt; n; i += 3) {</span>
-<span class="fc" id="L364">			final XPoint2D ppt2 = getPoint(splines, i);</span>
-<span class="fc" id="L365">			final XPoint2D ppt3 = getPoint(splines, i + 1);</span>
-<span class="fc" id="L366">			final XPoint2D ppt4 = getPoint(splines, i + 2);</span>
-<span class="fc" id="L367">			dotPath = dotPath.addCurve(ppt2, ppt3, ppt4);</span>
+<span class="pc bpc" id="L363" title="1 of 2 branches missed.">		for (int i = 4; i &lt; n; i += 3) {</span>
+<span class="nc" id="L364">			final XPoint2D ppt2 = getPoint(splines, i);</span>
+<span class="nc" id="L365">			final XPoint2D ppt3 = getPoint(splines, i + 1);</span>
+<span class="nc" id="L366">			final XPoint2D ppt4 = getPoint(splines, i + 2);</span>
+<span class="nc" id="L367">			dotPath = dotPath.addCurve(ppt2, ppt3, ppt4);</span>
 		}
 
 <span class="fc" id="L370">		return dotPath;</span>

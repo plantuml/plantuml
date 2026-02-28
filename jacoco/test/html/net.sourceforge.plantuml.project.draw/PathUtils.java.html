@@ -41,12 +41,12 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 <span class="nc" id="L41">public class PathUtils {</span>
 
 	public static UPath UtoRight(double width, double height, double round) {
-<span class="fc" id="L44">		final UPath result = UPath.none();</span>
-<span class="pc bpc" id="L45" title="1 of 2 branches missed.">		if (round == 0) {</span>
-<span class="fc" id="L46">			result.moveTo(0, 0);</span>
-<span class="fc" id="L47">			result.lineTo(width, 0);</span>
-<span class="fc" id="L48">			result.lineTo(width, height);</span>
-<span class="fc" id="L49">			result.lineTo(0, height);</span>
+<span class="nc" id="L44">		final UPath result = UPath.none();</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">		if (round == 0) {</span>
+<span class="nc" id="L46">			result.moveTo(0, 0);</span>
+<span class="nc" id="L47">			result.lineTo(width, 0);</span>
+<span class="nc" id="L48">			result.lineTo(width, height);</span>
+<span class="nc" id="L49">			result.lineTo(0, height);</span>
 		} else {
 <span class="nc" id="L51">			final double halfRound = round / 2;</span>
 <span class="nc" id="L52">			result.moveTo(0, 0);</span>
@@ -56,16 +56,16 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 <span class="nc" id="L56">			result.arcTo(new XPoint2D(width - halfRound, height), halfRound, 0, 1);</span>
 <span class="nc" id="L57">			result.lineTo(0, height);</span>
 		}
-<span class="fc" id="L59">		return result;</span>
+<span class="nc" id="L59">		return result;</span>
 	}
 
 	public static UPath UtoLeft(double width, double height, double round) {
-<span class="fc" id="L63">		final UPath result = UPath.none();</span>
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (round == 0) {</span>
-<span class="fc" id="L65">			result.moveTo(width, height);</span>
-<span class="fc" id="L66">			result.lineTo(0, height);</span>
-<span class="fc" id="L67">			result.lineTo(0, 0);</span>
-<span class="fc" id="L68">			result.lineTo(width, 0);</span>
+<span class="nc" id="L63">		final UPath result = UPath.none();</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (round == 0) {</span>
+<span class="nc" id="L65">			result.moveTo(width, height);</span>
+<span class="nc" id="L66">			result.lineTo(0, height);</span>
+<span class="nc" id="L67">			result.lineTo(0, 0);</span>
+<span class="nc" id="L68">			result.lineTo(width, 0);</span>
 		} else {
 <span class="nc" id="L70">			final double halfRound = round / 2;</span>
 <span class="nc" id="L71">			result.moveTo(width, height);</span>
@@ -75,7 +75,7 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 <span class="nc" id="L75">			result.arcTo(new XPoint2D(halfRound, 0), halfRound, 0, 1);</span>
 <span class="nc" id="L76">			result.lineTo(width, 0);</span>
 		}
-<span class="fc" id="L78">		return result;</span>
+<span class="nc" id="L78">		return result;</span>
 	}
 
 }

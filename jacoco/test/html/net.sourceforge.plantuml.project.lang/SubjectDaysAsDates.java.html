@@ -106,29 +106,29 @@ public class SubjectDaysAsDates implements Subject&lt;GanttDiagram&gt; {
 	}
 
 	public Failable&lt;DaysAsDates&gt; getMe(GanttDiagram project, RegexResult arg) {
-<span class="fc" id="L109">		final String countAnd = arg.get(&quot;COUNT_AND&quot;, 0);</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (countAnd != null) {</span>
+<span class="nc" id="L109">		final String countAnd = arg.get(&quot;COUNT_AND&quot;, 0);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (countAnd != null) {</span>
 <span class="nc" id="L111">			final TimePoint date3 = getDate(project, arg, &quot;3&quot;);</span>
 <span class="nc" id="L112">			final int nb = Integer.parseInt(countAnd);</span>
 <span class="nc" id="L113">			return Failable.ok(new DaysAsDates(project, date3.toDay(), nb));</span>
 		}
-<span class="fc" id="L115">		final String countThen = arg.get(&quot;COUNT_THEN&quot;, 0);</span>
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (countThen != null) {</span>
+<span class="nc" id="L115">		final String countThen = arg.get(&quot;COUNT_THEN&quot;, 0);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (countThen != null) {</span>
 <span class="nc" id="L117">			final TimePoint date3 = project.getThenDate();</span>
 <span class="nc" id="L118">			final int nb = Integer.parseInt(countThen);</span>
 <span class="nc" id="L119">			return Failable.ok(new DaysAsDates(project, date3.toDay(), nb));</span>
 		}
-<span class="fc" id="L121">		final TimePoint date1 = getDate(project, arg, &quot;1&quot;);</span>
-<span class="fc" id="L122">		final TimePoint date2 = getDate(project, arg, &quot;2&quot;);</span>
-<span class="fc" id="L123">		return Failable.ok(new DaysAsDates(date1.toDay(), date2.toDay()));</span>
+<span class="nc" id="L121">		final TimePoint date1 = getDate(project, arg, &quot;1&quot;);</span>
+<span class="nc" id="L122">		final TimePoint date2 = getDate(project, arg, &quot;2&quot;);</span>
+<span class="nc" id="L123">		return Failable.ok(new DaysAsDates(date1.toDay(), date2.toDay()));</span>
 	}
 
 	private TimePoint getDate(GanttDiagram project, RegexResult arg, String suffix) {
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (arg.get(&quot;BDAY&quot; + suffix, 0) != null) {</span>
-<span class="fc" id="L128">			final int day = Integer.parseInt(arg.get(&quot;BDAY&quot; + suffix, 0));</span>
-<span class="fc" id="L129">			final int month = Integer.parseInt(arg.get(&quot;BMONTH&quot; + suffix, 0));</span>
-<span class="fc" id="L130">			final int year = Integer.parseInt(arg.get(&quot;BYEAR&quot; + suffix, 0));</span>
-<span class="fc" id="L131">			return TimePoint.ofStartOfDay(year, month, day);</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (arg.get(&quot;BDAY&quot; + suffix, 0) != null) {</span>
+<span class="nc" id="L128">			final int day = Integer.parseInt(arg.get(&quot;BDAY&quot; + suffix, 0));</span>
+<span class="nc" id="L129">			final int month = Integer.parseInt(arg.get(&quot;BMONTH&quot; + suffix, 0));</span>
+<span class="nc" id="L130">			final int year = Integer.parseInt(arg.get(&quot;BYEAR&quot; + suffix, 0));</span>
+<span class="nc" id="L131">			return TimePoint.ofStartOfDay(year, month, day);</span>
 		}
 <span class="nc bnc" id="L133" title="All 2 branches missed.">		if (arg.get(&quot;ECOUNT&quot; + suffix, 0) != null) {</span>
 <span class="nc" id="L134">			final int day = Integer.parseInt(arg.get(&quot;ECOUNT&quot; + suffix, 0));</span>
@@ -182,11 +182,11 @@ public class SubjectDaysAsDates implements Subject&lt;GanttDiagram&gt; {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="fc" id="L185">			final HColor color = ((CenterBorderColor) complement).getCenter();</span>
-<span class="fc bfc" id="L186" title="All 2 branches covered.">			for (LocalDate d : (DaysAsDates) subject)</span>
-<span class="fc" id="L187">				project.colorDay(d, color);</span>
+<span class="nc" id="L185">			final HColor color = ((CenterBorderColor) complement).getCenter();</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">			for (LocalDate d : (DaysAsDates) subject)</span>
+<span class="nc" id="L187">				project.colorDay(d, color);</span>
 
-<span class="fc" id="L189">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L189">			return CommandExecutionResult.ok();</span>
 
 		}
 

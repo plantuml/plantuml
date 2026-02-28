@@ -359,11 +359,11 @@ try {
 <span class="pc bpc" id="L359" title="2 of 6 branches missed.">    if(clipTail &amp;&amp; ND_shape(tn)!=null &amp;&amp; ND_shape(tn).fns.insidefn!=null) {</span>
 <span class="fc" id="L360">	inside_context.s_n = tn;</span>
 <span class="fc" id="L361">	inside_context.s_bp = tbox;</span>
-<span class="pc bfc" id="L362" title="All 2 branches covered.">	for (start[0] = 0; start[0] &lt; pn - 4; start[0] += 3) {</span>
-<span class="fc" id="L363">	    p2.x = ps.get__(start[0] + 3).x - ND_coord(tn).x;</span>
-<span class="fc" id="L364">	    p2.y = ps.get__(start[0] + 3).y - ND_coord(tn).y;</span>
-<span class="pc bpc" id="L365" title="1 of 2 branches missed.">	    if (((Boolean)ND_shape(tn).fns.insidefn.exe(zz, inside_context, p2)) == false)</span>
-<span class="fc" id="L366">		break;</span>
+<span class="pc bpc" id="L362" title="1 of 2 branches missed.">	for (start[0] = 0; start[0] &lt; pn - 4; start[0] += 3) {</span>
+<span class="nc" id="L363">	    p2.x = ps.get__(start[0] + 3).x - ND_coord(tn).x;</span>
+<span class="nc" id="L364">	    p2.y = ps.get__(start[0] + 3).y - ND_coord(tn).y;</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">	    if (((Boolean)ND_shape(tn).fns.insidefn.exe(zz, inside_context, p2)) == false)</span>
+<span class="nc" id="L366">		break;</span>
 	}
 <span class="fc" id="L368">	shape_clip0(zz, inside_context, tn, ps.plus_(start[0]), true);</span>
     } else
@@ -371,21 +371,21 @@ try {
 <span class="pc bpc" id="L371" title="3 of 6 branches missed.">    if(clipHead &amp;&amp; ND_shape(hn)!=null &amp;&amp; ND_shape(hn).fns.insidefn!=null) {</span>
 <span class="fc" id="L372">	inside_context.s_n = hn;</span>
 <span class="fc" id="L373">	inside_context.s_bp = hbox;</span>
-<span class="pc bfc" id="L374" title="All 2 branches covered.">	for (end[0] = pn - 4; end[0] &gt; 0; end[0] -= 3) {</span>
-<span class="fc" id="L375">	    p2.x = ps.get__(end[0]).x - ND_coord(hn).x;</span>
-<span class="fc" id="L376">	    p2.y = ps.get__(end[0]).y - ND_coord(hn).y;</span>
-<span class="pc bpc" id="L377" title="1 of 2 branches missed.">	    if (((Boolean)ND_shape(hn).fns.insidefn.exe(zz, inside_context, p2)) == false)</span>
-<span class="fc" id="L378">		break;</span>
+<span class="pc bpc" id="L374" title="1 of 2 branches missed.">	for (end[0] = pn - 4; end[0] &gt; 0; end[0] -= 3) {</span>
+<span class="nc" id="L375">	    p2.x = ps.get__(end[0]).x - ND_coord(hn).x;</span>
+<span class="nc" id="L376">	    p2.y = ps.get__(end[0]).y - ND_coord(hn).y;</span>
+<span class="nc bnc" id="L377" title="All 2 branches missed.">	    if (((Boolean)ND_shape(hn).fns.insidefn.exe(zz, inside_context, p2)) == false)</span>
+<span class="nc" id="L378">		break;</span>
 	}
 <span class="fc" id="L380">	shape_clip0(zz, inside_context, hn, ps.plus_(end[0]), false);</span>
     } else
 <span class="nc" id="L382">	end[0] = pn - 4;</span>
-<span class="pc bfc" id="L383" title="All 2 branches covered.">    for (; start[0] &lt; pn - 4; start[0] += 3) </span>
-<span class="pc bpc" id="L384" title="1 of 2 branches missed.">	if (!APPROXEQPT(ps.get__(start[0]), ps.get__(start[0] + 3), MILLIPOINT))</span>
-<span class="fc" id="L385">	    break;</span>
-<span class="pc bfc" id="L386" title="All 2 branches covered.">    for (; end[0] &gt; 0; end[0] -= 3)</span>
-<span class="pc bpc" id="L387" title="1 of 2 branches missed.">	if (!APPROXEQPT(ps.get__(end[0]), ps.get__(end[0] + 3), MILLIPOINT))</span>
-<span class="fc" id="L388">	    break;</span>
+<span class="pc bpc" id="L383" title="1 of 2 branches missed.">    for (; start[0] &lt; pn - 4; start[0] += 3) </span>
+<span class="nc bnc" id="L384" title="All 2 branches missed.">	if (!APPROXEQPT(ps.get__(start[0]), ps.get__(start[0] + 3), MILLIPOINT))</span>
+<span class="nc" id="L385">	    break;</span>
+<span class="pc bpc" id="L386" title="1 of 2 branches missed.">    for (; end[0] &gt; 0; end[0] -= 3)</span>
+<span class="nc bnc" id="L387" title="All 2 branches missed.">	if (!APPROXEQPT(ps.get__(end[0]), ps.get__(end[0] + 3), MILLIPOINT))</span>
+<span class="nc" id="L388">	    break;</span>
 <span class="fc" id="L389">   arrow_clip(zz, fe, hn, ps, start, end, newspl, info);</span>
 
 <span class="pc bpc" id="L391" title="1 of 2 branches missed.">    for (i = start[0]; i &lt; end[0] + 4; ) {</span>
@@ -526,10 +526,10 @@ try {
     
 <span class="fc bfc" id="L527" title="All 2 branches covered.">    if (ED_tail_port(e).dyna)</span>
 <span class="fc" id="L528">	ED_tail_port(e, resolvePort(agtail(e), aghead(e), ED_tail_port(e)));</span>
-<span class="fc bfc" id="L529" title="All 2 branches covered.">    if (ND_shape(n)!=null)</span>
+<span class="pc bpc" id="L529" title="1 of 2 branches missed.">    if (ND_shape(n)!=null)</span>
 <span class="fc" id="L530">	pboxfn = (CFunction) ND_shape(n).fns.pboxfn;</span>
     else
-<span class="fc" id="L532">	pboxfn = null;</span>
+<span class="nc" id="L532">	pboxfn = null;</span>
 <span class="fc" id="L533">    P.start.p.___(add_pointf(ND_coord(n), ED_tail_port(e).p));</span>
 <span class="pc bpc" id="L534" title="1 of 2 branches missed.">    if (merge) {</span>
 	/*P-&gt;start.theta = - M_PI / 2; */
@@ -545,7 +545,7 @@ try {
 <span class="fc" id="L545">    P.nbox = 0;</span>
 <span class="fc" id="L546">    P.data = e;</span>
 <span class="fc" id="L547">    endp.np.___(P.start.p);</span>
-<span class="pc bpc" id="L548" title="1 of 6 branches missed.">    if ((et == REGULAREDGE) &amp;&amp; (ND_node_type(n) == NORMAL) &amp;&amp; ((side = ED_tail_port(e).side)!=0)) {</span>
+<span class="pc bpc" id="L548" title="2 of 6 branches missed.">    if ((et == REGULAREDGE) &amp;&amp; (ND_node_type(n) == NORMAL) &amp;&amp; ((side = ED_tail_port(e).side)!=0)) {</span>
 	ST_Agedge_s orig;
 <span class="fc" id="L550">	final ST_boxf b0 = new ST_boxf(), b = endp.nb.copy();</span>
 <span class="pc bpc" id="L551" title="1 of 2 branches missed.">	if ((side &amp; TOP)!=0) {</span>
@@ -680,7 +680,7 @@ try {
     
 <span class="pc bpc" id="L681" title="1 of 2 branches missed.">    if (et == REGULAREDGE) side = BOTTOM;</span>
 <span class="nc" id="L682">    else side = endp.sidemask;  /* for flat edges */</span>
-<span class="fc bfc" id="L683" title="All 2 branches covered.">    if (pboxfn!=null</span>
+<span class="pc bpc" id="L683" title="1 of 2 branches missed.">    if (pboxfn!=null</span>
 <span class="pc bpc" id="L684" title="1 of 2 branches missed.">	&amp;&amp; (mask = (Integer) pboxfn.exe(zz, n, ED_tail_port(e), side, endp.boxes[0], endp.boxn))!=0)</span>
 <span class="nc" id="L685">	endp.sidemask = mask;</span>
     else {
@@ -739,10 +739,10 @@ try {
     
 <span class="pc bpc" id="L740" title="1 of 2 branches missed.">    if (ED_head_port(e).dyna) </span>
 <span class="nc" id="L741">	ED_head_port(e, resolvePort(aghead(e), agtail(e), ED_head_port(e)));</span>
-<span class="fc bfc" id="L742" title="All 2 branches covered.">    if (ND_shape(n)!=null)</span>
+<span class="pc bpc" id="L742" title="1 of 2 branches missed.">    if (ND_shape(n)!=null)</span>
 <span class="fc" id="L743">	pboxfn = (CFunction) ND_shape(n).fns.pboxfn;</span>
     else
-<span class="fc" id="L745">	pboxfn = null;</span>
+<span class="nc" id="L745">	pboxfn = null;</span>
 <span class="fc" id="L746">    P.end.p.___(add_pointf(ND_coord(n), ED_head_port(e).p));</span>
 <span class="pc bpc" id="L747" title="1 of 2 branches missed.">    if (merge) {</span>
 <span class="nc" id="L748">UNSUPPORTED(&quot;cproejwusj67kuugolh6tbkwz&quot;); // 	/*P-&gt;end.theta = M_PI / 2; */</span>
@@ -757,7 +757,7 @@ try {
 <span class="fc" id="L757">	    P.end.constrained = false;</span>
     }
 <span class="fc" id="L759">    endp.np.___(P.end.p);</span>
-<span class="pc bpc" id="L760" title="2 of 6 branches missed.">    if ((et == REGULAREDGE) &amp;&amp; (ND_node_type(n) == NORMAL) &amp;&amp; ((side = ED_head_port(e).side)!=0)) {</span>
+<span class="pc bpc" id="L760" title="3 of 6 branches missed.">    if ((et == REGULAREDGE) &amp;&amp; (ND_node_type(n) == NORMAL) &amp;&amp; ((side = ED_head_port(e).side)!=0)) {</span>
 	ST_Agedge_s orig;
 <span class="nc" id="L762">	final ST_boxf b0 = new ST_boxf(), b = endp.nb.copy();</span>
 <span class="nc bnc" id="L763" title="All 2 branches missed.">	if ((side &amp; TOP)!=0) {</span>
@@ -893,7 +893,7 @@ try {
     
 <span class="pc bpc" id="L894" title="1 of 2 branches missed.">    if (et == REGULAREDGE) side = TOP;</span>
 <span class="nc" id="L895">    else side = endp.sidemask;  /* for flat edges */</span>
-<span class="fc bfc" id="L896" title="All 2 branches covered.">    if (pboxfn!=null</span>
+<span class="pc bpc" id="L896" title="1 of 2 branches missed.">    if (pboxfn!=null</span>
 <span class="pc bpc" id="L897" title="1 of 2 branches missed.">	&amp;&amp; (mask = (Integer) pboxfn.exe(zz, n, ED_head_port(e), side, endp.boxes[0], endp.boxn))!=0)</span>
 <span class="nc" id="L898">	endp.sidemask = mask;</span>
     else {
@@ -1406,28 +1406,28 @@ try {
  */@Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/splines.c&quot;, name=&quot;endPoints&quot;, key=&quot;7wyn51o9k6u7joaq9k18boffh&quot;, definition=&quot;static void endPoints(splines * spl, pointf * p, pointf * q)&quot;)
 public static void endPoints(ST_splines spl, ST_pointf p, ST_pointf q) {
-<span class="fc" id="L1409">ENTERING(&quot;7wyn51o9k6u7joaq9k18boffh&quot;,&quot;endPoints&quot;);</span>
+<span class="nc" id="L1409">ENTERING(&quot;7wyn51o9k6u7joaq9k18boffh&quot;,&quot;endPoints&quot;);</span>
 try {
-<span class="fc" id="L1411">     final ST_bezier bz = new ST_bezier();</span>
+<span class="nc" id="L1411">     final ST_bezier bz = new ST_bezier();</span>
      
-<span class="fc" id="L1413">     bz.___(spl.list.get__(0));</span>
-<span class="pc bpc" id="L1414" title="1 of 2 branches missed.">     if (bz.sflag!=0) {</span>
+<span class="nc" id="L1413">     bz.___(spl.list.get__(0));</span>
+<span class="nc bnc" id="L1414" title="All 2 branches missed.">     if (bz.sflag!=0) {</span>
 <span class="nc" id="L1415">UNSUPPORTED(&quot;4wazlko0bxmzxoobqacij1btk&quot;); // 	*p = bz.sp;</span>
      }
      else {
-<span class="fc" id="L1418">    	p.___(bz.list.get__(0));</span>
+<span class="nc" id="L1418">    	p.___(bz.list.get__(0));</span>
      }
-<span class="fc" id="L1420">     bz.___(spl.list.get__(spl.size-1));</span>
-<span class="pc bpc" id="L1421" title="1 of 2 branches missed.">     if (bz.eflag!=0) {</span>
+<span class="nc" id="L1420">     bz.___(spl.list.get__(spl.size-1));</span>
+<span class="nc bnc" id="L1421" title="All 2 branches missed.">     if (bz.eflag!=0) {</span>
 <span class="nc" id="L1422">UNSUPPORTED(&quot;78u9nvs8u7rxturidz5nf8hn4&quot;); // 	*q = bz.ep;</span>
      }
      else {
-<span class="fc" id="L1425">		q.___(bz.list.get__(bz.size-1));</span>
+<span class="nc" id="L1425">		q.___(bz.list.get__(bz.size-1));</span>
      }
 } finally {
-<span class="fc" id="L1428">LEAVING(&quot;7wyn51o9k6u7joaq9k18boffh&quot;,&quot;endPoints&quot;);</span>
+<span class="nc" id="L1428">LEAVING(&quot;7wyn51o9k6u7joaq9k18boffh&quot;,&quot;endPoints&quot;);</span>
 }
-<span class="fc" id="L1430">}</span>
+<span class="nc" id="L1430">}</span>
 
 
 //3 8hpmwzlqbj1nii32zubbe9hru
@@ -1435,34 +1435,34 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/common/splines.c&quot;, name=&quot;edgeMidpoint&quot;, key=&quot;8hpmwzlqbj1nii32zubbe9hru&quot;, definition=&quot;pointf edgeMidpoint (graph_t* g, edge_t * e)&quot;)
 public static ST_pointf edgeMidpoint(ST_Agraph_s g, ST_Agedge_s e) {
-<span class="fc" id="L1438">ENTERING(&quot;8hpmwzlqbj1nii32zubbe9hru&quot;,&quot;edgeMidpoint&quot;);</span>
+<span class="nc" id="L1438">ENTERING(&quot;8hpmwzlqbj1nii32zubbe9hru&quot;,&quot;edgeMidpoint&quot;);</span>
 try {
-<span class="fc" id="L1440">	return edgeMidpoint_(g, e).copy();</span>
+<span class="nc" id="L1440">	return edgeMidpoint_(g, e).copy();</span>
 } finally {
-<span class="fc" id="L1442">LEAVING(&quot;8hpmwzlqbj1nii32zubbe9hru&quot;,&quot;edgeMidpoint&quot;);</span>
+<span class="nc" id="L1442">LEAVING(&quot;8hpmwzlqbj1nii32zubbe9hru&quot;,&quot;edgeMidpoint&quot;);</span>
 }
 }
 	
 	
 private static ST_pointf edgeMidpoint_(ST_Agraph_s g, ST_Agedge_s e) {
-<span class="fc" id="L1448">     int et = (GD_flags(g) &amp; (7 &lt;&lt; 1));</span>
-<span class="fc" id="L1449">     final ST_pointf d = new ST_pointf();</span>
-<span class="fc" id="L1450">     final ST_pointf spf = new ST_pointf();</span>
-<span class="fc" id="L1451">     final ST_pointf p = new ST_pointf();</span>
-<span class="fc" id="L1452">     final ST_pointf q = new ST_pointf();</span>
-<span class="fc" id="L1453">     endPoints((ST_splines) ED_spl(e), p, q);</span>
-<span class="pc bpc" id="L1454" title="1 of 2 branches missed.">     if (APPROXEQPT(p, q, MILLIPOINT)) { /* degenerate spline */</span>
+<span class="nc" id="L1448">     int et = (GD_flags(g) &amp; (7 &lt;&lt; 1));</span>
+<span class="nc" id="L1449">     final ST_pointf d = new ST_pointf();</span>
+<span class="nc" id="L1450">     final ST_pointf spf = new ST_pointf();</span>
+<span class="nc" id="L1451">     final ST_pointf p = new ST_pointf();</span>
+<span class="nc" id="L1452">     final ST_pointf q = new ST_pointf();</span>
+<span class="nc" id="L1453">     endPoints((ST_splines) ED_spl(e), p, q);</span>
+<span class="nc bnc" id="L1454" title="All 2 branches missed.">     if (APPROXEQPT(p, q, MILLIPOINT)) { /* degenerate spline */</span>
 <span class="nc" id="L1455">UNSUPPORTED(&quot;7i8m5mpfnv7m9uqxh015zfdaj&quot;); // 	spf = p;</span>
      }
-<span class="pc bpc" id="L1457" title="3 of 4 branches missed.">     else if ((et == (5 &lt;&lt; 1)) || (et == (2 &lt;&lt; 1))) {</span>
-<span class="fc" id="L1458"> 	d.x = (q.x + p.x) / 2.;</span>
-<span class="fc" id="L1459"> 	d.y = (p.y + q.y) / 2.;</span>
-<span class="fc" id="L1460"> 	spf.___(dotneato_closest((ST_splines)ED_spl(e), d));</span>
+<span class="nc bnc" id="L1457" title="All 4 branches missed.">     else if ((et == (5 &lt;&lt; 1)) || (et == (2 &lt;&lt; 1))) {</span>
+<span class="nc" id="L1458"> 	d.x = (q.x + p.x) / 2.;</span>
+<span class="nc" id="L1459"> 	d.y = (p.y + q.y) / 2.;</span>
+<span class="nc" id="L1460"> 	spf.___(dotneato_closest((ST_splines)ED_spl(e), d));</span>
      }
      else {   /* ET_PLINE, ET_ORTHO or ET_LINE */
 <span class="nc" id="L1463">UNSUPPORTED(&quot;6he3hi05vusuthrchn4enk7o6&quot;); // 	spf = polylineMidpoint (ED_spl(e), &amp;p, &amp;q);</span>
      }
-<span class="fc" id="L1465">     return spf;</span>
+<span class="nc" id="L1465">     return spf;</span>
 }
 
 

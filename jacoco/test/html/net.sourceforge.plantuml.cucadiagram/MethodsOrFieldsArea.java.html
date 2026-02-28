@@ -129,10 +129,10 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 <span class="pc bpc" id="L129" title="1 of 2 branches missed.">			if (cs instanceof Member == false)</span>
 <span class="nc" id="L130">				continue;</span>
 <span class="fc" id="L131">			final Member m = (Member) cs;</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">			if (m.getVisibilityModifier() != null)</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">			if (m.getVisibilityModifier() != null)</span>
 <span class="fc" id="L133">				return true;</span>
 
-<span class="fc" id="L135">		}</span>
+<span class="nc" id="L135">		}</span>
 <span class="fc" id="L136">		return false;</span>
 	}
 
@@ -404,10 +404,10 @@ public class MethodsOrFieldsArea extends AbstractTextBlock implements TextBlock,
 <span class="nc" id="L404">				placementStrategy = new PlacementStrategyY1Y2Right(stringBounder);</span>
 
 <span class="fc" id="L406">			group = new ULayoutGroup(placementStrategy);</span>
-<span class="fc bfc" id="L407" title="All 2 branches covered.">			for (CharSequence cs : members) {</span>
-<span class="fc" id="L408">				final TextBlock bloc = createTextBlock(cs);</span>
-<span class="fc" id="L409">				group.add(bloc);</span>
-<span class="fc" id="L410">			}</span>
+<span class="pc bpc" id="L407" title="1 of 2 branches missed.">			for (CharSequence cs : members) {</span>
+<span class="nc" id="L408">				final TextBlock bloc = createTextBlock(cs);</span>
+<span class="nc" id="L409">				group.add(bloc);</span>
+<span class="nc" id="L410">			}</span>
 		}
 <span class="fc" id="L412">		return group;</span>
 	}

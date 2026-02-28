@@ -64,15 +64,15 @@ public class UBrexCommandEndif extends UBrexSingleLineCommand2&lt;ActivityDiagra
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (diagram.getLastEntityConsulted() == null)</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (diagram.getLastEntityConsulted() == null)</span>
 <span class="nc" id="L68">			return CommandExecutionResult.error(&quot;No if for this endif&quot;);</span>
 
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (diagram.getCurrentContext() == null)</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (diagram.getCurrentContext() == null)</span>
 <span class="nc" id="L71">			return CommandExecutionResult.error(&quot;No if for this endif&quot;);</span>
 
-<span class="fc" id="L73">		diagram.endif();</span>
+<span class="nc" id="L73">		diagram.endif();</span>
 
-<span class="fc" id="L75">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L75">		return CommandExecutionResult.ok();</span>
 	}
 
 }

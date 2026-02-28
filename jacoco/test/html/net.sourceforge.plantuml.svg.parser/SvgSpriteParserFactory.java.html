@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SvgSpriteParserFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.svg.parser</a> &gt; <span class="el_source">SvgSpriteParserFactory.java</span></div><h1>SvgSpriteParserFactory.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.svg.parser;
+
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.PragmaKey;
+import net.sourceforge.plantuml.teavm.TeaVM;
+
+/**
+ * Factory for selecting an SVG sprite parser implementation.
+ *
+ * &lt;p&gt;Selection is based on the {@code svgparser} pragma when provided. The
+ * default remains Nano unless explicitly set to {@code sax}.
+ */
+public final class SvgSpriteParserFactory {
+
+	private SvgSpriteParserFactory() {
+	}
+
+	/**
+	 * Create a parser for a single SVG sprite using the default selection logic.
+	 *
+	 * @param svg SVG content
+	 * @return parser instance
+	 */
+	public static ISvgSpriteParser create(String svg) {
+<span class="fc" id="L63">		return create(Collections.singletonList(svg), null);</span>
+	}
+
+	/**
+	 * Create a parser for multiple SVG sprite fragments using the default selection logic.
+	 *
+	 * @param svg SVG fragments
+	 * @return parser instance
+	 */
+	public static ISvgSpriteParser create(List&lt;String&gt; svg) {
+<span class="nc" id="L73">		return create(svg, null);</span>
+	}
+
+	/**
+	 * Create a parser for a single SVG sprite using pragma-based selection.
+	 *
+	 * @param svg SVG content
+	 * @param pragma diagram pragma (may be null)
+	 * @return parser instance
+	 */
+	public static ISvgSpriteParser create(String svg, Pragma pragma) {
+<span class="fc" id="L84">		return create(Collections.singletonList(svg), pragma);</span>
+	}
+
+	/**
+	 * Create a parser for multiple SVG sprite fragments using pragma-based selection.
+	 *
+	 * @param svg SVG fragments
+	 * @param pragma diagram pragma (may be null)
+	 * @return parser instance
+	 */
+	public static ISvgSpriteParser create(List&lt;String&gt; svg, Pragma pragma) {
+<span class="fc" id="L95">		final String parser = getParserSelector(pragma);</span>
+		// TeaVM does not provide javax.xml.parsers; this branch forces Nano and is
+		// evaluated at compile time, so TeaVM removes the unreachable JVM-only path
+		// from the generated JavaScript output and class stubs.
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L100">			return new SvgNanoParser(svg);</span>
+
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (&quot;sax&quot;.equals(parser))</span>
+<span class="fc" id="L103">			return new SvgSaxParser(svg);</span>
+
+		// Default parser: nano unless explicitly set to sax.
+<span class="fc" id="L106">		return new SvgNanoParser(svg);</span>
+	}
+
+	/**
+	 * Resolve the parser selector value from the pragma, defaulting to {@code nano}.
+	 */
+	private static String getParserSelector(Pragma pragma) {
+<span class="pc bpc" id="L113" title="1 of 4 branches missed.">		if (pragma != null &amp;&amp; pragma.isDefine(PragmaKey.SVG_PARSER)) {</span>
+<span class="fc" id="L114">			String value = pragma.getValue(PragmaKey.SVG_PARSER);</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">			if (value == null)</span>
+<span class="nc" id="L116">				return &quot;nano&quot;;</span>
+<span class="fc" id="L117">			value = value.trim().toLowerCase();</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">			if (value.length() == 0)</span>
+<span class="nc" id="L119">				return &quot;nano&quot;;</span>
+<span class="fc" id="L120">			return value;</span>
+		}
+
+<span class="fc" id="L123">		return &quot;nano&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

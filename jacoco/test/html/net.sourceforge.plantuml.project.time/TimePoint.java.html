@@ -71,11 +71,11 @@ public class TimePoint implements Comparable&lt;TimePoint&gt;, PValue {
 	}
 
 	public static TimePoint ofStartOfDay(int year, int month, int dayOfMonth) {
-<span class="fc" id="L74">		return new TimePoint(LocalDateTime.of(year, month, dayOfMonth, 0, 0));</span>
+<span class="nc" id="L74">		return new TimePoint(LocalDateTime.of(year, month, dayOfMonth, 0, 0));</span>
 	}
 
 	public static TimePoint ofEndOfDayMinusOneSecond(LocalDate day) {
-<span class="fc" id="L78">		return ofStartOfDay(day.plusDays(1)).minusOneSecond();</span>
+<span class="nc" id="L78">		return ofStartOfDay(day.plusDays(1)).minusOneSecond();</span>
 	}
 
 	public TimePoint ofEndOfDay() {
@@ -108,12 +108,12 @@ public class TimePoint implements Comparable&lt;TimePoint&gt;, PValue {
 	}
 
 	public int getWeekOfYear(WeekNumberStrategy strategy) {
-<span class="fc" id="L111">		final WeekFields wf = WeekFields.of(strategy.getFirstDayOfWeek(), strategy.getMinimalDaysInFirstWeek());</span>
-<span class="fc" id="L112">		return utcDateTime.toLocalDate().get(wf.weekOfYear());</span>
+<span class="nc" id="L111">		final WeekFields wf = WeekFields.of(strategy.getFirstDayOfWeek(), strategy.getMinimalDaysInFirstWeek());</span>
+<span class="nc" id="L112">		return utcDateTime.toLocalDate().get(wf.weekOfYear());</span>
 	}
 
 	public TimePoint increment() {
-<span class="fc" id="L116">		return addDays(1);</span>
+<span class="nc" id="L116">		return addDays(1);</span>
 	}
 
 	public TimePoint decrement() {
@@ -121,7 +121,7 @@ public class TimePoint implements Comparable&lt;TimePoint&gt;, PValue {
 	}
 
 	public TimePoint addDays(int nday) {
-<span class="fc" id="L124">		return new TimePoint(this.utcDateTime.toLocalDate().plusDays(nday).atStartOfDay());</span>
+<span class="nc" id="L124">		return new TimePoint(this.utcDateTime.toLocalDate().plusDays(nday).atStartOfDay());</span>
 	}
 
 	public final int getAbsoluteDayNum() {
@@ -129,7 +129,7 @@ public class TimePoint implements Comparable&lt;TimePoint&gt;, PValue {
 	}
 
 	public final long getMillis() {
-<span class="fc" id="L132">		return utcDateTime.toInstant(ZoneOffset.UTC).toEpochMilli();</span>
+<span class="nc" id="L132">		return utcDateTime.toInstant(ZoneOffset.UTC).toEpochMilli();</span>
 	}
 
 	public int year() {
@@ -143,23 +143,23 @@ public class TimePoint implements Comparable&lt;TimePoint&gt;, PValue {
 
 	@Override
 	public int hashCode() {
-<span class="fc" id="L146">		return utcDateTime.hashCode();</span>
+<span class="nc" id="L146">		return utcDateTime.hashCode();</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (this == obj)</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (this == obj)</span>
 <span class="nc" id="L152">			return true;</span>
-<span class="pc bpc" id="L153" title="2 of 4 branches missed.">		if (obj == null || obj.getClass() != TimePoint.class)</span>
+<span class="nc bnc" id="L153" title="All 4 branches missed.">		if (obj == null || obj.getClass() != TimePoint.class)</span>
 <span class="nc" id="L154">			return false;</span>
 
-<span class="fc" id="L156">		final TimePoint other = (TimePoint) obj;</span>
-<span class="fc" id="L157">		return this.utcDateTime.equals(other.utcDateTime);</span>
+<span class="nc" id="L156">		final TimePoint other = (TimePoint) obj;</span>
+<span class="nc" id="L157">		return this.utcDateTime.equals(other.utcDateTime);</span>
 	}
 
 	@Override
 	public int compareTo(TimePoint other) {
-<span class="fc" id="L162">		return this.utcDateTime.compareTo(other.utcDateTime);</span>
+<span class="nc" id="L162">		return this.utcDateTime.compareTo(other.utcDateTime);</span>
 	}
 
 	public final int getDayOfMonth() {
@@ -171,11 +171,11 @@ public class TimePoint implements Comparable&lt;TimePoint&gt;, PValue {
 	}
 
 	public YearMonth monthYear() {
-<span class="fc" id="L174">		return YearMonth.from(utcDateTime);</span>
+<span class="nc" id="L174">		return YearMonth.from(utcDateTime);</span>
 	}
 
 	public DayOfWeek toDayOfWeek() {
-<span class="fc" id="L178">		return utcDateTime.getDayOfWeek();</span>
+<span class="nc" id="L178">		return utcDateTime.getDayOfWeek();</span>
 	}
 
 	public LocalDate toDay() {

@@ -104,17 +104,17 @@ public class CommandPackage extends SingleLineCommand2&lt;AbstractEntityDiagram&
 			ParserPass currentPass) throws NoSuchColorException {
 		String idShort;
 		String display;
-<span class="fc" id="L107">		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;NAME&quot;, 0));</span>
+<span class="nc" id="L107">		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;NAME&quot;, 0));</span>
 
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (arg.get(&quot;AS&quot;, 0) == null) {</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">			if (name.length() == 0) {</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (arg.get(&quot;AS&quot;, 0) == null) {</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">			if (name.length() == 0) {</span>
 <span class="nc" id="L111">				idShort = diagram.getUniqueSequence(&quot;##&quot;);</span>
 <span class="nc" id="L112">				display = null;</span>
 <span class="nc" id="L113">				return CommandExecutionResult.error(&quot;Error in name&quot;);</span>
 				// throw new IllegalStateException(&quot;AS&quot;);
 			} else {
-<span class="fc" id="L116">				idShort = name;</span>
-<span class="fc" id="L117">				display = idShort;</span>
+<span class="nc" id="L116">				idShort = name;</span>
+<span class="nc" id="L117">				display = idShort;</span>
 			}
 		} else {
 <span class="nc" id="L120">			display = name;</span>
@@ -122,41 +122,41 @@ public class CommandPackage extends SingleLineCommand2&lt;AbstractEntityDiagram&
 		}
 
 		final Quark&lt;Entity&gt; quark;
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (arg.get(&quot;AS&quot;, 0) == null) {</span>
-<span class="fc" id="L126">			quark = diagram.quarkInContext(false, diagram.cleanId(name));</span>
-<span class="fc" id="L127">			display = quark.getName();</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (arg.get(&quot;AS&quot;, 0) == null) {</span>
+<span class="nc" id="L126">			quark = diagram.quarkInContext(false, diagram.cleanId(name));</span>
+<span class="nc" id="L127">			display = quark.getName();</span>
 		} else {
 <span class="nc" id="L129">			quark = diagram.quarkInContext(false, diagram.cleanId(arg.get(&quot;AS&quot;, 0)));</span>
 <span class="nc" id="L130">			display = name;</span>
 		}
 
-<span class="fc" id="L133">		final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
-<span class="fc" id="L134">		final USymbol usymbol = USymbols.fromString(stereotype, diagram.getSkinParam().actorStyle(),</span>
-<span class="fc" id="L135">				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());</span>
+<span class="nc" id="L133">		final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="nc" id="L134">		final USymbol usymbol = USymbols.fromString(stereotype, diagram.getSkinParam().actorStyle(),</span>
+<span class="nc" id="L135">				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());</span>
 
-<span class="fc" id="L137">		final CommandExecutionResult status = diagram.gotoGroup(location, quark,</span>
-<span class="fc" id="L138">				Display.getWithNewlines(diagram.getPragma(), display), GroupType.PACKAGE, usymbol);</span>
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (status.isOk() == false)</span>
+<span class="nc" id="L137">		final CommandExecutionResult status = diagram.gotoGroup(location, quark,</span>
+<span class="nc" id="L138">				Display.getWithNewlines(diagram.getPragma(), display), GroupType.PACKAGE, usymbol);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (status.isOk() == false)</span>
 <span class="nc" id="L140">			return status;</span>
 
-<span class="fc" id="L142">		final Entity p = diagram.getCurrentGroup();</span>
+<span class="nc" id="L142">		final Entity p = diagram.getCurrentGroup();</span>
 
-<span class="pc bpc" id="L144" title="2 of 4 branches missed.">		if (stereotype != null &amp;&amp; usymbol == null)</span>
-<span class="fc" id="L145">			p.setStereotype(Stereotype.build(stereotype));</span>
+<span class="nc bnc" id="L144" title="All 4 branches missed.">		if (stereotype != null &amp;&amp; usymbol == null)</span>
+<span class="nc" id="L145">			p.setStereotype(Stereotype.build(stereotype));</span>
 
-<span class="fc" id="L147">		CommandCreateClassMultilines.addTags(p, arg.getLazzy(&quot;TAGS&quot;, 0));</span>
+<span class="nc" id="L147">		CommandCreateClassMultilines.addTags(p, arg.getLazzy(&quot;TAGS&quot;, 0));</span>
 
-<span class="fc" id="L149">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
-<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		if (urlString != null) {</span>
+<span class="nc" id="L149">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (urlString != null) {</span>
 <span class="nc" id="L151">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
 <span class="nc" id="L152">			final Url url = urlBuilder.getUrl(urlString);</span>
 <span class="nc" id="L153">			p.addUrl(url);</span>
 		}
 
-<span class="fc" id="L156">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L157">		p.setColors(colors);</span>
+<span class="nc" id="L156">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L157">		p.setColors(colors);</span>
 
-<span class="fc" id="L159">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L159">		return CommandExecutionResult.ok();</span>
 	}
 
 }

@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 
 public class ContainingEllipse {
 
-<span class="fc" id="L43">	private final SmallestEnclosingCircle sec = new SmallestEnclosingCircle();</span>
+<span class="nc" id="L43">	private final SmallestEnclosingCircle sec = new SmallestEnclosingCircle();</span>
 	private final YTransformer ytransformer;
 
 	@Override
@@ -48,25 +48,25 @@ public class ContainingEllipse {
 <span class="nc" id="L48">		return &quot;ContainingEllipse &quot; + getWidth() + &quot; &quot; + getHeight();</span>
 	}
 
-<span class="fc" id="L51">	public ContainingEllipse(double coefY) {</span>
-<span class="fc" id="L52">		ytransformer = new YTransformer(coefY);</span>
-<span class="fc" id="L53">	}</span>
+<span class="nc" id="L51">	public ContainingEllipse(double coefY) {</span>
+<span class="nc" id="L52">		ytransformer = new YTransformer(coefY);</span>
+<span class="nc" id="L53">	}</span>
 
 	public void append(XPoint2D pt) {
-<span class="fc" id="L56">		pt = ytransformer.getReversePoint2D(pt);</span>
-<span class="fc" id="L57">		sec.append(pt);</span>
-<span class="fc" id="L58">	}</span>
+<span class="nc" id="L56">		pt = ytransformer.getReversePoint2D(pt);</span>
+<span class="nc" id="L57">		sec.append(pt);</span>
+<span class="nc" id="L58">	}</span>
 
 	public void append(double x, double y) {
 <span class="nc" id="L61">		append(new XPoint2D(x, y));</span>
 <span class="nc" id="L62">	}</span>
 
 	public double getWidth() {
-<span class="fc" id="L65">		return 2 * sec.getCircle().getRadius();</span>
+<span class="nc" id="L65">		return 2 * sec.getCircle().getRadius();</span>
 	}
 
 	public double getHeight() {
-<span class="fc" id="L69">		return 2 * sec.getCircle().getRadius() * ytransformer.getAlpha();</span>
+<span class="nc" id="L69">		return 2 * sec.getCircle().getRadius() * ytransformer.getAlpha();</span>
 	}
 
 	public XPoint2D getCenter() {
@@ -74,9 +74,9 @@ public class ContainingEllipse {
 	}
 
 	public UEllipse asUEllipse() {
-<span class="fc" id="L77">		final UEllipse ellipse = UEllipse.build(getWidth(), getHeight());</span>
-<span class="fc" id="L78">		ellipse.setDeltaShadow(deltaShadow);</span>
-<span class="fc" id="L79">		return ellipse;</span>
+<span class="nc" id="L77">		final UEllipse ellipse = UEllipse.build(getWidth(), getHeight());</span>
+<span class="nc" id="L78">		ellipse.setDeltaShadow(deltaShadow);</span>
+<span class="nc" id="L79">		return ellipse;</span>
 	}
 
 	private double deltaShadow;

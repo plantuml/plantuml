@@ -39,12 +39,12 @@ package net.sourceforge.plantuml.klimt.color;
 <span class="fc" id="L39">	TEXT, LINE, BACK, HEADER, ARROW;</span>
 
 	public static ColorType getType(String s) {
-<span class="fc" id="L42">		final int x = s.indexOf('.');</span>
-<span class="pc bpc" id="L43" title="1 of 2 branches missed.">		if (x != -1) {</span>
+<span class="nc" id="L42">		final int x = s.indexOf('.');</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">		if (x != -1) {</span>
 <span class="nc" id="L44">			s = s.substring(0, x);</span>
 		}
-<span class="fc" id="L46">		final ColorType key = ColorType.valueOf(s.toUpperCase());</span>
-<span class="fc" id="L47">		return key;</span>
+<span class="nc" id="L46">		final ColorType key = ColorType.valueOf(s.toUpperCase());</span>
+<span class="nc" id="L47">		return key;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

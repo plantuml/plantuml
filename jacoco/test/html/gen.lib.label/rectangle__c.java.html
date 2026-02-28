@@ -156,15 +156,15 @@ import h.ST_Rect_t;
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/rectangle.c&quot;, name=&quot;InitRect&quot;, key=&quot;1wtvfzwbzj03e6w5rw4k7qdax&quot;, definition=&quot;void InitRect(Rect_t * r)&quot;)
 public static void InitRect(ST_Rect_t r) {
-<span class="fc" id="L159">ENTERING(&quot;1wtvfzwbzj03e6w5rw4k7qdax&quot;,&quot;InitRect&quot;);</span>
+<span class="nc" id="L159">ENTERING(&quot;1wtvfzwbzj03e6w5rw4k7qdax&quot;,&quot;InitRect&quot;);</span>
 try {
      int i;
-<span class="fc bfc" id="L162" title="All 2 branches covered.">     for (i = 0; i &lt; 2*2; i++)</span>
-<span class="fc" id="L163">    	 r.boundary[i]=0;</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">     for (i = 0; i &lt; 2*2; i++)</span>
+<span class="nc" id="L163">    	 r.boundary[i]=0;</span>
 } finally {
-<span class="fc" id="L165">LEAVING(&quot;1wtvfzwbzj03e6w5rw4k7qdax&quot;,&quot;InitRect&quot;);</span>
+<span class="nc" id="L165">LEAVING(&quot;1wtvfzwbzj03e6w5rw4k7qdax&quot;,&quot;InitRect&quot;);</span>
 }
-<span class="fc" id="L167">}</span>
+<span class="nc" id="L167">}</span>
 
 
 
@@ -259,19 +259,19 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/label/rectangle.c&quot;, name=&quot;Overlap&quot;, key=&quot;9glce34jzknoqj98agg96k03o&quot;, definition=&quot;int Overlap(Rect_t * r, Rect_t * s)&quot;)
 public static boolean Overlap(ST_Rect_t r, ST_Rect_t s) {
-<span class="fc" id="L262">ENTERING(&quot;9glce34jzknoqj98agg96k03o&quot;,&quot;Overlap&quot;);</span>
+<span class="nc" id="L262">ENTERING(&quot;9glce34jzknoqj98agg96k03o&quot;,&quot;Overlap&quot;);</span>
 try {
      int i, j;
 //     assert(r &amp;&amp; s);
-<span class="fc bfc" id="L266" title="All 2 branches covered.">     for (i = 0; i &lt; 2; i++) {</span>
-<span class="fc" id="L267"> 	j = i + 2;	/* index for high sides */</span>
-<span class="fc bfc" id="L268" title="All 4 branches covered."> 	if (r.boundary[i] &gt; s.boundary[j]</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">     for (i = 0; i &lt; 2; i++) {</span>
+<span class="nc" id="L267"> 	j = i + 2;	/* index for high sides */</span>
+<span class="nc bnc" id="L268" title="All 4 branches missed."> 	if (r.boundary[i] &gt; s.boundary[j]</span>
  	    || s.boundary[i] &gt; r.boundary[j])
-<span class="fc" id="L270"> 	    return false;</span>
+<span class="nc" id="L270"> 	    return false;</span>
      }
-<span class="fc" id="L272">     return (true);</span>
+<span class="nc" id="L272">     return (true);</span>
 } finally {
-<span class="fc" id="L274">LEAVING(&quot;9glce34jzknoqj98agg96k03o&quot;,&quot;Overlap&quot;);</span>
+<span class="nc" id="L274">LEAVING(&quot;9glce34jzknoqj98agg96k03o&quot;,&quot;Overlap&quot;);</span>
 }
 }
 

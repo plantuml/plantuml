@@ -42,19 +42,19 @@ class PositiveForce {
 	private final Real fixedPoint;
 	private final RealMoveable movingPoint;
 	private final double minimunDistance;
-<span class="fc" id="L45">	private final boolean trace = false;</span>
+<span class="nc" id="L45">	private final boolean trace = false;</span>
 	private final Throwable creationPoint;
 
-<span class="fc" id="L48">	public PositiveForce(Real fixedPoint, RealMoveable movingPoint, double minimunDistance) {</span>
-<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if (fixedPoint == movingPoint) {</span>
+<span class="nc" id="L48">	public PositiveForce(Real fixedPoint, RealMoveable movingPoint, double minimunDistance) {</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		if (fixedPoint == movingPoint) {</span>
 <span class="nc" id="L50">			throw new IllegalArgumentException();</span>
 		}
-<span class="fc" id="L52">		this.fixedPoint = fixedPoint;</span>
-<span class="fc" id="L53">		this.movingPoint = movingPoint;</span>
-<span class="fc" id="L54">		this.minimunDistance = minimunDistance;</span>
-<span class="fc" id="L55">		this.creationPoint = new Throwable();</span>
-<span class="fc" id="L56">		this.creationPoint.fillInStackTrace();</span>
-<span class="fc" id="L57">	}</span>
+<span class="nc" id="L52">		this.fixedPoint = fixedPoint;</span>
+<span class="nc" id="L53">		this.movingPoint = movingPoint;</span>
+<span class="nc" id="L54">		this.minimunDistance = minimunDistance;</span>
+<span class="nc" id="L55">		this.creationPoint = new Throwable();</span>
+<span class="nc" id="L56">		this.creationPoint.fillInStackTrace();</span>
+<span class="nc" id="L57">	}</span>
 
 	@Override
 	public String toString() {
@@ -65,10 +65,10 @@ class PositiveForce {
 		if (trace) {
 			System.err.println(&quot;apply &quot; + this);
 		}
-<span class="fc" id="L68">		final double movingPointValue = movingPoint.getCurrentValue();</span>
+<span class="nc" id="L68">		final double movingPointValue = movingPoint.getCurrentValue();</span>
 		final double fixedPointValue;
 		try {
-<span class="fc" id="L71">			fixedPointValue = fixedPoint.getCurrentValue();</span>
+<span class="nc" id="L71">			fixedPointValue = fixedPoint.getCurrentValue();</span>
 <span class="nc" id="L72">		} catch (IllegalStateException e) {</span>
 <span class="nc" id="L73">			System.err.println(&quot;Pb with force &quot; + this);</span>
 <span class="nc" id="L74">			System.err.println(&quot;This force has been created here:&quot;);</span>
@@ -76,20 +76,20 @@ class PositiveForce {
 <span class="nc" id="L76">			System.err.println(&quot;The fixed point has been created here: &quot; + fixedPoint);</span>
 <span class="nc" id="L77">			fixedPoint.printCreationStackTrace();</span>
 <span class="nc" id="L78">			throw e;</span>
-<span class="fc" id="L79">		}</span>
-<span class="fc" id="L80">		final double distance = movingPointValue - fixedPointValue;</span>
-<span class="fc" id="L81">		final double diff = distance - minimunDistance;</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (diff &gt;= 0) {</span>
+<span class="nc" id="L79">		}</span>
+<span class="nc" id="L80">		final double distance = movingPointValue - fixedPointValue;</span>
+<span class="nc" id="L81">		final double diff = distance - minimunDistance;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (diff &gt;= 0) {</span>
 			if (trace) {
 				System.err.println(&quot;Not using &quot;);
 			}
-<span class="fc" id="L86">			return false;</span>
+<span class="nc" id="L86">			return false;</span>
 		}
 		if (trace) {
 			System.err.println(&quot;moving &quot; + (-diff) + &quot; &quot; + movingPoint);
 		}
-<span class="fc" id="L91">		movingPoint.move(-diff);</span>
-<span class="fc" id="L92">		return true;</span>
+<span class="nc" id="L91">		movingPoint.move(-diff);</span>
+<span class="nc" id="L92">		return true;</span>
 	}
 
 }

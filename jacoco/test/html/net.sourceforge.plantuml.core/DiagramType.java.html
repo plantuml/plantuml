@@ -67,7 +67,7 @@ package net.sourceforge.plantuml.core;
 	}
 
 	private static DiagramType getType(String text, final int p) {
-<span class="pc bpc" id="L70" title="12 of 18 branches missed.">		switch (Character.toLowerCase(text.charAt(p))) {</span>
+<span class="pc bpc" id="L70" title="13 of 18 branches missed.">		switch (Character.toLowerCase(text.charAt(p))) {</span>
 
 		case 'b':
 <span class="nc bnc" id="L73" title="All 2 branches missed.">			if (check(&quot;bpm&quot;, text, p))</span>
@@ -77,14 +77,14 @@ package net.sourceforge.plantuml.core;
 <span class="nc" id="L77">			return UNKNOWN;</span>
 
 		case 'c':
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">			if (check(&quot;chart&quot;, text, p))</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (check(&quot;chart&quot;, text, p))</span>
 <span class="nc" id="L81">				return CHART;</span>
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">			if (check(&quot;creole&quot;, text, p))</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">			if (check(&quot;creole&quot;, text, p))</span>
 <span class="nc" id="L83">				return CREOLE;</span>
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">			if (check(&quot;chronology&quot;, text, p))</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			if (check(&quot;chronology&quot;, text, p))</span>
 <span class="nc" id="L85">				return CHRONOLOGY;</span>
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">			if (check(&quot;chen&quot;, text, p))</span>
-<span class="fc" id="L87">				return CHEN_EER;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">			if (check(&quot;chen&quot;, text, p))</span>
+<span class="nc" id="L87">				return CHEN_EER;</span>
 <span class="nc" id="L88">			return UNKNOWN;</span>
 
 		case 'd':

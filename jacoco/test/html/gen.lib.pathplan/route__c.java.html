@@ -143,11 +143,11 @@ try {
     double maxd, d, t;
     int maxi, i, spliti;
 <span class="fc bfc" id="L145" title="All 2 branches covered.">    if (zz.tnan &lt; inpn) {</span>
-<span class="fc bfc" id="L146" title="All 2 branches covered.">	if ((zz.tnas) == null) {</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">	if ((zz.tnas) == null) {</span>
 <span class="pc bpc" id="L147" title="1 of 2 branches missed.">	    if ((zz.tnas = CArray.&lt;ST_tna_t&gt;ALLOC__(inpn, ZType.ST_tna_t)) == null)</span>
 <span class="nc" id="L148">		return -1;</span>
 	} else {
-<span class="pc bpc" id="L150" title="1 of 2 branches missed.">	    if (((zz.tnas = CArray.&lt;ST_tna_t&gt;REALLOC__(inpn, zz.tnas, ZType.ST_tna_t)))==null)</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">	    if (((zz.tnas = CArray.&lt;ST_tna_t&gt;REALLOC__(inpn, zz.tnas, ZType.ST_tna_t)))==null)</span>
 <span class="nc" id="L151">		return -1;</span>
 	}
 <span class="fc" id="L153">	zz.tnan = inpn;</span>
@@ -163,25 +163,25 @@ try {
     }
 <span class="pc bpc" id="L164" title="1 of 2 branches missed.">    if (mkspline(inps, inpn, zz.tnas, ev0, ev1, p1, v1, p2, v2) == -1)</span>
 <span class="nc" id="L165">	return -1;</span>
-<span class="fc bfc" id="L166" title="All 2 branches covered.">    if (splinefits(zz, edges, edgen, p1, v1, p2, v2, inps, inpn)!=0)</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">    if (splinefits(zz, edges, edgen, p1, v1, p2, v2, inps, inpn)!=0)</span>
 <span class="fc" id="L167">	return 0;</span>
-<span class="fc" id="L168">    cp1.___(add(p1, scale(v1, 1 / 3.0)));</span>
-<span class="fc" id="L169">    cp2.___(sub(p2, scale(v2, 1 / 3.0)));</span>
-<span class="fc bfc" id="L170" title="All 2 branches covered.">    for (maxd = -1, maxi = -1, i = 1; i &lt; inpn - 1; i++) {</span>
-<span class="fc" id="L171">	t = zz.tnas.get__(i).t;</span>
-<span class="fc" id="L172">	p.x = (B0(t) * p1.x + B1(t) * cp1.x + B2(t) * cp2.x + B3(t) * p2.x);</span>
-<span class="fc" id="L173">	p.y = (B0(t) * p1.y + B1(t) * cp1.y + B2(t) * cp2.y + B3(t) * p2.y);</span>
-<span class="fc bfc" id="L174" title="All 2 branches covered.">	if ((d = dist(p, inps.get__(i))) &gt; maxd)</span>
-<span class="fc" id="L175">	    {maxd = d; maxi = i;}</span>
+<span class="nc" id="L168">    cp1.___(add(p1, scale(v1, 1 / 3.0)));</span>
+<span class="nc" id="L169">    cp2.___(sub(p2, scale(v2, 1 / 3.0)));</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">    for (maxd = -1, maxi = -1, i = 1; i &lt; inpn - 1; i++) {</span>
+<span class="nc" id="L171">	t = zz.tnas.get__(i).t;</span>
+<span class="nc" id="L172">	p.x = (B0(t) * p1.x + B1(t) * cp1.x + B2(t) * cp2.x + B3(t) * p2.x);</span>
+<span class="nc" id="L173">	p.y = (B0(t) * p1.y + B1(t) * cp1.y + B2(t) * cp2.y + B3(t) * p2.y);</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">	if ((d = dist(p, inps.get__(i))) &gt; maxd)</span>
+<span class="nc" id="L175">	    {maxd = d; maxi = i;}</span>
     }
-<span class="fc" id="L177">    spliti = maxi;</span>
-<span class="fc" id="L178">    splitv1.___(normv(sub(inps.get__(spliti), inps.get__(spliti - 1))));</span>
-<span class="fc" id="L179">    splitv2.___(normv(sub(inps.get__(spliti + 1), inps.get__(spliti))));</span>
-<span class="fc" id="L180">    splitv.___(normv(add(splitv1, splitv2)));</span>
-<span class="fc" id="L181">    reallyroutespline(zz, edges, edgen, inps, spliti + 1, ev0, splitv);</span>
-<span class="fc" id="L182">    reallyroutespline(zz, edges, edgen, inps.plus_(spliti), inpn - spliti, splitv,</span>
+<span class="nc" id="L177">    spliti = maxi;</span>
+<span class="nc" id="L178">    splitv1.___(normv(sub(inps.get__(spliti), inps.get__(spliti - 1))));</span>
+<span class="nc" id="L179">    splitv2.___(normv(sub(inps.get__(spliti + 1), inps.get__(spliti))));</span>
+<span class="nc" id="L180">    splitv.___(normv(add(splitv1, splitv2)));</span>
+<span class="nc" id="L181">    reallyroutespline(zz, edges, edgen, inps, spliti + 1, ev0, splitv);</span>
+<span class="nc" id="L182">    reallyroutespline(zz, edges, edgen, inps.plus_(spliti), inpn - spliti, splitv,</span>
 		      ev1);
-<span class="fc" id="L184">    return 0;</span>
+<span class="nc" id="L184">    return 0;</span>
 } finally {
 <span class="fc" id="L186">LEAVING(&quot;13dxqzbgtpl4ubnnvw6ehzzi9&quot;,&quot;reallyroutespline&quot;);</span>
 }
@@ -223,11 +223,11 @@ try {
 <span class="fc" id="L223">    det01 = c[0][0] * c[1][1] - c[1][0] * c[0][1];</span>
 <span class="fc" id="L224">    det0X = c[0][0] * x[1] - c[0][1] * x[0];</span>
 <span class="fc" id="L225">    detX1 = x[0] * c[1][1] - x[1] * c[0][1];</span>
-<span class="pc bpc" id="L226" title="1 of 4 branches missed.">    if (((det01) &gt;= 0 ? (det01) : -(det01)) &gt;= 1e-6) {</span>
-<span class="fc" id="L227">	scale0 = detX1 / det01;</span>
-<span class="fc" id="L228">	scale3 = det0X / det01;</span>
+<span class="pc bpc" id="L226" title="2 of 4 branches missed.">    if (((det01) &gt;= 0 ? (det01) : -(det01)) &gt;= 1e-6) {</span>
+<span class="nc" id="L227">	scale0 = detX1 / det01;</span>
+<span class="nc" id="L228">	scale3 = det0X / det01;</span>
     }
-<span class="pc bpc" id="L230" title="3 of 8 branches missed.">    if (((det01) &gt;= 0 ? (det01) : -(det01)) &lt; 1e-6 || scale0 &lt;= 0.0 || scale3 &lt;= 0.0) {</span>
+<span class="pc bpc" id="L230" title="6 of 8 branches missed.">    if (((det01) &gt;= 0 ? (det01) : -(det01)) &lt; 1e-6 || scale0 &lt;= 0.0 || scale3 &lt;= 0.0) {</span>
 <span class="fc" id="L231">	d01 = dist(inps.get__(0), inps.get__(inpn - 1)) / 3.0;</span>
 <span class="fc" id="L232">	scale0 = d01;</span>
 <span class="fc" id="L233">	scale3 = d01;</span>
@@ -286,7 +286,7 @@ try {
     int forceflag;
 <span class="fc" id="L287">    int first = 1;</span>
     
-<span class="fc bfc" id="L289" title="All 2 branches covered.">    forceflag = inpn == 2 ? 1 : 0;</span>
+<span class="pc bpc" id="L289" title="1 of 2 branches missed.">    forceflag = inpn == 2 ? 1 : 0;</span>
     
 <span class="fc" id="L291">    a = b = 4;</span>
     for (;;) {
@@ -307,11 +307,11 @@ try {
 	 * constraint polygon, or computing the candidate spline more carefully,
 	 * for example using the path. SCN */
 	
-<span class="fc bfc" id="L310" title="All 4 branches covered.">	if (first!=0 &amp;&amp; (dist_n(sps, 4) &lt; (dist_n(inps, inpn) - 1E-3)))</span>
-<span class="fc" id="L311">	    return 0;</span>
+<span class="pc bpc" id="L310" title="2 of 4 branches missed.">	if (first!=0 &amp;&amp; (dist_n(sps, 4) &lt; (dist_n(inps, inpn) - 1E-3)))</span>
+<span class="nc" id="L311">	    return 0;</span>
 <span class="fc" id="L312">	first = 0;</span>
 	
-<span class="fc bfc" id="L314" title="All 2 branches covered.">	if (splineisinside(edges, edgen, sps)) {</span>
+<span class="pc bpc" id="L314" title="1 of 2 branches missed.">	if (splineisinside(edges, edgen, sps)) {</span>
 <span class="fc" id="L315">	    growops(zz, zz.opl + 4);</span>
 <span class="fc bfc" id="L316" title="All 2 branches covered.">	    for (pi = 1; pi &lt; 4; pi++) {</span>
 <span class="fc" id="L317">		zz.ops_route.get__(zz.opl).x = sps.get__(pi).x;</span>
@@ -320,8 +320,8 @@ try {
 		}
 <span class="fc" id="L321">	    return 1;</span>
 	}
-<span class="pc bpc" id="L323" title="1 of 4 branches missed.">	if (a == 0 &amp;&amp; b == 0) {</span>
-<span class="pc bpc" id="L324" title="1 of 2 branches missed.">	    if (forceflag!=0) {</span>
+<span class="nc bnc" id="L323" title="All 4 branches missed.">	if (a == 0 &amp;&amp; b == 0) {</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">	    if (forceflag!=0) {</span>
 <span class="nc" id="L325">		growops(zz, zz.opl + 4);</span>
 <span class="nc bnc" id="L326" title="All 2 branches missed.">		for (pi = 1; pi &lt; 4; pi++)</span>
 		{
@@ -333,15 +333,15 @@ try {
 	    }
 	    break;
 	}
-<span class="fc bfc" id="L336" title="All 2 branches covered.">	if (a &gt; .01)</span>
+<span class="nc bnc" id="L336" title="All 2 branches missed.">	if (a &gt; .01)</span>
 	{
-<span class="fc" id="L338">	    a /= 2;</span>
-<span class="fc" id="L339">	    b /= 2;</span>
+<span class="nc" id="L338">	    a /= 2;</span>
+<span class="nc" id="L339">	    b /= 2;</span>
 	}
 	else
-<span class="fc" id="L342">	    a = b = 0;</span>
+<span class="nc" id="L342">	    a = b = 0;</span>
     }
-<span class="fc" id="L344">    return 0;</span>
+<span class="nc" id="L344">    return 0;</span>
 } finally {
 <span class="fc" id="L346">LEAVING(&quot;987ednrgu5qo9dzhpiox47mhb&quot;,&quot;splinefits&quot;);</span>
 }
@@ -371,22 +371,22 @@ try {
 	   return 1; */
 <span class="pc bpc" id="L372" title="1 of 2 branches missed.">	if ((rootn = splineintersectsline(sps, lps, roots)) == 4)</span>
 <span class="nc" id="L373">	    continue;</span>
-<span class="fc bfc" id="L374" title="All 2 branches covered.">	for (rooti = 0; rooti &lt; rootn; rooti++) {</span>
-<span class="fc bfc" id="L375" title="All 4 branches covered.">	    if (roots[rooti] &lt; 1E-6 || roots[rooti] &gt; 1 - 1E-6)</span>
-<span class="fc" id="L376">		continue;</span>
-<span class="fc" id="L377">	    t = roots[rooti];</span>
-<span class="fc" id="L378">	    td = t * t * t;</span>
-<span class="fc" id="L379">	    tc = 3 * t * t * (1 - t);</span>
-<span class="fc" id="L380">	    tb = 3 * t * (1 - t) * (1 - t);</span>
-<span class="fc" id="L381">	    ta = (1 - t) * (1 - t) * (1 - t);</span>
-<span class="fc" id="L382">	    ip.x = ta * sps.get__(0).x + tb * sps.get__(1).x +</span>
-<span class="fc" id="L383">		tc * sps.get__(2).x + td * sps.get__(3).x;</span>
-<span class="fc" id="L384">	    ip.y = ta * sps.get__(0).y + tb * sps.get__(1).y +</span>
-<span class="fc" id="L385">		tc * sps.get__(2).y + td * sps.get__(3).y;</span>
-<span class="fc bfc" id="L386" title="All 2 branches covered.">	    if (DISTSQ(ip, lps.get__(0)) &lt; 1E-3 ||</span>
-<span class="pc bpc" id="L387" title="1 of 2 branches missed.">		DISTSQ(ip, lps.get__(1)) &lt; 1E-3)</span>
+<span class="pc bpc" id="L374" title="1 of 2 branches missed.">	for (rooti = 0; rooti &lt; rootn; rooti++) {</span>
+<span class="nc bnc" id="L375" title="All 4 branches missed.">	    if (roots[rooti] &lt; 1E-6 || roots[rooti] &gt; 1 - 1E-6)</span>
+<span class="nc" id="L376">		continue;</span>
+<span class="nc" id="L377">	    t = roots[rooti];</span>
+<span class="nc" id="L378">	    td = t * t * t;</span>
+<span class="nc" id="L379">	    tc = 3 * t * t * (1 - t);</span>
+<span class="nc" id="L380">	    tb = 3 * t * (1 - t) * (1 - t);</span>
+<span class="nc" id="L381">	    ta = (1 - t) * (1 - t) * (1 - t);</span>
+<span class="nc" id="L382">	    ip.x = ta * sps.get__(0).x + tb * sps.get__(1).x +</span>
+<span class="nc" id="L383">		tc * sps.get__(2).x + td * sps.get__(3).x;</span>
+<span class="nc" id="L384">	    ip.y = ta * sps.get__(0).y + tb * sps.get__(1).y +</span>
+<span class="nc" id="L385">		tc * sps.get__(2).y + td * sps.get__(3).y;</span>
+<span class="nc bnc" id="L386" title="All 2 branches missed.">	    if (DISTSQ(ip, lps.get__(0)) &lt; 1E-3 ||</span>
+<span class="nc bnc" id="L387" title="All 2 branches missed.">		DISTSQ(ip, lps.get__(1)) &lt; 1E-3)</span>
 <span class="nc" id="L388">		continue;</span>
-<span class="fc" id="L389">	    return false;</span>
+<span class="nc" id="L389">	    return false;</span>
 	}
     }
 <span class="fc" id="L392">    return true;</span>
@@ -456,8 +456,8 @@ try {
 <span class="fc" id="L456">		    sv = scoeff[0] + tv * (scoeff[1] + tv *</span>
 					   (scoeff[2] + tv * scoeff[3]));
 <span class="fc" id="L458">		    sv = (sv - ycoeff[0]) / ycoeff[1];</span>
-<span class="fc bfc" id="L459" title="All 4 branches covered.">		    if ((0 &lt;= sv) &amp;&amp; (sv &lt;= 1))</span>
-<span class="fc" id="L460">			addroot(tv, roots, rootn);</span>
+<span class="pc bpc" id="L459" title="3 of 4 branches missed.">		    if ((0 &lt;= sv) &amp;&amp; (sv &lt;= 1))</span>
+<span class="nc" id="L460">			addroot(tv, roots, rootn);</span>
 		}
 	    }
 <span class="fc" id="L463">	    return rootn[0];</span>
@@ -479,8 +479,8 @@ try {
 <span class="fc" id="L479">		sv = scoeff[0] + tv * (scoeff[1] +</span>
 				       tv * (scoeff[2] + tv * scoeff[3]));
 <span class="fc" id="L481">		sv = (sv - xcoeff[0]) / xcoeff[1];</span>
-<span class="fc bfc" id="L482" title="All 4 branches covered.">		if ((0 &lt;= sv) &amp;&amp; (sv &lt;= 1))</span>
-<span class="fc" id="L483">		    addroot(tv, roots, rootn);</span>
+<span class="pc bpc" id="L482" title="1 of 4 branches missed.">		if ((0 &lt;= sv) &amp;&amp; (sv &lt;= 1))</span>
+<span class="nc" id="L483">		    addroot(tv, roots, rootn);</span>
 	    }
 	}
 <span class="fc" id="L486">	return rootn[0];</span>
@@ -516,16 +516,16 @@ try {
 @Reviewed(when = &quot;01/12/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;addroot&quot;, key=&quot;6ldk438jjflh0huxkg4cs8kwu&quot;, definition=&quot;static void addroot(double root, double *roots, int *rootnp)&quot;)
 public static void addroot(double root, double roots[], int rootnp[]) {
-<span class="fc" id="L519">ENTERING(&quot;6ldk438jjflh0huxkg4cs8kwu&quot;,&quot;addroot&quot;);</span>
+<span class="nc" id="L519">ENTERING(&quot;6ldk438jjflh0huxkg4cs8kwu&quot;,&quot;addroot&quot;);</span>
 try {
-<span class="pc bpc" id="L521" title="2 of 4 branches missed.">    if (root &gt;= 0 &amp;&amp; root &lt;= 1) {</span>
-<span class="fc" id="L522">	roots[rootnp[0]] = root;</span>
-<span class="fc" id="L523">	rootnp[0]++;</span>
+<span class="nc bnc" id="L521" title="All 4 branches missed.">    if (root &gt;= 0 &amp;&amp; root &lt;= 1) {</span>
+<span class="nc" id="L522">	roots[rootnp[0]] = root;</span>
+<span class="nc" id="L523">	rootnp[0]++;</span>
 	}
 } finally {
-<span class="fc" id="L526">LEAVING(&quot;6ldk438jjflh0huxkg4cs8kwu&quot;,&quot;addroot&quot;);</span>
+<span class="nc" id="L526">LEAVING(&quot;6ldk438jjflh0huxkg4cs8kwu&quot;,&quot;addroot&quot;);</span>
 }
-<span class="fc" id="L528">}</span>
+<span class="nc" id="L528">}</span>
 
 
 
@@ -700,12 +700,12 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;B0&quot;, key=&quot;73nhv3cuxqa9va0puve0ji2d5&quot;, definition=&quot;static double B0(double t)&quot;)
 public static double B0(double t) {
-<span class="fc" id="L703">ENTERING(&quot;73nhv3cuxqa9va0puve0ji2d5&quot;,&quot;B0&quot;);</span>
+<span class="nc" id="L703">ENTERING(&quot;73nhv3cuxqa9va0puve0ji2d5&quot;,&quot;B0&quot;);</span>
 try {
-<span class="fc" id="L705">    double tmp = 1.0 - t;</span>
-<span class="fc" id="L706">    return tmp * tmp * tmp;</span>
+<span class="nc" id="L705">    double tmp = 1.0 - t;</span>
+<span class="nc" id="L706">    return tmp * tmp * tmp;</span>
 } finally {
-<span class="fc" id="L708">LEAVING(&quot;73nhv3cuxqa9va0puve0ji2d5&quot;,&quot;B0&quot;);</span>
+<span class="nc" id="L708">LEAVING(&quot;73nhv3cuxqa9va0puve0ji2d5&quot;,&quot;B0&quot;);</span>
 }
 }
 
@@ -751,11 +751,11 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/pathplan/route.c&quot;, name=&quot;B3&quot;, key=&quot;5sjstsgkvoou9grsty3y0cnvg&quot;, definition=&quot;static double B3(double t)&quot;)
 public static double B3(double t) {
-<span class="fc" id="L754">ENTERING(&quot;5sjstsgkvoou9grsty3y0cnvg&quot;,&quot;B3&quot;);</span>
+<span class="nc" id="L754">ENTERING(&quot;5sjstsgkvoou9grsty3y0cnvg&quot;,&quot;B3&quot;);</span>
 try {
-<span class="fc" id="L756">    return t * t * t;</span>
+<span class="nc" id="L756">    return t * t * t;</span>
 } finally {
-<span class="fc" id="L758">LEAVING(&quot;5sjstsgkvoou9grsty3y0cnvg&quot;,&quot;B3&quot;);</span>
+<span class="nc" id="L758">LEAVING(&quot;5sjstsgkvoou9grsty3y0cnvg&quot;,&quot;B3&quot;);</span>
 }
 }
 

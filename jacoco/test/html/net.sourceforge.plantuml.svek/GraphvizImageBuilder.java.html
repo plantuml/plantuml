@@ -150,9 +150,9 @@ public final class GraphvizImageBuilder {
 
 		private final HColor backColor;
 
-<span class="nc" id="L153">		EntityImageSimpleEmpty(HColor backColor) {</span>
-<span class="nc" id="L154">			this.backColor = backColor;</span>
-<span class="nc" id="L155">		}</span>
+<span class="fc" id="L153">		EntityImageSimpleEmpty(HColor backColor) {</span>
+<span class="fc" id="L154">			this.backColor = backColor;</span>
+<span class="fc" id="L155">		}</span>
 
 		public boolean isHidden() {
 <span class="nc" id="L158">			return false;</span>
@@ -163,7 +163,7 @@ public final class GraphvizImageBuilder {
 		}
 
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L166">			return new XDimension2D(10, 10);</span>
+<span class="fc" id="L166">			return new XDimension2D(10, 10);</span>
 		}
 
 		public MinMax getMinMax(StringBounder stringBounder) {
@@ -175,7 +175,7 @@ public final class GraphvizImageBuilder {
 		}
 
 		public void drawU(UGraphic ug) {
-<span class="nc" id="L178">		}</span>
+<span class="fc" id="L178">		}</span>
 
 		public ShapeType getShapeType() {
 <span class="nc" id="L181">			return ShapeType.RECTANGLE;</span>
@@ -205,8 +205,8 @@ public final class GraphvizImageBuilder {
 
 	public IEntityImage buildImage(StringBounder stringBounder, BaseFile basefile, String dotStrings[],
 			boolean fileFormatOptionIsDebugSvek) {
-<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (dotData.isDegeneratedWithFewEntities(0))</span>
-<span class="nc" id="L209">			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor());</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		if (dotData.isDegeneratedWithFewEntities(0))</span>
+<span class="fc" id="L209">			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor());</span>
 
 <span class="pc bpc" id="L211" title="1 of 4 branches missed.">		if (dotData.isDegeneratedWithFewEntities(1) &amp;&amp; dotData.getUmlDiagramType() != UmlDiagramType.STATE) {</span>
 <span class="fc" id="L212">			final Entity single = dotData.getLeafs().iterator().next();</span>

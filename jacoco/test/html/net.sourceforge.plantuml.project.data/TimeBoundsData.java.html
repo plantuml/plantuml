@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 	}
 
 	public LocalDate getPrintStart() {
-<span class="fc" id="L65">		return printStart;</span>
+<span class="nc" id="L65">		return printStart;</span>
 	}
 
 	public LocalDate getPrintEnd() {
@@ -72,8 +72,8 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 	// Setters
 
 	public void setMinDay(LocalDate minDay) {
-<span class="fc" id="L75">		this.minDay = minDay;</span>
-<span class="fc" id="L76">	}</span>
+<span class="nc" id="L75">		this.minDay = minDay;</span>
+<span class="nc" id="L76">	}</span>
 
 	public void setMaxDay(LocalDate maxDay) {
 <span class="fc" id="L79">		this.maxDay = maxDay;</span>
@@ -89,27 +89,27 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 
 	public TimePoint getStartForDrawing(final Task tmp) {
 		TimePoint result;
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (getPrintStart() == null)</span>
-<span class="fc" id="L93">			result = tmp.getStart();</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (getPrintStart() == null)</span>
+<span class="nc" id="L93">			result = tmp.getStart();</span>
 		else
 <span class="nc" id="L95">			result = TimePoint.max(TimePoint.ofStartOfDay(getMinDay()), tmp.getStart());</span>
 
-<span class="fc" id="L97">		return result;</span>
+<span class="nc" id="L97">		return result;</span>
 	}
 
 	public TimePoint getEndForDrawing(final Task tmp) {
 		TimePoint result;
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (getPrintStart() == null)</span>
-<span class="fc" id="L103">			result = tmp.getEnd();</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (getPrintStart() == null)</span>
+<span class="nc" id="L103">			result = tmp.getEnd();</span>
 		else
 <span class="nc" id="L105">			result = TimePoint.min(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)), tmp.getEnd());</span>
 
-<span class="fc" id="L107">		return result;</span>
+<span class="nc" id="L107">		return result;</span>
 	}
 
 	public boolean isHidden(Task task) {
-<span class="pc bpc" id="L111" title="3 of 4 branches missed.">		if (this.getPrintStart() == null || task instanceof TaskSeparator)</span>
-<span class="fc" id="L112">			return false;</span>
+<span class="nc bnc" id="L111" title="All 4 branches missed.">		if (this.getPrintStart() == null || task instanceof TaskSeparator)</span>
+<span class="nc" id="L112">			return false;</span>
 
 <span class="nc bnc" id="L114" title="All 2 branches missed.">		if (task.getEndMinusOneDayTOBEREMOVED().compareTo(TimePoint.ofStartOfDay(this.getMinDay())) &lt; 0)</span>
 <span class="nc" id="L115">			return true;</span>
@@ -121,9 +121,9 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 	}
 
 	public double getBarsColumnWidth(TimeHeader timeHeader) {
-<span class="fc" id="L124">		final double xmin = timeHeader.getTimeScale().getPosition(TimePoint.ofStartOfDay(getMinDay()));</span>
-<span class="fc" id="L125">		final double xmax = timeHeader.getTimeScale().getPosition(TimePoint.ofEndOfDayMinusOneSecond(getMaxDay()));</span>
-<span class="fc" id="L126">		return xmax - xmin;</span>
+<span class="nc" id="L124">		final double xmin = timeHeader.getTimeScale().getPosition(TimePoint.ofStartOfDay(getMinDay()));</span>
+<span class="nc" id="L125">		final double xmax = timeHeader.getTimeScale().getPosition(TimePoint.ofEndOfDayMinusOneSecond(getMaxDay()));</span>
+<span class="nc" id="L126">		return xmax - xmin;</span>
 	}
 
 	public void initMinMax(GanttModelData modelData, DayCalendarData dayCalendar) {
@@ -136,13 +136,13 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 <span class="nc" id="L136">					continue;</span>
 
 <span class="fc" id="L138">				final TimePoint tmp = task.getEnd().minusOneSecond();</span>
-<span class="pc bpc" id="L139" title="1 of 4 branches missed.">				if (this.getMaxDay() == null || this.getMaxDay().compareTo(tmp.toDay()) &lt; 0)</span>
+<span class="pc bpc" id="L139" title="3 of 4 branches missed.">				if (this.getMaxDay() == null || this.getMaxDay().compareTo(tmp.toDay()) &lt; 0)</span>
 <span class="fc" id="L140">					this.setMaxDay(tmp.toDay());</span>
 <span class="fc" id="L141">			}</span>
 		}
 
-<span class="fc bfc" id="L144" title="All 2 branches covered.">		for (TimePoint d : dayCalendar.getColorDays())</span>
-<span class="pc bpc" id="L145" title="1 of 2 branches missed.">			if (d.toDay().compareTo(this.getMaxDay()) &gt; 0)</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		for (TimePoint d : dayCalendar.getColorDays())</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">			if (d.toDay().compareTo(this.getMaxDay()) &gt; 0)</span>
 <span class="nc" id="L146">				this.setMaxDay(d.toDay());</span>
 
 <span class="pc bpc" id="L148" title="1 of 2 branches missed.">		for (TimePoint d : dayCalendar.getNameDays().keySet())</span>

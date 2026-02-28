@@ -49,11 +49,11 @@ import net.sourceforge.plantuml.regex.RegexResult;
 	}
 
 	public Failable&lt;CenterBorderColor&gt; getMe(GanttDiagram diagram, RegexResult arg, String suffix) {
-<span class="fc" id="L52">		final String color1 = arg.get(&quot;COMPLEMENT&quot; + suffix, 0);</span>
-<span class="fc" id="L53">		final String color2 = arg.get(&quot;COMPLEMENT&quot; + suffix, 1);</span>
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		final HColor col1 = color1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color1);</span>
-<span class="pc bpc" id="L55" title="1 of 2 branches missed.">		final HColor col2 = color2 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color2);</span>
-<span class="fc" id="L56">		return Failable.ok(new CenterBorderColor(col1, col2));</span>
+<span class="nc" id="L52">		final String color1 = arg.get(&quot;COMPLEMENT&quot; + suffix, 0);</span>
+<span class="nc" id="L53">		final String color2 = arg.get(&quot;COMPLEMENT&quot; + suffix, 1);</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		final HColor col1 = color1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color1);</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		final HColor col2 = color2 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color2);</span>
+<span class="nc" id="L56">		return Failable.ok(new CenterBorderColor(col1, col2));</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

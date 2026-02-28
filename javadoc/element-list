@@ -194,6 +194,7 @@ net.sourceforge.plantuml.sudoku
 net.sourceforge.plantuml.svek
 net.sourceforge.plantuml.svek.extremity
 net.sourceforge.plantuml.svek.image
+net.sourceforge.plantuml.svg.parser
 net.sourceforge.plantuml.swing
 net.sourceforge.plantuml.syntax
 net.sourceforge.plantuml.teavm

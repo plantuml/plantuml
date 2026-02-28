@@ -83,7 +83,7 @@ public class DecorateEntityImage extends AbstractTextBlock {
 
 	public static TextBlock addTopAndBottom(TextBlock original, UGroup group1, TextBlock text1,
 			HorizontalAlignment horizontal1, UGroup group2, TextBlock text2, HorizontalAlignment horizontal2) {
-<span class="fc" id="L86">		return new DecorateEntityImage(original, group1, text1, horizontal1, group2, text2, horizontal2);</span>
+<span class="nc" id="L86">		return new DecorateEntityImage(original, group1, text1, horizontal1, group2, text2, horizontal2);</span>
 	}
 
 	private DecorateEntityImage(TextBlock original, UGroup group1, TextBlock text1, HorizontalAlignment horizontal1,
@@ -141,12 +141,12 @@ public class DecorateEntityImage extends AbstractTextBlock {
 	}
 
 	private double getTextX(final XDimension2D dimText, final XDimension2D dimTotal, HorizontalAlignment h) {
-<span class="fc bfc" id="L144" title="All 2 branches covered.">		if (h == HorizontalAlignment.CENTER)</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		if (h == HorizontalAlignment.CENTER)</span>
 <span class="fc" id="L145">			return (dimTotal.getWidth() - dimText.getWidth()) / 2;</span>
-<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		else if (h == HorizontalAlignment.LEFT)</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		else if (h == HorizontalAlignment.LEFT)</span>
 <span class="nc" id="L147">			return 0;</span>
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		else if (h == HorizontalAlignment.RIGHT)</span>
-<span class="fc" id="L149">			return dimTotal.getWidth() - dimText.getWidth();</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		else if (h == HorizontalAlignment.RIGHT)</span>
+<span class="nc" id="L149">			return dimTotal.getWidth() - dimText.getWidth();</span>
 		else
 <span class="nc" id="L151">			throw new IllegalStateException();</span>
 

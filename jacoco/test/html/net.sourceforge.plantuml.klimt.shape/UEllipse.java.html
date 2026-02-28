@@ -75,13 +75,13 @@ public class UEllipse extends AbstractShadowable implements UShapeSized {
 	}
 
 	public XDimension2D getDimension() {
-<span class="fc" id="L78">		return new XDimension2D(width, height);</span>
+<span class="nc" id="L78">		return new XDimension2D(width, height);</span>
 	}
 
 	public UEllipse bigger(double more) {
-<span class="fc" id="L82">		final UEllipse result = UEllipse.build(width + more, height + more);</span>
-<span class="fc" id="L83">		result.setDeltaShadow(getDeltaShadow());</span>
-<span class="fc" id="L84">		return result;</span>
+<span class="nc" id="L82">		final UEllipse result = UEllipse.build(width + more, height + more);</span>
+<span class="nc" id="L83">		result.setDeltaShadow(getDeltaShadow());</span>
+<span class="nc" id="L84">		return result;</span>
 	}
 
 	public UEllipse scale(double factor) {

@@ -46,34 +46,34 @@ public class CenterBorderColor {
 	private final String style;
 
 	public CenterBorderColor(HColor center, HColor border) {
-<span class="fc" id="L49">		this(center, border, null);</span>
-<span class="fc" id="L50">	}</span>
+<span class="nc" id="L49">		this(center, border, null);</span>
+<span class="nc" id="L50">	}</span>
 
-<span class="fc" id="L52">	public CenterBorderColor(HColor center, HColor border, String style) {</span>
-<span class="fc" id="L53">		this.center = center;</span>
-<span class="fc" id="L54">		this.border = border;</span>
-<span class="fc" id="L55">		this.style = style;</span>
-<span class="fc" id="L56">	}</span>
+<span class="nc" id="L52">	public CenterBorderColor(HColor center, HColor border, String style) {</span>
+<span class="nc" id="L53">		this.center = center;</span>
+<span class="nc" id="L54">		this.border = border;</span>
+<span class="nc" id="L55">		this.style = style;</span>
+<span class="nc" id="L56">	}</span>
 
 	public UGraphic apply(UGraphic ug) {
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (isOk() == false) {</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (isOk() == false) {</span>
 <span class="nc" id="L60">			throw new IllegalStateException();</span>
 		}
-<span class="fc" id="L62">		ug = ug.apply(center.bg());</span>
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (border == null) {</span>
+<span class="nc" id="L62">		ug = ug.apply(center.bg());</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (border == null) {</span>
 <span class="nc" id="L64">			ug = ug.apply(center);</span>
 		} else {
-<span class="fc" id="L66">			ug = ug.apply(border);</span>
+<span class="nc" id="L66">			ug = ug.apply(border);</span>
 		}
-<span class="fc" id="L68">		return ug;</span>
+<span class="nc" id="L68">		return ug;</span>
 	}
 
 	public boolean isOk() {
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		return center != null;</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		return center != null;</span>
 	}
 
 	public final HColor getCenter() {
-<span class="fc" id="L76">		return center;</span>
+<span class="nc" id="L76">		return center;</span>
 	}
 
 	public final String getStyle() {

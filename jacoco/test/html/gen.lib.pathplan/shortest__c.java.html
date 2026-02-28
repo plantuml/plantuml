@@ -119,10 +119,10 @@ try {
 <span class="fc" id="L119">		minpi = pi; }</span>
     }
 <span class="fc" id="L121">    p2.___(polyp.ps.get__(minpi));</span>
-<span class="fc bfc" id="L122" title="All 2 branches covered.">    p1.___(polyp.ps.get__(((minpi == 0) ? polyp.pn - 1 : minpi - 1)));</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">    p1.___(polyp.ps.get__(((minpi == 0) ? polyp.pn - 1 : minpi - 1)));</span>
 <span class="pc bpc" id="L123" title="1 of 2 branches missed.">    p3.___(polyp.ps.get__(((minpi == polyp.pn - 1) ? 0 : minpi + 1)));</span>
 <span class="pc bpc" id="L124" title="5 of 6 branches missed.">    if (((p1.x == p2.x &amp;&amp; p2.x == p3.x) &amp;&amp; (p3.y &gt; p2.y)) ||</span>
-<span class="fc bfc" id="L125" title="All 2 branches covered.">	ccw(p1, p2, p3) != 1) {</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">	ccw(p1, p2, p3) != 1) {</span>
 <span class="fc bfc" id="L126" title="All 2 branches covered.">	for (pi = polyp.pn - 1; pi &gt;= 0; pi--) {</span>
 <span class="fc bfc" id="L127" title="All 2 branches covered.">	    if (pi &lt; polyp.pn - 1</span>
 <span class="fc bfc" id="L128" title="All 2 branches covered.">		&amp;&amp; polyp.ps.get__(pi).x == polyp.ps.get__(pi+1).x</span>
@@ -134,14 +134,14 @@ try {
 <span class="fc" id="L134">	    zz.pnll++;</span>
 	}
     } else {
-<span class="fc bfc" id="L137" title="All 2 branches covered.">	for (pi = 0; pi &lt; polyp.pn; pi++) {</span>
-<span class="fc bfc" id="L138" title="All 4 branches covered.">	    if (pi &gt; 0 &amp;&amp; polyp.ps.get__(pi).x == polyp.ps.get__(pi - 1).x &amp;&amp;</span>
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		polyp.ps.get__(pi).y == polyp.ps.get__(pi - 1).y)</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">	for (pi = 0; pi &lt; polyp.pn; pi++) {</span>
+<span class="nc bnc" id="L138" title="All 4 branches missed.">	    if (pi &gt; 0 &amp;&amp; polyp.ps.get__(pi).x == polyp.ps.get__(pi - 1).x &amp;&amp;</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		polyp.ps.get__(pi).y == polyp.ps.get__(pi - 1).y)</span>
 <span class="nc" id="L140">		continue;</span>
-<span class="fc" id="L141">	    zz.pnls[zz.pnll].pp = polyp.ps.get__(pi);</span>
-<span class="fc" id="L142">	    zz.pnls[zz.pnll].link = zz.pnls[zz.pnll % polyp.pn];</span>
-<span class="fc" id="L143">	    zz.pnlps[zz.pnll] = zz.pnls[zz.pnll];</span>
-<span class="fc" id="L144">	    zz.pnll++;</span>
+<span class="nc" id="L141">	    zz.pnls[zz.pnll].pp = polyp.ps.get__(pi);</span>
+<span class="nc" id="L142">	    zz.pnls[zz.pnll].link = zz.pnls[zz.pnll % polyp.pn];</span>
+<span class="nc" id="L143">	    zz.pnlps[zz.pnll] = zz.pnls[zz.pnll];</span>
+<span class="nc" id="L144">	    zz.pnll++;</span>
 	}
     }
     
@@ -245,16 +245,16 @@ try {
 <span class="fc" id="L245">		splitdq(zz, 2, splitindex);</span>
 <span class="fc" id="L246">		add2dq(zz, 1, rpnlp);</span>
 		/* if the split is behind the apex, then reset apex */
-<span class="fc bfc" id="L248" title="All 2 branches covered.">		if (splitindex &gt; zz.dq.apex)</span>
-<span class="fc" id="L249">		    zz.dq.apex = splitindex;</span>
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">		if (splitindex &gt; zz.dq.apex)</span>
+<span class="nc" id="L249">		    zz.dq.apex = splitindex;</span>
 	    } else {
 		/* add left point to deque */
 <span class="fc" id="L252">		splitindex = finddqsplit(zz, lpnlp);</span>
 <span class="fc" id="L253">		splitdq(zz, 1, splitindex);</span>
 <span class="fc" id="L254">		add2dq(zz, 2, lpnlp);</span>
 		/* if the split is in front of the apex, then reset apex */
-<span class="fc bfc" id="L256" title="All 2 branches covered.">		if (splitindex &lt; zz.dq.apex)</span>
-<span class="fc" id="L257">		    zz.dq.apex = splitindex;</span>
+<span class="pc bpc" id="L256" title="1 of 2 branches missed.">		if (splitindex &lt; zz.dq.apex)</span>
+<span class="nc" id="L257">		    zz.dq.apex = splitindex;</span>
 	    }
 	}
 <span class="fc" id="L260">	trii = -1;</span>
@@ -336,7 +336,7 @@ try {
 <span class="fc bfc" id="L336" title="All 2 branches covered.">    if (ccw(pnlps[pnlim1].pp, pnlps[pnli].pp, pnlps[pnlip1].pp) ==</span>
 	1)
 <span class="fc" id="L338">	res =</span>
-<span class="fc bfc" id="L339" title="All 2 branches covered.">	    (ccw(pnlps[pnli].pp, pnlps[pnlip2].pp, pnlps[pnlim1].pp) ==</span>
+<span class="pc bpc" id="L339" title="1 of 2 branches missed.">	    (ccw(pnlps[pnli].pp, pnlps[pnlip2].pp, pnlps[pnlim1].pp) ==</span>
 	     1)
 <span class="fc bfc" id="L341" title="All 2 branches covered.">	    &amp;&amp; (ccw(pnlps[pnlip2].pp, pnlps[pnli].pp, pnlps[pnlip1].pp)</span>
 		== 1);
@@ -518,9 +518,9 @@ try {
 	    1)
 <span class="fc" id="L519">	    return index;</span>
 <span class="fc bfc" id="L520" title="All 2 branches covered.">    for (index = zz.dq.lpnlpi; index &gt; zz.dq.apex; index--)</span>
-<span class="fc bfc" id="L521" title="All 2 branches covered.">	if (ccw(zz.dq.pnlps[index - 1].pp, zz.dq.pnlps[index].pp, pnlp.pp) ==</span>
+<span class="pc bpc" id="L521" title="1 of 2 branches missed.">	if (ccw(zz.dq.pnlps[index - 1].pp, zz.dq.pnlps[index].pp, pnlp.pp) ==</span>
 	    2)
-<span class="fc" id="L523">	    return index;</span>
+<span class="nc" id="L523">	    return index;</span>
 <span class="fc" id="L524">    return zz.dq.apex;</span>
 } finally {
 <span class="fc" id="L526">LEAVING(&quot;9dnrc8vqpffp5t3bmsackgqtl&quot;,&quot;finddqsplit&quot;);</span>
@@ -557,11 +557,11 @@ public static boolean intersects(ST_pointf pap, ST_pointf pbp, ST_pointf pcp, ST
 <span class="fc" id="L557">ENTERING(&quot;22a9ajg9t8ovqsigk3tyu3rkd&quot;,&quot;intersects&quot;);</span>
 try {
     int ccw1, ccw2, ccw3, ccw4;
-<span class="fc bfc" id="L560" title="All 4 branches covered.">    if (ccw(pap, pbp, pcp) == 3 || ccw(pap, pbp, pdp) == 3 ||</span>
+<span class="pc bpc" id="L560" title="2 of 4 branches missed.">    if (ccw(pap, pbp, pcp) == 3 || ccw(pap, pbp, pdp) == 3 ||</span>
 <span class="fc bfc" id="L561" title="All 4 branches covered.">	ccw(pcp, pdp, pap) == 3 || ccw(pcp, pdp, pbp) == 3) {</span>
-<span class="pc bpc" id="L562" title="1 of 4 branches missed.">	if (between(pap, pbp, pcp) || between(pap, pbp, pdp) ||</span>
+<span class="pc bpc" id="L562" title="2 of 4 branches missed.">	if (between(pap, pbp, pcp) || between(pap, pbp, pdp) ||</span>
 <span class="pc bpc" id="L563" title="2 of 4 branches missed.">	    between(pcp, pdp, pap) || between(pcp, pdp, pbp))</span>
-<span class="fc" id="L564">	    return ((!(false)));</span>
+<span class="nc" id="L564">	    return ((!(false)));</span>
     } else {
 <span class="fc bfc" id="L566" title="All 2 branches covered.">	ccw1 = (ccw(pap, pbp, pcp) == 1) ? 1 : 0;</span>
 <span class="fc bfc" id="L567" title="All 2 branches covered.">	ccw2 = (ccw(pap, pbp, pdp) == 1) ? 1 : 0;</span>
@@ -592,7 +592,7 @@ try {
 <span class="fc" id="L592">    p2.y = pcp.y - pap.y;</span>
 <span class="fc bfc" id="L593" title="All 2 branches covered.">    if (ccw(pap, pbp, pcp) != 3)</span>
 <span class="fc" id="L594">	return false;</span>
-<span class="fc bfc" id="L595" title="All 4 branches covered.">    return (p2.x * p1.x + p2.y * p1.y &gt;= 0) &amp;&amp;</span>
+<span class="pc bpc" id="L595" title="1 of 4 branches missed.">    return (p2.x * p1.x + p2.y * p1.y &gt;= 0) &amp;&amp;</span>
 	(p2.x * p2.x + p2.y * p2.y &lt;= p1.x * p1.x + p1.y * p1.y);
 } finally {
 <span class="fc" id="L598">LEAVING(&quot;uh5n18rzyevtb4cwpni70qpc&quot;,&quot;between&quot;);</span>
@@ -632,7 +632,7 @@ public static void growpnls(Globals zz, int newpnln) {
 try {
 <span class="fc bfc" id="L633" title="All 2 branches covered.">    if (newpnln &lt;= zz.pnln)</span>
 <span class="fc" id="L634">	return;</span>
-<span class="fc bfc" id="L635" title="All 2 branches covered.">    if ((zz.pnls) == null) {</span>
+<span class="pc bpc" id="L635" title="1 of 2 branches missed.">    if ((zz.pnls) == null) {</span>
 <span class="pc bpc" id="L636" title="1 of 2 branches missed.">	if ((zz.pnls = malloc(newpnln)) == null) {</span>
 <span class="nc" id="L637">UNSUPPORTED(&quot;9zyfc4bjg3i6rrna9vqf8doys&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot malloc pnls&quot;));</span>
 <span class="nc" id="L638">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
@@ -642,11 +642,11 @@ try {
 <span class="nc" id="L642">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
 	}
     } else {
-<span class="pc bpc" id="L645" title="1 of 2 branches missed.">	if (((zz.pnls = realloc(zz.pnls, newpnln)))==null) {</span>
+<span class="nc bnc" id="L645" title="All 2 branches missed.">	if (((zz.pnls = realloc(zz.pnls, newpnln)))==null) {</span>
 <span class="nc" id="L646">UNSUPPORTED(&quot;105nogpkt0qqut0yu4alvkk1u&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot realloc pnls&quot;));</span>
 <span class="nc" id="L647">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
 	}
-<span class="pc bpc" id="L649" title="1 of 2 branches missed.">	if (((zz.pnlps = realloc(zz.pnlps, newpnln)))==null) {</span>
+<span class="nc bnc" id="L649" title="All 2 branches missed.">	if (((zz.pnlps = realloc(zz.pnlps, newpnln)))==null) {</span>
 <span class="nc" id="L650">UNSUPPORTED(&quot;be84alh84ub40x4um989aj20d&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot realloc pnlps&quot;));</span>
 <span class="nc" id="L651">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
 	}
@@ -665,14 +665,14 @@ private static ST_pointnlink_t[] malloc(int nb) {
 <span class="fc" id="L665">	return result;</span>
 }
 private static ST_pointnlink_t[] realloc(ST_pointnlink_t orig[], int nb) {
-<span class="pc bpc" id="L668" title="1 of 2 branches missed.">	if (orig.length &gt;= nb) {</span>
+<span class="nc bnc" id="L668" title="All 2 branches missed.">	if (orig.length &gt;= nb) {</span>
 <span class="nc" id="L669">		return orig;</span>
 	}
-<span class="fc" id="L671">	ST_pointnlink_t result[] = malloc(nb);</span>
-<span class="fc bfc" id="L672" title="All 2 branches covered.">	for (int i = 0; i &lt; orig.length; i++) {</span>
-<span class="fc" id="L673">		result[i] = orig[i];</span>
+<span class="nc" id="L671">	ST_pointnlink_t result[] = malloc(nb);</span>
+<span class="nc bnc" id="L672" title="All 2 branches missed.">	for (int i = 0; i &lt; orig.length; i++) {</span>
+<span class="nc" id="L673">		result[i] = orig[i];</span>
 	}
-<span class="fc" id="L675">	return result;</span>
+<span class="nc" id="L675">	return result;</span>
 }
 
 
@@ -686,13 +686,13 @@ public static void growtris(Globals zz, int newtrin) {
 try {
 <span class="pc bpc" id="L687" title="1 of 2 branches missed.">    if (newtrin &lt;= zz.trin)</span>
 <span class="nc" id="L688">	return;</span>
-<span class="fc bfc" id="L689" title="All 2 branches covered.">    if ((zz.tris) == null) {</span>
+<span class="pc bpc" id="L689" title="1 of 2 branches missed.">    if ((zz.tris) == null) {</span>
 <span class="pc bpc" id="L690" title="1 of 2 branches missed.">	if ((zz.tris = CArray.&lt;ST_triangle_t&gt;ALLOC__(newtrin, ZType.ST_triangle_t)) == null) {</span>
 <span class="nc" id="L691">	UNSUPPORTED(&quot;5782e28cjpaa3dpf8up4zmtq7&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot malloc tris&quot;));</span>
 <span class="nc" id="L692">	UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
 	}
     } else {
-<span class="pc bpc" id="L695" title="1 of 2 branches missed.">	if (((zz.tris = CArray.&lt;ST_triangle_t&gt;REALLOC__(newtrin, zz.tris, ZType.ST_triangle_t)))==null) {</span>
+<span class="nc bnc" id="L695" title="All 2 branches missed.">	if (((zz.tris = CArray.&lt;ST_triangle_t&gt;REALLOC__(newtrin, zz.tris, ZType.ST_triangle_t)))==null) {</span>
 <span class="nc" id="L696">	UNSUPPORTED(&quot;d3fgu54pn5tydfhn7z73v73ra&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot realloc tris&quot;));</span>
 <span class="nc" id="L697">	UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
 	}
@@ -733,13 +733,13 @@ public static void growdq(Globals zz, int newdqn) {
 try {
 <span class="fc bfc" id="L734" title="All 2 branches covered.">    if (newdqn &lt;= zz.dq.pnlpn)</span>
 <span class="fc" id="L735">	return;</span>
-<span class="fc bfc" id="L736" title="All 2 branches covered.">    if ((zz.dq.pnlps) == null) {</span>
+<span class="pc bpc" id="L736" title="1 of 2 branches missed.">    if ((zz.dq.pnlps) == null) {</span>
 <span class="pc bpc" id="L737" title="1 of 2 branches missed.">	if (!zz.dq.malloc(newdqn)) {</span>
 <span class="nc" id="L738">UNSUPPORTED(&quot;88fwpb40wz9jc8jiz7u032s4t&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot malloc dq.pnls&quot;));</span>
 <span class="nc" id="L739">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
 	}
     } else {
-<span class="pc bpc" id="L742" title="1 of 2 branches missed.">	if (!zz.dq.realloc(newdqn)) {</span>
+<span class="nc bnc" id="L742" title="All 2 branches missed.">	if (!zz.dq.realloc(newdqn)) {</span>
 <span class="nc" id="L743">UNSUPPORTED(&quot;exqx4ck7h15m8whgip6xpnhoo&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot realloc dq.pnls&quot;));</span>
 <span class="nc" id="L744">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
 	}
@@ -762,13 +762,13 @@ public static void growops(Globals zz, int newopn) {
 try {
 <span class="fc bfc" id="L763" title="All 2 branches covered.">    if (newopn &lt;= zz.opn_shortest)</span>
 <span class="fc" id="L764">	return;</span>
-<span class="fc bfc" id="L765" title="All 2 branches covered.">    if ((zz.ops_shortest) == null) {</span>
+<span class="pc bpc" id="L765" title="1 of 2 branches missed.">    if ((zz.ops_shortest) == null) {</span>
 <span class="pc bpc" id="L766" title="1 of 2 branches missed.">	if ((zz.ops_shortest = CArray.&lt;ST_pointf&gt;ALLOC__(newopn, ZType.ST_pointf)) == null) {</span>
 <span class="nc" id="L767">UNSUPPORTED(&quot;7wxgcgah7iy6vetj5yszoq4k4&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot malloc ops&quot;));</span>
 <span class="nc" id="L768">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
 	}
     } else {
-<span class="pc bpc" id="L771" title="1 of 2 branches missed.">	if (((zz.ops_shortest = CArray.&lt;ST_pointf&gt;REALLOC__(newopn, zz.ops_shortest, ZType.ST_pointf)))==null) {</span>
+<span class="nc bnc" id="L771" title="All 2 branches missed.">	if (((zz.ops_shortest = CArray.&lt;ST_pointf&gt;REALLOC__(newopn, zz.ops_shortest, ZType.ST_pointf)))==null) {</span>
 <span class="nc" id="L772">UNSUPPORTED(&quot;7azrdo5s3kc44taqmtmeu1s33&quot;); // 	    fprintf (stderr, &quot;libpath/%s:%d: %s\n&quot;, &quot;graphviz-2.38.0\\lib\\pathplan\\shortest.c&quot;, 26, (&quot;cannot realloc ops&quot;));</span>
 <span class="nc" id="L773">UNSUPPORTED(&quot;1r6uhbnmxv8c6msnscw07w0qx&quot;); // 	    longjmp(jbuf,1);</span>
     }

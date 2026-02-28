@@ -72,15 +72,15 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 	}
 
 	public HColor getDayColor(TimePoint day) {
-<span class="fc" id="L75">		HColor color = colorDaysToday.get(day);</span>
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (color == null)</span>
-<span class="fc" id="L77">			color = colorDaysInternal.get(day);</span>
+<span class="nc" id="L75">		HColor color = colorDaysToday.get(day);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (color == null)</span>
+<span class="nc" id="L77">			color = colorDaysInternal.get(day);</span>
 
-<span class="fc" id="L79">		return color;</span>
+<span class="nc" id="L79">		return color;</span>
 	}
 
 	public HColor getDayOfWeekColor(DayOfWeek dayOfWeek) {
-<span class="fc" id="L83">		return colorDaysOfWeek.get(dayOfWeek);</span>
+<span class="nc" id="L83">		return colorDaysOfWeek.get(dayOfWeek);</span>
 	}
 
 	public String getDayName(TimePoint day) {
@@ -100,7 +100,7 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 	}
 
 	public boolean hasSeparatorBefore(LocalDate day) {
-<span class="fc" id="L103">		return verticalSeparatorBefore.contains(day);</span>
+<span class="nc" id="L103">		return verticalSeparatorBefore.contains(day);</span>
 	}
 
 	// Mutator
@@ -118,8 +118,8 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 <span class="nc" id="L118">	}</span>
 
 	public void putColorDay(TimePoint day, HColor color) {
-<span class="fc" id="L121">		colorDaysInternal.put(day, color);</span>
-<span class="fc" id="L122">	}</span>
+<span class="nc" id="L121">		colorDaysInternal.put(day, color);</span>
+<span class="nc" id="L122">	}</span>
 
 	public void putColorDayOfWeek(DayOfWeek dow, HColor color) {
 <span class="nc" id="L125">		colorDaysOfWeek.put(dow, color);</span>

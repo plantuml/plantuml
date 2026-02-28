@@ -55,35 +55,35 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 
 
 	public EntityImageSynchroBar(Entity entity) {
-<span class="fc" id="L58">		super(entity);</span>
-<span class="fc" id="L59">	}</span>
+<span class="nc" id="L58">		super(entity);</span>
+<span class="nc" id="L59">	}</span>
 
 	private StyleSignatureBasic getStyleSignature() {
-<span class="fc" id="L62">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activityBar);</span>
+<span class="nc" id="L62">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activityBar);</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (getSkinParam().getRankdir() == Rankdir.LEFT_TO_RIGHT)</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (getSkinParam().getRankdir() == Rankdir.LEFT_TO_RIGHT)</span>
 <span class="nc" id="L67">			return new XDimension2D(8, 80);</span>
 
-<span class="fc" id="L69">		return new XDimension2D(80, 8);</span>
+<span class="nc" id="L69">		return new XDimension2D(80, 8);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="fc" id="L73">		final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L74">		final Shadowable rect = URectangle.build(dim.getWidth(), dim.getHeight());</span>
+<span class="nc" id="L73">		final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L74">		final Shadowable rect = URectangle.build(dim.getWidth(), dim.getHeight());</span>
 
-<span class="fc" id="L76">		final Style style = getStyleSignature().withTOBECHANGED(getEntity().getStereotype())</span>
-<span class="fc" id="L77">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
-<span class="fc" id="L78">		final HColor color = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L79">		final double shadowing = style.getShadowing();</span>
+<span class="nc" id="L76">		final Style style = getStyleSignature().withTOBECHANGED(getEntity().getStereotype())</span>
+<span class="nc" id="L77">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L78">		final HColor color = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L79">		final double shadowing = style.getShadowing();</span>
 
-<span class="fc" id="L81">		rect.setDeltaShadow(shadowing);</span>
-<span class="fc" id="L82">		ug.apply(HColors.none()).apply(color.bg()).draw(rect);</span>
-<span class="fc" id="L83">	}</span>
+<span class="nc" id="L81">		rect.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L82">		ug.apply(HColors.none()).apply(color.bg()).draw(rect);</span>
+<span class="nc" id="L83">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="fc" id="L86">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L86">		return ShapeType.RECTANGLE;</span>
 	}
 
 }

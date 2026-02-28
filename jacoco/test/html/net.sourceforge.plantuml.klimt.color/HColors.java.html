@@ -144,19 +144,19 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 	}
 
 	public static UChange changeBack(UGraphic ug) {
-<span class="fc" id="L147">		final HColor color = ug.getParam().getColor();</span>
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (color == null)</span>
+<span class="nc" id="L147">		final HColor color = ug.getParam().getColor();</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (color == null)</span>
 <span class="nc" id="L149">			return HColors.none().bg();</span>
 
-<span class="fc" id="L151">		return color.bg();</span>
+<span class="nc" id="L151">		return color.bg();</span>
 	}
 
 	public static HColor unlinear(HColor color1, HColor color2, int completion) {
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (completion == 0)</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (completion == 0)</span>
 <span class="nc" id="L156">			return color1;</span>
 
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (completion == 100)</span>
-<span class="fc" id="L159">			return color2;</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (completion == 100)</span>
+<span class="nc" id="L159">			return color2;</span>
 
 <span class="nc bnc" id="L161" title="All 4 branches missed.">		if (color1 instanceof HColorSimple &amp;&amp; color2 instanceof HColorSimple)</span>
 <span class="nc" id="L162">			return HColorSimple.unlinear((HColorSimple) color1, (HColorSimple) color2, completion);</span>

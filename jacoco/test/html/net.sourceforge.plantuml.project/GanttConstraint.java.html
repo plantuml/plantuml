@@ -61,32 +61,32 @@ public class GanttConstraint extends WithLinkType {
 	private final HColorSet colorSet;
 
 	public GanttConstraint(HColorSet colorSet, StyleBuilder styleBuilder, TaskInstant source, TaskInstant dest,
-<span class="fc" id="L64">			HColor forcedColor) {</span>
-<span class="fc" id="L65">		this.styleBuilder = styleBuilder;</span>
-<span class="fc" id="L66">		this.colorSet = colorSet;</span>
-<span class="fc" id="L67">		this.source = source;</span>
-<span class="fc" id="L68">		this.dest = dest;</span>
-<span class="fc" id="L69">		this.type = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
-<span class="fc" id="L70">		this.setSpecificColor(forcedColor);</span>
-<span class="fc" id="L71">	}</span>
+<span class="nc" id="L64">			HColor forcedColor) {</span>
+<span class="nc" id="L65">		this.styleBuilder = styleBuilder;</span>
+<span class="nc" id="L66">		this.colorSet = colorSet;</span>
+<span class="nc" id="L67">		this.source = source;</span>
+<span class="nc" id="L68">		this.dest = dest;</span>
+<span class="nc" id="L69">		this.type = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
+<span class="nc" id="L70">		this.setSpecificColor(forcedColor);</span>
+<span class="nc" id="L71">	}</span>
 
 	public GanttConstraint(HColorSet colorSet, StyleBuilder styleBuilder, TaskInstant source, TaskInstant dest) {
-<span class="fc" id="L74">		this(colorSet, styleBuilder, source, dest, null);</span>
-<span class="fc" id="L75">	}</span>
+<span class="nc" id="L74">		this(colorSet, styleBuilder, source, dest, null);</span>
+<span class="nc" id="L75">	}</span>
 
 	public boolean isOn(Task task) {
-<span class="pc bpc" id="L78" title="1 of 4 branches missed.">		return source.getMoment() == task || dest.getMoment() == task;</span>
+<span class="nc bnc" id="L78" title="All 4 branches missed.">		return source.getMoment() == task || dest.getMoment() == task;</span>
 	}
 
 	public boolean isThereRightArrow(Task task) {
-<span class="pc bpc" id="L82" title="1 of 4 branches missed.">		if (dest.getMoment() == task &amp;&amp; dest.getAttribute() == TaskAttribute.END)</span>
+<span class="nc bnc" id="L82" title="All 4 branches missed.">		if (dest.getMoment() == task &amp;&amp; dest.getAttribute() == TaskAttribute.END)</span>
 <span class="nc" id="L83">			return true;</span>
 
-<span class="pc bpc" id="L85" title="1 of 4 branches missed.">		if (source.getMoment() == task &amp;&amp; dest.getAttribute() == TaskAttribute.END</span>
+<span class="nc bnc" id="L85" title="All 4 branches missed.">		if (source.getMoment() == task &amp;&amp; dest.getAttribute() == TaskAttribute.END</span>
 <span class="nc bnc" id="L86" title="All 2 branches missed.">				&amp;&amp; source.getAttribute() == TaskAttribute.END)</span>
 <span class="nc" id="L87">			return true;</span>
 
-<span class="fc" id="L89">		return false;</span>
+<span class="nc" id="L89">		return false;</span>
 	}
 
 	@Override
@@ -95,14 +95,14 @@ public class GanttConstraint extends WithLinkType {
 	}
 
 	final public StyleSignatureBasic getStyleSignature() {
-<span class="fc" id="L98">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.arrow);</span>
+<span class="nc" id="L98">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.arrow);</span>
 	}
 
 	public UDrawable getUDrawable(TimeScale timeScale, TaskDrawRegistryData toTaskDraw) {
-<span class="fc" id="L102">		Style style = getStyleSignature().getMergedStyle(styleBuilder).eventuallyOverride(PName.LineColor,</span>
-<span class="fc" id="L103">				getSpecificColor());</span>
-<span class="fc" id="L104">		style = style.eventuallyOverride(getType().getStroke3(style.getStroke()));</span>
-<span class="fc" id="L105">		return new GanttArrow(colorSet, style, timeScale, source, dest, toTaskDraw, styleBuilder);</span>
+<span class="nc" id="L102">		Style style = getStyleSignature().getMergedStyle(styleBuilder).eventuallyOverride(PName.LineColor,</span>
+<span class="nc" id="L103">				getSpecificColor());</span>
+<span class="nc" id="L104">		style = style.eventuallyOverride(getType().getStroke3(style.getStroke()));</span>
+<span class="nc" id="L105">		return new GanttArrow(colorSet, style, timeScale, source, dest, toTaskDraw, styleBuilder);</span>
 	}
 
 	public boolean isHidden(TimePoint min, TimePoint max) {

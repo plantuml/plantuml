@@ -46,32 +46,32 @@ public class ColorResolver {
 	final private HColorSimple forcedColor;
 	final private GrayLevelRange grayLevelRange;
 
-<span class="nc" id="L49">	public ColorResolver(HColor fontColor, HColor forcedColor, GrayLevelRange grayLevelRange) {</span>
-<span class="nc" id="L50">		this.fontColor = (HColorSimple) fontColor;</span>
-<span class="nc" id="L51">		this.forcedColor = (HColorSimple) forcedColor;</span>
-<span class="nc" id="L52">		this.grayLevelRange = grayLevelRange;</span>
-<span class="nc" id="L53">	}</span>
+<span class="fc" id="L49">	public ColorResolver(HColor fontColor, HColor forcedColor, GrayLevelRange grayLevelRange) {</span>
+<span class="fc" id="L50">		this.fontColor = (HColorSimple) fontColor;</span>
+<span class="fc" id="L51">		this.forcedColor = (HColorSimple) forcedColor;</span>
+<span class="fc" id="L52">		this.grayLevelRange = grayLevelRange;</span>
+<span class="fc" id="L53">	}</span>
 
 	public HColor getDefaultColor() {
-<span class="nc bnc" id="L56" title="All 4 branches missed.">		if (fontColor == null &amp;&amp; forcedColor == null)</span>
+<span class="pc bpc" id="L56" title="3 of 4 branches missed.">		if (fontColor == null &amp;&amp; forcedColor == null)</span>
 <span class="nc" id="L57">			return HColors.BLACK;</span>
 
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		return forcedColor == null ? fontColor : forcedColor;</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		return forcedColor == null ? fontColor : forcedColor;</span>
 	}
 
 	public HColor getTrueColor(String code) {
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (code.equalsIgnoreCase(&quot;none&quot;))</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (code.equalsIgnoreCase(&quot;none&quot;))</span>
 <span class="nc" id="L64">			return HColors.none();</span>
 		
-<span class="nc" id="L66">		final HColorSimple result = (HColorSimple) HColorSet.instance().getColorOrWhite(code);</span>
+<span class="fc" id="L66">		final HColorSimple result = (HColorSimple) HColorSet.instance().getColorOrWhite(code);</span>
 		
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (forcedColor == null)</span>
-<span class="nc" id="L69">			return result;</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (forcedColor == null)</span>
+<span class="fc" id="L69">			return result;</span>
 		
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (forcedColor.isGray())</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (forcedColor.isGray())</span>
 <span class="nc" id="L72">			return result.asMonochrome();</span>
 		
-<span class="nc" id="L74">		return result.asMonochrome(forcedColor, grayLevelRange.getMinGrayLevel(), grayLevelRange.getMaxGrayLevel());</span>
+<span class="fc" id="L74">		return result.asMonochrome(forcedColor, grayLevelRange.getMinGrayLevel(), grayLevelRange.getMaxGrayLevel());</span>
 	}
 
 }

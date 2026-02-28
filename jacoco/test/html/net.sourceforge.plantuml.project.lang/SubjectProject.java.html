@@ -58,7 +58,7 @@ public class SubjectProject implements Subject&lt;GanttDiagram&gt; {
 	}
 
 	public Failable&lt;GanttDiagram&gt; getMe(GanttDiagram project, RegexResult arg) {
-<span class="fc" id="L61">		return Failable.ok(project);</span>
+<span class="nc" id="L61">		return Failable.ok(project);</span>
 	}
 
 	public Collection&lt;? extends SentenceSimple&lt;GanttDiagram&gt;&gt; getSentences() {
@@ -74,9 +74,9 @@ public class SubjectProject implements Subject&lt;GanttDiagram&gt; {
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="fc" id="L77">			final LocalDate start = (LocalDate) complement;</span>
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">			assert project == subject;</span>
-<span class="fc" id="L79">			return project.updateStartingPoint(start);</span>
+<span class="nc" id="L77">			final LocalDate start = (LocalDate) complement;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			assert project == subject;</span>
+<span class="nc" id="L79">			return project.updateStartingPoint(start);</span>
 		}
 
 	}

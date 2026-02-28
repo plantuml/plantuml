@@ -86,8 +86,8 @@ public abstract class AbstractPlacementStrategy implements PlacementStrategy {
 
 	protected double getSumHeight(Iterator&lt;XDimension2D&gt; it) {
 <span class="fc" id="L88">		double result = 0;</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		while (it.hasNext()) {</span>
-<span class="fc" id="L90">			result += it.next().getHeight();</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L90">			result += it.next().getHeight();</span>
 		}
 <span class="fc" id="L92">		return result;</span>
 	}

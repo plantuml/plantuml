@@ -47,12 +47,12 @@ public class LifeEvent extends AbstractEvent implements Event {
 	private final Fashion backcolor;
 	private final StyleBuilder styleBuilder;
 
-<span class="fc" id="L50">	public LifeEvent(Participant p, LifeEventType type, Fashion backcolor, StyleBuilder styleBuilder) {</span>
-<span class="fc" id="L51">		this.styleBuilder = styleBuilder;</span>
-<span class="fc" id="L52">		this.p = p;</span>
-<span class="fc" id="L53">		this.type = type;</span>
-<span class="fc" id="L54">		this.backcolor = backcolor;</span>
-<span class="fc" id="L55">	}</span>
+<span class="nc" id="L50">	public LifeEvent(Participant p, LifeEventType type, Fashion backcolor, StyleBuilder styleBuilder) {</span>
+<span class="nc" id="L51">		this.styleBuilder = styleBuilder;</span>
+<span class="nc" id="L52">		this.p = p;</span>
+<span class="nc" id="L53">		this.type = type;</span>
+<span class="nc" id="L54">		this.backcolor = backcolor;</span>
+<span class="nc" id="L55">	}</span>
 
 	@Override
 	public String toString() {
@@ -60,31 +60,31 @@ public class LifeEvent extends AbstractEvent implements Event {
 	}
 
 	public Participant getParticipant() {
-<span class="fc" id="L63">		return p;</span>
+<span class="nc" id="L63">		return p;</span>
 	}
 
 	public LifeEventType getType() {
-<span class="fc" id="L67">		return type;</span>
+<span class="nc" id="L67">		return type;</span>
 	}
 
 	public Fashion getSpecificColors() {
-<span class="fc" id="L71">		return backcolor;</span>
+<span class="nc" id="L71">		return backcolor;</span>
 	}
 
 	public boolean dealWith(Participant someone) {
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		return this.p == someone;</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		return this.p == someone;</span>
 	}
 
 	public boolean isActivate() {
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		return type == LifeEventType.ACTIVATE;</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		return type == LifeEventType.ACTIVATE;</span>
 	}
 
 	public boolean isDeactivateOrDestroy() {
-<span class="pc bpc" id="L83" title="2 of 4 branches missed.">		return type == LifeEventType.DEACTIVATE || type == LifeEventType.DESTROY;</span>
+<span class="nc bnc" id="L83" title="All 4 branches missed.">		return type == LifeEventType.DEACTIVATE || type == LifeEventType.DESTROY;</span>
 	}
 
 	public boolean isDeactivate() {
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		return type == LifeEventType.DEACTIVATE;</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		return type == LifeEventType.DEACTIVATE;</span>
 	}
 
 	public boolean isDestroy(Participant p) {
@@ -94,11 +94,11 @@ public class LifeEvent extends AbstractEvent implements Event {
 	private AbstractMessage message;
 
 	public void setMessage(AbstractMessage message) {
-<span class="fc" id="L97">		this.message = message;</span>
-<span class="fc" id="L98">	}</span>
+<span class="nc" id="L97">		this.message = message;</span>
+<span class="nc" id="L98">	}</span>
 
 	public AbstractMessage getMessage() {
-<span class="fc" id="L101">		return message;</span>
+<span class="nc" id="L101">		return message;</span>
 	}
 
 	public StyleSignature getStyleSignature() {
@@ -106,12 +106,12 @@ public class LifeEvent extends AbstractEvent implements Event {
 	}
 
 	public Style[] getUsedStyle() {
-<span class="fc" id="L109">		final Style style = type.getStyleSignature().getMergedStyle(styleBuilder);</span>
-<span class="fc" id="L110">		return new Style[] { style };</span>
+<span class="nc" id="L109">		final Style style = type.getStyleSignature().getMergedStyle(styleBuilder);</span>
+<span class="nc" id="L110">		return new Style[] { style };</span>
 	}
 
 	public StyleBuilder getStyleBuilder() {
-<span class="fc" id="L114">		return styleBuilder;</span>
+<span class="nc" id="L114">		return styleBuilder;</span>
 	}
 
 }

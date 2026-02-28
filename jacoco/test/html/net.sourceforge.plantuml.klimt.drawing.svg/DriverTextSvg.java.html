@@ -132,9 +132,9 @@ public class DriverTextSvg implements UDriver&lt;UText, SvgGraphics&gt; {
 
 		}
 
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {</span>
-<span class="nc bnc" id="L136" title="All 2 branches missed.">			if (fontConfiguration.getExtendedColor() == null)</span>
-<span class="nc" id="L137">				decorations.append(&quot;line-through &quot;);</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (fontConfiguration.containsStyle(FontStyle.STRIKE)) {</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">			if (fontConfiguration.getExtendedColor() == null)</span>
+<span class="fc" id="L137">				decorations.append(&quot;line-through &quot;);</span>
 			else
 <span class="nc" id="L139">				extraLines.add(fontConfiguration.getExtendedColor(), -font.getSize2D() / 4.0);</span>
 

@@ -100,24 +100,24 @@ public class UBrexCommandIf extends UBrexSingleLineCommand2&lt;ActivityDiagram&g
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L103">		final Entity entity1 = CommandLinkActivity.ubrexGetEntityForIfOnly(location, diagram, arg);</span>
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (entity1 == null)</span>
+<span class="nc" id="L103">		final Entity entity1 = CommandLinkActivity.ubrexGetEntityForIfOnly(location, diagram, arg);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (entity1 == null)</span>
 <span class="nc" id="L105">			return CommandExecutionResult.error(&quot;No if possible at this point&quot;);</span>
 
 		final String ifCode;
 		final String ifLabel;
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (arg.get(&quot;IF2&quot;, 0) == null) {</span>
-<span class="fc" id="L110">			ifCode = arg.get(&quot;ASIF1&quot;, 0);</span>
-<span class="fc" id="L111">			ifLabel = arg.get(&quot;IF1&quot;, 0);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (arg.get(&quot;IF2&quot;, 0) == null) {</span>
+<span class="nc" id="L110">			ifCode = arg.get(&quot;ASIF1&quot;, 0);</span>
+<span class="nc" id="L111">			ifLabel = arg.get(&quot;IF1&quot;, 0);</span>
 		} else {
 <span class="nc" id="L113">			ifCode = null;</span>
 <span class="nc" id="L114">			ifLabel = arg.get(&quot;IF2&quot;, 0);</span>
 		}
-<span class="fc" id="L116">		diagram.startIf(location, ifCode);</span>
+<span class="nc" id="L116">		diagram.startIf(location, ifCode);</span>
 
-<span class="fc" id="L118">		int lenght = 2;</span>
+<span class="nc" id="L118">		int lenght = 2;</span>
 
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (arg.get(&quot;ARROW_BODY1&quot;, 0) != null) {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (arg.get(&quot;ARROW_BODY1&quot;, 0) != null) {</span>
 //			final String arrow = StringUtils.manageArrowForCuca(arg.get(&quot;ARROW&quot;, 0));
 //			lenght = arrow.length() - 1;
 <span class="nc" id="L123">			final String arrowBody1 = CommandLinkClass.notNull(arg.get(&quot;ARROW_BODY1&quot;, 0));</span>
@@ -128,24 +128,24 @@ public class UBrexCommandIf extends UBrexSingleLineCommand2&lt;ActivityDiagram&g
 <span class="nc" id="L128">			lenght = arrow.length() - 1;</span>
 		}
 
-<span class="fc" id="L131">		final Entity branch = diagram.getCurrentContext().getBranch();</span>
+<span class="nc" id="L131">		final Entity branch = diagram.getCurrentContext().getBranch();</span>
 
-<span class="fc" id="L133">		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;BRACKET&quot;, 0)),</span>
+<span class="nc" id="L133">		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;BRACKET&quot;, 0)),</span>
 				lenght);
-<span class="fc" id="L135">		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1, branch,</span>
-<span class="fc" id="L136">				new LinkType(LinkDecor.ARROW, LinkDecor.NONE), linkArg.withQuantifier(null, ifLabel)</span>
-<span class="fc" id="L137">						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));</span>
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (arg.get(&quot;ARROW&quot;, 0) != null) {</span>
+<span class="nc" id="L135">		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1, branch,</span>
+<span class="nc" id="L136">				new LinkType(LinkDecor.ARROW, LinkDecor.NONE), linkArg.withQuantifier(null, ifLabel)</span>
+<span class="nc" id="L137">						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (arg.get(&quot;ARROW&quot;, 0) != null) {</span>
 <span class="nc" id="L139">			final Direction direction = StringUtils.getArrowDirection(arg.get(&quot;ARROW&quot;, 0));</span>
 <span class="nc bnc" id="L140" title="All 4 branches missed.">			if (direction == Direction.LEFT || direction == Direction.UP)</span>
 <span class="nc" id="L141">				link = link.getInv();</span>
 
 		}
 
-<span class="fc" id="L145">		link.applyStyle(arg.getLazzy(&quot;ARROW_STYLE&quot;, 0));</span>
-<span class="fc" id="L146">		diagram.addLink(link);</span>
+<span class="nc" id="L145">		link.applyStyle(arg.getLazzy(&quot;ARROW_STYLE&quot;, 0));</span>
+<span class="nc" id="L146">		diagram.addLink(link);</span>
 
-<span class="fc" id="L148">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L148">		return CommandExecutionResult.ok();</span>
 	}
 
 }

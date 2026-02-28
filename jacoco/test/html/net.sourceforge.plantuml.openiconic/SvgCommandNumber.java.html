@@ -42,15 +42,15 @@ public class SvgCommandNumber implements SvgCommand {
 	final private double number;
 
 	public static SvgCommandNumber parse(String number) {
-<span class="nc" id="L45">		return new SvgCommandNumber(Double.parseDouble(number));</span>
+<span class="fc" id="L45">		return new SvgCommandNumber(Double.parseDouble(number));</span>
 	}
 
-<span class="nc" id="L48">	public SvgCommandNumber(double number) {</span>
-<span class="nc" id="L49">		this.number = number;</span>
-<span class="nc" id="L50">	}</span>
+<span class="fc" id="L48">	public SvgCommandNumber(double number) {</span>
+<span class="fc" id="L49">		this.number = number;</span>
+<span class="fc" id="L50">	}</span>
 
 	public SvgCommandNumber add(SvgCommandNumber other) {
-<span class="nc" id="L53">		return new SvgCommandNumber(getDouble() + other.getDouble());</span>
+<span class="fc" id="L53">		return new SvgCommandNumber(getDouble() + other.getDouble());</span>
 	}
 
 	public String toSvg() {
@@ -58,7 +58,7 @@ public class SvgCommandNumber implements SvgCommand {
 	}
 
 	public double getDouble() {
-<span class="nc" id="L61">		return number;</span>
+<span class="fc" id="L61">		return number;</span>
 	}
 
 }

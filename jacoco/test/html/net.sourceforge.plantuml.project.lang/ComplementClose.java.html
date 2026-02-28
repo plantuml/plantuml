@@ -48,14 +48,14 @@ import net.sourceforge.plantuml.regex.RegexResult;
 	}
 
 	public Failable&lt;String&gt; getMe(GanttDiagram project, RegexResult arg, String suffix) {
-<span class="fc" id="L51">		final String value = arg.get(&quot;CLOSED&quot; + suffix, 0);</span>
-<span class="fc" id="L52">		final int x = value.indexOf('[');</span>
-<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (x &gt; 0) {</span>
+<span class="nc" id="L51">		final String value = arg.get(&quot;CLOSED&quot; + suffix, 0);</span>
+<span class="nc" id="L52">		final int x = value.indexOf('[');</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (x &gt; 0) {</span>
 <span class="nc" id="L54">			final int y = value.lastIndexOf(']');</span>
 <span class="nc" id="L55">			final String s = value.substring(x + 1, y);</span>
 <span class="nc" id="L56">			return Failable.ok(s);</span>
 		}
-<span class="fc" id="L58">		return Failable.ok(&quot;&quot;);</span>
+<span class="nc" id="L58">		return Failable.ok(&quot;&quot;);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

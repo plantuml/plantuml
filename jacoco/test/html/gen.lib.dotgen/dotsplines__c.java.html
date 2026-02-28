@@ -191,8 +191,8 @@ public static ST_Agedge_s getmainedge(ST_Agedge_s e) {
 <span class="fc" id="L191">ENTERING(&quot;dobhmc46zwtvv8rg3ywntl91j&quot;,&quot;getmainedge&quot;);</span>
 try {
 <span class="fc" id="L193">    ST_Agedge_s le = e;</span>
-<span class="fc bfc" id="L194" title="All 2 branches covered.">    while (ED_to_virt(le)!=null)</span>
-<span class="fc" id="L195">	le = ED_to_virt(le);</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">    while (ED_to_virt(le)!=null)</span>
+<span class="nc" id="L195">	le = ED_to_virt(le);</span>
 <span class="fc bfc" id="L196" title="All 2 branches covered.">    while (ED_to_orig(le)!=null)</span>
 <span class="fc" id="L197">	le = ED_to_orig(le);</span>
 <span class="fc" id="L198">    return le;</span>
@@ -258,14 +258,14 @@ try {
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;portcmp&quot;, key=&quot;3krohso3quojiv4fveh1en7o6&quot;, definition=&quot;int portcmp(port p0, port p1)&quot;)
 public static int portcmp(final ST_port p0, final ST_port p1) {
 // WARNING!! STRUCT
-<span class="fc" id="L261">return portcmp_w_(p0.copy(), p1.copy());</span>
+<span class="nc" id="L261">return portcmp_w_(p0.copy(), p1.copy());</span>
 }
 private static int portcmp_w_(final ST_port p0, final ST_port p1) {
-<span class="fc" id="L264">ENTERING(&quot;3krohso3quojiv4fveh1en7o6&quot;,&quot;portcmp&quot;);</span>
+<span class="nc" id="L264">ENTERING(&quot;3krohso3quojiv4fveh1en7o6&quot;,&quot;portcmp&quot;);</span>
 try {
     int rv;
-<span class="pc bpc" id="L267" title="1 of 2 branches missed.">    if (p1.defined == false)</span>
-<span class="pc bpc" id="L268" title="1 of 2 branches missed.">	return (p0.defined ? 1 : 0);</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">    if (p1.defined == false)</span>
+<span class="nc bnc" id="L268" title="All 2 branches missed.">	return (p0.defined ? 1 : 0);</span>
 <span class="nc bnc" id="L269" title="All 2 branches missed.">    if (p0.defined == false)</span>
 <span class="nc" id="L270">	return -1;</span>
 <span class="nc" id="L271">    rv = (int) (p0.p.x - p1.p.x);</span>
@@ -273,7 +273,7 @@ try {
 <span class="nc" id="L273">	rv = (int) (p0.p.y - p1.p.y);</span>
 <span class="nc" id="L274">    return rv;</span>
 } finally {
-<span class="fc" id="L276">LEAVING(&quot;3krohso3quojiv4fveh1en7o6&quot;,&quot;portcmp&quot;);</span>
+<span class="nc" id="L276">LEAVING(&quot;3krohso3quojiv4fveh1en7o6&quot;,&quot;portcmp&quot;);</span>
 }
 }
 
@@ -516,10 +516,10 @@ try {
 <span class="fc" id="L516">		    ND_rw(n, ND_mval(n));</span>
 <span class="fc" id="L517">		    ND_mval(n, tmp);</span>
 		}
-<span class="fc bfc" id="L519" title="All 2 branches covered.">		for (k = 0; (e = ND_other(n).list.get_(k))!=null; k++) {</span>
-<span class="fc" id="L520">		    setflags(e, 0, 0, AUXGRAPH);</span>
-<span class="fc" id="L521">			edges.set_(n_edges++, e);</span>
-<span class="pc bpc" id="L522" title="1 of 2 branches missed.">		    if (n_edges % CHUNK == 0)</span>
+<span class="pc bpc" id="L519" title="1 of 2 branches missed.">		for (k = 0; (e = ND_other(n).list.get_(k))!=null; k++) {</span>
+<span class="nc" id="L520">		    setflags(e, 0, 0, AUXGRAPH);</span>
+<span class="nc" id="L521">			edges.set_(n_edges++, e);</span>
+<span class="nc bnc" id="L522" title="All 2 branches missed.">		    if (n_edges % CHUNK == 0)</span>
 <span class="nc" id="L523">			    edges = CArrayOfStar.&lt;ST_Agedge_s&gt;REALLOC(n_edges + CHUNK, edges, ZType.ST_Agedge_s);</span>
 		}
 	    }
@@ -565,10 +565,10 @@ try {
 <span class="nc" id="L565">	    ea = fwdedgea.out;</span>
 	}
 
-<span class="fc bfc" id="L568" title="All 2 branches covered.">	for (cnt = 1; i &lt; n_edges; cnt++, i++) {</span>
-<span class="fc bfc" id="L569" title="All 2 branches covered.">	    if ((le0 != (le1 = getmainedge((e1 = edges.get_(i))))))</span>
+<span class="pc bfc" id="L568" title="All 2 branches covered.">	for (cnt = 1; i &lt; n_edges; cnt++, i++) {</span>
+<span class="pc bpc" id="L569" title="1 of 2 branches missed.">	    if ((le0 != (le1 = getmainedge((e1 = edges.get_(i))))))</span>
 <span class="fc" id="L570">		break;</span>
-<span class="pc bpc" id="L571" title="1 of 2 branches missed.">	    if (ED_adjacent(e0)!=0) continue; /* all flat adjacent edges at once */</span>
+<span class="nc bnc" id="L571" title="All 2 branches missed.">	    if (ED_adjacent(e0)!=0) continue; /* all flat adjacent edges at once */</span>
 <span class="nc bnc" id="L572" title="All 4 branches missed.">	    if (ED_tail_port(e1).defined || ED_head_port(e1).defined) {</span>
 <span class="nc bnc" id="L573" title="All 2 branches missed.">		if (!havePorts) break;</span>
 		else
@@ -626,7 +626,7 @@ try {
 <span class="fc" id="L626">    }</span>
     /* place regular edge labels */
 <span class="fc bfc" id="L628" title="All 2 branches covered.">    for (n = GD_nlist(g); n!=null; n = ND_next(n)) {</span>
-<span class="fc bfc" id="L629" title="All 4 branches covered.">	if ((ND_node_type(n) == VIRTUAL) &amp;&amp; (ND_label(n))!=null) {</span>
+<span class="pc bpc" id="L629" title="1 of 4 branches missed.">	if ((ND_node_type(n) == VIRTUAL) &amp;&amp; (ND_label(n))!=null) {</span>
 <span class="fc" id="L630">	    place_vnlabel(n);</span>
 <span class="fc" id="L631">	    updateBB(g, ND_label(n));</span>
 	}
@@ -639,7 +639,7 @@ try {
 finish :
     /* vladimir: place port labels */
     /* FIX: head and tail labels are not part of cluster bbox */
-<span class="pc bpc" id="L642" title="3 of 8 branches missed.">    if ((zz.E_headlabel!=null || zz.E_taillabel!=null) &amp;&amp; (zz.E_labelangle!=null || zz.E_labeldistance!=null)) {</span>
+<span class="pc bpc" id="L642" title="6 of 8 branches missed.">    if ((zz.E_headlabel!=null || zz.E_taillabel!=null) &amp;&amp; (zz.E_labelangle!=null || zz.E_labeldistance!=null)) {</span>
 <span class="nc" id="L643">UNSUPPORTED(&quot;attp4bsjqe99xnhi7lr7pszar&quot;); // 	for (n = agfstnode(g); n; n = agnxtnode(g, n)) {</span>
 <span class="nc" id="L644">UNSUPPORTED(&quot;54jm4bbgzyl0txauszo1mappu&quot;); // 	    if (E_headlabel) {</span>
 <span class="nc" id="L645">UNSUPPORTED(&quot;dw8yu56thd0wpolmtby8r5doo&quot;); // 		for (e = agfstin(g, n); e; e = agnxtin(g, e))</span>
@@ -707,7 +707,7 @@ try {
 <span class="fc bfc" id="L707" title="All 2 branches covered.">    for (e = (ST_Agedge_s) ND_out(n).list.get_(0); ED_edge_type(e) != 0;</span>
 <span class="fc" id="L708">	 e = ED_to_orig(e));</span>
 <span class="fc" id="L709">    dimen.___(ED_label(e).dimen);</span>
-<span class="fc bfc" id="L710" title="All 2 branches covered.">    width = GD_flip(agraphof(n)) ? dimen.y : dimen.x;</span>
+<span class="pc bpc" id="L710" title="1 of 2 branches missed.">    width = GD_flip(agraphof(n)) ? dimen.y : dimen.x;</span>
 <span class="fc" id="L711">    ED_label(e).pos.x = ND_coord(n).x + width / 2.0;</span>
 <span class="fc" id="L712">    ED_label(e).pos.y = ND_coord(n).y;</span>
 <span class="fc" id="L713">    ED_label(e).set= false ? 0 : 1;</span>
@@ -727,16 +727,16 @@ public static void setflags(ST_Agedge_s e, int hint1, int hint2, int f3) {
 <span class="fc" id="L727">ENTERING(&quot;598jn37hjkm7j0kcg2nmdvlwq&quot;,&quot;setflags&quot;);</span>
 try {
     int f1, f2;
-<span class="fc bfc" id="L730" title="All 2 branches covered.">    if (hint1 != 0)</span>
+<span class="pc bpc" id="L730" title="1 of 2 branches missed.">    if (hint1 != 0)</span>
 <span class="fc" id="L731">	f1 = hint1;</span>
     else {
-<span class="pc bpc" id="L733" title="1 of 2 branches missed.">	if (agtail(e) == aghead(e))</span>
+<span class="nc bnc" id="L733" title="All 2 branches missed.">	if (agtail(e) == aghead(e))</span>
 <span class="nc bnc" id="L734" title="All 4 branches missed.">	    if (ED_tail_port(e).defined || ED_head_port(e).defined)</span>
 <span class="nc" id="L735">		f1 = 4;</span>
 	    else
 <span class="nc" id="L737">		f1 = 8;</span>
-<span class="pc bpc" id="L738" title="1 of 2 branches missed.">	else if (ND_rank(agtail(e)) == ND_rank(aghead(e)))</span>
-<span class="fc" id="L739">	    f1 = 2;</span>
+<span class="nc bnc" id="L738" title="All 2 branches missed.">	else if (ND_rank(agtail(e)) == ND_rank(aghead(e)))</span>
+<span class="nc" id="L739">	    f1 = 2;</span>
 	else
 <span class="nc" id="L741">	    f1 = 1;</span>
     }
@@ -800,8 +800,8 @@ try {
 <span class="fc" id="L800">    t1 = ND_rank(agtail(le1)) - ND_rank(aghead(le1));</span>
 <span class="fc" id="L801">    v0 = Math.abs((int)t0);   /* ugly, but explicit as to how we avoid equality tests on fp numbers */</span>
 <span class="fc" id="L802">    v1 = Math.abs((int)t1);</span>
-<span class="fc bfc" id="L803" title="All 2 branches covered.">    if (v0 != v1)</span>
-<span class="fc" id="L804">	return (v0 - v1);</span>
+<span class="pc bpc" id="L803" title="1 of 2 branches missed.">    if (v0 != v1)</span>
+<span class="nc" id="L804">	return (v0 - v1);</span>
 <span class="fc" id="L805">    t0 = ND_coord(agtail(le0)).x - ND_coord(aghead(le0)).x;</span>
 <span class="fc" id="L806">    t1 = ND_coord(agtail(le1)).x - ND_coord(aghead(le1)).x;</span>
 <span class="fc" id="L807">    v0 = Math.abs((int)t0);</span>
@@ -809,29 +809,29 @@ try {
 <span class="fc bfc" id="L809" title="All 2 branches covered.">    if (v0 != v1)</span>
 <span class="fc" id="L810">	return (v0 - v1);</span>
     /* This provides a cheap test for edges having the same set of endpoints.  */
-<span class="fc bfc" id="L812" title="All 2 branches covered.">    if (le0.tag.seq != le1.tag.seq)</span>
+<span class="pc bpc" id="L812" title="1 of 2 branches missed.">    if (le0.tag.seq != le1.tag.seq)</span>
 <span class="fc" id="L813">	return (le0.tag.seq - le1.tag.seq);</span>
-<span class="pc bpc" id="L814" title="2 of 4 branches missed.">    ea = (ED_tail_port(e0).defined || ED_head_port(e0).defined) ? e0 : le0;</span>
-<span class="pc bpc" id="L815" title="1 of 2 branches missed.">    if ((ED_tree_index(ea) &amp; 32)!=0) {</span>
+<span class="nc bnc" id="L814" title="All 4 branches missed.">    ea = (ED_tail_port(e0).defined || ED_head_port(e0).defined) ? e0 : le0;</span>
+<span class="nc bnc" id="L815" title="All 2 branches missed.">    if ((ED_tree_index(ea) &amp; 32)!=0) {</span>
 <span class="nc" id="L816">	MAKEFWDEDGE(fwdedgea.out, ea);</span>
 <span class="nc" id="L817">	ea = (ST_Agedge_s) fwdedgea.out;</span>
     }
-<span class="pc bpc" id="L819" title="2 of 4 branches missed.">    eb = (ED_tail_port(e1).defined || ED_head_port(e1).defined) ? e1 : le1;</span>
-<span class="pc bpc" id="L820" title="1 of 2 branches missed.">    if ((ED_tree_index(eb) &amp; 32)!=0) {</span>
+<span class="nc bnc" id="L819" title="All 4 branches missed.">    eb = (ED_tail_port(e1).defined || ED_head_port(e1).defined) ? e1 : le1;</span>
+<span class="nc bnc" id="L820" title="All 2 branches missed.">    if ((ED_tree_index(eb) &amp; 32)!=0) {</span>
 <span class="nc" id="L821">	MAKEFWDEDGE(fwdedgeb.out, eb);</span>
 <span class="nc" id="L822">	eb = (ST_Agedge_s) fwdedgeb.out;</span>
     }
-<span class="pc bpc" id="L824" title="1 of 2 branches missed.">    if ((rv = portcmp(ED_tail_port(ea), ED_tail_port(eb)))!=0)</span>
+<span class="nc bnc" id="L824" title="All 2 branches missed.">    if ((rv = portcmp(ED_tail_port(ea), ED_tail_port(eb)))!=0)</span>
 <span class="nc" id="L825">	return rv;</span>
-<span class="pc bpc" id="L826" title="1 of 2 branches missed.">    if ((rv = portcmp(ED_head_port(ea), ED_head_port(eb)))!=0)</span>
+<span class="nc bnc" id="L826" title="All 2 branches missed.">    if ((rv = portcmp(ED_head_port(ea), ED_head_port(eb)))!=0)</span>
 <span class="nc" id="L827">	return rv;</span>
-<span class="fc" id="L828">    et0 = ED_tree_index(e0) &amp; 192;</span>
-<span class="fc" id="L829">    et1 = ED_tree_index(e1) &amp; 192;</span>
-<span class="pc bpc" id="L830" title="1 of 2 branches missed.">    if (et0 != et1)</span>
+<span class="nc" id="L828">    et0 = ED_tree_index(e0) &amp; 192;</span>
+<span class="nc" id="L829">    et1 = ED_tree_index(e1) &amp; 192;</span>
+<span class="nc bnc" id="L830" title="All 2 branches missed.">    if (et0 != et1)</span>
 <span class="nc" id="L831">	return (et0 - et1);</span>
-<span class="pc bpc" id="L832" title="3 of 4 branches missed.">    if (et0 == 2 &amp;&amp; (ED_label(e0) != ED_label(e1)))</span>
+<span class="nc bnc" id="L832" title="All 4 branches missed.">    if (et0 == 2 &amp;&amp; (ED_label(e0) != ED_label(e1)))</span>
 <span class="nc" id="L833">	 UNSUPPORTED(&quot;return (int) (ED_label(e0) - ED_label(e1))&quot;);</span>
-<span class="fc" id="L834">    return (e0.tag.seq - e1.tag.seq);</span>
+<span class="nc" id="L834">    return (e0.tag.seq - e1.tag.seq);</span>
 } finally {
 <span class="fc" id="L836">LEAVING(&quot;1nf1s6wkn35ptjn884ii56fh&quot;,&quot;edgecmp&quot;);</span>
 }
@@ -842,23 +842,23 @@ try {
 <span class="fc" id="L842">public static CFunction edgelblcmpfn = new CFunctionAbstract(&quot;edgelblcmpfn&quot;) {</span>
 	
 	public Object exe(Globals zz, Object... args) {
-<span class="fc" id="L845">		return edgelblcmpfn((CArrayOfStar&lt;ST_Agedge_s&gt;)args[0], (CArrayOfStar&lt;ST_Agedge_s&gt;)args[1]);</span>
+<span class="nc" id="L845">		return edgelblcmpfn((CArrayOfStar&lt;ST_Agedge_s&gt;)args[0], (CArrayOfStar&lt;ST_Agedge_s&gt;)args[1]);</span>
 	}};
 
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;edgelblcmpfn&quot;, key=&quot;bmsa24i3avg14po4sp17yh89k&quot;, definition=&quot;static int edgelblcmpfn(edge_t** ptr0, edge_t** ptr1)&quot;)
 public static int edgelblcmpfn(CArrayOfStar&lt;ST_Agedge_s&gt; ptr0, CArrayOfStar&lt;ST_Agedge_s&gt; ptr1) {
-<span class="fc" id="L851">ENTERING(&quot;bmsa24i3avg14po4sp17yh89k&quot;,&quot;edgelblcmpfn&quot;);</span>
+<span class="nc" id="L851">ENTERING(&quot;bmsa24i3avg14po4sp17yh89k&quot;,&quot;edgelblcmpfn&quot;);</span>
 try {
     ST_Agedge_s e0, e1;
-<span class="fc" id="L854">    final ST_pointf sz0 = new ST_pointf(), sz1 = new ST_pointf();</span>
-<span class="fc" id="L855">    e0 = ptr0.get_(0);</span>
-<span class="fc" id="L856">    e1 = ptr1.get_(0);</span>
-<span class="pc bpc" id="L857" title="1 of 2 branches missed.">    if (ED_label(e0)!=null) {</span>
-<span class="pc bpc" id="L858" title="1 of 2 branches missed.">	if (ED_label(e1)!=null) {</span>
-<span class="fc" id="L859">	    sz0.___(ED_label(e0).dimen);</span>
-<span class="fc" id="L860">	    sz1.___(ED_label(e1).dimen);</span>
-<span class="pc bpc" id="L861" title="1 of 2 branches missed.">	    if (sz0.x &gt; sz1.x) return -1;</span>
+<span class="nc" id="L854">    final ST_pointf sz0 = new ST_pointf(), sz1 = new ST_pointf();</span>
+<span class="nc" id="L855">    e0 = ptr0.get_(0);</span>
+<span class="nc" id="L856">    e1 = ptr1.get_(0);</span>
+<span class="nc bnc" id="L857" title="All 2 branches missed.">    if (ED_label(e0)!=null) {</span>
+<span class="nc bnc" id="L858" title="All 2 branches missed.">	if (ED_label(e1)!=null) {</span>
+<span class="nc" id="L859">	    sz0.___(ED_label(e0).dimen);</span>
+<span class="nc" id="L860">	    sz1.___(ED_label(e1).dimen);</span>
+<span class="nc bnc" id="L861" title="All 2 branches missed.">	    if (sz0.x &gt; sz1.x) return -1;</span>
 <span class="nc bnc" id="L862" title="All 2 branches missed.">	    else if (sz0.x &lt; sz1.x) return 1;</span>
 <span class="nc bnc" id="L863" title="All 2 branches missed.">	    else if (sz0.y &gt; sz1.y) return -1;</span>
 <span class="nc bnc" id="L864" title="All 2 branches missed.">	    else if (sz0.y &lt; sz1.y) return 1;</span>
@@ -873,7 +873,7 @@ try {
     else
 <span class="nc" id="L874"> 	return 0;</span>
 } finally {
-<span class="fc" id="L876">LEAVING(&quot;bmsa24i3avg14po4sp17yh89k&quot;,&quot;edgelblcmpfn&quot;);</span>
+<span class="nc" id="L876">LEAVING(&quot;bmsa24i3avg14po4sp17yh89k&quot;,&quot;edgelblcmpfn&quot;);</span>
 }
 }
 
@@ -890,75 +890,75 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;makeSimpleFlatLabels&quot;, key=&quot;3xmylrnypvoqrj2yrxnomsj5k&quot;, definition=&quot;static void makeSimpleFlatLabels (node_t* tn, node_t* hn, edge_t** edges, int ind, int cnt, int et, int n_lbls)&quot;)
 public static void makeSimpleFlatLabels(Globals zz, ST_Agnode_s tn, ST_Agnode_s hn, CArrayOfStar&lt;ST_Agedge_s&gt; edges, int ind, int cnt, int et, int n_lbls) {
-<span class="fc" id="L893">ENTERING(&quot;3xmylrnypvoqrj2yrxnomsj5k&quot;,&quot;makeSimpleFlatLabels&quot;);</span>
+<span class="nc" id="L893">ENTERING(&quot;3xmylrnypvoqrj2yrxnomsj5k&quot;,&quot;makeSimpleFlatLabels&quot;);</span>
 try {
 	CArray&lt;ST_pointf&gt; ps;
-<span class="fc" id="L896">    final ST_Ppoly_t poly = new ST_Ppoly_t();</span>
-<span class="fc" id="L897">    int pn[] = new int[1];</span>
-<span class="fc" id="L898">	ST_Agedge_s e = edges.get_(ind);</span>
-<span class="fc" id="L899">    final CArray&lt;ST_pointf&gt; points = CArray.&lt;ST_pointf&gt;ALLOC__(10, ZType.ST_pointf);</span>
-<span class="fc" id="L900">    final ST_pointf tp = new ST_pointf(), hp = new ST_pointf();</span>
+<span class="nc" id="L896">    final ST_Ppoly_t poly = new ST_Ppoly_t();</span>
+<span class="nc" id="L897">    int pn[] = new int[1];</span>
+<span class="nc" id="L898">	ST_Agedge_s e = edges.get_(ind);</span>
+<span class="nc" id="L899">    final CArray&lt;ST_pointf&gt; points = CArray.&lt;ST_pointf&gt;ALLOC__(10, ZType.ST_pointf);</span>
+<span class="nc" id="L900">    final ST_pointf tp = new ST_pointf(), hp = new ST_pointf();</span>
     int i, pointn;
-<span class="fc" id="L902">    double leftend, rightend, ctrx=0, ctry=0, miny, maxy;</span>
-<span class="fc" id="L903">    double uminx=0, umaxx=0;</span>
-<span class="fc" id="L904">    double lminx=0, lmaxx=0;</span>
+<span class="nc" id="L902">    double leftend, rightend, ctrx=0, ctry=0, miny, maxy;</span>
+<span class="nc" id="L903">    double uminx=0, umaxx=0;</span>
+<span class="nc" id="L904">    double lminx=0, lmaxx=0;</span>
     
-<span class="fc" id="L906">    CArrayOfStar&lt;ST_Agedge_s&gt; earray = CArrayOfStar.&lt;ST_Agedge_s&gt;ALLOC(cnt, ZType.ST_Agedge_s);</span>
+<span class="nc" id="L906">    CArrayOfStar&lt;ST_Agedge_s&gt; earray = CArrayOfStar.&lt;ST_Agedge_s&gt;ALLOC(cnt, ZType.ST_Agedge_s);</span>
     
-<span class="fc bfc" id="L908" title="All 2 branches covered.">    for (i = 0; i &lt; cnt; i++) {</span>
-<span class="fc" id="L909">	earray.set_(i, edges.get_(ind + i));</span>
+<span class="nc bnc" id="L908" title="All 2 branches missed.">    for (i = 0; i &lt; cnt; i++) {</span>
+<span class="nc" id="L909">	earray.set_(i, edges.get_(ind + i));</span>
     }
     
-<span class="fc" id="L912">    qsort(zz, earray,</span>
+<span class="nc" id="L912">    qsort(zz, earray,</span>
     cnt,
     dotsplines__c.edgelblcmpfn);
-<span class="fc" id="L915">    tp.___(add_pointf(ND_coord(tn), ED_tail_port(e).p));</span>
-<span class="fc" id="L916">    hp.___(add_pointf(ND_coord(hn), ED_head_port(e).p));</span>
+<span class="nc" id="L915">    tp.___(add_pointf(ND_coord(tn), ED_tail_port(e).p));</span>
+<span class="nc" id="L916">    hp.___(add_pointf(ND_coord(hn), ED_head_port(e).p));</span>
     
-<span class="fc" id="L918">    leftend = tp.x+ND_rw(tn);</span>
-<span class="fc" id="L919">    rightend = hp.x-ND_lw(hn);</span>
-<span class="fc" id="L920">    ctrx = (leftend + rightend)/2.0;</span>
+<span class="nc" id="L918">    leftend = tp.x+ND_rw(tn);</span>
+<span class="nc" id="L919">    rightend = hp.x-ND_lw(hn);</span>
+<span class="nc" id="L920">    ctrx = (leftend + rightend)/2.0;</span>
     
     /* do first edge */
-<span class="fc" id="L923">    e = earray.get_(0);</span>
-<span class="fc" id="L924">    pointn = 0;</span>
-<span class="fc" id="L925">    points.get__(pointn++).___(tp);</span>
-<span class="fc" id="L926">    points.get__(pointn++).___(tp);</span>
-<span class="fc" id="L927">    points.get__(pointn++).___(hp);</span>
-<span class="fc" id="L928">    points.get__(pointn++).___(hp);</span>
-<span class="fc" id="L929">    clip_and_install(zz, e, aghead(e), points, pointn, zz.sinfo);</span>
-<span class="fc" id="L930">    ED_label(e).pos.x = ctrx;</span>
-<span class="fc" id="L931">    ED_label(e).pos.y = (tp.y + (ED_label(e).dimen.y+6)/2.0);</span>
-<span class="fc" id="L932">    ED_label(e).set = 1;</span>
+<span class="nc" id="L923">    e = earray.get_(0);</span>
+<span class="nc" id="L924">    pointn = 0;</span>
+<span class="nc" id="L925">    points.get__(pointn++).___(tp);</span>
+<span class="nc" id="L926">    points.get__(pointn++).___(tp);</span>
+<span class="nc" id="L927">    points.get__(pointn++).___(hp);</span>
+<span class="nc" id="L928">    points.get__(pointn++).___(hp);</span>
+<span class="nc" id="L929">    clip_and_install(zz, e, aghead(e), points, pointn, zz.sinfo);</span>
+<span class="nc" id="L930">    ED_label(e).pos.x = ctrx;</span>
+<span class="nc" id="L931">    ED_label(e).pos.y = (tp.y + (ED_label(e).dimen.y+6)/2.0);</span>
+<span class="nc" id="L932">    ED_label(e).set = 1;</span>
     
-<span class="fc" id="L934">    miny = tp.y + 6/2.0;</span>
-<span class="fc" id="L935">    maxy = miny + ED_label(e).dimen.y;</span>
-<span class="fc" id="L936">    uminx = ctrx - (ED_label(e).dimen.x)/2.0;</span>
-<span class="fc" id="L937">    umaxx = ctrx + (ED_label(e).dimen.x)/2.0;</span>
+<span class="nc" id="L934">    miny = tp.y + 6/2.0;</span>
+<span class="nc" id="L935">    maxy = miny + ED_label(e).dimen.y;</span>
+<span class="nc" id="L936">    uminx = ctrx - (ED_label(e).dimen.x)/2.0;</span>
+<span class="nc" id="L937">    umaxx = ctrx + (ED_label(e).dimen.x)/2.0;</span>
     
-<span class="fc bfc" id="L939" title="All 2 branches covered.">    for (i = 1; i &lt; n_lbls; i++) {</span>
-<span class="fc" id="L940">	e = earray.get_(i);</span>
-<span class="pc bpc" id="L941" title="1 of 2 branches missed.">	if (i%2!=0) {  /* down */</span>
-<span class="pc bpc" id="L942" title="1 of 2 branches missed.">	    if (i == 1) {</span>
-<span class="fc" id="L943">		lminx = ctrx - (ED_label(e).dimen.x)/2.0;</span>
-<span class="fc" id="L944">		lmaxx = ctrx + (ED_label(e).dimen.x)/2.0;</span>
+<span class="nc bnc" id="L939" title="All 2 branches missed.">    for (i = 1; i &lt; n_lbls; i++) {</span>
+<span class="nc" id="L940">	e = earray.get_(i);</span>
+<span class="nc bnc" id="L941" title="All 2 branches missed.">	if (i%2!=0) {  /* down */</span>
+<span class="nc bnc" id="L942" title="All 2 branches missed.">	    if (i == 1) {</span>
+<span class="nc" id="L943">		lminx = ctrx - (ED_label(e).dimen.x)/2.0;</span>
+<span class="nc" id="L944">		lmaxx = ctrx + (ED_label(e).dimen.x)/2.0;</span>
 		}
-<span class="fc" id="L946">	    miny -= 6 + ED_label(e).dimen.y;</span>
-<span class="fc" id="L947">	    points.get__(0).___(tp);</span>
-<span class="fc" id="L948">	    points.get__(1).x = tp.x;</span>
-<span class="fc" id="L949">	    points.get__(1).y = miny - 6;</span>
-<span class="fc" id="L950">	    points.get__(2).x = hp.x;</span>
-<span class="fc" id="L951">	    points.get__(2).y = points.get__(1).y;</span>
-<span class="fc" id="L952">	    points.get__(3).___(hp);</span>
-<span class="fc" id="L953">	    points.get__(4).x = lmaxx;</span>
-<span class="fc" id="L954">	    points.get__(4).y = hp.y;</span>
-<span class="fc" id="L955">	    points.get__(5).x = lmaxx;</span>
-<span class="fc" id="L956">	    points.get__(5).y = miny;</span>
-<span class="fc" id="L957">	    points.get__(6).x = lminx;</span>
-<span class="fc" id="L958">	    points.get__(6).y = miny;</span>
-<span class="fc" id="L959">	    points.get__(7).x = lminx;</span>
-<span class="fc" id="L960">	    points.get__(7).y = tp.y;</span>
-<span class="fc" id="L961">	    ctry = miny + (ED_label(e).dimen.y)/2.0;</span>
+<span class="nc" id="L946">	    miny -= 6 + ED_label(e).dimen.y;</span>
+<span class="nc" id="L947">	    points.get__(0).___(tp);</span>
+<span class="nc" id="L948">	    points.get__(1).x = tp.x;</span>
+<span class="nc" id="L949">	    points.get__(1).y = miny - 6;</span>
+<span class="nc" id="L950">	    points.get__(2).x = hp.x;</span>
+<span class="nc" id="L951">	    points.get__(2).y = points.get__(1).y;</span>
+<span class="nc" id="L952">	    points.get__(3).___(hp);</span>
+<span class="nc" id="L953">	    points.get__(4).x = lmaxx;</span>
+<span class="nc" id="L954">	    points.get__(4).y = hp.y;</span>
+<span class="nc" id="L955">	    points.get__(5).x = lmaxx;</span>
+<span class="nc" id="L956">	    points.get__(5).y = miny;</span>
+<span class="nc" id="L957">	    points.get__(6).x = lminx;</span>
+<span class="nc" id="L958">	    points.get__(6).y = miny;</span>
+<span class="nc" id="L959">	    points.get__(7).x = lminx;</span>
+<span class="nc" id="L960">	    points.get__(7).y = tp.y;</span>
+<span class="nc" id="L961">	    ctry = miny + (ED_label(e).dimen.y)/2.0;</span>
 	}
 	else {   /* up */
 <span class="nc" id="L964">	    points.get__(0).___(tp);</span>
@@ -979,18 +979,18 @@ try {
 <span class="nc" id="L979">	    ctry =  maxy + (ED_label(e).dimen.y)/2.0 + 6;</span>
 <span class="nc" id="L980">	    maxy += ED_label(e).dimen.y + 6;</span>
 	}
-<span class="fc" id="L982">	poly.pn = 8;</span>
-<span class="fc" id="L983">	poly.ps = points;</span>
-<span class="pc bpc" id="L984" title="1 of 2 branches missed.">	ps = simpleSplineRoute (zz, tp, hp, poly, pn, et == (3 &lt;&lt; 1));</span>
-<span class="pc bpc" id="L985" title="1 of 2 branches missed.">	if (pn[0] == 0) return;</span>
-<span class="fc" id="L986">	ED_label(e).pos.x = ctrx;</span>
-<span class="fc" id="L987">	ED_label(e).pos.y = ctry;</span>
-<span class="fc" id="L988">	ED_label(e).set= false ? 0 : 1;</span>
-<span class="fc" id="L989">	clip_and_install(zz, e, aghead(e), ps, pn[0], zz.sinfo);</span>
+<span class="nc" id="L982">	poly.pn = 8;</span>
+<span class="nc" id="L983">	poly.ps = points;</span>
+<span class="nc bnc" id="L984" title="All 2 branches missed.">	ps = simpleSplineRoute (zz, tp, hp, poly, pn, et == (3 &lt;&lt; 1));</span>
+<span class="nc bnc" id="L985" title="All 2 branches missed.">	if (pn[0] == 0) return;</span>
+<span class="nc" id="L986">	ED_label(e).pos.x = ctrx;</span>
+<span class="nc" id="L987">	ED_label(e).pos.y = ctry;</span>
+<span class="nc" id="L988">	ED_label(e).set= false ? 0 : 1;</span>
+<span class="nc" id="L989">	clip_and_install(zz, e, aghead(e), ps, pn[0], zz.sinfo);</span>
     }
     
     /* edges with no labels */
-<span class="pc bpc" id="L993" title="1 of 2 branches missed.">    for (; i &lt; cnt; i++) {</span>
+<span class="nc bnc" id="L993" title="All 2 branches missed.">    for (; i &lt; cnt; i++) {</span>
 <span class="nc" id="L994">	e = earray.get_(i);</span>
 <span class="nc bnc" id="L995" title="All 2 branches missed.">	if (i%2!=0) {  /* down */</span>
 <span class="nc bnc" id="L996" title="All 2 branches missed.">	    if (i == 1) {</span>
@@ -1038,11 +1038,11 @@ try {
 <span class="nc" id="L1038">	clip_and_install(zz, e, aghead(e), ps, pn[0], zz.sinfo);</span>
     }
     
-<span class="fc" id="L1041">    Memory.free (earray);</span>
+<span class="nc" id="L1041">    Memory.free (earray);</span>
 } finally {
-<span class="fc" id="L1043">LEAVING(&quot;3xmylrnypvoqrj2yrxnomsj5k&quot;,&quot;makeSimpleFlatLabels&quot;);</span>
+<span class="nc" id="L1043">LEAVING(&quot;3xmylrnypvoqrj2yrxnomsj5k&quot;,&quot;makeSimpleFlatLabels&quot;);</span>
 }
-<span class="fc" id="L1045">}</span>
+<span class="nc" id="L1045">}</span>
 
 
 
@@ -1123,17 +1123,17 @@ try {
 <span class="fc" id="L1123">    tn = agtail(e0); hn = aghead(e0);</span>
 <span class="fc bfc" id="L1124" title="All 2 branches covered.">    for (i = 0; i &lt; cnt; i++) {</span>
 <span class="fc" id="L1125">	e = edges.get_(ind + i);</span>
-<span class="fc bfc" id="L1126" title="All 2 branches covered.">	if (ED_label(e)!=null) labels++;</span>
+<span class="pc bpc" id="L1126" title="1 of 2 branches missed.">	if (ED_label(e)!=null) labels++;</span>
 <span class="pc bpc" id="L1127" title="2 of 4 branches missed.">	if (ED_tail_port(e).defined || ED_head_port(e).defined) ports = 1;</span>
     }
 <span class="pc bpc" id="L1129" title="1 of 2 branches missed.">    if (ports == 0) {</span>
 	/* flat edges without ports and labels can go straight left to right */
-<span class="fc bfc" id="L1131" title="All 2 branches covered.">	if (labels == 0) {</span>
+<span class="pc bpc" id="L1131" title="1 of 2 branches missed.">	if (labels == 0) {</span>
 <span class="fc" id="L1132">	    makeSimpleFlat (zz, tn, hn, edges, ind, cnt, et);</span>
 	}
 	/* flat edges without ports but with labels take more work */
 	else {
-<span class="fc" id="L1136">	    makeSimpleFlatLabels (zz, tn, hn, edges, ind, cnt, et, labels);</span>
+<span class="nc" id="L1136">	    makeSimpleFlatLabels (zz, tn, hn, edges, ind, cnt, et, labels);</span>
 	}
 <span class="fc" id="L1138">	return;</span>
     }
@@ -1454,10 +1454,10 @@ try {
 <span class="nc" id="L1454">	MAKEFWDEDGE(fwdedge.out, e);</span>
 <span class="nc" id="L1455">	e = (ST_Agedge_s) fwdedge.out;</span>
     }
-<span class="pc bfc" id="L1457" title="All 2 branches covered.">    for (i = 1; i &lt; cnt; i++) {</span>
-<span class="pc bpc" id="L1458" title="1 of 2 branches missed.">	if (ED_adjacent(edges.get_(ind+i))!=0) {</span>
-<span class="fc" id="L1459">	    isAdjacent = 1;</span>
-<span class="fc" id="L1460">	    break;</span>
+<span class="pc bpc" id="L1457" title="1 of 2 branches missed.">    for (i = 1; i &lt; cnt; i++) {</span>
+<span class="nc bnc" id="L1458" title="All 2 branches missed.">	if (ED_adjacent(edges.get_(ind+i))!=0) {</span>
+<span class="nc" id="L1459">	    isAdjacent = 1;</span>
+<span class="nc" id="L1460">	    break;</span>
 	}
     }
     /* The lead edge edges[ind] might not have been marked earlier as adjacent,
@@ -1707,13 +1707,13 @@ try {
 <span class="pc bpc" id="L1707" title="1 of 4 branches missed.">	while (ND_node_type(hn) == VIRTUAL &amp;&amp; !((Boolean)zz.sinfo.splineMerge.exe(zz, hn)).booleanValue()) {</span>
 <span class="fc" id="L1708">	    longedge = 1;</span>
 <span class="fc" id="L1709">	    zz.boxes[boxn++].___(rank_box(sp, g, ND_rank(tn)));</span>
-<span class="fc bfc" id="L1710" title="All 2 branches covered.">	    if (!smode</span>
+<span class="pc bpc" id="L1710" title="1 of 2 branches missed.">	    if (!smode</span>
 <span class="fc" id="L1711">	        &amp;&amp; ((sl = straight_len(hn)) &gt;=</span>
-<span class="fc bfc" id="L1712" title="All 4 branches covered.">	    	((GD_has_labels(g) &amp; EDGE_LABEL)!=0 ? 4 + 1 : 2 + 1))) {</span>
-<span class="fc" id="L1713">	        smode = true;</span>
-<span class="fc" id="L1714">	        si = 1; sl -= 2;</span>
+<span class="pc bpc" id="L1712" title="2 of 4 branches missed.">	    	((GD_has_labels(g) &amp; EDGE_LABEL)!=0 ? 4 + 1 : 2 + 1))) {</span>
+<span class="nc" id="L1713">	        smode = true;</span>
+<span class="nc" id="L1714">	        si = 1; sl -= 2;</span>
 	    }
-<span class="fc bfc" id="L1716" title="All 4 branches covered.">	    if (!smode || si &gt; 0) {</span>
+<span class="pc bpc" id="L1716" title="3 of 4 branches missed.">	    if (!smode || si &gt; 0) {</span>
 <span class="fc" id="L1717">	        si--;</span>
 <span class="fc" id="L1718">	        zz.boxes[boxn++].___(maximal_bbox(g, sp, hn, e, ND_out(hn).list.get_(0)));</span>
 <span class="fc" id="L1719">	        e = ND_out(hn).list.get_(0);</span>
@@ -1721,16 +1721,16 @@ try {
 <span class="fc" id="L1721">	        hn = aghead(e);</span>
 <span class="fc" id="L1722">	        continue;</span>
 	    }
-<span class="fc" id="L1724">	    hend.nb.___(maximal_bbox(g, sp, hn, e, ND_out(hn).list.get_(0)));</span>
-<span class="fc" id="L1725">	    endpath(zz, P, e, 1, hend, spline_merge(aghead(e)));</span>
-<span class="fc" id="L1726">	    b.___(makeregularend(hend.boxes[hend.boxn[0] - 1], (1&lt;&lt;2),</span>
-<span class="fc" id="L1727">	    	       ND_coord(hn).y + GD_rank(g).get__(ND_rank(hn)).ht2));</span>
-<span class="pc bpc" id="L1728" title="2 of 4 branches missed.">	    if (b.LL.x &lt; b.UR.x &amp;&amp; b.LL.y &lt; b.UR.y)</span>
+<span class="nc" id="L1724">	    hend.nb.___(maximal_bbox(g, sp, hn, e, ND_out(hn).list.get_(0)));</span>
+<span class="nc" id="L1725">	    endpath(zz, P, e, 1, hend, spline_merge(aghead(e)));</span>
+<span class="nc" id="L1726">	    b.___(makeregularend(hend.boxes[hend.boxn[0] - 1], (1&lt;&lt;2),</span>
+<span class="nc" id="L1727">	    	       ND_coord(hn).y + GD_rank(g).get__(ND_rank(hn)).ht2));</span>
+<span class="nc bnc" id="L1728" title="All 4 branches missed.">	    if (b.LL.x &lt; b.UR.x &amp;&amp; b.LL.y &lt; b.UR.y)</span>
 <span class="nc" id="L1729">UNSUPPORTED(&quot;1crhubfzekx1qi2ti9ajqsfoc&quot;); // 	        hend.boxes[hend.boxn++] = b;</span>
-<span class="fc" id="L1730">	    P.end.theta = M_PI / 2;</span>
-<span class="fc" id="L1731">	    P.end.constrained= true;</span>
-<span class="fc" id="L1732">	    completeregularpath(P, segfirst, e, tend, hend, zz.boxes, boxn, 1);</span>
-<span class="pc bpc" id="L1733" title="1 of 2 branches missed.">	    if (splines) ps = routesplines(zz, P, pn);</span>
+<span class="nc" id="L1730">	    P.end.theta = M_PI / 2;</span>
+<span class="nc" id="L1731">	    P.end.constrained= true;</span>
+<span class="nc" id="L1732">	    completeregularpath(P, segfirst, e, tend, hend, zz.boxes, boxn, 1);</span>
+<span class="nc bnc" id="L1733" title="All 2 branches missed.">	    if (splines) ps = routesplines(zz, P, pn);</span>
 	    else {
 <span class="nc" id="L1735">UNSUPPORTED(&quot;biyp75vm751j3qmqacagfej4b&quot;); // 		ps = routepolylines (P, &amp;pn);</span>
 <span class="nc" id="L1736">UNSUPPORTED(&quot;4fmdmgg43suu7ppgrcaofwqzh&quot;); // 		if ((et == (1 &lt;&lt; 1)) &amp;&amp; (pn &gt; 4)) {</span>
@@ -1739,33 +1739,33 @@ try {
 <span class="nc" id="L1739">UNSUPPORTED(&quot;3fwatldph3opctz8aieqd214d&quot;); // 		    pn = 4;</span>
 <span class="nc" id="L1740">UNSUPPORTED(&quot;6eq5kf0bj692bokt0bixy1ixh&quot;); // 		}</span>
 	    }
-<span class="pc bpc" id="L1742" title="1 of 2 branches missed.">	    if (pn[0] == 0)</span>
+<span class="nc bnc" id="L1742" title="All 2 branches missed.">	    if (pn[0] == 0)</span>
 <span class="nc" id="L1743">	        return;</span>
-<span class="pc bpc" id="L1744" title="1 of 2 branches missed.">	    if (pointn[0] + pn[0] &gt; zz.numpts) {</span>
+<span class="nc bnc" id="L1744" title="All 2 branches missed.">	    if (pointn[0] + pn[0] &gt; zz.numpts) {</span>
                 /* This should be enough to include 3 extra points added by
                  * straight_path below.
                  */
 <span class="nc" id="L1748">UNSUPPORTED(&quot;k37sqlxbjikqg4xdonnvefo3&quot;); // 		numpts = 2*(pointn+pn); </span>
 <span class="nc" id="L1749">UNSUPPORTED(&quot;8kbxhk7qirj3tr7hn1ukwar3h&quot;); // 		pointfs = RALLOC(numpts, pointfs, pointf);</span>
 	    }
-<span class="fc bfc" id="L1751" title="All 2 branches covered.">	    for (i = 0; i &lt; pn[0]; i++) {</span>
-<span class="fc" id="L1752">		zz.pointfs.get__(pointn[0]++).___(ps.get__(i));</span>
+<span class="nc bnc" id="L1751" title="All 2 branches missed.">	    for (i = 0; i &lt; pn[0]; i++) {</span>
+<span class="nc" id="L1752">		zz.pointfs.get__(pointn[0]++).___(ps.get__(i));</span>
 	    }
-<span class="fc" id="L1754">	    e = straight_path((ST_Agedge_s)ND_out(hn).list.get_(0), sl, zz.pointfs, pointn);</span>
-<span class="fc" id="L1755">	    recover_slack(zz, segfirst, P);</span>
-<span class="fc" id="L1756">	    segfirst = e;</span>
-<span class="fc" id="L1757">	    tn = agtail(e);</span>
-<span class="fc" id="L1758">	    hn = aghead(e);</span>
-<span class="fc" id="L1759">	    boxn = 0;</span>
-<span class="fc" id="L1760">	    tend.nb.___(maximal_bbox(g, sp, tn, (ST_Agedge_s) ND_in(tn).list.get_(0), e));</span>
-<span class="fc" id="L1761">	    beginpath(zz, P, e, 1, tend, spline_merge(tn));</span>
-<span class="fc" id="L1762">	    b.___(makeregularend(tend.boxes[tend.boxn[0] - 1], (1&lt;&lt;0),</span>
-<span class="fc" id="L1763">	    	       ND_coord(tn).y - GD_rank(g).get__(ND_rank(tn)).ht1));</span>
-<span class="pc bpc" id="L1764" title="2 of 4 branches missed.">	    if (b.LL.x &lt; b.UR.x &amp;&amp; b.LL.y &lt; b.UR.y)</span>
+<span class="nc" id="L1754">	    e = straight_path((ST_Agedge_s)ND_out(hn).list.get_(0), sl, zz.pointfs, pointn);</span>
+<span class="nc" id="L1755">	    recover_slack(zz, segfirst, P);</span>
+<span class="nc" id="L1756">	    segfirst = e;</span>
+<span class="nc" id="L1757">	    tn = agtail(e);</span>
+<span class="nc" id="L1758">	    hn = aghead(e);</span>
+<span class="nc" id="L1759">	    boxn = 0;</span>
+<span class="nc" id="L1760">	    tend.nb.___(maximal_bbox(g, sp, tn, (ST_Agedge_s) ND_in(tn).list.get_(0), e));</span>
+<span class="nc" id="L1761">	    beginpath(zz, P, e, 1, tend, spline_merge(tn));</span>
+<span class="nc" id="L1762">	    b.___(makeregularend(tend.boxes[tend.boxn[0] - 1], (1&lt;&lt;0),</span>
+<span class="nc" id="L1763">	    	       ND_coord(tn).y - GD_rank(g).get__(ND_rank(tn)).ht1));</span>
+<span class="nc bnc" id="L1764" title="All 4 branches missed.">	    if (b.LL.x &lt; b.UR.x &amp;&amp; b.LL.y &lt; b.UR.y)</span>
 <span class="nc" id="L1765">UNSUPPORTED(&quot;cjx6tldge3otk1pk6ks1pkn2w&quot;); // 	        tend.boxes[tend.boxn++] = b;</span>
-<span class="fc" id="L1766">	    P.start.theta = -M_PI / 2;</span>
-<span class="fc" id="L1767">	    P.start.constrained= true;</span>
-<span class="fc" id="L1768">	    smode = false;</span>
+<span class="nc" id="L1766">	    P.start.theta = -M_PI / 2;</span>
+<span class="nc" id="L1767">	    P.start.constrained= true;</span>
+<span class="nc" id="L1768">	    smode = false;</span>
 	}
 <span class="fc" id="L1770">	zz.boxes[boxn++].___(rank_box(sp, g, ND_rank(tn)));</span>
 <span class="fc" id="L1771">	b.___(maximal_bbox(g, sp, hn, e, null));</span>
@@ -1863,10 +1863,10 @@ try {
 <span class="fc" id="L1863">	pp = spl.list.get__(0).list;</span>
 <span class="fc" id="L1864">       	pn = spl.list.get__(0).size;</span>
     }
-<span class="fc bfc" id="L1866" title="All 2 branches covered.">    if (uright!=null) {</span>
-<span class="pc bpc" id="L1867" title="1 of 2 branches missed.">	if ((spl = getsplinepoints(uright)) == null) return;</span>
-<span class="fc" id="L1868">	pp = spl.list.get__(0).list;</span>
-<span class="fc" id="L1869">       	pn = spl.list.get__(0).size;</span>
+<span class="pc bpc" id="L1866" title="1 of 2 branches missed.">    if (uright!=null) {</span>
+<span class="nc bnc" id="L1867" title="All 2 branches missed.">	if ((spl = getsplinepoints(uright)) == null) return;</span>
+<span class="nc" id="L1868">	pp = spl.list.get__(0).list;</span>
+<span class="nc" id="L1869">       	pn = spl.list.get__(0).size;</span>
     }
 <span class="fc" id="L1871">    lleft = lright = null;</span>
 <span class="fc" id="L1872">    lleft = bot_bound(last, -1);</span>
@@ -1876,10 +1876,10 @@ try {
 <span class="fc" id="L1876">	pp = spl.list.get__(spl.size - 1).list;</span>
 <span class="fc" id="L1877">       	pn = spl.list.get__(spl.size - 1).size;</span>
     }
-<span class="fc bfc" id="L1879" title="All 2 branches covered.">    if (lright!=null) {</span>
-<span class="pc bpc" id="L1880" title="1 of 2 branches missed.">	if ((spl = getsplinepoints(lright)) == null) return;</span>
-<span class="fc" id="L1881">	pp = spl.list.get__(spl.size - 1).list;</span>
-<span class="fc" id="L1882">       	pn = spl.list.get__(spl.size - 1).size;</span>
+<span class="pc bpc" id="L1879" title="1 of 2 branches missed.">    if (lright!=null) {</span>
+<span class="nc bnc" id="L1880" title="All 2 branches missed.">	if ((spl = getsplinepoints(lright)) == null) return;</span>
+<span class="nc" id="L1881">	pp = spl.list.get__(spl.size - 1).list;</span>
+<span class="nc" id="L1882">       	pn = spl.list.get__(spl.size - 1).size;</span>
     }
 <span class="fc bfc" id="L1884" title="All 2 branches covered.">    for (i = 0; i &lt; tendp.boxn[0]; i++)</span>
 <span class="fc" id="L1885">	add_box(P, (tendp).boxes[i]);</span>
@@ -1955,7 +1955,7 @@ try {
 <span class="fc bfc" id="L1955" title="All 2 branches covered.">    for (i = 0; i &lt; P.nbox - 1; i++) {</span>
 <span class="fc" id="L1956">	bp1 = (ST_boxf) P.boxes[i];</span>
 <span class="fc" id="L1957">	bp2 = (ST_boxf) P.boxes[i+1];</span>
-<span class="fc bfc" id="L1958" title="All 6 branches covered.">	if (i &gt;= fb &amp;&amp; i &lt;= lb &amp;&amp; (i - fb) % 2 == 0) {</span>
+<span class="pc bpc" id="L1958" title="1 of 6 branches missed.">	if (i &gt;= fb &amp;&amp; i &lt;= lb &amp;&amp; (i - fb) % 2 == 0) {</span>
 <span class="pc bpc" id="L1959" title="1 of 2 branches missed.">	    if (bp1.LL.x + 16 &gt; bp2.UR.x)</span>
 <span class="nc" id="L1960">		bp2.UR.x = bp1.LL.x + 16;</span>
 <span class="pc bpc" id="L1961" title="1 of 2 branches missed.">	    if (bp1.UR.x - 16 &lt; bp2.LL.x)</span>
@@ -2021,13 +2021,13 @@ try {
 <span class="fc" id="L2021">    v = n;</span>
     while (true) {
 <span class="fc" id="L2023">	v = (ST_Agnode_s) aghead(ND_out(v).list.get_(0));</span>
-<span class="fc bfc" id="L2024" title="All 2 branches covered.">	if (ND_node_type(v) != 1)</span>
+<span class="pc bpc" id="L2024" title="1 of 2 branches missed.">	if (ND_node_type(v) != 1)</span>
 <span class="fc" id="L2025">	    break;</span>
-<span class="pc bpc" id="L2026" title="2 of 4 branches missed.">	if ((ND_out(v).size != 1) || (ND_in(v).size != 1))</span>
+<span class="nc bnc" id="L2026" title="All 4 branches missed.">	if ((ND_out(v).size != 1) || (ND_in(v).size != 1))</span>
 <span class="nc" id="L2027">	    break;</span>
-<span class="fc bfc" id="L2028" title="All 2 branches covered.">	if (ND_coord(v).x != ND_coord(n).x)</span>
-<span class="fc" id="L2029">	    break;</span>
-<span class="fc" id="L2030">	cnt++;</span>
+<span class="nc bnc" id="L2028" title="All 2 branches missed.">	if (ND_coord(v).x != ND_coord(n).x)</span>
+<span class="nc" id="L2029">	    break;</span>
+<span class="nc" id="L2030">	cnt++;</span>
     }
 <span class="fc" id="L2032">    return cnt;</span>
 } finally {
@@ -2043,18 +2043,18 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;&quot;, key=&quot;15pgjjuil2c1rjldu29j07gbz&quot;, definition=&quot;static edge_t *straight_path(edge_t * e, int cnt, pointf * plist, int *np)&quot;)
 public static ST_Agedge_s straight_path(ST_Agedge_s e, int cnt, CArray&lt;ST_pointf&gt; plist, int np[]) {
-<span class="fc" id="L2046">ENTERING(&quot;15pgjjuil2c1rjldu29j07gbz&quot;,&quot;straight_path&quot;);</span>
+<span class="nc" id="L2046">ENTERING(&quot;15pgjjuil2c1rjldu29j07gbz&quot;,&quot;straight_path&quot;);</span>
 try {
-<span class="fc" id="L2048">    int n = np[0];</span>
-<span class="fc" id="L2049">    ST_Agedge_s f = e;</span>
-<span class="fc bfc" id="L2050" title="All 2 branches covered.">    while ((cnt--)!=0)</span>
-<span class="fc" id="L2051">	f = (ST_Agedge_s) ND_out(aghead(f)).list.get_(0);</span>
-<span class="fc" id="L2052">    plist.get__(np[0]++).___(plist.get__(n - 1));</span>
-<span class="fc" id="L2053">    plist.get__(np[0]++).___(plist.get__(n - 1));</span>
-<span class="fc" id="L2054">    plist.get__(np[0]).___(ND_coord(agtail(f)));  /* will be overwritten by next spline */</span>
-<span class="fc" id="L2055">    return f;</span>
+<span class="nc" id="L2048">    int n = np[0];</span>
+<span class="nc" id="L2049">    ST_Agedge_s f = e;</span>
+<span class="nc bnc" id="L2050" title="All 2 branches missed.">    while ((cnt--)!=0)</span>
+<span class="nc" id="L2051">	f = (ST_Agedge_s) ND_out(aghead(f)).list.get_(0);</span>
+<span class="nc" id="L2052">    plist.get__(np[0]++).___(plist.get__(n - 1));</span>
+<span class="nc" id="L2053">    plist.get__(np[0]++).___(plist.get__(n - 1));</span>
+<span class="nc" id="L2054">    plist.get__(np[0]).___(ND_coord(agtail(f)));  /* will be overwritten by next spline */</span>
+<span class="nc" id="L2055">    return f;</span>
 } finally {
-<span class="fc" id="L2057">LEAVING(&quot;15pgjjuil2c1rjldu29j07gbz&quot;,&quot;straight_path&quot;);</span>
+<span class="nc" id="L2057">LEAVING(&quot;15pgjjuil2c1rjldu29j07gbz&quot;,&quot;straight_path&quot;);</span>
 }
 }
 
@@ -2074,17 +2074,17 @@ try {
 <span class="fc" id="L2074">    for (vn = aghead(e);</span>
 <span class="pc bpc" id="L2075" title="1 of 4 branches missed.">	 ND_node_type(vn) == 1 &amp;&amp; !((Boolean)zz.sinfo.splineMerge.exe(zz, vn)).booleanValue();</span>
 <span class="fc" id="L2076">	 vn = aghead(ND_out(vn).list.get_(0))) {</span>
-<span class="fc bfc" id="L2077" title="All 4 branches covered.">	while ((b &lt; p.nbox) &amp;&amp; (p.boxes[b].LL.y &gt; ND_coord(vn).y))</span>
+<span class="pc bpc" id="L2077" title="1 of 4 branches missed.">	while ((b &lt; p.nbox) &amp;&amp; (p.boxes[b].LL.y &gt; ND_coord(vn).y))</span>
 <span class="fc" id="L2078">	    b++;</span>
-<span class="fc bfc" id="L2079" title="All 2 branches covered.">	if (b &gt;= p.nbox)</span>
-<span class="fc" id="L2080">	    break;</span>
+<span class="pc bpc" id="L2079" title="1 of 2 branches missed.">	if (b &gt;= p.nbox)</span>
+<span class="nc" id="L2080">	    break;</span>
 <span class="pc bpc" id="L2081" title="1 of 2 branches missed.">	if (p.boxes[b].UR.y &lt; ND_coord(vn).y)</span>
 <span class="nc" id="L2082">	    continue;</span>
-<span class="fc bfc" id="L2083" title="All 2 branches covered.">	if (ND_label(vn)!=null)</span>
+<span class="pc bpc" id="L2083" title="1 of 2 branches missed.">	if (ND_label(vn)!=null)</span>
 <span class="fc" id="L2084">	    resize_vn(vn, (int)p.boxes[b].LL.x, (int)p.boxes[b].UR.x,</span>
 <span class="fc" id="L2085">		      (int)(p.boxes[b].UR.x + ND_rw(vn)));</span>
 	else
-<span class="fc" id="L2087">	    resize_vn(vn, (int)p.boxes[b].LL.x, (int)((p.boxes[b].LL.x +</span>
+<span class="nc" id="L2087">	    resize_vn(vn, (int)p.boxes[b].LL.x, (int)((p.boxes[b].LL.x +</span>
 					     p.boxes[b].UR.x) / 2),
 		      (int)p.boxes[b].UR.x);
     }
@@ -2130,7 +2130,7 @@ try {
 <span class="pc bpc" id="L2130" title="1 of 4 branches missed.">	    &amp;&amp; ((ED_to_orig(f) == null) || (ED_spl(ED_to_orig(f)) == null)))</span>
 <span class="fc" id="L2131">	    continue;</span>
 <span class="fc bfc" id="L2132" title="All 2 branches covered.">	if ((ans == null)</span>
-<span class="fc bfc" id="L2133" title="All 2 branches covered.">	    || (side * (ND_order(aghead(ans)) - ND_order(aghead(f))) &gt; 0))</span>
+<span class="pc bpc" id="L2133" title="1 of 2 branches missed.">	    || (side * (ND_order(aghead(ans)) - ND_order(aghead(f))) &gt; 0))</span>
 <span class="fc" id="L2134">	    ans = f;</span>
     }
 <span class="fc" id="L2136">    return ans;</span>
@@ -2157,8 +2157,8 @@ try {
 <span class="pc bpc" id="L2157" title="1 of 2 branches missed.">	if ((ED_spl(f) == null)</span>
 <span class="pc bpc" id="L2158" title="1 of 4 branches missed.">	    &amp;&amp; ((ED_to_orig(f) == null) || (ED_spl(ED_to_orig(f)) == null)))</span>
 <span class="fc" id="L2159">	    continue;</span>
-<span class="fc bfc" id="L2160" title="All 2 branches covered.">	if ((ans == null)</span>
-<span class="fc bfc" id="L2161" title="All 2 branches covered.">	    || (side * (ND_order(agtail(ans)) - ND_order(agtail(f))) &gt; 0))</span>
+<span class="pc bpc" id="L2160" title="1 of 2 branches missed.">	if ((ans == null)</span>
+<span class="nc bnc" id="L2161" title="All 2 branches missed.">	    || (side * (ND_order(agtail(ans)) - ND_order(agtail(f))) &gt; 0))</span>
 <span class="fc" id="L2162">	    ans = f;</span>
     }
 <span class="fc" id="L2164">    return ans;</span>
@@ -2197,25 +2197,25 @@ try {
     ST_Agraph_s rv, cl, tcl, hcl;
     ST_Agedge_s orig;
 <span class="fc" id="L2199">    rv = null;</span>
-<span class="fc bfc" id="L2200" title="All 2 branches covered.">    if (ND_node_type(n) == 0)</span>
+<span class="pc bpc" id="L2200" title="1 of 2 branches missed.">    if (ND_node_type(n) == 0)</span>
 <span class="fc" id="L2201">	tcl = hcl = ND_clust(n);</span>
     else {
-<span class="fc" id="L2203">	orig = ED_to_orig(ND_out(n).list.get_(0));</span>
-<span class="fc" id="L2204">	tcl = ND_clust(agtail(orig));</span>
-<span class="fc" id="L2205">	hcl = ND_clust(aghead(orig));</span>
+<span class="nc" id="L2203">	orig = ED_to_orig(ND_out(n).list.get_(0));</span>
+<span class="nc" id="L2204">	tcl = ND_clust(agtail(orig));</span>
+<span class="nc" id="L2205">	hcl = ND_clust(aghead(orig));</span>
     }
-<span class="fc bfc" id="L2207" title="All 2 branches covered.">    if (ND_node_type(adj) == 0) {</span>
-<span class="fc bfc" id="L2208" title="All 2 branches covered.">	cl = ( ND_clust(adj) == g ? null:ND_clust(adj));</span>
-<span class="pc bpc" id="L2209" title="3 of 6 branches missed.">	if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl))</span>
+<span class="pc bpc" id="L2207" title="1 of 2 branches missed.">    if (ND_node_type(adj) == 0) {</span>
+<span class="pc bpc" id="L2208" title="1 of 2 branches missed.">	cl = ( ND_clust(adj) == g ? null:ND_clust(adj));</span>
+<span class="pc bpc" id="L2209" title="5 of 6 branches missed.">	if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl))</span>
 <span class="nc" id="L2210">	    rv = cl;</span>
     } else {
-<span class="fc" id="L2212">	orig = ED_to_orig(ND_out(adj).list.get_(0));</span>
-<span class="pc bpc" id="L2213" title="1 of 2 branches missed.">	cl = ( ND_clust(agtail(orig)) == g ? null:ND_clust(agtail(orig)));</span>
-<span class="pc bpc" id="L2214" title="7 of 8 branches missed.">	if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl) &amp;&amp; cl_vninside(cl, adj))</span>
+<span class="nc" id="L2212">	orig = ED_to_orig(ND_out(adj).list.get_(0));</span>
+<span class="nc bnc" id="L2213" title="All 2 branches missed.">	cl = ( ND_clust(agtail(orig)) == g ? null:ND_clust(agtail(orig)));</span>
+<span class="nc bnc" id="L2214" title="All 8 branches missed.">	if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl) &amp;&amp; cl_vninside(cl, adj))</span>
 <span class="nc" id="L2215">	    rv = cl;</span>
 	else {
-<span class="pc bpc" id="L2217" title="1 of 2 branches missed.">	    cl = ( ND_clust(aghead(orig)) == g ? null:ND_clust(aghead(orig)));</span>
-<span class="pc bpc" id="L2218" title="7 of 8 branches missed.">	    if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl) &amp;&amp; cl_vninside(cl, adj))</span>
+<span class="nc bnc" id="L2217" title="All 2 branches missed.">	    cl = ( ND_clust(aghead(orig)) == g ? null:ND_clust(aghead(orig)));</span>
+<span class="nc bnc" id="L2218" title="All 8 branches missed.">	    if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl) &amp;&amp; cl_vninside(cl, adj))</span>
 <span class="nc" id="L2219">		rv = cl;</span>
 	}
     }
@@ -2253,19 +2253,19 @@ try {
 <span class="nc" id="L2253">	    nb = GD_bb(left_cl).UR.x + (double)(sp.Splinesep);</span>
 	else {
 <span class="fc" id="L2255">	    nb = (double)(ND_coord(left).x + ND_mval(left));</span>
-<span class="fc bfc" id="L2256" title="All 2 branches covered.">	    if (ND_node_type(left) == NORMAL)</span>
+<span class="pc bpc" id="L2256" title="1 of 2 branches missed.">	    if (ND_node_type(left) == NORMAL)</span>
 <span class="fc" id="L2257">		nb += GD_nodesep(g) / 2.;</span>
 	    else
-<span class="fc" id="L2259">		nb += (double)(sp.Splinesep);</span>
+<span class="nc" id="L2259">		nb += (double)(sp.Splinesep);</span>
 	}
-<span class="fc bfc" id="L2261" title="All 2 branches covered.">	if (nb &lt; b)</span>
+<span class="pc bpc" id="L2261" title="1 of 2 branches missed.">	if (nb &lt; b)</span>
 <span class="fc" id="L2262">	    b = nb;</span>
 <span class="fc" id="L2263">	rv.LL.x = ROUND(b);</span>
     } else
 <span class="fc" id="L2265">	rv.LL.x = Math.min(ROUND(b), sp.LeftBound);</span>
     
     /* we have to leave room for our own label! */
-<span class="fc bfc" id="L2268" title="All 4 branches covered.">    if ((ND_node_type(vn) == VIRTUAL) &amp;&amp; (ND_label(vn)!=null))</span>
+<span class="pc bpc" id="L2268" title="1 of 4 branches missed.">    if ((ND_node_type(vn) == VIRTUAL) &amp;&amp; (ND_label(vn)!=null))</span>
 <span class="fc" id="L2269">	b = (double)(ND_coord(vn).x + 10);</span>
     else
 <span class="fc" id="L2271">	b = (double)(ND_coord(vn).x + ND_rw(vn) + FUDGE);</span>
@@ -2274,18 +2274,18 @@ try {
 <span class="nc" id="L2274">	    nb = GD_bb(right_cl).LL.x - (double)(sp.Splinesep);</span>
 	else {
 <span class="fc" id="L2276">	    nb = ND_coord(right).x - ND_lw(right);</span>
-<span class="fc bfc" id="L2277" title="All 2 branches covered.">	    if (ND_node_type(right) == NORMAL)</span>
+<span class="pc bpc" id="L2277" title="1 of 2 branches missed.">	    if (ND_node_type(right) == NORMAL)</span>
 <span class="fc" id="L2278">		nb -= GD_nodesep(g) / 2.;</span>
 	    else
-<span class="fc" id="L2280">		nb -= (double)(sp.Splinesep);</span>
+<span class="nc" id="L2280">		nb -= (double)(sp.Splinesep);</span>
 	}
-<span class="fc bfc" id="L2282" title="All 2 branches covered.">	if (nb &gt; b)</span>
+<span class="pc bpc" id="L2282" title="1 of 2 branches missed.">	if (nb &gt; b)</span>
 <span class="fc" id="L2283">	    b = nb;</span>
 <span class="fc" id="L2284">	rv.UR.x = ROUND(b);</span>
     } else
 <span class="fc" id="L2286">	rv.UR.x = Math.max(ROUND(b), sp.RightBound);</span>
     
-<span class="fc bfc" id="L2288" title="All 4 branches covered.">    if ((ND_node_type(vn) == VIRTUAL) &amp;&amp; (ND_label(vn)!=null)) {</span>
+<span class="pc bpc" id="L2288" title="1 of 4 branches missed.">    if ((ND_node_type(vn) == VIRTUAL) &amp;&amp; (ND_label(vn)!=null)) {</span>
 <span class="fc" id="L2289">	rv.UR.x = rv.UR.x - ND_rw(vn);</span>
 <span class="pc bpc" id="L2290" title="1 of 2 branches missed.">	if (rv.UR.x &lt; rv.LL.x) rv.UR.x = ND_coord(vn).x;</span>
     }
@@ -2311,19 +2311,19 @@ try {
     int i;
 <span class="fc" id="L2312">    ST_Agnode_s n, rv = null;</span>
 <span class="fc" id="L2313">    CArray&lt;ST_rank_t&gt; rank = GD_rank(g).plus_(ND_rank(vn));</span>
-<span class="fc bfc" id="L2314" title="All 4 branches covered.">    for (i = ND_order(vn) + dir; ((i &gt;= 0) &amp;&amp; (i &lt; rank.get__(0).n)); i += dir) {</span>
+<span class="pc bfc" id="L2314" title="All 4 branches covered.">    for (i = ND_order(vn) + dir; ((i &gt;= 0) &amp;&amp; (i &lt; rank.get__(0).n)); i += dir) {</span>
 <span class="fc" id="L2315">	n = rank.get__(0).v.get_(i);</span>
-<span class="fc bfc" id="L2316" title="All 4 branches covered.">	if ((ND_node_type(n) == 1) &amp;&amp; (ND_label(n)!=null)) {</span>
-<span class="fc" id="L2317">	    rv = n;</span>
-<span class="fc" id="L2318">	    break;</span>
+<span class="pc bpc" id="L2316" title="3 of 4 branches missed.">	if ((ND_node_type(n) == 1) &amp;&amp; (ND_label(n)!=null)) {</span>
+<span class="nc" id="L2317">	    rv = n;</span>
+<span class="nc" id="L2318">	    break;</span>
 	}
-<span class="fc bfc" id="L2320" title="All 2 branches covered.">	if (ND_node_type(n) == 0) {</span>
+<span class="pc bpc" id="L2320" title="1 of 2 branches missed.">	if (ND_node_type(n) == 0) {</span>
 <span class="fc" id="L2321">	    rv = n;</span>
 <span class="fc" id="L2322">	    break;</span>
 	}
-<span class="fc bfc" id="L2324" title="All 2 branches covered.">	if (pathscross(n, vn, ie, oe) == false) {</span>
-<span class="fc" id="L2325">	    rv = n;</span>
-<span class="fc" id="L2326">	    break;</span>
+<span class="nc bnc" id="L2324" title="All 2 branches missed.">	if (pathscross(n, vn, ie, oe) == false) {</span>
+<span class="nc" id="L2325">	    rv = n;</span>
+<span class="nc" id="L2326">	    break;</span>
 	}
     }
 <span class="fc" id="L2329">    return rv;</span>
@@ -2340,50 +2340,50 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;pathscross&quot;, key=&quot;f4q0oqe165s9pl5k0th5noeyv&quot;, definition=&quot;static boolean pathscross(n0, n1, ie1, oe1) node_t *n0, *n1&quot;)
 public static boolean pathscross(ST_Agnode_s n0, ST_Agnode_s n1, ST_Agedge_s ie1, ST_Agedge_s oe1) {
-<span class="fc" id="L2343">ENTERING(&quot;f4q0oqe165s9pl5k0th5noeyv&quot;,&quot;pathscross&quot;);</span>
+<span class="nc" id="L2343">ENTERING(&quot;f4q0oqe165s9pl5k0th5noeyv&quot;,&quot;pathscross&quot;);</span>
 try {
     ST_Agedge_s e0, e1;
     ST_Agnode_s na, nb;
     boolean order;
     int cnt;
-<span class="fc bfc" id="L2349" title="All 2 branches covered.">    order = (ND_order(n0) &gt; ND_order(n1));</span>
-<span class="pc bpc" id="L2350" title="3 of 4 branches missed.">    if ((ND_out(n0).size != 1) &amp;&amp; (ND_out(n0).size != 1))</span>
+<span class="nc bnc" id="L2349" title="All 2 branches missed.">    order = (ND_order(n0) &gt; ND_order(n1));</span>
+<span class="nc bnc" id="L2350" title="All 4 branches missed.">    if ((ND_out(n0).size != 1) &amp;&amp; (ND_out(n0).size != 1))</span>
 <span class="nc" id="L2351">	return false;</span>
-<span class="fc" id="L2352">    e1 = oe1;</span>
-<span class="pc bpc" id="L2353" title="1 of 4 branches missed.">    if (ND_out(n0).size == 1 &amp;&amp; e1!=null) {</span>
-<span class="fc" id="L2354">	e0 = (ST_Agedge_s) ND_out(n0).list.get_(0);</span>
-<span class="fc bfc" id="L2355" title="All 2 branches covered.">	for (cnt = 0; cnt &lt; 2; cnt++) {</span>
-<span class="fc bfc" id="L2356" title="All 2 branches covered.">	    if ((na = aghead(e0)) == (nb = aghead(e1)))</span>
-<span class="fc" id="L2357">		break;</span>
-<span class="fc bfc" id="L2358" title="All 4 branches covered.">	    if (order != (ND_order(na) &gt; ND_order(nb)))</span>
-<span class="fc" id="L2359">		return true;</span>
-<span class="fc bfc" id="L2360" title="All 4 branches covered.">	    if ((ND_out(na).size != 1) || (ND_node_type(na) == 0))</span>
-<span class="fc" id="L2361">		break;</span>
-<span class="fc" id="L2362">	    e0 = (ST_Agedge_s) ND_out(na).list.get_(0);</span>
-<span class="fc bfc" id="L2363" title="All 4 branches covered.">	    if ((ND_out(nb).size != 1) || (ND_node_type(nb) == 0))</span>
-<span class="fc" id="L2364">		break;</span>
-<span class="fc" id="L2365">	    e1 = (ST_Agedge_s) ND_out(nb).list.get_(0);</span>
+<span class="nc" id="L2352">    e1 = oe1;</span>
+<span class="nc bnc" id="L2353" title="All 4 branches missed.">    if (ND_out(n0).size == 1 &amp;&amp; e1!=null) {</span>
+<span class="nc" id="L2354">	e0 = (ST_Agedge_s) ND_out(n0).list.get_(0);</span>
+<span class="nc bnc" id="L2355" title="All 2 branches missed.">	for (cnt = 0; cnt &lt; 2; cnt++) {</span>
+<span class="nc bnc" id="L2356" title="All 2 branches missed.">	    if ((na = aghead(e0)) == (nb = aghead(e1)))</span>
+<span class="nc" id="L2357">		break;</span>
+<span class="nc bnc" id="L2358" title="All 4 branches missed.">	    if (order != (ND_order(na) &gt; ND_order(nb)))</span>
+<span class="nc" id="L2359">		return true;</span>
+<span class="nc bnc" id="L2360" title="All 4 branches missed.">	    if ((ND_out(na).size != 1) || (ND_node_type(na) == 0))</span>
+<span class="nc" id="L2361">		break;</span>
+<span class="nc" id="L2362">	    e0 = (ST_Agedge_s) ND_out(na).list.get_(0);</span>
+<span class="nc bnc" id="L2363" title="All 4 branches missed.">	    if ((ND_out(nb).size != 1) || (ND_node_type(nb) == 0))</span>
+<span class="nc" id="L2364">		break;</span>
+<span class="nc" id="L2365">	    e1 = (ST_Agedge_s) ND_out(nb).list.get_(0);</span>
 	}
     }
-<span class="fc" id="L2368">    e1 = ie1;</span>
-<span class="pc bpc" id="L2369" title="1 of 4 branches missed.">    if (ND_in(n0).size == 1 &amp;&amp; e1!=null) {</span>
-<span class="fc" id="L2370">	e0 = (ST_Agedge_s) ND_in(n0).list.get_(0);</span>
-<span class="fc bfc" id="L2371" title="All 2 branches covered.">	for (cnt = 0; cnt &lt; 2; cnt++) {</span>
-<span class="fc bfc" id="L2372" title="All 2 branches covered.">	    if ((na = agtail(e0))== (nb = agtail(e1)))</span>
-<span class="fc" id="L2373">		break;</span>
-<span class="pc bpc" id="L2374" title="1 of 4 branches missed.">	    if (order != (ND_order(na) &gt; ND_order(nb)))</span>
+<span class="nc" id="L2368">    e1 = ie1;</span>
+<span class="nc bnc" id="L2369" title="All 4 branches missed.">    if (ND_in(n0).size == 1 &amp;&amp; e1!=null) {</span>
+<span class="nc" id="L2370">	e0 = (ST_Agedge_s) ND_in(n0).list.get_(0);</span>
+<span class="nc bnc" id="L2371" title="All 2 branches missed.">	for (cnt = 0; cnt &lt; 2; cnt++) {</span>
+<span class="nc bnc" id="L2372" title="All 2 branches missed.">	    if ((na = agtail(e0))== (nb = agtail(e1)))</span>
+<span class="nc" id="L2373">		break;</span>
+<span class="nc bnc" id="L2374" title="All 4 branches missed.">	    if (order != (ND_order(na) &gt; ND_order(nb)))</span>
 <span class="nc" id="L2375">		return true;</span>
-<span class="fc bfc" id="L2376" title="All 4 branches covered.">	    if ((ND_in(na).size != 1) || (ND_node_type(na) == 0))</span>
-<span class="fc" id="L2377">		break;</span>
-<span class="fc" id="L2378">	    e0 = (ST_Agedge_s) ND_in(na).list.get_(0);</span>
-<span class="fc bfc" id="L2379" title="All 4 branches covered.">	    if ((ND_in(nb).size != 1) || (ND_node_type(nb) == 0))</span>
-<span class="fc" id="L2380">		break;</span>
-<span class="fc" id="L2381">	    e1 = (ST_Agedge_s) ND_in(nb).list.get_(0);</span>
+<span class="nc bnc" id="L2376" title="All 4 branches missed.">	    if ((ND_in(na).size != 1) || (ND_node_type(na) == 0))</span>
+<span class="nc" id="L2377">		break;</span>
+<span class="nc" id="L2378">	    e0 = (ST_Agedge_s) ND_in(na).list.get_(0);</span>
+<span class="nc bnc" id="L2379" title="All 4 branches missed.">	    if ((ND_in(nb).size != 1) || (ND_node_type(nb) == 0))</span>
+<span class="nc" id="L2380">		break;</span>
+<span class="nc" id="L2381">	    e1 = (ST_Agedge_s) ND_in(nb).list.get_(0);</span>
 	}
     }
-<span class="fc" id="L2384">    return false;</span>
+<span class="nc" id="L2384">    return false;</span>
 } finally {
-<span class="fc" id="L2386">LEAVING(&quot;f4q0oqe165s9pl5k0th5noeyv&quot;,&quot;pathscross&quot;);</span>
+<span class="nc" id="L2386">LEAVING(&quot;f4q0oqe165s9pl5k0th5noeyv&quot;,&quot;pathscross&quot;);</span>
 }
 }
 

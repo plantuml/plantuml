@@ -63,20 +63,20 @@ public class ChenEerDiagramFactory extends PSystemCommandFactory {
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="fc" id="L66">		CommonCommands.addCommonCommands1(cmds);</span>
-<span class="fc" id="L67">		cmds.add(new CommandRankDir());</span>
+<span class="nc" id="L66">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="nc" id="L67">		cmds.add(new CommandRankDir());</span>
 
-<span class="fc" id="L69">		cmds.add(new CommandCreateEntity());</span>
-<span class="fc" id="L70">		cmds.add(new CommandCreateAttribute());</span>
-<span class="fc" id="L71">		cmds.add(new CommandAssociate());</span>
-<span class="fc" id="L72">		cmds.add(new CommandEndGroup());</span>
-<span class="fc" id="L73">		cmds.add(new CommandSimpleSubclass());</span>
-<span class="fc" id="L74">		cmds.add(new CommandMultiSubclass());</span>
-<span class="fc" id="L75">	}</span>
+<span class="nc" id="L69">		cmds.add(new CommandCreateEntity());</span>
+<span class="nc" id="L70">		cmds.add(new CommandCreateAttribute());</span>
+<span class="nc" id="L71">		cmds.add(new CommandAssociate());</span>
+<span class="nc" id="L72">		cmds.add(new CommandEndGroup());</span>
+<span class="nc" id="L73">		cmds.add(new CommandSimpleSubclass());</span>
+<span class="nc" id="L74">		cmds.add(new CommandMultiSubclass());</span>
+<span class="nc" id="L75">	}</span>
 
 	@Override
 	public AbstractPSystem createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L79">		return new ChenEerDiagram(source, previous, preprocessing);</span>
+<span class="nc" id="L79">		return new ChenEerDiagram(source, previous, preprocessing);</span>
 	}
 
 	@Override

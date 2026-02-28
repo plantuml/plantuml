@@ -105,13 +105,13 @@ public class VCompactFactory implements FtileFactory {
 	}
 
 	private StyleSignatureBasic getSignatureCircleStart() {
-<span class="fc" id="L108">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start);</span>
+<span class="nc" id="L108">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start);</span>
 	}
 
 	@Override
 	public Ftile start(Swimlane swimlane, Colors colors) {
-<span class="fc" id="L113">		final Style style = getSignatureCircleStart().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L114">		return new FtileCircleStart(skinParam(), swimlane, style, colors);</span>
+<span class="nc" id="L113">		final Style style = getSignatureCircleStart().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L114">		return new FtileCircleStart(skinParam(), swimlane, style, colors);</span>
 	}
 
 	@Override

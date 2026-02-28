@@ -57,7 +57,7 @@ public class ValueImpl implements Value {
 	}
 
 	public static ValueImpl regular(String value, int priority) {
-<span class="fc" id="L60">		return new ValueImpl(new DarkString(Objects.requireNonNull(value), null, priority));</span>
+<span class="nc" id="L60">		return new ValueImpl(new DarkString(Objects.requireNonNull(value), null, priority));</span>
 	}
 
 	public Value mergeWith(Value other) {

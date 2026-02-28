@@ -184,8 +184,8 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 <span class="fc" id="L184">			tmp.add(s.getString());</span>
 
 <span class="fc bfc" id="L186" title="All 2 branches covered.">		if (tmp.size() &gt; 2)</span>
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">			if (tmp.get(tmp.size() - 1).toString().isEmpty()</span>
-<span class="nc bnc" id="L188" title="All 2 branches missed.">					&amp;&amp; tmp.get(tmp.size() - 2).toString().equals(EmbeddedDiagram.EMBEDDED_END))</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">			if (tmp.get(tmp.size() - 1).toString().isEmpty()</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">					&amp;&amp; tmp.get(tmp.size() - 2).toString().equals(EmbeddedDiagram.EMBEDDED_END))</span>
 <span class="nc" id="L189">				tmp.remove(tmp.size() - 1);</span>
 
 <span class="fc" id="L191">		final Display result = create(tmp);</span>
@@ -301,12 +301,12 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 <span class="fc bfc" id="L301" title="All 2 branches covered.">				} else if (c2 == 't') {</span>
 <span class="fc" id="L302">					current.append('\t');</span>
 <span class="fc" id="L303">					addWarning(pragma, JawsWarning.BACKSLASH_TABULATION);</span>
-<span class="fc bfc" id="L304" title="All 2 branches covered.">				} else if (c2 == '\\') {</span>
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">				} else if (c2 == '\\') {</span>
 <span class="fc" id="L305">					current.append(c2);</span>
 <span class="fc" id="L306">					addWarning(pragma, JawsWarning.BACKSLASH_BACKSLASH);</span>
 				} else {
-<span class="fc" id="L308">					current.append(c);</span>
-<span class="fc" id="L309">					current.append(c2);</span>
+<span class="nc" id="L308">					current.append(c);</span>
+<span class="nc" id="L309">					current.append(c2);</span>
 				}
 <span class="pc bpc" id="L311" title="1 of 2 branches missed.">			} else if (c == Jaws.BLOCK_E1_REAL_TABULATION) {</span>
 				// current.append('\t');
@@ -595,8 +595,8 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 	}
 
 	public String toTooltipText() {
-<span class="fc bfc" id="L598" title="All 2 branches covered.">		if (size() == 0)</span>
-<span class="fc" id="L599">			return &quot;&quot;;</span>
+<span class="pc bpc" id="L598" title="1 of 2 branches missed.">		if (size() == 0)</span>
+<span class="nc" id="L599">			return &quot;&quot;;</span>
 <span class="fc" id="L600">		return get(0).toString();</span>
 	}
 
