@@ -42,23 +42,55 @@ import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
+/**
+ * Factory for selecting an SVG sprite parser implementation.
+ *
+ * <p>Selection is based on the {@code svgparser} pragma when provided. The
+ * default remains Nano unless explicitly set to {@code sax}.
+ */
 public final class SvgSpriteParserFactory {
 
 	private SvgSpriteParserFactory() {
 	}
 
+	/**
+	 * Create a parser for a single SVG sprite using the default selection logic.
+	 *
+	 * @param svg SVG content
+	 * @return parser instance
+	 */
 	public static ISvgSpriteParser create(String svg) {
 		return create(Collections.singletonList(svg), null);
 	}
 
+	/**
+	 * Create a parser for multiple SVG sprite fragments using the default selection logic.
+	 *
+	 * @param svg SVG fragments
+	 * @return parser instance
+	 */
 	public static ISvgSpriteParser create(List<String> svg) {
 		return create(svg, null);
 	}
 
+	/**
+	 * Create a parser for a single SVG sprite using pragma-based selection.
+	 *
+	 * @param svg SVG content
+	 * @param pragma diagram pragma (may be null)
+	 * @return parser instance
+	 */
 	public static ISvgSpriteParser create(String svg, Pragma pragma) {
 		return create(Collections.singletonList(svg), pragma);
 	}
 
+	/**
+	 * Create a parser for multiple SVG sprite fragments using pragma-based selection.
+	 *
+	 * @param svg SVG fragments
+	 * @param pragma diagram pragma (may be null)
+	 * @return parser instance
+	 */
 	public static ISvgSpriteParser create(List<String> svg, Pragma pragma) {
 		final String parser = getParserSelector(pragma);
 		// TeaVM does not provide javax.xml.parsers; this branch forces Nano and is
@@ -74,6 +106,9 @@ public final class SvgSpriteParserFactory {
 		return new SvgNanoParser(svg);
 	}
 
+	/**
+	 * Resolve the parser selector value from the pragma, defaulting to {@code nano}.
+	 */
 	private static String getParserSelector(Pragma pragma) {
 		if (pragma != null && pragma.isDefine(PragmaKey.SVG_PARSER)) {
 			String value = pragma.getValue(PragmaKey.SVG_PARSER);

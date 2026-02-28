@@ -39,8 +39,26 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 
+/**
+ * Contract for SVG sprite parsers used by PlantUML to render sprite content
+ * into a {@link net.sourceforge.plantuml.klimt.drawing.UGraphic}.
+ *
+ * <p>Implementations are responsible for interpreting SVG content and drawing
+ * to the provided graphic context with scaling and color resolution applied.
+ *
+ * <p>Parsers are selected at runtime (for example via pragma) and may differ
+ * in feature support and rendering fidelity.
+ */
 public interface ISvgSpriteParser extends Sprite {
 
+	/**
+	 * Render the sprite into the provided graphics context.
+	 *
+	 * @param ug the graphic context used for drawing
+	 * @param scale scale factor applied to the SVG content
+	 * @param fontColor default font color to use for text elements
+	 * @param forcedColor optional override color for monochrome rendering
+	 */
 	void drawU(UGraphic ug, double scale, HColor fontColor, HColor forcedColor);
 
 }
