@@ -1,4 +1,5 @@
 @startuml
+!pragma svgparser sax
 ' Alternative to svg2GroupsWithStyle.puml using inline attributes
 ' This approach works with both SvgSaxParser (zero-dependency) and SvgDomParser (Batik)
 sprite inlineStyleSprite <svg viewBox="0 0 140 60" xmlns="http://www.w3.org/2000/svg">

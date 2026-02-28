@@ -1,4 +1,5 @@
 @startuml
+!pragma svgparser sax
 sprite textAnchor <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
   <!-- Reference line at x=100 -->
   <line x1="100" y1="0" x2="100" y2="100" stroke="#CCCCCC" stroke-width="1"/>

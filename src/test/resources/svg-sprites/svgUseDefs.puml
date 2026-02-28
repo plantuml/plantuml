@@ -1,4 +1,5 @@
 @startuml
+!pragma svgparser sax
 sprite defsUse <svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <!-- reusable group: a small icon -->

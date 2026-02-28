@@ -1,4 +1,5 @@
 @startuml
+!pragma svgparser sax
 'Test transform matrix(a,b,c,d,e,f) - should apply affine transformation
 'Matrix: scale 1.5, rotate ~26.57°, translate (10,5)
 'matrix(cos(26.57°)*1.5, sin(26.57°)*1.5, -sin(26.57°)*1.5, cos(26.57°)*1.5, 10, 5)

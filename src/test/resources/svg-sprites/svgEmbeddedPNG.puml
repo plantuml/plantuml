@@ -1,4 +1,5 @@
 @startuml
+!pragma svgparser sax
 ' Test for embedded PNG and JPEG images in SVG sprites
 ' 
 ' LIMITATION: Embedded raster images (PNG/JPEG) work correctly in PNG output

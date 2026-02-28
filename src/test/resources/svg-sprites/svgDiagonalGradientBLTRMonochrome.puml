@@ -1,4 +1,5 @@
 @startuml
+!pragma svgparser sax
 ' Monochrome test for diagonal linear gradient (bottom-left to top-right)
 skinparam monochrome true
 

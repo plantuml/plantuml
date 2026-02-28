@@ -1,4 +1,5 @@
 @startuml
+!pragma svgparser sax
 sprite complexsprite <svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
   <!-- Group 1: circle + label -->
   <g id="group1" transform="translate(8,8)">
