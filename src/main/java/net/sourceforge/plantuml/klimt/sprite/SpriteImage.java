@@ -40,7 +40,6 @@ import java.util.Objects;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.FileUtils;
-import net.sourceforge.plantuml.emoji.SvgNanoParser;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -53,6 +52,8 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SImageIO;
+import net.sourceforge.plantuml.svg.parser.ISvgSpriteParser;
+import net.sourceforge.plantuml.svg.parser.SvgSpriteParserFactory;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Log;
 
@@ -94,8 +95,10 @@ public class SpriteImage implements Sprite {
 
 		try {
 			InputStream is = getInternalSprite(name + ".svg");
-			if (is != null)
-				return new SvgNanoParser(FileUtils.readAllBytes(is));
+			if (is != null) {
+				final ISvgSpriteParser parser = SvgSpriteParserFactory.create(FileUtils.readAllBytes(is));
+				return parser;
+			}
 			is = getInternalSprite(name + ".png");
 			if (is != null)
 				return new SpriteImage(SImageIO.read(is));

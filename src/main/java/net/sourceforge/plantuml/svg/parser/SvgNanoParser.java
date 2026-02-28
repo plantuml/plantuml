@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml.emoji;
+package net.sourceforge.plantuml.svg.parser;
 
 import java.awt.Font;
 import java.util.ArrayDeque;
@@ -45,6 +45,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.emoji.ColorResolver;
+import net.sourceforge.plantuml.emoji.GrayLevelRange;
+import net.sourceforge.plantuml.emoji.UGraphicWithScale;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -65,13 +68,12 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
-import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.openiconic.SvgPath;
 
 // Emojji from https://twemoji.twitter.com/
 // Shorcut from https://api.github.com/emojis
 
-public class SvgNanoParser implements Sprite, GrayLevelRange {
+public class SvgNanoParser implements ISvgSpriteParser, GrayLevelRange {
 
 	private static final Pattern P_TEXT_OR_DRAW = Pattern
 			.compile("(\\<text .*?\\</text\\>)|(\\<(svg|path|g|circle|ellipse)[^<>]*\\>)|(\\</[^<>]*\\>)");

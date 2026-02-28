@@ -35,10 +35,9 @@
  */
 package net.sourceforge.plantuml.emoji;
 
-import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
-
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 

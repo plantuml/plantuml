@@ -54,8 +54,11 @@ import net.sourceforge.plantuml.emoji.data.Dummy;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.svg.parser.ISvgSpriteParser;
+import net.sourceforge.plantuml.svg.parser.SvgSpriteParserFactory;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
+
 
 // Emojji from https://twemoji.twitter.com/
 // Shorcut from https://api.github.com/emojis
@@ -83,7 +86,7 @@ public class Emoji {
 		return Collections.unmodifiableMap(new TreeMap<>(ALL));
 	}
 
-	private SvgNanoParser nano;
+	private ISvgSpriteParser parser;
 
 	private final String unicode;
 	private final String shortcut;
@@ -149,7 +152,7 @@ public class Emoji {
 	// ::done
 
 	private synchronized void loadIfNeed() throws IOException {
-		if (nano != null)
+		if (parser != null)
 			return;
 
 		final List<String> data = new ArrayList<String>();
@@ -166,8 +169,7 @@ public class Emoji {
 				data.add(singleLine);
 			}
 		}
-
-		this.nano = new SvgNanoParser(data);
+		this.parser = SvgSpriteParserFactory.create(data);
 	}
 
 	public void drawU(UGraphic ug, double scale, HColor colorForMonochrome) {
@@ -176,7 +178,7 @@ public class Emoji {
 		} catch (IOException e) {
 			Logme.error(e);
 		}
-		nano.drawU(ug, scale, colorForMonochrome, colorForMonochrome);
+		parser.drawU(ug, scale, colorForMonochrome, colorForMonochrome);
 	}
 
 	public String getShortcut() {

@@ -1,0 +1,10 @@
+@startuml
+!pragma svgparser sax
+sprite textBold <svg viewBox="0 0 200 90" xmlns="http://www.w3.org/2000/svg">
+  <text x="10" y="20" font-family="Arial" font-size="16" font-weight="normal" fill="#000000">Normal Text</text>
+  <text x="10" y="45" font-family="Arial" font-size="16" font-weight="bold" fill="#000000">Bold (700)</text>
+  <text x="10" y="70" font-family="Arial" font-size="16" font-weight="900" fill="#000000">Bold 900</text>
+</svg>
+
+Alice -> Bob : <$textBold> font weights
+@enduml
