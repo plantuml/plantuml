@@ -1,7 +1,26 @@
 /**
  * SVG sprite parsing support.
  *
- * <p><strong>Parser constraints:</strong>
+ * <p><strong>Parser selection:</strong> Nano is the default parser. Use a pragma
+ * to explicitly select SAX parsing in a diagram:
+ * <pre>
+ * !pragma svgparser sax
+ * </pre>
+ * or to reassert Nano:
+ * <pre>
+ * !pragma svgparser nano
+ * </pre>
+ *
+ * <p><strong>Nano parser constraints:</strong>
+ * <ul>
+ *   <li>Legacy, regex-based parsing with a limited SVG subset.</li>
+ *   <li>No CSS <code>&lt;style&gt;</code> blocks or class selectors.</li>
+ *   <li>Definitions and references (such as <code>&lt;defs&gt;</code> and <code>&lt;use&gt;</code>)
+ *   are not parsed.</li>
+ *   <li>SVG gradients are not parsed.</li>
+ * </ul>
+ *
+ * <p><strong>SAX parser constraints:</strong>
  * <ul>
  *   <li>The SAX-based parser supports only inline attributes.</li>
  *   <li>CSS <code>&lt;style&gt;</code> blocks and class selectors are not parsed.</li>
@@ -11,7 +30,7 @@
  *   and embedded SVG images are not.</li>
  * </ul>
  *
- * <p><strong>Gradient constraints:</strong>
+ * <p><strong>SAX gradient constraints:</strong>
  * <ul>
  *   <li>Linear gradients are supported, but only the first and last stops are used.</li>
  *   <li>Intermediate stops, offsets, and <code>stop-opacity</code> are ignored.</li>
