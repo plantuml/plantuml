@@ -86,7 +86,7 @@ import net.sourceforge.plantuml.utils.Base64Coder;
  *   <li>Pass 2: Render elements, resolve use references, apply transforms</li>
  * </ol>
  * 
- * @see ISvgParser
+ * @see ISvgSpriteParser
  * @since 1.2026.3
  */
 public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {

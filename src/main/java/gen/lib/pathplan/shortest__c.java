@@ -186,11 +186,12 @@ UNSUPPORTED("8d9xfgejx5vgd6shva5wk5k06"); // 	return -1;
     
     /* if endpoints in same triangle, use a single line */
     if (ftrii == ltrii) {
-UNSUPPORTED("2nnkwrdxg0ma2m482dqarlbz6"); // 	growops(2);
-UNSUPPORTED("5penbn9ky80i7jw02belk2zoj"); // 	output->pn = 2;
-UNSUPPORTED("8i925e1tnbqn909027lqcg3fi"); // 	ops[0] = eps[0], ops[1] = eps[1];
-UNSUPPORTED("3rcg6c9s9nmostq9c3r5n6x4h"); // 	output->ps = ops;
-UNSUPPORTED("c9ckhc8veujmwcw0ar3u3zld4"); // 	return 0;
+    	growops(zz, 2);
+    	output.pn = 2;
+    	zz.ops_shortest.get__(0).___(eps.get__(0));
+    	zz.ops_shortest.get__(1).___(eps.get__(1));
+    	output.ps = zz.ops_shortest;
+    	return 0;
     }
     
     /* build funnel and shortest path linked list (in add2dq) */
