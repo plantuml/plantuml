@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.PragmaKey;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public final class SvgSpriteParserFactory {
 
@@ -60,18 +61,17 @@ public final class SvgSpriteParserFactory {
 
 	public static ISvgSpriteParser create(List<String> svg, Pragma pragma) {
 		final String parser = getParserSelector(pragma);
-		// ::uncomment when __TEAVM__
-		// /* TeaVM build does not include javax.xml.parsers; always use Nano parser. */
-		// return new SvgNanoParser(svg);
-		// ::done
+		// TeaVM does not provide javax.xml.parsers; this branch forces Nano and is
+		// evaluated at compile time, so TeaVM removes the unreachable JVM-only path
+		// from the generated JavaScript output and class stubs.
+		if (TeaVM.isTeaVM())
+			return new SvgNanoParser(svg);
 
-		// ::comment when __TEAVM__
 		if ("sax".equals(parser))
 			return new SvgSaxParser(svg);
 
 		// Default parser: nano unless explicitly set to sax.
 		return new SvgNanoParser(svg);
-		// ::done
 	}
 
 	private static String getParserSelector(Pragma pragma) {
