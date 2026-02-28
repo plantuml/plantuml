@@ -144,12 +144,12 @@ public class Colors {
 	}
 
 	public Colors add(ColorType type, HColor color) {
-<span class="fc bfc" id="L147" title="All 2 branches covered.">		if (color == null)</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (color == null)</span>
 <span class="fc" id="L148">			return this;</span>
 
-<span class="fc" id="L150">		final Colors result = copy();</span>
-<span class="fc" id="L151">		result.map.put(type, color);</span>
-<span class="fc" id="L152">		return result;</span>
+<span class="nc" id="L150">		final Colors result = copy();</span>
+<span class="nc" id="L151">		result.map.put(type, color);</span>
+<span class="nc" id="L152">		return result;</span>
 	}
 
 	private Colors add(ColorType colorType, Colors other) {
