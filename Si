@@ -1,0 +1,37 @@
+@startuml
+start
+:Identificación de la necesidad de personal;
+if (¿Gerente de unidad aprueba?) then (Sí)
+  :Enviar solicitud a RH;
+else (No)
+  :Fin del proceso;
+  stop
+endif
+
+:Revisión de recursos humanos;
+if (¿Hay candidatos internos?) then (Sí)
+  :Entrevista a candidatos;
+else (No)
+  :Publicar vacante;
+endif
+
+:Recepción de candidaturas;
+:Evaluación inicial de RH;
+if (¿Seleccionados para entrevista?) then (Sí)
+  :Entrevista con RH;
+else (No)
+  :Fin del proceso;
+  stop
+endif
+
+:Evaluación técnica;
+if (¿Candidato cumple requisitos?) then (Sí)
+  :Selección final por la junta;
+else (No)
+  :Buscar más candidatos;
+  :Volver a RH;
+endif
+
+:Contratación;
+stop
+@enduml
