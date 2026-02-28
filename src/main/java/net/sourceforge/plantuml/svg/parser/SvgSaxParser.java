@@ -10,6 +10,7 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -70,9 +71,12 @@ import net.sourceforge.plantuml.utils.Base64Coder;
  *   <li>Feature-frozen at SVG 1.1 core subset</li>
  *   <li>No SVG 2.0 extensions (use a full DOM-based parser for full support)</li>
  *   <li>Radial gradients are not supported (not in core PlantUML renderer)</li>
+ *   <li>Linear gradients use only the first/last stops; intermediate stops, offsets, and stop-opacity are ignored</li>
+ *   <li>Gradient direction is approximated to horizontal, vertical, or diagonal; arbitrary angles are not preserved</li>
  *   <li>Embedded raster images via data URIs only (PNG/JPEG); no external URLs or embedded SVG</li>
  *   <li>No clipPath, mask, filter, pattern</li>
  *   <li>Text: no tspan, overline, or advanced layout</li>
+ *   <li>Numeric font-weight values are reduced to bold/normal only</li>
  *   <li>CSS: No &lt;style&gt; blocks or class selectors (use inline attributes only)</li>
  * </ul>
  * 
@@ -88,6 +92,7 @@ import net.sourceforge.plantuml.utils.Base64Coder;
 public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 
     private static final Logger LOG = Logger.getLogger(SvgSaxParser.class.getName());
+    private static final AtomicBoolean WARNED_NUMERIC_WEIGHT = new AtomicBoolean(false);
 
     private final List<String> svg;
 
@@ -1172,6 +1177,10 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
                 } else {
                     try {
                         int weight = Integer.parseInt(fontWeight);
+                        if (WARNED_NUMERIC_WEIGHT.compareAndSet(false, true)) {
+                            LOG.warning("SVG font-weight numeric values are reduced to bold/normal; "
+                                    + "intermediate weights are not supported.");
+                        }
                         if (weight >= 600) {
                             style |= Font.BOLD;
                         }

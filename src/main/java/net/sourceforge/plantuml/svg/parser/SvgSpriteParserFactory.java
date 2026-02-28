@@ -38,17 +38,28 @@ package net.sourceforge.plantuml.svg.parser;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.PragmaKey;
+
 public final class SvgSpriteParserFactory {
 
 	private SvgSpriteParserFactory() {
 	}
 
 	public static ISvgSpriteParser create(String svg) {
-		return create(Collections.singletonList(svg));
+		return create(Collections.singletonList(svg), null);
 	}
 
 	public static ISvgSpriteParser create(List<String> svg) {
-		final String parser = getParserProperty();
+		return create(svg, null);
+	}
+
+	public static ISvgSpriteParser create(String svg, Pragma pragma) {
+		return create(Collections.singletonList(svg), pragma);
+	}
+
+	public static ISvgSpriteParser create(List<String> svg, Pragma pragma) {
+		final String parser = getParserSelector(pragma);
 		// ::uncomment when __TEAVM__
 		// /* TeaVM build does not include javax.xml.parsers; always use Nano parser. */
 		// return new SvgNanoParser(svg);
@@ -58,17 +69,23 @@ public final class SvgSpriteParserFactory {
 		if ("sax".equals(parser))
 			return new SvgSaxParser(svg);
 
-		// Default parser: sax (preferred for gradients and SVG features).
+		// Default parser: nano unless explicitly set to sax.
 		return new SvgNanoParser(svg);
 		// ::done
 	}
 
-	private static String getParserProperty() {
-		final String value = System.getProperty("plantuml.svg.parser");
-		if (value == null)
-			return "sax";
+	private static String getParserSelector(Pragma pragma) {
+		if (pragma != null && pragma.isDefine(PragmaKey.SVG_PARSER)) {
+			String value = pragma.getValue(PragmaKey.SVG_PARSER);
+			if (value == null)
+				return "nano";
+			value = value.trim().toLowerCase();
+			if (value.length() == 0)
+				return "nano";
+			return value;
+		}
 
-		return value.trim().toLowerCase();
+		return "nano";
 	}
 
 }
