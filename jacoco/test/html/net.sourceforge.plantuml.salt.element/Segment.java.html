@@ -40,28 +40,28 @@ public class Segment {
 	private final int row;
 	private final int col;
 
-<span class="fc" id="L43">	public Segment(int row, int col) {</span>
-<span class="fc" id="L44">		this.row = row;</span>
-<span class="fc" id="L45">		this.col = col;</span>
-<span class="fc" id="L46">	}</span>
+<span class="nc" id="L43">	public Segment(int row, int col) {</span>
+<span class="nc" id="L44">		this.row = row;</span>
+<span class="nc" id="L45">		this.col = col;</span>
+<span class="nc" id="L46">	}</span>
 
 	@Override
 	public int hashCode() {
-<span class="fc" id="L50">		return row * 47 + col;</span>
+<span class="nc" id="L50">		return row * 47 + col;</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="fc" id="L55">		final Segment this2 = (Segment) obj;</span>
-<span class="pc bpc" id="L56" title="2 of 4 branches missed.">		return row == this2.row &amp;&amp; col == this2.col;</span>
+<span class="nc" id="L55">		final Segment this2 = (Segment) obj;</span>
+<span class="nc bnc" id="L56" title="All 4 branches missed.">		return row == this2.row &amp;&amp; col == this2.col;</span>
 	}
 
 	public final int getRow() {
-<span class="fc" id="L60">		return row;</span>
+<span class="nc" id="L60">		return row;</span>
 	}
 
 	public final int getCol() {
-<span class="fc" id="L64">		return col;</span>
+<span class="nc" id="L64">		return col;</span>
 	}
 
 }

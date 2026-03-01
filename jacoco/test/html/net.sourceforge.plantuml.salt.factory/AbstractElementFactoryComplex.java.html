@@ -46,32 +46,32 @@ import net.sourceforge.plantuml.salt.element.Element;
 public abstract class AbstractElementFactoryComplex implements ElementFactory {
 
 	final private DataSource dataSource;
-<span class="fc" id="L49">	final private Collection&lt;ElementFactory&gt; factories = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L49">	final private Collection&lt;ElementFactory&gt; factories = new ArrayList&lt;&gt;();</span>
 	final private SaltDictionary dictionary;
 
-<span class="fc" id="L52">	public AbstractElementFactoryComplex(DataSource dataSource, SaltDictionary dictionary) {</span>
-<span class="fc" id="L53">		this.dataSource = dataSource;</span>
-<span class="fc" id="L54">		this.dictionary = dictionary;</span>
-<span class="fc" id="L55">	}</span>
+<span class="nc" id="L52">	public AbstractElementFactoryComplex(DataSource dataSource, SaltDictionary dictionary) {</span>
+<span class="nc" id="L53">		this.dataSource = dataSource;</span>
+<span class="nc" id="L54">		this.dictionary = dictionary;</span>
+<span class="nc" id="L55">	}</span>
 
 	final public void addFactory(ElementFactory factory) {
-<span class="fc" id="L58">		factories.add(factory);</span>
-<span class="fc" id="L59">	}</span>
+<span class="nc" id="L58">		factories.add(factory);</span>
+<span class="nc" id="L59">	}</span>
 
 	protected Terminated&lt;Element&gt; getNextElement() {
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		for (ElementFactory factory : factories)</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">			if (factory.ready())</span>
-<span class="fc" id="L64">				return factory.create();</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		for (ElementFactory factory : factories)</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">			if (factory.ready())</span>
+<span class="nc" id="L64">				return factory.create();</span>
 
 <span class="nc" id="L66">		throw new IllegalStateException(dataSource.peek(0).getElement());</span>
 	}
 
 	protected final DataSource getDataSource() {
-<span class="fc" id="L70">		return dataSource;</span>
+<span class="nc" id="L70">		return dataSource;</span>
 	}
 
 	protected final SaltDictionary getDictionary() {
-<span class="fc" id="L74">		return dictionary;</span>
+<span class="nc" id="L74">		return dictionary;</span>
 	}
 
 }

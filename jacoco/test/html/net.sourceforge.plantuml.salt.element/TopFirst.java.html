@@ -39,15 +39,15 @@ import java.util.Comparator;
 
 import net.sourceforge.plantuml.salt.Cell;
 
-<span class="fc" id="L42">class TopFirst implements Comparator&lt;Cell&gt; {</span>
+<span class="nc" id="L42">class TopFirst implements Comparator&lt;Cell&gt; {</span>
 
 	public int compare(Cell c0, Cell c1) {
-<span class="fc" id="L45">		final int diffNb = c0.getNbRows() - c1.getNbRows();</span>
-<span class="pc bpc" id="L46" title="1 of 2 branches missed.">		if (diffNb != 0) {</span>
+<span class="nc" id="L45">		final int diffNb = c0.getNbRows() - c1.getNbRows();</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">		if (diffNb != 0) {</span>
 <span class="nc" id="L47">			return diffNb;</span>
 		}
-<span class="fc" id="L49">		final int diffPos = c0.getMinRow() - c1.getMinRow();</span>
-<span class="fc" id="L50">		return diffPos;</span>
+<span class="nc" id="L49">		final int diffPos = c0.getMinRow() - c1.getMinRow();</span>
+<span class="nc" id="L50">		return diffPos;</span>
 	}
 
 }

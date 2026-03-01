@@ -153,20 +153,20 @@ public class Matcher2 {
 	}
 
 	public int end() {
-<span class="fc" id="L156">		final long now = System.currentTimeMillis();</span>
+<span class="nc" id="L156">		final long now = System.currentTimeMillis();</span>
 		try {
-<span class="fc" id="L158">			return matcher.end();</span>
+<span class="nc" id="L158">			return matcher.end();</span>
 		} finally {
-<span class="fc" id="L160">			addTime(System.currentTimeMillis() - now);</span>
+<span class="nc" id="L160">			addTime(System.currentTimeMillis() - now);</span>
 		}
 	}
 
 	public int start() {
-<span class="fc" id="L165">		final long now = System.currentTimeMillis();</span>
+<span class="nc" id="L165">		final long now = System.currentTimeMillis();</span>
 		try {
-<span class="fc" id="L167">			return matcher.start();</span>
+<span class="nc" id="L167">			return matcher.start();</span>
 		} finally {
-<span class="fc" id="L169">			addTime(System.currentTimeMillis() - now);</span>
+<span class="nc" id="L169">			addTime(System.currentTimeMillis() - now);</span>
 		}
 	}
 

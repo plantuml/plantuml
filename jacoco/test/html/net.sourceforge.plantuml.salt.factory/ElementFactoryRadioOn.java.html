@@ -52,10 +52,10 @@ public class ElementFactoryRadioOn implements ElementFactory {
 	final private DataSource dataSource;
 	final private ISkinSimple spriteContainer;
 
-<span class="fc" id="L55">	public ElementFactoryRadioOn(DataSource dataSource, ISkinSimple spriteContainer) {</span>
-<span class="fc" id="L56">		this.dataSource = dataSource;</span>
-<span class="fc" id="L57">		this.spriteContainer = spriteContainer;</span>
-<span class="fc" id="L58">	}</span>
+<span class="nc" id="L55">	public ElementFactoryRadioOn(DataSource dataSource, ISkinSimple spriteContainer) {</span>
+<span class="nc" id="L56">		this.dataSource = dataSource;</span>
+<span class="nc" id="L57">		this.spriteContainer = spriteContainer;</span>
+<span class="nc" id="L58">	}</span>
 
 	public Terminated&lt;Element&gt; create() {
 <span class="nc bnc" id="L61" title="All 2 branches missed.">		if (ready() == false) {</span>
@@ -74,8 +74,8 @@ public class ElementFactoryRadioOn implements ElementFactory {
 	}
 
 	public boolean ready() {
-<span class="fc" id="L77">		final String text = dataSource.peek(0).getElement();</span>
-<span class="fc" id="L78">		return text.startsWith(&quot;(X)&quot;);</span>
+<span class="nc" id="L77">		final String text = dataSource.peek(0).getElement();</span>
+<span class="nc" id="L78">		return text.startsWith(&quot;(X)&quot;);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

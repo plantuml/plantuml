@@ -47,21 +47,21 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandSalt extends SingleLineCommand2&lt;PSystemSalt&gt; {
 
 	public CommandSalt() {
-<span class="fc" id="L50">		super(false, getRegexConcat());</span>
-<span class="fc" id="L51">	}</span>
+<span class="nc" id="L50">		super(false, getRegexConcat());</span>
+<span class="nc" id="L51">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L54">		return RegexConcat.build(CommandSalt.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L55">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L54">		return RegexConcat.build(CommandSalt.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L55">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;salt&quot;), //
-<span class="fc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L58">				RegexLeaf.end());</span>
+<span class="nc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L58">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(PSystemSalt diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="fc" id="L63">		diagram.setIamSalt(true);</span>
-<span class="fc" id="L64">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L63">		diagram.setIamSalt(true);</span>
+<span class="nc" id="L64">		return CommandExecutionResult.ok();</span>
 	}
 
 }

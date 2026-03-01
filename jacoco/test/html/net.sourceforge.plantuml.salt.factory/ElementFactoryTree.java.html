@@ -48,8 +48,8 @@ import net.sourceforge.plantuml.salt.element.TableStrategy;
 public class ElementFactoryTree extends AbstractElementFactoryComplex {
 
 	public ElementFactoryTree(DataSource dataSource, SaltDictionary dictionary) {
-<span class="fc" id="L51">		super(dataSource, dictionary);</span>
-<span class="fc" id="L52">	}</span>
+<span class="nc" id="L51">		super(dataSource, dictionary);</span>
+<span class="nc" id="L52">	}</span>
 
 	public Terminated&lt;Element&gt; create() {
 <span class="nc bnc" id="L55" title="All 2 branches missed.">		if (ready() == false) {</span>
@@ -83,8 +83,8 @@ public class ElementFactoryTree extends AbstractElementFactoryComplex {
 	}
 
 	public boolean ready() {
-<span class="fc" id="L86">		final String text = getDataSource().peek(0).getElement();</span>
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (text.equals(&quot;{&quot;)) {</span>
+<span class="nc" id="L86">		final String text = getDataSource().peek(0).getElement();</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (text.equals(&quot;{&quot;)) {</span>
 <span class="nc" id="L88">			final String text1 = getDataSource().peek(1).getElement();</span>
 <span class="nc bnc" id="L89" title="All 2 branches missed.">			if (text1.equals(&quot;T&quot;)) {</span>
 <span class="nc" id="L90">				return true;</span>
@@ -96,7 +96,7 @@ public class ElementFactoryTree extends AbstractElementFactoryComplex {
 			}
 <span class="nc" id="L97">			return false;</span>
 		}
-<span class="fc" id="L99">		return false;</span>
+<span class="nc" id="L99">		return false;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

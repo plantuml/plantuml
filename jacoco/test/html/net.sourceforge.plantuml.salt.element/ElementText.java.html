@@ -54,28 +54,28 @@ public class ElementText extends AbstractElement {
 	private final boolean show;
 	private final String text;
 
-<span class="fc" id="L57">	public ElementText(List&lt;String&gt; text, UFont font, ISkinSimple spriteContainer) {</span>
-<span class="fc" id="L58">		final FontConfiguration config = FontConfiguration.blackBlueTrue(font);</span>
-<span class="fc" id="L59">		this.block = Display.create(text).create(config, HorizontalAlignment.LEFT, spriteContainer);</span>
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		this.show = text.get(0).equals(&quot;.&quot;) == false;</span>
-<span class="fc" id="L61">		this.text = text.get(0);</span>
-<span class="fc" id="L62">	}</span>
+<span class="nc" id="L57">	public ElementText(List&lt;String&gt; text, UFont font, ISkinSimple spriteContainer) {</span>
+<span class="nc" id="L58">		final FontConfiguration config = FontConfiguration.blackBlueTrue(font);</span>
+<span class="nc" id="L59">		this.block = Display.create(text).create(config, HorizontalAlignment.LEFT, spriteContainer);</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		this.show = text.get(0).equals(&quot;.&quot;) == false;</span>
+<span class="nc" id="L61">		this.text = text.get(0);</span>
+<span class="nc" id="L62">	}</span>
 
 	public XDimension2D getPreferredDimension(StringBounder stringBounder, double x, double y) {
-<span class="fc" id="L65">		return block.calculateDimension(stringBounder);</span>
+<span class="nc" id="L65">		return block.calculateDimension(stringBounder);</span>
 	}
 
 	public void drawU(UGraphic ug, int zIndex, XDimension2D dimToUse) {
-<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (zIndex != 0) {</span>
-<span class="fc" id="L70">			return;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (zIndex != 0) {</span>
+<span class="nc" id="L70">			return;</span>
 		}
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (show) {</span>
-<span class="fc" id="L73">			block.drawU(ug);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (show) {</span>
+<span class="nc" id="L73">			block.drawU(ug);</span>
 		}
-<span class="fc" id="L75">	}</span>
+<span class="nc" id="L75">	}</span>
 
 	public final String getText() {
-<span class="fc" id="L78">		return text;</span>
+<span class="nc" id="L78">		return text;</span>
 	}
 
 }

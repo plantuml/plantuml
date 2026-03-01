@@ -48,10 +48,10 @@ public class ElementFactoryButton implements ElementFactory {
 	final private DataSource dataSource;
 	final private ISkinSimple spriteContainer;
 
-<span class="fc" id="L51">	public ElementFactoryButton(DataSource dataSource, ISkinSimple spriteContainer) {</span>
-<span class="fc" id="L52">		this.dataSource = dataSource;</span>
-<span class="fc" id="L53">		this.spriteContainer = spriteContainer;</span>
-<span class="fc" id="L54">	}</span>
+<span class="nc" id="L51">	public ElementFactoryButton(DataSource dataSource, ISkinSimple spriteContainer) {</span>
+<span class="nc" id="L52">		this.dataSource = dataSource;</span>
+<span class="nc" id="L53">		this.spriteContainer = spriteContainer;</span>
+<span class="nc" id="L54">	}</span>
 
 	public Terminated&lt;Element&gt; create() {
 <span class="nc bnc" id="L57" title="All 2 branches missed.">		if (ready() == false) {</span>
@@ -65,8 +65,8 @@ public class ElementFactoryButton implements ElementFactory {
 	}
 
 	public boolean ready() {
-<span class="fc" id="L68">		final String text = dataSource.peek(0).getElement();</span>
-<span class="pc bpc" id="L69" title="3 of 4 branches missed.">		return text.startsWith(&quot;[&quot;) &amp;&amp; text.endsWith(&quot;]&quot;);</span>
+<span class="nc" id="L68">		final String text = dataSource.peek(0).getElement();</span>
+<span class="nc bnc" id="L69" title="All 4 branches missed.">		return text.startsWith(&quot;[&quot;) &amp;&amp; text.endsWith(&quot;]&quot;);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

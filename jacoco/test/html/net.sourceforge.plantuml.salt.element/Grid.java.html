@@ -54,81 +54,81 @@ public class Grid {
 	private final TableStrategy strategy;
 	private final TextBlock title;
 
-<span class="fc" id="L57">	private final Set&lt;Segment&gt; horizontals = new HashSet&lt;&gt;();</span>
-<span class="fc" id="L58">	private final Set&lt;Segment&gt; verticals = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L57">	private final Set&lt;Segment&gt; horizontals = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L58">	private final Set&lt;Segment&gt; verticals = new HashSet&lt;&gt;();</span>
 
-<span class="fc" id="L60">	public Grid(double[] rowsStart, double[] colsStart, TableStrategy strategy, TextBlock title) {</span>
-<span class="fc" id="L61">		this.title = title;</span>
-<span class="fc" id="L62">		this.rowsStart = rowsStart;</span>
-<span class="fc" id="L63">		this.colsStart = colsStart;</span>
-<span class="fc" id="L64">		this.strategy = strategy;</span>
-<span class="pc bpc" id="L65" title="3 of 6 branches missed.">		if (strategy == TableStrategy.DRAW_OUTSIDE || strategy == TableStrategy.DRAW_OUTSIDE_WITH_TITLE</span>
+<span class="nc" id="L60">	public Grid(double[] rowsStart, double[] colsStart, TableStrategy strategy, TextBlock title) {</span>
+<span class="nc" id="L61">		this.title = title;</span>
+<span class="nc" id="L62">		this.rowsStart = rowsStart;</span>
+<span class="nc" id="L63">		this.colsStart = colsStart;</span>
+<span class="nc" id="L64">		this.strategy = strategy;</span>
+<span class="nc bnc" id="L65" title="All 6 branches missed.">		if (strategy == TableStrategy.DRAW_OUTSIDE || strategy == TableStrategy.DRAW_OUTSIDE_WITH_TITLE</span>
 				|| strategy == TableStrategy.DRAW_ALL) {
-<span class="fc" id="L67">			addOutside();</span>
+<span class="nc" id="L67">			addOutside();</span>
 		}
-<span class="fc" id="L69">	}</span>
+<span class="nc" id="L69">	}</span>
 
 	private void addOutside() {
-<span class="fc" id="L72">		final int nbRow = rowsStart.length;</span>
-<span class="fc" id="L73">		final int nbCol = colsStart.length;</span>
-<span class="fc bfc" id="L74" title="All 2 branches covered.">		for (int c = 0; c &lt; nbCol - 1; c++) {</span>
-<span class="fc" id="L75">			horizontals.add(new Segment(0, c));</span>
-<span class="fc" id="L76">			horizontals.add(new Segment(nbRow - 1, c));</span>
+<span class="nc" id="L72">		final int nbRow = rowsStart.length;</span>
+<span class="nc" id="L73">		final int nbCol = colsStart.length;</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		for (int c = 0; c &lt; nbCol - 1; c++) {</span>
+<span class="nc" id="L75">			horizontals.add(new Segment(0, c));</span>
+<span class="nc" id="L76">			horizontals.add(new Segment(nbRow - 1, c));</span>
 		}
-<span class="fc bfc" id="L78" title="All 2 branches covered.">		for (int r = 0; r &lt; nbRow - 1; r++) {</span>
-<span class="fc" id="L79">			verticals.add(new Segment(r, 0));</span>
-<span class="fc" id="L80">			verticals.add(new Segment(r, nbCol - 1));</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		for (int r = 0; r &lt; nbRow - 1; r++) {</span>
+<span class="nc" id="L79">			verticals.add(new Segment(r, 0));</span>
+<span class="nc" id="L80">			verticals.add(new Segment(r, nbCol - 1));</span>
 		}
 
-<span class="fc" id="L83">	}</span>
+<span class="nc" id="L83">	}</span>
 
 	public void drawU(UGraphic ug, double x, double y, HColor white) {
 		// Hlines
-<span class="fc bfc" id="L87" title="All 2 branches covered.">		for (Segment seg : horizontals) {</span>
-<span class="fc" id="L88">			final int row1 = seg.getRow();</span>
-<span class="fc" id="L89">			final int col1 = seg.getCol();</span>
-<span class="fc" id="L90">			final double width = colsStart[col1 + 1] - colsStart[col1];</span>
-<span class="fc" id="L91">			ug.apply(new UTranslate(x + colsStart[col1], y + rowsStart[row1])).draw(ULine.hline(width));</span>
-<span class="fc" id="L92">		}</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		for (Segment seg : horizontals) {</span>
+<span class="nc" id="L88">			final int row1 = seg.getRow();</span>
+<span class="nc" id="L89">			final int col1 = seg.getCol();</span>
+<span class="nc" id="L90">			final double width = colsStart[col1 + 1] - colsStart[col1];</span>
+<span class="nc" id="L91">			ug.apply(new UTranslate(x + colsStart[col1], y + rowsStart[row1])).draw(ULine.hline(width));</span>
+<span class="nc" id="L92">		}</span>
 		// Vlines
-<span class="fc bfc" id="L94" title="All 2 branches covered.">		for (Segment seg : verticals) {</span>
-<span class="fc" id="L95">			final int row1 = seg.getRow();</span>
-<span class="fc" id="L96">			final int col1 = seg.getCol();</span>
-<span class="fc" id="L97">			final double height = rowsStart[row1 + 1] - rowsStart[row1];</span>
-<span class="fc" id="L98">			ug.apply(new UTranslate(x + colsStart[col1], y + rowsStart[row1])).draw(ULine.vline(height));</span>
-<span class="fc" id="L99">		}</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		for (Segment seg : verticals) {</span>
+<span class="nc" id="L95">			final int row1 = seg.getRow();</span>
+<span class="nc" id="L96">			final int col1 = seg.getCol();</span>
+<span class="nc" id="L97">			final double height = rowsStart[row1 + 1] - rowsStart[row1];</span>
+<span class="nc" id="L98">			ug.apply(new UTranslate(x + colsStart[col1], y + rowsStart[row1])).draw(ULine.vline(height));</span>
+<span class="nc" id="L99">		}</span>
 
-<span class="fc" id="L101">		final XDimension2D dim = title.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L101">		final XDimension2D dim = title.calculateDimension(ug.getStringBounder());</span>
 
-<span class="pc bpc" id="L103" title="3 of 4 branches missed.">		if (dim.getWidth() &gt; 0 &amp;&amp; dim.getHeight() &gt; 0) {</span>
+<span class="nc bnc" id="L103" title="All 4 branches missed.">		if (dim.getWidth() &gt; 0 &amp;&amp; dim.getHeight() &gt; 0) {</span>
 <span class="nc" id="L104">			final UGraphic ug2 = ug.apply(new UTranslate(x + 6, y - dim.getHeight() * 0));</span>
 <span class="nc" id="L105">			ug2.apply(white.bg()).apply(white).draw(URectangle.build(dim));</span>
 <span class="nc" id="L106">			title.drawU(ug2);</span>
 		}
 
-<span class="fc" id="L109">	}</span>
+<span class="nc" id="L109">	}</span>
 
 	public void addCell(Cell cell) {
 
-<span class="pc bpc" id="L113" title="3 of 6 branches missed.">		if (strategy == TableStrategy.DRAW_NONE || strategy == TableStrategy.DRAW_OUTSIDE</span>
+<span class="nc bnc" id="L113" title="All 6 branches missed.">		if (strategy == TableStrategy.DRAW_NONE || strategy == TableStrategy.DRAW_OUTSIDE</span>
 				|| strategy == TableStrategy.DRAW_OUTSIDE_WITH_TITLE) {
 <span class="nc" id="L115">			return;</span>
 		}
 
-<span class="pc bpc" id="L118" title="2 of 4 branches missed.">		if (strategy == TableStrategy.DRAW_HORIZONTAL || strategy == TableStrategy.DRAW_ALL) {</span>
+<span class="nc bnc" id="L118" title="All 4 branches missed.">		if (strategy == TableStrategy.DRAW_HORIZONTAL || strategy == TableStrategy.DRAW_ALL) {</span>
 			// Hlines
-<span class="fc bfc" id="L120" title="All 2 branches covered.">			for (int c = cell.getMinCol(); c &lt;= cell.getMaxCol(); c++) {</span>
-<span class="fc" id="L121">				horizontals.add(new Segment(cell.getMinRow(), c));</span>
-<span class="fc" id="L122">				horizontals.add(new Segment(cell.getMaxRow() + 1, c));</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">			for (int c = cell.getMinCol(); c &lt;= cell.getMaxCol(); c++) {</span>
+<span class="nc" id="L121">				horizontals.add(new Segment(cell.getMinRow(), c));</span>
+<span class="nc" id="L122">				horizontals.add(new Segment(cell.getMaxRow() + 1, c));</span>
 			}
 		}
-<span class="pc bpc" id="L125" title="2 of 4 branches missed.">		if (strategy == TableStrategy.DRAW_VERTICAL || strategy == TableStrategy.DRAW_ALL) {</span>
+<span class="nc bnc" id="L125" title="All 4 branches missed.">		if (strategy == TableStrategy.DRAW_VERTICAL || strategy == TableStrategy.DRAW_ALL) {</span>
 			// Vlines
-<span class="fc bfc" id="L127" title="All 2 branches covered.">			for (int r = cell.getMinRow(); r &lt;= cell.getMaxRow(); r++) {</span>
-<span class="fc" id="L128">				verticals.add(new Segment(r, cell.getMinCol()));</span>
-<span class="fc" id="L129">				verticals.add(new Segment(r, cell.getMaxCol() + 1));</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">			for (int r = cell.getMinRow(); r &lt;= cell.getMaxRow(); r++) {</span>
+<span class="nc" id="L128">				verticals.add(new Segment(r, cell.getMinCol()));</span>
+<span class="nc" id="L129">				verticals.add(new Segment(r, cell.getMaxCol() + 1));</span>
 			}
 		}
-<span class="fc" id="L132">	}</span>
+<span class="nc" id="L132">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

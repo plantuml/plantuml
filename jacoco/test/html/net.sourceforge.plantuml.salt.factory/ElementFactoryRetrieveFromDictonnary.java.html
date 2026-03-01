@@ -47,10 +47,10 @@ public class ElementFactoryRetrieveFromDictonnary implements ElementFactory {
 	private final SaltDictionary dictionary;
 	private final DataSource dataSource;
 
-<span class="fc" id="L50">	public ElementFactoryRetrieveFromDictonnary(DataSource dataSource, SaltDictionary dictionary) {</span>
-<span class="fc" id="L51">		this.dataSource = dataSource;</span>
-<span class="fc" id="L52">		this.dictionary = dictionary;</span>
-<span class="fc" id="L53">	}</span>
+<span class="nc" id="L50">	public ElementFactoryRetrieveFromDictonnary(DataSource dataSource, SaltDictionary dictionary) {</span>
+<span class="nc" id="L51">		this.dataSource = dataSource;</span>
+<span class="nc" id="L52">		this.dictionary = dictionary;</span>
+<span class="nc" id="L53">	}</span>
 
 	public Terminated&lt;Element&gt; create() {
 <span class="nc bnc" id="L56" title="All 2 branches missed.">		if (ready() == false) {</span>
@@ -66,8 +66,8 @@ public class ElementFactoryRetrieveFromDictonnary implements ElementFactory {
 	}
 
 	public boolean ready() {
-<span class="fc" id="L69">		final String text = dataSource.peek(0).getElement();</span>
-<span class="fc" id="L70">		return text.matches(&quot;\\&lt;\\&lt;\\w+\\&gt;\\&gt;&quot;);</span>
+<span class="nc" id="L69">		final String text = dataSource.peek(0).getElement();</span>
+<span class="nc" id="L70">		return text.matches(&quot;\\&lt;\\&lt;\\w+\\&gt;\\&gt;&quot;);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

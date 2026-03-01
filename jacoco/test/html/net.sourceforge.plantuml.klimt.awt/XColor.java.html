@@ -34,15 +34,15 @@ public class XColor {
 	}
 
 	public static XColor fromFloat(float r, float g, float b, float a) {
-<span class="nc bnc" id="L37" title="All 24 branches missed.">		if (!Float.isFinite(r) || !Float.isFinite(g) || !Float.isFinite(b) || !Float.isFinite(a) || r &lt; 0.0f || r &gt; 1.0f</span>
+<span class="pc bpc" id="L37" title="12 of 24 branches missed.">		if (!Float.isFinite(r) || !Float.isFinite(g) || !Float.isFinite(b) || !Float.isFinite(a) || r &lt; 0.0f || r &gt; 1.0f</span>
 				|| g &lt; 0.0f || g &gt; 1.0f || b &lt; 0.0f || b &gt; 1.0f || a &lt; 0.0f || a &gt; 1.0f) {
 <span class="nc" id="L39">			throw new IllegalArgumentException();</span>
 		}
-<span class="nc" id="L41">		final int red = Math.round(r * 255.0f) &amp; 0xFF;</span>
-<span class="nc" id="L42">		final int green = Math.round(g * 255.0f) &amp; 0xFF;</span>
-<span class="nc" id="L43">		final int blue = Math.round(b * 255.0f) &amp; 0xFF;</span>
-<span class="nc" id="L44">		final int alpha = Math.round(a * 255.0f) &amp; 0xFF;</span>
-<span class="nc" id="L45">		return new XColor(red, green, blue, alpha);</span>
+<span class="fc" id="L41">		final int red = Math.round(r * 255.0f) &amp; 0xFF;</span>
+<span class="fc" id="L42">		final int green = Math.round(g * 255.0f) &amp; 0xFF;</span>
+<span class="fc" id="L43">		final int blue = Math.round(b * 255.0f) &amp; 0xFF;</span>
+<span class="fc" id="L44">		final int alpha = Math.round(a * 255.0f) &amp; 0xFF;</span>
+<span class="fc" id="L45">		return new XColor(red, green, blue, alpha);</span>
 	}
 
 	public int getAlpha() {
@@ -67,15 +67,15 @@ public class XColor {
 
 	public float[] getRGBColorComponents(Object object) {
 		float[] result;
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (object == null)</span>
-<span class="nc" id="L71">			result = new float[3];</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (object == null)</span>
+<span class="fc" id="L71">			result = new float[3];</span>
 		else
 <span class="nc" id="L73">			result = (float[]) object;</span>
 
-<span class="nc" id="L75">		result[0] = red / 255.0f;</span>
-<span class="nc" id="L76">		result[1] = green / 255.0f;</span>
-<span class="nc" id="L77">		result[2] = blue / 255.0f;</span>
-<span class="nc" id="L78">		return result;</span>
+<span class="fc" id="L75">		result[0] = red / 255.0f;</span>
+<span class="fc" id="L76">		result[1] = green / 255.0f;</span>
+<span class="fc" id="L77">		result[2] = blue / 255.0f;</span>
+<span class="fc" id="L78">		return result;</span>
 	}
 
 	public Color toAwtColor() {

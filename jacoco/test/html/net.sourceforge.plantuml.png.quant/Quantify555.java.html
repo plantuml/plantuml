@@ -176,10 +176,10 @@ import net.sourceforge.plantuml.utils.Log;
 					+ (memAfterCubes - memBeforeCubes) + &quot; MB)&quot;);
 
 			// Abort if there are not enough cubes, risk of over-quantization
-<span class="fc bfc" id="L179" title="All 2 branches covered.">			if (nbCubes &lt; MIN_CUBES_THRESHOLD) {</span>
-<span class="pc" id="L180">				Log.info(() -&gt; &quot;Quantify555: abort, not enough distinct colors (&quot; + finalNbCubes + &quot; &lt; &quot;</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">			if (nbCubes &lt; MIN_CUBES_THRESHOLD) {</span>
+<span class="nc" id="L180">				Log.info(() -&gt; &quot;Quantify555: abort, not enough distinct colors (&quot; + finalNbCubes + &quot; &lt; &quot;</span>
 						+ MIN_CUBES_THRESHOLD + &quot;)&quot;);
-<span class="fc" id="L182">				return null;</span>
+<span class="nc" id="L182">				return null;</span>
 			}
 
 			// Step 3: Build the final indexed image

@@ -35,20 +35,20 @@
  */
 package net.sourceforge.plantuml.salt.element;
 
-<span class="fc" id="L38">public enum TableStrategy {</span>
-<span class="fc" id="L39">	DRAW_NONE(' '), DRAW_OUTSIDE('+'), DRAW_OUTSIDE_WITH_TITLE('^'), DRAW_HORIZONTAL('-'), DRAW_VERTICAL('!'),</span>
-<span class="fc" id="L40">	DRAW_ALL('#');</span>
+<span class="nc" id="L38">public enum TableStrategy {</span>
+<span class="nc" id="L39">	DRAW_NONE(' '), DRAW_OUTSIDE('+'), DRAW_OUTSIDE_WITH_TITLE('^'), DRAW_HORIZONTAL('-'), DRAW_VERTICAL('!'),</span>
+<span class="nc" id="L40">	DRAW_ALL('#');</span>
 
 	private final char c;
 
-<span class="fc" id="L44">	private TableStrategy(char c) {</span>
-<span class="fc" id="L45">		this.c = c;</span>
-<span class="fc" id="L46">	}</span>
+<span class="nc" id="L44">	private TableStrategy(char c) {</span>
+<span class="nc" id="L45">		this.c = c;</span>
+<span class="nc" id="L46">	}</span>
 
 	public static TableStrategy fromChar(char c) {
-<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		for (TableStrategy t : TableStrategy.values()) {</span>
-<span class="fc bfc" id="L50" title="All 2 branches covered.">			if (c == t.c) {</span>
-<span class="fc" id="L51">				return t;</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		for (TableStrategy t : TableStrategy.values()) {</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">			if (c == t.c) {</span>
+<span class="nc" id="L51">				return t;</span>
 			}
 		}
 <span class="nc" id="L54">		return null;</span>

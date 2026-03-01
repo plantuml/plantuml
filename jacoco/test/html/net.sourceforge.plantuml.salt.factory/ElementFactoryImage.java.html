@@ -49,10 +49,10 @@ public class ElementFactoryImage implements ElementFactory {
 	final private DataSource dataSource;
 	final private SaltDictionary dictionary;
 
-<span class="fc" id="L52">	public ElementFactoryImage(DataSource dataSource, SaltDictionary dictionary) {</span>
-<span class="fc" id="L53">		this.dataSource = dataSource;</span>
-<span class="fc" id="L54">		this.dictionary = dictionary;</span>
-<span class="fc" id="L55">	}</span>
+<span class="nc" id="L52">	public ElementFactoryImage(DataSource dataSource, SaltDictionary dictionary) {</span>
+<span class="nc" id="L53">		this.dataSource = dataSource;</span>
+<span class="nc" id="L54">		this.dictionary = dictionary;</span>
+<span class="nc" id="L55">	}</span>
 
 	public Terminated&lt;Element&gt; create() {
 <span class="nc bnc" id="L58" title="All 2 branches missed.">		if (ready() == false) {</span>
@@ -73,8 +73,8 @@ public class ElementFactoryImage implements ElementFactory {
 	}
 
 	public boolean ready() {
-<span class="fc" id="L76">		final String text = dataSource.peek(0).getElement();</span>
-<span class="pc bpc" id="L77" title="2 of 4 branches missed.">		return text.equals(&quot;&lt;&lt;&quot;) || text.matches(&quot;\\&lt;\\&lt;\\w+&quot;);</span>
+<span class="nc" id="L76">		final String text = dataSource.peek(0).getElement();</span>
+<span class="nc bnc" id="L77" title="All 4 branches missed.">		return text.equals(&quot;&lt;&lt;&quot;) || text.matches(&quot;\\&lt;\\&lt;\\w+&quot;);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

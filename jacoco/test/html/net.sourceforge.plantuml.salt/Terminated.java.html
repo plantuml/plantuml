@@ -42,17 +42,17 @@ public class Terminated&lt;O&gt; {
 	private final O element;
 	private final Terminator terminator;
 
-<span class="fc" id="L45">	public Terminated(O element, Terminator terminator) {</span>
-<span class="fc" id="L46">		this.element = element;</span>
-<span class="fc" id="L47">		this.terminator = Objects.requireNonNull(terminator);</span>
-<span class="fc" id="L48">	}</span>
+<span class="nc" id="L45">	public Terminated(O element, Terminator terminator) {</span>
+<span class="nc" id="L46">		this.element = element;</span>
+<span class="nc" id="L47">		this.terminator = Objects.requireNonNull(terminator);</span>
+<span class="nc" id="L48">	}</span>
 
 	public O getElement() {
-<span class="fc" id="L51">		return element;</span>
+<span class="nc" id="L51">		return element;</span>
 	}
 
 	public Terminator getTerminator() {
-<span class="fc" id="L55">		return terminator;</span>
+<span class="nc" id="L55">		return terminator;</span>
 	}
 
 	public String toString() {

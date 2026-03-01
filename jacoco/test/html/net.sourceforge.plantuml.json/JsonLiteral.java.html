@@ -43,12 +43,12 @@ class JsonLiteral extends JsonValue {
 
 	@Override
 	void write(JsonWriter writer) throws IOException {
-<span class="nc" id="L46">		writer.writeLiteral(value);</span>
-<span class="nc" id="L47">	}</span>
+<span class="fc" id="L46">		writer.writeLiteral(value);</span>
+<span class="fc" id="L47">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L51">		return value;</span>
+<span class="fc" id="L51">		return value;</span>
 	}
 
 	@Override
@@ -73,7 +73,7 @@ class JsonLiteral extends JsonValue {
 
 	@Override
 	public boolean isBoolean() {
-<span class="pc bpc" id="L76" title="1 of 4 branches missed.">		return isTrue || isFalse;</span>
+<span class="fc bfc" id="L76" title="All 4 branches covered.">		return isTrue || isFalse;</span>
 	}
 
 	@Override

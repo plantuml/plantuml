@@ -43,39 +43,39 @@ public class Cell {
 	private int minCol;
 	private int maxCol;
 
-<span class="fc" id="L46">	public Cell(int row, int col) {</span>
-<span class="fc" id="L47">		minRow = row;</span>
-<span class="fc" id="L48">		maxRow = row;</span>
-<span class="fc" id="L49">		minCol = col;</span>
-<span class="fc" id="L50">		maxCol = col;</span>
-<span class="fc" id="L51">	}</span>
+<span class="nc" id="L46">	public Cell(int row, int col) {</span>
+<span class="nc" id="L47">		minRow = row;</span>
+<span class="nc" id="L48">		maxRow = row;</span>
+<span class="nc" id="L49">		minCol = col;</span>
+<span class="nc" id="L50">		maxCol = col;</span>
+<span class="nc" id="L51">	}</span>
 
 	public void mergeLeft() {
 <span class="nc" id="L54">		maxCol++;</span>
 <span class="nc" id="L55">	}</span>
 
 	public int getMinRow() {
-<span class="fc" id="L58">		return minRow;</span>
+<span class="nc" id="L58">		return minRow;</span>
 	}
 
 	public int getMaxRow() {
-<span class="fc" id="L62">		return maxRow;</span>
+<span class="nc" id="L62">		return maxRow;</span>
 	}
 
 	public int getMinCol() {
-<span class="fc" id="L66">		return minCol;</span>
+<span class="nc" id="L66">		return minCol;</span>
 	}
 
 	public int getMaxCol() {
-<span class="fc" id="L70">		return maxCol;</span>
+<span class="nc" id="L70">		return maxCol;</span>
 	}
 
 	public int getNbRows() {
-<span class="fc" id="L74">		return maxRow - minRow + 1;</span>
+<span class="nc" id="L74">		return maxRow - minRow + 1;</span>
 	}
 
 	public int getNbCols() {
-<span class="fc" id="L78">		return maxCol - minCol + 1;</span>
+<span class="nc" id="L78">		return maxCol - minCol + 1;</span>
 	}
 
 	@Override

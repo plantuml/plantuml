@@ -44,11 +44,11 @@ import net.sourceforge.plantuml.salt.Terminator;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.ElementTabBar;
 
-<span class="fc" id="L47">public class ElementFactoryTab extends AbstractElementFactoryComplex {</span>
+<span class="nc" id="L47">public class ElementFactoryTab extends AbstractElementFactoryComplex {</span>
 
 	public ElementFactoryTab(DataSource dataSource, SaltDictionary dictionary) {
-<span class="fc" id="L50">		super(dataSource, dictionary);</span>
-<span class="fc" id="L51">	}</span>
+<span class="nc" id="L50">		super(dataSource, dictionary);</span>
+<span class="nc" id="L51">	}</span>
 
 	public Terminated&lt;Element&gt; create() {
 <span class="nc bnc" id="L54" title="All 2 branches missed.">		if (ready() == false) {</span>
@@ -72,11 +72,11 @@ import net.sourceforge.plantuml.salt.element.ElementTabBar;
 	}
 
 	public boolean ready() {
-<span class="fc" id="L75">		final String text = getDataSource().peek(0).getElement();</span>
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (text.equals(&quot;{/&quot;)) {</span>
+<span class="nc" id="L75">		final String text = getDataSource().peek(0).getElement();</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (text.equals(&quot;{/&quot;)) {</span>
 <span class="nc" id="L77">			return true;</span>
 		}
-<span class="fc" id="L79">		return false;</span>
+<span class="nc" id="L79">		return false;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

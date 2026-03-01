@@ -44,9 +44,9 @@ public class ElementFactoryLine implements ElementFactory {
 
 	final private DataSource dataSource;
 
-<span class="fc" id="L47">	public ElementFactoryLine(DataSource dataSource) {</span>
-<span class="fc" id="L48">		this.dataSource = dataSource;</span>
-<span class="fc" id="L49">	}</span>
+<span class="nc" id="L47">	public ElementFactoryLine(DataSource dataSource) {</span>
+<span class="nc" id="L48">		this.dataSource = dataSource;</span>
+<span class="nc" id="L49">	}</span>
 
 	public Terminated&lt;Element&gt; create() {
 <span class="nc bnc" id="L52" title="All 2 branches missed.">		if (ready() == false) {</span>
@@ -58,25 +58,25 @@ public class ElementFactoryLine implements ElementFactory {
 	}
 
 	public boolean ready() {
-<span class="fc" id="L61">		final String text = dataSource.peek(0).getElement();</span>
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (isLine(text, '-')) {</span>
+<span class="nc" id="L61">		final String text = dataSource.peek(0).getElement();</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (isLine(text, '-')) {</span>
 <span class="nc" id="L63">			return true;</span>
 		}
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (isLine(text, '=')) {</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (isLine(text, '=')) {</span>
 <span class="nc" id="L66">			return true;</span>
 		}
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (isLine(text, '~')) {</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (isLine(text, '~')) {</span>
 <span class="nc" id="L69">			return true;</span>
 		}
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (isLine(text, '.')) {</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (isLine(text, '.')) {</span>
 <span class="nc" id="L72">			return true;</span>
 		}
-<span class="fc" id="L74">		return false;</span>
+<span class="nc" id="L74">		return false;</span>
 	}
 
 	private boolean isLine(String text, char c) {
-<span class="fc" id="L78">		final String s = &quot;&quot; + c + c;</span>
-<span class="pc bpc" id="L79" title="3 of 4 branches missed.">		return text.startsWith(s) &amp;&amp; text.endsWith(s);</span>
+<span class="nc" id="L78">		final String s = &quot;&quot; + c + c;</span>
+<span class="nc bnc" id="L79" title="All 4 branches missed.">		return text.startsWith(s) &amp;&amp; text.endsWith(s);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
