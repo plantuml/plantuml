@@ -210,8 +210,8 @@ public class PSystemBuilder {
 		factories.add(new PSystemOpenIconicFactory());
 		factories.add(new PSystemListOpenIconicFactory());
 		factories.add(new PSystemListArchimateSpritesFactory());
-		factories.add(new PSystemSaltFactory(DiagramType.UML));
-//		factories.add(new PSystemSaltFactory(DiagramType.SALT));
+//		factories.add(new PSystemSaltFactory(DiagramType.UML));
+		factories.add(new PSystemSaltFactory(DiagramType.SALT));
 //		factories.add(new PSystemDotFactory(DiagramType.DOT));
 //		factories.add(new PSystemDotFactory(DiagramType.UML));
 		factories.add(new NwDiagramFactory());
