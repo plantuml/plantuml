@@ -63,24 +63,24 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="nc" id="L66">		final TValue data = values.get(0);</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (data.isJson() == false)</span>
+<span class="fc" id="L66">		final TValue data = values.get(0);</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (data.isJson() == false)</span>
 <span class="nc" id="L68">			throw new EaterException(&quot;Not JSON data&quot;, location);</span>
 
-<span class="nc" id="L70">		final JsonValue json = data.toJson().cloneMe();</span>
+<span class="fc" id="L70">		final JsonValue json = data.toJson().cloneMe();</span>
 
-<span class="nc bnc" id="L72" title="All 4 branches missed.">		if (!json.isArray() &amp;&amp; !json.isObject())</span>
+<span class="pc bpc" id="L72" title="1 of 4 branches missed.">		if (!json.isArray() &amp;&amp; !json.isObject())</span>
 <span class="nc" id="L73">			return data;</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (json.isArray()) {</span>
-<span class="nc" id="L75">			final JsonValue value = values.get(1).toJsonValue();</span>
-<span class="nc" id="L76">			json.asArray().add(value);</span>
-<span class="nc" id="L77">			return TValue.fromJson(json);</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (json.isArray()) {</span>
+<span class="fc" id="L75">			final JsonValue value = values.get(1).toJsonValue();</span>
+<span class="fc" id="L76">			json.asArray().add(value);</span>
+<span class="fc" id="L77">			return TValue.fromJson(json);</span>
 		}
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (json.isObject()) {</span>
-<span class="nc" id="L80">			final String name = values.get(1).toString();</span>
-<span class="nc" id="L81">			final JsonValue value = values.get(2).toJsonValue();</span>
-<span class="nc" id="L82">			json.asObject().add(name, value);</span>
-<span class="nc" id="L83">			return TValue.fromJson(json);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (json.isObject()) {</span>
+<span class="fc" id="L80">			final String name = values.get(1).toString();</span>
+<span class="fc" id="L81">			final JsonValue value = values.get(2).toJsonValue();</span>
+<span class="fc" id="L82">			json.asObject().add(name, value);</span>
+<span class="fc" id="L83">			return TValue.fromJson(json);</span>
 		}
 <span class="nc" id="L85">		throw new EaterException(&quot;Bad JSON type&quot;, location);</span>
 	}

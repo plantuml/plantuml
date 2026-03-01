@@ -84,10 +84,10 @@ public class JsonObject extends JsonValue implements Iterable&lt;Member&gt; {
 	 * Added for PlantUML
 	 */
 	public JsonValue cloneMe() {
-<span class="nc" id="L87">		final JsonObject copy = new JsonObject();</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		for (int i=0; i&lt;names.size(); i++)</span>
-<span class="nc" id="L89">			copy.add(this.names.get(i), this.values.get(i).cloneMe());</span>
-<span class="nc" id="L90">		return copy;</span>
+<span class="fc" id="L87">		final JsonObject copy = new JsonObject();</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		for (int i=0; i&lt;names.size(); i++)</span>
+<span class="fc" id="L89">			copy.add(this.names.get(i), this.values.get(i).cloneMe());</span>
+<span class="fc" id="L90">		return copy;</span>
 	}
 
 

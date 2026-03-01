@@ -194,10 +194,10 @@ public class JsonParser {
 <span class="nc" id="L194">			throw error(&quot;Nesting too deep&quot;);</span>
 		}
 <span class="fc" id="L196">		skipWhiteSpace();</span>
-<span class="pc bpc" id="L197" title="1 of 2 branches missed.">		if (readChar(']')) {</span>
-<span class="nc" id="L198">			nestingLevel--;</span>
-<span class="nc" id="L199">			handler.endArray(array);</span>
-<span class="nc" id="L200">			return;</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">		if (readChar(']')) {</span>
+<span class="fc" id="L198">			nestingLevel--;</span>
+<span class="fc" id="L199">			handler.endArray(array);</span>
+<span class="fc" id="L200">			return;</span>
 		}
 		do {
 <span class="fc" id="L203">			skipWhiteSpace();</span>

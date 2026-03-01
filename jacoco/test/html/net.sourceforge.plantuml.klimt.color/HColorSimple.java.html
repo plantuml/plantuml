@@ -67,18 +67,18 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	// ::comment when __HAXE__
 	@Override
 	public String asString() {
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (isTransparent())</span>
-<span class="nc" id="L71">			return &quot;transparent&quot;;</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (isTransparent())</span>
+<span class="fc" id="L71">			return &quot;transparent&quot;;</span>
 
 <span class="fc" id="L73">		final int red = color.getRed();</span>
 <span class="fc" id="L74">		final int green = color.getGreen();</span>
 <span class="fc" id="L75">		final int blue = color.getBlue();</span>
 <span class="fc" id="L76">		final int alpha = color.getAlpha();</span>
 
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (alpha == 255)</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (alpha == 255)</span>
 <span class="fc" id="L79">			return String.format(&quot;#%02X%02X%02X&quot;, red, green, blue);</span>
 
-<span class="nc" id="L81">		return String.format(&quot;#%02x%02x%02x%02x&quot;, alpha, red, green, blue);</span>
+<span class="fc" id="L81">		return String.format(&quot;#%02x%02x%02x%02x&quot;, alpha, red, green, blue);</span>
 	}
 
 	@Override
@@ -125,7 +125,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 
 	@Override
 	public boolean isDark() {
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		return ColorUtils.getGrayScale(color) &lt; 128;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		return ColorUtils.getGrayScale(color) &lt; 128;</span>
 	}
 
 	@Override

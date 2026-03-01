@@ -48,8 +48,8 @@ public class HSLColor {
 	 * @param l is the Lumanance percentage between 0 - 100
 	 */
 	public HSLColor(float h, float s, float l) {
-<span class="nc" id="L51">		this(h, s, l, 1.0f);</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L51">		this(h, s, l, 1.0f);</span>
+<span class="fc" id="L52">	}</span>
 
 	/**
 	 * Create a HSLColor object using individual HSL values.
@@ -59,11 +59,11 @@ public class HSLColor {
 	 * @param l     the Lumanance percentage between 0 - 100
 	 * @param alpha the alpha value between 0 - 1
 	 */
-<span class="nc" id="L62">	public HSLColor(float h, float s, float l, float alpha) {</span>
-<span class="nc" id="L63">		hsl = new float[] { h, s, l };</span>
-<span class="nc" id="L64">		this.alpha = alpha;</span>
-<span class="nc" id="L65">		rgb = toRGB(hsl, alpha);</span>
-<span class="nc" id="L66">	}</span>
+<span class="fc" id="L62">	public HSLColor(float h, float s, float l, float alpha) {</span>
+<span class="fc" id="L63">		hsl = new float[] { h, s, l };</span>
+<span class="fc" id="L64">		this.alpha = alpha;</span>
+<span class="fc" id="L65">		rgb = toRGB(hsl, alpha);</span>
+<span class="fc" id="L66">	}</span>
 
 	/**
 	 * Create a HSLColor object using an an array containing the individual HSL
@@ -369,8 +369,8 @@ public class HSLColor {
 <span class="fc bfc" id="L369" title="All 2 branches covered.">		if (h &lt; 0)</span>
 <span class="fc" id="L370">			h += 1;</span>
 
-<span class="pc bpc" id="L372" title="1 of 2 branches missed.">		if (h &gt; 1)</span>
-<span class="nc" id="L373">			h -= 1;</span>
+<span class="fc bfc" id="L372" title="All 2 branches covered.">		if (h &gt; 1)</span>
+<span class="fc" id="L373">			h -= 1;</span>
 
 <span class="fc bfc" id="L375" title="All 2 branches covered.">		if (6 * h &lt; 1)</span>
 <span class="fc" id="L376">			return p + ((q - p) * 6 * h);</span>

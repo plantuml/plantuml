@@ -144,7 +144,7 @@ public final class TValue {
 	}
 
 	public boolean isString() {
-<span class="nc bnc" id="L147" title="All 2 branches missed.">		return this.stringValue != null;</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		return this.stringValue != null;</span>
 	}
 
 	public Token toToken() {
@@ -223,13 +223,13 @@ public final class TValue {
 	}
 
 	public JsonValue toJsonValue() {
-<span class="nc bnc" id="L226" title="All 2 branches missed.">		if (isNumber()) {</span>
-<span class="nc" id="L227">			return Json.value(this.intValue);</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">		if (isNumber()) {</span>
+<span class="fc" id="L227">			return Json.value(this.intValue);</span>
 		}
-<span class="nc bnc" id="L229" title="All 2 branches missed.">		if (isString()) {</span>
-<span class="nc" id="L230">			return Json.value(this.stringValue);</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">		if (isString()) {</span>
+<span class="fc" id="L230">			return Json.value(this.stringValue);</span>
 		}
-<span class="nc" id="L232">		return this.jsonValue;</span>
+<span class="fc" id="L232">		return this.jsonValue;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
