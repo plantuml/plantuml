@@ -71,10 +71,10 @@ public class JsonArray extends JsonValue implements Iterable&lt;JsonValue&gt; {
 	 * Added for PlantUML
 	 */
 	public JsonValue cloneMe() {
-<span class="fc" id="L74">		final JsonArray copy = new JsonArray();</span>
-<span class="fc bfc" id="L75" title="All 2 branches covered.">		for (JsonValue value : values)</span>
-<span class="fc" id="L76">			copy.values.add(value.cloneMe());</span>
-<span class="fc" id="L77">		return copy;</span>
+<span class="nc" id="L74">		final JsonArray copy = new JsonArray();</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		for (JsonValue value : values)</span>
+<span class="nc" id="L76">			copy.values.add(value.cloneMe());</span>
+<span class="nc" id="L77">		return copy;</span>
 	}
 
 
@@ -375,8 +375,8 @@ public class JsonArray extends JsonValue implements Iterable&lt;JsonValue&gt; {
 	 *                                   &lt;code&gt;index &amp;gt;= size&lt;/code&gt;
 	 */
 	public JsonArray remove(int index) {
-<span class="fc" id="L378">		values.remove(index);</span>
-<span class="fc" id="L379">		return this;</span>
+<span class="nc" id="L378">		values.remove(index);</span>
+<span class="nc" id="L379">		return this;</span>
 	}
 
 	/**
@@ -450,11 +450,11 @@ public class JsonArray extends JsonValue implements Iterable&lt;JsonValue&gt; {
 	void write(JsonWriter writer) throws IOException {
 <span class="fc" id="L451">		writer.writeArrayOpen();</span>
 <span class="fc" id="L452">		Iterator&lt;JsonValue&gt; iterator = iterator();</span>
-<span class="fc bfc" id="L453" title="All 2 branches covered.">		if (iterator.hasNext()) {</span>
+<span class="pc bpc" id="L453" title="1 of 2 branches missed.">		if (iterator.hasNext()) {</span>
 <span class="fc" id="L454">			iterator.next().write(writer);</span>
-<span class="fc bfc" id="L455" title="All 2 branches covered.">			while (iterator.hasNext()) {</span>
-<span class="fc" id="L456">				writer.writeArraySeparator();</span>
-<span class="fc" id="L457">				iterator.next().write(writer);</span>
+<span class="pc bpc" id="L455" title="1 of 2 branches missed.">			while (iterator.hasNext()) {</span>
+<span class="nc" id="L456">				writer.writeArraySeparator();</span>
+<span class="nc" id="L457">				iterator.next().write(writer);</span>
 			}
 		}
 <span class="fc" id="L460">		writer.writeArrayClose();</span>
