@@ -34,7 +34,13 @@ Or to reassert Nano:
 - Gradient fills are supported (linear gradients, with simplified stops).
 
 ## SAX gradient constraints
-- Linear gradients are supported, but only the first and last stops are used.
-- Intermediate stops, offsets, and `stop-opacity` are ignored.
-- Gradient direction is approximated to horizontal, vertical, or diagonal.
+- Linear gradients support multiple stops and `stop-opacity`.
+- Gradient direction follows the SVG `x1/y1/x2/y2` vector.
 - Radial gradients are not supported.
+
+## Scope: sprites vs. standard diagrams
+- Multi-stop and spreadMethod handling applies only to SVG sprites parsed by the SAX sprite parser.
+- Standard PlantUML diagram gradients (e.g., `#ffd200|8cfcff`) remain two-stop and use the existing `HColorGradient` flow.
+
+## Test coverage note
+- No dedicated unit tests for non-sprite gradient rendering were found as part of this change set; the focused test run was the SVG sprite image generation suite.

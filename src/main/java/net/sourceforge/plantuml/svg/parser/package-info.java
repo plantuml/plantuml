@@ -41,9 +41,8 @@
  *
  * <p><strong>SAX gradient constraints:</strong>
  * <ul>
- *   <li>Linear gradients are supported, but only the first and last stops are used.</li>
- *   <li>Intermediate stops, offsets, and <code>stop-opacity</code> are ignored.</li>
- *   <li>Gradient direction is approximated to horizontal, vertical, or diagonal.</li>
+ *   <li>Linear gradients support multiple stops and <code>stop-opacity</code>.</li>
+ *   <li>Gradient direction follows the SVG <code>x1/y1/x2/y2</code> vector.</li>
  *   <li>Radial gradients are not supported.</li>
  * </ul>
  */
