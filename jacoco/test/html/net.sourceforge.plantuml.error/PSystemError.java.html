@@ -262,9 +262,9 @@ public abstract class PSystemError extends PlainDiagram {
 <span class="nc" id="L262">				udrawable = addMessagePatreon(udrawable);</span>
 <span class="pc bpc" id="L263" title="1 of 2 branches missed.">			} else if (min == 15) {</span>
 <span class="nc" id="L264">				udrawable = addMessageLiberapay(udrawable);</span>
-<span class="pc bpc" id="L265" title="3 of 6 branches missed.">			} else if (min == 30 || min == 39 || min == 48) {</span>
-<span class="nc" id="L266">				udrawable = addMessageDedication(udrawable);</span>
-<span class="pc bpc" id="L267" title="1 of 2 branches missed.">			} else if (getSource().containsIgnoreCase(&quot;arecibo&quot;)) {</span>
+<span class="pc bpc" id="L265" title="5 of 6 branches missed.">			} else if (min == 30 || min == 39 || min == 48) {</span>
+<span class="fc" id="L266">				udrawable = addMessageDedication(udrawable);</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">			} else if (getSource().containsIgnoreCase(&quot;arecibo&quot;)) {</span>
 <span class="nc" id="L268">				udrawable = addMessageArecibo(udrawable);</span>
 			}
 		}
@@ -321,12 +321,12 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlock addMessageDedication(final TextBlock source) throws IOException {
-<span class="nc bnc" id="L324" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
+<span class="pc bpc" id="L324" title="1 of 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
 <span class="nc" id="L325">			return source;</span>
 
-<span class="nc" id="L327">		final TextBlock message = getMessageDedication();</span>
-<span class="nc" id="L328">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L329">		return result;</span>
+<span class="fc" id="L327">		final TextBlock message = getMessageDedication();</span>
+<span class="fc" id="L328">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
+<span class="fc" id="L329">		return result;</span>
 	}
 
 	private TextBlock addMessageAdopt(final TextBlock source) throws IOException {
@@ -346,25 +346,25 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlock getMessageDedication() {
-<span class="nc" id="L349">		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite(&quot;#eae2c9&quot;);</span>
+<span class="fc" id="L349">		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite(&quot;#eae2c9&quot;);</span>
 
-<span class="nc" id="L351">		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
-<span class="nc" id="L352">				.exportFlashcode(&quot;https://plantuml.com/dedication&quot;, XColor.BLACK, backColor.getAwtColor()));</span>
-<span class="nc" id="L353">		final Display disp = Display.create(&quot;&lt;b&gt;Add your own dedication into PlantUML&quot;, &quot; &quot;, &quot;For just $5 per month!&quot;,</span>
+<span class="fc" id="L351">		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
+<span class="fc" id="L352">				.exportFlashcode(&quot;https://plantuml.com/dedication&quot;, XColor.BLACK, backColor.getAwtColor()));</span>
+<span class="fc" id="L353">		final Display disp = Display.create(&quot;&lt;b&gt;Add your own dedication into PlantUML&quot;, &quot; &quot;, &quot;For just $5 per month!&quot;,</span>
 				&quot;Details on &lt;i&gt;[[https://plantuml.com/dedication]]&quot;);
 
-<span class="nc" id="L356">		final UFont font = UFontFactory.sansSerif(14);</span>
-<span class="nc" id="L357">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
-<span class="nc" id="L358">		final TextBlock text = TextBlockUtils</span>
-<span class="nc" id="L359">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
+<span class="fc" id="L356">		final UFont font = UFontFactory.sansSerif(14);</span>
+<span class="fc" id="L357">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
+<span class="fc" id="L358">		final TextBlock text = TextBlockUtils</span>
+<span class="fc" id="L359">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
 		final TextBlock result;
-<span class="nc bnc" id="L361" title="All 2 branches missed.">		if (qrcode == null) {</span>
+<span class="pc bpc" id="L361" title="1 of 2 branches missed.">		if (qrcode == null) {</span>
 <span class="nc" id="L362">			result = text;</span>
 		} else {
-<span class="nc" id="L364">			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);</span>
-<span class="nc" id="L365">			result = TextBlockUtils.mergeLR(text, TextBlockUtils.fromUImage(qr), VerticalAlignment.CENTER);</span>
+<span class="fc" id="L364">			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);</span>
+<span class="fc" id="L365">			result = TextBlockUtils.mergeLR(text, TextBlockUtils.fromUImage(qr), VerticalAlignment.CENTER);</span>
 		}
-<span class="nc" id="L367">		return TextBlockUtils.addBackcolor(result, backColor);</span>
+<span class="fc" id="L367">		return TextBlockUtils.addBackcolor(result, backColor);</span>
 
 	}
 
@@ -482,11 +482,11 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private PortableImage smaller(PortableImage im) {
-<span class="nc bnc" id="L485" title="All 2 branches missed.">		if (im == null)</span>
+<span class="pc bpc" id="L485" title="1 of 2 branches missed.">		if (im == null)</span>
 <span class="nc" id="L486">			return null;</span>
 
-<span class="nc" id="L488">		final int nb = 1;</span>
-<span class="nc" id="L489">		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);</span>
+<span class="fc" id="L488">		final int nb = 1;</span>
+<span class="fc" id="L489">		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);</span>
 	}
 
 	// ::done

@@ -62,11 +62,11 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L65">		final String value = getenv(values.get(0).toString());</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (value == null)</span>
-<span class="fc" id="L67">			return TValue.fromString(&quot;&quot;);</span>
+<span class="nc" id="L65">		final String value = getenv(values.get(0).toString());</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (value == null)</span>
+<span class="nc" id="L67">			return TValue.fromString(&quot;&quot;);</span>
 
-<span class="fc" id="L69">		return TValue.fromString(value);</span>
+<span class="nc" id="L69">		return TValue.fromString(value);</span>
 	}
 
 	private String getenv(String name) {
@@ -74,12 +74,12 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 		// A plantuml server should have an own SecurityManager to
 		// avoid access to properties and environment variables, but we should
 		// also stop here in other deployments.
-<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (SecurityUtils.getSecurityProfile().canWeReadThisEnvironmentVariable(name) == false)</span>
-<span class="fc" id="L78">			return null;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile().canWeReadThisEnvironmentVariable(name) == false)</span>
+<span class="nc" id="L78">			return null;</span>
 
-<span class="fc" id="L80">		final String env = System.getProperty(name);</span>
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (env != null)</span>
-<span class="fc" id="L82">			return env;</span>
+<span class="nc" id="L80">		final String env = System.getProperty(name);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (env != null)</span>
+<span class="nc" id="L82">			return env;</span>
 
 <span class="nc" id="L84">		return System.getenv(name);</span>
 	}

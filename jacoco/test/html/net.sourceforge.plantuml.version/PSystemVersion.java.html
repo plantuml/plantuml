@@ -67,18 +67,18 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 public class PSystemVersion extends PlainStringsDiagram {
 
 	PSystemVersion(UmlSource source, boolean withImage, List&lt;String&gt; args, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L70">		super(source, preprocessing);</span>
-<span class="fc" id="L71">		this.strings.addAll(args);</span>
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM())</span>
+<span class="nc" id="L70">		super(source, preprocessing);</span>
+<span class="nc" id="L71">		this.strings.addAll(args);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (!TeaVM.isTeaVM())</span>
 			try {
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">				if (withImage) {</span>
-<span class="fc" id="L75">					this.image = getPlantumlImage();</span>
-<span class="fc" id="L76">					this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">				if (withImage) {</span>
+<span class="nc" id="L75">					this.image = getPlantumlImage();</span>
+<span class="nc" id="L76">					this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;</span>
 				}
 <span class="nc" id="L78">			} catch (Exception e) {</span>
 <span class="nc" id="L79">				e.printStackTrace();</span>
-<span class="fc" id="L80">			}</span>
-<span class="fc" id="L81">	}</span>
+<span class="nc" id="L80">			}</span>
+<span class="nc" id="L81">	}</span>
 
 	private PSystemVersion(UmlSource source, List&lt;String&gt; args, PortableImage image,
 			PreprocessingArtifact preprocessing) {
@@ -207,7 +207,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 <span class="fc" id="L207">		Stdlib.addInfoVersion(strings, true);</span>
 <span class="fc" id="L208">		strings.add(&quot; &quot;);</span>
 
-<span class="fc" id="L210">		return new PSystemVersion(source, true, strings, preprocessing);</span>
+<span class="nc" id="L210">		return new PSystemVersion(source, true, strings, preprocessing);</span>
 	}
 	// ::done
 
@@ -291,7 +291,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 //	}
 
 	public DiagramDescription getDescription() {
-<span class="fc" id="L294">		return new DiagramDescription(&quot;(Version)&quot;);</span>
+<span class="nc" id="L294">		return new DiagramDescription(&quot;(Version)&quot;);</span>
 	}
 
 	public List&lt;String&gt; getLines() {
