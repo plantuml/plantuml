@@ -60,7 +60,9 @@ public class DriverPathSvg extends DriverShadowedG2d implements UDriver<UPath, S
 		final HColor color = param.getColor();
 		final HColor back = param.getBackcolor();
 
-		if (color != null && back != null && color.equals(back)) {
+		if (color != null && back != null && color.equals(back)
+				&& (color instanceof net.sourceforge.plantuml.klimt.color.HColorGradient) == false
+				&& (color instanceof net.sourceforge.plantuml.klimt.color.HColorLinearGradient) == false) {
 			svg.setFillColor(color.toSvg(mapper));
 			svg.setStrokeColor("");
 			svg.setStrokeWidth(0, null);

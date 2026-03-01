@@ -137,9 +137,9 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 
 			if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
 				final Rectangle2D.Double area = new Rectangle2D.Double(x, y - height + 1.5, width, height);
-				if (extended instanceof HColorGradient) {
-					final GradientPaint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, width, height,
-							extended);
+				if (extended instanceof HColorGradient || extended instanceof net.sourceforge.plantuml.klimt.color.HColorLinearGradient) {
+					final java.awt.Paint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, width, height,
+								extended);
 					g2d.setPaint(paint);
 					g2d.fill(area);
 				} else {

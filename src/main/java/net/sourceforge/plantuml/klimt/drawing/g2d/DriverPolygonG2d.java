@@ -36,14 +36,15 @@
 package net.sourceforge.plantuml.klimt.drawing.g2d;
 
 import java.awt.BasicStroke;
-import java.awt.GradientPaint;
 import java.awt.Graphics2D;
+import java.awt.Paint;
 import java.awt.geom.GeneralPath;
 
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
+import net.sourceforge.plantuml.klimt.color.HColorLinearGradient;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
@@ -88,27 +89,8 @@ public class DriverPolygonG2d extends DriverShadowedG2d implements UDriver<UPoly
 			else
 				drawShadow(g2d, path, shape.getDeltaShadow(), dpiFactor);
 
-		if (back instanceof HColorGradient) {
-			final HColorGradient gr = (HColorGradient) back;
-			final char policy = gr.getPolicy();
-			final GradientPaint paint;
-			if (policy == '|')
-				paint = new GradientPaint((float) x, (float) (y + shape.getHeight()) / 2,
-						gr.getColor1().toColor(mapper).toAwtColor(), (float) (x + shape.getWidth()),
-						(float) (y + shape.getHeight()) / 2, gr.getColor2().toColor(mapper).toAwtColor());
-			else if (policy == '\\')
-				paint = new GradientPaint((float) x, (float) (y + shape.getHeight()), gr.getColor1().toColor(mapper).toAwtColor(),
-						(float) (x + shape.getWidth()), (float) y, gr.getColor2().toColor(mapper).toAwtColor());
-			else if (policy == '-')
-				paint = new GradientPaint((float) (x + shape.getWidth()) / 2, (float) y, gr.getColor1().toColor(mapper).toAwtColor(),
-						(float) (x + shape.getWidth()) / 2, (float) (y + shape.getHeight()),
-						gr.getColor2().toColor(mapper).toAwtColor());
-			else
-				// for /
-				paint = new GradientPaint((float) x, (float) y, gr.getColor1().toColor(mapper).toAwtColor(),
-						(float) (x + shape.getWidth()), (float) (y + shape.getHeight()),
-						gr.getColor2().toColor(mapper).toAwtColor());
-
+		if (back instanceof HColorGradient || back instanceof HColorLinearGradient) {
+			final Paint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, shape.getWidth(), shape.getHeight(), back);
 			g2d.setPaint(paint);
 			g2d.fill(path);
 		} else if (back.isTransparent() == false) {

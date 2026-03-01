@@ -73,6 +73,7 @@ import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
@@ -422,6 +423,91 @@ public class SvgGraphics {
 			defs.appendChild(elt);
 		}
 		return id;
+	}
+
+	public String createSvgGradient(net.sourceforge.plantuml.klimt.color.HColorLinearGradient gr,
+			ColorMapper mapper) {
+		final List<Object> key = buildLinearGradientKey(gr, mapper);
+		String id = gradients.get(key);
+		if (id == null) {
+			final Element elt = document.createElement("linearGradient");
+			if (gr.isUserSpaceOnUse()) {
+				elt.setAttribute("gradientUnits", "userSpaceOnUse");
+				elt.setAttribute("x1", format(gr.getX1()));
+				elt.setAttribute("y1", format(gr.getY1()));
+				elt.setAttribute("x2", format(gr.getX2()));
+				elt.setAttribute("y2", format(gr.getY2()));
+			} else {
+				elt.setAttribute("x1", formatPercent(gr.getX1()));
+				elt.setAttribute("y1", formatPercent(gr.getY1()));
+				elt.setAttribute("x2", formatPercent(gr.getX2()));
+				elt.setAttribute("y2", formatPercent(gr.getY2()));
+			}
+			if (gr.getSpreadMethod() != net.sourceforge.plantuml.klimt.color.HColorLinearGradient.SpreadMethod.PAD) {
+				elt.setAttribute("spreadMethod", gr.getSpreadMethod().name().toLowerCase());
+			}
+			id = gradientId + gradients.size();
+			gradients.put(key, id);
+			elt.setAttribute("id", id);
+
+			for (net.sourceforge.plantuml.klimt.color.HColorLinearGradient.Stop stop : gr.getStops()) {
+				final Element stopElt = document.createElement("stop");
+				stopElt.setAttribute("offset", formatPercent(stop.getOffset()));
+				final net.sourceforge.plantuml.klimt.awt.XColor color = stop.getColor().toColor(mapper);
+				stopElt.setAttribute("stop-color", net.sourceforge.plantuml.klimt.awt.XColor.toHexRGBColor(color.getRGB()));
+				final double opacity = (color.getAlpha() / 255.0) * stop.getOpacity();
+				if (opacity < 0.9999)
+					stopElt.setAttribute("stop-opacity", formatOpacity(opacity));
+				elt.appendChild(stopElt);
+			}
+			defs.appendChild(elt);
+		}
+		return id;
+	}
+
+	private List<Object> buildLinearGradientKey(net.sourceforge.plantuml.klimt.color.HColorLinearGradient gr,
+			ColorMapper mapper) {
+		final List<Object> key = new ArrayList<Object>();
+		key.add("linear");
+		key.add(Boolean.valueOf(gr.isUserSpaceOnUse()));
+		key.add(gr.getSpreadMethod().name());
+		key.add(Double.valueOf(gr.getX1()));
+		key.add(Double.valueOf(gr.getY1()));
+		key.add(Double.valueOf(gr.getX2()));
+		key.add(Double.valueOf(gr.getY2()));
+		for (net.sourceforge.plantuml.klimt.color.HColorLinearGradient.Stop stop : gr.getStops()) {
+			final net.sourceforge.plantuml.klimt.awt.XColor color = stop.getColor().toColor(mapper);
+			key.add(Double.valueOf(stop.getOffset()));
+			key.add(net.sourceforge.plantuml.klimt.awt.XColor.toHexRGBColor(color.getRGB()));
+			key.add(Double.valueOf(stop.getOpacity()));
+		}
+		return key;
+	}
+
+	private String formatPercent(double value) {
+		final double percent = value * 100.0;
+		if (percent == 0.0)
+			return "0%";
+
+		String s = String.format(Locale.US, "%.4f", percent);
+		final int dot = s.indexOf('.');
+		if (dot >= 0) {
+			int end = s.length() - 1;
+			while (end > dot && s.charAt(end) == '0')
+				end--;
+			if (end == dot)
+				end--;
+			s = s.substring(0, end + 1);
+		}
+		return s + "%";
+	}
+
+	private String formatOpacity(double value) {
+		if (value <= 0.0)
+			return "0";
+		if (value >= 1.0)
+			return "1";
+		return String.format(Locale.US, "%.4f", value);
 	}
 
 	public final void setFillColor(String fill) {

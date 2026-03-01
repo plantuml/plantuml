@@ -35,14 +35,15 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.g2d;
 
-import java.awt.GradientPaint;
 import java.awt.Graphics2D;
+import java.awt.Paint;
 
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
+import net.sourceforge.plantuml.klimt.color.HColorLinearGradient;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.USegment;
@@ -91,27 +92,11 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<UPath, G
 			else
 				drawShadow(g2d, p, shape.getDeltaShadow(), dpiFactor);
 
-		if (back instanceof HColorGradient) {
-			final HColorGradient gr = (HColorGradient) back;
-			final char policy = gr.getPolicy();
-			final GradientPaint paint;
-			if (policy == '|') {
-				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY() / 2,
-						gr.getColor1().toColor(mapper).toAwtColor(), (float) minMax.getMaxX(), (float) minMax.getMaxY() / 2,
-						gr.getColor2().toColor(mapper).toAwtColor());
-			} else if (policy == '\\') {
-				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY(),
-						gr.getColor1().toColor(mapper).toAwtColor(), (float) minMax.getMaxX(), (float) minMax.getMinY(),
-						gr.getColor2().toColor(mapper).toAwtColor());
-			} else if (policy == '-') {
-				paint = new GradientPaint((float) minMax.getMaxX() / 2, (float) minMax.getMinY(),
-						gr.getColor1().toColor(mapper).toAwtColor(), (float) minMax.getMaxX() / 2, (float) minMax.getMaxY(),
-						gr.getColor2().toColor(mapper).toAwtColor());
-			} else {
-				// for /
-				paint = new GradientPaint((float) x, (float) y, gr.getColor1().toColor(mapper).toAwtColor(),
-						(float) minMax.getMaxX(), (float) minMax.getMaxY(), gr.getColor2().toColor(mapper).toAwtColor());
-			}
+		if (back instanceof HColorGradient || back instanceof HColorLinearGradient) {
+			final double width = minMax.getMaxX() - minMax.getMinX();
+			final double height = minMax.getMaxY() - minMax.getMinY();
+			final Paint paint = DriverRectangleG2d.getPaintGradient(minMax.getMinX(), minMax.getMinY(), mapper, width, height,
+					back);
 			g2d.setPaint(paint);
 			g2d.fill(p);
 		} else if (back.isTransparent() == false) {
