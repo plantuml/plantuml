@@ -1,0 +1,15 @@
+@startuml
+!pragma svgparser sax
+sprite spreadreflect <svg width="300" height="40" viewBox="0 0 300 40" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="lg-reflect" x1="0%" y1="0%" x2="100%" y2="0%" spreadMethod="reflect">
+            <stop offset="0%" stop-color="#FF0000" />
+            <stop offset="50%" stop-color="#00FF00" />
+            <stop offset="100%" stop-color="#0000FF" />
+        </linearGradient>
+    </defs>
+    <rect x="0" y="0" width="300" height="40" fill="url(#lg-reflect)" />
+</svg>
+
+Alice -> Bob : <$spreadreflect>
+@enduml

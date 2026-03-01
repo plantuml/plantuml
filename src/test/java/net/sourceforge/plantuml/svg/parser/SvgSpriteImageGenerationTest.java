@@ -138,6 +138,13 @@ public class SvgSpriteImageGenerationTest {
                 "SVG should not contain error message - check generated file: " + svgOutput);
             assertFalse(svgContent.contains("An error has occurred"), 
                 "SVG should not contain error message - check generated file: " + svgOutput);
+
+            if ("azureSVG".equals(baseName)) {
+                final int stopCount = countOccurrences(svgContent, "<stop");
+                assertTrue(stopCount >= 3, "azureSVG should include multiple gradient stops");
+                assertTrue(svgContent.contains("stop-opacity"), "azureSVG should preserve stop-opacity in SVG output");
+            }
+
             
             System.out.println("  ✓ SVG validation: Contains valid <svg> tags, no errors");
         } catch (Exception e) {
@@ -154,5 +161,17 @@ public class SvgSpriteImageGenerationTest {
                 return false;
         }
         return true;
+    }
+
+    private int countOccurrences(String haystack, String needle) {
+        int count = 0;
+        int index = 0;
+        while (true) {
+            final int next = haystack.indexOf(needle, index);
+            if (next < 0)
+                return count;
+            count++;
+            index = next + needle.length();
+        }
     }
 }
