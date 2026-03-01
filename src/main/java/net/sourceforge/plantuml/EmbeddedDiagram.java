@@ -65,7 +65,6 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
-	// ::remove file when __HAXE__
 
 	public static final String EMBEDDED_START = "{{";
 	public static final String EMBEDDED_END = "}}";
@@ -83,6 +82,8 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 				return "uml";
 			case EMBEDDED_START + "ditaa":
 				return "ditaa";
+			case EMBEDDED_START + "salt":
+				return "salt";
 			case EMBEDDED_START + "uml":
 				return "uml";
 			case EMBEDDED_START + "wbs":
