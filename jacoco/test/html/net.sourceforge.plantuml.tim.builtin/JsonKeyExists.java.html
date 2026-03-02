@@ -63,22 +63,22 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="nc" id="L66">		final TValue arg0 = values.get(0);</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (arg0.isJson() == false)</span>
+<span class="fc" id="L66">		final TValue arg0 = values.get(0);</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (arg0.isJson() == false)</span>
 <span class="nc" id="L68">			return TValue.fromBoolean(false);</span>
 
-<span class="nc" id="L70">		final JsonValue json = arg0.toJson();</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (json.isObject() == false)</span>
+<span class="fc" id="L70">		final JsonValue json = arg0.toJson();</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (json.isObject() == false)</span>
 <span class="nc" id="L72">			return TValue.fromBoolean(false);</span>
 
-<span class="nc" id="L74">		final TValue arg1 = values.get(1);</span>
-<span class="nc bnc" id="L75" title="All 6 branches missed.">		if (arg1.isString() || (arg1.isJson() &amp;&amp; arg1.toJson().isString())) {</span>
-<span class="nc" id="L76">			final String keyname = arg1.toString();</span>
-<span class="nc" id="L77">			final JsonObject object = (JsonObject) json;</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (object.contains(keyname))</span>
-<span class="nc" id="L79">				return TValue.fromBoolean(true);</span>
+<span class="fc" id="L74">		final TValue arg1 = values.get(1);</span>
+<span class="pc bpc" id="L75" title="3 of 6 branches missed.">		if (arg1.isString() || (arg1.isJson() &amp;&amp; arg1.toJson().isString())) {</span>
+<span class="fc" id="L76">			final String keyname = arg1.toString();</span>
+<span class="fc" id="L77">			final JsonObject object = (JsonObject) json;</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">			if (object.contains(keyname))</span>
+<span class="fc" id="L79">				return TValue.fromBoolean(true);</span>
 		}
-<span class="nc" id="L81">		return TValue.fromBoolean(false);</span>
+<span class="fc" id="L81">		return TValue.fromBoolean(false);</span>
 	}
 
 }

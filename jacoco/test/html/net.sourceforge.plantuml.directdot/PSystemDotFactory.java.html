@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 public class PSystemDotFactory extends PSystemBasicFactory&lt;PSystemDot&gt; {
 
 	private StringBuilder data;
-<span class="nc" id="L49">	private static final Pattern GRAPHVIZ_DOT_HEADER_PATTERN = Pattern.compile(</span>
+<span class="fc" id="L49">	private static final Pattern GRAPHVIZ_DOT_HEADER_PATTERN = Pattern.compile(</span>
 		  &quot;\\s*&quot;                            // optional leading whitespace
 		+ &quot;(strict\\s+)?&quot;                   // optional 'strict'
 		+ &quot;(di)?&quot;                           // optional 'di'
@@ -62,8 +62,8 @@ public class PSystemDotFactory extends PSystemBasicFactory&lt;PSystemDot&gt; {
 	);
 
 	public PSystemDotFactory(DiagramType diagramType) {
-<span class="nc" id="L65">		super(diagramType);</span>
-<span class="nc" id="L66">	}</span>
+<span class="fc" id="L65">		super(diagramType);</span>
+<span class="fc" id="L66">	}</span>
 
 	@Override
 	public PSystemDot initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
