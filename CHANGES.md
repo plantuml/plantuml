@@ -4,14 +4,16 @@
   - [🖼️ allow cumulative textDecoration on SVG (#2542)](https://github.com/plantuml/plantuml/commit/3c2d7982bad5c103afc60fcb9a73f1f377801ae9)
   - [✨ Add role label to associations in class diagrams (#2537)](https://github.com/plantuml/plantuml/commit/75a55488c3c599bc6c543ae53e2f82e9f5f898cb)
   - [🚸 improve `packetdiag` and `nwdiag` (better def., deprecate @startuml, ...) (#2547)](https://github.com/plantuml/plantuml/commit/5bf3ddf475f8eefbc7da6be56c98a82d8825f719)
-  - [💥 temporary remove chronology diagrams](https://github.com/plantuml/plantuml/commit/858e221bfd501c7fce15db9f709d272e365a1a45)
+  - [💥 [Chronology] temporary remove chronology diagrams](https://github.com/plantuml/plantuml/commit/858e221bfd501c7fce15db9f709d272e365a1a45)
+  - [💥 [Activity] Suppress old SDL end char management (#2489)](https://github.com/plantuml/plantuml/issues/2489)
+  - [💥 [Activity] Require stereotypes at end of line in activity diagrams](https://github.com/plantuml/plantuml/commit/b5fa99b65d4cd2eeccdb964aee1135e6dbbae618)
   - [📝 add new gradle tasks and `Jdepend-graph of plantuml` on dev site (#2550)](https://github.com/plantuml/plantuml/commit/908674afff254a380daa95231d90579d9ce7bfb8)
   - [👷 publish Java 8 JAR built thanks to `ant`](https://github.com/plantuml/plantuml/commit/f1f0d0f96548b53c20c0acc60f47d3e23a49b8f9)
   - [🐛 fix NPE](https://github.com/plantuml/plantuml/commit/a7f8aecf0be879d32d7aa43c670e5497dc56c522)
-  - [✨ add groups for start and ending state (#2500)](https://github.com/plantuml/plantuml/pull/2500)
-  - [✨ group individual states in SVG (#2511)](https://github.com/plantuml/plantuml/pull/2511)
-  - [✨ allow Timing signals without full-label (similar to `clock`)(#2499)](https://github.com/plantuml/plantuml/pull/2499)
-  - [✨ allow visibility on one-line class (#2519)](https://github.com/plantuml/plantuml/pull/2519)
+  - [✨ [State] add groups for start and ending state (#2500)](https://github.com/plantuml/plantuml/pull/2500)
+  - [✨ [State] group individual states in SVG (#2511)](https://github.com/plantuml/plantuml/pull/2511)
+  - [✨ [Timing] allow Timing signals without full-label (similar to `clock`)(#2499)](https://github.com/plantuml/plantuml/pull/2499)
+  - [✨ [Class] allow visibility on one-line class (#2519)](https://github.com/plantuml/plantuml/pull/2519)
 
 ## V1.2026.1 (Jan 18, 2026)
  - [🐛 fix GUI - GUI flag generates error for release 1.2026.0](https://github.com/plantuml/plantuml/issues/2481)
@@ -2233,6 +2235,7 @@ have been renamed to generateImage
 ## V7994
 
 - [New options in table for Salt](salt#table)
+
 
 
 
