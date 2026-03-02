@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.dedication.PSystemDedicationFactory;
 import net.sourceforge.plantuml.definition.PSystemDefinitionFactory;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
+import net.sourceforge.plantuml.directdot.PSystemDotFactory;
 import net.sourceforge.plantuml.ditaa.PSystemDitaaFactory;
 import net.sourceforge.plantuml.donors.PSystemDonorsFactory;
 import net.sourceforge.plantuml.donors.PSystemSkinparameterListFactory;
@@ -212,7 +213,7 @@ public class PSystemBuilder {
 		factories.add(new PSystemListArchimateSpritesFactory());
 //		factories.add(new PSystemSaltFactory(DiagramType.UML));
 		factories.add(new PSystemSaltFactory(DiagramType.SALT));
-//		factories.add(new PSystemDotFactory(DiagramType.DOT));
+		factories.add(new PSystemDotFactory(DiagramType.DOT));
 //		factories.add(new PSystemDotFactory(DiagramType.UML));
 		factories.add(new NwDiagramFactory());
 		factories.add(new MindMapDiagramFactory());
