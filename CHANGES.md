@@ -8,6 +8,10 @@
   - [📝 add new gradle tasks and `Jdepend-graph of plantuml` on dev site (#2550)](https://github.com/plantuml/plantuml/commit/908674afff254a380daa95231d90579d9ce7bfb8)
   - [👷 publish Java 8 JAR built thanks to `ant`](https://github.com/plantuml/plantuml/commit/f1f0d0f96548b53c20c0acc60f47d3e23a49b8f9)
   - [🐛 fix NPE](https://github.com/plantuml/plantuml/commit/a7f8aecf0be879d32d7aa43c670e5497dc56c522)
+  - [✨ add groups for start and ending state (#2500)](https://github.com/plantuml/plantuml/pull/2500)
+  - [✨ group individual states in SVG (#2511)](https://github.com/plantuml/plantuml/pull/2511)
+  - [✨ allow Timing signals without full-label (similar to `clock`)(#2499)](https://github.com/plantuml/plantuml/pull/2499)
+  - [✨ allow visibility on one-line class (#2519)](https://github.com/plantuml/plantuml/pull/2519)
 
 ## V1.2026.1 (Jan 18, 2026)
  - [🐛 fix GUI - GUI flag generates error for release 1.2026.0](https://github.com/plantuml/plantuml/issues/2481)
@@ -2229,6 +2233,7 @@ have been renamed to generateImage
 ## V7994
 
 - [New options in table for Salt](salt#table)
+
 
 
 
