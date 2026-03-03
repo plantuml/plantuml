@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.utils.PatchUtils;
 
 public abstract class AbstractGtile extends AbstractGtileRoot implements Gtile {
 

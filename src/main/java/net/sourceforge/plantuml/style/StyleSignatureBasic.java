@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.stereo.Stereostyles;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.url.Url;
-import net.sourceforge.plantuml.utils.PatchUtils;
 
 public class StyleSignatureBasic implements StyleSignature {
 	// ::remove file when __HAXE__

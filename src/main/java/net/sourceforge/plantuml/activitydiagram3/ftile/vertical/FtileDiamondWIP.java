@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.Styleable;
-import net.sourceforge.plantuml.utils.PatchUtils;
 
 abstract class FtileDiamondWIP extends AbstractFtile implements Styleable {
 

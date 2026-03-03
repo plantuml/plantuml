@@ -66,7 +66,6 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.Styleable;
 import net.sourceforge.plantuml.svek.image.Opale;
-import net.sourceforge.plantuml.utils.PatchUtils;
 
 public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable {
 
