@@ -38,7 +38,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
-import net.sourceforge.plantuml.core.AbstractPSystem;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.teavm.TeaVM;
@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.utils.Log;
 public class PSystemVersionFactory extends PSystemSingleLineFactory {
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
+	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		try {
 			if (line.matches("(?i)^(authors?|about)\\s*$"))
 				return PSystemVersion.createShowAuthors(source, preprocessing);

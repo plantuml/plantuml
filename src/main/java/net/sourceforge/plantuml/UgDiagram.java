@@ -40,7 +40,7 @@ import java.io.OutputStream;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
-import net.sourceforge.plantuml.core.AbstractPSystem;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramChromeFactory12026;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.TextBlockExporter12026;
@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
-public abstract class UgDiagram extends AbstractPSystem {
+public abstract class UgDiagram extends Diagram {
 
 	public UgDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);

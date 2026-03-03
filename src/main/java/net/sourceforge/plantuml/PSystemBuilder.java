@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.cheneer.ChenEerDiagramFactory;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
-import net.sourceforge.plantuml.core.AbstractPSystem;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -119,7 +119,7 @@ import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
  * Tries each of the factories (enumerated in the static block below) until one
  * succeeds.
  *
- * @see AbstractPSystem
+ * @see Diagram
  */
 public class PSystemBuilder {
 

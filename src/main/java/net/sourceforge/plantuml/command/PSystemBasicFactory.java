@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.command;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.Previous;
-import net.sourceforge.plantuml.core.AbstractPSystem;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
 
-public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSystemAbstractFactory {
+public abstract class PSystemBasicFactory<P extends Diagram> extends PSystemAbstractFactory {
 
 	public PSystemBasicFactory(DiagramType diagramType) {
 		super(diagramType);

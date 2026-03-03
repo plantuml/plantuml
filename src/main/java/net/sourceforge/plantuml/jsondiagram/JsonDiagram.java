@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.command.CommandControl;
 import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.core.AbstractPSystem;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -95,7 +95,7 @@ public class JsonDiagram extends TitledDiagram {
 			final BlocLines lines = BlocLines.singleString(scale);
 			for (Command cmd : cmds)
 				if (cmd.isValid(lines) == CommandControl.OK)
-					((SingleLineCommand2<AbstractPSystem>) cmd).execute(this, lines, ParserPass.ONE);
+					((SingleLineCommand2<Diagram>) cmd).execute(this, lines, ParserPass.ONE);
 		}
 	}
 

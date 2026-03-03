@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.openiconic;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
-import net.sourceforge.plantuml.core.AbstractPSystem;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
@@ -46,7 +46,7 @@ public class PSystemListOpenIconicFactory extends PSystemSingleLineFactory {
 	
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
+	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		final String lineLower = StringUtils.goLowerCase(line);
 		if (lineLower.startsWith("listopeniconic"))
 			return new PSystemListOpenIconic(source, preprocessing);

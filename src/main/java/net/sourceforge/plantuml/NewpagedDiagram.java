@@ -42,7 +42,7 @@ import java.util.List;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
-import net.sourceforge.plantuml.core.AbstractPSystem;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramChromeFactory12026;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -61,7 +61,7 @@ public class NewpagedDiagram extends UgDiagram {
 
 	private final List<Diagram> diagrams = new ArrayList<>();
 
-	public NewpagedDiagram(UmlSource source, AbstractPSystem diag1, AbstractPSystem diag2,
+	public NewpagedDiagram(UmlSource source, Diagram diag1, Diagram diag2,
 			PreprocessingArtifact preprocessingArtifact) {
 		super(source, preprocessingArtifact);
 		if (diag1 instanceof NewpagedDiagram)
@@ -189,14 +189,14 @@ public class NewpagedDiagram extends UgDiagram {
 	public void makeDiagramReady() {
 		super.makeDiagramReady();
 		for (Diagram diagram : diagrams)
-			((AbstractPSystem) diagram).makeDiagramReady();
+			((Diagram) diagram).makeDiagramReady();
 
 	}
 
 	@Override
 	public String checkFinalError() {
 		for (Diagram p : getDiagrams()) {
-			final String check = ((AbstractPSystem) p).checkFinalError();
+			final String check = ((Diagram) p).checkFinalError();
 			if (check != null)
 				return check;
 

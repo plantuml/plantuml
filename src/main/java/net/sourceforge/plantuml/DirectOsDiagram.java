@@ -40,14 +40,14 @@ import java.io.OutputStream;
 
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
-import net.sourceforge.plantuml.core.AbstractPSystem;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
-public abstract class DirectOsDiagram extends AbstractPSystem {
+public abstract class DirectOsDiagram extends Diagram {
 
 	public DirectOsDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
