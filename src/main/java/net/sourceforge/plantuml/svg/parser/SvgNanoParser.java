@@ -74,6 +74,8 @@ import net.sourceforge.plantuml.openiconic.SvgPath;
 
 public class SvgNanoParser implements ISvgSpriteParser, GrayLevelRange {
 
+	private final static boolean TRACE = false;
+
 	private static final Pattern P_TEXT_OR_DRAW = Pattern
 			.compile("(\\<text .*?\\</text\\>)|(\\<(svg|path|g|circle|ellipse)[^<>]*\\>)|(\\</[^<>]*\\>)");
 
@@ -160,7 +162,8 @@ public class SvgNanoParser implements ISvgSpriteParser, GrayLevelRange {
 			} else if (s.startsWith("<text ")) {
 				drawText(ugs, s, stackG);
 			} else {
-				System.err.println("**?=" + s);
+				if (TRACE)
+					System.err.println("ignored1=" + s);
 			}
 		}
 	}
@@ -176,8 +179,10 @@ public class SvgNanoParser implements ISvgSpriteParser, GrayLevelRange {
 						data.add(s);
 					else if (s.startsWith("<svg") || s.startsWith("</svg")) {
 						// Ignore
-					} else
-						System.err.println("???=" + s);
+					} else {
+						if (TRACE)
+							System.err.println("ignored2=" + s);
+					}
 				}
 			}
 		}

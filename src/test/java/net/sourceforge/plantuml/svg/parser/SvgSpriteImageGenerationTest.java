@@ -33,6 +33,9 @@ public class SvgSpriteImageGenerationTest {
     private static final Path RESOURCES_DIR = Paths.get("src/test/resources/svg-sprites");
 	// NOTE: SAX parser does not support <style> blocks; keep this file excluded for now.
 	private static final String[] SKIPPED_PUML_FILES = { "svg2GroupsWithStyle.puml" };
+	
+	private final static boolean TRACE = false;
+
 
     @BeforeAll
     static void setup() throws IOException {
@@ -52,7 +55,7 @@ public class SvgSpriteImageGenerationTest {
      */
     @TestFactory
     Stream<DynamicTest> generateImagesFromAllPumlFiles() throws IOException {
-        if (SKIPPED_PUML_FILES.length > 0) {
+        if (TRACE && SKIPPED_PUML_FILES.length > 0) {
             System.out.println("\n=== Skipping SVG sprite files ===");
             for (String skip : SKIPPED_PUML_FILES) {
                 System.out.println("  - " + skip);
@@ -88,7 +91,8 @@ public class SvgSpriteImageGenerationTest {
         // Get the base filename without extension
         String baseName = pumlFile.getFileName().toString().replaceFirst("\\.puml$", "");
         
-        System.out.println("\n=== Processing: " + baseName + " ===");
+        if (TRACE)
+            System.out.println("\n=== Processing: " + baseName + " ===");
         
         // Generate the diagram using PlantUmlTestUtils
         PlantUmlTestUtils.ExportDiagram exporter = PlantUmlTestUtils.exportDiagram(content);
@@ -102,9 +106,11 @@ public class SvgSpriteImageGenerationTest {
             exporter.toFile(pngOutput, FileFormat.PNG);
             assertTrue(Files.exists(pngOutput), "PNG file should be created: " + pngOutput);
             assertTrue(Files.size(pngOutput) > 0, "PNG file should not be empty: " + pngOutput);
-            System.out.println("  ✓ PNG: " + pngOutput + " (" + Files.size(pngOutput) + " bytes)");
+            if (TRACE)
+                System.out.println("  ✓ PNG: " + pngOutput + " (" + Files.size(pngOutput) + " bytes)");
         } catch (Exception e) {
-            System.err.println("  ✗ PNG generation failed: " + e.getMessage());
+            if (TRACE)
+                System.err.println("  ✗ PNG generation failed: " + e.getMessage());
             throw e;
         }
         
@@ -114,9 +120,11 @@ public class SvgSpriteImageGenerationTest {
             assertNotNull(pngImage, "PNG image should be loadable");
             assertTrue(pngImage.getWidth() > 0, "PNG image should have width");
             assertTrue(pngImage.getHeight() > 0, "PNG image should have height");
-            System.out.println("  ✓ PNG dimensions: " + pngImage.getWidth() + "x" + pngImage.getHeight());
+            if (TRACE)
+                System.out.println("  ✓ PNG dimensions: " + pngImage.getWidth() + "x" + pngImage.getHeight());
         } catch (Exception e) {
-            System.err.println("  ⚠ PNG image validation warning: " + e.getMessage());
+            if (TRACE)
+                System.err.println("  ⚠ PNG image validation warning: " + e.getMessage());
             // Continue even if image can't be loaded (might be a rendering issue)
         }
         
@@ -126,7 +134,8 @@ public class SvgSpriteImageGenerationTest {
             exporter.toFile(svgOutput, FileFormat.SVG);
             assertTrue(Files.exists(svgOutput), "SVG file should be created: " + svgOutput);
             assertTrue(Files.size(svgOutput) > 0, "SVG file should not be empty: " + svgOutput);
-            System.out.println("  ✓ SVG: " + svgOutput + " (" + Files.size(svgOutput) + " bytes)");
+            if (TRACE)
+                System.out.println("  ✓ SVG: " + svgOutput + " (" + Files.size(svgOutput) + " bytes)");
             
             // Verify SVG content contains expected SVG tags
             String svgContent = Files.readString(svgOutput, StandardCharsets.UTF_8);
@@ -139,13 +148,16 @@ public class SvgSpriteImageGenerationTest {
             assertFalse(svgContent.contains("An error has occurred"), 
                 "SVG should not contain error message - check generated file: " + svgOutput);
             
-            System.out.println("  ✓ SVG validation: Contains valid <svg> tags, no errors");
+            if (TRACE)
+                System.out.println("  ✓ SVG validation: Contains valid <svg> tags, no errors");
         } catch (Exception e) {
-            System.err.println("  ✗ SVG generation failed: " + e.getMessage());
+            if (TRACE)
+                System.err.println("  ✗ SVG generation failed: " + e.getMessage());
             throw e;
         }
         
-        System.out.println("✅ SUCCESS: Generated images for " + baseName);
+        if (TRACE)
+            System.out.println("✅ SUCCESS: Generated images for " + baseName);
     }
 
     private boolean shouldInclude(String fileName) {

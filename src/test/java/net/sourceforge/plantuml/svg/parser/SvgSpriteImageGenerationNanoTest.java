@@ -21,15 +21,18 @@ import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import test.utils.PlantUmlTestUtils;
 
 /**
- * Generates images using SvgNanoParser for comparison with SAX output.
- * Does not fail on SVG error text since this is only for visual comparison.
+ * Generates images using SvgNanoParser for comparison with SAX output. Does not
+ * fail on SVG error text since this is only for visual comparison.
  */
 public class SvgSpriteImageGenerationNanoTest {
 
 	private static final Path OUTPUT_DIR = Paths.get("target/test-output/svg-sprites");
 	private static final Path RESOURCES_DIR = Paths.get("src/test/resources/svg-sprites");
-	// NOTE: SAX parser does not support <style> blocks; keep this file excluded for now.
+	// NOTE: SAX parser does not support <style> blocks; keep this file excluded for
+	// now.
 	private static final String[] SKIPPED_PUML_FILES = { "svg2GroupsWithStyle.puml" };
+
+	private final static boolean TRACE = false;
 
 	@BeforeAll
 	static void setup() throws IOException {
@@ -39,24 +42,18 @@ public class SvgSpriteImageGenerationNanoTest {
 
 	@TestFactory
 	Stream<DynamicTest> generateImagesFromAllPumlFiles() throws IOException {
-		if (SKIPPED_PUML_FILES.length > 0) {
+		if (TRACE && SKIPPED_PUML_FILES.length > 0) {
 			System.out.println("\n=== Skipping SVG sprite files ===");
 			for (String skip : SKIPPED_PUML_FILES)
 				System.out.println("  - " + skip);
 		}
 		try (Stream<Path> paths = Files.walk(RESOURCES_DIR)) {
-			List<Path> pumlFiles = paths
-					.filter(Files::isRegularFile)
-					.filter(p -> p.toString().endsWith(".puml"))
-					.filter(p -> shouldInclude(p.getFileName().toString()))
-					.collect(Collectors.toList());
+			List<Path> pumlFiles = paths.filter(Files::isRegularFile).filter(p -> p.toString().endsWith(".puml"))
+					.filter(p -> shouldInclude(p.getFileName().toString())).collect(Collectors.toList());
 
-			return pumlFiles.stream().map(pumlFile ->
-					DynamicTest.dynamicTest(
-							"Generate nano image for: " + pumlFile.getFileName(),
-							() -> generateAndValidateImage(pumlFile)
-						)
-				);
+			return pumlFiles.stream()
+					.map(pumlFile -> DynamicTest.dynamicTest("Generate nano image for: " + pumlFile.getFileName(),
+							() -> generateAndValidateImage(pumlFile)));
 		}
 	}
 
@@ -66,7 +63,8 @@ public class SvgSpriteImageGenerationNanoTest {
 		String baseName = pumlFile.getFileName().toString().replaceFirst("\\.puml$", "");
 		String nanoBaseName = baseName + "_nano";
 
-		System.out.println("\n=== Processing (nano): " + baseName + " ===");
+		if (TRACE)
+			System.out.println("\n=== Processing (nano): " + baseName + " ===");
 
 		PlantUmlTestUtils.ExportDiagram exporter = PlantUmlTestUtils.exportDiagram(content);
 
@@ -75,9 +73,11 @@ public class SvgSpriteImageGenerationNanoTest {
 			exporter.toFile(pngOutput, FileFormat.PNG);
 			assertTrue(Files.exists(pngOutput), "PNG file should be created: " + pngOutput);
 			assertTrue(Files.size(pngOutput) > 0, "PNG file should not be empty: " + pngOutput);
-			System.out.println("  ✓ PNG: " + pngOutput + " (" + Files.size(pngOutput) + " bytes)");
+			if (TRACE)
+				System.out.println("  ✓ PNG: " + pngOutput + " (" + Files.size(pngOutput) + " bytes)");
 		} catch (Exception e) {
-			System.err.println("  ✗ PNG generation failed: " + e.getMessage());
+			if (TRACE)
+				System.err.println("  ✗ PNG generation failed: " + e.getMessage());
 			throw e;
 		}
 
@@ -86,9 +86,11 @@ public class SvgSpriteImageGenerationNanoTest {
 			assertNotNull(pngImage, "PNG image should be loadable");
 			assertTrue(pngImage.getWidth() > 0, "PNG image should have width");
 			assertTrue(pngImage.getHeight() > 0, "PNG image should have height");
-			System.out.println("  ✓ PNG dimensions: " + pngImage.getWidth() + "x" + pngImage.getHeight());
+			if (TRACE)
+				System.out.println("  ✓ PNG dimensions: " + pngImage.getWidth() + "x" + pngImage.getHeight());
 		} catch (Exception e) {
-			System.err.println("  ⚠ PNG image validation warning: " + e.getMessage());
+			if (TRACE)
+				System.err.println("  ⚠ PNG image validation warning: " + e.getMessage());
 		}
 
 		Path svgOutput = OUTPUT_DIR.resolve(nanoBaseName + ".svg");
@@ -96,18 +98,22 @@ public class SvgSpriteImageGenerationNanoTest {
 			exporter.toFile(svgOutput, FileFormat.SVG);
 			assertTrue(Files.exists(svgOutput), "SVG file should be created: " + svgOutput);
 			assertTrue(Files.size(svgOutput) > 0, "SVG file should not be empty: " + svgOutput);
-			System.out.println("  ✓ SVG: " + svgOutput + " (" + Files.size(svgOutput) + " bytes)");
+			if (TRACE)
+				System.out.println("  ✓ SVG: " + svgOutput + " (" + Files.size(svgOutput) + " bytes)");
 
 			String svgContent = Files.readString(svgOutput, StandardCharsets.UTF_8);
 			assertTrue(svgContent.contains("<svg"), "SVG file should contain <svg> tag");
 			assertTrue(svgContent.contains("</svg>"), "SVG file should have closing </svg> tag");
-			System.out.println("  ✓ SVG validation: Contains valid <svg> tags");
+			if (TRACE)
+				System.out.println("  ✓ SVG validation: Contains valid <svg> tags");
 		} catch (Exception e) {
-			System.err.println("  ✗ SVG generation failed: " + e.getMessage());
+			if (TRACE)
+				System.err.println("  ✗ SVG generation failed: " + e.getMessage());
 			throw e;
 		}
 
-		System.out.println("✅ SUCCESS: Generated nano images for " + baseName);
+		if (TRACE)
+			System.out.println("✅ SUCCESS: Generated nano images for " + baseName);
 	}
 
 	private boolean shouldInclude(String fileName) {
