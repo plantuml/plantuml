@@ -47,10 +47,13 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.crash.GraphvizCrash;
+import net.sourceforge.plantuml.dot.CucaDiagramSimplifierActivity;
+import net.sourceforge.plantuml.dot.CucaDiagramSimplifierState;
 import net.sourceforge.plantuml.dot.DotData;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 
@@ -66,11 +69,18 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 			throws IOException {
 		throw new UnsupportedOperationException("TEAVM100");
 	}
-	
+
 	@Override
-	public TextBlock getTextBlock12026(List<String> dotStrings, FileFormatOption fileFormatOption) {
-		
-		 final StringBounder stringBounder = new StringBounderTeaVM();
+	public TextBlock getTextBlock12026(List<String> dotStrings, FileFormatOption fileFormatOption)
+			throws IOException, InterruptedException {
+
+		BrowserLog.consoleLog(CucaDiagramFileMakerTeaVM.class, "getTextBlock12026");
+		final StringBounder stringBounder = new StringBounderTeaVM();
+
+		if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY)
+			new CucaDiagramSimplifierActivity().simplify(diagram, stringBounder, DotMode.NORMAL);
+		else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE)
+			new CucaDiagramSimplifierState().simplify(diagram, stringBounder, DotMode.NORMAL);
 
 		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, clusterManager.getCurrent(),
 				diagram.getUmlDiagramType(), diagram.getSkinParam());
@@ -80,7 +90,6 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 
 		GraphvizImageBuilder imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),
 				diagram.getUmlDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager);
-		
 
 		TextBlock result = imageBuilder.buildImage(stringBounder, null, diagram.getDotStringSkek(), false);
 
@@ -100,7 +109,7 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 		// Ensure text near the margins is not cut off (side effect in
 		// SvekResult::calculateDimension())
 		result.calculateDimension(stringBounder);
-		
+
 		return result;
 
 //		final String widthwarning = diagram.getSkinParam().getValue("widthwarning");
@@ -115,9 +124,7 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 //
 //		ib.udrawable.drawU(ug);
 
-		
 	}
-
 
 	@Override
 	public void createOneGraphic01970(UGraphic ug) {
