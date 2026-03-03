@@ -45,7 +45,6 @@ import java.util.List;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ScaleSimple;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -91,7 +90,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.Log;
 
-public class PSystemSalt extends TitledDiagram implements WithSprite {
+public class PSystemSalt extends TitledDiagram {
 
 	private final List<String> data;
 	private final SaltDictionary dictionary;
@@ -139,7 +138,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 		final XDimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);
 		return getTextBlock(salt, size);
 	}
-	
+
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		return getTextMainBlock01970(fileFormatOption);
@@ -174,7 +173,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 
 	private List<String> manageSprite() {
 
-		final Command<WithSprite> cmd = CommandFactorySprite.ME.createMultiLine(false);
+		final Command<TitledDiagram> cmd = CommandFactorySprite.ME.createMultiLine(false);
 
 		final List<String> result = new ArrayList<>();
 		for (Iterator<String> it = data.iterator(); it.hasNext();) {

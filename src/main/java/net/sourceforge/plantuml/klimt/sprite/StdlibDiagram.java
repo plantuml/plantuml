@@ -42,7 +42,6 @@ import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandFactorySprite;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -125,7 +124,7 @@ public class StdlibDiagram extends TitledDiagram {
 
 		final CommandFactorySprite factorySpriteCommand = CommandFactorySprite.ME;
 
-		Command<WithSprite> cmd = factorySpriteCommand.createMultiLine(false);
+		Command<TitledDiagram> cmd = factorySpriteCommand.createMultiLine(false);
 
 //		final List<String> all = folder.extractAllSprites();
 //		int nb = 0;

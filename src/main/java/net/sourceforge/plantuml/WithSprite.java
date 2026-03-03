@@ -35,11 +35,9 @@
  */
 package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 
-public interface WithSprite extends Diagram {
-	// ::remove file when __HAXE__
+public interface WithSprite {
 
 	public void addSprite(String name, Sprite sprite);
 }

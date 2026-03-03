@@ -50,7 +50,6 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -97,7 +96,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-public class GanttDiagram extends TitledDiagram implements WithSprite, GanttStyle {
+public class GanttDiagram extends TitledDiagram implements GanttStyle {
 
 	// ------------------------------------------------------------------------
 	// model / prepared state
@@ -194,7 +193,7 @@ public class GanttDiagram extends TitledDiagram implements WithSprite, GanttStyl
 		return new GanttDiagramMainBlock(this.timeBounds, this.modelData, this.drawRegistry, this.displayConfig,
 				this.timelineStyle, this, timeHeader, stringBounder);
 	}
-	
+
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		return getTextMainBlock01970(fileFormatOption);
