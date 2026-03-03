@@ -110,7 +110,7 @@ public class FtileBox extends AbstractFtile {
 
 	public Set<Swimlane> getSwimlanes() {
 		if (swimlane == null)
-			return PatchUtils.emptySet();
+			return Collections.emptySet();
 
 		return Collections.singleton(swimlane);
 	}

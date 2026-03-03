@@ -89,7 +89,7 @@ public abstract class AbstractGtile extends AbstractGtileRoot implements Gtile {
 	@Override
 	public Set<Swimlane> getSwimlanes() {
 		if (singleSwimlane == null)
-			return PatchUtils.emptySet();
+			return Collections.emptySet();
 		return Collections.singleton(singleSwimlane);
 	}
 

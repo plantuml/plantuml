@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.style;
 
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
@@ -63,7 +64,7 @@ public class StyleSignatureBasic implements StyleSignature {
 	}
 
 	public static StyleSignatureBasic empty() {
-		return new StyleSignatureBasic(StyleKey.empty(), PatchUtils.emptySet());
+		return new StyleSignatureBasic(StyleKey.empty(), Collections.emptySet());
 	}
 
 	private StyleSignatureBasic(StyleKey key, Set<String> stereotypes) {
@@ -221,7 +222,7 @@ public class StyleSignatureBasic implements StyleSignature {
 	}
 
 	public static StyleSignatureBasic of(SName... names) {
-		return new StyleSignatureBasic(StyleKey.of(names), PatchUtils.emptySet());
+		return new StyleSignatureBasic(StyleKey.of(names), Collections.emptySet());
 	}
 
 	private String clean(String name) {

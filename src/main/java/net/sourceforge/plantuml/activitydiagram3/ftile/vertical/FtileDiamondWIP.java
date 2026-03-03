@@ -105,7 +105,7 @@ abstract class FtileDiamondWIP extends AbstractFtile implements Styleable {
 
 	final public Set<Swimlane> getSwimlanes() {
 		if (swimlane == null)
-			return PatchUtils.emptySet();
+			return Collections.emptySet();
 
 		return Collections.singleton(swimlane);
 	}
