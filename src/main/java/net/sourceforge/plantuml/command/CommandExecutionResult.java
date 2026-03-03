@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.command;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.core.AbstractPSystem;
 
 public class CommandExecutionResult {
 

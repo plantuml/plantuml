@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.core.AbstractPSystem;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;

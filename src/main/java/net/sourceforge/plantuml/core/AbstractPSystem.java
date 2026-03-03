@@ -33,7 +33,7 @@
  * 
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.core;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -43,15 +43,15 @@ import java.util.Objects;
 import java.util.Set;
 
 import net.atmp.ImageBuilder;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.PSystemBuilder;
+import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.ProtectedCommand;
-import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.core.InstallationRequirement;
-import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;

@@ -36,8 +36,8 @@ package net.sourceforge.plantuml.version;
 
 import java.io.IOException;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.AbstractPSystem;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.utils.Log;

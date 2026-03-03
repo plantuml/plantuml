@@ -40,6 +40,7 @@ import java.io.OutputStream;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
+import net.sourceforge.plantuml.core.AbstractPSystem;
 import net.sourceforge.plantuml.core.DiagramChromeFactory12026;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.TextBlockExporter12026;

@@ -35,9 +35,9 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.ScaleHeight;
 import net.sourceforge.plantuml.ScaleWidth;
+import net.sourceforge.plantuml.core.AbstractPSystem;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;

@@ -40,6 +40,7 @@ import java.io.OutputStream;
 
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
+import net.sourceforge.plantuml.core.AbstractPSystem;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;

@@ -39,11 +39,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.core.AbstractPSystem;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;

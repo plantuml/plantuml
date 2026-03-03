@@ -39,8 +39,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.AbstractPSystem;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 

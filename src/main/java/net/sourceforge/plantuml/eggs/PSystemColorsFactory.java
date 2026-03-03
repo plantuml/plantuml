@@ -38,8 +38,8 @@ package net.sourceforge.plantuml.eggs;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.AbstractPSystem;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
