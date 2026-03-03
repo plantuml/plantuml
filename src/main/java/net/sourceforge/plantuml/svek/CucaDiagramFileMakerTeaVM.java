@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 
 public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
-	// ::remove file when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
+	// ::remove file when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
 
 	public CucaDiagramFileMakerTeaVM(CucaDiagram diagram) {
 		super(diagram);

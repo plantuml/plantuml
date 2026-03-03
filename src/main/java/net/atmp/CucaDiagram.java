@@ -463,7 +463,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 	final public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
 		final CucaDiagramFileMaker maker;
 		if (TeaVM.isTeaVM())
-			// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
+			// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
 			maker = new CucaDiagramFileMakerTeaVM(this);
 		// maker = new CucaDiagramFileMakerSmetana(this);
 		// ::done
@@ -504,7 +504,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 		final CucaDiagramFileMaker maker;
 
 		if (TeaVM.isTeaVM())
-			// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
+			// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
 			maker = new CucaDiagramFileMakerTeaVM(this);
 		// maker = new CucaDiagramFileMakerSmetana(this);
 		// ::done
