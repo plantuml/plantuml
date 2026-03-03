@@ -133,7 +133,7 @@ class PipeTest {
 				false, false));
 		l.add(TestCase.of("-syntax", "@startuml\na->b\n@enduml\n@startuml\na->b\nb->c\n@enduml\n",
 				"SEQUENCE\n(2 participants)\nSEQUENCE\n(3 participants)\n", Verification.EXACT, false, false));
-		l.add(TestCase.of("-syntax", "@startgantt\n[a] lasts 1 day\n@endgantt", "OTHER\n(Gantt)\n", Verification.EXACT,
+		l.add(TestCase.of("-syntax", "@startgantt\n[a] lasts 1 day\n@endgantt", "GANTT\n(Gantt)\n", Verification.EXACT,
 				false, false));
 
 		// invalid syntax
