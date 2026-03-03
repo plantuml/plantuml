@@ -184,7 +184,7 @@ public class SourceStringReader {
 		}
 <span class="pc bpc" id="L185" title="1 of 2 branches missed.">		for (BlockUml b : blocks) {</span>
 <span class="fc" id="L186">			final Diagram system = b.getDiagram();</span>
-<span class="fc" id="L187">			final int nbInSystem = system.getNbImages();</span>
+<span class="fc" id="L187">			final int nbInSystem = system.getCardinality();</span>
 <span class="pc bpc" id="L188" title="1 of 2 branches missed.">			if (numImage &lt; nbInSystem) {</span>
 				// final CMapData cmap = new CMapData();
 <span class="fc" id="L190">				final ImageData imageData = system.exportDiagram(os, numImage, fileFormatOption);</span>
@@ -207,7 +207,7 @@ public class SourceStringReader {
 
 <span class="nc bnc" id="L208" title="All 2 branches missed.">		for (BlockUml b : blocks) {</span>
 <span class="nc" id="L209">			final Diagram system = b.getDiagram();</span>
-<span class="nc" id="L210">			final int nbInSystem = system.getNbImages();</span>
+<span class="nc" id="L210">			final int nbInSystem = system.getCardinality();</span>
 <span class="nc bnc" id="L211" title="All 2 branches missed.">			if (numImage &lt; nbInSystem) {</span>
 				// final ImageData imageData = system.exportDiagram(os, numImage,
 				// fileFormatOption);
@@ -241,7 +241,7 @@ public class SourceStringReader {
 
 <span class="pc bpc" id="L242" title="1 of 2 branches missed.">		for (BlockUml b : blocks) {</span>
 <span class="fc" id="L243">			final Diagram system = b.getDiagram();</span>
-<span class="fc" id="L244">			final int nbInSystem = system.getNbImages();</span>
+<span class="fc" id="L244">			final int nbInSystem = system.getCardinality();</span>
 <span class="pc bpc" id="L245" title="1 of 2 branches missed.">			if (numImage &lt; nbInSystem) {</span>
 <span class="fc" id="L246">				final ImageData imageData = system.exportDiagram(new NullOutputStream(), numImage, fileFormatOption);</span>
 <span class="fc bfc" id="L247" title="All 2 branches covered.">				if (imageData.containsCMapData())</span>

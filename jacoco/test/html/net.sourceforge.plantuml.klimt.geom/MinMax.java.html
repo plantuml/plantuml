@@ -170,5 +170,9 @@ public class MinMax {
 <span class="nc" id="L170">		return new MinMax(minX + dx, minY + dy, maxX + dx, maxY + dy);</span>
 	}
 
+	public MinMax enlarge(double dx, double dy) {
+<span class="fc" id="L174">		return new MinMax(minX, minY, maxX + dx, maxY + dy);</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

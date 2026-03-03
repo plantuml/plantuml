@@ -52,28 +52,28 @@ public class PngTitler {
 	private final HColorSet set;
 	private final ISkinSimple spriteContainer;
 
-<span class="fc" id="L55">	public PngTitler(DisplayPositioned text, Style style, HColorSet set, ISkinSimple spriteContainer) {</span>
-<span class="fc" id="L56">		this.style = style;</span>
-<span class="fc" id="L57">		this.set = set;</span>
-<span class="fc" id="L58">		this.spriteContainer = spriteContainer;</span>
-<span class="fc" id="L59">		this.text = text;</span>
+<span class="nc" id="L55">	public PngTitler(DisplayPositioned text, Style style, HColorSet set, ISkinSimple spriteContainer) {</span>
+<span class="nc" id="L56">		this.style = style;</span>
+<span class="nc" id="L57">		this.set = set;</span>
+<span class="nc" id="L58">		this.spriteContainer = spriteContainer;</span>
+<span class="nc" id="L59">		this.text = text;</span>
 
-<span class="fc" id="L61">	}</span>
+<span class="nc" id="L61">	}</span>
 
 	public XDimension2D getTextDimension(StringBounder stringBounder) {
-<span class="fc" id="L64">		final TextBlock textBloc = getRibbonBlock();</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (textBloc == null)</span>
-<span class="fc" id="L66">			return null;</span>
+<span class="nc" id="L64">		final TextBlock textBloc = getRibbonBlock();</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (textBloc == null)</span>
+<span class="nc" id="L66">			return null;</span>
 
-<span class="fc" id="L68">		return textBloc.calculateDimension(stringBounder);</span>
+<span class="nc" id="L68">		return textBloc.calculateDimension(stringBounder);</span>
 	}
 
 	public TextBlock getRibbonBlock() {
-<span class="fc" id="L72">		final Display display = text.getDisplay();</span>
-<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (Display.isNull(display))</span>
-<span class="fc" id="L74">			return null;</span>
+<span class="nc" id="L72">		final Display display = text.getDisplay();</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (Display.isNull(display))</span>
+<span class="nc" id="L74">			return null;</span>
 
-<span class="fc" id="L76">		return style.createTextBlockBordered(display, set, spriteContainer, Style.ID_TITLE, LineBreakStrategy.NONE);</span>
+<span class="nc" id="L76">		return style.createTextBlockBordered(display, set, spriteContainer, Style.ID_TITLE, LineBreakStrategy.NONE);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

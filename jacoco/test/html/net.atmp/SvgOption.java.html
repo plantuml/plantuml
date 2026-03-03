@@ -111,12 +111,12 @@ public class SvgOption {
 	}
 
 	public SvgOption withTitle(Display titleDisplay) {
-<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (titleDisplay.size() &gt; 0) {</span>
-<span class="fc" id="L115">			title = StreamSupport.stream(titleDisplay.spliterator(), false) //</span>
-<span class="fc" id="L116">	            .map(CharSequence::toString) //</span>
-<span class="fc" id="L117">	            .collect(Collectors.joining(&quot;\n&quot;));</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (titleDisplay.size() &gt; 0) {</span>
+<span class="nc" id="L115">			title = StreamSupport.stream(titleDisplay.spliterator(), false) //</span>
+<span class="nc" id="L116">	            .map(CharSequence::toString) //</span>
+<span class="nc" id="L117">	            .collect(Collectors.joining(&quot;\n&quot;));</span>
 		}
-<span class="fc" id="L119">		return this;</span>
+<span class="nc" id="L119">		return this;</span>
 	}
 
 

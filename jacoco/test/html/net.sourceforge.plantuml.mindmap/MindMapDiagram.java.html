@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.SkinParam;
@@ -61,110 +60,115 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.Direction;
 
-public class MindMapDiagram extends UmlDiagram {
+public class MindMapDiagram extends TitledDiagram {
 
-<span class="fc" id="L66">	private final List&lt;MindMap&gt; mindmaps = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L65">	private final List&lt;MindMap&gt; mindmaps = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L68">	private boolean defaultDirection = true;</span>
+<span class="fc" id="L67">	private boolean defaultDirection = true;</span>
 
 	public final void setDefaultDirection(Direction direction) {
-<span class="nc bnc" id="L71" title="All 4 branches missed.">		this.defaultDirection = direction == Direction.RIGHT || direction == Direction.DOWN;</span>
-<span class="nc" id="L72">	}</span>
+<span class="nc bnc" id="L70" title="All 4 branches missed.">		this.defaultDirection = direction == Direction.RIGHT || direction == Direction.DOWN;</span>
+<span class="nc" id="L71">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="fc" id="L75">		return new DiagramDescription(&quot;MindMap&quot;);</span>
+<span class="fc" id="L74">		return new DiagramDescription(&quot;MindMap&quot;);</span>
 	}
 
 	public MindMapDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L79">		super(source, UmlDiagramType.MINDMAP, null, preprocessing);</span>
-<span class="fc" id="L80">		((SkinParam) getSkinParam()).setRankdir(Rankdir.LEFT_TO_RIGHT);</span>
-<span class="fc" id="L81">		this.mindmaps.add(new MindMap(getSkinParam()));</span>
-<span class="fc" id="L82">	}</span>
+<span class="fc" id="L78">		super(source, UmlDiagramType.MINDMAP, null, preprocessing);</span>
+<span class="fc" id="L79">		((SkinParam) getSkinParam()).setRankdir(Rankdir.LEFT_TO_RIGHT);</span>
+<span class="fc" id="L80">		this.mindmaps.add(new MindMap(getSkinParam()));</span>
+<span class="fc" id="L81">	}</span>
 
 	@Override
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-<span class="fc" id="L88">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);</span>
+<span class="nc" id="L87">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);</span>
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
-<span class="fc" id="L93">		return new AbstractTextBlock() {</span>
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+<span class="fc" id="L92">		return getTextMainBlock01970(fileFormatOption);</span>
+	}
+
+	@Override
+	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+<span class="fc" id="L97">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc bfc" id="L96" title="All 2 branches covered.">				for (MindMap mindmap : mindmaps) {</span>
-<span class="fc" id="L97">					mindmap.drawU(ug);</span>
-<span class="fc" id="L98">					final XDimension2D dim = mindmap.calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L99">					ug = ug.apply(UTranslate.dy(dim.getHeight()));</span>
-<span class="fc" id="L100">				}</span>
-<span class="fc" id="L101">			}</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">				for (MindMap mindmap : mindmaps) {</span>
+<span class="fc" id="L101">					mindmap.drawU(ug);</span>
+<span class="fc" id="L102">					final XDimension2D dim = mindmap.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L103">					ug = ug.apply(UTranslate.dy(dim.getHeight()));</span>
+<span class="fc" id="L104">				}</span>
+<span class="fc" id="L105">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L104">				double width = 0;</span>
-<span class="fc" id="L105">				double height = 0;</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">				for (MindMap mindmap : mindmaps) {</span>
-<span class="fc" id="L107">					final XDimension2D dim = mindmap.calculateDimension(stringBounder);</span>
-<span class="fc" id="L108">					height += dim.getHeight();</span>
-<span class="fc" id="L109">					width = Math.max(width, dim.getWidth());</span>
-<span class="fc" id="L110">				}</span>
-<span class="fc" id="L111">				return new XDimension2D(width, height);</span>
+<span class="fc" id="L108">				double width = 0;</span>
+<span class="fc" id="L109">				double height = 0;</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">				for (MindMap mindmap : mindmaps) {</span>
+<span class="fc" id="L111">					final XDimension2D dim = mindmap.calculateDimension(stringBounder);</span>
+<span class="fc" id="L112">					height += dim.getHeight();</span>
+<span class="fc" id="L113">					width = Math.max(width, dim.getWidth());</span>
+<span class="fc" id="L114">				}</span>
+<span class="fc" id="L115">				return new XDimension2D(width + 10, height);</span>
 			}
 
 		};
 	}
 
 	public CommandExecutionResult addIdea(HColor backColor, int level, Display label, IdeaShape shape) {
-<span class="fc" id="L118">		return addIdea(backColor, level, label, shape, defaultDirection);</span>
+<span class="fc" id="L122">		return addIdea(backColor, level, label, shape, defaultDirection);</span>
 	}
 
 	private MindMap last() {
-<span class="fc" id="L122">		return mindmaps.get(mindmaps.size() - 1);</span>
+<span class="fc" id="L126">		return mindmaps.get(mindmaps.size() - 1);</span>
 	}
 
 	public CommandExecutionResult addIdea(HColor backColor, int level, Display label, IdeaShape shape,
 			boolean direction) {
-<span class="fc" id="L127">		final Stereotype stereotype = label.getEndingStereotype();</span>
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L129">			label = label.removeEndingStereotype();</span>
+<span class="fc" id="L131">		final Stereotype stereotype = label.getEndingStereotype();</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L133">			label = label.removeEndingStereotype();</span>
 
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (last().isFull(level))</span>
-<span class="nc" id="L132">			this.mindmaps.add(new MindMap(getSkinParam()));</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (last().isFull(level))</span>
+<span class="nc" id="L136">			this.mindmaps.add(new MindMap(getSkinParam()));</span>
 
-<span class="fc" id="L134">		return last().addIdeaInternal(stereotype, backColor, level, label, shape, direction);</span>
+<span class="fc" id="L138">		return last().addIdeaInternal(stereotype, backColor, level, label, shape, direction);</span>
 	}
 
 	public CommandExecutionResult addIdea(Stereotype stereotype, HColor backColor, int level, Display label,
 			IdeaShape shape) {
-<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (last().isFull(level))</span>
-<span class="nc" id="L140">			this.mindmaps.add(new MindMap(getSkinParam()));</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (last().isFull(level))</span>
+<span class="nc" id="L144">			this.mindmaps.add(new MindMap(getSkinParam()));</span>
 
-<span class="nc" id="L142">		return last().addIdeaInternal(stereotype, backColor, level, label, shape, defaultDirection);</span>
+<span class="nc" id="L146">		return last().addIdeaInternal(stereotype, backColor, level, label, shape, defaultDirection);</span>
 	}
 
 	private String first;
 
 	public int getSmartLevel(String type) {
-<span class="fc bfc" id="L148" title="All 2 branches covered.">		if (first == null)</span>
-<span class="fc" id="L149">			first = type;</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		if (first == null)</span>
+<span class="fc" id="L153">			first = type;</span>
 
-<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (type.endsWith(&quot;**&quot;))</span>
-<span class="fc" id="L152">			type = type.replace('\t', ' ').trim();</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (type.endsWith(&quot;**&quot;))</span>
+<span class="fc" id="L156">			type = type.replace('\t', ' ').trim();</span>
 
-<span class="fc" id="L154">		type = type.replace('\t', ' ');</span>
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (type.contains(&quot; &quot;) == false)</span>
-<span class="fc" id="L156">			return type.length() - 1;</span>
+<span class="fc" id="L158">		type = type.replace('\t', ' ');</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (type.contains(&quot; &quot;) == false)</span>
+<span class="fc" id="L160">			return type.length() - 1;</span>
 
-<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (type.endsWith(first))</span>
-<span class="nc" id="L159">			return type.length() - first.length();</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (type.endsWith(first))</span>
+<span class="nc" id="L163">			return type.length() - first.length();</span>
 
-<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (type.trim().length() == 1)</span>
-<span class="nc" id="L162">			return type.length() - 1;</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (type.trim().length() == 1)</span>
+<span class="nc" id="L166">			return type.length() - 1;</span>
 
-<span class="nc bnc" id="L164" title="All 2 branches missed.">		if (type.startsWith(first))</span>
-<span class="nc" id="L165">			return type.length() - first.length();</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (type.startsWith(first))</span>
+<span class="nc" id="L169">			return type.length() - first.length();</span>
 
-<span class="nc" id="L167">		throw new UnsupportedOperationException(&quot;type=&lt;&quot; + type + &quot;&gt;[&quot; + first + &quot;]&quot;);</span>
+<span class="nc" id="L171">		throw new UnsupportedOperationException(&quot;type=&lt;&quot; + type + &quot;&gt;[&quot; + first + &quot;]&quot;);</span>
 	}
 
 }

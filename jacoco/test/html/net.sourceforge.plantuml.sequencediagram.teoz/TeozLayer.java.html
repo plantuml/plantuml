@@ -40,38 +40,37 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
-public class TeozLayer extends AbstractTextBlock implements TextBlock {
+public class TeozLayer implements TextBlock {
 
 	private final PngTitler titler;
 	private XDimension2D dimension;
 	private final FontParam param;
 
-<span class="nc" id="L52">	public TeozLayer(PngTitler titler, StringBounder stringBounder, FontParam param) {</span>
-<span class="nc" id="L53">		this.titler = titler;</span>
-<span class="nc" id="L54">		this.param = param;</span>
+<span class="nc" id="L51">	public TeozLayer(PngTitler titler, StringBounder stringBounder, FontParam param) {</span>
+<span class="nc" id="L52">		this.titler = titler;</span>
+<span class="nc" id="L53">		this.param = param;</span>
 
-<span class="nc" id="L56">		dimension = new XDimension2D(0, 0);</span>
-<span class="nc bnc" id="L57" title="All 4 branches missed.">		if (titler != null &amp;&amp; titler.getRibbonBlock() != null) {</span>
-<span class="nc" id="L58">			dimension = titler.getRibbonBlock().calculateDimension(stringBounder);</span>
+<span class="nc" id="L55">		dimension = new XDimension2D(0, 0);</span>
+<span class="nc bnc" id="L56" title="All 4 branches missed.">		if (titler != null &amp;&amp; titler.getRibbonBlock() != null) {</span>
+<span class="nc" id="L57">			dimension = titler.getRibbonBlock().calculateDimension(stringBounder);</span>
 		}
-<span class="nc" id="L60">	}</span>
+<span class="nc" id="L59">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L63">		return dimension;</span>
+<span class="nc" id="L62">		return dimension;</span>
 	}
 
 	public FontParam getParam() {
-<span class="nc" id="L67">		return param;</span>
+<span class="nc" id="L66">		return param;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (titler != null) {</span>
-<span class="nc" id="L72">			titler.getRibbonBlock().drawU(ug);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (titler != null) {</span>
+<span class="nc" id="L71">			titler.getRibbonBlock().drawU(ug);</span>
 		}
-<span class="nc" id="L74">	}</span>
+<span class="nc" id="L73">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

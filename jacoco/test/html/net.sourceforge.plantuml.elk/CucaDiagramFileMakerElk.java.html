@@ -319,7 +319,7 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 	}
 
 	@Override
-	public ImageData createFile(OutputStream os, List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)
+	public ImageData createFile01970(OutputStream os, List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)
 			throws IOException {
 
 		// https://www.eclipse.org/forums/index.php/t/1095737/
@@ -528,8 +528,31 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 	}
 
 	@Override
-	public void createOneGraphic(UGraphic ug) {
+	public void createOneGraphic01970(UGraphic ug) {
 <span class="nc" id="L532">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public TextBlock getTextBlock12026(List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)
+			throws IOException, InterruptedException {
+
+<span class="nc" id="L539">		final ElkNode root = ElkGraphUtil.createGraph();</span>
+<span class="nc" id="L540">		root.setProperty(CoreOptions.DIRECTION, Direction.DOWN);</span>
+<span class="nc" id="L541">		root.setProperty(CoreOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);</span>
+
+<span class="nc" id="L543">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
+
+<span class="nc" id="L545">		this.printAllSubgroups(stringBounder, root, diagram.getRootGroup());</span>
+<span class="nc" id="L546">		this.printEntities(stringBounder, root, getUnpackagedEntities());</span>
+
+<span class="nc" id="L548">		this.manageAllEdges(stringBounder);</span>
+
+<span class="nc" id="L550">		new RecursiveGraphLayoutEngine().layout(root, new NullElkProgressMonitor());</span>
+
+<span class="nc" id="L552">		final MinMax minMax = TextBlockUtils.getMinMax(</span>
+				new MyElkDrawing(clusterManager, diagram, null, clusters, edges, nodes), stringBounder, false);
+
+<span class="nc" id="L555">		return new MyElkDrawing(clusterManager, diagram, minMax, clusters, edges, nodes);</span>
 	}
 
 }

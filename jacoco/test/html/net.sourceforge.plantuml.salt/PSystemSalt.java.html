@@ -45,7 +45,6 @@ import java.util.List;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ScaleSimple;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -61,7 +60,6 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.log.Logme;
@@ -92,179 +90,184 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.Log;
 
-public class PSystemSalt extends TitledDiagram implements WithSprite {
+public class PSystemSalt extends TitledDiagram {
 
 	private final List&lt;String&gt; data;
 	private final SaltDictionary dictionary;
 
 	@Deprecated
 	public PSystemSalt(UmlSource source, List&lt;String&gt; data, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L102">		super(source, UmlDiagramType.SALT, null, preprocessing);</span>
-<span class="nc" id="L103">		this.dictionary = new SaltDictionary(source.getPathSystem(), preprocessing.getOption());</span>
-<span class="nc" id="L104">		this.data = data;</span>
-<span class="nc" id="L105">	}</span>
+<span class="nc" id="L100">		super(source, UmlDiagramType.SALT, null, preprocessing);</span>
+<span class="nc" id="L101">		this.dictionary = new SaltDictionary(source.getPathSystem(), preprocessing.getOption());</span>
+<span class="nc" id="L102">		this.data = data;</span>
+<span class="nc" id="L103">	}</span>
 
 	public PSystemSalt(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L108">		this(source, new ArrayList&lt;String&gt;(), preprocessing);</span>
-<span class="nc" id="L109">	}</span>
+<span class="nc" id="L106">		this(source, new ArrayList&lt;String&gt;(), preprocessing);</span>
+<span class="nc" id="L107">	}</span>
 
 	public void add(String s) {
-<span class="nc" id="L112">		data.addAll(StringLocated.expandsNewline(s));</span>
-<span class="nc" id="L113">	}</span>
+<span class="nc" id="L110">		data.addAll(StringLocated.expandsNewline(s));</span>
+<span class="nc" id="L111">	}</span>
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+	final protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		try {
-<span class="nc" id="L119">			final Element salt = createElement(manageSprite());</span>
-<span class="nc" id="L120">			final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());</span>
-<span class="nc" id="L121">			final XDimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);</span>
-<span class="nc" id="L122">			return createImageBuilder(fileFormatOption).drawable(getTextBlock(salt, size)).write(os);</span>
-<span class="nc" id="L123">		} catch (Exception e) {</span>
-<span class="nc" id="L124">			Logme.error(e);</span>
-<span class="nc" id="L125">			final CrashReportHandler report = new CrashReportHandler(e, getMetadata(), getFlashData());</span>
-<span class="nc" id="L126">			report.anErrorHasOccured(e, getFlashData());</span>
-<span class="nc" id="L127">			report.addProperties();</span>
+<span class="nc" id="L117">			final Element salt = createElement(manageSprite());</span>
+<span class="nc" id="L118">			final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());</span>
+<span class="nc" id="L119">			final XDimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);</span>
+<span class="nc" id="L120">			return createImageBuilder(fileFormatOption).drawable(getTextBlock(salt, size)).write(os);</span>
+<span class="nc" id="L121">		} catch (Exception e) {</span>
+<span class="nc" id="L122">			Logme.error(e);</span>
+<span class="nc" id="L123">			final CrashReportHandler report = new CrashReportHandler(e, getMetadata(), getFlashData());</span>
+<span class="nc" id="L124">			report.anErrorHasOccured(e, getFlashData());</span>
+<span class="nc" id="L125">			report.addProperties();</span>
+<span class="nc" id="L126">			report.addEmptyLine();</span>
+<span class="nc" id="L127">			report.youShouldSendThisDiagram();</span>
 <span class="nc" id="L128">			report.addEmptyLine();</span>
-<span class="nc" id="L129">			report.youShouldSendThisDiagram();</span>
-<span class="nc" id="L130">			report.addEmptyLine();</span>
-<span class="nc" id="L131">			report.exportDiagramError(fileFormatOption, seed(), os);</span>
-<span class="nc" id="L132">			return ImageDataSimple.error(e);</span>
+<span class="nc" id="L129">			report.exportDiagramError(fileFormatOption, seed(), os);</span>
+<span class="nc" id="L130">			return ImageDataSimple.error(e);</span>
 		}
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
-<span class="nc" id="L138">		final Element salt = createElement(manageSprite());</span>
-<span class="nc" id="L139">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());</span>
-<span class="nc" id="L140">		final XDimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);</span>
-<span class="nc" id="L141">		return getTextBlock(salt, size);</span>
+	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+<span class="nc" id="L136">		final Element salt = createElement(manageSprite());</span>
+<span class="nc" id="L137">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());</span>
+<span class="nc" id="L138">		final XDimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);</span>
+<span class="nc" id="L139">		return getTextBlock(salt, size);</span>
+	}
+
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+<span class="nc" id="L144">		return getTextMainBlock01970(fileFormatOption);</span>
 	}
 
 	private TextBlock getTextBlock(final Element salt, final XDimension2D size) {
-<span class="nc" id="L145">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L148">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L148">				ug = ug.apply(getBlack());</span>
-<span class="nc" id="L149">				salt.drawU(ug, 0, new XDimension2D(size.getWidth(), size.getHeight()));</span>
-<span class="nc" id="L150">				salt.drawU(ug, 1, new XDimension2D(size.getWidth(), size.getHeight()));</span>
-<span class="nc" id="L151">			}</span>
+<span class="nc" id="L151">				ug = ug.apply(getBlack());</span>
+<span class="nc" id="L152">				salt.drawU(ug, 0, new XDimension2D(size.getWidth(), size.getHeight()));</span>
+<span class="nc" id="L153">				salt.drawU(ug, 1, new XDimension2D(size.getWidth(), size.getHeight()));</span>
+<span class="nc" id="L154">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L154">				return size;</span>
+<span class="nc" id="L157">				return size;</span>
 			}
 
 			public HColor getBackcolor() {
-<span class="nc" id="L158">				return getSkinParam().getBackgroundColor();</span>
+<span class="nc" id="L161">				return getSkinParam().getBackgroundColor();</span>
 			}
 		};
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L164">		return new DiagramDescription(&quot;(Salt)&quot;);</span>
+<span class="nc" id="L167">		return new DiagramDescription(&quot;(Salt)&quot;);</span>
 	}
 
 	public void addSprite(String name, Sprite sprite) {
-<span class="nc" id="L168">		dictionary.addSprite(name, sprite);</span>
-<span class="nc" id="L169">	}</span>
+<span class="nc" id="L171">		dictionary.addSprite(name, sprite);</span>
+<span class="nc" id="L172">	}</span>
 
 	private List&lt;String&gt; manageSprite() {
 
-<span class="nc" id="L173">		final Command&lt;WithSprite&gt; cmd = CommandFactorySprite.ME.createMultiLine(false);</span>
+<span class="nc" id="L176">		final Command&lt;TitledDiagram&gt; cmd = CommandFactorySprite.ME.createMultiLine(false);</span>
 
-<span class="nc" id="L175">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L176" title="All 2 branches missed.">		for (Iterator&lt;String&gt; it = data.iterator(); it.hasNext();) {</span>
-<span class="nc" id="L177">			String s = it.next();</span>
-<span class="nc bnc" id="L178" title="All 2 branches missed.">			if (s.equals(&quot;hide stereotype&quot;)) {</span>
+<span class="nc" id="L178">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		for (Iterator&lt;String&gt; it = data.iterator(); it.hasNext();) {</span>
+<span class="nc" id="L180">			String s = it.next();</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">			if (s.equals(&quot;hide stereotype&quot;)) {</span>
 				// System.err.println(&quot;skipping &quot; + s);
-<span class="nc bnc" id="L180" title="All 2 branches missed.">			} else if (s.startsWith(&quot;skinparam &quot;)) {</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">			} else if (s.startsWith(&quot;skinparam &quot;)) {</span>
 				// System.err.println(&quot;skipping &quot; + s);
-<span class="nc bnc" id="L182" title="All 2 branches missed.">			} else if (s.startsWith(&quot;scale &quot;)) {</span>
-<span class="nc" id="L183">				final double scale = Double.parseDouble(s.substring(&quot;scale &quot;.length()));</span>
-<span class="nc" id="L184">				this.setScale(new ScaleSimple(scale));</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">			} else if (s.startsWith(&quot;scale &quot;)) {</span>
+<span class="nc" id="L186">				final double scale = Double.parseDouble(s.substring(&quot;scale &quot;.length()));</span>
+<span class="nc" id="L187">				this.setScale(new ScaleSimple(scale));</span>
 				// System.err.println(&quot;skipping &quot; + s);
-<span class="nc bnc" id="L186" title="All 2 branches missed.">			} else if (s.startsWith(&quot;sprite $&quot;)) {</span>
-<span class="nc" id="L187">				BlocLines bloc = BlocLines.singleString(s);</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">			} else if (s.startsWith(&quot;sprite $&quot;)) {</span>
+<span class="nc" id="L190">				BlocLines bloc = BlocLines.singleString(s);</span>
 				do {
-<span class="nc" id="L189">					s = it.next();</span>
-<span class="nc" id="L190">					bloc = bloc.addString(s);</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">				} while (s.equals(&quot;}&quot;) == false);</span>
+<span class="nc" id="L192">					s = it.next();</span>
+<span class="nc" id="L193">					bloc = bloc.addString(s);</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">				} while (s.equals(&quot;}&quot;) == false);</span>
 				try {
-<span class="nc" id="L193">					final CommandExecutionResult cmdResult = cmd.execute(this, bloc, ParserPass.ONE);</span>
-<span class="nc" id="L194">				} catch (NoSuchColorException e) {</span>
-<span class="nc" id="L195">				}</span>
-<span class="nc" id="L196">			} else {</span>
-<span class="nc" id="L197">				result.add(s);</span>
+<span class="nc" id="L196">					final CommandExecutionResult cmdResult = cmd.execute(this, bloc, ParserPass.ONE);</span>
+<span class="nc" id="L197">				} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L198">				}</span>
+<span class="nc" id="L199">			} else {</span>
+<span class="nc" id="L200">				result.add(s);</span>
 			}
-<span class="nc" id="L199">		}</span>
-<span class="nc" id="L200">		return result;</span>
+<span class="nc" id="L202">		}</span>
+<span class="nc" id="L203">		return result;</span>
 	}
 
 	private Element createElement(List&lt;String&gt; data) {
 
-<span class="nc" id="L205">		final DataSourceImpl source = new DataSourceImpl(data);</span>
+<span class="nc" id="L208">		final DataSourceImpl source = new DataSourceImpl(data);</span>
 
-<span class="nc" id="L207">		final Collection&lt;AbstractElementFactoryComplex&gt; cpx = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L210">		final Collection&lt;AbstractElementFactoryComplex&gt; cpx = new ArrayList&lt;&gt;();</span>
 
 		// cpx.add(new ElementFactorySimpleFrame(source, dictionnary));
-<span class="nc" id="L210">		cpx.add(new ElementFactoryPyramid(source, dictionary));</span>
-<span class="nc" id="L211">		cpx.add(new ElementFactoryScroll(source, dictionary));</span>
-<span class="nc" id="L212">		cpx.add(new ElementFactoryBorder(source, dictionary));</span>
+<span class="nc" id="L213">		cpx.add(new ElementFactoryPyramid(source, dictionary));</span>
+<span class="nc" id="L214">		cpx.add(new ElementFactoryScroll(source, dictionary));</span>
+<span class="nc" id="L215">		cpx.add(new ElementFactoryBorder(source, dictionary));</span>
 
-<span class="nc bnc" id="L214" title="All 2 branches missed.">		for (AbstractElementFactoryComplex f : cpx)</span>
-<span class="nc" id="L215">			addSimpleFactory(f, source, dictionary);</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">		for (AbstractElementFactoryComplex f : cpx)</span>
+<span class="nc" id="L218">			addSimpleFactory(f, source, dictionary);</span>
 
-<span class="nc bnc" id="L217" title="All 2 branches missed.">		for (AbstractElementFactoryComplex f1 : cpx)</span>
-<span class="nc bnc" id="L218" title="All 2 branches missed.">			for (AbstractElementFactoryComplex f2 : cpx)</span>
-<span class="nc" id="L219">				f1.addFactory(f2);</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">		for (AbstractElementFactoryComplex f1 : cpx)</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">			for (AbstractElementFactoryComplex f2 : cpx)</span>
+<span class="nc" id="L222">				f1.addFactory(f2);</span>
 
-<span class="nc bnc" id="L221" title="All 2 branches missed.">		for (ElementFactory f : cpx) {</span>
-<span class="nc bnc" id="L222" title="All 2 branches missed.">			if (f.ready()) {</span>
-<span class="nc" id="L223">				Log.info(()-&gt;&quot;Using &quot; + f);</span>
-<span class="nc" id="L224">				return f.create().getElement();</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">		for (ElementFactory f : cpx) {</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">			if (f.ready()) {</span>
+<span class="nc" id="L226">				Log.info(() -&gt; &quot;Using &quot; + f);</span>
+<span class="nc" id="L227">				return f.create().getElement();</span>
 			}
-<span class="nc" id="L226">		}</span>
+<span class="nc" id="L229">		}</span>
 
-<span class="nc" id="L228">		Log.println(&quot;data=&quot; + data);</span>
-<span class="nc" id="L229">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L231">		Log.println(&quot;data=&quot; + data);</span>
+<span class="nc" id="L232">		throw new IllegalArgumentException();</span>
 
 	}
 
 	private static void addSimpleFactory(final AbstractElementFactoryComplex cpxFactory, final DataSource source,
 			SaltDictionary dictionary) {
-<span class="nc" id="L235">		cpxFactory.addFactory(new ElementFactoryMenu(source, dictionary));</span>
-<span class="nc" id="L236">		cpxFactory.addFactory(new ElementFactoryTree(source, dictionary));</span>
-<span class="nc" id="L237">		cpxFactory.addFactory(new ElementFactoryTab(source, dictionary));</span>
-<span class="nc" id="L238">		cpxFactory.addFactory(new ElementFactoryLine(source));</span>
-<span class="nc" id="L239">		cpxFactory.addFactory(new ElementFactoryTextField(source, dictionary));</span>
-<span class="nc" id="L240">		cpxFactory.addFactory(new ElementFactoryCheckboxOn(source, dictionary));</span>
-<span class="nc" id="L241">		cpxFactory.addFactory(new ElementFactoryCheckboxOff(source, dictionary));</span>
-<span class="nc" id="L242">		cpxFactory.addFactory(new ElementFactoryButton(source, dictionary));</span>
-<span class="nc" id="L243">		cpxFactory.addFactory(new ElementFactoryDroplist(source, dictionary));</span>
-<span class="nc" id="L244">		cpxFactory.addFactory(new ElementFactoryRadioOn(source, dictionary));</span>
-<span class="nc" id="L245">		cpxFactory.addFactory(new ElementFactoryRadioOff(source, dictionary));</span>
-<span class="nc" id="L246">		cpxFactory.addFactory(new ElementFactoryImage(source, dictionary));</span>
-<span class="nc" id="L247">		cpxFactory.addFactory(new ElementFactoryRetrieveFromDictonnary(source, dictionary));</span>
-<span class="nc" id="L248">		cpxFactory.addFactory(new ElementFactoryText(source, dictionary));</span>
-<span class="nc" id="L249">	}</span>
+<span class="nc" id="L238">		cpxFactory.addFactory(new ElementFactoryMenu(source, dictionary));</span>
+<span class="nc" id="L239">		cpxFactory.addFactory(new ElementFactoryTree(source, dictionary));</span>
+<span class="nc" id="L240">		cpxFactory.addFactory(new ElementFactoryTab(source, dictionary));</span>
+<span class="nc" id="L241">		cpxFactory.addFactory(new ElementFactoryLine(source));</span>
+<span class="nc" id="L242">		cpxFactory.addFactory(new ElementFactoryTextField(source, dictionary));</span>
+<span class="nc" id="L243">		cpxFactory.addFactory(new ElementFactoryCheckboxOn(source, dictionary));</span>
+<span class="nc" id="L244">		cpxFactory.addFactory(new ElementFactoryCheckboxOff(source, dictionary));</span>
+<span class="nc" id="L245">		cpxFactory.addFactory(new ElementFactoryButton(source, dictionary));</span>
+<span class="nc" id="L246">		cpxFactory.addFactory(new ElementFactoryDroplist(source, dictionary));</span>
+<span class="nc" id="L247">		cpxFactory.addFactory(new ElementFactoryRadioOn(source, dictionary));</span>
+<span class="nc" id="L248">		cpxFactory.addFactory(new ElementFactoryRadioOff(source, dictionary));</span>
+<span class="nc" id="L249">		cpxFactory.addFactory(new ElementFactoryImage(source, dictionary));</span>
+<span class="nc" id="L250">		cpxFactory.addFactory(new ElementFactoryRetrieveFromDictonnary(source, dictionary));</span>
+<span class="nc" id="L251">		cpxFactory.addFactory(new ElementFactoryText(source, dictionary));</span>
+<span class="nc" id="L252">	}</span>
 
 	private boolean iamSalt;
 
 	public void setIamSalt(boolean iamSalt) {
-<span class="nc" id="L254">		this.iamSalt = true;</span>
-<span class="nc" id="L255">	}</span>
+<span class="nc" id="L257">		this.iamSalt = true;</span>
+<span class="nc" id="L258">	}</span>
 
 	public final boolean isIamSalt() {
-<span class="nc" id="L258">		return iamSalt;</span>
+<span class="nc" id="L261">		return iamSalt;</span>
 	}
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="nc" id="L263">		return ClockwiseTopRightBottomLeft.same(5);</span>
+<span class="nc" id="L266">		return ClockwiseTopRightBottomLeft.same(5);</span>
 	}
 
 	private HColor getBlack() {
-<span class="nc" id="L267">		return HColors.BLACK;</span>
+<span class="nc" id="L270">		return HColors.BLACK;</span>
 	}
 
 }

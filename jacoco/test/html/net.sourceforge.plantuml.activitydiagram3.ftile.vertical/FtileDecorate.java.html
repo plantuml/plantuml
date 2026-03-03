@@ -46,101 +46,98 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
-import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.Style;
 
-public abstract class FtileDecorate extends AbstractTextBlock implements Ftile {
+public abstract class FtileDecorate implements Ftile {
 
 	final private Ftile ftile;
 
-<span class="fc" id="L62">	public FtileDecorate(final Ftile ftile) {</span>
-<span class="fc" id="L63">		this.ftile = ftile;</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L59">	public FtileDecorate(final Ftile ftile) {</span>
+<span class="fc" id="L60">		this.ftile = ftile;</span>
+<span class="fc" id="L61">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L68">		return &quot;&quot; + getClass() + &quot; &quot; + ftile;</span>
+<span class="nc" id="L65">		return &quot;&quot; + getClass() + &quot; &quot; + ftile;</span>
 	}
 
 	@Override
 	public LinkRendering getOutLinkRendering() {
-<span class="nc" id="L73">		return ftile.getOutLinkRendering();</span>
+<span class="nc" id="L70">		return ftile.getOutLinkRendering();</span>
 	}
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="fc" id="L78">		return ftile.getInLinkRendering();</span>
+<span class="fc" id="L75">		return ftile.getInLinkRendering();</span>
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L83">		ftile.drawU(ug);</span>
-<span class="fc" id="L84">	}</span>
+<span class="fc" id="L80">		ftile.drawU(ug);</span>
+<span class="fc" id="L81">	}</span>
 
 	@Override
 	public FtileGeometry calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L88">		return ftile.calculateDimension(stringBounder);</span>
+<span class="fc" id="L85">		return ftile.calculateDimension(stringBounder);</span>
 	}
 
 	@Override
 	public Collection&lt;Connection&gt; getInnerConnections() {
-<span class="nc" id="L93">		return ftile.getInnerConnections();</span>
+<span class="nc" id="L90">		return ftile.getInnerConnections();</span>
 	}
 
 	@Override
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc" id="L98">		return ftile.getSwimlanes();</span>
+<span class="nc" id="L95">		return ftile.getSwimlanes();</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneIn() {
-<span class="fc" id="L103">		return ftile.getSwimlaneIn();</span>
+<span class="fc" id="L100">		return ftile.getSwimlaneIn();</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneOut() {
-<span class="fc" id="L108">		return ftile.getSwimlaneOut();</span>
+<span class="fc" id="L105">		return ftile.getSwimlaneOut();</span>
 	}
 
 	@Override
 	public ISkinParam skinParam() {
-<span class="fc" id="L113">		return ftile.skinParam();</span>
+<span class="fc" id="L110">		return ftile.skinParam();</span>
 	}
 
 	protected final Ftile getFtileDelegated() {
-<span class="fc" id="L117">		return ftile;</span>
+<span class="fc" id="L114">		return ftile;</span>
 	}
 
 	@Override
 	public List&lt;WeldingPoint&gt; getWeldingPoints() {
-<span class="fc" id="L122">		return ftile.getWeldingPoints();</span>
+<span class="fc" id="L119">		return ftile.getWeldingPoints();</span>
 	}
 
 	@Override
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (child == ftile)</span>
-<span class="nc" id="L128">			return UTranslate.none();</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (child == ftile)</span>
+<span class="nc" id="L125">			return UTranslate.none();</span>
 
-<span class="nc" id="L130">		return ftile.getTranslateFor(child, stringBounder);</span>
+<span class="nc" id="L127">		return ftile.getTranslateFor(child, stringBounder);</span>
 	}
 
 	@Override
 	public Collection&lt;Ftile&gt; getMyChildren() {
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (this == ftile)</span>
-<span class="nc" id="L136">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (this == ftile)</span>
+<span class="nc" id="L133">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L138">		return Collections.singleton(ftile);</span>
+<span class="nc" id="L135">		return Collections.singleton(ftile);</span>
 	}
 
 	@Override
 	public HorizontalAlignment arrowHorizontalAlignment() {
-<span class="fc" id="L143">		return ftile.arrowHorizontalAlignment();</span>
+<span class="fc" id="L140">		return ftile.arrowHorizontalAlignment();</span>
 	}
 
 }

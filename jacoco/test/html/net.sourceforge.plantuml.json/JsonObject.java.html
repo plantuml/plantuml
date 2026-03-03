@@ -523,16 +523,16 @@ public class JsonObject extends JsonValue implements Iterable&lt;Member&gt; {
 	 * @return the object itself, to enable method chaining
 	 */
 	public JsonObject remove(String name) {
-<span class="nc bnc" id="L526" title="All 2 branches missed.">		if (name == null) {</span>
+<span class="pc bpc" id="L526" title="1 of 2 branches missed.">		if (name == null) {</span>
 <span class="nc" id="L527">			throw new NullPointerException(&quot;name is null&quot;);</span>
 		}
-<span class="nc" id="L529">		int index = indexOf(name);</span>
-<span class="nc bnc" id="L530" title="All 2 branches missed.">		if (index != -1) {</span>
-<span class="nc" id="L531">			table.remove(index);</span>
-<span class="nc" id="L532">			names.remove(index);</span>
-<span class="nc" id="L533">			values.remove(index);</span>
+<span class="fc" id="L529">		int index = indexOf(name);</span>
+<span class="fc bfc" id="L530" title="All 2 branches covered.">		if (index != -1) {</span>
+<span class="fc" id="L531">			table.remove(index);</span>
+<span class="fc" id="L532">			names.remove(index);</span>
+<span class="fc" id="L533">			values.remove(index);</span>
 		}
-<span class="nc" id="L535">		return this;</span>
+<span class="fc" id="L535">		return this;</span>
 	}
 
 	/**
@@ -788,7 +788,7 @@ public class JsonObject extends JsonValue implements Iterable&lt;Member&gt; {
 <span class="fc" id="L788">		writer.writeObjectOpen();</span>
 <span class="fc" id="L789">		Iterator&lt;String&gt; namesIterator = names.iterator();</span>
 <span class="fc" id="L790">		Iterator&lt;JsonValue&gt; valuesIterator = values.iterator();</span>
-<span class="pc bpc" id="L791" title="1 of 2 branches missed.">		if (namesIterator.hasNext()) {</span>
+<span class="fc bfc" id="L791" title="All 2 branches covered.">		if (namesIterator.hasNext()) {</span>
 <span class="fc" id="L792">			writer.writeMemberName(namesIterator.next());</span>
 <span class="fc" id="L793">			writer.writeMemberSeparator();</span>
 <span class="fc" id="L794">			valuesIterator.next().write(writer);</span>
@@ -946,14 +946,14 @@ public class JsonObject extends JsonValue implements Iterable&lt;Member&gt; {
 <span class="fc" id="L946">		}</span>
 
 		void remove(int index) {
-<span class="nc bnc" id="L949" title="All 2 branches missed.">			for (int i = 0; i &lt; hashTable.length; i++) {</span>
-<span class="nc bnc" id="L950" title="All 2 branches missed.">				if ((hashTable[i] &amp; 0xff) == index + 1) {</span>
-<span class="nc" id="L951">					hashTable[i] = 0;</span>
-<span class="nc bnc" id="L952" title="All 2 branches missed.">				} else if ((hashTable[i] &amp; 0xff) &gt; index + 1) {</span>
+<span class="fc bfc" id="L949" title="All 2 branches covered.">			for (int i = 0; i &lt; hashTable.length; i++) {</span>
+<span class="fc bfc" id="L950" title="All 2 branches covered.">				if ((hashTable[i] &amp; 0xff) == index + 1) {</span>
+<span class="fc" id="L951">					hashTable[i] = 0;</span>
+<span class="pc bpc" id="L952" title="1 of 2 branches missed.">				} else if ((hashTable[i] &amp; 0xff) &gt; index + 1) {</span>
 <span class="nc" id="L953">					hashTable[i]--;</span>
 				}
 			}
-<span class="nc" id="L956">		}</span>
+<span class="fc" id="L956">		}</span>
 
 		int get(Object name) {
 <span class="fc" id="L959">			int slot = hashSlotFor(name);</span>

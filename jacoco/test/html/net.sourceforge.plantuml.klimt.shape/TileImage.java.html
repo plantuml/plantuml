@@ -46,24 +46,23 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.ImgValign;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class TileImage extends AbstractTextBlock implements TextBlock {
-    // ::remove file when __HAXE__
+public class TileImage implements TextBlock {
 
 	private final PortableImage image;
 	private final int vspace;
 
-<span class="nc" id="L55">	public TileImage(PortableImage image, ImgValign valign, int vspace) {</span>
-<span class="nc" id="L56">		this.image = Objects.requireNonNull(image);</span>
-<span class="nc" id="L57">		this.vspace = vspace;</span>
-<span class="nc" id="L58">	}</span>
+<span class="nc" id="L54">	public TileImage(PortableImage image, ImgValign valign, int vspace) {</span>
+<span class="nc" id="L55">		this.image = Objects.requireNonNull(image);</span>
+<span class="nc" id="L56">		this.vspace = vspace;</span>
+<span class="nc" id="L57">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L61">		return new XDimension2D(image.getWidth(), image.getHeight() + 2 * vspace);</span>
+<span class="nc" id="L60">		return new XDimension2D(image.getWidth(), image.getHeight() + 2 * vspace);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L65">		ug.apply(UTranslate.dy(vspace)).draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));</span>
-<span class="nc" id="L66">	}</span>
+<span class="nc" id="L64">		ug.apply(UTranslate.dy(vspace)).draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));</span>
+<span class="nc" id="L65">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

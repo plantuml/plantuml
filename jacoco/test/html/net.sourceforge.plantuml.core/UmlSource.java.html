@@ -246,13 +246,13 @@ final public class UmlSource {
 	 * &lt;code&gt;null&lt;/code&gt;.
 	 */
 	public Display getTitle() {
-<span class="nc bnc" id="L249" title="All 2 branches missed.">		for (StringLocated s : source) {</span>
-<span class="nc" id="L250">			final Matcher2 m = TITLE.matcher(s.getString());</span>
-<span class="nc" id="L251">			final boolean ok = m.matches();</span>
-<span class="nc bnc" id="L252" title="All 2 branches missed.">			if (ok)</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">		for (StringLocated s : source) {</span>
+<span class="fc" id="L250">			final Matcher2 m = TITLE.matcher(s.getString());</span>
+<span class="fc" id="L251">			final boolean ok = m.matches();</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">			if (ok)</span>
 <span class="nc" id="L253">				return Display.create(m.group(1));</span>
-<span class="nc" id="L254">		}</span>
-<span class="nc" id="L255">		return Display.empty();</span>
+<span class="fc" id="L254">		}</span>
+<span class="fc" id="L255">		return Display.empty();</span>
 	}
 
 	public boolean isStartDef() {

@@ -42,67 +42,66 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.SName;
 
-<span class="fc" id="L52">class USymbolPerson extends USymbol {</span>
+<span class="fc" id="L51">class USymbolPerson extends USymbol {</span>
 
 	@Override
 	public SName[] getSNames() {
-<span class="nc" id="L56">		return new SName[] { SName.person };</span>
+<span class="nc" id="L55">		return new SName[] { SName.person };</span>
 	}
 
 	private void drawHeadAndBody(UGraphic ug, double shadowing, XDimension2D dimBody, double headSize) {
-<span class="nc" id="L60">		final UEllipse head = UEllipse.build(headSize, headSize);</span>
-<span class="nc" id="L61">		final URectangle body = URectangle.build(dimBody).rounded(headSize);</span>
+<span class="nc" id="L59">		final UEllipse head = UEllipse.build(headSize, headSize);</span>
+<span class="nc" id="L60">		final URectangle body = URectangle.build(dimBody).rounded(headSize);</span>
 
-<span class="nc" id="L63">		body.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L64">		head.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L62">		body.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L63">		head.setDeltaShadow(shadowing);</span>
 
-<span class="nc" id="L66">		final double posx = (dimBody.getWidth() - headSize) / 2;</span>
-<span class="nc" id="L67">		ug.apply(UTranslate.dx(posx)).draw(head);</span>
-<span class="nc" id="L68">		ug.apply(UTranslate.dy(headSize)).draw(body);</span>
-<span class="nc" id="L69">	}</span>
+<span class="nc" id="L65">		final double posx = (dimBody.getWidth() - headSize) / 2;</span>
+<span class="nc" id="L66">		ug.apply(UTranslate.dx(posx)).draw(head);</span>
+<span class="nc" id="L67">		ug.apply(UTranslate.dy(headSize)).draw(body);</span>
+<span class="nc" id="L68">	}</span>
 
 	private double headSize(XDimension2D dimBody) {
-<span class="nc" id="L72">		final double surface = dimBody.getWidth() * dimBody.getHeight();</span>
-<span class="nc" id="L73">		return Math.sqrt(surface) * .42;</span>
+<span class="nc" id="L71">		final double surface = dimBody.getWidth() * dimBody.getHeight();</span>
+<span class="nc" id="L72">		return Math.sqrt(surface) * .42;</span>
 	}
 
 	private Margin getMargin() {
-<span class="nc" id="L77">		return new Margin(10, 10, 10, 10);</span>
+<span class="nc" id="L76">		return new Margin(10, 10, 10, 10);</span>
 	}
 
 	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
 			final Fashion symbolContext, final HorizontalAlignment stereoAlignment) {
-<span class="nc" id="L83">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L82">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L86">				final XDimension2D dimFull = calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L87">				final XDimension2D dimBody = bodyDimension(ug.getStringBounder());</span>
-<span class="nc" id="L88">				ug = UGraphicStencil.create(ug, dimFull);</span>
-<span class="nc" id="L89">				ug = symbolContext.apply(ug);</span>
-<span class="nc" id="L90">				final double headSize = headSize(dimBody);</span>
-<span class="nc" id="L91">				drawHeadAndBody(ug, symbolContext.getDeltaShadow(), dimBody, headSize);</span>
-<span class="nc" id="L92">				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereoAlignment);</span>
-<span class="nc" id="L93">				final Margin margin = getMargin();</span>
-<span class="nc" id="L94">				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1() + headSize)));</span>
-<span class="nc" id="L95">			}</span>
+<span class="nc" id="L85">				final XDimension2D dimFull = calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L86">				final XDimension2D dimBody = bodyDimension(ug.getStringBounder());</span>
+<span class="nc" id="L87">				ug = UGraphicStencil.create(ug, dimFull);</span>
+<span class="nc" id="L88">				ug = symbolContext.apply(ug);</span>
+<span class="nc" id="L89">				final double headSize = headSize(dimBody);</span>
+<span class="nc" id="L90">				drawHeadAndBody(ug, symbolContext.getDeltaShadow(), dimBody, headSize);</span>
+<span class="nc" id="L91">				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereoAlignment);</span>
+<span class="nc" id="L92">				final Margin margin = getMargin();</span>
+<span class="nc" id="L93">				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1() + headSize)));</span>
+<span class="nc" id="L94">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L98">				final XDimension2D body = bodyDimension(stringBounder);</span>
-<span class="nc" id="L99">				return body.delta(0, headSize(body));</span>
+<span class="nc" id="L97">				final XDimension2D body = bodyDimension(stringBounder);</span>
+<span class="nc" id="L98">				return body.delta(0, headSize(body));</span>
 			}
 
 			private XDimension2D bodyDimension(StringBounder stringBounder) {
-<span class="nc" id="L103">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
-<span class="nc" id="L104">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
-<span class="nc" id="L105">				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));</span>
+<span class="nc" id="L102">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="nc" id="L103">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
+<span class="nc" id="L104">				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));</span>
 			}
 		};
 	}
@@ -111,7 +110,7 @@ import net.sourceforge.plantuml.style.SName;
 	public TextBlock asBig(final TextBlock title, final HorizontalAlignment labelAlignment, final TextBlock stereotype,
 			final double width, final double height, final Fashion symbolContext,
 			final HorizontalAlignment stereoAlignment) {
-<span class="nc" id="L114">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L113">		throw new UnsupportedOperationException();</span>
 	}
 
 }

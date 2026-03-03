@@ -35,9 +35,9 @@
  */
 package net.sourceforge.plantuml.openiconic;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 	
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
+	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 <span class="fc" id="L50">		final String lineLower = StringUtils.goLowerCase(line);</span>
 <span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (lineLower.startsWith(&quot;listopeniconic&quot;))</span>
 <span class="nc" id="L52">			return new PSystemListOpenIconic(source, preprocessing);</span>

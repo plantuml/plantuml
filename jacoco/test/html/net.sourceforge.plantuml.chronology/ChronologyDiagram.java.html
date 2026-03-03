@@ -45,7 +45,6 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -56,7 +55,6 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.project.GanttStyle;
@@ -77,13 +75,13 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-public class ChronologyDiagram extends TitledDiagram implements WithSprite, GanttStyle {
+public class ChronologyDiagram extends TitledDiagram implements GanttStyle {
 
-<span class="nc" id="L82">	private final Map&lt;Task, TaskDraw&gt; draws = new LinkedHashMap&lt;Task, TaskDraw&gt;();</span>
-<span class="nc" id="L83">	private final Map&lt;TaskCode, Task&gt; tasks = new LinkedHashMap&lt;TaskCode, Task&gt;();</span>
+<span class="nc" id="L80">	private final Map&lt;Task, TaskDraw&gt; draws = new LinkedHashMap&lt;Task, TaskDraw&gt;();</span>
+<span class="nc" id="L81">	private final Map&lt;TaskCode, Task&gt; tasks = new LinkedHashMap&lt;TaskCode, Task&gt;();</span>
 
 	// private final List&lt;GanttConstraint&gt; constraints = new ArrayList&lt;&gt;();
-<span class="nc" id="L86">	private final HColorSet colorSet = HColorSet.instance();</span>
+<span class="nc" id="L84">	private final HColorSet colorSet = HColorSet.instance();</span>
 //
 //	private final OpenClose openClose = new OpenClose();
 //
@@ -92,14 +90,14 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 //	private final Map&lt;Day, HColor&gt; colorDaysInternal = new HashMap&lt;Day, HColor&gt;();
 //	private final Map&lt;DayOfWeek, HColor&gt; colorDaysOfWeek = new HashMap&lt;DayOfWeek, HColor&gt;();
 //	private final Map&lt;Day, String&gt; nameDays = new HashMap&lt;Day, String&gt;();
-<span class="nc" id="L95">	private LabelStrategy labelStrategy = new LabelStrategy(LabelPosition.LEGACY, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L93">	private LabelStrategy labelStrategy = new LabelStrategy(LabelPosition.LEGACY, HorizontalAlignment.LEFT);</span>
 //
 //	// Let's follow ISO-8601 rules
 //	private WeekNumberStrategy weekNumberStrategy = new WeekNumberStrategy(DayOfWeek.MONDAY, 4);
 //
 //	private PrintScale printScale = PrintScale.DAILY;
 //	private double factorScale = 1.0;
-<span class="nc" id="L102">	private Locale locale = Locale.ENGLISH;</span>
+<span class="nc" id="L100">	private Locale locale = Locale.ENGLISH;</span>
 //
 //	private Day today;
 //	private double totalHeightWithoutFooter;
@@ -110,7 +108,7 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 //	private Day printStart;
 //	private Day printEnd;
 //
-<span class="nc" id="L113">	private final RealOrigin origin = RealUtils.createOrigin();</span>
+<span class="nc" id="L111">	private final RealOrigin origin = RealUtils.createOrigin();</span>
 //
 //	private int defaultCompletion = 100;
 //
@@ -118,12 +116,12 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 //	private Resource they;
 
 	public CommandExecutionResult changeLanguage(String lang) {
-<span class="nc" id="L121">		this.locale = new Locale(lang);</span>
-<span class="nc" id="L122">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L119">		this.locale = new Locale(lang);</span>
+<span class="nc" id="L120">		return CommandExecutionResult.ok();</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L126">		return new DiagramDescription(&quot;(Chronology)&quot;);</span>
+<span class="nc" id="L124">		return new DiagramDescription(&quot;(Chronology)&quot;);</span>
 	}
 
 //	public void setWeekNumberStrategy(DayOfWeek firstDayOfWeek, int minimalDaysInFirstWeek) {
@@ -131,17 +129,17 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 //	}
 
 	public ChronologyDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L134">		super(source, UmlDiagramType.CHRONOLOGY, null, preprocessing);</span>
-<span class="nc" id="L135">	}</span>
+<span class="nc" id="L132">		super(source, UmlDiagramType.CHRONOLOGY, null, preprocessing);</span>
+<span class="nc" id="L133">	}</span>
 
 //	public final int getDpi(FileFormatOption fileFormatOption) {
 //		return 96;
 //	}
 
 	@Override
-	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-<span class="nc" id="L144">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);</span>
+<span class="nc" id="L142">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);</span>
 	}
 
 //	public void setPrintScale(PrintScale printScale) {
@@ -180,18 +178,23 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 //	}
 
 	@Override
-	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
-<span class="nc" id="L184">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());</span>
-<span class="nc" id="L185">		initMinMax();</span>
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+<span class="nc" id="L182">		return getTextMainBlock01970(fileFormatOption);</span>
+	}
 
-<span class="nc" id="L187">		final TimeHeader2 timeHeader = new TimeHeaderChronology(stringBounder, thParam(), PrintScale.DAILY,</span>
+	@Override
+	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+<span class="nc" id="L187">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());</span>
+<span class="nc" id="L188">		initMinMax();</span>
+
+<span class="nc" id="L190">		final TimeHeader2 timeHeader = new TimeHeaderChronology(stringBounder, thParam(), PrintScale.DAILY,</span>
 				this.timeScale);
-<span class="nc" id="L189">		initTaskAndResourceDraws(timeHeader.getTimeScale(), timeHeader.getFullHeaderHeight(stringBounder),</span>
+<span class="nc" id="L192">		initTaskAndResourceDraws(timeHeader.getTimeScale(), timeHeader.getFullHeaderHeight(stringBounder),</span>
 				stringBounder);
 
-<span class="nc" id="L192">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L195">		return new TextBlock() {</span>
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L194">				return new XDimension2D(1000, 1000);</span>
+<span class="nc" id="L197">				return new XDimension2D(1000, 1000);</span>
 			}
 
 			@Override
@@ -199,7 +202,7 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 //				timeHeader.drawTimeHeader(ug, 200);
 //				drawTasksRect(ug);
 //				drawTasksTitle(ug, 0, 0);
-<span class="nc" id="L202">			}</span>
+<span class="nc" id="L205">			}</span>
 		};
 
 	}
@@ -252,7 +255,7 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 //	}
 
 	private TimeHeaderParameters2 thParam() {
-<span class="nc" id="L255">		return new TimeHeaderParameters2(null, 1, min, max, getIHtmlColorSet(), locale, null, null, null, this, false);</span>
+<span class="nc" id="L258">		return new TimeHeaderParameters2(null, 1, min, max, getIHtmlColorSet(), locale, null, null, null, this, false);</span>
 	}
 
 //	private Map&lt;Day, HColor&gt; colorDays() {
@@ -262,14 +265,14 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 
 	@Override
 	public final Style getStyle(SName param) {
-<span class="nc" id="L265">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, param)</span>
-<span class="nc" id="L266">				.getMergedStyle(getCurrentStyleBuilder());</span>
+<span class="nc" id="L268">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, param)</span>
+<span class="nc" id="L269">				.getMergedStyle(getCurrentStyleBuilder());</span>
 	}
 
 	@Override
 	public final Style getStyle(SName param1, SName param2) {
-<span class="nc" id="L271">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, param1, param2)</span>
-<span class="nc" id="L272">				.getMergedStyle(getCurrentStyleBuilder());</span>
+<span class="nc" id="L274">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, param1, param2)</span>
+<span class="nc" id="L275">				.getMergedStyle(getCurrentStyleBuilder());</span>
 	}
 
 //	private double getTotalHeight(StringBounder stringBounder, TimeHeader timeHeader) {
@@ -280,15 +283,15 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 //	}
 
 	private void drawTasksRect(UGraphic ug) {
-<span class="nc bnc" id="L283" title="All 2 branches missed.">		for (Task task : tasks.values()) {</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">		for (Task task : tasks.values()) {</span>
 //			if (isHidden(task))
 //				continue;
 
-<span class="nc" id="L287">			final TaskDraw draw = draws.get(task);</span>
-<span class="nc" id="L288">			final UTranslate move = UTranslate.dy(draw.getY(ug.getStringBounder()).getCurrentValue());</span>
-<span class="nc" id="L289">			draw.drawU(ug.apply(move));</span>
-<span class="nc" id="L290">		}</span>
-<span class="nc" id="L291">	}</span>
+<span class="nc" id="L290">			final TaskDraw draw = draws.get(task);</span>
+<span class="nc" id="L291">			final UTranslate move = UTranslate.dy(draw.getY(ug.getStringBounder()).getCurrentValue());</span>
+<span class="nc" id="L292">			draw.drawU(ug.apply(move));</span>
+<span class="nc" id="L293">		}</span>
+<span class="nc" id="L294">	}</span>
 
 //	private void drawConstraints(final UGraphic ug, TimeScale timeScale) {
 //		for (GanttConstraint constraint : constraints) {
@@ -305,15 +308,15 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 //	}
 
 	private void drawTasksTitle(UGraphic ug, double colTitles, double colBars) {
-<span class="nc bnc" id="L308" title="All 2 branches missed.">		for (Task task : tasks.values()) {</span>
+<span class="nc bnc" id="L311" title="All 2 branches missed.">		for (Task task : tasks.values()) {</span>
 //			if (isHidden(task))
 //				continue;
 
-<span class="nc" id="L312">			final TaskDraw draw = draws.get(task);</span>
-<span class="nc" id="L313">			final UTranslate move = UTranslate.dy(draw.getY(ug.getStringBounder()).getCurrentValue());</span>
-<span class="nc" id="L314">			draw.drawTitle(ug.apply(move), labelStrategy, colTitles, colBars);</span>
-<span class="nc" id="L315">		}</span>
-<span class="nc" id="L316">	}</span>
+<span class="nc" id="L315">			final TaskDraw draw = draws.get(task);</span>
+<span class="nc" id="L316">			final UTranslate move = UTranslate.dy(draw.getY(ug.getStringBounder()).getCurrentValue());</span>
+<span class="nc" id="L317">			draw.drawTitle(ug.apply(move), labelStrategy, colTitles, colBars);</span>
+<span class="nc" id="L318">		}</span>
+<span class="nc" id="L319">	}</span>
 
 //	private void drawResources(UGraphic ug) {
 //		for (Resource res : resources.values()) {
@@ -362,11 +365,11 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 //	private final Map&lt;String, OpenClose&gt; openCloseForTask = new HashMap&lt;&gt;();
 //
 	private void initTaskAndResourceDraws(TimeScale timeScale, double headerHeight, StringBounder stringBounder) {
-<span class="nc" id="L365">		Real y = origin;</span>
-<span class="nc" id="L366">		y = y.addFixed(headerHeight);</span>
-<span class="nc bnc" id="L367" title="All 2 branches missed.">		for (Task task : tasks.values()) {</span>
+<span class="nc" id="L368">		Real y = origin;</span>
+<span class="nc" id="L369">		y = y.addFixed(headerHeight);</span>
+<span class="nc bnc" id="L370" title="All 2 branches missed.">		for (Task task : tasks.values()) {</span>
 			final TaskDraw draw;
-<span class="nc" id="L369">			final String disp = task.getCode().getDisplay();</span>
+<span class="nc" id="L372">			final String disp = task.getCode().getDisplay();</span>
 //			draw = new TaskDrawDiamond(timeScale, y, disp, task.getStart(), task, this, task.getStyleBuilder(),
 //					getSkinParam());
 //			final double height = draw.getFullHeightTask(stringBounder);
@@ -396,7 +399,7 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 //				y = y.addAtLeast(draw.getFullHeightTask(stringBounder));
 //
 //			draws.put(task, draw);
-<span class="nc" id="L399">		}</span>
+<span class="nc" id="L402">		}</span>
 //		origin.compileNow();
 //		magicPush(stringBounder);
 //		double yy = lastY(stringBounder);
@@ -410,7 +413,7 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 //			}
 //
 //		this.totalHeightWithoutFooter = yy;
-<span class="nc" id="L413">	}</span>
+<span class="nc" id="L416">	}</span>
 
 //
 //	private ResourceDraw buildResourceDraw(ChronologyDiagram gantt, Resource res, TimeScale timeScale, double y, Day min,
@@ -476,26 +479,26 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 //	}
 //
 	private void initMinMax() {
-<span class="nc bnc" id="L479" title="All 2 branches missed.">		if (tasks.size() == 0) {</span>
-<span class="nc" id="L480">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L482" title="All 2 branches missed.">		if (tasks.size() == 0) {</span>
+<span class="nc" id="L483">			throw new IllegalStateException();</span>
 		}
-<span class="nc bnc" id="L482" title="All 2 branches missed.">		for (Task task : tasks.values()) {</span>
-<span class="nc bnc" id="L483" title="All 4 branches missed.">			if (this.min == null || this.max == null) {</span>
-<span class="nc" id="L484">				this.min = task.getStart().toDay();</span>
-<span class="nc" id="L485">				this.max = task.getEnd().toDay();</span>
-<span class="nc" id="L486">				continue;</span>
+<span class="nc bnc" id="L485" title="All 2 branches missed.">		for (Task task : tasks.values()) {</span>
+<span class="nc bnc" id="L486" title="All 4 branches missed.">			if (this.min == null || this.max == null) {</span>
+<span class="nc" id="L487">				this.min = task.getStart().toDay();</span>
+<span class="nc" id="L488">				this.max = task.getEnd().toDay();</span>
+<span class="nc" id="L489">				continue;</span>
 
 			}
-<span class="nc bnc" id="L489" title="All 2 branches missed.">			if (this.min.compareTo(task.getStart().toDay()) &gt; 0)</span>
-<span class="nc" id="L490">				this.min = task.getStart().toDay();</span>
-<span class="nc bnc" id="L491" title="All 2 branches missed.">			if (this.max.compareTo(task.getEnd().toDay()) &lt; 0)</span>
-<span class="nc" id="L492">				this.max = task.getEnd().toDay();</span>
-<span class="nc" id="L493">		}</span>
+<span class="nc bnc" id="L492" title="All 2 branches missed.">			if (this.min.compareTo(task.getStart().toDay()) &gt; 0)</span>
+<span class="nc" id="L493">				this.min = task.getStart().toDay();</span>
+<span class="nc bnc" id="L494" title="All 2 branches missed.">			if (this.max.compareTo(task.getEnd().toDay()) &lt; 0)</span>
+<span class="nc" id="L495">				this.max = task.getEnd().toDay();</span>
+<span class="nc" id="L496">		}</span>
 
-<span class="nc" id="L495">		this.timeScale = new TimeScaleChronology(1000);</span>
-<span class="nc" id="L496">		this.timeScale.setMin(this.min.toEpochDay());</span>
-<span class="nc" id="L497">		this.timeScale.setMax(this.max.toEpochDay());</span>
-<span class="nc" id="L498">	}</span>
+<span class="nc" id="L498">		this.timeScale = new TimeScaleChronology(1000);</span>
+<span class="nc" id="L499">		this.timeScale.setMin(this.min.toEpochDay());</span>
+<span class="nc" id="L500">		this.timeScale.setMax(this.max.toEpochDay());</span>
+<span class="nc" id="L501">	}</span>
 
 //	public Day getThenDate() {
 //		Day result = getStartingDate();
@@ -529,17 +532,17 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 //	}
 
 	public Task getOrCreateTask(TaskCode code, boolean linkedToPrevious) {
-<span class="nc" id="L532">		Task result = tasks.get(Objects.requireNonNull(code));</span>
-<span class="nc bnc" id="L533" title="All 2 branches missed.">		if (result == null) {</span>
+<span class="nc" id="L535">		Task result = tasks.get(Objects.requireNonNull(code));</span>
+<span class="nc bnc" id="L536" title="All 2 branches missed.">		if (result == null) {</span>
 
-<span class="nc" id="L535">			result = new TaskChronology(getSkinParam().getCurrentStyleBuilder(), code);</span>
-<span class="nc bnc" id="L536" title="All 2 branches missed.">			if (currentGroup != null)</span>
-<span class="nc" id="L537">				currentGroup.addTask(result);</span>
+<span class="nc" id="L538">			result = new TaskChronology(getSkinParam().getCurrentStyleBuilder(), code);</span>
+<span class="nc bnc" id="L539" title="All 2 branches missed.">			if (currentGroup != null)</span>
+<span class="nc" id="L540">				currentGroup.addTask(result);</span>
 
-<span class="nc" id="L539">			tasks.put(code, result);</span>
+<span class="nc" id="L542">			tasks.put(code, result);</span>
 
 		}
-<span class="nc" id="L542">		return result;</span>
+<span class="nc" id="L545">		return result;</span>
 	}
 
 //	private Task getLastCreatedTask() {
@@ -556,7 +559,7 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 //		tasks.put(separator.getCode(), separator);
 //	}
 //
-<span class="nc" id="L559">	private TaskGroup currentGroup = null;</span>
+<span class="nc" id="L562">	private TaskGroup currentGroup = null;</span>
 //
 //	public CommandExecutionResult addGroup(String name) {
 //		TaskGroup group = new TaskGroup(this.currentGroup, getSkinParam().getCurrentStyleBuilder(), name);
@@ -747,18 +750,18 @@ public class ChronologyDiagram extends TitledDiagram implements WithSprite, Gant
 
 	// @Override
 	public PiecewiseConstant getDefaultPlan() {
-<span class="nc" id="L750">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L753">		throw new UnsupportedOperationException();</span>
 	}
 
 	// @Override
 	public TaskDraw getTaskDraw(Task task) {
 		// TODO Auto-generated method stub
-<span class="nc" id="L756">		return null;</span>
+<span class="nc" id="L759">		return null;</span>
 	}
 
 	// @Override
 	public HColorSet getIHtmlColorSet() {
-<span class="nc" id="L761">		return colorSet;</span>
+<span class="nc" id="L764">		return colorSet;</span>
 	}
 
 //	private boolean showFootbox = true;

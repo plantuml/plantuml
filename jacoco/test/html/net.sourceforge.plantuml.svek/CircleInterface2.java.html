@@ -40,40 +40,39 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 
-public class CircleInterface2 extends AbstractTextBlock implements TextBlock {
+public class CircleInterface2 implements TextBlock {
 
-<span class="nc" id="L49">	private final double margin = 1;</span>
+<span class="nc" id="L48">	private final double margin = 1;</span>
 
-<span class="nc" id="L51">	private final double radius = 8;</span>
+<span class="nc" id="L50">	private final double radius = 8;</span>
 
 	private final HColor backgroundColor;
 	private final HColor foregroundColor;
 
 	private final double deltaShadow;
 
-<span class="nc" id="L58">	public CircleInterface2(HColor backgroundColor, HColor foregroundColor, double deltaShadow) {</span>
-<span class="nc" id="L59">		this.backgroundColor = backgroundColor;</span>
-<span class="nc" id="L60">		this.foregroundColor = foregroundColor;</span>
-<span class="nc" id="L61">		this.deltaShadow = deltaShadow;</span>
-<span class="nc" id="L62">	}</span>
+<span class="nc" id="L57">	public CircleInterface2(HColor backgroundColor, HColor foregroundColor, double deltaShadow) {</span>
+<span class="nc" id="L58">		this.backgroundColor = backgroundColor;</span>
+<span class="nc" id="L59">		this.foregroundColor = foregroundColor;</span>
+<span class="nc" id="L60">		this.deltaShadow = deltaShadow;</span>
+<span class="nc" id="L61">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L65">		double x = 0;</span>
-<span class="nc" id="L66">		double y = 0;</span>
-<span class="nc" id="L67">		x += margin;</span>
-<span class="nc" id="L68">		y += margin;</span>
-<span class="nc" id="L69">		ug = ug.apply(backgroundColor.bg()).apply(foregroundColor);</span>
-<span class="nc" id="L70">		final UEllipse circle = UEllipse.build(radius * 2, radius * 2);</span>
-<span class="nc" id="L71">		circle.setDeltaShadow(deltaShadow);</span>
-<span class="nc" id="L72">		ug.apply(new UTranslate(x, y)).draw(circle);</span>
-<span class="nc" id="L73">	}</span>
+<span class="nc" id="L64">		double x = 0;</span>
+<span class="nc" id="L65">		double y = 0;</span>
+<span class="nc" id="L66">		x += margin;</span>
+<span class="nc" id="L67">		y += margin;</span>
+<span class="nc" id="L68">		ug = ug.apply(backgroundColor.bg()).apply(foregroundColor);</span>
+<span class="nc" id="L69">		final UEllipse circle = UEllipse.build(radius * 2, radius * 2);</span>
+<span class="nc" id="L70">		circle.setDeltaShadow(deltaShadow);</span>
+<span class="nc" id="L71">		ug.apply(new UTranslate(x, y)).draw(circle);</span>
+<span class="nc" id="L72">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L76">		return new XDimension2D(radius * 2 + 2 * margin, radius * 2 + 2 * margin);</span>
+<span class="nc" id="L75">		return new XDimension2D(radius * 2 + 2 * margin, radius * 2 + 2 * margin);</span>
 	}
 
 }

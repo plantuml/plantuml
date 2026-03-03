@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,131 +43,169 @@ import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramChromeFactory12026;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.TextBlockExporter12026;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.utils.BlocLines;
 
-public class NewpagedDiagram extends AbstractPSystem {
-	// ::remove file when __HAXE__
+public class NewpagedDiagram extends UgDiagram {
 
-<span class="nc" id="L58">	private final List&lt;Diagram&gt; diagrams = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L62">	private final List&lt;Diagram&gt; diagrams = new ArrayList&lt;&gt;();</span>
 
-	public NewpagedDiagram(UmlSource source, AbstractPSystem diag1, AbstractPSystem diag2,
+	public NewpagedDiagram(UmlSource source, Diagram diag1, Diagram diag2,
 			PreprocessingArtifact preprocessingArtifact) {
-<span class="nc" id="L62">		super(source, preprocessingArtifact);</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (diag1 instanceof NewpagedDiagram)</span>
-<span class="nc" id="L64">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L66">		super(source, preprocessingArtifact);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (diag1 instanceof NewpagedDiagram)</span>
+<span class="nc" id="L68">			throw new IllegalArgumentException();</span>
 
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (diag2 instanceof NewpagedDiagram)</span>
-<span class="nc" id="L67">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (diag2 instanceof NewpagedDiagram)</span>
+<span class="nc" id="L71">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L69">		this.diagrams.add(diag1);</span>
-<span class="nc" id="L70">		this.diagrams.add(diag2);</span>
-<span class="nc" id="L71">	}</span>
+<span class="nc" id="L73">		this.diagrams.add(diag1);</span>
+<span class="nc" id="L74">		this.diagrams.add(diag2);</span>
+<span class="nc" id="L75">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L75">		return super.toString() + &quot; SIZE=&quot; + diagrams.size() + &quot; &quot; + diagrams;</span>
+<span class="nc" id="L79">		return super.toString() + &quot; SIZE=&quot; + diagrams.size() + &quot; &quot; + diagrams;</span>
 	}
 
 	public Diagram getLastDiagram() {
-<span class="nc" id="L79">		return diagrams.get(diagrams.size() - 1);</span>
+<span class="nc" id="L83">		return diagrams.get(diagrams.size() - 1);</span>
 	}
 
 	@Override
 	public CommandExecutionResult executeCommand(Command cmd, BlocLines lines, ParserPass currentPass) {
-<span class="nc" id="L84">		final int nb = diagrams.size();</span>
+<span class="nc" id="L88">		final int nb = diagrams.size();</span>
 		try {
-<span class="nc" id="L86">			final CommandExecutionResult tmp = cmd.execute(diagrams.get(nb - 1), lines, currentPass);</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">			if (tmp.getNewDiagram() instanceof NewpagedDiagram) {</span>
-<span class="nc" id="L88">				final NewpagedDiagram new1 = (NewpagedDiagram) tmp.getNewDiagram();</span>
+<span class="nc" id="L90">			final CommandExecutionResult tmp = cmd.execute(diagrams.get(nb - 1), lines, currentPass);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">			if (tmp.getNewDiagram() instanceof NewpagedDiagram) {</span>
+<span class="nc" id="L92">				final NewpagedDiagram new1 = (NewpagedDiagram) tmp.getNewDiagram();</span>
 				// System.err.println(&quot;this=&quot; + this);
 				// System.err.println(&quot;new1=&quot; + new1);
-<span class="nc bnc" id="L91" title="All 2 branches missed.">				if (new1.size() != 2)</span>
-<span class="nc" id="L92">					throw new IllegalStateException();</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">				if (new1.size() != 2)</span>
+<span class="nc" id="L96">					throw new IllegalStateException();</span>
 
-<span class="nc bnc" id="L94" title="All 2 branches missed.">				if (new1.diagrams.get(0) != this.diagrams.get(nb - 1))</span>
-<span class="nc" id="L95">					throw new IllegalStateException();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">				if (new1.diagrams.get(0) != this.diagrams.get(nb - 1))</span>
+<span class="nc" id="L99">					throw new IllegalStateException();</span>
 
-<span class="nc" id="L97">				this.diagrams.add(new1.diagrams.get(1));</span>
-<span class="nc" id="L98">				return tmp.withDiagram(this);</span>
+<span class="nc" id="L101">				this.diagrams.add(new1.diagrams.get(1));</span>
+<span class="nc" id="L102">				return tmp.withDiagram(this);</span>
 
 			}
-<span class="nc" id="L101">			return tmp;</span>
-<span class="nc" id="L102">		} catch (NoSuchColorException e) {</span>
-<span class="nc" id="L103">			return CommandExecutionResult.badColor();</span>
+<span class="nc" id="L105">			return tmp;</span>
+<span class="nc" id="L106">		} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L107">			return CommandExecutionResult.badColor();</span>
 		}
 	}
 
 	private int size() {
-<span class="nc" id="L108">		return diagrams.size();</span>
+<span class="nc" id="L112">		return diagrams.size();</span>
+	}
+
+//	@Override
+//	public final ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException {
+//		return diagrams.get(num).exportDiagram(os, 0, fileFormat);
+//	}
+
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception {
+<span class="nc" id="L122">		final TitledDiagram titledDiagram = (TitledDiagram) diagrams.get(num);</span>
+<span class="nc" id="L123">		TextBlock result = titledDiagram.getTextBlock12026(num, fileFormatOption);</span>
+<span class="nc" id="L124">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(titledDiagram.getSkinParam());</span>
+<span class="nc" id="L125">		result = DiagramChromeFactory12026.create(result, titledDiagram, titledDiagram.getSkinParam(), stringBounder,</span>
+<span class="nc" id="L126">				titledDiagram.getWarnings());</span>
+
+<span class="nc" id="L128">		return result;</span>
 	}
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
-			throws IOException {
-<span class="nc" id="L114">		return diagrams.get(num).exportDiagram(os, 0, fileFormat);</span>
+	protected TextBlockExporter12026 getExporter(int num, FileFormatOption fileFormatOption) throws Exception {
+
+<span class="nc" id="L134">		TextBlock result = getTextBlock12026(num, fileFormatOption);</span>
+
+<span class="nc" id="L136">		final HColor backColor = calculateBackColor();</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (backColor != null)</span>
+<span class="nc" id="L138">			result = TextBlockUtils.addBackcolor(result, backColor);</span>
+
+<span class="nc" id="L140">		final ColorMapper mutedMapper = muteColorMapper(fileFormatOption.getColorMapper());</span>
+<span class="nc" id="L141">		final FileFormatOption effectiveFormat = fileFormatOption.withColorMapper(mutedMapper);</span>
+
+<span class="nc" id="L143">		final TextBlockExporter12026.Builder builder = TextBlockExporter12026.builder(result, effectiveFormat);</span>
+
+<span class="nc" id="L145">		final TitledDiagram titledDiagram = (TitledDiagram) diagrams.get(num);</span>
+
+<span class="nc" id="L147">		builder.styled(titledDiagram);</span>
+
+<span class="nc" id="L149">		return builder.build();</span>
+
 	}
 
-	public int getNbImages() {
-<span class="nc" id="L118">		int nb = 0;</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		for (Diagram d : diagrams)</span>
-<span class="nc" id="L120">			nb += d.getNbImages();</span>
+	public int getCardinality() {
+<span class="nc" id="L154">		int nb = 0;</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		for (Diagram d : diagrams)</span>
+<span class="nc" id="L156">			nb += d.getCardinality();</span>
 
-<span class="nc" id="L122">		return nb;</span>
+<span class="nc" id="L158">		return nb;</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L126">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		for (Diagram d : diagrams) {</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
-<span class="nc" id="L129">				sb.append(&quot; &quot;);</span>
+<span class="nc" id="L162">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		for (Diagram d : diagrams) {</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
+<span class="nc" id="L165">				sb.append(&quot; &quot;);</span>
 
-<span class="nc" id="L131">			sb.append(d.getDescription());</span>
-<span class="nc" id="L132">		}</span>
-<span class="nc" id="L133">		return new DiagramDescription(sb.toString());</span>
+<span class="nc" id="L167">			sb.append(d.getDescription());</span>
+<span class="nc" id="L168">		}</span>
+<span class="nc" id="L169">		return new DiagramDescription(sb.toString());</span>
 	}
 
-	public String getWarningOrError() {
-<span class="nc" id="L137">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">		for (Diagram d : diagrams) {</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
-<span class="nc" id="L140">				sb.append(&quot; &quot;);</span>
-
-<span class="nc bnc" id="L142" title="All 2 branches missed.">			if (d.getWarningOrError() != null)</span>
-<span class="nc" id="L143">				sb.append(d.getWarningOrError());</span>
-
-<span class="nc" id="L145">		}</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (sb.length() == 0)</span>
-<span class="nc" id="L147">			return null;</span>
-
-<span class="nc" id="L149">		return sb.toString();</span>
-	}
+//	public String getWarningOrError() {
+//		final StringBuilder sb = new StringBuilder();
+//		for (Diagram d : diagrams) {
+//			if (sb.length() &gt; 0)
+//				sb.append(&quot; &quot;);
+//
+//			if (d.getWarningOrError() != null)
+//				sb.append(d.getWarningOrError());
+//
+//		}
+//		if (sb.length() == 0)
+//			return null;
+//
+//		return sb.toString();
+//	}
 
 	@Override
 	public void makeDiagramReady() {
-<span class="nc" id="L154">		super.makeDiagramReady();</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		for (Diagram diagram : diagrams)</span>
-<span class="nc" id="L156">			((AbstractPSystem) diagram).makeDiagramReady();</span>
+<span class="nc" id="L190">		super.makeDiagramReady();</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">		for (Diagram diagram : diagrams)</span>
+<span class="nc" id="L192">			((Diagram) diagram).makeDiagramReady();</span>
 
-<span class="nc" id="L158">	}</span>
+<span class="nc" id="L194">	}</span>
 
 	@Override
 	public String checkFinalError() {
-<span class="nc bnc" id="L162" title="All 2 branches missed.">		for (Diagram p : getDiagrams()) {</span>
-<span class="nc" id="L163">			final String check = ((AbstractPSystem) p).checkFinalError();</span>
-<span class="nc bnc" id="L164" title="All 2 branches missed.">			if (check != null)</span>
-<span class="nc" id="L165">				return check;</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">		for (Diagram p : getDiagrams()) {</span>
+<span class="nc" id="L199">			final String check = ((Diagram) p).checkFinalError();</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">			if (check != null)</span>
+<span class="nc" id="L201">				return check;</span>
 
-<span class="nc" id="L167">		}</span>
-<span class="nc" id="L168">		return super.checkFinalError();</span>
+<span class="nc" id="L203">		}</span>
+<span class="nc" id="L204">		return super.checkFinalError();</span>
 	}
 
 	public final List&lt;Diagram&gt; getDiagrams() {
-<span class="nc" id="L172">		return Collections.unmodifiableList(diagrams);</span>
+<span class="nc" id="L208">		return Collections.unmodifiableList(diagrams);</span>
 	}
 
 }

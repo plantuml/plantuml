@@ -82,9 +82,9 @@ public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer
 <span class="fc bfc" id="L82" title="All 2 branches covered.">		if (shape instanceof UText) {</span>
 <span class="fc" id="L83">			final UText txt = (UText) shape;</span>
 <span class="fc" id="L84">			final int y = ((int) (getTranslateY() + txt.getDescent(getStringBounder()))) / 10;</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">			if (txt.getFontConfiguration().containsStyle(FontStyle.WAVE)) {</span>
-<span class="nc" id="L86">				charArea.drawHLine('^', y, getDx(), txt.getText().length());</span>
-<span class="nc" id="L87">				charArea.drawStringLR(txt.getText(), getDx(), y + 1);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">			if (txt.getFontConfiguration().containsStyle(FontStyle.WAVE)) {</span>
+<span class="fc" id="L86">				charArea.drawHLine('^', y, getDx(), txt.getText().length());</span>
+<span class="fc" id="L87">				charArea.drawStringLR(txt.getText(), getDx(), y + 1);</span>
 			} else {
 <span class="fc" id="L89">				charArea.drawStringLR(txt.getText(), getDx(), y);</span>
 			}

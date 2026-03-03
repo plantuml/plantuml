@@ -39,24 +39,22 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class TileImageSvg extends AbstractTextBlock implements TextBlock {
-    // ::remove file when __HAXE__
-
+public class TileImageSvg implements TextBlock {
 	private final UImageSvg svg;
 	private final double scale;
 
-<span class="nc" id="L48">	public TileImageSvg(String svg, double scale) {</span>
-<span class="nc" id="L49">		this.svg = new UImageSvg(svg, scale);</span>
-<span class="nc" id="L50">		this.scale = scale;</span>
-<span class="nc" id="L51">	}</span>
+<span class="nc" id="L46">	public TileImageSvg(String svg, double scale) {</span>
+<span class="nc" id="L47">		this.svg = new UImageSvg(svg, scale);</span>
+<span class="nc" id="L48">		this.scale = scale;</span>
+<span class="nc" id="L49">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L54">		return new XDimension2D(svg.getWidth(), svg.getHeight());</span>
+<span class="nc" id="L52">		return new XDimension2D(svg.getWidth(), svg.getHeight());</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L58">		ug.draw(svg);</span>
-<span class="nc" id="L59">	}</span>
+<span class="nc" id="L56">		ug.draw(svg);</span>
+<span class="nc" id="L57">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

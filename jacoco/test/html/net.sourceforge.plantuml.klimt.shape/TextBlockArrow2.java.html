@@ -46,45 +46,43 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.svek.GuideLine;
 
-public class TextBlockArrow2 extends AbstractTextBlock implements TextBlock {
-    // ::remove file when __HAXE__
-
+public class TextBlockArrow2 implements TextBlock {
 	private final double size;
 	private final GuideLine angle;
 	private final HColor color;
 
-<span class="nc" id="L56">	public TextBlockArrow2(GuideLine angle, FontConfiguration fontConfiguration) {</span>
-<span class="nc" id="L57">		this.angle = Objects.requireNonNull(angle);</span>
-<span class="nc" id="L58">		this.size = fontConfiguration.getFont().getSize2D();</span>
-<span class="nc" id="L59">		this.color = fontConfiguration.getColor();</span>
+<span class="nc" id="L54">	public TextBlockArrow2(GuideLine angle, FontConfiguration fontConfiguration) {</span>
+<span class="nc" id="L55">		this.angle = Objects.requireNonNull(angle);</span>
+<span class="nc" id="L56">		this.size = fontConfiguration.getFont().getSize2D();</span>
+<span class="nc" id="L57">		this.color = fontConfiguration.getColor();</span>
 
-<span class="nc" id="L61">	}</span>
+<span class="nc" id="L59">	}</span>
 
 	public void drawU(UGraphic ug) {
 		// final double triSize = size * .80;
-<span class="nc" id="L65">		final int triSize = (int) (size * .80);</span>
+<span class="nc" id="L63">		final int triSize = (int) (size * .80);</span>
 
-<span class="nc" id="L67">		ug = ug.apply(color);</span>
-<span class="nc" id="L68">		ug = ug.apply(color.bg());</span>
-<span class="nc" id="L69">		ug = ug.apply(new UTranslate(triSize / 2, size / 2));</span>
+<span class="nc" id="L65">		ug = ug.apply(color);</span>
+<span class="nc" id="L66">		ug = ug.apply(color.bg());</span>
+<span class="nc" id="L67">		ug = ug.apply(new UTranslate(triSize / 2, size / 2));</span>
 
-<span class="nc" id="L71">		final UPolygon triangle = new UPolygon();</span>
-<span class="nc" id="L72">		final double beta = Math.PI * 4 / 5;</span>
-<span class="nc" id="L73">		triangle.addPoint(getPoint(triSize / 2, angle.getArrowDirectionInRadian()));</span>
-<span class="nc" id="L74">		triangle.addPoint(getPoint(triSize / 2, angle.getArrowDirectionInRadian() + beta));</span>
-<span class="nc" id="L75">		triangle.addPoint(getPoint(triSize / 2, angle.getArrowDirectionInRadian() - beta));</span>
-<span class="nc" id="L76">		triangle.addPoint(getPoint(triSize / 2, angle.getArrowDirectionInRadian()));</span>
-<span class="nc" id="L77">		ug.draw(triangle);</span>
-<span class="nc" id="L78">	}</span>
+<span class="nc" id="L69">		final UPolygon triangle = new UPolygon();</span>
+<span class="nc" id="L70">		final double beta = Math.PI * 4 / 5;</span>
+<span class="nc" id="L71">		triangle.addPoint(getPoint(triSize / 2, angle.getArrowDirectionInRadian()));</span>
+<span class="nc" id="L72">		triangle.addPoint(getPoint(triSize / 2, angle.getArrowDirectionInRadian() + beta));</span>
+<span class="nc" id="L73">		triangle.addPoint(getPoint(triSize / 2, angle.getArrowDirectionInRadian() - beta));</span>
+<span class="nc" id="L74">		triangle.addPoint(getPoint(triSize / 2, angle.getArrowDirectionInRadian()));</span>
+<span class="nc" id="L75">		ug.draw(triangle);</span>
+<span class="nc" id="L76">	}</span>
 
 	private XPoint2D getPoint(double len, double alpha) {
-<span class="nc" id="L81">		final double dx = len * Math.sin(alpha);</span>
-<span class="nc" id="L82">		final double dy = len * Math.cos(alpha);</span>
-<span class="nc" id="L83">		return new XPoint2D(dx, dy);</span>
+<span class="nc" id="L79">		final double dx = len * Math.sin(alpha);</span>
+<span class="nc" id="L80">		final double dy = len * Math.cos(alpha);</span>
+<span class="nc" id="L81">		return new XPoint2D(dx, dy);</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L87">		return new XDimension2D(size, size);</span>
+<span class="nc" id="L85">		return new XDimension2D(size, size);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -97,13 +97,13 @@ public class PSystemEbnf extends TitledDiagram {
 	}
 
 	@Override
-	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
+	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-<span class="nc" id="L102">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);</span>
+<span class="nc" id="L102">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);</span>
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 <span class="nc bnc" id="L107" title="All 2 branches missed.">		if (expressions.size() == 0) {</span>
 <span class="nc" id="L108">			final Style style = ETile.getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 <span class="nc" id="L109">			final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
@@ -118,6 +118,11 @@ public class PSystemEbnf extends TitledDiagram {
 <span class="nc" id="L118">					expressions.get(i).getUDrawable(getSkinParam(), getPreprocessingArtifact()),</span>
 					HorizontalAlignment.LEFT);
 <span class="nc" id="L120">		return TextBlockUtils.addBackcolor(result, null);</span>
+	}
+
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+<span class="nc" id="L125">		return getTextMainBlock01970(fileFormatOption);</span>
 	}
 
 }

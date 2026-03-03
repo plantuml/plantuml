@@ -191,7 +191,7 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 			} else {
 <span class="fc" id="L192">				this.backcolorString = backcolor.toSvg(option.getColorMapper());</span>
 <span class="fc" id="L193">				final String color = backcolor.toSvg(option.getColorMapper());</span>
-<span class="pc bpc" id="L194" title="1 of 4 branches missed.">				if (color.equals(&quot;#00000000&quot;) == false &amp;&amp; color.equals(&quot;#000000&quot;) == false</span>
+<span class="pc bpc" id="L194" title="2 of 4 branches missed.">				if (color.equals(&quot;#00000000&quot;) == false &amp;&amp; color.equals(&quot;#000000&quot;) == false</span>
 <span class="fc bfc" id="L195" title="All 2 branches covered.">						&amp;&amp; color.equals(&quot;#FFFFFF&quot;) == false)</span>
 <span class="fc" id="L196">					this.paintBackcolor(color);</span>
 			}
@@ -331,11 +331,11 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 <span class="fc" id="L331">		svg.setAttribute(&quot;xmlns:xlink&quot;, &quot;http://www.w3.org/1999/xlink&quot;);</span>
 <span class="fc" id="L332">		svg.setAttribute(&quot;version&quot;, &quot;1.1&quot;);</span>
 
-<span class="fc bfc" id="L334" title="All 2 branches covered.">		if (option.getTitle() != null) {</span>
+<span class="pc bpc" id="L334" title="1 of 2 branches missed.">		if (option.getTitle() != null) {</span>
 			// Create a title element and set its text
-<span class="fc" id="L336">			final Element title = document.createElement(&quot;title&quot;);</span>
-<span class="fc" id="L337">			title.setTextContent(option.getTitle());</span>
-<span class="fc" id="L338">			svg.appendChild(title);</span>
+<span class="nc" id="L336">			final Element title = document.createElement(&quot;title&quot;);</span>
+<span class="nc" id="L337">			title.setTextContent(option.getTitle());</span>
+<span class="nc" id="L338">			svg.appendChild(title);</span>
 		}
 
 <span class="fc" id="L341">		final String desc = option.getDesc();</span>

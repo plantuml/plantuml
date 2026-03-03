@@ -45,51 +45,50 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.url.Url;
 
 public class TextBlockWithUrl implements TextBlock {
-    // ::remove file when __HAXE__
 
 	private final TextBlock block;
 	private final Url url;
 
 	public static TextBlock withUrl(TextBlock block, Url url) {
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if (url == null)</span>
-<span class="fc" id="L55">			return block;</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (url == null)</span>
+<span class="fc" id="L54">			return block;</span>
 
-<span class="nc" id="L57">		return new TextBlockWithUrl(block, url);</span>
+<span class="nc" id="L56">		return new TextBlockWithUrl(block, url);</span>
 
 	}
 
-<span class="nc" id="L61">	private TextBlockWithUrl(TextBlock block, Url url) {</span>
-<span class="nc" id="L62">		this.block = block;</span>
-<span class="nc" id="L63">		this.url = url;</span>
-<span class="nc" id="L64">	}</span>
+<span class="nc" id="L60">	private TextBlockWithUrl(TextBlock block, Url url) {</span>
+<span class="nc" id="L61">		this.block = block;</span>
+<span class="nc" id="L62">		this.url = url;</span>
+<span class="nc" id="L63">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L67">		ug.startUrl(url);</span>
-<span class="nc" id="L68">		block.drawU(ug);</span>
-<span class="nc" id="L69">		ug.closeUrl();</span>
-<span class="nc" id="L70">	}</span>
+<span class="nc" id="L66">		ug.startUrl(url);</span>
+<span class="nc" id="L67">		block.drawU(ug);</span>
+<span class="nc" id="L68">		ug.closeUrl();</span>
+<span class="nc" id="L69">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L73">		return block.calculateDimension(stringBounder);</span>
+<span class="nc" id="L72">		return block.calculateDimension(stringBounder);</span>
 	}
 
 	public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L77">		return block.getMinMax(stringBounder);</span>
+<span class="nc" id="L76">		return block.getMinMax(stringBounder);</span>
 	}
 
 	@Override
 	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
-<span class="nc" id="L82">		return block.getInnerPosition(member, stringBounder);</span>
+<span class="nc" id="L81">		return block.getInnerPosition(member, stringBounder);</span>
 	}
 
 	@Override
 	public MagneticBorder getMagneticBorder() {
-<span class="nc" id="L87">		return block.getMagneticBorder();</span>
+<span class="nc" id="L86">		return block.getMagneticBorder();</span>
 	}
 
 	@Override
 	public HColor getBackcolor() {
-<span class="nc" id="L92">		return block.getBackcolor();</span>
+<span class="nc" id="L91">		return block.getBackcolor();</span>
 	}
 
 }

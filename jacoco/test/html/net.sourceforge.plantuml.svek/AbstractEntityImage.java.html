@@ -40,55 +40,54 @@ import java.util.Objects;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 
-public abstract class AbstractEntityImage extends AbstractTextBlock implements IEntityImage {
+public abstract class AbstractEntityImage implements IEntityImage {
 
 	private final Entity entity;
 	private final ISkinParam skinParam;
 
-<span class="fc" id="L53">	public AbstractEntityImage(Entity entity) {</span>
-<span class="fc" id="L54">		this.entity = Objects.requireNonNull(entity);</span>
-<span class="fc" id="L55">		this.skinParam = entity.getSkinParam();</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L52">	public AbstractEntityImage(Entity entity) {</span>
+<span class="fc" id="L53">		this.entity = Objects.requireNonNull(entity);</span>
+<span class="fc" id="L54">		this.skinParam = entity.getSkinParam();</span>
+<span class="fc" id="L55">	}</span>
 
 	@Override
 	public boolean isHidden() {
-<span class="nc" id="L60">		return entity.isHidden();</span>
+<span class="nc" id="L59">		return entity.isHidden();</span>
 	}
 
 	protected final Entity getEntity() {
-<span class="fc" id="L64">		return entity;</span>
+<span class="fc" id="L63">		return entity;</span>
 	}
 
 	protected final ISkinParam getSkinParam() {
-<span class="fc" id="L68">		return skinParam;</span>
+<span class="fc" id="L67">		return skinParam;</span>
 	}
 
 	@Override
 	public final HColor getBackcolor() {
-<span class="nc" id="L73">		return skinParam.getBackgroundColor();</span>
+<span class="nc" id="L72">		return skinParam.getBackgroundColor();</span>
 	}
 
 	protected final Stereotype getStereo() {
-<span class="fc" id="L77">		return entity.getStereotype();</span>
+<span class="fc" id="L76">		return entity.getStereotype();</span>
 	}
 
 	@Override
 	public Margins getShield(StringBounder stringBounder) {
-<span class="nc" id="L82">		return Margins.NONE;</span>
+<span class="nc" id="L81">		return Margins.NONE;</span>
 	}
 
 	@Override
 	public double getOverscanX(StringBounder stringBounder) {
-<span class="nc" id="L87">		return 0;</span>
+<span class="nc" id="L86">		return 0;</span>
 	}
 
 	public SName getStyleName() {
-<span class="fc" id="L91">		return entity.getUmlDiagramType().getStyleName();</span>
+<span class="fc" id="L90">		return entity.getUmlDiagramType().getStyleName();</span>
 
 	}
 

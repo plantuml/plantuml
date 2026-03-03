@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UgDiagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml</a> &gt; <span class="el_source">UgDiagram.java</span></div><h1>UgDiagram.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramChromeFactory12026;
+import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.TextBlockExporter12026;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.crash.CrashReportHandler;
+import net.sourceforge.plantuml.crash.GraphvizCrash;
+import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
+import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.teavm.TeaVM;
+
+public abstract class UgDiagram extends Diagram {
+
+	public UgDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L65">		super(source, preprocessing);</span>
+<span class="fc" id="L66">	}</span>
+
+	public abstract TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception;
+
+	public TextBlock addChrome(TextBlock result, FileFormatOption fileFormatOption) {
+<span class="fc" id="L71">		return result;</span>
+	}
+
+	@Override
+	final public ImageData exportDiagram(OutputStream os, int index, FileFormatOption fileFormatOption)
+			throws IOException {
+
+<span class="fc" id="L78">		final FileFormat fileFormat = fileFormatOption.getFileFormat();</span>
+<span class="fc" id="L79">		ImageData specialResult = null;</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		if (fileFormat.isXmi())</span>
+<span class="fc" id="L81">			specialResult = exportXmi(os, fileFormat);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		else if (fileFormat == FileFormat.SCXML)</span>
+<span class="fc" id="L83">			specialResult = exportScxml(os);</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		else if (fileFormat == FileFormat.GRAPHML)</span>
+<span class="nc" id="L85">			specialResult = exportGraphml(os);</span>
+<span class="fc bfc" id="L86" title="All 4 branches covered.">		else if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT)</span>
+<span class="fc" id="L87">			specialResult = exportTxt(os, index, fileFormat);</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (specialResult != null)</span>
+<span class="fc" id="L89">			return specialResult;</span>
+
+<span class="fc" id="L91">		final long now = System.currentTimeMillis();</span>
+		try {
+<span class="fc" id="L93">			return getExporter(index, fileFormatOption).exportTo(os);</span>
+<span class="nc" id="L94">		} catch (Throwable e) {</span>
+<span class="nc" id="L95">			Logme.error(e);</span>
+<span class="nc" id="L96">			final CrashReportHandler report = new CrashReportHandler(e, getMetadata(), getFlashData());</span>
+<span class="nc" id="L97">			report.anErrorHasOccured(e, getFlashData());</span>
+<span class="nc" id="L98">			report.addProperties();</span>
+<span class="nc" id="L99">			report.addEmptyLine();</span>
+<span class="nc" id="L100">			report.youShouldSendThisDiagram();</span>
+<span class="nc" id="L101">			report.addEmptyLine();</span>
+<span class="nc" id="L102">			report.exportDiagramError(fileFormatOption, seed(), os);</span>
+<span class="nc" id="L103">			return ImageDataSimple.error(e);</span>
+		} finally {
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS))</span>
+<span class="fc" id="L107">					StatsUtilsIncrement.onceMoreGenerate(System.currentTimeMillis() - now, getClass(),</span>
+<span class="fc" id="L108">							fileFormatOption.getFileFormat());</span>
+
+			}
+		}
+	}
+
+	protected TextBlockExporter12026 getExporter(int index, FileFormatOption fileFormatOption) throws Exception {
+<span class="fc" id="L115">		TextBlock result = getTextBlock12026(index, fileFormatOption);</span>
+
+<span class="fc" id="L117">		final int status = computeStatus(result);</span>
+
+<span class="fc" id="L119">		result = addChrome(result, fileFormatOption);</span>
+
+<span class="fc" id="L121">		final HColor backColor = calculateBackColor();</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (backColor != null)</span>
+<span class="fc" id="L123">			result = TextBlockUtils.addBackcolor(result, backColor);</span>
+
+<span class="fc" id="L125">		final ColorMapper mutedMapper = muteColorMapper(fileFormatOption.getColorMapper());</span>
+<span class="fc" id="L126">		final FileFormatOption effectiveFormat = fileFormatOption.withColorMapper(mutedMapper);</span>
+
+<span class="fc" id="L128">		final TextBlockExporter12026.Builder builder = TextBlockExporter12026.builder(result, effectiveFormat);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		if (this instanceof TitledDiagram)</span>
+<span class="fc" id="L130">			builder.styled((TitledDiagram) this);</span>
+		else
+<span class="fc" id="L132">			builder.scale(getScale()) //</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">					.metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null) //</span>
+<span class="fc" id="L134">					.seed(seed()) //</span>
+<span class="fc" id="L135">					.warningOrError(getWarningOrError()) //</span>
+<span class="fc" id="L136">					.margin(getDefaultMargins());</span>
+
+<span class="fc" id="L138">		builder.status(status);</span>
+
+<span class="fc" id="L140">		return builder.build();</span>
+	}
+
+	private int computeStatus(TextBlock textBlock) {
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		if (this instanceof PSystemError)</span>
+<span class="fc" id="L145">			return FileImageData.ERROR;</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		if (textBlock instanceof GraphvizCrash)</span>
+<span class="nc" id="L147">			return FileImageData.CRASH;</span>
+<span class="fc bfc" id="L148" title="All 4 branches covered.">		if (textBlock instanceof IEntityImage &amp;&amp; ((IEntityImage) textBlock).isCrash())</span>
+<span class="fc" id="L149">			return FileImageData.CRASH;</span>
+<span class="fc" id="L150">		return 0;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

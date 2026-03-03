@@ -41,35 +41,34 @@ import java.util.Set;
 import net.sourceforge.plantuml.skin.Pragma;
 
 <span class="nc" id="L43">abstract class AbstractConnectorPuzzle implements ConnectorPuzzle {</span>
-    // ::remove folder when __HAXE__
 
-<span class="nc" id="L46">	private final EnumSet&lt;Where&gt; connections = EnumSet.noneOf(Where.class);</span>
+<span class="nc" id="L45">	private final EnumSet&lt;Where&gt; connections = EnumSet.noneOf(Where.class);</span>
 
 	public final boolean have(Where where) {
-<span class="nc" id="L49">		return connections.contains(where);</span>
+<span class="nc" id="L48">		return connections.contains(where);</span>
 	}
 
 	public final void append(Where where) {
-<span class="nc" id="L53">		this.connections.add(where);</span>
-<span class="nc" id="L54">	}</span>
+<span class="nc" id="L52">		this.connections.add(where);</span>
+<span class="nc" id="L53">	}</span>
 
 	public final void remove(Where where) {
-<span class="nc" id="L57">		final boolean ok = connections.remove(where);</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (ok == false) {</span>
-<span class="nc" id="L59">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L56">		final boolean ok = connections.remove(where);</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (ok == false) {</span>
+<span class="nc" id="L58">			throw new IllegalArgumentException();</span>
 		}
-<span class="nc" id="L61">	}</span>
+<span class="nc" id="L60">	}</span>
 
 	public final void append(ConnectorPuzzle other) {
-<span class="nc" id="L64">		this.connections.addAll(((AbstractConnectorPuzzle) other).connections);</span>
-<span class="nc" id="L65">	}</span>
+<span class="nc" id="L63">		this.connections.addAll(((AbstractConnectorPuzzle) other).connections);</span>
+<span class="nc" id="L64">	}</span>
 
 	protected final Set&lt;Where&gt; connections() {
-<span class="nc" id="L68">		return connections;</span>
+<span class="nc" id="L67">		return connections;</span>
 	}
 	
 	protected Pragma getPragma() {
-<span class="nc" id="L72">		return Pragma.createEmpty();</span>
+<span class="nc" id="L71">		return Pragma.createEmpty();</span>
 	}
 
 }

@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class DisplayPositioned extends DisplayPositionned {
+public class DisplayPositioned {
 
 	private final Display display;
 	private final HorizontalAlignment horizontalAlignment;
@@ -61,8 +61,8 @@ public class DisplayPositioned extends DisplayPositionned {
 <span class="fc" id="L61">	}</span>
 
 	public DisplayPositioned withPage(int page, int lastpage) {
-<span class="fc" id="L64">		final Display newDisplay = display.withPage(page, lastpage);</span>
-<span class="fc" id="L65">		return new DisplayPositioned(location, newDisplay, horizontalAlignment, verticalAlignment);</span>
+<span class="nc" id="L64">		final Display newDisplay = display.withPage(page, lastpage);</span>
+<span class="nc" id="L65">		return new DisplayPositioned(location, newDisplay, horizontalAlignment, verticalAlignment);</span>
 	}
 
 	public DisplayPositioned withDisplay(Display display) {
@@ -79,7 +79,7 @@ public class DisplayPositioned extends DisplayPositionned {
 
 	public static DisplayPositioned single(Display display, HorizontalAlignment horizontalAlignment,
 			VerticalAlignment verticalAlignment) {
-<span class="nc" id="L82">		return new DisplayPositioned(null, display, horizontalAlignment, verticalAlignment);</span>
+<span class="fc" id="L82">		return new DisplayPositioned(null, display, horizontalAlignment, verticalAlignment);</span>
 	}
 
 	public static DisplayPositioned single(LineLocation location, Display display,
@@ -116,12 +116,12 @@ public class DisplayPositioned extends DisplayPositionned {
 	}
 
 	public TextBlock createRibbon(FontConfiguration fontConfiguration, ISkinSimple spriteContainer, Style style) {
-<span class="nc" id="L119">		final Display display = getDisplay();</span>
-<span class="nc bnc" id="L120" title="All 4 branches missed.">		if (Display.isNull(display) || display.size() == 0)</span>
+<span class="fc" id="L119">		final Display display = getDisplay();</span>
+<span class="pc bpc" id="L120" title="2 of 4 branches missed.">		if (Display.isNull(display) || display.size() == 0)</span>
 <span class="nc" id="L121">			return null;</span>
 
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (style != null)</span>
-<span class="nc" id="L124">			return style.createTextBlockBordered(display, spriteContainer.getIHtmlColorSet(), spriteContainer, null,</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (style != null)</span>
+<span class="fc" id="L124">			return style.createTextBlockBordered(display, spriteContainer.getIHtmlColorSet(), spriteContainer, null,</span>
 					LineBreakStrategy.NONE);
 
 <span class="nc" id="L127">		return display.create(fontConfiguration, getHorizontalAlignment(), spriteContainer);</span>

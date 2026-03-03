@@ -80,7 +80,7 @@ public final class LimitFinder extends UGraphicNo {
 <span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (instanceOfAny(change, UAntiAliasing.class, UBackground.class, UClip.class, HColor.class, UHidden.class,</span>
 				UStroke.class, UTranslate.class, CopyForegroundColorToBackgroundColor.class) == false)
 <span class="nc" id="L82">			throw new UnsupportedOperationException(change.getClass().toString());</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">		result.clip = change instanceof UClip ? ((UClip) change).translate(result.getTranslate()) : this.clip;</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		result.clip = change instanceof UClip ? ((UClip) change).translate(result.getTranslate()) : this.clip;</span>
 <span class="fc" id="L84">		return result;</span>
 	}
 
@@ -114,19 +114,19 @@ public final class LimitFinder extends UGraphicNo {
 <span class="fc" id="L114">			drawUPath(x, y, (UPath) shape);</span>
 <span class="fc bfc" id="L115" title="All 2 branches covered.">		} else if (shape instanceof URectangle) {</span>
 <span class="fc" id="L116">			drawRectangle(x, y, (URectangle) shape);</span>
-<span class="fc bfc" id="L117" title="All 2 branches covered.">		} else if (shape instanceof DotPath) {</span>
-<span class="fc" id="L118">			drawDotPath(x, y, (DotPath) shape);</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		} else if (shape instanceof DotPath) {</span>
+<span class="nc" id="L118">			drawDotPath(x, y, (DotPath) shape);</span>
 <span class="fc bfc" id="L119" title="All 2 branches covered.">		} else if (shape instanceof UImage) {</span>
 <span class="fc" id="L120">			drawImage(x, y, (UImage) shape);</span>
 <span class="pc bpc" id="L121" title="1 of 2 branches missed.">		} else if (shape instanceof UImageSvg) {</span>
 <span class="nc" id="L122">			drawImageSvg(x, y, (UImageSvg) shape);</span>
-<span class="fc bfc" id="L123" title="All 2 branches covered.">		} else if (shape instanceof UComment) {</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">		} else if (shape instanceof UEmpty) {</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		} else if (shape instanceof UComment) {</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		} else if (shape instanceof UEmpty) {</span>
 <span class="fc" id="L125">			drawEmpty(x, y, (UEmpty) shape);</span>
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		} else if (shape instanceof TextBlock) {</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		} else if (shape instanceof TextBlock) {</span>
 <span class="nc" id="L127">			final TextBlock tb = (TextBlock) shape;</span>
 <span class="nc" id="L128">			tb.drawU(this);</span>
-<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		} else if (shape instanceof UCenteredCharacter) {</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		} else if (shape instanceof UCenteredCharacter) {</span>
 			// To be done
 <span class="nc bnc" id="L131" title="All 2 branches missed.">		} else if (shape instanceof CenteredText) {</span>
 			// Ignored
@@ -142,7 +142,7 @@ public final class LimitFinder extends UGraphicNo {
 <span class="fc" id="L142">	}</span>
 
 	private void addPoint(double x, double y) {
-<span class="fc bfc" id="L145" title="All 4 branches covered.">		if (clip == null || clip.isInside(x, y))</span>
+<span class="pc bpc" id="L145" title="3 of 4 branches missed.">		if (clip == null || clip.isInside(x, y))</span>
 <span class="fc" id="L146">			minmax.addPoint(x, y);</span>
 
 <span class="fc" id="L148">	}</span>
@@ -179,10 +179,10 @@ public final class LimitFinder extends UGraphicNo {
 <span class="fc" id="L179">	}</span>
 
 	private void drawDotPath(double x, double y, DotPath shape) {
-<span class="fc" id="L182">		final MinMax shapeMinMax = shape.getMinMax();</span>
-<span class="fc" id="L183">		addPoint(x + shapeMinMax.getMinX(), y + shapeMinMax.getMinY());</span>
-<span class="fc" id="L184">		addPoint(x + shapeMinMax.getMaxX(), y + shapeMinMax.getMaxY());</span>
-<span class="fc" id="L185">	}</span>
+<span class="nc" id="L182">		final MinMax shapeMinMax = shape.getMinMax();</span>
+<span class="nc" id="L183">		addPoint(x + shapeMinMax.getMinX(), y + shapeMinMax.getMinY());</span>
+<span class="nc" id="L184">		addPoint(x + shapeMinMax.getMaxX(), y + shapeMinMax.getMaxY());</span>
+<span class="nc" id="L185">	}</span>
 
 	private void drawImage(double x, double y, UImage shape) {
 <span class="fc" id="L188">		addPoint(x, y);</span>
@@ -211,7 +211,7 @@ public final class LimitFinder extends UGraphicNo {
 <span class="fc" id="L211">	}</span>
 
 	public ColorMapper getColorMapper() {
-<span class="fc" id="L214">		return ColorMapper.IDENTITY;</span>
+<span class="nc" id="L214">		return ColorMapper.IDENTITY;</span>
 	}
 
 	public double getMaxX() {

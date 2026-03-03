@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockLineBefore;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
@@ -50,50 +49,51 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
-public abstract class BodyEnhancedAbstract extends AbstractTextBlock implements TextBlock {
+public abstract class BodyEnhancedAbstract implements TextBlock {
 
 	protected final HorizontalAlignment align;
 	protected final FontConfiguration titleConfig;
 	protected TextBlock area;
 	private final Style style;
 
-<span class="fc" id="L60">	BodyEnhancedAbstract(HorizontalAlignment align, FontConfiguration titleConfig, Style style) {</span>
-<span class="fc" id="L61">		this.align = align;</span>
-<span class="fc" id="L62">		this.titleConfig = titleConfig;</span>
-<span class="fc" id="L63">		this.style = style;</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L59">	BodyEnhancedAbstract(HorizontalAlignment align, FontConfiguration titleConfig, Style style) {</span>
+<span class="fc" id="L60">		this.align = align;</span>
+<span class="fc" id="L61">		this.titleConfig = titleConfig;</span>
+<span class="fc" id="L62">		this.style = style;</span>
+<span class="fc" id="L63">	}</span>
 
 	public static boolean isBlockSeparator(CharSequence cs) {
-<span class="fc" id="L67">		final String s = cs.toString();</span>
-<span class="pc bpc" id="L68" title="3 of 4 branches missed.">		if (s.startsWith(&quot;--&quot;) &amp;&amp; s.endsWith(&quot;--&quot;))</span>
-<span class="nc" id="L69">			return true;</span>
+<span class="fc" id="L66">		final String s = cs.toString();</span>
+<span class="pc bpc" id="L67" title="3 of 4 branches missed.">		if (s.startsWith(&quot;--&quot;) &amp;&amp; s.endsWith(&quot;--&quot;))</span>
+<span class="nc" id="L68">			return true;</span>
 
-<span class="fc bfc" id="L71" title="All 4 branches covered.">		if (s.startsWith(&quot;==&quot;) &amp;&amp; s.endsWith(&quot;==&quot;))</span>
-<span class="fc" id="L72">			return true;</span>
+<span class="fc bfc" id="L70" title="All 4 branches covered.">		if (s.startsWith(&quot;==&quot;) &amp;&amp; s.endsWith(&quot;==&quot;))</span>
+<span class="fc" id="L71">			return true;</span>
 
-<span class="pc bpc" id="L74" title="5 of 6 branches missed.">		if (s.startsWith(&quot;..&quot;) &amp;&amp; s.endsWith(&quot;..&quot;) &amp;&amp; s.equals(&quot;...&quot;) == false)</span>
-<span class="nc" id="L75">			return true;</span>
+<span class="pc bpc" id="L73" title="5 of 6 branches missed.">		if (s.startsWith(&quot;..&quot;) &amp;&amp; s.endsWith(&quot;..&quot;) &amp;&amp; s.equals(&quot;...&quot;) == false)</span>
+<span class="nc" id="L74">			return true;</span>
 
-<span class="pc bpc" id="L77" title="3 of 4 branches missed.">		if (s.startsWith(&quot;__&quot;) &amp;&amp; s.endsWith(&quot;__&quot;))</span>
-<span class="nc" id="L78">			return true;</span>
+<span class="pc bpc" id="L76" title="3 of 4 branches missed.">		if (s.startsWith(&quot;__&quot;) &amp;&amp; s.endsWith(&quot;__&quot;))</span>
+<span class="nc" id="L77">			return true;</span>
 
-<span class="fc" id="L80">		return false;</span>
+<span class="fc" id="L79">		return false;</span>
 	}
 
 	public final XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L84">		return getArea(stringBounder).calculateDimension(stringBounder);</span>
+<span class="fc" id="L83">		return getArea(stringBounder).calculateDimension(stringBounder);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="fc" id="L88">		getArea(ug.getStringBounder()).drawU(ug);</span>
-<span class="fc" id="L89">	}</span>
+<span class="fc" id="L87">		getArea(ug.getStringBounder()).drawU(ug);</span>
+<span class="fc" id="L88">	}</span>
 
 	final protected TextBlock getTitle(String s, ISkinSimple spriteContainer) {
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (s.length() &lt;= 4)</span>
-<span class="nc" id="L93">			return null;</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (s.length() &lt;= 4)</span>
+<span class="nc" id="L92">			return null;</span>
 
-<span class="fc" id="L95">		s = StringUtils.trin(s.substring(2, s.length() - 2));</span>
-<span class="fc" id="L96">		return Display.getWithNewlines(spriteContainer.getPragma(), s).create(titleConfig, HorizontalAlignment.LEFT, spriteContainer);</span>
+<span class="fc" id="L94">		s = StringUtils.trin(s.substring(2, s.length() - 2));</span>
+<span class="fc" id="L95">		return Display.getWithNewlines(spriteContainer.getPragma(), s).create(titleConfig, HorizontalAlignment.LEFT,</span>
+				spriteContainer);
 	}
 
 	abstract protected TextBlock getArea(StringBounder stringBounder);

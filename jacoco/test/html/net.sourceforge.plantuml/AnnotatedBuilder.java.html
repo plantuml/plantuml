@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.BigFrame;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
@@ -64,158 +63,157 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.DecorateEntityImage;
 
 public class AnnotatedBuilder {
-	// ::remove file when __HAXE__
 
 	private final Annotated annotated;
 	private final ISkinParam skinParam;
 	private final StringBounder stringBounder;
 
-<span class="fc" id="L73">	public AnnotatedBuilder(Annotated annotated, ISkinParam skinParam, StringBounder stringBounder) {</span>
-<span class="fc" id="L74">		this.annotated = annotated;</span>
-<span class="fc" id="L75">		this.skinParam = skinParam;</span>
-<span class="fc" id="L76">		this.stringBounder = stringBounder;</span>
-<span class="fc" id="L77">	}</span>
+<span class="nc" id="L71">	public AnnotatedBuilder(Annotated annotated, ISkinParam skinParam, StringBounder stringBounder) {</span>
+<span class="nc" id="L72">		this.annotated = annotated;</span>
+<span class="nc" id="L73">		this.skinParam = skinParam;</span>
+<span class="nc" id="L74">		this.stringBounder = stringBounder;</span>
+<span class="nc" id="L75">	}</span>
 
 	public boolean hasMainFrame() {
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		return Display.isNull(annotated.getMainFrame().getDisplay()) == false;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		return Display.isNull(annotated.getMainFrame().getDisplay()) == false;</span>
 	}
 
 	public double mainFrameSuppHeight() {
-<span class="nc" id="L84">		final Display mainFrame = annotated.getMainFrame().getDisplay();</span>
-<span class="nc" id="L85">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.mainframe)</span>
-<span class="nc" id="L86">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="nc" id="L87">		final FontConfiguration fontConfiguration = FontConfiguration.create(getSkinParam(), style);</span>
-<span class="nc" id="L88">		final TextBlock title = mainFrame.create(fontConfiguration, HorizontalAlignment.CENTER, getSkinParam());</span>
-<span class="nc" id="L89">		final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
+<span class="nc" id="L82">		final Display mainFrame = annotated.getMainFrame().getDisplay();</span>
+<span class="nc" id="L83">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.mainframe)</span>
+<span class="nc" id="L84">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L85">		final FontConfiguration fontConfiguration = FontConfiguration.create(getSkinParam(), style);</span>
+<span class="nc" id="L86">		final TextBlock title = mainFrame.create(fontConfiguration, HorizontalAlignment.CENTER, getSkinParam());</span>
+<span class="nc" id="L87">		final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L91">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
-<span class="nc" id="L92">		final ClockwiseTopRightBottomLeft padding = style.getPadding().incTop(dimTitle.getHeight() + 10);</span>
+<span class="nc" id="L89">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="nc" id="L90">		final ClockwiseTopRightBottomLeft padding = style.getPadding().incTop(dimTitle.getHeight() + 10);</span>
 
-<span class="nc" id="L94">		return margin.getBottom() + margin.getTop() + padding.getTop() + padding.getBottom() + 10;</span>
+<span class="nc" id="L92">		return margin.getBottom() + margin.getTop() + padding.getTop() + padding.getBottom() + 10;</span>
 	}
 
 	public TextBlock decoreWithFrame(final TextBlock original) {
-<span class="fc" id="L98">		final Display mainFrame = annotated.getMainFrame().getDisplay();</span>
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (Display.isNull(mainFrame))</span>
-<span class="fc" id="L100">			return original;</span>
+<span class="nc" id="L96">		final Display mainFrame = annotated.getMainFrame().getDisplay();</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (Display.isNull(mainFrame))</span>
+<span class="nc" id="L98">			return original;</span>
 
 //		final double x1 = 5;
 //		final double x2 = 7;
 //		final double y1 = 10;
 //		final double y2 = 10;
 
-<span class="nc" id="L107">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.mainframe)</span>
-<span class="nc" id="L108">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="nc" id="L109">		final FontConfiguration fontConfiguration = FontConfiguration.create(getSkinParam(), style);</span>
-<span class="nc" id="L110">		final TextBlock title = mainFrame.create(fontConfiguration, HorizontalAlignment.CENTER, getSkinParam());</span>
-<span class="nc" id="L111">		final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
+<span class="nc" id="L105">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.mainframe)</span>
+<span class="nc" id="L106">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L107">		final FontConfiguration fontConfiguration = FontConfiguration.create(getSkinParam(), style);</span>
+<span class="nc" id="L108">		final TextBlock title = mainFrame.create(fontConfiguration, HorizontalAlignment.CENTER, getSkinParam());</span>
+<span class="nc" id="L109">		final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L113">		final Fashion symbolContext = style.getSymbolContext(skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L114">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
-<span class="nc" id="L115">		final ClockwiseTopRightBottomLeft padding = style.getPadding().incTop(dimTitle.getHeight() + 10);</span>
+<span class="nc" id="L111">		final Fashion symbolContext = style.getSymbolContext(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L112">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="nc" id="L113">		final ClockwiseTopRightBottomLeft padding = style.getPadding().incTop(dimTitle.getHeight() + 10);</span>
 
-<span class="nc" id="L117">		final MinMax originalMinMax = TextBlockUtils.getMinMax(original, stringBounder, false);</span>
+<span class="nc" id="L115">		final MinMax originalMinMax = TextBlockUtils.getMinMax(original, stringBounder, false);</span>
 
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		final double ww = originalMinMax.getMinX() &gt;= 0 ? originalMinMax.getMaxX() : originalMinMax.getWidth();</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		final double hh = originalMinMax.getMinY() &gt;= 0 ? originalMinMax.getMaxY() : originalMinMax.getHeight();</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		final double dx = originalMinMax.getMinX() &lt; 0 ? -originalMinMax.getMinX() : 0;</span>
-<span class="nc bnc" id="L122" title="All 2 branches missed.">		final double dy = originalMinMax.getMinY() &lt; 0 ? -originalMinMax.getMinY() : 0;</span>
-<span class="nc" id="L123">		final UTranslate delta = new UTranslate(dx, dy);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		final double ww = originalMinMax.getMinX() &gt;= 0 ? originalMinMax.getMaxX() : originalMinMax.getWidth();</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		final double hh = originalMinMax.getMinY() &gt;= 0 ? originalMinMax.getMaxY() : originalMinMax.getHeight();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		final double dx = originalMinMax.getMinX() &lt; 0 ? -originalMinMax.getMinX() : 0;</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		final double dy = originalMinMax.getMinY() &lt; 0 ? -originalMinMax.getMinY() : 0;</span>
+<span class="nc" id="L121">		final UTranslate delta = new UTranslate(dx, dy);</span>
 
-<span class="nc" id="L125">		final double width = padding.getLeft() + Math.max(ww + 12, dimTitle.getWidth() + 10) + padding.getRight();</span>
-<span class="nc" id="L126">		final double height = padding.getTop() + dimTitle.getHeight() + hh + padding.getBottom();</span>
+<span class="nc" id="L123">		final double width = padding.getLeft() + Math.max(ww + 12, dimTitle.getWidth() + 10) + padding.getRight();</span>
+<span class="nc" id="L124">		final double height = padding.getTop() + dimTitle.getHeight() + hh + padding.getBottom();</span>
 
-<span class="nc" id="L128">		final TextBlock frame = new BigFrame(title, width, height, symbolContext);</span>
+<span class="nc" id="L126">		final TextBlock frame = new BigFrame(title, width, height, symbolContext);</span>
 
-<span class="nc" id="L130">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L128">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L133">				frame.drawU(ug.apply(margin.getTranslate()));</span>
-<span class="nc" id="L134">				original.drawU(ug.apply(margin.getTranslate().compose(padding.getTranslate().compose(delta))));</span>
-<span class="nc" id="L135">			}</span>
+<span class="nc" id="L131">				frame.drawU(ug.apply(margin.getTranslate()));</span>
+<span class="nc" id="L132">				original.drawU(ug.apply(margin.getTranslate().compose(padding.getTranslate().compose(delta))));</span>
+<span class="nc" id="L133">			}</span>
 
 			@Override
 			public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
-<span class="nc" id="L139">				final XRectangle2D rect = original.getInnerPosition(member, stringBounder);</span>
-<span class="nc" id="L140">				return new XRectangle2D(dx + rect.getX() + margin.getLeft() + padding.getLeft(),</span>
-<span class="nc" id="L141">						dy + rect.getY() + margin.getTop() + padding.getTop() + dimTitle.getHeight(), rect.getWidth(),</span>
-<span class="nc" id="L142">						rect.getHeight());</span>
+<span class="nc" id="L137">				final XRectangle2D rect = original.getInnerPosition(member, stringBounder);</span>
+<span class="nc" id="L138">				return new XRectangle2D(dx + rect.getX() + margin.getLeft() + padding.getLeft(),</span>
+<span class="nc" id="L139">						dy + rect.getY() + margin.getTop() + padding.getTop() + dimTitle.getHeight(), rect.getWidth(),</span>
+<span class="nc" id="L140">						rect.getHeight());</span>
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L146">				final XDimension2D dim1 = original.calculateDimension(stringBounder);</span>
-<span class="nc" id="L147">				final XDimension2D dim2 = padding.apply(dim1);</span>
-<span class="nc" id="L148">				final XDimension2D dim3 = margin.apply(dim2);</span>
-<span class="nc" id="L149">				return dim3;</span>
+<span class="nc" id="L144">				final XDimension2D dim1 = original.calculateDimension(stringBounder);</span>
+<span class="nc" id="L145">				final XDimension2D dim2 = padding.apply(dim1);</span>
+<span class="nc" id="L146">				final XDimension2D dim3 = margin.apply(dim2);</span>
+<span class="nc" id="L147">				return dim3;</span>
 			}
 
 			public HColor getBackcolor() {
-<span class="nc" id="L153">				return symbolContext.getBackColor();</span>
+<span class="nc" id="L151">				return symbolContext.getBackColor();</span>
 			}
 		};
 	}
 
 	private ISkinParam getSkinParam() {
-<span class="fc" id="L159">		return skinParam;</span>
+<span class="nc" id="L157">		return skinParam;</span>
 	}
 
 	public TextBlock getLegend() {
-<span class="fc" id="L163">		final DisplayPositioned legend = annotated.getLegend();</span>
-<span class="fc" id="L164">		return EntityImageLegend.create(legend.getDisplay(), getSkinParam());</span>
+<span class="nc" id="L161">		final DisplayPositioned legend = annotated.getLegend();</span>
+<span class="nc" id="L162">		return EntityImageLegend.create(legend.getDisplay(), getSkinParam());</span>
 	}
 
 	public TextBlock getTitle() {
-<span class="fc" id="L168">		final DisplayPositioned title = (DisplayPositioned) annotated.getTitle();</span>
-<span class="fc" id="L169">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)</span>
-<span class="fc" id="L170">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L171">		final TextBlock block = style.createTextBlockBordered(title.getDisplay(), skinParam.getIHtmlColorSet(),</span>
+<span class="nc" id="L166">		final DisplayPositioned title = (DisplayPositioned) annotated.getTitle();</span>
+<span class="nc" id="L167">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)</span>
+<span class="nc" id="L168">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L169">		final TextBlock block = style.createTextBlockBordered(title.getDisplay(), skinParam.getIHtmlColorSet(),</span>
 				skinParam, Style.ID_TITLE, LineBreakStrategy.NONE);
-<span class="fc" id="L173">		return block;</span>
+<span class="nc" id="L171">		return block;</span>
 	}
 
 	public TextBlock getCaption() {
-<span class="fc" id="L177">		final DisplayPositioned caption = annotated.getCaption();</span>
-<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (caption.isNull())</span>
-<span class="fc" id="L179">			return TextBlockUtils.empty(0, 0);</span>
+<span class="nc" id="L175">		final DisplayPositioned caption = annotated.getCaption();</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">		if (caption.isNull())</span>
+<span class="nc" id="L177">			return TextBlockUtils.empty(0, 0);</span>
 
-<span class="fc" id="L181">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.caption)</span>
-<span class="fc" id="L182">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L183">		return style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(), skinParam,</span>
+<span class="nc" id="L179">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.caption)</span>
+<span class="nc" id="L180">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L181">		return style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(), skinParam,</span>
 				Style.ID_CAPTION, LineBreakStrategy.NONE);
 
 	}
 
 	public TextBlock addHeaderAndFooter(TextBlock original) {
-<span class="fc" id="L189">		final DisplayPositioned header = annotated.getHeader();</span>
-<span class="fc" id="L190">		final DisplayPositioned footer = annotated.getFooter();</span>
-<span class="pc bpc" id="L191" title="2 of 4 branches missed.">		if (footer.isNull() &amp;&amp; header.isNull())</span>
-<span class="fc" id="L192">			return original;</span>
+<span class="nc" id="L187">		final DisplayPositioned header = annotated.getHeader();</span>
+<span class="nc" id="L188">		final DisplayPositioned footer = annotated.getFooter();</span>
+<span class="nc bnc" id="L189" title="All 4 branches missed.">		if (footer.isNull() &amp;&amp; header.isNull())</span>
+<span class="nc" id="L190">			return original;</span>
 
-<span class="nc" id="L194">		final UGroup group1 = new UGroup(header.getLineLocation());</span>
-<span class="nc" id="L195">		group1.put(UGroupType.CLASS, &quot;header&quot;);</span>
+<span class="nc" id="L192">		final UGroup group1 = new UGroup(header.getLineLocation());</span>
+<span class="nc" id="L193">		group1.put(UGroupType.CLASS, &quot;header&quot;);</span>
 
-<span class="nc" id="L197">		TextBlock textHeader = null;</span>
-<span class="nc bnc" id="L198" title="All 2 branches missed.">		if (header.isNull() == false) {</span>
-<span class="nc" id="L199">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.header)</span>
-<span class="nc" id="L200">					.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="nc" id="L201">			textHeader = header.createRibbon(FontConfiguration.create(getSkinParam(), FontParam.HEADER, null),</span>
-<span class="nc" id="L202">					getSkinParam(), style);</span>
+<span class="nc" id="L195">		TextBlock textHeader = null;</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		if (header.isNull() == false) {</span>
+<span class="nc" id="L197">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.header)</span>
+<span class="nc" id="L198">					.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L199">			textHeader = header.createRibbon(FontConfiguration.create(getSkinParam(), FontParam.HEADER, null),</span>
+<span class="nc" id="L200">					getSkinParam(), style);</span>
 		}
 
-<span class="nc" id="L205">		final UGroup group2 = new UGroup(footer.getLineLocation());</span>
-<span class="nc" id="L206">		group2.put(UGroupType.CLASS, &quot;footer&quot;);</span>
+<span class="nc" id="L203">		final UGroup group2 = new UGroup(footer.getLineLocation());</span>
+<span class="nc" id="L204">		group2.put(UGroupType.CLASS, &quot;footer&quot;);</span>
 
-<span class="nc" id="L208">		TextBlock textFooter = null;</span>
-<span class="nc bnc" id="L209" title="All 2 branches missed.">		if (footer.isNull() == false) {</span>
+<span class="nc" id="L206">		TextBlock textFooter = null;</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">		if (footer.isNull() == false) {</span>
 
-<span class="nc" id="L211">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.footer)</span>
-<span class="nc" id="L212">					.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="nc" id="L213">			textFooter = footer.createRibbon(FontConfiguration.create(getSkinParam(), FontParam.FOOTER, null),</span>
-<span class="nc" id="L214">					getSkinParam(), style);</span>
+<span class="nc" id="L209">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.footer)</span>
+<span class="nc" id="L210">					.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L211">			textFooter = footer.createRibbon(FontConfiguration.create(getSkinParam(), FontParam.FOOTER, null),</span>
+<span class="nc" id="L212">					getSkinParam(), style);</span>
 		}
 
-<span class="nc" id="L217">		return DecorateEntityImage.addTopAndBottom(original, group1, textHeader, header.getHorizontalAlignment(),</span>
-<span class="nc" id="L218">				group2, textFooter, footer.getHorizontalAlignment());</span>
+<span class="nc" id="L215">		return DecorateEntityImage.addTopAndBottom(original, group1, textHeader, header.getHorizontalAlignment(),</span>
+<span class="nc" id="L216">				group2, textFooter, footer.getHorizontalAlignment());</span>
 	}
 
 }

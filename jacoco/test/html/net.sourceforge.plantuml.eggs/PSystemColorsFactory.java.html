@@ -38,8 +38,8 @@ package net.sourceforge.plantuml.eggs;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 <span class="fc" id="L48">	private static final Pattern pattern = Pattern.compile(&quot;^colors?\\s*(#?\\w+)?\\s*$&quot;);</span>
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
+	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 <span class="fc" id="L52">		final Matcher matcher = pattern.matcher(line);</span>
 <span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (matcher.matches()) </span>
 <span class="nc" id="L54">			return new PSystemColors(source, matcher.group(1), preprocessing);</span>

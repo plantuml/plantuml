@@ -40,10 +40,10 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
 
-public class FilesListing extends AbstractTextBlock {
+public class FilesListing implements TextBlock {
 
 	private final ISkinParam skinParam;
 	private final FontConfiguration fontConfiguration;
@@ -58,25 +58,32 @@ public class FilesListing extends AbstractTextBlock {
 
 	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L61">		return new XDimension2D(200, 200);</span>
+<span class="nc" id="L61">		double width = 0;</span>
+<span class="nc" id="L62">		double height = 0;</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		for (FEntry ent : root) {</span>
+<span class="nc" id="L64">			final XDimension2D dim = ent.calculateDimension(stringBounder, fontConfiguration, skinParam, 0);</span>
+<span class="nc" id="L65">			width = Math.max(width, dim.getWidth());</span>
+<span class="nc" id="L66">			height += dim.getHeight();</span>
+<span class="nc" id="L67">		}</span>
+<span class="nc" id="L68">		return new XDimension2D(width, height);</span>
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		for (FEntry ent : root)</span>
-<span class="nc" id="L67">			ug = ent.drawAndMove(ug, fontConfiguration, skinParam, 0);</span>
-<span class="nc" id="L68">	}</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		for (FEntry ent : root)</span>
+<span class="nc" id="L74">			ug = ent.drawAndMove(ug, fontConfiguration, skinParam, 0);</span>
+<span class="nc" id="L75">	}</span>
 
 	public void addRawEntry(String raw) {
-<span class="nc" id="L71">		lastCreated = root.addRawEntry(raw);</span>
-<span class="nc" id="L72">	}</span>
+<span class="nc" id="L78">		lastCreated = root.addRawEntry(raw);</span>
+<span class="nc" id="L79">	}</span>
 
 	public void addNote(List&lt;String&gt; note) {
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (lastCreated == null)</span>
-<span class="nc" id="L76">			root.addNote(note);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (lastCreated == null)</span>
+<span class="nc" id="L83">			root.addNote(note);</span>
 		else
-<span class="nc" id="L78">			lastCreated.getParent().addNote(note);</span>
-<span class="nc" id="L79">	}</span>
+<span class="nc" id="L85">			lastCreated.getParent().addNote(note);</span>
+<span class="nc" id="L86">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

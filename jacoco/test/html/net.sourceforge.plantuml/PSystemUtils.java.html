@@ -97,7 +97,7 @@ import net.sourceforge.plantuml.utils.Log;
 	private static List&lt;FileImageData&gt; exportDiagramsNewpaged(NewpagedDiagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
 <span class="nc" id="L99">		final List&lt;FileImageData&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L100">		final int nbImages = system.getNbImages();</span>
+<span class="nc" id="L100">		final int nbImages = system.getCardinality();</span>
 <span class="nc bnc" id="L101" title="All 2 branches missed.">		for (int i = 0; i &lt; nbImages; i++) {</span>
 
 <span class="nc" id="L103">			final SFile f = suggestedFile.getFile(i);</span>
@@ -138,7 +138,7 @@ import net.sourceforge.plantuml.utils.Log;
 	private static List&lt;FileImageData&gt; exportDiagramsSequence(SequenceDiagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
 <span class="fc" id="L140">		final List&lt;FileImageData&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L141">		final int nbImages = system.getNbImages();</span>
+<span class="fc" id="L141">		final int nbImages = system.getCardinality();</span>
 <span class="fc bfc" id="L142" title="All 2 branches covered.">		for (int i = 0; i &lt; nbImages; i++) {</span>
 
 <span class="fc" id="L144">			final SFile f = suggestedFile.getFile(i);</span>
@@ -208,8 +208,8 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (imageData == null)</span>
 <span class="nc" id="L209">			return emptyList();</span>
 
-<span class="pc bpc" id="L211" title="1 of 4 branches missed.">		if (imageData.containsCMapData() &amp;&amp; system instanceof UmlDiagram)</span>
-<span class="fc" id="L212">			((UmlDiagram) system).exportCmap(suggestedFile, 0, imageData);</span>
+<span class="pc bpc" id="L211" title="1 of 4 branches missed.">		if (imageData.containsCMapData() &amp;&amp; system instanceof TitledDiagram)</span>
+<span class="fc" id="L212">			((TitledDiagram) system).exportCmap(suggestedFile, 0, imageData);</span>
 
 <span class="fc bfc" id="L214" title="All 4 branches covered.">		if (system instanceof TitledDiagram &amp;&amp; fileFormatOption.getFileFormat() == FileFormat.PNG)</span>
 <span class="fc" id="L215">			return splitPng((TitledDiagram) system, suggestedFile, imageData, fileFormatOption);</span>

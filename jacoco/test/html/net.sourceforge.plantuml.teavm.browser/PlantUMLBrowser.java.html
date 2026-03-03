@@ -9,11 +9,15 @@ import org.teavm.jso.dom.xml.Element;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramChromeFactory12026;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.teavm.PSystemBuilder2;
 import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
 import net.sourceforge.plantuml.teavm.SvgGraphicsTeaVM;
@@ -121,18 +125,18 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
  * 
  * @see net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine
  */
-<span class="nc" id="L124">public class PlantUMLBrowser {</span>
-	// ::remove file when __MIT__  __EPL__  __BSD__  __ASL__  __LGPL__  __GPLV2__
+<span class="nc" id="L128">public class PlantUMLBrowser {</span>
+	// ::remove file when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
 	// ::remove file when JAVA8
 
 	// =========================================================================
 	// Rendering configuration
 	// =========================================================================
 
-<span class="nc" id="L132">	private static final StringBounder STRING_BOUNDER = new StringBounderTeaVM();</span>
-<span class="nc" id="L133">	private static final ColorMapper COLOR_MAPPER = ColorMapper.TEAVM;</span>
-<span class="nc" id="L134">	private static final HColor BACK = HColors.WHITE;</span>
-<span class="nc" id="L135">	private static final PSystemBuilder2 BUILDER = new PSystemBuilder2();</span>
+<span class="nc" id="L136">	private static final StringBounder STRING_BOUNDER = new StringBounderTeaVM();</span>
+<span class="nc" id="L137">	private static final ColorMapper COLOR_MAPPER = ColorMapper.TEAVM;</span>
+<span class="nc" id="L138">	private static final HColor BACK = HColors.WHITE;</span>
+<span class="nc" id="L139">	private static final PSystemBuilder2 BUILDER = new PSystemBuilder2();</span>
 
 	// =========================================================================
 	// Worker thread synchronization
@@ -143,7 +147,7 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 	// =========================================================================
 
 	/** Lock object for synchronizing between JS requests and worker thread. */
-<span class="nc" id="L146">	private static final Object LOCK = new Object();</span>
+<span class="nc" id="L150">	private static final Object LOCK = new Object();</span>
 
 	/**
 	 * The PlantUML source lines to render, or null if no request is pending. Set by
@@ -172,14 +176,14 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 	public static void main(String[] args) {
 		// Start worker thread FIRST - it needs to be ready to receive requests.
 		// The thread runs forever, waiting for render requests.
-<span class="nc" id="L175">		new Thread(PlantUMLBrowser::workerLoop, &quot;plantuml-render&quot;).start();</span>
+<span class="nc" id="L179">		new Thread(PlantUMLBrowser::workerLoop, &quot;plantuml-render&quot;).start();</span>
 
 		// Register the JS-callable function. After this, JavaScript can call
 		// plantumlRender(lines, elementId) to request a diagram rendering.
-<span class="nc" id="L179">		registerRender(PlantUMLBrowser::requestRender);</span>
+<span class="nc" id="L183">		registerRender(PlantUMLBrowser::requestRender);</span>
 
-<span class="nc" id="L181">		BrowserLog.jsStatusDuration();</span>
-<span class="nc" id="L182">	}</span>
+<span class="nc" id="L185">		BrowserLog.jsStatusDuration();</span>
+<span class="nc" id="L186">	}</span>
 
 	// =========================================================================
 	// JavaScript API registration
@@ -234,15 +238,15 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 	 * @param elementId the ID of the HTML element where the SVG should be rendered
 	 */
 	private static void requestRender(String[] lines, String elementId) {
-<span class="nc" id="L237">		synchronized (LOCK) {</span>
+<span class="nc" id="L241">		synchronized (LOCK) {</span>
 			// Store the request (overwrites any previous pending request)
-<span class="nc" id="L239">			pendingLines = lines;</span>
-<span class="nc" id="L240">			pendingElementId = elementId;</span>
+<span class="nc" id="L243">			pendingLines = lines;</span>
+<span class="nc" id="L244">			pendingElementId = elementId;</span>
 
 			// Wake up the worker thread to process this request
-<span class="nc" id="L243">			LOCK.notify();</span>
-<span class="nc" id="L244">		}</span>
-<span class="nc" id="L245">	}</span>
+<span class="nc" id="L247">			LOCK.notify();</span>
+<span class="nc" id="L248">		}</span>
+<span class="nc" id="L249">	}</span>
 
 	// =========================================================================
 	// Worker thread
@@ -271,28 +275,28 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 			String elementId;
 
 			// Wait for a render request
-<span class="nc" id="L274">			synchronized (LOCK) {</span>
+<span class="nc" id="L278">			synchronized (LOCK) {</span>
 				// Spin-wait pattern: keep waiting until we have work to do.
 				// This handles spurious wakeups correctly.
-<span class="nc bnc" id="L277" title="All 2 branches missed.">				while (pendingLines == null) {</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">				while (pendingLines == null) {</span>
 					try {
-<span class="nc" id="L279">						LOCK.wait();</span>
-<span class="nc" id="L280">					} catch (InterruptedException e) {</span>
+<span class="nc" id="L283">						LOCK.wait();</span>
+<span class="nc" id="L284">					} catch (InterruptedException e) {</span>
 						// Interruption is not expected, but if it happens, just retry
-<span class="nc" id="L282">					}</span>
+<span class="nc" id="L286">					}</span>
 				}
 
 				// Capture the request and clear the pending state.
 				// This must be atomic (inside synchronized) to avoid race conditions.
-<span class="nc" id="L287">				lines = pendingLines;</span>
-<span class="nc" id="L288">				elementId = pendingElementId;</span>
-<span class="nc" id="L289">				pendingLines = null;</span>
-<span class="nc" id="L290">			}</span>
+<span class="nc" id="L291">				lines = pendingLines;</span>
+<span class="nc" id="L292">				elementId = pendingElementId;</span>
+<span class="nc" id="L293">				pendingLines = null;</span>
+<span class="nc" id="L294">			}</span>
 
 			// Perform rendering OUTSIDE the synchronized block.
 			// This allows new requests to be queued while we're rendering.
-<span class="nc" id="L294">			doRender(lines, elementId);</span>
-<span class="nc" id="L295">		}</span>
+<span class="nc" id="L298">			doRender(lines, elementId);</span>
+<span class="nc" id="L299">		}</span>
 	}
 
 	// =========================================================================
@@ -319,42 +323,56 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 	 */
 	private static void doRender(String[] lines, String elementId) {
 		// Find the target element in the DOM
-<span class="nc" id="L322">		HTMLElement out = HTMLDocument.current().getElementById(elementId);</span>
-<span class="nc bnc" id="L323" title="All 2 branches missed.">		if (out == null)</span>
-<span class="nc" id="L324">			return;</span>
+<span class="nc" id="L326">		HTMLElement out = HTMLDocument.current().getElementById(elementId);</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">		if (out == null)</span>
+<span class="nc" id="L328">			return;</span>
 
 		try {
 			// Create SVG graphics context with TeaVM-compatible implementation
-<span class="nc" id="L328">			BrowserLog.reset();</span>
-<span class="nc" id="L329">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender&quot;);</span>
+<span class="nc" id="L332">			BrowserLog.reset();</span>
+<span class="nc" id="L333">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender&quot;);</span>
 
-<span class="nc" id="L331">			SvgGraphicsTeaVM svg = new SvgGraphicsTeaVM(900, 900);</span>
-<span class="nc" id="L332">			UGraphicTeaVM ug = UGraphicTeaVM.build(BACK, COLOR_MAPPER, STRING_BOUNDER, svg);</span>
+<span class="nc" id="L335">			SvgGraphicsTeaVM svg = new SvgGraphicsTeaVM(900, 900);</span>
+<span class="nc" id="L336">			UGraphicTeaVM ug = UGraphicTeaVM.build(BACK, COLOR_MAPPER, STRING_BOUNDER, svg);</span>
 
-<span class="nc" id="L334">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender wip10&quot;);</span>
+<span class="nc" id="L338">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender wip10&quot;);</span>
 
 			// Parse and render the diagram.
 			// For class diagrams, this will call GraphVizjsTeaVMEngine internally,
 			// which uses Viz.js for layout. The @Async magic happens here.
-<span class="nc" id="L339">			Diagram diagram = BUILDER.createDiagram(lines);</span>
-<span class="nc" id="L340">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender wip20&quot;);</span>
-<span class="nc" id="L341">			diagram.exportDiagramGraphic(ug, new FileFormatOption(FileFormat.SVG));</span>
-<span class="nc" id="L342">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender wip30&quot;);</span>
+<span class="nc" id="L343">			Diagram diagram = BUILDER.createDiagram(lines);</span>
+<span class="nc" id="L344">			final FileFormatOption fileFormat = new FileFormatOption(FileFormat.SVG);</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">			if (diagram instanceof UgDiagram) {</span>
+<span class="nc" id="L346">				BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender new10&quot;);</span>
+<span class="nc" id="L347">				TextBlock tb = ((UgDiagram) diagram).getTextBlock12026(0, fileFormat);</span>
+<span class="nc" id="L348">				final UgDiagram titled = (UgDiagram) diagram;</span>
+
+<span class="nc bnc" id="L350" title="All 2 branches missed.">				if (diagram instanceof TitledDiagram)</span>
+<span class="nc" id="L351">					tb = DiagramChromeFactory12026.create(tb, (TitledDiagram) titled,</span>
+<span class="nc" id="L352">							((TitledDiagram) titled).getSkinParam(), STRING_BOUNDER, titled.getWarnings());</span>
+
+<span class="nc" id="L354">				tb.drawU(ug);</span>
+<span class="nc" id="L355">				BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender new20&quot;);</span>
+<span class="nc" id="L356">			} else {</span>
+<span class="nc" id="L357">				BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender ERROR&quot;);</span>
+				// diagram.exportDiagramGraphic01970(ug, fileFormat);
+<span class="nc" id="L359">				BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender ERROR&quot;);</span>
+			}
 
 			// Clear any previous content (old SVG, error messages, etc.)
-<span class="nc" id="L345">			removeAllChildren(out);</span>
-<span class="nc" id="L346">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender wip40&quot;);</span>
+<span class="nc" id="L363">			removeAllChildren(out);</span>
+<span class="nc" id="L364">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender wip40&quot;);</span>
 
 			// Insert the rendered SVG into the DOM
-<span class="nc" id="L349">			appendSvgElement(out, svg.getSvgRoot());</span>
-<span class="nc" id="L350">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender done&quot;);</span>
-<span class="nc" id="L351">			BrowserLog.jsStatusDuration();</span>
+<span class="nc" id="L367">			appendSvgElement(out, svg.getSvgRoot());</span>
+<span class="nc" id="L368">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender done&quot;);</span>
+<span class="nc" id="L369">			BrowserLog.jsStatusDuration();</span>
 
-<span class="nc" id="L353">		} catch (Exception e) {</span>
+<span class="nc" id="L371">		} catch (Exception e) {</span>
 			// Display error message in the target element
-<span class="nc" id="L355">			out.setTextContent(String.valueOf(e));</span>
-<span class="nc" id="L356">		}</span>
-<span class="nc" id="L357">	}</span>
+<span class="nc" id="L373">			out.setTextContent(String.valueOf(e));</span>
+<span class="nc" id="L374">		}</span>
+<span class="nc" id="L375">	}</span>
 
 	// =========================================================================
 	// JavaScript interop utilities

@@ -67,16 +67,15 @@ public class CommunicationTileNoteTop extends CommunicationTileNoteBottomTopAbst
 		if (YGauge.USE_ME)
 			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 
-<span class="nc" id="L70">		final double middleMsg = (tile.getMinX().getCurrentValue() + tile.getMaxX().getCurrentValue()) / 2;</span>
+<span class="nc" id="L70">		final double middleMsg = getMiddleMsg();</span>
+<span class="nc" id="L71">		final double xNote = getNotePosition(stringBounder).getCurrentValue();</span>
 
-<span class="nc" id="L72">		final double xNote = getNotePosition(stringBounder).getCurrentValue();</span>
+<span class="nc" id="L73">		comp.drawU(ug.apply(UTranslate.dx(xNote)), area, (Context2D) ug);</span>
 
-<span class="nc" id="L74">		comp.drawU(ug.apply(UTranslate.dx(xNote)), area, (Context2D) ug);</span>
+<span class="nc" id="L75">		drawLine(ug, middleMsg, tile.getContactPointRelative() + dim.getHeight() + spacey, xNote + dim.getWidth() / 2,</span>
+<span class="nc" id="L76">				dim.getHeight() - 2 * Rose.paddingY);</span>
 
-<span class="nc" id="L76">		drawLine(ug, middleMsg, tile.getContactPointRelative() + dim.getHeight() + spacey, xNote + dim.getWidth() / 2,</span>
-<span class="nc" id="L77">				dim.getHeight() - 2 * Rose.paddingY);</span>
-
-<span class="nc" id="L79">	}</span>
+<span class="nc" id="L78">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

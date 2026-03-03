@@ -96,11 +96,11 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 
 	@Override
 	public HColor lighten(int ratio) {
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
 <span class="nc" id="L100">			return this;</span>
-<span class="nc" id="L101">		final float[] hsl = new HSLColor(color).getHSL();</span>
-<span class="nc" id="L102">		hsl[2] += hsl[2] * (ratio / 100.0);</span>
-<span class="nc" id="L103">		return HColorSimple.create(new HSLColor(hsl).getRGB());</span>
+<span class="fc" id="L101">		final float[] hsl = new HSLColor(color).getHSL();</span>
+<span class="fc" id="L102">		hsl[2] += hsl[2] * (ratio / 100.0);</span>
+<span class="fc" id="L103">		return HColorSimple.create(new HSLColor(hsl).getRGB());</span>
 	}
 
 	@Override

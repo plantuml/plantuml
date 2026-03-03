@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 
@@ -57,73 +56,74 @@ public class SpriteColor implements Sprite {
 	private final int gray[][];
 	private final int color[][];
 
-<span class="nc" id="L60">	public SpriteColor(int width, int height) {</span>
-<span class="nc" id="L61">		this.width = width;</span>
-<span class="nc" id="L62">		this.height = height;</span>
-<span class="nc" id="L63">		this.gray = new int[height][width];</span>
-<span class="nc" id="L64">		this.color = new int[height][width];</span>
-<span class="nc" id="L65">	}</span>
+<span class="nc" id="L59">	public SpriteColor(int width, int height) {</span>
+<span class="nc" id="L60">		this.width = width;</span>
+<span class="nc" id="L61">		this.height = height;</span>
+<span class="nc" id="L62">		this.gray = new int[height][width];</span>
+<span class="nc" id="L63">		this.color = new int[height][width];</span>
+<span class="nc" id="L64">	}</span>
 
 	public void setGray(int x, int y, int level) {
-<span class="nc bnc" id="L68" title="All 4 branches missed.">		if (x &lt; 0 || x &gt;= width)</span>
-<span class="nc" id="L69">			return;</span>
+<span class="nc bnc" id="L67" title="All 4 branches missed.">		if (x &lt; 0 || x &gt;= width)</span>
+<span class="nc" id="L68">			return;</span>
 
-<span class="nc bnc" id="L71" title="All 4 branches missed.">		if (y &lt; 0 || y &gt;= height)</span>
-<span class="nc" id="L72">			return;</span>
+<span class="nc bnc" id="L70" title="All 4 branches missed.">		if (y &lt; 0 || y &gt;= height)</span>
+<span class="nc" id="L71">			return;</span>
 
-<span class="nc bnc" id="L74" title="All 4 branches missed.">		if (level &lt; 0 || level &gt;= 16)</span>
-<span class="nc" id="L75">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L73" title="All 4 branches missed.">		if (level &lt; 0 || level &gt;= 16)</span>
+<span class="nc" id="L74">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L77">		gray[y][x] = level;</span>
-<span class="nc" id="L78">		color[y][x] = -1;</span>
-<span class="nc" id="L79">	}</span>
+<span class="nc" id="L76">		gray[y][x] = level;</span>
+<span class="nc" id="L77">		color[y][x] = -1;</span>
+<span class="nc" id="L78">	}</span>
 
 	public void setColor(int x, int y, int col) {
-<span class="nc bnc" id="L82" title="All 4 branches missed.">		if (x &lt; 0 || x &gt;= width)</span>
-<span class="nc" id="L83">			return;</span>
+<span class="nc bnc" id="L81" title="All 4 branches missed.">		if (x &lt; 0 || x &gt;= width)</span>
+<span class="nc" id="L82">			return;</span>
 
-<span class="nc bnc" id="L85" title="All 4 branches missed.">		if (y &lt; 0 || y &gt;= height)</span>
-<span class="nc" id="L86">			return;</span>
+<span class="nc bnc" id="L84" title="All 4 branches missed.">		if (y &lt; 0 || y &gt;= height)</span>
+<span class="nc" id="L85">			return;</span>
 
-<span class="nc" id="L88">		gray[y][x] = -1;</span>
-<span class="nc" id="L89">		color[y][x] = col;</span>
-<span class="nc" id="L90">	}</span>
+<span class="nc" id="L87">		gray[y][x] = -1;</span>
+<span class="nc" id="L88">		color[y][x] = col;</span>
+<span class="nc" id="L89">	}</span>
 
 	public int getHeight() {
-<span class="nc" id="L93">		return height;</span>
+<span class="nc" id="L92">		return height;</span>
 	}
 
 	public int getWidth() {
-<span class="nc" id="L97">		return width;</span>
+<span class="nc" id="L96">		return width;</span>
 	}
 
 	public UImage toUImage(ColorMapper colorMapper, HColor backcolor, HColor forecolor) {
-<span class="nc" id="L101">		final PortableImage im = PortableImageFactory.build(width, height, PortableImage.TYPE_INT_RGB);</span>
+<span class="nc" id="L100">		final PortableImage im = PortableImageFactory.build(width, height, PortableImage.TYPE_INT_RGB);</span>
 
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (backcolor == null)</span>
-<span class="nc" id="L104">			backcolor = HColors.WHITE;</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (backcolor == null)</span>
+<span class="nc" id="L103">			backcolor = HColors.WHITE;</span>
 
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (forecolor == null)</span>
-<span class="nc" id="L107">			forecolor = HColors.BLACK;</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (forecolor == null)</span>
+<span class="nc" id="L106">			forecolor = HColors.BLACK;</span>
 
-<span class="nc" id="L109">		final HColorGradient gradient = HColors.gradient(backcolor, forecolor, '\0');</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		for (int col = 0; col &lt; width; col++) {</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">			for (int line = 0; line &lt; height; line++) {</span>
-<span class="nc" id="L112">				final int localColor = color[line][col];</span>
-<span class="nc bnc" id="L113" title="All 2 branches missed.">				if (localColor == -1) {</span>
-<span class="nc" id="L114">					final double coef = 1.0 * gray[line][col] / (16 - 1);</span>
-<span class="nc" id="L115">					im.setRGB(col, line, gradient.getRGB(colorMapper, coef, 255));</span>
-<span class="nc" id="L116">				} else {</span>
-<span class="nc" id="L117">					im.setRGB(col, line, localColor);</span>
+<span class="nc" id="L108">		final HColorGradient gradient = HColors.gradient(backcolor, forecolor, '\0');</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		for (int col = 0; col &lt; width; col++) {</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">			for (int line = 0; line &lt; height; line++) {</span>
+<span class="nc" id="L111">				final int localColor = color[line][col];</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">				if (localColor == -1) {</span>
+<span class="nc" id="L113">					final double coef = 1.0 * gray[line][col] / (16 - 1);</span>
+<span class="nc" id="L114">					im.setRGB(col, line, gradient.getRGB(colorMapper, coef, 255));</span>
+<span class="nc" id="L115">				} else {</span>
+<span class="nc" id="L116">					im.setRGB(col, line, localColor);</span>
 				}
 			}
 		}
-<span class="nc" id="L121">		return new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L120">		return new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));</span>
 	}
 
 	@Override
-	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale, final HColor backColor) {
-<span class="nc" id="L126">		return new AbstractTextBlock() {</span>
+	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale,
+			final HColor backColor) {
+<span class="nc" id="L126">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
 <span class="nc" id="L129">				final UImage image = toUImage(ug.getColorMapper(), ug.getParam().getBackcolor(), fontColor);</span>

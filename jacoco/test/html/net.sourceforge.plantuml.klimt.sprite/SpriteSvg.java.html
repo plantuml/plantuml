@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 
@@ -47,14 +46,15 @@ public class SpriteSvg implements Sprite {
 
 	private final String svg;
 
-<span class="nc" id="L50">	public SpriteSvg(String svg) {</span>
-<span class="nc" id="L51">		this.svg = svg;</span>
-<span class="nc" id="L52">	}</span>
+<span class="nc" id="L49">	public SpriteSvg(String svg) {</span>
+<span class="nc" id="L50">		this.svg = svg;</span>
+<span class="nc" id="L51">	}</span>
 
 	@Override
-	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale, final HColor backColor) {
+	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale,
+			final HColor backColor) {
 <span class="nc" id="L56">		final UImageSvg img = new UImageSvg(svg, scale);</span>
-<span class="nc" id="L57">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L57">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
 <span class="nc" id="L60">				ug.draw(img);</span>

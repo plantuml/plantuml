@@ -41,12 +41,12 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-<span class="nc" id="L49">public abstract class ETile extends AbstractTextBlock {</span>
+<span class="nc" id="L49">public abstract class ETile implements TextBlock {</span>
 
 <span class="nc" id="L51">	protected final boolean TRACE = false;</span>
 
@@ -74,93 +74,94 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 <span class="nc" id="L74">		ug.apply(new UTranslate(x1, y)).draw(ULine.hline(x2 - x1));</span>
 <span class="nc" id="L75">	}</span>
 
-	protected final void drawHlineDirected(UGraphic ug, double y, double x1, double x2, double coef, double minimunSizeForArrow) {
-<span class="nc" id="L78">		ug.apply(new UTranslate(x1, y)).draw(ULine.hline(x2 - x1));</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (x2 &gt; x1 + minimunSizeForArrow)</span>
-<span class="nc" id="L80">			ug.apply(new CopyForegroundColorToBackgroundColor())</span>
-<span class="nc" id="L81">					.apply(new UTranslate(x1 * (1 - coef) + x2 * coef - 2, y)).draw(getArrowToRight());</span>
+	protected final void drawHlineDirected(UGraphic ug, double y, double x1, double x2, double coef,
+			double minimunSizeForArrow) {
+<span class="nc" id="L79">		ug.apply(new UTranslate(x1, y)).draw(ULine.hline(x2 - x1));</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (x2 &gt; x1 + minimunSizeForArrow)</span>
+<span class="nc" id="L81">			ug.apply(new CopyForegroundColorToBackgroundColor())</span>
+<span class="nc" id="L82">					.apply(new UTranslate(x1 * (1 - coef) + x2 * coef - 2, y)).draw(getArrowToRight());</span>
 
-<span class="nc" id="L83">	}</span>
+<span class="nc" id="L84">	}</span>
 
 	protected final void drawHlineAntiDirected(UGraphic ug, double y, double x1, double x2, double coef) {
-<span class="nc" id="L86">		ug.apply(new UTranslate(x1, y)).draw(ULine.hline(x2 - x1));</span>
-<span class="nc" id="L87">		ug.apply(new CopyForegroundColorToBackgroundColor()).apply(new UTranslate(x1 * (1 - coef) + x2 * coef - 2, y))</span>
-<span class="nc" id="L88">				.draw(getArrowToLeft());</span>
+<span class="nc" id="L87">		ug.apply(new UTranslate(x1, y)).draw(ULine.hline(x2 - x1));</span>
+<span class="nc" id="L88">		ug.apply(new CopyForegroundColorToBackgroundColor()).apply(new UTranslate(x1 * (1 - coef) + x2 * coef - 2, y))</span>
+<span class="nc" id="L89">				.draw(getArrowToLeft());</span>
 
-<span class="nc" id="L90">	}</span>
+<span class="nc" id="L91">	}</span>
 
 	protected final void drawVline(UGraphic ug, double x, double y1, double y2) {
-<span class="nc" id="L93">		ug.apply(new UTranslate(x, y1)).draw(ULine.vline(y2 - y1));</span>
-<span class="nc" id="L94">	}</span>
+<span class="nc" id="L94">		ug.apply(new UTranslate(x, y1)).draw(ULine.vline(y2 - y1));</span>
+<span class="nc" id="L95">	}</span>
 
 	protected final void drawVlineDirected(UGraphic ug, double x, double y1, double y2) {
-<span class="nc" id="L97">		ug.apply(new UTranslate(x, y1)).draw(ULine.vline(y2 - y1));</span>
-<span class="nc" id="L98">		ug.apply(new CopyForegroundColorToBackgroundColor()).apply(new UTranslate(x, y1 * .5 + y2 * .5 - 2))</span>
-<span class="nc" id="L99">				.draw(getArrowToBottom());</span>
+<span class="nc" id="L98">		ug.apply(new UTranslate(x, y1)).draw(ULine.vline(y2 - y1));</span>
+<span class="nc" id="L99">		ug.apply(new CopyForegroundColorToBackgroundColor()).apply(new UTranslate(x, y1 * .5 + y2 * .5 - 2))</span>
+<span class="nc" id="L100">				.draw(getArrowToBottom());</span>
 
-<span class="nc" id="L101">	}</span>
+<span class="nc" id="L102">	}</span>
 
 	protected final void drawVlineAntiDirected(UGraphic ug, double x, double y1, double y2) {
-<span class="nc" id="L104">		ug.apply(new UTranslate(x, y1)).draw(ULine.vline(y2 - y1));</span>
-<span class="nc" id="L105">		ug.apply(new CopyForegroundColorToBackgroundColor()).apply(new UTranslate(x, y1 * .5 + y2 * .5 + 2))</span>
-<span class="nc" id="L106">				.draw(getArrowToTop());</span>
+<span class="nc" id="L105">		ug.apply(new UTranslate(x, y1)).draw(ULine.vline(y2 - y1));</span>
+<span class="nc" id="L106">		ug.apply(new CopyForegroundColorToBackgroundColor()).apply(new UTranslate(x, y1 * .5 + y2 * .5 + 2))</span>
+<span class="nc" id="L107">				.draw(getArrowToTop());</span>
 
-<span class="nc" id="L108">	}</span>
+<span class="nc" id="L109">	}</span>
 
 	static UPath getArrowToLeft() {
-<span class="nc" id="L111">		final UPath arrow = UPath.none();</span>
-<span class="nc" id="L112">		arrow.moveTo(0, 0);</span>
-<span class="nc" id="L113">		arrow.lineTo(0, -3);</span>
-<span class="nc" id="L114">		arrow.lineTo(-6, 0);</span>
-<span class="nc" id="L115">		arrow.lineTo(0, 3);</span>
-<span class="nc" id="L116">		arrow.lineTo(0, 0);</span>
-<span class="nc" id="L117">		arrow.closePath();</span>
-<span class="nc" id="L118">		return arrow;</span>
+<span class="nc" id="L112">		final UPath arrow = UPath.none();</span>
+<span class="nc" id="L113">		arrow.moveTo(0, 0);</span>
+<span class="nc" id="L114">		arrow.lineTo(0, -3);</span>
+<span class="nc" id="L115">		arrow.lineTo(-6, 0);</span>
+<span class="nc" id="L116">		arrow.lineTo(0, 3);</span>
+<span class="nc" id="L117">		arrow.lineTo(0, 0);</span>
+<span class="nc" id="L118">		arrow.closePath();</span>
+<span class="nc" id="L119">		return arrow;</span>
 	}
 
 	static UPath getArrowToRight() {
-<span class="nc" id="L122">		final UPath arrow = UPath.none();</span>
-<span class="nc" id="L123">		arrow.moveTo(0, 0);</span>
-<span class="nc" id="L124">		arrow.lineTo(0, -3);</span>
-<span class="nc" id="L125">		arrow.lineTo(6, 0);</span>
-<span class="nc" id="L126">		arrow.lineTo(0, 3);</span>
-<span class="nc" id="L127">		arrow.lineTo(0, 0);</span>
-<span class="nc" id="L128">		arrow.closePath();</span>
-<span class="nc" id="L129">		return arrow;</span>
+<span class="nc" id="L123">		final UPath arrow = UPath.none();</span>
+<span class="nc" id="L124">		arrow.moveTo(0, 0);</span>
+<span class="nc" id="L125">		arrow.lineTo(0, -3);</span>
+<span class="nc" id="L126">		arrow.lineTo(6, 0);</span>
+<span class="nc" id="L127">		arrow.lineTo(0, 3);</span>
+<span class="nc" id="L128">		arrow.lineTo(0, 0);</span>
+<span class="nc" id="L129">		arrow.closePath();</span>
+<span class="nc" id="L130">		return arrow;</span>
 	}
 
 	static UPath getArrowToBottom() {
-<span class="nc" id="L133">		final UPath arrow = UPath.none();</span>
-<span class="nc" id="L134">		arrow.moveTo(0, 0);</span>
-<span class="nc" id="L135">		arrow.lineTo(3, 0);</span>
-<span class="nc" id="L136">		arrow.lineTo(0, 6);</span>
-<span class="nc" id="L137">		arrow.lineTo(-3, 0);</span>
-<span class="nc" id="L138">		arrow.lineTo(0, 0);</span>
-<span class="nc" id="L139">		arrow.closePath();</span>
-<span class="nc" id="L140">		return arrow;</span>
+<span class="nc" id="L134">		final UPath arrow = UPath.none();</span>
+<span class="nc" id="L135">		arrow.moveTo(0, 0);</span>
+<span class="nc" id="L136">		arrow.lineTo(3, 0);</span>
+<span class="nc" id="L137">		arrow.lineTo(0, 6);</span>
+<span class="nc" id="L138">		arrow.lineTo(-3, 0);</span>
+<span class="nc" id="L139">		arrow.lineTo(0, 0);</span>
+<span class="nc" id="L140">		arrow.closePath();</span>
+<span class="nc" id="L141">		return arrow;</span>
 	}
 
 	static UPath getArrowToTop() {
-<span class="nc" id="L144">		final UPath arrow = UPath.none();</span>
-<span class="nc" id="L145">		arrow.moveTo(0, 0);</span>
-<span class="nc" id="L146">		arrow.lineTo(3, 0);</span>
-<span class="nc" id="L147">		arrow.lineTo(0, -6);</span>
-<span class="nc" id="L148">		arrow.lineTo(-3, 0);</span>
-<span class="nc" id="L149">		arrow.lineTo(0, 0);</span>
-<span class="nc" id="L150">		arrow.closePath();</span>
-<span class="nc" id="L151">		return arrow;</span>
+<span class="nc" id="L145">		final UPath arrow = UPath.none();</span>
+<span class="nc" id="L146">		arrow.moveTo(0, 0);</span>
+<span class="nc" id="L147">		arrow.lineTo(3, 0);</span>
+<span class="nc" id="L148">		arrow.lineTo(0, -6);</span>
+<span class="nc" id="L149">		arrow.lineTo(-3, 0);</span>
+<span class="nc" id="L150">		arrow.lineTo(0, 0);</span>
+<span class="nc" id="L151">		arrow.closePath();</span>
+<span class="nc" id="L152">		return arrow;</span>
 	}
 
 	protected void addCommentBelow(String comment) {
-<span class="nc" id="L155">		System.err.println(&quot;Ignoring below comment &quot; + comment + &quot; &quot; + getClass());</span>
-<span class="nc" id="L156">	}</span>
+<span class="nc" id="L156">		System.err.println(&quot;Ignoring below comment &quot; + comment + &quot; &quot; + getClass());</span>
+<span class="nc" id="L157">	}</span>
 
 	protected void addCommentAbove(String comment) {
-<span class="nc" id="L159">		System.err.println(&quot;Ignoring above comment &quot; + comment + &quot; &quot; + getClass());</span>
-<span class="nc" id="L160">	}</span>
+<span class="nc" id="L160">		System.err.println(&quot;Ignoring above comment &quot; + comment + &quot; &quot; + getClass());</span>
+<span class="nc" id="L161">	}</span>
 
 	protected String getRepetitionLabel() {
-<span class="nc" id="L163">		return &quot;?&quot;;</span>
+<span class="nc" id="L164">		return &quot;?&quot;;</span>
 	}
 
 }

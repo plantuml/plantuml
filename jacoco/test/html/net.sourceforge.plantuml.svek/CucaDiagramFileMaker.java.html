@@ -43,6 +43,8 @@ import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 
 public abstract class CucaDiagramFileMaker {
 
@@ -50,21 +52,35 @@ public abstract class CucaDiagramFileMaker {
 	protected final Bibliotekon bibliotekon;
 	protected final ClusterManager clusterManager;
 
-<span class="fc" id="L53">	public CucaDiagramFileMaker(CucaDiagram diagram) {</span>
-<span class="fc" id="L54">		this.diagram = diagram;</span>
-<span class="fc" id="L55">		this.bibliotekon = new Bibliotekon(diagram.getLinks());</span>
-<span class="fc" id="L56">		final Cluster root = new Cluster(null, diagram, bibliotekon.getColorSequence(), diagram.getRootGroup());</span>
-<span class="fc" id="L57">		this.clusterManager = new ClusterManager(bibliotekon, root);</span>
+<span class="fc" id="L55">	public CucaDiagramFileMaker(CucaDiagram diagram) {</span>
+<span class="fc" id="L56">		this.diagram = diagram;</span>
+<span class="fc" id="L57">		this.bibliotekon = new Bibliotekon(diagram.getLinks());</span>
+<span class="fc" id="L58">		final Cluster root = new Cluster(null, diagram, bibliotekon.getColorSequence(), diagram.getRootGroup());</span>
+<span class="fc" id="L59">		this.clusterManager = new ClusterManager(bibliotekon, root);</span>
 
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L61">	}</span>
 
 	protected final Bibliotekon getBibliotekon() {
-<span class="fc" id="L62">		return bibliotekon;</span>
+<span class="fc" id="L64">		return bibliotekon;</span>
 	}
 
-	public abstract ImageData createFile(OutputStream os, List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)
-			throws IOException;
+	public abstract ImageData createFile01970(OutputStream os, List&lt;String&gt; dotStrings,
+			FileFormatOption fileFormatOption) throws IOException;
 
-	public abstract void createOneGraphic(UGraphic ug);
+	public abstract void createOneGraphic01970(UGraphic ug);
+
+	// Methods ending with 12026 are the new methods
+	public TextBlock getTextBlock12026(List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)
+			throws IOException, InterruptedException {
+		/*
+		 * This method should draw image number &quot;num&quot; of the diagram, but without
+		 * titles, header, footer, legend, caption, or mainframe, which will be added by
+		 * another class on top of this TextBlock
+		 */
+<span class="nc" id="L80">		System.err.println(&quot;CucaDiagramFileMaker::getTextBlock12026 &quot; + getClass().getSimpleName());</span>
+<span class="nc" id="L81">		return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+		// throw new UnsupportedOperationException(&quot;wip&quot;);
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

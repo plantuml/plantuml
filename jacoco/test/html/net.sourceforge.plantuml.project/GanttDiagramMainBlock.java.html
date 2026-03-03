@@ -35,14 +35,16 @@
  */
 package net.sourceforge.plantuml.project;
 
+import net.sourceforge.plantuml.annotation.PerformanceIssue;
 import net.sourceforge.plantuml.crash.CrashImage;
 import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.project.core.Resource;
@@ -62,7 +64,7 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-public class GanttDiagramMainBlock extends AbstractTextBlock {
+public class GanttDiagramMainBlock implements TextBlock {
 
 	private final GanttDiagram diagram;
 	private final TimeHeader timeHeader;
@@ -76,116 +78,121 @@ public class GanttDiagramMainBlock extends AbstractTextBlock {
 
 	public GanttDiagramMainBlock(TimeBoundsData timeBounds, GanttModelData modelData, TaskDrawRegistryData drawRegistry,
 			DisplayConfigData displayConfig, TimelineStyleData timelineStyle, GanttDiagram diagram,
-<span class="nc" id="L79">			TimeHeader timeHeader, StringBounder stringBounder) {</span>
-<span class="nc" id="L80">		this.diagram = diagram;</span>
-<span class="nc" id="L81">		this.timeBounds = timeBounds;</span>
-<span class="nc" id="L82">		this.modelData = modelData;</span>
-<span class="nc" id="L83">		this.drawRegistry = drawRegistry;</span>
-<span class="nc" id="L84">		this.displayConfig = displayConfig;</span>
-<span class="nc" id="L85">		this.timelineStyle = timelineStyle;</span>
-<span class="nc" id="L86">		this.timeHeader = timeHeader;</span>
-<span class="nc" id="L87">		this.layout = new GanttLayout(modelData, displayConfig, timeBounds, timelineStyle, drawRegistry, stringBounder,</span>
+<span class="nc" id="L81">			TimeHeader timeHeader, StringBounder stringBounder) {</span>
+<span class="nc" id="L82">		this.diagram = diagram;</span>
+<span class="nc" id="L83">		this.timeBounds = timeBounds;</span>
+<span class="nc" id="L84">		this.modelData = modelData;</span>
+<span class="nc" id="L85">		this.drawRegistry = drawRegistry;</span>
+<span class="nc" id="L86">		this.displayConfig = displayConfig;</span>
+<span class="nc" id="L87">		this.timelineStyle = timelineStyle;</span>
+<span class="nc" id="L88">		this.timeHeader = timeHeader;</span>
+<span class="nc" id="L89">		this.layout = new GanttLayout(modelData, displayConfig, timeBounds, timelineStyle, drawRegistry, stringBounder,</span>
 				timeHeader);
-<span class="nc" id="L89">	}</span>
+<span class="nc" id="L91">	}</span>
 
 	@Override
 	public void drawU(UGraphic ug) {
 		try {
-<span class="nc" id="L94">			final UGraphic ugOrig = ug;</span>
+<span class="nc" id="L96">			final UGraphic ugOrig = ug;</span>
 
-<span class="nc bnc" id="L96" title="All 2 branches missed.">			if (displayConfig.getLabelStrategy().titleInFirstColumn())</span>
-<span class="nc" id="L97">				ug = ug.apply(UTranslate.dx(layout.getTitlesWidth()));</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (displayConfig.getLabelStrategy().titleInFirstColumn())</span>
+<span class="nc" id="L99">				ug = ug.apply(UTranslate.dx(layout.getTitlesWidth()));</span>
 
-<span class="nc" id="L99">			final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.timeline)</span>
-<span class="nc" id="L100">					.getMergedStyle(timelineStyle.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L101">			final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.timeline)</span>
+<span class="nc" id="L102">					.getMergedStyle(timelineStyle.getSkinParam().getCurrentStyleBuilder());</span>
 
-<span class="nc" id="L102">			final HColor back = style.value(PName.BackGroundColor).asColor(timelineStyle.getColorSet());</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">			if (back.isTransparent() == false) {</span>
+<span class="nc" id="L104">			final HColor back = style.value(PName.BackGroundColor).asColor(timelineStyle.getColorSet());</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (back.isTransparent() == false) {</span>
 
-<span class="nc" id="L105">				final double fullWidth = layout.getTitlesWidth() + layout.getBarsWidth();</span>
+<span class="nc" id="L107">				final double fullWidth = layout.getTitlesWidth() + layout.getBarsWidth();</span>
 
-<span class="nc" id="L107">				final URectangle rect1 = URectangle.build(fullWidth, layout.getHeaderHeight());</span>
-<span class="nc" id="L108">				ug.apply(back.bg()).draw(rect1);</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">				if (displayConfig.isShowFootbox()) {</span>
-<span class="nc" id="L110">					final URectangle rect2 = URectangle.build(fullWidth, layout.getFooterHeight());</span>
-<span class="nc" id="L111">					ug.apply(back.bg()).apply(UTranslate.dy(drawRegistry.getTotalHeightWithoutFooter())).draw(rect2);</span>
+<span class="nc" id="L109">				final URectangle rect1 = URectangle.build(fullWidth, layout.getHeaderHeight());</span>
+<span class="nc" id="L110">				ug.apply(back.bg()).draw(rect1);</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">				if (displayConfig.isShowFootbox()) {</span>
+<span class="nc" id="L112">					final URectangle rect2 = URectangle.build(fullWidth, layout.getFooterHeight());</span>
+<span class="nc" id="L113">					ug.apply(back.bg()).apply(UTranslate.dy(drawRegistry.getTotalHeightWithoutFooter())).draw(rect2);</span>
 				}
 			}
 
-<span class="nc" id="L115">			timeHeader.drawTimeHeader(ug, drawRegistry.getTotalHeightWithoutFooter());</span>
+<span class="nc" id="L117">			timeHeader.drawTimeHeader(ug, drawRegistry.getTotalHeightWithoutFooter());</span>
 
-<span class="nc" id="L117">			drawConstraints(ug, timeHeader.getTimeScale());</span>
-<span class="nc" id="L118">			drawTasksRect(ug);</span>
-<span class="nc" id="L119">			drawTasksTitle(ugOrig, layout.getTitlesWidth(), layout.getBarsWidth());</span>
+<span class="nc" id="L119">			drawConstraints(ug, timeHeader.getTimeScale());</span>
+<span class="nc" id="L120">			drawTasksRect(ug);</span>
+<span class="nc" id="L121">			drawTasksTitle(ugOrig, layout.getTitlesWidth(), layout.getBarsWidth());</span>
 
-<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (displayConfig.isHideResourceFootbox() == false)</span>
-<span class="nc" id="L122">				drawResources(ug);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">			if (displayConfig.isHideResourceFootbox() == false)</span>
+<span class="nc" id="L124">				drawResources(ug);</span>
 
-<span class="nc bnc" id="L124" title="All 2 branches missed.">			if (displayConfig.isShowFootbox())</span>
-<span class="nc" id="L125">				timeHeader.drawTimeFooter(ug.apply(UTranslate.dy(drawRegistry.getTotalHeightWithoutFooter())));</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">			if (displayConfig.isShowFootbox())</span>
+<span class="nc" id="L127">				timeHeader.drawTimeFooter(ug.apply(UTranslate.dy(drawRegistry.getTotalHeightWithoutFooter())));</span>
 
-<span class="nc" id="L127">		} catch (Throwable e) {</span>
-<span class="nc" id="L128">			Logme.error(e);</span>
+<span class="nc" id="L129">		} catch (Throwable e) {</span>
+<span class="nc" id="L130">			Logme.error(e);</span>
 
-<span class="nc" id="L130">			final ReportLog report = new ReportLog();</span>
-<span class="nc" id="L131">			report.anErrorHasOccured(e, diagram.getFlashData());</span>
+<span class="nc" id="L132">			final ReportLog report = new ReportLog();</span>
+<span class="nc" id="L133">			report.anErrorHasOccured(e, diagram.getFlashData());</span>
 
-<span class="nc" id="L133">			report.addProperties();</span>
-<span class="nc" id="L134">			report.addEmptyLine();</span>
-<span class="nc" id="L135">			report.youShouldSendThisDiagram();</span>
+<span class="nc" id="L135">			report.addProperties();</span>
+<span class="nc" id="L136">			report.addEmptyLine();</span>
+<span class="nc" id="L137">			report.youShouldSendThisDiagram();</span>
 
-<span class="nc" id="L137">			final CrashImage image = new CrashImage(e, diagram.getFlashData(), report);</span>
-<span class="nc" id="L138">			image.drawU(ug);</span>
+<span class="nc" id="L139">			final CrashImage image = new CrashImage(e, diagram.getFlashData(), report);</span>
+<span class="nc" id="L140">			image.drawU(ug);</span>
 
-<span class="nc" id="L140">		}</span>
+<span class="nc" id="L142">		}</span>
 
-<span class="nc" id="L142">	}</span>
+<span class="nc" id="L144">	}</span>
 
+	@PerformanceIssue
+	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L145">		return layout.calculateDimension();</span>
+<span class="nc" id="L149">		final LimitFinder limitFinder = LimitFinder.create(stringBounder, true);</span>
+<span class="nc" id="L150">		this.drawU(limitFinder);</span>
+<span class="nc" id="L151">		return limitFinder.getMinMax().getDimension();</span>
+		// return layout.calculateDimension();
 	}
 
 	private void drawTasksRect(UGraphic ug) {
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		for (Task task : modelData.getTasks()) {</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">			if (timeBounds.isHidden(task))</span>
-<span class="nc" id="L151">				continue;</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		for (Task task : modelData.getTasks()) {</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			if (timeBounds.isHidden(task))</span>
+<span class="nc" id="L158">				continue;</span>
 
-<span class="nc" id="L153">			final TaskDraw draw = drawRegistry.getTaskDraw(task);</span>
-<span class="nc" id="L154">			final UTranslate move = UTranslate.dy(draw.getY(ug.getStringBounder()).getCurrentValue());</span>
-<span class="nc" id="L155">			draw.drawU(ug.apply(move));</span>
-<span class="nc" id="L156">		}</span>
-<span class="nc" id="L157">	}</span>
+<span class="nc" id="L160">			final TaskDraw draw = drawRegistry.getTaskDraw(task);</span>
+<span class="nc" id="L161">			final UTranslate move = UTranslate.dy(draw.getY(ug.getStringBounder()).getCurrentValue());</span>
+<span class="nc" id="L162">			draw.drawU(ug.apply(move));</span>
+<span class="nc" id="L163">		}</span>
+<span class="nc" id="L164">	}</span>
 
 	private void drawConstraints(final UGraphic ug, TimeScale timeScale) {
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		for (GanttConstraint constraint : modelData.getConstraints()) {</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">			if (timeBounds.getPrintStart() != null</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">					&amp;&amp; constraint.isHidden(TimePoint.ofStartOfDay(timeBounds.getMinDay()),</span>
-<span class="nc" id="L163">							TimePoint.ofEndOfDayMinusOneSecond(timeBounds.getMaxDay())))</span>
-<span class="nc" id="L164">				continue;</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		for (GanttConstraint constraint : modelData.getConstraints()) {</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">			if (timeBounds.getPrintStart() != null</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">					&amp;&amp; constraint.isHidden(TimePoint.ofStartOfDay(timeBounds.getMinDay()),</span>
+<span class="nc" id="L170">							TimePoint.ofEndOfDayMinusOneSecond(timeBounds.getMaxDay())))</span>
+<span class="nc" id="L171">				continue;</span>
 
-<span class="nc" id="L166">			constraint.getUDrawable(timeScale, drawRegistry).drawU(ug);</span>
-<span class="nc" id="L167">		}</span>
+<span class="nc" id="L173">			constraint.getUDrawable(timeScale, drawRegistry).drawU(ug);</span>
+<span class="nc" id="L174">		}</span>
 
-<span class="nc" id="L169">	}</span>
+<span class="nc" id="L176">	}</span>
 
 	private void drawTasksTitle(UGraphic ug, double colTitles, double colBars) {
-<span class="nc bnc" id="L172" title="All 2 branches missed.">		for (Task task : modelData.getTasks()) {</span>
-<span class="nc bnc" id="L173" title="All 2 branches missed.">			if (timeBounds.isHidden(task))</span>
-<span class="nc" id="L174">				continue;</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		for (Task task : modelData.getTasks()) {</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">			if (timeBounds.isHidden(task))</span>
+<span class="nc" id="L181">				continue;</span>
 
-<span class="nc" id="L176">			final TaskDraw draw = drawRegistry.getTaskDraw(task);</span>
-<span class="nc" id="L177">			final UTranslate move = UTranslate.dy(draw.getY(ug.getStringBounder()).getCurrentValue());</span>
-<span class="nc" id="L178">			draw.drawTitle(ug.apply(move), displayConfig.getLabelStrategy(), colTitles, colBars);</span>
-<span class="nc" id="L179">		}</span>
-<span class="nc" id="L180">	}</span>
+<span class="nc" id="L183">			final TaskDraw draw = drawRegistry.getTaskDraw(task);</span>
+<span class="nc" id="L184">			final UTranslate move = UTranslate.dy(draw.getY(ug.getStringBounder()).getCurrentValue());</span>
+<span class="nc" id="L185">			draw.drawTitle(ug.apply(move), displayConfig.getLabelStrategy(), colTitles, colBars);</span>
+<span class="nc" id="L186">		}</span>
+<span class="nc" id="L187">	}</span>
 
 	private void drawResources(UGraphic ug) {
-<span class="nc bnc" id="L183" title="All 2 branches missed.">		for (Resource res : modelData.getResources()) {</span>
-<span class="nc" id="L184">			final ResourceDraw draw = res.getResourceDraw();</span>
-<span class="nc" id="L185">			final UTranslate move = UTranslate.dy(draw.getY());</span>
-<span class="nc" id="L186">			draw.drawU(ug.apply(move));</span>
-<span class="nc" id="L187">		}</span>
-<span class="nc" id="L188">	}</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		for (Resource res : modelData.getResources()) {</span>
+<span class="nc" id="L191">			final ResourceDraw draw = res.getResourceDraw();</span>
+<span class="nc" id="L192">			final UTranslate move = UTranslate.dy(draw.getY());</span>
+<span class="nc" id="L193">			draw.drawU(ug.apply(move));</span>
+<span class="nc" id="L194">		}</span>
+<span class="nc" id="L195">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

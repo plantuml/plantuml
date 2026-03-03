@@ -114,11 +114,13 @@ import net.sourceforge.plantuml.utils.Direction;
 <span class="fc" id="L114">			height = Math.max(height, childDim.getHeight());</span>
 <span class="fc" id="L115">			width += childDim.getWidth();</span>
 <span class="fc" id="L116">		}</span>
-<span class="fc" id="L117">		final XDimension2D mainDim = main.calculateDimension(stringBounder);</span>
-<span class="fc" id="L118">		height += mainDim.getHeight();</span>
-<span class="fc" id="L119">		height += deltay;</span>
-<span class="fc" id="L120">		width = Math.max(width, mainDim.getWidth());</span>
-<span class="fc" id="L121">		return new XDimension2D(width, height);</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		if (right.size() &gt; 1)</span>
+<span class="fc" id="L118">			width += (right.size() - 1) * delta1x;</span>
+<span class="fc" id="L119">		final XDimension2D mainDim = main.calculateDimension(stringBounder);</span>
+<span class="fc" id="L120">		height += mainDim.getHeight();</span>
+<span class="fc" id="L121">		height += deltay;</span>
+<span class="fc" id="L122">		width = Math.max(width, mainDim.getWidth());</span>
+<span class="fc" id="L123">		return new XDimension2D(width, height);</span>
 	}
 
 }

@@ -47,95 +47,94 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Log;
 
-public class TileText extends AbstractTextBlock implements TextBlock {
-	// ::remove file when __HAXE__
+public class TileText implements TextBlock {
 
 	private final String text;
 	private final FontConfiguration fontConfiguration;
 	private final Url url;
 
-<span class="fc" id="L57">	public TileText(String text, FontConfiguration fontConfiguration, Url url) {</span>
-<span class="fc" id="L58">		this.fontConfiguration = fontConfiguration;</span>
-<span class="fc" id="L59">		this.text = text;</span>
-<span class="fc" id="L60">		this.url = url;</span>
-<span class="fc" id="L61">	}</span>
+<span class="fc" id="L56">	public TileText(String text, FontConfiguration fontConfiguration, Url url) {</span>
+<span class="fc" id="L57">		this.fontConfiguration = fontConfiguration;</span>
+<span class="fc" id="L58">		this.text = text;</span>
+<span class="fc" id="L59">		this.url = url;</span>
+<span class="fc" id="L60">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L64">		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);</span>
-<span class="fc" id="L65">		final int spaceBottom = Math.abs(fontConfiguration.getSpace());</span>
-<span class="pc" id="L66">		Log.debug(() -&gt; &quot;g2d=&quot; + rect);</span>
-<span class="pc" id="L67">		Log.debug(() -&gt; &quot;Size for &quot; + text + &quot; is &quot; + rect);</span>
-<span class="fc" id="L68">		double h = rect.getHeight();</span>
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (h &lt; 10) {</span>
-<span class="nc" id="L70">			h = 10;</span>
+<span class="fc" id="L63">		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);</span>
+<span class="fc" id="L64">		final int spaceBottom = Math.abs(fontConfiguration.getSpace());</span>
+<span class="pc" id="L65">		Log.debug(() -&gt; &quot;g2d=&quot; + rect);</span>
+<span class="pc" id="L66">		Log.debug(() -&gt; &quot;Size for &quot; + text + &quot; is &quot; + rect);</span>
+<span class="fc" id="L67">		double h = rect.getHeight();</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (h &lt; 10) {</span>
+<span class="nc" id="L69">			h = 10;</span>
 		}
-<span class="pc bpc" id="L72" title="2 of 4 branches missed.">		final double width = text.indexOf('\t') == -1 &amp;&amp; text.indexOf(Jaws.BLOCK_E1_REAL_TABULATION) == -1</span>
-<span class="fc" id="L73">				? rect.getWidth()</span>
-<span class="pc" id="L74">				: getWidth(stringBounder);</span>
-<span class="fc" id="L75">		return new XDimension2D(width, h + spaceBottom);</span>
+<span class="pc bpc" id="L71" title="2 of 4 branches missed.">		final double width = text.indexOf('\t') == -1 &amp;&amp; text.indexOf(Jaws.BLOCK_E1_REAL_TABULATION) == -1</span>
+<span class="fc" id="L72">				? rect.getWidth()</span>
+<span class="pc" id="L73">				: getWidth(stringBounder);</span>
+<span class="fc" id="L74">		return new XDimension2D(width, h + spaceBottom);</span>
 	}
 
 	public double getFontSize2D() {
-<span class="fc" id="L79">		return fontConfiguration.getFont().getSize2D();</span>
+<span class="fc" id="L78">		return fontConfiguration.getFont().getSize2D();</span>
 	}
 
 	double getTabSize(StringBounder stringBounder) {
-<span class="fc" id="L83">		return stringBounder.calculateDimension(fontConfiguration.getFont(), &quot;        &quot;).getWidth();</span>
+<span class="fc" id="L82">		return stringBounder.calculateDimension(fontConfiguration.getFont(), &quot;        &quot;).getWidth();</span>
 	}
 
 	@JawsStrange
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L88">		double x = 0;</span>
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (url != null) {</span>
-<span class="nc" id="L90">			ug.startUrl(url);</span>
+<span class="fc" id="L87">		double x = 0;</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (url != null) {</span>
+<span class="nc" id="L89">			ug.startUrl(url);</span>
 		}
-<span class="fc" id="L92">		ug = ug.apply(fontConfiguration.getColor());</span>
+<span class="fc" id="L91">		ug = ug.apply(fontConfiguration.getColor());</span>
 
-<span class="fc" id="L94">		final StringTokenizer tokenizer = new StringTokenizer(text, &quot;\t&quot; + Jaws.BLOCK_E1_REAL_TABULATION, true);</span>
+<span class="fc" id="L93">		final StringTokenizer tokenizer = new StringTokenizer(text, &quot;\t&quot; + Jaws.BLOCK_E1_REAL_TABULATION, true);</span>
 
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (tokenizer.hasMoreTokens()) {</span>
-<span class="fc" id="L97">			final double tabSize = getTabSize(ug.getStringBounder());</span>
-<span class="fc bfc" id="L98" title="All 2 branches covered.">			while (tokenizer.hasMoreTokens()) {</span>
-<span class="fc" id="L99">				final String s = tokenizer.nextToken();</span>
-<span class="pc bpc" id="L100" title="2 of 4 branches missed.">				if (s.equals(&quot;\t&quot;) || s.equals(&quot;&quot; + Jaws.BLOCK_E1_REAL_TABULATION)) {</span>
-<span class="nc" id="L101">					final double remainder = x % tabSize;</span>
-<span class="nc" id="L102">					x += tabSize - remainder;</span>
-<span class="nc" id="L103">				} else {</span>
-<span class="fc" id="L104">					final UText utext = UText.build(s, fontConfiguration);</span>
-<span class="fc" id="L105">					final XDimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), s);</span>
-<span class="fc" id="L106">					final int space = fontConfiguration.getSpace();</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (tokenizer.hasMoreTokens()) {</span>
+<span class="fc" id="L96">			final double tabSize = getTabSize(ug.getStringBounder());</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">			while (tokenizer.hasMoreTokens()) {</span>
+<span class="fc" id="L98">				final String s = tokenizer.nextToken();</span>
+<span class="pc bpc" id="L99" title="2 of 4 branches missed.">				if (s.equals(&quot;\t&quot;) || s.equals(&quot;&quot; + Jaws.BLOCK_E1_REAL_TABULATION)) {</span>
+<span class="nc" id="L100">					final double remainder = x % tabSize;</span>
+<span class="nc" id="L101">					x += tabSize - remainder;</span>
+<span class="nc" id="L102">				} else {</span>
+<span class="fc" id="L103">					final UText utext = UText.build(s, fontConfiguration);</span>
+<span class="fc" id="L104">					final XDimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), s);</span>
+<span class="fc" id="L105">					final int space = fontConfiguration.getSpace();</span>
 					final double ypos;
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">					if (space &lt; 0) {</span>
-<span class="nc" id="L109">						ypos = space /*- getFontSize2D() - space*/;</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">					if (space &lt; 0) {</span>
+<span class="nc" id="L108">						ypos = space /*- getFontSize2D() - space*/;</span>
 					} else {
-<span class="fc" id="L111">						ypos = space;</span>
+<span class="fc" id="L110">						ypos = space;</span>
 					}
-<span class="fc" id="L113">					ug.apply(new UTranslate(x, ypos)).draw(utext);</span>
-<span class="fc" id="L114">					x += dim.getWidth();</span>
+<span class="fc" id="L112">					ug.apply(new UTranslate(x, ypos)).draw(utext);</span>
+<span class="fc" id="L113">					x += dim.getWidth();</span>
 				}
-<span class="fc" id="L116">			}</span>
+<span class="fc" id="L115">			}</span>
 		}
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (url != null) {</span>
-<span class="nc" id="L119">			ug.closeUrl();</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (url != null) {</span>
+<span class="nc" id="L118">			ug.closeUrl();</span>
 		}
-<span class="fc" id="L121">	}</span>
+<span class="fc" id="L120">	}</span>
 
 	@JawsStrange
 	double getWidth(StringBounder stringBounder) {
-<span class="nc" id="L125">		final StringTokenizer tokenizer = new StringTokenizer(text, &quot;\t&quot; + Jaws.BLOCK_E1_REAL_TABULATION, true);</span>
-<span class="nc" id="L126">		final double tabSize = getTabSize(stringBounder);</span>
-<span class="nc" id="L127">		double x = 0;</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		while (tokenizer.hasMoreTokens()) {</span>
-<span class="nc" id="L129">			final String s = tokenizer.nextToken();</span>
-<span class="nc bnc" id="L130" title="All 4 branches missed.">			if (s.equals(&quot;\t&quot;) || s.equals(&quot;&quot; + Jaws.BLOCK_E1_REAL_TABULATION)) {</span>
-<span class="nc" id="L131">				final double remainder = x % tabSize;</span>
-<span class="nc" id="L132">				x += tabSize - remainder;</span>
-<span class="nc" id="L133">			} else {</span>
-<span class="nc" id="L134">				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);</span>
-<span class="nc" id="L135">				x += dim.getWidth();</span>
+<span class="nc" id="L124">		final StringTokenizer tokenizer = new StringTokenizer(text, &quot;\t&quot; + Jaws.BLOCK_E1_REAL_TABULATION, true);</span>
+<span class="nc" id="L125">		final double tabSize = getTabSize(stringBounder);</span>
+<span class="nc" id="L126">		double x = 0;</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		while (tokenizer.hasMoreTokens()) {</span>
+<span class="nc" id="L128">			final String s = tokenizer.nextToken();</span>
+<span class="nc bnc" id="L129" title="All 4 branches missed.">			if (s.equals(&quot;\t&quot;) || s.equals(&quot;&quot; + Jaws.BLOCK_E1_REAL_TABULATION)) {</span>
+<span class="nc" id="L130">				final double remainder = x % tabSize;</span>
+<span class="nc" id="L131">				x += tabSize - remainder;</span>
+<span class="nc" id="L132">			} else {</span>
+<span class="nc" id="L133">				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);</span>
+<span class="nc" id="L134">				x += dim.getWidth();</span>
 			}
-<span class="nc" id="L137">		}</span>
-<span class="nc" id="L138">		return x;</span>
+<span class="nc" id="L136">		}</span>
+<span class="nc" id="L137">		return x;</span>
 	}
 
 }

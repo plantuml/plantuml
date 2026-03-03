@@ -358,11 +358,11 @@ public class JsonArray extends JsonValue implements Iterable&lt;JsonValue&gt; {
 	 *                                   &lt;code&gt;index &amp;gt;= size&lt;/code&gt;
 	 */
 	public JsonArray set(int index, JsonValue value) {
-<span class="nc bnc" id="L361" title="All 2 branches missed.">		if (value == null) {</span>
+<span class="pc bpc" id="L361" title="1 of 2 branches missed.">		if (value == null) {</span>
 <span class="nc" id="L362">			throw new NullPointerException(&quot;value is null&quot;);</span>
 		}
-<span class="nc" id="L364">		values.set(index, value);</span>
-<span class="nc" id="L365">		return this;</span>
+<span class="fc" id="L364">		values.set(index, value);</span>
+<span class="fc" id="L365">		return this;</span>
 	}
 
 	/**
@@ -375,8 +375,8 @@ public class JsonArray extends JsonValue implements Iterable&lt;JsonValue&gt; {
 	 *                                   &lt;code&gt;index &amp;gt;= size&lt;/code&gt;
 	 */
 	public JsonArray remove(int index) {
-<span class="nc" id="L378">		values.remove(index);</span>
-<span class="nc" id="L379">		return this;</span>
+<span class="fc" id="L378">		values.remove(index);</span>
+<span class="fc" id="L379">		return this;</span>
 	}
 
 	/**

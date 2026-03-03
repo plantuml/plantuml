@@ -43,63 +43,62 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.SName;
 
-<span class="fc" id="L52">class USymbolComponent2 extends USymbol {</span>
+<span class="fc" id="L51">class USymbolComponent2 extends USymbol {</span>
 
 	@Override
 	public SName[] getSNames() {
-<span class="fc" id="L56">		return new SName[] { SName.component };</span>
+<span class="fc" id="L55">		return new SName[] { SName.component };</span>
 	}
 
 	private void drawComponent2(UGraphic ug, double widthTotal, double heightTotal, double shadowing,
 			double roundCorner) {
 
-<span class="fc" id="L62">		final URectangle form = URectangle.build(widthTotal, heightTotal).rounded(roundCorner);</span>
-<span class="fc" id="L63">		form.setDeltaShadow(shadowing);</span>
+<span class="fc" id="L61">		final URectangle form = URectangle.build(widthTotal, heightTotal).rounded(roundCorner);</span>
+<span class="fc" id="L62">		form.setDeltaShadow(shadowing);</span>
 
-<span class="fc" id="L65">		final UShape small = URectangle.build(15, 10);</span>
-<span class="fc" id="L66">		final UShape tiny = URectangle.build(4, 2);</span>
+<span class="fc" id="L64">		final UShape small = URectangle.build(15, 10);</span>
+<span class="fc" id="L65">		final UShape tiny = URectangle.build(4, 2);</span>
 
-<span class="fc" id="L68">		ug.draw(form);</span>
+<span class="fc" id="L67">		ug.draw(form);</span>
 
 		// UML 2 Component Notation
-<span class="fc" id="L71">		ug.apply(new UTranslate(widthTotal - 20, 5)).draw(small);</span>
-<span class="fc" id="L72">		ug.apply(new UTranslate(widthTotal - 22, 7)).draw(tiny);</span>
-<span class="fc" id="L73">		ug.apply(new UTranslate(widthTotal - 22, 11)).draw(tiny);</span>
+<span class="fc" id="L70">		ug.apply(new UTranslate(widthTotal - 20, 5)).draw(small);</span>
+<span class="fc" id="L71">		ug.apply(new UTranslate(widthTotal - 22, 7)).draw(tiny);</span>
+<span class="fc" id="L72">		ug.apply(new UTranslate(widthTotal - 22, 11)).draw(tiny);</span>
 
-<span class="fc" id="L75">	}</span>
+<span class="fc" id="L74">	}</span>
 
 	private Margin getMargin() {
-<span class="fc" id="L78">		return new Margin(10 + 5, 20 + 5, 15 + 5, 5 + 5);</span>
+<span class="fc" id="L77">		return new Margin(10 + 5, 20 + 5, 15 + 5, 5 + 5);</span>
 	}
 
 	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
 			final Fashion symbolContext, final HorizontalAlignment stereoAlignment) {
-<span class="fc" id="L84">		return new AbstractTextBlock() {</span>
+<span class="fc" id="L83">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L87">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L88">				ug = UGraphicStencil.create(ug, dim);</span>
-<span class="fc" id="L89">				ug = symbolContext.apply(ug);</span>
-<span class="fc" id="L90">				drawComponent2(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow(),</span>
-<span class="fc" id="L91">						symbolContext.getRoundCorner());</span>
-<span class="fc" id="L92">				final Margin margin = getMargin();</span>
+<span class="fc" id="L86">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L87">				ug = UGraphicStencil.create(ug, dim);</span>
+<span class="fc" id="L88">				ug = symbolContext.apply(ug);</span>
+<span class="fc" id="L89">				drawComponent2(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow(),</span>
+<span class="fc" id="L90">						symbolContext.getRoundCorner());</span>
+<span class="fc" id="L91">				final Margin margin = getMargin();</span>
 
-<span class="fc" id="L94">				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);</span>
-<span class="fc" id="L95">				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));</span>
+<span class="fc" id="L93">				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);</span>
+<span class="fc" id="L94">				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));</span>
 				// label.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
-<span class="fc" id="L97">			}</span>
+<span class="fc" id="L96">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L100">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
-<span class="fc" id="L101">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
-<span class="fc" id="L102">				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));</span>
+<span class="fc" id="L99">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="fc" id="L100">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
+<span class="fc" id="L101">				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));</span>
 			}
 		};
 	}
@@ -108,23 +107,23 @@ import net.sourceforge.plantuml.style.SName;
 	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
 			final double width, final double height, final Fashion symbolContext,
 			final HorizontalAlignment stereoAlignment) {
-<span class="nc" id="L111">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L110">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L114">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L115">				ug = symbolContext.apply(ug);</span>
-<span class="nc" id="L116">				drawComponent2(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow(),</span>
-<span class="nc" id="L117">						symbolContext.getRoundCorner());</span>
-<span class="nc" id="L118">				final XDimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L119">				final double posStereo = (width - dimStereo.getWidth()) / 2;</span>
-<span class="nc" id="L120">				stereotype.drawU(ug.apply(new UTranslate(posStereo, 13)));</span>
-<span class="nc" id="L121">				final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L122">				final double posTitle = (width - dimTitle.getWidth()) / 2;</span>
-<span class="nc" id="L123">				title.drawU(ug.apply(new UTranslate(posTitle, 13 + dimStereo.getHeight())));</span>
-<span class="nc" id="L124">			}</span>
+<span class="nc" id="L113">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L114">				ug = symbolContext.apply(ug);</span>
+<span class="nc" id="L115">				drawComponent2(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow(),</span>
+<span class="nc" id="L116">						symbolContext.getRoundCorner());</span>
+<span class="nc" id="L117">				final XDimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L118">				final double posStereo = (width - dimStereo.getWidth()) / 2;</span>
+<span class="nc" id="L119">				stereotype.drawU(ug.apply(new UTranslate(posStereo, 13)));</span>
+<span class="nc" id="L120">				final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L121">				final double posTitle = (width - dimTitle.getWidth()) / 2;</span>
+<span class="nc" id="L122">				title.drawU(ug.apply(new UTranslate(posTitle, 13 + dimStereo.getHeight())));</span>
+<span class="nc" id="L123">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L127">				return new XDimension2D(width, height);</span>
+<span class="nc" id="L126">				return new XDimension2D(width, height);</span>
 			}
 
 		};

@@ -421,16 +421,16 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 	}
 
 	public Display withPage(int page, int lastpage) {
-<span class="fc bfc" id="L424" title="All 2 branches covered.">		if (displayData == null)</span>
-<span class="fc" id="L425">			return this;</span>
+<span class="nc bnc" id="L424" title="All 2 branches missed.">		if (displayData == null)</span>
+<span class="nc" id="L425">			return this;</span>
 
-<span class="fc" id="L427">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L428" title="All 2 branches covered.">		for (CharSequence line : displayData) {</span>
-<span class="fc" id="L429">			line = line.toString().replace(&quot;%page%&quot;, &quot;&quot; + page);</span>
-<span class="fc" id="L430">			line = line.toString().replace(&quot;%lastpage%&quot;, &quot;&quot; + lastpage);</span>
-<span class="fc" id="L431">			result.add(line);</span>
-<span class="fc" id="L432">		}</span>
-<span class="fc" id="L433">		return new Display(showStereotype, result, this.naturalHorizontalAlignment, this.isNull,</span>
+<span class="nc" id="L427">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L428" title="All 2 branches missed.">		for (CharSequence line : displayData) {</span>
+<span class="nc" id="L429">			line = line.toString().replace(&quot;%page%&quot;, &quot;&quot; + page);</span>
+<span class="nc" id="L430">			line = line.toString().replace(&quot;%lastpage%&quot;, &quot;&quot; + lastpage);</span>
+<span class="nc" id="L431">			result.add(line);</span>
+<span class="nc" id="L432">		}</span>
+<span class="nc" id="L433">		return new Display(showStereotype, result, this.naturalHorizontalAlignment, this.isNull,</span>
 				this.defaultCreoleMode);
 	}
 

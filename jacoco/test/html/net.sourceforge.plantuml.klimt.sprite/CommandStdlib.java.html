@@ -48,15 +48,15 @@ public class CommandStdlib extends SingleLineCommand2&lt;StdlibDiagram&gt; {
 	
 
 	public CommandStdlib() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="nc" id="L51">		super(getRegexConcat());</span>
+<span class="nc" id="L52">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandStdlib.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L55">		return RegexConcat.build(CommandStdlib.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;stdlib&quot;), //
-<span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;([-\\w.]+)&quot;), //
-<span class="fc" id="L59">				RegexLeaf.end());</span>
+<span class="nc" id="L59">				RegexLeaf.end());</span>
 	}
 
 	@Override

@@ -83,7 +83,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 	}
 
 	public static TextBlock empty(final double width, final double height) {
-<span class="fc" id="L86">		return new AbstractTextBlock() {</span>
+<span class="fc" id="L86">		return new TextBlock() {</span>
 			public void drawU(UGraphic ug) {
 <span class="fc" id="L88">			}</span>
 
@@ -185,7 +185,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 	}
 
 	public static TextBlock fromUImage(final UImage image) {
-<span class="nc" id="L188">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L188">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
 <span class="nc" id="L191">				ug.draw(image);</span>

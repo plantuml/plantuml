@@ -44,64 +44,63 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 
-public class TextBlockLineBefore extends AbstractTextBlock implements TextBlock, WithPorts {
-    // ::remove file when __HAXE__
+public class TextBlockLineBefore implements TextBlock, WithPorts {
 
 	private final TextBlock textBlock;
 	private final char separator;
 	private final TextBlock title;
 	private final double defaultThickness;
 
-<span class="fc" id="L55">	public TextBlockLineBefore(double defaultThickness, TextBlock textBlock, char separator, TextBlock title) {</span>
-<span class="fc" id="L56">		this.textBlock = textBlock;</span>
-<span class="fc" id="L57">		this.separator = separator;</span>
-<span class="fc" id="L58">		this.title = title;</span>
-<span class="fc" id="L59">		this.defaultThickness = defaultThickness;</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L54">	public TextBlockLineBefore(double defaultThickness, TextBlock textBlock, char separator, TextBlock title) {</span>
+<span class="fc" id="L55">		this.textBlock = textBlock;</span>
+<span class="fc" id="L56">		this.separator = separator;</span>
+<span class="fc" id="L57">		this.title = title;</span>
+<span class="fc" id="L58">		this.defaultThickness = defaultThickness;</span>
+<span class="fc" id="L59">	}</span>
 
 	public TextBlockLineBefore(double defaultThickness, TextBlock textBlock, char separator) {
-<span class="fc" id="L63">		this(defaultThickness, textBlock, separator, null);</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L62">		this(defaultThickness, textBlock, separator, null);</span>
+<span class="fc" id="L63">	}</span>
 
 	public TextBlockLineBefore(double defaultThickness, TextBlock textBlock) {
-<span class="fc" id="L67">		this(defaultThickness, textBlock, '\0');</span>
-<span class="fc" id="L68">	}</span>
+<span class="fc" id="L66">		this(defaultThickness, textBlock, '\0');</span>
+<span class="fc" id="L67">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L71">		final XDimension2D dim = textBlock.calculateDimension(stringBounder);</span>
-<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (title != null) {</span>
-<span class="fc" id="L73">			final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
-<span class="fc" id="L74">			return dim.atLeast(dimTitle.getWidth() + 8, dimTitle.getHeight());</span>
+<span class="fc" id="L70">		final XDimension2D dim = textBlock.calculateDimension(stringBounder);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (title != null) {</span>
+<span class="fc" id="L72">			final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
+<span class="fc" id="L73">			return dim.atLeast(dimTitle.getWidth() + 8, dimTitle.getHeight());</span>
 		}
-<span class="fc" id="L76">		return dim;</span>
+<span class="fc" id="L75">		return dim;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L80">		final HColor color = ug.getParam().getColor();</span>
-<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (title == null)</span>
-<span class="fc" id="L82">			UHorizontalLine.infinite(defaultThickness, 1, 1, separator).drawMe(ug);</span>
+<span class="fc" id="L79">		final HColor color = ug.getParam().getColor();</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		if (title == null)</span>
+<span class="fc" id="L81">			UHorizontalLine.infinite(defaultThickness, 1, 1, separator).drawMe(ug);</span>
 
-<span class="fc" id="L84">		textBlock.drawU(ug);</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (color == null)</span>
-<span class="nc" id="L86">			ug = ug.apply(HColors.none());</span>
+<span class="fc" id="L83">		textBlock.drawU(ug);</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (color == null)</span>
+<span class="nc" id="L85">			ug = ug.apply(HColors.none());</span>
 		else
-<span class="fc" id="L88">			ug = ug.apply(color);</span>
+<span class="fc" id="L87">			ug = ug.apply(color);</span>
 
-<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (title != null)</span>
-<span class="fc" id="L91">			UHorizontalLine.infinite(defaultThickness, 1, 1, title, separator).drawMe(ug);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (title != null)</span>
+<span class="fc" id="L90">			UHorizontalLine.infinite(defaultThickness, 1, 1, title, separator).drawMe(ug);</span>
 
-<span class="fc" id="L93">	}</span>
+<span class="fc" id="L92">	}</span>
 
 	@Override
 	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
-<span class="nc" id="L97">		return textBlock.getInnerPosition(member, stringBounder);</span>
+<span class="nc" id="L96">		return textBlock.getInnerPosition(member, stringBounder);</span>
 	}
 
 	@Override
 	public Ports getPorts(StringBounder stringBounder) {
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (textBlock instanceof WithPorts)</span>
-<span class="nc" id="L103">			return ((WithPorts) textBlock).getPorts(stringBounder);</span>
-<span class="nc" id="L104">		return new Ports();</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (textBlock instanceof WithPorts)</span>
+<span class="nc" id="L102">			return ((WithPorts) textBlock).getPorts(stringBounder);</span>
+<span class="nc" id="L103">		return new Ports();</span>
 	}
 
 }

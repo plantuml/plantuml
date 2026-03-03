@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextBlockExporter12026.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.core</a> &gt; <span class="el_source">TextBlockExporter12026.java</span></div><h1>TextBlockExporter12026.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.core;
+
+// ::comment when __TEAVM__
+import java.awt.Graphics2D;
+// ::done
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Set;
+
+import net.atmp.SvgOption;
+import net.sourceforge.plantuml.EmptyImageBuilder;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.Scale;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.api.ImageDataComplex;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.braille.UGraphicBraille;
+import net.sourceforge.plantuml.cli.GlobalConfig;
+import net.sourceforge.plantuml.cli.GlobalConfigKey;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.awt.XColor;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorGradient;
+import net.sourceforge.plantuml.klimt.color.HColorSimple;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.debug.UGraphicDebug;
+import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
+import net.sourceforge.plantuml.klimt.drawing.eps.EpsStrategy;
+import net.sourceforge.plantuml.klimt.drawing.eps.UGraphicEps;
+import net.sourceforge.plantuml.klimt.drawing.g2d.UGraphicG2d;
+import net.sourceforge.plantuml.klimt.drawing.html5.UGraphicHtml5;
+import net.sourceforge.plantuml.klimt.drawing.svg.UGraphicSvg;
+import net.sourceforge.plantuml.klimt.drawing.tikz.UGraphicTikz;
+import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
+import net.sourceforge.plantuml.klimt.drawing.visio.UGraphicVdx;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.skin.ColorParam;
+import net.sourceforge.plantuml.skin.CornerParam;
+import net.sourceforge.plantuml.skin.LineParam;
+import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.PragmaKey;
+import net.sourceforge.plantuml.skin.SkinParam;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.text.SvgCharSizeHack;
+import net.sourceforge.plantuml.url.CMapData;
+import net.sourceforge.plantuml.url.Url;
+
+/**
+ * Exports a fully-decorated {@link TextBlock} to an {@link OutputStream} in a
+ * given image format.
+ *
+ * &lt;p&gt;
+ * This class handles the low-level rendering concerns that were previously
+ * buried inside {@code ImageBuilder}: dimension calculation, scale/DPI,
+ * UGraphic creation, margins, border, and stream writing.
+ *
+ * &lt;p&gt;
+ * It does &lt;b&gt;not&lt;/b&gt; handle diagram chrome (title, header, footer, etc.).
+ * The input {@link TextBlock} is expected to be already fully decorated
+ * (e.g. by {@link DiagramChromeFactory12026}). Handwritten mode is applied
+ * automatically when {@code skinParam.handwritten()} is {@code true}.
+ */
+public class TextBlockExporter12026 {
+
+	private final TextBlock textBlock;
+	private final FileFormatOption fileFormatOption;
+	private final ISkinParam skinParam;
+	private final StringBounder stringBounder;
+	private final HColor backcolor;
+	private final ClockwiseTopRightBottomLeft margin;
+	private final String metadata;
+	private final long seed;
+	private final int status;
+	private final Scale scale;
+	private final String warningOrError;
+	private final Pragma pragma;
+
+	// Optional diagram-level info for SVG attributes
+	private final UmlDiagramType diagramType;
+
+<span class="fc" id="L133">	private TextBlockExporter12026(Builder builder) {</span>
+<span class="fc" id="L134">		this.textBlock = builder.textBlock;</span>
+<span class="fc" id="L135">		this.fileFormatOption = builder.fileFormatOption;</span>
+<span class="fc" id="L136">		this.skinParam = builder.skinParam;</span>
+<span class="fc" id="L137">		this.backcolor = builder.backcolor;</span>
+<span class="fc" id="L138">		this.margin = builder.margin;</span>
+<span class="fc" id="L139">		this.metadata = builder.metadata;</span>
+<span class="fc" id="L140">		this.seed = builder.seed;</span>
+<span class="fc" id="L141">		this.status = builder.status;</span>
+<span class="fc" id="L142">		this.scale = builder.scale;</span>
+<span class="fc" id="L143">		this.warningOrError = builder.warningOrError;</span>
+<span class="fc" id="L144">		this.pragma = builder.pragma;</span>
+<span class="fc" id="L145">		this.diagramType = builder.diagramType;</span>
+<span class="fc" id="L146">		this.stringBounder = builder.fileFormatOption</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">				.getDefaultStringBounder(builder.skinParam != null ? builder.skinParam : SvgCharSizeHack.NO_HACK);</span>
+<span class="fc" id="L148">	}</span>
+
+	/**
+	 * Exports the {@link TextBlock} to the given {@link OutputStream}.
+	 *
+	 * @param os the output stream to write to
+	 * @return image metadata (dimensions, optional cmap data)
+	 * @throws IOException if an I/O error occurs
+	 */
+	public ImageData exportTo(OutputStream os) throws IOException {
+<span class="fc" id="L158">		final XDimension2D dim = calculateFinalDimension();</span>
+
+<span class="fc" id="L160">		final double scaleFactor = computeScaleFactor(dim);</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if (scaleFactor &lt;= 0)</span>
+<span class="nc" id="L162">			throw new IllegalStateException(&quot;Bad scaleFactor&quot;);</span>
+
+<span class="fc" id="L164">		UGraphic ug = createUGraphic(dim, scaleFactor);</span>
+
+<span class="fc" id="L166">		maybeDrawBorder(ug, dim);</span>
+
+<span class="fc" id="L168">		ug = ug.apply(new UTranslate(margin.getLeft(), margin.getTop()));</span>
+<span class="fc" id="L169">		ug = applyHandwritten(ug);</span>
+
+<span class="fc" id="L171">		textBlock.drawU(ug);</span>
+<span class="fc" id="L172">		ug.flushUg();</span>
+<span class="fc" id="L173">		ug.writeToStream(os, metadata, 96);</span>
+<span class="fc" id="L174">		os.flush();</span>
+
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">			if (ug instanceof UGraphicG2d) {</span>
+<span class="fc" id="L178">				final Set&lt;Url&gt; urls = ((UGraphicG2d) ug).getAllUrlsEncountered();</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">				if (urls.size() &gt; 0) {</span>
+<span class="fc" id="L180">					final CMapData cmap = CMapData.cmapString(urls, scaleFactor);</span>
+<span class="fc" id="L181">					return new ImageDataComplex(dim, cmap, warningOrError, status);</span>
+				}
+			}
+		}
+
+<span class="fc" id="L186">		return new ImageDataSimple(dim, status);</span>
+	}
+
+	// -----------------------------------------------------------------------
+	// Dimension calculation
+	// -----------------------------------------------------------------------
+
+	private XDimension2D calculateFinalDimension() {
+<span class="fc" id="L194">		final XDimension2D dim = textBlock.calculateDimension(stringBounder);</span>
+<span class="fc" id="L195">		return new XDimension2D(dim.getWidth() + margin.getLeft() + margin.getRight(),</span>
+<span class="fc" id="L196">				dim.getHeight() + margin.getTop() + margin.getBottom());</span>
+	}
+
+	private double computeScaleFactor(XDimension2D dim) {
+<span class="fc bfc" id="L200" title="All 2 branches covered.">		final int dpi = skinParam == null ? 96 : skinParam.getDpi();</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		final double fromScale = scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight());</span>
+<span class="fc" id="L202">		return fromScale * dpi / 96.0;</span>
+	}
+
+	// -----------------------------------------------------------------------
+	// Border
+	// -----------------------------------------------------------------------
+
+	private void maybeDrawBorder(UGraphic ug, XDimension2D dim) {
+<span class="fc bfc" id="L210" title="All 2 branches covered.">		if (skinParam == null)</span>
+<span class="fc" id="L211">			return;</span>
+
+<span class="fc" id="L213">		final HColor color = new Rose().getHtmlColor(skinParam, ColorParam.diagramBorder);</span>
+
+<span class="fc" id="L215">		UStroke stroke = skinParam.getThickness(LineParam.diagramBorder, null);</span>
+<span class="pc bpc" id="L216" title="2 of 4 branches missed.">		if (stroke == null &amp;&amp; color != null)</span>
+<span class="nc" id="L217">			stroke = UStroke.simple();</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">		if (stroke == null)</span>
+<span class="fc" id="L219">			return;</span>
+
+<span class="nc" id="L221">		final URectangle rectangle = URectangle</span>
+<span class="nc" id="L222">				.build(dim.getWidth() - stroke.getThickness(), dim.getHeight() - stroke.getThickness())</span>
+<span class="nc" id="L223">				.rounded(skinParam.getRoundCorner(CornerParam.diagramBorder, null));</span>
+
+<span class="nc bnc" id="L225" title="All 2 branches missed.">		ug.apply(color == null ? HColors.BLACK : color).apply(stroke).draw(rectangle);</span>
+<span class="nc" id="L226">	}</span>
+
+	// -----------------------------------------------------------------------
+	// Handwritten mode
+	// -----------------------------------------------------------------------
+
+	private UGraphic applyHandwritten(UGraphic ug) {
+<span class="pc bpc" id="L233" title="1 of 4 branches missed.">		if (skinParam != null &amp;&amp; skinParam.handwritten())</span>
+<span class="nc" id="L234">			return new UGraphicHandwritten(ug);</span>
+<span class="fc" id="L235">		return ug;</span>
+	}
+
+	// -----------------------------------------------------------------------
+	// UGraphic factory
+	// -----------------------------------------------------------------------
+
+	private UGraphic createUGraphic(XDimension2D dim, double scaleFactor) {
+		// ::comment when __TEAVM__
+<span class="fc" id="L244">		final ColorMapper colorMapper = fileFormatOption.getColorMapper();</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">		final Pragma p = pragma != null ? pragma : Pragma.createEmpty();</span>
+<span class="pc bpc" id="L246" title="7 of 12 branches missed.">		switch (fileFormatOption.getFileFormat()) {</span>
+		case PNG:
+		case PNG_EMPTY:
+		case RAW:
+<span class="fc" id="L250">			return createUGraphicPNG(scaleFactor, dim, fileFormatOption.getWatermark(),</span>
+<span class="fc" id="L251">					fileFormatOption.getFileFormat());</span>
+		case SVG:
+<span class="fc" id="L253">			return createUGraphicSVG(scaleFactor, dim, p);</span>
+		case EPS:
+<span class="fc" id="L255">			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.getDefault2());</span>
+		case EPS_TEXT:
+<span class="fc" id="L257">			return new UGraphicEps(backcolor, colorMapper, stringBounder, EpsStrategy.WITH_MACRO_AND_TEXT);</span>
+		case HTML5:
+<span class="nc" id="L259">			return new UGraphicHtml5(backcolor, colorMapper, stringBounder);</span>
+		case VDX:
+<span class="nc" id="L261">			return new UGraphicVdx(backcolor, colorMapper, stringBounder);</span>
+		case LATEX:
+<span class="nc" id="L263">			return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, true, p);</span>
+		case LATEX_NO_PREAMBLE:
+<span class="nc" id="L265">			return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, false, p);</span>
+		case BRAILLE_PNG:
+<span class="nc" id="L267">			return new UGraphicBraille(backcolor, colorMapper, stringBounder);</span>
+		case UTXT:
+		case ATXT:
+<span class="fc" id="L270">			return new UGraphicTxt();</span>
+		case DEBUG:
+<span class="nc" id="L272">			return new UGraphicDebug(scaleFactor, dim, getSvgLinkTarget(), getHoverPathColorRGB(), seed,</span>
+<span class="nc" id="L273">					getPreserveAspectRatio());</span>
+		default:
+			// ::done
+<span class="nc" id="L276">			throw new UnsupportedOperationException(fileFormatOption.getFileFormat().toString());</span>
+		// ::comment when __TEAVM__
+		}
+		// ::done
+	}
+
+	// ::comment when __TEAVM__
+	private UGraphic createUGraphicSVG(double scaleFactor, XDimension2D dim, Pragma p) {
+<span class="fc" id="L284">		SvgOption option = SvgOption.basic().withPreserveAspectRatio(getPreserveAspectRatio());</span>
+<span class="fc" id="L285">		option = option.withHoverPathColorRGB(getHoverPathColorRGB());</span>
+<span class="fc" id="L286">		option = option.withMinDim(dim);</span>
+<span class="fc" id="L287">		option = option.withBackcolor(backcolor);</span>
+<span class="fc" id="L288">		option = option.withScale(scaleFactor);</span>
+<span class="fc" id="L289">		option = option.withColorMapper(fileFormatOption.getColorMapper());</span>
+<span class="fc" id="L290">		option = option.withLinkTarget(getSvgLinkTarget());</span>
+<span class="fc" id="L291">		option = option.withFont(p.getValue(PragmaKey.SVG_FONT));</span>
+<span class="fc" id="L292">		option = option.withPragma(p);</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">		if (skinParam != null)</span>
+<span class="fc" id="L294">			option = option.withConfigurationStore(skinParam.options());</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">		if (diagramType != null) {</span>
+<span class="fc" id="L296">			option = option.withRootAttribute(&quot;data-diagram-type&quot;, diagramType.name());</span>
+		}
+
+<span class="pc bpc" id="L299" title="1 of 2 branches missed.">		if (p.isTrue(PragmaKey.SVG_INTERACTIVE)) {</span>
+<span class="nc" id="L300">			String interactiveBaseFilename = &quot;default&quot;;</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">			if (diagramType == UmlDiagramType.SEQUENCE)</span>
+<span class="nc" id="L302">				interactiveBaseFilename = &quot;sequencediagram&quot;;</span>
+<span class="nc" id="L303">			option = option.withInteractive(interactiveBaseFilename);</span>
+		}
+
+<span class="fc bfc" id="L306" title="All 2 branches covered.">		if (skinParam != null) {</span>
+<span class="fc" id="L307">			option = option.withLengthAdjust(skinParam.getlengthAdjust());</span>
+<span class="fc" id="L308">			option = option.withSvgDimensionStyle(skinParam.svgDimensionStyle());</span>
+		}
+
+<span class="fc" id="L311">		return UGraphicSvg.build(option, false, seed, stringBounder);</span>
+	}
+
+	private UGraphic createUGraphicPNG(double scaleFactor, XDimension2D dim, String watermark, FileFormat format) {
+<span class="fc" id="L315">		XColor pngBackColor = new XColor(0, 0, 0, 0);</span>
+
+<span class="pc bpc" id="L317" title="1 of 2 branches missed.">		if (this.backcolor instanceof HColorSimple)</span>
+<span class="fc" id="L318">			pngBackColor = this.backcolor.toColor(fileFormatOption.getColorMapper());</span>
+
+<span class="pc bpc" id="L320" title="1 of 2 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.REPLACE_WHITE_BACKGROUND_BY_TRANSPARENT)</span>
+<span class="nc bnc" id="L321" title="All 4 branches missed.">				&amp;&amp; (XColor.WHITE.equals(pngBackColor) || XColor.BLACK.equals(pngBackColor)))</span>
+<span class="nc" id="L322">			pngBackColor = new XColor(0, 0, 0, 0);</span>
+
+<span class="fc" id="L324">		final EmptyImageBuilder builder = new EmptyImageBuilder(watermark, (int) (dim.getWidth() * scaleFactor),</span>
+<span class="fc" id="L325">				(int) (dim.getHeight() * scaleFactor), pngBackColor, stringBounder);</span>
+<span class="fc" id="L326">		final Graphics2D graphics2D = builder.getGraphics2D();</span>
+
+<span class="fc" id="L328">		final UGraphicG2d ug = new UGraphicG2d(backcolor, fileFormatOption.getColorMapper(), stringBounder, graphics2D,</span>
+				scaleFactor, format);
+
+<span class="fc" id="L331">		ug.setPortableImage(builder.getPortableImage());</span>
+<span class="fc" id="L332">		final PortableImage im = ug.getPortableImage();</span>
+<span class="pc bpc" id="L333" title="1 of 2 branches missed.">		if (this.backcolor instanceof HColorGradient)</span>
+<span class="nc" id="L334">			ug.apply(this.backcolor.bg())</span>
+<span class="nc" id="L335">					.draw(URectangle.build(im.getWidth() / scaleFactor, im.getHeight() / scaleFactor));</span>
+
+<span class="fc" id="L337">		return ug;</span>
+	}
+
+	private String getHoverPathColorRGB() {
+<span class="pc bpc" id="L341" title="1 of 2 branches missed.">		if (fileFormatOption.getHoverColor() != null)</span>
+<span class="nc" id="L342">			return fileFormatOption.getHoverColor();</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">		if (skinParam != null) {</span>
+<span class="fc" id="L344">			final HColor color = skinParam.hoverPathColor();</span>
+<span class="pc bpc" id="L345" title="1 of 2 branches missed.">			if (color != null)</span>
+<span class="nc" id="L346">				return color.toRGB(fileFormatOption.getColorMapper());</span>
+		}
+<span class="fc" id="L348">		return null;</span>
+	}
+	// ::done
+
+	private String getSvgLinkTarget() {
+<span class="pc bpc" id="L353" title="1 of 2 branches missed.">		if (fileFormatOption.getSvgLinkTarget() != null)</span>
+<span class="nc" id="L354">			return fileFormatOption.getSvgLinkTarget();</span>
+<span class="fc bfc" id="L355" title="All 2 branches covered.">		if (skinParam != null)</span>
+<span class="fc" id="L356">			return skinParam.getSvgLinkTarget();</span>
+<span class="fc" id="L357">		return null;</span>
+	}
+
+	private String getPreserveAspectRatio() {
+<span class="pc bpc" id="L361" title="1 of 2 branches missed.">		if (fileFormatOption.getPreserveAspectRatio() != null)</span>
+<span class="nc" id="L362">			return fileFormatOption.getPreserveAspectRatio();</span>
+<span class="fc bfc" id="L363" title="All 2 branches covered.">		if (skinParam != null)</span>
+<span class="fc" id="L364">			return skinParam.getPreserveAspectRatio();</span>
+<span class="fc" id="L365">		return SkinParam.DEFAULT_PRESERVE_ASPECT_RATIO;</span>
+	}
+
+	// =======================================================================
+	// Builder
+	// =======================================================================
+
+	/**
+	 * Creates a new {@link Builder} for the given decorated {@link TextBlock} and
+	 * output format.
+	 *
+	 * @param textBlock        the fully-decorated diagram content
+	 * @param fileFormatOption the desired output format and options
+	 * @return a new builder
+	 */
+	public static Builder builder(TextBlock textBlock, FileFormatOption fileFormatOption) {
+<span class="fc" id="L381">		return new Builder(textBlock, fileFormatOption);</span>
+	}
+
+	public static class Builder {
+		// Required
+		private final TextBlock textBlock;
+		private final FileFormatOption fileFormatOption;
+
+		// Optional with defaults
+		private ISkinParam skinParam;
+<span class="fc" id="L391">		private HColor backcolor = HColors.WHITE.withDark(HColors.BLACK);</span>
+<span class="fc" id="L392">		private ClockwiseTopRightBottomLeft margin = ClockwiseTopRightBottomLeft.none();</span>
+		private String metadata;
+<span class="fc" id="L394">		private long seed = 42;</span>
+<span class="fc" id="L395">		private int status = 0;</span>
+		private Scale scale;
+		private String warningOrError;
+		private Pragma pragma;
+		private UmlDiagramType diagramType;
+
+<span class="fc" id="L401">		private Builder(TextBlock textBlock, FileFormatOption fileFormatOption) {</span>
+<span class="fc" id="L402">			this.textBlock = textBlock;</span>
+<span class="fc" id="L403">			this.fileFormatOption = fileFormatOption;</span>
+<span class="fc bfc" id="L404" title="All 2 branches covered.">			if (textBlock.getBackcolor() != null) {</span>
+<span class="fc" id="L405">				this.backcolor = textBlock.getBackcolor();</span>
+			}
+<span class="fc" id="L407">		}</span>
+
+		public Builder skinParam(ISkinParam skinParam) {
+<span class="nc" id="L410">			this.skinParam = skinParam;</span>
+<span class="nc" id="L411">			return this;</span>
+		}
+
+		public Builder backcolor(HColor backcolor) {
+<span class="nc" id="L415">			this.backcolor = backcolor;</span>
+<span class="nc" id="L416">			return this;</span>
+		}
+
+		public Builder margin(ClockwiseTopRightBottomLeft margin) {
+<span class="fc" id="L420">			this.margin = margin;</span>
+<span class="fc" id="L421">			return this;</span>
+		}
+
+		public Builder metadata(String metadata) {
+<span class="fc" id="L425">			this.metadata = metadata;</span>
+<span class="fc" id="L426">			return this;</span>
+		}
+
+		public Builder seed(long seed) {
+<span class="fc" id="L430">			this.seed = seed;</span>
+<span class="fc" id="L431">			return this;</span>
+		}
+
+		public Builder status(int status) {
+<span class="fc" id="L435">			this.status = status;</span>
+<span class="fc" id="L436">			return this;</span>
+		}
+
+		public Builder scale(Scale scale) {
+<span class="fc" id="L440">			this.scale = scale;</span>
+<span class="fc" id="L441">			return this;</span>
+		}
+
+		public Builder warningOrError(String warningOrError) {
+<span class="fc" id="L445">			this.warningOrError = warningOrError;</span>
+<span class="fc" id="L446">			return this;</span>
+		}
+
+		public Builder pragma(Pragma pragma) {
+<span class="nc" id="L450">			this.pragma = pragma;</span>
+<span class="nc" id="L451">			return this;</span>
+		}
+
+		public Builder diagramType(UmlDiagramType diagramType) {
+<span class="nc" id="L455">			this.diagramType = diagramType;</span>
+<span class="nc" id="L456">			return this;</span>
+		}
+
+		/**
+		 * Convenience method to configure this builder from a {@link TitledDiagram},
+		 * similar to what {@code ImageBuilder.styled()} does.
+		 *
+		 * @param diagram the source diagram
+		 * @return this builder
+		 */
+		public Builder styled(TitledDiagram diagram) {
+<span class="fc" id="L467">			this.skinParam = diagram.getSkinParam();</span>
+<span class="fc" id="L468">			this.backcolor = diagram.calculateBackColor();</span>
+<span class="fc" id="L469">			this.margin = calculateMargin(diagram);</span>
+<span class="fc bfc" id="L470" title="All 2 branches covered.">			this.metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;</span>
+<span class="fc" id="L471">			this.seed = diagram.seed();</span>
+<span class="fc" id="L472">			this.warningOrError = diagram.getWarningOrError();</span>
+<span class="fc" id="L473">			this.status = 0;</span>
+<span class="fc" id="L474">			this.scale = diagram.getScale();</span>
+<span class="fc" id="L475">			this.pragma = diagram.getPragma();</span>
+<span class="fc" id="L476">			this.diagramType = diagram.getUmlDiagramType();</span>
+<span class="fc" id="L477">			return this;</span>
+		}
+
+		public TextBlockExporter12026 build() {
+<span class="fc" id="L481">			return new TextBlockExporter12026(this);</span>
+		}
+
+		private static ClockwiseTopRightBottomLeft calculateMargin(net.sourceforge.plantuml.TitledDiagram diagram) {
+<span class="fc" id="L485">			final Style style = StyleSignatureBasic.of(SName.root, SName.document)</span>
+<span class="fc" id="L486">					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc bfc" id="L487" title="All 2 branches covered.">			if (style.hasValue(PName.Margin))</span>
+<span class="fc" id="L488">				return style.getMargin();</span>
+<span class="fc" id="L489">			return diagram.getDefaultMargins();</span>
+		}
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

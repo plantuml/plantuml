@@ -38,47 +38,46 @@ package net.sourceforge.plantuml.svek;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.utils.Direction;
 
-public class DirectionalTextBlock extends AbstractTextBlock implements TextBlock {
+public class DirectionalTextBlock implements TextBlock {
 	private final TextBlock right;
 	private final TextBlock left;
 	private final TextBlock up;
 	private final TextBlock down;
 	private final GuideLine guideline;
 
-<span class="nc" id="L52">	public DirectionalTextBlock(GuideLine guideline, TextBlock right, TextBlock left, TextBlock up, TextBlock down) {</span>
-<span class="nc" id="L53">		this.right = right;</span>
-<span class="nc" id="L54">		this.left = left;</span>
-<span class="nc" id="L55">		this.up = up;</span>
-<span class="nc" id="L56">		this.down = down;</span>
-<span class="nc" id="L57">		this.guideline = guideline;</span>
-<span class="nc" id="L58">	}</span>
+<span class="nc" id="L51">	public DirectionalTextBlock(GuideLine guideline, TextBlock right, TextBlock left, TextBlock up, TextBlock down) {</span>
+<span class="nc" id="L52">		this.right = right;</span>
+<span class="nc" id="L53">		this.left = left;</span>
+<span class="nc" id="L54">		this.up = up;</span>
+<span class="nc" id="L55">		this.down = down;</span>
+<span class="nc" id="L56">		this.guideline = guideline;</span>
+<span class="nc" id="L57">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L61">		Direction dir = guideline.getArrowDirection();</span>
-<span class="nc bnc" id="L62" title="All 5 branches missed.">		switch (dir) {</span>
+<span class="nc" id="L60">		Direction dir = guideline.getArrowDirection();</span>
+<span class="nc bnc" id="L61" title="All 5 branches missed.">		switch (dir) {</span>
 		case RIGHT:
-<span class="nc" id="L64">			right.drawU(ug);</span>
-<span class="nc" id="L65">			break;</span>
+<span class="nc" id="L63">			right.drawU(ug);</span>
+<span class="nc" id="L64">			break;</span>
 		case LEFT:
-<span class="nc" id="L67">			left.drawU(ug);</span>
-<span class="nc" id="L68">			break;</span>
+<span class="nc" id="L66">			left.drawU(ug);</span>
+<span class="nc" id="L67">			break;</span>
 		case UP:
-<span class="nc" id="L70">			up.drawU(ug);</span>
-<span class="nc" id="L71">			break;</span>
+<span class="nc" id="L69">			up.drawU(ug);</span>
+<span class="nc" id="L70">			break;</span>
 		case DOWN:
-<span class="nc" id="L73">			down.drawU(ug);</span>
-<span class="nc" id="L74">			break;</span>
+<span class="nc" id="L72">			down.drawU(ug);</span>
+<span class="nc" id="L73">			break;</span>
 		default:
-<span class="nc" id="L76">			throw new UnsupportedOperationException();</span>
+<span class="nc" id="L75">			throw new UnsupportedOperationException();</span>
 		}
-<span class="nc" id="L78">	}</span>
+<span class="nc" id="L77">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L81">		return right.calculateDimension(stringBounder);</span>
+<span class="nc" id="L80">		return right.calculateDimension(stringBounder);</span>
 	}
 
 }

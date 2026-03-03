@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
@@ -60,57 +59,57 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.utils.Direction;
 
-public class FloatingNote extends AbstractTextBlock implements Stencil, TextBlock {
+public class FloatingNote implements Stencil, TextBlock {
 
 	private final Opale opale;
 
-<span class="nc" id="L67">	private FloatingNote(Display note, ISkinParam skinParam, SName sname, boolean withLink) {</span>
+<span class="nc" id="L66">	private FloatingNote(Display note, ISkinParam skinParam, SName sname, boolean withLink) {</span>
 
-<span class="nc" id="L69">		final Style style = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.note)</span>
-<span class="nc" id="L70">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="nc" id="L71">		final LineBreakStrategy wrapWidth = style.wrapWidth();</span>
-<span class="nc" id="L72">		final FontConfiguration fc = FontConfiguration.create(skinParam, style);</span>
-<span class="nc" id="L73">		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L74">		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L75">		final UStroke stroke = style.getStroke();</span>
-<span class="nc" id="L76">		final double shadowing = style.getShadowing();</span>
+<span class="nc" id="L68">		final Style style = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.note)</span>
+<span class="nc" id="L69">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L70">		final LineBreakStrategy wrapWidth = style.wrapWidth();</span>
+<span class="nc" id="L71">		final FontConfiguration fc = FontConfiguration.create(skinParam, style);</span>
+<span class="nc" id="L72">		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L73">		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L74">		final UStroke stroke = style.getStroke();</span>
+<span class="nc" id="L75">		final double shadowing = style.getShadowing();</span>
 
-<span class="nc" id="L78">		final Sheet sheet = skinParam</span>
-<span class="nc" id="L79">				.sheet(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)</span>
-<span class="nc" id="L80">				.createSheet(note);</span>
-<span class="nc" id="L81">		final SheetBlock2 sheetBlock2 = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this,</span>
+<span class="nc" id="L77">		final Sheet sheet = skinParam</span>
+<span class="nc" id="L78">				.sheet(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)</span>
+<span class="nc" id="L79">				.createSheet(note);</span>
+<span class="nc" id="L80">		final SheetBlock2 sheetBlock2 = new SheetBlock2(new SheetBlock1(sheet, wrapWidth, skinParam.getPadding()), this,</span>
 				stroke);
-<span class="nc" id="L83">		this.opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheetBlock2, withLink, stroke);</span>
+<span class="nc" id="L82">		this.opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheetBlock2, withLink, stroke);</span>
 
-<span class="nc" id="L85">	}</span>
+<span class="nc" id="L84">	}</span>
 
 	public static FloatingNote create(Display note, ISkinParam skinParam, SName sname) {
-<span class="nc" id="L88">		return new FloatingNote(note, skinParam, sname, false);</span>
+<span class="nc" id="L87">		return new FloatingNote(note, skinParam, sname, false);</span>
 	}
 
 	public static FloatingNote createOpale(Display note, ISkinParam skinParam, SName sname) {
-<span class="nc" id="L92">		return new FloatingNote(note, skinParam, sname, true);</span>
+<span class="nc" id="L91">		return new FloatingNote(note, skinParam, sname, true);</span>
 	}
 
 	public void setOpale(Direction strategy, XPoint2D pp1, XPoint2D pp2) {
-<span class="nc" id="L96">		opale.setOpale(strategy, pp1, pp2);</span>
+<span class="nc" id="L95">		opale.setOpale(strategy, pp1, pp2);</span>
 
-<span class="nc" id="L98">	}</span>
+<span class="nc" id="L97">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L101">		opale.drawU(ug);</span>
-<span class="nc" id="L102">	}</span>
+<span class="nc" id="L100">		opale.drawU(ug);</span>
+<span class="nc" id="L101">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L105">		return opale.calculateDimension(stringBounder);</span>
+<span class="nc" id="L104">		return opale.calculateDimension(stringBounder);</span>
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L109">		return -opale.getMarginX1();</span>
+<span class="nc" id="L108">		return -opale.getMarginX1();</span>
 	}
 
 	public double getEndingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L113">		return opale.calculateDimension(stringBounder).getWidth() - opale.getMarginX1();</span>
+<span class="nc" id="L112">		return opale.calculateDimension(stringBounder).getWidth() - opale.getMarginX1();</span>
 	}
 
 }

@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UEmpty;
@@ -52,11 +51,11 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.style.SName;
 
-<span class="fc" id="L55">class USymbolNode extends USymbol {</span>
+<span class="fc" id="L54">class USymbolNode extends USymbol {</span>
 
 	@Override
 	public SName[] getSNames() {
-<span class="fc" id="L59">		return new SName[] { SName.node };</span>
+<span class="fc" id="L58">		return new SName[] { SName.node };</span>
 	}
 
 //	public USymbolNode(HorizontalAlignment stereotypeAlignement) {
@@ -69,27 +68,27 @@ import net.sourceforge.plantuml.style.SName;
 //	}
 
 	private void drawNode(UGraphic ug, double width, double height, double shadowing) {
-<span class="fc" id="L72">		final UPolygon shape = new UPolygon();</span>
-<span class="fc" id="L73">		shape.addPoint(0, 10);</span>
-<span class="fc" id="L74">		shape.addPoint(10, 0);</span>
-<span class="fc" id="L75">		shape.addPoint(width, 0);</span>
-<span class="fc" id="L76">		shape.addPoint(width, height - 10);</span>
-<span class="fc" id="L77">		shape.addPoint(width - 10, height);</span>
-<span class="fc" id="L78">		shape.addPoint(0, height);</span>
-<span class="fc" id="L79">		shape.addPoint(0, 10);</span>
+<span class="fc" id="L71">		final UPolygon shape = new UPolygon();</span>
+<span class="fc" id="L72">		shape.addPoint(0, 10);</span>
+<span class="fc" id="L73">		shape.addPoint(10, 0);</span>
+<span class="fc" id="L74">		shape.addPoint(width, 0);</span>
+<span class="fc" id="L75">		shape.addPoint(width, height - 10);</span>
+<span class="fc" id="L76">		shape.addPoint(width - 10, height);</span>
+<span class="fc" id="L77">		shape.addPoint(0, height);</span>
+<span class="fc" id="L78">		shape.addPoint(0, 10);</span>
 
-<span class="fc" id="L81">		shape.setDeltaShadow(shadowing);</span>
+<span class="fc" id="L80">		shape.setDeltaShadow(shadowing);</span>
 
-<span class="fc" id="L83">		ug.draw(shape);</span>
+<span class="fc" id="L82">		ug.draw(shape);</span>
 
-<span class="fc" id="L85">		ug.apply(new UTranslate(width - 10, 10)).draw(new ULine(10, -10));</span>
+<span class="fc" id="L84">		ug.apply(new UTranslate(width - 10, 10)).draw(new ULine(10, -10));</span>
 
-<span class="fc" id="L87">		ug.apply(UTranslate.dy(10)).draw(ULine.hline(width - 10));</span>
-<span class="fc" id="L88">		ug.apply(new UTranslate(width - 10, 10)).draw(ULine.vline(height - 10));</span>
+<span class="fc" id="L86">		ug.apply(UTranslate.dy(10)).draw(ULine.hline(width - 10));</span>
+<span class="fc" id="L87">		ug.apply(new UTranslate(width - 10, 10)).draw(ULine.vline(height - 10));</span>
 
-<span class="fc" id="L90">		ug.apply(new UTranslate(0, height)).draw(new UEmpty(10, 10));</span>
+<span class="fc" id="L89">		ug.apply(new UTranslate(0, height)).draw(new UEmpty(10, 10));</span>
 
-<span class="fc" id="L92">	}</span>
+<span class="fc" id="L91">	}</span>
 
 	class MyUGraphicNode extends AbstractUGraphicHorizontalLine {
 
@@ -97,55 +96,55 @@ import net.sourceforge.plantuml.style.SName;
 
 		@Override
 		protected AbstractUGraphicHorizontalLine copy(UGraphic ug) {
-<span class="fc" id="L100">			return new MyUGraphicNode(ug, endingX);</span>
+<span class="fc" id="L99">			return new MyUGraphicNode(ug, endingX);</span>
 		}
 
-<span class="fc" id="L103">		public MyUGraphicNode(UGraphic ug, double endingX) {</span>
-<span class="fc" id="L104">			super(ug);</span>
-<span class="fc" id="L105">			this.endingX = endingX;</span>
-<span class="fc" id="L106">		}</span>
+<span class="fc" id="L102">		public MyUGraphicNode(UGraphic ug, double endingX) {</span>
+<span class="fc" id="L103">			super(ug);</span>
+<span class="fc" id="L104">			this.endingX = endingX;</span>
+<span class="fc" id="L105">		}</span>
 
 		@Override
 		protected void drawHline(UGraphic ug, UHorizontalLine line, UTranslate translate) {
-<span class="nc" id="L110">			ug = ug.apply(translate);</span>
+<span class="nc" id="L109">			ug = ug.apply(translate);</span>
 
-<span class="nc" id="L112">			drawHlineInternal(ug, line);</span>
-<span class="nc bnc" id="L113" title="All 2 branches missed.">			if (line.isDouble()) {</span>
-<span class="nc" id="L114">				drawHlineInternal(ug.apply(UTranslate.dy(2)), line);</span>
+<span class="nc" id="L111">			drawHlineInternal(ug, line);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">			if (line.isDouble()) {</span>
+<span class="nc" id="L113">				drawHlineInternal(ug.apply(UTranslate.dy(2)), line);</span>
 			}
-<span class="nc" id="L116">			line.drawTitleInternal(ug, 0, endingX - 10, 0, true);</span>
-<span class="nc" id="L117">		}</span>
+<span class="nc" id="L115">			line.drawTitleInternal(ug, 0, endingX - 10, 0, true);</span>
+<span class="nc" id="L116">		}</span>
 
 		private void drawHlineInternal(UGraphic ug, UHorizontalLine line) {
-<span class="nc" id="L120">			ug = ug.apply(line.getStroke()).apply(HColors.none().bg());</span>
-<span class="nc" id="L121">			ug.draw(ULine.hline(endingX - 10));</span>
-<span class="nc" id="L122">			ug.apply(UTranslate.dx(endingX - 10)).draw(new ULine(10, -10));</span>
-<span class="nc" id="L123">		}</span>
+<span class="nc" id="L119">			ug = ug.apply(line.getStroke()).apply(HColors.none().bg());</span>
+<span class="nc" id="L120">			ug.draw(ULine.hline(endingX - 10));</span>
+<span class="nc" id="L121">			ug.apply(UTranslate.dx(endingX - 10)).draw(new ULine(10, -10));</span>
+<span class="nc" id="L122">		}</span>
 	}
 
 	private Margin getMargin() {
-<span class="fc" id="L127">		return new Margin(10 + 5, 20 + 5, 15 + 5, 5 + 5);</span>
+<span class="fc" id="L126">		return new Margin(10 + 5, 20 + 5, 15 + 5, 5 + 5);</span>
 	}
 
 	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
 			final Fashion symbolContext, final HorizontalAlignment stereoAlignment) {
-<span class="fc" id="L133">		return new AbstractTextBlock() {</span>
+<span class="fc" id="L132">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L136">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L137">				ug = symbolContext.apply(ug);</span>
-<span class="fc" id="L138">				drawNode(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());</span>
-<span class="fc" id="L139">				final Margin margin = getMargin();</span>
-<span class="fc" id="L140">				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereoAlignment);</span>
-<span class="fc" id="L141">				final UGraphic ug2 = new MyUGraphicNode(ug, dim.getWidth());</span>
-<span class="fc" id="L142">				tb.drawU(ug2.apply(new UTranslate(margin.getX1(), margin.getY1())));</span>
-<span class="fc" id="L143">			}</span>
+<span class="fc" id="L135">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L136">				ug = symbolContext.apply(ug);</span>
+<span class="fc" id="L137">				drawNode(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());</span>
+<span class="fc" id="L138">				final Margin margin = getMargin();</span>
+<span class="fc" id="L139">				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereoAlignment);</span>
+<span class="fc" id="L140">				final UGraphic ug2 = new MyUGraphicNode(ug, dim.getWidth());</span>
+<span class="fc" id="L141">				tb.drawU(ug2.apply(new UTranslate(margin.getX1(), margin.getY1())));</span>
+<span class="fc" id="L142">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L146">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
-<span class="fc" id="L147">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
-<span class="fc" id="L148">				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));</span>
+<span class="fc" id="L145">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="fc" id="L146">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
+<span class="fc" id="L147">				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));</span>
 			}
 		};
 	}
@@ -154,44 +153,44 @@ import net.sourceforge.plantuml.style.SName;
 	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
 			final double width, final double height, final Fashion symbolContext,
 			final HorizontalAlignment stereoAlignment) {
-<span class="nc" id="L157">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L156">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L160">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L161">				ug = symbolContext.apply(ug);</span>
-<span class="nc" id="L162">				drawNode(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());</span>
-<span class="nc" id="L163">				ug = ug.apply(new UTranslate(-4, 11));</span>
+<span class="nc" id="L159">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L160">				ug = symbolContext.apply(ug);</span>
+<span class="nc" id="L161">				drawNode(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());</span>
+<span class="nc" id="L162">				ug = ug.apply(new UTranslate(-4, 11));</span>
 
-<span class="nc" id="L165">				final XDimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L164">				final XDimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());</span>
 				final double posStereoX;
-<span class="nc" id="L167">				final double posStereoY = 2;</span>
-<span class="nc bnc" id="L168" title="All 2 branches missed.">				if (stereoAlignment == HorizontalAlignment.RIGHT) {</span>
-<span class="nc" id="L169">					posStereoX = width - dimStereo.getWidth() - getMargin().getX1();</span>
+<span class="nc" id="L166">				final double posStereoY = 2;</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">				if (stereoAlignment == HorizontalAlignment.RIGHT) {</span>
+<span class="nc" id="L168">					posStereoX = width - dimStereo.getWidth() - getMargin().getX1();</span>
 				} else {
-<span class="nc" id="L171">					posStereoX = (width - dimStereo.getWidth()) / 2;</span>
+<span class="nc" id="L170">					posStereoX = (width - dimStereo.getWidth()) / 2;</span>
 
 				}
-<span class="nc" id="L174">				stereotype.drawU(ug.apply(new UTranslate(posStereoX, posStereoY)));</span>
-<span class="nc" id="L175">				final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L176">				final double posTitle = (width - dimTitle.getWidth()) / 2;</span>
-<span class="nc" id="L177">				title.drawU(ug.apply(new UTranslate(posTitle, 2 + dimStereo.getHeight())));</span>
+<span class="nc" id="L173">				stereotype.drawU(ug.apply(new UTranslate(posStereoX, posStereoY)));</span>
+<span class="nc" id="L174">				final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L175">				final double posTitle = (width - dimTitle.getWidth()) / 2;</span>
+<span class="nc" id="L176">				title.drawU(ug.apply(new UTranslate(posTitle, 2 + dimStereo.getHeight())));</span>
 
-<span class="nc" id="L179">			}</span>
+<span class="nc" id="L178">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L182">				return new XDimension2D(width, height);</span>
+<span class="nc" id="L181">				return new XDimension2D(width, height);</span>
 			}
 		};
 	}
 
 	@Override
 	public int suppHeightBecauseOfShape() {
-<span class="nc" id="L189">		return 5;</span>
+<span class="nc" id="L188">		return 5;</span>
 	}
 
 	@Override
 	public int suppWidthBecauseOfShape() {
-<span class="nc" id="L194">		return 60;</span>
+<span class="nc" id="L193">		return 60;</span>
 	}
 
 }

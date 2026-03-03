@@ -368,61 +368,65 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 <span class="nc" id="L368">		return false;</span>
 	}
 
-	public String changeName(String fileName, int cpt) {
-<span class="fc bfc" id="L372" title="All 2 branches covered.">		if (cpt == 0)</span>
-<span class="fc" id="L373">			return changeName(fileName, getFileSuffix());</span>
+	public boolean isXmi() {
+<span class="fc" id="L372">		return name().startsWith(&quot;XMI&quot;);</span>
+	}
 
-<span class="fc" id="L375">		return changeName(fileName, (String) GlobalConfig.getInstance().value(GlobalConfigKey.FILE_SEPARATOR)</span>
-<span class="fc" id="L376">				+ String.format(&quot;%03d&quot;, cpt) + getFileSuffix());</span>
+	public String changeName(String fileName, int cpt) {
+<span class="fc bfc" id="L376" title="All 2 branches covered.">		if (cpt == 0)</span>
+<span class="fc" id="L377">			return changeName(fileName, getFileSuffix());</span>
+
+<span class="fc" id="L379">		return changeName(fileName, (String) GlobalConfig.getInstance().value(GlobalConfigKey.FILE_SEPARATOR)</span>
+<span class="fc" id="L380">				+ String.format(&quot;%03d&quot;, cpt) + getFileSuffix());</span>
 	}
 
 	private String changeName(String fileName, String replacement) {
-<span class="fc" id="L380">		String result = fileName.replaceAll(&quot;\\.\\w+$&quot;, replacement);</span>
-<span class="fc bfc" id="L381" title="All 2 branches covered.">		if (result.equals(fileName))</span>
-<span class="fc" id="L382">			result = fileName + replacement;</span>
+<span class="fc" id="L384">		String result = fileName.replaceAll(&quot;\\.\\w+$&quot;, replacement);</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">		if (result.equals(fileName))</span>
+<span class="fc" id="L386">			result = fileName + replacement;</span>
 
-<span class="fc" id="L384">		return result;</span>
+<span class="fc" id="L388">		return result;</span>
 	}
 
 	public boolean doesSupportMetadata() {
-<span class="pc bpc" id="L388" title="1 of 4 branches missed.">		return this == PNG || this == SVG;</span>
+<span class="pc bpc" id="L392" title="1 of 4 branches missed.">		return this == PNG || this == SVG;</span>
 	}
 
 	private static final String META_HEADER_NEW = &quot;&lt;?plantuml-src &quot;;
 
 	public boolean equalsMetadata(String currentMetadata, SFile existingFile) {
 		try {
-<span class="fc bfc" id="L395" title="All 2 branches covered.">			if (this == PNG) {</span>
-<span class="fc" id="L396">				final MetadataTag tag = new MetadataTag(existingFile, &quot;plantuml&quot;);</span>
-<span class="fc" id="L397">				final String previousMetadata = tag.getData();</span>
-<span class="fc" id="L398">				final boolean sameMetadata = currentMetadata.equals(previousMetadata);</span>
-<span class="fc" id="L399">				return sameMetadata;</span>
+<span class="fc bfc" id="L399" title="All 2 branches covered.">			if (this == PNG) {</span>
+<span class="fc" id="L400">				final MetadataTag tag = new MetadataTag(existingFile, &quot;plantuml&quot;);</span>
+<span class="fc" id="L401">				final String previousMetadata = tag.getData();</span>
+<span class="fc" id="L402">				final boolean sameMetadata = currentMetadata.equals(previousMetadata);</span>
+<span class="fc" id="L403">				return sameMetadata;</span>
 			}
-<span class="pc bpc" id="L401" title="1 of 2 branches missed.">			if (this == SVG) {</span>
-<span class="fc" id="L402">				final String svg = FileUtils.readSvg(existingFile);</span>
-<span class="pc bpc" id="L403" title="1 of 2 branches missed.">				if (svg == null)</span>
-<span class="nc" id="L404">					return false;</span>
+<span class="pc bpc" id="L405" title="1 of 2 branches missed.">			if (this == SVG) {</span>
+<span class="fc" id="L406">				final String svg = FileUtils.readSvg(existingFile);</span>
+<span class="pc bpc" id="L407" title="1 of 2 branches missed.">				if (svg == null)</span>
+<span class="nc" id="L408">					return false;</span>
 
-<span class="fc" id="L406">				final String currentSignature = SvgGraphics.getMetadataHex(currentMetadata);</span>
+<span class="fc" id="L410">				final String currentSignature = SvgGraphics.getMetadataHex(currentMetadata);</span>
 
 				// New format: &lt;?plantuml-src ...?&gt;
-<span class="fc" id="L409">				final int idxNew = svg.lastIndexOf(META_HEADER_NEW);</span>
-<span class="pc bpc" id="L410" title="1 of 2 branches missed.">				if (idxNew != -1) {</span>
-<span class="fc" id="L411">					final String part = svg.substring(idxNew + META_HEADER_NEW.length());</span>
-<span class="fc" id="L412">					return part.startsWith(currentSignature + &quot;?&gt;&quot;);</span>
+<span class="fc" id="L413">				final int idxNew = svg.lastIndexOf(META_HEADER_NEW);</span>
+<span class="pc bpc" id="L414" title="1 of 2 branches missed.">				if (idxNew != -1) {</span>
+<span class="fc" id="L415">					final String part = svg.substring(idxNew + META_HEADER_NEW.length());</span>
+<span class="fc" id="L416">					return part.startsWith(currentSignature + &quot;?&gt;&quot;);</span>
 				}
 
 				// Old format: &lt;!--SRC=[...]--&gt;
-<span class="nc" id="L416">				final int idxOld = svg.lastIndexOf(SvgGraphics.META_HEADER);</span>
-<span class="nc bnc" id="L417" title="All 2 branches missed.">				if (idxOld != -1) {</span>
-<span class="nc" id="L418">					final String part = svg.substring(idxOld + SvgGraphics.META_HEADER.length());</span>
-<span class="nc" id="L419">					return part.startsWith(currentSignature + &quot;]&quot;);</span>
+<span class="nc" id="L420">				final int idxOld = svg.lastIndexOf(SvgGraphics.META_HEADER);</span>
+<span class="nc bnc" id="L421" title="All 2 branches missed.">				if (idxOld != -1) {</span>
+<span class="nc" id="L422">					final String part = svg.substring(idxOld + SvgGraphics.META_HEADER.length());</span>
+<span class="nc" id="L423">					return part.startsWith(currentSignature + &quot;]&quot;);</span>
 				}
 			}
-<span class="nc" id="L422">		} catch (IOException e) {</span>
-<span class="nc" id="L423">			Logme.error(e);</span>
-<span class="nc" id="L424">		}</span>
-<span class="nc" id="L425">		return false;</span>
+<span class="nc" id="L426">		} catch (IOException e) {</span>
+<span class="nc" id="L427">			Logme.error(e);</span>
+<span class="nc" id="L428">		}</span>
+<span class="nc" id="L429">		return false;</span>
 	}
 	// ::done
 

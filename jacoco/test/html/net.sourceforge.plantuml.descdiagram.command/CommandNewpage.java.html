@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.descdiagram.command;
 
 import net.sourceforge.plantuml.NewpagedDiagram;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandNewpage extends SingleLineCommand2&lt;UmlDiagram&gt; {
+public class CommandNewpage extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
 	private final PSystemCommandFactory factory;
 
@@ -62,10 +62,10 @@ public class CommandNewpage extends SingleLineCommand2&lt;UmlDiagram&gt; {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg,
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 <span class="nc" id="L67">		final int dpi = diagram.getSkinParam().getDpi();</span>
-<span class="nc" id="L68">		final UmlDiagram emptyDiagram = (UmlDiagram) factory.createEmptyDiagram(diagram.getPathSystem(),</span>
+<span class="nc" id="L68">		final TitledDiagram emptyDiagram = (TitledDiagram) factory.createEmptyDiagram(diagram.getPathSystem(),</span>
 <span class="nc" id="L69">				diagram.getSource(), diagram.getPrevious(), diagram.getPreprocessingArtifact());</span>
 <span class="nc bnc" id="L70" title="All 2 branches missed.">		if (dpi != 96)</span>
 <span class="nc" id="L71">			emptyDiagram.setParam(&quot;dpi&quot;, &quot;&quot; + dpi);</span>

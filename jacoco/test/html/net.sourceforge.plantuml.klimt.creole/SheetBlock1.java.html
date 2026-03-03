@@ -51,14 +51,12 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
-public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, Stencil {
-	// ::remove folder when __HAXE__
+public class SheetBlock1 implements TextBlock, Atom, Stencil {
 
 	private final Sheet sheet;
 	private List&lt;Stripe&gt; stripes;
@@ -74,168 +72,168 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 	private double minimumWidth;
 
 	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, double padding) {
-<span class="fc" id="L77">		this(sheet, maxWidth, ClockwiseTopRightBottomLeft.same(padding), 0, 0);</span>
-<span class="fc" id="L78">	}</span>
+<span class="fc" id="L75">		this(sheet, maxWidth, ClockwiseTopRightBottomLeft.same(padding), 0, 0);</span>
+<span class="fc" id="L76">	}</span>
 
 	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, Style style) {
-<span class="fc" id="L81">		this(sheet, maxWidth, style.getPadding(), 0, 0);</span>
-<span class="fc" id="L82">		this.minimumWidth = style.value(PName.MinimumWidth).asDouble();</span>
-<span class="fc" id="L83">	}</span>
+<span class="fc" id="L79">		this(sheet, maxWidth, style.getPadding(), 0, 0);</span>
+<span class="fc" id="L80">		this.minimumWidth = style.value(PName.MinimumWidth).asDouble();</span>
+<span class="fc" id="L81">	}</span>
 
 	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, double padding, double marginX1, double marginX2) {
-<span class="fc" id="L86">		this(sheet, maxWidth, ClockwiseTopRightBottomLeft.same(padding), marginX1, marginX2);</span>
-<span class="fc" id="L87">	}</span>
+<span class="fc" id="L84">		this(sheet, maxWidth, ClockwiseTopRightBottomLeft.same(padding), marginX1, marginX2);</span>
+<span class="fc" id="L85">	}</span>
 
 	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, ClockwiseTopRightBottomLeft padding, double marginX1,
-<span class="fc" id="L90">			double marginX2) {</span>
-<span class="fc" id="L91">		this.sheet = sheet;</span>
-<span class="fc" id="L92">		this.maxWidth = Objects.requireNonNull(maxWidth);</span>
-<span class="fc" id="L93">		this.padding = padding;</span>
-<span class="fc" id="L94">		this.marginX1 = marginX1;</span>
-<span class="fc" id="L95">		this.marginX2 = marginX2;</span>
-<span class="fc" id="L96">	}</span>
+<span class="fc" id="L88">			double marginX2) {</span>
+<span class="fc" id="L89">		this.sheet = sheet;</span>
+<span class="fc" id="L90">		this.maxWidth = Objects.requireNonNull(maxWidth);</span>
+<span class="fc" id="L91">		this.padding = padding;</span>
+<span class="fc" id="L92">		this.marginX1 = marginX1;</span>
+<span class="fc" id="L93">		this.marginX2 = marginX2;</span>
+<span class="fc" id="L94">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L100">		return sheet.toString();</span>
+<span class="nc" id="L98">		return sheet.toString();</span>
 	}
 
 	public HorizontalAlignment getCellAlignment() {
-<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (stripes.size() != 1)</span>
-<span class="fc" id="L105">			return HorizontalAlignment.LEFT;</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (stripes.size() != 1)</span>
+<span class="fc" id="L103">			return HorizontalAlignment.LEFT;</span>
 
-<span class="fc" id="L107">		final Stripe simple = stripes.get(0);</span>
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (simple instanceof StripeSimple)</span>
-<span class="fc" id="L109">			return ((StripeSimple) simple).getCellAlignment();</span>
+<span class="fc" id="L105">		final Stripe simple = stripes.get(0);</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (simple instanceof StripeSimple)</span>
+<span class="fc" id="L107">			return ((StripeSimple) simple).getCellAlignment();</span>
 
-<span class="nc" id="L111">		return HorizontalAlignment.LEFT;</span>
+<span class="nc" id="L109">		return HorizontalAlignment.LEFT;</span>
 	}
 
 	public HorizontalAlignment getHorizontalAlignment() {
-<span class="fc" id="L115">		return sheet.getHorizontalAlignment();</span>
+<span class="fc" id="L113">		return sheet.getHorizontalAlignment();</span>
 	}
 
 	private void initMap(StringBounder stringBounder) {
-<span class="fc" id="L119">		final Class&lt;? extends StringBounder&gt; currentCaller = stringBounder.getClass();</span>
-<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (lastCaller == currentCaller)</span>
-<span class="fc" id="L121">			return;</span>
-<span class="fc" id="L122">		this.lastCaller = currentCaller;</span>
-<span class="fc" id="L123">		stripes = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">		for (Stripe stripe : sheet)</span>
-<span class="fc" id="L125">			stripes.addAll(new Fission(stripe, maxWidth).getSplitted(stringBounder));</span>
+<span class="fc" id="L117">		final Class&lt;? extends StringBounder&gt; currentCaller = stringBounder.getClass();</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		if (lastCaller == currentCaller)</span>
+<span class="fc" id="L119">			return;</span>
+<span class="fc" id="L120">		this.lastCaller = currentCaller;</span>
+<span class="fc" id="L121">		stripes = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		for (Stripe stripe : sheet)</span>
+<span class="fc" id="L123">			stripes.addAll(new Fission(stripe, maxWidth).getSplitted(stringBounder));</span>
 
-<span class="fc" id="L127">		positions = new LinkedHashMap&lt;&gt;();</span>
-<span class="fc" id="L128">		widths = new LinkedHashMap&lt;&gt;();</span>
-<span class="fc" id="L129">		heights = new LinkedHashMap&lt;&gt;();</span>
-<span class="fc" id="L130">		minMax = MinMax.getEmpty(true);</span>
-<span class="fc" id="L131">		double y = 0;</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">		for (Stripe stripe : stripes) {</span>
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">			if (stripe.getAtoms().size() == 0)</span>
-<span class="nc" id="L134">				continue;</span>
+<span class="fc" id="L125">		positions = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L126">		widths = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L127">		heights = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L128">		minMax = MinMax.getEmpty(true);</span>
+<span class="fc" id="L129">		double y = 0;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">		for (Stripe stripe : stripes) {</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">			if (stripe.getAtoms().size() == 0)</span>
+<span class="nc" id="L132">				continue;</span>
 
-<span class="fc" id="L136">			final Sea sea = new Sea(stringBounder);</span>
-<span class="fc bfc" id="L137" title="All 2 branches covered.">			for (Atom atom : stripe.getAtoms())</span>
-<span class="fc" id="L138">				sea.add(atom);</span>
+<span class="fc" id="L134">			final Sea sea = new Sea(stringBounder);</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">			for (Atom atom : stripe.getAtoms())</span>
+<span class="fc" id="L136">				sea.add(atom);</span>
 
-<span class="fc" id="L140">			sea.doAlign();</span>
-<span class="pc bpc" id="L141" title="1 of 2 branches missed.">			if (stringBounder.matchesProperty(&quot;TIKZ&quot;)) {</span>
-<span class="nc" id="L142">				sea.doAlignTikz();</span>
+<span class="fc" id="L138">			sea.doAlign();</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">			if (stringBounder.matchesProperty(&quot;TIKZ&quot;)) {</span>
+<span class="nc" id="L140">				sea.doAlignTikz();</span>
 			}
-<span class="fc" id="L144">			sea.translateMinYto(y);</span>
-<span class="fc" id="L145">			final double width = sea.getWidth();</span>
-<span class="fc" id="L146">			widths.put(stripe, width);</span>
-<span class="fc" id="L147">			minMax = sea.update(minMax);</span>
-<span class="fc" id="L148">			final double height = sea.getHeight();</span>
-<span class="fc" id="L149">			heights.put(stripe, height);</span>
-<span class="fc" id="L150">			y += height;</span>
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">			if (stringBounder.matchesProperty(&quot;TIKZ&quot;)) {</span>
-<span class="nc" id="L152">				sea.doAlignTikzBaseline();</span>
+<span class="fc" id="L142">			sea.translateMinYto(y);</span>
+<span class="fc" id="L143">			final double width = sea.getWidth();</span>
+<span class="fc" id="L144">			widths.put(stripe, width);</span>
+<span class="fc" id="L145">			minMax = sea.update(minMax);</span>
+<span class="fc" id="L146">			final double height = sea.getHeight();</span>
+<span class="fc" id="L147">			heights.put(stripe, height);</span>
+<span class="fc" id="L148">			y += height;</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">			if (stringBounder.matchesProperty(&quot;TIKZ&quot;)) {</span>
+<span class="nc" id="L150">				sea.doAlignTikzBaseline();</span>
 			}
-<span class="fc" id="L154">			sea.exportAllPositions(positions);</span>
-<span class="fc" id="L155">		}</span>
+<span class="fc" id="L152">			sea.exportAllPositions(positions);</span>
+<span class="fc" id="L153">		}</span>
 
-<span class="fc" id="L157">		double maxWidth = 0;</span>
-<span class="fc bfc" id="L158" title="All 2 branches covered.">		for (Double v : widths.values())</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">			if (v &gt; maxWidth)</span>
-<span class="fc" id="L160">				maxWidth = v;</span>
+<span class="fc" id="L155">		double maxWidth = 0;</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		for (Double v : widths.values())</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">			if (v &gt; maxWidth)</span>
+<span class="fc" id="L158">				maxWidth = v;</span>
 
-<span class="fc bfc" id="L162" title="All 2 branches covered.">		for (Map.Entry&lt;Stripe, Double&gt; ent : widths.entrySet()) {</span>
-<span class="fc" id="L163">			final double diff = maxWidth - ent.getValue();</span>
-<span class="fc bfc" id="L164" title="All 2 branches covered.">			if (diff &gt; 0) {</span>
-<span class="fc" id="L165">				final Stripe key = ent.getKey();</span>
-<span class="fc" id="L166">				final int coef = getCoef(key);</span>
-<span class="fc bfc" id="L167" title="All 2 branches covered.">				if (coef &gt; 0)</span>
-<span class="fc bfc" id="L168" title="All 2 branches covered.">					for (Atom atom : key.getAtoms()) {</span>
-<span class="fc" id="L169">						final Position pos = positions.get(atom);</span>
-<span class="fc" id="L170">						positions.put(atom, pos.translateX(diff / coef));</span>
-<span class="fc" id="L171">					}</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		for (Map.Entry&lt;Stripe, Double&gt; ent : widths.entrySet()) {</span>
+<span class="fc" id="L161">			final double diff = maxWidth - ent.getValue();</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">			if (diff &gt; 0) {</span>
+<span class="fc" id="L163">				final Stripe key = ent.getKey();</span>
+<span class="fc" id="L164">				final int coef = getCoef(key);</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">				if (coef &gt; 0)</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">					for (Atom atom : key.getAtoms()) {</span>
+<span class="fc" id="L167">						final Position pos = positions.get(atom);</span>
+<span class="fc" id="L168">						positions.put(atom, pos.translateX(diff / coef));</span>
+<span class="fc" id="L169">					}</span>
 			}
-<span class="fc" id="L173">		}</span>
-<span class="fc" id="L174">	}</span>
+<span class="fc" id="L171">		}</span>
+<span class="fc" id="L172">	}</span>
 
 	private int getCoef(Stripe key) {
-<span class="fc bfc" id="L177" title="All 2 branches covered.">		if (key instanceof StripeSimple)</span>
-<span class="fc" id="L178">			return getCoef(((StripeSimple) key).getCellAlignment());</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">		if (key instanceof StripeSimple)</span>
+<span class="fc" id="L176">			return getCoef(((StripeSimple) key).getCellAlignment());</span>
 
-<span class="fc" id="L180">		return getCoef(sheet.getHorizontalAlignment());</span>
+<span class="fc" id="L178">		return getCoef(sheet.getHorizontalAlignment());</span>
 	}
 
 	private int getCoef(HorizontalAlignment alignment) {
-<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (alignment == null)</span>
-<span class="nc" id="L185">			return 0;</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		if (alignment == null)</span>
+<span class="nc" id="L183">			return 0;</span>
 
-<span class="fc bfc" id="L187" title="All 3 branches covered.">		switch (alignment) {</span>
+<span class="fc bfc" id="L185" title="All 3 branches covered.">		switch (alignment) {</span>
 		case CENTER:
-<span class="fc" id="L189">			return 2;</span>
+<span class="fc" id="L187">			return 2;</span>
 		case RIGHT:
-<span class="fc" id="L191">			return 1;</span>
+<span class="fc" id="L189">			return 1;</span>
 		default:
-<span class="fc" id="L193">			return 0;</span>
+<span class="fc" id="L191">			return 0;</span>
 		}
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L198">		initMap(stringBounder);</span>
-<span class="fc" id="L199">		return minMax.getDimension().delta(padding.getBottom() + padding.getTop());</span>
+<span class="fc" id="L196">		initMap(stringBounder);</span>
+<span class="fc" id="L197">		return minMax.getDimension().delta(padding.getBottom() + padding.getTop());</span>
 	}
 
 	@Override
 	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
-<span class="nc" id="L204">		return null;</span>
+<span class="nc" id="L202">		return null;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L208">		initMap(ug.getStringBounder());</span>
-<span class="pc bpc" id="L209" title="1 of 4 branches missed.">		if (padding.getLeft() &gt; 0 || padding.getTop() &gt; 0)</span>
-<span class="fc" id="L210">			ug = ug.apply(new UTranslate(padding.getLeft(), padding.getTop()));</span>
+<span class="fc" id="L206">		initMap(ug.getStringBounder());</span>
+<span class="pc bpc" id="L207" title="1 of 4 branches missed.">		if (padding.getLeft() &gt; 0 || padding.getTop() &gt; 0)</span>
+<span class="fc" id="L208">			ug = ug.apply(new UTranslate(padding.getLeft(), padding.getTop()));</span>
 
-<span class="fc bfc" id="L212" title="All 2 branches covered.">		for (Stripe stripe : stripes)</span>
-<span class="fc bfc" id="L213" title="All 2 branches covered.">			for (Atom atom : stripe.getAtoms()) {</span>
-<span class="fc" id="L214">				final Position position = positions.get(atom);</span>
-<span class="fc" id="L215">				atom.drawU(position.translate(ug));</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">		for (Stripe stripe : stripes)</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">			for (Atom atom : stripe.getAtoms()) {</span>
+<span class="fc" id="L212">				final Position position = positions.get(atom);</span>
+<span class="fc" id="L213">				atom.drawU(position.translate(ug));</span>
 				// position.drawDebug(ug);
-<span class="fc" id="L217">			}</span>
-<span class="fc" id="L218">	}</span>
+<span class="fc" id="L215">			}</span>
+<span class="fc" id="L216">	}</span>
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L221">		return 0;</span>
+<span class="nc" id="L219">		return 0;</span>
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L225">		return -marginX1;</span>
+<span class="fc" id="L223">		return -marginX1;</span>
 	}
 
 	public double getEndingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L229">		return calculateDimension(stringBounder).getWidth() + marginX2;</span>
+<span class="fc" id="L227">		return calculateDimension(stringBounder).getWidth() + marginX2;</span>
 	}
 
 	public final double getMinimumWidth() {
-<span class="fc" id="L233">		return minimumWidth;</span>
+<span class="fc" id="L231">		return minimumWidth;</span>
 	}
 
 	@Override
 	public List&lt;Neutron&gt; getNeutrons() {
-<span class="nc" id="L238">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L236">		throw new UnsupportedOperationException();</span>
 	}
 
 }

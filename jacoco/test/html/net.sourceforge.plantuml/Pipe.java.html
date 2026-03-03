@@ -146,15 +146,15 @@ public class Pipe {
 
 	private void syntaxCheckDiagram(SourceStringReader sourceStringReader, ExitStatus exitStatus) {
 <span class="fc" id="L148">		final Diagram system = sourceStringReader.getBlocks().get(0).getDiagram();</span>
-<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (system instanceof UmlDiagram) {</span>
-<span class="fc" id="L150">			ps.println(((UmlDiagram) system).getUmlDiagramType().name());</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (system instanceof TitledDiagram) {</span>
+<span class="fc" id="L150">			ps.println(((TitledDiagram) system).getUmlDiagramType().name());</span>
 <span class="fc" id="L151">			ps.println(system.getDescription());</span>
-<span class="fc bfc" id="L152" title="All 2 branches covered.">		} else if (system instanceof PSystemError) {</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		} else if (system instanceof PSystemError) {</span>
 <span class="fc" id="L153">			exitStatus.goesHasErrors();</span>
 <span class="fc" id="L154">			stdrpt.printInfo(ps, system);</span>
 		} else {
-<span class="fc" id="L156">			ps.println(&quot;OTHER&quot;);</span>
-<span class="fc" id="L157">			ps.println(system.getDescription());</span>
+<span class="nc" id="L156">			ps.println(&quot;OTHER&quot;);</span>
+<span class="nc" id="L157">			ps.println(system.getDescription());</span>
 		}
 <span class="fc" id="L159">	}</span>
 

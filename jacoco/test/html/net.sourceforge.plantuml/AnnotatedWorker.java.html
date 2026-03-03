@@ -48,51 +48,51 @@ public class AnnotatedWorker {
 	private final Annotated annotated;
 	private final AnnotatedBuilder builder;
 
-<span class="fc" id="L51">	public AnnotatedWorker(Annotated annotated, AnnotatedBuilder builder) {</span>
-<span class="fc" id="L52">		this.annotated = annotated;</span>
-<span class="fc" id="L53">		this.builder = builder;</span>
-<span class="fc" id="L54">	}</span>
+<span class="nc" id="L51">	public AnnotatedWorker(Annotated annotated, AnnotatedBuilder builder) {</span>
+<span class="nc" id="L52">		this.annotated = annotated;</span>
+<span class="nc" id="L53">		this.builder = builder;</span>
+<span class="nc" id="L54">	}</span>
 
 	public TextBlock addAdd(TextBlock result) {
-<span class="fc" id="L57">		result = builder.decoreWithFrame(result);</span>
-<span class="fc" id="L58">		result = addLegend(result);</span>
-<span class="fc" id="L59">		result = addTitle(result);</span>
-<span class="fc" id="L60">		result = addCaption(result);</span>
-<span class="fc" id="L61">		result = builder.addHeaderAndFooter(result);</span>
-<span class="fc" id="L62">		return (TextBlock) result;</span>
+<span class="nc" id="L57">		result = builder.decoreWithFrame(result);</span>
+<span class="nc" id="L58">		result = addLegend(result);</span>
+<span class="nc" id="L59">		result = addTitle(result);</span>
+<span class="nc" id="L60">		result = addCaption(result);</span>
+<span class="nc" id="L61">		result = builder.addHeaderAndFooter(result);</span>
+<span class="nc" id="L62">		return (TextBlock) result;</span>
 	}
 
 	public TextBlock addLegend(TextBlock original) {
-<span class="fc" id="L66">		final DisplayPositioned legend = annotated.getLegend();</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">		if (legend.isNull())</span>
-<span class="fc" id="L68">			return original;</span>
+<span class="nc" id="L66">		final DisplayPositioned legend = annotated.getLegend();</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (legend.isNull())</span>
+<span class="nc" id="L68">			return original;</span>
 
-<span class="fc" id="L70">		final UGroup group = new UGroup(legend.getLineLocation());</span>
-<span class="fc" id="L71">		group.put(UGroupType.CLASS, &quot;legend&quot;);</span>
+<span class="nc" id="L70">		final UGroup group = new UGroup(legend.getLineLocation());</span>
+<span class="nc" id="L71">		group.put(UGroupType.CLASS, &quot;legend&quot;);</span>
 
-<span class="fc" id="L73">		return DecorateEntityImage.add(group, original, builder.getLegend(), legend.getHorizontalAlignment(),</span>
-<span class="fc" id="L74">				legend.getVerticalAlignment());</span>
+<span class="nc" id="L73">		return DecorateEntityImage.add(group, original, builder.getLegend(), legend.getHorizontalAlignment(),</span>
+<span class="nc" id="L74">				legend.getVerticalAlignment());</span>
 	}
 
 	public TextBlock addTitle(TextBlock original) {
-<span class="fc" id="L78">		final DisplayPositioned title = (DisplayPositioned) annotated.getTitle();</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (title.isNull())</span>
-<span class="fc" id="L80">			return original;</span>
+<span class="nc" id="L78">		final DisplayPositioned title = (DisplayPositioned) annotated.getTitle();</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (title.isNull())</span>
+<span class="nc" id="L80">			return original;</span>
 
-<span class="fc" id="L82">		final UGroup group = new UGroup(title.getLineLocation());</span>
-<span class="fc" id="L83">		group.put(UGroupType.CLASS, &quot;title&quot;);</span>
-<span class="fc" id="L84">		return DecorateEntityImage.addTop(group, original, builder.getTitle(), HorizontalAlignment.CENTER);</span>
+<span class="nc" id="L82">		final UGroup group = new UGroup(title.getLineLocation());</span>
+<span class="nc" id="L83">		group.put(UGroupType.CLASS, &quot;title&quot;);</span>
+<span class="nc" id="L84">		return DecorateEntityImage.addTop(group, original, builder.getTitle(), HorizontalAlignment.CENTER);</span>
 	}
 
 	private TextBlock addCaption(TextBlock original) {
-<span class="fc" id="L88">		final DisplayPositioned caption = annotated.getCaption();</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (caption.isNull())</span>
-<span class="fc" id="L90">			return original;</span>
+<span class="nc" id="L88">		final DisplayPositioned caption = annotated.getCaption();</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (caption.isNull())</span>
+<span class="nc" id="L90">			return original;</span>
 
-<span class="fc" id="L92">		final UGroup group = new UGroup(caption.getLineLocation());</span>
-<span class="fc" id="L93">		group.put(UGroupType.CLASS, &quot;caption&quot;);</span>
+<span class="nc" id="L92">		final UGroup group = new UGroup(caption.getLineLocation());</span>
+<span class="nc" id="L93">		group.put(UGroupType.CLASS, &quot;caption&quot;);</span>
 
-<span class="fc" id="L95">		return DecorateEntityImage.addBottom(group, original, builder.getCaption(), HorizontalAlignment.CENTER);</span>
+<span class="nc" id="L95">		return DecorateEntityImage.addBottom(group, original, builder.getCaption(), HorizontalAlignment.CENTER);</span>
 	}
 
 }

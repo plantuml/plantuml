@@ -35,10 +35,10 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
-import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandNamespaceSeparator extends SingleLineCommand2&lt;AbstractPSystem&gt; {
+public class CommandNamespaceSeparator extends SingleLineCommand2&lt;Diagram&gt; {
 
 <span class="fc" id="L51">	public static final CommandNamespaceSeparator ME = new CommandNamespaceSeparator();</span>
 
@@ -67,7 +67,7 @@ public class CommandNamespaceSeparator extends SingleLineCommand2&lt;AbstractPSy
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractPSystem diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(Diagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 <span class="nc" id="L71">		final String s = arg.get(&quot;SEPARATOR&quot;, 0);</span>
 <span class="nc bnc" id="L72" title="All 2 branches missed.">		if (&quot;none&quot;.equalsIgnoreCase(s))</span>
 <span class="nc" id="L73">			diagram.setNamespaceSeparator(null);</span>

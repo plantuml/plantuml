@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.dedication.PSystemDedicationFactory;
@@ -118,10 +119,9 @@ import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
  * Tries each of the factories (enumerated in the static block below) until one
  * succeeds.
  *
- * @see AbstractPSystem
+ * @see Diagram
  */
-<span class="fc" id="L123">public class PSystemBuilder {</span>
-	
+<span class="fc" id="L124">public class PSystemBuilder {</span>
 
 <span class="fc" id="L126">	public static final long startTime = System.currentTimeMillis();</span>
 
@@ -231,7 +231,7 @@ import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 
 <span class="fc" id="L232">		factories.add(new PSystemDefinitionFactory());</span>
 <span class="fc" id="L233">		factories.add(new ListSpriteDiagramFactory());</span>
-<span class="fc" id="L234">		factories.add(new StdlibDiagramFactory());</span>
+		// factories.add(new StdlibDiagramFactory());
 <span class="fc" id="L235">		factories.add(new PSystemMathFactory(DiagramType.MATH));</span>
 <span class="fc" id="L236">		factories.add(new PSystemLatexFactory(DiagramType.LATEX));</span>
 <span class="fc" id="L237">		factories.add(new PSystemCreoleFactory());</span>

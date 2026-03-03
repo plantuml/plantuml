@@ -42,40 +42,39 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.style.SName;
 
-<span class="fc" id="L50">class USymbolLabel extends USymbol {</span>
+<span class="fc" id="L49">class USymbolLabel extends USymbol {</span>
 
 	@Override
 	public SName[] getSNames() {
-<span class="nc" id="L54">		return new SName[] { SName.label };</span>
+<span class="nc" id="L53">		return new SName[] { SName.label };</span>
 	}
 
 	private Margin getMargin() {
-<span class="nc" id="L58">		return new Margin(10, 10, 10, 10);</span>
+<span class="nc" id="L57">		return new Margin(10, 10, 10, 10);</span>
 	}
 
 	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
 			final Fashion symbolContext, final HorizontalAlignment stereoAlignment) {
-<span class="nc" id="L64">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L63">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L67">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L68">				ug = UGraphicStencil.create(ug, dim);</span>
-<span class="nc" id="L69">				ug = symbolContext.apply(ug);</span>
-<span class="nc" id="L70">				final Margin margin = getMargin();</span>
-<span class="nc" id="L71">				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereoAlignment);</span>
-<span class="nc" id="L72">				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));</span>
-<span class="nc" id="L73">			}</span>
+<span class="nc" id="L66">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L67">				ug = UGraphicStencil.create(ug, dim);</span>
+<span class="nc" id="L68">				ug = symbolContext.apply(ug);</span>
+<span class="nc" id="L69">				final Margin margin = getMargin();</span>
+<span class="nc" id="L70">				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereoAlignment);</span>
+<span class="nc" id="L71">				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));</span>
+<span class="nc" id="L72">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L76">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
-<span class="nc" id="L77">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
-<span class="nc" id="L78">				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));</span>
+<span class="nc" id="L75">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="nc" id="L76">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
+<span class="nc" id="L77">				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));</span>
 			}
 		};
 	}
@@ -84,34 +83,34 @@ import net.sourceforge.plantuml.style.SName;
 	public TextBlock asBig(final TextBlock title, final HorizontalAlignment labelAlignment, final TextBlock stereotype,
 			final double width, final double height, final Fashion symbolContext,
 			final HorizontalAlignment stereoAlignment) {
-<span class="nc" id="L87">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L86">		return new TextBlock() {</span>
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L89">				ug = symbolContext.apply(ug);</span>
-<span class="nc" id="L90">				final XDimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L88">				ug = symbolContext.apply(ug);</span>
+<span class="nc" id="L89">				final XDimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());</span>
 				final double posStereoX;
 				final double posStereoY;
-<span class="nc bnc" id="L93" title="All 2 branches missed.">				if (stereoAlignment == HorizontalAlignment.RIGHT) {</span>
-<span class="nc" id="L94">					posStereoX = width - dimStereo.getWidth() - getMargin().getX1() / 2;</span>
-<span class="nc" id="L95">					posStereoY = getMargin().getY1() / 2;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">				if (stereoAlignment == HorizontalAlignment.RIGHT) {</span>
+<span class="nc" id="L93">					posStereoX = width - dimStereo.getWidth() - getMargin().getX1() / 2;</span>
+<span class="nc" id="L94">					posStereoY = getMargin().getY1() / 2;</span>
 				} else {
-<span class="nc" id="L97">					posStereoX = (width - dimStereo.getWidth()) / 2;</span>
-<span class="nc" id="L98">					posStereoY = 2;</span>
+<span class="nc" id="L96">					posStereoX = (width - dimStereo.getWidth()) / 2;</span>
+<span class="nc" id="L97">					posStereoY = 2;</span>
 				}
-<span class="nc" id="L100">				stereotype.drawU(ug.apply(new UTranslate(posStereoX, posStereoY)));</span>
-<span class="nc" id="L101">				final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L99">				stereotype.drawU(ug.apply(new UTranslate(posStereoX, posStereoY)));</span>
+<span class="nc" id="L100">				final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
 				final double posTitle;
-<span class="nc bnc" id="L103" title="All 2 branches missed.">				if (labelAlignment == HorizontalAlignment.LEFT) {</span>
-<span class="nc" id="L104">					posTitle = 3;</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">				} else if (labelAlignment == HorizontalAlignment.RIGHT) {</span>
-<span class="nc" id="L106">					posTitle = width - dimTitle.getWidth() - 3;</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">				if (labelAlignment == HorizontalAlignment.LEFT) {</span>
+<span class="nc" id="L103">					posTitle = 3;</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">				} else if (labelAlignment == HorizontalAlignment.RIGHT) {</span>
+<span class="nc" id="L105">					posTitle = width - dimTitle.getWidth() - 3;</span>
 				} else {
-<span class="nc" id="L108">					posTitle = (width - dimTitle.getWidth()) / 2;</span>
+<span class="nc" id="L107">					posTitle = (width - dimTitle.getWidth()) / 2;</span>
 				}
-<span class="nc" id="L110">				title.drawU(ug.apply(new UTranslate(posTitle, 2 + dimStereo.getHeight())));</span>
-<span class="nc" id="L111">			}</span>
+<span class="nc" id="L109">				title.drawU(ug.apply(new UTranslate(posTitle, 2 + dimStereo.getHeight())));</span>
+<span class="nc" id="L110">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L114">				return new XDimension2D(width, height);</span>
+<span class="nc" id="L113">				return new XDimension2D(width, height);</span>
 			}
 		};
 	}

@@ -41,26 +41,25 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-class SimpleTextBlockBordered extends AbstractTextBlock implements TextBlock {
-    // ::remove file when __HAXE__
+class SimpleTextBlockBordered implements TextBlock {
 
 	private final TextBlock textBlock;
 	private final HColor color;
 
-<span class="nc" id="L50">	public SimpleTextBlockBordered(TextBlock textBlock, HColor color) {</span>
-<span class="nc" id="L51">		this.textBlock = textBlock;</span>
-<span class="nc" id="L52">		this.color = color;</span>
-<span class="nc" id="L53">	}</span>
+<span class="nc" id="L49">	public SimpleTextBlockBordered(TextBlock textBlock, HColor color) {</span>
+<span class="nc" id="L50">		this.textBlock = textBlock;</span>
+<span class="nc" id="L51">		this.color = color;</span>
+<span class="nc" id="L52">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L56">		final XDimension2D dim = textBlock.calculateDimension(stringBounder);</span>
-<span class="nc" id="L57">		return dim.delta(1, 1);</span>
+<span class="nc" id="L55">		final XDimension2D dim = textBlock.calculateDimension(stringBounder);</span>
+<span class="nc" id="L56">		return dim.delta(1, 1);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L61">		final XDimension2D dim = textBlock.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L62">		textBlock.drawU(ug.apply(new UTranslate(1, 1)));</span>
-<span class="nc" id="L63">		ug.apply(color).draw(URectangle.build(dim.getWidth(), dim.getHeight()));</span>
-<span class="nc" id="L64">	}</span>
+<span class="nc" id="L60">		final XDimension2D dim = textBlock.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L61">		textBlock.drawU(ug.apply(new UTranslate(1, 1)));</span>
+<span class="nc" id="L62">		ug.apply(color).draw(URectangle.build(dim.getWidth(), dim.getHeight()));</span>
+<span class="nc" id="L63">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -72,7 +72,7 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 <span class="nc" id="L72">			return TValue.fromBoolean(false);</span>
 
 <span class="fc" id="L74">		final TValue arg1 = values.get(1);</span>
-<span class="pc bpc" id="L75" title="3 of 6 branches missed.">		if (arg1.isString() || (arg1.isJson() &amp;&amp; arg1.toJson().isString())) {</span>
+<span class="fc bfc" id="L75" title="All 6 branches covered.">		if (arg1.isString() || (arg1.isJson() &amp;&amp; arg1.toJson().isString())) {</span>
 <span class="fc" id="L76">			final String keyname = arg1.toString();</span>
 <span class="fc" id="L77">			final JsonObject object = (JsonObject) json;</span>
 <span class="fc bfc" id="L78" title="All 2 branches covered.">			if (object.contains(keyname))</span>

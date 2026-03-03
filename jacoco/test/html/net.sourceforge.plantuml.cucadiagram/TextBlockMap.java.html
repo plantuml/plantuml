@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
@@ -62,147 +61,146 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 
-public class TextBlockMap extends AbstractTextBlock implements WithPorts {
-    // ::remove folder when __HAXE__
+public class TextBlockMap implements WithPorts, TextBlock {
 
 	private final ISkinParam skinParam;
 	private final FontConfiguration fontConfiguration;
-<span class="nc" id="L70">	private final Map&lt;TextBlock, TextBlock&gt; blocksMap = new LinkedHashMap&lt;&gt;();</span>
-<span class="nc" id="L71">	private final List&lt;String&gt; keys = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L68">	private final Map&lt;TextBlock, TextBlock&gt; blocksMap = new LinkedHashMap&lt;&gt;();</span>
+<span class="nc" id="L69">	private final List&lt;String&gt; keys = new ArrayList&lt;&gt;();</span>
 	private double totalWidth;
 
 	public TextBlockMap(FontConfiguration fontConfiguration, ISkinParam skinParam, Map&lt;String, String&gt; map,
-<span class="nc" id="L75">			LineBreakStrategy wordWrap) {</span>
-<span class="nc" id="L76">		this.skinParam = skinParam;</span>
-<span class="nc" id="L77">		this.fontConfiguration = fontConfiguration;</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		for (Map.Entry&lt;String, String&gt; ent : map.entrySet()) {</span>
-<span class="nc" id="L79">			String key = ent.getKey();</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (VisibilityModifier.isVisibilityCharacter(key))</span>
-<span class="nc" id="L81">				key = key.substring(1);</span>
-<span class="nc" id="L82">			this.keys.add(key);</span>
-<span class="nc" id="L83">			final String value = ent.getValue();</span>
-<span class="nc" id="L84">			final TextBlock block1 = getTextBlock(key, wordWrap);</span>
-<span class="nc" id="L85">			final TextBlock block2 = getTextBlock(value, wordWrap);</span>
-<span class="nc" id="L86">			this.blocksMap.put(block1, block2);</span>
-<span class="nc" id="L87">		}</span>
-<span class="nc" id="L88">	}</span>
+<span class="nc" id="L73">			LineBreakStrategy wordWrap) {</span>
+<span class="nc" id="L74">		this.skinParam = skinParam;</span>
+<span class="nc" id="L75">		this.fontConfiguration = fontConfiguration;</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (Map.Entry&lt;String, String&gt; ent : map.entrySet()) {</span>
+<span class="nc" id="L77">			String key = ent.getKey();</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (VisibilityModifier.isVisibilityCharacter(key))</span>
+<span class="nc" id="L79">				key = key.substring(1);</span>
+<span class="nc" id="L80">			this.keys.add(key);</span>
+<span class="nc" id="L81">			final String value = ent.getValue();</span>
+<span class="nc" id="L82">			final TextBlock block1 = getTextBlock(key, wordWrap);</span>
+<span class="nc" id="L83">			final TextBlock block2 = getTextBlock(value, wordWrap);</span>
+<span class="nc" id="L84">			this.blocksMap.put(block1, block2);</span>
+<span class="nc" id="L85">		}</span>
+<span class="nc" id="L86">	}</span>
 
 	@Override
 	public Ports getPorts(StringBounder stringBounder) {
-<span class="nc" id="L92">		final Ports ports = new Ports();</span>
-<span class="nc" id="L93">		int i = 0;</span>
-<span class="nc" id="L94">		double y = 0;</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		for (Map.Entry&lt;TextBlock, TextBlock&gt; ent : blocksMap.entrySet()) {</span>
-<span class="nc" id="L96">			final TextBlock key = ent.getKey();</span>
-<span class="nc" id="L97">			final TextBlock value = ent.getValue();</span>
-<span class="nc" id="L98">			final double height = getHeightOfRow(stringBounder, key, value);</span>
-<span class="nc" id="L99">			ports.add(keys.get(i), 100, y, height);</span>
-<span class="nc" id="L100">			y += height;</span>
-<span class="nc" id="L101">			i++;</span>
-<span class="nc" id="L102">		}</span>
-<span class="nc" id="L103">		return ports;</span>
+<span class="nc" id="L90">		final Ports ports = new Ports();</span>
+<span class="nc" id="L91">		int i = 0;</span>
+<span class="nc" id="L92">		double y = 0;</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		for (Map.Entry&lt;TextBlock, TextBlock&gt; ent : blocksMap.entrySet()) {</span>
+<span class="nc" id="L94">			final TextBlock key = ent.getKey();</span>
+<span class="nc" id="L95">			final TextBlock value = ent.getValue();</span>
+<span class="nc" id="L96">			final double height = getHeightOfRow(stringBounder, key, value);</span>
+<span class="nc" id="L97">			ports.add(keys.get(i), 100, y, height);</span>
+<span class="nc" id="L98">			y += height;</span>
+<span class="nc" id="L99">			i++;</span>
+<span class="nc" id="L100">		}</span>
+<span class="nc" id="L101">		return ports;</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L107">		return new XDimension2D(getWidthColA(stringBounder) + getWidthColB(stringBounder),</span>
-<span class="nc" id="L108">				getTotalHeight(stringBounder));</span>
+<span class="nc" id="L105">		return new XDimension2D(getWidthColA(stringBounder) + getWidthColB(stringBounder),</span>
+<span class="nc" id="L106">				getTotalHeight(stringBounder));</span>
 	}
 
 	private double getWidthColA(StringBounder stringBounder) {
-<span class="nc" id="L112">		return getMaxWidth(stringBounder, blocksMap.keySet());</span>
+<span class="nc" id="L110">		return getMaxWidth(stringBounder, blocksMap.keySet());</span>
 	}
 
 	private double getWidthColB(StringBounder stringBounder) {
-<span class="nc" id="L116">		return getMaxWidth(stringBounder, blocksMap.values());</span>
+<span class="nc" id="L114">		return getMaxWidth(stringBounder, blocksMap.values());</span>
 	}
 
 	private double getMaxWidth(StringBounder stringBounder, Collection&lt;TextBlock&gt; blocks) {
-<span class="nc" id="L120">		double width = 0;</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		for (TextBlock block : blocks)</span>
-<span class="nc" id="L122">			width = Math.max(width, block.calculateDimension(stringBounder).getWidth());</span>
+<span class="nc" id="L118">		double width = 0;</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		for (TextBlock block : blocks)</span>
+<span class="nc" id="L120">			width = Math.max(width, block.calculateDimension(stringBounder).getWidth());</span>
 
-<span class="nc" id="L124">		return width;</span>
+<span class="nc" id="L122">		return width;</span>
 	}
 
 	public void drawU(final UGraphic ug) {
-<span class="nc" id="L128">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L129">		final XDimension2D fullDim = calculateDimension(stringBounder);</span>
-<span class="nc" id="L130">		final double trueWidth = Math.max(fullDim.getWidth(), totalWidth);</span>
-<span class="nc" id="L131">		final double widthColA = getWidthColA(stringBounder);</span>
-<span class="nc" id="L132">		final double widthColB = getWidthColB(stringBounder);</span>
-<span class="nc" id="L133">		double y = 0;</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">		for (Map.Entry&lt;TextBlock, TextBlock&gt; ent : blocksMap.entrySet()) {</span>
-<span class="nc" id="L135">			final TextBlock key = ent.getKey();</span>
-<span class="nc" id="L136">			final TextBlock value = ent.getValue();</span>
-<span class="nc" id="L137">			final UGraphic ugline = ug.apply(UTranslate.dy(y));</span>
-<span class="nc" id="L138">			ugline.draw(ULine.hline(trueWidth));</span>
-<span class="nc" id="L139">			final double heightOfRow = getHeightOfRow(stringBounder, key, value);</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">			if (value instanceof Point) {</span>
-<span class="nc" id="L141">				final double posColA = (trueWidth - key.calculateDimension(stringBounder).getWidth()) / 2;</span>
-<span class="nc" id="L142">				key.drawU(ugline.apply(UTranslate.dx(posColA)));</span>
-<span class="nc" id="L143">			} else {</span>
-<span class="nc" id="L144">				final double posColA = (widthColA - key.calculateDimension(stringBounder).getWidth()) / 2;</span>
-<span class="nc" id="L145">				key.drawU(ugline.apply(UTranslate.dx(posColA)));</span>
-<span class="nc" id="L146">				value.drawU(ugline.apply(UTranslate.dx(widthColA)));</span>
-<span class="nc" id="L147">				ugline.apply(UTranslate.dx(widthColA)).draw(ULine.vline(heightOfRow));</span>
+<span class="nc" id="L126">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L127">		final XDimension2D fullDim = calculateDimension(stringBounder);</span>
+<span class="nc" id="L128">		final double trueWidth = Math.max(fullDim.getWidth(), totalWidth);</span>
+<span class="nc" id="L129">		final double widthColA = getWidthColA(stringBounder);</span>
+<span class="nc" id="L130">		final double widthColB = getWidthColB(stringBounder);</span>
+<span class="nc" id="L131">		double y = 0;</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		for (Map.Entry&lt;TextBlock, TextBlock&gt; ent : blocksMap.entrySet()) {</span>
+<span class="nc" id="L133">			final TextBlock key = ent.getKey();</span>
+<span class="nc" id="L134">			final TextBlock value = ent.getValue();</span>
+<span class="nc" id="L135">			final UGraphic ugline = ug.apply(UTranslate.dy(y));</span>
+<span class="nc" id="L136">			ugline.draw(ULine.hline(trueWidth));</span>
+<span class="nc" id="L137">			final double heightOfRow = getHeightOfRow(stringBounder, key, value);</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">			if (value instanceof Point) {</span>
+<span class="nc" id="L139">				final double posColA = (trueWidth - key.calculateDimension(stringBounder).getWidth()) / 2;</span>
+<span class="nc" id="L140">				key.drawU(ugline.apply(UTranslate.dx(posColA)));</span>
+<span class="nc" id="L141">			} else {</span>
+<span class="nc" id="L142">				final double posColA = (widthColA - key.calculateDimension(stringBounder).getWidth()) / 2;</span>
+<span class="nc" id="L143">				key.drawU(ugline.apply(UTranslate.dx(posColA)));</span>
+<span class="nc" id="L144">				value.drawU(ugline.apply(UTranslate.dx(widthColA)));</span>
+<span class="nc" id="L145">				ugline.apply(UTranslate.dx(widthColA)).draw(ULine.vline(heightOfRow));</span>
 			}
-<span class="nc" id="L149">			y += heightOfRow;</span>
-<span class="nc" id="L150">		}</span>
-<span class="nc" id="L151">	}</span>
+<span class="nc" id="L147">			y += heightOfRow;</span>
+<span class="nc" id="L148">		}</span>
+<span class="nc" id="L149">	}</span>
 
 	private double getTotalHeight(StringBounder stringBounder) {
-<span class="nc" id="L154">		double height = 0;</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		for (Map.Entry&lt;TextBlock, TextBlock&gt; ent : blocksMap.entrySet()) {</span>
-<span class="nc" id="L156">			final TextBlock key = ent.getKey();</span>
-<span class="nc" id="L157">			final TextBlock value = ent.getValue();</span>
-<span class="nc" id="L158">			height += getHeightOfRow(stringBounder, key, value);</span>
-<span class="nc" id="L159">		}</span>
-<span class="nc" id="L160">		return height;</span>
+<span class="nc" id="L152">		double height = 0;</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		for (Map.Entry&lt;TextBlock, TextBlock&gt; ent : blocksMap.entrySet()) {</span>
+<span class="nc" id="L154">			final TextBlock key = ent.getKey();</span>
+<span class="nc" id="L155">			final TextBlock value = ent.getValue();</span>
+<span class="nc" id="L156">			height += getHeightOfRow(stringBounder, key, value);</span>
+<span class="nc" id="L157">		}</span>
+<span class="nc" id="L158">		return height;</span>
 	}
 
 	private double getHeightOfRow(StringBounder stringBounder, TextBlock key, TextBlock value) {
-<span class="nc" id="L164">		return Math.max(key.calculateDimension(stringBounder).getHeight(),</span>
-<span class="nc" id="L165">				value.calculateDimension(stringBounder).getHeight());</span>
+<span class="nc" id="L162">		return Math.max(key.calculateDimension(stringBounder).getHeight(),</span>
+<span class="nc" id="L163">				value.calculateDimension(stringBounder).getHeight());</span>
 	}
 
 	private TextBlock getTextBlock(String key, LineBreakStrategy wordWrap) {
-<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (key.equals(&quot;\0&quot;))</span>
-<span class="nc" id="L170">			return new Point(fontConfiguration.getColor());</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (key.equals(&quot;\0&quot;))</span>
+<span class="nc" id="L168">			return new Point(fontConfiguration.getColor());</span>
 
-<span class="nc" id="L172">		final Display display = Display.getWithNewlines(skinParam.getPragma(), key);</span>
-<span class="nc" id="L173">		TextBlock result = display.create0(fontConfiguration, HorizontalAlignment.LEFT, skinParam, wordWrap,</span>
+<span class="nc" id="L170">		final Display display = Display.getWithNewlines(skinParam.getPragma(), key);</span>
+<span class="nc" id="L171">		TextBlock result = display.create0(fontConfiguration, HorizontalAlignment.LEFT, skinParam, wordWrap,</span>
 				CreoleMode.FULL, null, null);
-<span class="nc" id="L175">		result = TextBlockUtils.withMargin(result, 5, 2);</span>
-<span class="nc" id="L176">		return result;</span>
+<span class="nc" id="L173">		result = TextBlockUtils.withMargin(result, 5, 2);</span>
+<span class="nc" id="L174">		return result;</span>
 	}
 
-	static class Point extends AbstractTextBlock {
+	static class Point implements TextBlock {
 
 		private final HColor color;
 
-<span class="nc" id="L183">		public Point(HColor color) {</span>
-<span class="nc" id="L184">			this.color = color;</span>
-<span class="nc" id="L185">		}</span>
+<span class="nc" id="L181">		public Point(HColor color) {</span>
+<span class="nc" id="L182">			this.color = color;</span>
+<span class="nc" id="L183">		}</span>
 
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L188">			return new XDimension2D(getDiameter(), getDiameter());</span>
+<span class="nc" id="L186">			return new XDimension2D(getDiameter(), getDiameter());</span>
 		}
 
 		public void drawU(UGraphic ug) {
-<span class="nc" id="L192">			final UShape point = UEllipse.build(getDiameter(), getDiameter());</span>
-<span class="nc" id="L193">			ug = ug.apply(color).apply(color.bg());</span>
-<span class="nc" id="L194">			ug.draw(point);</span>
-<span class="nc" id="L195">		}</span>
+<span class="nc" id="L190">			final UShape point = UEllipse.build(getDiameter(), getDiameter());</span>
+<span class="nc" id="L191">			ug = ug.apply(color).apply(color.bg());</span>
+<span class="nc" id="L192">			ug.draw(point);</span>
+<span class="nc" id="L193">		}</span>
 
 		private double getDiameter() {
-<span class="nc" id="L198">			return 7;</span>
+<span class="nc" id="L196">			return 7;</span>
 		}
 
 	}
 
 	public void setTotalWidth(double totalWidth) {
-<span class="nc" id="L204">		this.totalWidth = totalWidth;</span>
-<span class="nc" id="L205">	}</span>
+<span class="nc" id="L202">		this.totalWidth = totalWidth;</span>
+<span class="nc" id="L203">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

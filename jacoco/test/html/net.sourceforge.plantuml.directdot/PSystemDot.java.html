@@ -39,7 +39,7 @@ import java.io.OutputStream;
 import java.util.Arrays;
 
 import net.atmp.ImageBuilder;
-import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.DirectOsDiagram;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FileImageData;
@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-public class PSystemDot extends AbstractPSystem {
+public class PSystemDot extends DirectOsDiagram {
 	
 
 	private final String data;

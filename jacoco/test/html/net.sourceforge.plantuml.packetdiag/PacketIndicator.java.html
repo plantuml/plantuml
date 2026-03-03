@@ -48,13 +48,12 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.nwdiag.VerticalLine;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
-public class PacketIndicator extends AbstractTextBlock {
+public class PacketIndicator implements TextBlock {
 
 	public static final double V_LINE_FULL = 32D;
 
@@ -70,71 +69,66 @@ public class PacketIndicator extends AbstractTextBlock {
 
 	private final ISkinParam skinParam;
 
-<span class="nc" id="L73">	public PacketIndicator(boolean full, boolean numbered, int bitNumber, Style style, ISkinParam skinParam) {</span>
-<span class="nc" id="L74">		this.full = full;</span>
-<span class="nc" id="L75">		this.numbered = numbered;</span>
-<span class="nc" id="L76">		this.style = style;</span>
-<span class="nc" id="L77">		this.bitNumber = bitNumber + &quot;&quot;;</span>
-<span class="nc" id="L78">		this.skinParam = skinParam;</span>
-<span class="nc" id="L79">	}</span>
+<span class="nc" id="L72">	public PacketIndicator(boolean full, boolean numbered, int bitNumber, Style style, ISkinParam skinParam) {</span>
+<span class="nc" id="L73">		this.full = full;</span>
+<span class="nc" id="L74">		this.numbered = numbered;</span>
+<span class="nc" id="L75">		this.style = style;</span>
+<span class="nc" id="L76">		this.bitNumber = bitNumber + &quot;&quot;;</span>
+<span class="nc" id="L77">		this.skinParam = skinParam;</span>
+<span class="nc" id="L78">	}</span>
 
 	@Override
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L83">		TextBlock numberTb = numberTb();</span>
+<span class="nc" id="L82">		TextBlock numberTb = numberTb();</span>
 		// number dimension is always calculated for consistent padding
-<span class="nc" id="L85">		XDimension2D numberDim = numberTb.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L84">		XDimension2D numberDim = numberTb.calculateDimension(ug.getStringBounder());</span>
 
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		double lineOffsetY = full ? 0 : V_LINE_SHORT;</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		double lineLength = full ? V_LINE_FULL : V_LINE_SHORT;</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (numbered) {</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">			double numberYOffset = full ? 0 : V_LINE_SHORT;</span>
-<span class="nc" id="L91">			numberTb.drawU(ug.apply(new UTranslate(-numberDim.getWidth() / 2, numberYOffset)));</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		double lineOffsetY = full ? 0 : V_LINE_SHORT;</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		double lineLength = full ? V_LINE_FULL : V_LINE_SHORT;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (numbered) {</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			double numberYOffset = full ? 0 : V_LINE_SHORT;</span>
+<span class="nc" id="L90">			numberTb.drawU(ug.apply(new UTranslate(-numberDim.getWidth() / 2, numberYOffset)));</span>
 		}
-<span class="nc" id="L93">		TextBlock vLineTb = vLineTb(lineOffsetY, lineLength);</span>
-<span class="nc" id="L94">		vLineTb.drawU(ug.apply(UTranslate.dy(numberDim.getHeight())));</span>
-<span class="nc" id="L95">	}</span>
+<span class="nc" id="L92">		TextBlock vLineTb = vLineTb(lineOffsetY, lineLength);</span>
+<span class="nc" id="L93">		vLineTb.drawU(ug.apply(UTranslate.dy(numberDim.getHeight())));</span>
+<span class="nc" id="L94">	}</span>
 
 	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L99">		XDimension2D numberDim = numberTb().calculateDimension(stringBounder);</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		double vLineHeight = full ? V_LINE_FULL : V_LINE_SHORT;</span>
-<span class="nc" id="L101">		return numberDim.mergeTB(new XDimension2D(0D, vLineHeight));</span>
+<span class="nc" id="L98">		XDimension2D numberDim = numberTb().calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		double vLineHeight = full ? V_LINE_FULL : V_LINE_SHORT;</span>
+<span class="nc" id="L100">		return numberDim.mergeTB(new XDimension2D(0D, vLineHeight));</span>
 	}
 
 	TextBlock numberTb() {
-<span class="nc" id="L105">		FontConfiguration fg = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L106">		return createNumberTextBlock(fg, skinParam, bitNumber);</span>
+<span class="nc" id="L104">		FontConfiguration fg = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L105">		return createNumberTextBlock(fg, skinParam, bitNumber);</span>
 	}
 
 	TextBlock vLineTb(double y, double height) {
-<span class="nc" id="L110">		return createVLineTextBlock(style, skinParam, y, height);</span>
+<span class="nc" id="L109">		return createVLineTextBlock(style, skinParam, y, height);</span>
 	}
 
 	public static TextBlock createNumberTextBlock(FontConfiguration fg, ISkinParam skinParam, CharSequence... s) {
-<span class="nc" id="L114">		return Display.create(s).create8(</span>
-						fg,
-						HorizontalAlignment.LEFT,
-						skinParam,
-						CreoleMode.NO_CREOLE,
-						LineBreakStrategy.NONE
-		);
+<span class="nc" id="L113">		return Display.create(s).create8(fg, HorizontalAlignment.LEFT, skinParam, CreoleMode.NO_CREOLE,</span>
+				LineBreakStrategy.NONE);
 	}
 
 	public static TextBlock createVLineTextBlock(Style style, ISkinParam skinParam, double y, double height) {
-<span class="nc" id="L124">		final HColor lineColor = style.getSymbolContext(skinParam.getIHtmlColorSet()).getForeColor();</span>
-<span class="nc" id="L125">		final UStroke stroke = style.getStroke();</span>
-<span class="nc" id="L126">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L118">		final HColor lineColor = style.getSymbolContext(skinParam.getIHtmlColorSet()).getForeColor();</span>
+<span class="nc" id="L119">		final UStroke stroke = style.getStroke();</span>
+<span class="nc" id="L120">		return new TextBlock() {</span>
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L129">				return new XDimension2D(stroke.getThickness(), height);</span>
+<span class="nc" id="L123">				return new XDimension2D(stroke.getThickness(), height);</span>
 			}
 
 			@Override
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L134">				ug = ug.apply(lineColor).apply(stroke);</span>
-<span class="nc" id="L135">				VerticalLine vLine = new VerticalLine(y, y + height, Collections.emptySet());</span>
-<span class="nc" id="L136">				vLine.drawU(ug);</span>
-<span class="nc" id="L137">			}</span>
+<span class="nc" id="L128">				ug = ug.apply(lineColor).apply(stroke);</span>
+<span class="nc" id="L129">				VerticalLine vLine = new VerticalLine(y, y + height, Collections.emptySet());</span>
+<span class="nc" id="L130">				vLine.drawU(ug);</span>
+<span class="nc" id="L131">			}</span>
 		};
 	}
 }

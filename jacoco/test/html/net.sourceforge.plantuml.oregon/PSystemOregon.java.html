@@ -47,6 +47,8 @@ import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
@@ -57,57 +59,62 @@ public class PSystemOregon extends PlainDiagram {
 
 	@Deprecated
 	public PSystemOregon(UmlSource source, Keyboard keyboard, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L60">		super(source, preprocessing);</span>
-<span class="nc" id="L61">		final BasicGame game = new OregonBasicGame();</span>
+<span class="nc" id="L62">		super(source, preprocessing);</span>
+<span class="nc" id="L63">		final BasicGame game = new OregonBasicGame();</span>
 		try {
-<span class="nc" id="L63">			game.run(keyboard);</span>
-<span class="nc" id="L64">			this.screen = game.getScreen();</span>
+<span class="nc" id="L65">			game.run(keyboard);</span>
+<span class="nc" id="L66">			this.screen = game.getScreen();</span>
 			// this.screen = new Screen();
 			// screen.print(&quot;Game ended??&quot;);
-<span class="nc" id="L67">		} catch (NoInputException e) {</span>
-<span class="nc" id="L68">			this.screen = game.getScreen();</span>
-<span class="nc" id="L69">		}</span>
-<span class="nc" id="L70">	}</span>
+<span class="nc" id="L69">		} catch (NoInputException e) {</span>
+<span class="nc" id="L70">			this.screen = game.getScreen();</span>
+<span class="nc" id="L71">		}</span>
+<span class="nc" id="L72">	}</span>
 
 	@Override
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L74">		return super.createImageBuilder(fileFormatOption).blackBackcolor();</span>
+<span class="nc" id="L76">		return super.createImageBuilder(fileFormatOption).blackBackcolor();</span>
+	}
+
+	@Override
+	public HColor calculateBackColor() {
+<span class="nc" id="L81">		return HColors.BLACK;</span>
 	}
 
 	public PSystemOregon(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L78">		super(source, preprocessing);</span>
-<span class="nc" id="L79">		this.inputs = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L80">	}</span>
+<span class="nc" id="L85">		super(source, preprocessing);</span>
+<span class="nc" id="L86">		this.inputs = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L87">	}</span>
 
 	public void add(String line) {
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(line)) {</span>
-<span class="nc" id="L84">			inputs.add(line);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(line)) {</span>
+<span class="nc" id="L91">			inputs.add(line);</span>
 		}
-<span class="nc" id="L86">	}</span>
+<span class="nc" id="L93">	}</span>
 
 	private Screen getScreen() {
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (screen == null) {</span>
-<span class="nc" id="L90">			final Keyboard keyboard = new KeyboardList(inputs);</span>
-<span class="nc" id="L91">			final BasicGame game = new OregonBasicGame();</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (screen == null) {</span>
+<span class="nc" id="L97">			final Keyboard keyboard = new KeyboardList(inputs);</span>
+<span class="nc" id="L98">			final BasicGame game = new OregonBasicGame();</span>
 			try {
-<span class="nc" id="L93">				game.run(keyboard);</span>
-<span class="nc" id="L94">				this.screen = game.getScreen();</span>
+<span class="nc" id="L100">				game.run(keyboard);</span>
+<span class="nc" id="L101">				this.screen = game.getScreen();</span>
 				// this.screen = new Screen();
 				// screen.print(&quot;Game ended??&quot;);
-<span class="nc" id="L97">			} catch (NoInputException e) {</span>
-<span class="nc" id="L98">				this.screen = game.getScreen();</span>
-<span class="nc" id="L99">			}</span>
+<span class="nc" id="L104">			} catch (NoInputException e) {</span>
+<span class="nc" id="L105">				this.screen = game.getScreen();</span>
+<span class="nc" id="L106">			}</span>
 		}
-<span class="nc" id="L101">		return screen;</span>
+<span class="nc" id="L108">		return screen;</span>
 	}
 
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L106">		return createGreenOnBlackMonospaced(getScreen().getLines());</span>
+<span class="nc" id="L113">		return createGreenOnBlackMonospaced(getScreen().getLines());</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L110">		return new DiagramDescription(&quot;(The Oregon Trail)&quot;);</span>
+<span class="nc" id="L117">		return new DiagramDescription(&quot;(The Oregon Trail)&quot;);</span>
 	}
 
 }

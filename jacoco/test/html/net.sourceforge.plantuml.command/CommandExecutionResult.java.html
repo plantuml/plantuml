@@ -38,16 +38,16 @@ package net.sourceforge.plantuml.command;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.core.Diagram;
 
 public class CommandExecutionResult {
 
 	private final String error;
-	private final AbstractPSystem newDiagram;
+	private final Diagram newDiagram;
 	private final List&lt;String&gt; debugLines;
 	private final int score;
 
-<span class="fc" id="L50">	private CommandExecutionResult(AbstractPSystem newDiagram, String error, int score, List&lt;String&gt; debugLines) {</span>
+<span class="fc" id="L50">	private CommandExecutionResult(Diagram newDiagram, String error, int score, List&lt;String&gt; debugLines) {</span>
 <span class="fc" id="L51">		this.error = error;</span>
 <span class="fc" id="L52">		this.newDiagram = newDiagram;</span>
 <span class="fc" id="L53">		this.debugLines = debugLines;</span>
@@ -55,7 +55,7 @@ public class CommandExecutionResult {
 
 <span class="fc" id="L56">	}</span>
 
-	public CommandExecutionResult withDiagram(AbstractPSystem newDiagram) {
+	public CommandExecutionResult withDiagram(Diagram newDiagram) {
 <span class="nc" id="L59">		return new CommandExecutionResult(newDiagram, error, 0, null);</span>
 	}
 
@@ -64,7 +64,7 @@ public class CommandExecutionResult {
 <span class="nc" id="L64">		return super.toString() + &quot; &quot; + error;</span>
 	}
 
-	public static CommandExecutionResult newDiagram(AbstractPSystem result) {
+	public static CommandExecutionResult newDiagram(Diagram result) {
 <span class="nc" id="L68">		return new CommandExecutionResult(result, null, 0, null);</span>
 	}
 
@@ -120,7 +120,7 @@ public class CommandExecutionResult {
 <span class="fc" id="L120">		return score;</span>
 	}
 
-	public AbstractPSystem getNewDiagram() {
+	public Diagram getNewDiagram() {
 <span class="fc" id="L124">		return newDiagram;</span>
 	}
 

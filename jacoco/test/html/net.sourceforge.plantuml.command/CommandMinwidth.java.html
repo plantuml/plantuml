@@ -35,14 +35,14 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandMinwidth extends SingleLineCommand2&lt;UmlDiagram&gt; {
+public class CommandMinwidth extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
 <span class="fc" id="L47">	public static final CommandMinwidth ME = new CommandMinwidth();</span>
 
@@ -58,9 +58,9 @@ public class CommandMinwidth extends SingleLineCommand2&lt;UmlDiagram&gt; {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 <span class="nc" id="L62">		final int minwidth = Integer.parseInt(arg.get(&quot;VALUE&quot;, 0));</span>
-<span class="nc" id="L63">		diagram.setMinwidth(minwidth);</span>
+		// diagram.setMinwidth(minwidth);
 <span class="nc" id="L64">		return CommandExecutionResult.ok();</span>
 	}
 

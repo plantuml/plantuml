@@ -230,7 +230,7 @@ public class TextGrid {
 <span class="nc" id="L230">			+StringUtils.repeatString(&quot;0123456789&quot;, (int) Math.floor(getWidth()/10)+1));</span>
 <span class="nc bnc" id="L231" title="All 2 branches missed.">		while(it.hasNext()){</span>
 <span class="nc" id="L232">			String row = it.next().toString();</span>
-<span class="nc" id="L233">			String index = new Integer(i).toString();</span>
+<span class="nc" id="L233">			String index = Integer.toString(i);</span>
 <span class="nc bnc" id="L234" title="All 2 branches missed.">			if(i &lt; 10) index = &quot; &quot;+index;</span>
 <span class="nc" id="L235">			System.out.println(index+&quot; (&quot;+row+&quot;)&quot;);</span>
 <span class="nc" id="L236">			i++; </span>
@@ -246,7 +246,7 @@ public class TextGrid {
 <span class="nc" id="L246">			+StringUtils.repeatString(&quot;0123456789&quot;, (int) Math.floor(getWidth()/10)+1)+&quot;\n&quot;);</span>
 <span class="nc bnc" id="L247" title="All 2 branches missed.">		while(it.hasNext()){</span>
 <span class="nc" id="L248">			String row = it.next().toString();</span>
-<span class="nc" id="L249">			String index = new Integer(i).toString();</span>
+<span class="nc" id="L249">			String index = Integer.toString(i);</span>
 <span class="nc bnc" id="L250" title="All 2 branches missed.">			if(i &lt; 10) index = &quot; &quot;+index;</span>
 <span class="nc" id="L251">			row = row.replaceAll(&quot;\n&quot;, &quot;\\\\n&quot;);</span>
 <span class="nc" id="L252">			row = row.replaceAll(&quot;\r&quot;, &quot;\\\\r&quot;);</span>

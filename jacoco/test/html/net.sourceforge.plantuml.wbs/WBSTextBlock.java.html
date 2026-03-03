@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.ULine;
@@ -54,23 +53,24 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-abstract class WBSTextBlock extends AbstractTextBlock {
+abstract class WBSTextBlock implements TextBlock {
 
 	protected final ISkinParam skinParam;
 	private final Stereotype stereotype;
 	private final StyleBuilder styleBuilder;
 	private final int level;
 
-<span class="fc" id="L64">	public WBSTextBlock(ISkinParam skinParam, StyleBuilder styleBuilder, int level, Stereotype stereotype) {</span>
-<span class="fc" id="L65">		this.skinParam = skinParam;</span>
-<span class="fc" id="L66">		this.styleBuilder = styleBuilder;</span>
-<span class="fc" id="L67">		this.level = level;</span>
-<span class="fc" id="L68">		this.stereotype = stereotype;</span>
-<span class="fc" id="L69">	}</span>
+<span class="fc" id="L63">	public WBSTextBlock(ISkinParam skinParam, StyleBuilder styleBuilder, int level, Stereotype stereotype) {</span>
+<span class="fc" id="L64">		this.skinParam = skinParam;</span>
+<span class="fc" id="L65">		this.styleBuilder = styleBuilder;</span>
+<span class="fc" id="L66">		this.level = level;</span>
+<span class="fc" id="L67">		this.stereotype = stereotype;</span>
+<span class="fc" id="L68">	}</span>
 
 	private Style getStyleUsed() {
-<span class="fc" id="L72">		final StyleSignature signature = StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.arrow)</span>
-<span class="fc" id="L73">				.addLevel(level).withTOBECHANGED(stereotype);</span>
+<span class="fc" id="L71">		final StyleSignature signature = StyleSignatureBasic</span>
+<span class="fc" id="L72">				.of(SName.root, SName.element, SName.wbsDiagram, SName.arrow).addLevel(level)</span>
+<span class="fc" id="L73">				.withTOBECHANGED(stereotype);</span>
 <span class="fc" id="L74">		return signature.getMergedStyle(styleBuilder);</span>
 	}
 

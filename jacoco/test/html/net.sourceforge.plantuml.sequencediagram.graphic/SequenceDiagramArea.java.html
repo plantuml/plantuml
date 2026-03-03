@@ -66,18 +66,18 @@ public class SequenceDiagramArea {
 	private HorizontalAlignment legendHorizontalAlignment;
 
 	public void setLegend(XDimension2D dimLegend, boolean isLegendTop, HorizontalAlignment horizontalAlignment) {
-<span class="fc" id="L69">		this.legendHorizontalAlignment = horizontalAlignment;</span>
-<span class="fc" id="L70">		this.legendWidth = dimLegend.getWidth();</span>
-<span class="fc" id="L71">		this.legendHeight = dimLegend.getHeight();</span>
-<span class="fc" id="L72">		this.isLegendTop = isLegendTop;</span>
-<span class="fc" id="L73">	}</span>
+<span class="nc" id="L69">		this.legendHorizontalAlignment = horizontalAlignment;</span>
+<span class="nc" id="L70">		this.legendWidth = dimLegend.getWidth();</span>
+<span class="nc" id="L71">		this.legendHeight = dimLegend.getHeight();</span>
+<span class="nc" id="L72">		this.isLegendTop = isLegendTop;</span>
+<span class="nc" id="L73">	}</span>
 
 	public double getLegendWidth() {
-<span class="fc" id="L76">		return legendWidth;</span>
+<span class="nc" id="L76">		return legendWidth;</span>
 	}
 
 	public boolean hasLegend() {
-<span class="pc bpc" id="L80" title="3 of 4 branches missed.">		return legendHeight &gt; 0 &amp;&amp; legendWidth &gt; 0;</span>
+<span class="nc bnc" id="L80" title="All 4 branches missed.">		return legendHeight &gt; 0 &amp;&amp; legendWidth &gt; 0;</span>
 	}
 
 	public double getLegendX() {
@@ -90,24 +90,24 @@ public class SequenceDiagramArea {
 
 	}
 
-<span class="fc" id="L93">	public SequenceDiagramArea(double width, double height) {</span>
-<span class="fc" id="L94">		this.sequenceWidth = width;</span>
-<span class="fc" id="L95">		this.sequenceHeight = height;</span>
-<span class="fc" id="L96">	}</span>
+<span class="nc" id="L93">	public SequenceDiagramArea(double width, double height) {</span>
+<span class="nc" id="L94">		this.sequenceWidth = width;</span>
+<span class="nc" id="L95">		this.sequenceHeight = height;</span>
+<span class="nc" id="L96">	}</span>
 
 	public void setTitleArea(double width, double height) {
-<span class="fc" id="L99">		this.titleWidth = width;</span>
-<span class="fc" id="L100">		this.titleHeight = height;</span>
-<span class="fc" id="L101">	}</span>
+<span class="nc" id="L99">		this.titleWidth = width;</span>
+<span class="nc" id="L100">		this.titleHeight = height;</span>
+<span class="nc" id="L101">	}</span>
 
 	private void setCaptionArea(double width, double height) {
-<span class="fc" id="L104">		this.captionWidth = width;</span>
-<span class="fc" id="L105">		this.captionHeight = height;</span>
-<span class="fc" id="L106">	}</span>
+<span class="nc" id="L104">		this.captionWidth = width;</span>
+<span class="nc" id="L105">		this.captionHeight = height;</span>
+<span class="nc" id="L106">	}</span>
 
 	public void setCaptionArea(XDimension2D dim) {
-<span class="fc" id="L109">		setCaptionArea(dim.getWidth(), dim.getHeight());</span>
-<span class="fc" id="L110">	}</span>
+<span class="nc" id="L109">		setCaptionArea(dim.getWidth(), dim.getHeight());</span>
+<span class="nc" id="L110">	}</span>
 
 	public void setHeaderArea(double headerWidth, double headerHeight, double headerMargin) {
 <span class="nc" id="L113">		this.headerWidth = headerWidth;</span>
@@ -116,13 +116,13 @@ public class SequenceDiagramArea {
 <span class="nc" id="L116">	}</span>
 
 	public void setFooterArea(double footerWidth, double footerHeight, double footerMargin) {
-<span class="fc" id="L119">		this.footerWidth = footerWidth;</span>
-<span class="fc" id="L120">		this.footerHeight = footerHeight;</span>
-<span class="fc" id="L121">		this.footerMargin = footerMargin;</span>
-<span class="fc" id="L122">	}</span>
+<span class="nc" id="L119">		this.footerWidth = footerWidth;</span>
+<span class="nc" id="L120">		this.footerHeight = footerHeight;</span>
+<span class="nc" id="L121">		this.footerMargin = footerMargin;</span>
+<span class="nc" id="L122">	}</span>
 
 	public double getWidth() {
-<span class="fc" id="L125">		return MathUtils.max(sequenceWidth, headerWidth, titleWidth, footerWidth, captionWidth);</span>
+<span class="nc" id="L125">		return MathUtils.max(sequenceWidth, headerWidth, titleWidth, footerWidth, captionWidth);</span>
 	}
 
 	public double getHeight() {
@@ -131,11 +131,11 @@ public class SequenceDiagramArea {
 	}
 
 	public double getFooterY() {
-<span class="fc" id="L134">		return sequenceHeight + headerHeight + headerMargin + titleHeight + footerMargin + captionHeight + legendHeight;</span>
+<span class="nc" id="L134">		return sequenceHeight + headerHeight + headerMargin + titleHeight + footerMargin + captionHeight + legendHeight;</span>
 	}
 
 	public double getCaptionY() {
-<span class="fc" id="L138">		return sequenceHeight + headerHeight + headerMargin + titleHeight + legendHeight;</span>
+<span class="nc" id="L138">		return sequenceHeight + headerHeight + headerMargin + titleHeight + legendHeight;</span>
 	}
 
 	public double getLegendY() {
@@ -147,11 +147,11 @@ public class SequenceDiagramArea {
 	}
 
 	public double getTitleX() {
-<span class="fc" id="L150">		return (getWidth() - titleWidth) / 2;</span>
+<span class="nc" id="L150">		return (getWidth() - titleWidth) / 2;</span>
 	}
 
 	public double getTitleY() {
-<span class="fc" id="L154">		return headerHeight + headerMargin;</span>
+<span class="nc" id="L154">		return headerHeight + headerMargin;</span>
 	}
 
 	public double getHeaderHeightMargin() {
@@ -159,18 +159,18 @@ public class SequenceDiagramArea {
 	}
 
 	public double getCaptionX() {
-<span class="fc" id="L162">		return (getWidth() - captionWidth) / 2;</span>
+<span class="nc" id="L162">		return (getWidth() - captionWidth) / 2;</span>
 	}
 
 	public double getSequenceAreaX() {
-<span class="fc" id="L166">		return (getWidth() - sequenceWidth) / 2;</span>
+<span class="nc" id="L166">		return (getWidth() - sequenceWidth) / 2;</span>
 	}
 
 	public double getSequenceAreaY() {
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (isLegendTop)</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (isLegendTop)</span>
 <span class="nc" id="L171">			return getTitleY() + titleHeight + legendHeight;</span>
 
-<span class="fc" id="L173">		return getTitleY() + titleHeight;</span>
+<span class="nc" id="L173">		return getTitleY() + titleHeight;</span>
 	}
 
 	public double getHeaderY() {
@@ -178,14 +178,14 @@ public class SequenceDiagramArea {
 	}
 
 	public double getFooterX(HorizontalAlignment align) {
-<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (align == HorizontalAlignment.LEFT)</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (align == HorizontalAlignment.LEFT)</span>
 <span class="nc" id="L182">			return 0;</span>
 
-<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (align == HorizontalAlignment.RIGHT)</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (align == HorizontalAlignment.RIGHT)</span>
 <span class="nc" id="L185">			return getWidth() - footerWidth;</span>
 
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		if (align == HorizontalAlignment.CENTER)</span>
-<span class="fc" id="L188">			return (getWidth() - footerWidth) / 2;</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		if (align == HorizontalAlignment.CENTER)</span>
+<span class="nc" id="L188">			return (getWidth() - footerWidth) / 2;</span>
 
 <span class="nc" id="L190">		throw new IllegalStateException();</span>
 	}
@@ -204,18 +204,18 @@ public class SequenceDiagramArea {
 	}
 
 	public void initFooter(PngTitler pngTitler, StringBounder stringBounder) {
-<span class="fc" id="L207">		final XDimension2D dim = pngTitler.getTextDimension(stringBounder);</span>
-<span class="fc bfc" id="L208" title="All 2 branches covered.">		if (dim != null)</span>
-<span class="fc" id="L209">			setFooterArea(dim.getWidth(), dim.getHeight(), 0);</span>
+<span class="nc" id="L207">		final XDimension2D dim = pngTitler.getTextDimension(stringBounder);</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (dim != null)</span>
+<span class="nc" id="L209">			setFooterArea(dim.getWidth(), dim.getHeight(), 0);</span>
 
-<span class="fc" id="L211">	}</span>
+<span class="nc" id="L211">	}</span>
 
 	public void initHeader(PngTitler pngTitler, StringBounder stringBounder) {
-<span class="fc" id="L214">		final XDimension2D dim = pngTitler.getTextDimension(stringBounder);</span>
-<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if (dim != null)</span>
+<span class="nc" id="L214">		final XDimension2D dim = pngTitler.getTextDimension(stringBounder);</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">		if (dim != null)</span>
 <span class="nc" id="L216">			setHeaderArea(dim.getWidth(), dim.getHeight(), 0);</span>
 
-<span class="fc" id="L218">	}</span>
+<span class="nc" id="L218">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -64,10 +64,10 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 
 <span class="fc" id="L65">	}</span>
 
-	public ImageData createFile(OutputStream os, List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)
+	public ImageData createFile01970(OutputStream os, List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)
 			throws IOException {
 		try {
-<span class="fc" id="L70">			return createFileInternal(os, dotStrings, fileFormatOption);</span>
+<span class="nc" id="L70">			return createFileInternal(os, dotStrings, fileFormatOption);</span>
 <span class="nc" id="L71">		} catch (InterruptedException e) {</span>
 <span class="nc" id="L72">			Logme.error(e);</span>
 <span class="nc" id="L73">			throw new IOException(e);</span>
@@ -75,12 +75,12 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 	}
 
 	@Override
-	public void createOneGraphic(UGraphic ug) {
+	public void createOneGraphic01970(UGraphic ug) {
 <span class="nc" id="L79">		throw new UnsupportedOperationException();</span>
 	}
-
-	private ImageData createFileInternal(OutputStream os, List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)
-			throws IOException, InterruptedException {
+	
+	@Override
+	public TextBlock getTextBlock12026(List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption) throws IOException, InterruptedException {
 
 <span class="fc" id="L85">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
 
@@ -98,75 +98,104 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 <span class="fc" id="L98">		GraphvizImageBuilder imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),</span>
 <span class="fc" id="L99">				diagram.getUmlDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager);</span>
 <span class="fc" id="L100">		BaseFile basefile = null;</span>
-<span class="pc bpc" id="L101" title="3 of 4 branches missed.">		if (fileFormatOption.isDebugSvek() &amp;&amp; os instanceof NamedOutputStream)</span>
-<span class="nc" id="L102">			basefile = ((NamedOutputStream) os).getBasefile();</span>
+//		if (fileFormatOption.isDebugSvek() &amp;&amp; os instanceof NamedOutputStream)
+//			basefile = ((NamedOutputStream) os).getBasefile();
 
 <span class="fc" id="L104">		TextBlock result = imageBuilder.buildImage(stringBounder, basefile, diagram.getDotStringSkek(),</span>
 <span class="fc" id="L105">				fileFormatOption.isDebugSvek());</span>
+		
+<span class="fc" id="L107">		return result;</span>
 
-<span class="fc" id="L107">		int status = 0;</span>
+	}
 
-<span class="pc bpc" id="L109" title="1 of 4 branches missed.">		if (result instanceof IEntityImage &amp;&amp; ((IEntityImage) result).isCrash())</span>
-<span class="fc" id="L110">			status = 503;</span>
+	private ImageData createFileInternal(OutputStream os, List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)
+			throws IOException, InterruptedException {
 
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (result instanceof GraphvizCrash) {</span>
-<span class="nc" id="L113">			status = 503;</span>
-<span class="nc" id="L114">			imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),</span>
-<span class="nc" id="L115">					diagram.getUmlDiagramType().getStyleName(), DotMode.NO_LEFT_RIGHT_AND_XLABEL, dotStringFactory,</span>
+<span class="nc" id="L114">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
+
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY)</span>
+<span class="nc" id="L117">			new CucaDiagramSimplifierActivity().simplify(diagram, stringBounder, DotMode.NORMAL);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE)</span>
+<span class="nc" id="L119">			new CucaDiagramSimplifierState().simplify(diagram, stringBounder, DotMode.NORMAL);</span>
+
+<span class="nc" id="L121">		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, clusterManager.getCurrent(),</span>
+<span class="nc" id="L122">				diagram.getUmlDiagramType(), diagram.getSkinParam());</span>
+
+<span class="nc" id="L124">		final DotData dotData = new DotData(diagram, diagram.getRootGroup(), getOrderedLinks(), diagram.leafs(),</span>
+				diagram, diagram);
+
+<span class="nc" id="L127">		GraphvizImageBuilder imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),</span>
+<span class="nc" id="L128">				diagram.getUmlDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager);</span>
+<span class="nc" id="L129">		BaseFile basefile = null;</span>
+<span class="nc bnc" id="L130" title="All 4 branches missed.">		if (fileFormatOption.isDebugSvek() &amp;&amp; os instanceof NamedOutputStream)</span>
+<span class="nc" id="L131">			basefile = ((NamedOutputStream) os).getBasefile();</span>
+
+<span class="nc" id="L133">		TextBlock result = imageBuilder.buildImage(stringBounder, basefile, diagram.getDotStringSkek(),</span>
+<span class="nc" id="L134">				fileFormatOption.isDebugSvek());</span>
+
+<span class="nc" id="L136">		int status = 0;</span>
+
+<span class="nc bnc" id="L138" title="All 4 branches missed.">		if (result instanceof IEntityImage &amp;&amp; ((IEntityImage) result).isCrash())</span>
+<span class="nc" id="L139">			status = 503;</span>
+
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (result instanceof GraphvizCrash) {</span>
+<span class="nc" id="L142">			status = 503;</span>
+<span class="nc" id="L143">			imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),</span>
+<span class="nc" id="L144">					diagram.getUmlDiagramType().getStyleName(), DotMode.NO_LEFT_RIGHT_AND_XLABEL, dotStringFactory,</span>
 					clusterManager);
-<span class="nc" id="L117">			result = imageBuilder.buildImage(stringBounder, basefile, diagram.getDotStringSkek(),</span>
-<span class="nc" id="L118">					fileFormatOption.isDebugSvek());</span>
+<span class="nc" id="L146">			result = imageBuilder.buildImage(stringBounder, basefile, diagram.getDotStringSkek(),</span>
+<span class="nc" id="L147">					fileFormatOption.isDebugSvek());</span>
 		}
 		// TODO There is something strange with the left margin of mainframe, I think
 		// because AnnotatedWorker is used here
 		// It can be looked at in another PR
-<span class="fc" id="L123">		final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);</span>
-<span class="fc" id="L124">		result = new AnnotatedWorker(diagram, builder).addAdd(result);</span>
+<span class="nc" id="L152">		final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);</span>
+<span class="nc" id="L153">		result = new AnnotatedWorker(diagram, builder).addAdd(result);</span>
 
 		// TODO UmlDiagram.getWarningOrError() looks similar so this might be
 		// simplified? - will leave for a separate PR
-<span class="fc" id="L128">		final String widthwarning = diagram.getSkinParam().getValue(&quot;widthwarning&quot;);</span>
-<span class="fc" id="L129">		String warningOrError = null;</span>
-<span class="pc bpc" id="L130" title="3 of 4 branches missed.">		if (widthwarning != null &amp;&amp; widthwarning.matches(&quot;\\d+&quot;))</span>
-<span class="nc" id="L131">			warningOrError = imageBuilder.getWarningOrError(Integer.parseInt(widthwarning));</span>
+<span class="nc" id="L157">		final String widthwarning = diagram.getSkinParam().getValue(&quot;widthwarning&quot;);</span>
+<span class="nc" id="L158">		String warningOrError = null;</span>
+<span class="nc bnc" id="L159" title="All 4 branches missed.">		if (widthwarning != null &amp;&amp; widthwarning.matches(&quot;\\d+&quot;))</span>
+<span class="nc" id="L160">			warningOrError = imageBuilder.getWarningOrError(Integer.parseInt(widthwarning));</span>
 
 		// Sorry about this hack. There is a side effect in
 		// SvekResult::calculateDimension()
-<span class="fc" id="L135">		result.calculateDimension(stringBounder); // Ensure text near the margins is not cut off</span>
+<span class="nc" id="L164">		result.calculateDimension(stringBounder); // Ensure text near the margins is not cut off</span>
 
-<span class="fc" id="L137">		return diagram.createImageBuilder(fileFormatOption) //</span>
-<span class="fc" id="L138">				.annotations(false) // backwards compatibility (AnnotatedWorker is used above)</span>
-<span class="fc" id="L139">				.drawable(result) //</span>
-<span class="fc" id="L140">				.status(status) //</span>
-<span class="fc" id="L141">				.warningOrError(warningOrError) //</span>
-<span class="fc" id="L142">				.write(os);</span>
+<span class="nc" id="L166">		return diagram.createImageBuilder(fileFormatOption) //</span>
+<span class="nc" id="L167">				.annotations(false) // backwards compatibility (AnnotatedWorker is used above)</span>
+<span class="nc" id="L168">				.drawable(result) //</span>
+<span class="nc" id="L169">				.status(status) //</span>
+<span class="nc" id="L170">				.warningOrError(warningOrError) //</span>
+<span class="nc" id="L171">				.write(os);</span>
 	}
 
 	private List&lt;Link&gt; getOrderedLinks() {
-<span class="fc" id="L146">		final List&lt;Link&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		for (Link l : diagram.getLinks())</span>
-<span class="nc" id="L148">			addLinkNew(result, l);</span>
+<span class="fc" id="L175">		final List&lt;Link&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		for (Link l : diagram.getLinks())</span>
+<span class="nc" id="L177">			addLinkNew(result, l);</span>
 
-<span class="fc" id="L150">		return result;</span>
+<span class="fc" id="L179">		return result;</span>
 	}
 
 	private void addLinkNew(List&lt;Link&gt; result, Link link) {
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		for (int i = 0; i &lt; result.size(); i++) {</span>
-<span class="nc" id="L155">			final Link other = result.get(i);</span>
-<span class="nc bnc" id="L156" title="All 2 branches missed.">			if (other.sameConnections(link)) {</span>
-<span class="nc bnc" id="L157" title="All 4 branches missed.">				while (i &lt; result.size() &amp;&amp; result.get(i).sameConnections(link))</span>
-<span class="nc" id="L158">					i++;</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		for (int i = 0; i &lt; result.size(); i++) {</span>
+<span class="nc" id="L184">			final Link other = result.get(i);</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">			if (other.sameConnections(link)) {</span>
+<span class="nc bnc" id="L186" title="All 4 branches missed.">				while (i &lt; result.size() &amp;&amp; result.get(i).sameConnections(link))</span>
+<span class="nc" id="L187">					i++;</span>
 
-<span class="nc bnc" id="L160" title="All 2 branches missed.">				if (i == result.size())</span>
-<span class="nc" id="L161">					result.add(link);</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">				if (i == result.size())</span>
+<span class="nc" id="L190">					result.add(link);</span>
 				else
-<span class="nc" id="L163">					result.add(i, link);</span>
+<span class="nc" id="L192">					result.add(i, link);</span>
 
-<span class="nc" id="L165">				return;</span>
+<span class="nc" id="L194">				return;</span>
 			}
 		}
-<span class="nc" id="L168">		result.add(link);</span>
-<span class="nc" id="L169">	}</span>
+<span class="nc" id="L197">		result.add(link);</span>
+<span class="nc" id="L198">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

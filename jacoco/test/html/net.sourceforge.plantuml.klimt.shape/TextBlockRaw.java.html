@@ -44,55 +44,53 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class TextBlockRaw extends AbstractTextBlock implements TextBlock {
-    // ::remove file when __HAXE__
-
+public class TextBlockRaw implements TextBlock {
 	private List&lt;Line&gt; lines2;
 
 	private final List&lt;String&gt; strings;
 	private final FontConfiguration fontConfiguration;
 
-<span class="fc" id="L55">	public TextBlockRaw(List&lt;String&gt; strings, FontConfiguration fontConfiguration) {</span>
-<span class="fc" id="L56">		this.strings = strings;</span>
-<span class="fc" id="L57">		this.fontConfiguration = fontConfiguration;</span>
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L53">	public TextBlockRaw(List&lt;String&gt; strings, FontConfiguration fontConfiguration) {</span>
+<span class="fc" id="L54">		this.strings = strings;</span>
+<span class="fc" id="L55">		this.fontConfiguration = fontConfiguration;</span>
+<span class="fc" id="L56">	}</span>
 
 	private List&lt;Line&gt; getLines(StringBounder stringBounder) {
-<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (lines2 == null) {</span>
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">			if (stringBounder == null) {</span>
-<span class="nc" id="L63">				throw new IllegalStateException();</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		if (lines2 == null) {</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">			if (stringBounder == null) {</span>
+<span class="nc" id="L61">				throw new IllegalStateException();</span>
 			}
-<span class="fc" id="L65">			this.lines2 = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">			for (String s : strings) {</span>
-<span class="fc" id="L67">				lines2.add(SingleLine.rawText(s, fontConfiguration));</span>
-<span class="fc" id="L68">			}</span>
+<span class="fc" id="L63">			this.lines2 = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">			for (String s : strings) {</span>
+<span class="fc" id="L65">				lines2.add(SingleLine.rawText(s, fontConfiguration));</span>
+<span class="fc" id="L66">			}</span>
 		}
-<span class="fc" id="L70">		return lines2;</span>
+<span class="fc" id="L68">		return lines2;</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L74">		return getTextDimension(stringBounder);</span>
+<span class="fc" id="L72">		return getTextDimension(stringBounder);</span>
 	}
 
 	protected final XDimension2D getTextDimension(StringBounder stringBounder) {
-<span class="fc" id="L78">		double width = 0;</span>
-<span class="fc" id="L79">		double height = 0;</span>
-<span class="fc bfc" id="L80" title="All 2 branches covered.">		for (Line line : getLines(stringBounder)) {</span>
-<span class="fc" id="L81">			final XDimension2D size2D = line.calculateDimension(stringBounder);</span>
-<span class="fc" id="L82">			height += size2D.getHeight();</span>
-<span class="fc" id="L83">			width = Math.max(width, size2D.getWidth());</span>
-<span class="fc" id="L84">		}</span>
-<span class="fc" id="L85">		return new XDimension2D(width, height);</span>
+<span class="fc" id="L76">		double width = 0;</span>
+<span class="fc" id="L77">		double height = 0;</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		for (Line line : getLines(stringBounder)) {</span>
+<span class="fc" id="L79">			final XDimension2D size2D = line.calculateDimension(stringBounder);</span>
+<span class="fc" id="L80">			height += size2D.getHeight();</span>
+<span class="fc" id="L81">			width = Math.max(width, size2D.getWidth());</span>
+<span class="fc" id="L82">		}</span>
+<span class="fc" id="L83">		return new XDimension2D(width, height);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L89">		double y = 0;</span>
+<span class="fc" id="L87">		double y = 0;</span>
 
-<span class="fc bfc" id="L91" title="All 2 branches covered.">		for (Line line : getLines(ug.getStringBounder())) {</span>
-<span class="fc" id="L92">			line.drawU(ug.apply(UTranslate.dy(y)));</span>
-<span class="fc" id="L93">			y += line.calculateDimension(ug.getStringBounder()).getHeight();</span>
-<span class="fc" id="L94">		}</span>
-<span class="fc" id="L95">	}</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		for (Line line : getLines(ug.getStringBounder())) {</span>
+<span class="fc" id="L90">			line.drawU(ug.apply(UTranslate.dy(y)));</span>
+<span class="fc" id="L91">			y += line.calculateDimension(ug.getStringBounder()).getHeight();</span>
+<span class="fc" id="L92">		}</span>
+<span class="fc" id="L93">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

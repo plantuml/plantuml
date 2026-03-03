@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
@@ -56,7 +55,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
 import net.sourceforge.plantuml.url.Url;
 
-public final class InnerStateAutonom extends AbstractTextBlock implements IEntityImage {
+public final class InnerStateAutonom implements IEntityImage {
 
 	private final IEntityImage im;
 	private final TextBlock title;
@@ -71,113 +70,113 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 	private final HColor bodyColor;
 	private final Style styleHeader;
 
-<span class="nc" id="L74">	public InnerStateAutonom(IEntityImage im, Entity group) {</span>
-<span class="nc" id="L75">		this.im = Objects.requireNonNull(im);</span>
-<span class="nc" id="L76">		final ISkinParam skinParam = group.getSkinParam();</span>
+<span class="nc" id="L73">	public InnerStateAutonom(IEntityImage im, Entity group) {</span>
+<span class="nc" id="L74">		this.im = Objects.requireNonNull(im);</span>
+<span class="nc" id="L75">		final ISkinParam skinParam = group.getSkinParam();</span>
 
-<span class="nc" id="L78">		final Style styleTitle = EntityImageStateCommon.getStyleStateTitle(group, skinParam);</span>
-<span class="nc" id="L79">		final Style style = EntityImageStateCommon.getStyleState(group, skinParam);</span>
-<span class="nc" id="L80">		final Style styleBody = EntityImageStateCommon.getStyleStateBody(group, skinParam);</span>
-<span class="nc" id="L81">		this.styleHeader = EntityImageStateCommon.getStyleStateHeader(group, skinParam);</span>
+<span class="nc" id="L77">		final Style styleTitle = EntityImageStateCommon.getStyleStateTitle(group, skinParam);</span>
+<span class="nc" id="L78">		final Style style = EntityImageStateCommon.getStyleState(group, skinParam);</span>
+<span class="nc" id="L79">		final Style styleBody = EntityImageStateCommon.getStyleStateBody(group, skinParam);</span>
+<span class="nc" id="L80">		this.styleHeader = EntityImageStateCommon.getStyleStateHeader(group, skinParam);</span>
 
-<span class="nc" id="L83">		this.rounded = style.value(PName.RoundCorner).asDouble();</span>
-<span class="nc" id="L84">		this.shadowing = style.getShadowing();</span>
+<span class="nc" id="L82">		this.rounded = style.value(PName.RoundCorner).asDouble();</span>
+<span class="nc" id="L83">		this.shadowing = style.getShadowing();</span>
 
-<span class="nc" id="L86">		final FontConfiguration titleFontConfiguration = styleTitle.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L87">		this.title = group.getDisplay().create(titleFontConfiguration, styleTitle.getHorizontalAlignment(), skinParam);</span>
+<span class="nc" id="L85">		final FontConfiguration titleFontConfiguration = styleTitle.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L86">		this.title = group.getDisplay().create(titleFontConfiguration, styleTitle.getHorizontalAlignment(), skinParam);</span>
 
-<span class="nc" id="L89">		this.attribute = group.getStateHeader(skinParam);</span>
+<span class="nc" id="L88">		this.attribute = group.getStateHeader(skinParam);</span>
 
-<span class="nc bnc" id="L91" title="All 4 branches missed.">		this.withSymbol = group.getStereotype() != null &amp;&amp; group.getStereotype().isWithOOSymbol();</span>
-<span class="nc" id="L92">		this.url = group.getUrl99();</span>
+<span class="nc bnc" id="L90" title="All 4 branches missed.">		this.withSymbol = group.getStereotype() != null &amp;&amp; group.getStereotype().isWithOOSymbol();</span>
+<span class="nc" id="L91">		this.url = group.getUrl99();</span>
 
-<span class="nc" id="L94">		this.borderColor = group.getColors().getColor(ColorType.LINE);</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (this.borderColor == null)</span>
-<span class="nc" id="L96">			this.borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L93">		this.borderColor = group.getColors().getColor(ColorType.LINE);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (this.borderColor == null)</span>
+<span class="nc" id="L95">			this.borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
 
-<span class="nc" id="L98">		this.backColor = group.getColors().getColor(ColorType.BACK);</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (this.backColor == null)</span>
-<span class="nc" id="L100">			this.backColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L97">		this.backColor = group.getColors().getColor(ColorType.BACK);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (this.backColor == null)</span>
+<span class="nc" id="L99">			this.backColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
 
-<span class="nc" id="L102">		this.stroke = group.getColors().getSpecificLineStroke();</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (this.stroke == null)</span>
-<span class="nc" id="L104">			this.stroke = style.getStroke();</span>
+<span class="nc" id="L101">		this.stroke = group.getColors().getSpecificLineStroke();</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (this.stroke == null)</span>
+<span class="nc" id="L103">			this.stroke = style.getStroke();</span>
 
-<span class="nc" id="L106">		this.bodyColor = styleBody.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L105">		this.bodyColor = styleBody.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
 
-<span class="nc" id="L108">	}</span>
+<span class="nc" id="L107">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L111">		final XDimension2D text = title.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L112">		final XDimension2D attr = attribute.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L113">		final XDimension2D total = calculateDimension(ug.getStringBounder());</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		final double marginForFields = attr.getHeight() &gt; 0 ? IEntityImage.MARGIN : 0;</span>
+<span class="nc" id="L110">		final XDimension2D text = title.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L111">		final XDimension2D attr = attribute.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L112">		final XDimension2D total = calculateDimension(ug.getStringBounder());</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		final double marginForFields = attr.getHeight() &gt; 0 ? IEntityImage.MARGIN : 0;</span>
 
-<span class="nc" id="L116">		final double titreHeight = IEntityImage.MARGIN + text.getHeight() + IEntityImage.MARGIN_LINE;</span>
+<span class="nc" id="L115">		final double titreHeight = IEntityImage.MARGIN + text.getHeight() + IEntityImage.MARGIN_LINE;</span>
 
-<span class="nc" id="L118">		final RoundedContainer r = new RoundedContainer(total, titreHeight, attr.getHeight() + marginForFields,</span>
+<span class="nc" id="L117">		final RoundedContainer r = new RoundedContainer(total, titreHeight, attr.getHeight() + marginForFields,</span>
 				borderColor, backColor, bodyColor, stroke, rounded, shadowing);
 
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L122">			ug.startUrl(url);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L121">			ug.startUrl(url);</span>
 
-<span class="nc" id="L124">		r.drawU(ug);</span>
-<span class="nc" id="L125">		title.drawU(ug.apply(new UTranslate((total.getWidth() - text.getWidth()) / 2, IEntityImage.MARGIN)));</span>
-<span class="nc" id="L126">		final HorizontalAlignment horizontalAlignment = styleHeader.getHorizontalAlignment();</span>
-<span class="nc" id="L127">		horizontalAlignment.draw(ug, attribute, IEntityImage.MARGIN,</span>
-<span class="nc" id="L128">				IEntityImage.MARGIN + text.getHeight() + IEntityImage.MARGIN, total.getWidth());</span>
+<span class="nc" id="L123">		r.drawU(ug);</span>
+<span class="nc" id="L124">		title.drawU(ug.apply(new UTranslate((total.getWidth() - text.getWidth()) / 2, IEntityImage.MARGIN)));</span>
+<span class="nc" id="L125">		final HorizontalAlignment horizontalAlignment = styleHeader.getHorizontalAlignment();</span>
+<span class="nc" id="L126">		horizontalAlignment.draw(ug, attribute, IEntityImage.MARGIN,</span>
+<span class="nc" id="L127">				IEntityImage.MARGIN + text.getHeight() + IEntityImage.MARGIN, total.getWidth());</span>
 
-<span class="nc" id="L130">		final double spaceYforURL = getSpaceYforURL(ug.getStringBounder());</span>
-<span class="nc" id="L131">		im.drawU(ug.apply(new UTranslate(IEntityImage.MARGIN, spaceYforURL)));</span>
+<span class="nc" id="L129">		final double spaceYforURL = getSpaceYforURL(ug.getStringBounder());</span>
+<span class="nc" id="L130">		im.drawU(ug.apply(new UTranslate(IEntityImage.MARGIN, spaceYforURL)));</span>
 
-<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (withSymbol)</span>
-<span class="nc" id="L134">			EntityImageState.drawSymbol(ug.apply(borderColor), total.getWidth(), total.getHeight());</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (withSymbol)</span>
+<span class="nc" id="L133">			EntityImageState.drawSymbol(ug.apply(borderColor), total.getWidth(), total.getHeight());</span>
 
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L137">			ug.closeUrl();</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L136">			ug.closeUrl();</span>
 
-<span class="nc" id="L139">	}</span>
+<span class="nc" id="L138">	}</span>
 
 	private double getSpaceYforURL(StringBounder stringBounder) {
-<span class="nc" id="L142">		final XDimension2D text = title.calculateDimension(stringBounder);</span>
-<span class="nc" id="L143">		final XDimension2D attr = attribute.calculateDimension(stringBounder);</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">		final double marginForFields = attr.getHeight() &gt; 0 ? IEntityImage.MARGIN : 0;</span>
-<span class="nc" id="L145">		final double titreHeight = IEntityImage.MARGIN + text.getHeight() + IEntityImage.MARGIN_LINE;</span>
-<span class="nc" id="L146">		final double suppY = titreHeight + marginForFields + attr.getHeight();</span>
-<span class="nc" id="L147">		return suppY + IEntityImage.MARGIN_LINE;</span>
+<span class="nc" id="L141">		final XDimension2D text = title.calculateDimension(stringBounder);</span>
+<span class="nc" id="L142">		final XDimension2D attr = attribute.calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		final double marginForFields = attr.getHeight() &gt; 0 ? IEntityImage.MARGIN : 0;</span>
+<span class="nc" id="L144">		final double titreHeight = IEntityImage.MARGIN + text.getHeight() + IEntityImage.MARGIN_LINE;</span>
+<span class="nc" id="L145">		final double suppY = titreHeight + marginForFields + attr.getHeight();</span>
+<span class="nc" id="L146">		return suppY + IEntityImage.MARGIN_LINE;</span>
 	}
 
 	public HColor getBackcolor() {
-<span class="nc" id="L151">		return null;</span>
+<span class="nc" id="L150">		return null;</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L155">		final XDimension2D img = im.calculateDimension(stringBounder);</span>
-<span class="nc" id="L156">		final XDimension2D text = title.calculateDimension(stringBounder);</span>
-<span class="nc" id="L157">		final XDimension2D attr = attribute.calculateDimension(stringBounder);</span>
+<span class="nc" id="L154">		final XDimension2D img = im.calculateDimension(stringBounder);</span>
+<span class="nc" id="L155">		final XDimension2D text = title.calculateDimension(stringBounder);</span>
+<span class="nc" id="L156">		final XDimension2D attr = attribute.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L159">		final XDimension2D dim = text.mergeTB(attr, img);</span>
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		final double marginForFields = attr.getHeight() &gt; 0 ? IEntityImage.MARGIN : 0;</span>
+<span class="nc" id="L158">		final XDimension2D dim = text.mergeTB(attr, img);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		final double marginForFields = attr.getHeight() &gt; 0 ? IEntityImage.MARGIN : 0;</span>
 
-<span class="nc" id="L162">		final XDimension2D result = dim.delta(IEntityImage.MARGIN * 2 + 2 * IEntityImage.MARGIN_LINE + marginForFields);</span>
+<span class="nc" id="L161">		final XDimension2D result = dim.delta(IEntityImage.MARGIN * 2 + 2 * IEntityImage.MARGIN_LINE + marginForFields);</span>
 
-<span class="nc" id="L164">		return result;</span>
+<span class="nc" id="L163">		return result;</span>
 	}
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L168">		return ShapeType.ROUND_RECTANGLE;</span>
+<span class="nc" id="L167">		return ShapeType.ROUND_RECTANGLE;</span>
 	}
 
 	public Margins getShield(StringBounder stringBounder) {
-<span class="nc" id="L172">		return Margins.NONE;</span>
+<span class="nc" id="L171">		return Margins.NONE;</span>
 	}
 
 	public boolean isHidden() {
-<span class="nc" id="L176">		return im.isHidden();</span>
+<span class="nc" id="L175">		return im.isHidden();</span>
 	}
 
 	public double getOverscanX(StringBounder stringBounder) {
-<span class="nc" id="L180">		return 0;</span>
+<span class="nc" id="L179">		return 0;</span>
 	}
 
 }

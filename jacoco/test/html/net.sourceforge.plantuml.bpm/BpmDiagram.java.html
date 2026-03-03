@@ -43,7 +43,7 @@ import java.util.List;
 
 import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.UmlDiagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
-public class BpmDiagram extends UmlDiagram {
+public class BpmDiagram extends TitledDiagram {
 	private void cleanGrid(Grid grid) {
 		while (true) {
 <span class="nc" id="L61">			final boolean v1 = new CleanerEmptyLine().clean(grid);</span>
@@ -195,8 +195,16 @@ public class BpmDiagram extends UmlDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 <span class="nc" id="L199">		throw new UnsupportedOperationException();</span>
+	}
+	
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+<span class="nc" id="L204">		final Grid grid = createGrid();</span>
+<span class="nc" id="L205">		cleanGrid(grid);</span>
+<span class="nc" id="L206">		return grid.toArray(SkinParam.create(PathSystem.fetch(), getUmlDiagramType(), getPragma(),</span>
+<span class="nc" id="L207">				getPreprocessingArtifact().getOption()));</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -39,27 +39,26 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class TextBlockEmpty extends AbstractTextBlock {
-    // ::remove file when __HAXE__
+public class TextBlockEmpty implements TextBlock {
 
 	private final double width;
 	private final double height;
 
-<span class="fc" id="L48">	public TextBlockEmpty(double width, double height) {</span>
-<span class="fc" id="L49">		this.width = width;</span>
-<span class="fc" id="L50">		this.height = height;</span>
-<span class="fc" id="L51">	}</span>
+<span class="fc" id="L47">	public TextBlockEmpty(double width, double height) {</span>
+<span class="fc" id="L48">		this.width = width;</span>
+<span class="fc" id="L49">		this.height = height;</span>
+<span class="fc" id="L50">	}</span>
 
 	public TextBlockEmpty() {
-<span class="fc" id="L54">		this(0, 0);</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L53">		this(0, 0);</span>
+<span class="fc" id="L54">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L58">		return new XDimension2D(width, height);</span>
+<span class="fc" id="L57">		return new XDimension2D(width, height);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L61">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

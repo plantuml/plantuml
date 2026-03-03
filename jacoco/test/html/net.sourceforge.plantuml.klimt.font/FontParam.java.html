@@ -191,11 +191,11 @@ interface FontParamConstant {
 	}
 
 	public StyleSignatureBasic getStyleDefinition(SName diagramType) {
-<span class="fc bfc" id="L194" title="All 2 branches covered.">		if (this == FOOTER) {</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		if (this == FOOTER) {</span>
 <span class="fc" id="L195">			return StyleSignatureBasic.of(SName.root, SName.document, SName.footer);</span>
 		}
-<span class="pc bpc" id="L197" title="1 of 2 branches missed.">		if (this == HEADER) {</span>
-<span class="fc" id="L198">			return StyleSignatureBasic.of(SName.root, SName.document, SName.header);</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		if (this == HEADER) {</span>
+<span class="nc" id="L198">			return StyleSignatureBasic.of(SName.root, SName.document, SName.header);</span>
 		}
 <span class="nc bnc" id="L200" title="All 2 branches missed.">		if (this == TITLE) {</span>
 <span class="nc" id="L201">			return StyleSignatureBasic.of(SName.root, SName.document, SName.title);</span>

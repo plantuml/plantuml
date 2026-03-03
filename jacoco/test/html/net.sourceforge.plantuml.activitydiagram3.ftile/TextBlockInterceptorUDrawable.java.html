@@ -42,32 +42,31 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
-public class TextBlockInterceptorUDrawable extends AbstractTextBlock implements TextBlock {
+public class TextBlockInterceptorUDrawable implements TextBlock {
 
 	private final TextBlock textBlock;
 	private final HColor gotoColor;
 	private final boolean isDebug;
 
-<span class="fc" id="L54">	public TextBlockInterceptorUDrawable(TextBlock textBlock, HColor gotoColor, boolean isDebug) {</span>
-<span class="fc" id="L55">		this.textBlock = textBlock;</span>
-<span class="fc" id="L56">		this.gotoColor = gotoColor;</span>
-<span class="fc" id="L57">		this.isDebug = isDebug;</span>
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L53">	public TextBlockInterceptorUDrawable(TextBlock textBlock, HColor gotoColor, boolean isDebug) {</span>
+<span class="fc" id="L54">		this.textBlock = textBlock;</span>
+<span class="fc" id="L55">		this.gotoColor = gotoColor;</span>
+<span class="fc" id="L56">		this.isDebug = isDebug;</span>
+<span class="fc" id="L57">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L61">		new UGraphicInterceptorUDrawable2(ug, emptyHashMap(), gotoColor, isDebug).draw(textBlock);</span>
-<span class="fc" id="L62">		ug.flushUg();</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L60">		new UGraphicInterceptorUDrawable2(ug, emptyHashMap(), gotoColor, isDebug).draw(textBlock);</span>
+<span class="fc" id="L61">		ug.flushUg();</span>
+<span class="fc" id="L62">	}</span>
 
 	private HashMap&lt;String, UTranslate&gt; emptyHashMap() {
-<span class="fc" id="L66">		return new HashMap&lt;&gt;();</span>
+<span class="fc" id="L65">		return new HashMap&lt;&gt;();</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L70">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L69">		throw new UnsupportedOperationException();</span>
 	}
 
 }

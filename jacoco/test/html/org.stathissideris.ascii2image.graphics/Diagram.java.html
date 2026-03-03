@@ -721,8 +721,8 @@ public class Diagram {
 
 <span class="nc" id="L722">			int index = filledSets.indexOf(largest);</span>
 <span class="nc bnc" id="L723" title="All 2 branches missed.">			if(gridLargest.equals(gridOfSmalls)</span>
-<span class="nc bnc" id="L724" title="All 2 branches missed.">					&amp;&amp; !toBeRemovedIndices.contains(new Integer(index))) {</span>
-<span class="nc" id="L725">				toBeRemovedIndices.add(new Integer(index));</span>
+<span class="nc bnc" id="L724" title="All 2 branches missed.">					&amp;&amp; !toBeRemovedIndices.contains(Integer.valueOf(index))) {</span>
+<span class="nc" id="L725">				toBeRemovedIndices.add(Integer.valueOf(index));</span>
 				if (DEBUG){
 					System.out.println(&quot;Decided to remove set:&quot;);
 					largest.printAsGrid();

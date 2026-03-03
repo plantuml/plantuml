@@ -44,45 +44,44 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
-<span class="fc" id="L50">abstract class USymbolSimpleAbstract extends USymbol {</span>
+<span class="fc" id="L49">abstract class USymbolSimpleAbstract extends USymbol {</span>
 
 	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
 			final Fashion symbolContext, final HorizontalAlignment stereoAlignment) {
-<span class="nc" id="L55">		Objects.requireNonNull(stereotype);</span>
-<span class="nc" id="L56">		final TextBlock stickman = getDrawing(symbolContext);</span>
-<span class="nc" id="L57">		return new AbstractTextBlock() {</span>
+<span class="nc" id="L54">		Objects.requireNonNull(stereotype);</span>
+<span class="nc" id="L55">		final TextBlock stickman = getDrawing(symbolContext);</span>
+<span class="nc" id="L56">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L60">				final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L61">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
-<span class="nc" id="L62">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
-<span class="nc" id="L63">				final XDimension2D dimStickMan = stickman.calculateDimension(stringBounder);</span>
-<span class="nc" id="L64">				final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
-<span class="nc" id="L65">				final double stickmanX = (dimTotal.getWidth() - dimStickMan.getWidth()) / 2;</span>
-<span class="nc" id="L66">				final double stickmanY = dimStereo.getHeight();</span>
-<span class="nc" id="L67">				ug = symbolContext.apply(ug);</span>
-<span class="nc" id="L68">				stickman.drawU(ug.apply(new UTranslate(stickmanX, stickmanY)));</span>
-<span class="nc" id="L69">				final double labelX = (dimTotal.getWidth() - dimLabel.getWidth()) / 2;</span>
-<span class="nc" id="L70">				final double labelY = dimStickMan.getHeight() + dimStereo.getHeight();</span>
+<span class="nc" id="L59">				final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L60">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="nc" id="L61">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
+<span class="nc" id="L62">				final XDimension2D dimStickMan = stickman.calculateDimension(stringBounder);</span>
+<span class="nc" id="L63">				final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="nc" id="L64">				final double stickmanX = (dimTotal.getWidth() - dimStickMan.getWidth()) / 2;</span>
+<span class="nc" id="L65">				final double stickmanY = dimStereo.getHeight();</span>
+<span class="nc" id="L66">				ug = symbolContext.apply(ug);</span>
+<span class="nc" id="L67">				stickman.drawU(ug.apply(new UTranslate(stickmanX, stickmanY)));</span>
+<span class="nc" id="L68">				final double labelX = (dimTotal.getWidth() - dimLabel.getWidth()) / 2;</span>
+<span class="nc" id="L69">				final double labelY = dimStickMan.getHeight() + dimStereo.getHeight();</span>
 
 				// Actor bug?
-<span class="nc" id="L73">				final UGraphic ug2 = UGraphicStencil.create(ug, dimLabel);</span>
-<span class="nc" id="L74">				label.drawU(ug2.apply(new UTranslate(labelX, labelY)));</span>
+<span class="nc" id="L72">				final UGraphic ug2 = UGraphicStencil.create(ug, dimLabel);</span>
+<span class="nc" id="L73">				label.drawU(ug2.apply(new UTranslate(labelX, labelY)));</span>
 				// label.drawU(ug.apply(new UTranslate(labelX, labelY)));
 
-<span class="nc" id="L77">				final double stereoX = (dimTotal.getWidth() - dimStereo.getWidth()) / 2;</span>
-<span class="nc" id="L78">				stereotype.drawU(ug.apply(UTranslate.dx(stereoX)));</span>
-<span class="nc" id="L79">			}</span>
+<span class="nc" id="L76">				final double stereoX = (dimTotal.getWidth() - dimStereo.getWidth()) / 2;</span>
+<span class="nc" id="L77">				stereotype.drawU(ug.apply(UTranslate.dx(stereoX)));</span>
+<span class="nc" id="L78">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L82">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
-<span class="nc" id="L83">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
-<span class="nc" id="L84">				final XDimension2D dimActor = stickman.calculateDimension(stringBounder);</span>
-<span class="nc" id="L85">				return XDimension2D.mergeLayoutT12B3(dimStereo, dimActor, dimLabel);</span>
+<span class="nc" id="L81">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="nc" id="L82">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
+<span class="nc" id="L83">				final XDimension2D dimActor = stickman.calculateDimension(stringBounder);</span>
+<span class="nc" id="L84">				return XDimension2D.mergeLayoutT12B3(dimStereo, dimActor, dimLabel);</span>
 			}
 		};
 	}
@@ -93,7 +92,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, TextBlock stereotype,
 			final double width, final double height, final Fashion symbolContext,
 			final HorizontalAlignment stereoAlignment) {
-<span class="nc" id="L96">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L95">		throw new UnsupportedOperationException();</span>
 	}
 
 }

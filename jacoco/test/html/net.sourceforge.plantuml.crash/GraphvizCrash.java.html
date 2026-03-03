@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
@@ -65,7 +64,7 @@ import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
-public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
+public class GraphvizCrash implements IEntityImage {
 
 	private final TextBlock text1;
 	private final String flash;
@@ -73,129 +72,129 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	private final PortableImage flashCode;
 	private final boolean graphviz244onWindows;
 
-<span class="nc" id="L76">	private GraphvizCrash(String flash, boolean graphviz244onWindows, Throwable rootCause) {</span>
-<span class="nc" id="L77">		this.flash = flash;</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L79">			this.graphviz244onWindows = graphviz244onWindows;</span>
-<span class="nc" id="L80">			this.flashCode = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, XColor.BLACK, XColor.WHITE);</span>
+<span class="nc" id="L75">	private GraphvizCrash(String flash, boolean graphviz244onWindows, Throwable rootCause) {</span>
+<span class="nc" id="L76">		this.flash = flash;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L78">			this.graphviz244onWindows = graphviz244onWindows;</span>
+<span class="nc" id="L79">			this.flashCode = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, XColor.BLACK, XColor.WHITE);</span>
 		} else {
-<span class="nc" id="L82">			this.graphviz244onWindows = false;</span>
-<span class="nc" id="L83">			this.flashCode = null;</span>
+<span class="nc" id="L81">			this.graphviz244onWindows = false;</span>
+<span class="nc" id="L82">			this.flashCode = null;</span>
 		}
-<span class="nc" id="L85">		final ReportLog strings = new ReportLog();</span>
-<span class="nc" id="L86">		init(strings, rootCause);</span>
-<span class="nc" id="L87">		this.text1 = GraphicStrings.createBlackOnWhite(strings.asList(), IconLoader.getRandom(),</span>
+<span class="nc" id="L84">		final ReportLog strings = new ReportLog();</span>
+<span class="nc" id="L85">		init(strings, rootCause);</span>
+<span class="nc" id="L86">		this.text1 = GraphicStrings.createBlackOnWhite(strings.asList(), IconLoader.getRandom(),</span>
 				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
-<span class="nc" id="L89">	}</span>
+<span class="nc" id="L88">	}</span>
 
 	public static IEntityImage build(String text, boolean graphviz244onWindows, Throwable rootCause) {
-<span class="nc" id="L92">		return new GraphvizCrash(text, graphviz244onWindows, rootCause);</span>
+<span class="nc" id="L91">		return new GraphvizCrash(text, graphviz244onWindows, rootCause);</span>
 	}
 
 	private void init(ReportLog strings, Throwable rootCause) {
-<span class="nc" id="L96">		strings.anErrorHasOccured(null, flash);</span>
-<span class="nc" id="L97">		strings.add(&quot;For some reason, dot/GraphViz has crashed.&quot;);</span>
-<span class="nc" id="L98">		strings.addEmptyLine();</span>
-<span class="nc" id="L99">		strings.add(&quot;RootCause &quot; + rootCause);</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (rootCause != null)</span>
-<span class="nc" id="L101">			strings.addAll(CommandExecutionResult.getStackTrace(rootCause));</span>
+<span class="nc" id="L95">		strings.anErrorHasOccured(null, flash);</span>
+<span class="nc" id="L96">		strings.add(&quot;For some reason, dot/GraphViz has crashed.&quot;);</span>
+<span class="nc" id="L97">		strings.addEmptyLine();</span>
+<span class="nc" id="L98">		strings.add(&quot;RootCause &quot; + rootCause);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (rootCause != null)</span>
+<span class="nc" id="L100">			strings.addAll(CommandExecutionResult.getStackTrace(rootCause));</span>
 
-<span class="nc" id="L103">		strings.addEmptyLine();</span>
-<span class="nc" id="L104">		strings.addProperties();</span>
-<span class="nc" id="L105">		strings.addEmptyLine();</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (!TeaVM.isTeaVM())</span>
+<span class="nc" id="L102">		strings.addEmptyLine();</span>
+<span class="nc" id="L103">		strings.addProperties();</span>
+<span class="nc" id="L104">		strings.addEmptyLine();</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (!TeaVM.isTeaVM())</span>
 			try {
-<span class="nc" id="L108">				final String dotVersion = GraphvizRuntimeEnvironment.getInstance().dotVersion();</span>
-<span class="nc" id="L109">				strings.add(&quot;Default dot version: &quot; + dotVersion);</span>
-<span class="nc" id="L110">			} catch (Throwable e) {</span>
-<span class="nc" id="L111">				strings.add(&quot;Cannot determine dot version: &quot; + e.toString());</span>
-<span class="nc" id="L112">			}</span>
+<span class="nc" id="L107">				final String dotVersion = GraphvizRuntimeEnvironment.getInstance().dotVersion();</span>
+<span class="nc" id="L108">				strings.add(&quot;Default dot version: &quot; + dotVersion);</span>
+<span class="nc" id="L109">			} catch (Throwable e) {</span>
+<span class="nc" id="L110">				strings.add(&quot;Cannot determine dot version: &quot; + e.toString());</span>
+<span class="nc" id="L111">			}</span>
 
-<span class="nc" id="L114">		strings.pleaseCheckYourGraphVizVersion();</span>
-<span class="nc" id="L115">		strings.youShouldSendThisDiagram();</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (flashCode != null)</span>
-<span class="nc" id="L117">			strings.addDecodeHint();</span>
+<span class="nc" id="L113">		strings.pleaseCheckYourGraphVizVersion();</span>
+<span class="nc" id="L114">		strings.youShouldSendThisDiagram();</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (flashCode != null)</span>
+<span class="nc" id="L116">			strings.addDecodeHint();</span>
 
-<span class="nc" id="L119">	}</span>
+<span class="nc" id="L118">	}</span>
 
 	private List&lt;String&gt; getText2() {
-<span class="nc" id="L122">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L123">		strings.add(&quot; &quot;);</span>
-<span class="nc" id="L124">		strings.add(&quot;&lt;b&gt;It looks like you are running GraphViz 2.44 under Windows.&quot;);</span>
-<span class="nc" id="L125">		strings.add(&quot;If you have just installed GraphViz, you &lt;i&gt;may&lt;/i&gt; have to execute&quot;);</span>
-<span class="nc" id="L126">		strings.add(&quot;the post-install command &lt;b&gt;dot -c&lt;/b&gt; like in the following example:&quot;);</span>
-<span class="nc" id="L127">		return strings;</span>
+<span class="nc" id="L121">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L122">		strings.add(&quot; &quot;);</span>
+<span class="nc" id="L123">		strings.add(&quot;&lt;b&gt;It looks like you are running GraphViz 2.44 under Windows.&quot;);</span>
+<span class="nc" id="L124">		strings.add(&quot;If you have just installed GraphViz, you &lt;i&gt;may&lt;/i&gt; have to execute&quot;);</span>
+<span class="nc" id="L125">		strings.add(&quot;the post-install command &lt;b&gt;dot -c&lt;/b&gt; like in the following example:&quot;);</span>
+<span class="nc" id="L126">		return strings;</span>
 	}
 
 	private List&lt;String&gt; getText3() {
-<span class="nc" id="L131">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L132">		strings.add(&quot; &quot;);</span>
-<span class="nc" id="L133">		strings.add(&quot;You may have to have &lt;i&gt;Administrator rights&lt;/i&gt; to avoid the following error message:&quot;);</span>
-<span class="nc" id="L134">		return strings;</span>
+<span class="nc" id="L130">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L131">		strings.add(&quot; &quot;);</span>
+<span class="nc" id="L132">		strings.add(&quot;You may have to have &lt;i&gt;Administrator rights&lt;/i&gt; to avoid the following error message:&quot;);</span>
+<span class="nc" id="L133">		return strings;</span>
 	}
 
 	public boolean isHidden() {
-<span class="nc" id="L138">		return false;</span>
+<span class="nc" id="L137">		return false;</span>
 	}
 
 	public HColor getBackcolor() {
-<span class="nc" id="L142">		return HColors.WHITE;</span>
+<span class="nc" id="L141">		return HColors.WHITE;</span>
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L146">		return getMain().calculateDimension(stringBounder);</span>
+<span class="nc" id="L145">		return getMain().calculateDimension(stringBounder);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L150">		getMain().drawU(ug);</span>
-<span class="nc" id="L151">	}</span>
+<span class="nc" id="L149">		getMain().drawU(ug);</span>
+<span class="nc" id="L150">	}</span>
 
 	private TextBlock getMain() {
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L155">			return text1;</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L154">			return text1;</span>
 		} else {
-<span class="nc" id="L157">			TextBlock result = text1;</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">			if (flashCode != null) {</span>
-<span class="nc" id="L159">				final UImage flash = new UImage(new PixelImage(flashCode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))</span>
-<span class="nc" id="L160">						.scale(3);</span>
-<span class="nc" id="L161">				result = TextBlockUtils.mergeTB(result, flash, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L156">			TextBlock result = text1;</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			if (flashCode != null) {</span>
+<span class="nc" id="L158">				final UImage flash = new UImage(new PixelImage(flashCode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))</span>
+<span class="nc" id="L159">						.scale(3);</span>
+<span class="nc" id="L160">				result = TextBlockUtils.mergeTB(result, flash, HorizontalAlignment.LEFT);</span>
 			}
 
-<span class="nc bnc" id="L164" title="All 2 branches missed.">			if (graphviz244onWindows) {</span>
-<span class="nc" id="L165">				final TextBlock text2 = GraphicStrings.createBlackOnWhite(getText2());</span>
-<span class="nc" id="L166">				result = TextBlockUtils.mergeTB(result, text2, HorizontalAlignment.LEFT);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (graphviz244onWindows) {</span>
+<span class="nc" id="L164">				final TextBlock text2 = GraphicStrings.createBlackOnWhite(getText2());</span>
+<span class="nc" id="L165">				result = TextBlockUtils.mergeTB(result, text2, HorizontalAlignment.LEFT);</span>
 
-<span class="nc" id="L168">				final UImage dotc = new UImage(</span>
-<span class="nc" id="L169">						new PixelImage(PSystemVersion.getDotc(), AffineTransformType.TYPE_BILINEAR));</span>
-<span class="nc" id="L170">				result = TextBlockUtils.mergeTB(result, dotc, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L167">				final UImage dotc = new UImage(</span>
+<span class="nc" id="L168">						new PixelImage(PSystemVersion.getDotc(), AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L169">				result = TextBlockUtils.mergeTB(result, dotc, HorizontalAlignment.LEFT);</span>
 
-<span class="nc" id="L172">				final TextBlock text3 = GraphicStrings.createBlackOnWhite(getText3());</span>
-<span class="nc" id="L173">				result = TextBlockUtils.mergeTB(result, text3, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L171">				final TextBlock text3 = GraphicStrings.createBlackOnWhite(getText3());</span>
+<span class="nc" id="L172">				result = TextBlockUtils.mergeTB(result, text3, HorizontalAlignment.LEFT);</span>
 
-<span class="nc" id="L175">				final UImage dotd = new UImage(</span>
-<span class="nc" id="L176">						new PixelImage(PSystemVersion.getDotd(), AffineTransformType.TYPE_BILINEAR));</span>
-<span class="nc" id="L177">				result = TextBlockUtils.mergeTB(result, dotd, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L174">				final UImage dotd = new UImage(</span>
+<span class="nc" id="L175">						new PixelImage(PSystemVersion.getDotd(), AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L176">				result = TextBlockUtils.mergeTB(result, dotd, HorizontalAlignment.LEFT);</span>
 			}
 
-<span class="nc" id="L180">			return result;</span>
+<span class="nc" id="L179">			return result;</span>
 		}
 	}
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L185">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L184">		return ShapeType.RECTANGLE;</span>
 	}
 
 	public Margins getShield(StringBounder stringBounder) {
-<span class="nc" id="L189">		return Margins.NONE;</span>
+<span class="nc" id="L188">		return Margins.NONE;</span>
 	}
 
 	public double getOverscanX(StringBounder stringBounder) {
-<span class="nc" id="L193">		return 0;</span>
+<span class="nc" id="L192">		return 0;</span>
 	}
 
 	@Override
 	public boolean isCrash() {
-<span class="nc" id="L198">		return true;</span>
+<span class="nc" id="L197">		return true;</span>
 	}
 
 }

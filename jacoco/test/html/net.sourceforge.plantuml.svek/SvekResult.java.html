@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.svek;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.plantuml.annotation.PerformanceIssue;
 import net.sourceforge.plantuml.dot.DotData;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -46,7 +47,6 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UHidden;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-public final class SvekResult extends AbstractTextBlock implements IEntityImage {
+public final class SvekResult implements IEntityImage {
 
 	private final DotData dotData;
 	private final DotStringFactory clusterManager;
@@ -123,28 +123,29 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 
 	private MinMax minMax;
 
+	@PerformanceIssue
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (minMax == null) {</span>
-<span class="nc" id="L128">			minMax = TextBlockUtils.getMinMax(this, stringBounder, false);</span>
-<span class="nc" id="L129">			clusterManager.moveDelta(6 - minMax.getMinX(), 6 - minMax.getMinY());</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (minMax == null) {</span>
+<span class="nc" id="L129">			minMax = TextBlockUtils.getMinMax(this, stringBounder, false);</span>
+<span class="nc" id="L130">			clusterManager.moveDelta(6 - minMax.getMinX(), 6 - minMax.getMinY());</span>
 		}
-<span class="nc" id="L131">		return minMax.getDimension().delta(0, 12);</span>
+<span class="nc" id="L132">		return minMax.getDimension().delta(15, 15);</span>
 	}
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L135">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L136">		return ShapeType.RECTANGLE;</span>
 	}
 
 	public Margins getShield(StringBounder stringBounder) {
-<span class="nc" id="L139">		return Margins.NONE;</span>
+<span class="nc" id="L140">		return Margins.NONE;</span>
 	}
 
 	public boolean isHidden() {
-<span class="nc" id="L143">		return false;</span>
+<span class="nc" id="L144">		return false;</span>
 	}
 
 	public double getOverscanX(StringBounder stringBounder) {
-<span class="nc" id="L147">		return 0;</span>
+<span class="nc" id="L148">		return 0;</span>
 	}
 
 }
