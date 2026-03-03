@@ -46,6 +46,8 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.TextBlockExporter12026;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.CrashReportHandler;
+import net.sourceforge.plantuml.crash.GraphvizCrash;
+import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -54,6 +56,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
+import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
 public abstract class UgDiagram extends Diagram {
@@ -110,6 +113,9 @@ public abstract class UgDiagram extends Diagram {
 
 	protected TextBlockExporter12026 getExporter(int index, FileFormatOption fileFormatOption) throws Exception {
 		TextBlock result = getTextBlock12026(index, fileFormatOption);
+
+		final int status = computeStatus(result);
+
 		result = addChrome(result, fileFormatOption);
 
 		final HColor backColor = calculateBackColor();
@@ -129,7 +135,19 @@ public abstract class UgDiagram extends Diagram {
 					.warningOrError(getWarningOrError()) //
 					.margin(getDefaultMargins());
 
+		builder.status(status);
+
 		return builder.build();
+	}
+
+	private int computeStatus(TextBlock textBlock) {
+		if (this instanceof PSystemError)
+			return FileImageData.ERROR;
+		if (textBlock instanceof GraphvizCrash)
+			return FileImageData.CRASH;
+		if (textBlock instanceof IEntityImage && ((IEntityImage) textBlock).isCrash())
+			return FileImageData.CRASH;
+		return 0;
 	}
 
 }
