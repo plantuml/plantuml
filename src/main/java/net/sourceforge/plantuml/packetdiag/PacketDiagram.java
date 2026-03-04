@@ -133,7 +133,32 @@ public class PacketDiagram extends TitledDiagram {
 		return new TextBlock() {
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return null;
+				double indicatorTotalWidth = 0D;
+				double indicatorMaxHeight = 0D;
+				for (PacketIndicator indicator : packetIndicators) {
+					XDimension2D iDim = indicator.calculateDimension(stringBounder);
+					indicatorTotalWidth = indicatorTotalWidth + bitWidth;
+					indicatorMaxHeight = Math.max(iDim.getHeight(), indicatorMaxHeight);
+				}
+
+				double gridMaxWidth = 0D;
+				double gridTotalHeight = 0D;
+				for (List<PacketBlock> blocks : packetGrid) {
+					double rowWidth = 0D;
+					double rowHeight = 0D;
+					for (PacketBlock block : blocks) {
+						TextBlock tb = block.getShapeTextBlock(stringBounder, bitWidth, bitHeight);
+						XDimension2D dim = tb.calculateDimension(stringBounder);
+						rowWidth += dim.getWidth();
+						rowHeight = dim.getHeight();
+					}
+					gridMaxWidth = Math.max(gridMaxWidth, rowWidth);
+					gridTotalHeight += rowHeight;
+				}
+
+				final double totalWidth = Math.max(indicatorTotalWidth, gridMaxWidth);
+				final double totalHeight = indicatorMaxHeight + gridTotalHeight;
+				return new XDimension2D(totalWidth, totalHeight);
 			}
 
 			@Override
