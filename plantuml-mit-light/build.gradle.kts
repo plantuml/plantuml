@@ -52,6 +52,7 @@ tasks.named<Jar>("jar") {
     from(mitClassesOutput) {
         exclude("**/*.spm")
         exclude("net/sourceforge/plantuml/emoji/data/**")
+        exclude("teavm/**")
     }
 
     manifest {
