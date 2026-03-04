@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.teavm;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 
 public class StringBounderTeaVM implements StringBounder {
 	// ::remove file when JAVA8
@@ -79,8 +80,12 @@ public class StringBounderTeaVM implements StringBounder {
 		final String fontWeight = font.isBold() ? "bold" : "normal";
 
 		final double[] metrics = SvgGraphicsTeaVM.getDetailedTextMetrics(text, fontFamily, fontSize, fontWeight);
-		// metrics[2] is actualBoundingBoxDescent
-		return metrics[2];
+		// metrics[0] = width
+		// metrics[1] = actualBoundingBoxAscent (glyph-specific ascent above baseline)
+		// metrics[2] = actualBoundingBoxDescent (glyph-specific descent below baseline, can be negative for characters above baseline like '"')
+		// metrics[3] = fontBoundingBoxAscent (font-level ascent, constant for all glyphs)
+		// metrics[4] = fontBoundingBoxDescent (font-level descent, constant for all glyphs, like Java's LineMetrics.getDescent())
+		return metrics[4];
 	}
 
 	@Override
