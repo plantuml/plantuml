@@ -334,7 +334,7 @@ public class SequenceDiagram extends TitledDiagram {
 		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(0, fileFormatOption);
 		sequenceDiagramPngMaker.createOneGraphic01970(ug);
 	}
-	
+
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormat) {
 		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(num, fileFormat);
@@ -510,7 +510,7 @@ public class SequenceDiagram extends TitledDiagram {
 	}
 
 	@Override
-	public int getCardinality() {
+	public int getNbImages() {
 		return countNewpage + 1;
 	}
 
@@ -578,11 +578,8 @@ public class SequenceDiagram extends TitledDiagram {
 	}
 
 	@Override
-	public boolean isOk() {
-		if (participantsList.size() == 0)
-			return false;
-
-		return true;
+	public boolean isIncomplete() {
+		return participantsList.size() == 0;
 	}
 
 	@Override

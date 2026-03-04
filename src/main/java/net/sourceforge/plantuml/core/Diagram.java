@@ -30,264 +30,56 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.core;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.Objects;
 import java.util.Set;
 
-import net.atmp.ImageBuilder;
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PSystemBuilder;
-import net.sourceforge.plantuml.Scale;
-import net.sourceforge.plantuml.abel.DisplayPositioned;
-import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
-import net.sourceforge.plantuml.command.ProtectedCommand;
-import net.sourceforge.plantuml.klimt.UTranslate;
-import net.sourceforge.plantuml.klimt.color.ColorMapper;
-import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.font.FontConfiguration;
-import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.font.UFontFactory;
-import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
-import net.sourceforge.plantuml.klimt.shape.UText;
-import net.sourceforge.plantuml.nio.PathSystem;
-import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.text.BackSlash;
-import net.sourceforge.plantuml.utils.BlocLines;
-import net.sourceforge.plantuml.version.Version;
-import net.sourceforge.plantuml.warning.Warning;
 import net.sourceforge.plantuml.warning.WarningHandler;
 
-/**
- * An abstract class for all diagram classes.
- * 
- * <p>
- * Short for "{@link net.sourceforge.plantuml.plasma plasma} system", although
- * most newer diagram types do not use entities stored in a plasma.
- *
- * @see PSystemBuilder
- */
-public abstract class Diagram implements WarningHandler {
-
-	public abstract ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException;
-
-	public abstract DiagramDescription getDescription();
-
-	private final UmlSource source;
-	private Scale scale;
-	private int splitPagesHorizontal = 1;
-	private int splitPagesVertical = 1;
-
-	private String namespaceSeparator = null;
-	private final PreprocessingArtifact preprocessing;
-
-	public void setNamespaceSeparator(String namespaceSeparator) {
-		this.namespaceSeparator = namespaceSeparator;
-	}
-
-	final public String getNamespaceSeparator() {
-		return namespaceSeparator;
-	}
-
-	public Diagram(UmlSource source, PreprocessingArtifact preprocessing) {
-		this.source = Objects.requireNonNull(source);
-		this.preprocessing = preprocessing;
-	}
-
-	public PathSystem getPathSystem() {
-		return PathSystem.fetch();
-	}
-
-	private String getVersion() {
-		return Version.versionString();
-	}
-
-	final public String getMetadata() {
-		if (source == null)
-			return getVersion();
-
-		final String rawString = source.getRawString("\n");
-		final String plainString = source.getPlainString("\n");
-		if (rawString != null && rawString.equals(plainString))
-			return rawString + BackSlash.NEWLINE + getVersion();
-
-		return rawString + BackSlash.NEWLINE + plainString + BackSlash.NEWLINE + getVersion();
-	}
-
-	final public UmlSource getSource() {
-		return source;
-	}
-
-	public final String getFlashData() {
-		final UmlSource source = getSource();
-		if (source == null)
-			return "";
-
-		return source.getPlainString("\n");
-	}
-
-	final public long seed() {
-		if (source == null)
-			return 42;
-
-		return getSource().seed();
-	}
-
-	public int getCardinality() {
-		return 1;
-	}
-
-	public int getSplitPagesHorizontal() {
-		return splitPagesHorizontal;
-	}
-
-	public void setSplitPagesHorizontal(int splitPagesHorizontal) {
-		this.splitPagesHorizontal = splitPagesHorizontal;
-	}
-
-	public int getSplitPagesVertical() {
-		return splitPagesVertical;
-	}
-
-	public void setSplitPagesVertical(int splitPagesVertical) {
-		this.splitPagesVertical = splitPagesVertical;
-	}
-
-	public DisplayPositioned getTitle() {
-		if (source == null)
-			return DisplayPositioned.single(Display.empty(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);
-
-		return DisplayPositioned.single(source.getTitle(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);
-	}
-
-	public String getWarningOrError() {
-		return null;
-	}
-
-	public String checkFinalError() {
-		return null;
-	}
-
-	public void makeDiagramReady() {
-	}
-
-	public boolean isOk() {
-		return true;
-	}
-
-	public CommandExecutionResult executeCommand(Command cmd, BlocLines lines, ParserPass currentPass) {
-		cmd = new ProtectedCommand(cmd);
-		try {
-			return cmd.execute(this, lines, currentPass);
-		} catch (NoSuchColorException e) {
-			return CommandExecutionResult.badColor();
-		}
-	}
-
-	public boolean hasUrl() {
-		return false;
-	}
-
-	public HColor calculateBackColor() {
-		return null;
-	}
-
-	final public void setScale(Scale scale) {
-		this.scale = scale;
-	}
-
-	final public Scale getScale() {
-		return scale;
-	}
-
-	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		final ColorMapper init = fileFormatOption.getColorMapper();
-		final ColorMapper newColorMappter = muteColorMapper(init);
-		return ImageBuilder.create(fileFormatOption.withColorMapper(newColorMappter));
-	}
-
-	protected ColorMapper muteColorMapper(ColorMapper init) {
-		return init;
-	}
+public interface Diagram extends WarningHandler {
 
 	/**
-	 * Exports this diagram in XMI format. Returns {@code null} if this diagram type
-	 * does not support XMI, allowing the caller to fall back to the standard
-	 * TextBlock export path.
+	 * Export the diagram as an image to some format. Note that a diagram could be
+	 * drawn as several images (think about <code>new page</code> for sequence
+	 * diagram for example).
+	 * 
+	 * @param os         where to write the image
+	 * @param num        usually 0 (index of the image to be exported for this
+	 *                   diagram).
+	 * @param fileFormat file format to use
+	 * 
+	 * @return a description of the generated image
+	 * 
+	 * @throws IOException
 	 */
-	protected ImageData exportXmi(OutputStream os, FileFormat fileFormat) throws IOException {
-		return null;
-	}
+	ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException;
 
-	/** @see #exportXmi */
-	protected ImageData exportScxml(OutputStream os) throws IOException {
-		return null;
-	}
+	public int getNbImages();
 
-	/** @see #exportXmi */
-	protected ImageData exportGraphml(OutputStream os) throws IOException {
-		return null;
-	}
+	public DiagramDescription getDescription();
 
-	/** @see #exportXmi */
-	protected ImageData exportTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
-		return null;
-	}
+	public UmlSource getSource();
 
-	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-		return ClockwiseTopRightBottomLeft.same(0);
-	}
+	public String getMetadata();
 
-	public Display getTitleDisplay() {
-		return Display.NULL;
-	}
+	public String getWarningOrError();
 
-	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
-		final UFont font = UFontFactory.monospaced(14);
-		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
-		final UText text = UText.build("Not implemented yet for " + getClass().getName(), fc);
-		ug.apply(new UTranslate(10, 10)).draw(text);
-	}
+	public boolean hasUrl();
 
-	public Set<ParserPass> getRequiredPass() {
-		return EnumSet.of(ParserPass.ONE);
-	}
+	public Display getTitleDisplay();
 
-	public void startingPass(ParserPass pass) {
-	}
+	public InstallationRequirement getInstallationRequirement();
 
-	final public PreprocessingArtifact getPreprocessingArtifact() {
-		return preprocessing;
-	}
+	public String checkFinalError();
 
-	@Override
-	public void addWarning(Warning warning) {
-		throw new UnsupportedOperationException();
-
-	}
-
-	@Override
-	public Collection<Warning> getWarnings() {
-		return preprocessing.getWarnings();
-	}
-
-	public InstallationRequirement getInstallationRequirement() {
-		return InstallationRequirement.NONE;
-	}
+	public Set<ParserPass> getRequiredPass();
 
 }

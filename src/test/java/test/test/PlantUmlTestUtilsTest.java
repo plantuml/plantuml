@@ -24,7 +24,7 @@ class PlantUmlTestUtilsTest {
         assertEquals("net.sourceforge.plantuml.definition.PSystemDefinition", d.getClass().getName());
         assertEquals("(Definition)", d.getDescription().toString());
         assertEquals("NULL", d.getTitleDisplay().toString());
-        assertEquals(1, d.getCardinality());
+        assertEquals(1, d.getNbImages());
         assertEquals(DiagramType.DEFINITION, d.getSource().getDiagramType());
         assertEquals("[]", d.getSource().getTitle().toString());
         assertEquals(3, d.getSource().getTotalLineCount());
@@ -44,7 +44,7 @@ class PlantUmlTestUtilsTest {
         assertEquals("net.sourceforge.plantuml.ebnf.PSystemEbnf", d.getClass().getName());
         assertEquals("(EBNF)", d.getDescription().toString());
         assertEquals("[ebnf-Title]", d.getTitleDisplay().toString());
-        assertEquals(1, d.getCardinality());
+        assertEquals(1, d.getNbImages());
         assertEquals(DiagramType.EBNF, d.getSource().getDiagramType());
         assertEquals("[ebnf-Title]", d.getSource().getTitle().toString());
         assertEquals(4, d.getSource().getTotalLineCount());
@@ -69,7 +69,7 @@ class PlantUmlTestUtilsTest {
         assertEquals("net.sourceforge.plantuml.sequencediagram.SequenceDiagram", d.getClass().getName());
         assertEquals("(4 participants)", d.getDescription().toString());
         assertEquals("[a seq title]", d.getTitleDisplay().toString());
-        assertEquals(2, d.getCardinality());
+        assertEquals(2, d.getNbImages());
         assertEquals(DiagramType.UML, d.getSource().getDiagramType());
         assertEquals("[a seq title]", d.getSource().getTitle().toString());
         assertEquals(6, d.getSource().getTotalLineCount());
@@ -90,7 +90,7 @@ class PlantUmlTestUtilsTest {
         assertEquals("net.sourceforge.plantuml.descdiagram.DescriptionDiagram", d.getClass().getName());
         assertEquals("(1 entities)", d.getDescription().toString());
         assertEquals("[that is the title]", d.getTitleDisplay().toString());
-        assertEquals(1, d.getCardinality());
+        assertEquals(1, d.getNbImages());
         assertEquals(DiagramType.UML, d.getSource().getDiagramType());
         assertEquals("[that is the title]", d.getSource().getTitle().toString());
         assertEquals(4, d.getSource().getTotalLineCount());
@@ -110,7 +110,7 @@ class PlantUmlTestUtilsTest {
         assertEquals("net.sourceforge.plantuml.mindmap.MindMapDiagram", d.getClass().getName());
         assertEquals("MindMap", d.getDescription().toString());
         assertEquals("NULL", d.getTitleDisplay().toString());
-        assertEquals(1, d.getCardinality());
+        assertEquals(1, d.getNbImages());
         assertEquals(DiagramType.MINDMAP, d.getSource().getDiagramType());
         assertEquals("[]", d.getSource().getTitle().toString());
         assertEquals(3, d.getSource().getTotalLineCount());

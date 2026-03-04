@@ -36,14 +36,14 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.ScaleMaxWidthAndHeight;
-import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.AbstractDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandScaleMaxWidthAndHeight extends SingleLineCommand2<Diagram> {
+public class CommandScaleMaxWidthAndHeight extends SingleLineCommand2<AbstractDiagram> {
 
 	public static final CommandScaleMaxWidthAndHeight ME = new CommandScaleMaxWidthAndHeight();
 
@@ -65,7 +65,7 @@ public class CommandScaleMaxWidthAndHeight extends SingleLineCommand2<Diagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(Diagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final double width = Double.parseDouble(arg.get("WIDTH", 0));
 		final double height = Double.parseDouble(arg.get("HEIGHT", 0));
 		diagram.setScale(new ScaleMaxWidthAndHeight(width, height));

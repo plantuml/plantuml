@@ -38,16 +38,16 @@ package net.sourceforge.plantuml.command;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.AbstractDiagram;
 
 public class CommandExecutionResult {
 
 	private final String error;
-	private final Diagram newDiagram;
+	private final AbstractDiagram newDiagram;
 	private final List<String> debugLines;
 	private final int score;
 
-	private CommandExecutionResult(Diagram newDiagram, String error, int score, List<String> debugLines) {
+	private CommandExecutionResult(AbstractDiagram newDiagram, String error, int score, List<String> debugLines) {
 		this.error = error;
 		this.newDiagram = newDiagram;
 		this.debugLines = debugLines;
@@ -55,7 +55,7 @@ public class CommandExecutionResult {
 
 	}
 
-	public CommandExecutionResult withDiagram(Diagram newDiagram) {
+	public CommandExecutionResult withDiagram(AbstractDiagram newDiagram) {
 		return new CommandExecutionResult(newDiagram, error, 0, null);
 	}
 
@@ -64,7 +64,7 @@ public class CommandExecutionResult {
 		return super.toString() + " " + error;
 	}
 
-	public static CommandExecutionResult newDiagram(Diagram result) {
+	public static CommandExecutionResult newDiagram(AbstractDiagram result) {
 		return new CommandExecutionResult(result, null, 0, null);
 	}
 
@@ -120,7 +120,7 @@ public class CommandExecutionResult {
 		return score;
 	}
 
-	public Diagram getNewDiagram() {
+	public AbstractDiagram getNewDiagram() {
 		return newDiagram;
 	}
 

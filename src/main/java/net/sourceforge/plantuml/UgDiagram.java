@@ -40,8 +40,7 @@ import java.io.OutputStream;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
-import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.core.DiagramChromeFactory12026;
+import net.sourceforge.plantuml.core.AbstractDiagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.TextBlockExporter12026;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -50,7 +49,6 @@ import net.sourceforge.plantuml.crash.GraphvizCrash;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.log.Logme;
@@ -59,7 +57,7 @@ import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
-public abstract class UgDiagram extends Diagram {
+public abstract class UgDiagram extends AbstractDiagram {
 
 	public UgDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);

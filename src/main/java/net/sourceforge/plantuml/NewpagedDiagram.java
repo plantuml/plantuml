@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramChromeFactory12026;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.TextBlockExporter12026;
@@ -59,9 +58,9 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class NewpagedDiagram extends UgDiagram {
 
-	private final List<Diagram> diagrams = new ArrayList<>();
+	private final List<UgDiagram> diagrams = new ArrayList<>();
 
-	public NewpagedDiagram(UmlSource source, Diagram diag1, Diagram diag2,
+	public NewpagedDiagram(UmlSource source, UgDiagram diag1, UgDiagram diag2,
 			PreprocessingArtifact preprocessingArtifact) {
 		super(source, preprocessingArtifact);
 		if (diag1 instanceof NewpagedDiagram)
@@ -79,7 +78,7 @@ public class NewpagedDiagram extends UgDiagram {
 		return super.toString() + " SIZE=" + diagrams.size() + " " + diagrams;
 	}
 
-	public Diagram getLastDiagram() {
+	public UgDiagram getLastDiagram() {
 		return diagrams.get(diagrams.size() - 1);
 	}
 
@@ -152,15 +151,15 @@ public class NewpagedDiagram extends UgDiagram {
 
 	public int getCardinality() {
 		int nb = 0;
-		for (Diagram d : diagrams)
-			nb += d.getCardinality();
+		for (UgDiagram d : diagrams)
+			nb += d.getNbImages();
 
 		return nb;
 	}
 
 	public DiagramDescription getDescription() {
 		final StringBuilder sb = new StringBuilder();
-		for (Diagram d : diagrams) {
+		for (UgDiagram d : diagrams) {
 			if (sb.length() > 0)
 				sb.append(" ");
 
@@ -188,14 +187,14 @@ public class NewpagedDiagram extends UgDiagram {
 	@Override
 	public void makeDiagramReady() {
 		super.makeDiagramReady();
-		for (Diagram diagram : diagrams)
-			((Diagram) diagram).makeDiagramReady();
+		for (UgDiagram diagram : diagrams)
+			diagram.makeDiagramReady();
 
 	}
 
 	@Override
 	public String checkFinalError() {
-		for (Diagram p : getDiagrams()) {
+		for (UgDiagram p : getDiagrams()) {
 			final String check = ((Diagram) p).checkFinalError();
 			if (check != null)
 				return check;
@@ -204,7 +203,7 @@ public class NewpagedDiagram extends UgDiagram {
 		return super.checkFinalError();
 	}
 
-	public final List<Diagram> getDiagrams() {
+	public final List<UgDiagram> getDiagrams() {
 		return Collections.unmodifiableList(diagrams);
 	}
 

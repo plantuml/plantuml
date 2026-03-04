@@ -104,6 +104,7 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 	private final UmlDiagramType type;
 
 	private final SkinParam skinParam;
+	private String namespaceSeparator = null;
 
 	public TitledDiagram(UmlSource source, UmlDiagramType type, Previous previous,
 			PreprocessingArtifact preprocessing) {
@@ -114,6 +115,14 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 		if (previous != null)
 			this.skinParam.copyAllFrom(previous);
 
+	}
+
+	public void setNamespaceSeparator(String namespaceSeparator) {
+		this.namespaceSeparator = namespaceSeparator;
+	}
+
+	final public String getNamespaceSeparator() {
+		return namespaceSeparator;
 	}
 
 	public final StyleBuilder getCurrentStyleBuilder() {
@@ -472,7 +481,5 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 				getWarnings());
 		return result;
 	}
-
-
 
 }
