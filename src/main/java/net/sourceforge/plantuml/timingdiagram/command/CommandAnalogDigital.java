@@ -30,18 +30,14 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * Contribution: The-Lum
  * 
- *
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.klimt.color.ColorParser;
-import net.sourceforge.plantuml.klimt.color.ColorType;
-import net.sourceforge.plantuml.klimt.color.Colors;
-import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -50,23 +46,24 @@ import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.timingdiagram.PlayerAnalogDigital;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.timingdiagram.TimingType;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
+public class CommandAnalogDigital extends SingleLineCommand2<TimingDiagram> {
 
-	public CommandRobustConcise() {
+	public CommandAnalogDigital() {
 		super(getRegexConcat());
 	}
 
 	private static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandRobustConcise.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandAnalogDigital.class.getName(), RegexLeaf.start(), //
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(1, "COMPACT", "(compact)"), //
 								RegexLeaf.spaceOneOrMore())), //
-				new RegexLeaf(1, "TYPE", "(robust|concise|rectangle)"), //
+				new RegexLeaf(1, "TYPE", "(analog|digital)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
@@ -75,19 +72,24 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore())), //
 				new RegexLeaf(1, "CODE", "([%pLN_.@]+)"), //
+				StereotypePattern.optional("STEREOTYPE"), //
+				new RegexOptional(//
+						new RegexConcat( //
+								new RegexOr(new RegexLeaf("between"), new RegexLeaf("from")), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf(1, "START", "(-?[0-9]*\\.?[0-9]+)"), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexOr(new RegexLeaf("and"), new RegexLeaf("to")), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf(1, "END", "(-?[0-9]*\\.?[0-9]+)"), //
+								RegexLeaf.spaceOneOrMore())), //
 				StereotypePattern.optional("STEREOTYPE2"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOr(color().getRegex()), //
 				RegexLeaf.end());
-	}
-
-	private static ColorParser color() {
-		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
-			ParserPass currentPass) throws NoSuchColorException {
+			ParserPass currentPass) {
 		final String compact = arg.get("COMPACT", 0);
 		final String code = arg.get("CODE", 0);
 		String full = arg.get("FULL", 0);
@@ -101,21 +103,13 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 			stereotype = Stereotype.build(arg.get("STEREOTYPE2", 0));
 
 		final TimingType type = TimingType.valueOf(arg.get("TYPE", 0).toUpperCase());
-		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		final PlayerAnalogDigital player = diagram.createPlayerAnalogDigital(type, code, full, compact != null, stereotype);
 
-		switch (type) {
-		case ROBUST:
-			diagram.createPlayerRobust(code, full, compact != null, stereotype, colors.getColor(ColorType.BACK));
-			break;
-		case CONCISE:
-			diagram.createPlayerConcise(code, full, compact != null, stereotype, colors.getColor(ColorType.BACK));
-			break;
-		case RECTANGLE:
-			diagram.createPlayerRectangle(code, full, compact != null, stereotype, colors.getColor(ColorType.BACK));
-			break;
-		default:
-			return CommandExecutionResult.error("Unknown timing style: " + type);
-		}
+		final String start = arg.get("START", 0);
+		final String end = arg.get("END", 0);
+		if (start != null && end != null)
+			player.setBounds(start, end);
+
 		return CommandExecutionResult.ok();
 	}
 

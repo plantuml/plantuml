@@ -83,6 +83,7 @@ public enum SName {
 	delay, //
 	destroy, //
 	diamond, //
+	digital, //
 	document, //
 	ebnf, //
 	element, //
