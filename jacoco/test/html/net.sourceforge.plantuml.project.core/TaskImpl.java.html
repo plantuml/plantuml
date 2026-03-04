@@ -253,15 +253,15 @@ public class TaskImpl extends AbstractTask implements Task {
 
 	@Override
 	public void setStart(TimePoint start) {
-<span class="pc bpc" id="L256" title="1 of 2 branches missed.">		if (start.toString().endsWith(&quot;T00:00&quot;) == false)</span>
-<span class="nc" id="L257">			throw new IllegalArgumentException(start.toString());</span>
+//		if (start.toString().endsWith(&quot;T00:00&quot;) == false)
+//			throw new IllegalArgumentException(start.toString());
 <span class="fc" id="L258">		solver.setData(TaskAttribute.START, start);</span>
 <span class="fc" id="L259">	}</span>
 
 	@Override
 	public void setEnd(TimePoint end) {
-<span class="nc bnc" id="L263" title="All 2 branches missed.">		if (end.toString().endsWith(&quot;T00:00&quot;) == false)</span>
-<span class="nc" id="L264">			throw new IllegalArgumentException(end.toString());</span>
+//		if (end.toString().endsWith(&quot;T00:00&quot;) == false)
+//			throw new IllegalArgumentException(end.toString());
 <span class="nc" id="L265">		solver.setData(TaskAttribute.END, end);</span>
 <span class="nc" id="L266">	}</span>
 

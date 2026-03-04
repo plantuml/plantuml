@@ -97,7 +97,7 @@ import net.sourceforge.plantuml.utils.Log;
 	private static List&lt;FileImageData&gt; exportDiagramsNewpaged(NewpagedDiagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
 <span class="nc" id="L99">		final List&lt;FileImageData&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L100">		final int nbImages = system.getCardinality();</span>
+<span class="nc" id="L100">		final int nbImages = system.getNbImages();</span>
 <span class="nc bnc" id="L101" title="All 2 branches missed.">		for (int i = 0; i &lt; nbImages; i++) {</span>
 
 <span class="nc" id="L103">			final SFile f = suggestedFile.getFile(i);</span>
@@ -138,7 +138,7 @@ import net.sourceforge.plantuml.utils.Log;
 	private static List&lt;FileImageData&gt; exportDiagramsSequence(SequenceDiagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
 <span class="fc" id="L140">		final List&lt;FileImageData&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L141">		final int nbImages = system.getCardinality();</span>
+<span class="fc" id="L141">		final int nbImages = system.getNbImages();</span>
 <span class="fc bfc" id="L142" title="All 2 branches covered.">		for (int i = 0; i &lt; nbImages; i++) {</span>
 
 <span class="fc" id="L144">			final SFile f = suggestedFile.getFile(i);</span>

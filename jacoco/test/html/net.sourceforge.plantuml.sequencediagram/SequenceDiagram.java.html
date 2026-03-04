@@ -334,7 +334,7 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="nc" id="L334">		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(0, fileFormatOption);</span>
 <span class="nc" id="L335">		sequenceDiagramPngMaker.createOneGraphic01970(ug);</span>
 <span class="nc" id="L336">	}</span>
-	
+
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormat) {
 <span class="fc" id="L340">		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(num, fileFormat);</span>
@@ -510,7 +510,7 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 	}
 
 	@Override
-	public int getCardinality() {
+	public int getNbImages() {
 <span class="fc" id="L514">		return countNewpage + 1;</span>
 	}
 
@@ -578,51 +578,48 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="nc" id="L578">	}</span>
 
 	@Override
-	public boolean isOk() {
-<span class="fc bfc" id="L582" title="All 2 branches covered.">		if (participantsList.size() == 0)</span>
-<span class="fc" id="L583">			return false;</span>
-
-<span class="fc" id="L585">		return true;</span>
+	public boolean isIncomplete() {
+<span class="fc bfc" id="L582" title="All 2 branches covered.">		return participantsList.size() == 0;</span>
 	}
 
 	@Override
 	public String checkFinalError() {
-<span class="pc bpc" id="L590" title="1 of 2 branches missed.">		if (this.isHideUnlinkedData())</span>
-<span class="nc" id="L591">			this.removeHiddenParticipants();</span>
+<span class="pc bpc" id="L587" title="1 of 2 branches missed.">		if (this.isHideUnlinkedData())</span>
+<span class="nc" id="L588">			this.removeHiddenParticipants();</span>
 
-<span class="fc" id="L593">		return super.checkFinalError();</span>
+<span class="fc" id="L590">		return super.checkFinalError();</span>
 	}
 
-<span class="fc" id="L596">	private final Set&lt;EntityPortion&gt; hiddenPortions = EnumSet.&lt;EntityPortion&gt;noneOf(EntityPortion.class);</span>
+<span class="fc" id="L593">	private final Set&lt;EntityPortion&gt; hiddenPortions = EnumSet.&lt;EntityPortion&gt;noneOf(EntityPortion.class);</span>
 
 	public void hideOrShow(Set&lt;EntityPortion&gt; portions, boolean show) {
-<span class="nc bnc" id="L599" title="All 2 branches missed.">		if (show)</span>
-<span class="nc" id="L600">			hiddenPortions.removeAll(portions);</span>
+<span class="nc bnc" id="L596" title="All 2 branches missed.">		if (show)</span>
+<span class="nc" id="L597">			hiddenPortions.removeAll(portions);</span>
 		else
-<span class="nc" id="L602">			hiddenPortions.addAll(portions);</span>
+<span class="nc" id="L599">			hiddenPortions.addAll(portions);</span>
 
-<span class="nc" id="L604">	}</span>
+<span class="nc" id="L601">	}</span>
 
 	public Display manageVariable(Display labels) {
-<span class="fc" id="L607">		return labels.replace(&quot;%autonumber%&quot;, autoNumber.getCurrentMessageNumber(false));</span>
+<span class="fc" id="L604">		return labels.replace(&quot;%autonumber%&quot;, autoNumber.getCurrentMessageNumber(false));</span>
 	}
 
-<span class="fc" id="L610">	private final List&lt;LinkAnchor&gt; linkAnchors = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L607">	private final List&lt;LinkAnchor&gt; linkAnchors = new ArrayList&lt;&gt;();</span>
 
 	public CommandExecutionResult linkAnchor(String anchor1, String anchor2, String message) {
-<span class="nc" id="L613">		this.linkAnchors.add(new LinkAnchor(anchor1, anchor2, message));</span>
-<span class="nc" id="L614">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L610">		this.linkAnchors.add(new LinkAnchor(anchor1, anchor2, message));</span>
+<span class="nc" id="L611">		return CommandExecutionResult.ok();</span>
 	}
 
 	public List&lt;LinkAnchor&gt; getLinkAnchors() {
-<span class="nc" id="L618">		return Collections.unmodifiableList(linkAnchors);</span>
+<span class="nc" id="L615">		return Collections.unmodifiableList(linkAnchors);</span>
 	}
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="pc bpc" id="L623" title="1 of 2 branches missed.">		return modeTeoz() // this is for backward compatibility</span>
-<span class="nc" id="L624">				? ClockwiseTopRightBottomLeft.same(5)</span>
-<span class="fc" id="L625">				: ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 5, 5, 0);</span>
+<span class="pc bpc" id="L620" title="1 of 2 branches missed.">		return modeTeoz() // this is for backward compatibility</span>
+<span class="nc" id="L621">				? ClockwiseTopRightBottomLeft.same(5)</span>
+<span class="fc" id="L622">				: ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 5, 5, 0);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

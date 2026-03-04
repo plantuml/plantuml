@@ -43,8 +43,7 @@ import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.Previous;
-import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.AbstractDiagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.error.PSystemError;
@@ -60,82 +59,83 @@ import net.sourceforge.plantuml.version.IteratorCounter2;
 
 public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
-<span class="fc" id="L63">	private final List&lt;Command&gt; cmds = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L62">	private final List&lt;Command&gt; cmds = new ArrayList&lt;&gt;();</span>
 
 	protected abstract void initCommandsList(List&lt;Command&gt; cmds);
 
-	public abstract Diagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+	public abstract AbstractDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing);
 
 	protected PSystemCommandFactory() {
-<span class="fc" id="L71">		this(DiagramType.UML);</span>
-<span class="fc" id="L72">	}</span>
+<span class="fc" id="L70">		this(DiagramType.UML);</span>
+<span class="fc" id="L71">	}</span>
 
 	protected PSystemCommandFactory(DiagramType type) {
-<span class="fc" id="L75">		super(type);</span>
-<span class="fc" id="L76">	}</span>
+<span class="fc" id="L74">		super(type);</span>
+<span class="fc" id="L75">	}</span>
 
 	@Override
-	final public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
+	final public AbstractDiagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing) {
 
-<span class="fc" id="L82">		BrowserLog.consoleLog(getClass(), &quot;createSystem&quot;);</span>
+<span class="fc" id="L81">		BrowserLog.consoleLog(getClass(), &quot;createSystem&quot;);</span>
 
-<span class="fc" id="L84">		IteratorCounter2 it = source.iterator2();</span>
-<span class="fc" id="L85">		final StringLocated startLine = it.next();</span>
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (StartUtils.isArobaseStartDiagram(startLine.getString()) == false)</span>
-<span class="nc" id="L87">			throw new UnsupportedOperationException();</span>
+<span class="fc" id="L83">		IteratorCounter2 it = source.iterator2();</span>
+<span class="fc" id="L84">		final StringLocated startLine = it.next();</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (StartUtils.isArobaseStartDiagram(startLine.getString()) == false)</span>
+<span class="nc" id="L86">			throw new UnsupportedOperationException();</span>
 
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (source.isEmpty()) {</span>
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">			if (it.hasNext())</span>
-<span class="fc" id="L91">				it.next();</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (source.isEmpty()) {</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">			if (it.hasNext())</span>
+<span class="fc" id="L90">				it.next();</span>
 
-<span class="fc" id="L93">			return buildEmptyError(source, startLine.getLocation(), it.getTrace(), preprocessing);</span>
+<span class="fc" id="L92">			return buildEmptyError(source, startLine.getLocation(), it.getTrace(), preprocessing);</span>
 		}
-<span class="fc" id="L95">		Diagram sys = createEmptyDiagram(pathSystem, source, previous, preprocessing);</span>
+<span class="fc" id="L94">		AbstractDiagram sys = createEmptyDiagram(pathSystem, source, previous, preprocessing);</span>
 
-<span class="fc" id="L97">		final Set&lt;ParserPass&gt; requiredPass = sys.getRequiredPass();</span>
+<span class="fc" id="L96">		final Set&lt;ParserPass&gt; requiredPass = sys.getRequiredPass();</span>
 
-<span class="fc bfc" id="L99" title="All 2 branches covered.">		for (ParserPass pass : requiredPass) {</span>
-<span class="fc" id="L100">			sys.startingPass(pass);</span>
-<span class="pc bpc" id="L101" title="1 of 2 branches missed.">			while (it.hasNext()) {</span>
-<span class="fc bfc" id="L102" title="All 2 branches covered.">				if (StartUtils.isArobaseEndDiagram(it.peek().getString())) {</span>
-<span class="fc" id="L103">					it = source.iterator2();</span>
-<span class="fc" id="L104">					it.next();</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		for (ParserPass pass : requiredPass) {</span>
+<span class="fc" id="L99">			sys.startingPass(pass);</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">			while (it.hasNext()) {</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">				if (StartUtils.isArobaseEndDiagram(it.peek().getString())) {</span>
+<span class="fc" id="L102">					it = source.iterator2();</span>
+<span class="fc" id="L103">					it.next();</span>
 					// For next pass
-<span class="fc" id="L106">					break;</span>
+<span class="fc" id="L105">					break;</span>
 				}
-<span class="fc" id="L108">				sys = executeFewLines(sys, source, it, pass, preprocessing);</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">				if (sys instanceof PSystemError)</span>
-<span class="fc" id="L110">					return sys;</span>
+<span class="fc" id="L107">				sys = executeFewLines(sys, source, it, pass, preprocessing);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">				if (sys instanceof PSystemError)</span>
+<span class="fc" id="L109">					return sys;</span>
 			}
-<span class="fc" id="L112">		}</span>
-<span class="fc" id="L113">		return finalizeDiagram(sys, source, it, preprocessing);</span>
+<span class="fc" id="L111">		}</span>
+<span class="fc" id="L112">		return finalizeDiagram(sys, source, it, preprocessing);</span>
 
 	}
 
-	private Diagram finalizeDiagram(Diagram sys, UmlSource source, IteratorCounter2 it,
+	private AbstractDiagram finalizeDiagram(AbstractDiagram sys, UmlSource source, IteratorCounter2 it,
 			PreprocessingArtifact preprocessing) {
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (sys == null)</span>
-<span class="nc" id="L120">			return null;</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (sys == null)</span>
+<span class="nc" id="L119">			return null;</span>
 
-<span class="fc" id="L122">		final String err = sys.checkFinalError();</span>
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (err != null) {</span>
-<span class="nc" id="L124">			final LineLocation location = it.next().getLocation();</span>
-<span class="nc" id="L125">			return buildExecutionError(source, err, location, it.getTrace(), preprocessing);</span>
+<span class="fc" id="L121">		final String err = sys.checkFinalError();</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (err != null) {</span>
+<span class="nc" id="L123">			final LineLocation location = it.next().getLocation();</span>
+<span class="nc" id="L124">			return buildExecutionError(source, err, location, it.getTrace(), preprocessing);</span>
 		}
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (source.getTotalLineCount() == 2) {</span>
-<span class="nc" id="L128">			final LineLocation location = it.next().getLocation();</span>
-<span class="nc" id="L129">			return buildEmptyError(source, location, it.getTrace(), preprocessing);</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (source.getTotalLineCount() == 2) {</span>
+<span class="nc" id="L127">			final LineLocation location = it.next().getLocation();</span>
+<span class="nc" id="L128">			return buildEmptyError(source, location, it.getTrace(), preprocessing);</span>
 		}
+
 <span class="fc" id="L131">		sys.makeDiagramReady();</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (sys.isOk() == false)</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (sys.isIncomplete())</span>
 <span class="fc" id="L133">			return null;</span>
 
 <span class="fc" id="L135">		return sys;</span>
 	}
 
-	private Diagram executeFewLines(Diagram sys, UmlSource source, final IteratorCounter2 it,
+	private AbstractDiagram executeFewLines(AbstractDiagram sys, UmlSource source, final IteratorCounter2 it,
 			ParserPass currentPass, PreprocessingArtifact preprocessing) {
 <span class="fc" id="L140">		final Step step = getCandidate(it);</span>
 <span class="fc bfc" id="L141" title="All 2 branches covered.">		if (step == null) {</span>

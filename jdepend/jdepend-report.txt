@@ -3783,18 +3783,19 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 11
+    Total Classes: 12
     Concrete Classes: 10
-    Abstract Classes: 1
+    Abstract Classes: 2
 
     Ca: 74
     Ce: 38
 
-    A: 0.09
+    A: 0.17
     I: 0.34
-    D: 0.57
+    D: 0.49
 
 Abstract Classes:
+    net.sourceforge.plantuml.core.Diagram
     net.sourceforge.plantuml.core.ImageData
 
 Concrete Classes:
@@ -14954,7 +14955,7 @@ net.sourceforge.plantuml.command.note,11,1,4,17,0.09,0.81,0.1,1
 net.sourceforge.plantuml.command.note.sequence,8,0,1,9,0,0.9,0.1,1
 net.sourceforge.plantuml.compositediagram,2,0,1,10,0,0.91,0.09,1
 net.sourceforge.plantuml.compositediagram.command,2,0,1,10,0,0.91,0.09,1
-net.sourceforge.plantuml.core,11,1,74,38,0.09,0.34,0.57,1
+net.sourceforge.plantuml.core,12,2,74,38,0.17,0.34,0.49,1
 net.sourceforge.plantuml.crash,1,0,4,6,0,0.6,0.4,1
 net.sourceforge.plantuml.cruise,3,3,0,7,1,1,1,1
 net.sourceforge.plantuml.cucadiagram,30,6,9,20,0.2,0.69,0.11,1

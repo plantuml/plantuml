@@ -35,14 +35,14 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandPage extends SingleLineCommand2&lt;Diagram&gt; {
+public class CommandPage extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
 <span class="fc" id="L47">	public static final CommandPage ME = new CommandPage();</span>
 
@@ -62,7 +62,7 @@ public class CommandPage extends SingleLineCommand2&lt;Diagram&gt; {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(Diagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
 
 <span class="fc" id="L67">		final int horizontal = Integer.parseInt(arg.get(&quot;NB1&quot;, 0));</span>
 <span class="fc" id="L68">		final int vertical = Integer.parseInt(arg.get(&quot;NB2&quot;, 0));</span>

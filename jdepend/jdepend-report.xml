@@ -5864,18 +5864,21 @@
 
         <Package name="net.sourceforge.plantuml.core">
             <Stats>
-                <TotalClasses>11</TotalClasses>
+                <TotalClasses>12</TotalClasses>
                 <ConcreteClasses>10</ConcreteClasses>
-                <AbstractClasses>1</AbstractClasses>
+                <AbstractClasses>2</AbstractClasses>
                 <Ca>74</Ca>
                 <Ce>38</Ce>
-                <A>0.09</A>
+                <A>0.17</A>
                 <I>0.34</I>
-                <D>0.57</D>
+                <D>0.49</D>
                 <V>1</V>
             </Stats>
 
             <AbstractClasses>
+                <Class sourceFile="Diagram.java">
+                    net.sourceforge.plantuml.core.Diagram
+                </Class>
                 <Class sourceFile="ImageData.java">
                     net.sourceforge.plantuml.core.ImageData
                 </Class>

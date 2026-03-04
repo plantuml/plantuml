@@ -1095,8 +1095,8 @@ Total Classes: 2
 "net.sourceforge.plantuml.compositediagram.command" --> "net.sourceforge.plantuml.regex"
 "net.sourceforge.plantuml.compositediagram.command" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.core" %lighten("red", 43.00000000000001) {
-Total Classes: 11
+class "net.sourceforge.plantuml.core" %lighten("red", 51) {
+Total Classes: 12
 }
 "net.sourceforge.plantuml.core" --> "java.awt"
 "net.sourceforge.plantuml.core" --> "java.io"

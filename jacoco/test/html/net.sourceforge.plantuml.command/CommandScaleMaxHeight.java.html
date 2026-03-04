@@ -36,14 +36,14 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.ScaleMaxHeight;
-import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.AbstractDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandScaleMaxHeight extends SingleLineCommand2&lt;Diagram&gt; {
+public class CommandScaleMaxHeight extends SingleLineCommand2&lt;AbstractDiagram&gt; {
 
 <span class="fc" id="L48">	public static final CommandScaleMaxHeight ME = new CommandScaleMaxHeight();</span>
 
@@ -63,7 +63,7 @@ public class CommandScaleMaxHeight extends SingleLineCommand2&lt;Diagram&gt; {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(Diagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 <span class="nc" id="L67">		final double height = Double.parseDouble(arg.get(&quot;HEIGHT&quot;, 0));</span>
 <span class="nc" id="L68">		diagram.setScale(new ScaleMaxHeight(height));</span>
 <span class="nc" id="L69">		return CommandExecutionResult.ok();</span>
