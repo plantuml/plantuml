@@ -142,25 +142,25 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 <span class="fc" id="L142">	private final Set&lt;Participant&gt; noActivationAuthorized2 = new HashSet&lt;&gt;();</span>
 
 	public final boolean addLifeEvent(LifeEvent lifeEvent) {
-<span class="nc" id="L145">		lifeEvent.setMessage(this);</span>
+<span class="fc" id="L145">		lifeEvent.setMessage(this);</span>
 
-<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (this.isSelfMessage()) {</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">			if (lifeEvent.getParticipant() != this.getParticipant1())</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (this.isSelfMessage()) {</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">			if (lifeEvent.getParticipant() != this.getParticipant1())</span>
 <span class="nc" id="L149">				return true;</span>
 		}
 
-<span class="nc" id="L152">		lifeEventsType.add(lifeEvent.getType());</span>
-<span class="nc bnc" id="L153" title="All 4 branches missed.">		if (lifeEventsType.size() == 1 &amp;&amp; isActivate())</span>
-<span class="nc" id="L154">			firstIsActivate = true;</span>
+<span class="fc" id="L152">		lifeEventsType.add(lifeEvent.getType());</span>
+<span class="pc bpc" id="L153" title="1 of 4 branches missed.">		if (lifeEventsType.size() == 1 &amp;&amp; isActivate())</span>
+<span class="fc" id="L154">			firstIsActivate = true;</span>
 
-<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (lifeEvent.getType() == LifeEventType.ACTIVATE</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">				&amp;&amp; noActivationAuthorized2.contains(lifeEvent.getParticipant()))</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (lifeEvent.getType() == LifeEventType.ACTIVATE</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">				&amp;&amp; noActivationAuthorized2.contains(lifeEvent.getParticipant()))</span>
 <span class="nc" id="L158">			return false;</span>
 
-<span class="nc bnc" id="L160" title="All 4 branches missed.">		if (lifeEvent.getType() == LifeEventType.DEACTIVATE || lifeEvent.getType() == LifeEventType.DESTROY)</span>
-<span class="nc" id="L161">			noActivationAuthorized2.add(lifeEvent.getParticipant());</span>
+<span class="pc bpc" id="L160" title="1 of 4 branches missed.">		if (lifeEvent.getType() == LifeEventType.DEACTIVATE || lifeEvent.getType() == LifeEventType.DESTROY)</span>
+<span class="fc" id="L161">			noActivationAuthorized2.add(lifeEvent.getParticipant());</span>
 
-<span class="nc" id="L163">		return true;</span>
+<span class="fc" id="L163">		return true;</span>
 	}
 
 	public final boolean isCreate() {
@@ -178,16 +178,16 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	}
 
 	public boolean isDestroy() {
-<span class="nc" id="L181">		return lifeEventsType.contains(LifeEventType.DESTROY);</span>
+<span class="fc" id="L181">		return lifeEventsType.contains(LifeEventType.DESTROY);</span>
 	}
 
 	@Deprecated
 	private boolean isDeactivateOrDestroy() {
-<span class="nc bnc" id="L186" title="All 4 branches missed.">		return isDeactivate() || isDestroy();</span>
+<span class="pc bpc" id="L186" title="2 of 4 branches missed.">		return isDeactivate() || isDestroy();</span>
 	}
 
 	public final boolean isActivateAndDeactive() {
-<span class="pc bpc" id="L190" title="3 of 4 branches missed.">		return firstIsActivate &amp;&amp; isDeactivateOrDestroy();</span>
+<span class="pc bpc" id="L190" title="1 of 4 branches missed.">		return firstIsActivate &amp;&amp; isDeactivateOrDestroy();</span>
 	}
 
 	public final Display getLabel() {
@@ -238,7 +238,7 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	private double posYstartLevel;
 
 	public double getPosYstartLevel() {
-<span class="nc" id="L241">		return posYstartLevel;</span>
+<span class="fc" id="L241">		return posYstartLevel;</span>
 	}
 
 	public void setPosYstartLevel(double posYstartLevel) {
@@ -250,7 +250,7 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 <span class="fc" id="L250">	}</span>
 
 	public double getPosYendLevel() {
-<span class="nc" id="L253">		return posYendLevel;</span>
+<span class="fc" id="L253">		return posYendLevel;</span>
 	}
 
 	private String anchor;
@@ -289,7 +289,7 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	public abstract Participant getParticipant2();
 	
 	public StyleBuilder getStyleBuilder() {
-<span class="nc" id="L292">		return styleBuilder;</span>
+<span class="fc" id="L292">		return styleBuilder;</span>
 	}
 
 

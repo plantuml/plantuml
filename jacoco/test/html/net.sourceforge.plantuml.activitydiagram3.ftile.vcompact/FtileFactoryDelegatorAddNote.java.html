@@ -55,11 +55,11 @@ public class FtileFactoryDelegatorAddNote extends FtileFactoryDelegator {
 	@Override
 	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection&lt;PositionedNote&gt; notes,
 			VerticalAlignment verticalAlignment) {
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (notes.size() == 0)</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (notes.size() == 0)</span>
 <span class="nc" id="L59">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L61">		ISkinParam skinParam = skinParam();</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (ftile == null) {</span>
+<span class="fc" id="L61">		ISkinParam skinParam = skinParam();</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (ftile == null) {</span>
 <span class="nc" id="L63">			final PositionedNote note = notes.iterator().next();</span>
 <span class="nc bnc" id="L64" title="All 2 branches missed.">			if (note.getColors() != null)</span>
 <span class="nc" id="L65">				skinParam = note.getColors().mute(skinParam);</span>
@@ -67,7 +67,7 @@ public class FtileFactoryDelegatorAddNote extends FtileFactoryDelegator {
 <span class="nc" id="L67">			return new FtileNoteAlone(skinParam.shadowing(null), note.getDisplay(), skinParam,</span>
 <span class="nc bnc" id="L68" title="All 2 branches missed.">					note.getType() == NoteType.NOTE, swimlane);</span>
 		}
-<span class="nc" id="L70">		return FtileWithNoteOpale.create(ftile, notes, true, verticalAlignment);</span>
+<span class="fc" id="L70">		return FtileWithNoteOpale.create(ftile, notes, true, verticalAlignment);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -85,19 +85,19 @@ public class ConnectionVerticalDown extends AbstractConnection implements Connec
 
 	@Override
 	public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-<span class="nc" id="L88">		final ISkinParam skinParam = getFtile1().skinParam();</span>
-<span class="nc" id="L89">		final Snake snake = Snake.create(skinParam, color, skinParam.arrows().asToDown()).withLabel(textBlock,</span>
-<span class="nc" id="L90">				arrowHorizontalAlignment());</span>
-<span class="nc" id="L91">		final XPoint2D mp1a = translate1.getTranslated(p1);</span>
-<span class="nc" id="L92">		final XPoint2D mp2b = translate2.getTranslated(p2);</span>
-<span class="nc" id="L93">		final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;</span>
-<span class="nc" id="L94">		snake.addPoint(mp1a);</span>
-<span class="nc" id="L95">		snake.addPoint(mp1a.getX(), middle);</span>
-<span class="nc" id="L96">		snake.addPoint(mp2b.getX(), middle);</span>
-<span class="nc" id="L97">		snake.addPoint(mp2b);</span>
-<span class="nc" id="L98">		ug.draw(snake);</span>
+<span class="fc" id="L88">		final ISkinParam skinParam = getFtile1().skinParam();</span>
+<span class="fc" id="L89">		final Snake snake = Snake.create(skinParam, color, skinParam.arrows().asToDown()).withLabel(textBlock,</span>
+<span class="fc" id="L90">				arrowHorizontalAlignment());</span>
+<span class="fc" id="L91">		final XPoint2D mp1a = translate1.getTranslated(p1);</span>
+<span class="fc" id="L92">		final XPoint2D mp2b = translate2.getTranslated(p2);</span>
+<span class="fc" id="L93">		final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;</span>
+<span class="fc" id="L94">		snake.addPoint(mp1a);</span>
+<span class="fc" id="L95">		snake.addPoint(mp1a.getX(), middle);</span>
+<span class="fc" id="L96">		snake.addPoint(mp2b.getX(), middle);</span>
+<span class="fc" id="L97">		snake.addPoint(mp2b);</span>
+<span class="fc" id="L98">		ug.draw(snake);</span>
 
-<span class="nc" id="L100">	}</span>
+<span class="fc" id="L100">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

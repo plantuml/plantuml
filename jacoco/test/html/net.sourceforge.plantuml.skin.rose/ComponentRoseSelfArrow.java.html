@@ -56,43 +56,43 @@ import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 
-<span class="nc" id="L59">	private final double arrowWidth = 45;</span>
-<span class="nc" id="L60">	private final double xRight = arrowWidth - 3;</span>
+<span class="fc" id="L59">	private final double arrowWidth = 45;</span>
+<span class="fc" id="L60">	private final double xRight = arrowWidth - 3;</span>
 	private final boolean niceArrow;
 
 	public ComponentRoseSelfArrow(Style style, Display stringsToDisplay, ArrowConfiguration arrowConfiguration,
 			ISkinParam skinParam, LineBreakStrategy maxMessageSize, boolean niceArrow) {
-<span class="nc" id="L65">		super(style, stringsToDisplay, arrowConfiguration, skinParam, maxMessageSize);</span>
-<span class="nc" id="L66">		this.niceArrow = niceArrow;</span>
-<span class="nc" id="L67">	}</span>
+<span class="fc" id="L65">		super(style, stringsToDisplay, arrowConfiguration, skinParam, maxMessageSize);</span>
+<span class="fc" id="L66">		this.niceArrow = niceArrow;</span>
+<span class="fc" id="L67">	}</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (getArrowConfiguration().isHidden()) {</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (getArrowConfiguration().isHidden()) {</span>
 <span class="nc" id="L72">			return;</span>
 		}
-<span class="nc" id="L74">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L75">		final double textHeight = getTextHeight(stringBounder);</span>
-<span class="nc" id="L76">		double prefTextWidth = getPreferredWidth(stringBounder);</span>
+<span class="fc" id="L74">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L75">		final double textHeight = getTextHeight(stringBounder);</span>
+<span class="fc" id="L76">		double prefTextWidth = getPreferredWidth(stringBounder);</span>
 
-<span class="nc" id="L78">		final double arrowHeight = getArrowOnlyHeight(stringBounder);</span>
+<span class="fc" id="L78">		final double arrowHeight = getArrowOnlyHeight(stringBounder);</span>
 
-<span class="nc" id="L80">		ug = ug.apply(getForegroundColor());</span>
-<span class="nc" id="L81">		final UGraphic ug2 = getArrowConfiguration().applyStroke(ug);</span>
+<span class="fc" id="L80">		ug = ug.apply(getForegroundColor());</span>
+<span class="fc" id="L81">		final UGraphic ug2 = getArrowConfiguration().applyStroke(ug);</span>
 
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (getArrowConfiguration().isReverseDefine())</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (getArrowConfiguration().isReverseDefine())</span>
 <span class="nc" id="L84">			drawLeftSide(ug, ug2, area, arrowHeight, textHeight, prefTextWidth);</span>
 		else
-<span class="nc" id="L86">			drawRightSide(ug, ug2, area, arrowHeight, textHeight);</span>
+<span class="fc" id="L86">			drawRightSide(ug, ug2, area, arrowHeight, textHeight);</span>
 
-<span class="nc" id="L88">		getTextBlock().drawU(ug.apply(UTranslate.dx(getMarginX1())));</span>
-<span class="nc" id="L89">	}</span>
+<span class="fc" id="L88">		getTextBlock().drawU(ug.apply(UTranslate.dx(getMarginX1())));</span>
+<span class="fc" id="L89">	}</span>
 
 	private void drawRightSide(UGraphic ug, UGraphic ug2, Area area, double arrowHeight, double textHeight) {
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		double x1 = area.getDeltaX1() &lt; 0 ? area.getDeltaX1() : 0;</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		double x2 = area.getDeltaX1() &gt; 0 ? -area.getDeltaX1() : 1;</span>
-<span class="nc" id="L94">		final UEllipse circle = UEllipse.build(ComponentRoseArrow.diamCircle, ComponentRoseArrow.diamCircle);</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (getArrowConfiguration().getDecoration1() == ArrowDecoration.CIRCLE) {</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		double x1 = area.getDeltaX1() &lt; 0 ? area.getDeltaX1() : 0;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		double x2 = area.getDeltaX1() &gt; 0 ? -area.getDeltaX1() : 1;</span>
+<span class="fc" id="L94">		final UEllipse circle = UEllipse.build(ComponentRoseArrow.diamCircle, ComponentRoseArrow.diamCircle);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (getArrowConfiguration().getDecoration1() == ArrowDecoration.CIRCLE) {</span>
 <span class="nc" id="L96">			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())</span>
 <span class="nc" id="L97">					.apply(getBackgroundColor().bg())</span>
 <span class="nc" id="L98">					.apply(new UTranslate(x1 + 1 - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle,</span>
@@ -101,7 +101,7 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 <span class="nc" id="L101">			x1 += ComponentRoseArrow.diamCircle / 2 + ComponentRoseArrow.thinCircle + 1;</span>
 <span class="nc bnc" id="L102" title="All 2 branches missed.">			x1 -= getArrowConfiguration().getDressing1().getHead() == ArrowHead.NONE ? ComponentRoseArrow.thinCircle+1 : 0;</span>
 		}
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (getArrowConfiguration().getDecoration2() == ArrowDecoration.CIRCLE) {</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (getArrowConfiguration().getDecoration2() == ArrowDecoration.CIRCLE) {</span>
 <span class="nc" id="L105">			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())</span>
 <span class="nc" id="L106">					.apply(getBackgroundColor().bg())</span>
 <span class="nc" id="L107">					.apply(new UTranslate(</span>
@@ -110,32 +110,32 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 <span class="nc" id="L110">					.draw(circle);</span>
 <span class="nc" id="L111">			x2 += ComponentRoseArrow.diamCircle / 2 + ComponentRoseArrow.thinCircle;</span>
 		}
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		final boolean hasStartingCrossX = getArrowConfiguration().getDressing1().getHead() == ArrowHead.CROSSX;</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (hasStartingCrossX)</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		final boolean hasStartingCrossX = getArrowConfiguration().getDressing1().getHead() == ArrowHead.CROSSX;</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (hasStartingCrossX)</span>
 <span class="nc" id="L115">			x1 += 2 * ComponentRoseArrow.spaceCrossX;</span>
 
-<span class="nc bnc" id="L117" title="All 2 branches missed.">		final boolean hasFinalCrossX = getArrowConfiguration().getDressing2().getHead() == ArrowHead.CROSSX;</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (hasFinalCrossX)</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		final boolean hasFinalCrossX = getArrowConfiguration().getDressing2().getHead() == ArrowHead.CROSSX;</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (hasFinalCrossX)</span>
 <span class="nc" id="L119">			x2 += 2 * ComponentRoseArrow.spaceCrossX;</span>
 
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (getArrowConfiguration().getDressing2().getHead() == ArrowHead.ASYNC)</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (getArrowConfiguration().getDressing2().getHead() == ArrowHead.ASYNC)</span>
 <span class="nc" id="L122">			x2 -= 1;</span>
 
-<span class="nc" id="L124">		ug2.apply(new UTranslate(x1, textHeight)).draw(ULine.hline(xRight - x1));</span>
-<span class="nc" id="L125">		ug2.apply(new UTranslate(xRight, textHeight)).draw(ULine.vline(arrowHeight));</span>
-<span class="nc" id="L126">		ug2.apply(new UTranslate(x2, textHeight + arrowHeight)).draw(ULine.hline(xRight - x2));</span>
+<span class="fc" id="L124">		ug2.apply(new UTranslate(x1, textHeight)).draw(ULine.hline(xRight - x1));</span>
+<span class="fc" id="L125">		ug2.apply(new UTranslate(xRight, textHeight)).draw(ULine.vline(arrowHeight));</span>
+<span class="fc" id="L126">		ug2.apply(new UTranslate(x2, textHeight + arrowHeight)).draw(ULine.hline(xRight - x2));</span>
 
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (getArrowConfiguration().getDressing2().getHead() == ArrowHead.ASYNC)</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (getArrowConfiguration().getDressing2().getHead() == ArrowHead.ASYNC)</span>
 <span class="nc" id="L129">			x2 += 1;</span>
 
-<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (hasStartingCrossX) {</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (hasStartingCrossX) {</span>
 <span class="nc" id="L132">			ug.apply(UStroke.withThickness(2))</span>
 <span class="nc" id="L133">					.apply(new UTranslate(ComponentRoseArrow.spaceCrossX, textHeight - getArrowDeltaX() / 2.0))</span>
 <span class="nc" id="L134">					.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));</span>
 <span class="nc" id="L135">			ug.apply(UStroke.withThickness(2))</span>
 <span class="nc" id="L136">					.apply(new UTranslate(ComponentRoseArrow.spaceCrossX, textHeight + getArrowDeltaX() / 2.0))</span>
 <span class="nc" id="L137">					.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">		}  else if (getArrowConfiguration().isAsync1()) {</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		}  else if (getArrowConfiguration().isAsync1()) {</span>
 <span class="nc bnc" id="L139" title="All 2 branches missed.">			if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {</span>
 <span class="nc" id="L140">				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x1, textHeight))</span>
 <span class="nc" id="L141">						.draw(new ULine(getArrowDeltaX(), getArrowDeltaY()));</span>
@@ -144,12 +144,12 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 <span class="nc" id="L144">				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x1, textHeight))</span>
 <span class="nc" id="L145">						.draw(new ULine(getArrowDeltaX(), -getArrowDeltaY()));</span>
 			}
-<span class="nc bnc" id="L147" title="All 2 branches missed.">		} else if (getArrowConfiguration().getDressing1().getHead() == ArrowHead.NORMAL) {</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		} else if (getArrowConfiguration().getDressing1().getHead() == ArrowHead.NORMAL) {</span>
 <span class="nc" id="L148">			final UPolygon polygon = getPolygon().translate(0, textHeight);</span>
 <span class="nc" id="L149">			ug.apply(getForegroundColor().bg()).apply(UTranslate.dx(x1)).draw(polygon);</span>
 		}
 
-<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (hasFinalCrossX) {</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (hasFinalCrossX) {</span>
 <span class="nc" id="L153">			ug.apply(UStroke.withThickness(2))</span>
 <span class="nc" id="L154">					.apply(new UTranslate(ComponentRoseArrow.spaceCrossX,</span>
 <span class="nc" id="L155">							textHeight - getArrowDeltaX() / 2.0 + arrowHeight))</span>
@@ -158,7 +158,7 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 <span class="nc" id="L158">					.apply(new UTranslate(ComponentRoseArrow.spaceCrossX,</span>
 <span class="nc" id="L159">							textHeight + getArrowDeltaX() / 2.0 + arrowHeight))</span>
 <span class="nc" id="L160">					.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">		} else if (getArrowConfiguration().isAsync2()) {</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		} else if (getArrowConfiguration().isAsync2()) {</span>
 <span class="nc bnc" id="L162" title="All 2 branches missed.">			if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {</span>
 <span class="nc" id="L163">				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x2, textHeight + arrowHeight))</span>
 <span class="nc" id="L164">						.draw(new ULine(getArrowDeltaX(), -getArrowDeltaY()));</span>
@@ -167,11 +167,11 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 <span class="nc" id="L167">				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x2, textHeight + arrowHeight))</span>
 <span class="nc" id="L168">						.draw(new ULine(getArrowDeltaX(), getArrowDeltaY()));</span>
 			}
-<span class="nc bnc" id="L170" title="All 2 branches missed.">		} else if (getArrowConfiguration().getDressing2().getHead() == ArrowHead.NORMAL) {</span>
-<span class="nc" id="L171">			final UPolygon polygon = getPolygon().translate(0, textHeight + arrowHeight);</span>
-<span class="nc" id="L172">			ug.apply(getForegroundColor().bg()).apply(UTranslate.dx(x2)).draw(polygon);</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		} else if (getArrowConfiguration().getDressing2().getHead() == ArrowHead.NORMAL) {</span>
+<span class="fc" id="L171">			final UPolygon polygon = getPolygon().translate(0, textHeight + arrowHeight);</span>
+<span class="fc" id="L172">			ug.apply(getForegroundColor().bg()).apply(UTranslate.dx(x2)).draw(polygon);</span>
 		}
-<span class="nc" id="L174">	}</span>
+<span class="fc" id="L174">	}</span>
 
 	private void drawLeftSide(UGraphic ug, UGraphic ug2, Area area, double arrowHeight, double textHeight, double prefTextWidth) {
 <span class="nc" id="L177">		double deltaSize = area.getLiveDeltaSize();</span>
@@ -273,37 +273,37 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 <span class="nc" id="L273">	}</span>
 
 	private UPolygon getPolygon() {
-<span class="nc" id="L276">		final UPolygon polygon = new UPolygon();</span>
-<span class="nc bnc" id="L277" title="All 2 branches missed.">		final double direction = getArrowConfiguration().isReverseDefine() ? -1 : 1;</span>
-<span class="nc" id="L278">		final double x = direction * getArrowDeltaX();</span>
-<span class="nc bnc" id="L279" title="All 2 branches missed.">		if (getArrowConfiguration().getPart() == ArrowPart.TOP_PART) {</span>
+<span class="fc" id="L276">		final UPolygon polygon = new UPolygon();</span>
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">		final double direction = getArrowConfiguration().isReverseDefine() ? -1 : 1;</span>
+<span class="fc" id="L278">		final double x = direction * getArrowDeltaX();</span>
+<span class="pc bpc" id="L279" title="1 of 2 branches missed.">		if (getArrowConfiguration().getPart() == ArrowPart.TOP_PART) {</span>
 <span class="nc" id="L280">			polygon.addPoint(x-1, -getArrowDeltaY());</span>
 <span class="nc" id="L281">			polygon.addPoint(-1, 0);</span>
 <span class="nc" id="L282">			polygon.addPoint(x-1, 0);</span>
-<span class="nc bnc" id="L283" title="All 2 branches missed.">		} else if (getArrowConfiguration().getPart() == ArrowPart.BOTTOM_PART) {</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">		} else if (getArrowConfiguration().getPart() == ArrowPart.BOTTOM_PART) {</span>
 <span class="nc" id="L284">			polygon.addPoint(x-1, 0);</span>
 <span class="nc" id="L285">			polygon.addPoint(-1, 0);</span>
 <span class="nc" id="L286">			polygon.addPoint(x-1, getArrowDeltaY());</span>
 		} else {
-<span class="nc" id="L288">			polygon.addPoint(x, -getArrowDeltaY());</span>
-<span class="nc" id="L289">			polygon.addPoint(0, 0);</span>
-<span class="nc" id="L290">			polygon.addPoint(x, getArrowDeltaY());</span>
-<span class="nc bnc" id="L291" title="All 2 branches missed.">			if (niceArrow) {</span>
-<span class="nc" id="L292">				polygon.addPoint(x - direction * 4, 0);</span>
+<span class="fc" id="L288">			polygon.addPoint(x, -getArrowDeltaY());</span>
+<span class="fc" id="L289">			polygon.addPoint(0, 0);</span>
+<span class="fc" id="L290">			polygon.addPoint(x, getArrowDeltaY());</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">			if (niceArrow) {</span>
+<span class="fc" id="L292">				polygon.addPoint(x - direction * 4, 0);</span>
 			}
 		}
-<span class="nc" id="L295">		return polygon;</span>
+<span class="fc" id="L295">		return polygon;</span>
 	}
 
 	public XPoint2D getStartPoint(StringBounder stringBounder, XDimension2D dimensionToUse) {
-<span class="nc" id="L299">		final double textHeight = getTextHeight(stringBounder);</span>
-<span class="nc" id="L300">		return new XPoint2D(getPaddingX(), textHeight + getPaddingY());</span>
+<span class="fc" id="L299">		final double textHeight = getTextHeight(stringBounder);</span>
+<span class="fc" id="L300">		return new XPoint2D(getPaddingX(), textHeight + getPaddingY());</span>
 	}
 
 	public XPoint2D getEndPoint(StringBounder stringBounder, XDimension2D dimensionToUse) {
-<span class="nc" id="L304">		final double textHeight = getTextHeight(stringBounder);</span>
-<span class="nc" id="L305">		final double textAndArrowHeight = textHeight + getArrowOnlyHeight(stringBounder);</span>
-<span class="nc" id="L306">		return new XPoint2D(getPaddingX(), textAndArrowHeight + getPaddingY());</span>
+<span class="fc" id="L304">		final double textHeight = getTextHeight(stringBounder);</span>
+<span class="fc" id="L305">		final double textAndArrowHeight = textHeight + getArrowOnlyHeight(stringBounder);</span>
+<span class="fc" id="L306">		return new XPoint2D(getPaddingX(), textAndArrowHeight + getPaddingY());</span>
 	}
 
 	@Override
@@ -315,16 +315,16 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="nc" id="L318">		return getTextHeight(stringBounder) + getArrowDeltaY() + getArrowOnlyHeight(stringBounder) + 2 * getPaddingY();</span>
+<span class="fc" id="L318">		return getTextHeight(stringBounder) + getArrowDeltaY() + getArrowOnlyHeight(stringBounder) + 2 * getPaddingY();</span>
 	}
 
 	private double getArrowOnlyHeight(StringBounder stringBounder) {
-<span class="nc" id="L322">		return 13;</span>
+<span class="fc" id="L322">		return 13;</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L327">		return Math.max(getTextWidth(stringBounder), arrowWidth+5);</span>
+<span class="fc" id="L327">		return Math.max(getTextWidth(stringBounder), arrowWidth+5);</span>
 	}
 
 	public double getPosArrow(StringBounder stringBounder) {

@@ -133,106 +133,131 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L133">		return new TextBlock() {</span>
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L136">				return null;</span>
+<span class="nc" id="L136">				double indicatorTotalWidth = 0D;</span>
+<span class="nc" id="L137">				double indicatorMaxHeight = 0D;</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">				for (PacketIndicator indicator : packetIndicators) {</span>
+<span class="nc" id="L139">					XDimension2D iDim = indicator.calculateDimension(stringBounder);</span>
+<span class="nc" id="L140">					indicatorTotalWidth = indicatorTotalWidth + bitWidth;</span>
+<span class="nc" id="L141">					indicatorMaxHeight = Math.max(iDim.getHeight(), indicatorMaxHeight);</span>
+<span class="nc" id="L142">				}</span>
+
+<span class="nc" id="L144">				double gridMaxWidth = 0D;</span>
+<span class="nc" id="L145">				double gridTotalHeight = 0D;</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">				for (List&lt;PacketBlock&gt; blocks : packetGrid) {</span>
+<span class="nc" id="L147">					double rowWidth = 0D;</span>
+<span class="nc" id="L148">					double rowHeight = 0D;</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">					for (PacketBlock block : blocks) {</span>
+<span class="nc" id="L150">						TextBlock tb = block.getShapeTextBlock(stringBounder, bitWidth, bitHeight);</span>
+<span class="nc" id="L151">						XDimension2D dim = tb.calculateDimension(stringBounder);</span>
+<span class="nc" id="L152">						rowWidth += dim.getWidth();</span>
+<span class="nc" id="L153">						rowHeight = dim.getHeight();</span>
+<span class="nc" id="L154">					}</span>
+<span class="nc" id="L155">					gridMaxWidth = Math.max(gridMaxWidth, rowWidth);</span>
+<span class="nc" id="L156">					gridTotalHeight += rowHeight;</span>
+<span class="nc" id="L157">				}</span>
+
+<span class="nc" id="L159">				final double totalWidth = Math.max(indicatorTotalWidth, gridMaxWidth);</span>
+<span class="nc" id="L160">				final double totalHeight = indicatorMaxHeight + gridTotalHeight;</span>
+<span class="nc" id="L161">				return new XDimension2D(totalWidth, totalHeight);</span>
 			}
 
 			@Override
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L141">				double maxWidth = 0D;</span>
-<span class="nc" id="L142">				double maxHeight = 0D;</span>
+<span class="nc" id="L166">				double maxWidth = 0D;</span>
+<span class="nc" id="L167">				double maxHeight = 0D;</span>
 
-<span class="nc bnc" id="L144" title="All 2 branches missed.">				for (PacketIndicator indicator : packetIndicators) {</span>
-<span class="nc" id="L145">					indicator.drawU(ug);</span>
-<span class="nc" id="L146">					ug = ug.apply(new UTranslate(bitWidth, 0D));</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">				for (PacketIndicator indicator : packetIndicators) {</span>
+<span class="nc" id="L170">					indicator.drawU(ug);</span>
+<span class="nc" id="L171">					ug = ug.apply(new UTranslate(bitWidth, 0D));</span>
 
-<span class="nc" id="L148">					XDimension2D iDim = indicator.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L149">					maxWidth = maxWidth + bitWidth;</span>
-<span class="nc" id="L150">					maxHeight = Math.max(iDim.getHeight(), maxHeight);</span>
-<span class="nc" id="L151">				}</span>
-<span class="nc" id="L152">				ug = ug.apply(new UTranslate(-maxWidth, maxHeight));</span>
+<span class="nc" id="L173">					XDimension2D iDim = indicator.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L174">					maxWidth = maxWidth + bitWidth;</span>
+<span class="nc" id="L175">					maxHeight = Math.max(iDim.getHeight(), maxHeight);</span>
+<span class="nc" id="L176">				}</span>
+<span class="nc" id="L177">				ug = ug.apply(new UTranslate(-maxWidth, maxHeight));</span>
 
 				// Draw packets
-<span class="nc bnc" id="L155" title="All 2 branches missed.">				for (List&lt;PacketBlock&gt; blocks : packetGrid) {</span>
-<span class="nc" id="L156">					double totalWidth = 0D;</span>
-<span class="nc" id="L157">					double drawHeight = 0D;</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">					for (PacketBlock block : blocks) {</span>
-<span class="nc" id="L159">						TextBlock tb = block.getShapeTextBlock(ug.getStringBounder(), bitWidth, bitHeight);</span>
-<span class="nc" id="L160">						XDimension2D dim = tb.calculateDimension(ug.getStringBounder());</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">				for (List&lt;PacketBlock&gt; blocks : packetGrid) {</span>
+<span class="nc" id="L181">					double totalWidth = 0D;</span>
+<span class="nc" id="L182">					double drawHeight = 0D;</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">					for (PacketBlock block : blocks) {</span>
+<span class="nc" id="L184">						TextBlock tb = block.getShapeTextBlock(ug.getStringBounder(), bitWidth, bitHeight);</span>
+<span class="nc" id="L185">						XDimension2D dim = tb.calculateDimension(ug.getStringBounder());</span>
 
-<span class="nc" id="L162">						totalWidth += dim.getWidth();</span>
-<span class="nc" id="L163">						drawHeight = dim.getHeight();</span>
-<span class="nc" id="L164">						tb.drawU(ug);</span>
-<span class="nc" id="L165">						ug = ug.apply(new UTranslate(dim.getWidth(), 0D));</span>
-<span class="nc" id="L166">					}</span>
-<span class="nc" id="L167">					ug = ug.apply(new UTranslate(-totalWidth, drawHeight));</span>
-<span class="nc" id="L168">				}</span>
-<span class="nc" id="L169">			}</span>
+<span class="nc" id="L187">						totalWidth += dim.getWidth();</span>
+<span class="nc" id="L188">						drawHeight = dim.getHeight();</span>
+<span class="nc" id="L189">						tb.drawU(ug);</span>
+<span class="nc" id="L190">						ug = ug.apply(new UTranslate(dim.getWidth(), 0D));</span>
+<span class="nc" id="L191">					}</span>
+<span class="nc" id="L192">					ug = ug.apply(new UTranslate(-totalWidth, drawHeight));</span>
+<span class="nc" id="L193">				}</span>
+<span class="nc" id="L194">			}</span>
 		};
 	}
 	
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L175">		return getTextMainBlock01970(fileFormatOption);</span>
+<span class="nc" id="L200">		return getTextMainBlock01970(fileFormatOption);</span>
 	}
 
 
 
 	@Override
 	public DiagramDescription getDescription() {
-<span class="nc" id="L182">		return new DiagramDescription(&quot;Packet Diagram&quot;);</span>
+<span class="nc" id="L207">		return new DiagramDescription(&quot;Packet Diagram&quot;);</span>
 	}
 
 	@Override
 	public String checkFinalError() {
-<span class="nc" id="L187">		build();</span>
-<span class="nc" id="L188">		return super.checkFinalError();</span>
+<span class="nc" id="L212">		build();</span>
+<span class="nc" id="L213">		return super.checkFinalError();</span>
 	}
 
 	boolean isUseDefaultScaleInterval() {
-<span class="nc" id="L192">		return useDefaultScaleInterval;</span>
+<span class="nc" id="L217">		return useDefaultScaleInterval;</span>
 	}
 
 	public int getColWidth() {
-<span class="nc" id="L196">		return colWidth;</span>
+<span class="nc" id="L221">		return colWidth;</span>
 	}
 
 	public void setColWidth(int colWidth) {
-<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (colWidth &gt; 0)</span>
-<span class="nc" id="L201">			this.colWidth = colWidth;</span>
-<span class="nc" id="L202">	}</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">		if (colWidth &gt; 0)</span>
+<span class="nc" id="L226">			this.colWidth = colWidth;</span>
+<span class="nc" id="L227">	}</span>
 
 	/**
 	 * Bit interval for showing full length indicator
 	 */
 	int getFullIndicatorInterval() {
-<span class="nc bnc" id="L208" title="All 2 branches missed.">		return colWidth &gt;= 4 ? colWidth / 4 : colWidth;</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">		return colWidth &gt;= 4 ? colWidth / 4 : colWidth;</span>
 	}
 
 	void updateScaleInterval(int value) {
-<span class="nc bnc" id="L212" title="All 2 branches missed.">		if (value &gt; 0) {</span>
-<span class="nc" id="L213">			this.scaleInterval = Math.min(value, this.colWidth);</span>
-<span class="nc" id="L214">			this.useDefaultScaleInterval = false;</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">		if (value &gt; 0) {</span>
+<span class="nc" id="L238">			this.scaleInterval = Math.min(value, this.colWidth);</span>
+<span class="nc" id="L239">			this.useDefaultScaleInterval = false;</span>
 		}
-<span class="nc" id="L216">	}</span>
+<span class="nc" id="L241">	}</span>
 
 	void updateNodeHeight(int nodeHeight) {
-<span class="nc" id="L219">		this.bitHeight = Math.max(nodeHeight, 0);</span>
-<span class="nc" id="L220">	}</span>
+<span class="nc" id="L244">		this.bitHeight = Math.max(nodeHeight, 0);</span>
+<span class="nc" id="L245">	}</span>
 
 	void setScaleDirection(ScaleDirection scaleDirection) {
-<span class="nc" id="L223">		this.scaleDirection = scaleDirection;</span>
-<span class="nc" id="L224">	}</span>
+<span class="nc" id="L248">		this.scaleDirection = scaleDirection;</span>
+<span class="nc" id="L249">	}</span>
 
 	void addPacketItem(PacketItem packetItem) {
-<span class="nc" id="L227">		packetItems.add(packetItem);</span>
-<span class="nc" id="L228">	}</span>
+<span class="nc" id="L252">		packetItems.add(packetItem);</span>
+<span class="nc" id="L253">	}</span>
 
 	public Style getStyle() {
-<span class="nc bnc" id="L231" title="All 2 branches missed.">		if (style == null) {</span>
-<span class="nc" id="L232">			style = StyleSignatureBasic.of(SName.root, SName.element, SName.packetdiagDiagram)</span>
-<span class="nc" id="L233">					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">		if (style == null) {</span>
+<span class="nc" id="L257">			style = StyleSignatureBasic.of(SName.root, SName.element, SName.packetdiagDiagram)</span>
+<span class="nc" id="L258">					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 		}
-<span class="nc" id="L235">		return style;</span>
+<span class="nc" id="L260">		return style;</span>
 	}
 
 	/**
@@ -242,133 +267,133 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	 * @return bit-position of the last packet item in system or empty
 	 */
 	Optional&lt;Integer&gt; getLastPacketEnd() {
-<span class="nc bnc" id="L245" title="All 2 branches missed.">		return packetItems.isEmpty() ? Optional.empty() : Optional.of(packetItems.get(packetItems.size() - 1).bitEnd);</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">		return packetItems.isEmpty() ? Optional.empty() : Optional.of(packetItems.get(packetItems.size() - 1).bitEnd);</span>
 	}
 
 	private void build() {
-<span class="nc bnc" id="L249" title="All 2 branches missed.">		if (isUseDefaultScaleInterval()) {</span>
-<span class="nc" id="L250">			updateScaleInterval(getColWidth() / 2);</span>
+<span class="nc bnc" id="L274" title="All 2 branches missed.">		if (isUseDefaultScaleInterval()) {</span>
+<span class="nc" id="L275">			updateScaleInterval(getColWidth() / 2);</span>
 		}
-<span class="nc" id="L252">		adjustLayout();</span>
-<span class="nc" id="L253">		adjustColWidth();</span>
-<span class="nc" id="L254">		adjustIndicators();</span>
-<span class="nc" id="L255">		adjustBitWidth();</span>
-<span class="nc" id="L256">	}</span>
+<span class="nc" id="L277">		adjustLayout();</span>
+<span class="nc" id="L278">		adjustColWidth();</span>
+<span class="nc" id="L279">		adjustIndicators();</span>
+<span class="nc" id="L280">		adjustBitWidth();</span>
+<span class="nc" id="L281">	}</span>
 
 	/**
 	 * Keeps column width under control
 	 */
 	void adjustColWidth() {
-<span class="nc bnc" id="L262" title="All 2 branches missed.">		if (!this.packetGrid.isEmpty()) {</span>
-<span class="nc" id="L263">			int maxWidth = this.packetGrid.get(0).stream().mapToInt(PacketBlock::getWidth).sum();</span>
-<span class="nc" id="L264">			this.colWidth = Math.min(maxWidth, this.colWidth);</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">		if (!this.packetGrid.isEmpty()) {</span>
+<span class="nc" id="L288">			int maxWidth = this.packetGrid.get(0).stream().mapToInt(PacketBlock::getWidth).sum();</span>
+<span class="nc" id="L289">			this.colWidth = Math.min(maxWidth, this.colWidth);</span>
 		}
-<span class="nc" id="L266">	}</span>
+<span class="nc" id="L291">	}</span>
 
 	void adjustIndicators() {
-<span class="nc" id="L269">		final int fullLengthInterval = getFullIndicatorInterval();</span>
-<span class="nc" id="L270">		IntStream idxStream = IntStream.iterate(0, i -&gt; i + 1).limit(colWidth + 1);</span>
-<span class="nc bnc" id="L271" title="All 2 branches missed.">		if (scaleDirection == ScaleDirection.RTL) {</span>
-<span class="nc" id="L272">			idxStream = IntStream.iterate(colWidth, i -&gt; i - 1).limit(colWidth + 1);</span>
+<span class="nc" id="L294">		final int fullLengthInterval = getFullIndicatorInterval();</span>
+<span class="nc" id="L295">		IntStream idxStream = IntStream.iterate(0, i -&gt; i + 1).limit(colWidth + 1);</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">		if (scaleDirection == ScaleDirection.RTL) {</span>
+<span class="nc" id="L297">			idxStream = IntStream.iterate(colWidth, i -&gt; i - 1).limit(colWidth + 1);</span>
 		}
-<span class="nc" id="L274">		this.packetIndicators = idxStream.mapToObj(i -&gt; {</span>
-<span class="nc bnc" id="L275" title="All 2 branches missed.">			boolean full = i % fullLengthInterval == 0;</span>
-<span class="nc bnc" id="L276" title="All 2 branches missed.">			boolean numbered = i % scaleInterval == 0;</span>
-<span class="nc" id="L277">			return new PacketIndicator(full, numbered, i, getStyle(), getSkinParam());</span>
-<span class="nc" id="L278">		}).collect(Collectors.toList());</span>
-<span class="nc" id="L279">	}</span>
+<span class="nc" id="L299">		this.packetIndicators = idxStream.mapToObj(i -&gt; {</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">			boolean full = i % fullLengthInterval == 0;</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">			boolean numbered = i % scaleInterval == 0;</span>
+<span class="nc" id="L302">			return new PacketIndicator(full, numbered, i, getStyle(), getSkinParam());</span>
+<span class="nc" id="L303">		}).collect(Collectors.toList());</span>
+<span class="nc" id="L304">	}</span>
 
 	/**
 	 * Rearranges packets into one grid, split long packets if it went out of the
 	 * row
 	 */
 	void adjustLayout() {
-<span class="nc" id="L286">		List&lt;List&lt;PacketBlock&gt;&gt; grid = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L287">		List&lt;PacketBlock&gt; currRow = createPacketRow();</span>
-<span class="nc" id="L288">		int remainRowWidth = colWidth;</span>
-<span class="nc bnc" id="L289" title="All 2 branches missed.">		for (PacketItem packet : packetItems) {</span>
-<span class="nc" id="L290">			Optional&lt;PacketItem&gt; op = fitPacketInRow(packet, remainRowWidth, currRow);</span>
-<span class="nc bnc" id="L291" title="All 2 branches missed.">			if (op.isPresent()) {</span>
-<span class="nc" id="L292">				remainRowWidth = colWidth;</span>
-<span class="nc" id="L293">				grid.add(currRow);</span>
-<span class="nc" id="L294">				currRow = createPacketRow();</span>
+<span class="nc" id="L311">		List&lt;List&lt;PacketBlock&gt;&gt; grid = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L312">		List&lt;PacketBlock&gt; currRow = createPacketRow();</span>
+<span class="nc" id="L313">		int remainRowWidth = colWidth;</span>
+<span class="nc bnc" id="L314" title="All 2 branches missed.">		for (PacketItem packet : packetItems) {</span>
+<span class="nc" id="L315">			Optional&lt;PacketItem&gt; op = fitPacketInRow(packet, remainRowWidth, currRow);</span>
+<span class="nc bnc" id="L316" title="All 2 branches missed.">			if (op.isPresent()) {</span>
+<span class="nc" id="L317">				remainRowWidth = colWidth;</span>
+<span class="nc" id="L318">				grid.add(currRow);</span>
+<span class="nc" id="L319">				currRow = createPacketRow();</span>
 
-<span class="nc" id="L296">				PacketItem p = op.get();</span>
-<span class="nc" id="L297">				int rowCnt = p.width / remainRowWidth;</span>
-<span class="nc" id="L298">				int remain = p.width % remainRowWidth;</span>
-<span class="nc bnc" id="L299" title="All 2 branches missed.">				for (int i = 0; i &lt; rowCnt; i++) {</span>
-<span class="nc" id="L300">					PacketBlock pb = p.toPacketBlock(remainRowWidth, true, true, getSkinParam());</span>
-<span class="nc" id="L301">					grid.add(createPacketRow(pb));</span>
+<span class="nc" id="L321">				PacketItem p = op.get();</span>
+<span class="nc" id="L322">				int rowCnt = p.width / remainRowWidth;</span>
+<span class="nc" id="L323">				int remain = p.width % remainRowWidth;</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">				for (int i = 0; i &lt; rowCnt; i++) {</span>
+<span class="nc" id="L325">					PacketBlock pb = p.toPacketBlock(remainRowWidth, true, true, getSkinParam());</span>
+<span class="nc" id="L326">					grid.add(createPacketRow(pb));</span>
 				}
-<span class="nc bnc" id="L303" title="All 2 branches missed.">				if (remain &gt; 0) {</span>
-<span class="nc" id="L304">					PacketBlock pb = p.toPacketBlock(remainRowWidth, true, false, getSkinParam());</span>
-<span class="nc" id="L305">					currRow.add(pb);</span>
-<span class="nc" id="L306">					remainRowWidth -= remain;</span>
-<span class="nc" id="L307">				} else {</span>
-<span class="nc" id="L308">					grid.get(grid.size() - 1).get(0).openRight(false);</span>
+<span class="nc bnc" id="L328" title="All 2 branches missed.">				if (remain &gt; 0) {</span>
+<span class="nc" id="L329">					PacketBlock pb = p.toPacketBlock(remainRowWidth, true, false, getSkinParam());</span>
+<span class="nc" id="L330">					currRow.add(pb);</span>
+<span class="nc" id="L331">					remainRowWidth -= remain;</span>
+<span class="nc" id="L332">				} else {</span>
+<span class="nc" id="L333">					grid.get(grid.size() - 1).get(0).openRight(false);</span>
 				}
-<span class="nc" id="L310">			} else {</span>
-<span class="nc" id="L311">				remainRowWidth -= packet.width;</span>
-<span class="nc bnc" id="L312" title="All 2 branches missed.">				if (remainRowWidth == 0) {</span>
-<span class="nc" id="L313">					remainRowWidth = colWidth;</span>
-<span class="nc" id="L314">					grid.add(currRow);</span>
-<span class="nc" id="L315">					currRow = createPacketRow();</span>
+<span class="nc" id="L335">			} else {</span>
+<span class="nc" id="L336">				remainRowWidth -= packet.width;</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">				if (remainRowWidth == 0) {</span>
+<span class="nc" id="L338">					remainRowWidth = colWidth;</span>
+<span class="nc" id="L339">					grid.add(currRow);</span>
+<span class="nc" id="L340">					currRow = createPacketRow();</span>
 				}
 			}
-<span class="nc" id="L318">		}</span>
-<span class="nc bnc" id="L319" title="All 2 branches missed.">		if (!currRow.isEmpty()) {</span>
-<span class="nc" id="L320">			grid.add(currRow);</span>
+<span class="nc" id="L343">		}</span>
+<span class="nc bnc" id="L344" title="All 2 branches missed.">		if (!currRow.isEmpty()) {</span>
+<span class="nc" id="L345">			grid.add(currRow);</span>
 		}
 		// Equalize packet height, this behavior is not in the original implementation,
 		// but I find it make sense to do so
-<span class="nc" id="L324">		grid.forEach(blocks -&gt; {</span>
-<span class="nc" id="L325">			final int maxH = blocks.stream().map(PacketBlock::getHeight).max(Integer::compare).orElse(1);</span>
-<span class="nc" id="L326">			blocks.forEach(blk -&gt; blk.setHeight(maxH));</span>
-<span class="nc bnc" id="L327" title="All 2 branches missed.">			if (scaleDirection == ScaleDirection.RTL) {</span>
-<span class="nc" id="L328">				Collections.reverse(blocks);</span>
+<span class="nc" id="L349">		grid.forEach(blocks -&gt; {</span>
+<span class="nc" id="L350">			final int maxH = blocks.stream().map(PacketBlock::getHeight).max(Integer::compare).orElse(1);</span>
+<span class="nc" id="L351">			blocks.forEach(blk -&gt; blk.setHeight(maxH));</span>
+<span class="nc bnc" id="L352" title="All 2 branches missed.">			if (scaleDirection == ScaleDirection.RTL) {</span>
+<span class="nc" id="L353">				Collections.reverse(blocks);</span>
 			}
-<span class="nc" id="L330">		});</span>
+<span class="nc" id="L355">		});</span>
 
-<span class="nc" id="L332">		this.packetGrid = grid;</span>
-<span class="nc" id="L333">	}</span>
+<span class="nc" id="L357">		this.packetGrid = grid;</span>
+<span class="nc" id="L358">	}</span>
 
 	/**
 	 * Adjust the draw width for one bit based on font size
 	 */
 	void adjustBitWidth() {
-<span class="nc" id="L339">		final double bitScale = 3.0;</span>
-<span class="nc" id="L340">		this.bitWidth = getStyle().value(PName.FontSize).asDouble() * bitScale;</span>
-<span class="nc" id="L341">	}</span>
+<span class="nc" id="L364">		final double bitScale = 3.0;</span>
+<span class="nc" id="L365">		this.bitWidth = getStyle().value(PName.FontSize).asDouble() * bitScale;</span>
+<span class="nc" id="L366">	}</span>
 
 	private static List&lt;PacketBlock&gt; createPacketRow(PacketBlock... pbs) {
-<span class="nc" id="L344">		ArrayList&lt;PacketBlock&gt; row = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L345">		Collections.addAll(row, pbs);</span>
-<span class="nc" id="L346">		return row;</span>
+<span class="nc" id="L369">		ArrayList&lt;PacketBlock&gt; row = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L370">		Collections.addAll(row, pbs);</span>
+<span class="nc" id="L371">		return row;</span>
 	}
 
 	private Optional&lt;PacketItem&gt; fitPacketInRow(PacketItem packet, int remainRowWidth, List&lt;PacketBlock&gt; row) {
-<span class="nc bnc" id="L350" title="All 4 branches missed.">		if (TeaVM.a()) assert remainRowWidth &gt; 0;</span>
-<span class="nc" id="L351">		int overflow = packet.width - remainRowWidth;</span>
-<span class="nc bnc" id="L352" title="All 2 branches missed.">		if (overflow &gt; 0) {</span>
-<span class="nc" id="L353">			int margin = packet.width - remainRowWidth;</span>
-<span class="nc" id="L354">			int bitEnd = packet.bitEnd - margin;</span>
-<span class="nc" id="L355">			row.add(packet.toPacketBlock(remainRowWidth, false, true, getSkinParam()));</span>
-<span class="nc" id="L356">			return Optional.of(new PacketItem(margin, packet.height, bitEnd, packet.bitEnd, packet.desc));</span>
+<span class="nc bnc" id="L375" title="All 4 branches missed.">		if (TeaVM.a()) assert remainRowWidth &gt; 0;</span>
+<span class="nc" id="L376">		int overflow = packet.width - remainRowWidth;</span>
+<span class="nc bnc" id="L377" title="All 2 branches missed.">		if (overflow &gt; 0) {</span>
+<span class="nc" id="L378">			int margin = packet.width - remainRowWidth;</span>
+<span class="nc" id="L379">			int bitEnd = packet.bitEnd - margin;</span>
+<span class="nc" id="L380">			row.add(packet.toPacketBlock(remainRowWidth, false, true, getSkinParam()));</span>
+<span class="nc" id="L381">			return Optional.of(new PacketItem(margin, packet.height, bitEnd, packet.bitEnd, packet.desc));</span>
 		} else {
-<span class="nc" id="L358">			row.add(packet.toPacketBlock(getSkinParam()));</span>
-<span class="nc" id="L359">			return Optional.empty();</span>
+<span class="nc" id="L383">			row.add(packet.toPacketBlock(getSkinParam()));</span>
+<span class="nc" id="L384">			return Optional.empty();</span>
 		}
 	}
 
-<span class="nc" id="L363">	enum ScaleDirection {</span>
+<span class="nc" id="L388">	enum ScaleDirection {</span>
 		/**
 		 * Left to right
 		 */
-<span class="nc" id="L367">		LTR,</span>
+<span class="nc" id="L392">		LTR,</span>
 		/**
 		 * Right to left
 		 */
-<span class="nc" id="L371">		RTL</span>
+<span class="nc" id="L396">		RTL</span>
 	}
 
 	static class PacketItem {
@@ -379,25 +404,25 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 		final String desc;
 		int textRotation;
 
-<span class="nc" id="L382">		private PacketItem(int width, int height, int bitStart, int bitEnd, String desc) {</span>
-<span class="nc" id="L383">			this.width = width;</span>
-<span class="nc" id="L384">			this.height = height;</span>
-<span class="nc" id="L385">			this.bitStart = bitStart;</span>
-<span class="nc" id="L386">			this.bitEnd = bitEnd;</span>
-<span class="nc bnc" id="L387" title="All 2 branches missed.">			this.desc = desc == null ? &quot;&quot; : desc;</span>
-<span class="nc" id="L388">		}</span>
+<span class="nc" id="L407">		private PacketItem(int width, int height, int bitStart, int bitEnd, String desc) {</span>
+<span class="nc" id="L408">			this.width = width;</span>
+<span class="nc" id="L409">			this.height = height;</span>
+<span class="nc" id="L410">			this.bitStart = bitStart;</span>
+<span class="nc" id="L411">			this.bitEnd = bitEnd;</span>
+<span class="nc bnc" id="L412" title="All 2 branches missed.">			this.desc = desc == null ? &quot;&quot; : desc;</span>
+<span class="nc" id="L413">		}</span>
 
 		static PacketItem ofRange(int start, int end, int height, String desc) {
-<span class="nc" id="L391">			int width = end - start + 1;</span>
-<span class="nc" id="L392">			return new PacketItem(width, height, start, end, desc);</span>
+<span class="nc" id="L416">			int width = end - start + 1;</span>
+<span class="nc" id="L417">			return new PacketItem(width, height, start, end, desc);</span>
 		}
 
 		PacketBlock toPacketBlock(ISkinParam skinParam) {
-<span class="nc" id="L396">			return new PacketBlock(width, height, desc, skinParam);</span>
+<span class="nc" id="L421">			return new PacketBlock(width, height, desc, skinParam);</span>
 		}
 
 		PacketBlock toPacketBlock(int newWidth, boolean openLeft, boolean openRight, ISkinParam skinParam) {
-<span class="nc" id="L400">			return new PacketBlock(Math.min(newWidth, width), height, desc, skinParam, openLeft, openRight);</span>
+<span class="nc" id="L425">			return new PacketBlock(Math.min(newWidth, width), height, desc, skinParam, openLeft, openRight);</span>
 		}
 	}
 }

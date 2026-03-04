@@ -243,7 +243,7 @@ public class TextBlockExporter12026 {
 		// ::comment when __TEAVM__
 <span class="fc" id="L244">		final ColorMapper colorMapper = fileFormatOption.getColorMapper();</span>
 <span class="fc bfc" id="L245" title="All 2 branches covered.">		final Pragma p = pragma != null ? pragma : Pragma.createEmpty();</span>
-<span class="pc bpc" id="L246" title="7 of 12 branches missed.">		switch (fileFormatOption.getFileFormat()) {</span>
+<span class="pc bpc" id="L246" title="6 of 12 branches missed.">		switch (fileFormatOption.getFileFormat()) {</span>
 		case PNG:
 		case PNG_EMPTY:
 		case RAW:
@@ -269,8 +269,8 @@ public class TextBlockExporter12026 {
 		case ATXT:
 <span class="fc" id="L270">			return new UGraphicTxt();</span>
 		case DEBUG:
-<span class="nc" id="L272">			return new UGraphicDebug(scaleFactor, dim, getSvgLinkTarget(), getHoverPathColorRGB(), seed,</span>
-<span class="nc" id="L273">					getPreserveAspectRatio());</span>
+<span class="fc" id="L272">			return new UGraphicDebug(scaleFactor, dim, getSvgLinkTarget(), getHoverPathColorRGB(), seed,</span>
+<span class="fc" id="L273">					getPreserveAspectRatio());</span>
 		default:
 			// ::done
 <span class="nc" id="L276">			throw new UnsupportedOperationException(fileFormatOption.getFileFormat().toString());</span>

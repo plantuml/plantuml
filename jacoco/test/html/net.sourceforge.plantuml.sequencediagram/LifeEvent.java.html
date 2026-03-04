@@ -47,12 +47,12 @@ public class LifeEvent extends AbstractEvent implements Event {
 	private final Fashion backcolor;
 	private final StyleBuilder styleBuilder;
 
-<span class="nc" id="L50">	public LifeEvent(Participant p, LifeEventType type, Fashion backcolor, StyleBuilder styleBuilder) {</span>
-<span class="nc" id="L51">		this.styleBuilder = styleBuilder;</span>
-<span class="nc" id="L52">		this.p = p;</span>
-<span class="nc" id="L53">		this.type = type;</span>
-<span class="nc" id="L54">		this.backcolor = backcolor;</span>
-<span class="nc" id="L55">	}</span>
+<span class="fc" id="L50">	public LifeEvent(Participant p, LifeEventType type, Fashion backcolor, StyleBuilder styleBuilder) {</span>
+<span class="fc" id="L51">		this.styleBuilder = styleBuilder;</span>
+<span class="fc" id="L52">		this.p = p;</span>
+<span class="fc" id="L53">		this.type = type;</span>
+<span class="fc" id="L54">		this.backcolor = backcolor;</span>
+<span class="fc" id="L55">	}</span>
 
 	@Override
 	public String toString() {
@@ -60,15 +60,15 @@ public class LifeEvent extends AbstractEvent implements Event {
 	}
 
 	public Participant getParticipant() {
-<span class="nc" id="L63">		return p;</span>
+<span class="fc" id="L63">		return p;</span>
 	}
 
 	public LifeEventType getType() {
-<span class="nc" id="L67">		return type;</span>
+<span class="fc" id="L67">		return type;</span>
 	}
 
 	public Fashion getSpecificColors() {
-<span class="nc" id="L71">		return backcolor;</span>
+<span class="fc" id="L71">		return backcolor;</span>
 	}
 
 	public boolean dealWith(Participant someone) {
@@ -94,11 +94,11 @@ public class LifeEvent extends AbstractEvent implements Event {
 	private AbstractMessage message;
 
 	public void setMessage(AbstractMessage message) {
-<span class="nc" id="L97">		this.message = message;</span>
-<span class="nc" id="L98">	}</span>
+<span class="fc" id="L97">		this.message = message;</span>
+<span class="fc" id="L98">	}</span>
 
 	public AbstractMessage getMessage() {
-<span class="nc" id="L101">		return message;</span>
+<span class="fc" id="L101">		return message;</span>
 	}
 
 	public StyleSignature getStyleSignature() {
@@ -106,8 +106,8 @@ public class LifeEvent extends AbstractEvent implements Event {
 	}
 
 	public Style[] getUsedStyle() {
-<span class="nc" id="L109">		final Style style = type.getStyleSignature().getMergedStyle(styleBuilder);</span>
-<span class="nc" id="L110">		return new Style[] { style };</span>
+<span class="fc" id="L109">		final Style style = type.getStyleSignature().getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L110">		return new Style[] { style };</span>
 	}
 
 	public StyleBuilder getStyleBuilder() {

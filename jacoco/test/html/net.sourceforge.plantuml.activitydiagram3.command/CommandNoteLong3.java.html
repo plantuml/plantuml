@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.utils.BlocLines;
 public class CommandNoteLong3 extends CommandMultilines2&lt;ActivityDiagram3&gt; {
 
 <span class="fc" id="L64">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="nc" id="L65">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?note$&quot;));</span>
+<span class="fc" id="L65">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?note$&quot;));</span>
 
 	public CommandNoteLong3() {
 <span class="fc" id="L68">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
@@ -75,20 +75,20 @@ public class CommandNoteLong3 extends CommandMultilines2&lt;ActivityDiagram3&gt;
 	@Override
 	protected CommandExecutionResult executeNow(final ActivityDiagram3 diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L78">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc" id="L79">		lines = lines.subExtract(1, 1);</span>
-<span class="nc" id="L80">		lines = lines.removeEmptyColumns();</span>
-<span class="nc" id="L81">		final NotePosition position = NotePosition.defaultLeft(line0.get(&quot;POSITION&quot;, 0));</span>
-<span class="nc" id="L82">		final NoteType type = NoteType.defaultType(line0.get(&quot;TYPE&quot;, 0));</span>
-<span class="nc" id="L83">		final Display note = lines.toDisplay();</span>
-<span class="nc" id="L84">		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L78">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L79">		lines = lines.subExtract(1, 1);</span>
+<span class="fc" id="L80">		lines = lines.removeEmptyColumns();</span>
+<span class="fc" id="L81">		final NotePosition position = NotePosition.defaultLeft(line0.get(&quot;POSITION&quot;, 0));</span>
+<span class="fc" id="L82">		final NoteType type = NoteType.defaultType(line0.get(&quot;TYPE&quot;, 0));</span>
+<span class="fc" id="L83">		final Display note = lines.toDisplay();</span>
+<span class="fc" id="L84">		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
 
-<span class="nc" id="L86">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
-<span class="nc" id="L87">		Stereotype stereotype = null;</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (stereotypeString != null)</span>
+<span class="fc" id="L86">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L87">		Stereotype stereotype = null;</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (stereotypeString != null)</span>
 <span class="nc" id="L89">			stereotype = Stereotype.build(stereotypeString);</span>
 
-<span class="nc" id="L91">		return diagram.addNote(note, position, type, colors, stereotype);</span>
+<span class="fc" id="L91">		return diagram.addNote(note, position, type, colors, stereotype);</span>
 	}
 
 	static IRegex getRegexConcat() {

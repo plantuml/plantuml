@@ -37,14 +37,14 @@ package net.sourceforge.plantuml.sequencediagram;
 
 import net.sourceforge.plantuml.StringUtils;
 
-<span class="nc" id="L40">public enum NoteType {</span>
-<span class="nc" id="L41">	NOTE, FLOATING_NOTE;</span>
+<span class="fc" id="L40">public enum NoteType {</span>
+<span class="fc" id="L41">	NOTE, FLOATING_NOTE;</span>
 
 	public static NoteType defaultType(String s) {
-<span class="nc bnc" id="L44" title="All 2 branches missed.">		if (s == null) {</span>
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">		if (s == null) {</span>
 <span class="nc" id="L45">			return NoteType.NOTE;</span>
 		}
-<span class="nc" id="L47">		return NoteType.valueOf(StringUtils.goUpperCase(s).replace(' ', '_'));</span>
+<span class="fc" id="L47">		return NoteType.valueOf(StringUtils.goUpperCase(s).replace(' ', '_'));</span>
 	}
 
 }

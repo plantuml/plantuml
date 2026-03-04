@@ -34,48 +34,48 @@
  */
 package net.sourceforge.plantuml.yaml.parser;
 
-<span class="nc" id="L37">public enum YamlLineType {</span>
+<span class="fc" id="L37">public enum YamlLineType {</span>
 	
-<span class="nc" id="L39">	EMPTY_LINE,</span>
+<span class="fc" id="L39">	EMPTY_LINE,</span>
 	
 	
-<span class="nc" id="L42">	NO_KEY_ONLY_TEXT,</span>
+<span class="fc" id="L42">	NO_KEY_ONLY_TEXT,</span>
 	
 	
 	/**
 	 * Indicates that no value was provided.
 	 */
-<span class="nc" id="L48">	KEY_ONLY,</span>
+<span class="fc" id="L48">	KEY_ONLY,</span>
 	
 	/**
 	 * Indicates a simple regular scalar value.
 	 */
-<span class="nc" id="L53">	KEY_AND_VALUE,</span>
+<span class="fc" id="L53">	KEY_AND_VALUE,</span>
 	
 	/**
 	 * Indicates an inline list (e.g. [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]).
 	 */
-<span class="nc" id="L58">	KEY_AND_FLOW_SEQUENCE,</span>
+<span class="fc" id="L58">	KEY_AND_FLOW_SEQUENCE,</span>
 	
 	/**
 	 * Indicates a block style scalar value (using the '|' indicator).
 	 */
-<span class="nc" id="L63">	KEY_AND_BLOCK_STYLE,</span>
+<span class="fc" id="L63">	KEY_AND_BLOCK_STYLE,</span>
 	
 	/**
 	 * Indicates a folded style scalar value (using the '&gt;' indicator).
 	 */
-<span class="nc" id="L68">	KEY_AND_FOLDED_STYLE,</span>
+<span class="fc" id="L68">	KEY_AND_FOLDED_STYLE,</span>
 	
 	/**
 	 * Indicates a plain element in a list (e.g.  - red )
 	 */
-<span class="nc" id="L73">	PLAIN_ELEMENT_LIST,</span>
+<span class="fc" id="L73">	PLAIN_ELEMENT_LIST,</span>
 	
 	/**
 	 * Indicates a plain dash (e.g.  - )
 	 */
-<span class="nc" id="L78">	PLAIN_DASH,</span>
+<span class="fc" id="L78">	PLAIN_DASH,</span>
 	
 }
 

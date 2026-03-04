@@ -74,16 +74,16 @@ public class CommandActivate extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L77">		final LifeEventType type = LifeEventType.valueOf(StringUtils.goUpperCase(arg.get(&quot;TYPE&quot;, 0)));</span>
-<span class="nc" id="L78">		final Participant p = diagram.getOrCreateParticipant(location,</span>
-<span class="nc" id="L79">				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;WHO&quot;, 0)));</span>
-<span class="nc" id="L80">		final String back = arg.get(&quot;BACK&quot;, 0);</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		final HColor backColor = back == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(back);</span>
-<span class="nc" id="L82">		final String line = arg.get(&quot;LINE&quot;, 0);</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		final HColor lineColor = line == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(line);</span>
-<span class="nc" id="L84">		final String error = diagram.activate(p, type, backColor, lineColor);</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (error == null) {</span>
-<span class="nc" id="L86">			return CommandExecutionResult.ok();</span>
+<span class="fc" id="L77">		final LifeEventType type = LifeEventType.valueOf(StringUtils.goUpperCase(arg.get(&quot;TYPE&quot;, 0)));</span>
+<span class="fc" id="L78">		final Participant p = diagram.getOrCreateParticipant(location,</span>
+<span class="fc" id="L79">				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;WHO&quot;, 0)));</span>
+<span class="fc" id="L80">		final String back = arg.get(&quot;BACK&quot;, 0);</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		final HColor backColor = back == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(back);</span>
+<span class="fc" id="L82">		final String line = arg.get(&quot;LINE&quot;, 0);</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		final HColor lineColor = line == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(line);</span>
+<span class="fc" id="L84">		final String error = diagram.activate(p, type, backColor, lineColor);</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (error == null) {</span>
+<span class="fc" id="L86">			return CommandExecutionResult.ok();</span>
 		}
 <span class="nc" id="L88">		return CommandExecutionResult.error(error);</span>
 	}

@@ -135,8 +135,8 @@ public class Style {
 	}
 
 	public Style eventuallyOverride(PName param, HColor color) {
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (color == null)</span>
-<span class="nc" id="L139">			return this;</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		if (color == null)</span>
+<span class="fc" id="L139">			return this;</span>
 
 <span class="fc" id="L141">		final EnumMap&lt;PName, Value&gt; result = new EnumMap&lt;PName, Value&gt;(this.map);</span>
 <span class="fc" id="L142">		final Value old = result.get(param);</span>

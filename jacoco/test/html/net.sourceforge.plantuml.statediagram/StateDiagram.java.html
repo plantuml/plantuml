@@ -91,18 +91,18 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 	public Entity getStart(LineLocation location) {
 <span class="fc" id="L93">		final Entity g = getCurrentGroup();</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (g.isRoot()) {</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (g.isRoot()) {</span>
 <span class="fc" id="L95">			final String idShort = &quot;*start*&quot;;</span>
 <span class="fc" id="L96">			final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
 <span class="pc bpc" id="L97" title="1 of 2 branches missed.">			if (quark.getData() == null)</span>
 <span class="fc" id="L98">				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.CIRCLE_START, null);</span>
 <span class="fc" id="L99">			return quark.getData();</span>
 		}
-<span class="nc" id="L101">		final String idShort = &quot;*start*&quot; + g.getName();</span>
-<span class="nc" id="L102">		final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (quark.getData() == null)</span>
-<span class="nc" id="L104">			reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.CIRCLE_START, null);</span>
-<span class="nc" id="L105">		return quark.getData();</span>
+<span class="fc" id="L101">		final String idShort = &quot;*start*&quot; + g.getName();</span>
+<span class="fc" id="L102">		final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (quark.getData() == null)</span>
+<span class="fc" id="L104">			reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.CIRCLE_START, null);</span>
+<span class="fc" id="L105">		return quark.getData();</span>
 	}
 
 	public Entity getEnd(LineLocation location) {
@@ -204,11 +204,11 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 	@Override
 	public boolean endGroup() {
-<span class="nc" id="L207">		final Entity cur = getCurrentGroup();</span>
-<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (cur.getGroupType() == GroupType.CONCURRENT_STATE)</span>
+<span class="fc" id="L207">		final Entity cur = getCurrentGroup();</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (cur.getGroupType() == GroupType.CONCURRENT_STATE)</span>
 <span class="nc" id="L209">			super.endGroup();</span>
 
-<span class="nc" id="L211">		return super.endGroup();</span>
+<span class="fc" id="L211">		return super.endGroup();</span>
 	}
 
 <span class="fc" id="L214">	private boolean hideEmptyDescription = false;</span>

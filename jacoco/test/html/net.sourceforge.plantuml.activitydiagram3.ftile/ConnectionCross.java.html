@@ -42,26 +42,26 @@ public class ConnectionCross extends AbstractConnection {
 	private final Connection connection;
 
 	public ConnectionCross(Connection connection) {
-<span class="nc" id="L45">		super(connection.getFtile1(), connection.getFtile2());</span>
-<span class="nc" id="L46">		this.connection = connection;</span>
-<span class="nc" id="L47">	}</span>
+<span class="fc" id="L45">		super(connection.getFtile1(), connection.getFtile2());</span>
+<span class="fc" id="L46">		this.connection = connection;</span>
+<span class="fc" id="L47">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L50" title="All 2 branches missed.">		if (connection instanceof ConnectionTranslatable) {</span>
-<span class="nc" id="L51">			final ConnectionTranslatable conn = (ConnectionTranslatable) connection;</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">		if (connection instanceof ConnectionTranslatable) {</span>
+<span class="fc" id="L51">			final ConnectionTranslatable conn = (ConnectionTranslatable) connection;</span>
 
-<span class="nc" id="L53">			final Swimlane swimlane1 = getFtile1().getSwimlaneOut();</span>
-<span class="nc" id="L54">			final Swimlane swimlane2 = getFtile2().getSwimlaneIn();</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">			if (swimlane1 == null) {</span>
+<span class="fc" id="L53">			final Swimlane swimlane1 = getFtile1().getSwimlaneOut();</span>
+<span class="fc" id="L54">			final Swimlane swimlane2 = getFtile2().getSwimlaneIn();</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">			if (swimlane1 == null) {</span>
 <span class="nc" id="L56">				return;</span>
 				// throw new IllegalStateException(&quot;&quot; + getFtile1().getClass());
 			}
-<span class="nc bnc" id="L59" title="All 2 branches missed.">			if (swimlane2 == null) {</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">			if (swimlane2 == null) {</span>
 <span class="nc" id="L60">				return;</span>
 				// throw new IllegalStateException(&quot;&quot; + getFtile2().getClass());
 			}
-<span class="nc" id="L63">			conn.drawTranslate(ug, swimlane1.getTranslate(), swimlane2.getTranslate());</span>
+<span class="fc" id="L63">			conn.drawTranslate(ug, swimlane1.getTranslate(), swimlane2.getTranslate());</span>
 		}
-<span class="nc" id="L65">	}</span>
+<span class="fc" id="L65">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

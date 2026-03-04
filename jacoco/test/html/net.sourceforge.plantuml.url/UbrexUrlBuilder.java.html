@@ -90,105 +90,105 @@ public class UbrexUrlBuilder {
 //				S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL;
 //	}
 //
-<span class="nc" id="L93">	private static final UnicodeBracketedExpression QUOTED = UnicodeBracketedExpression.build(S_QUOTED);</span>
-<span class="nc" id="L94">	private static final UnicodeBracketedExpression ONLY_TOOLTIP = UnicodeBracketedExpression.build(S_ONLY_TOOLTIP);</span>
-<span class="nc" id="L95">	private static final UnicodeBracketedExpression ONLY_TOOLTIP_AND_LABEL = UnicodeBracketedExpression</span>
-<span class="nc" id="L96">			.build(S_ONLY_TOOLTIP_AND_LABEL);</span>
-<span class="nc" id="L97">	private static final UnicodeBracketedExpression LINK_TOOLTIP_NOLABEL = UnicodeBracketedExpression</span>
-<span class="nc" id="L98">			.build(S_LINK_TOOLTIP_NOLABEL);</span>
-<span class="nc" id="L99">	private static final UnicodeBracketedExpression LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL = UnicodeBracketedExpression</span>
-<span class="nc" id="L100">			.build(S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL);</span>
-<span class="nc" id="L101">	private static final UnicodeBracketedExpression LINK_NOTOOLTIP_WITH_OPTIONAL_LABEL = UnicodeBracketedExpression</span>
-<span class="nc" id="L102">			.build(S_LINK_NOTOOLTIP_WITH_OPTIONAL_LABEL);</span>
+<span class="fc" id="L93">	private static final UnicodeBracketedExpression QUOTED = UnicodeBracketedExpression.build(S_QUOTED);</span>
+<span class="fc" id="L94">	private static final UnicodeBracketedExpression ONLY_TOOLTIP = UnicodeBracketedExpression.build(S_ONLY_TOOLTIP);</span>
+<span class="fc" id="L95">	private static final UnicodeBracketedExpression ONLY_TOOLTIP_AND_LABEL = UnicodeBracketedExpression</span>
+<span class="fc" id="L96">			.build(S_ONLY_TOOLTIP_AND_LABEL);</span>
+<span class="fc" id="L97">	private static final UnicodeBracketedExpression LINK_TOOLTIP_NOLABEL = UnicodeBracketedExpression</span>
+<span class="fc" id="L98">			.build(S_LINK_TOOLTIP_NOLABEL);</span>
+<span class="fc" id="L99">	private static final UnicodeBracketedExpression LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL = UnicodeBracketedExpression</span>
+<span class="fc" id="L100">			.build(S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL);</span>
+<span class="fc" id="L101">	private static final UnicodeBracketedExpression LINK_NOTOOLTIP_WITH_OPTIONAL_LABEL = UnicodeBracketedExpression</span>
+<span class="fc" id="L102">			.build(S_LINK_NOTOOLTIP_WITH_OPTIONAL_LABEL);</span>
 
 	private final String topurl;
 	private UrlMode mode;
 
-<span class="nc" id="L107">	public UbrexUrlBuilder(String topurl, UrlMode mode) {</span>
-<span class="nc" id="L108">		this.topurl = topurl;</span>
-<span class="nc" id="L109">		this.mode = mode;</span>
-<span class="nc" id="L110">	}</span>
+<span class="fc" id="L107">	public UbrexUrlBuilder(String topurl, UrlMode mode) {</span>
+<span class="fc" id="L108">		this.topurl = topurl;</span>
+<span class="fc" id="L109">		this.mode = mode;</span>
+<span class="fc" id="L110">	}</span>
 
 	public Url getUrl(String s) {
 		UMatcher m;
-<span class="nc" id="L114">		m = getMatcher(QUOTED, s);</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (matchesOrFind(m))</span>
-<span class="nc" id="L116">			return buildUrl(m);</span>
+<span class="fc" id="L114">		m = getMatcher(QUOTED, s);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L116">			return buildUrl(m);</span>
 
-<span class="nc" id="L118">		m = getMatcher(ONLY_TOOLTIP, s);</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (matchesOrFind(m))</span>
-<span class="nc" id="L120">			return buildUrl(m);</span>
+<span class="fc" id="L118">		m = getMatcher(ONLY_TOOLTIP, s);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L120">			return buildUrl(m);</span>
 
-<span class="nc" id="L122">		m = getMatcher(ONLY_TOOLTIP_AND_LABEL, s);</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (matchesOrFind(m))</span>
-<span class="nc" id="L124">			return buildUrl(m);</span>
+<span class="fc" id="L122">		m = getMatcher(ONLY_TOOLTIP_AND_LABEL, s);</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L124">			return buildUrl(m);</span>
 
-<span class="nc" id="L126">		m = getMatcher(LINK_TOOLTIP_NOLABEL, s);</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (matchesOrFind(m))</span>
-<span class="nc" id="L128">			return buildUrl(m);</span>
+<span class="fc" id="L126">		m = getMatcher(LINK_TOOLTIP_NOLABEL, s);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L128">			return buildUrl(m);</span>
 
-<span class="nc" id="L130">		m = getMatcher(LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL, s);</span>
-<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (matchesOrFind(m))</span>
-<span class="nc" id="L132">			return buildUrl(m);</span>
+<span class="fc" id="L130">		m = getMatcher(LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL, s);</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L132">			return buildUrl(m);</span>
 
-<span class="nc" id="L134">		m = getMatcher(LINK_NOTOOLTIP_WITH_OPTIONAL_LABEL, s);</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (matchesOrFind(m))</span>
-<span class="nc" id="L136">			return buildUrl(m);</span>
+<span class="fc" id="L134">		m = getMatcher(LINK_NOTOOLTIP_WITH_OPTIONAL_LABEL, s);</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L136">			return buildUrl(m);</span>
 
 <span class="nc" id="L138">		return null;</span>
 	}
 
 	private UMatcher getMatcher(UnicodeBracketedExpression ubrex, String s) {
-<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (mode == UrlMode.STRICT)</span>
-<span class="nc" id="L143">			return ubrex.match(s);</span>
-<span class="nc" id="L144">		final TextNavigator tn = TextNavigator.build(s);</span>
-<span class="nc bnc" id="L145" title="All 2 branches missed.">		for (int i = 0; i &lt; tn.length() - 2; i++) {</span>
-<span class="nc" id="L146">			final UMatcher matcher = ubrex.match(tn, i);</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">			if (matcher.startMatch())</span>
-<span class="nc" id="L148">				return matcher;</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		if (mode == UrlMode.STRICT)</span>
+<span class="fc" id="L143">			return ubrex.match(s);</span>
+<span class="fc" id="L144">		final TextNavigator tn = TextNavigator.build(s);</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		for (int i = 0; i &lt; tn.length() - 2; i++) {</span>
+<span class="fc" id="L146">			final UMatcher matcher = ubrex.match(tn, i);</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">			if (matcher.startMatch())</span>
+<span class="fc" id="L148">				return matcher;</span>
 		}
-<span class="nc" id="L150">		return new UMatchNone();</span>
+<span class="fc" id="L150">		return new UMatchNone();</span>
 	}
 
 	private Url buildUrl(UMatcher m) {
-<span class="nc" id="L154">		final String url = getValue(m, &quot;URL&quot;);</span>
-<span class="nc" id="L155">		final String tooltip = getValue(m, &quot;TOOLTIP&quot;);</span>
-<span class="nc" id="L156">		final String label = getValue(m, &quot;LABEL&quot;);</span>
-<span class="nc" id="L157">		return new Url(withTopUrl(url), tooltip, label);</span>
+<span class="fc" id="L154">		final String url = getValue(m, &quot;URL&quot;);</span>
+<span class="fc" id="L155">		final String tooltip = getValue(m, &quot;TOOLTIP&quot;);</span>
+<span class="fc" id="L156">		final String label = getValue(m, &quot;LABEL&quot;);</span>
+<span class="fc" id="L157">		return new Url(withTopUrl(url), tooltip, label);</span>
 	}
 
 	private String getValue(UMatcher m, String key) {
-<span class="nc" id="L161">		final List&lt;String&gt; list = m.getCapture(key);</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (list.size() == 0)</span>
-<span class="nc" id="L163">			return null;</span>
-<span class="nc" id="L164">		return list.get(0);</span>
+<span class="fc" id="L161">		final List&lt;String&gt; list = m.getCapture(key);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		if (list.size() == 0)</span>
+<span class="fc" id="L163">			return null;</span>
+<span class="fc" id="L164">		return list.get(0);</span>
 	}
 
 	private boolean matchesOrFind(UMatcher m) {
-<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (mode == UrlMode.STRICT)</span>
-<span class="nc" id="L169">			return m.exactMatch();</span>
-<span class="nc bnc" id="L170" title="All 2 branches missed.">		else if (mode == UrlMode.ANYWHERE)</span>
-<span class="nc" id="L171">			return m.startMatch();</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">		if (mode == UrlMode.STRICT)</span>
+<span class="fc" id="L169">			return m.exactMatch();</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		else if (mode == UrlMode.ANYWHERE)</span>
+<span class="fc" id="L171">			return m.startMatch();</span>
 		else
 <span class="nc" id="L173">			throw new IllegalStateException();</span>
 
 	}
 
 	private String withTopUrl(String url) {
-<span class="nc bnc" id="L178" title="All 2 branches missed.">		if (url == null)</span>
-<span class="nc" id="L179">			return &quot;&quot;;</span>
-<span class="nc bnc" id="L180" title="All 8 branches missed.">		if (url.startsWith(&quot;http:&quot;) == false &amp;&amp; url.startsWith(&quot;https:&quot;) == false &amp;&amp; url.startsWith(&quot;file:&quot;) == false</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (url == null)</span>
+<span class="fc" id="L179">			return &quot;&quot;;</span>
+<span class="pc bpc" id="L180" title="3 of 8 branches missed.">		if (url.startsWith(&quot;http:&quot;) == false &amp;&amp; url.startsWith(&quot;https:&quot;) == false &amp;&amp; url.startsWith(&quot;file:&quot;) == false</span>
 				&amp;&amp; topurl != null)
 <span class="nc" id="L182">			return topurl + url;</span>
 
-<span class="nc" id="L184">		return url;</span>
+<span class="fc" id="L184">		return url;</span>
 	}
 
-<span class="nc" id="L187">	static class UMatchNone implements UMatcher {</span>
+<span class="fc" id="L187">	static class UMatchNone implements UMatcher {</span>
 
 		@Override
 		public boolean startMatch() {
-<span class="nc" id="L191">			return false;</span>
+<span class="fc" id="L191">			return false;</span>
 		}
 
 		@Override
