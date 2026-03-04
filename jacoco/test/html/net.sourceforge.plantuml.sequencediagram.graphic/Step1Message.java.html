@@ -212,10 +212,10 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc" id="L212">		double deltaY = 0;</span>
 <span class="fc" id="L213">		double deltaX = 0;</span>
 <span class="fc" id="L214">		double halfLifeWidth = getHalfLifeWidth();</span>
-<span class="fc bfc" id="L215" title="All 2 branches covered.">		if (getMessage().isActivate()) {</span>
-<span class="fc" id="L216">			deltaY -= halfLifeWidth;</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if (getMessage().isActivate()) {</span>
+<span class="nc" id="L216">			deltaY -= halfLifeWidth;</span>
 			if (GlobalConfig.STRICT_SELFMESSAGE_POSITION)
-<span class="fc" id="L218">				deltaX += 5;</span>
+<span class="nc" id="L218">				deltaX += 5;</span>
 		}
 <span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (getMessage().isDeactivate())</span>
 <span class="nc" id="L221">			deltaY += halfLifeWidth;</span>
@@ -233,10 +233,10 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	private int getLevelAt(double posY, double halfLifeWidth) {
 <span class="fc" id="L234">		double length = getLivingParticipantBox1().getLiveThicknessAt(getStringBounder(), posY).getSegment()</span>
 <span class="fc" id="L235">				.getLength();</span>
-<span class="fc bfc" id="L236" title="All 2 branches covered.">		if (length &lt; halfLifeWidth)</span>
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">		if (length &lt; halfLifeWidth)</span>
 <span class="fc" id="L237">			return 0;</span>
 
-<span class="fc" id="L239">		return ((int) (length / halfLifeWidth)) - 1;</span>
+<span class="nc" id="L239">		return ((int) (length / halfLifeWidth)) - 1;</span>
 	}
 
 	private double getHalfLifeWidth() {

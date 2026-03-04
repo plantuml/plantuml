@@ -363,17 +363,17 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 	}
 
 	public String activate(Participant p, LifeEventType lifeEventType, HColor backcolor, HColor linecolor) {
-<span class="pc bpc" id="L366" title="1 of 2 branches missed.">		if (lastDelay != null)</span>
+<span class="nc bnc" id="L366" title="All 2 branches missed.">		if (lastDelay != null)</span>
 <span class="nc" id="L367">			return &quot;You cannot Activate/Deactivate just after a ...&quot;;</span>
 
-<span class="fc" id="L369">		final LifeEvent lifeEvent = new LifeEvent(p, lifeEventType, new Fashion(backcolor, linecolor),</span>
-<span class="fc" id="L370">				getSkinParam().getCurrentStyleBuilder());</span>
-<span class="fc" id="L371">		events.add(lifeEvent);</span>
-<span class="pc bpc" id="L372" title="1 of 2 branches missed.">		if (lifeEventType == LifeEventType.CREATE) {</span>
+<span class="nc" id="L369">		final LifeEvent lifeEvent = new LifeEvent(p, lifeEventType, new Fashion(backcolor, linecolor),</span>
+<span class="nc" id="L370">				getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L371">		events.add(lifeEvent);</span>
+<span class="nc bnc" id="L372" title="All 2 branches missed.">		if (lifeEventType == LifeEventType.CREATE) {</span>
 <span class="nc" id="L373">			pendingCreate = lifeEvent;</span>
 <span class="nc" id="L374">			return null;</span>
 		}
-<span class="pc bpc" id="L376" title="1 of 2 branches missed.">		if (lastEventWithDeactivate == null) {</span>
+<span class="nc bnc" id="L376" title="All 2 branches missed.">		if (lastEventWithDeactivate == null) {</span>
 <span class="nc bnc" id="L377" title="All 2 branches missed.">			if (lifeEventType == LifeEventType.ACTIVATE) {</span>
 <span class="nc" id="L378">				p.incInitialLife(new Fashion(backcolor, linecolor));</span>
 <span class="nc" id="L379">				return null;</span>
@@ -383,18 +383,18 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 
 <span class="nc" id="L384">			return null;</span>
 		}
-<span class="pc bpc" id="L386" title="1 of 4 branches missed.">		if (lifeEventType == LifeEventType.ACTIVATE &amp;&amp; lastEventWithDeactivate instanceof AbstractMessage)</span>
-<span class="fc" id="L387">			activationState.push((AbstractMessage) lastEventWithDeactivate);</span>
-<span class="pc bpc" id="L388" title="3 of 4 branches missed.">		else if (lifeEventType == LifeEventType.DEACTIVATE &amp;&amp; activationState.empty() == false)</span>
+<span class="nc bnc" id="L386" title="All 4 branches missed.">		if (lifeEventType == LifeEventType.ACTIVATE &amp;&amp; lastEventWithDeactivate instanceof AbstractMessage)</span>
+<span class="nc" id="L387">			activationState.push((AbstractMessage) lastEventWithDeactivate);</span>
+<span class="nc bnc" id="L388" title="All 4 branches missed.">		else if (lifeEventType == LifeEventType.DEACTIVATE &amp;&amp; activationState.empty() == false)</span>
 <span class="nc" id="L389">			activationState.pop();</span>
 
-<span class="fc" id="L391">		final boolean ok = lastEventWithDeactivate.addLifeEvent(lifeEvent);</span>
-<span class="pc bpc" id="L392" title="1 of 2 branches missed.">		if (lastEventWithDeactivate instanceof AbstractMessage) {</span>
-<span class="fc" id="L393">			final AbstractMessage lastMessage = (AbstractMessage) lastEventWithDeactivate;</span>
-<span class="fc" id="L394">			lifeEvent.setMessage(lastMessage);</span>
+<span class="nc" id="L391">		final boolean ok = lastEventWithDeactivate.addLifeEvent(lifeEvent);</span>
+<span class="nc bnc" id="L392" title="All 2 branches missed.">		if (lastEventWithDeactivate instanceof AbstractMessage) {</span>
+<span class="nc" id="L393">			final AbstractMessage lastMessage = (AbstractMessage) lastEventWithDeactivate;</span>
+<span class="nc" id="L394">			lifeEvent.setMessage(lastMessage);</span>
 		}
-<span class="pc bpc" id="L396" title="1 of 2 branches missed.">		if (ok)</span>
-<span class="fc" id="L397">			return null;</span>
+<span class="nc bnc" id="L396" title="All 2 branches missed.">		if (ok)</span>
+<span class="nc" id="L397">			return null;</span>
 
 <span class="nc" id="L399">		return &quot;Activate/Deactivate already done on &quot; + p.getCode();</span>
 	}

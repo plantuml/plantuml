@@ -86,14 +86,14 @@ public class ActivityDiagram3 extends TitledDiagram {
 <span class="fc" id="L86">	}</span>
 
 	public CommandExecutionResult swimlane(String name, HColor color, Display label) {
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (swimlaneStrategy == null)</span>
-<span class="fc" id="L90">			swimlaneStrategy = SwimlaneStrategy.SWIMLANE_ALLOWED;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (swimlaneStrategy == null)</span>
+<span class="nc" id="L90">			swimlaneStrategy = SwimlaneStrategy.SWIMLANE_ALLOWED;</span>
 
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (swimlaneStrategy == SwimlaneStrategy.SWIMLANE_FORBIDDEN)</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (swimlaneStrategy == SwimlaneStrategy.SWIMLANE_FORBIDDEN)</span>
 <span class="nc" id="L93">			return CommandExecutionResult.error(&quot;This swimlane must be defined at the start of the diagram.&quot;);</span>
 
-<span class="fc" id="L95">		swimlanes.swimlane(name, color, label);</span>
-<span class="fc" id="L96">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L95">		swimlanes.swimlane(name, color, label);</span>
+<span class="nc" id="L96">		return CommandExecutionResult.ok();</span>
 	}
 
 	private void setCurrent(Instruction ins) {
@@ -149,10 +149,10 @@ public class ActivityDiagram3 extends TitledDiagram {
 	}
 
 	public void start(Colors colors) {
-<span class="fc" id="L152">		manageSwimlaneStrategy();</span>
-<span class="fc" id="L153">		current().add(new InstructionStart(colors, swimlanes.getCurrentSwimlane(), nextLinkRenderer()));</span>
-<span class="fc" id="L154">		setNextLinkRendererInternal(LinkRendering.none());</span>
-<span class="fc" id="L155">	}</span>
+<span class="nc" id="L152">		manageSwimlaneStrategy();</span>
+<span class="nc" id="L153">		current().add(new InstructionStart(colors, swimlanes.getCurrentSwimlane(), nextLinkRenderer()));</span>
+<span class="nc" id="L154">		setNextLinkRendererInternal(LinkRendering.none());</span>
+<span class="nc" id="L155">	}</span>
 
 	public void stop(Colors colors) {
 <span class="fc" id="L158">		manageSwimlaneStrategy();</span>
@@ -494,12 +494,12 @@ public class ActivityDiagram3 extends TitledDiagram {
 
 	public CommandExecutionResult addNote(Display note, NotePosition position, NoteType type, Colors colors,
 			Stereotype stereotype) {
-<span class="fc" id="L497">		final boolean ok = current().addNote(note, position, type, colors, swimlanes.getCurrentSwimlane(), stereotype);</span>
-<span class="pc bpc" id="L498" title="1 of 2 branches missed.">		if (ok == false)</span>
+<span class="nc" id="L497">		final boolean ok = current().addNote(note, position, type, colors, swimlanes.getCurrentSwimlane(), stereotype);</span>
+<span class="nc bnc" id="L498" title="All 2 branches missed.">		if (ok == false)</span>
 <span class="nc" id="L499">			return CommandExecutionResult.error(&quot;Cannot add note here&quot;);</span>
 
-<span class="fc" id="L501">		manageHasUrl(note);</span>
-<span class="fc" id="L502">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L501">		manageHasUrl(note);</span>
+<span class="nc" id="L502">		return CommandExecutionResult.ok();</span>
 	}
 
 <span class="fc" id="L505">	private boolean hasUrl = false;</span>

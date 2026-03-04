@@ -731,7 +731,7 @@ public class JsonObject extends JsonValue implements Iterable&lt;Member&gt; {
 	 * @return the number of members in this object
 	 */
 	public int size() {
-<span class="fc" id="L734">		return names.size();</span>
+<span class="nc" id="L734">		return names.size();</span>
 	}
 
 	/**
@@ -837,7 +837,7 @@ public class JsonObject extends JsonValue implements Iterable&lt;Member&gt; {
 
 	int indexOf(String name) {
 <span class="fc" id="L839">		int index = table.get(name);</span>
-<span class="fc bfc" id="L840" title="All 4 branches covered.">		if (index != -1 &amp;&amp; name.equals(names.get(index))) {</span>
+<span class="pc bpc" id="L840" title="1 of 4 branches missed.">		if (index != -1 &amp;&amp; name.equals(names.get(index))) {</span>
 <span class="fc" id="L841">			return index;</span>
 		}
 <span class="fc" id="L843">		return names.lastIndexOf(name);</span>

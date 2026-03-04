@@ -71,7 +71,7 @@ public class CommandCreatePackageState extends SingleLineCommand2&lt;StateDiagra
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="pc bpc" id="L74" title="1 of 6 branches missed.">		return pass == ParserPass.ONE || pass == ParserPass.TWO || pass == ParserPass.THREE;</span>
+<span class="nc bnc" id="L74" title="All 6 branches missed.">		return pass == ParserPass.ONE || pass == ParserPass.TWO || pass == ParserPass.THREE;</span>
 	}
 
 	private static IRegex getRegexConcat() {
@@ -111,8 +111,8 @@ public class CommandCreatePackageState extends SingleLineCommand2&lt;StateDiagra
 	}
 
 	private String getNotNull(RegexResult arg, String v1, String v2) {
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (arg.get(v1, 0) == null)</span>
-<span class="fc" id="L115">			return arg.get(v2, 0);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (arg.get(v1, 0) == null)</span>
+<span class="nc" id="L115">			return arg.get(v2, 0);</span>
 
 <span class="nc" id="L117">		return arg.get(v1, 0);</span>
 	}
@@ -120,44 +120,44 @@ public class CommandCreatePackageState extends SingleLineCommand2&lt;StateDiagra
 	@Override
 	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L123">		final String idShort = getNotNull(arg, &quot;CODE1&quot;, &quot;CODE2&quot;);</span>
-<span class="fc" id="L124">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
+<span class="nc" id="L123">		final String idShort = getNotNull(arg, &quot;CODE1&quot;, &quot;CODE2&quot;);</span>
+<span class="nc" id="L124">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
 
-<span class="fc" id="L126">		final String display = getNotNull(arg, &quot;DISPLAY1&quot;, &quot;DISPLAY2&quot;);</span>
+<span class="nc" id="L126">		final String display = getNotNull(arg, &quot;DISPLAY1&quot;, &quot;DISPLAY2&quot;);</span>
 
-<span class="fc" id="L128">		diagram.gotoGroup(location, quark,</span>
-<span class="pc bpc" id="L129" title="1 of 2 branches missed.">				Display.getWithNewlines(diagram.getPragma(), display == null ? quark.getName() : display),</span>
+<span class="nc" id="L128">		diagram.gotoGroup(location, quark,</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">				Display.getWithNewlines(diagram.getPragma(), display == null ? quark.getName() : display),</span>
 				GroupType.STATE);
-<span class="fc" id="L131">		final Entity p = diagram.getCurrentGroup();</span>
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (display != null)</span>
+<span class="nc" id="L131">		final Entity p = diagram.getCurrentGroup();</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (display != null)</span>
 <span class="nc" id="L133">			p.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));</span>
 
-<span class="fc" id="L135">		final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
-<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L135">		final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (stereotype != null)</span>
 <span class="nc" id="L137">			p.setStereotype(Stereotype.build(stereotype));</span>
 
-<span class="fc" id="L139">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (urlString != null) {</span>
+<span class="nc" id="L139">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (urlString != null) {</span>
 <span class="nc" id="L141">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
 <span class="nc" id="L142">			final Url url = urlBuilder.getUrl(urlString);</span>
 <span class="nc" id="L143">			p.addUrl(url);</span>
 		}
 
-<span class="fc" id="L146">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L147">		final String s = arg.get(&quot;LINECOLOR&quot;, 1);</span>
+<span class="nc" id="L146">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L147">		final String s = arg.get(&quot;LINECOLOR&quot;, 1);</span>
 
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
-<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		if (lineColor != null)</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (lineColor != null)</span>
 <span class="nc" id="L151">			colors = colors.add(ColorType.LINE, lineColor);</span>
 
-<span class="pc bpc" id="L153" title="1 of 2 branches missed.">		if (arg.get(&quot;LINECOLOR&quot;, 0) != null)</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (arg.get(&quot;LINECOLOR&quot;, 0) != null)</span>
 <span class="nc" id="L154">			colors = colors.addLegacyStroke(arg.get(&quot;LINECOLOR&quot;, 0));</span>
 
-<span class="fc" id="L156">		p.setColors(colors);</span>
+<span class="nc" id="L156">		p.setColors(colors);</span>
 
-<span class="fc" id="L158">		CommandCreateClassMultilines.addTags(p, arg.getLazzy(&quot;TAGS&quot;, 0));</span>
+<span class="nc" id="L158">		CommandCreateClassMultilines.addTags(p, arg.getLazzy(&quot;TAGS&quot;, 0));</span>
 
-<span class="fc" id="L160">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L160">		return CommandExecutionResult.ok();</span>
 	}
 
 }

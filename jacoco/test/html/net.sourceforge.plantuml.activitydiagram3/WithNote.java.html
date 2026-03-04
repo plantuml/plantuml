@@ -54,16 +54,16 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 <span class="fc" id="L54">	private final Collection&lt;PositionedNote&gt; notes = new ArrayList&lt;&gt;();</span>
 
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
-<span class="fc" id="L57">		this.notes.add(new PositionedNote(note, position, type, swimlaneNote, colors, stereotype));</span>
-<span class="fc" id="L58">		return true;</span>
+<span class="nc" id="L57">		this.notes.add(new PositionedNote(note, position, type, swimlaneNote, colors, stereotype));</span>
+<span class="nc" id="L58">		return true;</span>
 	}
 
 	final protected Ftile eventuallyAddNote(FtileFactory factory, Ftile ftile, Swimlane swimlane,
 			VerticalAlignment verticalAlignment) {
-<span class="fc bfc" id="L63" title="All 2 branches covered.">		if (notes.size() == 0)</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (notes.size() == 0)</span>
 <span class="fc" id="L64">			return ftile;</span>
 
-<span class="fc" id="L66">		return factory.addNote(ftile, swimlane, notes, verticalAlignment);</span>
+<span class="nc" id="L66">		return factory.addNote(ftile, swimlane, notes, verticalAlignment);</span>
 	}
 
 	public Collection&lt;PositionedNote&gt; getPositionedNotes() {

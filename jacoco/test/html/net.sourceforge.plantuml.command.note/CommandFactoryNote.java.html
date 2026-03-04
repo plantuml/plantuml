@@ -119,7 +119,7 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand&lt;Ab
 	}
 
 <span class="fc" id="L121">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="fc" id="L122">			() -&gt; Pattern2.cmpile(&quot;^[%s]*end[%s]?note$&quot;));</span>
+<span class="nc" id="L122">			() -&gt; Pattern2.cmpile(&quot;^[%s]*end[%s]?note$&quot;));</span>
 
 	public Command&lt;AbstractEntityDiagram&gt; createMultiLine(boolean withBracket) {
 <span class="fc" id="L125">		return new CommandMultilines2&lt;AbstractEntityDiagram&gt;(multiLine, MultilinesStrategy.KEEP_STARTING_QUOTE,</span>
@@ -129,38 +129,38 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand&lt;Ab
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram diagram, BlocLines lines,
 					ParserPass currentPass) throws NoSuchColorException {
 				// StringUtils.trim(lines, false);
-<span class="fc" id="L132">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="fc" id="L133">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
-<span class="fc" id="L134">				lines = lines.removeEmptyColumns();</span>
-<span class="fc" id="L135">				final Display display = lines.toDisplay();</span>
-<span class="fc" id="L136">				return executeInternal(lines.getLocation(), diagram, line0, display);</span>
+<span class="nc" id="L132">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L133">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
+<span class="nc" id="L134">				lines = lines.removeEmptyColumns();</span>
+<span class="nc" id="L135">				final Display display = lines.toDisplay();</span>
+<span class="nc" id="L136">				return executeInternal(lines.getLocation(), diagram, line0, display);</span>
 			}
 		};
 	}
 
 	private CommandExecutionResult executeInternal(LineLocation location, AbstractEntityDiagram diagram,
 			RegexResult arg, Display display) throws NoSuchColorException {
-<span class="fc" id="L143">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="fc" id="L144">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(idShort));</span>
+<span class="nc" id="L143">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L144">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(idShort));</span>
 
-<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (quark.getData() != null)</span>
 <span class="nc" id="L147">			return CommandExecutionResult.error(&quot;Note already created: &quot; + quark.getName());</span>
 
-<span class="fc" id="L149">		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.NOTE, null);</span>
+<span class="nc" id="L149">		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.NOTE, null);</span>
 
-<span class="pc bpc" id="L151" title="2 of 4 branches missed.">		if (TeaVM.a()) assert entity != null;</span>
-<span class="fc" id="L152">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="fc" id="L153">		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
-<span class="pc bpc" id="L154" title="1 of 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
-<span class="fc" id="L155">		final String stereotypeString = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="fc" id="L156">		Stereotype stereotype = null;</span>
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (stereotypeString != null) {</span>
+<span class="nc bnc" id="L151" title="All 4 branches missed.">		if (TeaVM.a()) assert entity != null;</span>
+<span class="nc" id="L152">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L153">		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="nc" id="L155">		final String stereotypeString = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L156">		Stereotype stereotype = null;</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (stereotypeString != null) {</span>
 <span class="nc" id="L158">			stereotype = Stereotype.build(stereotypeString);</span>
 <span class="nc" id="L159">			entity.setStereotype(stereotype);</span>
 		}
 
-<span class="fc" id="L162">		CommandCreateClassMultilines.addTags(entity, arg.get(&quot;TAGS&quot;, 0));</span>
-<span class="fc" id="L163">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L162">		CommandCreateClassMultilines.addTags(entity, arg.get(&quot;TAGS&quot;, 0));</span>
+<span class="nc" id="L163">		return CommandExecutionResult.ok();</span>
 	}
 
 }

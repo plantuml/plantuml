@@ -95,19 +95,19 @@ public class Opale implements TextBlock {
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L98">		final double height = getHeight(stringBounder);</span>
-<span class="fc" id="L99">		final double width = getWidth(stringBounder);</span>
-<span class="fc" id="L100">		return new XDimension2D(width, height);</span>
+<span class="nc" id="L98">		final double height = getHeight(stringBounder);</span>
+<span class="nc" id="L99">		final double width = getWidth(stringBounder);</span>
+<span class="nc" id="L100">		return new XDimension2D(width, height);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
 <span class="fc" id="L104">		final StringBounder stringBounder = ug.getStringBounder();</span>
 <span class="fc" id="L105">		ug = ug.apply(noteBackgroundColor.bg()).apply(borderColor);</span>
 		final UPath polygon;
-<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (withLink == false)</span>
-<span class="fc" id="L108">			polygon = getPolygonNormal(stringBounder);</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">		else if (strategy == Direction.LEFT)</span>
-<span class="fc" id="L110">			polygon = getPolygonLeft(stringBounder, pp1, pp2);</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (withLink == false)</span>
+<span class="nc" id="L108">			polygon = getPolygonNormal(stringBounder);</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		else if (strategy == Direction.LEFT)</span>
+<span class="nc" id="L110">			polygon = getPolygonLeft(stringBounder, pp1, pp2);</span>
 <span class="fc bfc" id="L111" title="All 2 branches covered.">		else if (strategy == Direction.RIGHT)</span>
 <span class="fc" id="L112">			polygon = getPolygonRight(stringBounder, pp1, pp2);</span>
 <span class="pc bpc" id="L113" title="1 of 2 branches missed.">		else if (strategy == Direction.UP)</span>
@@ -126,7 +126,7 @@ public class Opale implements TextBlock {
 <span class="fc" id="L126">	}</span>
 
 	private UPath getPolygonNormal(final StringBounder stringBounder) {
-<span class="fc" id="L129">		return getPolygonNormal(getWidth(stringBounder), getHeight(stringBounder), roundCorner);</span>
+<span class="nc" id="L129">		return getPolygonNormal(getWidth(stringBounder), getHeight(stringBounder), roundCorner);</span>
 	}
 
 	public static UPath getCorner(double width, double roundCorner) {
@@ -171,26 +171,26 @@ public class Opale implements TextBlock {
 <span class="fc" id="L171">	private final double delta = 4;</span>
 
 	private UPath getPolygonLeft(final StringBounder stringBounder, final XPoint2D pp1, final XPoint2D pp2) {
-<span class="fc" id="L174">		final UPath polygon = UPath.none();</span>
-<span class="fc" id="L175">		polygon.moveTo(0, roundCorner / 2);</span>
+<span class="nc" id="L174">		final UPath polygon = UPath.none();</span>
+<span class="nc" id="L175">		polygon.moveTo(0, roundCorner / 2);</span>
 
-<span class="fc" id="L177">		double y1 = pp1.getY() - delta;</span>
-<span class="fc" id="L178">		y1 = MathUtils.limitation(y1, 0, getHeight(stringBounder) - 2 * delta);</span>
-<span class="fc" id="L179">		polygon.lineTo(0, y1);</span>
-<span class="fc" id="L180">		polygon.lineTo(pp2.getX(), pp2.getY());</span>
-<span class="fc" id="L181">		polygon.lineTo(0, y1 + 2 * delta);</span>
+<span class="nc" id="L177">		double y1 = pp1.getY() - delta;</span>
+<span class="nc" id="L178">		y1 = MathUtils.limitation(y1, 0, getHeight(stringBounder) - 2 * delta);</span>
+<span class="nc" id="L179">		polygon.lineTo(0, y1);</span>
+<span class="nc" id="L180">		polygon.lineTo(pp2.getX(), pp2.getY());</span>
+<span class="nc" id="L181">		polygon.lineTo(0, y1 + 2 * delta);</span>
 
-<span class="fc" id="L183">		polygon.lineTo(0, getHeight(stringBounder) - roundCorner / 2);</span>
-<span class="fc" id="L184">		polygon.arcTo(new XPoint2D(roundCorner / 2, getHeight(stringBounder)), roundCorner / 2, 0, 0);</span>
-<span class="fc" id="L185">		polygon.lineTo(getWidth(stringBounder) - roundCorner / 2, getHeight(stringBounder));</span>
-<span class="fc" id="L186">		polygon.arcTo(new XPoint2D(getWidth(stringBounder), getHeight(stringBounder) - roundCorner / 2),</span>
+<span class="nc" id="L183">		polygon.lineTo(0, getHeight(stringBounder) - roundCorner / 2);</span>
+<span class="nc" id="L184">		polygon.arcTo(new XPoint2D(roundCorner / 2, getHeight(stringBounder)), roundCorner / 2, 0, 0);</span>
+<span class="nc" id="L185">		polygon.lineTo(getWidth(stringBounder) - roundCorner / 2, getHeight(stringBounder));</span>
+<span class="nc" id="L186">		polygon.arcTo(new XPoint2D(getWidth(stringBounder), getHeight(stringBounder) - roundCorner / 2),</span>
 				roundCorner / 2, 0, 0);
-<span class="fc" id="L188">		polygon.lineTo(getWidth(stringBounder), cornersize);</span>
-<span class="fc" id="L189">		polygon.lineTo(getWidth(stringBounder) - cornersize, 0);</span>
-<span class="fc" id="L190">		polygon.lineTo(roundCorner / 2, 0);</span>
-<span class="fc" id="L191">		polygon.arcTo(new XPoint2D(0, roundCorner / 2), roundCorner / 2, 0, 0);</span>
-<span class="fc" id="L192">		polygon.closePath();</span>
-<span class="fc" id="L193">		return polygon;</span>
+<span class="nc" id="L188">		polygon.lineTo(getWidth(stringBounder), cornersize);</span>
+<span class="nc" id="L189">		polygon.lineTo(getWidth(stringBounder) - cornersize, 0);</span>
+<span class="nc" id="L190">		polygon.lineTo(roundCorner / 2, 0);</span>
+<span class="nc" id="L191">		polygon.arcTo(new XPoint2D(0, roundCorner / 2), roundCorner / 2, 0, 0);</span>
+<span class="nc" id="L192">		polygon.closePath();</span>
+<span class="nc" id="L193">		return polygon;</span>
 	}
 
 	private UPath getPolygonRight(final StringBounder stringBounder, final XPoint2D pp1, final XPoint2D pp2) {
@@ -263,7 +263,7 @@ public class Opale implements TextBlock {
 	}
 
 	public final int getMarginX1() {
-<span class="fc" id="L266">		return marginX1;</span>
+<span class="nc" id="L266">		return marginX1;</span>
 	}
 
 }

@@ -342,19 +342,19 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 
 	final public CommandExecutionResult gotoGroup(LineLocation location, Quark&lt;Entity&gt; quark, Display display,
 			GroupType type) {
-<span class="fc" id="L345">		return gotoGroup(location, quark, display, type, null);</span>
+<span class="nc" id="L345">		return gotoGroup(location, quark, display, type, null);</span>
 	}
 
 	final public CommandExecutionResult gotoGroup(LineLocation location, Quark&lt;Entity&gt; quark, Display display,
 			GroupType type, USymbol usymbol) {
-<span class="fc bfc" id="L350" title="All 2 branches covered.">		if (quark.getData() == null) {</span>
+<span class="pc bpc" id="L350" title="1 of 2 branches missed.">		if (quark.getData() == null) {</span>
 <span class="fc" id="L351">			final Entity result = this.createGroup(location, quark, type);</span>
 <span class="fc" id="L352">			result.setTogether(currentTogether());</span>
 <span class="fc" id="L353">			result.setDisplay(display);</span>
 		}
 <span class="fc" id="L355">		final Entity ent = quark.getData();</span>
 <span class="fc" id="L356">		ent.muteToGroupType(type);</span>
-<span class="fc bfc" id="L357" title="All 2 branches covered.">		if (usymbol != null)</span>
+<span class="pc bpc" id="L357" title="1 of 2 branches missed.">		if (usymbol != null)</span>
 <span class="fc" id="L358">			ent.setUSymbol(usymbol);</span>
 
 <span class="fc" id="L360">		this.stacks.add(quark.getData());</span>
@@ -415,9 +415,9 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 
 	// ::comment when __TEAVM__
 	private void createFilesGraphml(OutputStream suggestedFile) throws IOException {
-<span class="fc" id="L418">		final CucaDiagramGraphmlMaker maker = new CucaDiagramGraphmlMaker(this);</span>
-<span class="fc" id="L419">		maker.createFiles(suggestedFile);</span>
-<span class="fc" id="L420">	}</span>
+<span class="nc" id="L418">		final CucaDiagramGraphmlMaker maker = new CucaDiagramGraphmlMaker(this);</span>
+<span class="nc" id="L419">		maker.createFiles(suggestedFile);</span>
+<span class="nc" id="L420">	}</span>
 
 	private void createFilesXmi(OutputStream suggestedFile, FileFormat fileFormat) throws IOException {
 <span class="nc" id="L423">		final CucaDiagramXmiMaker maker = new CucaDiagramXmiMaker(this, fileFormat);</span>
@@ -438,8 +438,8 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 
 	@Override
 	protected ImageData exportGraphml(OutputStream os) throws IOException {
-<span class="fc" id="L441">		createFilesGraphml(os);</span>
-<span class="fc" id="L442">		return ImageDataSimple.ok();</span>
+<span class="nc" id="L441">		createFilesGraphml(os);</span>
+<span class="nc" id="L442">		return ImageDataSimple.ok();</span>
 	}
 
 	@Override
@@ -953,8 +953,8 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 <span class="fc" id="L953">				continue;</span>
 
 <span class="fc" id="L955">			final Entity data = quark.getData();</span>
-<span class="pc bpc" id="L956" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup())</span>
-<span class="fc" id="L957">				result.add(data);</span>
+<span class="pc bpc" id="L956" title="2 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup())</span>
+<span class="nc" id="L957">				result.add(data);</span>
 <span class="fc" id="L958">		}</span>
 <span class="fc" id="L959">		return Collections.unmodifiableCollection(result);</span>
 	}

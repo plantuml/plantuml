@@ -49,8 +49,8 @@ public class SkinParamBackcolored extends SkinParamDelegator {
 	final private boolean forceClickage;
 
 	public SkinParamBackcolored(ISkinParam skinParam, HColor backColorElement) {
-<span class="fc" id="L52">		this(skinParam, backColorElement, null, false);</span>
-<span class="fc" id="L53">	}</span>
+<span class="nc" id="L52">		this(skinParam, backColorElement, null, false);</span>
+<span class="nc" id="L53">	}</span>
 
 	public SkinParamBackcolored(ISkinParam skinParam, HColor backColorElement, boolean forceClickage) {
 <span class="nc" id="L56">		this(skinParam, backColorElement, null, forceClickage);</span>
@@ -67,11 +67,11 @@ public class SkinParamBackcolored extends SkinParamDelegator {
 
 	public SkinParamBackcolored(ISkinParam skinParam, HColor backColorElement, HColor backColorGeneral,
 			boolean forceClickage) {
-<span class="fc" id="L70">		super(skinParam);</span>
-<span class="fc" id="L71">		this.forceClickage = forceClickage;</span>
-<span class="fc" id="L72">		this.backColorElement = backColorElement;</span>
-<span class="fc" id="L73">		this.backColorGeneral = backColorGeneral;</span>
-<span class="fc" id="L74">	}</span>
+<span class="nc" id="L70">		super(skinParam);</span>
+<span class="nc" id="L71">		this.forceClickage = forceClickage;</span>
+<span class="nc" id="L72">		this.backColorElement = backColorElement;</span>
+<span class="nc" id="L73">		this.backColorGeneral = backColorGeneral;</span>
+<span class="nc" id="L74">	}</span>
 
 	@Override
 	public HColor getBackgroundColor() {
@@ -100,7 +100,7 @@ public class SkinParamBackcolored extends SkinParamDelegator {
 <span class="nc" id="L100">		return super.getHtmlColor(param, stereotype, clickable);</span>
 	}
 
-<span class="fc" id="L103">	private final Map&lt;ColorParam, HColor&gt; forced = new EnumMap&lt;ColorParam, HColor&gt;(ColorParam.class);</span>
+<span class="nc" id="L103">	private final Map&lt;ColorParam, HColor&gt; forced = new EnumMap&lt;ColorParam, HColor&gt;(ColorParam.class);</span>
 
 	public void forceColor(ColorParam param, HColor color) {
 <span class="nc" id="L106">		forced.put(param, color);</span>

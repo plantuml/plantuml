@@ -45,10 +45,10 @@ public class RegexRepeatedZeroOrMore extends RegexComposed implements IRegex {
 
 	@Override
 	public String getPatternAsString() {
-<span class="fc" id="L48">		final StringBuilder sb = new StringBuilder(&quot;(?:&quot;);</span>
-<span class="fc" id="L49">		sb.append(partials().get(0).getPatternAsString());</span>
-<span class="fc" id="L50">		sb.append(&quot;)*&quot;);</span>
-<span class="fc" id="L51">		return sb.toString();</span>
+<span class="nc" id="L48">		final StringBuilder sb = new StringBuilder(&quot;(?:&quot;);</span>
+<span class="nc" id="L49">		sb.append(partials().get(0).getPatternAsString());</span>
+<span class="nc" id="L50">		sb.append(&quot;)*&quot;);</span>
+<span class="nc" id="L51">		return sb.toString();</span>
 	}
 
 	public boolean match(StringLocated full) {

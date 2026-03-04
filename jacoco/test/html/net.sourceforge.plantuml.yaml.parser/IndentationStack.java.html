@@ -37,31 +37,31 @@ package net.sourceforge.plantuml.yaml.parser;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-<span class="fc" id="L40">public class IndentationStack {</span>
+<span class="nc" id="L40">public class IndentationStack {</span>
 
-<span class="fc" id="L42">	private final Deque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;();</span>
+<span class="nc" id="L42">	private final Deque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;();</span>
 
 	public int size() {
-<span class="fc" id="L45">		return stack.size();</span>
+<span class="nc" id="L45">		return stack.size();</span>
 	}
 
 	public void push(int value) {
-<span class="fc bfc" id="L49" title="All 4 branches covered.">		if (size() &gt; 0 &amp;&amp; value &lt;= peek())</span>
-<span class="fc" id="L50">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L49" title="All 4 branches missed.">		if (size() &gt; 0 &amp;&amp; value &lt;= peek())</span>
+<span class="nc" id="L50">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L52">		stack.addLast(value);</span>
-<span class="fc" id="L53">	}</span>
+<span class="nc" id="L52">		stack.addLast(value);</span>
+<span class="nc" id="L53">	}</span>
 
 	public int peek() {
-<span class="fc" id="L56">		return stack.getLast();</span>
+<span class="nc" id="L56">		return stack.getLast();</span>
 	}
 
 	public int pop() {
-<span class="fc" id="L60">		return stack.removeLast();</span>
+<span class="nc" id="L60">		return stack.removeLast();</span>
 	}
 
 	public boolean contains(int value) {
-<span class="fc" id="L64">		return stack.contains(value);</span>
+<span class="nc" id="L64">		return stack.contains(value);</span>
 	}
 	
 	@Override

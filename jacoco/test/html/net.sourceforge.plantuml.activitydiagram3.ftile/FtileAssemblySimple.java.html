@@ -73,7 +73,7 @@ public class FtileAssemblySimple implements Ftile {
 	}
 
 	public Swimlane getSwimlaneOut() {
-<span class="fc" id="L76">		return tile2.getSwimlaneOut();</span>
+<span class="nc" id="L76">		return tile2.getSwimlaneOut();</span>
 	}
 
 <span class="fc" id="L79">	private final Map&lt;Ftile, UTranslate&gt; cachedTranslation = new HashMap&lt;Ftile, UTranslate&gt;();</span>
@@ -146,10 +146,10 @@ public class FtileAssemblySimple implements Ftile {
 
 	@Override
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="fc" id="L149">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
-<span class="fc" id="L150">		result.addAll(tile1.getSwimlanes());</span>
-<span class="fc" id="L151">		result.addAll(tile2.getSwimlanes());</span>
-<span class="fc" id="L152">		return Collections.unmodifiableSet(result);</span>
+<span class="nc" id="L149">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L150">		result.addAll(tile1.getSwimlanes());</span>
+<span class="nc" id="L151">		result.addAll(tile2.getSwimlanes());</span>
+<span class="nc" id="L152">		return Collections.unmodifiableSet(result);</span>
 	}
 
 	@Override

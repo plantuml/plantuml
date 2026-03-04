@@ -56,8 +56,8 @@ public abstract class PlainDiagram extends UgDiagram {
 
 	@Override
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-<span class="fc" id="L59">		return super.createImageBuilder(fileFormatOption).margin(getDefaultMargins())</span>
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">				.metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null).seed(seed());</span>
+<span class="nc" id="L59">		return super.createImageBuilder(fileFormatOption).margin(getDefaultMargins())</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">				.metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null).seed(seed());</span>
 	}
 
 //	@Override

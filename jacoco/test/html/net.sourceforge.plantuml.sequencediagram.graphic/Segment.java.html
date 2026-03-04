@@ -97,11 +97,11 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	public Collection&lt;Segment&gt; cutSegmentIfNeed(Collection&lt;Segment&gt; allDelays) {
-<span class="fc" id="L100">		final List&lt;Segment&gt; sortedDelay = new ArrayList&lt;&gt;(allDelays);</span>
-<span class="fc" id="L101">		Collections.sort(sortedDelay, new SortPos1());</span>
-<span class="fc" id="L102">		final List&lt;Segment&gt; result2 = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L103">		double pendingStart = pos1;</span>
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		for (Segment pause : sortedDelay) {</span>
+<span class="nc" id="L100">		final List&lt;Segment&gt; sortedDelay = new ArrayList&lt;&gt;(allDelays);</span>
+<span class="nc" id="L101">		Collections.sort(sortedDelay, new SortPos1());</span>
+<span class="nc" id="L102">		final List&lt;Segment&gt; result2 = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L103">		double pendingStart = pos1;</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		for (Segment pause : sortedDelay) {</span>
 <span class="nc bnc" id="L105" title="All 2 branches missed.">			if (Math.abs(pause.pos1 - pendingStart) &lt; 0.001) {</span>
 <span class="nc" id="L106">				pendingStart = pause.pos2;</span>
 <span class="nc" id="L107">				continue;</span>
@@ -120,13 +120,13 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L120">				pendingStart = pause.pos2;</span>
 			}
 <span class="nc" id="L122">		}</span>
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (pendingStart &lt; this.pos2)</span>
-<span class="fc" id="L124">			result2.add(new Segment(pendingStart, this.pos2));</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (pendingStart &lt; this.pos2)</span>
+<span class="nc" id="L124">			result2.add(new Segment(pendingStart, this.pos2));</span>
 
-<span class="fc" id="L126">		return Collections.unmodifiableCollection(result2);</span>
+<span class="nc" id="L126">		return Collections.unmodifiableCollection(result2);</span>
 	}
 
-<span class="fc" id="L129">	static class SortPos1 implements Comparator&lt;Segment&gt; {</span>
+<span class="nc" id="L129">	static class SortPos1 implements Comparator&lt;Segment&gt; {</span>
 		public int compare(Segment segA, Segment segB) {
 <span class="nc" id="L131">			return (int) Math.signum(segA.pos1 - segB.pos1);</span>
 		}

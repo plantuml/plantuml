@@ -182,10 +182,10 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 
 	@Override
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
-<span class="pc bpc" id="L185" title="1 of 2 branches missed.">		if (getLast() == null)</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (getLast() == null)</span>
 <span class="nc" id="L186">			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 
-<span class="fc" id="L188">		return getLast().addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+<span class="nc" id="L188">		return getLast().addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 	}
 
 	@Override

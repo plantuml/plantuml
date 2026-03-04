@@ -103,11 +103,11 @@ public class URectangle extends AbstractShadowable implements UShapeSized, UShap
 	}
 
 	public final URectangle ignoreForCompressionOnX() {
-<span class="fc" id="L106">		return new URectangle(width, height, rx, ry, comment, true, ignoreForCompressionOnY, codeLine);</span>
+<span class="nc" id="L106">		return new URectangle(width, height, rx, ry, comment, true, ignoreForCompressionOnY, codeLine);</span>
 	}
 
 	public final URectangle ignoreForCompressionOnY() {
-<span class="fc" id="L110">		return new URectangle(width, height, rx, ry, comment, ignoreForCompressionOnX, true, codeLine);</span>
+<span class="nc" id="L110">		return new URectangle(width, height, rx, ry, comment, ignoreForCompressionOnX, true, codeLine);</span>
 	}
 
 	public static URectangle build(double width, double height) {
@@ -189,20 +189,20 @@ public class URectangle extends AbstractShadowable implements UShapeSized, UShap
 //	}
 
 	public void drawWhenCompressed(UGraphic ug, CompressionMode mode) {
-<span class="fc bfc" id="L192" title="All 2 branches covered.">		if (mode == CompressionMode.ON_X) {</span>
-<span class="fc" id="L193">			ug.draw(new UEmpty(2, getHeight()));</span>
-<span class="fc" id="L194">			ug.apply(UTranslate.dx(getWidth() - 2)).draw(new UEmpty(2, getHeight()));</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">		if (mode == CompressionMode.ON_X) {</span>
+<span class="nc" id="L193">			ug.draw(new UEmpty(2, getHeight()));</span>
+<span class="nc" id="L194">			ug.apply(UTranslate.dx(getWidth() - 2)).draw(new UEmpty(2, getHeight()));</span>
 //			drawEmpty(x, y, new UEmpty(2, shape.getHeight()));
 //			drawEmpty(x + shape.getWidth() - 2, y, new UEmpty(2, shape.getHeight()));
 		}
-<span class="fc bfc" id="L198" title="All 2 branches covered.">		if (mode == CompressionMode.ON_Y) {</span>
-<span class="fc" id="L199">			ug.draw(new UEmpty(getWidth(), 2));</span>
-<span class="fc" id="L200">			ug.apply(UTranslate.dy(getHeight() - 2)).draw(new UEmpty(getWidth(), 2));</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">		if (mode == CompressionMode.ON_Y) {</span>
+<span class="nc" id="L199">			ug.draw(new UEmpty(getWidth(), 2));</span>
+<span class="nc" id="L200">			ug.apply(UTranslate.dy(getHeight() - 2)).draw(new UEmpty(getWidth(), 2));</span>
 //			drawEmpty(x, y, new UEmpty(shape.getWidth(), 2));
 //			drawEmpty(x, y + shape.getHeight() - 2, new UEmpty(shape.getWidth(), 2));
 		}
 
-<span class="fc" id="L205">	}</span>
+<span class="nc" id="L205">	}</span>
 
 	public boolean isIgnoreForCompressionOn(CompressionMode mode) {
 <span class="fc bfc" id="L208" title="All 2 branches covered.">		if (mode == CompressionMode.ON_X)</span>

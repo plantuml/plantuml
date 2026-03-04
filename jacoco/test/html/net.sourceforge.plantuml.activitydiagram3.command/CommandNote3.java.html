@@ -84,17 +84,17 @@ public class CommandNote3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L87">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L88">		final Display note = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
-<span class="fc" id="L89">		final NotePosition position = NotePosition.defaultLeft(arg.get(&quot;POSITION&quot;, 0));</span>
-<span class="fc" id="L90">		final NoteType type = NoteType.defaultType(arg.get(&quot;TYPE&quot;, 0));</span>
+<span class="nc" id="L87">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L88">		final Display note = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
+<span class="nc" id="L89">		final NotePosition position = NotePosition.defaultLeft(arg.get(&quot;POSITION&quot;, 0));</span>
+<span class="nc" id="L90">		final NoteType type = NoteType.defaultType(arg.get(&quot;TYPE&quot;, 0));</span>
 
-<span class="fc" id="L92">		final String stereotypeString = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="fc" id="L93">		Stereotype stereotype = null;</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (stereotypeString != null)</span>
+<span class="nc" id="L92">		final String stereotypeString = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L93">		Stereotype stereotype = null;</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (stereotypeString != null)</span>
 <span class="nc" id="L95">			stereotype = Stereotype.build(stereotypeString);</span>
 
-<span class="fc" id="L97">		return diagram.addNote(note, position, type, colors, stereotype);</span>
+<span class="nc" id="L97">		return diagram.addNote(note, position, type, colors, stereotype);</span>
 	}
 
 }

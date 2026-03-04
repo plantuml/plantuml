@@ -41,10 +41,10 @@ import net.sourceforge.plantuml.StringUtils;
 <span class="fc" id="L41">	LEFT, RIGHT, OVER, OVER_SEVERAL, BOTTOM, TOP;</span>
 
 	public static NotePosition defaultLeft(String s) {
-<span class="pc bpc" id="L44" title="1 of 2 branches missed.">		if (s == null) {</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">		if (s == null) {</span>
 <span class="nc" id="L45">			return NotePosition.LEFT;</span>
 		}
-<span class="fc" id="L47">		return NotePosition.valueOf(StringUtils.goUpperCase(s));</span>
+<span class="nc" id="L47">		return NotePosition.valueOf(StringUtils.goUpperCase(s));</span>
 	}
 
 }

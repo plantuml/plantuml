@@ -52,15 +52,15 @@ public class Swimlane implements SpecificBackcolorable, Comparable&lt;Swimlane&g
 	private final int order;
 	private Display display;
 
-<span class="fc" id="L55">	private UTranslate translate = UTranslate.none();</span>
+<span class="nc" id="L55">	private UTranslate translate = UTranslate.none();</span>
 	private double actualWidth;
 
-<span class="fc" id="L58">	public Swimlane(String name, int order, Pragma pragma) {</span>
-<span class="fc" id="L59">		this.name = name;</span>
-<span class="fc" id="L60">		this.display = Display.getWithNewlines(pragma, name);</span>
-<span class="fc" id="L61">		this.order = order;</span>
+<span class="nc" id="L58">	public Swimlane(String name, int order, Pragma pragma) {</span>
+<span class="nc" id="L59">		this.name = name;</span>
+<span class="nc" id="L60">		this.display = Display.getWithNewlines(pragma, name);</span>
+<span class="nc" id="L61">		this.order = order;</span>
 
-<span class="fc" id="L63">	}</span>
+<span class="nc" id="L63">	}</span>
 
 	@Override
 	public String toString() {
@@ -68,11 +68,11 @@ public class Swimlane implements SpecificBackcolorable, Comparable&lt;Swimlane&g
 	}
 
 	public String getName() {
-<span class="fc" id="L71">		return name;</span>
+<span class="nc" id="L71">		return name;</span>
 	}
 
 	public Display getDisplay() {
-<span class="fc" id="L75">		return display;</span>
+<span class="nc" id="L75">		return display;</span>
 	}
 
 	public void setDisplay(Display label) {
@@ -80,19 +80,19 @@ public class Swimlane implements SpecificBackcolorable, Comparable&lt;Swimlane&g
 <span class="nc" id="L80">	}</span>
 
 	public final UTranslate getTranslate() {
-<span class="fc" id="L83">		return translate;</span>
+<span class="nc" id="L83">		return translate;</span>
 	}
 
 	public final void setTranslate(UTranslate translate) {
-<span class="fc" id="L87">		this.translate = translate;</span>
-<span class="fc" id="L88">	}</span>
+<span class="nc" id="L87">		this.translate = translate;</span>
+<span class="nc" id="L88">	}</span>
 
 	public final void setWidth(double actualWidth) {
-<span class="fc" id="L91">		this.actualWidth = actualWidth;</span>
-<span class="fc" id="L92">	}</span>
+<span class="nc" id="L91">		this.actualWidth = actualWidth;</span>
+<span class="nc" id="L92">	}</span>
 
 	public Colors getColors() {
-<span class="fc" id="L95">		return colors;</span>
+<span class="nc" id="L95">		return colors;</span>
 	}
 
 	public void setSpecificColorTOBEREMOVED(ColorType type, HColor color) {
@@ -101,10 +101,10 @@ public class Swimlane implements SpecificBackcolorable, Comparable&lt;Swimlane&g
 		}
 <span class="nc" id="L102">	}</span>
 
-<span class="fc" id="L104">	private Colors colors = Colors.empty();</span>
+<span class="nc" id="L104">	private Colors colors = Colors.empty();</span>
 
 	public final double getActualWidth() {
-<span class="fc" id="L107">		return actualWidth;</span>
+<span class="nc" id="L107">		return actualWidth;</span>
 	}
 
 	public void setColors(Colors colors) {
@@ -114,12 +114,12 @@ public class Swimlane implements SpecificBackcolorable, Comparable&lt;Swimlane&g
 	private MinMax minMax;
 
 	public void setMinMax(MinMax minMax) {
-<span class="fc" id="L117">		this.minMax = minMax;</span>
+<span class="nc" id="L117">		this.minMax = minMax;</span>
 
-<span class="fc" id="L119">	}</span>
+<span class="nc" id="L119">	}</span>
 
 	public MinMax getMinMax() {
-<span class="fc" id="L122">		return minMax;</span>
+<span class="nc" id="L122">		return minMax;</span>
 	}
 
 	@Override

@@ -69,22 +69,22 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 <span class="fc" id="L69">	}</span>
 
 	protected void drawInternalU(UGraphic ug, Area area) {
-<span class="fc" id="L72">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="fc" id="L73">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L74">		final int x = (int) (dimensionToUse.getWidth() - getPreferredWidth(stringBounder)) / 2;</span>
+<span class="nc" id="L72">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="nc" id="L73">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L74">		final int x = (int) (dimensionToUse.getWidth() - getPreferredWidth(stringBounder)) / 2;</span>
 
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (dimensionToUse.getHeight() == 0)</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (dimensionToUse.getHeight() == 0)</span>
 <span class="nc" id="L77">			return;</span>
 
-<span class="fc" id="L79">		ug.startGroup(UGroup.singletonMap(UGroupType.TITLE, stringsToDisplay.toTooltipText()));</span>
+<span class="nc" id="L79">		ug.startGroup(UGroup.singletonMap(UGroupType.TITLE, stringsToDisplay.toTooltipText()));</span>
 
-<span class="fc" id="L81">		final URectangle rect = URectangle.build(getPreferredWidth(stringBounder), dimensionToUse.getHeight());</span>
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (symbolContext.isShadowing())</span>
+<span class="nc" id="L81">		final URectangle rect = URectangle.build(getPreferredWidth(stringBounder), dimensionToUse.getHeight());</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (symbolContext.isShadowing())</span>
 <span class="nc" id="L83">			rect.setDeltaShadow(1);</span>
 
-<span class="fc" id="L85">		ug = ug.apply(symbolContext.getForeColor());</span>
-<span class="pc bpc" id="L86" title="2 of 4 branches missed.">		if (closeUp &amp;&amp; closeDown) {</span>
-<span class="fc" id="L87">			ug.apply(symbolContext.getBackColor().bg()).apply(UTranslate.dx(x)).draw(rect);</span>
+<span class="nc" id="L85">		ug = ug.apply(symbolContext.getForeColor());</span>
+<span class="nc bnc" id="L86" title="All 4 branches missed.">		if (closeUp &amp;&amp; closeDown) {</span>
+<span class="nc" id="L87">			ug.apply(symbolContext.getBackColor().bg()).apply(UTranslate.dx(x)).draw(rect);</span>
 		} else {
 <span class="nc" id="L89">			ug.apply(symbolContext.getBackColor().bg()).apply(symbolContext.getBackColor()).apply(UTranslate.dx(x))</span>
 <span class="nc" id="L90">					.draw(rect);</span>
@@ -102,8 +102,8 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 
 		}
 
-<span class="fc" id="L105">		ug.closeGroup();</span>
-<span class="fc" id="L106">	}</span>
+<span class="nc" id="L105">		ug.closeGroup();</span>
+<span class="nc" id="L106">	}</span>
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {

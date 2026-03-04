@@ -191,17 +191,17 @@ public abstract class AbstractDiagram implements Diagram {
 	}
 
 	final public void setScale(Scale scale) {
-<span class="fc" id="L194">		this.scale = scale;</span>
-<span class="fc" id="L195">	}</span>
+<span class="nc" id="L194">		this.scale = scale;</span>
+<span class="nc" id="L195">	}</span>
 
 	final public Scale getScale() {
 <span class="fc" id="L198">		return scale;</span>
 	}
 
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-<span class="fc" id="L202">		final ColorMapper init = fileFormatOption.getColorMapper();</span>
-<span class="fc" id="L203">		final ColorMapper newColorMappter = muteColorMapper(init);</span>
-<span class="fc" id="L204">		return ImageBuilder.create(fileFormatOption.withColorMapper(newColorMappter));</span>
+<span class="nc" id="L202">		final ColorMapper init = fileFormatOption.getColorMapper();</span>
+<span class="nc" id="L203">		final ColorMapper newColorMappter = muteColorMapper(init);</span>
+<span class="nc" id="L204">		return ImageBuilder.create(fileFormatOption.withColorMapper(newColorMappter));</span>
 	}
 
 	protected ColorMapper muteColorMapper(ColorMapper init) {

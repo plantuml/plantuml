@@ -67,12 +67,12 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 		final private double y;
 		final private StyleBuilder styleBuilder;
 
-<span class="fc" id="L70">		Variation(LifeSegmentVariation type, double y, Fashion backcolor, StyleBuilder styleBuilder) {</span>
-<span class="fc" id="L71">			this.type = type;</span>
-<span class="fc" id="L72">			this.y = y;</span>
-<span class="fc" id="L73">			this.colors = backcolor;</span>
-<span class="fc" id="L74">			this.styleBuilder = styleBuilder;</span>
-<span class="fc" id="L75">		}</span>
+<span class="nc" id="L70">		Variation(LifeSegmentVariation type, double y, Fashion backcolor, StyleBuilder styleBuilder) {</span>
+<span class="nc" id="L71">			this.type = type;</span>
+<span class="nc" id="L72">			this.y = y;</span>
+<span class="nc" id="L73">			this.colors = backcolor;</span>
+<span class="nc" id="L74">			this.styleBuilder = styleBuilder;</span>
+<span class="nc" id="L75">		}</span>
 
 		@Override
 		public String toString() {
@@ -97,25 +97,25 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc" id="L97">	}</span>
 
 	public void addSegmentVariation(LifeSegmentVariation type, double y, Fashion colors, StyleBuilder styleBuilder) {
-<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (events.size() &gt; 0) {</span>
-<span class="fc" id="L101">			final Variation last = events.get(events.size() - 1);</span>
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">			if (y &lt; last.y) {</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (events.size() &gt; 0) {</span>
+<span class="nc" id="L101">			final Variation last = events.get(events.size() - 1);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">			if (y &lt; last.y) {</span>
 <span class="nc" id="L103">				return;</span>
 				// throw new IllegalArgumentException();
 			}
-<span class="pc bpc" id="L106" title="3 of 4 branches missed.">			if (y == last.y &amp;&amp; type != last.type) {</span>
+<span class="nc bnc" id="L106" title="All 4 branches missed.">			if (y == last.y &amp;&amp; type != last.type) {</span>
 <span class="nc" id="L107">				return;</span>
 				// throw new IllegalArgumentException();
 			}
 		}
-<span class="fc" id="L111">		events.add(new Variation(type, y, colors, styleBuilder));</span>
-<span class="fc" id="L112">		final int currentLevel = type.apply(stairs.getLastValue());</span>
-<span class="fc" id="L113">		stairs.addStep(y, currentLevel);</span>
-<span class="pc bpc" id="L114" title="2 of 4 branches missed.">		if (TeaVM.a()) assert getLevel(y) == stairs.getValue(y);</span>
-<span class="pc bpc" id="L115" title="2 of 4 branches missed.">		if (TeaVM.a()) assert currentLevel == stairs.getValue(y);</span>
-<span class="pc bpc" id="L116" title="2 of 4 branches missed.">		if (TeaVM.a()) assert getLevel(y) == currentLevel;</span>
-<span class="fc" id="L117">		maxLevel = Math.max(getLevel(y), maxLevel);</span>
-<span class="fc" id="L118">	}</span>
+<span class="nc" id="L111">		events.add(new Variation(type, y, colors, styleBuilder));</span>
+<span class="nc" id="L112">		final int currentLevel = type.apply(stairs.getLastValue());</span>
+<span class="nc" id="L113">		stairs.addStep(y, currentLevel);</span>
+<span class="nc bnc" id="L114" title="All 4 branches missed.">		if (TeaVM.a()) assert getLevel(y) == stairs.getValue(y);</span>
+<span class="nc bnc" id="L115" title="All 4 branches missed.">		if (TeaVM.a()) assert currentLevel == stairs.getValue(y);</span>
+<span class="nc bnc" id="L116" title="All 4 branches missed.">		if (TeaVM.a()) assert getLevel(y) == currentLevel;</span>
+<span class="nc" id="L117">		maxLevel = Math.max(getLevel(y), maxLevel);</span>
+<span class="nc" id="L118">	}</span>
 
 	public void finish(double y) {
 <span class="fc" id="L121">		final int missingClose = getMissingClose();</span>
@@ -126,11 +126,11 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 
 	int getMissingClose() {
 <span class="fc" id="L128">		int level = 0;</span>
-<span class="fc bfc" id="L129" title="All 2 branches covered.">		for (Variation ev : events)</span>
-<span class="fc bfc" id="L130" title="All 2 branches covered.">			if (ev.type == LifeSegmentVariation.LARGER)</span>
-<span class="fc" id="L131">				level++;</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		for (Variation ev : events)</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">			if (ev.type == LifeSegmentVariation.LARGER)</span>
+<span class="nc" id="L131">				level++;</span>
 			else
-<span class="fc" id="L133">				level--;</span>
+<span class="nc" id="L133">				level--;</span>
 
 <span class="fc" id="L135">		return level;</span>
 	}
@@ -160,17 +160,17 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	private double getRightShiftAtLevel(int level) {
-<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (level == 0) {</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		if (level == 0) {</span>
 <span class="fc" id="L164">			return 0;</span>
 		}
-<span class="fc" id="L166">		return level * (nominalPreferredWidth / 2.0);</span>
+<span class="nc" id="L166">		return level * (nominalPreferredWidth / 2.0);</span>
 	}
 
 	private double getLeftShiftAtLevel(int level) {
-<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (level == 0)</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (level == 0)</span>
 <span class="fc" id="L171">			return 0;</span>
 
-<span class="fc" id="L173">		return nominalPreferredWidth / 2.0;</span>
+<span class="nc" id="L173">		return nominalPreferredWidth / 2.0;</span>
 	}
 
 	private double getStartingX(StringBounder stringBounder) {
@@ -179,31 +179,31 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	private SegmentColored getSegment(int i) {
-<span class="fc bfc" id="L182" title="All 2 branches covered.">		if (events.get(i).type != LifeSegmentVariation.LARGER)</span>
-<span class="fc" id="L183">			return null;</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		if (events.get(i).type != LifeSegmentVariation.LARGER)</span>
+<span class="nc" id="L183">			return null;</span>
 
-<span class="fc" id="L185">		int level = 1;</span>
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		for (int j = i + 1; j &lt; events.size(); j++) {</span>
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">			if (events.get(j).type == LifeSegmentVariation.LARGER)</span>
+<span class="nc" id="L185">		int level = 1;</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		for (int j = i + 1; j &lt; events.size(); j++) {</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">			if (events.get(j).type == LifeSegmentVariation.LARGER)</span>
 <span class="nc" id="L188">				level++;</span>
 			else
-<span class="fc" id="L190">				level--;</span>
+<span class="nc" id="L190">				level--;</span>
 
-<span class="pc bpc" id="L192" title="1 of 2 branches missed.">			if (level == 0) {</span>
-<span class="fc" id="L193">				final double y1 = events.get(i).y;</span>
-<span class="fc" id="L194">				final double y2 = events.get(j).y;</span>
-<span class="fc" id="L195">				return SegmentColored.create(y1, y2, events.get(i).colors, shadowing);</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">			if (level == 0) {</span>
+<span class="nc" id="L193">				final double y1 = events.get(i).y;</span>
+<span class="nc" id="L194">				final double y2 = events.get(j).y;</span>
+<span class="nc" id="L195">				return SegmentColored.create(y1, y2, events.get(i).colors, shadowing);</span>
 			}
 		}
 <span class="nc" id="L198">		return SegmentColored.create(events.get(i).y, events.get(events.size() - 1).y, events.get(i).colors, shadowing);</span>
 	}
 
 	private Collection&lt;SegmentColored&gt; getSegmentsCutted(StringBounder stringBounder, int i) {
-<span class="fc" id="L202">		final SegmentColored seg = getSegment(i);</span>
-<span class="fc bfc" id="L203" title="All 2 branches covered.">		if (seg != null)</span>
-<span class="fc" id="L204">			return seg.cutSegmentIfNeed(participant.getDelays(stringBounder));</span>
+<span class="nc" id="L202">		final SegmentColored seg = getSegment(i);</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		if (seg != null)</span>
+<span class="nc" id="L204">			return seg.cutSegmentIfNeed(participant.getDelays(stringBounder));</span>
 
-<span class="fc" id="L206">		return Collections.emptyList();</span>
+<span class="nc" id="L206">		return Collections.emptyList();</span>
 	}
 
 	public void drawU(UGraphic ug, Rose skin, ISkinParam skinParam) {
@@ -212,44 +212,44 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc" id="L212">		ug = ug.apply(UTranslate.dx(getStartingX(stringBounder)));</span>
 
 <span class="fc" id="L214">		int eventLevel = 0;</span>
-<span class="fc bfc" id="L215" title="All 2 branches covered.">		for (int i = 0; i &lt; events.size(); i++) {</span>
-<span class="fc" id="L216">			ComponentType type = ComponentType.ACTIVATION_BOX_CLOSE_OPEN;</span>
-<span class="fc" id="L217">			Collection&lt;SegmentColored&gt; segmentsCutted = getSegmentsCutted(stringBounder, i);</span>
-<span class="fc bfc" id="L218" title="All 2 branches covered.">			if (events.get(i).type == LifeSegmentVariation.LARGER)</span>
-<span class="fc" id="L219">				eventLevel++;</span>
-<span class="pc bpc" id="L220" title="1 of 2 branches missed.">			else if (events.get(i).type == LifeSegmentVariation.SMALLER)</span>
-<span class="fc" id="L221">				eventLevel = Math.max(0, eventLevel - 1);</span>
-<span class="fc bfc" id="L222" title="All 2 branches covered.">			for (final Iterator&lt;SegmentColored&gt; it = segmentsCutted.iterator(); it.hasNext();) {</span>
-<span class="fc" id="L223">				final SegmentColored seg = it.next();</span>
-<span class="fc" id="L224">				final HColor specificBackColor = seg.getSpecificBackColor();</span>
-<span class="fc" id="L225">				ISkinParam skinParam2 = new SkinParamBackcolored(skinParam, specificBackColor);</span>
-<span class="fc" id="L226">				final HColor specificLineColor = seg.getSpecificLineColor();</span>
-<span class="pc bpc" id="L227" title="1 of 2 branches missed.">				if (specificLineColor != null)</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		for (int i = 0; i &lt; events.size(); i++) {</span>
+<span class="nc" id="L216">			ComponentType type = ComponentType.ACTIVATION_BOX_CLOSE_OPEN;</span>
+<span class="nc" id="L217">			Collection&lt;SegmentColored&gt; segmentsCutted = getSegmentsCutted(stringBounder, i);</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">			if (events.get(i).type == LifeSegmentVariation.LARGER)</span>
+<span class="nc" id="L219">				eventLevel++;</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">			else if (events.get(i).type == LifeSegmentVariation.SMALLER)</span>
+<span class="nc" id="L221">				eventLevel = Math.max(0, eventLevel - 1);</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">			for (final Iterator&lt;SegmentColored&gt; it = segmentsCutted.iterator(); it.hasNext();) {</span>
+<span class="nc" id="L223">				final SegmentColored seg = it.next();</span>
+<span class="nc" id="L224">				final HColor specificBackColor = seg.getSpecificBackColor();</span>
+<span class="nc" id="L225">				ISkinParam skinParam2 = new SkinParamBackcolored(skinParam, specificBackColor);</span>
+<span class="nc" id="L226">				final HColor specificLineColor = seg.getSpecificLineColor();</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">				if (specificLineColor != null)</span>
 <span class="nc" id="L228">					skinParam2 = new SkinParamForceColor(skinParam2, ColorParam.sequenceLifeLineBorder,</span>
 							specificLineColor);
 
-<span class="pc bpc" id="L231" title="1 of 2 branches missed.">				if (it.hasNext() == false)</span>
-<span class="pc bpc" id="L232" title="1 of 2 branches missed.">					type = type == ComponentType.ACTIVATION_BOX_CLOSE_OPEN ? ComponentType.ACTIVATION_BOX_CLOSE_CLOSE</span>
-<span class="pc" id="L233">							: ComponentType.ACTIVATION_BOX_OPEN_CLOSE;</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">				if (it.hasNext() == false)</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">					type = type == ComponentType.ACTIVATION_BOX_CLOSE_OPEN ? ComponentType.ACTIVATION_BOX_CLOSE_CLOSE</span>
+<span class="nc" id="L233">							: ComponentType.ACTIVATION_BOX_OPEN_CLOSE;</span>
 
-<span class="fc" id="L235">				StyleBuilder currentStyleBuilder = events.get(i).styleBuilder;</span>
-<span class="pc bpc" id="L236" title="1 of 2 branches missed.">				if (currentStyleBuilder == null)</span>
+<span class="nc" id="L235">				StyleBuilder currentStyleBuilder = events.get(i).styleBuilder;</span>
+<span class="nc bnc" id="L236" title="All 2 branches missed.">				if (currentStyleBuilder == null)</span>
 <span class="nc" id="L237">					currentStyleBuilder = skinParam2.getCurrentStyleBuilder();</span>
 
-<span class="fc" id="L239">				Style style = type.getStyleSignature().withTOBECHANGED(participant.getStereotype())</span>
-<span class="fc" id="L240">						.getMergedStyle(currentStyleBuilder);</span>
+<span class="nc" id="L239">				Style style = type.getStyleSignature().withTOBECHANGED(participant.getStereotype())</span>
+<span class="nc" id="L240">						.getMergedStyle(currentStyleBuilder);</span>
 
-<span class="pc bpc" id="L242" title="1 of 2 branches missed.">				if (style != null) {</span>
-<span class="fc" id="L243">					style = style.eventuallyOverride(PName.BackGroundColor, specificBackColor);</span>
-<span class="fc" id="L244">					style = style.eventuallyOverride(PName.LineColor, specificLineColor);</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">				if (style != null) {</span>
+<span class="nc" id="L243">					style = style.eventuallyOverride(PName.BackGroundColor, specificBackColor);</span>
+<span class="nc" id="L244">					style = style.eventuallyOverride(PName.LineColor, specificLineColor);</span>
 				}
 
-<span class="fc" id="L247">				final Component compAliveBox = skin.createComponent(new Style[] { style }, type, null, skinParam2,</span>
+<span class="nc" id="L247">				final Component compAliveBox = skin.createComponent(new Style[] { style }, type, null, skinParam2,</span>
 						participantDisplay);
-<span class="fc" id="L249">				type = ComponentType.ACTIVATION_BOX_OPEN_OPEN;</span>
-<span class="fc" id="L250">				final int currentLevel = Math.min(eventLevel, getLevel(seg.getPos1Initial()));</span>
-<span class="fc" id="L251">				seg.drawU(ug, compAliveBox, currentLevel);</span>
-<span class="fc" id="L252">			}</span>
+<span class="nc" id="L249">				type = ComponentType.ACTIVATION_BOX_OPEN_OPEN;</span>
+<span class="nc" id="L250">				final int currentLevel = Math.min(eventLevel, getLevel(seg.getPos1Initial()));</span>
+<span class="nc" id="L251">				seg.drawU(ug, compAliveBox, currentLevel);</span>
+<span class="nc" id="L252">			}</span>
 		}
 <span class="fc" id="L254">	}</span>
 
@@ -278,10 +278,10 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	public Fashion getColors() {
-<span class="fc bfc" id="L281" title="All 2 branches covered.">		if (events.size() == 0)</span>
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">		if (events.size() == 0)</span>
 <span class="fc" id="L282">			return null;</span>
 
-<span class="fc" id="L284">		return events.get(events.size() - 1).colors;</span>
+<span class="nc" id="L284">		return events.get(events.size() - 1).colors;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -55,10 +55,10 @@ public class InstructionStart extends MonoSwimable implements Instruction {
 	private final Colors colors;
 
 	public InstructionStart(Colors colors, Swimlane swimlane, LinkRendering inlinkRendering) {
-<span class="fc" id="L58">		super(swimlane);</span>
-<span class="fc" id="L59">		this.colors = colors;</span>
-<span class="fc" id="L60">		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
-<span class="fc" id="L61">	}</span>
+<span class="nc" id="L58">		super(swimlane);</span>
+<span class="nc" id="L59">		this.colors = colors;</span>
+<span class="nc" id="L60">		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);</span>
+<span class="nc" id="L61">	}</span>
 
 	@Override
 	public boolean containsBreak() {
@@ -72,9 +72,9 @@ public class InstructionStart extends MonoSwimable implements Instruction {
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
-<span class="fc" id="L75">		Ftile result = factory.start(getSwimlaneIn(), colors);</span>
-<span class="fc" id="L76">		result = eventuallyAddNote(factory, result, result.getSwimlaneIn(), VerticalAlignment.CENTER);</span>
-<span class="fc" id="L77">		return result;</span>
+<span class="nc" id="L75">		Ftile result = factory.start(getSwimlaneIn(), colors);</span>
+<span class="nc" id="L76">		result = eventuallyAddNote(factory, result, result.getSwimlaneIn(), VerticalAlignment.CENTER);</span>
+<span class="nc" id="L77">		return result;</span>
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class InstructionStart extends MonoSwimable implements Instruction {
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="fc" id="L92">		return inlinkRendering;</span>
+<span class="nc" id="L92">		return inlinkRendering;</span>
 	}
 
 }
