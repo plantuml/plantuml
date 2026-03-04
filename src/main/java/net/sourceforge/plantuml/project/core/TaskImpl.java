@@ -253,15 +253,15 @@ public class TaskImpl extends AbstractTask implements Task {
 
 	@Override
 	public void setStart(TimePoint start) {
-		if (start.toString().endsWith("T00:00") == false)
-			throw new IllegalArgumentException(start.toString());
+//		if (start.toString().endsWith("T00:00") == false)
+//			throw new IllegalArgumentException(start.toString());
 		solver.setData(TaskAttribute.START, start);
 	}
 
 	@Override
 	public void setEnd(TimePoint end) {
-		if (end.toString().endsWith("T00:00") == false)
-			throw new IllegalArgumentException(end.toString());
+//		if (end.toString().endsWith("T00:00") == false)
+//			throw new IllegalArgumentException(end.toString());
 		solver.setData(TaskAttribute.END, end);
 	}
 
