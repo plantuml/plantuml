@@ -46,22 +46,21 @@ import net.sourceforge.plantuml.klimt.font.UnusedSpace;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
 
 <span class="fc" id="L48">public class DriverCenteredCharacterSvg implements UDriver&lt;UCenteredCharacter, SvgGraphics&gt; {</span>
-    // ::remove file when __HAXE__
 
 	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param,
 			SvgGraphics svg) {
-<span class="nc" id="L53">		final char c = characterCircled.getChar();</span>
-<span class="nc" id="L54">		final UFont font = characterCircled.getFont();</span>
-<span class="nc" id="L55">		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);</span>
+<span class="nc" id="L52">		final char c = characterCircled.getChar();</span>
+<span class="nc" id="L53">		final UFont font = characterCircled.getFont();</span>
+<span class="nc" id="L54">		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);</span>
 
-<span class="nc" id="L57">		final double xpos = x - unusedSpace.getCenterX() - 0.5;</span>
-<span class="nc" id="L58">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
+<span class="nc" id="L56">		final double xpos = x - unusedSpace.getCenterX() - 0.5;</span>
+<span class="nc" id="L57">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
 
-<span class="nc" id="L60">		final TextLayout t = UFontContext.SVG.createTextLayout(font, &quot;&quot; + c);</span>
-<span class="nc" id="L61">		final HColor textColor = param.getColor();</span>
-<span class="nc" id="L62">		svg.setFillColor(textColor.toSvg(mapper));</span>
+<span class="nc" id="L59">		final TextLayout t = UFontContext.SVG.createTextLayout(font, &quot;&quot; + c);</span>
+<span class="nc" id="L60">		final HColor textColor = param.getColor();</span>
+<span class="nc" id="L61">		svg.setFillColor(textColor.toSvg(mapper));</span>
 
-<span class="nc" id="L64">		svg.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));</span>
-<span class="nc" id="L65">	}</span>
+<span class="nc" id="L63">		svg.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));</span>
+<span class="nc" id="L64">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

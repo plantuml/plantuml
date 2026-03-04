@@ -41,18 +41,17 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
 
 <span class="fc" id="L43">public class DriverDotPathSvg implements UDriver&lt;DotPath, SvgGraphics&gt; {</span>
-    // ::remove file when __HAXE__
 
 	public void draw(DotPath shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 
-<span class="nc bnc" id="L48" title="All 2 branches missed.">		if (param.getColor().isTransparent() == false) {</span>
-<span class="nc" id="L49">			DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		if (param.getColor().isTransparent() == false) {</span>
+<span class="nc" id="L48">			DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>
 
-<span class="nc" id="L51">			svg.setFillColor(null);</span>
-<span class="nc" id="L52">			svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
+<span class="nc" id="L50">			svg.setFillColor(null);</span>
+<span class="nc" id="L51">			svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
 
-<span class="nc" id="L54">			svg.svgPath(x, y, shape.toUPath(), 0);</span>
+<span class="nc" id="L53">			svg.svgPath(x, y, shape.toUPath(), 0);</span>
 		}
-<span class="nc" id="L56">	}</span>
+<span class="nc" id="L55">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

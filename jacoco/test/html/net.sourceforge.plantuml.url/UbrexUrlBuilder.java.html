@@ -116,8 +116,8 @@ public class UbrexUrlBuilder {
 <span class="fc" id="L116">			return buildUrl(m);</span>
 
 <span class="fc" id="L118">		m = getMatcher(ONLY_TOOLTIP, s);</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (matchesOrFind(m))</span>
-<span class="nc" id="L120">			return buildUrl(m);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
+<span class="fc" id="L120">			return buildUrl(m);</span>
 
 <span class="fc" id="L122">		m = getMatcher(ONLY_TOOLTIP_AND_LABEL, s);</span>
 <span class="fc bfc" id="L123" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
@@ -142,12 +142,12 @@ public class UbrexUrlBuilder {
 <span class="fc bfc" id="L142" title="All 2 branches covered.">		if (mode == UrlMode.STRICT)</span>
 <span class="fc" id="L143">			return ubrex.match(s);</span>
 <span class="fc" id="L144">		final TextNavigator tn = TextNavigator.build(s);</span>
-<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		for (int i = 0; i &lt; tn.length() - 2; i++) {</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		for (int i = 0; i &lt; tn.length() - 2; i++) {</span>
 <span class="fc" id="L146">			final UMatcher matcher = ubrex.match(tn, i);</span>
 <span class="fc bfc" id="L147" title="All 2 branches covered.">			if (matcher.startMatch())</span>
 <span class="fc" id="L148">				return matcher;</span>
 		}
-<span class="nc" id="L150">		return new UMatchNone();</span>
+<span class="fc" id="L150">		return new UMatchNone();</span>
 	}
 
 	private Url buildUrl(UMatcher m) {
@@ -177,18 +177,18 @@ public class UbrexUrlBuilder {
 	private String withTopUrl(String url) {
 <span class="fc bfc" id="L178" title="All 2 branches covered.">		if (url == null)</span>
 <span class="fc" id="L179">			return &quot;&quot;;</span>
-<span class="pc bpc" id="L180" title="7 of 8 branches missed.">		if (url.startsWith(&quot;http:&quot;) == false &amp;&amp; url.startsWith(&quot;https:&quot;) == false &amp;&amp; url.startsWith(&quot;file:&quot;) == false</span>
+<span class="pc bpc" id="L180" title="3 of 8 branches missed.">		if (url.startsWith(&quot;http:&quot;) == false &amp;&amp; url.startsWith(&quot;https:&quot;) == false &amp;&amp; url.startsWith(&quot;file:&quot;) == false</span>
 				&amp;&amp; topurl != null)
 <span class="nc" id="L182">			return topurl + url;</span>
 
 <span class="fc" id="L184">		return url;</span>
 	}
 
-<span class="nc" id="L187">	static class UMatchNone implements UMatcher {</span>
+<span class="fc" id="L187">	static class UMatchNone implements UMatcher {</span>
 
 		@Override
 		public boolean startMatch() {
-<span class="nc" id="L191">			return false;</span>
+<span class="fc" id="L191">			return false;</span>
 		}
 
 		@Override

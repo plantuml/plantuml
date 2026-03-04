@@ -42,58 +42,57 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 
 public class DriverEllipseSvg implements UDriver&lt;UEllipse, SvgGraphics&gt; {
-    // ::remove file when __HAXE__
 
 	private final ClipContainer clipContainer;
 
-<span class="fc" id="L49">	public DriverEllipseSvg(ClipContainer clipContainer) {</span>
-<span class="fc" id="L50">		this.clipContainer = clipContainer;</span>
-<span class="fc" id="L51">	}</span>
+<span class="fc" id="L48">	public DriverEllipseSvg(ClipContainer clipContainer) {</span>
+<span class="fc" id="L49">		this.clipContainer = clipContainer;</span>
+<span class="fc" id="L50">	}</span>
 
 	public void draw(UEllipse shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-<span class="fc" id="L54">		final double width = shape.getWidth();</span>
-<span class="fc" id="L55">		final double height = shape.getHeight();</span>
+<span class="fc" id="L53">		final double width = shape.getWidth();</span>
+<span class="fc" id="L54">		final double height = shape.getHeight();</span>
 
-<span class="fc" id="L57">		final UClip clip = clipContainer.getClip();</span>
-<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (clip != null) {</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">			if (clip.isInside(x, y) == false) {</span>
-<span class="nc" id="L60">				return;</span>
+<span class="fc" id="L56">		final UClip clip = clipContainer.getClip();</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (clip != null) {</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">			if (clip.isInside(x, y) == false) {</span>
+<span class="nc" id="L59">				return;</span>
 			}
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">			if (clip.isInside(x + width, y + height) == false) {</span>
-<span class="nc" id="L63">				return;</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">			if (clip.isInside(x + width, y + height) == false) {</span>
+<span class="nc" id="L62">				return;</span>
 			}
 		}
 
-<span class="fc" id="L67">		DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>
-<span class="fc" id="L68">		DriverRectangleSvg.applyFillColor(svg, mapper, param);</span>
+<span class="fc" id="L66">		DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>
+<span class="fc" id="L67">		DriverRectangleSvg.applyFillColor(svg, mapper, param);</span>
 
-<span class="fc" id="L70">		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
+<span class="fc" id="L69">		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
 
-<span class="fc" id="L72">		double start = shape.getStart();</span>
-<span class="fc" id="L73">		final double extend = shape.getExtend();</span>
-<span class="fc" id="L74">		final double cx = x + width / 2;</span>
-<span class="fc" id="L75">		final double cy = y + height / 2;</span>
-<span class="pc bpc" id="L76" title="2 of 4 branches missed.">		if (start == 0 &amp;&amp; extend == 0) {</span>
-<span class="fc" id="L77">			svg.svgEllipse(cx, cy, width / 2, height / 2, shape.getDeltaShadow());</span>
+<span class="fc" id="L71">		double start = shape.getStart();</span>
+<span class="fc" id="L72">		final double extend = shape.getExtend();</span>
+<span class="fc" id="L73">		final double cx = x + width / 2;</span>
+<span class="fc" id="L74">		final double cy = y + height / 2;</span>
+<span class="pc bpc" id="L75" title="2 of 4 branches missed.">		if (start == 0 &amp;&amp; extend == 0) {</span>
+<span class="fc" id="L76">			svg.svgEllipse(cx, cy, width / 2, height / 2, shape.getDeltaShadow());</span>
 		} else {
-<span class="nc" id="L79">			start = start + 90;</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (extend &gt; 0) {</span>
+<span class="nc" id="L78">			start = start + 90;</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">			if (extend &gt; 0) {</span>
 				// http://www.itk.ilstu.edu/faculty/javila/SVG/SVG_drawing1/elliptical_curve.htm
-<span class="nc" id="L82">				final double x1 = cx + Math.sin(start * Math.PI / 180.) * width / 2;</span>
-<span class="nc" id="L83">				final double y1 = cy + Math.cos(start * Math.PI / 180.) * height / 2;</span>
-<span class="nc" id="L84">				final double x2 = cx + Math.sin((start + extend) * Math.PI / 180.) * width / 2;</span>
-<span class="nc" id="L85">				final double y2 = cy + Math.cos((start + extend) * Math.PI / 180.) * height / 2;</span>
-<span class="nc" id="L86">				svg.svgArcEllipse(width / 2, height / 2, x1, y1, x2, y2);</span>
-<span class="nc" id="L87">			} else {</span>
-<span class="nc" id="L88">				final double x1 = cx + Math.sin((start + extend) * Math.PI / 180.) * width / 2;</span>
-<span class="nc" id="L89">				final double y1 = cy + Math.cos((start + extend) * Math.PI / 180.) * height / 2;</span>
-<span class="nc" id="L90">				final double x2 = cx + Math.sin(start * Math.PI / 180.) * width / 2;</span>
-<span class="nc" id="L91">				final double y2 = cy + Math.cos(start * Math.PI / 180.) * height / 2;</span>
-<span class="nc" id="L92">				svg.svgArcEllipse(width / 2, height / 2, x1, y1, x2, y2);</span>
+<span class="nc" id="L81">				final double x1 = cx + Math.sin(start * Math.PI / 180.) * width / 2;</span>
+<span class="nc" id="L82">				final double y1 = cy + Math.cos(start * Math.PI / 180.) * height / 2;</span>
+<span class="nc" id="L83">				final double x2 = cx + Math.sin((start + extend) * Math.PI / 180.) * width / 2;</span>
+<span class="nc" id="L84">				final double y2 = cy + Math.cos((start + extend) * Math.PI / 180.) * height / 2;</span>
+<span class="nc" id="L85">				svg.svgArcEllipse(width / 2, height / 2, x1, y1, x2, y2);</span>
+<span class="nc" id="L86">			} else {</span>
+<span class="nc" id="L87">				final double x1 = cx + Math.sin((start + extend) * Math.PI / 180.) * width / 2;</span>
+<span class="nc" id="L88">				final double y1 = cy + Math.cos((start + extend) * Math.PI / 180.) * height / 2;</span>
+<span class="nc" id="L89">				final double x2 = cx + Math.sin(start * Math.PI / 180.) * width / 2;</span>
+<span class="nc" id="L90">				final double y2 = cy + Math.cos(start * Math.PI / 180.) * height / 2;</span>
+<span class="nc" id="L91">				svg.svgArcEllipse(width / 2, height / 2, x1, y1, x2, y2);</span>
 
 			}
 		}
-<span class="fc" id="L96">	}</span>
+<span class="fc" id="L95">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

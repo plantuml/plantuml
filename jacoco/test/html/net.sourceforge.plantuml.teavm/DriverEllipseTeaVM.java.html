@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.teavm;
 
 import net.sourceforge.plantuml.klimt.ClipContainer;
+import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
@@ -46,31 +47,39 @@ public class DriverEllipseTeaVM implements UDriver&lt;UEllipse, SvgGraphicsTeaVM
 
 	private final ClipContainer clipContainer;
 
-<span class="nc" id="L49">	public DriverEllipseTeaVM(ClipContainer clipContainer) {</span>
-<span class="nc" id="L50">		this.clipContainer = clipContainer;</span>
-<span class="nc" id="L51">	}</span>
+<span class="nc" id="L50">	public DriverEllipseTeaVM(ClipContainer clipContainer) {</span>
+<span class="nc" id="L51">		this.clipContainer = clipContainer;</span>
+<span class="nc" id="L52">	}</span>
 
 	@Override
 	public void draw(UEllipse ellipse, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
-<span class="nc" id="L55">		DriverRectangleTeaVM.applyFillColor(svg, mapper, param);</span>
-<span class="nc" id="L56">		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);</span>
-<span class="nc" id="L57">		svg.setStrokeWidth(param.getStroke().getThickness());</span>
+<span class="nc" id="L56">		final double width = ellipse.getWidth();</span>
+<span class="nc" id="L57">		final double height = ellipse.getHeight();</span>
 
-<span class="nc" id="L59">		final double width = ellipse.getWidth();</span>
-<span class="nc" id="L60">		final double height = ellipse.getHeight();</span>
+<span class="nc" id="L59">		final UClip clip = clipContainer.getClip();</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (clip != null) {</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">			if (clip.isInside(x, y) == false)</span>
+<span class="nc" id="L62">				return;</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">			if (clip.isInside(x + width, y + height) == false)</span>
+<span class="nc" id="L64">				return;</span>
+		}
+
+<span class="nc" id="L67">		DriverRectangleTeaVM.applyFillColor(svg, mapper, param);</span>
+<span class="nc" id="L68">		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);</span>
+<span class="nc" id="L69">		svg.setStrokeWidth(param.getStroke().getThickness());</span>
 
 		// UEllipse uses width/height, but SVG ellipse uses rx/ry (radii)
 		// And x,y is top-left corner for UEllipse, but center for SVG
-<span class="nc" id="L64">		final double cx = x + width / 2;</span>
-<span class="nc" id="L65">		final double cy = y + height / 2;</span>
-<span class="nc" id="L66">		final double rx = width / 2;</span>
-<span class="nc" id="L67">		final double ry = height / 2;</span>
+<span class="nc" id="L73">		final double cx = x + width / 2;</span>
+<span class="nc" id="L74">		final double cy = y + height / 2;</span>
+<span class="nc" id="L75">		final double rx = width / 2;</span>
+<span class="nc" id="L76">		final double ry = height / 2;</span>
 
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (Math.abs(rx - ry) &lt; 0.01)</span>
-<span class="nc" id="L70">			svg.drawCircle(cx, cy, rx);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (Math.abs(rx - ry) &lt; 0.01)</span>
+<span class="nc" id="L79">			svg.drawCircle(cx, cy, rx);</span>
 		else
-<span class="nc" id="L72">			svg.drawEllipse(cx, cy, rx, ry);</span>
+<span class="nc" id="L81">			svg.drawEllipse(cx, cy, rx, ry);</span>
 
-<span class="nc" id="L74">	}</span>
+<span class="nc" id="L83">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
