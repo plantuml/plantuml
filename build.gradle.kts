@@ -705,11 +705,32 @@ tasks.register("teavm") {
 	doLast {
 		// Copy the HTML template and all js files (without erasing existing files)
 		copy {
-		    from("src/main/resources/teavm") {
-		        include("index.html", "*.js")
-		    }
-		    into(outputDir)
-		}		
+			from("src/main/resources/teavm") {
+				include("index.html", "*.js")
+			}
+			into(outputDir)
+		}
+
+		// List all produced .js files with human-readable sizes
+		fun sizeInMB(bytes: Long): String {
+			return "%.2f MB".format(bytes.toDouble() / (1024.0 * 1024.0))
+		}
+
+		val jsFiles = outputDir.listFiles { f -> f.isFile && f.name.endsWith(".js") }
+			?.sortedBy { it.name.lowercase() }
+		if (jsFiles != null && jsFiles.isNotEmpty()) {
+			val nameWidth = maxOf(jsFiles.maxOf { it.name.length }, "TOTAL".length)
+			val totalSize = jsFiles.sumOf { it.length() }
+			val sizeWidth = sizeInMB(totalSize).length
+
+			println("")
+			println("TeaVM JS files:")
+			for (f in jsFiles) {
+				println("  %-${nameWidth}s  %${sizeWidth}s".format(f.name, sizeInMB(f.length())))
+			}
+			println("  %-${nameWidth}s  %${sizeWidth}s".format("TOTAL", sizeInMB(totalSize)))
+		}
+
 		println("")
 		println("======================")
 		println("TeaVM Ready!  --> ${outputDir.absolutePath}/index.html")
