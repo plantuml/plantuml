@@ -62,13 +62,12 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
 import net.sourceforge.plantuml.klimt.color.HColors;
-import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.debug.UGraphicDebug;
-import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
 import net.sourceforge.plantuml.klimt.drawing.eps.EpsStrategy;
 import net.sourceforge.plantuml.klimt.drawing.eps.UGraphicEps;
 import net.sourceforge.plantuml.klimt.drawing.g2d.UGraphicG2d;
+import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
 import net.sourceforge.plantuml.klimt.drawing.html5.UGraphicHtml5;
 import net.sourceforge.plantuml.klimt.drawing.svg.UGraphicSvg;
 import net.sourceforge.plantuml.klimt.drawing.tikz.UGraphicTikz;
@@ -126,6 +125,7 @@ public class TextBlockExporter12026 {
 	private final Scale scale;
 	private final String warningOrError;
 	private final Pragma pragma;
+	private final boolean isHandwritten;
 
 	// Optional diagram-level info for SVG attributes
 	private final UmlDiagramType diagramType;
@@ -143,6 +143,7 @@ public class TextBlockExporter12026 {
 		this.warningOrError = builder.warningOrError;
 		this.pragma = builder.pragma;
 		this.diagramType = builder.diagramType;
+		this.isHandwritten = builder.isHandwritten;
 		this.stringBounder = builder.fileFormatOption
 				.getDefaultStringBounder(builder.skinParam != null ? builder.skinParam : SvgCharSizeHack.NO_HACK);
 	}
@@ -166,7 +167,8 @@ public class TextBlockExporter12026 {
 		maybeDrawBorder(ug, dim);
 
 		ug = ug.apply(new UTranslate(margin.getLeft(), margin.getTop()));
-		ug = applyHandwritten(ug);
+		if (isHandwritten)
+			ug = new UGraphicHandwritten(ug);
 
 		textBlock.drawU(ug);
 		ug.flushUg();
@@ -223,16 +225,6 @@ public class TextBlockExporter12026 {
 				.rounded(skinParam.getRoundCorner(CornerParam.diagramBorder, null));
 
 		ug.apply(color == null ? HColors.BLACK : color).apply(stroke).draw(rectangle);
-	}
-
-	// -----------------------------------------------------------------------
-	// Handwritten mode
-	// -----------------------------------------------------------------------
-
-	private UGraphic applyHandwritten(UGraphic ug) {
-		if (skinParam != null && skinParam.handwritten())
-			return new UGraphicHandwritten(ug);
-		return ug;
 	}
 
 	// -----------------------------------------------------------------------
@@ -375,16 +367,18 @@ public class TextBlockExporter12026 {
 	 *
 	 * @param textBlock        the fully-decorated diagram content
 	 * @param fileFormatOption the desired output format and options
+	 * @param isHandwritten 
 	 * @return a new builder
 	 */
-	public static Builder builder(TextBlock textBlock, FileFormatOption fileFormatOption) {
-		return new Builder(textBlock, fileFormatOption);
+	public static Builder builder(TextBlock textBlock, FileFormatOption fileFormatOption, boolean isHandwritten) {
+		return new Builder(textBlock, fileFormatOption, isHandwritten);
 	}
 
 	public static class Builder {
 		// Required
 		private final TextBlock textBlock;
 		private final FileFormatOption fileFormatOption;
+		private final boolean isHandwritten;
 
 		// Optional with defaults
 		private ISkinParam skinParam;
@@ -398,9 +392,10 @@ public class TextBlockExporter12026 {
 		private Pragma pragma;
 		private UmlDiagramType diagramType;
 
-		private Builder(TextBlock textBlock, FileFormatOption fileFormatOption) {
+		private Builder(TextBlock textBlock, FileFormatOption fileFormatOption, boolean isHandwritten) {
 			this.textBlock = textBlock;
 			this.fileFormatOption = fileFormatOption;
+			this.isHandwritten = isHandwritten;
 			if (textBlock.getBackcolor() != null) {
 				this.backcolor = textBlock.getBackcolor();
 			}

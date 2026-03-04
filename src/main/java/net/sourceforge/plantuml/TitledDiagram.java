@@ -117,6 +117,13 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 
 	}
 
+	@Override
+	public boolean isHandwritten() {
+		if (skinParam.handwritten())
+			return true;
+		return super.isHandwritten();
+	}
+
 	public void setNamespaceSeparator(String namespaceSeparator) {
 		this.namespaceSeparator = namespaceSeparator;
 	}

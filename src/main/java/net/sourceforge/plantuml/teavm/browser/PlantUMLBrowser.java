@@ -16,6 +16,8 @@ import net.sourceforge.plantuml.core.DiagramChromeFactory12026;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.teavm.PSystemBuilder2;
@@ -333,7 +335,7 @@ public class PlantUMLBrowser {
 			BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender");
 
 			SvgGraphicsTeaVM svg = new SvgGraphicsTeaVM(900, 900);
-			UGraphicTeaVM ug = UGraphicTeaVM.build(BACK, COLOR_MAPPER, STRING_BOUNDER, svg);
+			UGraphic ug = UGraphicTeaVM.build(BACK, COLOR_MAPPER, STRING_BOUNDER, svg);
 
 			BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender wip10");
 
@@ -345,11 +347,14 @@ public class PlantUMLBrowser {
 			if (diagram instanceof UgDiagram) {
 				BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender new10");
 				TextBlock tb = ((UgDiagram) diagram).getTextBlock12026(0, fileFormat);
-				final UgDiagram titled = (UgDiagram) diagram;
+				final UgDiagram ugDiagram = (UgDiagram) diagram;
 
 				if (diagram instanceof TitledDiagram)
-					tb = DiagramChromeFactory12026.create(tb, (TitledDiagram) titled,
-							((TitledDiagram) titled).getSkinParam(), STRING_BOUNDER, titled.getWarnings());
+					tb = DiagramChromeFactory12026.create(tb, (TitledDiagram) ugDiagram,
+							((TitledDiagram) ugDiagram).getSkinParam(), STRING_BOUNDER, ugDiagram.getWarnings());
+
+				if (ugDiagram.isHandwritten())
+					ug = new UGraphicHandwritten(ug);
 
 				tb.drawU(ug);
 				BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender new20");

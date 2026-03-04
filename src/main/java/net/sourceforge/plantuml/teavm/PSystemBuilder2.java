@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
 import net.sourceforge.plantuml.ebnf.PSystemEbnfFactory;
 import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.error.PSystemErrorPreprocessor;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.error.PSystemUnsupported;
 import net.sourceforge.plantuml.jaws.Jaws;
@@ -128,7 +129,11 @@ public class PSystemBuilder2 {
 		final UmlSource source = UmlSource.create(tmp, false);
 		final DiagramType diagramType = source.getDiagramType();
 
-		final PreprocessingArtifact preprocessing = new PreprocessingArtifact();
+		final PreprocessingArtifact preprocessing = timLoader.getPreprocessingArtifact();
+
+		if (timLoader.isPreprocessorError())
+			return new PSystemErrorPreprocessor(tmp, timLoader.getDebug(), timLoader.getPreprocessingArtifact());
+
 		final List<PSystemError> errors = new ArrayList<>();
 
 		if (lastFactory != null && diagramType == lastFactory.getDiagramType()) {

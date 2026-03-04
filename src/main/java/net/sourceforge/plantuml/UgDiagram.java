@@ -49,9 +49,11 @@ import net.sourceforge.plantuml.crash.GraphvizCrash;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.svek.IEntityImage;
@@ -109,6 +111,12 @@ public abstract class UgDiagram extends AbstractDiagram {
 		}
 	}
 
+	public boolean isHandwritten() {
+		if (getPreprocessingArtifact().getOption().isDefine(OptionKey.HANDWRITTEN))
+			return true;
+		return false;
+	}
+
 	protected TextBlockExporter12026 getExporter(int index, FileFormatOption fileFormatOption) throws Exception {
 		TextBlock result = getTextBlock12026(index, fileFormatOption);
 
@@ -123,7 +131,8 @@ public abstract class UgDiagram extends AbstractDiagram {
 		final ColorMapper mutedMapper = muteColorMapper(fileFormatOption.getColorMapper());
 		final FileFormatOption effectiveFormat = fileFormatOption.withColorMapper(mutedMapper);
 
-		final TextBlockExporter12026.Builder builder = TextBlockExporter12026.builder(result, effectiveFormat);
+		final TextBlockExporter12026.Builder builder = TextBlockExporter12026.builder(result, effectiveFormat,
+				isHandwritten());
 		if (this instanceof TitledDiagram)
 			builder.styled((TitledDiagram) this);
 		else

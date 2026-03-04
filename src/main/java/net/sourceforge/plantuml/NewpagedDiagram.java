@@ -139,9 +139,10 @@ public class NewpagedDiagram extends UgDiagram {
 		final ColorMapper mutedMapper = muteColorMapper(fileFormatOption.getColorMapper());
 		final FileFormatOption effectiveFormat = fileFormatOption.withColorMapper(mutedMapper);
 
-		final TextBlockExporter12026.Builder builder = TextBlockExporter12026.builder(result, effectiveFormat);
-
 		final TitledDiagram titledDiagram = (TitledDiagram) diagrams.get(num);
+
+		final TextBlockExporter12026.Builder builder = TextBlockExporter12026.builder(result, effectiveFormat,
+				titledDiagram.isHandwritten());
 
 		builder.styled(titledDiagram);
 
