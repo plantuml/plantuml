@@ -44,7 +44,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.EntityPosition;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
@@ -54,8 +53,8 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
-import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class ClusterDotString {
 
@@ -63,159 +62,159 @@ public class ClusterDotString {
 	private final ISkinParam skinParam;
 	private static final String ID_EE = &quot;ee&quot;;
 
-<span class="nc" id="L66">	public ClusterDotString(Cluster cluster, ISkinParam skinParam) {</span>
-<span class="nc" id="L67">		this.cluster = cluster;</span>
-<span class="nc" id="L68">		this.skinParam = skinParam;</span>
-<span class="nc" id="L69">	}</span>
+<span class="nc" id="L65">	public ClusterDotString(Cluster cluster, ISkinParam skinParam) {</span>
+<span class="nc" id="L66">		this.cluster = cluster;</span>
+<span class="nc" id="L67">		this.skinParam = skinParam;</span>
+<span class="nc" id="L68">	}</span>
 
 	private boolean isPacked() {
-<span class="nc" id="L72">		return cluster.getGroup().isPacked();</span>
+<span class="nc" id="L71">		return cluster.getGroup().isPacked();</span>
 	}
 
 	void printInternal(StringBuilder sb, Collection&lt;SvekEdge&gt; lines, StringBounder stringBounder, DotMode dotMode,
 			GraphvizVersion graphvizVersion, UmlDiagramType type) {
 		// ::comment when __TEAVM__
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (cluster.diagram.getPragma().isTrue(PragmaKey.KERMOR)) {</span>
-<span class="nc" id="L79">			new ClusterDotStringKermor(cluster, skinParam).printInternal(sb, lines, stringBounder, dotMode,</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (cluster.diagram.getPragma().isTrue(PragmaKey.KERMOR)) {</span>
+<span class="nc" id="L78">			new ClusterDotStringKermor(cluster, skinParam).printInternal(sb, lines, stringBounder, dotMode,</span>
 					graphvizVersion, type);
-<span class="nc" id="L81">			return;</span>
+<span class="nc" id="L80">			return;</span>
 		}
 		// ::done
-<span class="nc" id="L84">		final boolean packed = isPacked();</span>
+<span class="nc" id="L83">		final boolean packed = isPacked();</span>
 
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (packed) {</span>
-<span class="nc" id="L87">			cluster.printCluster1(sb, lines, stringBounder);</span>
-<span class="nc" id="L88">			final SvekNode added = cluster.printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type);</span>
-<span class="nc" id="L89">			return;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (packed) {</span>
+<span class="nc" id="L86">			cluster.printCluster1(sb, lines, stringBounder);</span>
+<span class="nc" id="L87">			final SvekNode added = cluster.printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type);</span>
+<span class="nc" id="L88">			return;</span>
 
 		}
-<span class="nc" id="L92">		final boolean thereALinkFromOrToGroup2 = isThereALinkFromOrToGroup(lines);</span>
-<span class="nc" id="L93">		boolean thereALinkFromOrToGroup1 = thereALinkFromOrToGroup2;</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		final boolean useProtectionWhenThereALinkFromOrToGroup = TeaVM.isTeaVM() ? false</span>
-<span class="nc" id="L95">				: graphvizVersion.useProtectionWhenThereALinkFromOrToGroup();</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (useProtectionWhenThereALinkFromOrToGroup == false)</span>
-<span class="nc" id="L97">			thereALinkFromOrToGroup1 = false;</span>
+<span class="nc" id="L91">		final boolean thereALinkFromOrToGroup2 = isThereALinkFromOrToGroup(lines);</span>
+<span class="nc" id="L92">		boolean thereALinkFromOrToGroup1 = thereALinkFromOrToGroup2;</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		final boolean useProtectionWhenThereALinkFromOrToGroup = TeaVM.isTeaVM() ? false</span>
+<span class="nc" id="L94">				: graphvizVersion.useProtectionWhenThereALinkFromOrToGroup();</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (useProtectionWhenThereALinkFromOrToGroup == false)</span>
+<span class="nc" id="L96">			thereALinkFromOrToGroup1 = false;</span>
 
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (thereALinkFromOrToGroup1)</span>
-<span class="nc" id="L100">			subgraphClusterNoLabel(sb, &quot;a&quot;);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (thereALinkFromOrToGroup1)</span>
+<span class="nc" id="L99">			subgraphClusterNoLabel(sb, &quot;a&quot;);</span>
 
-<span class="nc" id="L102">		final Set&lt;EntityPosition&gt; entityPositionsExceptNormal = entityPositionsExceptNormal();</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (entityPositionsExceptNormal.size() &gt; 0)</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">			for (SvekEdge line : lines)</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">				if (line.isLinkFromOrTo(cluster.getGroup()))</span>
-<span class="nc" id="L106">					line.setProjectionCluster(cluster);</span>
+<span class="nc" id="L101">		final Set&lt;EntityPosition&gt; entityPositionsExceptNormal = entityPositionsExceptNormal();</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (entityPositionsExceptNormal.size() &gt; 0)</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			for (SvekEdge line : lines)</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">				if (line.isLinkFromOrTo(cluster.getGroup()))</span>
+<span class="nc" id="L105">					line.setProjectionCluster(cluster);</span>
 
-<span class="nc" id="L108">		boolean protection0 = protection0(type);</span>
-<span class="nc" id="L109">		boolean protection1 = protection1(type);</span>
-<span class="nc bnc" id="L110" title="All 4 branches missed.">		if (entityPositionsExceptNormal.size() &gt; 0 || useProtectionWhenThereALinkFromOrToGroup == false) {</span>
-<span class="nc" id="L111">			protection0 = false;</span>
-<span class="nc" id="L112">			protection1 = false;</span>
+<span class="nc" id="L107">		boolean protection0 = protection0(type);</span>
+<span class="nc" id="L108">		boolean protection1 = protection1(type);</span>
+<span class="nc bnc" id="L109" title="All 4 branches missed.">		if (entityPositionsExceptNormal.size() &gt; 0 || useProtectionWhenThereALinkFromOrToGroup == false) {</span>
+<span class="nc" id="L110">			protection0 = false;</span>
+<span class="nc" id="L111">			protection1 = false;</span>
 		}
 
-<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (protection0)</span>
-<span class="nc" id="L116">			subgraphClusterNoLabel(sb, &quot;p0&quot;);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (protection0)</span>
+<span class="nc" id="L115">			subgraphClusterNoLabel(sb, &quot;p0&quot;);</span>
 
-<span class="nc" id="L118">		sb.append(&quot;subgraph &quot; + cluster.getClusterId() + &quot; {&quot;);</span>
-<span class="nc" id="L119">		sb.append(&quot;style=solid;&quot;);</span>
-<span class="nc" id="L120">		sb.append(&quot;color=\&quot;&quot; + XColor.toHexRGBColor(cluster.getColor()) + &quot;\&quot;;&quot;);</span>
+<span class="nc" id="L117">		sb.append(&quot;subgraph &quot; + cluster.getClusterId() + &quot; {&quot;);</span>
+<span class="nc" id="L118">		sb.append(&quot;style=solid;&quot;);</span>
+<span class="nc" id="L119">		sb.append(&quot;color=\&quot;&quot; + XColor.toHexRGBColor(cluster.getColor()) + &quot;\&quot;;&quot;);</span>
 
 		final String label;
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (cluster.isLabel()) {</span>
-<span class="nc" id="L124">			final StringBuilder sblabel = new StringBuilder(&quot;&lt;&quot;);</span>
-<span class="nc" id="L125">			SvekEdge.appendTable(sblabel, cluster.getTitleAndAttributeWidth(), cluster.getTitleAndAttributeHeight() - 5,</span>
-<span class="nc" id="L126">					cluster.getTitleColor());</span>
-<span class="nc" id="L127">			sblabel.append(&quot;&gt;&quot;);</span>
-<span class="nc" id="L128">			label = sblabel.toString();</span>
-<span class="nc" id="L129">			final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment,</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (cluster.isLabel()) {</span>
+<span class="nc" id="L123">			final StringBuilder sblabel = new StringBuilder(&quot;&lt;&quot;);</span>
+<span class="nc" id="L124">			SvekEdge.appendTable(sblabel, cluster.getTitleAndAttributeWidth(), cluster.getTitleAndAttributeHeight() - 5,</span>
+<span class="nc" id="L125">					cluster.getTitleColor());</span>
+<span class="nc" id="L126">			sblabel.append(&quot;&gt;&quot;);</span>
+<span class="nc" id="L127">			label = sblabel.toString();</span>
+<span class="nc" id="L128">			final HorizontalAlignment align = skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment,</span>
 					null, false, null);
-<span class="nc" id="L131">			sb.append(&quot;labeljust=\&quot;&quot; + align.getGraphVizValue() + &quot;\&quot;;&quot;);</span>
-<span class="nc" id="L132">		} else {</span>
-<span class="nc" id="L133">			label = &quot;\&quot;\&quot;&quot;;</span>
+<span class="nc" id="L130">			sb.append(&quot;labeljust=\&quot;&quot; + align.getGraphVizValue() + &quot;\&quot;;&quot;);</span>
+<span class="nc" id="L131">		} else {</span>
+<span class="nc" id="L132">			label = &quot;\&quot;\&quot;&quot;;</span>
 		}
 
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (entityPositionsExceptNormal.size() &gt; 0) {</span>
-<span class="nc" id="L137">			printRanks(Cluster.RANK_SOURCE, withPosition(EntityPosition.getInputs()), sb, stringBounder);</span>
-<span class="nc" id="L138">			printRanks(Cluster.RANK_SINK, withPosition(EntityPosition.getOutputs()), sb, stringBounder);</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">			if (hasPort())</span>
-<span class="nc" id="L140">				subgraphClusterNoLabel(sb, ID_EE);</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (entityPositionsExceptNormal.size() &gt; 0) {</span>
+<span class="nc" id="L136">			printRanks(Cluster.RANK_SOURCE, withPosition(EntityPosition.getInputs()), sb, stringBounder);</span>
+<span class="nc" id="L137">			printRanks(Cluster.RANK_SINK, withPosition(EntityPosition.getOutputs()), sb, stringBounder);</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">			if (hasPort())</span>
+<span class="nc" id="L139">				subgraphClusterNoLabel(sb, ID_EE);</span>
 			else
-<span class="nc" id="L142">				subgraphClusterWithLabel(sb, ID_EE, label);</span>
+<span class="nc" id="L141">				subgraphClusterWithLabel(sb, ID_EE, label);</span>
 
 		} else {
-<span class="nc" id="L145">			sb.append(&quot;label=&quot; + label + &quot;;&quot;);</span>
-<span class="nc" id="L146">			SvekUtils.println(sb);</span>
+<span class="nc" id="L144">			sb.append(&quot;label=&quot; + label + &quot;;&quot;);</span>
+<span class="nc" id="L145">			SvekUtils.println(sb);</span>
 		}
 
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (thereALinkFromOrToGroup2)</span>
-<span class="nc" id="L150">			sb.append(Cluster.getSpecialPointId(cluster.getGroup()) + &quot; [shape=point,width=.01,label=\&quot;\&quot;];&quot;);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (thereALinkFromOrToGroup2)</span>
+<span class="nc" id="L149">			sb.append(Cluster.getSpecialPointId(cluster.getGroup()) + &quot; [shape=point,width=.01,label=\&quot;\&quot;];&quot;);</span>
 
-<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (thereALinkFromOrToGroup1)</span>
-<span class="nc" id="L153">			subgraphClusterNoLabel(sb, &quot;i&quot;);</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (thereALinkFromOrToGroup1)</span>
+<span class="nc" id="L152">			subgraphClusterNoLabel(sb, &quot;i&quot;);</span>
 
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (protection1)</span>
-<span class="nc" id="L156">			subgraphClusterNoLabel(sb, &quot;p1&quot;);</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (protection1)</span>
+<span class="nc" id="L155">			subgraphClusterNoLabel(sb, &quot;p1&quot;);</span>
 
-<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (skinParam.useSwimlanes(type)) {</span>
-<span class="nc" id="L159">			sb.append(&quot;{rank = source; &quot;);</span>
-<span class="nc" id="L160">			sb.append(getSourceInPoint(type));</span>
-<span class="nc" id="L161">			sb.append(&quot; [shape=point,width=.01,label=\&quot;\&quot;];&quot;);</span>
-<span class="nc" id="L162">			sb.append(cluster.getMinPoint(type) + &quot;-&gt;&quot; + getSourceInPoint(type) + &quot;  [weight=999];&quot;);</span>
-<span class="nc" id="L163">			sb.append(&quot;}&quot;);</span>
-<span class="nc" id="L164">			SvekUtils.println(sb);</span>
-<span class="nc" id="L165">			sb.append(&quot;{rank = sink; &quot;);</span>
-<span class="nc" id="L166">			sb.append(getSinkInPoint(type));</span>
-<span class="nc" id="L167">			sb.append(&quot; [shape=point,width=.01,label=\&quot;\&quot;];&quot;);</span>
-<span class="nc" id="L168">			sb.append(&quot;}&quot;);</span>
-<span class="nc" id="L169">			sb.append(getSinkInPoint(type) + &quot;-&gt;&quot; + cluster.getMaxPoint(type) + &quot;  [weight=999];&quot;);</span>
-<span class="nc" id="L170">			SvekUtils.println(sb);</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (skinParam.useSwimlanes(type)) {</span>
+<span class="nc" id="L158">			sb.append(&quot;{rank = source; &quot;);</span>
+<span class="nc" id="L159">			sb.append(getSourceInPoint(type));</span>
+<span class="nc" id="L160">			sb.append(&quot; [shape=point,width=.01,label=\&quot;\&quot;];&quot;);</span>
+<span class="nc" id="L161">			sb.append(cluster.getMinPoint(type) + &quot;-&gt;&quot; + getSourceInPoint(type) + &quot;  [weight=999];&quot;);</span>
+<span class="nc" id="L162">			sb.append(&quot;}&quot;);</span>
+<span class="nc" id="L163">			SvekUtils.println(sb);</span>
+<span class="nc" id="L164">			sb.append(&quot;{rank = sink; &quot;);</span>
+<span class="nc" id="L165">			sb.append(getSinkInPoint(type));</span>
+<span class="nc" id="L166">			sb.append(&quot; [shape=point,width=.01,label=\&quot;\&quot;];&quot;);</span>
+<span class="nc" id="L167">			sb.append(&quot;}&quot;);</span>
+<span class="nc" id="L168">			sb.append(getSinkInPoint(type) + &quot;-&gt;&quot; + cluster.getMaxPoint(type) + &quot;  [weight=999];&quot;);</span>
+<span class="nc" id="L169">			SvekUtils.println(sb);</span>
 		}
-<span class="nc" id="L172">		SvekUtils.println(sb);</span>
+<span class="nc" id="L171">		SvekUtils.println(sb);</span>
 
 		// -----------
-<span class="nc" id="L175">		cluster.printCluster1(sb, lines, stringBounder);</span>
+<span class="nc" id="L174">		cluster.printCluster1(sb, lines, stringBounder);</span>
 
-<span class="nc" id="L177">		final SvekNode added = cluster.printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type);</span>
-<span class="nc bnc" id="L178" title="All 2 branches missed.">		if (entityPositionsExceptNormal.size() &gt; 0)</span>
-<span class="nc bnc" id="L179" title="All 2 branches missed.">			if (hasPort()) {</span>
-<span class="nc" id="L180">				sb.append(empty() + &quot; [shape=rect,width=.01,height=.01,label=&quot;);</span>
-<span class="nc" id="L181">				sb.append(label);</span>
-<span class="nc" id="L182">				sb.append(&quot;];&quot;);</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">			} else if (added == null) {</span>
-<span class="nc" id="L184">				sb.append(empty() + &quot; [shape=point,width=.01,label=\&quot;\&quot;];&quot;);</span>
+<span class="nc" id="L176">		final SvekNode added = cluster.printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		if (entityPositionsExceptNormal.size() &gt; 0)</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">			if (hasPort()) {</span>
+<span class="nc" id="L179">				sb.append(empty() + &quot; [shape=rect,width=.01,height=.01,label=&quot;);</span>
+<span class="nc" id="L180">				sb.append(label);</span>
+<span class="nc" id="L181">				sb.append(&quot;];&quot;);</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">			} else if (added == null) {</span>
+<span class="nc" id="L183">				sb.append(empty() + &quot; [shape=point,width=.01,label=\&quot;\&quot;];&quot;);</span>
 			}
-<span class="nc" id="L186">		SvekUtils.println(sb);</span>
+<span class="nc" id="L185">		SvekUtils.println(sb);</span>
 
 		// -----------
 
-<span class="nc" id="L190">		sb.append(&quot;}&quot;);</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">		if (protection1)</span>
-<span class="nc" id="L192">			sb.append(&quot;}&quot;);</span>
+<span class="nc" id="L189">		sb.append(&quot;}&quot;);</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		if (protection1)</span>
+<span class="nc" id="L191">			sb.append(&quot;}&quot;);</span>
 
-<span class="nc bnc" id="L194" title="All 2 branches missed.">		if (thereALinkFromOrToGroup1) {</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		if (thereALinkFromOrToGroup1) {</span>
+<span class="nc" id="L194">			sb.append(&quot;}&quot;);</span>
 <span class="nc" id="L195">			sb.append(&quot;}&quot;);</span>
-<span class="nc" id="L196">			sb.append(&quot;}&quot;);</span>
 		}
-<span class="nc bnc" id="L198" title="All 2 branches missed.">		if (entityPositionsExceptNormal.size() &gt; 0)</span>
-<span class="nc" id="L199">			sb.append(&quot;}&quot;);</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		if (entityPositionsExceptNormal.size() &gt; 0)</span>
+<span class="nc" id="L198">			sb.append(&quot;}&quot;);</span>
 
-<span class="nc bnc" id="L201" title="All 2 branches missed.">		if (protection0)</span>
-<span class="nc" id="L202">			sb.append(&quot;}&quot;);</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (protection0)</span>
+<span class="nc" id="L201">			sb.append(&quot;}&quot;);</span>
 
-<span class="nc" id="L204">		SvekUtils.println(sb);</span>
-<span class="nc" id="L205">	}</span>
+<span class="nc" id="L203">		SvekUtils.println(sb);</span>
+<span class="nc" id="L204">	}</span>
 
 	private String getSourceInPoint(UmlDiagramType type) {
-<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (skinParam.useSwimlanes(type))</span>
-<span class="nc" id="L209">			return &quot;sourceIn&quot; + cluster.getColor();</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">		if (skinParam.useSwimlanes(type))</span>
+<span class="nc" id="L208">			return &quot;sourceIn&quot; + cluster.getColor();</span>
 
-<span class="nc" id="L211">		return null;</span>
+<span class="nc" id="L210">		return null;</span>
 	}
 
 	private String getSinkInPoint(UmlDiagramType type) {
-<span class="nc bnc" id="L215" title="All 2 branches missed.">		if (skinParam.useSwimlanes(type))</span>
-<span class="nc" id="L216">			return &quot;sinkIn&quot; + cluster.getColor();</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">		if (skinParam.useSwimlanes(type))</span>
+<span class="nc" id="L215">			return &quot;sinkIn&quot; + cluster.getColor();</span>
 
-<span class="nc" id="L218">		return null;</span>
+<span class="nc" id="L217">		return null;</span>
 	}
 
 	private String empty() {
@@ -223,104 +222,104 @@ public class ClusterDotString {
 		// We use the same node with one for thereALinkFromOrToGroup2 as an empty
 		// because we cannot put a new node in the nested inside of the cluster
 		// if thereALinkFromOrToGroup2 is enabled.
-<span class="nc" id="L226">		return Cluster.getSpecialPointId(cluster.getGroup());</span>
+<span class="nc" id="L225">		return Cluster.getSpecialPointId(cluster.getGroup());</span>
 	}
 
 	private boolean hasPort() {
-<span class="nc bnc" id="L230" title="All 2 branches missed.">		for (EntityPosition pos : entityPositionsExceptNormal())</span>
-<span class="nc bnc" id="L231" title="All 2 branches missed.">			if (pos.isPort())</span>
-<span class="nc" id="L232">				return true;</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">		for (EntityPosition pos : entityPositionsExceptNormal())</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">			if (pos.isPort())</span>
+<span class="nc" id="L231">				return true;</span>
 
-<span class="nc" id="L234">		return false;</span>
+<span class="nc" id="L233">		return false;</span>
 	}
 
 	private Set&lt;EntityPosition&gt; entityPositionsExceptNormal() {
-<span class="nc" id="L238">		final Set&lt;EntityPosition&gt; result = EnumSet.&lt;EntityPosition&gt;noneOf(EntityPosition.class);</span>
-<span class="nc bnc" id="L239" title="All 2 branches missed.">		for (SvekNode sh : cluster.getNodes())</span>
-<span class="nc bnc" id="L240" title="All 2 branches missed.">			if (sh.getEntityPosition() != EntityPosition.NORMAL)</span>
-<span class="nc" id="L241">				result.add(sh.getEntityPosition());</span>
+<span class="nc" id="L237">		final Set&lt;EntityPosition&gt; result = EnumSet.&lt;EntityPosition&gt;noneOf(EntityPosition.class);</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">		for (SvekNode sh : cluster.getNodes())</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">			if (sh.getEntityPosition() != EntityPosition.NORMAL)</span>
+<span class="nc" id="L240">				result.add(sh.getEntityPosition());</span>
 
-<span class="nc" id="L243">		return Collections.unmodifiableSet(result);</span>
+<span class="nc" id="L242">		return Collections.unmodifiableSet(result);</span>
 	}
 
 	private void subgraphClusterNoLabel(StringBuilder sb, String id) {
-<span class="nc" id="L247">		subgraphClusterWithLabel(sb, id, &quot;\&quot;\&quot;&quot;);</span>
-<span class="nc" id="L248">	}</span>
+<span class="nc" id="L246">		subgraphClusterWithLabel(sb, id, &quot;\&quot;\&quot;&quot;);</span>
+<span class="nc" id="L247">	}</span>
 
 	private void subgraphClusterWithLabel(StringBuilder sb, String id, String label) {
-<span class="nc" id="L251">		sb.append(&quot;subgraph &quot; + cluster.getClusterId() + id + &quot; {&quot;);</span>
-<span class="nc" id="L252">		sb.append(&quot;label=&quot; + label + &quot;;&quot;);</span>
-<span class="nc" id="L253">	}</span>
+<span class="nc" id="L250">		sb.append(&quot;subgraph &quot; + cluster.getClusterId() + id + &quot; {&quot;);</span>
+<span class="nc" id="L251">		sb.append(&quot;label=&quot; + label + &quot;;&quot;);</span>
+<span class="nc" id="L252">	}</span>
 
 	private void printRanks(String rank, List&lt;? extends SvekNode&gt; entries, StringBuilder sb,
 			StringBounder stringBounder) {
-<span class="nc bnc" id="L257" title="All 2 branches missed.">		if (entries.size() &gt; 0) {</span>
-<span class="nc" id="L258">			sb.append(&quot;{rank=&quot; + rank + &quot;;&quot;);</span>
-<span class="nc bnc" id="L259" title="All 2 branches missed.">			for (SvekNode sh1 : entries)</span>
-<span class="nc" id="L260">				sb.append(sh1.getUid() + &quot;;&quot;);</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">		if (entries.size() &gt; 0) {</span>
+<span class="nc" id="L257">			sb.append(&quot;{rank=&quot; + rank + &quot;;&quot;);</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">			for (SvekNode sh1 : entries)</span>
+<span class="nc" id="L259">				sb.append(sh1.getUid() + &quot;;&quot;);</span>
 
-<span class="nc" id="L262">			sb.append(&quot;}&quot;);</span>
-<span class="nc" id="L263">			SvekUtils.println(sb);</span>
-<span class="nc bnc" id="L264" title="All 2 branches missed.">			for (SvekNode sh2 : entries)</span>
-<span class="nc" id="L265">				sh2.appendShape(sb, stringBounder);</span>
+<span class="nc" id="L261">			sb.append(&quot;}&quot;);</span>
+<span class="nc" id="L262">			SvekUtils.println(sb);</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">			for (SvekNode sh2 : entries)</span>
+<span class="nc" id="L264">				sh2.appendShape(sb, stringBounder);</span>
 
-<span class="nc" id="L267">			SvekUtils.println(sb);</span>
-<span class="nc bnc" id="L268" title="All 2 branches missed.">			if (hasPort()) {</span>
-<span class="nc" id="L269">				boolean arrow = false;</span>
-<span class="nc" id="L270">				String node = null;</span>
-<span class="nc bnc" id="L271" title="All 2 branches missed.">				for (SvekNode sh : entries) {</span>
-<span class="nc bnc" id="L272" title="All 2 branches missed.">					if (arrow)</span>
-<span class="nc" id="L273">						sb.append(&quot;-&gt;&quot;);</span>
+<span class="nc" id="L266">			SvekUtils.println(sb);</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">			if (hasPort()) {</span>
+<span class="nc" id="L268">				boolean arrow = false;</span>
+<span class="nc" id="L269">				String node = null;</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">				for (SvekNode sh : entries) {</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">					if (arrow)</span>
+<span class="nc" id="L272">						sb.append(&quot;-&gt;&quot;);</span>
 
-<span class="nc" id="L275">					arrow = true;</span>
-<span class="nc" id="L276">					node = sh.getUid();</span>
-<span class="nc" id="L277">					sb.append(node);</span>
-<span class="nc" id="L278">				}</span>
-<span class="nc bnc" id="L279" title="All 2 branches missed.">				if (arrow)</span>
-<span class="nc" id="L280">					sb.append(&quot; [arrowhead=none]&quot;);</span>
+<span class="nc" id="L274">					arrow = true;</span>
+<span class="nc" id="L275">					node = sh.getUid();</span>
+<span class="nc" id="L276">					sb.append(node);</span>
+<span class="nc" id="L277">				}</span>
+<span class="nc bnc" id="L278" title="All 2 branches missed.">				if (arrow)</span>
+<span class="nc" id="L279">					sb.append(&quot; [arrowhead=none]&quot;);</span>
 
-<span class="nc" id="L282">				sb.append(';');</span>
-<span class="nc" id="L283">				SvekUtils.println(sb);</span>
-<span class="nc" id="L284">				sb.append(node + &quot;-&gt;&quot; + empty() + &quot;;&quot;);</span>
-<span class="nc" id="L285">				SvekUtils.println(sb);</span>
+<span class="nc" id="L281">				sb.append(';');</span>
+<span class="nc" id="L282">				SvekUtils.println(sb);</span>
+<span class="nc" id="L283">				sb.append(node + &quot;-&gt;&quot; + empty() + &quot;;&quot;);</span>
+<span class="nc" id="L284">				SvekUtils.println(sb);</span>
 			}
 		}
-<span class="nc" id="L288">	}</span>
+<span class="nc" id="L287">	}</span>
 
 	private List&lt;SvekNode&gt; withPosition(Set&lt;EntityPosition&gt; positions) {
-<span class="nc" id="L291">		final List&lt;SvekNode&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L292" title="All 2 branches missed.">		for (final Iterator&lt;SvekNode&gt; it = cluster.getNodes().iterator(); it.hasNext();) {</span>
-<span class="nc" id="L293">			final SvekNode sh = it.next();</span>
-<span class="nc bnc" id="L294" title="All 2 branches missed.">			if (positions.contains(sh.getEntityPosition()))</span>
-<span class="nc" id="L295">				result.add(sh);</span>
+<span class="nc" id="L290">		final List&lt;SvekNode&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">		for (final Iterator&lt;SvekNode&gt; it = cluster.getNodes().iterator(); it.hasNext();) {</span>
+<span class="nc" id="L292">			final SvekNode sh = it.next();</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">			if (positions.contains(sh.getEntityPosition()))</span>
+<span class="nc" id="L294">				result.add(sh);</span>
 
-<span class="nc" id="L297">		}</span>
-<span class="nc" id="L298">		return result;</span>
+<span class="nc" id="L296">		}</span>
+<span class="nc" id="L297">		return result;</span>
 	}
 
 	private boolean protection0(UmlDiagramType type) {
-<span class="nc bnc" id="L302" title="All 2 branches missed.">		if (skinParam.useSwimlanes(type))</span>
-<span class="nc" id="L303">			return false;</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">		if (skinParam.useSwimlanes(type))</span>
+<span class="nc" id="L302">			return false;</span>
 
-<span class="nc" id="L305">		return true;</span>
+<span class="nc" id="L304">		return true;</span>
 	}
 
 	private boolean protection1(UmlDiagramType type) {
-<span class="nc bnc" id="L309" title="All 2 branches missed.">		if (cluster.getGroup().getUSymbol() == USymbols.NODE)</span>
-<span class="nc" id="L310">			return true;</span>
+<span class="nc bnc" id="L308" title="All 2 branches missed.">		if (cluster.getGroup().getUSymbol() == USymbols.NODE)</span>
+<span class="nc" id="L309">			return true;</span>
 
-<span class="nc bnc" id="L312" title="All 2 branches missed.">		if (skinParam.useSwimlanes(type))</span>
-<span class="nc" id="L313">			return false;</span>
+<span class="nc bnc" id="L311" title="All 2 branches missed.">		if (skinParam.useSwimlanes(type))</span>
+<span class="nc" id="L312">			return false;</span>
 
-<span class="nc" id="L315">		return true;</span>
+<span class="nc" id="L314">		return true;</span>
 	}
 
 	private boolean isThereALinkFromOrToGroup(Collection&lt;SvekEdge&gt; lines) {
-<span class="nc bnc" id="L319" title="All 2 branches missed.">		for (SvekEdge line : lines)</span>
-<span class="nc bnc" id="L320" title="All 2 branches missed.">			if (line.isLinkFromOrTo(cluster.getGroup()))</span>
-<span class="nc" id="L321">				return true;</span>
+<span class="nc bnc" id="L318" title="All 2 branches missed.">		for (SvekEdge line : lines)</span>
+<span class="nc bnc" id="L319" title="All 2 branches missed.">			if (line.isLinkFromOrTo(cluster.getGroup()))</span>
+<span class="nc" id="L320">				return true;</span>
 
-<span class="nc" id="L323">		return false;</span>
+<span class="nc" id="L322">		return false;</span>
 	}
 
 }

@@ -42,143 +42,144 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-<span class="fc" id="L50">public class TFunctionImpl implements TFunction {</span>
+<span class="fc" id="L51">public class TFunctionImpl implements TFunction {</span>
 
 	private final TFunctionSignature signature;
 	private final List&lt;TFunctionArgument&gt; args;
-<span class="fc" id="L54">	private final List&lt;StringLocated&gt; body = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L55">	private final List&lt;StringLocated&gt; body = new ArrayList&lt;&gt;();</span>
 	private final boolean unquoted;
 	private /* final */ TFunctionType functionType;// = TFunctionType.VOID;
 	private String legacyDefinition;
 	private boolean containsReturn;
 
 	public TFunctionImpl(String functionName, List&lt;TFunctionArgument&gt; args, boolean unquoted,
-<span class="fc" id="L61">			TFunctionType functionType) {</span>
-<span class="fc" id="L62">		final Set&lt;String&gt; names = new HashSet&lt;&gt;();</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">		for (TFunctionArgument tmp : args)</span>
-<span class="fc" id="L64">			names.add(tmp.getName());</span>
+<span class="fc" id="L62">			TFunctionType functionType) {</span>
+<span class="fc" id="L63">		final Set&lt;String&gt; names = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		for (TFunctionArgument tmp : args)</span>
+<span class="fc" id="L65">			names.add(tmp.getName());</span>
 
-<span class="fc" id="L66">		this.signature = new TFunctionSignature(functionName, args.size(), names);</span>
-<span class="fc" id="L67">		this.args = args;</span>
-<span class="fc" id="L68">		this.unquoted = unquoted;</span>
-<span class="fc" id="L69">		this.functionType = functionType;</span>
-<span class="fc" id="L70">	}</span>
+<span class="fc" id="L67">		this.signature = new TFunctionSignature(functionName, args.size(), names);</span>
+<span class="fc" id="L68">		this.args = args;</span>
+<span class="fc" id="L69">		this.unquoted = unquoted;</span>
+<span class="fc" id="L70">		this.functionType = functionType;</span>
+<span class="fc" id="L71">	}</span>
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArguments) {
-<span class="fc bfc" id="L74" title="All 2 branches covered.">		for (String n : namedArguments)</span>
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">			if (signature.getNamedArguments().contains(n) == false)</span>
-<span class="nc" id="L76">				return false;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		for (String n : namedArguments)</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">			if (signature.getNamedArguments().contains(n) == false)</span>
+<span class="nc" id="L77">				return false;</span>
 
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (nbArg &gt; args.size())</span>
-<span class="nc" id="L79">			return false;</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (nbArg &gt; args.size())</span>
+<span class="nc" id="L80">			return false;</span>
 
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		assert nbArg &lt;= args.size();</span>
-<span class="fc" id="L82">		int neededArgument = 0;</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">		for (TFunctionArgument arg : args) {</span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">			if (namedArguments.contains(arg.getName()))</span>
-<span class="fc" id="L85">				continue;</span>
+<span class="pc bpc" id="L82" title="2 of 4 branches missed.">		if (TeaVM.a()) assert nbArg &lt;= args.size();</span>
+<span class="fc" id="L83">		int neededArgument = 0;</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		for (TFunctionArgument arg : args) {</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">			if (namedArguments.contains(arg.getName()))</span>
+<span class="fc" id="L86">				continue;</span>
 
-<span class="fc bfc" id="L87" title="All 2 branches covered.">			if (arg.getOptionalDefaultValue() == null)</span>
-<span class="fc" id="L88">				neededArgument++;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">			if (arg.getOptionalDefaultValue() == null)</span>
+<span class="fc" id="L89">				neededArgument++;</span>
 
-<span class="fc" id="L90">		}</span>
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (nbArg &lt; neededArgument)</span>
-<span class="nc" id="L92">			return false;</span>
+<span class="fc" id="L91">		}</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (nbArg &lt; neededArgument)</span>
+<span class="nc" id="L93">			return false;</span>
 
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		assert nbArg &gt;= neededArgument;</span>
-<span class="fc" id="L95">		return true;</span>
+<span class="pc bpc" id="L95" title="2 of 4 branches missed.">		if (TeaVM.a()) assert nbArg &gt;= neededArgument;</span>
+<span class="fc" id="L96">		return true;</span>
 	}
 
 	private TMemory getNewMemory(TMemory memory, List&lt;TValue&gt; values, Map&lt;String, TValue&gt; namedArguments) {
-<span class="fc" id="L99">		final Map&lt;String, TValue&gt; result = new HashMap&lt;String, TValue&gt;();</span>
-<span class="fc" id="L100">		int ivalue = 0;</span>
-<span class="fc bfc" id="L101" title="All 2 branches covered.">		for (TFunctionArgument arg : args) {</span>
+<span class="fc" id="L100">		final Map&lt;String, TValue&gt; result = new HashMap&lt;String, TValue&gt;();</span>
+<span class="fc" id="L101">		int ivalue = 0;</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		for (TFunctionArgument arg : args) {</span>
 			final TValue value;
-<span class="fc bfc" id="L103" title="All 2 branches covered.">			if (namedArguments.containsKey(arg.getName())) {</span>
-<span class="fc" id="L104">				value = namedArguments.get(arg.getName());</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">			} else if (ivalue &lt; values.size()) {</span>
-<span class="fc" id="L106">				value = values.get(ivalue);</span>
-<span class="fc" id="L107">				ivalue++;</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">			if (namedArguments.containsKey(arg.getName())) {</span>
+<span class="fc" id="L105">				value = namedArguments.get(arg.getName());</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			} else if (ivalue &lt; values.size()) {</span>
+<span class="fc" id="L107">				value = values.get(ivalue);</span>
+<span class="fc" id="L108">				ivalue++;</span>
 			} else {
-<span class="fc" id="L109">				value = arg.getOptionalDefaultValue();</span>
+<span class="fc" id="L110">				value = arg.getOptionalDefaultValue();</span>
 			}
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">			if (value == null)</span>
-<span class="nc" id="L112">				throw new IllegalStateException();</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">			if (value == null)</span>
+<span class="nc" id="L113">				throw new IllegalStateException();</span>
 
-<span class="fc" id="L114">			result.put(arg.getName(), value);</span>
-<span class="fc" id="L115">		}</span>
-<span class="fc" id="L116">		return memory.forkFromGlobal(result);</span>
+<span class="fc" id="L115">			result.put(arg.getName(), value);</span>
+<span class="fc" id="L116">		}</span>
+<span class="fc" id="L117">		return memory.forkFromGlobal(result);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L121">		return &quot;FUNCTION &quot; + signature + &quot; &quot; + args;</span>
+<span class="nc" id="L122">		return &quot;FUNCTION &quot; + signature + &quot; &quot; + args;</span>
 	}
 
 	public void addBody(StringLocated s) throws EaterException {
-<span class="fc" id="L125">		body.add(s);</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">		if (s.getType() == TLineType.RETURN) {</span>
-<span class="fc" id="L127">			this.containsReturn = true;</span>
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			if (functionType == TFunctionType.PROCEDURE)</span>
-<span class="nc" id="L129">				throw new EaterException(&quot;A procedure cannot have !return directive. Declare it as a function instead ?&quot;, s);</span>
+<span class="fc" id="L126">		body.add(s);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		if (s.getType() == TLineType.RETURN) {</span>
+<span class="fc" id="L128">			this.containsReturn = true;</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">			if (functionType == TFunctionType.PROCEDURE)</span>
+<span class="nc" id="L130">				throw new EaterException(&quot;A procedure cannot have !return directive. Declare it as a function instead ?&quot;, s);</span>
 		}
-<span class="fc" id="L131">	}</span>
+<span class="fc" id="L132">	}</span>
 
 	@Override
 	public void executeProcedureInternal(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; args,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="pc bpc" id="L136" title="3 of 4 branches missed.">		if (functionType != TFunctionType.PROCEDURE &amp;&amp; functionType != TFunctionType.LEGACY_DEFINELONG)</span>
-<span class="nc" id="L137">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L137" title="3 of 4 branches missed.">		if (functionType != TFunctionType.PROCEDURE &amp;&amp; functionType != TFunctionType.LEGACY_DEFINELONG)</span>
+<span class="nc" id="L138">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L139">		final TMemory copy = getNewMemory(memory, args, named);</span>
-<span class="fc" id="L140">		context.executeLines(copy, body, TFunctionType.PROCEDURE, false);</span>
-<span class="fc" id="L141">	}</span>
+<span class="fc" id="L140">		final TMemory copy = getNewMemory(memory, args, named);</span>
+<span class="fc" id="L141">		context.executeLines(copy, body, TFunctionType.PROCEDURE, false);</span>
+<span class="fc" id="L142">	}</span>
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; args,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc bfc" id="L146" title="All 2 branches covered.">		if (functionType == TFunctionType.LEGACY_DEFINE)</span>
-<span class="fc" id="L147">			return executeReturnLegacyDefine(location.getLocation(), context, memory, args);</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		if (functionType == TFunctionType.LEGACY_DEFINE)</span>
+<span class="fc" id="L148">			return executeReturnLegacyDefine(location.getLocation(), context, memory, args);</span>
 
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (functionType != TFunctionType.RETURN_FUNCTION)</span>
-<span class="nc" id="L150">			throw new EaterException(&quot;Illegal call here. Is there a return directive in your function?&quot;, location);</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		if (functionType != TFunctionType.RETURN_FUNCTION)</span>
+<span class="nc" id="L151">			throw new EaterException(&quot;Illegal call here. Is there a return directive in your function?&quot;, location);</span>
 
-<span class="fc" id="L152">		final TMemory copy = getNewMemory(memory, args, named);</span>
-<span class="fc" id="L153">		final TValue result = context.executeLines(copy, body, TFunctionType.RETURN_FUNCTION, true);</span>
-<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L155">			throw new EaterException(&quot;No return directive found in your function&quot;, location);</span>
+<span class="fc" id="L153">		final TMemory copy = getNewMemory(memory, args, named);</span>
+<span class="fc" id="L154">		final TValue result = context.executeLines(copy, body, TFunctionType.RETURN_FUNCTION, true);</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L156">			throw new EaterException(&quot;No return directive found in your function&quot;, location);</span>
 
-<span class="fc" id="L157">		return result;</span>
+<span class="fc" id="L158">		return result;</span>
 	}
 
 	private TValue executeReturnLegacyDefine(LineLocation location, TContext context, TMemory memory, List&lt;TValue&gt; args)
 			throws EaterException {
-<span class="pc bpc" id="L162" title="1 of 2 branches missed.">		if (legacyDefinition == null)</span>
-<span class="nc" id="L163">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		if (legacyDefinition == null)</span>
+<span class="nc" id="L164">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L165">		final TMemory copy = getNewMemory(memory, args, Collections.&lt;String, TValue&gt;emptyMap());</span>
-<span class="fc" id="L166">		final String tmp = context.applyFunctionsAndVariables(copy, new StringLocated(legacyDefinition, location));</span>
-<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if (tmp == null)</span>
-<span class="nc" id="L168">			return TValue.fromString(&quot;&quot;);</span>
+<span class="fc" id="L166">		final TMemory copy = getNewMemory(memory, args, Collections.&lt;String, TValue&gt;emptyMap());</span>
+<span class="fc" id="L167">		final String tmp = context.applyFunctionsAndVariables(copy, new StringLocated(legacyDefinition, location));</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		if (tmp == null)</span>
+<span class="nc" id="L169">			return TValue.fromString(&quot;&quot;);</span>
 
-<span class="fc" id="L170">		return TValue.fromString(tmp);</span>
+<span class="fc" id="L171">		return TValue.fromString(tmp);</span>
 		// eaterReturn.execute(context, copy);
 		// // System.err.println(&quot;s3=&quot; + eaterReturn.getValue2());
 		// return eaterReturn.getValue2();
 	}
 
 	public final TFunctionType getFunctionType() {
-<span class="fc" id="L177">		return functionType;</span>
+<span class="fc" id="L178">		return functionType;</span>
 	}
 
 	public final TFunctionSignature getSignature() {
-<span class="fc" id="L181">		return signature;</span>
+<span class="fc" id="L182">		return signature;</span>
 	}
 
 //	public void setFunctionType(TFunctionType type) {
@@ -186,29 +187,29 @@ import net.sourceforge.plantuml.utils.LineLocation;
 //	}
 
 	public void setLegacyDefinition(String legacyDefinition) {
-<span class="fc" id="L189">		this.legacyDefinition = legacyDefinition;</span>
-<span class="fc" id="L190">	}</span>
+<span class="fc" id="L190">		this.legacyDefinition = legacyDefinition;</span>
+<span class="fc" id="L191">	}</span>
 
 	public boolean isUnquoted() {
-<span class="fc" id="L193">		return unquoted;</span>
+<span class="fc" id="L194">		return unquoted;</span>
 	}
 
 	public boolean hasBody() {
-<span class="pc bpc" id="L197" title="1 of 2 branches missed.">		return body.size() &gt; 0;</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">		return body.size() &gt; 0;</span>
 	}
 
 	public void finalizeEnddefinelong() {
-<span class="nc bnc" id="L201" title="All 2 branches missed.">		if (functionType != TFunctionType.LEGACY_DEFINELONG)</span>
-<span class="nc" id="L202">			throw new UnsupportedOperationException();</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">		if (functionType != TFunctionType.LEGACY_DEFINELONG)</span>
+<span class="nc" id="L203">			throw new UnsupportedOperationException();</span>
 
-<span class="nc bnc" id="L204" title="All 2 branches missed.">		if (body.size() == 1) {</span>
-<span class="nc" id="L205">			this.functionType = TFunctionType.LEGACY_DEFINE;</span>
-<span class="nc" id="L206">			this.legacyDefinition = body.get(0).getString();</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (body.size() == 1) {</span>
+<span class="nc" id="L206">			this.functionType = TFunctionType.LEGACY_DEFINE;</span>
+<span class="nc" id="L207">			this.legacyDefinition = body.get(0).getString();</span>
 		}
-<span class="nc" id="L208">	}</span>
+<span class="nc" id="L209">	}</span>
 
 	public final boolean doesContainReturn() {
-<span class="fc" id="L211">		return containsReturn;</span>
+<span class="fc" id="L212">		return containsReturn;</span>
 	}
 
 }

@@ -39,48 +39,50 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-<span class="nc" id="L42">public class GitTextArea {</span>
+import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="nc" id="L44">	private final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L45">	private final List&lt;Commit&gt; commits = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L44">public class GitTextArea {</span>
+
+<span class="nc" id="L46">	private final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L47">	private final List&lt;Commit&gt; commits = new ArrayList&lt;&gt;();</span>
 
 	public void add(String s) {
-<span class="nc" id="L48">		lines.add(s);</span>
-<span class="nc" id="L49">	}</span>
+<span class="nc" id="L50">		lines.add(s);</span>
+<span class="nc" id="L51">	}</span>
 
 	public List&lt;Commit&gt; getAllCommits() {
-<span class="nc bnc" id="L52" title="All 2 branches missed.">		if (commits.size() == 0)</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">			for (int y = 0; y &lt; lines.size(); y++) {</span>
-<span class="nc" id="L54">				String s = lines.get(y);</span>
-<span class="nc" id="L55">				final String name = CursorPosition.getCommitNameInLine(s);</span>
-<span class="nc" id="L56">				final int x = s.indexOf(&quot;*&quot;);</span>
-<span class="nc bnc" id="L57" title="All 6 branches missed.">				assert (name == null) == (x == -1);</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">				if (x == -1)</span>
-<span class="nc" id="L59">					continue;</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		if (commits.size() == 0)</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">			for (int y = 0; y &lt; lines.size(); y++) {</span>
+<span class="nc" id="L56">				String s = lines.get(y);</span>
+<span class="nc" id="L57">				final String name = CursorPosition.getCommitNameInLine(s);</span>
+<span class="nc" id="L58">				final int x = s.indexOf(&quot;*&quot;);</span>
+<span class="nc bnc" id="L59" title="All 8 branches missed.">				if (TeaVM.a()) assert (name == null) == (x == -1);</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">				if (x == -1)</span>
+<span class="nc" id="L61">					continue;</span>
 
-<span class="nc" id="L61">				commits.add(new Commit(name, new CursorPosition(this, x, y)));</span>
+<span class="nc" id="L63">				commits.add(new Commit(name, new CursorPosition(this, x, y)));</span>
 			}
 
-<span class="nc" id="L64">		return Collections.unmodifiableList(commits);</span>
+<span class="nc" id="L66">		return Collections.unmodifiableList(commits);</span>
 	}
 
 	public char charAt(int x, int y) {
-<span class="nc" id="L68">		return lines.get(y).charAt(x);</span>
+<span class="nc" id="L70">		return lines.get(y).charAt(x);</span>
 	}
 
 	public String getLine(int y) {
-<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (y &gt;= lines.size())</span>
-<span class="nc" id="L73">			return &quot;&quot;;</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (y &gt;= lines.size())</span>
+<span class="nc" id="L75">			return &quot;&quot;;</span>
 
-<span class="nc" id="L75">		return lines.get(y);</span>
+<span class="nc" id="L77">		return lines.get(y);</span>
 	}
 
 	public Commit getCommitByName(String name) {
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		for (Commit commit : getAllCommits())</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (commit.getName().equals(name))</span>
-<span class="nc" id="L81">				return commit;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		for (Commit commit : getAllCommits())</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">			if (commit.getName().equals(name))</span>
+<span class="nc" id="L83">				return commit;</span>
 
-<span class="nc" id="L83">		return null;</span>
+<span class="nc" id="L85">		return null;</span>
 	}
 
 }

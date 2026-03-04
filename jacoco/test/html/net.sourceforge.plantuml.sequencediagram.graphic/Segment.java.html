@@ -41,92 +41,94 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-<span class="fc" id="L44">public class Segment {</span>
+import net.sourceforge.plantuml.teavm.TeaVM;
+
+<span class="fc" id="L46">public class Segment {</span>
 
 	final private double pos1;
 	final private double pos2;
 
-<span class="fc" id="L49">	public Segment(double pos1, double pos2) {</span>
-<span class="fc" id="L50">		this.pos1 = pos1;</span>
-<span class="fc" id="L51">		this.pos2 = pos2;</span>
-<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if (pos2 &lt; pos1) {</span>
-<span class="nc" id="L53">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L51">	public Segment(double pos1, double pos2) {</span>
+<span class="fc" id="L52">		this.pos1 = pos1;</span>
+<span class="fc" id="L53">		this.pos2 = pos2;</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if (pos2 &lt; pos1) {</span>
+<span class="nc" id="L55">			throw new IllegalArgumentException();</span>
 		}
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L57">	}</span>
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="nc" id="L59">		final Segment this2 = (Segment) obj;</span>
-<span class="nc bnc" id="L60" title="All 4 branches missed.">		return pos1 == this2.pos1 &amp;&amp; pos2 == this2.pos2;</span>
+<span class="nc" id="L61">		final Segment this2 = (Segment) obj;</span>
+<span class="nc bnc" id="L62" title="All 4 branches missed.">		return pos1 == this2.pos1 &amp;&amp; pos2 == this2.pos2;</span>
 	}
 
 	@Override
 	public int hashCode() {
-<span class="nc" id="L65">		return Double.valueOf(pos1).hashCode() + Double.valueOf(pos2).hashCode();</span>
+<span class="nc" id="L67">		return Double.valueOf(pos1).hashCode() + Double.valueOf(pos2).hashCode();</span>
 	}
 
 	final public boolean contains(double y) {
-<span class="nc bnc" id="L69" title="All 4 branches missed.">		return y &gt;= pos1 &amp;&amp; y &lt;= pos2;</span>
+<span class="nc bnc" id="L71" title="All 4 branches missed.">		return y &gt;= pos1 &amp;&amp; y &lt;= pos2;</span>
 	}
 
 	final public boolean contains(Segment other) {
-<span class="nc bnc" id="L73" title="All 4 branches missed.">		return contains(other.pos1) &amp;&amp; contains(other.pos2);</span>
+<span class="nc bnc" id="L75" title="All 4 branches missed.">		return contains(other.pos1) &amp;&amp; contains(other.pos2);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L78">		return &quot;&quot; + pos1 + &quot; - &quot; + pos2;</span>
+<span class="nc" id="L80">		return &quot;&quot; + pos1 + &quot; - &quot; + pos2;</span>
 	}
 
 	final public double getLength() {
-<span class="fc" id="L82">		return pos2 - pos1;</span>
+<span class="fc" id="L84">		return pos2 - pos1;</span>
 	}
 
 	final public double getPos1() {
-<span class="fc" id="L86">		return pos1;</span>
+<span class="fc" id="L88">		return pos1;</span>
 	}
 
 	final public double getPos2() {
-<span class="fc" id="L90">		return pos2;</span>
+<span class="fc" id="L92">		return pos2;</span>
 	}
 
 	public Segment merge(Segment this2) {
-<span class="fc" id="L94">		return new Segment(Math.min(this.pos1, this2.pos1), Math.max(this.pos2, this2.pos2));</span>
+<span class="fc" id="L96">		return new Segment(Math.min(this.pos1, this2.pos1), Math.max(this.pos2, this2.pos2));</span>
 	}
 
 	public Collection&lt;Segment&gt; cutSegmentIfNeed(Collection&lt;Segment&gt; allDelays) {
-<span class="nc" id="L98">		final List&lt;Segment&gt; sortedDelay = new ArrayList&lt;&gt;(allDelays);</span>
-<span class="nc" id="L99">		Collections.sort(sortedDelay, new SortPos1());</span>
-<span class="nc" id="L100">		final List&lt;Segment&gt; result2 = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L101">		double pendingStart = pos1;</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		for (Segment pause : sortedDelay) {</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">			if (Math.abs(pause.pos1 - pendingStart) &lt; 0.001) {</span>
-<span class="nc" id="L104">				pendingStart = pause.pos2;</span>
-<span class="nc" id="L105">				continue;</span>
+<span class="nc" id="L100">		final List&lt;Segment&gt; sortedDelay = new ArrayList&lt;&gt;(allDelays);</span>
+<span class="nc" id="L101">		Collections.sort(sortedDelay, new SortPos1());</span>
+<span class="nc" id="L102">		final List&lt;Segment&gt; result2 = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L103">		double pendingStart = pos1;</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		for (Segment pause : sortedDelay) {</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (Math.abs(pause.pos1 - pendingStart) &lt; 0.001) {</span>
+<span class="nc" id="L106">				pendingStart = pause.pos2;</span>
+<span class="nc" id="L107">				continue;</span>
 			}
-<span class="nc bnc" id="L107" title="All 2 branches missed.">			if (pause.pos1 &lt; pendingStart)</span>
-<span class="nc" id="L108">				continue;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (pause.pos1 &lt; pendingStart)</span>
+<span class="nc" id="L110">				continue;</span>
 
-<span class="nc bnc" id="L110" title="All 2 branches missed.">			if (pause.pos1 &gt; this.pos2) {</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">				if (pendingStart &lt; this.pos2)</span>
-<span class="nc" id="L112">					result2.add(new Segment(pendingStart, this.pos2));</span>
-<span class="nc" id="L113">				return Collections.unmodifiableCollection(result2);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">			if (pause.pos1 &gt; this.pos2) {</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">				if (pendingStart &lt; this.pos2)</span>
+<span class="nc" id="L114">					result2.add(new Segment(pendingStart, this.pos2));</span>
+<span class="nc" id="L115">				return Collections.unmodifiableCollection(result2);</span>
 			}
-<span class="nc bnc" id="L115" title="All 2 branches missed.">			if (this.contains(pause)) {</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">				assert pendingStart &lt; pause.pos1;</span>
-<span class="nc" id="L117">				result2.add(new Segment(pendingStart, pause.pos1));</span>
-<span class="nc" id="L118">				pendingStart = pause.pos2;</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">			if (this.contains(pause)) {</span>
+<span class="nc bnc" id="L118" title="All 4 branches missed.">				if (TeaVM.a()) assert pendingStart &lt; pause.pos1;</span>
+<span class="nc" id="L119">				result2.add(new Segment(pendingStart, pause.pos1));</span>
+<span class="nc" id="L120">				pendingStart = pause.pos2;</span>
 			}
-<span class="nc" id="L120">		}</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (pendingStart &lt; this.pos2)</span>
-<span class="nc" id="L122">			result2.add(new Segment(pendingStart, this.pos2));</span>
+<span class="nc" id="L122">		}</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (pendingStart &lt; this.pos2)</span>
+<span class="nc" id="L124">			result2.add(new Segment(pendingStart, this.pos2));</span>
 
-<span class="nc" id="L124">		return Collections.unmodifiableCollection(result2);</span>
+<span class="nc" id="L126">		return Collections.unmodifiableCollection(result2);</span>
 	}
 
-<span class="nc" id="L127">	static class SortPos1 implements Comparator&lt;Segment&gt; {</span>
+<span class="nc" id="L129">	static class SortPos1 implements Comparator&lt;Segment&gt; {</span>
 		public int compare(Segment segA, Segment segB) {
-<span class="nc" id="L129">			return (int) Math.signum(segA.pos1 - segB.pos1);</span>
+<span class="nc" id="L131">			return (int) Math.signum(segA.pos1 - segB.pos1);</span>
 		}
 	}
 

@@ -77,7 +77,7 @@ import org.teavm.jso.JSBody;
 		} else
 			try {
 <span class="nc" id="L79">				final byte[] digest = getMD5raw(s);</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">				assert digest.length == 16;</span>
+<span class="nc bnc" id="L80" title="All 4 branches missed.">				if (TeaVM.a()) assert digest.length == 16;</span>
 <span class="nc" id="L81">				return toHexString(digest);</span>
 <span class="nc" id="L82">			} catch (NoSuchAlgorithmException e) {</span>
 <span class="nc" id="L83">				Logme.error(e);</span>
@@ -127,7 +127,7 @@ import org.teavm.jso.JSBody;
 	public static String getSHA512Hex(String s) {
 		try {
 <span class="nc" id="L129">			final byte[] digest = getSHA512raw(s);</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">			assert digest.length == 64;</span>
+<span class="nc bnc" id="L130" title="All 4 branches missed.">			if (TeaVM.a()) assert digest.length == 64;</span>
 <span class="nc" id="L131">			return toHexString(digest);</span>
 <span class="nc" id="L132">		} catch (NoSuchAlgorithmException e) {</span>
 <span class="nc" id="L133">			Logme.error(e);</span>

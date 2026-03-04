@@ -35,90 +35,92 @@
  */
 package net.sourceforge.plantuml.klimt.geom;
 
-<span class="nc" id="L38">public class PositionableUtils {</span>
+import net.sourceforge.plantuml.teavm.TeaVM;
+
+<span class="nc" id="L40">public class PositionableUtils {</span>
 	// ::remove file when __HAXE__
 
 	static private XRectangle2D convert(Positionable positionable) {
-<span class="nc" id="L42">		final XPoint2D position = positionable.getPosition();</span>
-<span class="nc" id="L43">		final XDimension2D size = positionable.getSize();</span>
-<span class="nc" id="L44">		return new XRectangle2D(position.getX(), position.getY(), size.getWidth(), size.getHeight());</span>
+<span class="nc" id="L44">		final XPoint2D position = positionable.getPosition();</span>
+<span class="nc" id="L45">		final XDimension2D size = positionable.getSize();</span>
+<span class="nc" id="L46">		return new XRectangle2D(position.getX(), position.getY(), size.getWidth(), size.getHeight());</span>
 	}
 
 	static public boolean intersect(Positionable big, Positionable small) {
-<span class="nc" id="L48">		final XRectangle2D bigR = convert(big);</span>
-<span class="nc" id="L49">		final XRectangle2D smallR = convert(small);</span>
-<span class="nc" id="L50">		return bigR.intersects(smallR);</span>
+<span class="nc" id="L50">		final XRectangle2D bigR = convert(big);</span>
+<span class="nc" id="L51">		final XRectangle2D smallR = convert(small);</span>
+<span class="nc" id="L52">		return bigR.intersects(smallR);</span>
 	}
 
 	static public Positionable addMargin(final Positionable pos, final double widthMargin, final double heightMargin) {
-<span class="nc" id="L54">		return new Positionable() {</span>
+<span class="nc" id="L56">		return new Positionable() {</span>
 
 			public XPoint2D getPosition() {
-<span class="nc" id="L57">				final XPoint2D p = pos.getPosition();</span>
-<span class="nc" id="L58">				return new XPoint2D(p.getX() - widthMargin, p.getY() - heightMargin);</span>
+<span class="nc" id="L59">				final XPoint2D p = pos.getPosition();</span>
+<span class="nc" id="L60">				return new XPoint2D(p.getX() - widthMargin, p.getY() - heightMargin);</span>
 			}
 
 			public XDimension2D getSize() {
-<span class="nc" id="L62">				return pos.getSize().delta(2 * widthMargin, 2 * heightMargin);</span>
+<span class="nc" id="L64">				return pos.getSize().delta(2 * widthMargin, 2 * heightMargin);</span>
 			}
 
 			public void moveDelta(double deltaX, double deltaY) {
-<span class="nc" id="L66">				pos.moveDelta(deltaX, deltaY);</span>
-<span class="nc" id="L67">			}</span>
+<span class="nc" id="L68">				pos.moveDelta(deltaX, deltaY);</span>
+<span class="nc" id="L69">			}</span>
 		};
 	}
 
 	static private XPoint2D getCenter(Positionable p) {
-<span class="nc" id="L72">		final XPoint2D pt = p.getPosition();</span>
-<span class="nc" id="L73">		final XDimension2D dim = p.getSize();</span>
-<span class="nc" id="L74">		return new XPoint2D(pt.getX() + dim.getWidth() / 2, pt.getY() + dim.getHeight() / 2);</span>
+<span class="nc" id="L74">		final XPoint2D pt = p.getPosition();</span>
+<span class="nc" id="L75">		final XDimension2D dim = p.getSize();</span>
+<span class="nc" id="L76">		return new XPoint2D(pt.getX() + dim.getWidth() / 2, pt.getY() + dim.getHeight() / 2);</span>
 	}
 
 	static private Positionable move(Positionable p, double deltaX, double deltaY) {
-<span class="nc" id="L78">		final XPoint2D pt = p.getPosition();</span>
-<span class="nc" id="L79">		final XDimension2D dim = p.getSize();</span>
-<span class="nc" id="L80">		return new PositionableImpl(pt.getX() + deltaX, pt.getY() + deltaY, dim);</span>
+<span class="nc" id="L80">		final XPoint2D pt = p.getPosition();</span>
+<span class="nc" id="L81">		final XDimension2D dim = p.getSize();</span>
+<span class="nc" id="L82">		return new PositionableImpl(pt.getX() + deltaX, pt.getY() + deltaY, dim);</span>
 
 	}
 
 	public static Positionable moveAwayFrom(Positionable fixe, Positionable toMove) {
-<span class="nc" id="L85">		final XPoint2D centerFixe = getCenter(fixe);</span>
-<span class="nc" id="L86">		final XPoint2D centerToMove = getCenter(toMove);</span>
+<span class="nc" id="L87">		final XPoint2D centerFixe = getCenter(fixe);</span>
+<span class="nc" id="L88">		final XPoint2D centerToMove = getCenter(toMove);</span>
 		// final XPoint2D pt = toMove.getPosition();
 		// return new PositionableImpl(pt.getX() + 20, pt.getY(),
 		// toMove.getSize());
 
-<span class="nc" id="L91">		final double deltaX = centerToMove.getX() - centerFixe.getX();</span>
-<span class="nc" id="L92">		final double deltaY = centerToMove.getY() - centerFixe.getY();</span>
+<span class="nc" id="L93">		final double deltaX = centerToMove.getX() - centerFixe.getX();</span>
+<span class="nc" id="L94">		final double deltaY = centerToMove.getY() - centerFixe.getY();</span>
 
-<span class="nc" id="L94">		double min = 0.0;</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min) == false)</span>
-<span class="nc" id="L96">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L96">		double min = 0.0;</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min) == false)</span>
+<span class="nc" id="L98">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L98">		double max = 0.1;</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		while (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, max))</span>
-<span class="nc" id="L100">			max = max * 2;</span>
+<span class="nc" id="L100">		double max = 0.1;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		while (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, max))</span>
+<span class="nc" id="L102">			max = max * 2;</span>
 
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		for (int i = 0; i &lt; 5; i++) {</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">			assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min);</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">			assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, max) == false;</span>
-<span class="nc" id="L105">			final double candidat = (min + max) / 2.0;</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">			if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, candidat))</span>
-<span class="nc" id="L107">				min = candidat;</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc bnc" id="L105" title="All 4 branches missed.">			if (TeaVM.a()) assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min);</span>
+<span class="nc bnc" id="L106" title="All 4 branches missed.">			if (TeaVM.a()) assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, max) == false;</span>
+<span class="nc" id="L107">			final double candidat = (min + max) / 2.0;</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, candidat))</span>
+<span class="nc" id="L109">				min = candidat;</span>
 			else
-<span class="nc" id="L109">				max = candidat;</span>
+<span class="nc" id="L111">				max = candidat;</span>
 
 			// Log.println(&quot;min=&quot; + min + &quot; max=&quot; + max);
 		}
-<span class="nc" id="L113">		final double candidat = (min + max) / 2.0;</span>
-<span class="nc" id="L114">		return move(toMove, deltaX * candidat, deltaY * candidat);</span>
+<span class="nc" id="L115">		final double candidat = (min + max) / 2.0;</span>
+<span class="nc" id="L116">		return move(toMove, deltaX * candidat, deltaY * candidat);</span>
 
 	}
 
 	private static boolean doesIntersectWithThisCoef(Positionable fixe, Positionable toMove, double deltaX,
 			double deltaY, double c) {
-<span class="nc" id="L120">		final Positionable result = move(toMove, deltaX * c, deltaY * c);</span>
-<span class="nc" id="L121">		return intersect(fixe, result);</span>
+<span class="nc" id="L122">		final Positionable result = move(toMove, deltaX * c, deltaY * c);</span>
+<span class="nc" id="L123">		return intersect(fixe, result);</span>
 	}
 
 }

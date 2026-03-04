@@ -40,31 +40,32 @@ import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="fc" id="L44">public class DriverPolygonSvg implements UDriver&lt;UPolygon, SvgGraphics&gt; {</span>
+<span class="fc" id="L45">public class DriverPolygonSvg implements UDriver&lt;UPolygon, SvgGraphics&gt; {</span>
     // ::remove file when __HAXE__
 
 	private final ClipContainer clipContainer;
 
-<span class="fc" id="L49">	public DriverPolygonSvg(ClipContainer clipContainer) {</span>
-<span class="fc" id="L50">		this.clipContainer = clipContainer;</span>
-<span class="fc" id="L51">	}</span>
+<span class="fc" id="L50">	public DriverPolygonSvg(ClipContainer clipContainer) {</span>
+<span class="fc" id="L51">		this.clipContainer = clipContainer;</span>
+<span class="fc" id="L52">	}</span>
 
 	public void draw(UPolygon shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-<span class="fc" id="L54">		final double points[] = shape.getPointArray(x, y);</span>
-<span class="pc bpc" id="L55" title="1 of 2 branches missed.">		assert points.length % 2 == 0;</span>
-<span class="fc" id="L56">		final UClip clip = clipContainer.getClip();</span>
-<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (clip != null)</span>
-<span class="fc bfc" id="L58" title="All 2 branches covered.">			for (int j = 0; j &lt; points.length; j += 2)</span>
-<span class="fc bfc" id="L59" title="All 2 branches covered.">				if (clip.isInside(points[j], points[j + 1]) == false)</span>
-<span class="fc" id="L60">					return;</span>
+<span class="fc" id="L55">		final double points[] = shape.getPointArray(x, y);</span>
+<span class="pc bpc" id="L56" title="2 of 4 branches missed.">		if (TeaVM.a()) assert points.length % 2 == 0;</span>
+<span class="fc" id="L57">		final UClip clip = clipContainer.getClip();</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (clip != null)</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">			for (int j = 0; j &lt; points.length; j += 2)</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">				if (clip.isInside(points[j], points[j + 1]) == false)</span>
+<span class="fc" id="L61">					return;</span>
 
-<span class="fc" id="L62">		DriverRectangleSvg.applyFillColor(svg, mapper, param);</span>
-<span class="fc" id="L63">		DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>
+<span class="fc" id="L63">		DriverRectangleSvg.applyFillColor(svg, mapper, param);</span>
+<span class="fc" id="L64">		DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>
 
-<span class="fc" id="L65">		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
+<span class="fc" id="L66">		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
 
-<span class="fc" id="L67">		svg.svgPolygon(shape.getDeltaShadow(), points);</span>
-<span class="fc" id="L68">	}</span>
+<span class="fc" id="L68">		svg.svgPolygon(shape.getDeltaShadow(), points);</span>
+<span class="fc" id="L69">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

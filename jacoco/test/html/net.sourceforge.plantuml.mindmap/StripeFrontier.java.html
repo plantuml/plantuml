@@ -39,115 +39,117 @@ import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-<span class="fc" id="L42">public class StripeFrontier {</span>
+import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="fc" id="L44">	private final SortedSet&lt;Stripe&gt; stripes = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L44">public class StripeFrontier {</span>
 
-<span class="fc" id="L46">	public StripeFrontier() {</span>
-<span class="fc" id="L47">		this.stripes.add(new Stripe(-Double.MAX_VALUE, Double.MAX_VALUE, -Double.MAX_VALUE));</span>
-<span class="fc" id="L48">	}</span>
+<span class="fc" id="L46">	private final SortedSet&lt;Stripe&gt; stripes = new TreeSet&lt;&gt;();</span>
+
+<span class="fc" id="L48">	public StripeFrontier() {</span>
+<span class="fc" id="L49">		this.stripes.add(new Stripe(-Double.MAX_VALUE, Double.MAX_VALUE, -Double.MAX_VALUE));</span>
+<span class="fc" id="L50">	}</span>
 
 	public boolean isEmpty() {
-<span class="fc bfc" id="L51" title="All 2 branches covered.">		return stripes.size() == 1;</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		return stripes.size() == 1;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L56">		return stripes.toString();</span>
+<span class="nc" id="L58">		return stripes.toString();</span>
 	}
 
 	public boolean contains(double x, double y) {
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		for (Stripe stripe : stripes)</span>
-<span class="nc bnc" id="L61" title="All 2 branches missed.">			if (stripe.contains(x))</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">				return y &lt;= stripe.getValue();</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		for (Stripe stripe : stripes)</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">			if (stripe.contains(x))</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">				return y &lt;= stripe.getValue();</span>
 
-<span class="nc" id="L64">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L66">		throw new UnsupportedOperationException();</span>
 	}
 
 	public double getContact(double x1, double x2) {
-<span class="fc" id="L68">		final SortedSet&lt;Stripe&gt; collisions = collisionning(x1, x2);</span>
-<span class="fc" id="L69">		double result = -Double.MAX_VALUE;</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">		for (Stripe strip : collisions)</span>
-<span class="fc" id="L71">			result = Math.max(result, strip.getValue());</span>
+<span class="fc" id="L70">		final SortedSet&lt;Stripe&gt; collisions = collisionning(x1, x2);</span>
+<span class="fc" id="L71">		double result = -Double.MAX_VALUE;</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		for (Stripe strip : collisions)</span>
+<span class="fc" id="L73">			result = Math.max(result, strip.getValue());</span>
 
-<span class="fc" id="L73">		return result;</span>
+<span class="fc" id="L75">		return result;</span>
 
 	}
 
 	public void addSegment(double x1, double x2, double value) {
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (x2 &lt;= x1) {</span>
-<span class="nc" id="L79">			System.err.println(&quot;x1=&quot; + x1);</span>
-<span class="nc" id="L80">			System.err.println(&quot;x2=&quot; + x2);</span>
-<span class="nc" id="L81">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (x2 &lt;= x1) {</span>
+<span class="nc" id="L81">			System.err.println(&quot;x1=&quot; + x1);</span>
+<span class="nc" id="L82">			System.err.println(&quot;x2=&quot; + x2);</span>
+<span class="nc" id="L83">			throw new IllegalArgumentException();</span>
 		}
-<span class="fc" id="L83">		final SortedSet&lt;Stripe&gt; collisions = collisionning(x1, x2);</span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">		if (collisions.size() &gt; 1) {</span>
-<span class="fc" id="L85">			final Iterator&lt;Stripe&gt; it = collisions.iterator();</span>
-<span class="fc" id="L86">			it.next();</span>
-<span class="fc" id="L87">			double x = x1;</span>
-<span class="fc bfc" id="L88" title="All 2 branches covered.">			while (it.hasNext()) {</span>
-<span class="fc" id="L89">				final Stripe tmp = it.next();</span>
-<span class="fc" id="L90">				addSegment(x, tmp.getStart(), value);</span>
-<span class="fc" id="L91">				x = tmp.getStart();</span>
-<span class="fc" id="L92">			}</span>
-<span class="fc" id="L93">			addSegment(x, x2, value);</span>
+<span class="fc" id="L85">		final SortedSet&lt;Stripe&gt; collisions = collisionning(x1, x2);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (collisions.size() &gt; 1) {</span>
+<span class="fc" id="L87">			final Iterator&lt;Stripe&gt; it = collisions.iterator();</span>
+<span class="fc" id="L88">			it.next();</span>
+<span class="fc" id="L89">			double x = x1;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">			while (it.hasNext()) {</span>
+<span class="fc" id="L91">				final Stripe tmp = it.next();</span>
+<span class="fc" id="L92">				addSegment(x, tmp.getStart(), value);</span>
+<span class="fc" id="L93">				x = tmp.getStart();</span>
+<span class="fc" id="L94">			}</span>
+<span class="fc" id="L95">			addSegment(x, x2, value);</span>
 			// System.err.println(&quot;x1=&quot; + x1);
 			// System.err.println(&quot;x2=&quot; + x2);
 			// System.err.println(&quot;All=&quot; + stripes);
 			// System.err.println(&quot;collisions&quot; + collisions);
 			// throw new UnsupportedOperationException();
-<span class="fc" id="L99">		} else {</span>
-<span class="fc" id="L100">			final Stripe touch = collisions.iterator().next();</span>
-<span class="fc" id="L101">			addSingleInternal(x1, x2, value, touch);</span>
+<span class="fc" id="L101">		} else {</span>
+<span class="fc" id="L102">			final Stripe touch = collisions.iterator().next();</span>
+<span class="fc" id="L103">			addSingleInternal(x1, x2, value, touch);</span>
 		}
-<span class="fc" id="L103">	}</span>
+<span class="fc" id="L105">	}</span>
 
 	private void addSingleInternal(double x1, double x2, double value, final Stripe touch) {
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (value &lt;= touch.getValue())</span>
-<span class="nc" id="L107">			return;</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (value &lt;= touch.getValue())</span>
+<span class="nc" id="L109">			return;</span>
 
-<span class="fc" id="L109">		final boolean ok = this.stripes.remove(touch);</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		assert ok;</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (touch.getStart() != x1)</span>
-<span class="fc" id="L112">			this.stripes.add(new Stripe(touch.getStart(), x1, touch.getValue()));</span>
+<span class="fc" id="L111">		final boolean ok = this.stripes.remove(touch);</span>
+<span class="pc bpc" id="L112" title="2 of 4 branches missed.">		if (TeaVM.a()) assert ok;</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (touch.getStart() != x1)</span>
+<span class="fc" id="L114">			this.stripes.add(new Stripe(touch.getStart(), x1, touch.getValue()));</span>
 
-<span class="fc" id="L114">		this.stripes.add(new Stripe(x1, x2, value));</span>
-<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (x2 != touch.getEnd())</span>
-<span class="fc" id="L116">			this.stripes.add(new Stripe(x2, touch.getEnd(), touch.getValue()));</span>
+<span class="fc" id="L116">		this.stripes.add(new Stripe(x1, x2, value));</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		if (x2 != touch.getEnd())</span>
+<span class="fc" id="L118">			this.stripes.add(new Stripe(x2, touch.getEnd(), touch.getValue()));</span>
 
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		assert checkConsistent();</span>
-<span class="fc" id="L119">	}</span>
+<span class="pc bpc" id="L120" title="2 of 4 branches missed.">		if (TeaVM.a()) assert checkConsistent();</span>
+<span class="fc" id="L121">	}</span>
 
 	private boolean checkConsistent() {
-<span class="fc" id="L122">		Stripe last = null;</span>
-<span class="fc bfc" id="L123" title="All 2 branches covered.">		for (Stripe stripe : stripes) {</span>
-<span class="pc bpc" id="L124" title="1 of 4 branches missed.">			if (last == null &amp;&amp; stripe.getStart() != -Double.MAX_VALUE)</span>
-<span class="nc" id="L125">				return false;</span>
+<span class="fc" id="L124">		Stripe last = null;</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		for (Stripe stripe : stripes) {</span>
+<span class="pc bpc" id="L126" title="1 of 4 branches missed.">			if (last == null &amp;&amp; stripe.getStart() != -Double.MAX_VALUE)</span>
+<span class="nc" id="L127">				return false;</span>
 
-<span class="pc bpc" id="L127" title="1 of 4 branches missed.">			if (last != null &amp;&amp; last.getEnd() != stripe.getStart())</span>
-<span class="nc" id="L128">				return false;</span>
+<span class="pc bpc" id="L129" title="1 of 4 branches missed.">			if (last != null &amp;&amp; last.getEnd() != stripe.getStart())</span>
+<span class="nc" id="L130">				return false;</span>
 
-<span class="fc" id="L130">			last = stripe;</span>
-<span class="fc" id="L131">		}</span>
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (last.getEnd() != Double.MAX_VALUE)</span>
-<span class="nc" id="L133">			return false;</span>
+<span class="fc" id="L132">			last = stripe;</span>
+<span class="fc" id="L133">		}</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (last.getEnd() != Double.MAX_VALUE)</span>
+<span class="nc" id="L135">			return false;</span>
 
-<span class="fc" id="L135">		return true;</span>
+<span class="fc" id="L137">		return true;</span>
 	}
 
 	private SortedSet&lt;Stripe&gt; collisionning(double x1, double x2) {
-<span class="fc" id="L139">		final SortedSet&lt;Stripe&gt; result = new TreeSet&lt;&gt;();</span>
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		for (Iterator&lt;Stripe&gt; it = stripes.iterator(); it.hasNext();) {</span>
-<span class="fc" id="L141">			Stripe stripe = it.next();</span>
-<span class="fc bfc" id="L142" title="All 2 branches covered.">			if (x1 &gt;= stripe.getEnd())</span>
-<span class="fc" id="L143">				continue;</span>
+<span class="fc" id="L141">		final SortedSet&lt;Stripe&gt; result = new TreeSet&lt;&gt;();</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		for (Iterator&lt;Stripe&gt; it = stripes.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L143">			Stripe stripe = it.next();</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">			if (x1 &gt;= stripe.getEnd())</span>
+<span class="fc" id="L145">				continue;</span>
 
-<span class="fc" id="L145">			result.add(stripe);</span>
-<span class="fc bfc" id="L146" title="All 2 branches covered.">			if (x2 &lt;= stripe.getEnd())</span>
-<span class="fc" id="L147">				return result;</span>
+<span class="fc" id="L147">			result.add(stripe);</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">			if (x2 &lt;= stripe.getEnd())</span>
+<span class="fc" id="L149">				return result;</span>
 
-<span class="fc" id="L149">		}</span>
-<span class="nc" id="L150">		throw new UnsupportedOperationException();</span>
+<span class="fc" id="L151">		}</span>
+<span class="nc" id="L152">		throw new UnsupportedOperationException();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

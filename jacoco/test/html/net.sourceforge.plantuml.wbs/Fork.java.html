@@ -44,83 +44,84 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Direction;
 
-<span class="fc" id="L49">class Fork extends WBSTextBlock {</span>
+<span class="fc" id="L50">class Fork extends WBSTextBlock {</span>
 
 	private final TextBlock main;
-<span class="fc" id="L52">	private final List&lt;ITF&gt; right = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L53">	private final List&lt;ITF&gt; right = new ArrayList&lt;&gt;();</span>
 
 	public Fork(ISkinParam skinParam, WElement idea) {
-<span class="fc" id="L55">		super(idea.withBackColor(skinParam), idea.getStyleBuilder(), idea.getLevel(), idea.getStereotype());</span>
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (idea.getLevel() != 0)</span>
-<span class="nc" id="L57">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L56">		super(idea.withBackColor(skinParam), idea.getStyleBuilder(), idea.getLevel(), idea.getStereotype());</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		if (idea.getLevel() != 0)</span>
+<span class="nc" id="L58">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L59">		this.main = buildMain(idea);</span>
-<span class="fc bfc" id="L60" title="All 2 branches covered.">		for (WElement child : idea.getChildren(Direction.RIGHT))</span>
-<span class="fc" id="L61">			this.right.add(ITFComposed.build2(skinParam, child));</span>
+<span class="fc" id="L60">		this.main = buildMain(idea);</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		for (WElement child : idea.getChildren(Direction.RIGHT))</span>
+<span class="fc" id="L62">			this.right.add(ITFComposed.build2(skinParam, child));</span>
 
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L64">	}</span>
 
-<span class="fc" id="L65">	final private double delta1x = 20;</span>
-<span class="fc" id="L66">	final private double deltay = 40;</span>
+<span class="fc" id="L66">	final private double delta1x = 20;</span>
+<span class="fc" id="L67">	final private double deltay = 40;</span>
 
 	public void drawU(final UGraphic ug) {
-<span class="fc" id="L69">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L70">		final XDimension2D mainDim = main.calculateDimension(stringBounder);</span>
+<span class="fc" id="L70">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L71">		final XDimension2D mainDim = main.calculateDimension(stringBounder);</span>
 
-<span class="fc" id="L72">		final double y0 = mainDim.getHeight();</span>
-<span class="fc" id="L73">		final double y1 = y0 + deltay / 2;</span>
-<span class="fc" id="L74">		final double y2 = y0 + deltay;</span>
-<span class="fc" id="L75">		final double mainWidth = mainDim.getWidth();</span>
+<span class="fc" id="L73">		final double y0 = mainDim.getHeight();</span>
+<span class="fc" id="L74">		final double y1 = y0 + deltay / 2;</span>
+<span class="fc" id="L75">		final double y2 = y0 + deltay;</span>
+<span class="fc" id="L76">		final double mainWidth = mainDim.getWidth();</span>
 
-<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (right.size() == 0) {</span>
-<span class="fc" id="L78">			main.drawU(ug);</span>
-<span class="fc" id="L79">			drawLine(ug, mainWidth / 2, y0, mainWidth / 2, y1);</span>
-<span class="fc" id="L80">			return;</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (right.size() == 0) {</span>
+<span class="fc" id="L79">			main.drawU(ug);</span>
+<span class="fc" id="L80">			drawLine(ug, mainWidth / 2, y0, mainWidth / 2, y1);</span>
+<span class="fc" id="L81">			return;</span>
 		}
 
-<span class="fc" id="L83">		double x = 0;</span>
-<span class="fc" id="L84">		final double firstX = right.get(0).getT1(stringBounder).getX();</span>
-<span class="fc" id="L85">		double lastX = firstX;</span>
+<span class="fc" id="L84">		double x = 0;</span>
+<span class="fc" id="L85">		final double firstX = right.get(0).getT1(stringBounder).getX();</span>
+<span class="fc" id="L86">		double lastX = firstX;</span>
 
-<span class="fc bfc" id="L87" title="All 2 branches covered.">		for (ITF child : right) {</span>
-<span class="fc" id="L88">			lastX = x + child.getT1(stringBounder).getX();</span>
-<span class="fc" id="L89">			drawLine(ug, lastX, y1, lastX, y2);</span>
-<span class="fc" id="L90">			child.drawU(ug.apply(new UTranslate(x, y2)));</span>
-<span class="fc" id="L91">			x += child.calculateDimension(stringBounder).getWidth() + delta1x;</span>
-<span class="fc" id="L92">		}</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		for (ITF child : right) {</span>
+<span class="fc" id="L89">			lastX = x + child.getT1(stringBounder).getX();</span>
+<span class="fc" id="L90">			drawLine(ug, lastX, y1, lastX, y2);</span>
+<span class="fc" id="L91">			child.drawU(ug.apply(new UTranslate(x, y2)));</span>
+<span class="fc" id="L92">			x += child.calculateDimension(stringBounder).getWidth() + delta1x;</span>
+<span class="fc" id="L93">		}</span>
 
 		final double posMain;
-<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (lastX &gt; firstX) {</span>
-<span class="fc" id="L96">			drawLine(ug, firstX, y1, lastX, y1);</span>
-<span class="fc" id="L97">			posMain = firstX + (lastX - firstX - mainWidth) / 2;</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (lastX &gt; firstX) {</span>
+<span class="fc" id="L97">			drawLine(ug, firstX, y1, lastX, y1);</span>
+<span class="fc" id="L98">			posMain = firstX + (lastX - firstX - mainWidth) / 2;</span>
 		} else {
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">			assert lastX == firstX;</span>
-<span class="fc" id="L100">			final XDimension2D fullDim = calculateDimension(stringBounder);</span>
-<span class="fc" id="L101">			posMain = (fullDim.getWidth() - mainWidth) / 2;</span>
-<span class="fc" id="L102">			drawLine(ug, firstX, y1, posMain + mainWidth / 2, y1);</span>
+<span class="pc bpc" id="L100" title="2 of 4 branches missed.">			if (TeaVM.a()) assert lastX == firstX;</span>
+<span class="fc" id="L101">			final XDimension2D fullDim = calculateDimension(stringBounder);</span>
+<span class="fc" id="L102">			posMain = (fullDim.getWidth() - mainWidth) / 2;</span>
+<span class="fc" id="L103">			drawLine(ug, firstX, y1, posMain + mainWidth / 2, y1);</span>
 		}
-<span class="fc" id="L104">		main.drawU(ug.apply(UTranslate.dx(posMain)));</span>
-<span class="fc" id="L105">		drawLine(ug, posMain + mainWidth / 2, y0, posMain + mainWidth / 2, y1);</span>
+<span class="fc" id="L105">		main.drawU(ug.apply(UTranslate.dx(posMain)));</span>
+<span class="fc" id="L106">		drawLine(ug, posMain + mainWidth / 2, y0, posMain + mainWidth / 2, y1);</span>
 
-<span class="fc" id="L107">	}</span>
+<span class="fc" id="L108">	}</span>
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L110">		double width = 0;</span>
-<span class="fc" id="L111">		double height = 0;</span>
-<span class="fc bfc" id="L112" title="All 2 branches covered.">		for (ITF child : right) {</span>
-<span class="fc" id="L113">			final XDimension2D childDim = child.calculateDimension(stringBounder);</span>
-<span class="fc" id="L114">			height = Math.max(height, childDim.getHeight());</span>
-<span class="fc" id="L115">			width += childDim.getWidth();</span>
-<span class="fc" id="L116">		}</span>
-<span class="fc bfc" id="L117" title="All 2 branches covered.">		if (right.size() &gt; 1)</span>
-<span class="fc" id="L118">			width += (right.size() - 1) * delta1x;</span>
-<span class="fc" id="L119">		final XDimension2D mainDim = main.calculateDimension(stringBounder);</span>
-<span class="fc" id="L120">		height += mainDim.getHeight();</span>
-<span class="fc" id="L121">		height += deltay;</span>
-<span class="fc" id="L122">		width = Math.max(width, mainDim.getWidth());</span>
-<span class="fc" id="L123">		return new XDimension2D(width, height);</span>
+<span class="fc" id="L111">		double width = 0;</span>
+<span class="fc" id="L112">		double height = 0;</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		for (ITF child : right) {</span>
+<span class="fc" id="L114">			final XDimension2D childDim = child.calculateDimension(stringBounder);</span>
+<span class="fc" id="L115">			height = Math.max(height, childDim.getHeight());</span>
+<span class="fc" id="L116">			width += childDim.getWidth();</span>
+<span class="fc" id="L117">		}</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		if (right.size() &gt; 1)</span>
+<span class="fc" id="L119">			width += (right.size() - 1) * delta1x;</span>
+<span class="fc" id="L120">		final XDimension2D mainDim = main.calculateDimension(stringBounder);</span>
+<span class="fc" id="L121">		height += mainDim.getHeight();</span>
+<span class="fc" id="L122">		height += deltay;</span>
+<span class="fc" id="L123">		width = Math.max(width, mainDim.getWidth());</span>
+<span class="fc" id="L124">		return new XDimension2D(width, height);</span>
 	}
 
 }

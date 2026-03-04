@@ -35,28 +35,29 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.BackSlash;
 
-<span class="nc" id="L40">public class PlainText implements HtmlCommand {</span>
+<span class="nc" id="L41">public class PlainText implements HtmlCommand {</span>
 
 	private final String text;
 
 	// public static final PlainText TEXT_BS_BS_N = new PlainText(BackSlash.BS_BS_N);
 
-<span class="nc" id="L46">	PlainText(String text) {</span>
+<span class="nc" id="L47">	PlainText(String text) {</span>
 		// this.text = text.replaceAll(&quot;\\\\\\[&quot;, &quot;[&quot;).replaceAll(&quot;\\\\\\]&quot;, &quot;]&quot;);
-<span class="nc" id="L48">		this.text = text;</span>
-<span class="nc bnc" id="L49" title="All 2 branches missed.">		if (text.indexOf(BackSlash.CHAR_NEWLINE) != -1)</span>
-<span class="nc" id="L50">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L49">		this.text = text;</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">		if (text.indexOf(BackSlash.CHAR_NEWLINE) != -1)</span>
+<span class="nc" id="L51">			throw new IllegalArgumentException();</span>
 
-<span class="nc bnc" id="L52" title="All 2 branches missed.">		if (text.length() == 0)</span>
-<span class="nc" id="L53">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (text.length() == 0)</span>
+<span class="nc" id="L54">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L55">	}</span>
+<span class="nc" id="L56">	}</span>
 
 	public String getText() {
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		assert text.length() &gt; 0;</span>
-<span class="nc" id="L59">		return text;</span>
+<span class="nc bnc" id="L59" title="All 4 branches missed.">		if (TeaVM.a()) assert text.length() &gt; 0;</span>
+<span class="nc" id="L60">		return text;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

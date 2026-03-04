@@ -34,11 +34,13 @@
  */
 package net.sourceforge.plantuml.teavm;
 
+import net.sourceforge.plantuml.abel.LeafType;
+
 // ::comment when JAVA8
 // import org.teavm.interop.PlatformMarker;
 // ::done
 
-<span class="nc" id="L41">public class TeaVM {</span>
+<span class="nc" id="L43">public class TeaVM {</span>
 
 	/**
 	 * Platform marker method used to distinguish TeaVM compilation from standard
@@ -68,7 +70,23 @@ package net.sourceforge.plantuml.teavm;
 	@org.teavm.interop.PlatformMarker
 	// ::done
 	public static boolean isTeaVM() {
-<span class="fc" id="L71">		return false;</span>
+<span class="fc" id="L73">		return false;</span>
+	}
+	
+	/**
+	 * Guard method for assertions, ensuring they are removed from the
+	 * generated JavaScript output.
+	 *
+	 * Returns {@code true} on the JVM (allowing the assertion to execute)
+	 * and {@code false} under TeaVM (skipping it entirely via dead code
+	 * elimination).
+	 *
+	 * &lt;pre&gt;
+	 * if (TeaVM.a()) assert ...
+	 * &lt;/pre&gt;
+	 */
+	public static boolean a() {
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		return !isTeaVM();</span>
 	}
 
 }

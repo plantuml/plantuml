@@ -36,11 +36,11 @@
  */
 package net.sourceforge.plantuml.klimt;
 
-import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 import net.sourceforge.plantuml.klimt.compress.CompressionMode;
 import net.sourceforge.plantuml.klimt.compress.UShapeIgnorableForCompression;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;

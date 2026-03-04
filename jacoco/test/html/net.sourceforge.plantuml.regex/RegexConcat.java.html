@@ -37,11 +37,12 @@ package net.sourceforge.plantuml.regex;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 
-<span class="fc" id="L42">public final class RegexConcat extends RegexComposed implements IRegex {</span>
+<span class="fc" id="L43">public final class RegexConcat extends RegexComposed implements IRegex {</span>
 
-<span class="fc" id="L44">	private final AtomicLong foxRegex = new AtomicLong(-1L);</span>
+<span class="fc" id="L45">	private final AtomicLong foxRegex = new AtomicLong(-1L);</span>
 	private int limitSize;
 
 	// private static final Set&lt;String&gt; PRINTED2 = new HashSet&lt;&gt;();
@@ -67,31 +68,31 @@ import net.sourceforge.plantuml.text.StringLocated;
 //				Log.info(&quot;Matches escaped &quot; + nf.format(vescaped.get()) + &quot;/&quot; + nf.format(vtot.get()));
 //				Log.info(&quot;Matches created &quot; + nf.format(nbCreateMatches.get()));
 //			}
-<span class="fc" id="L70">	}</span>
+<span class="fc" id="L71">	}</span>
 
 	public RegexConcat(IRegex... partials) {
-<span class="fc" id="L73">		super(partials);</span>
-<span class="fc" id="L74">	}</span>
+<span class="fc" id="L74">		super(partials);</span>
+<span class="fc" id="L75">	}</span>
 
 	private long foxRegex() {
-<span class="fc" id="L77">		final long result = foxRegex.get();</span>
-<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (result == -1L) {</span>
-<span class="fc" id="L79">			long tmp = 0L;</span>
-<span class="fc bfc" id="L80" title="All 2 branches covered.">			for (int i = 1; i &lt; partials().size() - 1; i++) {</span>
-<span class="fc" id="L81">				final IRegex part = partials().get(i);</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">				if (part instanceof RegexLeaf) {</span>
-<span class="fc" id="L83">					final RegexLeaf leaf = (RegexLeaf) part;</span>
-<span class="fc" id="L84">					tmp = tmp | leaf.getFoxSignature();</span>
+<span class="fc" id="L78">		final long result = foxRegex.get();</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (result == -1L) {</span>
+<span class="fc" id="L80">			long tmp = 0L;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			for (int i = 1; i &lt; partials().size() - 1; i++) {</span>
+<span class="fc" id="L82">				final IRegex part = partials().get(i);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">				if (part instanceof RegexLeaf) {</span>
+<span class="fc" id="L84">					final RegexLeaf leaf = (RegexLeaf) part;</span>
+<span class="fc" id="L85">					tmp = tmp | leaf.getFoxSignature();</span>
 				}
 			}
-<span class="fc" id="L87">			foxRegex.set(tmp);</span>
-<span class="fc" id="L88">			return tmp;</span>
+<span class="fc" id="L88">			foxRegex.set(tmp);</span>
+<span class="fc" id="L89">			return tmp;</span>
 		}
-<span class="fc" id="L90">		return result;</span>
+<span class="fc" id="L91">		return result;</span>
 	}
 
 	public static RegexConcat build(String key, IRegex... partials) {
-<span class="fc" id="L94">		return buildInternal(partials);</span>
+<span class="fc" id="L95">		return buildInternal(partials);</span>
 //		RegexConcat result = cache.get(key);
 //		if (result == null) {
 //			cache.putIfAbsent(key, buildInternal(partials));
@@ -109,14 +110,14 @@ import net.sourceforge.plantuml.text.StringLocated;
 	}
 
 	private static RegexConcat buildInternal(IRegex... partials) {
-<span class="fc" id="L112">		final RegexConcat result = new RegexConcat(partials);</span>
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		assert partials[0] == RegexLeaf.start();</span>
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		assert partials[partials.length - 1] == RegexLeaf.end();</span>
-<span class="fc" id="L115">		return result;</span>
+<span class="fc" id="L113">		final RegexConcat result = new RegexConcat(partials);</span>
+<span class="pc bpc" id="L114" title="2 of 4 branches missed.">		if (TeaVM.a()) assert partials[0] == RegexLeaf.start();</span>
+<span class="pc bpc" id="L115" title="2 of 4 branches missed.">		if (TeaVM.a()) assert partials[partials.length - 1] == RegexLeaf.end();</span>
+<span class="fc" id="L116">		return result;</span>
 	}
 
 	private boolean invoked() {
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		return foxRegex.get() != -1L;</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		return foxRegex.get() != -1L;</span>
 	}
 
 //	static private final Set&lt;String&gt; PRINTED = new HashSet&lt;&gt;();
@@ -125,11 +126,11 @@ import net.sourceforge.plantuml.text.StringLocated;
 	@Override
 	public boolean match(StringLocated s) {
 		// ::comment when __TEAVM__
-<span class="pc bpc" id="L128" title="1 of 4 branches missed.">		if (limitSize != 0 &amp;&amp; s.getString().length() &gt; limitSize)</span>
-<span class="nc" id="L129">			return false;</span>
+<span class="pc bpc" id="L129" title="1 of 4 branches missed.">		if (limitSize != 0 &amp;&amp; s.getString().length() &gt; limitSize)</span>
+<span class="nc" id="L130">			return false;</span>
 
 		// vtot.incrementAndGet();
-<span class="fc" id="L132">		final long foxRegex = foxRegex();</span>
+<span class="fc" id="L133">		final long foxRegex = foxRegex();</span>
 //		synchronized (PRINTED) {
 //			final String full = getFullSlow();
 //			final boolean added = PRINTED.add(full);
@@ -139,34 +140,34 @@ import net.sourceforge.plantuml.text.StringLocated;
 //						+ FoxSignature.backToString(foxRegex) + &quot; &quot; + full);
 //			}
 //		}
-<span class="fc bfc" id="L142" title="All 2 branches covered.">		if (foxRegex != 0L) {</span>
-<span class="fc" id="L143">			final long foxLine = s.getFoxSignature();</span>
-<span class="fc" id="L144">			final long check = foxRegex &amp; foxLine;</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (foxRegex != 0L) {</span>
+<span class="fc" id="L144">			final long foxLine = s.getFoxSignature();</span>
+<span class="fc" id="L145">			final long check = foxRegex &amp; foxLine;</span>
 			// System.err.println(&quot;r=&quot; + getFullSlow() + &quot; s=&quot; + s + &quot; line=&quot; + foxLine + &quot;
 			// regex&quot; + foxRegex + &quot; &quot;
 			// + check + &quot; &lt;&quot; + FoxSignature.backToString(check) + &quot;&gt;&quot;);
-<span class="fc bfc" id="L148" title="All 2 branches covered.">			if (check != foxRegex) {</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">			if (check != foxRegex) {</span>
 				// vescaped.incrementAndGet();
-<span class="fc" id="L150">				return false;</span>
+<span class="fc" id="L151">				return false;</span>
 			}
 
 		}
 		// ::done
-<span class="fc" id="L155">		return super.match(s);</span>
+<span class="fc" id="L156">		return super.match(s);</span>
 	}
 
 	@Override
 	public String getPatternAsString() {
-<span class="fc" id="L160">		final StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L161" title="All 2 branches covered.">		for (IRegex p : partials())</span>
-<span class="fc" id="L162">			sb.append(p.getPatternAsString());</span>
+<span class="fc" id="L161">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		for (IRegex p : partials())</span>
+<span class="fc" id="L163">			sb.append(p.getPatternAsString());</span>
 
-<span class="fc" id="L164">		return sb.toString();</span>
+<span class="fc" id="L165">		return sb.toString();</span>
 	}
 
 	public RegexConcat protectSize(int size) {
-<span class="fc" id="L168">		limitSize = size;</span>
-<span class="fc" id="L169">		return this;</span>
+<span class="fc" id="L169">		limitSize = size;</span>
+<span class="fc" id="L170">		return this;</span>
 	}
 
 }

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.packetdiag;
 
+import java.util.List;
+
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommonCommands;
@@ -44,8 +46,6 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
-
-import java.util.List;
 
 public class PacketDiagramFactory extends PSystemCommandFactory {
 	public PacketDiagramFactory() {

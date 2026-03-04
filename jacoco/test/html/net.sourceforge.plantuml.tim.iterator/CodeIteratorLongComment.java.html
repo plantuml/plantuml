@@ -36,39 +36,40 @@ package net.sourceforge.plantuml.tim.iterator;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.EaterException;
 
-<span class="fc" id="L43">public class CodeIteratorLongComment extends AbstractCodeIterator {</span>
+<span class="fc" id="L44">public class CodeIteratorLongComment extends AbstractCodeIterator {</span>
 
 	private final List&lt;StringLocated&gt; logs;
 
 	public CodeIteratorLongComment(CodeIterator source, List&lt;StringLocated&gt; logs) {
-<span class="fc" id="L48">		super(source);</span>
-<span class="fc" id="L49">		this.logs = logs;</span>
-<span class="fc" id="L50">	}</span>
+<span class="fc" id="L49">		super(source);</span>
+<span class="fc" id="L50">		this.logs = logs;</span>
+<span class="fc" id="L51">	}</span>
 
 	public StringLocated peek() throws EaterException {
 		while (true) {
-<span class="fc bfc" id="L54" title="All 2 branches covered.">			if (source.peek() == null) {</span>
-<span class="fc" id="L55">				return null;</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">			if (source.peek() == null) {</span>
+<span class="fc" id="L56">				return null;</span>
 			}
-<span class="pc bpc" id="L57" title="1 of 2 branches missed.">			if (source.peek().getType() != TLineType.COMMENT_LONG_START) {</span>
-<span class="fc" id="L58">				return source.peek();</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">			if (source.peek().getType() != TLineType.COMMENT_LONG_START) {</span>
+<span class="fc" id="L59">				return source.peek();</span>
 			}
-<span class="nc" id="L60">			StringLocated s = null;</span>
-<span class="nc bnc" id="L61" title="All 4 branches missed.">			while ((s = source.peek()) != null &amp;&amp; s.getTrimmed().getString().endsWith(&quot;'/&quot;) == false) {</span>
-<span class="nc" id="L62">				logs.add(s);</span>
-<span class="nc" id="L63">				source.next();</span>
+<span class="nc" id="L61">			StringLocated s = null;</span>
+<span class="nc bnc" id="L62" title="All 4 branches missed.">			while ((s = source.peek()) != null &amp;&amp; s.getTrimmed().getString().endsWith(&quot;'/&quot;) == false) {</span>
+<span class="nc" id="L63">				logs.add(s);</span>
+<span class="nc" id="L64">				source.next();</span>
 			}
-<span class="nc bnc" id="L65" title="All 4 branches missed.">			assert source.peek() == null || s.getTrimmed().getString().endsWith(&quot;'/&quot;);</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">			if (source.peek() != null) {</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">				assert s.getTrimmed().getString().endsWith(&quot;'/&quot;);</span>
-<span class="nc" id="L68">				logs.add(source.peek());</span>
-<span class="nc" id="L69">				source.next();</span>
+<span class="nc bnc" id="L66" title="All 6 branches missed.">			if (TeaVM.a()) assert source.peek() == null || s.getTrimmed().getString().endsWith(&quot;'/&quot;);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">			if (source.peek() != null) {</span>
+<span class="nc bnc" id="L68" title="All 4 branches missed.">				if (TeaVM.a()) assert s.getTrimmed().getString().endsWith(&quot;'/&quot;);</span>
+<span class="nc" id="L69">				logs.add(source.peek());</span>
+<span class="nc" id="L70">				source.next();</span>
 			}
-<span class="nc" id="L71">		}</span>
+<span class="nc" id="L72">		}</span>
 
 	}
 }

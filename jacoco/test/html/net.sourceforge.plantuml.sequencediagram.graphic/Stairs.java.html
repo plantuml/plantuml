@@ -41,90 +41,92 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-<span class="fc" id="L44">public class Stairs {</span>
+import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="fc" id="L46">	private final List&lt;Double&gt; ys = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L47">	private final List&lt;Integer&gt; values = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L48">	private final Map&lt;Double, Integer&gt; cache = new HashMap&lt;Double, Integer&gt;();</span>
+<span class="fc" id="L46">public class Stairs {</span>
+
+<span class="fc" id="L48">	private final List&lt;Double&gt; ys = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L49">	private final List&lt;Integer&gt; values = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L50">	private final Map&lt;Double, Integer&gt; cache = new HashMap&lt;Double, Integer&gt;();</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L52">		final List&lt;Double&gt; copy = new ArrayList&lt;&gt;(ys);</span>
-<span class="nc" id="L53">		Collections.sort(copy);</span>
-<span class="nc" id="L54">		final StringBuilder sb = new StringBuilder(&quot;[&quot;);</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">		for (Double y : copy) {</span>
-<span class="nc" id="L56">			sb.append(y + &quot;=&quot; + getValue(y) + &quot; &quot;);</span>
-<span class="nc" id="L57">		}</span>
-<span class="nc" id="L58">		sb.append(&quot;]&quot;);</span>
-<span class="nc" id="L59">		return sb.toString();</span>
+<span class="nc" id="L54">		final List&lt;Double&gt; copy = new ArrayList&lt;&gt;(ys);</span>
+<span class="nc" id="L55">		Collections.sort(copy);</span>
+<span class="nc" id="L56">		final StringBuilder sb = new StringBuilder(&quot;[&quot;);</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		for (Double y : copy) {</span>
+<span class="nc" id="L58">			sb.append(y + &quot;=&quot; + getValue(y) + &quot; &quot;);</span>
+<span class="nc" id="L59">		}</span>
+<span class="nc" id="L60">		sb.append(&quot;]&quot;);</span>
+<span class="nc" id="L61">		return sb.toString();</span>
 	}
 
 	public void addStep(double y, int value) {
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		assert ys.size() == values.size();</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (ys.size() &gt; 0) {</span>
-<span class="nc" id="L65">			final double lastY = ys.get(ys.size() - 1);</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">			if (y &lt; lastY) {</span>
-<span class="nc" id="L67">				throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L65" title="All 4 branches missed.">		if (TeaVM.a()) assert ys.size() == values.size();</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (ys.size() &gt; 0) {</span>
+<span class="nc" id="L67">			final double lastY = ys.get(ys.size() - 1);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">			if (y &lt; lastY) {</span>
+<span class="nc" id="L69">				throw new IllegalArgumentException();</span>
 			}
-<span class="nc bnc" id="L69" title="All 2 branches missed.">			if (lastY == y) {</span>
-<span class="nc" id="L70">				values.set(ys.size() - 1, value);</span>
-<span class="nc" id="L71">				cache.clear();</span>
-<span class="nc" id="L72">				return;</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">			if (lastY == y) {</span>
+<span class="nc" id="L72">				values.set(ys.size() - 1, value);</span>
+<span class="nc" id="L73">				cache.clear();</span>
+<span class="nc" id="L74">				return;</span>
 			}
 		}
-<span class="nc" id="L75">		ys.add(y);</span>
-<span class="nc" id="L76">		values.add(value);</span>
-<span class="nc" id="L77">		cache.clear();</span>
-<span class="nc" id="L78">	}</span>
+<span class="nc" id="L77">		ys.add(y);</span>
+<span class="nc" id="L78">		values.add(value);</span>
+<span class="nc" id="L79">		cache.clear();</span>
+<span class="nc" id="L80">	}</span>
 
 	public int getMaxValue() {
-<span class="nc" id="L81">		int max = Integer.MIN_VALUE;</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		for (Integer v : values) {</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">			if (v &gt; max) {</span>
-<span class="nc" id="L84">				max = v;</span>
+<span class="nc" id="L83">		int max = Integer.MIN_VALUE;</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		for (Integer v : values) {</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			if (v &gt; max) {</span>
+<span class="nc" id="L86">				max = v;</span>
 			}
-<span class="nc" id="L86">		}</span>
-<span class="nc" id="L87">		return max;</span>
+<span class="nc" id="L88">		}</span>
+<span class="nc" id="L89">		return max;</span>
 	}
 
 	public List&lt;Double&gt; getYs() {
-<span class="nc" id="L91">		return Collections.unmodifiableList(ys);</span>
+<span class="nc" id="L93">		return Collections.unmodifiableList(ys);</span>
 	}
 
 	private double getLastY() {
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (ys.size() == 0) {</span>
-<span class="nc" id="L96">			return 0;</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (ys.size() == 0) {</span>
+<span class="nc" id="L98">			return 0;</span>
 		}
-<span class="nc" id="L98">		return ys.get(ys.size() - 1);</span>
+<span class="nc" id="L100">		return ys.get(ys.size() - 1);</span>
 	}
 
 	public int getValue(double y) {
-<span class="fc" id="L102">		Integer result = cache.get(y);</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (result == null) {</span>
-<span class="fc" id="L104">			result = getValueSlow(y);</span>
-<span class="fc" id="L105">			cache.put(y, result);</span>
+<span class="fc" id="L104">		Integer result = cache.get(y);</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc" id="L106">			result = getValueSlow(y);</span>
+<span class="fc" id="L107">			cache.put(y, result);</span>
 		}
-<span class="fc" id="L107">		return result;</span>
+<span class="fc" id="L109">		return result;</span>
 	}
 
 	private int getValueSlow(double y) {
-<span class="fc" id="L111">		final int idx = Collections.binarySearch(ys, y);</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (idx &gt;= 0) {</span>
-<span class="nc" id="L113">			return values.get(idx);</span>
+<span class="fc" id="L113">		final int idx = Collections.binarySearch(ys, y);</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (idx &gt;= 0) {</span>
+<span class="nc" id="L115">			return values.get(idx);</span>
 		}
-<span class="fc" id="L115">		final int insertPoint = -idx - 1;</span>
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (insertPoint == 0) {</span>
-<span class="fc" id="L117">			return 0;</span>
+<span class="fc" id="L117">		final int insertPoint = -idx - 1;</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (insertPoint == 0) {</span>
+<span class="fc" id="L119">			return 0;</span>
 		}
-<span class="nc" id="L119">		return values.get(insertPoint - 1);</span>
+<span class="nc" id="L121">		return values.get(insertPoint - 1);</span>
 	}
 
 	public int getLastValue() {
-<span class="nc" id="L123">		final int size = values.size();</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (size == 0) {</span>
-<span class="nc" id="L125">			return 0;</span>
+<span class="nc" id="L125">		final int size = values.size();</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (size == 0) {</span>
+<span class="nc" id="L127">			return 0;</span>
 		}
-<span class="nc" id="L127">		return values.get(size - 1);</span>
+<span class="nc" id="L129">		return values.get(size - 1);</span>
 	}
 
 }

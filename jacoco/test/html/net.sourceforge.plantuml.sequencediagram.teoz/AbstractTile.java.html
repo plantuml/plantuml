@@ -38,43 +38,44 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="nc" id="L42">public abstract class AbstractTile extends CommonTile implements Tile {</span>
+<span class="nc" id="L43">public abstract class AbstractTile extends CommonTile implements Tile {</span>
 
 	public AbstractTile(StringBounder stringBounder, YGauge currentY) {
-<span class="nc" id="L45">		super(stringBounder);</span>
+<span class="nc" id="L46">		super(stringBounder);</span>
 		if (YGauge.USE_ME)
 			System.err.println(&quot;CREATING &quot; + getClass());
-<span class="nc" id="L48">	}</span>
+<span class="nc" id="L49">	}</span>
 
 	public AbstractTile(StringBounder stringBounder) {
-<span class="nc" id="L51">		super(stringBounder);</span>
-<span class="nc" id="L52">	}</span>
+<span class="nc" id="L52">		super(stringBounder);</span>
+<span class="nc" id="L53">	}</span>
 
 	@Override
 	public YGauge getYGauge() {
-<span class="nc" id="L56">		throw new UnsupportedOperationException(getClass().toString());</span>
+<span class="nc" id="L57">		throw new UnsupportedOperationException(getClass().toString());</span>
 	}
 
 	public double getContactPointRelative() {
-<span class="nc" id="L60">		return -1;</span>
+<span class="nc" id="L61">		return -1;</span>
 	}
 
 	final public double getZZZ() {
-<span class="nc" id="L64">		final double result = getPreferredHeight() - getContactPointRelative();</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		assert result &gt;= 0;</span>
-<span class="nc" id="L66">		return result;</span>
+<span class="nc" id="L65">		final double result = getPreferredHeight() - getContactPointRelative();</span>
+<span class="nc bnc" id="L66" title="All 4 branches missed.">		if (TeaVM.a()) assert result &gt;= 0;</span>
+<span class="nc" id="L67">		return result;</span>
 	}
 
 	public boolean matchAnchor(String anchor) {
-<span class="nc" id="L70">		final Event event = this.getEvent();</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (event instanceof AbstractMessage) {</span>
-<span class="nc" id="L72">			final AbstractMessage msg = (AbstractMessage) event;</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">			if (anchor.equals(msg.getAnchor()))</span>
-<span class="nc" id="L74">				return true;</span>
+<span class="nc" id="L71">		final Event event = this.getEvent();</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (event instanceof AbstractMessage) {</span>
+<span class="nc" id="L73">			final AbstractMessage msg = (AbstractMessage) event;</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (anchor.equals(msg.getAnchor()))</span>
+<span class="nc" id="L75">				return true;</span>
 
 		}
-<span class="nc" id="L77">		return false;</span>
+<span class="nc" id="L78">		return false;</span>
 	}
 
 }

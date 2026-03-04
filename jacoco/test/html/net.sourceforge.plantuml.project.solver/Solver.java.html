@@ -48,72 +48,73 @@ import net.sourceforge.plantuml.project.ngm.NGMAllocation;
 import net.sourceforge.plantuml.project.ngm.NGMTask;
 import net.sourceforge.plantuml.project.ngm.NGMTotalEffort;
 import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="fc" id="L52">public class Solver {</span>
+<span class="fc" id="L53">public class Solver {</span>
 	// ::remove folder when __HAXE__
 
-<span class="fc" id="L55">	private final Map&lt;TaskAttribute, PValue&gt; values = new LinkedHashMap&lt;TaskAttribute, PValue&gt;();</span>
+<span class="fc" id="L56">	private final Map&lt;TaskAttribute, PValue&gt; values = new LinkedHashMap&lt;TaskAttribute, PValue&gt;();</span>
 
 //	public Solver(NGMAllocation allocation) {
 //		this.allocation = allocation;
 //	}
 
 	public final void setData(TaskAttribute attribute, PValue value) {
-<span class="fc bfc" id="L62" title="All 2 branches covered.">		if (value instanceof TimePoint) {</span>
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">			if (value.toString().endsWith(&quot;T00:00&quot;) == false)</span>
-<span class="nc" id="L64">				throw new IllegalArgumentException(value.toString());</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		if (value instanceof TimePoint) {</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">			if (value.toString().endsWith(&quot;T00:00&quot;) == false)</span>
+<span class="nc" id="L65">				throw new IllegalArgumentException(value.toString());</span>
 		}
-<span class="fc" id="L66">		final PValue previous = values.remove(attribute);</span>
-<span class="pc bpc" id="L67" title="1 of 4 branches missed.">		if (previous != null &amp;&amp; attribute == TaskAttribute.START) {</span>
-<span class="nc" id="L68">			final TimePoint previousInstant = (TimePoint) previous;</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">			if (previousInstant.compareTo((TimePoint) value) &gt; 0)</span>
-<span class="nc" id="L70">				value = previous;</span>
+<span class="fc" id="L67">		final PValue previous = values.remove(attribute);</span>
+<span class="pc bpc" id="L68" title="1 of 4 branches missed.">		if (previous != null &amp;&amp; attribute == TaskAttribute.START) {</span>
+<span class="nc" id="L69">			final TimePoint previousInstant = (TimePoint) previous;</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">			if (previousInstant.compareTo((TimePoint) value) &gt; 0)</span>
+<span class="nc" id="L71">				value = previous;</span>
 
 		}
-<span class="fc" id="L73">		values.put(attribute, value);</span>
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (values.size() &gt; 2)</span>
-<span class="nc" id="L75">			removeFirstElement();</span>
+<span class="fc" id="L74">		values.put(attribute, value);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (values.size() &gt; 2)</span>
+<span class="nc" id="L76">			removeFirstElement();</span>
 
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		assert values.size() &lt;= 2;</span>
+<span class="pc bpc" id="L78" title="2 of 4 branches missed.">		if (TeaVM.a()) assert values.size() &lt;= 2;</span>
 
-<span class="fc" id="L79">	}</span>
+<span class="fc" id="L80">	}</span>
 
 	private void removeFirstElement() {
-<span class="nc" id="L82">		final Iterator&lt;Entry&lt;TaskAttribute, PValue&gt;&gt; it = values.entrySet().iterator();</span>
-<span class="nc" id="L83">		it.next();</span>
-<span class="nc" id="L84">		it.remove();</span>
-<span class="nc" id="L85">	}</span>
+<span class="nc" id="L83">		final Iterator&lt;Entry&lt;TaskAttribute, PValue&gt;&gt; it = values.entrySet().iterator();</span>
+<span class="nc" id="L84">		it.next();</span>
+<span class="nc" id="L85">		it.remove();</span>
+<span class="nc" id="L86">	}</span>
 
 	public final PValue getData(NGMAllocation allocation, TaskAttribute attribute) {
-<span class="fc" id="L88">		PValue result = values.get(attribute);</span>
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (result == null) {</span>
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">			if (attribute == TaskAttribute.END)</span>
-<span class="fc" id="L91">				return computeEnd(allocation);</span>
+<span class="fc" id="L89">		PValue result = values.get(attribute);</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (result == null) {</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">			if (attribute == TaskAttribute.END)</span>
+<span class="fc" id="L92">				return computeEnd(allocation);</span>
 
-<span class="nc bnc" id="L93" title="All 2 branches missed.">			if (attribute == TaskAttribute.START)</span>
-<span class="nc" id="L94">				return computeStart(allocation);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">			if (attribute == TaskAttribute.START)</span>
+<span class="nc" id="L95">				return computeStart(allocation);</span>
 
-<span class="nc" id="L96">			return Load.ofDays(1);</span>
+<span class="nc" id="L97">			return Load.ofDays(1);</span>
 			// throw new UnsupportedOperationException(attribute.toString());
 		}
-<span class="nc" id="L99">		return result;</span>
+<span class="nc" id="L100">		return result;</span>
 	}
 
 	private TimePoint computeEnd(NGMAllocation allocation) {
-<span class="fc" id="L103">		final TimePoint start = (TimePoint) values.get(TaskAttribute.START);</span>
-<span class="fc" id="L104">		final NGMTotalEffort fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getEffort();</span>
-<span class="fc" id="L105">		final NGMTask task = NGMTask.withFixedTotalEffort(allocation, start.toLocalDateTime(), fullLoad);</span>
-<span class="fc" id="L106">		final LocalDateTime result = task.getEnd();</span>
-<span class="fc" id="L107">		return TimePoint.of(result);</span>
+<span class="fc" id="L104">		final TimePoint start = (TimePoint) values.get(TaskAttribute.START);</span>
+<span class="fc" id="L105">		final NGMTotalEffort fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getEffort();</span>
+<span class="fc" id="L106">		final NGMTask task = NGMTask.withFixedTotalEffort(allocation, start.toLocalDateTime(), fullLoad);</span>
+<span class="fc" id="L107">		final LocalDateTime result = task.getEnd();</span>
+<span class="fc" id="L108">		return TimePoint.of(result);</span>
 	}
 
 	private TimePoint computeStart(NGMAllocation allocation) {
-<span class="nc" id="L111">		final TimePoint end = (TimePoint) values.get(TaskAttribute.END);</span>
-<span class="nc" id="L112">		final NGMTotalEffort fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getEffort();</span>
-<span class="nc" id="L113">		final NGMTask task = NGMTask.withFixedTotalEffort(allocation, end.toLocalDateTime(), fullLoad);</span>
-<span class="nc" id="L114">		task.setEnd(end.toLocalDateTime());</span>
-<span class="nc" id="L115">		final LocalDateTime result = task.getStart();</span>
-<span class="nc" id="L116">		return TimePoint.of(result);</span>
+<span class="nc" id="L112">		final TimePoint end = (TimePoint) values.get(TaskAttribute.END);</span>
+<span class="nc" id="L113">		final NGMTotalEffort fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getEffort();</span>
+<span class="nc" id="L114">		final NGMTask task = NGMTask.withFixedTotalEffort(allocation, end.toLocalDateTime(), fullLoad);</span>
+<span class="nc" id="L115">		task.setEnd(end.toLocalDateTime());</span>
+<span class="nc" id="L116">		final LocalDateTime result = task.getStart();</span>
+<span class="nc" id="L117">		return TimePoint.of(result);</span>
 	}
 
 }

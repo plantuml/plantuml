@@ -266,7 +266,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 <span class="pc bpc" id="L266" title="1 of 2 branches missed.">		if (x == -1) {</span>
 <span class="fc bfc" id="L267" title="All 4 branches covered.">			if (reuseExistingChild &amp;&amp; this.countByName(full) == 1) {</span>
 <span class="fc" id="L268">				final Quark&lt;Entity&gt; byName = this.firstWithName(full);</span>
-<span class="pc bpc" id="L269" title="1 of 2 branches missed.">				assert byName != null;</span>
+<span class="pc bpc" id="L269" title="2 of 4 branches missed.">				if (TeaVM.a()) assert byName != null;</span>
 <span class="pc bpc" id="L270" title="1 of 2 branches missed.">				if (byName != currentQuark)</span>
 <span class="fc" id="L271">					return Failable.ok(byName);</span>
 			}
@@ -878,7 +878,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 	private Entity isNoteWithSingleLinkAttachedTo(Entity note) {
 <span class="fc bfc" id="L879" title="All 2 branches covered.">		if (note.getLeafType() != LeafType.NOTE)</span>
 <span class="fc" id="L880">			return null;</span>
-<span class="pc bpc" id="L881" title="1 of 2 branches missed.">		assert note.getLeafType() == LeafType.NOTE;</span>
+<span class="pc bpc" id="L881" title="2 of 4 branches missed.">		if (TeaVM.a()) assert note.getLeafType() == LeafType.NOTE;</span>
 <span class="fc" id="L882">		Entity other = null;</span>
 <span class="fc bfc" id="L883" title="All 2 branches covered.">		for (Link link : this.getLinks()) {</span>
 <span class="pc bpc" id="L884" title="1 of 2 branches missed.">			if (link.getType().isInvisible())</span>

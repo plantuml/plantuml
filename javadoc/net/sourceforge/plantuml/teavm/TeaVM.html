@@ -121,8 +121,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isTeaVM()" class="member-name-link">isTeaVM</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#a()" class="member-name-link">a</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Guard method for assertions, ensuring they are removed from the
+ generated JavaScript output.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isTeaVM()" class="member-name-link">isTeaVM</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Platform marker method used to distinguish TeaVM compilation from standard
  JVM execution.</div>
 </div>
@@ -183,6 +189,22 @@ loadScripts(document, 'script');</script>
  
  This mechanism is intended purely as a compile-time optimization hint for
  TeaVM, not as a runtime platform check.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="a()">
+<h3>a</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">a</span>()</div>
+<div class="block">Guard method for assertions, ensuring they are removed from the
+ generated JavaScript output.
+
+ Returns <code>true</code> on the JVM (allowing the assertion to execute)
+ and <code>false</code> under TeaVM (skipping it entirely via dead code
+ elimination).
+
+ <pre>
+ if (TeaVM.a()) assert ...
+ </pre></div>
 </section>
 </li>
 </ul>

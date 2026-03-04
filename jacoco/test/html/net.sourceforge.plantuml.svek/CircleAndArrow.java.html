@@ -35,10 +35,9 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
-
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
@@ -55,39 +54,39 @@ class CircleAndArrow implements UDrawable {
 	private XPoint2D p3;
 	private XPoint2D p4;
 
-<span class="nc" id="L58">	public CircleAndArrow(XPoint2D p1, XPoint2D p2) {</span>
-<span class="nc" id="L59">		this.center = new XPoint2D((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);</span>
-<span class="nc" id="L60">		at = XAffineTransform.getTranslateInstance(-center.getX(), -center.getY());</span>
-<span class="nc" id="L61">		at2 = XAffineTransform.getTranslateInstance(center.getX(), center.getY());</span>
-<span class="nc" id="L62">		radius = (int) (p1.distance(p2) / 2);</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (radius % 2 == 0) {</span>
-<span class="nc" id="L64">			radius--;</span>
+<span class="nc" id="L57">	public CircleAndArrow(XPoint2D p1, XPoint2D p2) {</span>
+<span class="nc" id="L58">		this.center = new XPoint2D((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);</span>
+<span class="nc" id="L59">		at = XAffineTransform.getTranslateInstance(-center.getX(), -center.getY());</span>
+<span class="nc" id="L60">		at2 = XAffineTransform.getTranslateInstance(center.getX(), center.getY());</span>
+<span class="nc" id="L61">		radius = (int) (p1.distance(p2) / 2);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (radius % 2 == 0) {</span>
+<span class="nc" id="L63">			radius--;</span>
 		}
-<span class="nc" id="L66">		this.p1 = putOnCircle(p1);</span>
-<span class="nc" id="L67">		this.p2 = putOnCircle(p2);</span>
+<span class="nc" id="L65">		this.p1 = putOnCircle(p1);</span>
+<span class="nc" id="L66">		this.p2 = putOnCircle(p2);</span>
 
-<span class="nc" id="L69">		this.p3 = this.p1.transform(at);</span>
-<span class="nc" id="L70">		this.p3 = new XPoint2D(p3.getY(), -p3.getX());</span>
-<span class="nc" id="L71">		this.p3 = this.p3.transform(at2);</span>
+<span class="nc" id="L68">		this.p3 = this.p1.transform(at);</span>
+<span class="nc" id="L69">		this.p3 = new XPoint2D(p3.getY(), -p3.getX());</span>
+<span class="nc" id="L70">		this.p3 = this.p3.transform(at2);</span>
 
-<span class="nc" id="L73">		this.p4 = this.p2.transform(at);</span>
-<span class="nc" id="L74">		this.p4 = new XPoint2D(p4.getY(), -p4.getX());</span>
-<span class="nc" id="L75">		this.p4 = this.p4.transform(at2);</span>
-<span class="nc" id="L76">	}</span>
+<span class="nc" id="L72">		this.p4 = this.p2.transform(at);</span>
+<span class="nc" id="L73">		this.p4 = new XPoint2D(p4.getY(), -p4.getX());</span>
+<span class="nc" id="L74">		this.p4 = this.p4.transform(at2);</span>
+<span class="nc" id="L75">	}</span>
 
 	private XPoint2D putOnCircle(XPoint2D p) {
-<span class="nc" id="L79">		p = p.transform(at);</span>
-<span class="nc" id="L80">		final double coef = p.distance(new XPoint2D(0, 0)) / radius;</span>
-<span class="nc" id="L81">		p = new XPoint2D(p.getX() / coef, p.getY() / coef);</span>
-<span class="nc" id="L82">		return p.transform(at2);</span>
+<span class="nc" id="L78">		p = p.transform(at);</span>
+<span class="nc" id="L79">		final double coef = p.distance(new XPoint2D(0, 0)) / radius;</span>
+<span class="nc" id="L80">		p = new XPoint2D(p.getX() / coef, p.getY() / coef);</span>
+<span class="nc" id="L81">		return p.transform(at2);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L86">		final UShape circle = UEllipse.build(radius * 2, radius * 2);</span>
-<span class="nc" id="L87">		ug.apply(new UTranslate(center.getX() - radius, center.getY() - radius)).draw(circle);</span>
+<span class="nc" id="L85">		final UShape circle = UEllipse.build(radius * 2, radius * 2);</span>
+<span class="nc" id="L86">		ug.apply(new UTranslate(center.getX() - radius, center.getY() - radius)).draw(circle);</span>
 		// drawLine(ug, x, y, p1, p2);
 		// drawLine(ug, x, y, p3, p4);
-<span class="nc" id="L90">	}</span>
+<span class="nc" id="L89">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

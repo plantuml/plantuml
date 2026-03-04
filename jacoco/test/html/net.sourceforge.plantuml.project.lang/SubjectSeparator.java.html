@@ -46,71 +46,72 @@ import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class SubjectSeparator implements Subject&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L52">	public static final Subject&lt;GanttDiagram&gt; ME = new SubjectSeparator();</span>
+<span class="fc" id="L53">	public static final Subject&lt;GanttDiagram&gt; ME = new SubjectSeparator();</span>
 
 	private SubjectSeparator() {
 	}
 
 	public IRegex toRegex() {
-<span class="fc" id="L58">		return new RegexLeaf(0, &quot;SUBJECT&quot;, &quot;separator&quot;);</span>
+<span class="fc" id="L59">		return new RegexLeaf(0, &quot;SUBJECT&quot;, &quot;separator&quot;);</span>
 	}
 
 	public Failable&lt;GanttDiagram&gt; getMe(GanttDiagram project, RegexResult arg) {
-<span class="nc" id="L62">		return Failable.ok(project);</span>
+<span class="nc" id="L63">		return Failable.ok(project);</span>
 	}
 
 	public Collection&lt;? extends SentenceSimple&lt;GanttDiagram&gt;&gt; getSentences() {
-<span class="fc" id="L66">		return Arrays.asList(new JustBefore(), new JustAfter(), new Just());</span>
+<span class="fc" id="L67">		return Arrays.asList(new JustBefore(), new JustAfter(), new Just());</span>
 	}
 
-<span class="fc" id="L69">	class JustBefore extends SentenceSimple&lt;GanttDiagram&gt; {</span>
+<span class="fc" id="L70">	class JustBefore extends SentenceSimple&lt;GanttDiagram&gt; {</span>
 
-<span class="fc" id="L71">		public JustBefore() {</span>
-<span class="fc" id="L72">			super(SubjectSeparator.this, Verbs.just, Words.exactly(Words.BEFORE), ComplementDate.any());</span>
-<span class="fc" id="L73">		}</span>
+<span class="fc" id="L72">		public JustBefore() {</span>
+<span class="fc" id="L73">			super(SubjectSeparator.this, Verbs.just, Words.exactly(Words.BEFORE), ComplementDate.any());</span>
+<span class="fc" id="L74">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L77">			final LocalDate day = (LocalDate) complement;</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">			assert project == subject;</span>
-<span class="nc" id="L79">			project.addVerticalSeparatorBefore(day);</span>
-<span class="nc" id="L80">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L78">			final LocalDate day = (LocalDate) complement;</span>
+<span class="nc bnc" id="L79" title="All 4 branches missed.">			if (TeaVM.a()) assert project == subject;</span>
+<span class="nc" id="L80">			project.addVerticalSeparatorBefore(day);</span>
+<span class="nc" id="L81">			return CommandExecutionResult.ok();</span>
 		}
 
 	}
 
-<span class="fc" id="L85">	class JustAfter extends SentenceSimple&lt;GanttDiagram&gt; {</span>
+<span class="fc" id="L86">	class JustAfter extends SentenceSimple&lt;GanttDiagram&gt; {</span>
 
-<span class="fc" id="L87">		public JustAfter() {</span>
-<span class="fc" id="L88">			super(SubjectSeparator.this, Verbs.just, Words.exactly(Words.AFTER), ComplementDate.any());</span>
-<span class="fc" id="L89">		}</span>
+<span class="fc" id="L88">		public JustAfter() {</span>
+<span class="fc" id="L89">			super(SubjectSeparator.this, Verbs.just, Words.exactly(Words.AFTER), ComplementDate.any());</span>
+<span class="fc" id="L90">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L93">			final LocalDate day = (LocalDate) complement;</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">			assert project == subject;</span>
-<span class="nc" id="L95">			project.addVerticalSeparatorBefore(day.plusDays(1));</span>
-<span class="nc" id="L96">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L94">			final LocalDate day = (LocalDate) complement;</span>
+<span class="nc bnc" id="L95" title="All 4 branches missed.">			if (TeaVM.a()) assert project == subject;</span>
+<span class="nc" id="L96">			project.addVerticalSeparatorBefore(day.plusDays(1));</span>
+<span class="nc" id="L97">			return CommandExecutionResult.ok();</span>
 		}
 
 	}
 
-<span class="fc" id="L101">	class Just extends SentenceSimple&lt;GanttDiagram&gt; {</span>
+<span class="fc" id="L102">	class Just extends SentenceSimple&lt;GanttDiagram&gt; {</span>
 
-<span class="fc" id="L103">		public Just() {</span>
-<span class="fc" id="L104">			super(SubjectSeparator.this, Verbs.just, new ComplementBeforeOrAfterOrAtTaskStartOrEnd());</span>
-<span class="fc" id="L105">		}</span>
+<span class="fc" id="L104">		public Just() {</span>
+<span class="fc" id="L105">			super(SubjectSeparator.this, Verbs.just, new ComplementBeforeOrAfterOrAtTaskStartOrEnd());</span>
+<span class="fc" id="L106">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L109">			final TaskInstant when = (TaskInstant) complement;</span>
+<span class="nc" id="L110">			final TaskInstant when = (TaskInstant) complement;</span>
 
-<span class="nc bnc" id="L111" title="All 2 branches missed.">			assert project == subject;</span>
-<span class="nc" id="L112">			project.addVerticalSeparatorBefore(when.getInstantPrecise().toDay());</span>
-<span class="nc" id="L113">			return CommandExecutionResult.ok();</span>
+<span class="nc bnc" id="L112" title="All 4 branches missed.">			if (TeaVM.a()) assert project == subject;</span>
+<span class="nc" id="L113">			project.addVerticalSeparatorBefore(when.getInstantPrecise().toDay());</span>
+<span class="nc" id="L114">			return CommandExecutionResult.ok();</span>
 		}
 
 	}

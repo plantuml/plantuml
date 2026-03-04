@@ -82,7 +82,7 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="nc" id="L82">	}</span>
 
 	private PortableImage generateFlashcodeImage(String flash, ReportLog strings) {
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		assert flash != null;</span>
+<span class="nc bnc" id="L85" title="All 4 branches missed.">		if (TeaVM.a()) assert flash != null;</span>
 <span class="nc bnc" id="L86" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
 <span class="nc" id="L87">			final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();</span>
 			try {

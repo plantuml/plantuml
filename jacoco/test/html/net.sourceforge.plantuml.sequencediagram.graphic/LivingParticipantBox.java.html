@@ -40,23 +40,24 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="fc" id="L44">public class LivingParticipantBox implements InGroupable {</span>
+<span class="fc" id="L45">public class LivingParticipantBox implements InGroupable {</span>
 
 	private final ParticipantBox participantBox;
 	private final LifeLine lifeLine;
 
-<span class="fc" id="L49">	public LivingParticipantBox(ParticipantBox participantBox, LifeLine lifeLine) {</span>
-<span class="fc" id="L50">		this.participantBox = participantBox;</span>
-<span class="fc" id="L51">		this.lifeLine = lifeLine;</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L50">	public LivingParticipantBox(ParticipantBox participantBox, LifeLine lifeLine) {</span>
+<span class="fc" id="L51">		this.participantBox = participantBox;</span>
+<span class="fc" id="L52">		this.lifeLine = lifeLine;</span>
+<span class="fc" id="L53">	}</span>
 
 	/**
 	 * @deprecated to be deleted
 	 */
 	@Deprecated
 	public ParticipantBox getParticipantBox() {
-<span class="fc" id="L59">		return participantBox;</span>
+<span class="fc" id="L60">		return participantBox;</span>
 	}
 
 	/**
@@ -64,59 +65,59 @@ import net.sourceforge.plantuml.sequencediagram.Participant;
 	 */
 	@Deprecated
 	public LifeLine getLifeLine() {
-<span class="fc" id="L67">		return lifeLine;</span>
+<span class="fc" id="L68">		return lifeLine;</span>
 	}
 
 	public SegmentColored getLiveThicknessAt(StringBounder stringBounder, double y) {
-<span class="fc" id="L71">		final double left = lifeLine.getLeftShift(y);</span>
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		assert left &gt;= 0;</span>
-<span class="fc" id="L73">		final double right = lifeLine.getRightShift(y);</span>
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		assert right &gt;= 0 : &quot;right=&quot; + right;</span>
-<span class="fc" id="L75">		final double centerX = participantBox.getCenterX(stringBounder);</span>
+<span class="fc" id="L72">		final double left = lifeLine.getLeftShift(y);</span>
+<span class="pc bpc" id="L73" title="2 of 4 branches missed.">		if (TeaVM.a()) assert left &gt;= 0;</span>
+<span class="fc" id="L74">		final double right = lifeLine.getRightShift(y);</span>
+<span class="pc bpc" id="L75" title="2 of 4 branches missed.">		if (TeaVM.a()) assert right &gt;= 0 : &quot;right=&quot; + right;</span>
+<span class="fc" id="L76">		final double centerX = participantBox.getCenterX(stringBounder);</span>
 		// Log.println(&quot;AZERTY &quot; + y + &quot; centerX=&quot; + centerX + &quot; left=&quot; + left + &quot;
 		// right=&quot; + right);
 		// Log.println(&quot;Attention, null for segment&quot;);
-<span class="fc" id="L79">		final Fashion colors = lifeLine.getColors();</span>
-<span class="fc" id="L80">		return SegmentColored.create(centerX - left, centerX + right, colors, lifeLine.shadowing());</span>
+<span class="fc" id="L80">		final Fashion colors = lifeLine.getColors();</span>
+<span class="fc" id="L81">		return SegmentColored.create(centerX - left, centerX + right, colors, lifeLine.shadowing());</span>
 	}
 
 	public void drawLineU22(UGraphic ug, double startingY, double endingY, boolean showTail, double myDelta) {
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (endingY &lt;= startingY) {</span>
-<span class="nc" id="L85">			return;</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (endingY &lt;= startingY) {</span>
+<span class="nc" id="L86">			return;</span>
 		}
-<span class="fc" id="L87">		final double destroy = lifeLine.getDestroy();</span>
-<span class="pc bpc" id="L88" title="5 of 6 branches missed.">		if (destroy != 0 &amp;&amp; destroy &gt; startingY &amp;&amp; destroy &lt; endingY) {</span>
-<span class="nc" id="L89">			endingY = destroy;</span>
+<span class="fc" id="L88">		final double destroy = lifeLine.getDestroy();</span>
+<span class="pc bpc" id="L89" title="5 of 6 branches missed.">		if (destroy != 0 &amp;&amp; destroy &gt; startingY &amp;&amp; destroy &lt; endingY) {</span>
+<span class="nc" id="L90">			endingY = destroy;</span>
 		}
-<span class="fc" id="L91">		participantBox.drawLineU22(ug, startingY, endingY, showTail, myDelta);</span>
-<span class="fc" id="L92">	}</span>
+<span class="fc" id="L92">		participantBox.drawLineU22(ug, startingY, endingY, showTail, myDelta);</span>
+<span class="fc" id="L93">	}</span>
 
 	public double magicMargin(StringBounder stringBounder) {
-<span class="fc" id="L95">		return participantBox.magicMargin(stringBounder);</span>
+<span class="fc" id="L96">		return participantBox.magicMargin(stringBounder);</span>
 	}
 
 	public void create(double ypos) {
-<span class="nc" id="L99">		lifeLine.setCreate(ypos);</span>
-<span class="nc" id="L100">	}</span>
+<span class="nc" id="L100">		lifeLine.setCreate(ypos);</span>
+<span class="nc" id="L101">	}</span>
 
 	public double getCreate() {
-<span class="fc" id="L103">		return lifeLine.getCreate();</span>
+<span class="fc" id="L104">		return lifeLine.getCreate();</span>
 	}
 
 	public double getMaxX(StringBounder stringBounder) {
-<span class="nc" id="L107">		return participantBox.getMaxX(stringBounder);</span>
+<span class="nc" id="L108">		return participantBox.getMaxX(stringBounder);</span>
 	}
 
 	public double getMinX(StringBounder stringBounder) {
-<span class="nc" id="L111">		return participantBox.getStartingX();</span>
+<span class="nc" id="L112">		return participantBox.getStartingX();</span>
 	}
 
 	public String toString(StringBounder stringBounder) {
-<span class="nc" id="L115">		return toString();</span>
+<span class="nc" id="L116">		return toString();</span>
 	}
 
 	public Participant getParticipant() {
-<span class="fc" id="L119">		return participantBox.getParticipant();</span>
+<span class="fc" id="L120">		return participantBox.getParticipant();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

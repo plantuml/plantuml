@@ -1923,10 +1923,10 @@ Stats:
     Abstract Classes: 1
 
     Ca: 5
-    Ce: 25
+    Ce: 26
 
     A: 0.01
-    I: 0.83
+    I: 0.84
     D: 0.15
 
 Abstract Classes:
@@ -2031,6 +2031,7 @@ Depends Upon:
     net.sourceforge.plantuml.style
     net.sourceforge.plantuml.svek
     net.sourceforge.plantuml.svek.image
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.url
     net.sourceforge.plantuml.utils
 
@@ -2785,7 +2786,7 @@ Stats:
     Abstract Classes: 7
 
     Ca: 0
-    Ce: 19
+    Ce: 20
 
     A: 0.22
     I: 1
@@ -2846,6 +2847,7 @@ Depends Upon:
     net.sourceforge.plantuml.regex
     net.sourceforge.plantuml.skin
     net.sourceforge.plantuml.style
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.utils
 
 Used By:
@@ -3353,11 +3355,11 @@ Stats:
     Abstract Classes: 4
 
     Ca: 3
-    Ce: 9
+    Ce: 10
 
     A: 0.16
-    I: 0.75
-    D: 0.09
+    I: 0.77
+    D: 0.07
 
 Abstract Classes:
     net.sourceforge.plantuml.code.Compression
@@ -3397,6 +3399,7 @@ Depends Upon:
     net.sourceforge.plantuml.brotli
     net.sourceforge.plantuml.code.deflate
     net.sourceforge.plantuml.log
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.zopfli
 
 Used By:
@@ -3447,11 +3450,11 @@ Stats:
     Abstract Classes: 7
 
     Ca: 60
-    Ce: 34
+    Ce: 35
 
     A: 0.14
-    I: 0.36
-    D: 0.5
+    I: 0.37
+    D: 0.49
 
 Abstract Classes:
     net.sourceforge.plantuml.command.Command
@@ -3537,6 +3540,7 @@ Depends Upon:
     net.sourceforge.plantuml.stereo
     net.sourceforge.plantuml.style
     net.sourceforge.plantuml.svg.parser
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.teavm.browser
     net.sourceforge.plantuml.text
     net.sourceforge.plantuml.url
@@ -4006,11 +4010,11 @@ Stats:
     Abstract Classes: 6
 
     Ca: 9
-    Ce: 20
+    Ce: 21
 
     A: 0.2
-    I: 0.69
-    D: 0.11
+    I: 0.7
+    D: 0.1
 
 Abstract Classes:
     net.sourceforge.plantuml.cucadiagram.Bodier
@@ -4066,6 +4070,7 @@ Depends Upon:
     net.sourceforge.plantuml.stereo
     net.sourceforge.plantuml.style
     net.sourceforge.plantuml.svek
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.url
 
 Used By:
@@ -5442,7 +5447,7 @@ Stats:
     Abstract Classes: 0
 
     Ca: 0
-    Ce: 22
+    Ce: 23
 
     A: 0
     I: 1
@@ -5482,6 +5487,7 @@ Depends Upon:
     net.sourceforge.plantuml.preproc
     net.sourceforge.plantuml.skin
     net.sourceforge.plantuml.style
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.text
     smetana.core
 
@@ -5498,11 +5504,11 @@ Stats:
     Abstract Classes: 0
 
     Ca: 1
-    Ce: 9
+    Ce: 10
 
     A: 0
-    I: 0.9
-    D: 0.1
+    I: 0.91
+    D: 0.09
 
 Abstract Classes:
 
@@ -5528,6 +5534,7 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.font
     net.sourceforge.plantuml.klimt.geom
     net.sourceforge.plantuml.klimt.shape
+    net.sourceforge.plantuml.teavm
 
 Used By:
     net.sourceforge.plantuml.flowdiagram
@@ -5859,11 +5866,11 @@ Stats:
     Abstract Classes: 10
 
     Ca: 81
-    Ce: 18
+    Ce: 19
 
     A: 0.48
-    I: 0.18
-    D: 0.34
+    I: 0.19
+    D: 0.33
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.AbstractShadowable
@@ -5908,6 +5915,7 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.regex
     net.sourceforge.plantuml.style
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.utils
 
 Used By:
@@ -6449,11 +6457,11 @@ Stats:
     Abstract Classes: 2
 
     Ca: 2
-    Ce: 13
+    Ce: 14
 
     A: 0.11
-    I: 0.87
-    D: 0.03
+    I: 0.88
+    D: 0.02
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.creole.command.Command
@@ -6490,6 +6498,7 @@ Depends Upon:
     net.sourceforge.plantuml.math
     net.sourceforge.plantuml.regex
     net.sourceforge.plantuml.style
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.text
     net.sourceforge.plantuml.url
 
@@ -6946,11 +6955,11 @@ Stats:
     Abstract Classes: 0
 
     Ca: 3
-    Ce: 15
+    Ce: 16
 
     A: 0
-    I: 0.83
-    D: 0.17
+    I: 0.84
+    D: 0.16
 
 Abstract Classes:
 
@@ -6982,6 +6991,7 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.drawing.g2d
     net.sourceforge.plantuml.klimt.font
     net.sourceforge.plantuml.klimt.shape
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.url
 
 Used By:
@@ -7260,11 +7270,11 @@ Stats:
     Abstract Classes: 6
 
     Ca: 88
-    Ce: 8
+    Ce: 9
 
     A: 0.18
-    I: 0.08
-    D: 0.74
+    I: 0.09
+    D: 0.73
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.geom.AbstractPlacementStrategy
@@ -7313,6 +7323,7 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.drawing
     net.sourceforge.plantuml.klimt.font
     net.sourceforge.plantuml.klimt.shape
+    net.sourceforge.plantuml.teavm
 
 Used By:
     net.atmp
@@ -7579,11 +7590,11 @@ Stats:
     Abstract Classes: 2
 
     Ca: 13
-    Ce: 25
+    Ce: 26
 
     A: 0.09
-    I: 0.66
-    D: 0.25
+    I: 0.67
+    D: 0.24
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.sprite.Sprite
@@ -7635,6 +7646,7 @@ Depends Upon:
     net.sourceforge.plantuml.regex
     net.sourceforge.plantuml.skin
     net.sourceforge.plantuml.style
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.text
     net.sourceforge.plantuml.utils
 
@@ -7849,10 +7861,10 @@ Stats:
     Abstract Classes: 1
 
     Ca: 1
-    Ce: 21
+    Ce: 22
 
     A: 0.08
-    I: 0.95
+    I: 0.96
     D: 0.04
 
 Abstract Classes:
@@ -7891,6 +7903,7 @@ Depends Upon:
     net.sourceforge.plantuml.skin
     net.sourceforge.plantuml.stereo
     net.sourceforge.plantuml.style
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.utils
     net.sourceforge.plantuml.wbs
 
@@ -7980,7 +7993,7 @@ Stats:
     Abstract Classes: 0
 
     Ca: 1
-    Ce: 16
+    Ce: 17
 
     A: 0
     I: 0.94
@@ -8018,6 +8031,7 @@ Depends Upon:
     net.sourceforge.plantuml.preproc
     net.sourceforge.plantuml.regex
     net.sourceforge.plantuml.skin
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.utils
 
 Used By:
@@ -8115,7 +8129,7 @@ Stats:
     Abstract Classes: 1
 
     Ca: 0
-    Ce: 14
+    Ce: 15
 
     A: 0.5
     I: 1
@@ -8141,6 +8155,7 @@ Depends Upon:
     net.sourceforge.plantuml.preproc
     net.sourceforge.plantuml.skin
     net.sourceforge.plantuml.style
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.utils
 
 Used By:
@@ -8986,11 +9001,11 @@ Stats:
     Abstract Classes: 2
 
     Ca: 5
-    Ce: 24
+    Ce: 25
 
     A: 0.22
     I: 0.83
-    D: 0.05
+    D: 0.06
 
 Abstract Classes:
     net.sourceforge.plantuml.project.draw.ResourceDraw
@@ -9029,6 +9044,7 @@ Depends Upon:
     net.sourceforge.plantuml.stereo
     net.sourceforge.plantuml.style
     net.sourceforge.plantuml.svek.image
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.url
 
 Used By:
@@ -9098,11 +9114,11 @@ Stats:
     Abstract Classes: 4
 
     Ca: 5
-    Ce: 13
+    Ce: 14
 
     A: 0.06
-    I: 0.72
-    D: 0.22
+    I: 0.74
+    D: 0.2
 
 Abstract Classes:
     net.sourceforge.plantuml.project.lang.Sentence
@@ -9185,6 +9201,7 @@ Depends Upon:
     net.sourceforge.plantuml.project.time
     net.sourceforge.plantuml.regex
     net.sourceforge.plantuml.stereo
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.url
 
 Used By:
@@ -9281,11 +9298,11 @@ Stats:
     Abstract Classes: 0
 
     Ca: 1
-    Ce: 6
+    Ce: 7
 
     A: 0
-    I: 0.86
-    D: 0.14
+    I: 0.88
+    D: 0.12
 
 Abstract Classes:
 
@@ -9300,6 +9317,7 @@ Depends Upon:
     net.sourceforge.plantuml.project.core
     net.sourceforge.plantuml.project.ngm
     net.sourceforge.plantuml.project.time
+    net.sourceforge.plantuml.teavm
 
 Used By:
     net.sourceforge.plantuml.project
@@ -9390,11 +9408,11 @@ Stats:
     Abstract Classes: 4
 
     Ca: 5
-    Ce: 2
+    Ce: 3
 
     A: 0.5
-    I: 0.29
-    D: 0.21
+    I: 0.38
+    D: 0.12
 
 Abstract Classes:
     net.sourceforge.plantuml.real.AbstractReal
@@ -9411,6 +9429,7 @@ Concrete Classes:
 Depends Upon:
     java.lang
     java.util
+    net.sourceforge.plantuml.teavm
 
 Used By:
     net.sourceforge.plantuml.chronology
@@ -9429,11 +9448,11 @@ Stats:
     Abstract Classes: 2
 
     Ca: 41
-    Ce: 5
+    Ce: 6
 
     A: 0.22
-    I: 0.11
-    D: 0.67
+    I: 0.13
+    D: 0.65
 
 Abstract Classes:
     net.sourceforge.plantuml.regex.IRegex
@@ -9453,6 +9472,7 @@ Depends Upon:
     java.lang
     java.util
     java.util.concurrent.atomic
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.text
 
 Used By:
@@ -9688,11 +9708,11 @@ Stats:
     Abstract Classes: 2
 
     Ca: 1
-    Ce: 7
+    Ce: 8
 
     A: 0.11
-    I: 0.88
-    D: 0.02
+    I: 0.89
+    D: 0.01
 
 Abstract Classes:
     net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex
@@ -9725,6 +9745,7 @@ Depends Upon:
     net.sourceforge.plantuml.salt
     net.sourceforge.plantuml.salt.element
     net.sourceforge.plantuml.style
+    net.sourceforge.plantuml.teavm
 
 Used By:
     net.sourceforge.plantuml.salt.element
@@ -10244,7 +10265,7 @@ Stats:
     Abstract Classes: 0
 
     Ca: 0
-    Ce: 2
+    Ce: 3
 
     A: 0
     I: 1
@@ -10263,6 +10284,7 @@ Concrete Classes:
 Depends Upon:
     java.lang
     java.util
+    net.sourceforge.plantuml.teavm
 
 Used By:
     Not used by any packages.
@@ -10277,7 +10299,7 @@ Stats:
     Abstract Classes: 6
 
     Ca: 0
-    Ce: 23
+    Ce: 24
 
     A: 0.12
     I: 1
@@ -10361,6 +10383,7 @@ Depends Upon:
     net.sourceforge.plantuml.skin.rose
     net.sourceforge.plantuml.stereo
     net.sourceforge.plantuml.style
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.utils
 
 Used By:
@@ -11552,12 +11575,12 @@ Stats:
     Concrete Classes: 15
     Abstract Classes: 1
 
-    Ca: 17
+    Ca: 43
     Ce: 12
 
     A: 0.06
-    I: 0.41
-    D: 0.52
+    I: 0.22
+    D: 0.72
 
 Abstract Classes:
     net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine$StringCallback
@@ -11596,21 +11619,47 @@ Depends Upon:
 Used By:
     net.atmp
     net.sourceforge.plantuml
+    net.sourceforge.plantuml.activitydiagram3.ftile.vcompact
+    net.sourceforge.plantuml.bpm
+    net.sourceforge.plantuml.code
+    net.sourceforge.plantuml.command
     net.sourceforge.plantuml.core
+    net.sourceforge.plantuml.cucadiagram
     net.sourceforge.plantuml.dot
     net.sourceforge.plantuml.flashcode
+    net.sourceforge.plantuml.gitlog
+    net.sourceforge.plantuml.golem
+    net.sourceforge.plantuml.klimt
     net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.creole.atom
+    net.sourceforge.plantuml.klimt.creole.command
     net.sourceforge.plantuml.klimt.creole.legacy
     net.sourceforge.plantuml.klimt.drawing.debug
     net.sourceforge.plantuml.klimt.drawing.hand
+    net.sourceforge.plantuml.klimt.drawing.svg
+    net.sourceforge.plantuml.klimt.geom
+    net.sourceforge.plantuml.klimt.sprite
     net.sourceforge.plantuml.log
+    net.sourceforge.plantuml.mindmap
+    net.sourceforge.plantuml.nwdiag
+    net.sourceforge.plantuml.objectdiagram
+    net.sourceforge.plantuml.project.draw
+    net.sourceforge.plantuml.project.lang
+    net.sourceforge.plantuml.project.solver
+    net.sourceforge.plantuml.real
+    net.sourceforge.plantuml.regex
+    net.sourceforge.plantuml.salt.factory
     net.sourceforge.plantuml.security
     net.sourceforge.plantuml.sequencediagram.graphic
+    net.sourceforge.plantuml.sequencediagram.puma
+    net.sourceforge.plantuml.sequencediagram.teoz
     net.sourceforge.plantuml.svek
     net.sourceforge.plantuml.svg.parser
+    net.sourceforge.plantuml.tim.iterator
+    net.sourceforge.plantuml.timingdiagram.graphic
     net.sourceforge.plantuml.utils
+    net.sourceforge.plantuml.wbs
 
 --------------------------------------------------
 - Package: net.sourceforge.plantuml.teavm.browser
@@ -12026,11 +12075,11 @@ Stats:
     Abstract Classes: 3
 
     Ca: 1
-    Ce: 7
+    Ce: 8
 
     A: 0.19
-    I: 0.88
-    D: 0.06
+    I: 0.89
+    D: 0.08
 
 Abstract Classes:
     net.sourceforge.plantuml.tim.iterator.AbstractCodeIterator
@@ -12057,6 +12106,7 @@ Depends Upon:
     java.util
     net.sourceforge.plantuml.json
     net.sourceforge.plantuml.preproc
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.text
     net.sourceforge.plantuml.tim
     net.sourceforge.plantuml.tim.expression
@@ -12200,10 +12250,10 @@ Stats:
     Abstract Classes: 3
 
     Ca: 1
-    Ce: 14
+    Ce: 15
 
     A: 0.18
-    I: 0.93
+    I: 0.94
     D: 0.11
 
 Abstract Classes:
@@ -12240,6 +12290,7 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.geom
     net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.style
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.timingdiagram
     net.sourceforge.plantuml.utils
 
@@ -12561,7 +12612,7 @@ Stats:
     Abstract Classes: 2
 
     Ca: 1
-    Ce: 22
+    Ce: 23
 
     A: 0.2
     I: 0.96
@@ -12603,6 +12654,7 @@ Depends Upon:
     net.sourceforge.plantuml.stereo
     net.sourceforge.plantuml.style
     net.sourceforge.plantuml.svek.extremity
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.utils
 
 Used By:
@@ -13784,7 +13836,6 @@ net.sourceforge.plantuml.classdiagram.command
 
 net.sourceforge.plantuml.code
     |
-    |   net.sourceforge.plantuml.log
     |-> net.sourceforge.plantuml.teavm
     |   net.sourceforge.plantuml.klimt.color
     |-> net.sourceforge.plantuml.teavm
@@ -14257,9 +14308,9 @@ net.sourceforge.plantuml.klimt.shape
 
 net.sourceforge.plantuml.klimt.sprite
     |
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.teavm
-    |-> net.sourceforge.plantuml.klimt.color
+    |-> net.sourceforge.plantuml.teavm
+    |   net.sourceforge.plantuml.klimt.color
+    |-> net.sourceforge.plantuml.teavm
 
 net.sourceforge.plantuml.log
     |
@@ -14312,10 +14363,9 @@ net.sourceforge.plantuml.nwdiag.next
 
 net.sourceforge.plantuml.objectdiagram
     |
-    |   net.sourceforge.plantuml.decoration
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.teavm
-    |-> net.sourceforge.plantuml.klimt.color
+    |-> net.sourceforge.plantuml.teavm
+    |   net.sourceforge.plantuml.klimt.color
+    |-> net.sourceforge.plantuml.teavm
 
 net.sourceforge.plantuml.openiconic
     |
@@ -14396,9 +14446,9 @@ net.sourceforge.plantuml.project.core
     |
     |   net.sourceforge.plantuml.project.draw
     |   net.sourceforge.plantuml.klimt.sprite
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.teavm
-    |-> net.sourceforge.plantuml.klimt.color
+    |-> net.sourceforge.plantuml.teavm
+    |   net.sourceforge.plantuml.klimt.color
+    |-> net.sourceforge.plantuml.teavm
 
 net.sourceforge.plantuml.project.data
     |
@@ -14410,9 +14460,9 @@ net.sourceforge.plantuml.project.data
 net.sourceforge.plantuml.project.draw
     |
     |   net.sourceforge.plantuml.klimt.sprite
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.teavm
-    |-> net.sourceforge.plantuml.klimt.color
+    |-> net.sourceforge.plantuml.teavm
+    |   net.sourceforge.plantuml.klimt.color
+    |-> net.sourceforge.plantuml.teavm
 
 net.sourceforge.plantuml.project.draw.header
     |
@@ -14451,15 +14501,21 @@ net.sourceforge.plantuml.project.timescale
     |   net.sourceforge.plantuml.project.core
     |   net.sourceforge.plantuml.project.draw
     |   net.sourceforge.plantuml.klimt.sprite
-    |-> net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.teavm
-    |-> net.sourceforge.plantuml.klimt.color
+    |-> net.sourceforge.plantuml.teavm
+    |   net.sourceforge.plantuml.klimt.color
+    |-> net.sourceforge.plantuml.teavm
+
+net.sourceforge.plantuml.real
+    |
+    |-> net.sourceforge.plantuml.teavm
+    |   net.sourceforge.plantuml.klimt.color
+    |-> net.sourceforge.plantuml.teavm
 
 net.sourceforge.plantuml.regex
     |
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.jaws
-    |-> net.sourceforge.plantuml.text
+    |-> net.sourceforge.plantuml.teavm
+    |   net.sourceforge.plantuml.klimt.color
+    |-> net.sourceforge.plantuml.teavm
 
 net.sourceforge.plantuml.regexdiagram
     |
@@ -14538,6 +14594,12 @@ net.sourceforge.plantuml.sequencediagram.graphic
     |-> net.sourceforge.plantuml.text
     |   net.sourceforge.plantuml.jaws
     |-> net.sourceforge.plantuml.text
+
+net.sourceforge.plantuml.sequencediagram.puma
+    |
+    |-> net.sourceforge.plantuml.teavm
+    |   net.sourceforge.plantuml.klimt.color
+    |-> net.sourceforge.plantuml.teavm
 
 net.sourceforge.plantuml.sequencediagram.teoz
     |
@@ -14920,7 +14982,7 @@ net.sourceforge.plantuml.activitydiagram.command,9,0,1,14,0,0.93,0.07,1
 net.sourceforge.plantuml.activitydiagram3,27,4,6,28,0.15,0.82,0.03,1
 net.sourceforge.plantuml.activitydiagram3.command,37,0,1,17,0,0.94,0.06,1
 net.sourceforge.plantuml.activitydiagram3.ftile,62,6,12,24,0.1,0.67,0.24,1
-net.sourceforge.plantuml.activitydiagram3.ftile.vcompact,74,1,5,25,0.01,0.83,0.15,1
+net.sourceforge.plantuml.activitydiagram3.ftile.vcompact,74,1,5,26,0.01,0.84,0.15,1
 net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond,24,1,1,21,0.04,0.95,0,1
 net.sourceforge.plantuml.activitydiagram3.ftile.vertical,20,1,5,17,0.05,0.77,0.18,1
 net.sourceforge.plantuml.activitydiagram3.gtile,35,6,3,22,0.17,0.88,0.05,1
@@ -14937,7 +14999,7 @@ net.sourceforge.plantuml.argon2.exception,2,0,1,1,0,0.5,0.5,1
 net.sourceforge.plantuml.argon2.model,4,0,3,3,0,0.5,0.5,1
 net.sourceforge.plantuml.asciiart,23,3,3,15,0.13,0.83,0.04,1
 net.sourceforge.plantuml.board,7,0,0,21,0,1,0,1
-net.sourceforge.plantuml.bpm,32,7,0,19,0.22,1,0.22,1
+net.sourceforge.plantuml.bpm,32,7,0,20,0.22,1,0.22,1
 net.sourceforge.plantuml.braille,11,0,3,12,0,0.8,0.2,1
 net.sourceforge.plantuml.brotli,9,0,2,3,0,0.6,0.4,1
 net.sourceforge.plantuml.chart,19,0,1,19,0,0.95,0.05,1
@@ -14948,9 +15010,9 @@ net.sourceforge.plantuml.chronology,12,1,0,33,0.08,1,0.08,1
 net.sourceforge.plantuml.classdiagram,3,0,9,17,0,0.65,0.35,1
 net.sourceforge.plantuml.classdiagram.command,12,0,5,17,0,0.77,0.23,1
 net.sourceforge.plantuml.cli,12,3,8,5,0.25,0.38,0.37,1
-net.sourceforge.plantuml.code,25,4,3,9,0.16,0.75,0.09,1
+net.sourceforge.plantuml.code,25,4,3,10,0.16,0.77,0.07,1
 net.sourceforge.plantuml.code.deflate,5,1,1,3,0.2,0.75,0.05,1
-net.sourceforge.plantuml.command,51,7,60,34,0.14,0.36,0.5,1
+net.sourceforge.plantuml.command,51,7,60,35,0.14,0.37,0.49,1
 net.sourceforge.plantuml.command.note,11,1,4,17,0.09,0.81,0.1,1
 net.sourceforge.plantuml.command.note.sequence,8,0,1,9,0,0.9,0.1,1
 net.sourceforge.plantuml.compositediagram,2,0,1,10,0,0.91,0.09,1
@@ -14958,7 +15020,7 @@ net.sourceforge.plantuml.compositediagram.command,2,0,1,10,0,0.91,0.09,1
 net.sourceforge.plantuml.core,12,2,74,38,0.17,0.34,0.49,1
 net.sourceforge.plantuml.crash,1,0,4,6,0,0.6,0.4,1
 net.sourceforge.plantuml.cruise,3,3,0,7,1,1,1,1
-net.sourceforge.plantuml.cucadiagram,30,6,9,20,0.2,0.69,0.11,1
+net.sourceforge.plantuml.cucadiagram,30,6,9,21,0.2,0.7,0.1,1
 net.sourceforge.plantuml.decoration,4,1,12,6,0.25,0.33,0.42,1
 net.sourceforge.plantuml.decoration.symbol,77,3,13,15,0.04,0.54,0.43,1
 net.sourceforge.plantuml.dedication,11,1,0,20,0.09,1,0.09,1
@@ -14988,8 +15050,8 @@ net.sourceforge.plantuml.flashcode,3,1,0,3,0.33,1,0.33,1
 net.sourceforge.plantuml.flowdiagram,6,0,0,22,0,1,0,1
 net.sourceforge.plantuml.font,2,0,0,7,0,1,0,1
 net.sourceforge.plantuml.ftp,2,0,0,3,0,1,0,1
-net.sourceforge.plantuml.gitlog,9,0,0,22,0,1,0,1
-net.sourceforge.plantuml.golem,10,0,1,9,0,0.9,0.1,1
+net.sourceforge.plantuml.gitlog,9,0,0,23,0,1,0,1
+net.sourceforge.plantuml.golem,10,0,1,10,0,0.91,0.09,1
 net.sourceforge.plantuml.graphml,2,0,0,17,0,1,0,1
 net.sourceforge.plantuml.hcl,3,0,0,11,0,1,0,1
 net.sourceforge.plantuml.help,2,0,0,16,0,1,0,1
@@ -14997,13 +15059,13 @@ net.sourceforge.plantuml.jaws,4,1,6,4,0.25,0.4,0.35,1
 net.sourceforge.plantuml.jcckit,1,0,0,12,0,1,0,1
 net.sourceforge.plantuml.json,18,2,11,3,0.11,0.21,0.67,1
 net.sourceforge.plantuml.jsondiagram,7,0,4,24,0,0.86,0.14,1
-net.sourceforge.plantuml.klimt,21,10,81,18,0.48,0.18,0.34,1
+net.sourceforge.plantuml.klimt,21,10,81,19,0.48,0.19,0.33,1
 net.sourceforge.plantuml.klimt.awt,3,1,29,8,0.33,0.22,0.45,1
 net.sourceforge.plantuml.klimt.color,25,1,95,10,0.04,0.1,0.86,1
 net.sourceforge.plantuml.klimt.compress,11,2,3,9,0.18,0.75,0.07,1
 net.sourceforge.plantuml.klimt.creole,19,4,68,12,0.21,0.15,0.64,1
 net.sourceforge.plantuml.klimt.creole.atom,14,2,2,18,0.14,0.9,0.04,1
-net.sourceforge.plantuml.klimt.creole.command,19,2,2,13,0.11,0.87,0.03,1
+net.sourceforge.plantuml.klimt.creole.command,19,2,2,14,0.11,0.88,0.02,1
 net.sourceforge.plantuml.klimt.creole.legacy,16,2,7,27,0.12,0.79,0.08,1
 net.sourceforge.plantuml.klimt.drawing,14,5,82,14,0.36,0.15,0.5,1
 net.sourceforge.plantuml.klimt.drawing.debug,1,0,4,8,0,0.67,0.33,1
@@ -15011,24 +15073,24 @@ net.sourceforge.plantuml.klimt.drawing.eps,15,1,2,14,0.07,0.88,0.06,1
 net.sourceforge.plantuml.klimt.drawing.g2d,13,1,4,19,0.08,0.83,0.1,1
 net.sourceforge.plantuml.klimt.drawing.hand,8,0,2,8,0,0.8,0.2,1
 net.sourceforge.plantuml.klimt.drawing.html5,3,0,2,8,0,0.8,0.2,1
-net.sourceforge.plantuml.klimt.drawing.svg,11,0,3,15,0,0.83,0.17,1
+net.sourceforge.plantuml.klimt.drawing.svg,11,0,3,16,0,0.84,0.16,1
 net.sourceforge.plantuml.klimt.drawing.tikz,10,0,2,12,0,0.86,0.14,1
 net.sourceforge.plantuml.klimt.drawing.txt,1,0,5,12,0,0.71,0.29,1
 net.sourceforge.plantuml.klimt.drawing.visio,8,1,2,10,0.12,0.83,0.04,1
 net.sourceforge.plantuml.klimt.font,10,4,83,10,0.4,0.11,0.49,1
-net.sourceforge.plantuml.klimt.geom,34,6,88,8,0.18,0.08,0.74,1
+net.sourceforge.plantuml.klimt.geom,34,6,88,9,0.18,0.09,0.73,1
 net.sourceforge.plantuml.klimt.shape,41,2,84,16,0.05,0.16,0.79,1
-net.sourceforge.plantuml.klimt.sprite,22,2,13,25,0.09,0.66,0.25,1
+net.sourceforge.plantuml.klimt.sprite,22,2,13,26,0.09,0.67,0.24,1
 net.sourceforge.plantuml.licensing,7,0,0,5,0,1,0,1
 net.sourceforge.plantuml.log,2,0,29,4,0,0.12,0.88,1
 net.sourceforge.plantuml.math,13,1,3,19,0.08,0.86,0.06,1
 net.sourceforge.plantuml.mda,2,0,1,4,0,0.8,0.2,1
-net.sourceforge.plantuml.mindmap,12,1,1,21,0.08,0.95,0.04,1
+net.sourceforge.plantuml.mindmap,12,1,1,22,0.08,0.96,0.04,1
 net.sourceforge.plantuml.nio,3,2,41,5,0.67,0.11,0.22,1
-net.sourceforge.plantuml.nwdiag,12,0,1,16,0,0.94,0.06,1
+net.sourceforge.plantuml.nwdiag,12,0,1,17,0,0.94,0.06,1
 net.sourceforge.plantuml.nwdiag.core,2,1,1,14,0.5,0.93,0.43,1
 net.sourceforge.plantuml.nwdiag.next,6,1,1,10,0.17,0.91,0.08,1
-net.sourceforge.plantuml.objectdiagram,2,1,0,14,0.5,1,0.5,1
+net.sourceforge.plantuml.objectdiagram,2,1,0,15,0.5,1,0.5,1
 net.sourceforge.plantuml.objectdiagram.command,0,0,3,0,0,0,1,1
 net.sourceforge.plantuml.openiconic,7,1,1,14,0.14,0.93,0.08,1
 net.sourceforge.plantuml.openiconic.data,1,0,0,1,0,1,0,1
@@ -15047,20 +15109,20 @@ net.sourceforge.plantuml.project,17,2,9,34,0.12,0.79,0.09,1
 net.sourceforge.plantuml.project.command,14,0,2,14,0,0.88,0.12,1
 net.sourceforge.plantuml.project.core,11,3,9,12,0.27,0.57,0.16,1
 net.sourceforge.plantuml.project.data,7,0,3,16,0,0.84,0.16,1
-net.sourceforge.plantuml.project.draw,9,2,5,24,0.22,0.83,0.05,1
+net.sourceforge.plantuml.project.draw,9,2,5,25,0.22,0.83,0.06,1
 net.sourceforge.plantuml.project.draw.header,5,3,2,19,0.6,0.9,0.5,1
-net.sourceforge.plantuml.project.lang,64,4,5,13,0.06,0.72,0.22,1
+net.sourceforge.plantuml.project.lang,64,4,5,14,0.06,0.74,0.2,1
 net.sourceforge.plantuml.project.ngm,4,1,2,3,0.25,0.6,0.15,1
 net.sourceforge.plantuml.project.ngm.math,10,2,6,4,0.2,0.4,0.4,1
-net.sourceforge.plantuml.project.solver,2,0,1,6,0,0.86,0.14,1
+net.sourceforge.plantuml.project.solver,2,0,1,7,0,0.88,0.12,1
 net.sourceforge.plantuml.project.time,1,0,9,2,0,0.18,0.82,1
 net.sourceforge.plantuml.project.timescale,5,1,5,6,0.2,0.55,0.25,1
-net.sourceforge.plantuml.real,8,4,5,2,0.5,0.29,0.21,1
-net.sourceforge.plantuml.regex,9,2,41,5,0.22,0.11,0.67,1
+net.sourceforge.plantuml.real,8,4,5,3,0.5,0.38,0.12,1
+net.sourceforge.plantuml.regex,9,2,41,6,0.22,0.13,0.65,1
 net.sourceforge.plantuml.regexdiagram,6,0,0,18,0,1,0,1
 net.sourceforge.plantuml.salt,9,1,2,21,0.11,0.91,0.02,1
 net.sourceforge.plantuml.salt.element,32,3,3,16,0.09,0.84,0.06,1
-net.sourceforge.plantuml.salt.factory,19,2,1,7,0.11,0.88,0.02,1
+net.sourceforge.plantuml.salt.factory,19,2,1,8,0.11,0.89,0.01,1
 net.sourceforge.plantuml.sdot,3,0,0,13,0,1,0,1
 net.sourceforge.plantuml.security,7,0,18,18,0,0.5,0.5,1
 net.sourceforge.plantuml.security.authentication,6,3,4,3,0.5,0.43,0.07,1
@@ -15070,8 +15132,8 @@ net.sourceforge.plantuml.security.authentication.token,2,0,0,4,0,1,0,1
 net.sourceforge.plantuml.sequencediagram,27,6,11,17,0.22,0.61,0.17,1
 net.sourceforge.plantuml.sequencediagram.command,30,1,3,17,0.03,0.85,0.12,1
 net.sourceforge.plantuml.sequencediagram.graphic,51,8,3,29,0.16,0.91,0.06,1
-net.sourceforge.plantuml.sequencediagram.puma,6,0,0,2,0,1,0,1
-net.sourceforge.plantuml.sequencediagram.teoz,51,6,0,23,0.12,1,0.12,1
+net.sourceforge.plantuml.sequencediagram.puma,6,0,0,3,0,1,0,1
+net.sourceforge.plantuml.sequencediagram.teoz,51,6,0,24,0.12,1,0.12,1
 net.sourceforge.plantuml.skin,35,5,73,25,0.14,0.26,0.6,1
 net.sourceforge.plantuml.skin.rose,23,1,13,13,0.04,0.5,0.46,1
 net.sourceforge.plantuml.statediagram,1,0,3,12,0,0.8,0.2,1
@@ -15088,7 +15150,7 @@ net.sourceforge.plantuml.svek.image,37,2,12,23,0.05,0.66,0.29,1
 net.sourceforge.plantuml.svg.parser,12,1,1,15,0.08,0.94,0.02,1
 net.sourceforge.plantuml.swing,36,0,0,15,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,10,0,1,0,1
-net.sourceforge.plantuml.teavm,16,1,17,12,0.06,0.41,0.52,1
+net.sourceforge.plantuml.teavm,16,1,43,12,0.06,0.22,0.72,1
 net.sourceforge.plantuml.teavm.browser,3,3,3,2,1,0.4,0.4,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.text,5,1,39,4,0.2,0.09,0.71,1
@@ -15097,16 +15159,16 @@ net.sourceforge.plantuml.tikz,0,0,1,0,0,0,1,1
 net.sourceforge.plantuml.tim,38,4,3,14,0.11,0.82,0.07,1
 net.sourceforge.plantuml.tim.builtin,69,1,0,15,0.01,1,0.01,1
 net.sourceforge.plantuml.tim.expression,17,3,3,3,0.18,0.5,0.32,1
-net.sourceforge.plantuml.tim.iterator,16,3,1,7,0.19,0.88,0.06,1
+net.sourceforge.plantuml.tim.iterator,16,3,1,8,0.19,0.89,0.08,1
 net.sourceforge.plantuml.timingdiagram,25,4,2,27,0.16,0.93,0.09,1
 net.sourceforge.plantuml.timingdiagram.command,13,1,1,10,0.08,0.91,0.01,1
-net.sourceforge.plantuml.timingdiagram.graphic,17,3,1,14,0.18,0.93,0.11,1
+net.sourceforge.plantuml.timingdiagram.graphic,17,3,1,15,0.18,0.94,0.11,1
 net.sourceforge.plantuml.url,4,0,31,4,0,0.11,0.89,1
 net.sourceforge.plantuml.utils,16,5,59,21,0.31,0.26,0.43,1
 net.sourceforge.plantuml.version,7,1,6,14,0.14,0.7,0.16,1
 net.sourceforge.plantuml.vizjs,7,0,0,6,0,1,0,1
 net.sourceforge.plantuml.warning,2,1,5,2,0.5,0.29,0.21,1
-net.sourceforge.plantuml.wbs,10,2,1,22,0.2,0.96,0.16,1
+net.sourceforge.plantuml.wbs,10,2,1,23,0.2,0.96,0.16,1
 net.sourceforge.plantuml.webp,8,0,0,2,0,1,0,1
 net.sourceforge.plantuml.windowsdot,1,0,1,4,0,0.8,0.2,1
 net.sourceforge.plantuml.wire,21,0,0,18,0,1,0,1

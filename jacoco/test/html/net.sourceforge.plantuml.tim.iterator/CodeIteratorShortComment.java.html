@@ -36,32 +36,33 @@ package net.sourceforge.plantuml.tim.iterator;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.EaterException;
 
-<span class="fc" id="L43">public class CodeIteratorShortComment extends AbstractCodeIterator {</span>
+<span class="fc" id="L44">public class CodeIteratorShortComment extends AbstractCodeIterator {</span>
 
 	private final List&lt;StringLocated&gt; logs;
 
 	public CodeIteratorShortComment(CodeIterator source, List&lt;StringLocated&gt; logs) {
-<span class="fc" id="L48">		super(source);</span>
-<span class="fc" id="L49">		this.logs = logs;</span>
-<span class="fc" id="L50">	}</span>
+<span class="fc" id="L49">		super(source);</span>
+<span class="fc" id="L50">		this.logs = logs;</span>
+<span class="fc" id="L51">	}</span>
 
 	public StringLocated peek() throws EaterException {
 		while (true) {
-<span class="fc" id="L54">			final StringLocated result = source.peek();</span>
-<span class="fc bfc" id="L55" title="All 2 branches covered.">			if (result == null) {</span>
-<span class="fc" id="L56">				return null;</span>
+<span class="fc" id="L55">			final StringLocated result = source.peek();</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">			if (result == null) {</span>
+<span class="fc" id="L57">				return null;</span>
 			}
-<span class="fc bfc" id="L58" title="All 2 branches covered.">			if (result.getType() == TLineType.COMMENT_SIMPLE) {</span>
-<span class="fc" id="L59">				logs.add(result);</span>
-<span class="fc" id="L60">				next();</span>
-<span class="fc" id="L61">				continue;</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">			if (result.getType() == TLineType.COMMENT_SIMPLE) {</span>
+<span class="fc" id="L60">				logs.add(result);</span>
+<span class="fc" id="L61">				next();</span>
+<span class="fc" id="L62">				continue;</span>
 			}
-<span class="pc bpc" id="L63" title="2 of 4 branches missed.">			assert result != null &amp;&amp; result.getType() != TLineType.COMMENT_SIMPLE;</span>
-<span class="fc" id="L64">			return result;</span>
+<span class="pc bpc" id="L64" title="3 of 6 branches missed.">			if (TeaVM.a()) assert result != null &amp;&amp; result.getType() != TLineType.COMMENT_SIMPLE;</span>
+<span class="fc" id="L65">			return result;</span>
 		}
 	}
 }

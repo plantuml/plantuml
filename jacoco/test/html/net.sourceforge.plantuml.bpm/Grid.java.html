@@ -45,50 +45,51 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.bpm.ConnectorPuzzle.Where;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="nc" id="L49">public class Grid {</span>
+<span class="nc" id="L50">public class Grid {</span>
 
 	private final Chain&lt;Line&gt; lines;
 	private final Chain&lt;Col&gt; cols;
 	private final Coord root;
-<span class="nc" id="L54">	private final Map&lt;Coord, Cell&gt; cells = new HashMap&lt;Coord, Cell&gt;();</span>
+<span class="nc" id="L55">	private final Map&lt;Coord, Cell&gt; cells = new HashMap&lt;Coord, Cell&gt;();</span>
 
-<span class="nc" id="L56">	public Grid() {</span>
-<span class="nc" id="L57">		this.root = new Coord(new Line(), new Col());</span>
-<span class="nc" id="L58">		this.lines = new ChainImpl&lt;&gt;(root.getLine());</span>
-<span class="nc" id="L59">		this.cols = new ChainImpl&lt;&gt;(root.getCol());</span>
-<span class="nc" id="L60">		this.cells.put(root, new Cell());</span>
-<span class="nc" id="L61">	}</span>
+<span class="nc" id="L57">	public Grid() {</span>
+<span class="nc" id="L58">		this.root = new Coord(new Line(), new Col());</span>
+<span class="nc" id="L59">		this.lines = new ChainImpl&lt;&gt;(root.getLine());</span>
+<span class="nc" id="L60">		this.cols = new ChainImpl&lt;&gt;(root.getCol());</span>
+<span class="nc" id="L61">		this.cells.put(root, new Cell());</span>
+<span class="nc" id="L62">	}</span>
 
-<span class="nc" id="L63">	private Grid(Grid other) {</span>
-<span class="nc" id="L64">		this.lines = ((ChainImpl&lt;Line&gt;) other.lines).cloneMe();</span>
-<span class="nc" id="L65">		this.cols = ((ChainImpl&lt;Col&gt;) other.cols).cloneMe();</span>
-<span class="nc" id="L66">		this.root = other.root;</span>
-<span class="nc" id="L67">		this.cells.putAll(other.cells);</span>
-<span class="nc" id="L68">	}</span>
+<span class="nc" id="L64">	private Grid(Grid other) {</span>
+<span class="nc" id="L65">		this.lines = ((ChainImpl&lt;Line&gt;) other.lines).cloneMe();</span>
+<span class="nc" id="L66">		this.cols = ((ChainImpl&lt;Col&gt;) other.cols).cloneMe();</span>
+<span class="nc" id="L67">		this.root = other.root;</span>
+<span class="nc" id="L68">		this.cells.putAll(other.cells);</span>
+<span class="nc" id="L69">	}</span>
 
 	public Grid cloneMe() {
-<span class="nc" id="L71">		return new Grid(this);</span>
+<span class="nc" id="L72">		return new Grid(this);</span>
 	}
 
 	public Cell getCell(Coord coord) {
-<span class="nc" id="L75">		return getCell(coord.getLine(), coord.getCol());</span>
+<span class="nc" id="L76">		return getCell(coord.getLine(), coord.getCol());</span>
 	}
 
 	public Cell getCell(Line line, Col col) {
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (lines.contains(line) == false) {</span>
-<span class="nc" id="L80">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (lines.contains(line) == false) {</span>
+<span class="nc" id="L81">			throw new IllegalArgumentException();</span>
 		}
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (cols.contains(col) == false) {</span>
-<span class="nc" id="L83">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (cols.contains(col) == false) {</span>
+<span class="nc" id="L84">			throw new IllegalArgumentException();</span>
 		}
-<span class="nc" id="L85">		final Coord coord = new Coord(line, col);</span>
-<span class="nc" id="L86">		Cell result = cells.get(coord);</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (result == null) {</span>
-<span class="nc" id="L88">			result = new Cell();</span>
-<span class="nc" id="L89">			cells.put(coord, result);</span>
+<span class="nc" id="L86">		final Coord coord = new Coord(line, col);</span>
+<span class="nc" id="L87">		Cell result = cells.get(coord);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (result == null) {</span>
+<span class="nc" id="L89">			result = new Cell();</span>
+<span class="nc" id="L90">			cells.put(coord, result);</span>
 		}
-<span class="nc" id="L91">		return result;</span>
+<span class="nc" id="L92">		return result;</span>
 	}
 
 	// private Set&lt;GridEdge&gt; edgeWith(Cell someCell) {
@@ -148,80 +149,80 @@ import net.sourceforge.plantuml.style.ISkinParam;
 	// }
 
 	public Coord getById(String id) {
-<span class="nc bnc" id="L151" title="All 2 branches missed.">		for (Map.Entry&lt;Coord, Cell&gt; ent : cells.entrySet()) {</span>
-<span class="nc" id="L152">			final Cell cell = ent.getValue();</span>
-<span class="nc bnc" id="L153" title="All 4 branches missed.">			if (cell == null || cell.getData() == null) {</span>
-<span class="nc" id="L154">				continue;</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		for (Map.Entry&lt;Coord, Cell&gt; ent : cells.entrySet()) {</span>
+<span class="nc" id="L153">			final Cell cell = ent.getValue();</span>
+<span class="nc bnc" id="L154" title="All 4 branches missed.">			if (cell == null || cell.getData() == null) {</span>
+<span class="nc" id="L155">				continue;</span>
 			}
-<span class="nc bnc" id="L156" title="All 2 branches missed.">			if (id.equals(cell.getData().getId())) {</span>
-<span class="nc" id="L157">				return ent.getKey();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			if (id.equals(cell.getData().getId())) {</span>
+<span class="nc" id="L158">				return ent.getKey();</span>
 			}
-<span class="nc" id="L159">		}</span>
-<span class="nc" id="L160">		return null;</span>
+<span class="nc" id="L160">		}</span>
+<span class="nc" id="L161">		return null;</span>
 	}
 
 	public final Coord getRoot() {
-<span class="nc" id="L164">		return root;</span>
+<span class="nc" id="L165">		return root;</span>
 	}
 
 	public final Chain&lt;Line&gt; lines() {
-<span class="nc" id="L168">		return lines;</span>
+<span class="nc" id="L169">		return lines;</span>
 	}
 
 	public final Chain&lt;Col&gt; cols() {
-<span class="nc" id="L172">		return cols;</span>
+<span class="nc" id="L173">		return cols;</span>
 	}
 
 	public final Coord getCoord(Cell cell) {
-<span class="nc bnc" id="L176" title="All 2 branches missed.">		for (Map.Entry&lt;Coord, Cell&gt; ent : cells.entrySet()) {</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">			if (ent.getValue() == cell) {</span>
-<span class="nc" id="L178">				return ent.getKey();</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		for (Map.Entry&lt;Coord, Cell&gt; ent : cells.entrySet()) {</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">			if (ent.getValue() == cell) {</span>
+<span class="nc" id="L179">				return ent.getKey();</span>
 			}
-<span class="nc" id="L180">		}</span>
-<span class="nc" id="L181">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L181">		}</span>
+<span class="nc" id="L182">		throw new IllegalArgumentException();</span>
 	}
 
 	private Coord getCoord(Placeable placeable) {
-<span class="nc bnc" id="L185" title="All 2 branches missed.">		for (Map.Entry&lt;Coord, Cell&gt; ent : cells.entrySet()) {</span>
-<span class="nc bnc" id="L186" title="All 2 branches missed.">			if (ent.getValue().getData() == placeable) {</span>
-<span class="nc" id="L187">				return ent.getKey();</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		for (Map.Entry&lt;Coord, Cell&gt; ent : cells.entrySet()) {</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">			if (ent.getValue().getData() == placeable) {</span>
+<span class="nc" id="L188">				return ent.getKey();</span>
 			}
-<span class="nc" id="L189">		}</span>
-<span class="nc" id="L190">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L190">		}</span>
+<span class="nc" id="L191">		throw new IllegalArgumentException();</span>
 	}
 
 	public final Navigator&lt;Line&gt; linesOf(Coord coord) {
-<span class="nc" id="L194">		return lines.navigator(coord.getLine());</span>
+<span class="nc" id="L195">		return lines.navigator(coord.getLine());</span>
 	}
 
 	public final Navigator&lt;Col&gt; colsOf(Coord coord) {
-<span class="nc" id="L198">		return cols.navigator(coord.getCol());</span>
+<span class="nc" id="L199">		return cols.navigator(coord.getCol());</span>
 	}
 
 	public final Navigator&lt;Line&gt; linesOf(Cell cell) {
-<span class="nc" id="L202">		return linesOf(getCoord(cell));</span>
+<span class="nc" id="L203">		return linesOf(getCoord(cell));</span>
 	}
 
 	public final Navigator&lt;Col&gt; colsOf(Cell cell) {
-<span class="nc" id="L206">		return colsOf(getCoord(cell));</span>
+<span class="nc" id="L207">		return colsOf(getCoord(cell));</span>
 	}
 
 	public final GridArray toArray(ISkinParam skinParam) {
-<span class="nc" id="L210">		final List&lt;Line&gt; lines = this.lines.toList();</span>
-<span class="nc" id="L211">		final List&lt;Col&gt; cols = this.cols.toList();</span>
-<span class="nc" id="L212">		final GridArray result = new GridArray(skinParam, lines.size(), cols.size());</span>
-<span class="nc bnc" id="L213" title="All 2 branches missed.">		for (Map.Entry&lt;Coord, Cell&gt; ent : cells.entrySet()) {</span>
-<span class="nc" id="L214">			final int l = lines.indexOf(ent.getKey().getLine());</span>
-<span class="nc" id="L215">			final int c = cols.indexOf(ent.getKey().getCol());</span>
-<span class="nc bnc" id="L216" title="All 2 branches missed.">			if (c == -1) {</span>
-<span class="nc" id="L217">				throw new IllegalStateException(&quot;col=&quot; + ent.getKey().getCol());</span>
+<span class="nc" id="L211">		final List&lt;Line&gt; lines = this.lines.toList();</span>
+<span class="nc" id="L212">		final List&lt;Col&gt; cols = this.cols.toList();</span>
+<span class="nc" id="L213">		final GridArray result = new GridArray(skinParam, lines.size(), cols.size());</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">		for (Map.Entry&lt;Coord, Cell&gt; ent : cells.entrySet()) {</span>
+<span class="nc" id="L215">			final int l = lines.indexOf(ent.getKey().getLine());</span>
+<span class="nc" id="L216">			final int c = cols.indexOf(ent.getKey().getCol());</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">			if (c == -1) {</span>
+<span class="nc" id="L218">				throw new IllegalStateException(&quot;col=&quot; + ent.getKey().getCol());</span>
 			}
-<span class="nc bnc" id="L219" title="All 2 branches missed.">			if (l == -1) {</span>
-<span class="nc" id="L220">				throw new IllegalStateException(&quot;line=&quot; + ent.getKey().getLine());</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">			if (l == -1) {</span>
+<span class="nc" id="L221">				throw new IllegalStateException(&quot;line=&quot; + ent.getKey().getLine());</span>
 			}
-<span class="nc" id="L222">			result.setData(l, c, ent.getValue().getData());</span>
-<span class="nc" id="L223">		}</span>
-<span class="nc" id="L224">		return result;</span>
+<span class="nc" id="L223">			result.setData(l, c, ent.getValue().getData());</span>
+<span class="nc" id="L224">		}</span>
+<span class="nc" id="L225">		return result;</span>
 	}
 
 	// public boolean isRowEmpty(Col row) {
@@ -254,39 +255,39 @@ import net.sourceforge.plantuml.style.ISkinParam;
 	// }
 
 	public Set&lt;Col&gt; usedColsOf(Line line) {
-<span class="nc" id="L257">		final Set&lt;Col&gt; result = new HashSet&lt;&gt;();</span>
-<span class="nc bnc" id="L258" title="All 2 branches missed.">		for (Map.Entry&lt;Coord, Cell&gt; ent : cells.entrySet()) {</span>
-<span class="nc" id="L259">			final Cell cell = ent.getValue();</span>
-<span class="nc bnc" id="L260" title="All 4 branches missed.">			if (cell == null || cell.getData() == null) {</span>
-<span class="nc" id="L261">				continue;</span>
+<span class="nc" id="L258">		final Set&lt;Col&gt; result = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L259" title="All 2 branches missed.">		for (Map.Entry&lt;Coord, Cell&gt; ent : cells.entrySet()) {</span>
+<span class="nc" id="L260">			final Cell cell = ent.getValue();</span>
+<span class="nc bnc" id="L261" title="All 4 branches missed.">			if (cell == null || cell.getData() == null) {</span>
+<span class="nc" id="L262">				continue;</span>
 			}
-<span class="nc bnc" id="L263" title="All 2 branches missed.">			if (ent.getKey().getLine() == line) {</span>
-<span class="nc" id="L264">				result.add(ent.getKey().getCol());</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">			if (ent.getKey().getLine() == line) {</span>
+<span class="nc" id="L265">				result.add(ent.getKey().getCol());</span>
 			}
-<span class="nc" id="L266">		}</span>
-<span class="nc" id="L267">		return Collections.unmodifiableSet(result);</span>
+<span class="nc" id="L267">		}</span>
+<span class="nc" id="L268">		return Collections.unmodifiableSet(result);</span>
 	}
 
 	public void removeLine(Line line) {
-<span class="nc bnc" id="L271" title="All 2 branches missed.">		assert usedColsOf(line).isEmpty();</span>
-<span class="nc bnc" id="L272" title="All 2 branches missed.">		for (final Iterator&lt;Map.Entry&lt;Coord, Cell&gt;&gt; it = cells.entrySet().iterator(); it.hasNext();) {</span>
-<span class="nc" id="L273">			final Map.Entry&lt;Coord, Cell&gt; ent = it.next();</span>
-<span class="nc bnc" id="L274" title="All 2 branches missed.">			if (ent.getKey().getLine() != line) {</span>
-<span class="nc" id="L275">				continue;</span>
+<span class="nc bnc" id="L272" title="All 4 branches missed.">		if (TeaVM.a()) assert usedColsOf(line).isEmpty();</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">		for (final Iterator&lt;Map.Entry&lt;Coord, Cell&gt;&gt; it = cells.entrySet().iterator(); it.hasNext();) {</span>
+<span class="nc" id="L274">			final Map.Entry&lt;Coord, Cell&gt; ent = it.next();</span>
+<span class="nc bnc" id="L275" title="All 2 branches missed.">			if (ent.getKey().getLine() != line) {</span>
+<span class="nc" id="L276">				continue;</span>
 			}
-<span class="nc" id="L277">			final Cell cell = ent.getValue();</span>
-<span class="nc bnc" id="L278" title="All 4 branches missed.">			if (cell == null || cell.getData() == null) {</span>
-<span class="nc" id="L279">				it.remove();</span>
+<span class="nc" id="L278">			final Cell cell = ent.getValue();</span>
+<span class="nc bnc" id="L279" title="All 4 branches missed.">			if (cell == null || cell.getData() == null) {</span>
+<span class="nc" id="L280">				it.remove();</span>
 			} else {
-<span class="nc" id="L281">				throw new IllegalStateException();</span>
+<span class="nc" id="L282">				throw new IllegalStateException();</span>
 			}
-<span class="nc" id="L283">		}</span>
+<span class="nc" id="L284">		}</span>
 
-<span class="nc" id="L285">		final boolean done = lines.remove(line);</span>
-<span class="nc bnc" id="L286" title="All 2 branches missed.">		if (done == false) {</span>
-<span class="nc" id="L287">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L286">		final boolean done = lines.remove(line);</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">		if (done == false) {</span>
+<span class="nc" id="L288">			throw new IllegalArgumentException();</span>
 		}
-<span class="nc" id="L289">	}</span>
+<span class="nc" id="L290">	}</span>
 
 	// public void addEdge(Collection&lt;GridEdge&gt; other) {
 	// this.edges.addAll(other);
@@ -312,121 +313,121 @@ import net.sourceforge.plantuml.style.ISkinParam;
 	// }
 
 	public void addConnections() {
-<span class="nc bnc" id="L315" title="All 2 branches missed.">		for (Map.Entry&lt;Coord, Cell&gt; ent : new HashMap&lt;&gt;(cells).entrySet()) {</span>
-<span class="nc" id="L316">			final List&lt;Placeable&gt; dests2 = ent.getValue().getDestinations2();</span>
-<span class="nc" id="L317">			final Coord src = ent.getKey();</span>
-<span class="nc bnc" id="L318" title="All 2 branches missed.">			for (int i = 0; i &lt; dests2.size(); i++) {</span>
-<span class="nc" id="L319">				final Coord dest = getCoord(dests2.get(i));</span>
-<span class="nc bnc" id="L320" title="All 2 branches missed.">				final boolean startHorizontal = i == 0;</span>
-<span class="nc bnc" id="L321" title="All 2 branches missed.">				if (startHorizontal) {</span>
+<span class="nc bnc" id="L316" title="All 2 branches missed.">		for (Map.Entry&lt;Coord, Cell&gt; ent : new HashMap&lt;&gt;(cells).entrySet()) {</span>
+<span class="nc" id="L317">			final List&lt;Placeable&gt; dests2 = ent.getValue().getDestinations2();</span>
+<span class="nc" id="L318">			final Coord src = ent.getKey();</span>
+<span class="nc bnc" id="L319" title="All 2 branches missed.">			for (int i = 0; i &lt; dests2.size(); i++) {</span>
+<span class="nc" id="L320">				final Coord dest = getCoord(dests2.get(i));</span>
+<span class="nc bnc" id="L321" title="All 2 branches missed.">				final boolean startHorizontal = i == 0;</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">				if (startHorizontal) {</span>
 					// System.err.println(&quot;DrawingHorizontal &quot; + ent.getValue() + &quot; --&gt; &quot; +
 					// dests.get(i) + &quot; &quot; + i);
-<span class="nc" id="L324">					drawStartHorizontal(src, dest);</span>
+<span class="nc" id="L325">					drawStartHorizontal(src, dest);</span>
 				} else {
-<span class="nc" id="L326">					drawStartVertical(src, dest);</span>
+<span class="nc" id="L327">					drawStartVertical(src, dest);</span>
 				}
 			}
-<span class="nc" id="L329">		}</span>
-<span class="nc" id="L330">	}</span>
+<span class="nc" id="L330">		}</span>
+<span class="nc" id="L331">	}</span>
 
 	private void drawStartVertical(final Coord src, final Coord dest) {
-<span class="nc bnc" id="L333" title="All 4 branches missed.">		if (src.getLine() == dest.getLine() &amp;&amp; src.getCol() == dest.getCol()) {</span>
-<span class="nc" id="L334">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L334" title="All 4 branches missed.">		if (src.getLine() == dest.getLine() &amp;&amp; src.getCol() == dest.getCol()) {</span>
+<span class="nc" id="L335">			throw new IllegalStateException();</span>
 		}
-<span class="nc" id="L336">		final BpmElement start = (BpmElement) getCell(src).getData();</span>
-<span class="nc" id="L337">		final int compare = lines.compare(src.getLine(), dest.getLine());</span>
-<span class="nc bnc" id="L338" title="All 2 branches missed.">		if (compare == 0) {</span>
-<span class="nc" id="L339">			throw new IllegalStateException();</span>
+<span class="nc" id="L337">		final BpmElement start = (BpmElement) getCell(src).getData();</span>
+<span class="nc" id="L338">		final int compare = lines.compare(src.getLine(), dest.getLine());</span>
+<span class="nc bnc" id="L339" title="All 2 branches missed.">		if (compare == 0) {</span>
+<span class="nc" id="L340">			throw new IllegalStateException();</span>
 		}
-<span class="nc bnc" id="L341" title="All 2 branches missed.">		start.append(compare &lt; 0 ? Where.SOUTH : Where.NORTH);</span>
+<span class="nc bnc" id="L342" title="All 2 branches missed.">		start.append(compare &lt; 0 ? Where.SOUTH : Where.NORTH);</span>
 
-<span class="nc" id="L343">		for (Navigator&lt;Line&gt; itLine = Navigators.iterate(lines, src.getLine(), dest.getLine()); itLine.get() != dest</span>
-<span class="nc bnc" id="L344" title="All 2 branches missed.">				.getLine();) {</span>
-<span class="nc" id="L345">			final Line cur = itLine.next();</span>
-<span class="nc bnc" id="L346" title="All 2 branches missed.">			if (cur != dest.getLine()) {</span>
-<span class="nc" id="L347">				addPuzzle(cur, src.getCol(), &quot;NS&quot;);</span>
+<span class="nc" id="L344">		for (Navigator&lt;Line&gt; itLine = Navigators.iterate(lines, src.getLine(), dest.getLine()); itLine.get() != dest</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">				.getLine();) {</span>
+<span class="nc" id="L346">			final Line cur = itLine.next();</span>
+<span class="nc bnc" id="L347" title="All 2 branches missed.">			if (cur != dest.getLine()) {</span>
+<span class="nc" id="L348">				addPuzzle(cur, src.getCol(), &quot;NS&quot;);</span>
 			}
-<span class="nc" id="L349">		}</span>
-<span class="nc" id="L350">		for (Navigator&lt;Col&gt; itCol = Navigators.iterate(cols, src.getCol(), dest.getCol()); itCol.get() != dest</span>
-<span class="nc bnc" id="L351" title="All 2 branches missed.">				.getCol();) {</span>
-<span class="nc" id="L352">			final Col cur = itCol.next();</span>
-<span class="nc bnc" id="L353" title="All 2 branches missed.">			if (cur != dest.getCol()) {</span>
-<span class="nc" id="L354">				addPuzzle(dest.getLine(), cur, &quot;EW&quot;);</span>
+<span class="nc" id="L350">		}</span>
+<span class="nc" id="L351">		for (Navigator&lt;Col&gt; itCol = Navigators.iterate(cols, src.getCol(), dest.getCol()); itCol.get() != dest</span>
+<span class="nc bnc" id="L352" title="All 2 branches missed.">				.getCol();) {</span>
+<span class="nc" id="L353">			final Col cur = itCol.next();</span>
+<span class="nc bnc" id="L354" title="All 2 branches missed.">			if (cur != dest.getCol()) {</span>
+<span class="nc" id="L355">				addPuzzle(dest.getLine(), cur, &quot;EW&quot;);</span>
 			}
-<span class="nc" id="L356">		}</span>
-<span class="nc" id="L357">		final BpmElement end = (BpmElement) getCell(dest).getData();</span>
-<span class="nc bnc" id="L358" title="All 2 branches missed.">		if (src.getLine() == dest.getLine()) {</span>
-<span class="nc bnc" id="L359" title="All 2 branches missed.">			end.append(compare &lt; 0 ? Where.NORTH : Where.SOUTH);</span>
+<span class="nc" id="L357">		}</span>
+<span class="nc" id="L358">		final BpmElement end = (BpmElement) getCell(dest).getData();</span>
+<span class="nc bnc" id="L359" title="All 2 branches missed.">		if (src.getLine() == dest.getLine()) {</span>
+<span class="nc bnc" id="L360" title="All 2 branches missed.">			end.append(compare &lt; 0 ? Where.NORTH : Where.SOUTH);</span>
 		}
-<span class="nc bnc" id="L361" title="All 4 branches missed.">		if (src.getLine() != dest.getLine() &amp;&amp; src.getCol() != dest.getCol()) {</span>
-<span class="nc bnc" id="L362" title="All 2 branches missed.">			if (lines.compare(dest.getLine(), src.getLine()) &gt; 0) {</span>
-<span class="nc" id="L363">				addPuzzle(dest.getLine(), src.getCol(), &quot;N&quot;);</span>
+<span class="nc bnc" id="L362" title="All 4 branches missed.">		if (src.getLine() != dest.getLine() &amp;&amp; src.getCol() != dest.getCol()) {</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">			if (lines.compare(dest.getLine(), src.getLine()) &gt; 0) {</span>
+<span class="nc" id="L364">				addPuzzle(dest.getLine(), src.getCol(), &quot;N&quot;);</span>
 			} else {
-<span class="nc" id="L365">				addPuzzle(dest.getLine(), src.getCol(), &quot;S&quot;);</span>
+<span class="nc" id="L366">				addPuzzle(dest.getLine(), src.getCol(), &quot;S&quot;);</span>
 			}
-<span class="nc bnc" id="L367" title="All 2 branches missed.">			if (cols.compare(dest.getCol(), src.getCol()) &gt; 0) {</span>
-<span class="nc" id="L368">				addPuzzle(dest.getLine(), src.getCol(), &quot;E&quot;);</span>
+<span class="nc bnc" id="L368" title="All 2 branches missed.">			if (cols.compare(dest.getCol(), src.getCol()) &gt; 0) {</span>
+<span class="nc" id="L369">				addPuzzle(dest.getLine(), src.getCol(), &quot;E&quot;);</span>
 			} else {
-<span class="nc" id="L370">				addPuzzle(dest.getLine(), src.getCol(), &quot;W&quot;);</span>
+<span class="nc" id="L371">				addPuzzle(dest.getLine(), src.getCol(), &quot;W&quot;);</span>
 			}
-<span class="nc bnc" id="L372" title="All 2 branches missed.">			end.append(cols.compare(src.getCol(), dest.getCol()) &gt; 0 ? Where.EAST : Where.WEST);</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">			end.append(cols.compare(src.getCol(), dest.getCol()) &gt; 0 ? Where.EAST : Where.WEST);</span>
 		}
 
-<span class="nc" id="L375">	}</span>
+<span class="nc" id="L376">	}</span>
 
 	private void drawStartHorizontal(final Coord src, final Coord dest) {
-<span class="nc bnc" id="L378" title="All 4 branches missed.">		if (src.getLine() == dest.getLine() &amp;&amp; src.getCol() == dest.getCol()) {</span>
-<span class="nc" id="L379">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L379" title="All 4 branches missed.">		if (src.getLine() == dest.getLine() &amp;&amp; src.getCol() == dest.getCol()) {</span>
+<span class="nc" id="L380">			throw new IllegalStateException();</span>
 		}
-<span class="nc" id="L381">		final BpmElement start = (BpmElement) getCell(src).getData();</span>
-<span class="nc" id="L382">		final int compare = cols.compare(src.getCol(), dest.getCol());</span>
-<span class="nc bnc" id="L383" title="All 2 branches missed.">		if (compare == 0) {</span>
-<span class="nc" id="L384">			throw new IllegalStateException();</span>
+<span class="nc" id="L382">		final BpmElement start = (BpmElement) getCell(src).getData();</span>
+<span class="nc" id="L383">		final int compare = cols.compare(src.getCol(), dest.getCol());</span>
+<span class="nc bnc" id="L384" title="All 2 branches missed.">		if (compare == 0) {</span>
+<span class="nc" id="L385">			throw new IllegalStateException();</span>
 		}
-<span class="nc bnc" id="L386" title="All 2 branches missed.">		start.append(compare &lt; 0 ? Where.EAST : Where.WEST);</span>
+<span class="nc bnc" id="L387" title="All 2 branches missed.">		start.append(compare &lt; 0 ? Where.EAST : Where.WEST);</span>
 
-<span class="nc" id="L388">		for (Navigator&lt;Col&gt; itCol = Navigators.iterate(cols, src.getCol(), dest.getCol()); itCol.get() != dest</span>
-<span class="nc bnc" id="L389" title="All 2 branches missed.">				.getCol();) {</span>
-<span class="nc" id="L390">			final Col cur = itCol.next();</span>
-<span class="nc bnc" id="L391" title="All 2 branches missed.">			if (cur != dest.getCol()) {</span>
-<span class="nc" id="L392">				addPuzzle(src.getLine(), cur, &quot;EW&quot;);</span>
+<span class="nc" id="L389">		for (Navigator&lt;Col&gt; itCol = Navigators.iterate(cols, src.getCol(), dest.getCol()); itCol.get() != dest</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">				.getCol();) {</span>
+<span class="nc" id="L391">			final Col cur = itCol.next();</span>
+<span class="nc bnc" id="L392" title="All 2 branches missed.">			if (cur != dest.getCol()) {</span>
+<span class="nc" id="L393">				addPuzzle(src.getLine(), cur, &quot;EW&quot;);</span>
 			}
-<span class="nc" id="L394">		}</span>
-<span class="nc" id="L395">		for (Navigator&lt;Line&gt; itLine = Navigators.iterate(lines, src.getLine(), dest.getLine()); itLine.get() != dest</span>
-<span class="nc bnc" id="L396" title="All 2 branches missed.">				.getLine();) {</span>
-<span class="nc" id="L397">			final Line cur = itLine.next();</span>
-<span class="nc bnc" id="L398" title="All 2 branches missed.">			if (cur != dest.getLine()) {</span>
-<span class="nc" id="L399">				addPuzzle(cur, dest.getCol(), &quot;NS&quot;);</span>
+<span class="nc" id="L395">		}</span>
+<span class="nc" id="L396">		for (Navigator&lt;Line&gt; itLine = Navigators.iterate(lines, src.getLine(), dest.getLine()); itLine.get() != dest</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">				.getLine();) {</span>
+<span class="nc" id="L398">			final Line cur = itLine.next();</span>
+<span class="nc bnc" id="L399" title="All 2 branches missed.">			if (cur != dest.getLine()) {</span>
+<span class="nc" id="L400">				addPuzzle(cur, dest.getCol(), &quot;NS&quot;);</span>
 			}
-<span class="nc" id="L401">		}</span>
-<span class="nc" id="L402">		final BpmElement end = (BpmElement) getCell(dest).getData();</span>
-<span class="nc bnc" id="L403" title="All 2 branches missed.">		if (src.getLine() == dest.getLine()) {</span>
-<span class="nc bnc" id="L404" title="All 2 branches missed.">			end.append(compare &lt; 0 ? Where.WEST : Where.EAST);</span>
+<span class="nc" id="L402">		}</span>
+<span class="nc" id="L403">		final BpmElement end = (BpmElement) getCell(dest).getData();</span>
+<span class="nc bnc" id="L404" title="All 2 branches missed.">		if (src.getLine() == dest.getLine()) {</span>
+<span class="nc bnc" id="L405" title="All 2 branches missed.">			end.append(compare &lt; 0 ? Where.WEST : Where.EAST);</span>
 		}
-<span class="nc bnc" id="L406" title="All 4 branches missed.">		if (src.getLine() != dest.getLine() &amp;&amp; src.getCol() != dest.getCol()) {</span>
-<span class="nc bnc" id="L407" title="All 2 branches missed.">			if (cols.compare(dest.getCol(), src.getCol()) &gt; 0) {</span>
-<span class="nc" id="L408">				addPuzzle(src.getLine(), dest.getCol(), &quot;W&quot;);</span>
+<span class="nc bnc" id="L407" title="All 4 branches missed.">		if (src.getLine() != dest.getLine() &amp;&amp; src.getCol() != dest.getCol()) {</span>
+<span class="nc bnc" id="L408" title="All 2 branches missed.">			if (cols.compare(dest.getCol(), src.getCol()) &gt; 0) {</span>
+<span class="nc" id="L409">				addPuzzle(src.getLine(), dest.getCol(), &quot;W&quot;);</span>
 			} else {
-<span class="nc" id="L410">				addPuzzle(src.getLine(), dest.getCol(), &quot;E&quot;);</span>
+<span class="nc" id="L411">				addPuzzle(src.getLine(), dest.getCol(), &quot;E&quot;);</span>
 			}
-<span class="nc bnc" id="L412" title="All 2 branches missed.">			if (lines.compare(dest.getLine(), src.getLine()) &gt; 0) {</span>
-<span class="nc" id="L413">				addPuzzle(src.getLine(), dest.getCol(), &quot;S&quot;);</span>
+<span class="nc bnc" id="L413" title="All 2 branches missed.">			if (lines.compare(dest.getLine(), src.getLine()) &gt; 0) {</span>
+<span class="nc" id="L414">				addPuzzle(src.getLine(), dest.getCol(), &quot;S&quot;);</span>
 			} else {
-<span class="nc" id="L415">				addPuzzle(src.getLine(), dest.getCol(), &quot;N&quot;);</span>
+<span class="nc" id="L416">				addPuzzle(src.getLine(), dest.getCol(), &quot;N&quot;);</span>
 			}
-<span class="nc bnc" id="L417" title="All 2 branches missed.">			end.append(lines.compare(src.getLine(), dest.getLine()) &gt; 0 ? Where.SOUTH : Where.NORTH);</span>
+<span class="nc bnc" id="L418" title="All 2 branches missed.">			end.append(lines.compare(src.getLine(), dest.getLine()) &gt; 0 ? Where.SOUTH : Where.NORTH);</span>
 		}
-<span class="nc" id="L419">	}</span>
+<span class="nc" id="L420">	}</span>
 
 	private void addPuzzle(Line line, Col col, String direction) {
-<span class="nc" id="L422">		final Cell cell = getCell(line, col);</span>
-<span class="nc" id="L423">		ConnectorPuzzleEmpty connector = (ConnectorPuzzleEmpty) cell.getData();</span>
-<span class="nc bnc" id="L424" title="All 2 branches missed.">		if (connector == null) {</span>
-<span class="nc" id="L425">			connector = new ConnectorPuzzleEmpty();</span>
-<span class="nc" id="L426">			cell.setData(connector);</span>
+<span class="nc" id="L423">		final Cell cell = getCell(line, col);</span>
+<span class="nc" id="L424">		ConnectorPuzzleEmpty connector = (ConnectorPuzzleEmpty) cell.getData();</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">		if (connector == null) {</span>
+<span class="nc" id="L426">			connector = new ConnectorPuzzleEmpty();</span>
+<span class="nc" id="L427">			cell.setData(connector);</span>
 		}
-<span class="nc" id="L428">		connector.append(ConnectorPuzzleEmpty.get(direction));</span>
-<span class="nc" id="L429">	}</span>
+<span class="nc" id="L429">		connector.append(ConnectorPuzzleEmpty.get(direction));</span>
+<span class="nc" id="L430">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

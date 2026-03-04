@@ -36,127 +36,128 @@
 package net.sourceforge.plantuml.bpm;
 
 import net.sourceforge.plantuml.bpm.ConnectorPuzzle.Where;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="nc" id="L40">public class CleanerInterleavingLines implements GridCleaner {</span>
+<span class="nc" id="L41">public class CleanerInterleavingLines implements GridCleaner {</span>
 
 	public boolean clean(Grid grid) {
 		// System.err.println(&quot;running CleanerInterleavingLines&quot;);
-<span class="nc" id="L44">		boolean result = false;</span>
-<span class="nc" id="L45">		Line previous = null;</span>
-<span class="nc bnc" id="L46" title="All 2 branches missed.">		for (Line line : grid.lines().toList()) {</span>
-<span class="nc bnc" id="L47" title="All 2 branches missed.">			if (previous != null) {</span>
-<span class="nc bnc" id="L48" title="All 2 branches missed.">				if (mergeable(grid, previous, line)) {</span>
+<span class="nc" id="L45">		boolean result = false;</span>
+<span class="nc" id="L46">		Line previous = null;</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		for (Line line : grid.lines().toList()) {</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">			if (previous != null) {</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">				if (mergeable(grid, previous, line)) {</span>
 					// System.err.println(&quot;MERGEABLE! &quot; + previous + &quot; &quot; + line);
-<span class="nc" id="L50">					mergeLines(grid, previous, line);</span>
-<span class="nc" id="L51">					return true;</span>
+<span class="nc" id="L51">					mergeLines(grid, previous, line);</span>
+<span class="nc" id="L52">					return true;</span>
 				}
 			}
-<span class="nc" id="L54">			previous = line;</span>
-<span class="nc" id="L55">		}</span>
-<span class="nc" id="L56">		return result;</span>
+<span class="nc" id="L55">			previous = line;</span>
+<span class="nc" id="L56">		}</span>
+<span class="nc" id="L57">		return result;</span>
 	}
 
 	private void mergeLines(Grid grid, Line line1, Line line2) {
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		for (Col col : grid.cols().toList()) {</span>
-<span class="nc" id="L61">			final Cell cell1 = grid.getCell(line1, col);</span>
-<span class="nc" id="L62">			final Cell cell2 = grid.getCell(line2, col);</span>
-<span class="nc" id="L63">			cell1.setData(merge(cell1.getData(), cell2.getData()));</span>
-<span class="nc" id="L64">			cell2.setData(null);</span>
-<span class="nc" id="L65">		}</span>
-<span class="nc" id="L66">		grid.removeLine(line2);</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">		for (Col col : grid.cols().toList()) {</span>
+<span class="nc" id="L62">			final Cell cell1 = grid.getCell(line1, col);</span>
+<span class="nc" id="L63">			final Cell cell2 = grid.getCell(line2, col);</span>
+<span class="nc" id="L64">			cell1.setData(merge(cell1.getData(), cell2.getData()));</span>
+<span class="nc" id="L65">			cell2.setData(null);</span>
+<span class="nc" id="L66">		}</span>
+<span class="nc" id="L67">		grid.removeLine(line2);</span>
 
-<span class="nc" id="L68">	}</span>
+<span class="nc" id="L69">	}</span>
 
 	private boolean mergeable(Grid grid, Line line1, Line line2) {
 		// int c = 0;
-<span class="nc bnc" id="L72" title="All 2 branches missed.">		for (Col col : grid.cols().toList()) {</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		for (Col col : grid.cols().toList()) {</span>
 			// System.err.println(&quot;c=&quot; + c);
 			// c++;
-<span class="nc" id="L75">			final Placeable cell1 = grid.getCell(line1, col).getData();</span>
-<span class="nc" id="L76">			final Placeable cell2 = grid.getCell(line2, col).getData();</span>
+<span class="nc" id="L76">			final Placeable cell1 = grid.getCell(line1, col).getData();</span>
+<span class="nc" id="L77">			final Placeable cell2 = grid.getCell(line2, col).getData();</span>
 			// System.err.println(&quot;cells=&quot; + cell1 + &quot; &quot; + cell2 + &quot; &quot; + mergeable(cell1,
 			// cell2));
-<span class="nc bnc" id="L79" title="All 2 branches missed.">			if (mergeable(cell1, cell2) == false) {</span>
-<span class="nc" id="L80">				return false;</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (mergeable(cell1, cell2) == false) {</span>
+<span class="nc" id="L81">				return false;</span>
 			}
-<span class="nc" id="L82">		}</span>
-<span class="nc" id="L83">		return true;</span>
+<span class="nc" id="L83">		}</span>
+<span class="nc" id="L84">		return true;</span>
 	}
 
 	private Placeable merge(Placeable data1, Placeable data2) {
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (data1 == null) {</span>
-<span class="nc" id="L88">			return data2;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (data1 == null) {</span>
+<span class="nc" id="L89">			return data2;</span>
 		}
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (data2 == null) {</span>
-<span class="nc" id="L91">			return data1;</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (data2 == null) {</span>
+<span class="nc" id="L92">			return data1;</span>
 		}
-<span class="nc bnc" id="L93" title="All 4 branches missed.">		assert data1 != null &amp;&amp; data2 != null;</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (data1 instanceof BpmElement) {</span>
-<span class="nc" id="L95">			return data1;</span>
+<span class="nc bnc" id="L94" title="All 6 branches missed.">		if (TeaVM.a()) assert data1 != null &amp;&amp; data2 != null;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (data1 instanceof BpmElement) {</span>
+<span class="nc" id="L96">			return data1;</span>
 		}
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (data2 instanceof BpmElement) {</span>
-<span class="nc" id="L98">			final ConnectorPuzzleEmpty puz1 = (ConnectorPuzzleEmpty) data1;</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (puz1.checkDirections(&quot;SW&quot;)) {</span>
-<span class="nc" id="L100">				((BpmElement) data2).remove(Where.NORTH);</span>
-<span class="nc" id="L101">				((BpmElement) data2).append(Where.WEST);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (data2 instanceof BpmElement) {</span>
+<span class="nc" id="L99">			final ConnectorPuzzleEmpty puz1 = (ConnectorPuzzleEmpty) data1;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (puz1.checkDirections(&quot;SW&quot;)) {</span>
+<span class="nc" id="L101">				((BpmElement) data2).remove(Where.NORTH);</span>
+<span class="nc" id="L102">				((BpmElement) data2).append(Where.WEST);</span>
 			}
-<span class="nc" id="L103">			return data2;</span>
+<span class="nc" id="L104">			return data2;</span>
 		}
-<span class="nc bnc" id="L105" title="All 4 branches missed.">		assert data1 instanceof ConnectorPuzzleEmpty &amp;&amp; data2 instanceof ConnectorPuzzleEmpty;</span>
-<span class="nc" id="L106">		final ConnectorPuzzleEmpty puz1 = (ConnectorPuzzleEmpty) data1;</span>
-<span class="nc" id="L107">		final ConnectorPuzzleEmpty puz2 = (ConnectorPuzzleEmpty) data2;</span>
-<span class="nc" id="L108">		return puz2;</span>
+<span class="nc bnc" id="L106" title="All 6 branches missed.">		if (TeaVM.a()) assert data1 instanceof ConnectorPuzzleEmpty &amp;&amp; data2 instanceof ConnectorPuzzleEmpty;</span>
+<span class="nc" id="L107">		final ConnectorPuzzleEmpty puz1 = (ConnectorPuzzleEmpty) data1;</span>
+<span class="nc" id="L108">		final ConnectorPuzzleEmpty puz2 = (ConnectorPuzzleEmpty) data2;</span>
+<span class="nc" id="L109">		return puz2;</span>
 	}
 
 	private boolean mergeable(Placeable data1, Placeable data2) {
-<span class="nc bnc" id="L112" title="All 4 branches missed.">		if (data1 == null || data2 == null) {</span>
-<span class="nc" id="L113">			return true;</span>
+<span class="nc bnc" id="L113" title="All 4 branches missed.">		if (data1 == null || data2 == null) {</span>
+<span class="nc" id="L114">			return true;</span>
 		}
-<span class="nc bnc" id="L115" title="All 4 branches missed.">		assert data1 != null &amp;&amp; data2 != null;</span>
-<span class="nc bnc" id="L116" title="All 4 branches missed.">		if (data1 instanceof ConnectorPuzzleEmpty &amp;&amp; data2 instanceof ConnectorPuzzleEmpty) {</span>
-<span class="nc" id="L117">			return mergeableCC((ConnectorPuzzleEmpty) data1, (ConnectorPuzzleEmpty) data2);</span>
+<span class="nc bnc" id="L116" title="All 6 branches missed.">		if (TeaVM.a()) assert data1 != null &amp;&amp; data2 != null;</span>
+<span class="nc bnc" id="L117" title="All 4 branches missed.">		if (data1 instanceof ConnectorPuzzleEmpty &amp;&amp; data2 instanceof ConnectorPuzzleEmpty) {</span>
+<span class="nc" id="L118">			return mergeableCC((ConnectorPuzzleEmpty) data1, (ConnectorPuzzleEmpty) data2);</span>
 		}
-<span class="nc bnc" id="L119" title="All 4 branches missed.">		if (data1 instanceof ConnectorPuzzleEmpty &amp;&amp; data2 instanceof BpmElement) {</span>
-<span class="nc" id="L120">			final boolean result = mergeablePuzzleSingle((ConnectorPuzzleEmpty) data1, (BpmElement) data2);</span>
+<span class="nc bnc" id="L120" title="All 4 branches missed.">		if (data1 instanceof ConnectorPuzzleEmpty &amp;&amp; data2 instanceof BpmElement) {</span>
+<span class="nc" id="L121">			final boolean result = mergeablePuzzleSingle((ConnectorPuzzleEmpty) data1, (BpmElement) data2);</span>
 			// System.err.println(&quot;OTHER2=&quot; + data2 + &quot; &quot; + data1 + &quot; &quot; + result);
-<span class="nc" id="L122">			return result;</span>
+<span class="nc" id="L123">			return result;</span>
 		}
-<span class="nc bnc" id="L124" title="All 4 branches missed.">		if (data2 instanceof ConnectorPuzzleEmpty &amp;&amp; data1 instanceof BpmElement) {</span>
-<span class="nc" id="L125">			final boolean result = mergeablePuzzleSingle((BpmElement) data1, (ConnectorPuzzleEmpty) data2);</span>
+<span class="nc bnc" id="L125" title="All 4 branches missed.">		if (data2 instanceof ConnectorPuzzleEmpty &amp;&amp; data1 instanceof BpmElement) {</span>
+<span class="nc" id="L126">			final boolean result = mergeablePuzzleSingle((BpmElement) data1, (ConnectorPuzzleEmpty) data2);</span>
 			// System.err.println(&quot;OTHER1=&quot; + data1 + &quot; &quot; + data2 + &quot; &quot; + result);
-<span class="nc" id="L127">			return result;</span>
+<span class="nc" id="L128">			return result;</span>
 		}
-<span class="nc" id="L129">		return false;</span>
+<span class="nc" id="L130">		return false;</span>
 	}
 
 	private boolean mergeablePuzzleSingle(ConnectorPuzzleEmpty data1, BpmElement data2) {
-<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (data1.checkDirections(&quot;NS&quot;)) {</span>
-<span class="nc" id="L134">			return true;</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (data1.checkDirections(&quot;NS&quot;)) {</span>
+<span class="nc" id="L135">			return true;</span>
 		}
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (data1.checkDirections(&quot;SW&quot;)) {</span>
-<span class="nc" id="L137">			return true;</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (data1.checkDirections(&quot;SW&quot;)) {</span>
+<span class="nc" id="L138">			return true;</span>
 		}
-<span class="nc" id="L139">		return false;</span>
+<span class="nc" id="L140">		return false;</span>
 	}
 
 	private boolean mergeablePuzzleSingle(BpmElement data1, ConnectorPuzzleEmpty data2) {
-<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (data2.checkDirections(&quot;NS&quot;)) {</span>
-<span class="nc" id="L144">			return true;</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (data2.checkDirections(&quot;NS&quot;)) {</span>
+<span class="nc" id="L145">			return true;</span>
 		}
-<span class="nc" id="L146">		return false;</span>
+<span class="nc" id="L147">		return false;</span>
 	}
 
 	private boolean mergeableCC(ConnectorPuzzleEmpty puz1, ConnectorPuzzleEmpty puz2) {
-<span class="nc bnc" id="L150" title="All 4 branches missed.">		if (puz1.checkDirections(&quot;NS&quot;) &amp;&amp; puz2.checkDirections(&quot;NS&quot;)) {</span>
-<span class="nc" id="L151">			return true;</span>
+<span class="nc bnc" id="L151" title="All 4 branches missed.">		if (puz1.checkDirections(&quot;NS&quot;) &amp;&amp; puz2.checkDirections(&quot;NS&quot;)) {</span>
+<span class="nc" id="L152">			return true;</span>
 		}
-<span class="nc bnc" id="L153" title="All 4 branches missed.">		if (puz1.checkDirections(&quot;NS&quot;) &amp;&amp; puz2.checkDirections(&quot;NE&quot;)) {</span>
-<span class="nc" id="L154">			return true;</span>
+<span class="nc bnc" id="L154" title="All 4 branches missed.">		if (puz1.checkDirections(&quot;NS&quot;) &amp;&amp; puz2.checkDirections(&quot;NE&quot;)) {</span>
+<span class="nc" id="L155">			return true;</span>
 		}
-<span class="nc bnc" id="L156" title="All 4 branches missed.">		if (puz1.checkDirections(&quot;NS&quot;) &amp;&amp; puz2.checkDirections(&quot;NW&quot;)) {</span>
-<span class="nc" id="L157">			return true;</span>
+<span class="nc bnc" id="L157" title="All 4 branches missed.">		if (puz1.checkDirections(&quot;NS&quot;) &amp;&amp; puz2.checkDirections(&quot;NW&quot;)) {</span>
+<span class="nc" id="L158">			return true;</span>
 		}
-<span class="nc" id="L159">		return false;</span>
+<span class="nc" id="L160">		return false;</span>
 	}
 
 }

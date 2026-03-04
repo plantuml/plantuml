@@ -41,54 +41,55 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="fc" id="L45">public class SkinParamColors extends SkinParamDelegator {</span>
+<span class="fc" id="L46">public class SkinParamColors extends SkinParamDelegator {</span>
 
 	public final Colors getColors() {
-<span class="fc" id="L48">		return colors;</span>
+<span class="fc" id="L49">		return colors;</span>
 	}
 
 	final private Colors colors;
 
 	public SkinParamColors(ISkinParam skinParam, Colors colors) {
-<span class="fc" id="L54">		super(skinParam);</span>
-<span class="fc" id="L55">		this.colors = colors;</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L55">		super(skinParam);</span>
+<span class="fc" id="L56">		this.colors = colors;</span>
+<span class="fc" id="L57">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L60">		return &quot;SkinParamColors::&quot; + colors;</span>
+<span class="nc" id="L61">		return &quot;SkinParamColors::&quot; + colors;</span>
 	}
 
 	@Override
 	public boolean shadowing(Stereotype stereotype) {
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (colors.getShadowing() == null) {</span>
-<span class="nc" id="L66">			return super.shadowing(stereotype);</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (colors.getShadowing() == null) {</span>
+<span class="nc" id="L67">			return super.shadowing(stereotype);</span>
 		}
-<span class="nc" id="L68">		return colors.getShadowing();</span>
+<span class="nc" id="L69">		return colors.getShadowing();</span>
 	}
 
 	@Override
 	public HColor getFontHtmlColor(Stereotype stereotype, FontParam... param) {
-<span class="nc" id="L73">		final HColor value = colors.getColor(ColorType.TEXT);</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (value == null) {</span>
-<span class="nc" id="L75">			return super.getFontHtmlColor(stereotype, param);</span>
+<span class="nc" id="L74">		final HColor value = colors.getColor(ColorType.TEXT);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (value == null) {</span>
+<span class="nc" id="L76">			return super.getFontHtmlColor(stereotype, param);</span>
 		}
-<span class="nc" id="L77">		return value;</span>
+<span class="nc" id="L78">		return value;</span>
 	}
 
 	@Override
 	public HColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
-<span class="nc" id="L82">		final ColorType type = param.getColorType();</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (type == null) {</span>
-<span class="nc" id="L84">			return super.getHtmlColor(param, stereotype, clickable);</span>
+<span class="nc" id="L83">		final ColorType type = param.getColorType();</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (type == null) {</span>
+<span class="nc" id="L85">			return super.getHtmlColor(param, stereotype, clickable);</span>
 		}
-<span class="nc" id="L86">		final HColor value = colors.getColor(type);</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (value != null) {</span>
-<span class="nc" id="L88">			return value;</span>
+<span class="nc" id="L87">		final HColor value = colors.getColor(type);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (value != null) {</span>
+<span class="nc" id="L89">			return value;</span>
 		}
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		assert value == null;</span>
-<span class="nc" id="L91">		return super.getHtmlColor(param, stereotype, clickable);</span>
+<span class="nc bnc" id="L91" title="All 4 branches missed.">		if (TeaVM.a()) assert value == null;</span>
+<span class="nc" id="L92">		return super.getHtmlColor(param, stereotype, clickable);</span>
 	}
 
 }

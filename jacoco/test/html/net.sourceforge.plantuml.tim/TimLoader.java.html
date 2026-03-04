@@ -44,66 +44,65 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.teavm.PSystemBuilder2;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class TimLoader {
 
 	private final TContext context;
-<span class="fc" id="L54">	private final TMemory global = new TMemoryGlobal();</span>
+<span class="fc" id="L53">	private final TMemory global = new TMemoryGlobal();</span>
 	private boolean preprocessorError;
 	private List&lt;StringLocated&gt; resultList;
 	private PreprocessingArtifact preprocessingArtifact;
 	private final PathSystem pathSystem;
 
 	public TimLoader(PathSystem pathSystem, Defines defines, Charset charset, DefinitionsContainer definitionsContainer,
-<span class="fc" id="L61">			StringLocated location) {</span>
-<span class="fc" id="L62">		this.pathSystem = pathSystem;</span>
-<span class="fc" id="L63">		this.context = new TContext(pathSystem, defines, charset, definitionsContainer);</span>
+<span class="fc" id="L60">			StringLocated location) {</span>
+<span class="fc" id="L61">		this.pathSystem = pathSystem;</span>
+<span class="fc" id="L62">		this.context = new TContext(pathSystem, defines, charset, definitionsContainer);</span>
 		try {
-<span class="fc" id="L65">			defines.copyTo(global, location);</span>
-<span class="nc" id="L66">		} catch (EaterException e) {</span>
-<span class="nc" id="L67">			Logme.error(e);</span>
-<span class="fc" id="L68">		}</span>
-<span class="fc" id="L69">	}</span>
+<span class="fc" id="L64">			defines.copyTo(global, location);</span>
+<span class="nc" id="L65">		} catch (EaterException e) {</span>
+<span class="nc" id="L66">			Logme.error(e);</span>
+<span class="fc" id="L67">		}</span>
+<span class="fc" id="L68">	}</span>
 
 	public Set&lt;File&gt; load(List&lt;StringLocated&gt; list) {
 //		CodeIteratorImpl.indentNow(list);
 		try {
-<span class="fc" id="L74">			BrowserLog.consoleLog(TimLoader.class, &quot;load wip20&quot;);</span>
-<span class="fc" id="L75">			context.executeLines(global, list, null, false);</span>
-<span class="fc" id="L76">			BrowserLog.consoleLog(TimLoader.class, &quot;load wip30&quot;);</span>
-<span class="fc" id="L77">		} catch (EaterException e) {</span>
-<span class="fc" id="L78">			context.getResultList().add(e.getLocation().withErrorPreprocessor(e.getMessage()));</span>
-<span class="fc" id="L79">			changeLastLine(context.getDebug(), e.getMessage());</span>
-<span class="fc" id="L80">			this.preprocessorError = true;</span>
-<span class="fc" id="L81">		}</span>
-<span class="fc" id="L82">		this.resultList = context.getResultList();</span>
-<span class="fc" id="L83">		this.preprocessingArtifact = context.getPreprocessingArtifact();</span>
-<span class="fc" id="L84">		return context.getFilesUsedCurrent();</span>
+<span class="fc" id="L73">			BrowserLog.consoleLog(TimLoader.class, &quot;load wip20&quot;);</span>
+<span class="fc" id="L74">			context.executeLines(global, list, null, false);</span>
+<span class="fc" id="L75">			BrowserLog.consoleLog(TimLoader.class, &quot;load wip30&quot;);</span>
+<span class="fc" id="L76">		} catch (EaterException e) {</span>
+<span class="fc" id="L77">			context.getResultList().add(e.getLocation().withErrorPreprocessor(e.getMessage()));</span>
+<span class="fc" id="L78">			changeLastLine(context.getDebug(), e.getMessage());</span>
+<span class="fc" id="L79">			this.preprocessorError = true;</span>
+<span class="fc" id="L80">		}</span>
+<span class="fc" id="L81">		this.resultList = context.getResultList();</span>
+<span class="fc" id="L82">		this.preprocessingArtifact = context.getPreprocessingArtifact();</span>
+<span class="fc" id="L83">		return context.getFilesUsedCurrent();</span>
 	}
 
 	private void changeLastLine(List&lt;StringLocated&gt; list, String message) {
-<span class="fc" id="L88">		final int num = list.size() - 1;</span>
-<span class="fc" id="L89">		final StringLocated last = list.get(num);</span>
-<span class="fc" id="L90">		list.set(num, last.withErrorPreprocessor(message));</span>
-<span class="fc" id="L91">	}</span>
+<span class="fc" id="L87">		final int num = list.size() - 1;</span>
+<span class="fc" id="L88">		final StringLocated last = list.get(num);</span>
+<span class="fc" id="L89">		list.set(num, last.withErrorPreprocessor(message));</span>
+<span class="fc" id="L90">	}</span>
 
 	public final List&lt;StringLocated&gt; getResultList() {
-<span class="fc" id="L94">		return resultList;</span>
+<span class="fc" id="L93">		return resultList;</span>
 	}
 
 	public final List&lt;StringLocated&gt; getDebug() {
-<span class="fc" id="L98">		return context.getDebug();</span>
+<span class="fc" id="L97">		return context.getDebug();</span>
 	}
 
 	public final boolean isPreprocessorError() {
-<span class="fc" id="L102">		return preprocessorError;</span>
+<span class="fc" id="L101">		return preprocessorError;</span>
 	}
 
 	public PreprocessingArtifact getPreprocessingArtifact() {
-<span class="fc" id="L106">		return preprocessingArtifact;</span>
+<span class="fc" id="L105">		return preprocessingArtifact;</span>
 	}
 
 }

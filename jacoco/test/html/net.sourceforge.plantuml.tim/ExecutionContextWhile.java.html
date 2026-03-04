@@ -38,7 +38,6 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.tim.expression.TokenStack;
 import net.sourceforge.plantuml.tim.iterator.CodePosition;
-import net.sourceforge.plantuml.utils.LineLocation;
 
 public class ExecutionContextWhile {
 
@@ -46,35 +45,35 @@ public class ExecutionContextWhile {
 	private final CodePosition codePosition;
 	private boolean skipMe;
 
-<span class="fc" id="L49">	private ExecutionContextWhile(TokenStack whileExpression, CodePosition codePosition) {</span>
-<span class="fc" id="L50">		this.whileExpression = whileExpression;</span>
-<span class="fc" id="L51">		this.codePosition = codePosition;</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L48">	private ExecutionContextWhile(TokenStack whileExpression, CodePosition codePosition) {</span>
+<span class="fc" id="L49">		this.whileExpression = whileExpression;</span>
+<span class="fc" id="L50">		this.codePosition = codePosition;</span>
+<span class="fc" id="L51">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L56">		return whileExpression.toString() + &quot; &quot; + codePosition;</span>
+<span class="nc" id="L55">		return whileExpression.toString() + &quot; &quot; + codePosition;</span>
 	}
 
 	public static ExecutionContextWhile fromValue(TokenStack whileExpression, CodePosition codePosition) {
-<span class="fc" id="L60">		return new ExecutionContextWhile(whileExpression, codePosition);</span>
+<span class="fc" id="L59">		return new ExecutionContextWhile(whileExpression, codePosition);</span>
 	}
 
 	public TValue conditionValue(StringLocated location, TContext context, TMemory memory)
 			throws EaterException {
-<span class="fc" id="L65">		return whileExpression.getResult(location, context, memory);</span>
+<span class="fc" id="L64">		return whileExpression.getResult(location, context, memory);</span>
 	}
 
 	public void skipMe() {
-<span class="fc" id="L69">		skipMe = true;</span>
-<span class="fc" id="L70">	}</span>
+<span class="fc" id="L68">		skipMe = true;</span>
+<span class="fc" id="L69">	}</span>
 
 	public final boolean isSkipMe() {
-<span class="fc" id="L73">		return skipMe;</span>
+<span class="fc" id="L72">		return skipMe;</span>
 	}
 
 	public CodePosition getStartWhile() {
-<span class="fc" id="L77">		return codePosition;</span>
+<span class="fc" id="L76">		return codePosition;</span>
 	}
 
 }

@@ -160,8 +160,8 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	public HColor asMonochrome(HColorSimple colorForMonochrome, double minGray, double maxGray) {
 <span class="fc" id="L161">		final XColor tmp = ColorUtils.getGrayScaleColor(color);</span>
 <span class="fc" id="L162">		final int gray = tmp.getGreen();</span>
-<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		assert gray == tmp.getBlue();</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		assert gray == tmp.getRed();</span>
+<span class="pc bpc" id="L163" title="2 of 4 branches missed.">		if (TeaVM.a()) assert gray == tmp.getBlue();</span>
+<span class="pc bpc" id="L164" title="2 of 4 branches missed.">		if (TeaVM.a()) assert gray == tmp.getRed();</span>
 
 <span class="fc" id="L166">		final double coef = (gray - minGray) / 256.0;</span>
 <span class="fc" id="L167">		final XColor result = ColorUtils.grayToColor(coef, colorForMonochrome.color);</span>

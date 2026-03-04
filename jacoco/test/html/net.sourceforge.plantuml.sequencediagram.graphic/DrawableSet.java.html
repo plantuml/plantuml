@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
-import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -71,6 +70,7 @@ import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.SkinParamBackcolored;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.Url;
 
 <span class="fc" id="L76">public class DrawableSet {</span>
@@ -193,7 +193,7 @@ import net.sourceforge.plantuml.url.Url;
 <span class="fc" id="L193">				pending = null;</span>
 <span class="fc" id="L194">				continue;</span>
 			}
-<span class="nc bnc" id="L196" title="All 2 branches missed.">			assert englober != null;</span>
+<span class="nc bnc" id="L196" title="All 4 branches missed.">			if (TeaVM.a()) assert englober != null;</span>
 <span class="nc bnc" id="L197" title="All 4 branches missed.">			if (pending != null &amp;&amp; englober == pending.getParticipantEnglober()) {</span>
 <span class="nc" id="L198">				pending.addParticipant(ent.getKey());</span>
 <span class="nc" id="L199">				continue;</span>
@@ -263,7 +263,7 @@ import net.sourceforge.plantuml.url.Url;
 
 <span class="nc" id="L264">		eventsList.add(idx, newpage);</span>
 <span class="nc" id="L265">		events.put(newpage, object);</span>
-<span class="nc bnc" id="L266" title="All 2 branches missed.">		assert events.size() == eventsList.size();</span>
+<span class="nc bnc" id="L266" title="All 4 branches missed.">		if (TeaVM.a()) assert events.size() == eventsList.size();</span>
 <span class="nc" id="L267">	}</span>
 
 	void setDimension(XDimension2D dim) {
@@ -464,7 +464,7 @@ import net.sourceforge.plantuml.url.Url;
 <span class="nc" id="L464">		int min = -1;</span>
 <span class="nc bnc" id="L465" title="All 2 branches missed.">		for (Participant p : someParticipants) {</span>
 <span class="nc" id="L466">			final int n = list.indexOf(p);</span>
-<span class="nc bnc" id="L467" title="All 2 branches missed.">			assert n != -1;</span>
+<span class="nc bnc" id="L467" title="All 4 branches missed.">			if (TeaVM.a()) assert n != -1;</span>
 <span class="nc bnc" id="L468" title="All 4 branches missed.">			if (min == -1 || min &gt; n)</span>
 <span class="nc" id="L469">				min = n;</span>
 
@@ -477,7 +477,7 @@ import net.sourceforge.plantuml.url.Url;
 <span class="nc" id="L477">		int max = -1;</span>
 <span class="nc bnc" id="L478" title="All 2 branches missed.">		for (Participant p : someParticipants) {</span>
 <span class="nc" id="L479">			final int n = list.indexOf(p);</span>
-<span class="nc bnc" id="L480" title="All 2 branches missed.">			assert n != -1;</span>
+<span class="nc bnc" id="L480" title="All 4 branches missed.">			if (TeaVM.a()) assert n != -1;</span>
 <span class="nc bnc" id="L481" title="All 4 branches missed.">			if (max == -1 || max &lt; n)</span>
 <span class="nc" id="L482">				max = n;</span>
 

@@ -41,39 +41,40 @@ import net.sourceforge.plantuml.salt.SaltDictionary;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.ElementPyramidScrolled;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="nc" id="L45">public class ElementFactoryScroll extends AbstractElementFactoryComplex {</span>
+<span class="nc" id="L46">public class ElementFactoryScroll extends AbstractElementFactoryComplex {</span>
 
 	public ElementFactoryScroll(DataSource dataSource, SaltDictionary dictionary) {
-<span class="nc" id="L48">		super(dataSource, dictionary);</span>
-<span class="nc" id="L49">	}</span>
+<span class="nc" id="L49">		super(dataSource, dictionary);</span>
+<span class="nc" id="L50">	}</span>
 
 	public Terminated&lt;Element&gt; create() {
-<span class="nc bnc" id="L52" title="All 2 branches missed.">		if (ready() == false) {</span>
-<span class="nc" id="L53">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (ready() == false) {</span>
+<span class="nc" id="L54">			throw new IllegalStateException();</span>
 		}
-<span class="nc" id="L55">		final Terminated&lt;String&gt; tmp = getDataSource().next();</span>
-<span class="nc" id="L56">		final String header = tmp.getElement();</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		assert header.startsWith(&quot;{&quot;);</span>
+<span class="nc" id="L56">		final Terminated&lt;String&gt; tmp = getDataSource().next();</span>
+<span class="nc" id="L57">		final String header = tmp.getElement();</span>
+<span class="nc bnc" id="L58" title="All 4 branches missed.">		if (TeaVM.a()) assert header.startsWith(&quot;{&quot;);</span>
 
-<span class="nc" id="L59">		final Positionner2 positionner = new Positionner2();</span>
+<span class="nc" id="L60">		final Positionner2 positionner = new Positionner2();</span>
 
-<span class="nc bnc" id="L61" title="All 2 branches missed.">		while (getDataSource().peek(0).getElement().equals(&quot;}&quot;) == false) {</span>
-<span class="nc" id="L62">			final Terminated&lt;Element&gt; next = getNextElement();</span>
-<span class="nc" id="L63">			positionner.add(next);</span>
-<span class="nc" id="L64">		}</span>
-<span class="nc" id="L65">		final Terminated&lt;String&gt; next = getDataSource().next();</span>
-<span class="nc" id="L66">		return new Terminated&lt;Element&gt;(</span>
-<span class="nc" id="L67">				new ElementPyramidScrolled(positionner, getDictionary(), ScrollStrategy.fromDesc(header)),</span>
-<span class="nc" id="L68">				next.getTerminator());</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		while (getDataSource().peek(0).getElement().equals(&quot;}&quot;) == false) {</span>
+<span class="nc" id="L63">			final Terminated&lt;Element&gt; next = getNextElement();</span>
+<span class="nc" id="L64">			positionner.add(next);</span>
+<span class="nc" id="L65">		}</span>
+<span class="nc" id="L66">		final Terminated&lt;String&gt; next = getDataSource().next();</span>
+<span class="nc" id="L67">		return new Terminated&lt;Element&gt;(</span>
+<span class="nc" id="L68">				new ElementPyramidScrolled(positionner, getDictionary(), ScrollStrategy.fromDesc(header)),</span>
+<span class="nc" id="L69">				next.getTerminator());</span>
 	}
 
 	public boolean ready() {
-<span class="nc" id="L72">		final String text = getDataSource().peek(0).getElement();</span>
-<span class="nc bnc" id="L73" title="All 6 branches missed.">		if (text.equals(&quot;{S&quot;) || text.equals(&quot;{S-&quot;) || text.equals(&quot;{SI&quot;)) {</span>
-<span class="nc" id="L74">			return true;</span>
+<span class="nc" id="L73">		final String text = getDataSource().peek(0).getElement();</span>
+<span class="nc bnc" id="L74" title="All 6 branches missed.">		if (text.equals(&quot;{S&quot;) || text.equals(&quot;{S-&quot;) || text.equals(&quot;{SI&quot;)) {</span>
+<span class="nc" id="L75">			return true;</span>
 		}
-<span class="nc" id="L76">		return false;</span>
+<span class="nc" id="L77">		return false;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

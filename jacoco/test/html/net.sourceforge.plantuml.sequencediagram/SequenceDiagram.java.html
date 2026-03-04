@@ -539,7 +539,7 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 	public void putParticipantInLast(String code) {
 <span class="nc" id="L540">		final Participant p = Objects.requireNonNull(participantsget(code), code);</span>
 <span class="nc" id="L541">		final boolean ok = participantsList.remove(p);</span>
-<span class="nc bnc" id="L542" title="All 2 branches missed.">		assert ok;</span>
+<span class="nc bnc" id="L542" title="All 4 branches missed.">		if (TeaVM.a()) assert ok;</span>
 <span class="nc" id="L543">		addWithOrder(p);</span>
 <span class="nc" id="L544">		participantEnglobers2.put(p, participantEnglober);</span>
 <span class="nc" id="L545">	}</span>

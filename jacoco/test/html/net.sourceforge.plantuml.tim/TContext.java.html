@@ -566,7 +566,7 @@ public class TContext {
 <span class="nc" id="L566">					executeVoid3(str, memory, function, call);</span>
 <span class="nc" id="L567">					return null;</span>
 				}
-<span class="pc bfc" id="L569" title="All 2 branches covered.">				assert function.getFunctionType() == TFunctionType.RETURN_FUNCTION</span>
+<span class="pc bpc" id="L569" title="1 of 4 branches missed.">				if (TeaVM.a()) assert function.getFunctionType() == TFunctionType.RETURN_FUNCTION</span>
 <span class="pc bpc" id="L570" title="1 of 2 branches missed.">						|| function.getFunctionType() == TFunctionType.LEGACY_DEFINE;</span>
 <span class="fc" id="L571">				final TValue functionReturn = function.executeReturnFunction(this, memory, str, call.getValues(),</span>
 <span class="fc" id="L572">						call.getNamedArguments());</span>
@@ -849,7 +849,7 @@ public class TContext {
 						}
 <span class="fc" id="L850">						saveImportedFiles = this.pathSystem;</span>
 <span class="fc" id="L851">						this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());</span>
-<span class="pc bpc" id="L852" title="1 of 2 branches missed.">						assert reader != null;</span>
+<span class="pc bpc" id="L852" title="2 of 4 branches missed.">						if (TeaVM.a()) assert reader != null;</span>
 					}
 				}
 			}

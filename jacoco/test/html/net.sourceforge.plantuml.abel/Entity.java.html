@@ -79,13 +79,14 @@ import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.svek.SingleStrategy;
 import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.Position;
 
-<span class="fc" id="L88">final public class Entity implements SpecificBackcolorable, Hideable, Removeable, LineConfigurable, Bag {</span>
+<span class="fc" id="L89">final public class Entity implements SpecificBackcolorable, Hideable, Removeable, LineConfigurable, Bag {</span>
 
 	private final StyleBuilder currentStyleBuilder;
 	private final CucaDiagram diagram;
@@ -96,19 +97,19 @@ import net.sourceforge.plantuml.utils.Position;
 
 	private final Bodier bodier;
 	private final String uid;
-<span class="fc" id="L99">	private Display display = Display.empty();</span>
-<span class="fc" id="L100">	private DisplayPositioned legend = null;</span>
+<span class="fc" id="L100">	private Display display = Display.empty();</span>
+<span class="fc" id="L101">	private DisplayPositioned legend = null;</span>
 
 	private LeafType leafType;
 	private Stereotype stereotype;
-<span class="fc" id="L104">	private Stereostyles stereostyles = Stereostyles.NONE;</span>
+<span class="fc" id="L105">	private Stereostyles stereostyles = Stereostyles.NONE;</span>
 	private String generic;
 
 	private GroupType groupType;
 
 	// Other
-<span class="fc" id="L110">	private Margins margins = Margins.NONE;</span>
-<span class="fc" id="L111">	private final Collection&lt;String&gt; portShortNames = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L111">	private Margins margins = Margins.NONE;</span>
+<span class="fc" id="L112">	private final Collection&lt;String&gt; portShortNames = new HashSet&lt;&gt;();</span>
 	private int xposition;
 	private IEntityImage svekImage;
 
@@ -118,438 +119,438 @@ import net.sourceforge.plantuml.utils.Position;
 	// private LineLocation codeLine;
 	private final LineLocation location;
 
-<span class="fc" id="L121">	private Set&lt;Stereotag&gt; tags = new LinkedHashSet&lt;&gt;();</span>
-<span class="fc" id="L122">	private final List&lt;CucaNote&gt; notesTop = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L123">	private final List&lt;CucaNote&gt; notesBottom = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L122">	private Set&lt;Stereotag&gt; tags = new LinkedHashSet&lt;&gt;();</span>
+<span class="fc" id="L123">	private final List&lt;CucaNote&gt; notesTop = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L124">	private final List&lt;CucaNote&gt; notesBottom = new ArrayList&lt;&gt;();</span>
 
 	private Together together;
 
 	private boolean packed;
 	private boolean isStatic;
-<span class="fc" id="L129">	private final Map&lt;Direction, List&lt;Kal&gt;&gt; kals = new EnumMap&lt;&gt;(Direction.class);</span>
+<span class="fc" id="L130">	private final Map&lt;Direction, List&lt;Kal&gt;&gt; kals = new EnumMap&lt;&gt;(Direction.class);</span>
 	private VisibilityModifier visibility;
 	private Neighborhood neighborhood;
-<span class="fc" id="L132">	private Colors colors = Colors.empty();</span>
-<span class="fc" id="L133">	private final Map&lt;String, Display&gt; tips = new LinkedHashMap&lt;String, Display&gt;();</span>
+<span class="fc" id="L133">	private Colors colors = Colors.empty();</span>
+<span class="fc" id="L134">	private final Map&lt;String, Display&gt; tips = new LinkedHashMap&lt;String, Display&gt;();</span>
 
 	//
 	public void addNote(Display note, Position position, Colors colors) {
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (position == Position.TOP)</span>
-<span class="nc" id="L138">			notesTop.add(CucaNote.build(note, position, colors));</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">		else if (position == Position.BOTTOM)</span>
-<span class="nc" id="L140">			notesBottom.add(CucaNote.build(note, position, colors));</span>
-<span class="nc" id="L141">	}</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (position == Position.TOP)</span>
+<span class="nc" id="L139">			notesTop.add(CucaNote.build(note, position, colors));</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		else if (position == Position.BOTTOM)</span>
+<span class="nc" id="L141">			notesBottom.add(CucaNote.build(note, position, colors));</span>
+<span class="nc" id="L142">	}</span>
 
 	//
 	public List&lt;CucaNote&gt; getNotes(Position position) {
-<span class="nc bnc" id="L145" title="All 2 branches missed.">		if (position == Position.TOP)</span>
-<span class="nc" id="L146">			return Collections.unmodifiableList(notesTop);</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (position == Position.BOTTOM)</span>
-<span class="nc" id="L148">			return Collections.unmodifiableList(notesBottom);</span>
-<span class="nc" id="L149">		throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (position == Position.TOP)</span>
+<span class="nc" id="L147">			return Collections.unmodifiableList(notesTop);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (position == Position.BOTTOM)</span>
+<span class="nc" id="L149">			return Collections.unmodifiableList(notesBottom);</span>
+<span class="nc" id="L150">		throw new IllegalArgumentException();</span>
 	}
 
 	public void addStereotag(Stereotag tag) {
-<span class="nc" id="L153">		this.tags.add(tag);</span>
-<span class="nc" id="L154">	}</span>
+<span class="nc" id="L154">		this.tags.add(tag);</span>
+<span class="nc" id="L155">	}</span>
 
 	public Set&lt;Stereotag&gt; stereotags() {
-<span class="nc" id="L157">		return Collections.unmodifiableSet(tags);</span>
+<span class="nc" id="L158">		return Collections.unmodifiableSet(tags);</span>
 	}
 
 	// Back to Entity
 	private Entity(StyleBuilder currentStyleBuilder, LineLocation location, Quark&lt;Entity&gt; quark, CucaDiagram diagram,
-<span class="fc" id="L162">			Bodier bodier, int rawLayout) {</span>
-<span class="fc" id="L163">		this.location = location;</span>
-<span class="fc" id="L164">		this.currentStyleBuilder = currentStyleBuilder;</span>
-<span class="fc" id="L165">		this.quark = Objects.requireNonNull(quark);</span>
-<span class="fc" id="L166">		this.diagram = diagram;</span>
-<span class="fc bfc" id="L167" title="All 2 branches covered.">		if (quark.isRoot())</span>
-<span class="fc" id="L168">			this.uid = &quot;entroot&quot;;</span>
+<span class="fc" id="L163">			Bodier bodier, int rawLayout) {</span>
+<span class="fc" id="L164">		this.location = location;</span>
+<span class="fc" id="L165">		this.currentStyleBuilder = currentStyleBuilder;</span>
+<span class="fc" id="L166">		this.quark = Objects.requireNonNull(quark);</span>
+<span class="fc" id="L167">		this.diagram = diagram;</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">		if (quark.isRoot())</span>
+<span class="fc" id="L169">			this.uid = &quot;entroot&quot;;</span>
 		else
-<span class="fc" id="L170">			this.uid = StringUtils.getUid(&quot;ent&quot;, diagram.getUniqueSequenceValue());</span>
-<span class="fc" id="L171">		this.bodier = bodier;</span>
-<span class="fc" id="L172">		this.rawLayout = rawLayout;</span>
-<span class="fc" id="L173">		this.quark.setData(this);</span>
-<span class="fc" id="L174">	}</span>
+<span class="fc" id="L171">			this.uid = StringUtils.getUid(&quot;ent&quot;, diagram.getUniqueSequenceValue());</span>
+<span class="fc" id="L172">		this.bodier = bodier;</span>
+<span class="fc" id="L173">		this.rawLayout = rawLayout;</span>
+<span class="fc" id="L174">		this.quark.setData(this);</span>
+<span class="fc" id="L175">	}</span>
 
 	public Entity(StyleBuilder currentStyleBuilder, LineLocation location, Quark&lt;Entity&gt; quark, CucaDiagram diagram,
 			Bodier bodier, LeafType leafType, int rawLayout) {
-<span class="fc" id="L178">		this(currentStyleBuilder, location, Objects.requireNonNull(quark), diagram, bodier, rawLayout);</span>
-<span class="fc" id="L179">		this.leafType = leafType;</span>
-<span class="fc" id="L180">	}</span>
+<span class="fc" id="L179">		this(currentStyleBuilder, location, Objects.requireNonNull(quark), diagram, bodier, rawLayout);</span>
+<span class="fc" id="L180">		this.leafType = leafType;</span>
+<span class="fc" id="L181">	}</span>
 
 	public Entity(StyleBuilder currentStyleBuilder, LineLocation location, Quark&lt;Entity&gt; quark, CucaDiagram diagram,
 			Bodier bodier, GroupType groupType, int rawLayout) {
-<span class="fc" id="L184">		this(currentStyleBuilder, location, Objects.requireNonNull(quark), diagram, bodier, rawLayout);</span>
-<span class="fc" id="L185">		this.groupType = groupType;</span>
-<span class="fc" id="L186">	}</span>
+<span class="fc" id="L185">		this(currentStyleBuilder, location, Objects.requireNonNull(quark), diagram, bodier, rawLayout);</span>
+<span class="fc" id="L186">		this.groupType = groupType;</span>
+<span class="fc" id="L187">	}</span>
 
 	public LeafType getLeafType() {
-<span class="fc" id="L189">		return leafType;</span>
+<span class="fc" id="L190">		return leafType;</span>
 	}
 
 	public void muteToType(LeafType newType) {
-<span class="pc bpc" id="L193" title="3 of 4 branches missed.">		if (leafType == LeafType.CLASS &amp;&amp; newType == LeafType.OBJECT)</span>
-<span class="nc" id="L194">			bodier.muteClassToObject();</span>
-<span class="fc" id="L195">		this.groupType = null;</span>
-<span class="fc" id="L196">		this.leafType = newType;</span>
-<span class="fc" id="L197">	}</span>
+<span class="pc bpc" id="L194" title="3 of 4 branches missed.">		if (leafType == LeafType.CLASS &amp;&amp; newType == LeafType.OBJECT)</span>
+<span class="nc" id="L195">			bodier.muteClassToObject();</span>
+<span class="fc" id="L196">		this.groupType = null;</span>
+<span class="fc" id="L197">		this.leafType = newType;</span>
+<span class="fc" id="L198">	}</span>
 
 	public void muteToGroupType(GroupType newType) {
-<span class="fc" id="L200">		this.groupType = newType;</span>
-<span class="fc" id="L201">		this.leafType = null;</span>
-<span class="fc" id="L202">	}</span>
+<span class="fc" id="L201">		this.groupType = newType;</span>
+<span class="fc" id="L202">		this.leafType = null;</span>
+<span class="fc" id="L203">	}</span>
 
 	public boolean muteToType(LeafType newType, USymbol newSymbol) {
 		// checkNotGroup();
-<span class="fc" id="L206">		Objects.requireNonNull(newType);</span>
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (leafType != LeafType.STILL_UNKNOWN) {</span>
-<span class="pc bpc" id="L208" title="1 of 2 branches missed.">			if (newType == this.leafType)</span>
-<span class="fc" id="L209">				return true;</span>
+<span class="fc" id="L207">		Objects.requireNonNull(newType);</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (leafType != LeafType.STILL_UNKNOWN) {</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">			if (newType == this.leafType)</span>
+<span class="fc" id="L210">				return true;</span>
 
-<span class="nc bnc" id="L211" title="All 10 branches missed.">			if (leafType != LeafType.ANNOTATION &amp;&amp; leafType != LeafType.ABSTRACT_CLASS &amp;&amp; leafType != LeafType.CLASS</span>
+<span class="nc bnc" id="L212" title="All 10 branches missed.">			if (leafType != LeafType.ANNOTATION &amp;&amp; leafType != LeafType.ABSTRACT_CLASS &amp;&amp; leafType != LeafType.CLASS</span>
 					&amp;&amp; leafType != LeafType.ENUM &amp;&amp; leafType != LeafType.INTERFACE) {
-<span class="nc" id="L213">				return false;</span>
+<span class="nc" id="L214">				return false;</span>
 				// throw new IllegalArgumentException(&quot;type=&quot; + leafType);
 			}
-<span class="nc bnc" id="L216" title="All 12 branches missed.">			if (newType != LeafType.ANNOTATION &amp;&amp; newType != LeafType.ABSTRACT_CLASS &amp;&amp; newType != LeafType.CLASS</span>
+<span class="nc bnc" id="L217" title="All 12 branches missed.">			if (newType != LeafType.ANNOTATION &amp;&amp; newType != LeafType.ABSTRACT_CLASS &amp;&amp; newType != LeafType.CLASS</span>
 					&amp;&amp; newType != LeafType.ENUM &amp;&amp; newType != LeafType.INTERFACE &amp;&amp; newType != LeafType.OBJECT) {
-<span class="nc" id="L218">				return false;</span>
+<span class="nc" id="L219">				return false;</span>
 				// throw new IllegalArgumentException(&quot;newtype=&quot; + newType);
 			}
 		}
-<span class="nc bnc" id="L222" title="All 4 branches missed.">		if (leafType == LeafType.CLASS &amp;&amp; newType == LeafType.OBJECT)</span>
-<span class="nc" id="L223">			bodier.muteClassToObject();</span>
+<span class="nc bnc" id="L223" title="All 4 branches missed.">		if (leafType == LeafType.CLASS &amp;&amp; newType == LeafType.OBJECT)</span>
+<span class="nc" id="L224">			bodier.muteClassToObject();</span>
 
-<span class="nc" id="L225">		this.leafType = newType;</span>
-<span class="nc" id="L226">		this.symbol = newSymbol;</span>
-<span class="nc" id="L227">		return true;</span>
+<span class="nc" id="L226">		this.leafType = newType;</span>
+<span class="nc" id="L227">		this.symbol = newSymbol;</span>
+<span class="nc" id="L228">		return true;</span>
 	}
 
 	public Quark&lt;Entity&gt; getQuark() {
-<span class="fc" id="L231">		return quark;</span>
+<span class="fc" id="L232">		return quark;</span>
 	}
 
 	public Display getDisplay() {
-<span class="fc" id="L235">		return display;</span>
+<span class="fc" id="L236">		return display;</span>
 	}
 
 	public void setDisplay(Display display) {
-<span class="fc" id="L239">		this.display = display;</span>
-<span class="fc" id="L240">	}</span>
+<span class="fc" id="L240">		this.display = display;</span>
+<span class="fc" id="L241">	}</span>
 
 	public String getUid() {
-<span class="fc" id="L243">		return uid;</span>
+<span class="fc" id="L244">		return uid;</span>
 	}
 
 	public Stereotype getStereotype() {
-<span class="fc" id="L247">		return stereotype;</span>
+<span class="fc" id="L248">		return stereotype;</span>
 	}
 
 	public final void setStereotype(Stereotype stereotype) {
-<span class="fc" id="L251">		this.stereotype = stereotype;</span>
-<span class="fc" id="L252">	}</span>
+<span class="fc" id="L252">		this.stereotype = stereotype;</span>
+<span class="fc" id="L253">	}</span>
 
 	public String toString() {
-<span class="fc" id="L255">		return quark.toString() + &quot; &quot; + display + &quot;(&quot; + leafType + &quot;)[&quot; + groupType + &quot;] &quot; + getUid();</span>
+<span class="fc" id="L256">		return quark.toString() + &quot; &quot; + display + &quot;(&quot; + leafType + &quot;)[&quot; + groupType + &quot;] &quot; + getUid();</span>
 	}
 
 	public final Url getUrl99() {
-<span class="fc" id="L259">		return url;</span>
+<span class="fc" id="L260">		return url;</span>
 	}
 
 	public boolean hasUrl() {
-<span class="nc bnc" id="L263" title="All 4 branches missed.">		if (Display.isNull(display) == false &amp;&amp; display.hasUrl())</span>
-<span class="nc" id="L264">			return true;</span>
+<span class="nc bnc" id="L264" title="All 4 branches missed.">		if (Display.isNull(display) == false &amp;&amp; display.hasUrl())</span>
+<span class="nc" id="L265">			return true;</span>
 
-<span class="nc bnc" id="L266" title="All 2 branches missed.">		if (bodier == null)</span>
-<span class="nc" id="L267">			return false;</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">		if (bodier == null)</span>
+<span class="nc" id="L268">			return false;</span>
 
-<span class="nc bnc" id="L269" title="All 2 branches missed.">		if (bodier.hasUrl())</span>
-<span class="nc" id="L270">			return true;</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">		if (bodier.hasUrl())</span>
+<span class="nc" id="L271">			return true;</span>
 
-<span class="nc bnc" id="L272" title="All 2 branches missed.">		return url != null;</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">		return url != null;</span>
 	}
 
 	public final void addUrl(Url url) {
-<span class="nc" id="L276">		this.url = url;</span>
-<span class="nc" id="L277">	}</span>
+<span class="nc" id="L277">		this.url = url;</span>
+<span class="nc" id="L278">	}</span>
 
 	public final Margins getMargins() {
-<span class="nc" id="L280">		checkNotGroup();</span>
-<span class="nc" id="L281">		return margins;</span>
+<span class="nc" id="L281">		checkNotGroup();</span>
+<span class="nc" id="L282">		return margins;</span>
 	}
 
 	public final void ensureMargins(Margins newMargins) {
 		// checkNotGroup();
-<span class="nc" id="L286">		this.margins = this.margins.merge(newMargins);</span>
-<span class="nc" id="L287">	}</span>
+<span class="nc" id="L287">		this.margins = this.margins.merge(newMargins);</span>
+<span class="nc" id="L288">	}</span>
 
 	public int getXposition() {
-<span class="nc" id="L290">		checkNotGroup();</span>
-<span class="nc" id="L291">		return xposition;</span>
+<span class="nc" id="L291">		checkNotGroup();</span>
+<span class="nc" id="L292">		return xposition;</span>
 	}
 
 	public void setXposition(int pos) {
-<span class="nc" id="L295">		checkNotGroup();</span>
-<span class="nc" id="L296">		xposition = pos;</span>
-<span class="nc" id="L297">	}</span>
+<span class="nc" id="L296">		checkNotGroup();</span>
+<span class="nc" id="L297">		xposition = pos;</span>
+<span class="nc" id="L298">	}</span>
 
 	public final IEntityImage getSvekImage() {
-<span class="fc" id="L300">		checkNotGroup();</span>
-<span class="fc" id="L301">		return svekImage;</span>
+<span class="fc" id="L301">		checkNotGroup();</span>
+<span class="fc" id="L302">		return svekImage;</span>
 	}
 
 	public final void setSvekImage(IEntityImage svekImage) {
-<span class="fc" id="L305">		checkNotGroup();</span>
-<span class="fc" id="L306">		this.svekImage = svekImage;</span>
-<span class="fc" id="L307">	}</span>
+<span class="fc" id="L306">		checkNotGroup();</span>
+<span class="fc" id="L307">		this.svekImage = svekImage;</span>
+<span class="fc" id="L308">	}</span>
 
 	public final void setGeneric(String generic) {
-<span class="nc" id="L310">		checkNotGroup();</span>
-<span class="nc" id="L311">		this.generic = generic;</span>
-<span class="nc" id="L312">	}</span>
+<span class="nc" id="L311">		checkNotGroup();</span>
+<span class="nc" id="L312">		this.generic = generic;</span>
+<span class="nc" id="L313">	}</span>
 
 	public final String getGeneric() {
-<span class="fc" id="L315">		checkNotGroup();</span>
-<span class="fc" id="L316">		return generic;</span>
+<span class="fc" id="L316">		checkNotGroup();</span>
+<span class="fc" id="L317">		return generic;</span>
 	}
 
 	public Bodier getBodier() {
-<span class="fc" id="L320">		return bodier;</span>
+<span class="fc" id="L321">		return bodier;</span>
 	}
 
 	public EntityPosition getEntityPosition() {
 //		if (leafType == LeafType.PORT)
 //			return EntityPosition.PORT;
 
-<span class="pc bpc" id="L327" title="1 of 2 branches missed.">		if (leafType == LeafType.PORTIN)</span>
-<span class="nc" id="L328">			return EntityPosition.PORTIN;</span>
+<span class="pc bpc" id="L328" title="1 of 2 branches missed.">		if (leafType == LeafType.PORTIN)</span>
+<span class="nc" id="L329">			return EntityPosition.PORTIN;</span>
 
-<span class="pc bpc" id="L330" title="1 of 2 branches missed.">		if (leafType == LeafType.PORTOUT)</span>
-<span class="nc" id="L331">			return EntityPosition.PORTOUT;</span>
+<span class="pc bpc" id="L331" title="1 of 2 branches missed.">		if (leafType == LeafType.PORTOUT)</span>
+<span class="nc" id="L332">			return EntityPosition.PORTOUT;</span>
 
-<span class="fc bfc" id="L333" title="All 2 branches covered.">		if (leafType != LeafType.STATE)</span>
-<span class="fc" id="L334">			return EntityPosition.NORMAL;</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">		if (leafType != LeafType.STATE)</span>
+<span class="fc" id="L335">			return EntityPosition.NORMAL;</span>
 
-<span class="pc bpc" id="L336" title="1 of 2 branches missed.">		if (quark.isRoot())</span>
-<span class="nc" id="L337">			return EntityPosition.NORMAL;</span>
+<span class="pc bpc" id="L337" title="1 of 2 branches missed.">		if (quark.isRoot())</span>
+<span class="nc" id="L338">			return EntityPosition.NORMAL;</span>
 
-<span class="fc" id="L339">		final Stereotype stereotype = getStereotype();</span>
-<span class="pc bpc" id="L340" title="1 of 2 branches missed.">		if (stereotype == null)</span>
-<span class="fc" id="L341">			return EntityPosition.NORMAL;</span>
+<span class="fc" id="L340">		final Stereotype stereotype = getStereotype();</span>
+<span class="pc bpc" id="L341" title="1 of 2 branches missed.">		if (stereotype == null)</span>
+<span class="fc" id="L342">			return EntityPosition.NORMAL;</span>
 
-<span class="nc" id="L343">		return EntityPosition.fromStereotype(stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));</span>
+<span class="nc" id="L344">		return EntityPosition.fromStereotype(stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));</span>
 
 	}
 
 	// ----------
 
 	private void checkGroup() {
-<span class="pc bpc" id="L350" title="1 of 2 branches missed.">		if (isGroup() == false)</span>
-<span class="nc" id="L351">			throw new UnsupportedOperationException();</span>
+<span class="pc bpc" id="L351" title="1 of 2 branches missed.">		if (isGroup() == false)</span>
+<span class="nc" id="L352">			throw new UnsupportedOperationException();</span>
 
-<span class="fc" id="L353">	}</span>
+<span class="fc" id="L354">	}</span>
 
 	private void checkNotGroup() {
-<span class="pc bpc" id="L356" title="1 of 2 branches missed.">		if (isGroup())</span>
-<span class="nc" id="L357">			throw new UnsupportedOperationException();</span>
+<span class="pc bpc" id="L357" title="1 of 2 branches missed.">		if (isGroup())</span>
+<span class="nc" id="L358">			throw new UnsupportedOperationException();</span>
 
-<span class="fc" id="L359">	}</span>
+<span class="fc" id="L360">	}</span>
 
 	public GroupType getGroupType() {
-<span class="fc" id="L362">		checkGroup();</span>
-<span class="fc" id="L363">		return groupType;</span>
+<span class="fc" id="L363">		checkGroup();</span>
+<span class="fc" id="L364">		return groupType;</span>
 	}
 
 	public PackageStyle getPackageStyle() {
-<span class="fc" id="L367">		checkGroup();</span>
-<span class="fc bfc" id="L368" title="All 2 branches covered.">		if (stereotype == null)</span>
-<span class="fc" id="L369">			return null;</span>
+<span class="fc" id="L368">		checkGroup();</span>
+<span class="fc bfc" id="L369" title="All 2 branches covered.">		if (stereotype == null)</span>
+<span class="fc" id="L370">			return null;</span>
 
-<span class="fc" id="L371">		return stereotype.getPackageStyle();</span>
+<span class="fc" id="L372">		return stereotype.getPackageStyle();</span>
 	}
 
 	public boolean isGroup() {
-<span class="pc bpc" id="L375" title="1 of 4 branches missed.">		if (groupType != null &amp;&amp; leafType != null)</span>
-<span class="nc" id="L376">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L376" title="1 of 4 branches missed.">		if (groupType != null &amp;&amp; leafType != null)</span>
+<span class="nc" id="L377">			throw new IllegalStateException();</span>
 
-<span class="pc bpc" id="L378" title="1 of 4 branches missed.">		assert groupType == null || leafType == null;</span>
-<span class="fc bfc" id="L379" title="All 2 branches covered.">		if (groupType != null)</span>
-<span class="fc" id="L380">			return true;</span>
+<span class="pc bpc" id="L379" title="2 of 6 branches missed.">		if (TeaVM.a()) assert groupType == null || leafType == null;</span>
+<span class="fc bfc" id="L380" title="All 2 branches covered.">		if (groupType != null)</span>
+<span class="fc" id="L381">			return true;</span>
 
-<span class="pc bpc" id="L382" title="1 of 2 branches missed.">		if (leafType != null)</span>
-<span class="fc" id="L383">			return false;</span>
+<span class="pc bpc" id="L383" title="1 of 2 branches missed.">		if (leafType != null)</span>
+<span class="fc" id="L384">			return false;</span>
 
-<span class="nc" id="L385">		throw new IllegalStateException();</span>
+<span class="nc" id="L386">		throw new IllegalStateException();</span>
 	}
 
 	// ---- other
 
 	public void overrideImage(IEntityImage img, LeafType leafType) {
-<span class="nc" id="L391">		checkGroup();</span>
-<span class="nc" id="L392">		this.svekImage = img;</span>
-<span class="nc" id="L393">		this.url = null;</span>
+<span class="nc" id="L392">		checkGroup();</span>
+<span class="nc" id="L393">		this.svekImage = img;</span>
+<span class="nc" id="L394">		this.url = null;</span>
 
-<span class="nc bnc" id="L395" title="All 2 branches missed.">		for (final Link link : new ArrayList&lt;&gt;(this.diagram.getLinks()))</span>
-<span class="nc bnc" id="L396" title="All 2 branches missed.">			if (EntityUtils.isPureInnerLink12(this, link))</span>
-<span class="nc" id="L397">				this.diagram.removeLink(link);</span>
+<span class="nc bnc" id="L396" title="All 2 branches missed.">		for (final Link link : new ArrayList&lt;&gt;(this.diagram.getLinks()))</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">			if (EntityUtils.isPureInnerLink12(this, link))</span>
+<span class="nc" id="L398">				this.diagram.removeLink(link);</span>
 
-<span class="nc" id="L399">		this.groupType = null;</span>
-<span class="nc" id="L400">		this.leafType = leafType;</span>
-<span class="nc" id="L401">	}</span>
+<span class="nc" id="L400">		this.groupType = null;</span>
+<span class="nc" id="L401">		this.leafType = leafType;</span>
+<span class="nc" id="L402">	}</span>
 
 	public USymbol getUSymbol() {
 
-<span class="pc bpc" id="L405" title="1 of 2 branches missed.">		if (getLeafType() == LeafType.USECASE)</span>
-<span class="nc" id="L406">			return USymbols.USECASE;</span>
-<span class="pc bpc" id="L407" title="1 of 2 branches missed.">		if (getLeafType() == LeafType.USECASE_BUSINESS)</span>
-<span class="nc" id="L408">			return USymbols.USECASE_BUSINESS;</span>
+<span class="pc bpc" id="L406" title="1 of 2 branches missed.">		if (getLeafType() == LeafType.USECASE)</span>
+<span class="nc" id="L407">			return USymbols.USECASE;</span>
+<span class="pc bpc" id="L408" title="1 of 2 branches missed.">		if (getLeafType() == LeafType.USECASE_BUSINESS)</span>
+<span class="nc" id="L409">			return USymbols.USECASE_BUSINESS;</span>
 		// return USymbols.ACTOR_STICKMAN_BUSINESS;
-<span class="pc bpc" id="L410" title="1 of 2 branches missed.">		if (getLeafType() == LeafType.CIRCLE)</span>
-<span class="nc" id="L411">			return USymbols.INTERFACE;</span>
+<span class="pc bpc" id="L411" title="1 of 2 branches missed.">		if (getLeafType() == LeafType.CIRCLE)</span>
+<span class="nc" id="L412">			return USymbols.INTERFACE;</span>
 
-<span class="fc" id="L413">		return symbol;</span>
+<span class="fc" id="L414">		return symbol;</span>
 	}
 
 	public void setUSymbol(USymbol symbol) {
-<span class="fc" id="L417">		this.symbol = symbol;</span>
-<span class="fc" id="L418">	}</span>
+<span class="fc" id="L418">		this.symbol = symbol;</span>
+<span class="fc" id="L419">	}</span>
 
 	public SingleStrategy getSingleStrategy() {
-<span class="nc" id="L421">		return SingleStrategy.SQUARE;</span>
+<span class="nc" id="L422">		return SingleStrategy.SQUARE;</span>
 	}
 
 	public boolean isHidden() {
-<span class="fc bfc" id="L425" title="All 2 branches covered.">		if (isRoot())</span>
-<span class="fc" id="L426">			return false;</span>
+<span class="fc bfc" id="L426" title="All 2 branches covered.">		if (isRoot())</span>
+<span class="fc" id="L427">			return false;</span>
 
-<span class="fc" id="L428">		final Entity parentContainer = getParentContainer();</span>
-<span class="pc bpc" id="L429" title="1 of 2 branches missed.">		if (parentContainer == this)</span>
-<span class="nc" id="L430">			return false;</span>
+<span class="fc" id="L429">		final Entity parentContainer = getParentContainer();</span>
+<span class="pc bpc" id="L430" title="1 of 2 branches missed.">		if (parentContainer == this)</span>
+<span class="nc" id="L431">			return false;</span>
 
-<span class="pc bpc" id="L432" title="2 of 4 branches missed.">		if (parentContainer != null &amp;&amp; parentContainer.isHidden())</span>
-<span class="nc" id="L433">			return true;</span>
+<span class="pc bpc" id="L433" title="2 of 4 branches missed.">		if (parentContainer != null &amp;&amp; parentContainer.isHidden())</span>
+<span class="nc" id="L434">			return true;</span>
 
-<span class="fc" id="L435">		return this.diagram.isHidden(this);</span>
+<span class="fc" id="L436">		return this.diagram.isHidden(this);</span>
 	}
 
 	public boolean isRemoved() {
-<span class="fc bfc" id="L439" title="All 2 branches covered.">		if (isRoot())</span>
-<span class="fc" id="L440">			return false;</span>
+<span class="fc bfc" id="L440" title="All 2 branches covered.">		if (isRoot())</span>
+<span class="fc" id="L441">			return false;</span>
 
-<span class="fc" id="L442">		final Entity parentContainer = getParentContainer();</span>
-<span class="pc bpc" id="L443" title="1 of 2 branches missed.">		if (parentContainer == this)</span>
-<span class="nc" id="L444">			return false;</span>
+<span class="fc" id="L443">		final Entity parentContainer = getParentContainer();</span>
+<span class="pc bpc" id="L444" title="1 of 2 branches missed.">		if (parentContainer == this)</span>
+<span class="nc" id="L445">			return false;</span>
 
-<span class="pc bpc" id="L446" title="2 of 4 branches missed.">		if (parentContainer != null &amp;&amp; parentContainer.isRemoved())</span>
-<span class="nc" id="L447">			return true;</span>
+<span class="pc bpc" id="L447" title="2 of 4 branches missed.">		if (parentContainer != null &amp;&amp; parentContainer.isRemoved())</span>
+<span class="nc" id="L448">			return true;</span>
 
-<span class="fc" id="L449">		return this.diagram.isRemoved(this);</span>
+<span class="fc" id="L450">		return this.diagram.isRemoved(this);</span>
 	}
 
 	public boolean isAloneAndUnlinked() {
-<span class="nc bnc" id="L453" title="All 2 branches missed.">		if (isGroup()) {</span>
-<span class="nc bnc" id="L454" title="All 2 branches missed.">			for (Quark&lt;Entity&gt; quarkChild : getQuark().getChildren()) {</span>
-<span class="nc" id="L455">				final Entity child = quarkChild.getData();</span>
-<span class="nc bnc" id="L456" title="All 2 branches missed.">				if (child.isAloneAndUnlinked() == false)</span>
-<span class="nc" id="L457">					return false;</span>
-<span class="nc" id="L458">			}</span>
-<span class="nc" id="L459">			return true;</span>
+<span class="nc bnc" id="L454" title="All 2 branches missed.">		if (isGroup()) {</span>
+<span class="nc bnc" id="L455" title="All 2 branches missed.">			for (Quark&lt;Entity&gt; quarkChild : getQuark().getChildren()) {</span>
+<span class="nc" id="L456">				final Entity child = quarkChild.getData();</span>
+<span class="nc bnc" id="L457" title="All 2 branches missed.">				if (child.isAloneAndUnlinked() == false)</span>
+<span class="nc" id="L458">					return false;</span>
+<span class="nc" id="L459">			}</span>
+<span class="nc" id="L460">			return true;</span>
 		}
 
-<span class="nc bnc" id="L462" title="All 2 branches missed.">		for (Link link : this.diagram.getLinks())</span>
-<span class="nc bnc" id="L463" title="All 2 branches missed.">			if (link.contains(this)) {</span>
-<span class="nc" id="L464">				final Entity other = link.getOther(this);</span>
-<span class="nc" id="L465">				final boolean removed = this.diagram.isRemovedIgnoreUnlinked(other);</span>
-<span class="nc bnc" id="L466" title="All 4 branches missed.">				if (removed == false &amp;&amp; link.getType().isInvisible() == false)</span>
-<span class="nc" id="L467">					return false;</span>
+<span class="nc bnc" id="L463" title="All 2 branches missed.">		for (Link link : this.diagram.getLinks())</span>
+<span class="nc bnc" id="L464" title="All 2 branches missed.">			if (link.contains(this)) {</span>
+<span class="nc" id="L465">				final Entity other = link.getOther(this);</span>
+<span class="nc" id="L466">				final boolean removed = this.diagram.isRemovedIgnoreUnlinked(other);</span>
+<span class="nc bnc" id="L467" title="All 4 branches missed.">				if (removed == false &amp;&amp; link.getType().isInvisible() == false)</span>
+<span class="nc" id="L468">					return false;</span>
 			}
 
-<span class="nc" id="L470">		return true;</span>
+<span class="nc" id="L471">		return true;</span>
 	}
 
 	private FontParam getTitleFontParam() {
-<span class="nc bnc" id="L474" title="All 2 branches missed.">		return getGroupType() == GroupType.STATE ? FontParam.STATE : FontParam.PACKAGE;</span>
+<span class="nc bnc" id="L475" title="All 2 branches missed.">		return getGroupType() == GroupType.STATE ? FontParam.STATE : FontParam.PACKAGE;</span>
 	}
 
 	public FontConfiguration getFontConfigurationForTitle(final ISkinParam skinParam) {
-<span class="nc" id="L478">		final FontParam fontParam = getTitleFontParam();</span>
-<span class="nc" id="L479">		final HColor fontHtmlColor = skinParam.getFontHtmlColor(getStereotype(), fontParam, FontParam.PACKAGE);</span>
-<span class="nc" id="L480">		final UFont font = skinParam.getFont(getStereotype(), true, fontParam, FontParam.PACKAGE);</span>
-<span class="nc" id="L481">		final FontConfiguration fontConfiguration = FontConfiguration.create(font, fontHtmlColor,</span>
-<span class="nc" id="L482">				skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());</span>
-<span class="nc" id="L483">		return fontConfiguration;</span>
+<span class="nc" id="L479">		final FontParam fontParam = getTitleFontParam();</span>
+<span class="nc" id="L480">		final HColor fontHtmlColor = skinParam.getFontHtmlColor(getStereotype(), fontParam, FontParam.PACKAGE);</span>
+<span class="nc" id="L481">		final UFont font = skinParam.getFont(getStereotype(), true, fontParam, FontParam.PACKAGE);</span>
+<span class="nc" id="L482">		final FontConfiguration fontConfiguration = FontConfiguration.create(font, fontHtmlColor,</span>
+<span class="nc" id="L483">				skinParam.getHyperlinkColor(), skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());</span>
+<span class="nc" id="L484">		return fontConfiguration;</span>
 	}
 
 	public final int getRawLayout() {
-<span class="nc" id="L487">		return rawLayout;</span>
+<span class="nc" id="L488">		return rawLayout;</span>
 	}
 
 	public char getConcurrentSeparator() {
-<span class="nc" id="L491">		return concurrentSeparator;</span>
+<span class="nc" id="L492">		return concurrentSeparator;</span>
 	}
 
 	public void setConcurrentSeparator(char separator) {
-<span class="nc" id="L495">		this.concurrentSeparator = separator;</span>
-<span class="nc" id="L496">	}</span>
+<span class="nc" id="L496">		this.concurrentSeparator = separator;</span>
+<span class="nc" id="L497">	}</span>
 
 	public void setNeighborhood(Neighborhood neighborhood) {
-<span class="nc" id="L499">		this.neighborhood = neighborhood;</span>
-<span class="nc" id="L500">	}</span>
+<span class="nc" id="L500">		this.neighborhood = neighborhood;</span>
+<span class="nc" id="L501">	}</span>
 
 	public Neighborhood getNeighborhood() {
-<span class="fc" id="L503">		return neighborhood;</span>
+<span class="fc" id="L504">		return neighborhood;</span>
 	}
 
 	public void putTip(String member, Display display) {
-<span class="nc" id="L507">		tips.put(member, display);</span>
-<span class="nc" id="L508">	}</span>
+<span class="nc" id="L508">		tips.put(member, display);</span>
+<span class="nc" id="L509">	}</span>
 
 	public Map&lt;String, Display&gt; getTips() {
-<span class="nc" id="L511">		return Collections.unmodifiableMap(tips);</span>
+<span class="nc" id="L512">		return Collections.unmodifiableMap(tips);</span>
 	}
 
 	public Colors getColors() {
-<span class="fc" id="L515">		return colors;</span>
+<span class="fc" id="L516">		return colors;</span>
 	}
 
 	public void setColors(Colors colors) {
-<span class="fc" id="L519">		this.colors = colors;</span>
-<span class="fc" id="L520">	}</span>
+<span class="fc" id="L520">		this.colors = colors;</span>
+<span class="fc" id="L521">	}</span>
 
 	public void setSpecificColorTOBEREMOVED(ColorType type, HColor color) {
-<span class="nc bnc" id="L523" title="All 2 branches missed.">		if (color != null)</span>
-<span class="nc" id="L524">			this.colors = colors.add(type, color);</span>
+<span class="nc bnc" id="L524" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L525">			this.colors = colors.add(type, color);</span>
 
-<span class="nc" id="L526">	}</span>
+<span class="nc" id="L527">	}</span>
 
 	public Collection&lt;String&gt; getPortShortNames() {
-<span class="fc" id="L529">		checkNotGroup();</span>
-<span class="fc" id="L530">		return Collections.unmodifiableCollection(portShortNames);</span>
+<span class="fc" id="L530">		checkNotGroup();</span>
+<span class="fc" id="L531">		return Collections.unmodifiableCollection(portShortNames);</span>
 	}
 
 	public void addPortShortName(String portShortName) {
-<span class="nc" id="L534">		portShortNames.add(portShortName);</span>
-<span class="nc" id="L535">	}</span>
+<span class="nc" id="L535">		portShortNames.add(portShortName);</span>
+<span class="nc" id="L536">	}</span>
 
 	public void setVisibilityModifier(VisibilityModifier visibility) {
-<span class="fc" id="L538">		this.visibility = visibility;</span>
+<span class="fc" id="L539">		this.visibility = visibility;</span>
 
-<span class="fc" id="L540">	}</span>
+<span class="fc" id="L541">	}</span>
 
 	public VisibilityModifier getVisibilityModifier() {
-<span class="fc" id="L543">		return visibility;</span>
+<span class="fc" id="L544">		return visibility;</span>
 	}
 
 	public void setLegend(DisplayPositioned legend) {
-<span class="nc" id="L547">		checkGroup();</span>
-<span class="nc" id="L548">		this.legend = legend;</span>
-<span class="nc" id="L549">	}</span>
+<span class="nc" id="L548">		checkGroup();</span>
+<span class="nc" id="L549">		this.legend = legend;</span>
+<span class="nc" id="L550">	}</span>
 
 	public DisplayPositioned getLegend() {
-<span class="fc" id="L552">		return legend;</span>
+<span class="fc" id="L553">		return legend;</span>
 	}
 
 //	public String getCodeLine() {
@@ -564,186 +565,186 @@ import net.sourceforge.plantuml.utils.Position;
 //	}
 
 	public void setStereostyle(String stereo) {
-<span class="fc" id="L567">		this.stereostyles = Stereostyles.build(stereo);</span>
-<span class="fc" id="L568">	}</span>
+<span class="fc" id="L568">		this.stereostyles = Stereostyles.build(stereo);</span>
+<span class="fc" id="L569">	}</span>
 
 	public Stereostyles getStereostyles() {
-<span class="fc" id="L571">		return stereostyles;</span>
+<span class="fc" id="L572">		return stereostyles;</span>
 	}
 
 	public void addKal(Kal kal) {
-<span class="nc" id="L575">		final Direction position = kal.getPosition();</span>
-<span class="nc" id="L576">		List&lt;Kal&gt; list = kals.get(position);</span>
-<span class="nc bnc" id="L577" title="All 2 branches missed.">		if (list == null) {</span>
-<span class="nc" id="L578">			list = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L579">			kals.put(position, list);</span>
+<span class="nc" id="L576">		final Direction position = kal.getPosition();</span>
+<span class="nc" id="L577">		List&lt;Kal&gt; list = kals.get(position);</span>
+<span class="nc bnc" id="L578" title="All 2 branches missed.">		if (list == null) {</span>
+<span class="nc" id="L579">			list = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L580">			kals.put(position, list);</span>
 		}
-<span class="nc" id="L581">		list.add(kal);</span>
-<span class="nc" id="L582">	}</span>
+<span class="nc" id="L582">		list.add(kal);</span>
+<span class="nc" id="L583">	}</span>
 
 	public List&lt;Kal&gt; getKals(Direction position) {
-<span class="fc" id="L585">		final List&lt;Kal&gt; result = kals.get(position);</span>
-<span class="pc bpc" id="L586" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="fc" id="L587">			return Collections.emptyList();</span>
-<span class="nc" id="L588">		return Collections.unmodifiableList(result);</span>
+<span class="fc" id="L586">		final List&lt;Kal&gt; result = kals.get(position);</span>
+<span class="pc bpc" id="L587" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="fc" id="L588">			return Collections.emptyList();</span>
+<span class="nc" id="L589">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public CucaDiagram getDiagram() {
-<span class="nc" id="L592">		return diagram;</span>
+<span class="nc" id="L593">		return diagram;</span>
 	}
 
 	public void setStatic(boolean isStatic) {
-<span class="nc" id="L596">		this.isStatic = isStatic;</span>
-<span class="nc" id="L597">	}</span>
+<span class="nc" id="L597">		this.isStatic = isStatic;</span>
+<span class="nc" id="L598">	}</span>
 
 	public boolean isStatic() {
-<span class="nc" id="L600">		return isStatic;</span>
+<span class="nc" id="L601">		return isStatic;</span>
 	}
 
 	// For group
 
 	public TextBlock getStateHeader(ISkinParam skinParam) {
-<span class="fc" id="L606">		checkGroup();</span>
-<span class="fc" id="L607">		final Style style = EntityImageStateCommon.getStyleStateHeader(this, skinParam);</span>
-<span class="fc" id="L608">		final List&lt;CharSequence&gt; details = getBodier().getRawBody();</span>
+<span class="fc" id="L607">		checkGroup();</span>
+<span class="fc" id="L608">		final Style style = EntityImageStateCommon.getStyleStateHeader(this, skinParam);</span>
+<span class="fc" id="L609">		final List&lt;CharSequence&gt; details = getBodier().getRawBody();</span>
 
-<span class="pc bpc" id="L610" title="1 of 2 branches missed.">		if (details.size() == 0)</span>
-<span class="fc" id="L611">			return new TextBlockEmpty();</span>
+<span class="pc bpc" id="L611" title="1 of 2 branches missed.">		if (details.size() == 0)</span>
+<span class="fc" id="L612">			return new TextBlockEmpty();</span>
 
-<span class="nc bnc" id="L613" title="All 2 branches missed.">		if (style == null)</span>
-<span class="nc" id="L614">			throw new IllegalArgumentException();</span>
-<span class="nc" id="L615">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);</span>
+<span class="nc bnc" id="L614" title="All 2 branches missed.">		if (style == null)</span>
+<span class="nc" id="L615">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L616">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);</span>
 
-<span class="nc" id="L617">		Display display = null;</span>
-<span class="nc bnc" id="L618" title="All 2 branches missed.">		for (CharSequence s : details)</span>
-<span class="nc bnc" id="L619" title="All 2 branches missed.">			if (display == null)</span>
-<span class="nc" id="L620">				display = Display.getWithNewlines(skinParam.getPragma(), s.toString());</span>
+<span class="nc" id="L618">		Display display = null;</span>
+<span class="nc bnc" id="L619" title="All 2 branches missed.">		for (CharSequence s : details)</span>
+<span class="nc bnc" id="L620" title="All 2 branches missed.">			if (display == null)</span>
+<span class="nc" id="L621">				display = Display.getWithNewlines(skinParam.getPragma(), s.toString());</span>
 			else
-<span class="nc" id="L622">				display = display.addAll(Display.getWithNewlines(skinParam.getPragma(), s.toString()));</span>
+<span class="nc" id="L623">				display = display.addAll(Display.getWithNewlines(skinParam.getPragma(), s.toString()));</span>
 
-<span class="nc" id="L624">		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();</span>
-<span class="nc" id="L625">		return display.create(fontConfiguration, horizontalAlignment, skinParam);</span>
+<span class="nc" id="L625">		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();</span>
+<span class="nc" id="L626">		return display.create(fontConfiguration, horizontalAlignment, skinParam);</span>
 
 	}
 
 	public void setTogether(Together together) {
-<span class="fc" id="L630">		this.together = together;</span>
-<span class="fc" id="L631">	}</span>
+<span class="fc" id="L631">		this.together = together;</span>
+<span class="fc" id="L632">	}</span>
 
 	public Together getTogether() {
-<span class="nc" id="L634">		return this.together;</span>
+<span class="nc" id="L635">		return this.together;</span>
 	}
 
 	public Entity getParentContainer() {
-<span class="fc bfc" id="L638" title="All 2 branches covered.">		if (quark.isRoot())</span>
-<span class="fc" id="L639">			return null;</span>
-<span class="fc" id="L640">		return quark.getParent().getData();</span>
+<span class="fc bfc" id="L639" title="All 2 branches covered.">		if (quark.isRoot())</span>
+<span class="fc" id="L640">			return null;</span>
+<span class="fc" id="L641">		return quark.getParent().getData();</span>
 	}
 
 	public Collection&lt;Entity&gt; leafs() {
-<span class="fc" id="L644">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L645" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; child : quark.getChildren()) {</span>
-<span class="fc" id="L646">			final Entity data = child.getData();</span>
-<span class="pc bpc" id="L647" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup() == false)</span>
-<span class="fc" id="L648">				result.add(data);</span>
-<span class="fc" id="L649">		}</span>
-<span class="fc" id="L650">		return Collections.unmodifiableCollection(result);</span>
+<span class="fc" id="L645">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L646" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; child : quark.getChildren()) {</span>
+<span class="fc" id="L647">			final Entity data = child.getData();</span>
+<span class="pc bpc" id="L648" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup() == false)</span>
+<span class="fc" id="L649">				result.add(data);</span>
+<span class="fc" id="L650">		}</span>
+<span class="fc" id="L651">		return Collections.unmodifiableCollection(result);</span>
 	}
 
 	public Collection&lt;Entity&gt; groups() {
-<span class="fc" id="L654">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L655" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; child : quark.getChildren()) {</span>
-<span class="fc" id="L656">			final Entity data = child.getData();</span>
-<span class="pc bpc" id="L657" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup())</span>
-<span class="fc" id="L658">				result.add(data);</span>
-<span class="fc" id="L659">		}</span>
-<span class="fc" id="L660">		return Collections.unmodifiableCollection(result);</span>
+<span class="fc" id="L655">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L656" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; child : quark.getChildren()) {</span>
+<span class="fc" id="L657">			final Entity data = child.getData();</span>
+<span class="pc bpc" id="L658" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup())</span>
+<span class="fc" id="L659">				result.add(data);</span>
+<span class="fc" id="L660">		}</span>
+<span class="fc" id="L661">		return Collections.unmodifiableCollection(result);</span>
 	}
 
 	public int countChildren() {
-<span class="nc" id="L664">		return getQuark().countChildren();</span>
+<span class="nc" id="L665">		return getQuark().countChildren();</span>
 	}
 
 	public boolean isRoot() {
-<span class="fc" id="L668">		return getQuark().isRoot();</span>
+<span class="fc" id="L669">		return getQuark().isRoot();</span>
 	}
 
 	final public boolean isEmpty() {
-<span class="fc bfc" id="L672" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; quarkChild : getQuark().getChildren()) {</span>
-<span class="fc" id="L673">			final Entity child = quarkChild.getData();</span>
-<span class="pc bpc" id="L674" title="1 of 2 branches missed.">			if (this.diagram.isRemoved(child) == false)</span>
-<span class="fc" id="L675">				return false;</span>
-<span class="nc" id="L676">		}</span>
-<span class="fc" id="L677">		return true;</span>
+<span class="fc bfc" id="L673" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; quarkChild : getQuark().getChildren()) {</span>
+<span class="fc" id="L674">			final Entity child = quarkChild.getData();</span>
+<span class="pc bpc" id="L675" title="1 of 2 branches missed.">			if (this.diagram.isRemoved(child) == false)</span>
+<span class="fc" id="L676">				return false;</span>
+<span class="nc" id="L677">		}</span>
+<span class="fc" id="L678">		return true;</span>
 	}
 
 	public String getName() {
-<span class="fc" id="L681">		return getQuark().getName();</span>
+<span class="fc" id="L682">		return getQuark().getName();</span>
 	}
 
 	public boolean isAutarkic() {
-<span class="nc bnc" id="L685" title="All 2 branches missed.">		if (getGroupType() == GroupType.PACKAGE)</span>
-<span class="nc" id="L686">			return false;</span>
+<span class="nc bnc" id="L686" title="All 2 branches missed.">		if (getGroupType() == GroupType.PACKAGE)</span>
+<span class="nc" id="L687">			return false;</span>
 
-<span class="nc bnc" id="L688" title="All 2 branches missed.">		if (getGroupType() == GroupType.INNER_ACTIVITY)</span>
-<span class="nc" id="L689">			return true;</span>
+<span class="nc bnc" id="L689" title="All 2 branches missed.">		if (getGroupType() == GroupType.INNER_ACTIVITY)</span>
+<span class="nc" id="L690">			return true;</span>
 
-<span class="nc bnc" id="L691" title="All 2 branches missed.">		if (getGroupType() == GroupType.CONCURRENT_ACTIVITY)</span>
-<span class="nc" id="L692">			return true;</span>
+<span class="nc bnc" id="L692" title="All 2 branches missed.">		if (getGroupType() == GroupType.CONCURRENT_ACTIVITY)</span>
+<span class="nc" id="L693">			return true;</span>
 
-<span class="nc bnc" id="L694" title="All 2 branches missed.">		if (getGroupType() == GroupType.CONCURRENT_STATE)</span>
-<span class="nc" id="L695">			return true;</span>
+<span class="nc bnc" id="L695" title="All 2 branches missed.">		if (getGroupType() == GroupType.CONCURRENT_STATE)</span>
+<span class="nc" id="L696">			return true;</span>
 
 //		if (diag.getChildrenGroups(this).size() &gt; 0)
 //			return false;
 
-<span class="nc bnc" id="L700" title="All 2 branches missed.">		for (Link link : this.diagram.getLinks())</span>
-<span class="nc bnc" id="L701" title="All 2 branches missed.">			if (EntityUtils.isPureInnerLink3(this, link) == false)</span>
-<span class="nc" id="L702">				return false;</span>
+<span class="nc bnc" id="L701" title="All 2 branches missed.">		for (Link link : this.diagram.getLinks())</span>
+<span class="nc bnc" id="L702" title="All 2 branches missed.">			if (EntityUtils.isPureInnerLink3(this, link) == false)</span>
+<span class="nc" id="L703">				return false;</span>
 
-<span class="nc bnc" id="L704" title="All 2 branches missed.">		for (Entity leaf : leafs())</span>
-<span class="nc bnc" id="L705" title="All 2 branches missed.">			if (leaf.getEntityPosition() != EntityPosition.NORMAL)</span>
-<span class="nc" id="L706">				return false;</span>
+<span class="nc bnc" id="L705" title="All 2 branches missed.">		for (Entity leaf : leafs())</span>
+<span class="nc bnc" id="L706" title="All 2 branches missed.">			if (leaf.getEntityPosition() != EntityPosition.NORMAL)</span>
+<span class="nc" id="L707">				return false;</span>
 
-<span class="nc" id="L708">		return true;</span>
+<span class="nc" id="L709">		return true;</span>
 	}
 
 	public boolean canBePacked() {
-<span class="nc bnc" id="L712" title="All 2 branches missed.">		if (isPacked())</span>
-<span class="nc" id="L713">			return false;</span>
-<span class="nc bnc" id="L714" title="All 2 branches missed.">		if (countChildren() != 1)</span>
-<span class="nc" id="L715">			return false;</span>
-<span class="nc bnc" id="L716" title="All 2 branches missed.">		if (leafs().size() != 0)</span>
-<span class="nc" id="L717">			return false;</span>
-<span class="nc bnc" id="L718" title="All 2 branches missed.">		for (Link link : this.diagram.getLinks())</span>
-<span class="nc bnc" id="L719" title="All 2 branches missed.">			if (link.contains(this))</span>
-<span class="nc" id="L720">				return false;</span>
+<span class="nc bnc" id="L713" title="All 2 branches missed.">		if (isPacked())</span>
+<span class="nc" id="L714">			return false;</span>
+<span class="nc bnc" id="L715" title="All 2 branches missed.">		if (countChildren() != 1)</span>
+<span class="nc" id="L716">			return false;</span>
+<span class="nc bnc" id="L717" title="All 2 branches missed.">		if (leafs().size() != 0)</span>
+<span class="nc" id="L718">			return false;</span>
+<span class="nc bnc" id="L719" title="All 2 branches missed.">		for (Link link : this.diagram.getLinks())</span>
+<span class="nc bnc" id="L720" title="All 2 branches missed.">			if (link.contains(this))</span>
+<span class="nc" id="L721">				return false;</span>
 
-<span class="nc" id="L722">		final Entity child = groups().iterator().next();</span>
-<span class="nc bnc" id="L723" title="All 2 branches missed.">		if (child.countChildren() == 0)</span>
-<span class="nc" id="L724">			return false;</span>
+<span class="nc" id="L723">		final Entity child = groups().iterator().next();</span>
+<span class="nc bnc" id="L724" title="All 2 branches missed.">		if (child.countChildren() == 0)</span>
+<span class="nc" id="L725">			return false;</span>
 
-<span class="nc" id="L726">		return true;</span>
+<span class="nc" id="L727">		return true;</span>
 	}
 
 	public final void setPacked(boolean packed) {
-<span class="nc" id="L730">		this.packed = true;</span>
-<span class="nc" id="L731">	}</span>
+<span class="nc" id="L731">		this.packed = true;</span>
+<span class="nc" id="L732">	}</span>
 
 	public final boolean isPacked() {
-<span class="fc" id="L734">		return packed;</span>
+<span class="fc" id="L735">		return packed;</span>
 	}
 
 	public final ISkinParam getSkinParam() {
-<span class="fc" id="L738">		return diagram.getSkinParam();</span>
+<span class="fc" id="L739">		return diagram.getSkinParam();</span>
 	}
 
 	public final UmlDiagramType getUmlDiagramType() {
-<span class="fc" id="L742">		return diagram.getUmlDiagramType();</span>
+<span class="fc" id="L743">		return diagram.getUmlDiagramType();</span>
 	}
 
 	public LineLocation getLocation() {
-<span class="fc" id="L746">		return location;</span>
+<span class="fc" id="L747">		return location;</span>
 	}
 
 	public StyleBuilder getCurrentStyleBuilder() {
@@ -751,18 +752,18 @@ import net.sourceforge.plantuml.utils.Position;
 		// See https://github.com/plantuml/plantuml/issues/2171 for background.
 		// If skinParam directive has been used in the diagram, retrieve the latest style builder
 		// from SkinParam for backward compatibility with previous behavior.
-<span class="fc bfc" id="L754" title="All 2 branches covered.">		if (diagram.isSkinParamUsed())</span>
-<span class="fc" id="L755">			return getSkinParam().getCurrentStyleBuilder();</span>
+<span class="fc bfc" id="L755" title="All 2 branches covered.">		if (diagram.isSkinParamUsed())</span>
+<span class="fc" id="L756">			return getSkinParam().getCurrentStyleBuilder();</span>
 
 		// If skinParam directive is not used, support local styles by returning the style builder
 		// that was active when the entity was created (currentStyleBuilder).
-<span class="fc" id="L759">		return currentStyleBuilder;</span>
+<span class="fc" id="L760">		return currentStyleBuilder;</span>
 	}
 	
 	
 
 	public final CharSequence getBestMatch(CharSequence candidate) {
-<span class="nc" id="L765">		return bodier.getBestMatch(candidate);</span>
+<span class="nc" id="L766">		return bodier.getBestMatch(candidate);</span>
 
 	}
 

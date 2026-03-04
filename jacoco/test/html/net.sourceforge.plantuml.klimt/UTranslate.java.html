@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.klimt;
 
 import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
-
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 
@@ -46,80 +45,80 @@ public class UTranslate implements UChange {
 
 	@Override
 	public String toString() {
-<span class="nc" id="L49">		return &quot;translate dx=&quot; + dx + &quot; dy=&quot; + dy;</span>
+<span class="nc" id="L48">		return &quot;translate dx=&quot; + dx + &quot; dy=&quot; + dy;</span>
 	}
 
 	public static UTranslate none() {
-<span class="fc" id="L53">		return new UTranslate(0, 0);</span>
+<span class="fc" id="L52">		return new UTranslate(0, 0);</span>
 	}
 
-<span class="fc" id="L56">	public UTranslate(double dx, double dy) {</span>
-<span class="fc" id="L57">		this.dx = dx;</span>
-<span class="fc" id="L58">		this.dy = dy;</span>
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L55">	public UTranslate(double dx, double dy) {</span>
+<span class="fc" id="L56">		this.dx = dx;</span>
+<span class="fc" id="L57">		this.dy = dy;</span>
+<span class="fc" id="L58">	}</span>
 
 	public static UTranslate dx(double dx) {
-<span class="fc" id="L62">		return new UTranslate(dx, 0);</span>
+<span class="fc" id="L61">		return new UTranslate(dx, 0);</span>
 	}
 
 	public static UTranslate dy(double dy) {
-<span class="fc" id="L66">		return new UTranslate(0, dy);</span>
+<span class="fc" id="L65">		return new UTranslate(0, dy);</span>
 	}
 
 	public static UTranslate point(XPoint2D p) {
-<span class="fc" id="L70">		return new UTranslate(p.getX(), p.getY());</span>
+<span class="fc" id="L69">		return new UTranslate(p.getX(), p.getY());</span>
 	}
 
 	public double getDx() {
-<span class="fc" id="L74">		return dx;</span>
+<span class="fc" id="L73">		return dx;</span>
 	}
 
 	public double getDy() {
-<span class="fc" id="L78">		return dy;</span>
+<span class="fc" id="L77">		return dy;</span>
 	}
 
 	public boolean isAlmostSame(UTranslate other) {
-<span class="nc bnc" id="L82" title="All 4 branches missed.">		return this.dx == other.dx || this.dy == other.dy;</span>
+<span class="nc bnc" id="L81" title="All 4 branches missed.">		return this.dx == other.dx || this.dy == other.dy;</span>
 	}
 
 	public XPoint2D getTranslated(XPoint2D p) {
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (p == null)</span>
-<span class="nc" id="L87">			return null;</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (p == null)</span>
+<span class="nc" id="L86">			return null;</span>
 
-<span class="fc" id="L89">		return new XPoint2D(p.getX() + dx, p.getY() + dy);</span>
+<span class="fc" id="L88">		return new XPoint2D(p.getX() + dx, p.getY() + dy);</span>
 	}
 
 	public UTranslate scaled(double scale) {
-<span class="nc" id="L93">		return new UTranslate(dx * scale, dy * scale);</span>
+<span class="nc" id="L92">		return new UTranslate(dx * scale, dy * scale);</span>
 	}
 
 	public UTranslate compose(UTranslate other) {
-<span class="fc" id="L97">		return new UTranslate(dx + other.dx, dy + other.dy);</span>
+<span class="fc" id="L96">		return new UTranslate(dx + other.dx, dy + other.dy);</span>
 	}
 
 	public UTranslate reverse() {
-<span class="fc" id="L101">		return new UTranslate(-dx, -dy);</span>
+<span class="fc" id="L100">		return new UTranslate(-dx, -dy);</span>
 	}
 
 	public XRectangle2D apply(XRectangle2D rect) {
-<span class="nc" id="L105">		return new XRectangle2D(rect.getX() + dx, rect.getY() + dy, rect.getWidth(), rect.getHeight());</span>
+<span class="nc" id="L104">		return new XRectangle2D(rect.getX() + dx, rect.getY() + dy, rect.getWidth(), rect.getHeight());</span>
 	}
 
 	public UTranslate multiplyBy(double v) {
-<span class="nc" id="L109">		return new UTranslate(dx * v, dy * v);</span>
+<span class="nc" id="L108">		return new UTranslate(dx * v, dy * v);</span>
 	}
 
 	public UTranslate sym() {
-<span class="fc" id="L113">		return new UTranslate(dy, dx);</span>
+<span class="fc" id="L112">		return new UTranslate(dy, dx);</span>
 	}
 
 	public XPoint2D getPosition() {
-<span class="nc" id="L117">		return new XPoint2D(dx, dy);</span>
+<span class="nc" id="L116">		return new XPoint2D(dx, dy);</span>
 	}
 
 	public UTranslate rotate(double angle) {
-<span class="fc" id="L121">		final XAffineTransform rotate = XAffineTransform.getRotateInstance(angle);</span>
-<span class="fc" id="L122">		return UTranslate.point(new XPoint2D(dx, dy).transform(rotate));</span>
+<span class="fc" id="L120">		final XAffineTransform rotate = XAffineTransform.getRotateInstance(angle);</span>
+<span class="fc" id="L121">		return UTranslate.point(new XPoint2D(dx, dy).transform(rotate));</span>
 
 	}
 
