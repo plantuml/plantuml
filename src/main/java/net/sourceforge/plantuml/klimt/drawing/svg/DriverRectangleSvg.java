@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 
 public class DriverRectangleSvg implements UDriver<URectangle, SvgGraphics> {
-    // ::remove file when __HAXE__
 
 	private final ClipContainer clipContainer;
 

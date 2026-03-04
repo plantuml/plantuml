@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 
 public class DriverLineSvg implements UDriver<ULine, SvgGraphics> {
-    // ::remove file when __HAXE__
 
 	private final ClipContainer clipContainer;
 

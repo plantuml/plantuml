@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.teavm;
 
 import net.sourceforge.plantuml.klimt.ClipContainer;
+import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -54,6 +55,10 @@ public class DriverPathTeaVM implements UDriver<UPath, SvgGraphicsTeaVM> {
 
 	@Override
 	public void draw(UPath path, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
+		final UClip clip = clipContainer.getClip();
+		if (clip != null && clip.isInside(x, y, path) == false)
+			return;
+
 		DriverRectangleTeaVM.applyFillColor(svg, mapper, param);
 		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);
 		svg.setStrokeWidth(param.getStroke().getThickness());

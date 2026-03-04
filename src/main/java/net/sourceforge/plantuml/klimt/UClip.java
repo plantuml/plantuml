@@ -112,7 +112,6 @@ public class UClip implements UChange {
 		return true;
 	}
 
-	// ::comment when __HAXE__
 	public Rectangle2D.Double getClippedRectangle(Rectangle2D.Double r) {
 		return (Rectangle2D.Double) r.createIntersection(new Rectangle2D.Double(x, y, width, height));
 	}
@@ -151,7 +150,6 @@ public class UClip implements UChange {
 	public boolean isInside(double x, double y, UPath shape) {
 		return isInside(x + shape.getMinX(), y + shape.getMinY()) && isInside(x + shape.getMaxX(), y + shape.getMaxY());
 	}
-	// ::done
 
 	private double getClippedX(double xp) {
 		if (xp < x)

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.teavm;
 
 import net.sourceforge.plantuml.klimt.ClipContainer;
+import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
@@ -52,12 +53,20 @@ public class DriverEllipseTeaVM implements UDriver<UEllipse, SvgGraphicsTeaVM> {
 
 	@Override
 	public void draw(UEllipse ellipse, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
+		final double width = ellipse.getWidth();
+		final double height = ellipse.getHeight();
+
+		final UClip clip = clipContainer.getClip();
+		if (clip != null) {
+			if (clip.isInside(x, y) == false)
+				return;
+			if (clip.isInside(x + width, y + height) == false)
+				return;
+		}
+
 		DriverRectangleTeaVM.applyFillColor(svg, mapper, param);
 		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);
 		svg.setStrokeWidth(param.getStroke().getThickness());
-
-		final double width = ellipse.getWidth();
-		final double height = ellipse.getHeight();
 
 		// UEllipse uses width/height, but SVG ellipse uses rx/ry (radii)
 		// And x,y is top-left corner for UEllipse, but center for SVG

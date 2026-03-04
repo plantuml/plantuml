@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.klimt.font.UnusedSpace;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
 
 public class DriverCenteredCharacterSvg implements UDriver<UCenteredCharacter, SvgGraphics> {
-    // ::remove file when __HAXE__
 
 	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param,
 			SvgGraphics svg) {

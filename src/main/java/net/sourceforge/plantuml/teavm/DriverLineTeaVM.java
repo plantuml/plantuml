@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.teavm;
 
 import net.sourceforge.plantuml.klimt.ClipContainer;
+import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
@@ -52,9 +53,46 @@ public class DriverLineTeaVM implements UDriver<ULine, SvgGraphicsTeaVM> {
 
 	@Override
 	public void draw(ULine line, double x, double y, ColorMapper mapper, UParam param, SvgGraphicsTeaVM svg) {
+		double x2 = x + line.getDX();
+		double y2 = y + line.getDY();
+
+		final UClip clip = clipContainer.getClip();
+		if (clip != null) {
+			if (clip.isInside(x, y) == false && clip.isInside(x2, y2) == false) {
+				if (x == x2) {
+					final double newY1 = clipY(clip, y);
+					final double newY2 = clipY(clip, y2);
+					if (newY1 == newY2)
+						return;
+					y = newY1;
+					y2 = newY2;
+				} else {
+					return;
+				}
+			} else if (clip.isInside(x, y) == false || clip.isInside(x2, y2) == false) {
+				if (x != x2 && y != y2)
+					return;
+				if (y == y2) {
+					x = clipX(clip, x);
+					x2 = clipX(clip, x2);
+				} else if (x == x2) {
+					y = clipY(clip, y);
+					y2 = clipY(clip, y2);
+				}
+			}
+		}
+
 		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);
 		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 
-		svg.drawLine(x, y, x + line.getDX(), y + line.getDY());
+		svg.drawLine(x, y, x2, y2);
+	}
+
+	private static double clipX(UClip clip, double xp) {
+		return Math.max(clip.getX(), Math.min(xp, clip.getX() + clip.getWidth()));
+	}
+
+	private static double clipY(UClip clip, double yp) {
+		return Math.max(clip.getY(), Math.min(yp, clip.getY() + clip.getHeight()));
 	}
 }
