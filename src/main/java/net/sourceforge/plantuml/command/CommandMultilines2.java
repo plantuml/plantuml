@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 
@@ -55,8 +56,8 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 	private final Lazy<Pattern2> end;
 
 	public CommandMultilines2(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd, Lazy<Pattern2> end) {
-		assert patternStart.getPatternAsString().startsWith("^") && patternStart.getPatternAsString().endsWith("$");
-		assert end != null;
+		if (TeaVM.a()) assert patternStart.getPatternAsString().startsWith("^") && patternStart.getPatternAsString().endsWith("$");
+		if (TeaVM.a()) assert end != null;
 
 		this.strategy = strategy;
 		this.starting = patternStart;

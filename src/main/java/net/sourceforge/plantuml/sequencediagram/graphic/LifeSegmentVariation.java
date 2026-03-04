@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 public enum LifeSegmentVariation {
 	LARGER, SMALLER;
 
@@ -42,7 +44,7 @@ public enum LifeSegmentVariation {
 		if (this == LARGER) {
 			return v + 1;
 		}
-		assert this == SMALLER;
+		if (TeaVM.a()) assert this == SMALLER;
 		if (v == 0) {
 			return 0;
 		}

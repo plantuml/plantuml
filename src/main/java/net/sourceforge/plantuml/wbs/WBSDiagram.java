@@ -69,6 +69,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Direction;
 
 public class WBSDiagram extends TitledDiagram {
@@ -180,7 +181,7 @@ public class WBSDiagram extends TitledDiagram {
 
 	public int getSmartLevel(String type) {
 		if (root == null) {
-			assert first == null;
+			if (TeaVM.a()) assert first == null;
 			first = type;
 			return 0;
 		}

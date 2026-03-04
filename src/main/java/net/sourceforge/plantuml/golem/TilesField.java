@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class TilesField implements TextBlock {
 
@@ -104,7 +105,7 @@ public class TilesField implements TextBlock {
 		final TileGeometry geom1 = tileArea1.getGeometry();
 		final TileGeometry geom2 = tileArea2.getGeometry();
 		if (pos1.equals(pos2)) {
-			assert tile1 == tile2;
+			if (TeaVM.a()) assert tile1 == tile2;
 			if (geom1 == geom2) {
 				throw new IllegalArgumentException();
 			}

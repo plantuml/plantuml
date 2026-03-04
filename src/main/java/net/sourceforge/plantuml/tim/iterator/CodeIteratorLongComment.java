@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.tim.iterator;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.EaterException;
@@ -62,9 +63,9 @@ public class CodeIteratorLongComment extends AbstractCodeIterator {
 				logs.add(s);
 				source.next();
 			}
-			assert source.peek() == null || s.getTrimmed().getString().endsWith("'/");
+			if (TeaVM.a()) assert source.peek() == null || s.getTrimmed().getString().endsWith("'/");
 			if (source.peek() != null) {
-				assert s.getTrimmed().getString().endsWith("'/");
+				if (TeaVM.a()) assert s.getTrimmed().getString().endsWith("'/");
 				logs.add(source.peek());
 				source.next();
 			}

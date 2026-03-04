@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class VerticalLine implements UDrawable {
 
@@ -63,7 +64,7 @@ public class VerticalLine implements UDrawable {
 			if (step < y1) {
 				continue;
 			}
-			assert step >= y1;
+			if (TeaVM.a()) assert step >= y1;
 			drawn = true;
 			if (step == y2) {
 				path.lineTo(0, y2);

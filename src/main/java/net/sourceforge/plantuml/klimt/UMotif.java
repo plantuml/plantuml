@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class UMotif {
 	// ::remove file when __HAXE__
@@ -50,7 +51,7 @@ public class UMotif {
 	private final List<XPoint2D> points = new ArrayList<>();
 
 	public UMotif(int... data) {
-		assert data.length % 2 == 0;
+		if (TeaVM.a()) assert data.length % 2 == 0;
 		for (int i = 0; i < data.length; i += 2) {
 			points.add(new XPoint2D(data[i], data[i + 1]));
 		}

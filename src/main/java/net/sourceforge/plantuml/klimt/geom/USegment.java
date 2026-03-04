@@ -35,10 +35,11 @@
  */
 package net.sourceforge.plantuml.klimt.geom;
 
-// ::comment when __HAXE__
-import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 // ::done
 import java.util.Arrays;
+
+// ::comment when __HAXE__
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 
 public class USegment {
 

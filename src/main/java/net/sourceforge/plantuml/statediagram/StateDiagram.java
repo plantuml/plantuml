@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class StateDiagram extends AbstractEntityDiagram {
@@ -242,7 +243,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 		if (parent1 != null ^ parent2 != null)
 			return false;
 
-		assert parent1 != null && parent2 != null;
+		if (TeaVM.a()) assert parent1 != null && parent2 != null;
 		return parent1 == parent2;
 	}
 

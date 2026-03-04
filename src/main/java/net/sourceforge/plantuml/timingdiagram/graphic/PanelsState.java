@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.timingdiagram.ChangeState;
 import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
@@ -218,7 +219,7 @@ public abstract class PanelsState extends Panels {
 		for (int i = 0; i < changes.size() - 1; i++) {
 			final double a = getPosInPixel(changes.get(i));
 			final double b = getPosInPixel(changes.get(i + 1));
-			assert b > a;
+			if (TeaVM.a()) assert b > a;
 			if (changes.get(i).isFlat())
 				drawFlat(ug.apply(UTranslate.dx(a)), b - a, changes.get(i));
 			else if (changes.get(i).isCompletelyHidden() == false)

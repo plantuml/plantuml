@@ -35,12 +35,11 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
+import net.sourceforge.plantuml.klimt.AbstractShadowable;
+import net.sourceforge.plantuml.klimt.UShapeSized;
 //::comment when __HAXE__
 import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 //::done
-
-import net.sourceforge.plantuml.klimt.AbstractShadowable;
-import net.sourceforge.plantuml.klimt.UShapeSized;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 public class ULine extends AbstractShadowable implements UShapeSized {

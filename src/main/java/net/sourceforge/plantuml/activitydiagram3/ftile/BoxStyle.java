@@ -39,7 +39,6 @@ package net.sourceforge.plantuml.activitydiagram3.ftile;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.klimt.Shadowable;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -49,7 +48,6 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.warning.Warning;
 
 //Created from Luc Trudeau original work
 public abstract class BoxStyle {

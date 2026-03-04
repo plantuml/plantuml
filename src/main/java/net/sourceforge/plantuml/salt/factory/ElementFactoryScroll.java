@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.salt.SaltDictionary;
 import net.sourceforge.plantuml.salt.Terminated;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.ElementPyramidScrolled;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class ElementFactoryScroll extends AbstractElementFactoryComplex {
 
@@ -54,7 +55,7 @@ public class ElementFactoryScroll extends AbstractElementFactoryComplex {
 		}
 		final Terminated<String> tmp = getDataSource().next();
 		final String header = tmp.getElement();
-		assert header.startsWith("{");
+		if (TeaVM.a()) assert header.startsWith("{");
 
 		final Positionner2 positionner = new Positionner2();
 

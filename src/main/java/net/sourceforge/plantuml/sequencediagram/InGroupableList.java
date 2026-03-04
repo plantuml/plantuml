@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.sequencediagram.graphic.GroupingGraphicalElement
 import net.sourceforge.plantuml.sequencediagram.graphic.LivingParticipantBox;
 import net.sourceforge.plantuml.sequencediagram.graphic.MessageExoArrow;
 import net.sourceforge.plantuml.sequencediagram.graphic.ParticipantBox;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class InGroupableList implements InGroupable {
 
@@ -137,7 +138,7 @@ public class InGroupableList implements InGroupable {
 		if (cacheMax == null)
 			cacheMax = getMaxSlow(stringBounder);
 
-		assert cacheMax == getMaxSlow(stringBounder);
+		if (TeaVM.a()) assert cacheMax == getMaxSlow(stringBounder);
 		return cacheMax;
 	}
 
@@ -189,7 +190,7 @@ public class InGroupableList implements InGroupable {
 	public double getMaxX(StringBounder stringBounder) {
 		final double min = getMinX(stringBounder);
 		final double max = getMaxXInternal(stringBounder);
-		assert max - min >= 0;
+		if (TeaVM.a()) assert max - min >= 0;
 		if (max - min < minWidth)
 			return min + minWidth + hack2;
 

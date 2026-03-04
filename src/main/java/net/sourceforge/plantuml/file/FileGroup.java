@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class FileGroup {
 	
@@ -128,7 +129,7 @@ public class FileGroup {
 	private final static Pattern2 noStarInDirectory = Pattern2.cmpile("^(?:([^*?]*)[/\\\\])?([^/\\\\]*)$");
 
 	private void initWithSimpleStar() {
-		assert pattern.indexOf("**") == -1;
+		if (TeaVM.a()) assert pattern.indexOf("**") == -1;
 		final Matcher2 m = noStarInDirectory.matcher(pattern);
 		if (m.find()) {
 			File dir = new File(".");

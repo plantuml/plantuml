@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -107,8 +108,8 @@ public abstract class UBrexSingleLineCommand2<S extends Diagram> implements Comm
 	}
 
 	private CommandControl isValidBracket(BlocLines lines) {
-		assert lines.size() == 2;
-		assert syntaxWithFinalBracket();
+		if (TeaVM.a()) assert lines.size() == 2;
+		if (TeaVM.a()) assert syntaxWithFinalBracket();
 		if (myTrim(lines.getAt(1)).equals("{") == false)
 			return CommandControl.NOT_OK;
 
@@ -126,7 +127,7 @@ public abstract class UBrexSingleLineCommand2<S extends Diagram> implements Comm
 
 	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass) {
 		if (syntaxWithFinalBracket() && lines.size() == 2) {
-			assert myTrim(lines.getAt(1)).equals("{");
+			if (TeaVM.a()) assert myTrim(lines.getAt(1)).equals("{");
 			lines = BlocLines.singleString(lines.getFirst().getString() + " {");
 		}
 		if (lines.size() != 1)

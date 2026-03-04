@@ -44,6 +44,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class ConstraintSet {
 
@@ -161,7 +162,7 @@ public class ConstraintSet {
 			ensureSpaceAfter(stringBounder, p2, p1, space);
 			return;
 		}
-		assert p1.getCenterX(stringBounder) < p2.getCenterX(stringBounder);
+		if (TeaVM.a()) assert p1.getCenterX(stringBounder) < p2.getCenterX(stringBounder);
 		final double existingSpace = p2.getCenterX(stringBounder) - p1.getCenterX(stringBounder);
 		if (existingSpace < space)
 			pushToLeftParticipantBox(space - existingSpace, p2, true);

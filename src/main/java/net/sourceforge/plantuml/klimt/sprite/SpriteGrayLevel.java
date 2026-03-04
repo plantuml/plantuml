@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorUtils;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public enum SpriteGrayLevel {
 
@@ -125,9 +126,9 @@ public enum SpriteGrayLevel {
 			final StringBuilder sb = new StringBuilder(width);
 			for (int x = 0; x < width; x++) {
 				final int level1 = getGrayOn16(img, x, y) / 2;
-				assert level1 >= 0 && level1 <= 7;
+				if (TeaVM.a()) assert level1 >= 0 && level1 <= 7;
 				final int level2 = getGrayOn16(img, x, y + 1) / 2;
-				assert level2 >= 0 && level2 <= 7;
+				if (TeaVM.a()) assert level2 >= 0 && level2 <= 7;
 				final int v = level1 * 8 + level2;
 				sb.append(AsciiEncoder.encode6bit((byte) v));
 			}
@@ -147,11 +148,11 @@ public enum SpriteGrayLevel {
 			final StringBuilder sb = new StringBuilder(width);
 			for (int x = 0; x < width; x++) {
 				final int level1 = getGrayOn16(img, x, y) / 4;
-				assert level1 >= 0 && level1 <= 3;
+				if (TeaVM.a()) assert level1 >= 0 && level1 <= 3;
 				final int level2 = getGrayOn16(img, x, y + 1) / 4;
-				assert level2 >= 0 && level2 <= 3;
+				if (TeaVM.a()) assert level2 >= 0 && level2 <= 3;
 				final int level3 = getGrayOn16(img, x, y + 2) / 4;
-				assert level3 >= 0 && level3 <= 3;
+				if (TeaVM.a()) assert level3 >= 0 && level3 <= 3;
 				final int v = level1 * 16 + level2 * 4 + level3;
 				sb.append(AsciiEncoder.encode6bit((byte) v));
 			}

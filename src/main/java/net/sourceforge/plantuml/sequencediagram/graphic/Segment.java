@@ -41,6 +41,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 public class Segment {
 
 	final private double pos1;
@@ -113,7 +115,7 @@ public class Segment {
 				return Collections.unmodifiableCollection(result2);
 			}
 			if (this.contains(pause)) {
-				assert pendingStart < pause.pos1;
+				if (TeaVM.a()) assert pendingStart < pause.pos1;
 				result2.add(new Segment(pendingStart, pause.pos1));
 				pendingStart = pause.pos2;
 			}

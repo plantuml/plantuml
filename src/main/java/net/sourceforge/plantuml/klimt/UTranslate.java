@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.klimt;
 
 import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
-
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 

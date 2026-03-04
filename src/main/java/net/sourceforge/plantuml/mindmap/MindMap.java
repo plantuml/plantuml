@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class MindMap implements UDrawable {
 
@@ -126,7 +127,7 @@ public class MindMap implements UDrawable {
 
 			if (multiplier == 0)
 				multiplier = level;
-			assert multiplier > 0;
+			if (TeaVM.a()) assert multiplier > 0;
 
 			if (level % multiplier != 0)
 				return CommandExecutionResult.error("Bad indentation");

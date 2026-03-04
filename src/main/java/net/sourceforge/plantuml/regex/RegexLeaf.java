@@ -42,6 +42,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.FoxSignature;
 import net.sourceforge.plantuml.text.StringLocated;
 
@@ -66,7 +67,7 @@ public class RegexLeaf implements IRegex {
 		this.pattern = regex;
 		this.name = name;
 		this.count = count;
-		assert internalSlowCount() == count : "Bad count number for " + name;
+		if (TeaVM.a()) assert internalSlowCount() == count : "Bad count number for " + name;
 	}
 
 	public static RegexLeaf spaceZeroOrMore() {

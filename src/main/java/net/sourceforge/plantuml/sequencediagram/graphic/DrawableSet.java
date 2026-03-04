@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
-import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -71,6 +70,7 @@ import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.SkinParamBackcolored;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.Url;
 
 public class DrawableSet {
@@ -193,7 +193,7 @@ public class DrawableSet {
 				pending = null;
 				continue;
 			}
-			assert englober != null;
+			if (TeaVM.a()) assert englober != null;
 			if (pending != null && englober == pending.getParticipantEnglober()) {
 				pending.addParticipant(ent.getKey());
 				continue;
@@ -263,7 +263,7 @@ public class DrawableSet {
 
 		eventsList.add(idx, newpage);
 		events.put(newpage, object);
-		assert events.size() == eventsList.size();
+		if (TeaVM.a()) assert events.size() == eventsList.size();
 	}
 
 	void setDimension(XDimension2D dim) {
@@ -464,7 +464,7 @@ public class DrawableSet {
 		int min = -1;
 		for (Participant p : someParticipants) {
 			final int n = list.indexOf(p);
-			assert n != -1;
+			if (TeaVM.a()) assert n != -1;
 			if (min == -1 || min > n)
 				min = n;
 
@@ -477,7 +477,7 @@ public class DrawableSet {
 		int max = -1;
 		for (Participant p : someParticipants) {
 			final int n = list.indexOf(p);
-			assert n != -1;
+			if (TeaVM.a()) assert n != -1;
 			if (max == -1 || max < n)
 				max = n;
 

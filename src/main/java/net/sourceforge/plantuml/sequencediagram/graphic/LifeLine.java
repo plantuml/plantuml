@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class LifeLine {
 
@@ -110,9 +111,9 @@ public class LifeLine {
 		events.add(new Variation(type, y, colors, styleBuilder));
 		final int currentLevel = type.apply(stairs.getLastValue());
 		stairs.addStep(y, currentLevel);
-		assert getLevel(y) == stairs.getValue(y);
-		assert currentLevel == stairs.getValue(y);
-		assert getLevel(y) == currentLevel;
+		if (TeaVM.a()) assert getLevel(y) == stairs.getValue(y);
+		if (TeaVM.a()) assert currentLevel == stairs.getValue(y);
+		if (TeaVM.a()) assert getLevel(y) == currentLevel;
 		maxLevel = Math.max(getLevel(y), maxLevel);
 	}
 

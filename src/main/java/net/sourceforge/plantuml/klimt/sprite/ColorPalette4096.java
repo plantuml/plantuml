@@ -41,6 +41,7 @@ import java.util.Objects;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
 import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class ColorPalette4096 {
 
@@ -69,7 +70,7 @@ public class ColorPalette4096 {
 	protected String encodeInt(int result) {
 		final int v2 = result % 64;
 		final int v1 = result / 64;
-		assert v1 >= 0 && v1 <= 63 && v2 >= 0 && v2 <= 63;
+		if (TeaVM.a()) assert v1 >= 0 && v1 <= 63 && v2 >= 0 && v2 <= 63;
 		return "" + colorValue.charAt(v1) + colorValue.charAt(v2);
 	}
 
@@ -105,7 +106,7 @@ public class ColorPalette4096 {
 	}
 
 	private int dup(int v) {
-		assert v >= 0 && v <= 15;
+		if (TeaVM.a()) assert v >= 0 && v <= 15;
 		return v * 16 + v;
 	}
 

@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class LiveBoxes {
 
@@ -260,7 +261,7 @@ public class LiveBoxes {
 			}
 
 			if (position != null) {
-				assert position <= totalHeight : "position=" + position + " totalHeight=" + totalHeight;
+				if (TeaVM.a()) assert position <= totalHeight : "position=" + position + " totalHeight=" + totalHeight;
 				indent = getLevelAt(event, EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE);
 				final Fashion activateColor = getActivateColor(event);
 				StyleBuilder styleBuilder = null;

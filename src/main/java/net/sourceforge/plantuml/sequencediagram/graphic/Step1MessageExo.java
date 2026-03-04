@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 class Step1MessageExo extends Step1Abstract {
 
@@ -104,7 +105,7 @@ class Step1MessageExo extends Step1Abstract {
 		final double posYendLevel = arrowYEndLevel + marginActivateAndDeactive;
 		getMessage().setPosYendLevel(posYendLevel);
 
-		assert graphic instanceof InGroupable;
+		if (TeaVM.a()) assert graphic instanceof InGroupable;
 		if (graphic instanceof InGroupable) {
 			inGroupablesStack.addElement((InGroupable) graphic);
 			inGroupablesStack.addElement(livingParticipantBox);

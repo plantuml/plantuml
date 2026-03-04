@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.Url;
 
 class MessageArrow extends Arrow {
@@ -73,7 +74,7 @@ class MessageArrow extends Arrow {
 	@Override
 	public double getActualWidth(StringBounder stringBounder) {
 		final double r = getRightEndInternal(stringBounder) - getLeftStartInternal(stringBounder);
-		assert r > 0;
+		if (TeaVM.a()) assert r > 0;
 		return r;
 	}
 

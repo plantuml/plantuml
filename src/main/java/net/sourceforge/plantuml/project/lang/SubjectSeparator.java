@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class SubjectSeparator implements Subject<GanttDiagram> {
 
@@ -75,7 +76,7 @@ public class SubjectSeparator implements Subject<GanttDiagram> {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final LocalDate day = (LocalDate) complement;
-			assert project == subject;
+			if (TeaVM.a()) assert project == subject;
 			project.addVerticalSeparatorBefore(day);
 			return CommandExecutionResult.ok();
 		}
@@ -91,7 +92,7 @@ public class SubjectSeparator implements Subject<GanttDiagram> {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final LocalDate day = (LocalDate) complement;
-			assert project == subject;
+			if (TeaVM.a()) assert project == subject;
 			project.addVerticalSeparatorBefore(day.plusDays(1));
 			return CommandExecutionResult.ok();
 		}
@@ -108,7 +109,7 @@ public class SubjectSeparator implements Subject<GanttDiagram> {
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final TaskInstant when = (TaskInstant) complement;
 
-			assert project == subject;
+			if (TeaVM.a()) assert project == subject;
 			project.addVerticalSeparatorBefore(when.getInstantPrecise().toDay());
 			return CommandExecutionResult.ok();
 		}

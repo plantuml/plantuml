@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.BackSlash;
 
 public class PlainText implements HtmlCommand {
@@ -55,7 +56,7 @@ public class PlainText implements HtmlCommand {
 	}
 
 	public String getText() {
-		assert text.length() > 0;
+		if (TeaVM.a()) assert text.length() > 0;
 		return text;
 	}
 }

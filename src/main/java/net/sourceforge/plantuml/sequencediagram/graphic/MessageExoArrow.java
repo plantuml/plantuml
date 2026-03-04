@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.rose.AbstractComponentRoseArrow;
 import net.sourceforge.plantuml.skin.rose.ComponentRoseArrow;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.Url;
 
 public class MessageExoArrow extends Arrow {
@@ -73,7 +74,7 @@ public class MessageExoArrow extends Arrow {
 
 	double getActualWidth(StringBounder stringBounder, double maxX) {
 		final double r = getRightEndInternal(stringBounder, maxX) - getLeftStartInternal(stringBounder);
-		assert r > 0;
+		if (TeaVM.a()) assert r > 0;
 		return r;
 	}
 

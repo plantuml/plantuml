@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.timingdiagram.ChangeState;
 import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
@@ -87,10 +88,10 @@ public class PanelsRobust extends Panels {
 			final double y = yOfState(states.get(0)) + heightForConstraints;
 			return new IntricatedPoint(new XPoint2D(x, y), new XPoint2D(x, y));
 		}
-		assert states.size() == 2;
+		if (TeaVM.a()) assert states.size() == 2;
 		final double y1 = yOfState(states.get(0)) + heightForConstraints;
 		final double y2 = yOfState(states.get(1)) + heightForConstraints;
-		assert y1 != y2;
+		if (TeaVM.a()) assert y1 != y2;
 		return new IntricatedPoint(new XPoint2D(x, y1), new XPoint2D(x, y2));
 	}
 

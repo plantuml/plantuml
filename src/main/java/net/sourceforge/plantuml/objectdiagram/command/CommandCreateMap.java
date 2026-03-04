@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -112,7 +113,7 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 		lines = lines.subExtract(1, 1);
 		for (StringLocated sl : lines) {
 			final String line = sl.getString();
-			assert line.length() > 0;
+			if (TeaVM.a()) assert line.length() > 0;
 			final boolean ok = entity1.getBodier().addFieldOrMethod(line);
 			if (ok == false)
 				return CommandExecutionResult.error("Map definition should contains key => value");

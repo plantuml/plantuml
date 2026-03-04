@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.bpm;
 
 import net.sourceforge.plantuml.bpm.ConnectorPuzzle.Where;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class CleanerInterleavingLines implements GridCleaner {
 
@@ -90,7 +91,7 @@ public class CleanerInterleavingLines implements GridCleaner {
 		if (data2 == null) {
 			return data1;
 		}
-		assert data1 != null && data2 != null;
+		if (TeaVM.a()) assert data1 != null && data2 != null;
 		if (data1 instanceof BpmElement) {
 			return data1;
 		}
@@ -102,7 +103,7 @@ public class CleanerInterleavingLines implements GridCleaner {
 			}
 			return data2;
 		}
-		assert data1 instanceof ConnectorPuzzleEmpty && data2 instanceof ConnectorPuzzleEmpty;
+		if (TeaVM.a()) assert data1 instanceof ConnectorPuzzleEmpty && data2 instanceof ConnectorPuzzleEmpty;
 		final ConnectorPuzzleEmpty puz1 = (ConnectorPuzzleEmpty) data1;
 		final ConnectorPuzzleEmpty puz2 = (ConnectorPuzzleEmpty) data2;
 		return puz2;
@@ -112,7 +113,7 @@ public class CleanerInterleavingLines implements GridCleaner {
 		if (data1 == null || data2 == null) {
 			return true;
 		}
-		assert data1 != null && data2 != null;
+		if (TeaVM.a()) assert data1 != null && data2 != null;
 		if (data1 instanceof ConnectorPuzzleEmpty && data2 instanceof ConnectorPuzzleEmpty) {
 			return mergeableCC((ConnectorPuzzleEmpty) data1, (ConnectorPuzzleEmpty) data2);
 		}

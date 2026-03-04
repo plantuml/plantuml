@@ -35,10 +35,9 @@
  */
 package net.sourceforge.plantuml.svek;
 
-import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
-
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;

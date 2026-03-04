@@ -45,6 +45,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.bpm.ConnectorPuzzle.Where;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class Grid {
 
@@ -268,7 +269,7 @@ public class Grid {
 	}
 
 	public void removeLine(Line line) {
-		assert usedColsOf(line).isEmpty();
+		if (TeaVM.a()) assert usedColsOf(line).isEmpty();
 		for (final Iterator<Map.Entry<Coord, Cell>> it = cells.entrySet().iterator(); it.hasNext();) {
 			final Map.Entry<Coord, Cell> ent = it.next();
 			if (ent.getKey().getLine() != line) {

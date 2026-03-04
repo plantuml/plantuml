@@ -40,6 +40,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class Upf9Encoder {
 	
@@ -50,7 +51,7 @@ public class Upf9Encoder {
 
 	public static byte[] encodeChar(char c) {
 		final byte[] result = encodeCharInternal(c);
-		assert checkBack(c, result);
+		if (TeaVM.a()) assert checkBack(c, result);
 		return result;
 	}
 
@@ -111,7 +112,7 @@ public class Upf9Encoder {
 		}
 		baos.close();
 		final byte[] result = baos.toByteArray();
-		assert s.endsWith(Upf9Decoder.decodeString(result, result.length));
+		if (TeaVM.a()) assert s.endsWith(Upf9Decoder.decodeString(result, result.length));
 		return result;
 	}
 

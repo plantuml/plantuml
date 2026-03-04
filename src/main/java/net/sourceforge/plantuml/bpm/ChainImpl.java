@@ -41,6 +41,8 @@ import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 public class ChainImpl<O> implements Chain<O> {
 
 	private final List<O> positive = new ArrayList<>();
@@ -132,12 +134,12 @@ public class ChainImpl<O> implements Chain<O> {
 		for (int i = 0; i < Math.max(positive.size(), negative.size()); i++) {
 			if (i < positive.size() && data == positive.get(i)) {
 				final InternalNavigator result = new InternalNavigator(i, currentVersion);
-				assert result.get() == data;
+				if (TeaVM.a()) assert result.get() == data;
 				return result;
 			}
 			if (i < negative.size() && data == negative.get(i)) {
 				final InternalNavigator result = new InternalNavigator(-i - 1, currentVersion);
-				assert result.get() == data;
+				if (TeaVM.a()) assert result.get() == data;
 				return result;
 			}
 		}
@@ -182,13 +184,13 @@ public class ChainImpl<O> implements Chain<O> {
 	}
 
 	private void ensureInternal(int position, List<O> list) {
-		assert position >= 0 : "position=" + position;
+		if (TeaVM.a()) assert position >= 0 : "position=" + position;
 		while (list.size() <= position) {
 			list.add(null);
 		}
-		assert list.size() > position;
+		if (TeaVM.a()) assert list.size() > position;
 		// Just check that list.get(position) does not throw Exception
-		assert list.get(position) != this;
+		if (TeaVM.a()) assert list.get(position) != this;
 	}
 
 	class InternalNavigator implements Navigator<O> {

@@ -39,6 +39,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 public class GitTextArea {
 
 	private final List<String> lines = new ArrayList<>();
@@ -54,7 +56,7 @@ public class GitTextArea {
 				String s = lines.get(y);
 				final String name = CursorPosition.getCommitNameInLine(s);
 				final int x = s.indexOf("*");
-				assert (name == null) == (x == -1);
+				if (TeaVM.a()) assert (name == null) == (x == -1);
 				if (x == -1)
 					continue;
 

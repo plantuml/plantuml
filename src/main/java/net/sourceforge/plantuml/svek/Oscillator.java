@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.svek;
 
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class Oscillator {
 
@@ -47,7 +48,7 @@ public class Oscillator {
 	private int y = -1;
 
 	public XPoint2D nextPosition() {
-		assert n % 2 == 1;
+		if (TeaVM.a()) assert n % 2 == 1;
 		final int halfN = (n - 1) / 2;
 		final XPoint2D result = new XPoint2D(x, y);
 		i++;

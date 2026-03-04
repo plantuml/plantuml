@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.expression.TValue;
@@ -78,7 +79,7 @@ public class TFunctionImpl implements TFunction {
 		if (nbArg > args.size())
 			return false;
 
-		assert nbArg <= args.size();
+		if (TeaVM.a()) assert nbArg <= args.size();
 		int neededArgument = 0;
 		for (TFunctionArgument arg : args) {
 			if (namedArguments.contains(arg.getName()))
@@ -91,7 +92,7 @@ public class TFunctionImpl implements TFunction {
 		if (nbArg < neededArgument)
 			return false;
 
-		assert nbArg >= neededArgument;
+		if (TeaVM.a()) assert nbArg >= neededArgument;
 		return true;
 	}
 

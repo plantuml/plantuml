@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import java.util.List;
-
 import net.sourceforge.plantuml.abel.SpecificBackcolorable;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.creole.Display;

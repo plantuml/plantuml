@@ -77,7 +77,7 @@ public class SignatureUtils {
 		} else
 			try {
 				final byte[] digest = getMD5raw(s);
-				assert digest.length == 16;
+				if (TeaVM.a()) assert digest.length == 16;
 				return toHexString(digest);
 			} catch (NoSuchAlgorithmException e) {
 				Logme.error(e);
@@ -127,7 +127,7 @@ public class SignatureUtils {
 	public static String getSHA512Hex(String s) {
 		try {
 			final byte[] digest = getSHA512raw(s);
-			assert digest.length == 64;
+			if (TeaVM.a()) assert digest.length == 64;
 			return toHexString(digest);
 		} catch (NoSuchAlgorithmException e) {
 			Logme.error(e);

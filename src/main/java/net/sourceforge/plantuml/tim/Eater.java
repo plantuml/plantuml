@@ -40,6 +40,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.expression.TValue;
@@ -267,7 +268,7 @@ public abstract class Eater {
 		if (i >= stringLocated.length() || stringLocated.charAt(i) != ch)
 			return;
 
-		assert stringLocated.charAt(i) == ch;
+		if (TeaVM.a()) assert stringLocated.charAt(i) == ch;
 		i++;
 	}
 

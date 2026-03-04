@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class SubjectProject implements Subject<GanttDiagram> {
 
@@ -75,7 +76,7 @@ public class SubjectProject implements Subject<GanttDiagram> {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final LocalDate start = (LocalDate) complement;
-			assert project == subject;
+			if (TeaVM.a()) assert project == subject;
 			return project.updateStartingPoint(start);
 		}
 

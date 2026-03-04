@@ -160,8 +160,8 @@ public class HColorSimple extends HColor {
 	public HColor asMonochrome(HColorSimple colorForMonochrome, double minGray, double maxGray) {
 		final XColor tmp = ColorUtils.getGrayScaleColor(color);
 		final int gray = tmp.getGreen();
-		assert gray == tmp.getBlue();
-		assert gray == tmp.getRed();
+		if (TeaVM.a()) assert gray == tmp.getBlue();
+		if (TeaVM.a()) assert gray == tmp.getRed();
 
 		final double coef = (gray - minGray) / 256.0;
 		final XColor result = ColorUtils.grayToColor(coef, colorForMonochrome.color);

@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.UrlBuilder;
 
 public class BodierLikeClassOrObject extends BodierAbstract {
@@ -74,7 +75,7 @@ public class BodierLikeClassOrObject extends BodierAbstract {
 			throw new IllegalArgumentException();
 
 		this.type = Objects.requireNonNull(type);
-		assert type.isLikeClass() || type == LeafType.OBJECT;
+		if (TeaVM.a()) assert type.isLikeClass() || type == LeafType.OBJECT;
 		this.hideVisibilityModifier = hideVisibilityModifier;
 	}
 
@@ -226,7 +227,7 @@ public class BodierLikeClassOrObject extends BodierAbstract {
 			return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),
 					rawBodyWithoutHidden(), skinParam, stereotype, leaf, style);
 		}
-		assert type.isLikeClass();
+		if (TeaVM.a()) assert type.isLikeClass();
 
 		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), skinParam, leaf, style);
 

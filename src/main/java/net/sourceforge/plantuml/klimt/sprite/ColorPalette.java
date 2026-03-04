@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
 import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class ColorPalette {
 
@@ -62,7 +63,7 @@ public class ColorPalette {
 				resultDist = dist;
 			}
 		}
-		assert result != 0;
+		if (TeaVM.a()) assert result != 0;
 		return result;
 	}
 

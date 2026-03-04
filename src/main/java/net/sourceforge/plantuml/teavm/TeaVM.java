@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.teavm;
 
+import net.sourceforge.plantuml.abel.LeafType;
+
 // ::comment when JAVA8
 // import org.teavm.interop.PlatformMarker;
 // ::done
@@ -69,6 +71,22 @@ public class TeaVM {
 	// ::done
 	public static boolean isTeaVM() {
 		return false;
+	}
+	
+	/**
+	 * Guard method for assertions, ensuring they are removed from the
+	 * generated JavaScript output.
+	 *
+	 * Returns {@code true} on the JVM (allowing the assertion to execute)
+	 * and {@code false} under TeaVM (skipping it entirely via dead code
+	 * elimination).
+	 *
+	 * <pre>
+	 * if (TeaVM.a()) assert ...
+	 * </pre>
+	 */
+	public static boolean a() {
+		return !isTeaVM();
 	}
 
 }

@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.puma;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 public class FixedLink {
 
 	final private SegmentPosition segmentPosition1;
@@ -53,7 +55,7 @@ public class FixedLink {
 		}
 		final double diff = p1 - p2;
 		segmentPosition2.getSegment().push(diff);
-		assert segmentPosition1.getPosition() == segmentPosition2.getPosition();
+		if (TeaVM.a()) assert segmentPosition1.getPosition() == segmentPosition2.getPosition();
 		return true;
 	}
 

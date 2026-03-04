@@ -42,7 +42,6 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.EntityPosition;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.dot.GraphvizVersion;

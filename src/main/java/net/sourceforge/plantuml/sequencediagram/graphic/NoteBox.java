@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.Url;
 
 final class NoteBox extends GraphicalElement implements InGroupable {
@@ -84,7 +85,7 @@ final class NoteBox extends GraphicalElement implements InGroupable {
 	final public double getPreferredWidth(StringBounder stringBounder) {
 		final double preferredWidth = comp.getPreferredWidth(stringBounder);
 		if (position == NotePosition.OVER_SEVERAL) {
-			assert p1 != p2;
+			if (TeaVM.a()) assert p1 != p2;
 			final double diff1 = p2.getParticipantBox().getMaxX(stringBounder) - p1.getParticipantBox().getMinX();
 			if (diff1 > preferredWidth) {
 				return diff1;

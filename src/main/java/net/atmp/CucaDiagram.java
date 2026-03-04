@@ -266,7 +266,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 		if (x == -1) {
 			if (reuseExistingChild && this.countByName(full) == 1) {
 				final Quark<Entity> byName = this.firstWithName(full);
-				assert byName != null;
+				if (TeaVM.a()) assert byName != null;
 				if (byName != currentQuark)
 					return Failable.ok(byName);
 			}
@@ -878,7 +878,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 	private Entity isNoteWithSingleLinkAttachedTo(Entity note) {
 		if (note.getLeafType() != LeafType.NOTE)
 			return null;
-		assert note.getLeafType() == LeafType.NOTE;
+		if (TeaVM.a()) assert note.getLeafType() == LeafType.NOTE;
 		Entity other = null;
 		for (Link link : this.getLinks()) {
 			if (link.getType().isInvisible())

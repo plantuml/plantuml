@@ -39,6 +39,8 @@ import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 public class StripeFrontier {
 
 	private final SortedSet<Stripe> stripes = new TreeSet<>();
@@ -107,7 +109,7 @@ public class StripeFrontier {
 			return;
 
 		final boolean ok = this.stripes.remove(touch);
-		assert ok;
+		if (TeaVM.a()) assert ok;
 		if (touch.getStart() != x1)
 			this.stripes.add(new Stripe(touch.getStart(), x1, touch.getValue()));
 
@@ -115,7 +117,7 @@ public class StripeFrontier {
 		if (x2 != touch.getEnd())
 			this.stripes.add(new Stripe(x2, touch.getEnd(), touch.getValue()));
 
-		assert checkConsistent();
+		if (TeaVM.a()) assert checkConsistent();
 	}
 
 	private boolean checkConsistent() {

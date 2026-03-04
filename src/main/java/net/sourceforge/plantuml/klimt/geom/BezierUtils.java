@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.klimt.geom;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 public class BezierUtils {
 	static public double getEndingAngle(final XCubicCurve2D left) {
 		if (left.getCtrlP2().equals(left.getP2()))
@@ -72,7 +74,7 @@ public class BezierUtils {
 		if (contains1 == false)
 			bez.setCurve(bez.x2, bez.y2, bez.ctrlx2, bez.ctrly2, bez.ctrlx1, bez.ctrly1, bez.x1, bez.y1);
 
-		assert shape.contains(bez.x1, bez.y1) && shape.contains(bez.x2, bez.y2) == false;
+		if (TeaVM.a()) assert shape.contains(bez.x1, bez.y1) && shape.contains(bez.x2, bez.y2) == false;
 		final XCubicCurve2D left = XCubicCurve2D.none();
 		final XCubicCurve2D right = XCubicCurve2D.none();
 		subdivide(bez, left, right, 0.5);

@@ -566,7 +566,7 @@ public class TContext {
 					executeVoid3(str, memory, function, call);
 					return null;
 				}
-				assert function.getFunctionType() == TFunctionType.RETURN_FUNCTION
+				if (TeaVM.a()) assert function.getFunctionType() == TFunctionType.RETURN_FUNCTION
 						|| function.getFunctionType() == TFunctionType.LEGACY_DEFINE;
 				final TValue functionReturn = function.executeReturnFunction(this, memory, str, call.getValues(),
 						call.getNamedArguments());
@@ -849,7 +849,7 @@ public class TContext {
 						}
 						saveImportedFiles = this.pathSystem;
 						this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
-						assert reader != null;
+						if (TeaVM.a()) assert reader != null;
 					}
 				}
 			}

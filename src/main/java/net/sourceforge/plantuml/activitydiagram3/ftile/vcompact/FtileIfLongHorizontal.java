@@ -75,6 +75,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.ConditionStyle;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 class FtileIfLongHorizontal extends AbstractFtile {
 
@@ -113,7 +114,7 @@ class FtileIfLongHorizontal extends AbstractFtile {
 		for (int i = 0; i < diamonds.size(); i++) {
 			Ftile diamond = diamonds.get(i);
 			final double missing = maxOutY - diamond.calculateDimension(stringBounder).getOutY();
-			assert missing >= 0;
+			if (TeaVM.a()) assert missing >= 0;
 			diamond = FtileUtils.addVerticalMargin(diamond, missing / 2, 20);
 			result.add(diamond);
 		}

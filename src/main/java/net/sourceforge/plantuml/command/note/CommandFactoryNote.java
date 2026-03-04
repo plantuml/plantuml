@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotag;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -147,7 +148,7 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 
 		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.NOTE, null);
 
-		assert entity != null;
+		if (TeaVM.a()) assert entity != null;
 		final String s = arg.get("COLOR", 0);
 		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
 				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));

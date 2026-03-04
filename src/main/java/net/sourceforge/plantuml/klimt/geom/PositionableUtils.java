@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.klimt.geom;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 public class PositionableUtils {
 	// ::remove file when __HAXE__
 
@@ -100,8 +102,8 @@ public class PositionableUtils {
 			max = max * 2;
 
 		for (int i = 0; i < 5; i++) {
-			assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min);
-			assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, max) == false;
+			if (TeaVM.a()) assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min);
+			if (TeaVM.a()) assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, max) == false;
 			final double candidat = (min + max) / 2.0;
 			if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, candidat))
 				min = candidat;

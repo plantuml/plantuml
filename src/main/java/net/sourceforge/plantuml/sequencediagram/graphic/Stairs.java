@@ -41,6 +41,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 public class Stairs {
 
 	private final List<Double> ys = new ArrayList<>();
@@ -60,7 +62,7 @@ public class Stairs {
 	}
 
 	public void addStep(double y, int value) {
-		assert ys.size() == values.size();
+		if (TeaVM.a()) assert ys.size() == values.size();
 		if (ys.size() > 0) {
 			final double lastY = ys.get(ys.size() - 1);
 			if (y < lastY) {

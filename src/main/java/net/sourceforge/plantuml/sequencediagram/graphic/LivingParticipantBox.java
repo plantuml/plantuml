@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.Participant;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class LivingParticipantBox implements InGroupable {
 
@@ -69,9 +70,9 @@ public class LivingParticipantBox implements InGroupable {
 
 	public SegmentColored getLiveThicknessAt(StringBounder stringBounder, double y) {
 		final double left = lifeLine.getLeftShift(y);
-		assert left >= 0;
+		if (TeaVM.a()) assert left >= 0;
 		final double right = lifeLine.getRightShift(y);
-		assert right >= 0 : "right=" + right;
+		if (TeaVM.a()) assert right >= 0 : "right=" + right;
 		final double centerX = participantBox.getCenterX(stringBounder);
 		// Log.println("AZERTY " + y + " centerX=" + centerX + " left=" + left + "
 		// right=" + right);

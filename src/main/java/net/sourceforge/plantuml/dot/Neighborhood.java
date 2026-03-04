@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.SvekEdge;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class Neighborhood {
 
@@ -81,7 +82,7 @@ public class Neighborhood {
 				// System.err.println("rect=" + rect);
 				// System.err.println("center=" + center);
 				// System.err.println("pt=" + pt);
-				assert false;
+				if (TeaVM.a()) assert false;
 				continue;
 			}
 			final double theta = Math.atan2(center.getX() - pt.getX(), -(center.getY() - pt.getY()));

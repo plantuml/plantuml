@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.tim;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 public class TrieImpl implements Trie {
 
 	private final Map<Character, TrieImpl> brothers = new HashMap<Character, TrieImpl>();
@@ -72,7 +74,7 @@ public class TrieImpl implements Trie {
 	            return false;
 
 	        if (i == s.length() - 2) {
-	            assert s.charAt(i + 1) == '\0';
+	            if (TeaVM.a()) assert s.charAt(i + 1) == '\0';
 	            return child.brothers.remove('\0') != null;
 	        }
 

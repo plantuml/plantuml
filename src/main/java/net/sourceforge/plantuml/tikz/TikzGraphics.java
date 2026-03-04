@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.klimt.geom.USegment;
 import net.sourceforge.plantuml.klimt.geom.USegmentType;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.PragmaKey;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
@@ -411,7 +412,7 @@ public class TikzGraphics {
 
 	public void polygon(double[] points) {
 
-		assert points.length % 2 == 0;
+		if (TeaVM.a()) assert points.length % 2 == 0;
 		final StringBuilder sb = new StringBuilder();
 		appendShadeOrDraw(sb);
 		sb.append("line width=" + thickness + "pt]");
@@ -425,7 +426,7 @@ public class TikzGraphics {
 	}
 
 	private void round(double r, double[] points) {
-		assert points.length % 2 == 0;
+		if (TeaVM.a()) assert points.length % 2 == 0;
 		final StringBuilder sb = new StringBuilder();
 		appendShadeOrDraw(sb);
 		sb.append("line width=" + thickness + "pt]");

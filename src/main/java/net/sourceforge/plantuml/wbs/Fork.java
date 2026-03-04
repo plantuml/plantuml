@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Direction;
 
 class Fork extends WBSTextBlock {
@@ -96,7 +97,7 @@ class Fork extends WBSTextBlock {
 			drawLine(ug, firstX, y1, lastX, y1);
 			posMain = firstX + (lastX - firstX - mainWidth) / 2;
 		} else {
-			assert lastX == firstX;
+			if (TeaVM.a()) assert lastX == firstX;
 			final XDimension2D fullDim = calculateDimension(stringBounder);
 			posMain = (fullDim.getWidth() - mainWidth) / 2;
 			drawLine(ug, firstX, y1, posMain + mainWidth / 2, y1);

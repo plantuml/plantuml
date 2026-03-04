@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.tim.iterator;
 
 import java.util.List;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 
@@ -78,9 +79,9 @@ public class CodeIteratorImpl implements CodeIterator {
 		if (current >= list.size())
 			throw new IllegalStateException();
 
-		assert current < list.size();
+		if (TeaVM.a()) assert current < list.size();
 		current++;
-		assert current <= list.size();
+		if (TeaVM.a()) assert current <= list.size();
 	}
 
 	@Override

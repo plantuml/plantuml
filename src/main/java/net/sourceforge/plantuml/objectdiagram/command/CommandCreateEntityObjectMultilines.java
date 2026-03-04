@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -99,7 +100,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 
 		lines = lines.subExtract(1, 1);
 		for (StringLocated s : lines) {
-			assert s.getString().length() > 0;
+			if (TeaVM.a()) assert s.getString().length() > 0;
 			if (VisibilityModifier.isVisibilityCharacter(s.getString()))
 				diagram.setVisibilityModifierPresent(true);
 

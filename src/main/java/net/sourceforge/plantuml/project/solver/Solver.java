@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.project.ngm.NGMAllocation;
 import net.sourceforge.plantuml.project.ngm.NGMTask;
 import net.sourceforge.plantuml.project.ngm.NGMTotalEffort;
 import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class Solver {
 	// ::remove folder when __HAXE__
@@ -74,7 +75,7 @@ public class Solver {
 		if (values.size() > 2)
 			removeFirstElement();
 
-		assert values.size() <= 2;
+		if (TeaVM.a()) assert values.size() <= 2;
 
 	}
 

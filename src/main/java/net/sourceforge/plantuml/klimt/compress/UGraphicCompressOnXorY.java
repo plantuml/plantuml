@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphicDelegator;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class UGraphicCompressOnXorY extends UGraphicDelegator {
     // ::remove file when __HAXE__
@@ -143,7 +144,7 @@ public class UGraphicCompressOnXorY extends UGraphicDelegator {
 			drawLine(x2, y2, x1, y1);
 			return;
 		}
-		assert y1 <= y2;
+		if (TeaVM.a()) assert y1 <= y2;
 		getUg().apply(new UTranslate(x1, y1)).draw(new ULine(x2 - x1, y2 - y1));
 	}
 

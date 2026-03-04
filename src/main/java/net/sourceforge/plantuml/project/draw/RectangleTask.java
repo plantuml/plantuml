@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.sequencediagram.graphic.Segment;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class RectangleTask {
 
@@ -82,8 +83,8 @@ public class RectangleTask {
 			return;
 		}
 
-		assert segments.size() == 1;
-		assert round > 0;
+		if (TeaVM.a()) assert segments.size() == 1;
+		if (TeaVM.a()) assert round > 0;
 		final Segment segment = segments.get(0);
 
 		final double width = segment.getLength();
@@ -144,7 +145,7 @@ public class RectangleTask {
 			else if (current >= lim)
 				widthCompletion = 0;
 			else {
-				assert current < lim && lim < next;
+				if (TeaVM.a()) assert current < lim && lim < next;
 				widthCompletion = lim - current;
 			}
 

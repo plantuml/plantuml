@@ -86,6 +86,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.Styleable;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class Swimlanes implements TextBlock, Styleable {
@@ -304,7 +305,7 @@ public class Swimlanes implements TextBlock, Styleable {
 
 		final XDimension2D dimensionFull = full.calculateDimension(stringBounder);
 		int i = 0;
-		assert dividers.size() == swimlanes().size() + 1;
+		if (TeaVM.a()) assert dividers.size() == swimlanes().size() + 1;
 		for (Swimlane swimlane : swimlanesSpecial()) {
 			final LaneDivider divider1 = dividers.get(i);
 
@@ -405,7 +406,7 @@ public class Swimlanes implements TextBlock, Styleable {
 
 			xpos += swimlane.getActualWidth() + laneDivider.getWidth();
 		}
-		assert dividers.size() == swimlanes().size() + 1;
+		if (TeaVM.a()) assert dividers.size() == swimlanes().size() + 1;
 	}
 
 	public double getHalfMissingSpace(StringBounder stringBounder, int i, double min) {
@@ -418,7 +419,7 @@ public class Swimlanes implements TextBlock, Styleable {
 		if (titleWidth <= swimlaneActualWidth)
 			return 5;
 
-		assert titleWidth > swimlaneActualWidth;
+		if (TeaVM.a()) assert titleWidth > swimlaneActualWidth;
 		return Math.max(5, 5 + (titleWidth - swimlaneActualWidth) / 2);
 	}
 

@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockEmpty;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.MathUtils;
 
 public class HeaderLayout {
@@ -87,12 +88,12 @@ public class HeaderLayout {
 
 		final double widthStereoAndName = Math.max(stereoDim.getWidth(), nameDim.getWidth());
 		final double suppWith = Math.max(0, width - circleDim.getWidth() - widthStereoAndName - genericDim.getWidth());
-		assert suppWith >= 0;
+		if (TeaVM.a()) assert suppWith >= 0;
 
 		final double h2 = Math.min(circleDim.getWidth() / 4, suppWith * 0.1);
 		final double h1 = (suppWith - h2) / 2;
-		assert h1 >= 0;
-		assert h2 >= 0;
+		if (TeaVM.a()) assert h1 >= 0;
+		if (TeaVM.a()) assert h2 >= 0;
 
 		final double xCircle = h1;
 		final double yCircle = (height - circleDim.getHeight()) / 2;

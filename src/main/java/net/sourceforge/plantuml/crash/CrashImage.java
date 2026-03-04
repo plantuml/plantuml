@@ -82,7 +82,7 @@ public class CrashImage implements UDrawable {
 	}
 
 	private PortableImage generateFlashcodeImage(String flash, ReportLog strings) {
-		assert flash != null;
+		if (TeaVM.a()) assert flash != null;
 		if (!TeaVM.isTeaVM()) {
 			final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 			try {

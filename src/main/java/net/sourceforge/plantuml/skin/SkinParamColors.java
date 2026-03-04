@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class SkinParamColors extends SkinParamDelegator {
 
@@ -87,7 +88,7 @@ public class SkinParamColors extends SkinParamDelegator {
 		if (value != null) {
 			return value;
 		}
-		assert value == null;
+		if (TeaVM.a()) assert value == null;
 		return super.getHtmlColor(param, stereotype, clickable);
 	}
 

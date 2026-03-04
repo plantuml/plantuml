@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.svek;
 
 import net.sourceforge.plantuml.abel.Hideable;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 public interface IEntityImage extends Hideable, TextBlock {

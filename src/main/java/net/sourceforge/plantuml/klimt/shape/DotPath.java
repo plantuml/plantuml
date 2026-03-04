@@ -39,7 +39,6 @@ package net.sourceforge.plantuml.klimt.shape;
 import java.awt.Graphics2D;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.GeneralPath;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -61,6 +60,7 @@ import net.sourceforge.plantuml.klimt.geom.USegmentType;
 import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.klimt.geom.XLine2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class DotPath implements UShape, Moveable {
 
@@ -435,14 +435,14 @@ public class DotPath implements UShape, Moveable {
 				if (tail.contains(this.beziers.get(idx).getP2())) {
 					// System.err.println("strange1");
 				} else {
-					assert tail.contains(this.beziers.get(idx).getP1());
-					assert tail.contains(this.beziers.get(idx).getP2()) == false;
+					if (TeaVM.a()) assert tail.contains(this.beziers.get(idx).getP1());
+					if (TeaVM.a()) assert tail.contains(this.beziers.get(idx).getP2()) == false;
 					XCubicCurve2D current = this.beziers.get(idx);
 					for (int k = 0; k < 8; k++) {
 						final XCubicCurve2D part1 = XCubicCurve2D.none();
 						final XCubicCurve2D part2 = XCubicCurve2D.none();
 						current.subdivide(part1, part2);
-						assert part1.getP2().equals(part2.getP1());
+						if (TeaVM.a()) assert part1.getP2().equals(part2.getP1());
 						if (tail.contains(part1.getP2())) {
 							current = part2;
 						} else {
@@ -467,13 +467,13 @@ public class DotPath implements UShape, Moveable {
 						if (head.contains(current.getP1())) {
 							return me;
 						}
-						assert head.contains(current.getP1()) == false;
-						assert head.contains(current.getP2());
+						if (TeaVM.a()) assert head.contains(current.getP1()) == false;
+						if (TeaVM.a()) assert head.contains(current.getP2());
 						for (int k = 0; k < 8; k++) {
 							final XCubicCurve2D part1 = XCubicCurve2D.none();
 							final XCubicCurve2D part2 = XCubicCurve2D.none();
 							current.subdivide(part1, part2);
-							assert part1.getP2().equals(part2.getP1());
+							if (TeaVM.a()) assert part1.getP2().equals(part2.getP1());
 							if (head.contains(part1.getP2())) {
 								current = part1;
 							} else {

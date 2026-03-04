@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class PacketDiagram extends TitledDiagram {
 
@@ -346,7 +347,7 @@ public class PacketDiagram extends TitledDiagram {
 	}
 
 	private Optional<PacketItem> fitPacketInRow(PacketItem packet, int remainRowWidth, List<PacketBlock> row) {
-		assert remainRowWidth > 0;
+		if (TeaVM.a()) assert remainRowWidth > 0;
 		int overflow = packet.width - remainRowWidth;
 		if (overflow > 0) {
 			int margin = packet.width - remainRowWidth;

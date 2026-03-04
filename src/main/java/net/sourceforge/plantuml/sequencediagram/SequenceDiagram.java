@@ -539,7 +539,7 @@ public class SequenceDiagram extends TitledDiagram {
 	public void putParticipantInLast(String code) {
 		final Participant p = Objects.requireNonNull(participantsget(code), code);
 		final boolean ok = participantsList.remove(p);
-		assert ok;
+		if (TeaVM.a()) assert ok;
 		addWithOrder(p);
 		participantEnglobers2.put(p, participantEnglober);
 	}

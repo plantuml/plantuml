@@ -85,6 +85,7 @@ import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.style.LengthAdjust;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Base64Coder;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
@@ -534,7 +535,7 @@ public class SvgGraphics {
 	}
 
 	public void svgPolygon(double deltaShadow, double... points) {
-		assert points.length % 2 == 0;
+		if (TeaVM.a()) assert points.length % 2 == 0;
 		manageShadow(deltaShadow);
 		if (hidden == false) {
 			final Element elt = document.createElement("polygon");
@@ -1037,7 +1038,7 @@ public class SvgGraphics {
 	}
 
 	private void addFilter(Element filter, String name, String... data) {
-		assert data.length % 2 == 0;
+		if (TeaVM.a()) assert data.length % 2 == 0;
 		final Element elt = document.createElement(name);
 		for (int i = 0; i < data.length; i += 2)
 			elt.setAttribute(data[i], data[i + 1]);

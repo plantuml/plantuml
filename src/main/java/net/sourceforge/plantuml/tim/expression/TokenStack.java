@@ -42,6 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.Eater;
 import net.sourceforge.plantuml.tim.EaterException;
@@ -173,8 +174,8 @@ public class TokenStack {
 		for (Map.Entry<Integer, Integer> ids : parens.entrySet()) {
 			final int iopen = ids.getKey();
 			final int iclose = ids.getValue();
-			assert tokens.get(iopen).getTokenType() == TokenType.OPEN_PAREN_MATH;
-			assert tokens.get(iclose).getTokenType() == TokenType.CLOSE_PAREN_MATH;
+			if (TeaVM.a()) assert tokens.get(iopen).getTokenType() == TokenType.OPEN_PAREN_MATH;
+			if (TeaVM.a()) assert tokens.get(iclose).getTokenType() == TokenType.CLOSE_PAREN_MATH;
 			if (iopen > 0 && tokens.get(iopen - 1).getTokenType() == TokenType.PLAIN_TEXT) {
 				tokens.set(iopen - 1, new Token(tokens.get(iopen - 1).getSurface(), TokenType.FUNCTION_NAME, null));
 				final int nbArg = countFunctionArg(subTokenStack(iopen + 1).tokenIterator(), location);

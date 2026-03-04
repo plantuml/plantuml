@@ -35,11 +35,11 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
-import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.AbstractShadowable;
+import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 import net.sourceforge.plantuml.klimt.compress.CompressionMode;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;

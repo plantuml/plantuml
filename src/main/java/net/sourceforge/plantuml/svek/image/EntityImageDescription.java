@@ -80,6 +80,7 @@ import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.svek.SvekNode;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.MathUtils;
@@ -168,7 +169,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		final FontConfiguration fcStereo = styleStereo.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		final HorizontalAlignment defaultAlign = styleTitle.getHorizontalAlignment();
 
-		assert getStereo() == stereotype;
+		if (TeaVM.a()) assert getStereo() == stereotype;
 
 		ctx = new Fashion(backcolor, forecolor).withStroke(stroke).withShadow(deltaShadow).withCorner(roundCorner,
 				diagonalCorner);

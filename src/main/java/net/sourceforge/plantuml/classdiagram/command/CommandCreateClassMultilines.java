@@ -70,6 +70,7 @@ import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.stereo.Stereotag;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
@@ -252,7 +253,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			return;
 
 		for (String tag : tags.split("[ ]+")) {
-			assert tag.startsWith("$");
+			if (TeaVM.a()) assert tag.startsWith("$");
 			tag = tag.substring(1);
 			entity.addStereotag(new Stereotag(tag));
 		}

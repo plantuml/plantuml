@@ -98,6 +98,7 @@ import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.utils.BlocLines;
 
@@ -356,7 +357,7 @@ public class SkinParam implements ISkinParam {
 		if (param == ColorParam.background)
 			return getIHtmlColorSet().getColorOrWhite(value);
 
-		assert param != ColorParam.background;
+		if (TeaVM.a()) assert param != ColorParam.background;
 
 		return getIHtmlColorSet().getColorOrWhite(value);
 	}

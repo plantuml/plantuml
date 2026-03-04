@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.real;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 class RealMiddle2 extends RealMoveable {
 
 	private final RealMoveable p1;
@@ -42,7 +44,7 @@ class RealMiddle2 extends RealMoveable {
 
 	RealMiddle2(RealMoveable p1, RealMoveable p2) {
 		super(p1.getLine(), "middle");
-		assert p1.getLine() == p2.getLine();
+		if (TeaVM.a()) assert p1.getLine() == p2.getLine();
 		this.p1 = p1;
 		this.p2 = p2;
 	}

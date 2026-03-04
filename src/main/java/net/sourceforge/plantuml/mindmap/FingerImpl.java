@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class FingerImpl implements Finger, UDrawable {
 
@@ -232,7 +233,7 @@ public class FingerImpl implements Finger, UDrawable {
 				return TextBlockUtils.withMargin(box, 0, 0, margin.getTop(), margin.getBottom());
 		}
 
-		assert idea.getShape() == IdeaShape.NONE;
+		if (TeaVM.a()) assert idea.getShape() == IdeaShape.NONE;
 		final TextBlock text = idea.getLabel().create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),
 				style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);
 		if (direction == 1)

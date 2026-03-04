@@ -68,6 +68,7 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class FontChecker {
 
@@ -173,7 +174,7 @@ public class FontChecker {
 	}
 
 	public PortableImage getBufferedImage(final char c) throws IOException {
-		assert c != '\t';
+		if (TeaVM.a()) assert c != '\t';
 
 		final double dim = 20;
 		final UDrawable drawable = new UDrawable() {

@@ -41,8 +41,7 @@ import com.plantuml.ubrex.UnicodeBracketedExpression;
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
-import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 
@@ -58,7 +57,7 @@ public abstract class UBrexCommandMultilines2<S extends Diagram> implements Comm
 
 	public UBrexCommandMultilines2(UnicodeBracketedExpression patternStart, MultilinesStrategy strategy, Trim trimEnd,
 			Lazy<UnicodeBracketedExpression> end) {
-		assert end != null;
+		if (TeaVM.a()) assert end != null;
 
 		this.strategy = strategy;
 		this.starting = patternStart;

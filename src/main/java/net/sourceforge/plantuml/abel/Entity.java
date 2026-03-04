@@ -79,6 +79,7 @@ import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.svek.SingleStrategy;
 import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Direction;
@@ -375,7 +376,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		if (groupType != null && leafType != null)
 			throw new IllegalStateException();
 
-		assert groupType == null || leafType == null;
+		if (TeaVM.a()) assert groupType == null || leafType == null;
 		if (groupType != null)
 			return true;
 

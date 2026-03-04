@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.code;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 public class AsciiEncoderBase64 implements URLEncoder {
 	
 
@@ -85,7 +87,7 @@ public class AsciiEncoderBase64 implements URLEncoder {
 		// System.err.println("length1=" + (length % 4));
 		// length += length % 4;
 		// System.err.println("length2=" + length);
-		assert length % 4 == 0 : "length=" + length;
+		if (TeaVM.a()) assert length % 4 == 0 : "length=" + length;
 		return (length * 3 + 3) / 4;
 	}
 
@@ -101,7 +103,7 @@ public class AsciiEncoderBase64 implements URLEncoder {
 	}
 
 	public static char encode6bit(byte b) {
-		assert b >= 0 && b < 64;
+		if (TeaVM.a()) assert b >= 0 && b < 64;
 		if (b < 26) {
 			return (char) ('A' + b);
 		}
@@ -120,7 +122,7 @@ public class AsciiEncoderBase64 implements URLEncoder {
 		if (b == 1) {
 			return '_';
 		}
-		assert false;
+		if (TeaVM.a()) assert false;
 		return '?';
 	}
 

@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.PaddingParam;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 class Step1Message extends Step1Abstract {
 
@@ -136,7 +137,7 @@ class Step1Message extends Step1Abstract {
 		final double posYendLevel = arrowYEndLevel + marginActivateAndDeactive - delta1;
 		getMessage().setPosYendLevel(posYendLevel);
 
-		assert graphic instanceof InGroupable;
+		if (TeaVM.a()) assert graphic instanceof InGroupable;
 		if (graphic instanceof InGroupable) {
 			inGroupablesStack.addElement((InGroupable) graphic);
 			inGroupablesStack.addElement(getLivingParticipantBox1());
