@@ -67,8 +67,6 @@ public abstract class CucaDiagramFileMaker {
 	public abstract ImageData createFile01970(OutputStream os, List<String> dotStrings,
 			FileFormatOption fileFormatOption) throws IOException;
 
-	public abstract void createOneGraphic01970(UGraphic ug);
-
 	// Methods ending with 12026 are the new methods
 	public TextBlock getTextBlock12026(List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {

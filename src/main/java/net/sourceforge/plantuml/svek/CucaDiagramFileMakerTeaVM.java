@@ -41,8 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.atmp.CucaDiagram;
-import net.atmp.ImageBuilder;
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.core.ImageData;
@@ -124,74 +122,6 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 //
 //		ib.udrawable.drawU(ug);
 
-	}
-
-	@Override
-	public void createOneGraphic01970(UGraphic ug) {
-		BrowserLog.consoleLog(CucaDiagramFileMakerTeaVM.class, "creating dot");
-		String[] dot = diagram.getDotStringSkek();
-		final List<String> dots = new ArrayList<String>();
-		for (String s : dot)
-			dots.add(s);
-
-		try {
-			BrowserLog.consoleLog(CucaDiagramFileMakerTeaVM.class, "wip1");
-			createFileInternal(ug, dots);
-			BrowserLog.consoleLog(CucaDiagramFileMakerTeaVM.class, "wip2");
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new UnsupportedOperationException("TEAVM103");
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			throw new UnsupportedOperationException("TEAVM105");
-		}
-
-		BrowserLog.consoleLog(CucaDiagramFileMakerTeaVM.class, "done");
-	}
-
-	private void createFileInternal(UGraphic ug, List<String> dotStrings) throws IOException, InterruptedException {
-
-		final StringBounder stringBounder = ug.getStringBounder();
-
-		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, clusterManager.getCurrent(),
-				diagram.getUmlDiagramType(), diagram.getSkinParam());
-
-		final DotData dotData = new DotData(diagram, diagram.getRootGroup(), getOrderedLinks(), diagram.leafs(),
-				diagram, diagram);
-
-		GraphvizImageBuilder imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),
-				diagram.getUmlDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager);
-
-		TextBlock result = imageBuilder.buildImage(stringBounder, null, diagram.getDotStringSkek(), false);
-
-		int status = 0;
-
-		if (result instanceof IEntityImage && ((IEntityImage) result).isCrash())
-			status = 503;
-
-		if (result instanceof GraphvizCrash) {
-			status = 503;
-			imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),
-					diagram.getUmlDiagramType().getStyleName(), DotMode.NO_LEFT_RIGHT_AND_XLABEL, dotStringFactory,
-					clusterManager);
-			result = imageBuilder.buildImage(stringBounder, null, diagram.getDotStringSkek(), false);
-		}
-
-		// Ensure text near the margins is not cut off (side effect in
-		// SvekResult::calculateDimension())
-		result.calculateDimension(stringBounder);
-
-		final String widthwarning = diagram.getSkinParam().getValue("widthwarning");
-		String warningOrError = null;
-		if (widthwarning != null && widthwarning.matches("\\d+"))
-			warningOrError = imageBuilder.getWarningOrError(Integer.parseInt(widthwarning));
-
-		// Use ImageBuilder.drawU() to apply all decoration logic (annotations,
-		// margins, handwritten mode, border) on the externally provided UGraphic.
-		final ImageBuilder ib = diagram.createImageBuilder(new FileFormatOption(FileFormat.SVG)).drawable(result)
-				.status(status).warningOrError(warningOrError);
-
-		ib.udrawable.drawU(ug);
 	}
 
 	private List<Link> getOrderedLinks() {

@@ -83,9 +83,4 @@ public final class SequenceDiagramXmiMaker implements FileMaker {
 		transformer.transform(source, resultat);
 	}
 
-	@Override
-	public void createOneGraphic01970(UGraphic ug) {
-		throw new UnsupportedOperationException();
-	}
-
 }

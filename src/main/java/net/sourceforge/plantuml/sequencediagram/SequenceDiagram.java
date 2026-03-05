@@ -323,12 +323,6 @@ public class SequenceDiagram extends TitledDiagram {
 	}
 
 	@Override
-	final public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
-		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(0, fileFormatOption);
-		sequenceDiagramPngMaker.createOneGraphic01970(ug);
-	}
-
-	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormat) {
 		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(num, fileFormat);
 		return sequenceDiagramPngMaker.getTextBlock12026(num, fileFormat);

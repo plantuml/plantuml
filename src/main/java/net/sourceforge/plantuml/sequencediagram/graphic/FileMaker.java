@@ -40,15 +40,12 @@ import java.io.OutputStream;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 
 public interface FileMaker {
 
 	ImageData createOne01970(OutputStream os, int index, boolean isWithMetadata) throws IOException;
-
-	void createOneGraphic01970(UGraphic ug);
 
 	public int getNbPages();
 

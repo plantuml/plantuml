@@ -528,11 +528,6 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 	}
 
 	@Override
-	public void createOneGraphic01970(UGraphic ug) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public TextBlock getTextBlock12026(List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
 

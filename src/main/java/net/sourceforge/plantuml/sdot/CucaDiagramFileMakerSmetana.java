@@ -428,19 +428,6 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	}
 
 	@Override
-	public void createOneGraphic01970(UGraphic ug) {
-		final Globals zz = Globals.open();
-		try {
-			final TextBlock textBlock = getTextBlock(ug.getStringBounder(), zz);
-			textBlock.drawU(ug);
-		} catch (Throwable e) {
-			SmetanaDebug.printMe();
-		} finally {
-			Globals.close();
-		}
-	}
-
-	@Override
 	public TextBlock getTextBlock12026(List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
 

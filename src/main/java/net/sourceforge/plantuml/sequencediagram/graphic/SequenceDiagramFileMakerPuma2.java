@@ -139,16 +139,6 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 	}
 
 	@Override
-	public void createOneGraphic01970(UGraphic ug) {
-		try {
-			final UDrawable drawable = createUDrawable(0);
-			diagram.createImageBuilder(fileFormatOption).drawable(drawable).drawU(ug);
-		} catch (IOException e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
 	public ImageData createOne01970(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
 		final UDrawable drawable = createUDrawable(index);
 		return diagram.createImageBuilder(fileFormatOption).drawable(drawable).write(os);

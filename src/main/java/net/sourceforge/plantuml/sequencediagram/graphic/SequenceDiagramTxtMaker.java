@@ -143,9 +143,4 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 		return 1;
 	}
 
-	@Override
-	public void createOneGraphic01970(UGraphic ug) {
-		throw new UnsupportedOperationException();
-	}
-
 }

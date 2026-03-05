@@ -289,15 +289,6 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	}
 
 	@Override
-	public void createOneGraphic01970(UGraphic ug) {
-		try {
-			diagram.createImageBuilder(fileFormatOption).drawable(new Foo(index)).drawU(ug);
-		} catch (IOException e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormat) {
 		return new TextBlock() {
 
