@@ -36,40 +36,24 @@
 package net.sourceforge.plantuml.sudoku;
 
 
-import java.awt.Graphics2D;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.atmp.SvgOption;
-import net.sourceforge.plantuml.EmptyImageBuilder;
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.api.ImageDataSimple;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.UTranslate;
-import net.sourceforge.plantuml.klimt.awt.PortableImage;
-import net.sourceforge.plantuml.klimt.awt.XColor;
-import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.drawing.eps.EpsStrategy;
-import net.sourceforge.plantuml.klimt.drawing.eps.UGraphicEps;
-import net.sourceforge.plantuml.klimt.drawing.g2d.UGraphicG2d;
-import net.sourceforge.plantuml.klimt.drawing.svg.UGraphicSvg;
-import net.sourceforge.plantuml.klimt.drawing.tikz.UGraphicTikz;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
-import net.sourceforge.plantuml.png.PngIO;
 
-public class GraphicsSudoku {
+public class GraphicsSudoku implements TextBlock {
 	// ::remove folder when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
 
 	private final ISudoku sudoku;
@@ -80,54 +64,6 @@ public class GraphicsSudoku {
 		this.sudoku = sudoku;
 	}
 
-	// ::uncomment when __TEAVM__
-//	public ImageData writeImageSvg(OutputStream os) throws IOException {
-//		throw new UnsupportedOperationException("TEAVM1");
-//	}
-	// ::done
-
-	// ::comment when __TEAVM__
-	public ImageData writeImageEps(OutputStream os) throws IOException {
-		final UGraphicEps ug = new UGraphicEps(HColors.WHITE, ColorMapper.IDENTITY,
-				FileFormat.EPS_TEXT.getDefaultStringBounder(), EpsStrategy.WITH_MACRO_AND_TEXT);
-		drawInternal(ug);
-		os.write(ug.getEPSCode().getBytes());
-		return ImageDataSimple.ok();
-	}
-
-	public ImageData writeImageLatex(OutputStream os, FileFormat fileFormat) throws IOException {
-		final UGraphicTikz ug = new UGraphicTikz(HColors.WHITE, ColorMapper.IDENTITY,
-				FileFormat.LATEX.getDefaultStringBounder(), 1, fileFormat == FileFormat.LATEX, null);
-		drawInternal(ug);
-		ug.writeToStream(os, null, -1); // dpi param is not used
-		return ImageDataSimple.ok();
-	}
-
-	public ImageData writeImageSvg(OutputStream os) throws IOException {
-		final SvgOption option = SvgOption.basic().withBackcolor(HColors.WHITE);
-		final UGraphicSvg ug = UGraphicSvg.build(option, false, 0, FileFormat.SVG.getDefaultStringBounder());
-		drawInternal(ug);
-		ug.writeToStream(os, null, -1); // dpi param is not used
-		return ImageDataSimple.ok();
-	}
-
-	final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();
-
-	public ImageData writeImagePng(OutputStream os) throws IOException {
-		final EmptyImageBuilder builder = new EmptyImageBuilder(null, sudoWidth, sudoHeight + textTotalHeight,
-				XColor.WHITE, stringBounder);
-		final PortableImage im = builder.getPortableImage();
-		final Graphics2D g3d = builder.getGraphics2D();
-
-		final UGraphic ug = new UGraphicG2d(HColors.WHITE, ColorMapper.IDENTITY, stringBounder, g3d, 1.0,
-				FileFormat.PNG);
-
-		drawInternal(ug);
-		g3d.dispose();
-		PngIO.write(im, ColorMapper.IDENTITY, os, null, 96);
-		return new ImageDataSimple(im.getWidth(), im.getHeight());
-	}
-	// ::done
 
 	final private int xOffset = 5;
 	final private int yOffset = 5;
@@ -144,7 +80,13 @@ public class GraphicsSudoku {
 	final private int sudoHeight = 9 * cellHeight + 2 * yOffset + boldWidth;
 	final private int sudoWidth = 9 * cellWidth + 2 * xOffset + boldWidth;
 
-	public void drawInternal(UGraphic ug) {
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(sudoWidth, sudoHeight + textTotalHeight);
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
 		ug = ug.apply(new UTranslate(xOffset, yOffset));
 
 		for (int x = 0; x < 9; x++) {

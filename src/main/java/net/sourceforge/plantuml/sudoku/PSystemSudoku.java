@@ -35,43 +35,20 @@
  */
 package net.sourceforge.plantuml.sudoku;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
-import net.sourceforge.plantuml.DirectOsDiagram;
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-public class PSystemSudoku extends DirectOsDiagram {
+public class PSystemSudoku extends UgDiagram {
 
 	final private ISudoku sudoku;
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
-			throws IOException {
-		final GraphicsSudoku sud = new GraphicsSudoku(sudoku);
-		// ::comment when __TEAVM__
-		if (fileFormat.getFileFormat() == FileFormat.EPS)
-			return sud.writeImageEps(os);
-
-		if (fileFormat.getFileFormat() == FileFormat.LATEX
-				|| fileFormat.getFileFormat() == FileFormat.LATEX_NO_PREAMBLE)
-			return sud.writeImageLatex(os, fileFormat.getFileFormat());
-
-		if (fileFormat.getFileFormat() == FileFormat.SVG)
-			return sud.writeImageSvg(os);
-
-		return sud.writeImagePng(os);
-		// ::done
-
-		// ::uncomment when __TEAVM__
-		// throw new UnsupportedOperationException("TEAVM2");
-		// ::done
-
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+		return new GraphicsSudoku(sudoku);
 	}
 
 	public DiagramDescription getDescription() {

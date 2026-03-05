@@ -103,6 +103,7 @@ public class PSystemBuilder2 {
 		factories.add(new YamlDiagramFactory());
 		factories.add(new PSystemEbnfFactory());
 		factories.add(new PSystemRegexFactory());
+		factories.add(new PSystemSudokuFactory());
 	}
 
 	public Diagram createDiagram(String[] split) {
