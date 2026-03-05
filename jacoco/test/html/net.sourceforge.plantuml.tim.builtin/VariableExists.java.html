@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
 <span class="fc" id="L64">		final String name = values.get(0).toString();</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">		return TValue.fromBoolean(memory.getVariable(name) != null);</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		return TValue.fromBoolean(memory.getVariable(name) != null);</span>
 	}
 
 }
