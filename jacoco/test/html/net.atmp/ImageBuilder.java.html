@@ -111,34 +111,34 @@ import net.sourceforge.plantuml.warning.Warning;
 public class ImageBuilder {
 
 	private boolean annotations;
-<span class="nc" id="L114">	private HColor backcolor = getDefaultHBackColor();</span>
+<span class="fc" id="L114">	private HColor backcolor = getDefaultHBackColor();</span>
 
 	private XDimension2D dimension;
 	private final FileFormatOption fileFormatOption;
 	public UDrawable udrawable;
-<span class="nc" id="L119">	private ClockwiseTopRightBottomLeft margin = ClockwiseTopRightBottomLeft.none();</span>
+<span class="fc" id="L119">	private ClockwiseTopRightBottomLeft margin = ClockwiseTopRightBottomLeft.none();</span>
 	private String metadata;
-<span class="nc" id="L121">	private long seed = 42;</span>
+<span class="fc" id="L121">	private long seed = 42;</span>
 	private ISkinParam skinParam;
 	private StringBounder stringBounder;
-<span class="nc" id="L124">	private int status = 0;</span>
+<span class="fc" id="L124">	private int status = 0;</span>
 	private TitledDiagram diagram;
 	private boolean randomPixel;
 	private String warningOrError;
-<span class="nc" id="L128">	private final Collection&lt;Warning&gt; warnings = new LinkedHashSet&lt;&gt;();</span>
+<span class="fc" id="L128">	private final Collection&lt;Warning&gt; warnings = new LinkedHashSet&lt;&gt;();</span>
 
 	public static ImageBuilder create(FileFormatOption fileFormatOption) {
-<span class="nc" id="L131">		return new ImageBuilder(fileFormatOption);</span>
+<span class="fc" id="L131">		return new ImageBuilder(fileFormatOption);</span>
 	}
 
 	public static ImageBuilder create(FileFormatOption fileFormatOption, UDrawable drawable) {
 <span class="nc" id="L135">		return create(fileFormatOption).drawable(drawable);</span>
 	}
 
-<span class="nc" id="L138">	private ImageBuilder(FileFormatOption fileFormatOption) {</span>
-<span class="nc" id="L139">		this.fileFormatOption = fileFormatOption;</span>
-<span class="nc" id="L140">		this.stringBounder = fileFormatOption.getDefaultStringBounder(SvgCharSizeHack.NO_HACK);</span>
-<span class="nc" id="L141">	}</span>
+<span class="fc" id="L138">	private ImageBuilder(FileFormatOption fileFormatOption) {</span>
+<span class="fc" id="L139">		this.fileFormatOption = fileFormatOption;</span>
+<span class="fc" id="L140">		this.stringBounder = fileFormatOption.getDefaultStringBounder(SvgCharSizeHack.NO_HACK);</span>
+<span class="fc" id="L141">	}</span>
 
 	public ImageBuilder annotations(boolean annotations) {
 <span class="nc" id="L144">		this.annotations = annotations;</span>
@@ -172,13 +172,13 @@ public class ImageBuilder {
 	}
 
 	public ImageBuilder margin(ClockwiseTopRightBottomLeft margin) {
-<span class="nc" id="L175">		this.margin = margin;</span>
-<span class="nc" id="L176">		return this;</span>
+<span class="fc" id="L175">		this.margin = margin;</span>
+<span class="fc" id="L176">		return this;</span>
 	}
 
 	public ImageBuilder metadata(String metadata) {
-<span class="nc" id="L180">		this.metadata = metadata;</span>
-<span class="nc" id="L181">		return this;</span>
+<span class="fc" id="L180">		this.metadata = metadata;</span>
+<span class="fc" id="L181">		return this;</span>
 	}
 
 	public ImageBuilder randomPixel() {
@@ -187,8 +187,8 @@ public class ImageBuilder {
 	}
 
 	public ImageBuilder seed(long seed) {
-<span class="nc" id="L190">		this.seed = seed;</span>
-<span class="nc" id="L191">		return this;</span>
+<span class="fc" id="L190">		this.seed = seed;</span>
+<span class="fc" id="L191">		return this;</span>
 	}
 
 	public ImageBuilder status(int status) {
@@ -212,17 +212,17 @@ public class ImageBuilder {
 	}
 
 	public ImageBuilder styled(TitledDiagram fromDiagram) {
-<span class="nc" id="L215">		this.skinParam = fromDiagram.getSkinParam();</span>
-<span class="nc" id="L216">		this.stringBounder = fileFormatOption.getDefaultStringBounder(skinParam);</span>
-<span class="nc" id="L217">		this.annotations = true;</span>
-<span class="nc" id="L218">		this.backcolor = fromDiagram.calculateBackColor();</span>
-<span class="nc" id="L219">		this.margin = calculateMargin(fromDiagram);</span>
-<span class="nc bnc" id="L220" title="All 2 branches missed.">		this.metadata = fileFormatOption.isWithMetadata() ? fromDiagram.getMetadata() : null;</span>
-<span class="nc" id="L221">		this.seed = fromDiagram.seed();</span>
-<span class="nc" id="L222">		this.diagram = fromDiagram;</span>
-<span class="nc" id="L223">		this.warningOrError = fromDiagram.getWarningOrError();</span>
-<span class="nc" id="L224">		this.warnings.addAll(fromDiagram.getWarnings());</span>
-<span class="nc" id="L225">		return this;</span>
+<span class="fc" id="L215">		this.skinParam = fromDiagram.getSkinParam();</span>
+<span class="fc" id="L216">		this.stringBounder = fileFormatOption.getDefaultStringBounder(skinParam);</span>
+<span class="fc" id="L217">		this.annotations = true;</span>
+<span class="fc" id="L218">		this.backcolor = fromDiagram.calculateBackColor();</span>
+<span class="fc" id="L219">		this.margin = calculateMargin(fromDiagram);</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		this.metadata = fileFormatOption.isWithMetadata() ? fromDiagram.getMetadata() : null;</span>
+<span class="fc" id="L221">		this.seed = fromDiagram.seed();</span>
+<span class="fc" id="L222">		this.diagram = fromDiagram;</span>
+<span class="fc" id="L223">		this.warningOrError = fromDiagram.getWarningOrError();</span>
+<span class="fc" id="L224">		this.warnings.addAll(fromDiagram.getWarnings());</span>
+<span class="fc" id="L225">		return this;</span>
 	}
 
 	public ImageData write(OutputStream os) throws IOException {
@@ -330,7 +330,7 @@ public class ImageBuilder {
 <span class="nc" id="L330">		return createImageData(dim);</span>
 	}
 
-<span class="nc" id="L333">	private final static FontConfiguration fc = FontConfiguration.blackBlueTrue(UFontFactory.monospaced(10));</span>
+<span class="fc" id="L333">	private final static FontConfiguration fc = FontConfiguration.blackBlueTrue(UFontFactory.monospaced(10));</span>
 
 	private void drawWarning(XDimension2D dimWarning, UGraphic ug, double fullWidth) {
 
@@ -411,7 +411,7 @@ public class ImageBuilder {
 	private UGraphic handwritten(UGraphic ug) {
 <span class="nc bnc" id="L412" title="All 4 branches missed.">		if (skinParam != null &amp;&amp; skinParam.handwritten())</span>
 <span class="nc" id="L413">			return new UGraphicHandwritten(ug);</span>
-<span class="nc bnc" id="L414" title="All 4 branches missed.">		if (diagram != null &amp;&amp; diagram.getPreprocessingArtifact().getOption().isDefine(OptionKey.HANDWRITTEN))</span>
+<span class="nc bnc" id="L414" title="All 4 branches missed.">		if (diagram != null &amp;&amp; diagram.getPreprocessingArtifact().getOption().isTrue(OptionKey.HANDWRITTEN))</span>
 <span class="nc" id="L415">			return new UGraphicHandwritten(ug);</span>
 
 <span class="nc" id="L417">		return ug;</span>
@@ -530,21 +530,21 @@ public class ImageBuilder {
 	}
 
 	private static ClockwiseTopRightBottomLeft calculateMargin(TitledDiagram diagram) {
-<span class="nc" id="L533">		final Style style = StyleSignatureBasic.of(SName.root, SName.document)</span>
-<span class="nc" id="L534">				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc bnc" id="L535" title="All 2 branches missed.">		if (style.hasValue(PName.Margin))</span>
+<span class="fc" id="L533">		final Style style = StyleSignatureBasic.of(SName.root, SName.document)</span>
+<span class="fc" id="L534">				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="pc bpc" id="L535" title="1 of 2 branches missed.">		if (style.hasValue(PName.Margin))</span>
 <span class="nc" id="L536">			return style.getMargin();</span>
 
-<span class="nc" id="L538">		return diagram.getDefaultMargins();</span>
+<span class="fc" id="L538">		return diagram.getDefaultMargins();</span>
 	}
 
 	public String getPreserveAspectRatio() {
-<span class="nc bnc" id="L542" title="All 2 branches missed.">		if (fileFormatOption.getPreserveAspectRatio() != null)</span>
-<span class="nc" id="L543">			return fileFormatOption.getPreserveAspectRatio();</span>
-<span class="nc bnc" id="L544" title="All 2 branches missed.">		else if (skinParam != null)</span>
-<span class="nc" id="L545">			return skinParam.getPreserveAspectRatio();</span>
+<span class="fc bfc" id="L542" title="All 2 branches covered.">		if (fileFormatOption.getPreserveAspectRatio() != null)</span>
+<span class="fc" id="L543">			return fileFormatOption.getPreserveAspectRatio();</span>
+<span class="fc bfc" id="L544" title="All 2 branches covered.">		else if (skinParam != null)</span>
+<span class="fc" id="L545">			return skinParam.getPreserveAspectRatio();</span>
 		else
-<span class="nc" id="L547">			return SkinParam.DEFAULT_PRESERVE_ASPECT_RATIO;</span>
+<span class="fc" id="L547">			return SkinParam.DEFAULT_PRESERVE_ASPECT_RATIO;</span>
 
 	}
 
@@ -553,7 +553,7 @@ public class ImageBuilder {
 	}
 
 	static private HColor getDefaultHBackColor() {
-<span class="nc" id="L556">		return HColors.WHITE.withDark(HColors.BLACK);</span>
+<span class="fc" id="L556">		return HColors.WHITE.withDark(HColors.BLACK);</span>
 	}
 
 }
