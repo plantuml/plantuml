@@ -111,27 +111,6 @@ public class PSystemSalt extends TitledDiagram {
 	}
 
 	@Override
-	final protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-		try {
-			final Element salt = createElement(manageSprite());
-			final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
-			final XDimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);
-			return createImageBuilder(fileFormatOption).drawable(getTextBlock(salt, size)).write(os);
-		} catch (Exception e) {
-			Logme.error(e);
-			final CrashReportHandler report = new CrashReportHandler(e, getMetadata(), getFlashData());
-			report.anErrorHasOccured(e, getFlashData());
-			report.addProperties();
-			report.addEmptyLine();
-			report.youShouldSendThisDiagram();
-			report.addEmptyLine();
-			report.exportDiagramError(fileFormatOption, seed(), os);
-			return ImageDataSimple.error(e);
-		}
-	}
-
-	@Override
 	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 		final Element salt = createElement(manageSprite());
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());

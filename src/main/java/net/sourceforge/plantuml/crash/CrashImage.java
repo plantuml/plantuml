@@ -45,15 +45,16 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Log;
 
-public class CrashImage implements UDrawable {
+public class CrashImage implements TextBlock {
 
 	private final PortableImage flashcodeImage;
 	private final TextBlock graphicStrings;
@@ -70,6 +71,17 @@ public class CrashImage implements UDrawable {
 	}
 
 	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		XDimension2D dim = graphicStrings.calculateDimension(stringBounder);
+		if (flashcodeImage != null) {
+			final double flashWidth = flashcodeImage.getWidth() * 3;
+			final double flashHeight = flashcodeImage.getHeight() * 3;
+			dim = new XDimension2D(Math.max(dim.getWidth(), flashWidth), dim.getHeight() + flashHeight);
+		}
+		return dim;
+	}
+
+	@Override
 	public void drawU(UGraphic ug) {
 		graphicStrings.drawU(ug);
 		if (flashcodeImage == null)
@@ -82,7 +94,8 @@ public class CrashImage implements UDrawable {
 	}
 
 	private PortableImage generateFlashcodeImage(String flash, ReportLog strings) {
-		if (TeaVM.a()) assert flash != null;
+		if (TeaVM.a())
+			assert flash != null;
 		if (!TeaVM.isTeaVM()) {
 			final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
 			try {
@@ -98,5 +111,4 @@ public class CrashImage implements UDrawable {
 
 		return null;
 	}
-
 }

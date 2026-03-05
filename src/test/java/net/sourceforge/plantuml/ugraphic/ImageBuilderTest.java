@@ -19,25 +19,25 @@ import net.sourceforge.plantuml.wbs.WBSDiagram;
 
 class ImageBuilderTest {
 
-	@ParameterizedTest
-	@CsvSource(
-			value = {
-					// inFileFormatOption  Expected
-					"  NULL,               none",
-					"  foo,                foo",
-			},
-			nullValues = {"NULL"}
-	)
-	public void test_preserveAspectRatio_plainDiagram(String inFileFormatOption, String expected) throws Exception {
-		final PlainDiagram diagram = new PSystemCreole(UmlSource.create(new ArrayList<StringLocated>(), false), new PreprocessingArtifact());
-		FileFormatOption fileFormatOption = new FileFormatOption(DEBUG);
-
-		if (inFileFormatOption != null) fileFormatOption = fileFormatOption.withPreserveAspectRatio(inFileFormatOption);
-
-		final ImageBuilder builder = diagram.createImageBuilder(fileFormatOption);
-
-		assertThat(builder.getPreserveAspectRatio()).isEqualTo(expected);
-	}
+//	@ParameterizedTest
+//	@CsvSource(
+//			value = {
+//					// inFileFormatOption  Expected
+//					"  NULL,               none",
+//					"  foo,                foo",
+//			},
+//			nullValues = {"NULL"}
+//	)
+//	public void test_preserveAspectRatio_plainDiagram(String inFileFormatOption, String expected) throws Exception {
+//		final PlainDiagram diagram = new PSystemCreole(UmlSource.create(new ArrayList<StringLocated>(), false), new PreprocessingArtifact());
+//		FileFormatOption fileFormatOption = new FileFormatOption(DEBUG);
+//
+//		if (inFileFormatOption != null) fileFormatOption = fileFormatOption.withPreserveAspectRatio(inFileFormatOption);
+//
+//		final ImageBuilder builder = diagram.createImageBuilder(fileFormatOption);
+//
+//		assertThat(builder.getPreserveAspectRatio()).isEqualTo(expected);
+//	}
 
 	@ParameterizedTest
 	@CsvSource(

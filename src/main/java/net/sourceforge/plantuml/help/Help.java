@@ -35,7 +35,6 @@
 package net.sourceforge.plantuml.help;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +42,6 @@ import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
@@ -74,18 +72,6 @@ public class Help extends TitledDiagram {
 	@Override
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
 		return super.createImageBuilder(fileFormatOption).annotations(false);
-	}
-
-	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormat)
-			throws IOException {
-		final Display display = Display.create(lines);
-		final UFont font = UFontFactory.serif(16);
-		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);
-		final Sheet sheet = getSkinParam().sheet(fontConfiguration, HorizontalAlignment.LEFT, CreoleMode.FULL)
-				.createSheet(display);
-		final SheetBlock1 sheetBlock = new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
-		return createImageBuilder(fileFormat).drawable(sheetBlock).write(os);
 	}
 
 	public void add(CharSequence line) {

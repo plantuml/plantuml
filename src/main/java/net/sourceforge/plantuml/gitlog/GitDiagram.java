@@ -34,14 +34,11 @@
  */
 package net.sourceforge.plantuml.gitlog;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Collection;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -63,13 +60,6 @@ public class GitDiagram extends TitledDiagram {
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("(Git)");
-	}
-
-	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-
-		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);
 	}
 
 	private SmetanaForGit getOrCreateSmetana(StringBounder stringBounder) {
@@ -98,6 +88,5 @@ public class GitDiagram extends TitledDiagram {
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		return getTextMainBlock01970(fileFormatOption);
 	}
-
 
 }

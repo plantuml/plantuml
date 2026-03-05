@@ -39,10 +39,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.core.TextBlockExporter12026;
 import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class CrashReportHandler extends ReportLog {
 
@@ -58,19 +59,17 @@ public class CrashReportHandler extends ReportLog {
 
 	public void exportDiagramError(FileFormatOption fileFormat, long seed, OutputStream os) throws IOException {
 
-		// ::comment when __TEAVM__
-		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
-			exportDiagramErrorText(os, exception);
-			return;
-		}
-		// ::done
+		if (!TeaVM.isTeaVM())
+			if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
+				exportDiagramErrorText(os, exception);
+				return;
+			}
 
 		final CrashImage image = new CrashImage(exception, flash, this);
 
-		ImageBuilder.create(fileFormat, image).metadata(metadata).seed(seed).write(os);
+		TextBlockExporter12026.builder(image, fileFormat, false).metadata(metadata).seed(seed).build().exportTo(os);
 	}
 
-	// ::comment when __TEAVM__
 	private void exportDiagramErrorText(OutputStream os, Throwable exception) {
 		final PrintWriter pw = SecurityUtils.createPrintWriter(os);
 		exception.printStackTrace(pw);
@@ -82,6 +81,5 @@ public class CrashReportHandler extends ReportLog {
 		}
 		pw.flush();
 	}
-	// ::done
 
 }

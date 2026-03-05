@@ -109,21 +109,6 @@ public class PSystemRegex extends TitledDiagram {
 	private final HColorSet colorSet;
 	private final HColor lineColor;
 
-	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);
-	}
-
-//	public CommandExecutionResult changeLanguage(String lang) {
-//		setParam("language", lang);
-//		return CommandExecutionResult.ok();
-//	}
-//
-//	public CommandExecutionResult useDescriptiveNames(String useDescriptive) {
-//		setParam("descriptive", useDescriptive);
-//		return CommandExecutionResult.ok();
-//	}
 
 	@Override
 	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {

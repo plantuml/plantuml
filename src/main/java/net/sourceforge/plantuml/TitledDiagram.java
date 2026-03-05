@@ -447,9 +447,6 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 		return name.replaceAll("(?i)\\.\\w{3}$", ".cmapx");
 	}
 
-	protected abstract ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException;
-
 	@Override
 	public String getWarningOrError() {
 		if (lastInfo == null)

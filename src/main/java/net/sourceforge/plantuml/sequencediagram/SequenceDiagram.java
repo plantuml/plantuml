@@ -311,13 +311,6 @@ public class SequenceDiagram extends TitledDiagram {
 	}
 
 	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormat)
-			throws IOException {
-		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(index, fileFormat);
-		return sequenceDiagramPngMaker.createOne01970(os, index, fileFormat.isWithMetadata());
-	}
-
-	@Override
 	protected ImageData exportXmi(OutputStream os, FileFormat fileFormat) throws IOException {
 		final SequenceDiagramXmiMaker maker = new SequenceDiagramXmiMaker(this, fileFormat);
 		return maker.createOne01970(os, 0, false);

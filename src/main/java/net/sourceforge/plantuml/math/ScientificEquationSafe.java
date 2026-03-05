@@ -40,12 +40,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 
-import net.atmp.ImageBuilder;
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.TextBlockExporter12026;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.MutableImage;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
@@ -101,7 +101,8 @@ public class ScientificEquationSafe {
 			}
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
-			dimSvg = ImageBuilder.create(new FileFormatOption(FileFormat.SVG), getRollback()).write(baos);
+			dimSvg = TextBlockExporter12026.builder(getRollback(), new FileFormatOption(FileFormat.SVG), false)
+					.build().exportTo(baos);
 		} catch (IOException e1) {
 			return null;
 		}
@@ -116,9 +117,10 @@ public class ScientificEquationSafe {
 				printTrace(e);
 			}
 		try {
-			final byte[] bytes = ImageBuilder.create(new FileFormatOption(FileFormat.PNG), getRollback())
-					.writeByteArray();
-			return new PixelImage(SImageIO.read(bytes), AffineTransformType.TYPE_BILINEAR);
+			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			TextBlockExporter12026.builder(getRollback(), new FileFormatOption(FileFormat.PNG), false)
+					.build().exportTo(baos);
+			return new PixelImage(SImageIO.read(baos.toByteArray()), AffineTransformType.TYPE_BILINEAR);
 		} catch (IOException e1) {
 			return null;
 		}

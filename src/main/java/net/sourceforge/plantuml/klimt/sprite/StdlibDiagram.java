@@ -83,13 +83,6 @@ public class StdlibDiagram extends TitledDiagram {
 	}
 
 	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-
-		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);
-	}
-
-	@Override
 	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 		return new TextBlock() {
 

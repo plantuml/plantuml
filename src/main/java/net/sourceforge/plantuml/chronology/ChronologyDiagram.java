@@ -136,11 +136,6 @@ public class ChronologyDiagram extends TitledDiagram implements GanttStyle {
 //		return 96;
 //	}
 
-	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);
-	}
 
 //	public void setPrintScale(PrintScale printScale) {
 //		this.printScale = printScale;

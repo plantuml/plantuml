@@ -531,56 +531,56 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-		if (TeaVM.isTeaVM()) {
-			throw new UnsupportedOperationException("TEAVM1676");
-		} else {
-
-			final FileFormat fileFormat = fileFormatOption.getFileFormat();
-
-			if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
-				createFilesTxt(os, index, fileFormat);
-				return ImageDataSimple.ok();
-			}
-
-			if (fileFormat == FileFormat.GRAPHML) {
-				createFilesGraphml(os);
-				return ImageDataSimple.ok();
-			}
-
-			if (fileFormat.name().startsWith("XMI")) {
-				createFilesXmi(os, fileFormat);
-				return ImageDataSimple.ok();
-			}
-
-			if (fileFormat == FileFormat.SCXML) {
-				createFilesScxml(os);
-				return ImageDataSimple.ok();
-			}
-
-			if (getUmlDiagramType() == UmlDiagramType.COMPOSITE)
-				throw new UnsupportedOperationException();
-
-			this.eventuallyBuildPhantomGroups(null);
-			final CucaDiagramFileMaker maker;
-			if (this.isUseElk())
-				maker = new CucaDiagramFileMakerElk(this);
-			else if (this.isUseSmetana())
-				maker = new CucaDiagramFileMakerSmetana(this);
-			else
-				maker = new CucaDiagramFileMakerSvek(this);
-
-			final ImageData result = maker.createFile01970(os, getDotStrings(), fileFormatOption);
-
-			if (result == null)
-				return ImageDataSimple.error();
-
-			this.warningOrError = result.getWarningOrError();
-			return result;
-		}
-	}
+//	@Override
+//	protected ImageData exportDiagramInternal01970(OutputStream os, int index, FileFormatOption fileFormatOption)
+//			throws IOException {
+//		if (TeaVM.isTeaVM()) {
+//			throw new UnsupportedOperationException("TEAVM1676");
+//		} else {
+//
+//			final FileFormat fileFormat = fileFormatOption.getFileFormat();
+//
+//			if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
+//				createFilesTxt(os, index, fileFormat);
+//				return ImageDataSimple.ok();
+//			}
+//
+//			if (fileFormat == FileFormat.GRAPHML) {
+//				createFilesGraphml(os);
+//				return ImageDataSimple.ok();
+//			}
+//
+//			if (fileFormat.name().startsWith("XMI")) {
+//				createFilesXmi(os, fileFormat);
+//				return ImageDataSimple.ok();
+//			}
+//
+//			if (fileFormat == FileFormat.SCXML) {
+//				createFilesScxml(os);
+//				return ImageDataSimple.ok();
+//			}
+//
+//			if (getUmlDiagramType() == UmlDiagramType.COMPOSITE)
+//				throw new UnsupportedOperationException();
+//
+//			this.eventuallyBuildPhantomGroups(null);
+//			final CucaDiagramFileMaker maker;
+//			if (this.isUseElk())
+//				maker = new CucaDiagramFileMakerElk(this);
+//			else if (this.isUseSmetana())
+//				maker = new CucaDiagramFileMakerSmetana(this);
+//			else
+//				maker = new CucaDiagramFileMakerSvek(this);
+//
+//			final ImageData result = maker.createFile01970(os, getDotStrings(), fileFormatOption);
+//
+//			if (result == null)
+//				return ImageDataSimple.error();
+//
+//			this.warningOrError = result.getWarningOrError();
+//			return result;
+//		}
+//	}
 
 	@Override
 	public String getWarningOrError() {

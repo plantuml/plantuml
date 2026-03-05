@@ -199,14 +199,6 @@ public class ActivityDiagram3 extends TitledDiagram {
 	}
 
 	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
-		final TextBlock result = getTextBlock(stringBounder);
-		return createImageBuilder(fileFormatOption).drawable(result).write(os);
-	}
-
-	@Override
 	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 		return getTextBlock(stringBounder);

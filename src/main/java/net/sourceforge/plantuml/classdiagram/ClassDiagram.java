@@ -35,23 +35,16 @@
  */
 package net.sourceforge.plantuml.classdiagram;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
-import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
-import net.sourceforge.plantuml.svek.image.EntityImageClass;
 
 public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
@@ -76,39 +69,39 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		incRawLayout();
 	}
 
-	@Override
-	final protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-		if (useLayoutExplicit != 0)
-			return exportLayoutExplicit(os, index, fileFormatOption);
-
-		return super.exportDiagramInternal(os, index, fileFormatOption);
-	}
-
-	final protected ImageData exportLayoutExplicit(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-		final FullLayout fullLayout = new FullLayout();
-		for (int i = 0; i <= useLayoutExplicit; i++) {
-			final RowLayout rawLayout = getRawLayout(i);
-			fullLayout.addRowLayout(rawLayout);
-		}
-		return createImageBuilder(fileFormatOption).annotations(false) // Backwards compatibility - this only applies
-																		// when "layout_new_line" is used
-				.drawable(fullLayout).write(os);
-	}
-
-	private RowLayout getRawLayout(int raw) {
-		final RowLayout rawLayout = new RowLayout();
-		for (Entity leaf : this.leafs())
-			if (leaf.getRawLayout() == raw)
-				rawLayout.addLeaf(getEntityImageClass(leaf));
-
-		return rawLayout;
-	}
-
-	private TextBlock getEntityImageClass(Entity entity) {
-		return new EntityImageClass(entity, this);
-	}
+//	@Override
+//	final protected ImageData exportDiagramInternal01970(OutputStream os, int index, FileFormatOption fileFormatOption)
+//			throws IOException {
+//		if (useLayoutExplicit != 0)
+//			return exportLayoutExplicit(os, index, fileFormatOption);
+//
+//		return super.exportDiagramInternal01970(os, index, fileFormatOption);
+//	}
+//
+//	final protected ImageData exportLayoutExplicit(OutputStream os, int index, FileFormatOption fileFormatOption)
+//			throws IOException {
+//		final FullLayout fullLayout = new FullLayout();
+//		for (int i = 0; i <= useLayoutExplicit; i++) {
+//			final RowLayout rawLayout = getRawLayout(i);
+//			fullLayout.addRowLayout(rawLayout);
+//		}
+//		return createImageBuilder(fileFormatOption).annotations(false) // Backwards compatibility - this only applies
+//																		// when "layout_new_line" is used
+//				.drawable(fullLayout).write(os);
+//	}
+//
+//	private RowLayout getRawLayout(int raw) {
+//		final RowLayout rawLayout = new RowLayout();
+//		for (Entity leaf : this.leafs())
+//			if (leaf.getRawLayout() == raw)
+//				rawLayout.addLeaf(getEntityImageClass(leaf));
+//
+//		return rawLayout;
+//	}
+//
+//	private TextBlock getEntityImageClass(Entity entity) {
+//		return new EntityImageClass(entity, this);
+//	}
 
 	@Override
 	public String checkFinalError() {

@@ -85,13 +85,6 @@ public class BpmDiagram extends TitledDiagram {
 		return super.createImageBuilder(fileFormatOption).annotations(false);
 	}
 
-	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-
-		return createImageBuilder(fileFormatOption).drawable(getUDrawable()).write(os);
-	}
-
 	private UDrawable getUDrawable() {
 		final Grid grid = createGrid();
 		cleanGrid(grid);

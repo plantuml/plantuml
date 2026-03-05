@@ -109,13 +109,6 @@ public class JsonDiagram extends TitledDiagram {
 		return new DiagramDescription("(Json)");
 	}
 
-	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-
-		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);
-	}
-
 	private void drawInternal(UGraphic ug) {
 		if (handwritten)
 			ug = new UGraphicHandwritten(ug);

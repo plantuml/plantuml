@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.flowdiagram;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +43,6 @@ import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.golem.MinMaxGolem;
 import net.sourceforge.plantuml.golem.Path;
@@ -129,13 +127,6 @@ public class FlowDiagram extends TitledDiagram implements TextBlock {
 				.dimension(calculateDimension(fileFormatOption.getDefaultStringBounder(getSkinParam())))
 				.margin(getDefaultMargins()).metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null)
 				.seed(seed());
-	}
-
-	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-
-		return createImageBuilder(fileFormatOption).drawable(this).write(os);
 	}
 
 	public void drawU(UGraphic ug) {
