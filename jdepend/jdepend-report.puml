@@ -1065,7 +1065,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.compositediagram.command" --> "net.sourceforge.plantuml.regex"
 "net.sourceforge.plantuml.compositediagram.command" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.core" %lighten("red", 50) {
+class "net.sourceforge.plantuml.core" %lighten("red", 51) {
 Total Classes: 12
 }
 "net.sourceforge.plantuml.core" --> "java.awt"
@@ -1438,7 +1438,6 @@ Total Classes: 4
 "net.sourceforge.plantuml.elk" --> "net.atmp"
 "net.sourceforge.plantuml.elk" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.elk" --> "net.sourceforge.plantuml.abel"
-"net.sourceforge.plantuml.elk" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.elk" --> "net.sourceforge.plantuml.decoration.symbol"
 "net.sourceforge.plantuml.elk" --> "net.sourceforge.plantuml.elk.proxy.core"
 "net.sourceforge.plantuml.elk" --> "net.sourceforge.plantuml.elk.proxy.core.math"
@@ -1923,7 +1922,7 @@ Total Classes: 16
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.klimt.drawing" %lighten("red", 50) {
+class "net.sourceforge.plantuml.klimt.drawing" %lighten("red", 51) {
 Total Classes: 14
 }
 "net.sourceforge.plantuml.klimt.drawing" --> "java.io"
@@ -2892,7 +2891,7 @@ Total Classes: 30
 "net.sourceforge.plantuml.sequencediagram.command" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.sequencediagram.graphic" %lighten("red", 94) {
-Total Classes: 51
+Total Classes: 50
 }
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "java.io"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "java.lang"
@@ -2933,13 +2932,11 @@ Total Classes: 6
 class "net.sourceforge.plantuml.sequencediagram.teoz" %lighten("red", 88) {
 Total Classes: 51
 }
-"net.sourceforge.plantuml.sequencediagram.teoz" --> "java.io"
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "java.lang"
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "java.util"
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml.abel"
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml.activitydiagram3.ftile"
-"net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml.klimt"
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml.klimt.creole"
@@ -3109,11 +3106,10 @@ Total Classes: 4
 "net.sourceforge.plantuml.sudoku" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.sudoku" --> "net.sourceforge.plantuml.command"
 "net.sourceforge.plantuml.sudoku" --> "net.sourceforge.plantuml.core"
-"net.sourceforge.plantuml.sudoku" --> "net.sourceforge.plantuml.klimt.drawing"
 "net.sourceforge.plantuml.sudoku" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.sudoku" --> "net.sourceforge.plantuml.regex"
 
-class "net.sourceforge.plantuml.svek" %lighten("red", 77) {
+class "net.sourceforge.plantuml.svek" %lighten("red", 76) {
 Total Classes: 65
 }
 "net.sourceforge.plantuml.svek" --> "java.io"
@@ -3125,7 +3121,6 @@ Total Classes: 65
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.abel"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.activitydiagram3.ftile"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.cli"
-"net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.crash"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.cucadiagram"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.decoration.symbol"
@@ -3139,7 +3134,6 @@ Total Classes: 65
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.klimt.font"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.klimt.shape"
-"net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.log"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.security"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.skin.rose"

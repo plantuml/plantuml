@@ -305,13 +305,13 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 	@Override
 	protected ImageData exportXmi(OutputStream os, FileFormat fileFormat) throws IOException {
 <span class="fc" id="L307">		final SequenceDiagramXmiMaker maker = new SequenceDiagramXmiMaker(this, fileFormat);</span>
-<span class="fc" id="L308">		return maker.createOne01970(os, 0, false);</span>
+<span class="fc" id="L308">		return maker.createOne(os, 0, false);</span>
 	}
 
 	@Override
 	protected ImageData exportTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
 <span class="fc" id="L313">		final SequenceDiagramTxtMaker maker = new SequenceDiagramTxtMaker(this, fileFormat);</span>
-<span class="fc" id="L314">		return maker.createOne01970(os, index, false);</span>
+<span class="fc" id="L314">		return maker.createOne(os, index, false);</span>
 	}
 
 	@Override

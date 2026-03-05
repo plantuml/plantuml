@@ -307,40 +307,35 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 
 	protected abstract TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption);
 
-	@Override
-	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
-<span class="nc" id="L312">		throw new UnsupportedOperationException();</span>
-	}
-
 	final public Pragma getPragma() {
-<span class="fc" id="L316">		return skinParam.getPragma();</span>
+<span class="fc" id="L311">		return skinParam.getPragma();</span>
 	}
 
 	@Override
 	public void addWarning(Warning warning) {
-<span class="nc" id="L321">		getPragma().addWarning(warning);</span>
-<span class="nc" id="L322">	}</span>
+<span class="nc" id="L316">		getPragma().addWarning(warning);</span>
+<span class="nc" id="L317">	}</span>
 
 	@Override
 	public Collection&lt;Warning&gt; getWarnings() {
-<span class="fc" id="L326">		return join(getPreprocessingArtifact().getWarnings(), getPragma().getWarnings());</span>
+<span class="fc" id="L321">		return join(getPreprocessingArtifact().getWarnings(), getPragma().getWarnings());</span>
 	}
 
 	static private Collection&lt;Warning&gt; join(Collection&lt;Warning&gt; col1, Collection&lt;Warning&gt; col2) {
-<span class="fc" id="L330">		final LinkedHashSet&lt;Warning&gt; result = new LinkedHashSet&lt;&gt;();</span>
-<span class="fc" id="L331">		result.addAll(col1);</span>
-<span class="fc" id="L332">		result.addAll(col2);</span>
-<span class="fc" id="L333">		return result;</span>
+<span class="fc" id="L325">		final LinkedHashSet&lt;Warning&gt; result = new LinkedHashSet&lt;&gt;();</span>
+<span class="fc" id="L326">		result.addAll(col1);</span>
+<span class="fc" id="L327">		result.addAll(col2);</span>
+<span class="fc" id="L328">		return result;</span>
 	}
 
 	public final DisplayPositioned getFooterOrHeaderTeoz(FontParam param) {
-<span class="nc bnc" id="L337" title="All 2 branches missed.">		if (param == FontParam.FOOTER)</span>
-<span class="nc" id="L338">			return getFooter();</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">		if (param == FontParam.FOOTER)</span>
+<span class="nc" id="L333">			return getFooter();</span>
 
-<span class="nc bnc" id="L340" title="All 2 branches missed.">		if (param == FontParam.HEADER)</span>
-<span class="nc" id="L341">			return getHeader();</span>
+<span class="nc bnc" id="L335" title="All 2 branches missed.">		if (param == FontParam.HEADER)</span>
+<span class="nc" id="L336">			return getHeader();</span>
 
-<span class="nc" id="L343">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L338">		throw new IllegalArgumentException();</span>
 	}
 
 //	@Override
@@ -409,70 +404,70 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 //	}
 
 	private ImageData exportDiagramInternalPdf(OutputStream os, int index) throws IOException {
-<span class="nc" id="L412">		final File svg = FileUtils.createTempFileLegacy(&quot;pdf&quot;, &quot;.svf&quot;);</span>
-<span class="nc" id="L413">		final File pdfFile = FileUtils.createTempFileLegacy(&quot;pdf&quot;, &quot;.pdf&quot;);</span>
+<span class="nc" id="L407">		final File svg = FileUtils.createTempFileLegacy(&quot;pdf&quot;, &quot;.svf&quot;);</span>
+<span class="nc" id="L408">		final File pdfFile = FileUtils.createTempFileLegacy(&quot;pdf&quot;, &quot;.pdf&quot;);</span>
 		final ImageData result;
-<span class="nc" id="L415">		try (OutputStream fos = new BufferedOutputStream(new FileOutputStream(svg))) {</span>
-<span class="nc" id="L416">			result = exportDiagram(fos, index, new FileFormatOption(FileFormat.SVG));</span>
+<span class="nc" id="L410">		try (OutputStream fos = new BufferedOutputStream(new FileOutputStream(svg))) {</span>
+<span class="nc" id="L411">			result = exportDiagram(fos, index, new FileFormatOption(FileFormat.SVG));</span>
 		}
-<span class="nc" id="L418">		PdfConverter.convert(svg, pdfFile);</span>
-<span class="nc" id="L419">		FileUtils.copyToStream(pdfFile, os);</span>
-<span class="nc" id="L420">		return result;</span>
+<span class="nc" id="L413">		PdfConverter.convert(svg, pdfFile);</span>
+<span class="nc" id="L414">		FileUtils.copyToStream(pdfFile, os);</span>
+<span class="nc" id="L415">		return result;</span>
 	}
 
 	final protected void exportCmap(SuggestedFile suggestedFile, int index, final ImageData cmapdata)
 			throws FileNotFoundException {
-<span class="fc" id="L425">		final String name = changeName(suggestedFile.getFile(index).getAbsolutePath());</span>
-<span class="fc" id="L426">		final SFile cmapFile = new SFile(name);</span>
-<span class="fc" id="L427">		try (PrintWriter pw = cmapFile.createPrintWriter()) {</span>
-<span class="pc bpc" id="L428" title="1 of 2 branches missed.">			if (PSystemUtils.canFileBeWritten(cmapFile) == false)</span>
-<span class="nc" id="L429">				return;</span>
+<span class="fc" id="L420">		final String name = changeName(suggestedFile.getFile(index).getAbsolutePath());</span>
+<span class="fc" id="L421">		final SFile cmapFile = new SFile(name);</span>
+<span class="fc" id="L422">		try (PrintWriter pw = cmapFile.createPrintWriter()) {</span>
+<span class="pc bpc" id="L423" title="1 of 2 branches missed.">			if (PSystemUtils.canFileBeWritten(cmapFile) == false)</span>
+<span class="nc" id="L424">				return;</span>
 
-<span class="fc" id="L431">			pw.print(cmapdata.getCMapData(cmapFile.getName().substring(0, cmapFile.getName().length() - 6)));</span>
-<span class="nc bnc" id="L432" title="All 2 branches missed.">		}</span>
-<span class="fc" id="L433">	}</span>
+<span class="fc" id="L426">			pw.print(cmapdata.getCMapData(cmapFile.getName().substring(0, cmapFile.getName().length() - 6)));</span>
+<span class="nc bnc" id="L427" title="All 2 branches missed.">		}</span>
+<span class="fc" id="L428">	}</span>
 
 	static String changeName(String name) {
-<span class="fc" id="L436">		return name.replaceAll(&quot;(?i)\\.\\w{3}$&quot;, &quot;.cmapx&quot;);</span>
+<span class="fc" id="L431">		return name.replaceAll(&quot;(?i)\\.\\w{3}$&quot;, &quot;.cmapx&quot;);</span>
 	}
 
 	@Override
 	public String getWarningOrError() {
-<span class="pc bpc" id="L441" title="1 of 2 branches missed.">		if (lastInfo == null)</span>
-<span class="fc" id="L442">			return null;</span>
+<span class="pc bpc" id="L436" title="1 of 2 branches missed.">		if (lastInfo == null)</span>
+<span class="fc" id="L437">			return null;</span>
 
-<span class="nc" id="L444">		final double actualWidth = lastInfo.getWidth();</span>
-<span class="nc bnc" id="L445" title="All 2 branches missed.">		if (actualWidth == 0)</span>
-<span class="nc" id="L446">			return null;</span>
+<span class="nc" id="L439">		final double actualWidth = lastInfo.getWidth();</span>
+<span class="nc bnc" id="L440" title="All 2 branches missed.">		if (actualWidth == 0)</span>
+<span class="nc" id="L441">			return null;</span>
 
-<span class="nc" id="L448">		final String value = getSkinParam().getValue(&quot;widthwarning&quot;);</span>
-<span class="nc bnc" id="L449" title="All 2 branches missed.">		if (value == null)</span>
-<span class="nc" id="L450">			return null;</span>
+<span class="nc" id="L443">		final String value = getSkinParam().getValue(&quot;widthwarning&quot;);</span>
+<span class="nc bnc" id="L444" title="All 2 branches missed.">		if (value == null)</span>
+<span class="nc" id="L445">			return null;</span>
 
-<span class="nc bnc" id="L452" title="All 2 branches missed.">		if (!DIGITS.matcher(value).matches())</span>
-<span class="nc" id="L453">			return null;</span>
+<span class="nc bnc" id="L447" title="All 2 branches missed.">		if (!DIGITS.matcher(value).matches())</span>
+<span class="nc" id="L448">			return null;</span>
 
-<span class="nc" id="L455">		final int widthwarning = Integer.parseInt(value);</span>
-<span class="nc bnc" id="L456" title="All 2 branches missed.">		if (actualWidth &gt; widthwarning)</span>
-<span class="nc" id="L457">			return &quot;The image is &quot; + ((int) actualWidth) + &quot; pixel width. (Warning limit is &quot; + widthwarning + &quot;)&quot;;</span>
+<span class="nc" id="L450">		final int widthwarning = Integer.parseInt(value);</span>
+<span class="nc bnc" id="L451" title="All 2 branches missed.">		if (actualWidth &gt; widthwarning)</span>
+<span class="nc" id="L452">			return &quot;The image is &quot; + ((int) actualWidth) + &quot; pixel width. (Warning limit is &quot; + widthwarning + &quot;)&quot;;</span>
 
-<span class="nc" id="L459">		return null;</span>
+<span class="nc" id="L454">		return null;</span>
 	}
 
 	public void setHideEmptyDescription(boolean hideEmptyDescription) {
-<span class="nc" id="L463">	}</span>
+<span class="nc" id="L458">	}</span>
 
 	public Previous getPrevious() {
-<span class="nc" id="L466">		return Previous.createFrom(getSkinParam().values());</span>
+<span class="nc" id="L461">		return Previous.createFrom(getSkinParam().values());</span>
 	}
 
 	@Override
 	public TextBlock addChrome(TextBlock result, FileFormatOption fileFormatOption) {
-<span class="fc" id="L471">		final TitledDiagram titledDiagram = (TitledDiagram) this;</span>
-<span class="fc" id="L472">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(titledDiagram.getSkinParam());</span>
-<span class="fc" id="L473">		result = DiagramChromeFactory12026.create(result, titledDiagram, titledDiagram.getSkinParam(), stringBounder,</span>
-<span class="fc" id="L474">				getWarnings());</span>
-<span class="fc" id="L475">		return result;</span>
+<span class="fc" id="L466">		final TitledDiagram titledDiagram = (TitledDiagram) this;</span>
+<span class="fc" id="L467">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(titledDiagram.getSkinParam());</span>
+<span class="fc" id="L468">		result = DiagramChromeFactory12026.create(result, titledDiagram, titledDiagram.getSkinParam(), stringBounder,</span>
+<span class="fc" id="L469">				getWarnings());</span>
+<span class="fc" id="L470">		return result;</span>
 	}
 
 }

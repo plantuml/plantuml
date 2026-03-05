@@ -360,24 +360,22 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 <span class="nc" id="L360">				BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender new20&quot;);</span>
 <span class="nc" id="L361">			} else {</span>
 <span class="nc" id="L362">				BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender ERROR&quot;);</span>
-				// diagram.exportDiagramGraphic01970(ug, fileFormat);
-<span class="nc" id="L364">				BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender ERROR&quot;);</span>
 			}
 
 			// Clear any previous content (old SVG, error messages, etc.)
-<span class="nc" id="L368">			removeAllChildren(out);</span>
-<span class="nc" id="L369">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender wip40&quot;);</span>
+<span class="nc" id="L366">			removeAllChildren(out);</span>
+<span class="nc" id="L367">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender wip40&quot;);</span>
 
 			// Insert the rendered SVG into the DOM
-<span class="nc" id="L372">			appendSvgElement(out, svg.getSvgRoot());</span>
-<span class="nc" id="L373">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender done&quot;);</span>
-<span class="nc" id="L374">			BrowserLog.jsStatusDuration();</span>
+<span class="nc" id="L370">			appendSvgElement(out, svg.getSvgRoot());</span>
+<span class="nc" id="L371">			BrowserLog.consoleLog(PlantUMLBrowser.class, &quot;doRender done&quot;);</span>
+<span class="nc" id="L372">			BrowserLog.jsStatusDuration();</span>
 
-<span class="nc" id="L376">		} catch (Exception e) {</span>
+<span class="nc" id="L374">		} catch (Exception e) {</span>
 			// Display error message in the target element
-<span class="nc" id="L378">			out.setTextContent(String.valueOf(e));</span>
-<span class="nc" id="L379">		}</span>
-<span class="nc" id="L380">	}</span>
+<span class="nc" id="L376">			out.setTextContent(String.valueOf(e));</span>
+<span class="nc" id="L377">		}</span>
+<span class="nc" id="L378">	}</span>
 
 	// =========================================================================
 	// JavaScript interop utilities

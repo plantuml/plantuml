@@ -54,66 +54,59 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemLicense extends PlainDiagram implements UDrawable {
-	
-	
+
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
-<span class="nc" id="L61">		return this;</span>
+<span class="nc" id="L60">		return this;</span>
 	}
 
 	public static PSystemLicense create(UmlSource source, PreprocessingArtifact preprocessing) throws IOException {
-<span class="nc" id="L65">		return new PSystemLicense(source, preprocessing);</span>
+<span class="nc" id="L64">		return new PSystemLicense(source, preprocessing);</span>
 	}
 
 	public PSystemLicense(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L69">		super(source, preprocessing);</span>
-<span class="nc" id="L70">	}</span>
+<span class="nc" id="L68">		super(source, preprocessing);</span>
+<span class="nc" id="L69">	}</span>
 
 	private TextBlock getGraphicStrings(List&lt;String&gt; strings) {
-<span class="nc" id="L73">		return GraphicStrings.createBlackOnWhite(strings);</span>
+<span class="nc" id="L72">		return GraphicStrings.createBlackOnWhite(strings);</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L77">		return new DiagramDescription(&quot;(License)&quot;);</span>
+<span class="nc" id="L76">		return new DiagramDescription(&quot;(License)&quot;);</span>
 	}
-
-	@Override
-	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
-<span class="nc" id="L82">		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();</span>
-<span class="nc" id="L83">		getTextBlock(licenseInfo).drawU(ug);</span>
-<span class="nc" id="L84">	}</span>
 
 	public void drawU(UGraphic ug) {
 
-<span class="nc" id="L88">		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();</span>
-<span class="nc" id="L89">		final PortableImage logo = LicenseInfo.retrieveDistributorImage(licenseInfo);</span>
+<span class="nc" id="L81">		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();</span>
+<span class="nc" id="L82">		final PortableImage logo = LicenseInfo.retrieveDistributorImage(licenseInfo);</span>
 
-<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (logo == null) {</span>
-<span class="nc" id="L92">			getTextBlock(licenseInfo).drawU(ug);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (logo == null) {</span>
+<span class="nc" id="L85">			getTextBlock(licenseInfo).drawU(ug);</span>
 		} else {
-<span class="nc" id="L94">			final List&lt;String&gt; strings1 = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L95">			final List&lt;String&gt; strings2 = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L87">			final List&lt;String&gt; strings1 = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L88">			final List&lt;String&gt; strings2 = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L97">			strings1.addAll(License.getCurrent().getText1(licenseInfo));</span>
-<span class="nc" id="L98">			strings2.addAll(License.getCurrent().getText2(licenseInfo));</span>
+<span class="nc" id="L90">			strings1.addAll(License.getCurrent().getText1(licenseInfo));</span>
+<span class="nc" id="L91">			strings2.addAll(License.getCurrent().getText2(licenseInfo));</span>
 
-<span class="nc" id="L100">			final TextBlock result1 = getGraphicStrings(strings1);</span>
-<span class="nc" id="L101">			result1.drawU(ug);</span>
-<span class="nc" id="L102">			ug = ug.apply(UTranslate.dy(4 + result1.calculateDimension(ug.getStringBounder()).getHeight()));</span>
-<span class="nc" id="L103">			UImage im = new UImage(new PixelImage(logo, AffineTransformType.TYPE_BILINEAR));</span>
-<span class="nc" id="L104">			ug.apply(UTranslate.dx(20)).draw(im);</span>
+<span class="nc" id="L93">			final TextBlock result1 = getGraphicStrings(strings1);</span>
+<span class="nc" id="L94">			result1.drawU(ug);</span>
+<span class="nc" id="L95">			ug = ug.apply(UTranslate.dy(4 + result1.calculateDimension(ug.getStringBounder()).getHeight()));</span>
+<span class="nc" id="L96">			UImage im = new UImage(new PixelImage(logo, AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L97">			ug.apply(UTranslate.dx(20)).draw(im);</span>
 
-<span class="nc" id="L106">			ug = ug.apply(UTranslate.dy(im.getHeight()));</span>
-<span class="nc" id="L107">			final TextBlock result2 = getGraphicStrings(strings2);</span>
-<span class="nc" id="L108">			result2.drawU(ug);</span>
+<span class="nc" id="L99">			ug = ug.apply(UTranslate.dy(im.getHeight()));</span>
+<span class="nc" id="L100">			final TextBlock result2 = getGraphicStrings(strings2);</span>
+<span class="nc" id="L101">			result2.drawU(ug);</span>
 		}
-<span class="nc" id="L110">	}</span>
+<span class="nc" id="L103">	}</span>
 
 	protected TextBlock getTextBlock(final LicenseInfo licenseInfo) {
-<span class="nc" id="L113">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L114">		strings.addAll(License.getCurrent().getText1(licenseInfo));</span>
-<span class="nc" id="L115">		strings.addAll(License.getCurrent().getText2(licenseInfo));</span>
-<span class="nc" id="L116">		return getGraphicStrings(strings);</span>
+<span class="nc" id="L106">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L107">		strings.addAll(License.getCurrent().getText1(licenseInfo));</span>
+<span class="nc" id="L108">		strings.addAll(License.getCurrent().getText2(licenseInfo));</span>
+<span class="nc" id="L109">		return getGraphicStrings(strings);</span>
 	}
 
 }

@@ -53,37 +53,26 @@ public abstract class PlainDiagram extends UgDiagram {
 <span class="fc" id="L53">		super(source, preprocessing);</span>
 <span class="fc" id="L54">	}</span>
 
-	@Override
-	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
-		try {
-<span class="nc" id="L59">			final UDrawable rootDrawable = getRootDrawable(fileFormatOption);</span>
-<span class="nc" id="L60">			rootDrawable.drawU(ug);</span>
-<span class="nc" id="L61">		} catch (IOException e) {</span>
-<span class="nc" id="L62">			e.printStackTrace();</span>
-<span class="nc" id="L63">			super.exportDiagramGraphic01970(ug, fileFormatOption);</span>
-<span class="nc" id="L64">		}</span>
-<span class="nc" id="L65">	}</span>
-
 	protected abstract UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException;
 
 	@Override
 	public final TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
-<span class="fc" id="L72">		final UDrawable rootDrawable = getRootDrawable(fileFormatOption);</span>
-<span class="fc" id="L73">		return new TextBlock() {</span>
+<span class="fc" id="L61">		final UDrawable rootDrawable = getRootDrawable(fileFormatOption);</span>
+<span class="fc" id="L62">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L76">				rootDrawable.drawU(ug);</span>
-<span class="fc" id="L77">			}</span>
+<span class="fc" id="L65">				rootDrawable.drawU(ug);</span>
+<span class="fc" id="L66">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder sb) {
-<span class="fc" id="L80">				final LimitFinder limitFinder = LimitFinder.create(sb, true);</span>
-<span class="fc" id="L81">				rootDrawable.drawU(limitFinder);</span>
-<span class="fc" id="L82">				return new XDimension2D(limitFinder.getMaxX() + 1, limitFinder.getMaxY() + 1);</span>
+<span class="fc" id="L69">				final LimitFinder limitFinder = LimitFinder.create(sb, true);</span>
+<span class="fc" id="L70">				rootDrawable.drawU(limitFinder);</span>
+<span class="fc" id="L71">				return new XDimension2D(limitFinder.getMaxX() + 1, limitFinder.getMaxY() + 1);</span>
 			}
 
 			public HColor getBackcolor() {
-<span class="fc" id="L86">				return null;</span>
+<span class="fc" id="L75">				return null;</span>
 			}
 
 		};

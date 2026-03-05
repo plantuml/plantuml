@@ -35,14 +35,10 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import net.sourceforge.plantuml.AnnotatedBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.PngTitler;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -81,38 +77,38 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	private final int index;
 
 	public SequenceDiagramFileMakerTeoz(SequenceDiagram diagram, Rose skin, FileFormatOption fileFormatOption,
-<span class="nc" id="L84">			int index) {</span>
-<span class="nc" id="L85">		this.index = index;</span>
-<span class="nc" id="L86">		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
-<span class="nc" id="L87">		this.diagram = diagram;</span>
-<span class="nc" id="L88">		this.fileFormatOption = fileFormatOption;</span>
-<span class="nc" id="L89">		this.skin = skin;</span>
-<span class="nc" id="L90">		this.body = new PlayingSpaceWithParticipants(createMainTile());</span>
-<span class="nc" id="L91">		this.footer = getFooterOrHeader(FontParam.FOOTER);</span>
-<span class="nc" id="L92">		this.header = getFooterOrHeader(FontParam.HEADER);</span>
-<span class="nc" id="L93">		this.annotatedBuilder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);</span>
+<span class="nc" id="L80">			int index) {</span>
+<span class="nc" id="L81">		this.index = index;</span>
+<span class="nc" id="L82">		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
+<span class="nc" id="L83">		this.diagram = diagram;</span>
+<span class="nc" id="L84">		this.fileFormatOption = fileFormatOption;</span>
+<span class="nc" id="L85">		this.skin = skin;</span>
+<span class="nc" id="L86">		this.body = new PlayingSpaceWithParticipants(createMainTile());</span>
+<span class="nc" id="L87">		this.footer = getFooterOrHeader(FontParam.FOOTER);</span>
+<span class="nc" id="L88">		this.header = getFooterOrHeader(FontParam.HEADER);</span>
+<span class="nc" id="L89">		this.annotatedBuilder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);</span>
 
-<span class="nc" id="L95">		this.min1 = body.getMinX(stringBounder);</span>
+<span class="nc" id="L91">		this.min1 = body.getMinX(stringBounder);</span>
 
-<span class="nc" id="L97">		this.title = getTitle();</span>
-<span class="nc" id="L98">		this.legend = getLegend();</span>
-<span class="nc" id="L99">		this.caption = annotatedBuilder.getCaption();</span>
+<span class="nc" id="L93">		this.title = getTitle();</span>
+<span class="nc" id="L94">		this.legend = getLegend();</span>
+<span class="nc" id="L95">		this.caption = annotatedBuilder.getCaption();</span>
 
-<span class="nc" id="L101">		this.heightEnglober1 = dolls.getOffsetForEnglobers(stringBounder);</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		this.heightEnglober2 = heightEnglober1 == 0 ? 0 : 10;</span>
+<span class="nc" id="L97">		this.heightEnglober1 = dolls.getOffsetForEnglobers(stringBounder);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		this.heightEnglober2 = heightEnglober1 == 0 ? 0 : 10;</span>
 
-<span class="nc" id="L104">		final double totalWidth = MathUtils.max(body.calculateDimension(stringBounder).getWidth(),</span>
-<span class="nc" id="L105">				title.calculateDimension(stringBounder).getWidth(), footer.calculateDimension(stringBounder).getWidth(),</span>
-<span class="nc" id="L106">				header.calculateDimension(stringBounder).getWidth(),</span>
-<span class="nc" id="L107">				legend.calculateDimension(stringBounder).getWidth());</span>
-<span class="nc" id="L108">		final double totalHeight = body.calculateDimension(stringBounder).getHeight() + heightEnglober1</span>
-<span class="nc" id="L109">				+ heightEnglober2 + title.calculateDimension(stringBounder).getHeight()</span>
-<span class="nc" id="L110">				+ header.calculateDimension(stringBounder).getHeight()</span>
-<span class="nc" id="L111">				+ legend.calculateDimension(stringBounder).getHeight()</span>
-<span class="nc" id="L112">				+ caption.calculateDimension(stringBounder).getHeight()</span>
-<span class="nc bnc" id="L113" title="All 2 branches missed.">				+ footer.calculateDimension(stringBounder).getHeight() + (annotatedBuilder.hasMainFrame() ? 10 : 0);</span>
-<span class="nc" id="L114">		this.dimTotal = new XDimension2D(totalWidth, totalHeight);</span>
-<span class="nc" id="L115">	}</span>
+<span class="nc" id="L100">		final double totalWidth = MathUtils.max(body.calculateDimension(stringBounder).getWidth(),</span>
+<span class="nc" id="L101">				title.calculateDimension(stringBounder).getWidth(), footer.calculateDimension(stringBounder).getWidth(),</span>
+<span class="nc" id="L102">				header.calculateDimension(stringBounder).getWidth(),</span>
+<span class="nc" id="L103">				legend.calculateDimension(stringBounder).getWidth());</span>
+<span class="nc" id="L104">		final double totalHeight = body.calculateDimension(stringBounder).getHeight() + heightEnglober1</span>
+<span class="nc" id="L105">				+ heightEnglober2 + title.calculateDimension(stringBounder).getHeight()</span>
+<span class="nc" id="L106">				+ header.calculateDimension(stringBounder).getHeight()</span>
+<span class="nc" id="L107">				+ legend.calculateDimension(stringBounder).getHeight()</span>
+<span class="nc" id="L108">				+ caption.calculateDimension(stringBounder).getHeight()</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">				+ footer.calculateDimension(stringBounder).getHeight() + (annotatedBuilder.hasMainFrame() ? 10 : 0);</span>
+<span class="nc" id="L110">		this.dimTotal = new XDimension2D(totalWidth, totalHeight);</span>
+<span class="nc" id="L111">	}</span>
 
 	private Dolls dolls;
 	private final StringBounder stringBounder;
@@ -128,193 +124,189 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	private final XDimension2D dimTotal;
 	private final Real min1;
 
-<span class="nc" id="L131">	private final LivingSpaces livingSpaces = new LivingSpaces();</span>
+<span class="nc" id="L127">	private final LivingSpaces livingSpaces = new LivingSpaces();</span>
 	private final double heightEnglober1;
 	private final double heightEnglober2;
-
-	public ImageData createOne01970(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
-<span class="nc" id="L136">		throw new UnsupportedOperationException();</span>
-	}
 
 	class Foo implements UDrawable {
 
 		private final int index;
 
-<span class="nc" id="L143">		Foo(int index) {</span>
-<span class="nc" id="L144">			this.index = index;</span>
-<span class="nc" id="L145">		}</span>
+<span class="nc" id="L135">		Foo(int index) {</span>
+<span class="nc" id="L136">			this.index = index;</span>
+<span class="nc" id="L137">		}</span>
 
 		public void drawU(UGraphic ug) {
-<span class="nc" id="L148">			drawInternal(ug, index);</span>
-<span class="nc" id="L149">		}</span>
+<span class="nc" id="L140">			drawInternal(ug, index);</span>
+<span class="nc" id="L141">		}</span>
 
 	}
 
 	private UGraphic goDownAndCenterForEnglobers(UGraphic ug) {
-<span class="nc" id="L154">		ug = goDown(ug, title);</span>
-<span class="nc" id="L155">		ug = goDown(ug, header);</span>
-<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP)</span>
-<span class="nc" id="L157">			ug = goDown(ug, legend);</span>
+<span class="nc" id="L146">		ug = goDown(ug, title);</span>
+<span class="nc" id="L147">		ug = goDown(ug, header);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP)</span>
+<span class="nc" id="L149">			ug = goDown(ug, legend);</span>
 
-<span class="nc" id="L159">		final double dx = (dimTotal.getWidth() - body.calculateDimension(stringBounder).getWidth()) / 2;</span>
-<span class="nc" id="L160">		return ug.apply(UTranslate.dx(dx));</span>
+<span class="nc" id="L151">		final double dx = (dimTotal.getWidth() - body.calculateDimension(stringBounder).getWidth()) / 2;</span>
+<span class="nc" id="L152">		return ug.apply(UTranslate.dx(dx));</span>
 	}
 
 	private UGraphic goDown(UGraphic ug, TextBlock size) {
-<span class="nc" id="L164">		return ug.apply(UTranslate.dy(size.calculateDimension(stringBounder).getHeight()));</span>
+<span class="nc" id="L156">		return ug.apply(UTranslate.dy(size.calculateDimension(stringBounder).getHeight()));</span>
 	}
 
 	public void printAligned(UGraphic ug, HorizontalAlignment align, final TextBlock layer) {
-<span class="nc" id="L168">		double dx = 0;</span>
-<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (align == HorizontalAlignment.RIGHT)</span>
-<span class="nc" id="L170">			dx = dimTotal.getWidth() - layer.calculateDimension(stringBounder).getWidth();</span>
-<span class="nc bnc" id="L171" title="All 2 branches missed.">		else if (align == HorizontalAlignment.CENTER)</span>
-<span class="nc" id="L172">			dx = (dimTotal.getWidth() - layer.calculateDimension(stringBounder).getWidth()) / 2;</span>
+<span class="nc" id="L160">		double dx = 0;</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (align == HorizontalAlignment.RIGHT)</span>
+<span class="nc" id="L162">			dx = dimTotal.getWidth() - layer.calculateDimension(stringBounder).getWidth();</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		else if (align == HorizontalAlignment.CENTER)</span>
+<span class="nc" id="L164">			dx = (dimTotal.getWidth() - layer.calculateDimension(stringBounder).getWidth()) / 2;</span>
 
-<span class="nc" id="L174">		layer.drawU(ug.apply(UTranslate.dx(dx)));</span>
-<span class="nc" id="L175">	}</span>
+<span class="nc" id="L166">		layer.drawU(ug.apply(UTranslate.dx(dx)));</span>
+<span class="nc" id="L167">	}</span>
 
 	private PlayingSpace createMainTile() {
-<span class="nc" id="L178">		final RealOrigin xorigin = RealUtils.createOrigin();</span>
-<span class="nc" id="L179">		Real xcurrent = xorigin.addAtLeast(0);</span>
-<span class="nc" id="L180">		final RealOrigin yorigin = RealUtils.createOrigin();</span>
-<span class="nc bnc" id="L181" title="All 2 branches missed.">		for (Participant p : diagram.participants()) {</span>
-<span class="nc" id="L182">			final LivingSpace livingSpace = new LivingSpace(p, diagram.getEnglober(p), skin, getSkinParam(), xcurrent,</span>
-<span class="nc" id="L183">					diagram.events());</span>
-<span class="nc" id="L184">			livingSpaces.put(p, livingSpace);</span>
-<span class="nc" id="L185">			xcurrent = livingSpace.getPosD(stringBounder).addAtLeast(0);</span>
-<span class="nc" id="L186">		}</span>
+<span class="nc" id="L170">		final RealOrigin xorigin = RealUtils.createOrigin();</span>
+<span class="nc" id="L171">		Real xcurrent = xorigin.addAtLeast(0);</span>
+<span class="nc" id="L172">		final RealOrigin yorigin = RealUtils.createOrigin();</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		for (Participant p : diagram.participants()) {</span>
+<span class="nc" id="L174">			final LivingSpace livingSpace = new LivingSpace(p, diagram.getEnglober(p), skin, getSkinParam(), xcurrent,</span>
+<span class="nc" id="L175">					diagram.events());</span>
+<span class="nc" id="L176">			livingSpaces.put(p, livingSpace);</span>
+<span class="nc" id="L177">			xcurrent = livingSpace.getPosD(stringBounder).addAtLeast(0);</span>
+<span class="nc" id="L178">		}</span>
 
-<span class="nc" id="L188">		final TileArguments tileArguments = new TileArguments(stringBounder, livingSpaces, skin, diagram.getSkinParam(),</span>
+<span class="nc" id="L180">		final TileArguments tileArguments = new TileArguments(stringBounder, livingSpaces, skin, diagram.getSkinParam(),</span>
 				xorigin, yorigin);
 
-<span class="nc" id="L191">		this.dolls = new Dolls(tileArguments);</span>
-<span class="nc" id="L192">		final PlayingSpace mainTile = new PlayingSpace(diagram, dolls, tileArguments);</span>
-<span class="nc" id="L193">		this.livingSpaces.addConstraints(stringBounder);</span>
-<span class="nc" id="L194">		mainTile.addConstraints();</span>
-<span class="nc" id="L195">		this.dolls.addConstraints(stringBounder);</span>
-<span class="nc" id="L196">		xorigin.compileNow();</span>
+<span class="nc" id="L183">		this.dolls = new Dolls(tileArguments);</span>
+<span class="nc" id="L184">		final PlayingSpace mainTile = new PlayingSpace(diagram, dolls, tileArguments);</span>
+<span class="nc" id="L185">		this.livingSpaces.addConstraints(stringBounder);</span>
+<span class="nc" id="L186">		mainTile.addConstraints();</span>
+<span class="nc" id="L187">		this.dolls.addConstraints(stringBounder);</span>
+<span class="nc" id="L188">		xorigin.compileNow();</span>
 		if (YGauge.USE_ME)
 			System.err.println(&quot;COMPILING Y&quot;);
-<span class="nc" id="L199">		yorigin.compileNow();</span>
-<span class="nc" id="L200">		tileArguments.setBordered(mainTile);</span>
-<span class="nc" id="L201">		return mainTile;</span>
+<span class="nc" id="L191">		yorigin.compileNow();</span>
+<span class="nc" id="L192">		tileArguments.setBordered(mainTile);</span>
+<span class="nc" id="L193">		return mainTile;</span>
 	}
 
 	public ISkinParam getSkinParam() {
-<span class="nc" id="L205">		return diagram.getSkinParam();</span>
+<span class="nc" id="L197">		return diagram.getSkinParam();</span>
 	}
 
 	private TextBlock getTitle() {
-<span class="nc bnc" id="L209" title="All 2 branches missed.">		if (diagram.getTitle().isNull())</span>
-<span class="nc" id="L210">			return new ComponentAdapter(null);</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">		if (diagram.getTitle().isNull())</span>
+<span class="nc" id="L202">			return new ComponentAdapter(null);</span>
 
-<span class="nc" id="L212">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)</span>
-<span class="nc" id="L213">				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L214">		final TextBlock compTitle = style.createTextBlockBordered(diagram.getTitle().getDisplay(),</span>
-<span class="nc" id="L215">				diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam(), Style.ID_TITLE,</span>
+<span class="nc" id="L204">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)</span>
+<span class="nc" id="L205">				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L206">		final TextBlock compTitle = style.createTextBlockBordered(diagram.getTitle().getDisplay(),</span>
+<span class="nc" id="L207">				diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam(), Style.ID_TITLE,</span>
 				LineBreakStrategy.NONE);
-<span class="nc" id="L217">		return compTitle;</span>
+<span class="nc" id="L209">		return compTitle;</span>
 
 	}
 
 	private TextBlock getLegend() {
-<span class="nc" id="L222">		final Display legend = diagram.getLegend().getDisplay();</span>
-<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (Display.isNull(legend))</span>
-<span class="nc" id="L224">			return TextBlockUtils.empty(0, 0);</span>
+<span class="nc" id="L214">		final Display legend = diagram.getLegend().getDisplay();</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">		if (Display.isNull(legend))</span>
+<span class="nc" id="L216">			return TextBlockUtils.empty(0, 0);</span>
 
-<span class="nc" id="L226">		return EntityImageLegend.create(legend, diagram.getSkinParam());</span>
+<span class="nc" id="L218">		return EntityImageLegend.create(legend, diagram.getSkinParam());</span>
 	}
 
 	public TextBlock getFooterOrHeader(final FontParam param) {
-<span class="nc bnc" id="L230" title="All 2 branches missed.">		if (diagram.getFooterOrHeaderTeoz(param).isNull())</span>
-<span class="nc" id="L231">			return new TeozLayer(null, stringBounder, param);</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (diagram.getFooterOrHeaderTeoz(param).isNull())</span>
+<span class="nc" id="L223">			return new TeozLayer(null, stringBounder, param);</span>
 
-<span class="nc" id="L233">		final DisplayPositioned display = diagram.getFooterOrHeaderTeoz(param).withPage(index + 1, getNbPages());</span>
-<span class="nc" id="L234">		final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L225">		final DisplayPositioned display = diagram.getFooterOrHeaderTeoz(param).withPage(index + 1, getNbPages());</span>
+<span class="nc" id="L226">		final ISkinParam skinParam = diagram.getSkinParam();</span>
 
-<span class="nc" id="L236">		final StyleSignatureBasic def = param.getStyleDefinition(null);</span>
-<span class="nc" id="L237">		final Style style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L228">		final StyleSignatureBasic def = param.getStyleDefinition(null);</span>
+<span class="nc" id="L229">		final Style style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 
-<span class="nc" id="L239">		final PngTitler pngTitler = new PngTitler(display, style, skinParam.getIHtmlColorSet(), skinParam);</span>
-<span class="nc" id="L240">		return new TeozLayer(pngTitler, stringBounder, param);</span>
+<span class="nc" id="L231">		final PngTitler pngTitler = new PngTitler(display, style, skinParam.getIHtmlColorSet(), skinParam);</span>
+<span class="nc" id="L232">		return new TeozLayer(pngTitler, stringBounder, param);</span>
 	}
 
 	public int getNbPages() {
-<span class="nc" id="L244">		return body.getNbPages();</span>
+<span class="nc" id="L236">		return body.getNbPages();</span>
 	}
 
 	private void drawInternal(UGraphic ug, int index) {
-<span class="nc" id="L248">		body.setIndex(index);</span>
-<span class="nc" id="L249">		final UTranslate min1translate = UTranslate.dx(-min1.getCurrentValue());</span>
-<span class="nc" id="L250">		ug = ug.apply(min1translate);</span>
+<span class="nc" id="L240">		body.setIndex(index);</span>
+<span class="nc" id="L241">		final UTranslate min1translate = UTranslate.dx(-min1.getCurrentValue());</span>
+<span class="nc" id="L242">		ug = ug.apply(min1translate);</span>
 
-<span class="nc" id="L252">		dolls.drawEnglobers(goDownAndCenterForEnglobers(ug),</span>
-<span class="nc" id="L253">				body.calculateDimension(stringBounder).getHeight() + heightEnglober1 + heightEnglober2 / 2,</span>
+<span class="nc" id="L244">		dolls.drawEnglobers(goDownAndCenterForEnglobers(ug),</span>
+<span class="nc" id="L245">				body.calculateDimension(stringBounder).getHeight() + heightEnglober1 + heightEnglober2 / 2,</span>
 				new SimpleContext2D(true));
 
-<span class="nc" id="L256">		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.HEADER).getHorizontalAlignment(), header);</span>
-<span class="nc" id="L257">		ug = goDown(ug, header);</span>
+<span class="nc" id="L248">		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.HEADER).getHorizontalAlignment(), header);</span>
+<span class="nc" id="L249">		ug = goDown(ug, header);</span>
 
-<span class="nc" id="L259">		final StyleSignatureBasic def = FontParam.TITLE.getStyleDefinition(null);</span>
-<span class="nc" id="L260">		final HorizontalAlignment titleAlignment = def.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder())</span>
-<span class="nc" id="L261">				.getHorizontalAlignment();</span>
+<span class="nc" id="L251">		final StyleSignatureBasic def = FontParam.TITLE.getStyleDefinition(null);</span>
+<span class="nc" id="L252">		final HorizontalAlignment titleAlignment = def.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder())</span>
+<span class="nc" id="L253">				.getHorizontalAlignment();</span>
 
-<span class="nc" id="L263">		printAligned(ug, titleAlignment, title);</span>
-<span class="nc" id="L264">		ug = goDown(ug, title);</span>
+<span class="nc" id="L255">		printAligned(ug, titleAlignment, title);</span>
+<span class="nc" id="L256">		ug = goDown(ug, title);</span>
 
-<span class="nc bnc" id="L266" title="All 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP) {</span>
-<span class="nc" id="L267">			printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);</span>
-<span class="nc" id="L268">			ug = goDown(ug, legend);</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP) {</span>
+<span class="nc" id="L259">			printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);</span>
+<span class="nc" id="L260">			ug = goDown(ug, legend);</span>
 		}
 
-<span class="nc" id="L271">		ug = ug.apply(UTranslate.dy(heightEnglober1));</span>
-<span class="nc" id="L272">		final TextBlock bodyFramed = annotatedBuilder.decoreWithFrame(body);</span>
-<span class="nc bnc" id="L273" title="All 2 branches missed.">		printAligned(ug.apply(UTranslate.dx((annotatedBuilder.hasMainFrame() ? 4 : 0))), HorizontalAlignment.CENTER,</span>
+<span class="nc" id="L263">		ug = ug.apply(UTranslate.dy(heightEnglober1));</span>
+<span class="nc" id="L264">		final TextBlock bodyFramed = annotatedBuilder.decoreWithFrame(body);</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">		printAligned(ug.apply(UTranslate.dx((annotatedBuilder.hasMainFrame() ? 4 : 0))), HorizontalAlignment.CENTER,</span>
 				bodyFramed);
-<span class="nc" id="L275">		ug = goDown(ug, bodyFramed);</span>
-<span class="nc" id="L276">		ug = ug.apply(UTranslate.dy(heightEnglober2));</span>
+<span class="nc" id="L267">		ug = goDown(ug, bodyFramed);</span>
+<span class="nc" id="L268">		ug = ug.apply(UTranslate.dy(heightEnglober2));</span>
 
-<span class="nc bnc" id="L278" title="All 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.BOTTOM) {</span>
-<span class="nc" id="L279">			printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);</span>
-<span class="nc" id="L280">			ug = goDown(ug, legend);</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">		if (diagram.getLegend().getVerticalAlignment() == VerticalAlignment.BOTTOM) {</span>
+<span class="nc" id="L271">			printAligned(ug, diagram.getLegend().getHorizontalAlignment(), legend);</span>
+<span class="nc" id="L272">			ug = goDown(ug, legend);</span>
 		}
-<span class="nc" id="L282">		printAligned(ug, HorizontalAlignment.CENTER, caption);</span>
-<span class="nc" id="L283">		ug = goDown(ug, caption);</span>
+<span class="nc" id="L274">		printAligned(ug, HorizontalAlignment.CENTER, caption);</span>
+<span class="nc" id="L275">		ug = goDown(ug, caption);</span>
 
-<span class="nc" id="L285">		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.FOOTER).getHorizontalAlignment(), footer);</span>
-<span class="nc" id="L286">	}</span>
+<span class="nc" id="L277">		printAligned(ug, diagram.getFooterOrHeaderTeoz(FontParam.FOOTER).getHorizontalAlignment(), footer);</span>
+<span class="nc" id="L278">	}</span>
 
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormat) {
-<span class="nc" id="L290">		return new TextBlock() {</span>
+<span class="nc" id="L282">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L293">				ug = ug.apply(new UTranslate(5, 5));</span>
+<span class="nc" id="L285">				ug = ug.apply(new UTranslate(5, 5));</span>
 
-<span class="nc" id="L295">				body.setIndex(num);</span>
-<span class="nc" id="L296">				final UTranslate min1translate = UTranslate.dx(-min1.getCurrentValue());</span>
-<span class="nc" id="L297">				ug = ug.apply(min1translate);</span>
+<span class="nc" id="L287">				body.setIndex(num);</span>
+<span class="nc" id="L288">				final UTranslate min1translate = UTranslate.dx(-min1.getCurrentValue());</span>
+<span class="nc" id="L289">				ug = ug.apply(min1translate);</span>
 
-<span class="nc" id="L299">				dolls.drawEnglobers(goDownAndCenterForEnglobers(ug),</span>
-<span class="nc" id="L300">						body.calculateDimension(stringBounder).getHeight() + heightEnglober1 + heightEnglober2 / 2,</span>
+<span class="nc" id="L291">				dolls.drawEnglobers(goDownAndCenterForEnglobers(ug),</span>
+<span class="nc" id="L292">						body.calculateDimension(stringBounder).getHeight() + heightEnglober1 + heightEnglober2 / 2,</span>
 						new SimpleContext2D(true));
 
-<span class="nc" id="L303">				ug = ug.apply(UTranslate.dy(heightEnglober1));</span>
-<span class="nc" id="L304">				printAligned(ug, HorizontalAlignment.CENTER, body);</span>
-<span class="nc" id="L305">				ug = goDown(ug, body);</span>
-<span class="nc" id="L306">				ug = ug.apply(UTranslate.dy(heightEnglober2));</span>
-<span class="nc" id="L307">			}</span>
+<span class="nc" id="L295">				ug = ug.apply(UTranslate.dy(heightEnglober1));</span>
+<span class="nc" id="L296">				printAligned(ug, HorizontalAlignment.CENTER, body);</span>
+<span class="nc" id="L297">				ug = goDown(ug, body);</span>
+<span class="nc" id="L298">				ug = ug.apply(UTranslate.dy(heightEnglober2));</span>
+<span class="nc" id="L299">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L310">				final double totalWidth = body.calculateDimension(stringBounder).getWidth();</span>
-<span class="nc" id="L311">				final double totalHeight = body.calculateDimension(stringBounder).getHeight() + heightEnglober1</span>
+<span class="nc" id="L302">				final double totalWidth = body.calculateDimension(stringBounder).getWidth();</span>
+<span class="nc" id="L303">				final double totalHeight = body.calculateDimension(stringBounder).getHeight() + heightEnglober1</span>
 						+ heightEnglober2;
-<span class="nc" id="L313">				return new XDimension2D(totalWidth + 10, totalHeight + 10);</span>
+<span class="nc" id="L305">				return new XDimension2D(totalWidth + 10, totalHeight + 10);</span>
 			}
 
 			public HColor getBackcolor() {
-<span class="nc" id="L317">				return null;</span>
+<span class="nc" id="L309">				return null;</span>
 			}
 
 		};
