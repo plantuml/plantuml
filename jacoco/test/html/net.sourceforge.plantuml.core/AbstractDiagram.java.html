@@ -199,9 +199,9 @@ public abstract class AbstractDiagram implements Diagram {
 	}
 
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-<span class="fc" id="L202">		final ColorMapper init = fileFormatOption.getColorMapper();</span>
-<span class="fc" id="L203">		final ColorMapper newColorMappter = muteColorMapper(init);</span>
-<span class="fc" id="L204">		return ImageBuilder.create(fileFormatOption.withColorMapper(newColorMappter));</span>
+<span class="nc" id="L202">		final ColorMapper init = fileFormatOption.getColorMapper();</span>
+<span class="nc" id="L203">		final ColorMapper newColorMappter = muteColorMapper(init);</span>
+<span class="nc" id="L204">		return ImageBuilder.create(fileFormatOption.withColorMapper(newColorMappter));</span>
 	}
 
 	protected ColorMapper muteColorMapper(ColorMapper init) {
