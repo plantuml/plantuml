@@ -112,7 +112,7 @@ public abstract class UgDiagram extends AbstractDiagram {
 	}
 
 	public boolean isHandwritten() {
-		if (getPreprocessingArtifact().getOption().isDefine(OptionKey.HANDWRITTEN))
+		if (getPreprocessingArtifact().getOption().isTrue(OptionKey.HANDWRITTEN))
 			return true;
 		return false;
 	}

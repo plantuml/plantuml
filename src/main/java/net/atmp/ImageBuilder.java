@@ -411,7 +411,7 @@ public class ImageBuilder {
 	private UGraphic handwritten(UGraphic ug) {
 		if (skinParam != null && skinParam.handwritten())
 			return new UGraphicHandwritten(ug);
-		if (diagram != null && diagram.getPreprocessingArtifact().getOption().isDefine(OptionKey.HANDWRITTEN))
+		if (diagram != null && diagram.getPreprocessingArtifact().getOption().isTrue(OptionKey.HANDWRITTEN))
 			return new UGraphicHandwritten(ug);
 
 		return ug;
