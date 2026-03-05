@@ -35,107 +35,100 @@
  */
 package net.sourceforge.plantuml.classdiagram;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
-import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
-import net.sourceforge.plantuml.svek.image.EntityImageClass;
 
 public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
 	public ClassDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessingArtifact) {
-<span class="fc" id="L59">		super(source, UmlDiagramType.CLASS, previous, preprocessingArtifact);</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L52">		super(source, UmlDiagramType.CLASS, previous, preprocessingArtifact);</span>
+<span class="fc" id="L53">	}</span>
 
 	private boolean allowMixing;
 
 	public void setAllowMixing(boolean allowMixing) {
-<span class="nc" id="L65">		this.allowMixing = allowMixing;</span>
-<span class="nc" id="L66">	}</span>
+<span class="nc" id="L58">		this.allowMixing = allowMixing;</span>
+<span class="nc" id="L59">	}</span>
 
 	public boolean isAllowMixing() {
-<span class="fc" id="L69">		return allowMixing;</span>
+<span class="fc" id="L62">		return allowMixing;</span>
 	}
 
-<span class="fc" id="L72">	private int useLayoutExplicit = 0;</span>
+<span class="fc" id="L65">	private int useLayoutExplicit = 0;</span>
 
 	public void layoutNewLine() {
-<span class="nc" id="L75">		useLayoutExplicit++;</span>
-<span class="nc" id="L76">		incRawLayout();</span>
-<span class="nc" id="L77">	}</span>
+<span class="nc" id="L68">		useLayoutExplicit++;</span>
+<span class="nc" id="L69">		incRawLayout();</span>
+<span class="nc" id="L70">	}</span>
 
-	@Override
-	final protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (useLayoutExplicit != 0)</span>
-<span class="nc" id="L83">			return exportLayoutExplicit(os, index, fileFormatOption);</span>
-
-<span class="nc" id="L85">		return super.exportDiagramInternal(os, index, fileFormatOption);</span>
-	}
-
-	final protected ImageData exportLayoutExplicit(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-<span class="nc" id="L90">		final FullLayout fullLayout = new FullLayout();</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">		for (int i = 0; i &lt;= useLayoutExplicit; i++) {</span>
-<span class="nc" id="L92">			final RowLayout rawLayout = getRawLayout(i);</span>
-<span class="nc" id="L93">			fullLayout.addRowLayout(rawLayout);</span>
-		}
-<span class="nc" id="L95">		return createImageBuilder(fileFormatOption).annotations(false) // Backwards compatibility - this only applies</span>
-																		// when &quot;layout_new_line&quot; is used
-<span class="nc" id="L97">				.drawable(fullLayout).write(os);</span>
-	}
-
-	private RowLayout getRawLayout(int raw) {
-<span class="nc" id="L101">		final RowLayout rawLayout = new RowLayout();</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		for (Entity leaf : this.leafs())</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">			if (leaf.getRawLayout() == raw)</span>
-<span class="nc" id="L104">				rawLayout.addLeaf(getEntityImageClass(leaf));</span>
-
-<span class="nc" id="L106">		return rawLayout;</span>
-	}
-
-	private TextBlock getEntityImageClass(Entity entity) {
-<span class="nc" id="L110">		return new EntityImageClass(entity, this);</span>
-	}
+//	@Override
+//	final protected ImageData exportDiagramInternal01970(OutputStream os, int index, FileFormatOption fileFormatOption)
+//			throws IOException {
+//		if (useLayoutExplicit != 0)
+//			return exportLayoutExplicit(os, index, fileFormatOption);
+//
+//		return super.exportDiagramInternal01970(os, index, fileFormatOption);
+//	}
+//
+//	final protected ImageData exportLayoutExplicit(OutputStream os, int index, FileFormatOption fileFormatOption)
+//			throws IOException {
+//		final FullLayout fullLayout = new FullLayout();
+//		for (int i = 0; i &lt;= useLayoutExplicit; i++) {
+//			final RowLayout rawLayout = getRawLayout(i);
+//			fullLayout.addRowLayout(rawLayout);
+//		}
+//		return createImageBuilder(fileFormatOption).annotations(false) // Backwards compatibility - this only applies
+//																		// when &quot;layout_new_line&quot; is used
+//				.drawable(fullLayout).write(os);
+//	}
+//
+//	private RowLayout getRawLayout(int raw) {
+//		final RowLayout rawLayout = new RowLayout();
+//		for (Entity leaf : this.leafs())
+//			if (leaf.getRawLayout() == raw)
+//				rawLayout.addLeaf(getEntityImageClass(leaf));
+//
+//		return rawLayout;
+//	}
+//
+//	private TextBlock getEntityImageClass(Entity entity) {
+//		return new EntityImageClass(entity, this);
+//	}
 
 	@Override
 	public String checkFinalError() {
-<span class="fc bfc" id="L115" title="All 2 branches covered.">		for (Link link : this.getLinks()) {</span>
-<span class="fc" id="L116">			final int len = link.getLength();</span>
-<span class="fc bfc" id="L117" title="All 2 branches covered.">			if (len == 1)</span>
-<span class="fc bfc" id="L118" title="All 2 branches covered.">				for (Link link2 : this.getLinks())</span>
-<span class="pc bpc" id="L119" title="2 of 4 branches missed.">					if (link2.sameConnections(link) &amp;&amp; link2.getLength() != 1)</span>
-<span class="nc" id="L120">						link2.setLength(1);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		for (Link link : this.getLinks()) {</span>
+<span class="fc" id="L109">			final int len = link.getLength();</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">			if (len == 1)</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">				for (Link link2 : this.getLinks())</span>
+<span class="pc bpc" id="L112" title="2 of 4 branches missed.">					if (link2.sameConnections(link) &amp;&amp; link2.getLength() != 1)</span>
+<span class="nc" id="L113">						link2.setLength(1);</span>
 
-<span class="fc" id="L122">		}</span>
+<span class="fc" id="L115">		}</span>
 
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (getPragma().isFalse(PragmaKey.USE_INTERMEDIATE_PACKAGES))</span>
-<span class="nc" id="L125">			packSomePackage();</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (getPragma().isFalse(PragmaKey.USE_INTERMEDIATE_PACKAGES))</span>
+<span class="nc" id="L118">			packSomePackage();</span>
 
-<span class="fc" id="L127">		this.applySingleStrategy();</span>
-<span class="fc" id="L128">		return super.checkFinalError();</span>
+<span class="fc" id="L120">		this.applySingleStrategy();</span>
+<span class="fc" id="L121">		return super.checkFinalError();</span>
 	}
 
 	public CommandExecutionResult checkIfPackageHierarchyIsOk(Entity entity) {
-<span class="fc" id="L132">		Quark&lt;Entity&gt; current = entity.getQuark().getParent();</span>
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		while (current.isRoot() == false) {</span>
-<span class="nc bnc" id="L134" title="All 4 branches missed.">			if (current.getData() != null &amp;&amp; current.getData().isGroup() == false)</span>
-<span class="nc" id="L135">				return CommandExecutionResult.error(&quot;Bad hierarchy for class &quot; + entity.getQuark().getQualifiedName());</span>
-<span class="nc" id="L136">			current = current.getParent();</span>
+<span class="fc" id="L125">		Quark&lt;Entity&gt; current = entity.getQuark().getParent();</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		while (current.isRoot() == false) {</span>
+<span class="nc bnc" id="L127" title="All 4 branches missed.">			if (current.getData() != null &amp;&amp; current.getData().isGroup() == false)</span>
+<span class="nc" id="L128">				return CommandExecutionResult.error(&quot;Bad hierarchy for class &quot; + entity.getQuark().getQualifiedName());</span>
+<span class="nc" id="L129">			current = current.getParent();</span>
 		}
-<span class="fc" id="L138">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L131">		return CommandExecutionResult.ok();</span>
 	}
 
 }

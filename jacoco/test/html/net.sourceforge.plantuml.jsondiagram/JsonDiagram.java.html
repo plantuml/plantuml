@@ -109,45 +109,38 @@ public class JsonDiagram extends TitledDiagram {
 <span class="fc" id="L109">		return new DiagramDescription(&quot;(Json)&quot;);</span>
 	}
 
-	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-
-<span class="nc" id="L116">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);</span>
-	}
-
 	private void drawInternal(UGraphic ug) {
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (handwritten)</span>
-<span class="nc" id="L121">			ug = new UGraphicHandwritten(ug);</span>
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (root == null) {</span>
-<span class="nc" id="L123">			final Display display = Display.getWithNewlines(getSkinParam().getPragma(),</span>
-<span class="nc" id="L124">					&quot;Your data does not sound like &quot; + getUmlDiagramType() + &quot; data&quot;);</span>
-<span class="nc" id="L125">			final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFontFactory.courier(14));</span>
-<span class="nc" id="L126">			TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, getSkinParam());</span>
-<span class="nc" id="L127">			result = TextBlockUtils.withMargin(result, 5, 2);</span>
-<span class="nc" id="L128">			result.drawU(ug);</span>
-<span class="nc" id="L129">		} else {</span>
-<span class="fc" id="L130">			new SmetanaForJson(ug, getSkinParam()).drawMe(root, highlighted);</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (handwritten)</span>
+<span class="nc" id="L114">			ug = new UGraphicHandwritten(ug);</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (root == null) {</span>
+<span class="nc" id="L116">			final Display display = Display.getWithNewlines(getSkinParam().getPragma(),</span>
+<span class="nc" id="L117">					&quot;Your data does not sound like &quot; + getUmlDiagramType() + &quot; data&quot;);</span>
+<span class="nc" id="L118">			final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFontFactory.courier(14));</span>
+<span class="nc" id="L119">			TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, getSkinParam());</span>
+<span class="nc" id="L120">			result = TextBlockUtils.withMargin(result, 5, 2);</span>
+<span class="nc" id="L121">			result.drawU(ug);</span>
+<span class="nc" id="L122">		} else {</span>
+<span class="fc" id="L123">			new SmetanaForJson(ug, getSkinParam()).drawMe(root, highlighted);</span>
 		}
-<span class="fc" id="L132">	}</span>
+<span class="fc" id="L125">	}</span>
 
 	@Override
 	protected TextBlock getTextMainBlock01970(final FileFormatOption fileFormatOption) {
-<span class="fc" id="L136">		return new TextBlock() {</span>
+<span class="fc" id="L129">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L139">				drawInternal(ug);</span>
-<span class="fc" id="L140">			}</span>
+<span class="fc" id="L132">				drawInternal(ug);</span>
+<span class="fc" id="L133">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L143">				return TextBlockUtils.getMinMax(getTextMainBlock01970(fileFormatOption), stringBounder, true).getDimension();</span>
+<span class="fc" id="L136">				return TextBlockUtils.getMinMax(getTextMainBlock01970(fileFormatOption), stringBounder, true).getDimension();</span>
 			}
 		};
 	}
 	
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="fc" id="L150">		return getTextMainBlock01970(fileFormatOption);</span>
+<span class="fc" id="L143">		return getTextMainBlock01970(fileFormatOption);</span>
 	}
 
 

@@ -97,32 +97,26 @@ public class PSystemEbnf extends TitledDiagram {
 	}
 
 	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-<span class="nc" id="L102">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);</span>
-	}
-
-	@Override
 	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (expressions.size() == 0) {</span>
-<span class="nc" id="L108">			final Style style = ETile.getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L109">			final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (expressions.size() == 0) {</span>
+<span class="nc" id="L102">			final Style style = ETile.getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L103">			final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="nc" id="L111">			final TextBlock tmp = EbnfEngine.syntaxError(fc, getSkinParam());</span>
-<span class="nc" id="L112">			return TextBlockUtils.addBackcolor(tmp, null);</span>
+<span class="nc" id="L105">			final TextBlock tmp = EbnfEngine.syntaxError(fc, getSkinParam());</span>
+<span class="nc" id="L106">			return TextBlockUtils.addBackcolor(tmp, null);</span>
 		}
 
-<span class="nc" id="L115">		TextBlock result = expressions.get(0).getUDrawable(getSkinParam(), getPreprocessingArtifact());</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		for (int i = 1; i &lt; expressions.size(); i++)</span>
-<span class="nc" id="L117">			result = TextBlockUtils.mergeTB(result,</span>
-<span class="nc" id="L118">					expressions.get(i).getUDrawable(getSkinParam(), getPreprocessingArtifact()),</span>
+<span class="nc" id="L109">		TextBlock result = expressions.get(0).getUDrawable(getSkinParam(), getPreprocessingArtifact());</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		for (int i = 1; i &lt; expressions.size(); i++)</span>
+<span class="nc" id="L111">			result = TextBlockUtils.mergeTB(result,</span>
+<span class="nc" id="L112">					expressions.get(i).getUDrawable(getSkinParam(), getPreprocessingArtifact()),</span>
 					HorizontalAlignment.LEFT);
-<span class="nc" id="L120">		return TextBlockUtils.addBackcolor(result, null);</span>
+<span class="nc" id="L114">		return TextBlockUtils.addBackcolor(result, null);</span>
 	}
 
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L125">		return getTextMainBlock01970(fileFormatOption);</span>
+<span class="nc" id="L119">		return getTextMainBlock01970(fileFormatOption);</span>
 	}
 
 }

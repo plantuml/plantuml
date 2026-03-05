@@ -95,30 +95,23 @@ public class ChartDiagram extends TitledDiagram {
 <span class="nc" id="L95">	}</span>
 
 	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-
-<span class="nc" id="L101">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);</span>
-	}
-
-	@Override
 	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
-<span class="nc" id="L106">		return new TextBlock() {</span>
+<span class="nc" id="L99">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L109">				drawMe(ug);</span>
-<span class="nc" id="L110">			}</span>
+<span class="nc" id="L102">				drawMe(ug);</span>
+<span class="nc" id="L103">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L113">				return getRenderer().calculateDimension(stringBounder);</span>
+<span class="nc" id="L106">				return getRenderer().calculateDimension(stringBounder);</span>
 			}
 		};
 	}
 
 	private void drawMe(UGraphic ug) {
-<span class="nc" id="L119">		final ChartRenderer renderer = getRenderer();</span>
-<span class="nc" id="L120">		renderer.drawU(ug);</span>
-<span class="nc" id="L121">	}</span>
+<span class="nc" id="L112">		final ChartRenderer renderer = getRenderer();</span>
+<span class="nc" id="L113">		renderer.drawU(ug);</span>
+<span class="nc" id="L114">	}</span>
 
 	private ChartRenderer getRenderer() {
 		// For horizontal orientation, use h-axis data where vertical mode uses y-axis,
@@ -127,236 +120,236 @@ public class ChartDiagram extends TitledDiagram {
 		// For horizontal bars: xAxis=numeric (horizontal), yAxisLabels=categories
 		// (vertical)
 		// We need to pass to renderer properly based on what it expects
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (orientation == Orientation.HORIZONTAL) {</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (orientation == Orientation.HORIZONTAL) {</span>
 			// For horizontal: pass h-axis numeric as yAxis, v-axis labels as xAxisLabels
 			// This way bars grow along the correct axis
-<span class="nc" id="L133">			return new ChartRenderer(getSkinParam(), yAxisLabels, yAxis.getTitle(), null, xAxisLabelPosition, series,</span>
+<span class="nc" id="L126">			return new ChartRenderer(getSkinParam(), yAxisLabels, yAxis.getTitle(), null, xAxisLabelPosition, series,</span>
 					xAxis, xAxis, null, legendPosition, yGridMode, xGridMode, stackMode, orientation, annotations);
 		}
 
 		// For vertical: h-axis=categories (xAxisLabels), v-axis=numeric (yAxis)
 		// Use xAxis title if available (for coordinate-pair mode), otherwise use
 		// xAxisTitle
-<span class="nc bnc" id="L140" title="All 6 branches missed.">		final String hAxisTitle = (xAxis != null &amp;&amp; xAxis.getTitle() != null &amp;&amp; !xAxis.getTitle().isEmpty())</span>
-<span class="nc" id="L141">				? xAxis.getTitle()</span>
-<span class="nc" id="L142">				: xAxisTitle;</span>
-<span class="nc" id="L143">		return new ChartRenderer(getSkinParam(), xAxisLabels, hAxisTitle, xAxisTickSpacing, xAxisLabelPosition, series,</span>
+<span class="nc bnc" id="L133" title="All 6 branches missed.">		final String hAxisTitle = (xAxis != null &amp;&amp; xAxis.getTitle() != null &amp;&amp; !xAxis.getTitle().isEmpty())</span>
+<span class="nc" id="L134">				? xAxis.getTitle()</span>
+<span class="nc" id="L135">				: xAxisTitle;</span>
+<span class="nc" id="L136">		return new ChartRenderer(getSkinParam(), xAxisLabels, hAxisTitle, xAxisTickSpacing, xAxisLabelPosition, series,</span>
 				xAxis, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation, annotations);
 	}
 
 	// Command methods
 
 	public CommandExecutionResult setXAxisLabels(List&lt;String&gt; labels) {
-<span class="nc" id="L150">		this.xAxisLabels.clear();</span>
-<span class="nc" id="L151">		this.xAxisLabels.addAll(labels);</span>
-<span class="nc" id="L152">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L143">		this.xAxisLabels.clear();</span>
+<span class="nc" id="L144">		this.xAxisLabels.addAll(labels);</span>
+<span class="nc" id="L145">		return CommandExecutionResult.ok();</span>
 	}
 
 	public void setXAxisTitle(String title) {
-<span class="nc" id="L156">		this.xAxisTitle = title;</span>
-<span class="nc" id="L157">	}</span>
+<span class="nc" id="L149">		this.xAxisTitle = title;</span>
+<span class="nc" id="L150">	}</span>
 
 	public void setXAxisLabelPosition(ChartAxis.LabelPosition position) {
-<span class="nc" id="L160">		this.xAxisLabelPosition = position;</span>
-<span class="nc" id="L161">	}</span>
+<span class="nc" id="L153">		this.xAxisLabelPosition = position;</span>
+<span class="nc" id="L154">	}</span>
 
 	public ChartAxis.LabelPosition getXAxisLabelPosition() {
-<span class="nc" id="L164">		return xAxisLabelPosition;</span>
+<span class="nc" id="L157">		return xAxisLabelPosition;</span>
 	}
 
 	public void setXAxisTickSpacing(Integer spacing) {
-<span class="nc" id="L168">		this.xAxisTickSpacing = spacing;</span>
-<span class="nc" id="L169">	}</span>
+<span class="nc" id="L161">		this.xAxisTickSpacing = spacing;</span>
+<span class="nc" id="L162">	}</span>
 
 	public Integer getXAxisTickSpacing() {
-<span class="nc" id="L172">		return xAxisTickSpacing;</span>
+<span class="nc" id="L165">		return xAxisTickSpacing;</span>
 	}
 
 	public CommandExecutionResult setXAxis(String title, Double min, Double max) {
-<span class="nc bnc" id="L176" title="All 2 branches missed.">		if (title != null)</span>
-<span class="nc" id="L177">			xAxis.setTitle(title);</span>
-<span class="nc bnc" id="L178" title="All 2 branches missed.">		if (min != null)</span>
-<span class="nc" id="L179">			xAxis.setMin(min);</span>
-<span class="nc bnc" id="L180" title="All 2 branches missed.">		if (max != null)</span>
-<span class="nc" id="L181">			xAxis.setMax(max);</span>
-<span class="nc" id="L182">		return CommandExecutionResult.ok();</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (title != null)</span>
+<span class="nc" id="L170">			xAxis.setTitle(title);</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (min != null)</span>
+<span class="nc" id="L172">			xAxis.setMin(min);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (max != null)</span>
+<span class="nc" id="L174">			xAxis.setMax(max);</span>
+<span class="nc" id="L175">		return CommandExecutionResult.ok();</span>
 	}
 
 	public ChartAxis getXAxis() {
-<span class="nc" id="L186">		return xAxis;</span>
+<span class="nc" id="L179">		return xAxis;</span>
 	}
 
 	public CommandExecutionResult setYAxis(String title, Double min, Double max) {
-<span class="nc bnc" id="L190" title="All 2 branches missed.">		if (title != null)</span>
-<span class="nc" id="L191">			yAxis.setTitle(title);</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">		if (min != null)</span>
-<span class="nc" id="L193">			yAxis.setMin(min);</span>
-<span class="nc bnc" id="L194" title="All 2 branches missed.">		if (max != null)</span>
-<span class="nc" id="L195">			yAxis.setMax(max);</span>
-<span class="nc" id="L196">		return CommandExecutionResult.ok();</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		if (title != null)</span>
+<span class="nc" id="L184">			yAxis.setTitle(title);</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (min != null)</span>
+<span class="nc" id="L186">			yAxis.setMin(min);</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		if (max != null)</span>
+<span class="nc" id="L188">			yAxis.setMax(max);</span>
+<span class="nc" id="L189">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult setYAxisLabels(List&lt;String&gt; labels) {
-<span class="nc" id="L200">		this.yAxisLabels.clear();</span>
-<span class="nc" id="L201">		this.yAxisLabels.addAll(labels);</span>
-<span class="nc" id="L202">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L193">		this.yAxisLabels.clear();</span>
+<span class="nc" id="L194">		this.yAxisLabels.addAll(labels);</span>
+<span class="nc" id="L195">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult setY2Axis(String title, Double min, Double max) {
-<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (y2Axis == null)</span>
-<span class="nc" id="L207">			y2Axis = new ChartAxis();</span>
-<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (title != null)</span>
-<span class="nc" id="L209">			y2Axis.setTitle(title);</span>
-<span class="nc bnc" id="L210" title="All 2 branches missed.">		if (min != null)</span>
-<span class="nc" id="L211">			y2Axis.setMin(min);</span>
-<span class="nc bnc" id="L212" title="All 2 branches missed.">		if (max != null)</span>
-<span class="nc" id="L213">			y2Axis.setMax(max);</span>
-<span class="nc" id="L214">		return CommandExecutionResult.ok();</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">		if (y2Axis == null)</span>
+<span class="nc" id="L200">			y2Axis = new ChartAxis();</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">		if (title != null)</span>
+<span class="nc" id="L202">			y2Axis.setTitle(title);</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		if (min != null)</span>
+<span class="nc" id="L204">			y2Axis.setMin(min);</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (max != null)</span>
+<span class="nc" id="L206">			y2Axis.setMax(max);</span>
+<span class="nc" id="L207">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult addSeries(ChartSeries series) {
 		// Validation for coordinate-pair notation
-<span class="nc bnc" id="L219" title="All 2 branches missed.">		if (series.hasExplicitXValues()) {</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		if (series.hasExplicitXValues()) {</span>
 			// Coordinate pairs only allowed for line and scatter charts
-<span class="nc bnc" id="L221" title="All 4 branches missed.">			if (series.getType() != ChartSeries.SeriesType.LINE &amp;&amp; series.getType() != ChartSeries.SeriesType.SCATTER) {</span>
-<span class="nc" id="L222">				return CommandExecutionResult</span>
-<span class="nc" id="L223">						.error(&quot;Coordinate pair notation (x:y) is only supported for line and scatter charts&quot;);</span>
+<span class="nc bnc" id="L214" title="All 4 branches missed.">			if (series.getType() != ChartSeries.SeriesType.LINE &amp;&amp; series.getType() != ChartSeries.SeriesType.SCATTER) {</span>
+<span class="nc" id="L215">				return CommandExecutionResult</span>
+<span class="nc" id="L216">						.error(&quot;Coordinate pair notation (x:y) is only supported for line and scatter charts&quot;);</span>
 			}
 
 			// Coordinate pairs require numeric h-axis (not categorical labels)
-<span class="nc bnc" id="L227" title="All 2 branches missed.">			if (!xAxisLabels.isEmpty()) {</span>
-<span class="nc" id="L228">				return CommandExecutionResult.error(</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">			if (!xAxisLabels.isEmpty()) {</span>
+<span class="nc" id="L221">				return CommandExecutionResult.error(</span>
 						&quot;Coordinate pair notation requires numeric h-axis (e.g., h-axis \&quot;x\&quot; -5 --&gt; 5), not categorical labels&quot;);
 			}
 
 			// Coordinate pairs require h-axis to be explicitly set
-<span class="nc bnc" id="L233" title="All 4 branches missed.">			if (xAxis.isAutoScale() || xAxis.getMax() == xAxis.getMin()) {</span>
-<span class="nc" id="L234">				return CommandExecutionResult</span>
-<span class="nc" id="L235">						.error(&quot;Coordinate pair notation requires explicit h-axis range (e.g., h-axis \&quot;x\&quot; -5 --&gt; 5)&quot;);</span>
+<span class="nc bnc" id="L226" title="All 4 branches missed.">			if (xAxis.isAutoScale() || xAxis.getMax() == xAxis.getMin()) {</span>
+<span class="nc" id="L227">				return CommandExecutionResult</span>
+<span class="nc" id="L228">						.error(&quot;Coordinate pair notation requires explicit h-axis range (e.g., h-axis \&quot;x\&quot; -5 --&gt; 5)&quot;);</span>
 			}
 
 			// All series must use the same format
-<span class="nc bnc" id="L239" title="All 2 branches missed.">			if (!this.series.isEmpty()) {</span>
-<span class="nc" id="L240">				final boolean firstHasX = this.series.get(0).hasExplicitXValues();</span>
-<span class="nc bnc" id="L241" title="All 2 branches missed.">				if (firstHasX != series.hasExplicitXValues()) {</span>
-<span class="nc" id="L242">					return CommandExecutionResult.error(</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">			if (!this.series.isEmpty()) {</span>
+<span class="nc" id="L233">				final boolean firstHasX = this.series.get(0).hasExplicitXValues();</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">				if (firstHasX != series.hasExplicitXValues()) {</span>
+<span class="nc" id="L235">					return CommandExecutionResult.error(</span>
 							&quot;All series must use the same data format (either all coordinate pairs or all index-based)&quot;);
 				}
 			}
 
 			// Validate x-coordinates fall within axis range
-<span class="nc bnc" id="L248" title="All 2 branches missed.">			for (double x : series.getXValues()) {</span>
-<span class="nc bnc" id="L249" title="All 4 branches missed.">				if (x &lt; xAxis.getMin() || x &gt; xAxis.getMax()) {</span>
-<span class="nc" id="L250">					return CommandExecutionResult.error(&quot;X-coordinate &quot; + x + &quot; is outside h-axis range [&quot;</span>
-<span class="nc" id="L251">							+ xAxis.getMin() + &quot;, &quot; + xAxis.getMax() + &quot;]&quot;);</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">			for (double x : series.getXValues()) {</span>
+<span class="nc bnc" id="L242" title="All 4 branches missed.">				if (x &lt; xAxis.getMin() || x &gt; xAxis.getMax()) {</span>
+<span class="nc" id="L243">					return CommandExecutionResult.error(&quot;X-coordinate &quot; + x + &quot; is outside h-axis range [&quot;</span>
+<span class="nc" id="L244">							+ xAxis.getMin() + &quot;, &quot; + xAxis.getMax() + &quot;]&quot;);</span>
 				}
-<span class="nc" id="L253">			}</span>
+<span class="nc" id="L246">			}</span>
 
 			// Auto-scale x-axis to include all x-values
-<span class="nc bnc" id="L256" title="All 2 branches missed.">			for (double x : series.getXValues()) {</span>
-<span class="nc" id="L257">				xAxis.includeValue(x);</span>
-<span class="nc" id="L258">			}</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">			for (double x : series.getXValues()) {</span>
+<span class="nc" id="L250">				xAxis.includeValue(x);</span>
+<span class="nc" id="L251">			}</span>
 		} else {
 			// Index-based mode: ensure consistency
-<span class="nc bnc" id="L261" title="All 2 branches missed.">			if (!this.series.isEmpty()) {</span>
-<span class="nc" id="L262">				final boolean firstHasX = this.series.get(0).hasExplicitXValues();</span>
-<span class="nc bnc" id="L263" title="All 2 branches missed.">				if (firstHasX != series.hasExplicitXValues()) {</span>
-<span class="nc" id="L264">					return CommandExecutionResult.error(</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">			if (!this.series.isEmpty()) {</span>
+<span class="nc" id="L255">				final boolean firstHasX = this.series.get(0).hasExplicitXValues();</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">				if (firstHasX != series.hasExplicitXValues()) {</span>
+<span class="nc" id="L257">					return CommandExecutionResult.error(</span>
 							&quot;All series must use the same data format (either all coordinate pairs or all index-based)&quot;);
 				}
 			}
 		}
 
-<span class="nc" id="L270">		this.series.add(series);</span>
+<span class="nc" id="L263">		this.series.add(series);</span>
 
 		// Auto-scale y-axes if needed
-<span class="nc bnc" id="L273" title="All 4 branches missed.">		final ChartAxis axis = series.isUseSecondaryAxis() &amp;&amp; y2Axis != null ? y2Axis : yAxis;</span>
-<span class="nc bnc" id="L274" title="All 2 branches missed.">		for (double value : series.getValues()) {</span>
-<span class="nc" id="L275">			axis.includeValue(value);</span>
-<span class="nc" id="L276">		}</span>
+<span class="nc bnc" id="L266" title="All 4 branches missed.">		final ChartAxis axis = series.isUseSecondaryAxis() &amp;&amp; y2Axis != null ? y2Axis : yAxis;</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">		for (double value : series.getValues()) {</span>
+<span class="nc" id="L268">			axis.includeValue(value);</span>
+<span class="nc" id="L269">		}</span>
 
-<span class="nc" id="L278">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L271">		return CommandExecutionResult.ok();</span>
 	}
 
 	public List&lt;String&gt; getXAxisLabels() {
-<span class="nc" id="L282">		return xAxisLabels;</span>
+<span class="nc" id="L275">		return xAxisLabels;</span>
 	}
 
 	public List&lt;ChartSeries&gt; getSeries() {
-<span class="nc" id="L286">		return series;</span>
+<span class="nc" id="L279">		return series;</span>
 	}
 
 	public ChartAxis getYAxis() {
-<span class="nc" id="L290">		return yAxis;</span>
+<span class="nc" id="L283">		return yAxis;</span>
 	}
 
 	public ChartAxis getY2Axis() {
-<span class="nc" id="L294">		return y2Axis;</span>
+<span class="nc" id="L287">		return y2Axis;</span>
 	}
 
 	public CommandExecutionResult setLegendPosition(LegendPosition position) {
-<span class="nc" id="L298">		this.legendPosition = position;</span>
-<span class="nc" id="L299">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L291">		this.legendPosition = position;</span>
+<span class="nc" id="L292">		return CommandExecutionResult.ok();</span>
 	}
 
 	public LegendPosition getLegendPosition() {
-<span class="nc" id="L303">		return legendPosition;</span>
+<span class="nc" id="L296">		return legendPosition;</span>
 	}
 
 	public CommandExecutionResult setGridMode(GridMode mode) {
-<span class="nc" id="L307">		this.xGridMode = mode;</span>
-<span class="nc" id="L308">		this.yGridMode = mode;</span>
-<span class="nc" id="L309">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L300">		this.xGridMode = mode;</span>
+<span class="nc" id="L301">		this.yGridMode = mode;</span>
+<span class="nc" id="L302">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult setXGridMode(GridMode mode) {
-<span class="nc" id="L313">		this.xGridMode = mode;</span>
-<span class="nc" id="L314">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L306">		this.xGridMode = mode;</span>
+<span class="nc" id="L307">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult setYGridMode(GridMode mode) {
-<span class="nc" id="L318">		this.yGridMode = mode;</span>
-<span class="nc" id="L319">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L311">		this.yGridMode = mode;</span>
+<span class="nc" id="L312">		return CommandExecutionResult.ok();</span>
 	}
 
 	public GridMode getXGridMode() {
-<span class="nc" id="L323">		return xGridMode;</span>
+<span class="nc" id="L316">		return xGridMode;</span>
 	}
 
 	public GridMode getYGridMode() {
-<span class="nc" id="L327">		return yGridMode;</span>
+<span class="nc" id="L320">		return yGridMode;</span>
 	}
 
 	public CommandExecutionResult setStackMode(StackMode mode) {
-<span class="nc" id="L331">		this.stackMode = mode;</span>
-<span class="nc" id="L332">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L324">		this.stackMode = mode;</span>
+<span class="nc" id="L325">		return CommandExecutionResult.ok();</span>
 	}
 
 	public StackMode getStackMode() {
-<span class="nc" id="L336">		return stackMode;</span>
+<span class="nc" id="L329">		return stackMode;</span>
 	}
 
 	public CommandExecutionResult setOrientation(Orientation orientation) {
-<span class="nc" id="L340">		this.orientation = orientation;</span>
-<span class="nc" id="L341">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L333">		this.orientation = orientation;</span>
+<span class="nc" id="L334">		return CommandExecutionResult.ok();</span>
 	}
 
 	public Orientation getOrientation() {
-<span class="nc" id="L345">		return orientation;</span>
+<span class="nc" id="L338">		return orientation;</span>
 	}
 
 	public CommandExecutionResult addAnnotation(ChartAnnotation annotation) {
-<span class="nc" id="L349">		this.annotations.add(annotation);</span>
-<span class="nc" id="L350">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L342">		this.annotations.add(annotation);</span>
+<span class="nc" id="L343">		return CommandExecutionResult.ok();</span>
 	}
 
 	public List&lt;ChartAnnotation&gt; getAnnotations() {
-<span class="nc" id="L354">		return annotations;</span>
+<span class="nc" id="L347">		return annotations;</span>
 	}
 
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L359">		return getTextMainBlock01970(fileFormatOption);</span>
+<span class="nc" id="L352">		return getTextMainBlock01970(fileFormatOption);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

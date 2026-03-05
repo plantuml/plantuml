@@ -34,14 +34,11 @@
  */
 package net.sourceforge.plantuml.gitlog;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Collection;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -56,39 +53,32 @@ public class GitDiagram extends TitledDiagram {
 	private SmetanaForGit smetana;
 
 	public GitDiagram(UmlSource source, GitTextArea textArea, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L59">		super(source, UmlDiagramType.GIT, null, preprocessing);</span>
-<span class="nc" id="L60">		this.gnodes = new GNodeBuilder(textArea.getAllCommits()).getAllNodes();</span>
-<span class="nc" id="L61">		new GNodeBuilder(textArea.getAllCommits());</span>
-<span class="nc" id="L62">	}</span>
+<span class="nc" id="L56">		super(source, UmlDiagramType.GIT, null, preprocessing);</span>
+<span class="nc" id="L57">		this.gnodes = new GNodeBuilder(textArea.getAllCommits()).getAllNodes();</span>
+<span class="nc" id="L58">		new GNodeBuilder(textArea.getAllCommits());</span>
+<span class="nc" id="L59">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L65">		return new DiagramDescription(&quot;(Git)&quot;);</span>
-	}
-
-	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-
-<span class="nc" id="L72">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);</span>
+<span class="nc" id="L62">		return new DiagramDescription(&quot;(Git)&quot;);</span>
 	}
 
 	private SmetanaForGit getOrCreateSmetana(StringBounder stringBounder) {
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (smetana == null)</span>
-<span class="nc" id="L77">			smetana = new SmetanaForGit(stringBounder, getSkinParam());</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (smetana == null)</span>
+<span class="nc" id="L67">			smetana = new SmetanaForGit(stringBounder, getSkinParam());</span>
 
-<span class="nc" id="L79">		return smetana;</span>
+<span class="nc" id="L69">		return smetana;</span>
 	}
 
 	@Override
 	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
-<span class="nc" id="L84">		return new TextBlock() {</span>
+<span class="nc" id="L74">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L87">				getOrCreateSmetana(ug.getStringBounder()).drawMe(ug, gnodes);</span>
-<span class="nc" id="L88">			}</span>
+<span class="nc" id="L77">				getOrCreateSmetana(ug.getStringBounder()).drawMe(ug, gnodes);</span>
+<span class="nc" id="L78">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L91">				return getOrCreateSmetana(stringBounder).calculateDimension(gnodes);</span>
+<span class="nc" id="L81">				return getOrCreateSmetana(stringBounder).calculateDimension(gnodes);</span>
 			}
 
 		};
@@ -96,9 +86,8 @@ public class GitDiagram extends TitledDiagram {
 
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L99">		return getTextMainBlock01970(fileFormatOption);</span>
+<span class="nc" id="L89">		return getTextMainBlock01970(fileFormatOption);</span>
 	}
-
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

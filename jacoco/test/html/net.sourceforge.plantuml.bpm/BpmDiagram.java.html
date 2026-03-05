@@ -85,126 +85,119 @@ public class BpmDiagram extends TitledDiagram {
 <span class="nc" id="L85">		return super.createImageBuilder(fileFormatOption).annotations(false);</span>
 	}
 
-	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-
-<span class="nc" id="L92">		return createImageBuilder(fileFormatOption).drawable(getUDrawable()).write(os);</span>
-	}
-
 	private UDrawable getUDrawable() {
-<span class="nc" id="L96">		final Grid grid = createGrid();</span>
-<span class="nc" id="L97">		cleanGrid(grid);</span>
-<span class="nc" id="L98">		final GridArray gridArray = grid.toArray(SkinParam.create(PathSystem.fetch(), getUmlDiagramType(), getPragma(),</span>
-<span class="nc" id="L99">				getPreprocessingArtifact().getOption()));</span>
+<span class="nc" id="L89">		final Grid grid = createGrid();</span>
+<span class="nc" id="L90">		cleanGrid(grid);</span>
+<span class="nc" id="L91">		final GridArray gridArray = grid.toArray(SkinParam.create(PathSystem.fetch(), getUmlDiagramType(), getPragma(),</span>
+<span class="nc" id="L92">				getPreprocessingArtifact().getOption()));</span>
 		// gridArray.addEdges(edges);
 		// System.err.println(&quot;gridArray=&quot; + gridArray);
-<span class="nc" id="L102">		return gridArray;</span>
+<span class="nc" id="L95">		return gridArray;</span>
 	}
 
 	public CommandExecutionResult addEvent(BpmEvent event) {
-<span class="nc" id="L106">		this.events.add(event);</span>
-<span class="nc" id="L107">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L99">		this.events.add(event);</span>
+<span class="nc" id="L100">		return CommandExecutionResult.ok();</span>
 	}
 
 	private Coord current;
 	private Cell last;
 
 	private Grid createGrid() {
-<span class="nc" id="L114">		final Grid grid = new Grid();</span>
-<span class="nc" id="L115">		this.current = grid.getRoot();</span>
+<span class="nc" id="L107">		final Grid grid = new Grid();</span>
+<span class="nc" id="L108">		this.current = grid.getRoot();</span>
 		// this.edges.clear();
-<span class="nc" id="L117">		last = grid.getCell(current);</span>
-<span class="nc" id="L118">		grid.getCell(current).setData(start);</span>
+<span class="nc" id="L110">		last = grid.getCell(current);</span>
+<span class="nc" id="L111">		grid.getCell(current).setData(start);</span>
 
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		for (BpmEvent event : events) {</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (event instanceof BpmEventAdd) {</span>
-<span class="nc" id="L122">				final BpmEventAdd tmp = (BpmEventAdd) event;</span>
-<span class="nc" id="L123">				addInGrid(grid, tmp.getElement());</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">			} else if (event instanceof BpmEventResume) {</span>
-<span class="nc" id="L125">				final String idDestination = ((BpmEventResume) event).getId();</span>
-<span class="nc" id="L126">				current = grid.getById(idDestination);</span>
-<span class="nc" id="L127">				last = grid.getCell(current);</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">				if (last == null) {</span>
-<span class="nc" id="L129">					throw new IllegalStateException();</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		for (BpmEvent event : events) {</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">			if (event instanceof BpmEventAdd) {</span>
+<span class="nc" id="L115">				final BpmEventAdd tmp = (BpmEventAdd) event;</span>
+<span class="nc" id="L116">				addInGrid(grid, tmp.getElement());</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">			} else if (event instanceof BpmEventResume) {</span>
+<span class="nc" id="L118">				final String idDestination = ((BpmEventResume) event).getId();</span>
+<span class="nc" id="L119">				current = grid.getById(idDestination);</span>
+<span class="nc" id="L120">				last = grid.getCell(current);</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">				if (last == null) {</span>
+<span class="nc" id="L122">					throw new IllegalStateException();</span>
 				}
-<span class="nc" id="L131">				final Navigator&lt;Line&gt; nav = grid.linesOf(current);</span>
-<span class="nc" id="L132">				final Line newLine = new Line();</span>
-<span class="nc" id="L133">				nav.insertAfter(newLine);</span>
-<span class="nc" id="L134">				final Col row = current.getCol();</span>
-<span class="nc" id="L135">				current = new Coord(newLine, row);</span>
-<span class="nc bnc" id="L136" title="All 2 branches missed.">			} else if (event instanceof BpmEventGoto) {</span>
-<span class="nc" id="L137">				final BpmEventGoto tmp = (BpmEventGoto) event;</span>
-<span class="nc" id="L138">				final String idDestination = tmp.getId();</span>
-<span class="nc" id="L139">				current = grid.getById(idDestination);</span>
-<span class="nc" id="L140">				final Cell src = last;</span>
-<span class="nc" id="L141">				last = grid.getCell(current);</span>
-<span class="nc bnc" id="L142" title="All 2 branches missed.">				if (last == null) {</span>
-<span class="nc" id="L143">					throw new IllegalStateException();</span>
+<span class="nc" id="L124">				final Navigator&lt;Line&gt; nav = grid.linesOf(current);</span>
+<span class="nc" id="L125">				final Line newLine = new Line();</span>
+<span class="nc" id="L126">				nav.insertAfter(newLine);</span>
+<span class="nc" id="L127">				final Col row = current.getCol();</span>
+<span class="nc" id="L128">				current = new Coord(newLine, row);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">			} else if (event instanceof BpmEventGoto) {</span>
+<span class="nc" id="L130">				final BpmEventGoto tmp = (BpmEventGoto) event;</span>
+<span class="nc" id="L131">				final String idDestination = tmp.getId();</span>
+<span class="nc" id="L132">				current = grid.getById(idDestination);</span>
+<span class="nc" id="L133">				final Cell src = last;</span>
+<span class="nc" id="L134">				last = grid.getCell(current);</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">				if (last == null) {</span>
+<span class="nc" id="L136">					throw new IllegalStateException();</span>
 				}
-<span class="nc" id="L145">				final Navigator&lt;Line&gt; nav = grid.linesOf(current);</span>
-<span class="nc" id="L146">				final Line newLine = new Line();</span>
-<span class="nc" id="L147">				nav.insertAfter(newLine);</span>
-<span class="nc" id="L148">				final Col row = current.getCol();</span>
-<span class="nc" id="L149">				current = new Coord(newLine, row);</span>
-<span class="nc" id="L150">				src.addConnectionTo2(last.getData());</span>
-<span class="nc" id="L151">			} else {</span>
-<span class="nc" id="L152">				throw new IllegalStateException();</span>
+<span class="nc" id="L138">				final Navigator&lt;Line&gt; nav = grid.linesOf(current);</span>
+<span class="nc" id="L139">				final Line newLine = new Line();</span>
+<span class="nc" id="L140">				nav.insertAfter(newLine);</span>
+<span class="nc" id="L141">				final Col row = current.getCol();</span>
+<span class="nc" id="L142">				current = new Coord(newLine, row);</span>
+<span class="nc" id="L143">				src.addConnectionTo2(last.getData());</span>
+<span class="nc" id="L144">			} else {</span>
+<span class="nc" id="L145">				throw new IllegalStateException();</span>
 			}
-<span class="nc" id="L154">		}</span>
-<span class="nc" id="L155">		grid.addConnections();</span>
+<span class="nc" id="L147">		}</span>
+<span class="nc" id="L148">		grid.addConnections();</span>
 		// for (GridEdge edge : edges) {
 		// System.err.println(&quot;EDGE=&quot; + edge.getEdgeDirection());
 		// edge.addLineIn(grid);
 		// }
 		// grid.addEdge(edges);
-<span class="nc" id="L161">		return grid;</span>
+<span class="nc" id="L154">		return grid;</span>
 	}
 
 	private void addInGrid(Grid grid, BpmElement element) {
-<span class="nc" id="L165">		final Navigator&lt;Col&gt; nav = grid.colsOf(current);</span>
-<span class="nc" id="L166">		final Col newRow = new Col();</span>
-<span class="nc" id="L167">		nav.insertAfter(newRow);</span>
-<span class="nc" id="L168">		current = new Coord(current.getLine(), newRow);</span>
-<span class="nc" id="L169">		grid.getCell(current).setData(element);</span>
-<span class="nc" id="L170">		last.addConnectionTo2(grid.getCell(current).getData());</span>
-<span class="nc" id="L171">		last = grid.getCell(current);</span>
+<span class="nc" id="L158">		final Navigator&lt;Col&gt; nav = grid.colsOf(current);</span>
+<span class="nc" id="L159">		final Col newRow = new Col();</span>
+<span class="nc" id="L160">		nav.insertAfter(newRow);</span>
+<span class="nc" id="L161">		current = new Coord(current.getLine(), newRow);</span>
+<span class="nc" id="L162">		grid.getCell(current).setData(element);</span>
+<span class="nc" id="L163">		last.addConnectionTo2(grid.getCell(current).getData());</span>
+<span class="nc" id="L164">		last = grid.getCell(current);</span>
 
-<span class="nc" id="L173">	}</span>
+<span class="nc" id="L166">	}</span>
 
 	public CommandExecutionResult newBranch() {
-<span class="nc" id="L176">		final BpmBranch branch = new BpmBranch(events.size());</span>
-<span class="nc" id="L177">		branches.addLast(branch);</span>
-<span class="nc" id="L178">		return addEvent(new BpmEventAdd(branch.getEntryElement()));</span>
+<span class="nc" id="L169">		final BpmBranch branch = new BpmBranch(events.size());</span>
+<span class="nc" id="L170">		branches.addLast(branch);</span>
+<span class="nc" id="L171">		return addEvent(new BpmEventAdd(branch.getEntryElement()));</span>
 	}
 
 	public CommandExecutionResult elseBranch() {
-<span class="nc" id="L182">		final BpmBranch branch = branches.getLast();</span>
-<span class="nc" id="L183">		final int counter = branch.incAndGetCounter();</span>
-<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (counter == 2) {</span>
-<span class="nc" id="L185">			addEvent(new BpmEventAdd(branch.getElseElement()));</span>
-<span class="nc" id="L186">			return addEvent(branch.getResumeEntryEvent());</span>
+<span class="nc" id="L175">		final BpmBranch branch = branches.getLast();</span>
+<span class="nc" id="L176">		final int counter = branch.incAndGetCounter();</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		if (counter == 2) {</span>
+<span class="nc" id="L178">			addEvent(new BpmEventAdd(branch.getElseElement()));</span>
+<span class="nc" id="L179">			return addEvent(branch.getResumeEntryEvent());</span>
 		}
-<span class="nc" id="L188">		addEvent(branch.getGoToEndEvent());</span>
-<span class="nc" id="L189">		return addEvent(branch.getResumeEntryEvent());</span>
+<span class="nc" id="L181">		addEvent(branch.getGoToEndEvent());</span>
+<span class="nc" id="L182">		return addEvent(branch.getResumeEntryEvent());</span>
 	}
 
 	public CommandExecutionResult endBranch() {
-<span class="nc" id="L193">		final BpmBranch branch = branches.removeLast();</span>
-<span class="nc" id="L194">		return addEvent(branch.getGoToEndEvent());</span>
+<span class="nc" id="L186">		final BpmBranch branch = branches.removeLast();</span>
+<span class="nc" id="L187">		return addEvent(branch.getGoToEndEvent());</span>
 	}
 
 	@Override
 	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
-<span class="nc" id="L199">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L192">		throw new UnsupportedOperationException();</span>
 	}
 	
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L204">		final Grid grid = createGrid();</span>
-<span class="nc" id="L205">		cleanGrid(grid);</span>
-<span class="nc" id="L206">		return grid.toArray(SkinParam.create(PathSystem.fetch(), getUmlDiagramType(), getPragma(),</span>
-<span class="nc" id="L207">				getPreprocessingArtifact().getOption()));</span>
+<span class="nc" id="L197">		final Grid grid = createGrid();</span>
+<span class="nc" id="L198">		cleanGrid(grid);</span>
+<span class="nc" id="L199">		return grid.toArray(SkinParam.create(PathSystem.fetch(), getUmlDiagramType(), getPragma(),</span>
+<span class="nc" id="L200">				getPreprocessingArtifact().getOption()));</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

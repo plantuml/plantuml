@@ -447,46 +447,43 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 <span class="fc" id="L447">		return name.replaceAll(&quot;(?i)\\.\\w{3}$&quot;, &quot;.cmapx&quot;);</span>
 	}
 
-	protected abstract ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException;
-
 	@Override
 	public String getWarningOrError() {
-<span class="pc bpc" id="L455" title="1 of 2 branches missed.">		if (lastInfo == null)</span>
-<span class="fc" id="L456">			return null;</span>
+<span class="pc bpc" id="L452" title="1 of 2 branches missed.">		if (lastInfo == null)</span>
+<span class="fc" id="L453">			return null;</span>
 
-<span class="nc" id="L458">		final double actualWidth = lastInfo.getWidth();</span>
-<span class="nc bnc" id="L459" title="All 2 branches missed.">		if (actualWidth == 0)</span>
-<span class="nc" id="L460">			return null;</span>
+<span class="nc" id="L455">		final double actualWidth = lastInfo.getWidth();</span>
+<span class="nc bnc" id="L456" title="All 2 branches missed.">		if (actualWidth == 0)</span>
+<span class="nc" id="L457">			return null;</span>
 
-<span class="nc" id="L462">		final String value = getSkinParam().getValue(&quot;widthwarning&quot;);</span>
-<span class="nc bnc" id="L463" title="All 2 branches missed.">		if (value == null)</span>
+<span class="nc" id="L459">		final String value = getSkinParam().getValue(&quot;widthwarning&quot;);</span>
+<span class="nc bnc" id="L460" title="All 2 branches missed.">		if (value == null)</span>
+<span class="nc" id="L461">			return null;</span>
+
+<span class="nc bnc" id="L463" title="All 2 branches missed.">		if (!DIGITS.matcher(value).matches())</span>
 <span class="nc" id="L464">			return null;</span>
 
-<span class="nc bnc" id="L466" title="All 2 branches missed.">		if (!DIGITS.matcher(value).matches())</span>
-<span class="nc" id="L467">			return null;</span>
+<span class="nc" id="L466">		final int widthwarning = Integer.parseInt(value);</span>
+<span class="nc bnc" id="L467" title="All 2 branches missed.">		if (actualWidth &gt; widthwarning)</span>
+<span class="nc" id="L468">			return &quot;The image is &quot; + ((int) actualWidth) + &quot; pixel width. (Warning limit is &quot; + widthwarning + &quot;)&quot;;</span>
 
-<span class="nc" id="L469">		final int widthwarning = Integer.parseInt(value);</span>
-<span class="nc bnc" id="L470" title="All 2 branches missed.">		if (actualWidth &gt; widthwarning)</span>
-<span class="nc" id="L471">			return &quot;The image is &quot; + ((int) actualWidth) + &quot; pixel width. (Warning limit is &quot; + widthwarning + &quot;)&quot;;</span>
-
-<span class="nc" id="L473">		return null;</span>
+<span class="nc" id="L470">		return null;</span>
 	}
 
 	public void setHideEmptyDescription(boolean hideEmptyDescription) {
-<span class="nc" id="L477">	}</span>
+<span class="nc" id="L474">	}</span>
 
 	public Previous getPrevious() {
-<span class="nc" id="L480">		return Previous.createFrom(getSkinParam().values());</span>
+<span class="nc" id="L477">		return Previous.createFrom(getSkinParam().values());</span>
 	}
 
 	@Override
 	public TextBlock addChrome(TextBlock result, FileFormatOption fileFormatOption) {
-<span class="fc" id="L485">		final TitledDiagram titledDiagram = (TitledDiagram) this;</span>
-<span class="fc" id="L486">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(titledDiagram.getSkinParam());</span>
-<span class="fc" id="L487">		result = DiagramChromeFactory12026.create(result, titledDiagram, titledDiagram.getSkinParam(), stringBounder,</span>
-<span class="fc" id="L488">				getWarnings());</span>
-<span class="fc" id="L489">		return result;</span>
+<span class="fc" id="L482">		final TitledDiagram titledDiagram = (TitledDiagram) this;</span>
+<span class="fc" id="L483">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(titledDiagram.getSkinParam());</span>
+<span class="fc" id="L484">		result = DiagramChromeFactory12026.create(result, titledDiagram, titledDiagram.getSkinParam(), stringBounder,</span>
+<span class="fc" id="L485">				getWarnings());</span>
+<span class="fc" id="L486">		return result;</span>
 	}
 
 }

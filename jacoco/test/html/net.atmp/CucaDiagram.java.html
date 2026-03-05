@@ -531,56 +531,56 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 <span class="nc" id="L531">		throw new UnsupportedOperationException();</span>
 	}
 
-	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-<span class="nc bnc" id="L537" title="All 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L538">			throw new UnsupportedOperationException(&quot;TEAVM1676&quot;);</span>
-		} else {
-
-<span class="nc" id="L541">			final FileFormat fileFormat = fileFormatOption.getFileFormat();</span>
-
-<span class="nc bnc" id="L543" title="All 4 branches missed.">			if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {</span>
-<span class="nc" id="L544">				createFilesTxt(os, index, fileFormat);</span>
-<span class="nc" id="L545">				return ImageDataSimple.ok();</span>
-			}
-
-<span class="nc bnc" id="L548" title="All 2 branches missed.">			if (fileFormat == FileFormat.GRAPHML) {</span>
-<span class="nc" id="L549">				createFilesGraphml(os);</span>
-<span class="nc" id="L550">				return ImageDataSimple.ok();</span>
-			}
-
-<span class="nc bnc" id="L553" title="All 2 branches missed.">			if (fileFormat.name().startsWith(&quot;XMI&quot;)) {</span>
-<span class="nc" id="L554">				createFilesXmi(os, fileFormat);</span>
-<span class="nc" id="L555">				return ImageDataSimple.ok();</span>
-			}
-
-<span class="nc bnc" id="L558" title="All 2 branches missed.">			if (fileFormat == FileFormat.SCXML) {</span>
-<span class="nc" id="L559">				createFilesScxml(os);</span>
-<span class="nc" id="L560">				return ImageDataSimple.ok();</span>
-			}
-
-<span class="nc bnc" id="L563" title="All 2 branches missed.">			if (getUmlDiagramType() == UmlDiagramType.COMPOSITE)</span>
-<span class="nc" id="L564">				throw new UnsupportedOperationException();</span>
-
-<span class="nc" id="L566">			this.eventuallyBuildPhantomGroups(null);</span>
-			final CucaDiagramFileMaker maker;
-<span class="nc bnc" id="L568" title="All 2 branches missed.">			if (this.isUseElk())</span>
-<span class="nc" id="L569">				maker = new CucaDiagramFileMakerElk(this);</span>
-<span class="nc bnc" id="L570" title="All 2 branches missed.">			else if (this.isUseSmetana())</span>
-<span class="nc" id="L571">				maker = new CucaDiagramFileMakerSmetana(this);</span>
-			else
-<span class="nc" id="L573">				maker = new CucaDiagramFileMakerSvek(this);</span>
-
-<span class="nc" id="L575">			final ImageData result = maker.createFile01970(os, getDotStrings(), fileFormatOption);</span>
-
-<span class="nc bnc" id="L577" title="All 2 branches missed.">			if (result == null)</span>
-<span class="nc" id="L578">				return ImageDataSimple.error();</span>
-
-<span class="nc" id="L580">			this.warningOrError = result.getWarningOrError();</span>
-<span class="nc" id="L581">			return result;</span>
-		}
-	}
+//	@Override
+//	protected ImageData exportDiagramInternal01970(OutputStream os, int index, FileFormatOption fileFormatOption)
+//			throws IOException {
+//		if (TeaVM.isTeaVM()) {
+//			throw new UnsupportedOperationException(&quot;TEAVM1676&quot;);
+//		} else {
+//
+//			final FileFormat fileFormat = fileFormatOption.getFileFormat();
+//
+//			if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
+//				createFilesTxt(os, index, fileFormat);
+//				return ImageDataSimple.ok();
+//			}
+//
+//			if (fileFormat == FileFormat.GRAPHML) {
+//				createFilesGraphml(os);
+//				return ImageDataSimple.ok();
+//			}
+//
+//			if (fileFormat.name().startsWith(&quot;XMI&quot;)) {
+//				createFilesXmi(os, fileFormat);
+//				return ImageDataSimple.ok();
+//			}
+//
+//			if (fileFormat == FileFormat.SCXML) {
+//				createFilesScxml(os);
+//				return ImageDataSimple.ok();
+//			}
+//
+//			if (getUmlDiagramType() == UmlDiagramType.COMPOSITE)
+//				throw new UnsupportedOperationException();
+//
+//			this.eventuallyBuildPhantomGroups(null);
+//			final CucaDiagramFileMaker maker;
+//			if (this.isUseElk())
+//				maker = new CucaDiagramFileMakerElk(this);
+//			else if (this.isUseSmetana())
+//				maker = new CucaDiagramFileMakerSmetana(this);
+//			else
+//				maker = new CucaDiagramFileMakerSvek(this);
+//
+//			final ImageData result = maker.createFile01970(os, getDotStrings(), fileFormatOption);
+//
+//			if (result == null)
+//				return ImageDataSimple.error();
+//
+//			this.warningOrError = result.getWarningOrError();
+//			return result;
+//		}
+//	}
 
 	@Override
 	public String getWarningOrError() {

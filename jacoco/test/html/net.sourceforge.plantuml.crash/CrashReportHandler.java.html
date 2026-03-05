@@ -39,10 +39,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.core.TextBlockExporter12026;
 import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class CrashReportHandler extends ReportLog {
 
@@ -50,39 +51,36 @@ public class CrashReportHandler extends ReportLog {
 	private final String metadata;
 	private final String flash;
 
-<span class="nc" id="L53">	public CrashReportHandler(Throwable exception, String metadata, String flash) {</span>
-<span class="nc" id="L54">		this.metadata = metadata;</span>
-<span class="nc" id="L55">		this.exception = exception;</span>
-<span class="nc" id="L56">		this.flash = flash;</span>
-<span class="nc" id="L57">	}</span>
+<span class="nc" id="L54">	public CrashReportHandler(Throwable exception, String metadata, String flash) {</span>
+<span class="nc" id="L55">		this.metadata = metadata;</span>
+<span class="nc" id="L56">		this.exception = exception;</span>
+<span class="nc" id="L57">		this.flash = flash;</span>
+<span class="nc" id="L58">	}</span>
 
 	public void exportDiagramError(FileFormatOption fileFormat, long seed, OutputStream os) throws IOException {
 
-		// ::comment when __TEAVM__
-<span class="nc bnc" id="L62" title="All 4 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {</span>
-<span class="nc" id="L63">			exportDiagramErrorText(os, exception);</span>
-<span class="nc" id="L64">			return;</span>
-		}
-		// ::done
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (!TeaVM.isTeaVM())</span>
+<span class="nc bnc" id="L63" title="All 4 branches missed.">			if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {</span>
+<span class="nc" id="L64">				exportDiagramErrorText(os, exception);</span>
+<span class="nc" id="L65">				return;</span>
+			}
 
 <span class="nc" id="L68">		final CrashImage image = new CrashImage(exception, flash, this);</span>
 
-<span class="nc" id="L70">		ImageBuilder.create(fileFormat, image).metadata(metadata).seed(seed).write(os);</span>
+<span class="nc" id="L70">		TextBlockExporter12026.builder(image, fileFormat, false).metadata(metadata).seed(seed).build().exportTo(os);</span>
 <span class="nc" id="L71">	}</span>
 
-	// ::comment when __TEAVM__
 	private void exportDiagramErrorText(OutputStream os, Throwable exception) {
-<span class="nc" id="L75">		final PrintWriter pw = SecurityUtils.createPrintWriter(os);</span>
-<span class="nc" id="L76">		exception.printStackTrace(pw);</span>
+<span class="nc" id="L74">		final PrintWriter pw = SecurityUtils.createPrintWriter(os);</span>
+<span class="nc" id="L75">		exception.printStackTrace(pw);</span>
+<span class="nc" id="L76">		pw.println();</span>
 <span class="nc" id="L77">		pw.println();</span>
-<span class="nc" id="L78">		pw.println();</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		for (String s : this) {</span>
-<span class="nc" id="L80">			s = s.replaceAll(&quot;\\&lt;/?\\w+?\\&gt;&quot;, &quot;&quot;);</span>
-<span class="nc" id="L81">			pw.println(s);</span>
-<span class="nc" id="L82">		}</span>
-<span class="nc" id="L83">		pw.flush();</span>
-<span class="nc" id="L84">	}</span>
-	// ::done
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		for (String s : this) {</span>
+<span class="nc" id="L79">			s = s.replaceAll(&quot;\\&lt;/?\\w+?\\&gt;&quot;, &quot;&quot;);</span>
+<span class="nc" id="L80">			pw.println(s);</span>
+<span class="nc" id="L81">		}</span>
+<span class="nc" id="L82">		pw.flush();</span>
+<span class="nc" id="L83">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

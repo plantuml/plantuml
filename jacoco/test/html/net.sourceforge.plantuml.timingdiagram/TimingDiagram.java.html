@@ -99,24 +99,17 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 <span class="fc" id="L99">	}</span>
 
 	@Override
-	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-			throws IOException {
-
-<span class="nc" id="L105">		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock01970(fileFormatOption)).write(os);</span>
-	}
-
-	@Override
 	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
-<span class="nc" id="L110">		return new TextBlock() {</span>
+<span class="nc" id="L103">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L113">				drawInternal(ug);</span>
-<span class="nc" id="L114">			}</span>
+<span class="nc" id="L106">				drawInternal(ug);</span>
+<span class="nc" id="L107">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L117">				final double withBeforeRuler = getPart1MaxWidth(stringBounder);</span>
-<span class="nc" id="L118">				final double totalWith = withBeforeRuler + ruler.getWidth() + marginX1 + marginX2;</span>
-<span class="nc" id="L119">				return new XDimension2D(totalWith, getHeightTotal(stringBounder));</span>
+<span class="nc" id="L110">				final double withBeforeRuler = getPart1MaxWidth(stringBounder);</span>
+<span class="nc" id="L111">				final double totalWith = withBeforeRuler + ruler.getWidth() + marginX1 + marginX2;</span>
+<span class="nc" id="L112">				return new XDimension2D(totalWith, getHeightTotal(stringBounder));</span>
 			}
 
 		};
@@ -124,322 +117,322 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L127">		return TextBlockUtils.withMargin(getTextMainBlock01970(fileFormatOption), 10, 10);</span>
+<span class="nc" id="L120">		return TextBlockUtils.withMargin(getTextMainBlock01970(fileFormatOption), 10, 10);</span>
 	}
 
 	private StyleSignatureBasic getStyleSignature() {
-<span class="nc" id="L131">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram);</span>
+<span class="nc" id="L124">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram);</span>
 	}
 
 	private HColor black() {
-<span class="nc" id="L135">		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L136">		return style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L128">		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L129">		return style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
 	}
 
 	private void drawInternal(UGraphic ug) {
-<span class="nc" id="L141">		ruler.ensureNotEmpty();</span>
-<span class="nc" id="L142">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L143">		final double part1MaxWidth = getPart1MaxWidth(stringBounder);</span>
+<span class="nc" id="L134">		ruler.ensureNotEmpty();</span>
+<span class="nc" id="L135">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L136">		final double part1MaxWidth = getPart1MaxWidth(stringBounder);</span>
 
-<span class="nc bnc" id="L145" title="All 2 branches missed.">		for (Player player : players.values()) {</span>
-<span class="nc" id="L146">			final HColor generalBackgroundColor = player.getGeneralBackgroundColor();</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">			if (generalBackgroundColor != null) {</span>
-<span class="nc" id="L148">				UGraphic ugPlayer = ug.apply(getUTranslateForPlayerFrame(player, stringBounder));</span>
-<span class="nc" id="L149">				final double fullHeight = player.getFrameHeight(stringBounder)</span>
-<span class="nc" id="L150">						+ player.panels().getFullHeight(stringBounder);</span>
-<span class="nc" id="L151">				ugPlayer = ugPlayer.apply(generalBackgroundColor).apply(generalBackgroundColor.bg());</span>
-<span class="nc" id="L152">				ugPlayer.draw(URectangle.build(getWidthTotal(stringBounder), fullHeight));</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		for (Player player : players.values()) {</span>
+<span class="nc" id="L139">			final HColor generalBackgroundColor = player.getGeneralBackgroundColor();</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">			if (generalBackgroundColor != null) {</span>
+<span class="nc" id="L141">				UGraphic ugPlayer = ug.apply(getUTranslateForPlayerFrame(player, stringBounder));</span>
+<span class="nc" id="L142">				final double fullHeight = player.getFrameHeight(stringBounder)</span>
+<span class="nc" id="L143">						+ player.panels().getFullHeight(stringBounder);</span>
+<span class="nc" id="L144">				ugPlayer = ugPlayer.apply(generalBackgroundColor).apply(generalBackgroundColor.bg());</span>
+<span class="nc" id="L145">				ugPlayer.draw(URectangle.build(getWidthTotal(stringBounder), fullHeight));</span>
 			}
-<span class="nc" id="L154">		}</span>
+<span class="nc" id="L147">		}</span>
 
-<span class="nc" id="L156">		final UTranslate widthPart1 = UTranslate.dx(part1MaxWidth);</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (compactByDefault == false)</span>
-<span class="nc" id="L158">			drawBorder(ug);</span>
+<span class="nc" id="L149">		final UTranslate widthPart1 = UTranslate.dx(part1MaxWidth);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (compactByDefault == false)</span>
+<span class="nc" id="L151">			drawBorder(ug);</span>
 
-<span class="nc" id="L160">		ug = ug.apply(UTranslate.dx(marginX1));</span>
+<span class="nc" id="L153">		ug = ug.apply(UTranslate.dx(marginX1));</span>
 
-<span class="nc" id="L162">		drawHighlightsBack(ug.apply(widthPart1));</span>
-<span class="nc" id="L163">		ruler.drawVlines(ug.apply(widthPart1), getHeightInner(stringBounder));</span>
+<span class="nc" id="L155">		drawHighlightsBack(ug.apply(widthPart1));</span>
+<span class="nc" id="L156">		ruler.drawVlines(ug.apply(widthPart1), getHeightInner(stringBounder));</span>
 
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		for (Player player : players.values()) {</span>
-<span class="nc" id="L166">			final UGraphic ugPlayer = ug.apply(getUTranslateForPlayer(player, stringBounder));</span>
-<span class="nc" id="L167">			final UGraphic ugFrame = ug.apply(getUTranslateForPlayerFrame(player, stringBounder));</span>
-<span class="nc bnc" id="L168" title="All 2 branches missed.">			if (player.isCompact() == false)</span>
-<span class="nc" id="L169">				drawHorizontalSeparator(ugFrame);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		for (Player player : players.values()) {</span>
+<span class="nc" id="L159">			final UGraphic ugPlayer = ug.apply(getUTranslateForPlayer(player, stringBounder));</span>
+<span class="nc" id="L160">			final UGraphic ugFrame = ug.apply(getUTranslateForPlayerFrame(player, stringBounder));</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">			if (player.isCompact() == false)</span>
+<span class="nc" id="L162">				drawHorizontalSeparator(ugFrame);</span>
 
-<span class="nc" id="L171">			player.drawFrameTitle(ugFrame);</span>
-<span class="nc" id="L172">			final Panels panels = player.panels();</span>
-<span class="nc" id="L173">			panels.drawLeftPanel(ugPlayer, part1MaxWidth);</span>
-<span class="nc" id="L174">			panels.drawRightPanel(ugPlayer.apply(widthPart1));</span>
-<span class="nc" id="L175">		}</span>
+<span class="nc" id="L164">			player.drawFrameTitle(ugFrame);</span>
+<span class="nc" id="L165">			final Panels panels = player.panels();</span>
+<span class="nc" id="L166">			panels.drawLeftPanel(ugPlayer, part1MaxWidth);</span>
+<span class="nc" id="L167">			panels.drawRightPanel(ugPlayer.apply(widthPart1));</span>
+<span class="nc" id="L168">		}</span>
 
-<span class="nc" id="L177">		ug = ug.apply(widthPart1);</span>
-<span class="nc" id="L178">		ruler.drawTimeAxis(ug.apply(getLastTranslate(stringBounder)), this.timeAxisStategy, codes);</span>
+<span class="nc" id="L170">		ug = ug.apply(widthPart1);</span>
+<span class="nc" id="L171">		ruler.drawTimeAxis(ug.apply(getLastTranslate(stringBounder)), this.timeAxisStategy, codes);</span>
 
-<span class="nc bnc" id="L180" title="All 2 branches missed.">		for (TimeMessage timeMessage : messages)</span>
-<span class="nc" id="L181">			drawMessages(ug, timeMessage);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		for (TimeMessage timeMessage : messages)</span>
+<span class="nc" id="L174">			drawMessages(ug, timeMessage);</span>
 
-<span class="nc" id="L183">		drawHighlightsLines(ug);</span>
-<span class="nc" id="L184">	}</span>
+<span class="nc" id="L176">		drawHighlightsLines(ug);</span>
+<span class="nc" id="L177">	}</span>
 
 	private void drawHorizontalSeparator(UGraphic ug) {
-<span class="nc" id="L187">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L188">		ug = ug.apply(black());</span>
-<span class="nc" id="L189">		ug = ug.apply(getBorderStroke());</span>
-<span class="nc" id="L190">		ug = ug.apply(UTranslate.dx(-marginX1));</span>
-<span class="nc" id="L191">		ug.draw(ULine.hline(getWidthTotal(stringBounder)));</span>
-<span class="nc" id="L192">	}</span>
+<span class="nc" id="L180">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L181">		ug = ug.apply(black());</span>
+<span class="nc" id="L182">		ug = ug.apply(getBorderStroke());</span>
+<span class="nc" id="L183">		ug = ug.apply(UTranslate.dx(-marginX1));</span>
+<span class="nc" id="L184">		ug.draw(ULine.hline(getWidthTotal(stringBounder)));</span>
+<span class="nc" id="L185">	}</span>
 
 	private void drawBorder(UGraphic ug) {
-<span class="nc" id="L195">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L196">		final ULine border = ULine.vline(getLastTranslate(stringBounder).getDy());</span>
-<span class="nc" id="L197">		ug = ug.apply(black()).apply(getBorderStroke());</span>
-<span class="nc" id="L198">		ug.draw(border);</span>
-<span class="nc" id="L199">		ug.apply(UTranslate.dx(getWidthTotal(stringBounder))).draw(border);</span>
-<span class="nc" id="L200">	}</span>
+<span class="nc" id="L188">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L189">		final ULine border = ULine.vline(getLastTranslate(stringBounder).getDy());</span>
+<span class="nc" id="L190">		ug = ug.apply(black()).apply(getBorderStroke());</span>
+<span class="nc" id="L191">		ug.draw(border);</span>
+<span class="nc" id="L192">		ug.apply(UTranslate.dx(getWidthTotal(stringBounder))).draw(border);</span>
+<span class="nc" id="L193">	}</span>
 
 	private UStroke getBorderStroke() {
-<span class="nc" id="L203">		return getStyleSignature().getMergedStyle(getCurrentStyleBuilder()).getStroke();</span>
+<span class="nc" id="L196">		return getStyleSignature().getMergedStyle(getCurrentStyleBuilder()).getStroke();</span>
 	}
 
 	private UTranslate getLastTranslate(final StringBounder stringBounder) {
-<span class="nc" id="L207">		return getUTranslateForPlayer(null, stringBounder);</span>
+<span class="nc" id="L200">		return getUTranslateForPlayer(null, stringBounder);</span>
 	}
 
 	private void drawHighlightsBack(UGraphic ug) {
-<span class="nc" id="L211">		final double height = getHeightInner(ug.getStringBounder());</span>
-<span class="nc bnc" id="L212" title="All 2 branches missed.">		for (Highlight highlight : highlights)</span>
-<span class="nc" id="L213">			highlight.drawHighlightsBack(ug, ruler, height);</span>
+<span class="nc" id="L204">		final double height = getHeightInner(ug.getStringBounder());</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">		for (Highlight highlight : highlights)</span>
+<span class="nc" id="L206">			highlight.drawHighlightsBack(ug, ruler, height);</span>
 
-<span class="nc" id="L215">	}</span>
+<span class="nc" id="L208">	}</span>
 
 	private void drawHighlightsLines(UGraphic ug) {
-<span class="nc" id="L218">		final double height = getHeightInner(ug.getStringBounder());</span>
-<span class="nc bnc" id="L219" title="All 2 branches missed.">		for (Highlight highlight : highlights) {</span>
-<span class="nc" id="L220">			highlight.drawHighlightsLines(ug, ruler, height);</span>
-<span class="nc" id="L221">			final double start = ruler.getPosInPixel(highlight.getTickFrom());</span>
-<span class="nc" id="L222">			highlight.getCaption(getSkinParam()).drawU(ug.apply(new UTranslate(start + 3, 2)));</span>
-<span class="nc" id="L223">		}</span>
-<span class="nc" id="L224">	}</span>
+<span class="nc" id="L211">		final double height = getHeightInner(ug.getStringBounder());</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		for (Highlight highlight : highlights) {</span>
+<span class="nc" id="L213">			highlight.drawHighlightsLines(ug, ruler, height);</span>
+<span class="nc" id="L214">			final double start = ruler.getPosInPixel(highlight.getTickFrom());</span>
+<span class="nc" id="L215">			highlight.getCaption(getSkinParam()).drawU(ug.apply(new UTranslate(start + 3, 2)));</span>
+<span class="nc" id="L216">		}</span>
+<span class="nc" id="L217">	}</span>
 
 	private double getHeightTotal(StringBounder stringBounder) {
-<span class="nc" id="L227">		return getHeightInner(stringBounder) + ruler.getHeight(stringBounder);</span>
+<span class="nc" id="L220">		return getHeightInner(stringBounder) + ruler.getHeight(stringBounder);</span>
 	}
 
 	private double getHeightInner(StringBounder stringBounder) {
-<span class="nc" id="L231">		return getLastTranslate(stringBounder).getDy();</span>
+<span class="nc" id="L224">		return getLastTranslate(stringBounder).getDy();</span>
 	}
 
 	private double getWidthTotal(final StringBounder stringBounder) {
-<span class="nc" id="L235">		return getPart1MaxWidth(stringBounder) + ruler.getWidth() + marginX1 + marginX2;</span>
+<span class="nc" id="L228">		return getPart1MaxWidth(stringBounder) + ruler.getWidth() + marginX1 + marginX2;</span>
 	}
 
 	private double getPart1MaxWidth(StringBounder stringBounder) {
-<span class="nc" id="L239">		double width = 0;</span>
-<span class="nc bnc" id="L240" title="All 2 branches missed.">		for (Player player : players.values()) {</span>
-<span class="nc" id="L241">			final double widthLeftPanel = player.panels().getLeftPanelWidth(stringBounder);</span>
-<span class="nc" id="L242">			width = Math.max(width, widthLeftPanel);</span>
-<span class="nc" id="L243">		}</span>
+<span class="nc" id="L232">		double width = 0;</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">		for (Player player : players.values()) {</span>
+<span class="nc" id="L234">			final double widthLeftPanel = player.panels().getLeftPanelWidth(stringBounder);</span>
+<span class="nc" id="L235">			width = Math.max(width, widthLeftPanel);</span>
+<span class="nc" id="L236">		}</span>
 
-<span class="nc" id="L245">		return width;</span>
+<span class="nc" id="L238">		return width;</span>
 	}
 
 	private void drawMessages(UGraphic ug, TimeMessage message) {
-<span class="nc" id="L249">		final Player player1 = message.getPlayer1();</span>
-<span class="nc" id="L250">		final Player player2 = message.getPlayer2();</span>
+<span class="nc" id="L242">		final Player player1 = message.getPlayer1();</span>
+<span class="nc" id="L243">		final Player player2 = message.getPlayer2();</span>
 
-<span class="nc" id="L252">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L245">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc" id="L254">		final UTranslate translate1 = getUTranslateForPlayer(player1, stringBounder);</span>
-<span class="nc" id="L255">		final UTranslate translate2 = getUTranslateForPlayer(player2, stringBounder);</span>
+<span class="nc" id="L247">		final UTranslate translate1 = getUTranslateForPlayer(player1, stringBounder);</span>
+<span class="nc" id="L248">		final UTranslate translate2 = getUTranslateForPlayer(player2, stringBounder);</span>
 
-<span class="nc" id="L257">		final IntricatedPoint pt1 = player1.panels().getTimeProjection(stringBounder, message.getTick1());</span>
-<span class="nc" id="L258">		final IntricatedPoint pt2 = player2.panels().getTimeProjection(stringBounder, message.getTick2());</span>
+<span class="nc" id="L250">		final IntricatedPoint pt1 = player1.panels().getTimeProjection(stringBounder, message.getTick1());</span>
+<span class="nc" id="L251">		final IntricatedPoint pt2 = player2.panels().getTimeProjection(stringBounder, message.getTick2());</span>
 
-<span class="nc bnc" id="L260" title="All 4 branches missed.">		if (pt1 == null || pt2 == null)</span>
-<span class="nc" id="L261">			return;</span>
+<span class="nc bnc" id="L253" title="All 4 branches missed.">		if (pt1 == null || pt2 == null)</span>
+<span class="nc" id="L254">			return;</span>
 
-<span class="nc" id="L263">		final TimeArrow timeArrow = TimeArrow.create(pt1.translated(translate1), pt2.translated(translate2),</span>
-<span class="nc" id="L264">				message.getLabel(), getSkinParam(), message);</span>
-<span class="nc" id="L265">		timeArrow.drawU(ug);</span>
+<span class="nc" id="L256">		final TimeArrow timeArrow = TimeArrow.create(pt1.translated(translate1), pt2.translated(translate2),</span>
+<span class="nc" id="L257">				message.getLabel(), getSkinParam(), message);</span>
+<span class="nc" id="L258">		timeArrow.drawU(ug);</span>
 
-<span class="nc" id="L267">	}</span>
+<span class="nc" id="L260">	}</span>
 
 	private UTranslate getUTranslateForPlayer(Player candidat, StringBounder stringBounder) {
-<span class="nc" id="L270">		double y = 0;</span>
-<span class="nc bnc" id="L271" title="All 2 branches missed.">		for (Player player : players.values()) {</span>
-<span class="nc" id="L272">			y += player.getFrameHeight(stringBounder);</span>
-<span class="nc bnc" id="L273" title="All 2 branches missed.">			if (candidat == player)</span>
-<span class="nc" id="L274">				return UTranslate.dy(y);</span>
+<span class="nc" id="L263">		double y = 0;</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">		for (Player player : players.values()) {</span>
+<span class="nc" id="L265">			y += player.getFrameHeight(stringBounder);</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">			if (candidat == player)</span>
+<span class="nc" id="L267">				return UTranslate.dy(y);</span>
 
 //			if (y == 0) {
 //				y += getHeightHighlights(stringBounder);
 //			}
-<span class="nc" id="L279">			y += player.panels().getFullHeight(stringBounder);</span>
-<span class="nc" id="L280">		}</span>
-<span class="nc bnc" id="L281" title="All 2 branches missed.">		if (candidat == null)</span>
-<span class="nc" id="L282">			return UTranslate.dy(y);</span>
+<span class="nc" id="L272">			y += player.panels().getFullHeight(stringBounder);</span>
+<span class="nc" id="L273">		}</span>
+<span class="nc bnc" id="L274" title="All 2 branches missed.">		if (candidat == null)</span>
+<span class="nc" id="L275">			return UTranslate.dy(y);</span>
 
-<span class="nc" id="L284">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L277">		throw new IllegalArgumentException();</span>
 	}
 
 	private UTranslate getUTranslateForPlayerFrame(Player candidat, StringBounder stringBounder) {
-<span class="nc" id="L288">		double y = 0;</span>
-<span class="nc bnc" id="L289" title="All 2 branches missed.">		for (Player player : players.values()) {</span>
-<span class="nc bnc" id="L290" title="All 2 branches missed.">			if (candidat == player)</span>
-<span class="nc" id="L291">				return UTranslate.dy(y);</span>
+<span class="nc" id="L281">		double y = 0;</span>
+<span class="nc bnc" id="L282" title="All 2 branches missed.">		for (Player player : players.values()) {</span>
+<span class="nc bnc" id="L283" title="All 2 branches missed.">			if (candidat == player)</span>
+<span class="nc" id="L284">				return UTranslate.dy(y);</span>
 
 //			if (y == 0) {
 //				y += getHeightHighlights(stringBounder);
 //			}
-<span class="nc" id="L296">			y += player.getFrameHeight(stringBounder);</span>
-<span class="nc" id="L297">			y += player.panels().getFullHeight(stringBounder);</span>
-<span class="nc" id="L298">		}</span>
-<span class="nc bnc" id="L299" title="All 2 branches missed.">		if (candidat == null)</span>
-<span class="nc" id="L300">			return UTranslate.dy(y);</span>
+<span class="nc" id="L289">			y += player.getFrameHeight(stringBounder);</span>
+<span class="nc" id="L290">			y += player.panels().getFullHeight(stringBounder);</span>
+<span class="nc" id="L291">		}</span>
+<span class="nc bnc" id="L292" title="All 2 branches missed.">		if (candidat == null)</span>
+<span class="nc" id="L293">			return UTranslate.dy(y);</span>
 
-<span class="nc" id="L302">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L295">		throw new IllegalArgumentException();</span>
 	}
 
 	public Player createPlayerRobust(String code, String full, boolean compact, Stereotype stereotype,
 			HColor backColor) {
-<span class="nc bnc" id="L307" title="All 4 branches missed.">		final Player player = new PlayerRobust(full, getSkinParam(), ruler, compactByDefault || compact, stereotype,</span>
+<span class="nc bnc" id="L300" title="All 4 branches missed.">		final Player player = new PlayerRobust(full, getSkinParam(), ruler, compactByDefault || compact, stereotype,</span>
 				backColor);
-<span class="nc" id="L309">		players.put(code, player);</span>
-<span class="nc" id="L310">		lastPlayer = player;</span>
-<span class="nc" id="L311">		return player;</span>
+<span class="nc" id="L302">		players.put(code, player);</span>
+<span class="nc" id="L303">		lastPlayer = player;</span>
+<span class="nc" id="L304">		return player;</span>
 	}
 
 	public Player createPlayerConcise(String code, String full, boolean compact, Stereotype stereotype,
 			HColor backColor) {
-<span class="nc bnc" id="L316" title="All 4 branches missed.">		final Player player = new PlayerConcise(full, getSkinParam(), ruler, compactByDefault || compact, stereotype,</span>
+<span class="nc bnc" id="L309" title="All 4 branches missed.">		final Player player = new PlayerConcise(full, getSkinParam(), ruler, compactByDefault || compact, stereotype,</span>
 				backColor);
-<span class="nc" id="L318">		players.put(code, player);</span>
-<span class="nc" id="L319">		lastPlayer = player;</span>
-<span class="nc" id="L320">		return player;</span>
+<span class="nc" id="L311">		players.put(code, player);</span>
+<span class="nc" id="L312">		lastPlayer = player;</span>
+<span class="nc" id="L313">		return player;</span>
 	}
 
 	public Player createPlayerRectangle(String code, String full, boolean compact, Stereotype stereotype,
 			HColor backColor) {
-<span class="nc bnc" id="L325" title="All 4 branches missed.">		final Player player = new PlayerRectangle(full, getSkinParam(), ruler, compactByDefault || compact, stereotype,</span>
+<span class="nc bnc" id="L318" title="All 4 branches missed.">		final Player player = new PlayerRectangle(full, getSkinParam(), ruler, compactByDefault || compact, stereotype,</span>
 				backColor);
-<span class="nc" id="L327">		players.put(code, player);</span>
-<span class="nc" id="L328">		lastPlayer = player;</span>
-<span class="nc" id="L329">		return player;</span>
+<span class="nc" id="L320">		players.put(code, player);</span>
+<span class="nc" id="L321">		lastPlayer = player;</span>
+<span class="nc" id="L322">		return player;</span>
 	}
 
 	public PlayerClock createPlayerClock(String code, String full, int period, int pulse, int offset, boolean compact,
 			Stereotype stereotype) {
-<span class="nc" id="L334">		final PlayerClock player = new PlayerClock(full, getSkinParam(), ruler, period, pulse, offset, compactByDefault,</span>
+<span class="nc" id="L327">		final PlayerClock player = new PlayerClock(full, getSkinParam(), ruler, period, pulse, offset, compactByDefault,</span>
 				stereotype);
-<span class="nc" id="L336">		players.put(code, player);</span>
-<span class="nc" id="L337">		clocks.put(code, player);</span>
-<span class="nc" id="L338">		final TimeTick tick = new TimeTick(new BigDecimal(period), TimingFormat.DECIMAL);</span>
-<span class="nc" id="L339">		ruler.addTime(tick);</span>
-<span class="nc" id="L340">		return player;</span>
+<span class="nc" id="L329">		players.put(code, player);</span>
+<span class="nc" id="L330">		clocks.put(code, player);</span>
+<span class="nc" id="L331">		final TimeTick tick = new TimeTick(new BigDecimal(period), TimingFormat.DECIMAL);</span>
+<span class="nc" id="L332">		ruler.addTime(tick);</span>
+<span class="nc" id="L333">		return player;</span>
 	}
 
 	public PlayerAnalog createPlayerAnalog(String code, String full, boolean compact, Stereotype stereotype) {
-<span class="nc" id="L344">		final PlayerAnalog player = new PlayerAnalog(full, getSkinParam(), ruler, compactByDefault, stereotype);</span>
-<span class="nc" id="L345">		players.put(code, player);</span>
-<span class="nc" id="L346">		return player;</span>
+<span class="nc" id="L337">		final PlayerAnalog player = new PlayerAnalog(full, getSkinParam(), ruler, compactByDefault, stereotype);</span>
+<span class="nc" id="L338">		players.put(code, player);</span>
+<span class="nc" id="L339">		return player;</span>
 	}
 
 	public Player createPlayerBinary(String code, String full, boolean compact, Stereotype stereotype) {
-<span class="nc" id="L350">		final Player player = new PlayerBinary(full, getSkinParam(), ruler, compactByDefault, stereotype);</span>
-<span class="nc" id="L351">		players.put(code, player);</span>
-<span class="nc" id="L352">		return player;</span>
+<span class="nc" id="L343">		final Player player = new PlayerBinary(full, getSkinParam(), ruler, compactByDefault, stereotype);</span>
+<span class="nc" id="L344">		players.put(code, player);</span>
+<span class="nc" id="L345">		return player;</span>
 	}
 
 	public TimeMessage createTimeMessage(Player player1, TimeTick time1, Player player2, TimeTick time2, String label) {
-<span class="nc" id="L356">		final TimeMessage message = new TimeMessage(new TickInPlayer(player1, time1), new TickInPlayer(player2, time2),</span>
-<span class="nc" id="L357">				label, getSkinParam());</span>
-<span class="nc" id="L358">		messages.add(message);</span>
-<span class="nc" id="L359">		return message;</span>
+<span class="nc" id="L349">		final TimeMessage message = new TimeMessage(new TickInPlayer(player1, time1), new TickInPlayer(player2, time2),</span>
+<span class="nc" id="L350">				label, getSkinParam());</span>
+<span class="nc" id="L351">		messages.add(message);</span>
+<span class="nc" id="L352">		return message;</span>
 	}
 
 	public void addTime(TimeTick time, String code) {
-<span class="nc" id="L363">		this.now = time;</span>
-<span class="nc" id="L364">		ruler.addTime(time);</span>
-<span class="nc bnc" id="L365" title="All 2 branches missed.">		if (code != null)</span>
-<span class="nc" id="L366">			this.codes.put(code, time);</span>
+<span class="nc" id="L356">		this.now = time;</span>
+<span class="nc" id="L357">		ruler.addTime(time);</span>
+<span class="nc bnc" id="L358" title="All 2 branches missed.">		if (code != null)</span>
+<span class="nc" id="L359">			this.codes.put(code, time);</span>
 
-<span class="nc" id="L368">	}</span>
+<span class="nc" id="L361">	}</span>
 
 	public TimeTick getCodeValue(String code) {
-<span class="nc" id="L371">		return codes.get(code);</span>
+<span class="nc" id="L364">		return codes.get(code);</span>
 	}
 
 	public void updateNow(TimeTick time) {
-<span class="nc" id="L375">		this.now = time;</span>
-<span class="nc" id="L376">	}</span>
+<span class="nc" id="L368">		this.now = time;</span>
+<span class="nc" id="L369">	}</span>
 
 	public Player getPlayer(String code) {
-<span class="nc" id="L379">		return players.get(code);</span>
+<span class="nc" id="L372">		return players.get(code);</span>
 	}
 
 	public TimeTick getNow() {
-<span class="nc" id="L383">		return now;</span>
+<span class="nc" id="L376">		return now;</span>
 	}
 
 	public TimeTick getClockValue(String clockName, int nb) {
-<span class="nc" id="L387">		final PlayerClock clock = clocks.get(clockName);</span>
-<span class="nc bnc" id="L388" title="All 2 branches missed.">		if (clock == null)</span>
-<span class="nc" id="L389">			return null;</span>
+<span class="nc" id="L380">		final PlayerClock clock = clocks.get(clockName);</span>
+<span class="nc bnc" id="L381" title="All 2 branches missed.">		if (clock == null)</span>
+<span class="nc" id="L382">			return null;</span>
 
-<span class="nc" id="L391">		return new TimeTick(new BigDecimal(nb * clock.getPeriod()), TimingFormat.DECIMAL);</span>
+<span class="nc" id="L384">		return new TimeTick(new BigDecimal(nb * clock.getPeriod()), TimingFormat.DECIMAL);</span>
 	}
 
 	public void setLastPlayer(Player player) {
-<span class="nc" id="L395">		this.lastPlayer = player;</span>
-<span class="nc" id="L396">	}</span>
+<span class="nc" id="L388">		this.lastPlayer = player;</span>
+<span class="nc" id="L389">	}</span>
 
 	public Player getLastPlayer() {
-<span class="nc" id="L399">		return lastPlayer;</span>
+<span class="nc" id="L392">		return lastPlayer;</span>
 	}
 
 	public void scaleInPixels(long tick, long pixel) {
-<span class="nc" id="L403">		ruler.scaleInPixels(tick, pixel);</span>
-<span class="nc" id="L404">	}</span>
+<span class="nc" id="L396">		ruler.scaleInPixels(tick, pixel);</span>
+<span class="nc" id="L397">	}</span>
 
 	public CommandExecutionResult setTimeAxisStategy(TimeAxisStategy newStrategy) {
-<span class="nc" id="L407">		this.timeAxisStategy = newStrategy;</span>
-<span class="nc" id="L408">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L400">		this.timeAxisStategy = newStrategy;</span>
+<span class="nc" id="L401">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult highlight(TimeTick tickFrom, TimeTick tickTo, Display caption, Colors colors) {
-<span class="nc" id="L412">		this.highlights.add(new Highlight(getSkinParam(), tickFrom, tickTo, caption, colors));</span>
-<span class="nc" id="L413">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L405">		this.highlights.add(new Highlight(getSkinParam(), tickFrom, tickTo, caption, colors));</span>
+<span class="nc" id="L406">		return CommandExecutionResult.ok();</span>
 
 	}
 
 	public void goCompactMode() {
-<span class="nc" id="L418">		this.compactByDefault = true;</span>
-<span class="nc" id="L419">	}</span>
+<span class="nc" id="L411">		this.compactByDefault = true;</span>
+<span class="nc" id="L412">	}</span>
 
 	private SimpleDateFormat sdf;
 
 	public CommandExecutionResult useDateFormat(String dateFormat) {
 		try {
-<span class="nc" id="L425">			this.sdf = new SimpleDateFormat(dateFormat, Locale.US);</span>
-<span class="nc" id="L426">		} catch (Exception e) {</span>
-<span class="nc" id="L427">			return CommandExecutionResult.error(&quot;Bad date format&quot;);</span>
-<span class="nc" id="L428">		}</span>
+<span class="nc" id="L418">			this.sdf = new SimpleDateFormat(dateFormat, Locale.US);</span>
+<span class="nc" id="L419">		} catch (Exception e) {</span>
+<span class="nc" id="L420">			return CommandExecutionResult.error(&quot;Bad date format&quot;);</span>
+<span class="nc" id="L421">		}</span>
 
-<span class="nc" id="L430">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L423">		return CommandExecutionResult.ok();</span>
 	}
 
 	@Override
 	public TimingFormat getTimingFormatDate() {
-<span class="nc bnc" id="L435" title="All 2 branches missed.">		if (sdf == null)</span>
-<span class="nc" id="L436">			return TimingFormat.DATE;</span>
-<span class="nc" id="L437">		return TimingFormat.create(sdf);</span>
+<span class="nc bnc" id="L428" title="All 2 branches missed.">		if (sdf == null)</span>
+<span class="nc" id="L429">			return TimingFormat.DATE;</span>
+<span class="nc" id="L430">		return TimingFormat.create(sdf);</span>
 	}
 
 	public void setStopAt(TimeTick timeTick) {
-<span class="nc" id="L441">		ruler.setStopAt(timeTick);</span>
-<span class="nc" id="L442">	}</span>
+<span class="nc" id="L434">		ruler.setStopAt(timeTick);</span>
+<span class="nc" id="L435">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

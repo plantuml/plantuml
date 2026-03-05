@@ -40,12 +40,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 
-import net.atmp.ImageBuilder;
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.TextBlockExporter12026;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.MutableImage;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
@@ -101,69 +101,71 @@ public class ScientificEquationSafe {
 			}
 <span class="nc" id="L102">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
 		try {
-<span class="nc" id="L104">			dimSvg = ImageBuilder.create(new FileFormatOption(FileFormat.SVG), getRollback()).write(baos);</span>
-<span class="nc" id="L105">		} catch (IOException e1) {</span>
-<span class="nc" id="L106">			return null;</span>
-<span class="nc" id="L107">		}</span>
-<span class="nc" id="L108">		return new UImageSvg(new String(baos.toByteArray()), scale);</span>
+<span class="nc" id="L104">			dimSvg = TextBlockExporter12026.builder(getRollback(), new FileFormatOption(FileFormat.SVG), false)</span>
+<span class="nc" id="L105">					.build().exportTo(baos);</span>
+<span class="nc" id="L106">		} catch (IOException e1) {</span>
+<span class="nc" id="L107">			return null;</span>
+<span class="nc" id="L108">		}</span>
+<span class="nc" id="L109">		return new UImageSvg(new String(baos.toByteArray()), scale);</span>
 	}
 
 	public MutableImage getImage(XColor foregroundColor, XColor backgroundColor) {
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (equation != null)</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (equation != null)</span>
 			try {
-<span class="nc" id="L114">				return equation.getImage(foregroundColor, backgroundColor);</span>
-<span class="nc" id="L115">			} catch (Exception e) {</span>
-<span class="nc" id="L116">				printTrace(e);</span>
+<span class="nc" id="L115">				return equation.getImage(foregroundColor, backgroundColor);</span>
+<span class="nc" id="L116">			} catch (Exception e) {</span>
+<span class="nc" id="L117">				printTrace(e);</span>
 			}
 		try {
-<span class="nc" id="L119">			final byte[] bytes = ImageBuilder.create(new FileFormatOption(FileFormat.PNG), getRollback())</span>
-<span class="nc" id="L120">					.writeByteArray();</span>
-<span class="nc" id="L121">			return new PixelImage(SImageIO.read(bytes), AffineTransformType.TYPE_BILINEAR);</span>
-<span class="nc" id="L122">		} catch (IOException e1) {</span>
-<span class="nc" id="L123">			return null;</span>
+<span class="nc" id="L120">			final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L121">			TextBlockExporter12026.builder(getRollback(), new FileFormatOption(FileFormat.PNG), false)</span>
+<span class="nc" id="L122">					.build().exportTo(baos);</span>
+<span class="nc" id="L123">			return new PixelImage(SImageIO.read(baos.toByteArray()), AffineTransformType.TYPE_BILINEAR);</span>
+<span class="nc" id="L124">		} catch (IOException e1) {</span>
+<span class="nc" id="L125">			return null;</span>
 		}
 	}
 
 	private void printTrace(Exception e) {
-<span class="nc" id="L128">		System.err.println(&quot;formula=&quot; + formula);</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (equation != null) {</span>
-<span class="nc" id="L130">			System.err.println(&quot;Latex=&quot; + equation.getSource());</span>
+<span class="nc" id="L130">		System.err.println(&quot;formula=&quot; + formula);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (equation != null) {</span>
+<span class="nc" id="L132">			System.err.println(&quot;Latex=&quot; + equation.getSource());</span>
 		}
-<span class="nc" id="L132">		Logme.error(e);</span>
-<span class="nc" id="L133">	}</span>
+<span class="nc" id="L134">		Logme.error(e);</span>
+<span class="nc" id="L135">	}</span>
 
 	private TextBlock getRollback() {
-<span class="nc" id="L136">		return GraphicStrings.createBlackOnWhiteMonospaced(Arrays.asList(formula));</span>
+<span class="nc" id="L138">		return GraphicStrings.createBlackOnWhiteMonospaced(Arrays.asList(formula));</span>
 	}
 
 	public ImageData export(OutputStream os, FileFormatOption fileFormat, float scale, XColor foregroundColor,
 			XColor backgroundColor) throws IOException {
-<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.PNG) {</span>
-<span class="nc" id="L142">			final PortableImage image = getImage(foregroundColor, backgroundColor).withScale(scale).getImage();</span>
-<span class="nc" id="L143">			SImageIO.write(image, &quot;png&quot;, os);</span>
-<span class="nc" id="L144">			return new ImageDataSimple(image.getWidth(), image.getHeight());</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.PNG) {</span>
+<span class="nc" id="L144">			final PortableImage image = getImage(foregroundColor, backgroundColor).withScale(scale).getImage();</span>
+<span class="nc" id="L145">			SImageIO.write(image, &quot;png&quot;, os);</span>
+<span class="nc" id="L146">			return new ImageDataSimple(image.getWidth(), image.getHeight());</span>
 		}
-<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.SVG) {</span>
-<span class="nc" id="L147">			os.write(getSvg(1, foregroundColor, backgroundColor).getSvg(true).getBytes());</span>
-<span class="nc" id="L148">			return dimSvg;</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.SVG) {</span>
+<span class="nc" id="L149">			os.write(getSvg(1, foregroundColor, backgroundColor).getSvg(true).getBytes());</span>
+<span class="nc" id="L150">			return dimSvg;</span>
 		}
-<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.EPS) {</span>
-<span class="nc" id="L151">			final PortableImage image = getImage(foregroundColor, backgroundColor).withScale(scale).getImage();</span>
-<span class="nc" id="L152">			final EpsGraphics out = new EpsGraphics();</span>
-<span class="nc" id="L153">			out.drawImage(image, 0, 0);</span>
-<span class="nc" id="L154">			out.close();</span>
-<span class="nc" id="L155">			os.write(out.getEPSCode().getBytes());</span>
-<span class="nc" id="L156">			return new ImageDataSimple(image.getWidth(), image.getHeight());</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.EPS) {</span>
+<span class="nc" id="L153">			final PortableImage image = getImage(foregroundColor, backgroundColor).withScale(scale).getImage();</span>
+<span class="nc" id="L154">			final EpsGraphics out = new EpsGraphics();</span>
+<span class="nc" id="L155">			out.drawImage(image, 0, 0);</span>
+<span class="nc" id="L156">			out.close();</span>
+<span class="nc" id="L157">			os.write(out.getEPSCode().getBytes());</span>
+<span class="nc" id="L158">			return new ImageDataSimple(image.getWidth(), image.getHeight());</span>
 		}
-<span class="nc" id="L158">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L160">		throw new UnsupportedOperationException();</span>
 	}
 
 	public final String getFormula() {
-<span class="nc" id="L162">		return formula;</span>
+<span class="nc" id="L164">		return formula;</span>
 	}
 
 	public final String getSource() {
-<span class="nc" id="L166">		return equation.getSource();</span>
+<span class="nc" id="L168">		return equation.getSource();</span>
 	}
 
 }
