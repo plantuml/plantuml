@@ -34,11 +34,9 @@
  */
 package net.sourceforge.plantuml.help;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -59,43 +57,38 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
 public class Help extends TitledDiagram {
 
-<span class="fc" id="L62">	private final List&lt;CharSequence&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L60">	private final List&lt;CharSequence&gt; lines = new ArrayList&lt;&gt;();</span>
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L65">		return new DiagramDescription(&quot;(Help)&quot;);</span>
+<span class="nc" id="L63">		return new DiagramDescription(&quot;(Help)&quot;);</span>
 	}
 
 	public Help(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L69">		super(source, UmlDiagramType.HELP, null, preprocessing);</span>
-<span class="fc" id="L70">	}</span>
-
-	@Override
-	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L74">		return super.createImageBuilder(fileFormatOption).annotations(false);</span>
-	}
+<span class="fc" id="L67">		super(source, UmlDiagramType.HELP, null, preprocessing);</span>
+<span class="fc" id="L68">	}</span>
 
 	public void add(CharSequence line) {
-<span class="fc" id="L78">		this.lines.add(line);</span>
-<span class="fc" id="L79">	}</span>
+<span class="fc" id="L71">		this.lines.add(line);</span>
+<span class="fc" id="L72">	}</span>
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="fc" id="L83">		return ClockwiseTopRightBottomLeft.same(0);</span>
+<span class="fc" id="L76">		return ClockwiseTopRightBottomLeft.same(0);</span>
 	}
 
 	@Override
 	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
-<span class="nc" id="L88">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L81">		throw new UnsupportedOperationException();</span>
 	}
-	
+
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="fc" id="L93">		final Display display = Display.create(lines);</span>
-<span class="fc" id="L94">		final UFont font = UFontFactory.serif(16);</span>
-<span class="fc" id="L95">		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);</span>
-<span class="fc" id="L96">		final Sheet sheet = getSkinParam().sheet(fontConfiguration, HorizontalAlignment.LEFT, CreoleMode.FULL)</span>
-<span class="fc" id="L97">				.createSheet(display);</span>
-<span class="fc" id="L98">		return new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);</span>
+<span class="fc" id="L86">		final Display display = Display.create(lines);</span>
+<span class="fc" id="L87">		final UFont font = UFontFactory.serif(16);</span>
+<span class="fc" id="L88">		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);</span>
+<span class="fc" id="L89">		final Sheet sheet = getSkinParam().sheet(fontConfiguration, HorizontalAlignment.LEFT, CreoleMode.FULL)</span>
+<span class="fc" id="L90">				.createSheet(display);</span>
+<span class="fc" id="L91">		return new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);</span>
 	}
 
 }

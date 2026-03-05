@@ -34,9 +34,6 @@
  */
 package net.sourceforge.plantuml.eggs;
 
-import java.io.IOException;
-
-import net.atmp.ImageBuilder;
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
@@ -51,32 +48,26 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemCharlie extends PlainDiagram {
-	
-	
+
 	private PortableImage image;
 
 	PSystemCharlie(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L59">		super(source, preprocessing);</span>
-<span class="nc" id="L60">		image = PSystemVersion.getCharlieImage();</span>
-<span class="nc" id="L61">	}</span>
-
-	@Override
-	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L65">		return super.createImageBuilder(fileFormatOption).blackBackcolor();</span>
-	}
+<span class="nc" id="L55">		super(source, preprocessing);</span>
+<span class="nc" id="L56">		image = PSystemVersion.getCharlieImage();</span>
+<span class="nc" id="L57">	}</span>
 
 	@Override
 	public UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
-<span class="nc" id="L70">		return new UDrawable() {</span>
+<span class="nc" id="L61">		return new UDrawable() {</span>
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L72">				final UImage im = new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR));</span>
-<span class="nc" id="L73">				ug.draw(im);</span>
-<span class="nc" id="L74">			}</span>
+<span class="nc" id="L63">				final UImage im = new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L64">				ug.draw(im);</span>
+<span class="nc" id="L65">			}</span>
 		};
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L79">		return new DiagramDescription(&quot;(Je Suis Charlie)&quot;);</span>
+<span class="nc" id="L70">		return new DiagramDescription(&quot;(Je Suis Charlie)&quot;);</span>
 	}
 
 }

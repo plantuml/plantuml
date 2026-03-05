@@ -35,15 +35,10 @@
  */
 package net.sourceforge.plantuml.klimt.sprite;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -62,63 +57,58 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 public class ListSpriteDiagram extends TitledDiagram {
 
 	public ListSpriteDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L65">		super(source, UmlDiagramType.HELP, previous, preprocessing);</span>
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L60">		super(source, UmlDiagramType.HELP, previous, preprocessing);</span>
+<span class="fc" id="L61">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L69">		return new DiagramDescription(&quot;(Sprites)&quot;);</span>
-	}
-
-	@Override
-	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L74">		return super.createImageBuilder(fileFormatOption).annotations(false);</span>
+<span class="nc" id="L64">		return new DiagramDescription(&quot;(Sprites)&quot;);</span>
 	}
 
 	@Override
 	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
-<span class="nc" id="L79">		return new TextBlock() {</span>
+<span class="nc" id="L69">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L82">				layout(ug.getStringBounder(), ug);</span>
-<span class="nc" id="L83">			}</span>
+<span class="nc" id="L72">				layout(ug.getStringBounder(), ug);</span>
+<span class="nc" id="L73">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L86">				return layout(stringBounder, null);</span>
+<span class="nc" id="L76">				return layout(stringBounder, null);</span>
 			}
 
 			private XDimension2D layout(StringBounder stringBounder, UGraphic ug) {
-<span class="nc" id="L90">				double x = 0;</span>
-<span class="nc" id="L91">				double y = 0;</span>
-<span class="nc" id="L92">				double rawHeight = 0;</span>
-<span class="nc" id="L93">				double totalWidth = 0;</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">				for (String n : getSkinParam().getAllSpriteNames()) {</span>
-<span class="nc" id="L95">					final Sprite sprite = getSkinParam().getSprite(n);</span>
-<span class="nc" id="L96">					TextBlock blockName = Display.create(n).create(</span>
-<span class="nc" id="L97">							FontConfiguration.blackBlueTrue(UFontFactory.sansSerif(14)), HorizontalAlignment.LEFT,</span>
-<span class="nc" id="L98">							getSkinParam());</span>
-<span class="nc" id="L99">					TextBlock tb = sprite.asTextBlock(HColors.BLACK, null, 1.0, null);</span>
-<span class="nc" id="L100">					tb = TextBlockUtils.mergeTB(tb, blockName, HorizontalAlignment.CENTER);</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">					if (ug != null)</span>
-<span class="nc" id="L102">						tb.drawU(ug.apply(new UTranslate(x, y)));</span>
-<span class="nc" id="L103">					final XDimension2D dim = tb.calculateDimension(stringBounder);</span>
-<span class="nc" id="L104">					rawHeight = Math.max(rawHeight, dim.getHeight());</span>
-<span class="nc" id="L105">					x += dim.getWidth();</span>
-<span class="nc" id="L106">					x += 30;</span>
-<span class="nc" id="L107">					totalWidth = Math.max(totalWidth, x);</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">					if (x &gt; 1024) {</span>
-<span class="nc" id="L109">						x = 0;</span>
-<span class="nc" id="L110">						y += rawHeight + 50;</span>
-<span class="nc" id="L111">						rawHeight = 0;</span>
+<span class="nc" id="L80">				double x = 0;</span>
+<span class="nc" id="L81">				double y = 0;</span>
+<span class="nc" id="L82">				double rawHeight = 0;</span>
+<span class="nc" id="L83">				double totalWidth = 0;</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">				for (String n : getSkinParam().getAllSpriteNames()) {</span>
+<span class="nc" id="L85">					final Sprite sprite = getSkinParam().getSprite(n);</span>
+<span class="nc" id="L86">					TextBlock blockName = Display.create(n).create(</span>
+<span class="nc" id="L87">							FontConfiguration.blackBlueTrue(UFontFactory.sansSerif(14)), HorizontalAlignment.LEFT,</span>
+<span class="nc" id="L88">							getSkinParam());</span>
+<span class="nc" id="L89">					TextBlock tb = sprite.asTextBlock(HColors.BLACK, null, 1.0, null);</span>
+<span class="nc" id="L90">					tb = TextBlockUtils.mergeTB(tb, blockName, HorizontalAlignment.CENTER);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">					if (ug != null)</span>
+<span class="nc" id="L92">						tb.drawU(ug.apply(new UTranslate(x, y)));</span>
+<span class="nc" id="L93">					final XDimension2D dim = tb.calculateDimension(stringBounder);</span>
+<span class="nc" id="L94">					rawHeight = Math.max(rawHeight, dim.getHeight());</span>
+<span class="nc" id="L95">					x += dim.getWidth();</span>
+<span class="nc" id="L96">					x += 30;</span>
+<span class="nc" id="L97">					totalWidth = Math.max(totalWidth, x);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">					if (x &gt; 1024) {</span>
+<span class="nc" id="L99">						x = 0;</span>
+<span class="nc" id="L100">						y += rawHeight + 50;</span>
+<span class="nc" id="L101">						rawHeight = 0;</span>
 					}
-<span class="nc" id="L113">				}</span>
-<span class="nc" id="L114">				return new XDimension2D(totalWidth, y + rawHeight);</span>
+<span class="nc" id="L103">				}</span>
+<span class="nc" id="L104">				return new XDimension2D(totalWidth, y + rawHeight);</span>
 			}
 		};
 	}
 
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L121">		return getTextMainBlock01970(fileFormatOption);</span>
+<span class="nc" id="L111">		return getTextMainBlock01970(fileFormatOption);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

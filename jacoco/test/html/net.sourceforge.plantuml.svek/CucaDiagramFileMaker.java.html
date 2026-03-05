@@ -67,8 +67,6 @@ public abstract class CucaDiagramFileMaker {
 	public abstract ImageData createFile01970(OutputStream os, List&lt;String&gt; dotStrings,
 			FileFormatOption fileFormatOption) throws IOException;
 
-	public abstract void createOneGraphic01970(UGraphic ug);
-
 	// Methods ending with 12026 are the new methods
 	public TextBlock getTextBlock12026(List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
@@ -77,8 +75,8 @@ public abstract class CucaDiagramFileMaker {
 		 * titles, header, footer, legend, caption, or mainframe, which will be added by
 		 * another class on top of this TextBlock
 		 */
-<span class="nc" id="L80">		System.err.println(&quot;CucaDiagramFileMaker::getTextBlock12026 &quot; + getClass().getSimpleName());</span>
-<span class="nc" id="L81">		return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="nc" id="L78">		System.err.println(&quot;CucaDiagramFileMaker::getTextBlock12026 &quot; + getClass().getSimpleName());</span>
+<span class="nc" id="L79">		return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
 		// throw new UnsupportedOperationException(&quot;wip&quot;);
 	}
 

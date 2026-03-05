@@ -84,7 +84,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 <span class="fc" id="L84">		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
 <span class="fc" id="L85">		this.fileFormatOption = fileFormatOption;</span>
 <span class="fc" id="L86">		final DrawableSetInitializer initializer = new DrawableSetInitializer(skin, diagram.getSkinParam(),</span>
-<span class="fc" id="L87">				diagram.isShowFootbox(), /*diagram.getAutonewpage(),*/ diagram.getCounter());</span>
+<span class="fc" id="L87">				diagram.isShowFootbox(), /* diagram.getAutonewpage(), */ diagram.getCounter());</span>
 
 <span class="fc bfc" id="L89" title="All 2 branches covered.">		for (Participant p : diagram.participants())</span>
 <span class="fc" id="L90">			initializer.addParticipant(p, diagram.getEnglober(p));</span>
@@ -128,154 +128,144 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 <span class="fc" id="L128">		final double headerHeight = drawableSet.getHeadHeight(stringBounder);</span>
 <span class="fc" id="L129">		final double tailHeight = drawableSet.getTailHeight(stringBounder, showFootbox);</span>
 <span class="fc" id="L130">		final double signatureHeight = 0;</span>
-<span class="fc" id="L131">		final double newpageHeight = drawableSet.getSkin().createComponentNewPage(</span>
-<span class="fc" id="L132">					new Style[] { ComponentType.NEWPAGE.getStyleSignature()</span>
-<span class="fc" id="L133"> 						.getMergedStyle(drawableSet.getSkinParam().getCurrentStyleBuilder()) },</span>
-<span class="fc" id="L134">					drawableSet.getSkinParam())</span>
-<span class="fc" id="L135">				.getPreferredHeight(stringBounder);</span>
+<span class="fc" id="L131">		final double newpageHeight = drawableSet.getSkin()</span>
+<span class="fc" id="L132">				.createComponentNewPage(</span>
+<span class="fc" id="L133">						new Style[] { ComponentType.NEWPAGE.getStyleSignature()</span>
+<span class="fc" id="L134">								.getMergedStyle(drawableSet.getSkinParam().getCurrentStyleBuilder()) },</span>
+<span class="fc" id="L135">						drawableSet.getSkinParam())</span>
+<span class="fc" id="L136">				.getPreferredHeight(stringBounder);</span>
 
-<span class="fc" id="L137">		return new PageSplitter(fullDimension.getHeight(), headerHeight, positions, tailHeight, signatureHeight,</span>
+<span class="fc" id="L138">		return new PageSplitter(fullDimension.getHeight(), headerHeight, positions, tailHeight, signatureHeight,</span>
 				newpageHeight, title);
 	}
 
 	@Override
-	public void createOneGraphic01970(UGraphic ug) {
-		try {
-<span class="nc" id="L144">			final UDrawable drawable = createUDrawable(0);</span>
-<span class="nc" id="L145">			diagram.createImageBuilder(fileFormatOption).drawable(drawable).drawU(ug);</span>
-<span class="nc" id="L146">		} catch (IOException e) {</span>
-<span class="nc" id="L147">			throw new UnsupportedOperationException(e);</span>
-<span class="nc" id="L148">		}</span>
-<span class="nc" id="L149">	}</span>
-
-	@Override
 	public ImageData createOne01970(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
-<span class="nc" id="L153">		final UDrawable drawable = createUDrawable(index);</span>
-<span class="nc" id="L154">		return diagram.createImageBuilder(fileFormatOption).drawable(drawable).write(os);</span>
+<span class="nc" id="L144">		throw new UnsupportedOperationException();</span>
 	}
 
 	private UDrawable createUDrawable(final int index) {
-<span class="nc" id="L158">		final Page page = pages.get(index);</span>
-<span class="nc" id="L159">		final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);</span>
-<span class="nc" id="L160">		double pageHeight = page.getHeight();</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (builder.hasMainFrame())</span>
-<span class="nc" id="L162">			pageHeight += builder.mainFrameSuppHeight();</span>
+<span class="nc" id="L148">		final Page page = pages.get(index);</span>
+<span class="nc" id="L149">		final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);</span>
+<span class="nc" id="L150">		double pageHeight = page.getHeight();</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (builder.hasMainFrame())</span>
+<span class="nc" id="L152">			pageHeight += builder.mainFrameSuppHeight();</span>
 
-<span class="nc" id="L164">		final SequenceDiagramArea area = new SequenceDiagramArea(fullDimension.getWidth(), pageHeight);</span>
+<span class="nc" id="L154">		final SequenceDiagramArea area = new SequenceDiagramArea(fullDimension.getWidth(), pageHeight);</span>
 
 		final TextBlock compTitle;
-<span class="nc" id="L167">		final TextBlock caption = builder.getCaption();</span>
-<span class="nc" id="L168">		area.setCaptionArea(caption.calculateDimension(stringBounder));</span>
+<span class="nc" id="L157">		final TextBlock caption = builder.getCaption();</span>
+<span class="nc" id="L158">		area.setCaptionArea(caption.calculateDimension(stringBounder));</span>
 
-<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (Display.isNull(page.getTitle())) {</span>
-<span class="nc" id="L171">			compTitle = null;</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (Display.isNull(page.getTitle())) {</span>
+<span class="nc" id="L161">			compTitle = null;</span>
 		} else {
-<span class="nc" id="L173">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)</span>
-<span class="nc" id="L174">					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L175">			compTitle = style.createTextBlockBordered(page.getTitle(), diagram.getSkinParam().getIHtmlColorSet(),</span>
-<span class="nc" id="L176">					diagram.getSkinParam(), Style.ID_TITLE, LineBreakStrategy.NONE);</span>
-<span class="nc" id="L177">			final XDimension2D dimTitle = compTitle.calculateDimension(stringBounder);</span>
-<span class="nc" id="L178">			area.setTitleArea(dimTitle.getWidth(), dimTitle.getHeight());</span>
+<span class="nc" id="L163">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)</span>
+<span class="nc" id="L164">					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L165">			compTitle = style.createTextBlockBordered(page.getTitle(), diagram.getSkinParam().getIHtmlColorSet(),</span>
+<span class="nc" id="L166">					diagram.getSkinParam(), Style.ID_TITLE, LineBreakStrategy.NONE);</span>
+<span class="nc" id="L167">			final XDimension2D dimTitle = compTitle.calculateDimension(stringBounder);</span>
+<span class="nc" id="L168">			area.setTitleArea(dimTitle.getWidth(), dimTitle.getHeight());</span>
 		}
-<span class="nc" id="L180">		area.initFooter(getPngTitler(FontParam.FOOTER, index), stringBounder);</span>
-<span class="nc" id="L181">		area.initHeader(getPngTitler(FontParam.HEADER, index), stringBounder);</span>
+<span class="nc" id="L170">		area.initFooter(getPngTitler(FontParam.FOOTER, index), stringBounder);</span>
+<span class="nc" id="L171">		area.initHeader(getPngTitler(FontParam.HEADER, index), stringBounder);</span>
 
 		final TextBlock legendBlock;
-<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (diagram.getLegend().isNull()) {</span>
-<span class="nc" id="L185">			legendBlock = TextBlockUtils.empty(0, 0);</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (diagram.getLegend().isNull()) {</span>
+<span class="nc" id="L175">			legendBlock = TextBlockUtils.empty(0, 0);</span>
 		} else {
-<span class="nc" id="L187">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.legend)</span>
-<span class="nc" id="L188">					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L189">			legendBlock = style.createTextBlockBordered(diagram.getLegend().getDisplay(),</span>
-<span class="nc" id="L190">					diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam(), Style.ID_LEGEND,</span>
+<span class="nc" id="L177">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.legend)</span>
+<span class="nc" id="L178">					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L179">			legendBlock = style.createTextBlockBordered(diagram.getLegend().getDisplay(),</span>
+<span class="nc" id="L180">					diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam(), Style.ID_LEGEND,</span>
 					LineBreakStrategy.NONE);
 		}
-<span class="nc" id="L193">		final XDimension2D dimLegend = legendBlock.calculateDimension(stringBounder);</span>
-<span class="nc" id="L194">		area.setLegend(dimLegend, isLegendTop(), diagram.getLegend().getHorizontalAlignment());</span>
+<span class="nc" id="L183">		final XDimension2D dimLegend = legendBlock.calculateDimension(stringBounder);</span>
+<span class="nc" id="L184">		area.setLegend(dimLegend, isLegendTop(), diagram.getLegend().getHorizontalAlignment());</span>
 
-<span class="nc" id="L196">		final UDrawable drawable = new UDrawable() {</span>
+<span class="nc" id="L186">		final UDrawable drawable = new UDrawable() {</span>
 			public void drawU(UGraphic ug) {
 
-<span class="nc" id="L199">				double delta = 0;</span>
-<span class="nc bnc" id="L200" title="All 2 branches missed.">				if (index &gt; 0)</span>
-<span class="nc" id="L201">					delta = page.getNewpage1() - page.getHeaderHeight();</span>
+<span class="nc" id="L189">				double delta = 0;</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">				if (index &gt; 0)</span>
+<span class="nc" id="L191">					delta = page.getNewpage1() - page.getHeaderHeight();</span>
 
-<span class="nc bnc" id="L203" title="All 2 branches missed.">				if (delta &lt; 0)</span>
-<span class="nc" id="L204">					delta = 0;</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">				if (delta &lt; 0)</span>
+<span class="nc" id="L194">					delta = 0;</span>
 
-<span class="nc bnc" id="L206" title="All 2 branches missed.">				if (compTitle != null) {</span>
-<span class="nc" id="L207">					final HColor back = diagram.calculateBackColor();</span>
-<span class="nc" id="L208">					compTitle.drawU(ug.apply(back.bg()).apply(new UTranslate(area.getTitleX(), area.getTitleY())));</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">				if (compTitle != null) {</span>
+<span class="nc" id="L197">					final HColor back = diagram.calculateBackColor();</span>
+<span class="nc" id="L198">					compTitle.drawU(ug.apply(back.bg()).apply(new UTranslate(area.getTitleX(), area.getTitleY())));</span>
 				}
-<span class="nc" id="L210">				caption.drawU(ug.apply(new UTranslate(area.getCaptionX(), area.getCaptionY())));</span>
+<span class="nc" id="L200">				caption.drawU(ug.apply(new UTranslate(area.getCaptionX(), area.getCaptionY())));</span>
 
-<span class="nc" id="L212">				final double delta1 = Math.max(0, area.getLegendWidth() - area.getWidth());</span>
+<span class="nc" id="L202">				final double delta1 = Math.max(0, area.getLegendWidth() - area.getWidth());</span>
 
-<span class="nc" id="L214">				final UTranslate forCore = new UTranslate(area.getSequenceAreaX() + delta1 / 2,</span>
-<span class="nc" id="L215">						area.getSequenceAreaY());</span>
-<span class="nc" id="L216">				TextBlock core = drawableSet.asTextBlock(delta, fullDimension.getWidth(), page,</span>
-<span class="nc" id="L217">						diagram.isShowFootbox());</span>
-<span class="nc" id="L218">				core = builder.decoreWithFrame(core);</span>
-<span class="nc" id="L219">				core.drawU(ug.apply(forCore));</span>
+<span class="nc" id="L204">				final UTranslate forCore = new UTranslate(area.getSequenceAreaX() + delta1 / 2,</span>
+<span class="nc" id="L205">						area.getSequenceAreaY());</span>
+<span class="nc" id="L206">				TextBlock core = drawableSet.asTextBlock(delta, fullDimension.getWidth(), page,</span>
+<span class="nc" id="L207">						diagram.isShowFootbox());</span>
+<span class="nc" id="L208">				core = builder.decoreWithFrame(core);</span>
+<span class="nc" id="L209">				core.drawU(ug.apply(forCore));</span>
 
-<span class="nc" id="L221">				drawHeader(area, ug, index);</span>
-<span class="nc" id="L222">				drawFooter(area, ug, index);</span>
+<span class="nc" id="L211">				drawHeader(area, ug, index);</span>
+<span class="nc" id="L212">				drawFooter(area, ug, index);</span>
 
-<span class="nc bnc" id="L224" title="All 2 branches missed.">				if (area.hasLegend())</span>
-<span class="nc" id="L225">					legendBlock.drawU(ug.apply(new UTranslate(area.getLegendX(), area.getLegendY())));</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">				if (area.hasLegend())</span>
+<span class="nc" id="L215">					legendBlock.drawU(ug.apply(new UTranslate(area.getLegendX(), area.getLegendY())));</span>
 
-<span class="nc" id="L227">			}</span>
+<span class="nc" id="L217">			}</span>
 
 		};
-<span class="nc" id="L230">		return drawable;</span>
+<span class="nc" id="L220">		return drawable;</span>
 	}
 
 	private void drawFooter(SequenceDiagramArea area, UGraphic ug, int page) {
-<span class="nc" id="L234">		final PngTitler pngTitler = getPngTitler(FontParam.FOOTER, page);</span>
+<span class="nc" id="L224">		final PngTitler pngTitler = getPngTitler(FontParam.FOOTER, page);</span>
+<span class="nc" id="L225">		final TextBlock text = pngTitler.getRibbonBlock();</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		if (text == null)</span>
+<span class="nc" id="L227">			return;</span>
+
+<span class="nc" id="L229">		text.drawU(ug.apply(</span>
+<span class="nc" id="L230">				new UTranslate(area.getFooterX(diagram.getFooter().getHorizontalAlignment()), area.getFooterY())));</span>
+<span class="nc" id="L231">	}</span>
+
+	private void drawHeader(SequenceDiagramArea area, UGraphic ug, int page) {
+<span class="nc" id="L234">		final PngTitler pngTitler = getPngTitler(FontParam.HEADER, page);</span>
 <span class="nc" id="L235">		final TextBlock text = pngTitler.getRibbonBlock();</span>
 <span class="nc bnc" id="L236" title="All 2 branches missed.">		if (text == null)</span>
 <span class="nc" id="L237">			return;</span>
 
 <span class="nc" id="L239">		text.drawU(ug.apply(</span>
-<span class="nc" id="L240">				new UTranslate(area.getFooterX(diagram.getFooter().getHorizontalAlignment()), area.getFooterY())));</span>
+<span class="nc" id="L240">				new UTranslate(area.getHeaderX(diagram.getHeader().getHorizontalAlignment()), area.getHeaderY())));</span>
 <span class="nc" id="L241">	}</span>
 
-	private void drawHeader(SequenceDiagramArea area, UGraphic ug, int page) {
-<span class="nc" id="L244">		final PngTitler pngTitler = getPngTitler(FontParam.HEADER, page);</span>
-<span class="nc" id="L245">		final TextBlock text = pngTitler.getRibbonBlock();</span>
-<span class="nc bnc" id="L246" title="All 2 branches missed.">		if (text == null)</span>
-<span class="nc" id="L247">			return;</span>
-
-<span class="nc" id="L249">		text.drawU(ug.apply(</span>
-<span class="nc" id="L250">				new UTranslate(area.getHeaderX(diagram.getHeader().getHorizontalAlignment()), area.getHeaderY())));</span>
-<span class="nc" id="L251">	}</span>
-
 	private PngTitler getPngTitler(final FontParam fontParam, int page) {
-<span class="nc" id="L254">		final ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="nc" id="L255">		final DisplayPositioned display = diagram.getFooterOrHeaderTeoz(fontParam).withPage(page + 1, pages.size());</span>
-<span class="nc" id="L256">		final StyleSignatureBasic def = fontParam.getStyleDefinition(null);</span>
-<span class="nc" id="L257">		final Style style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L244">		final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L245">		final DisplayPositioned display = diagram.getFooterOrHeaderTeoz(fontParam).withPage(page + 1, pages.size());</span>
+<span class="nc" id="L246">		final StyleSignatureBasic def = fontParam.getStyleDefinition(null);</span>
+<span class="nc" id="L247">		final Style style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 
-<span class="nc" id="L259">		return new PngTitler(display, style, skinParam.getIHtmlColorSet(), skinParam);</span>
+<span class="nc" id="L249">		return new PngTitler(display, style, skinParam.getIHtmlColorSet(), skinParam);</span>
 	}
 
 	private boolean isLegendTop() {
-<span class="nc bnc" id="L263" title="All 2 branches missed.">		return diagram.getLegend().isNull() == false</span>
-<span class="nc bnc" id="L264" title="All 2 branches missed.">				&amp;&amp; diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP;</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">		return diagram.getLegend().isNull() == false</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">				&amp;&amp; diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP;</span>
 	}
-	
+
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormat) {
-<span class="fc" id="L269">		final Page page = pages.get(num);</span>
+<span class="fc" id="L259">		final Page page = pages.get(num);</span>
 
-<span class="fc" id="L271">		double delta = 0;</span>
-<span class="fc bfc" id="L272" title="All 2 branches covered.">		if (num &gt; 0)</span>
-<span class="fc" id="L273">			delta = page.getNewpage1() - page.getHeaderHeight();</span>
+<span class="fc" id="L261">		double delta = 0;</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">		if (num &gt; 0)</span>
+<span class="fc" id="L263">			delta = page.getNewpage1() - page.getHeaderHeight();</span>
 
-<span class="pc bpc" id="L275" title="1 of 2 branches missed.">		if (delta &lt; 0)</span>
-<span class="nc" id="L276">			delta = 0;</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">		if (delta &lt; 0)</span>
+<span class="nc" id="L266">			delta = 0;</span>
 
-<span class="fc" id="L278">		return drawableSet.asTextBlock(delta, fullDimension.getWidth(), page, diagram.isShowFootbox());</span>
+<span class="fc" id="L268">		return drawableSet.asTextBlock(delta, fullDimension.getWidth(), page, diagram.isShowFootbox());</span>
 	}
 
 }

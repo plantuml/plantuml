@@ -41,7 +41,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.StringUtils;
@@ -59,62 +58,57 @@ public class PSystemOregon extends PlainDiagram {
 
 	@Deprecated
 	public PSystemOregon(UmlSource source, Keyboard keyboard, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L62">		super(source, preprocessing);</span>
-<span class="nc" id="L63">		final BasicGame game = new OregonBasicGame();</span>
+<span class="nc" id="L61">		super(source, preprocessing);</span>
+<span class="nc" id="L62">		final BasicGame game = new OregonBasicGame();</span>
 		try {
-<span class="nc" id="L65">			game.run(keyboard);</span>
-<span class="nc" id="L66">			this.screen = game.getScreen();</span>
+<span class="nc" id="L64">			game.run(keyboard);</span>
+<span class="nc" id="L65">			this.screen = game.getScreen();</span>
 			// this.screen = new Screen();
 			// screen.print(&quot;Game ended??&quot;);
-<span class="nc" id="L69">		} catch (NoInputException e) {</span>
-<span class="nc" id="L70">			this.screen = game.getScreen();</span>
-<span class="nc" id="L71">		}</span>
-<span class="nc" id="L72">	}</span>
-
-	@Override
-	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L76">		return super.createImageBuilder(fileFormatOption).blackBackcolor();</span>
-	}
+<span class="nc" id="L68">		} catch (NoInputException e) {</span>
+<span class="nc" id="L69">			this.screen = game.getScreen();</span>
+<span class="nc" id="L70">		}</span>
+<span class="nc" id="L71">	}</span>
 
 	@Override
 	public HColor calculateBackColor() {
-<span class="nc" id="L81">		return HColors.BLACK;</span>
+<span class="nc" id="L75">		return HColors.BLACK;</span>
 	}
 
 	public PSystemOregon(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L85">		super(source, preprocessing);</span>
-<span class="nc" id="L86">		this.inputs = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L87">	}</span>
+<span class="nc" id="L79">		super(source, preprocessing);</span>
+<span class="nc" id="L80">		this.inputs = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L81">	}</span>
 
 	public void add(String line) {
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(line)) {</span>
-<span class="nc" id="L91">			inputs.add(line);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(line)) {</span>
+<span class="nc" id="L85">			inputs.add(line);</span>
 		}
-<span class="nc" id="L93">	}</span>
+<span class="nc" id="L87">	}</span>
 
 	private Screen getScreen() {
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (screen == null) {</span>
-<span class="nc" id="L97">			final Keyboard keyboard = new KeyboardList(inputs);</span>
-<span class="nc" id="L98">			final BasicGame game = new OregonBasicGame();</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (screen == null) {</span>
+<span class="nc" id="L91">			final Keyboard keyboard = new KeyboardList(inputs);</span>
+<span class="nc" id="L92">			final BasicGame game = new OregonBasicGame();</span>
 			try {
-<span class="nc" id="L100">				game.run(keyboard);</span>
-<span class="nc" id="L101">				this.screen = game.getScreen();</span>
+<span class="nc" id="L94">				game.run(keyboard);</span>
+<span class="nc" id="L95">				this.screen = game.getScreen();</span>
 				// this.screen = new Screen();
 				// screen.print(&quot;Game ended??&quot;);
-<span class="nc" id="L104">			} catch (NoInputException e) {</span>
-<span class="nc" id="L105">				this.screen = game.getScreen();</span>
-<span class="nc" id="L106">			}</span>
+<span class="nc" id="L98">			} catch (NoInputException e) {</span>
+<span class="nc" id="L99">				this.screen = game.getScreen();</span>
+<span class="nc" id="L100">			}</span>
 		}
-<span class="nc" id="L108">		return screen;</span>
+<span class="nc" id="L102">		return screen;</span>
 	}
 
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L113">		return createGreenOnBlackMonospaced(getScreen().getLines());</span>
+<span class="nc" id="L107">		return createGreenOnBlackMonospaced(getScreen().getLines());</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L117">		return new DiagramDescription(&quot;(The Oregon Trail)&quot;);</span>
+<span class="nc" id="L111">		return new DiagramDescription(&quot;(The Oregon Trail)&quot;);</span>
 	}
 
 }
