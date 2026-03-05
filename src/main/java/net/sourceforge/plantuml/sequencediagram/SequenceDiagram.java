@@ -49,7 +49,6 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Previous;
@@ -63,7 +62,6 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
@@ -305,12 +303,6 @@ public class SequenceDiagram extends TitledDiagram {
 	}
 
 	@Override
-	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		return super.createImageBuilder(fileFormatOption).annotations(false);
-		// they are managed in the SequenceDiagramFileMaker* classes
-	}
-
-	@Override
 	protected ImageData exportXmi(OutputStream os, FileFormat fileFormat) throws IOException {
 		final SequenceDiagramXmiMaker maker = new SequenceDiagramXmiMaker(this, fileFormat);
 		return maker.createOne01970(os, 0, false);
@@ -526,7 +518,8 @@ public class SequenceDiagram extends TitledDiagram {
 	public void putParticipantInLast(String code) {
 		final Participant p = Objects.requireNonNull(participantsget(code), code);
 		final boolean ok = participantsList.remove(p);
-		if (TeaVM.a()) assert ok;
+		if (TeaVM.a())
+			assert ok;
 		addWithOrder(p);
 		participantEnglobers2.put(p, participantEnglober);
 	}

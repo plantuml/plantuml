@@ -34,9 +34,6 @@
  */
 package net.sourceforge.plantuml.eggs;
 
-import java.io.IOException;
-
-import net.atmp.ImageBuilder;
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
@@ -51,18 +48,12 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemCharlie extends PlainDiagram {
-	
-	
+
 	private PortableImage image;
 
 	PSystemCharlie(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
 		image = PSystemVersion.getCharlieImage();
-	}
-
-	@Override
-	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		return super.createImageBuilder(fileFormatOption).blackBackcolor();
 	}
 
 	@Override

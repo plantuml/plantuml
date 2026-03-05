@@ -46,7 +46,6 @@ import java.util.Map;
 
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.CucaNote;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
@@ -54,11 +53,7 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
-import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.crash.CrashReportHandler;
-import net.sourceforge.plantuml.crash.ReportLog;
-import net.sourceforge.plantuml.eggs.QuoteUtils;
 
 /*
  * You can choose between real "org.eclipse.elk..." classes or proxied "net.sourceforge.plantuml.elk.proxy..."
@@ -101,7 +96,6 @@ import net.sourceforge.plantuml.elk.proxy.graph.util.ElkGraphUtil;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -112,7 +106,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
-import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
@@ -144,7 +137,6 @@ https://rtsys.informatik.uni-kiel.de/~biblio/downloads/theses/thw-bt.pdf
  */
 @DuplicateCode(reference = "SvekEdge, CucaDiagramFileMakerElk, CucaDiagramFileMakerSmetana")
 public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
-	
 
 	private final Map<Entity, ElkNode> nodes = new LinkedHashMap<Entity, ElkNode>();
 	private final Map<Entity, ElkNode> clusters = new LinkedHashMap<Entity, ElkNode>();
@@ -261,7 +253,7 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 		final ISkinParam skinParam = diagram.getSkinParam();
 		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);
 		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), tmp).create(labelFont,
-			skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
+				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 		if (TextBlockUtils.isEmpty(label, stringBounder))
 			return null;
 
@@ -275,8 +267,8 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 
 		final ISkinParam skinParam = diagram.getSkinParam();
 		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);
-		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), role).create(labelFont, 
-			skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
+		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), role).create(labelFont,
+				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 		if (TextBlockUtils.isEmpty(label, stringBounder))
 			return null;
 
@@ -322,46 +314,7 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 	public ImageData createFile01970(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		// https://www.eclipse.org/forums/index.php/t/1095737/
-		try {
-			final ElkNode root = ElkGraphUtil.createGraph();
-			root.setProperty(CoreOptions.DIRECTION, Direction.DOWN);
-			root.setProperty(CoreOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
-
-			final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
-
-			this.printAllSubgroups(stringBounder, root, diagram.getRootGroup());
-			this.printEntities(stringBounder, root, getUnpackagedEntities());
-
-			this.manageAllEdges(stringBounder);
-
-			new RecursiveGraphLayoutEngine().layout(root, new NullElkProgressMonitor());
-
-			final MinMax minMax = TextBlockUtils.getMinMax(
-					new MyElkDrawing(clusterManager, diagram, null, clusters, edges, nodes), stringBounder, false);
-
-			final TextBlock drawable = new MyElkDrawing(clusterManager, diagram, minMax, clusters, edges, nodes);
-			return diagram.createImageBuilder(fileFormatOption) //
-					.drawable(drawable) //
-					.write(os); //
-
-		} catch (Throwable e) {
-			Logme.error(e);
-			final CrashReportHandler report = new CrashReportHandler(e, diagram.getMetadata(), diagram.getFlashData());
-			report.add("An error has occured : " + e);
-			final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());
-			report.add("<i>" + quote);
-			report.addEmptyLine();
-			report.addProperties();
-			report.addEmptyLine();
-			report.add("Sorry, ELK intregration is really alpha feature...");
-			report.addEmptyLine();
-			report.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> or");
-			report.add("post to <b>https://plantuml.com/qa</b> to solve this issue.");
-			report.addEmptyLine();
-			report.exportDiagramError(fileFormatOption, diagram.seed(), os);
-			return ImageDataSimple.error(e);
-		}
+		throw new UnsupportedOperationException();
 
 	}
 

@@ -42,10 +42,8 @@ import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Set;
 
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PSystemBuilder;
 import net.sourceforge.plantuml.Scale;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.command.Command;
@@ -196,12 +194,6 @@ public abstract class AbstractDiagram implements Diagram {
 
 	final public Scale getScale() {
 		return scale;
-	}
-
-	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		final ColorMapper init = fileFormatOption.getColorMapper();
-		final ColorMapper newColorMappter = muteColorMapper(init);
-		return ImageBuilder.create(fileFormatOption.withColorMapper(newColorMappter));
 	}
 
 	protected ColorMapper muteColorMapper(ColorMapper init) {

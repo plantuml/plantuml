@@ -41,7 +41,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.StringUtils;
@@ -69,11 +68,6 @@ public class PSystemOregon extends PlainDiagram {
 		} catch (NoInputException e) {
 			this.screen = game.getScreen();
 		}
-	}
-
-	@Override
-	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		return super.createImageBuilder(fileFormatOption).blackBackcolor();
 	}
 
 	@Override

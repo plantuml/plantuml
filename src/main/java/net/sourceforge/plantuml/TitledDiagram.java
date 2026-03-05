@@ -47,7 +47,6 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.regex.Pattern;
 
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.api.ApiStable;
@@ -270,11 +269,6 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 	}
 
 	@Override
-	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		return super.createImageBuilder(fileFormatOption).styled(this);
-	}
-
-	@Override
 	public final HColor calculateBackColor() {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.document, this.getUmlDiagramType().getStyleName())
 				.getMergedStyle(this.getSkinParam().getCurrentStyleBuilder());
@@ -315,12 +309,7 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 
 	@Override
 	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
-		try {
-			final TextBlock textBlock = getTextMainBlock01970(fileFormatOption);
-			createImageBuilder(fileFormatOption).drawable(textBlock).drawU(ug);
-		} catch (IOException e) {
-			throw new UnsupportedOperationException(e);
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	final public Pragma getPragma() {

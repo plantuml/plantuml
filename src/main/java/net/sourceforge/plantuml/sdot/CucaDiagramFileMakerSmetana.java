@@ -62,7 +62,6 @@ import h.ST_Agrec_s;
 import h.ST_GVC_s;
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.CucaNote;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
@@ -70,10 +69,7 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
-import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.crash.CrashReportHandler;
-import net.sourceforge.plantuml.eggs.QuoteUtils;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
@@ -89,7 +85,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
-import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
@@ -472,33 +467,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	private ImageData createFileLocked(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException {
-
-		final Globals zz = Globals.open();
-		try {
-			final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
-
-			final TextBlock drawable = getTextBlock(stringBounder, zz);
-			return diagram.createImageBuilder(fileFormatOption).drawable(drawable).write(os);
-		} catch (Throwable e) {
-			SmetanaDebug.printMe();
-			Logme.error(e);
-			final CrashReportHandler report = new CrashReportHandler(e, diagram.getMetadata(), diagram.getFlashData());
-			report.add("An error has occured : " + e);
-			final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());
-			report.add("<i>" + quote);
-			report.addEmptyLine();
-			report.addProperties();
-			report.addEmptyLine();
-			report.add("Sorry, the subproject Smetana is not finished yet...");
-			report.addEmptyLine();
-			report.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> or");
-			report.add("post to <b>https://plantuml.com/qa</b> to solve this issue.");
-			report.addEmptyLine();
-			report.exportDiagramError(fileFormatOption, diagram.seed(), os);
-			return ImageDataSimple.error();
-		} finally {
-			Globals.close();
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	private TextBlock getTextBlock(StringBounder stringBounder, Globals zz) {

@@ -34,22 +34,17 @@
  */
 package net.sourceforge.plantuml.bpm;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.SkinParam;
@@ -80,20 +75,15 @@ public class BpmDiagram extends TitledDiagram {
 		super(source, UmlDiagramType.BPM, null, preprocessing);
 	}
 
-	@Override
-	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		return super.createImageBuilder(fileFormatOption).annotations(false);
-	}
-
-	private UDrawable getUDrawable() {
-		final Grid grid = createGrid();
-		cleanGrid(grid);
-		final GridArray gridArray = grid.toArray(SkinParam.create(PathSystem.fetch(), getUmlDiagramType(), getPragma(),
-				getPreprocessingArtifact().getOption()));
-		// gridArray.addEdges(edges);
-		// System.err.println("gridArray=" + gridArray);
-		return gridArray;
-	}
+//	private UDrawable getUDrawable() {
+//		final Grid grid = createGrid();
+//		cleanGrid(grid);
+//		final GridArray gridArray = grid.toArray(SkinParam.create(PathSystem.fetch(), getUmlDiagramType(), getPragma(),
+//				getPreprocessingArtifact().getOption()));
+//		// gridArray.addEdges(edges);
+//		// System.err.println("gridArray=" + gridArray);
+//		return gridArray;
+//	}
 
 	public CommandExecutionResult addEvent(BpmEvent event) {
 		this.events.add(event);
@@ -191,7 +181,7 @@ public class BpmDiagram extends TitledDiagram {
 	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		final Grid grid = createGrid();

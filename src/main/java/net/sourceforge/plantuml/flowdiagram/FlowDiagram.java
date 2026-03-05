@@ -35,11 +35,9 @@
  */
 package net.sourceforge.plantuml.flowdiagram;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -119,14 +117,6 @@ public class FlowDiagram extends TitledDiagram implements TextBlock {
 			}
 		}
 		throw new IllegalArgumentException(id);
-	}
-
-	@Override
-	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		return ImageBuilder.create(fileFormatOption)
-				.dimension(calculateDimension(fileFormatOption.getDefaultStringBounder(getSkinParam())))
-				.margin(getDefaultMargins()).metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null)
-				.seed(seed());
 	}
 
 	public void drawU(UGraphic ug) {

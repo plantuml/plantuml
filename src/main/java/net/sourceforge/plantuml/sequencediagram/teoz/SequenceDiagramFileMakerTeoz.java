@@ -133,10 +133,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	private final double heightEnglober2;
 
 	public ImageData createOne01970(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
-		if (this.index != index)
-			throw new IllegalStateException();
-
-		return diagram.createImageBuilder(fileFormatOption).drawable(new Foo(index)).write(os);
+		throw new UnsupportedOperationException();
 	}
 
 	class Foo implements UDrawable {

@@ -36,16 +36,13 @@
 package net.sourceforge.plantuml.klimt.sprite;
 
 import java.io.IOException;
-import java.io.OutputStream;
 
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandFactorySprite;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -75,11 +72,6 @@ public class StdlibDiagram extends TitledDiagram {
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("(Sprites)");
-	}
-
-	@Override
-	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		return super.createImageBuilder(fileFormatOption).annotations(false);
 	}
 
 	@Override

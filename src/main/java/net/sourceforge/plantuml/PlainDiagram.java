@@ -36,7 +36,6 @@ package net.sourceforge.plantuml;
 
 import java.io.IOException;
 
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
@@ -53,20 +52,6 @@ public abstract class PlainDiagram extends UgDiagram {
 	public PlainDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
 	}
-
-	@Override
-	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		return super.createImageBuilder(fileFormatOption).margin(getDefaultMargins())
-				.metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null).seed(seed());
-	}
-
-//	@Override
-//	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
-//			throws IOException {
-//
-//		final UDrawable rootDrawable = getRootDrawable(fileFormatOption);
-//		return createImageBuilder(fileFormatOption).drawable(rootDrawable).write(os);
-//	}
 
 	@Override
 	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {

@@ -34,11 +34,9 @@
  */
 package net.sourceforge.plantuml.help;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -69,11 +67,6 @@ public class Help extends TitledDiagram {
 		super(source, UmlDiagramType.HELP, null, preprocessing);
 	}
 
-	@Override
-	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		return super.createImageBuilder(fileFormatOption).annotations(false);
-	}
-
 	public void add(CharSequence line) {
 		this.lines.add(line);
 	}
@@ -87,7 +80,7 @@ public class Help extends TitledDiagram {
 	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		final Display display = Display.create(lines);

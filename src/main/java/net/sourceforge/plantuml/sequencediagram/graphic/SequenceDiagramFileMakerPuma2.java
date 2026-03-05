@@ -84,7 +84,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
 		this.fileFormatOption = fileFormatOption;
 		final DrawableSetInitializer initializer = new DrawableSetInitializer(skin, diagram.getSkinParam(),
-				diagram.isShowFootbox(), /*diagram.getAutonewpage(),*/ diagram.getCounter());
+				diagram.isShowFootbox(), /* diagram.getAutonewpage(), */ diagram.getCounter());
 
 		for (Participant p : diagram.participants())
 			initializer.addParticipant(p, diagram.getEnglober(p));
@@ -128,10 +128,11 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		final double headerHeight = drawableSet.getHeadHeight(stringBounder);
 		final double tailHeight = drawableSet.getTailHeight(stringBounder, showFootbox);
 		final double signatureHeight = 0;
-		final double newpageHeight = drawableSet.getSkin().createComponentNewPage(
-					new Style[] { ComponentType.NEWPAGE.getStyleSignature()
- 						.getMergedStyle(drawableSet.getSkinParam().getCurrentStyleBuilder()) },
-					drawableSet.getSkinParam())
+		final double newpageHeight = drawableSet.getSkin()
+				.createComponentNewPage(
+						new Style[] { ComponentType.NEWPAGE.getStyleSignature()
+								.getMergedStyle(drawableSet.getSkinParam().getCurrentStyleBuilder()) },
+						drawableSet.getSkinParam())
 				.getPreferredHeight(stringBounder);
 
 		return new PageSplitter(fullDimension.getHeight(), headerHeight, positions, tailHeight, signatureHeight,
@@ -140,8 +141,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 	@Override
 	public ImageData createOne01970(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
-		final UDrawable drawable = createUDrawable(index);
-		return diagram.createImageBuilder(fileFormatOption).drawable(drawable).write(os);
+		throw new UnsupportedOperationException();
 	}
 
 	private UDrawable createUDrawable(final int index) {
@@ -253,7 +253,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		return diagram.getLegend().isNull() == false
 				&& diagram.getLegend().getVerticalAlignment() == VerticalAlignment.TOP;
 	}
-	
+
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormat) {
 		final Page page = pages.get(num);
