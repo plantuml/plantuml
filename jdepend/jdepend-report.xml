@@ -10718,7 +10718,7 @@
                 <TotalClasses>41</TotalClasses>
                 <ConcreteClasses>39</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>84</Ca>
+                <Ca>85</Ca>
                 <Ce>16</Ce>
                 <A>0.05</A>
                 <I>0.16</I>
@@ -10949,6 +10949,7 @@
                 <Package>net.sourceforge.plantuml.sequencediagram.teoz</Package>
                 <Package>net.sourceforge.plantuml.skin</Package>
                 <Package>net.sourceforge.plantuml.skin.rose</Package>
+                <Package>net.sourceforge.plantuml.sudoku</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.svek.extremity</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>
@@ -15926,12 +15927,12 @@
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.regex</Package>
             </DependsUpon>

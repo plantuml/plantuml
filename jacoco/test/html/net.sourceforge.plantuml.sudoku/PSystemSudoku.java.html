@@ -35,53 +35,30 @@
  */
 package net.sourceforge.plantuml.sudoku;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
-import net.sourceforge.plantuml.DirectOsDiagram;
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-public class PSystemSudoku extends DirectOsDiagram {
+public class PSystemSudoku extends UgDiagram {
 
 	final private ISudoku sudoku;
 
 	@Override
-	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
-			throws IOException {
-<span class="nc" id="L56">		final GraphicsSudoku sud = new GraphicsSudoku(sudoku);</span>
-		// ::comment when __TEAVM__
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.EPS)</span>
-<span class="nc" id="L59">			return sud.writeImageEps(os);</span>
-
-<span class="nc bnc" id="L61" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.LATEX</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">				|| fileFormat.getFileFormat() == FileFormat.LATEX_NO_PREAMBLE)</span>
-<span class="nc" id="L63">			return sud.writeImageLatex(os, fileFormat.getFileFormat());</span>
-
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.SVG)</span>
-<span class="nc" id="L66">			return sud.writeImageSvg(os);</span>
-
-<span class="nc" id="L68">		return sud.writeImagePng(os);</span>
-		// ::done
-
-		// ::uncomment when __TEAVM__
-		// throw new UnsupportedOperationException(&quot;TEAVM2&quot;);
-		// ::done
-
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+<span class="nc" id="L51">		return new GraphicsSudoku(sudoku);</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L78">		return new DiagramDescription(&quot;(Sudoku)&quot;);</span>
+<span class="nc" id="L55">		return new DiagramDescription(&quot;(Sudoku)&quot;);</span>
 	}
 
 	public PSystemSudoku(UmlSource source, Long seed, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L82">		super(source, preprocessing);</span>
-<span class="nc" id="L83">		sudoku = new SudokuDLX(seed);</span>
-<span class="nc" id="L84">	}</span>
+<span class="nc" id="L59">		super(source, preprocessing);</span>
+<span class="nc" id="L60">		sudoku = new SudokuDLX(seed);</span>
+<span class="nc" id="L61">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

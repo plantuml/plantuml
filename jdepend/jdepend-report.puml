@@ -3100,12 +3100,12 @@ Total Classes: 4
 class "net.sourceforge.plantuml.sudoku" %lighten("red", 75) {
 Total Classes: 4
 }
-"net.sourceforge.plantuml.sudoku" --> "java.io"
 "net.sourceforge.plantuml.sudoku" --> "java.lang"
 "net.sourceforge.plantuml.sudoku" --> "java.util"
 "net.sourceforge.plantuml.sudoku" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.sudoku" --> "net.sourceforge.plantuml.command"
 "net.sourceforge.plantuml.sudoku" --> "net.sourceforge.plantuml.core"
+"net.sourceforge.plantuml.sudoku" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.sudoku" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.sudoku" --> "net.sourceforge.plantuml.regex"
 
