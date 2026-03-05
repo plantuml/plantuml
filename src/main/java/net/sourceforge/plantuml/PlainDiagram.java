@@ -53,17 +53,6 @@ public abstract class PlainDiagram extends UgDiagram {
 		super(source, preprocessing);
 	}
 
-	@Override
-	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
-		try {
-			final UDrawable rootDrawable = getRootDrawable(fileFormatOption);
-			rootDrawable.drawU(ug);
-		} catch (IOException e) {
-			e.printStackTrace();
-			super.exportDiagramGraphic01970(ug, fileFormatOption);
-		}
-	}
-
 	protected abstract UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException;
 
 	@Override

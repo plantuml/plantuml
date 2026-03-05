@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemSudoku extends DirectOsDiagram {
@@ -73,12 +72,6 @@ public class PSystemSudoku extends DirectOsDiagram {
 		// throw new UnsupportedOperationException("TEAVM2");
 		// ::done
 
-	}
-
-	@Override
-	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
-		final GraphicsSudoku sud = new GraphicsSudoku(sudoku);
-		sud.drawInternal(ug);
 	}
 
 	public DiagramDescription getDescription() {

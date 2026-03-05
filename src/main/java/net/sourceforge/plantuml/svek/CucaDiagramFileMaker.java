@@ -36,13 +36,10 @@
 package net.sourceforge.plantuml.svek;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.List;
 
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 
@@ -63,9 +60,6 @@ public abstract class CucaDiagramFileMaker {
 	protected final Bibliotekon getBibliotekon() {
 		return bibliotekon;
 	}
-
-	public abstract ImageData createFile01970(OutputStream os, List<String> dotStrings,
-			FileFormatOption fileFormatOption) throws IOException;
 
 	// Methods ending with 12026 are the new methods
 	public TextBlock getTextBlock12026(List<String> dotStrings, FileFormatOption fileFormatOption)

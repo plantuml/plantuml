@@ -54,8 +54,7 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemLicense extends PlainDiagram implements UDrawable {
-	
-	
+
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
 		return this;
@@ -75,12 +74,6 @@ public class PSystemLicense extends PlainDiagram implements UDrawable {
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("(License)");
-	}
-
-	@Override
-	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
-		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();
-		getTextBlock(licenseInfo).drawU(ug);
 	}
 
 	public void drawU(UGraphic ug) {

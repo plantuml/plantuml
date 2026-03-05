@@ -360,8 +360,6 @@ public class PlantUMLBrowser {
 				BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender new20");
 			} else {
 				BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender ERROR");
-				// diagram.exportDiagramGraphic01970(ug, fileFormat);
-				BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender ERROR");
 			}
 
 			// Clear any previous content (old SVG, error messages, etc.)

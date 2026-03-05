@@ -35,14 +35,10 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import net.sourceforge.plantuml.AnnotatedBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.PngTitler;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -131,10 +127,6 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	private final LivingSpaces livingSpaces = new LivingSpaces();
 	private final double heightEnglober1;
 	private final double heightEnglober2;
-
-	public ImageData createOne01970(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
-		throw new UnsupportedOperationException();
-	}
 
 	class Foo implements UDrawable {
 

@@ -44,7 +44,6 @@ import static gen.lib.gvc.gvc__c.gvContext;
 import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -69,7 +68,6 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
@@ -384,44 +382,6 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	private static final Lock lock = new ReentrantLock();
 
-	public ImageData createFile01970(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
-			throws IOException {
-
-		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
-
-		this.printAllSubgroups(stringBounder, diagram.getRootGroup());
-		this.printEntities(stringBounder, getUnpackagedEntities());
-
-		for (Link link : diagram.getLinks()) {
-			if (link.isRemoved())
-				continue;
-
-			if (isOpalisable(link.getEntity1())) {
-				final SvekNode node = getBibliotekon().getNode(link.getEntity1());
-				final SvekNode other = getBibliotekon().getNode(link.getEntity2());
-				if (other != null) {
-					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);
-					link.setOpale(true);
-				}
-			} else if (isOpalisable(link.getEntity2())) {
-				final SvekNode node = getBibliotekon().getNode(link.getEntity2());
-				final SvekNode other = getBibliotekon().getNode(link.getEntity1());
-				if (other != null) {
-					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);
-					link.setOpale(true);
-				}
-			}
-
-		}
-
-		lock.lock();
-		try {
-			return createFileLocked(os, dotStrings, fileFormatOption);
-		} finally {
-			lock.unlock();
-		}
-	}
-
 	@Override
 	public TextBlock getTextBlock12026(List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
@@ -463,11 +423,6 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		} finally {
 			lock.unlock();
 		}
-	}
-
-	private ImageData createFileLocked(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
-			throws IOException {
-		throw new UnsupportedOperationException();
 	}
 
 	private TextBlock getTextBlock(StringBounder stringBounder, Globals zz) {

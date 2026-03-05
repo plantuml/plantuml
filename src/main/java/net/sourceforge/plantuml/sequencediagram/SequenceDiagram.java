@@ -305,13 +305,13 @@ public class SequenceDiagram extends TitledDiagram {
 	@Override
 	protected ImageData exportXmi(OutputStream os, FileFormat fileFormat) throws IOException {
 		final SequenceDiagramXmiMaker maker = new SequenceDiagramXmiMaker(this, fileFormat);
-		return maker.createOne01970(os, 0, false);
+		return maker.createOne(os, 0, false);
 	}
 
 	@Override
 	protected ImageData exportTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
 		final SequenceDiagramTxtMaker maker = new SequenceDiagramTxtMaker(this, fileFormat);
-		return maker.createOne01970(os, index, false);
+		return maker.createOne(os, index, false);
 	}
 
 	@Override

@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.asciiart.UmlCharArea;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -128,7 +127,7 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 
 	}
 
-	public ImageData createOne01970(OutputStream os, int index, boolean isWithMetadata) throws IOException {
+	public ImageData createOne(OutputStream os, int index, boolean isWithMetadata) throws IOException {
 		if (fileFormat == FileFormat.UTXT) {
 			final PrintStream ps = SecurityUtils.createPrintStream(os, true, UTF_8);
 			ug.getCharArea().print(ps);

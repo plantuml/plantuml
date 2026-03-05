@@ -36,20 +36,17 @@
 package net.sourceforge.plantuml.svek;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.abel.Link;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.dot.CucaDiagramSimplifierActivity;
 import net.sourceforge.plantuml.dot.CucaDiagramSimplifierState;
 import net.sourceforge.plantuml.dot.DotData;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
@@ -57,16 +54,6 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 	public CucaDiagramFileMakerSvek(CucaDiagram diagram) throws IOException {
 		super(diagram);
 
-	}
-
-	public ImageData createFile01970(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
-			throws IOException {
-		try {
-			return createFileInternal(os, dotStrings, fileFormatOption);
-		} catch (InterruptedException e) {
-			Logme.error(e);
-			throw new IOException(e);
-		}
 	}
 
 	@Override
@@ -96,12 +83,6 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 				fileFormatOption.isDebugSvek());
 
 		return result;
-
-	}
-
-	private ImageData createFileInternal(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
-			throws IOException, InterruptedException {
-		throw new UnsupportedOperationException();
 
 	}
 

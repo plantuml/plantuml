@@ -36,19 +36,16 @@
 package net.sourceforge.plantuml.svek;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.abel.Link;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.crash.GraphvizCrash;
 import net.sourceforge.plantuml.dot.CucaDiagramSimplifierActivity;
 import net.sourceforge.plantuml.dot.CucaDiagramSimplifierState;
 import net.sourceforge.plantuml.dot.DotData;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
@@ -60,12 +57,6 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 
 	public CucaDiagramFileMakerTeaVM(CucaDiagram diagram) {
 		super(diagram);
-	}
-
-	@Override
-	public ImageData createFile01970(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
-			throws IOException {
-		throw new UnsupportedOperationException("TEAVM100");
 	}
 
 	@Override

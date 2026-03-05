@@ -20,7 +20,6 @@ import org.w3c.dom.Document;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
@@ -36,8 +35,7 @@ public final class SequenceDiagramXmiMaker implements FileMaker {
 		this.fileFormat = fileFormat;
 	}
 
-	@Override
-	public ImageData createOne01970(OutputStream os, int index, boolean isWithMetadata) throws IOException {
+	public ImageData createOne(OutputStream os, int index, boolean isWithMetadata) throws IOException {
 		DocumentBuilder builder;
 		ImageData imageData = new ImageDataSimple(0, 0);
 		try {

@@ -310,14 +310,6 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 		return node;
 	}
 
-	@Override
-	public ImageData createFile01970(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
-			throws IOException {
-
-		throw new UnsupportedOperationException();
-
-	}
-
 	private void printAllSubgroups(StringBounder stringBounder, ElkNode cluster, Entity group) {
 		for (Entity g : diagram.getChildrenGroups(group)) {
 			if (g.isRemoved())

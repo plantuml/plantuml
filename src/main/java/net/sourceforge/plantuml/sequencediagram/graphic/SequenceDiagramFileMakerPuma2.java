@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -45,7 +43,6 @@ import java.util.Map;
 import net.sourceforge.plantuml.AnnotatedBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
-import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.PngTitler;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -139,86 +136,81 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 				newpageHeight, title);
 	}
 
-	@Override
-	public ImageData createOne01970(OutputStream os, final int index, boolean isWithMetadata) throws IOException {
-		throw new UnsupportedOperationException();
-	}
-
-	private UDrawable createUDrawable(final int index) {
-		final Page page = pages.get(index);
-		final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);
-		double pageHeight = page.getHeight();
-		if (builder.hasMainFrame())
-			pageHeight += builder.mainFrameSuppHeight();
-
-		final SequenceDiagramArea area = new SequenceDiagramArea(fullDimension.getWidth(), pageHeight);
-
-		final TextBlock compTitle;
-		final TextBlock caption = builder.getCaption();
-		area.setCaptionArea(caption.calculateDimension(stringBounder));
-
-		if (Display.isNull(page.getTitle())) {
-			compTitle = null;
-		} else {
-			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)
-					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
-			compTitle = style.createTextBlockBordered(page.getTitle(), diagram.getSkinParam().getIHtmlColorSet(),
-					diagram.getSkinParam(), Style.ID_TITLE, LineBreakStrategy.NONE);
-			final XDimension2D dimTitle = compTitle.calculateDimension(stringBounder);
-			area.setTitleArea(dimTitle.getWidth(), dimTitle.getHeight());
-		}
-		area.initFooter(getPngTitler(FontParam.FOOTER, index), stringBounder);
-		area.initHeader(getPngTitler(FontParam.HEADER, index), stringBounder);
-
-		final TextBlock legendBlock;
-		if (diagram.getLegend().isNull()) {
-			legendBlock = TextBlockUtils.empty(0, 0);
-		} else {
-			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.legend)
-					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
-			legendBlock = style.createTextBlockBordered(diagram.getLegend().getDisplay(),
-					diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam(), Style.ID_LEGEND,
-					LineBreakStrategy.NONE);
-		}
-		final XDimension2D dimLegend = legendBlock.calculateDimension(stringBounder);
-		area.setLegend(dimLegend, isLegendTop(), diagram.getLegend().getHorizontalAlignment());
-
-		final UDrawable drawable = new UDrawable() {
-			public void drawU(UGraphic ug) {
-
-				double delta = 0;
-				if (index > 0)
-					delta = page.getNewpage1() - page.getHeaderHeight();
-
-				if (delta < 0)
-					delta = 0;
-
-				if (compTitle != null) {
-					final HColor back = diagram.calculateBackColor();
-					compTitle.drawU(ug.apply(back.bg()).apply(new UTranslate(area.getTitleX(), area.getTitleY())));
-				}
-				caption.drawU(ug.apply(new UTranslate(area.getCaptionX(), area.getCaptionY())));
-
-				final double delta1 = Math.max(0, area.getLegendWidth() - area.getWidth());
-
-				final UTranslate forCore = new UTranslate(area.getSequenceAreaX() + delta1 / 2,
-						area.getSequenceAreaY());
-				TextBlock core = drawableSet.asTextBlock(delta, fullDimension.getWidth(), page,
-						diagram.isShowFootbox());
-				core = builder.decoreWithFrame(core);
-				core.drawU(ug.apply(forCore));
-
-				drawHeader(area, ug, index);
-				drawFooter(area, ug, index);
-
-				if (area.hasLegend())
-					legendBlock.drawU(ug.apply(new UTranslate(area.getLegendX(), area.getLegendY())));
-
-			}
-
-		};
-		return drawable;
-	}
+//	private UDrawable createUDrawable(final int index) {
+//		final Page page = pages.get(index);
+//		final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);
+//		double pageHeight = page.getHeight();
+//		if (builder.hasMainFrame())
+//			pageHeight += builder.mainFrameSuppHeight();
+//
+//		final SequenceDiagramArea area = new SequenceDiagramArea(fullDimension.getWidth(), pageHeight);
+//
+//		final TextBlock compTitle;
+//		final TextBlock caption = builder.getCaption();
+//		area.setCaptionArea(caption.calculateDimension(stringBounder));
+//
+//		if (Display.isNull(page.getTitle())) {
+//			compTitle = null;
+//		} else {
+//			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)
+//					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+//			compTitle = style.createTextBlockBordered(page.getTitle(), diagram.getSkinParam().getIHtmlColorSet(),
+//					diagram.getSkinParam(), Style.ID_TITLE, LineBreakStrategy.NONE);
+//			final XDimension2D dimTitle = compTitle.calculateDimension(stringBounder);
+//			area.setTitleArea(dimTitle.getWidth(), dimTitle.getHeight());
+//		}
+//		area.initFooter(getPngTitler(FontParam.FOOTER, index), stringBounder);
+//		area.initHeader(getPngTitler(FontParam.HEADER, index), stringBounder);
+//
+//		final TextBlock legendBlock;
+//		if (diagram.getLegend().isNull()) {
+//			legendBlock = TextBlockUtils.empty(0, 0);
+//		} else {
+//			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.legend)
+//					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+//			legendBlock = style.createTextBlockBordered(diagram.getLegend().getDisplay(),
+//					diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam(), Style.ID_LEGEND,
+//					LineBreakStrategy.NONE);
+//		}
+//		final XDimension2D dimLegend = legendBlock.calculateDimension(stringBounder);
+//		area.setLegend(dimLegend, isLegendTop(), diagram.getLegend().getHorizontalAlignment());
+//
+//		final UDrawable drawable = new UDrawable() {
+//			public void drawU(UGraphic ug) {
+//
+//				double delta = 0;
+//				if (index > 0)
+//					delta = page.getNewpage1() - page.getHeaderHeight();
+//
+//				if (delta < 0)
+//					delta = 0;
+//
+//				if (compTitle != null) {
+//					final HColor back = diagram.calculateBackColor();
+//					compTitle.drawU(ug.apply(back.bg()).apply(new UTranslate(area.getTitleX(), area.getTitleY())));
+//				}
+//				caption.drawU(ug.apply(new UTranslate(area.getCaptionX(), area.getCaptionY())));
+//
+//				final double delta1 = Math.max(0, area.getLegendWidth() - area.getWidth());
+//
+//				final UTranslate forCore = new UTranslate(area.getSequenceAreaX() + delta1 / 2,
+//						area.getSequenceAreaY());
+//				TextBlock core = drawableSet.asTextBlock(delta, fullDimension.getWidth(), page,
+//						diagram.isShowFootbox());
+//				core = builder.decoreWithFrame(core);
+//				core.drawU(ug.apply(forCore));
+//
+//				drawHeader(area, ug, index);
+//				drawFooter(area, ug, index);
+//
+//				if (area.hasLegend())
+//					legendBlock.drawU(ug.apply(new UTranslate(area.getLegendX(), area.getLegendY())));
+//
+//			}
+//
+//		};
+//		return drawable;
+//	}
 
 	private void drawFooter(SequenceDiagramArea area, UGraphic ug, int page) {
 		final PngTitler pngTitler = getPngTitler(FontParam.FOOTER, page);

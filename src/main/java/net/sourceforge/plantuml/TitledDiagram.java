@@ -307,11 +307,6 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 
 	protected abstract TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption);
 
-	@Override
-	public void exportDiagramGraphic01970(UGraphic ug, FileFormatOption fileFormatOption) {
-		throw new UnsupportedOperationException();
-	}
-
 	final public Pragma getPragma() {
 		return skinParam.getPragma();
 	}
