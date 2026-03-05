@@ -49,6 +49,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -65,10 +66,10 @@ import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.GeneratedImage;
+import net.sourceforge.plantuml.core.TextBlockExporter12026;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -338,8 +339,10 @@ class ImageWindow extends JFrame {
 			final String msg = "Error reading file: " + ex.toString();
 			final TextBlock error = GraphicStrings.createForError(Arrays.asList(msg), false);
 			try {
-				final byte[] bytes = ImageBuilder.create(new FileFormatOption(FileFormat.PNG), error).writeByteArray();
-				image = SImageIO.read(bytes);
+				final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				TextBlockExporter12026.builder(error, new FileFormatOption(FileFormat.PNG), false).build()
+						.exportTo(baos);
+				image = SImageIO.read(baos.toByteArray());
 			} catch (IOException e) {
 				Logme.error(e);
 			}

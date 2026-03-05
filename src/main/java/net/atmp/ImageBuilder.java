@@ -131,7 +131,7 @@ public class ImageBuilder {
 		return new ImageBuilder(fileFormatOption);
 	}
 
-	public static ImageBuilder create(FileFormatOption fileFormatOption, UDrawable drawable) {
+	private static ImageBuilder create(FileFormatOption fileFormatOption, UDrawable drawable) {
 		return create(fileFormatOption).drawable(drawable);
 	}
 

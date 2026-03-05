@@ -49,10 +49,10 @@ import java.util.Set;
 
 import javax.xml.transform.TransformerException;
 
-import net.atmp.ImageBuilder;
 import net.atmp.SvgOption;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.core.TextBlockExporter12026;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -60,10 +60,12 @@ import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontContext;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.security.SFile;
@@ -174,10 +176,15 @@ public class FontChecker {
 	}
 
 	public PortableImage getBufferedImage(final char c) throws IOException {
-		if (TeaVM.a()) assert c != '\t';
+		if (TeaVM.a())
+			assert c != '\t';
 
 		final double dim = 20;
-		final UDrawable drawable = new UDrawable() {
+		final TextBlock textBlock = new TextBlock() {
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return new XDimension2D(dim, dim);
+			}
+
 			public void drawU(UGraphic ug) {
 				ug = ug.apply(HColors.BLACK);
 				ug.draw(URectangle.build(dim - 1, dim - 1));
@@ -188,8 +195,9 @@ public class FontChecker {
 				}
 			}
 		};
-		final byte[] bytes = ImageBuilder.create(new FileFormatOption(FileFormat.PNG), drawable).writeByteArray();
-		return SImageIO.read(bytes);
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		TextBlockExporter12026.builder(textBlock, new FileFormatOption(FileFormat.PNG), false).build().exportTo(baos);
+		return SImageIO.read(baos.toByteArray());
 	}
 
 	// public BufferedImage getBufferedImageOld(char c) throws IOException {

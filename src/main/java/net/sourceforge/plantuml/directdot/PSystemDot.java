@@ -38,7 +38,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.DirectOsDiagram;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -54,6 +53,7 @@ import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.ProcessState;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.core.TextBlockExporter12026;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemDot extends DirectOsDiagram {
@@ -90,7 +90,8 @@ public class PSystemDot extends DirectOsDiagram {
 		if (graphviz.getExeState() != ExeState.OK) {
 			final TextBlock result = GraphicStrings
 					.createForError(Arrays.asList("There is an issue with your Dot/Graphviz installation"), false);
-			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);
+			return TextBlockExporter12026.builder(result, fileFormat, false)
+					.seed(seed()).status(FileImageData.CRASH).build().exportTo(os);
 		}
 
 		final CounterOutputStream counter = new CounterOutputStream(os);
@@ -100,7 +101,8 @@ public class PSystemDot extends DirectOsDiagram {
 		// }
 		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {
 			final TextBlock result = GraphicStrings.createForError(Arrays.asList("GraphViz has crashed"), false);
-			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);
+			return TextBlockExporter12026.builder(result, fileFormat, false)
+					.seed(seed()).status(FileImageData.CRASH).build().exportTo(os);
 		}
 
 		return ImageDataSimple.ok();

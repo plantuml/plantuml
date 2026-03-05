@@ -46,7 +46,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.cli.ExitStatus;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -54,6 +53,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.core.TextBlockExporter12026;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -260,7 +260,7 @@ public class SourceStringReader {
 				Arrays.asList("No valid @start/@end found, please check the version"),
 				fileFormatOption.isUseRedForError());
 
-		return ImageBuilder.create(fileFormatOption, error).write(os);
+		return TextBlockExporter12026.builder(error, fileFormatOption, false).build().exportTo(os);
 	}
 
 	public final List<BlockUml> getBlocks() {
