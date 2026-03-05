@@ -318,7 +318,7 @@ Total Classes: 7
 "jcckit.util" --> "java.lang"
 "jcckit.util" --> "java.util"
 
-class "net.atmp" %lighten("red", 55) {
+class "net.atmp" %lighten("red", 56) {
 Total Classes: 5
 }
 "net.atmp" --> "java.awt"
@@ -804,8 +804,8 @@ Total Classes: 11
 "net.sourceforge.plantuml.braille" --> "java.io"
 "net.sourceforge.plantuml.braille" --> "java.lang"
 "net.sourceforge.plantuml.braille" --> "java.util"
-"net.sourceforge.plantuml.braille" --> "net.atmp"
 "net.sourceforge.plantuml.braille" --> "net.sourceforge.plantuml"
+"net.sourceforge.plantuml.braille" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.braille" --> "net.sourceforge.plantuml.klimt"
 "net.sourceforge.plantuml.braille" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.braille" --> "net.sourceforge.plantuml.klimt.drawing"
@@ -1315,7 +1315,6 @@ Total Classes: 3
 "net.sourceforge.plantuml.directdot" --> "java.lang"
 "net.sourceforge.plantuml.directdot" --> "java.util"
 "net.sourceforge.plantuml.directdot" --> "java.util.regex"
-"net.sourceforge.plantuml.directdot" --> "net.atmp"
 "net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.api"
 "net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.command"

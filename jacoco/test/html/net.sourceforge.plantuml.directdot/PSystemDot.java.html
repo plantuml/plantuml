@@ -38,7 +38,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 
-import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.DirectOsDiagram;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -54,6 +53,7 @@ import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.ProcessState;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.core.TextBlockExporter12026;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemDot extends DirectOsDiagram {
@@ -90,20 +90,22 @@ public class PSystemDot extends DirectOsDiagram {
 <span class="nc bnc" id="L90" title="All 2 branches missed.">		if (graphviz.getExeState() != ExeState.OK) {</span>
 <span class="nc" id="L91">			final TextBlock result = GraphicStrings</span>
 <span class="nc" id="L92">					.createForError(Arrays.asList(&quot;There is an issue with your Dot/Graphviz installation&quot;), false);</span>
-<span class="nc" id="L93">			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);</span>
+<span class="nc" id="L93">			return TextBlockExporter12026.builder(result, fileFormat, false)</span>
+<span class="nc" id="L94">					.seed(seed()).status(FileImageData.CRASH).build().exportTo(os);</span>
 		}
 
-<span class="nc" id="L96">		final CounterOutputStream counter = new CounterOutputStream(os);</span>
-<span class="nc" id="L97">		final ProcessState state = graphviz.createFile3(counter);</span>
+<span class="nc" id="L97">		final CounterOutputStream counter = new CounterOutputStream(os);</span>
+<span class="nc" id="L98">		final ProcessState state = graphviz.createFile3(counter);</span>
 		// if (state.differs(ProcessState.TERMINATED_OK())) {
 		// throw new IllegalStateException(&quot;Timeout1 &quot; + state);
 		// }
-<span class="nc bnc" id="L101" title="All 4 branches missed.">		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {</span>
-<span class="nc" id="L102">			final TextBlock result = GraphicStrings.createForError(Arrays.asList(&quot;GraphViz has crashed&quot;), false);</span>
-<span class="nc" id="L103">			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);</span>
+<span class="nc bnc" id="L102" title="All 4 branches missed.">		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {</span>
+<span class="nc" id="L103">			final TextBlock result = GraphicStrings.createForError(Arrays.asList(&quot;GraphViz has crashed&quot;), false);</span>
+<span class="nc" id="L104">			return TextBlockExporter12026.builder(result, fileFormat, false)</span>
+<span class="nc" id="L105">					.seed(seed()).status(FileImageData.CRASH).build().exportTo(os);</span>
 		}
 
-<span class="nc" id="L106">		return ImageDataSimple.ok();</span>
+<span class="nc" id="L108">		return ImageDataSimple.ok();</span>
 	}
 
 }

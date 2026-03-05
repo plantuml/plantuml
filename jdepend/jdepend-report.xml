@@ -1795,11 +1795,11 @@
                 <TotalClasses>5</TotalClasses>
                 <ConcreteClasses>5</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>29</Ca>
+                <Ca>27</Ca>
                 <Ce>35</Ce>
                 <A>0</A>
-                <I>0.55</I>
-                <D>0.45</D>
+                <I>0.56</I>
+                <D>0.44</D>
                 <V>1</V>
             </Stats>
 
@@ -1865,14 +1865,12 @@
             <UsedBy>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.bpm</Package>
-                <Package>net.sourceforge.plantuml.braille</Package>
                 <Package>net.sourceforge.plantuml.classdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.command.note</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.cucadiagram</Package>
                 <Package>net.sourceforge.plantuml.decoration.symbol</Package>
                 <Package>net.sourceforge.plantuml.dedication</Package>
-                <Package>net.sourceforge.plantuml.directdot</Package>
                 <Package>net.sourceforge.plantuml.donors</Package>
                 <Package>net.sourceforge.plantuml.dot</Package>
                 <Package>net.sourceforge.plantuml.eggs</Package>
@@ -4572,8 +4570,8 @@
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
-                <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
+                <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
@@ -5856,10 +5854,10 @@
                 <TotalClasses>12</TotalClasses>
                 <ConcreteClasses>10</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>75</Ca>
+                <Ca>76</Ca>
                 <Ce>38</Ce>
                 <A>0.17</A>
-                <I>0.34</I>
+                <I>0.33</I>
                 <D>0.5</D>
                 <V>1</V>
             </Stats>
@@ -5958,6 +5956,7 @@
                 <Package>net.sourceforge.plantuml.api.v2</Package>
                 <Package>net.sourceforge.plantuml.board</Package>
                 <Package>net.sourceforge.plantuml.bpm</Package>
+                <Package>net.sourceforge.plantuml.braille</Package>
                 <Package>net.sourceforge.plantuml.chart</Package>
                 <Package>net.sourceforge.plantuml.chart.command</Package>
                 <Package>net.sourceforge.plantuml.cheneer</Package>
@@ -6869,7 +6868,7 @@
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>13</Ce>
+                <Ce>12</Ce>
                 <A>0</A>
                 <I>1</I>
                 <D>0</D>
@@ -6896,7 +6895,6 @@
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
                 <Package>java.util.regex</Package>
-                <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.api</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
@@ -20054,9 +20052,10 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.braille">
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.text</Package>
+            <Package>net.sourceforge.plantuml.jaws</Package>
+            <Package>net.sourceforge.plantuml.text</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.chart">
