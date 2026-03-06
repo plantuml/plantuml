@@ -62,7 +62,7 @@ public class UFontFactory {
 	public static UFont build(String fullDefinition, UFontFace face, int fontSize) {
 		final FontStack fontStack = new FontStack(fullDefinition);
 		final UFontFace safeFace = face == null ? UFontFace.normal() : face;
-		return new UFontImpl(fontStack, safeFace.toLegacyStyle(), fontSize);
+		return new UFontImpl(fontStack, safeFace, fontSize);
 	}
 
 	public static UFont serif(int size) {

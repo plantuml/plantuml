@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="340" viewBox="0 0 760 340">
+  <rect x="0" y="0" width="760" height="340" fill="#ffffff"/>
+  <text x="20" y="30" font-family="Segoe UI Variable, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="18" font-weight="700">Proposed FontWeight + FontStyle (examples)</text>
+
+  <text x="20" y="70" font-family="Segoe UI Variable, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="18" font-weight="100">FontWeight 100</text>
+  <text x="20" y="100" font-family="Segoe UI Variable, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="18" font-weight="900">FontWeight 900</text>
+  <text x="20" y="130" font-family="Segoe UI Variable, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="18" font-weight="600" font-style="italic">FontStyle Italic, FontWeight 600</text>
+  <text x="20" y="160" font-family="Segoe UI Variable, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="18" font-weight="200">FontStyle Normal, FontWeight 200</text>
+  <text x="20" y="190" font-family="Segoe UI Variable, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="18" font-weight="900">FontStyle Bold, FontWeight 900</text>
+  <text x="20" y="220" font-family="Segoe UI Variable, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="18" font-weight="700">FontStyle Bold, FontWeight 700</text>
+
+  <text x="420" y="250" font-family="Segoe UI Variable, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="14" fill="#666666">Requires font families with real weights.</text>
+  <text x="420" y="270" font-family="Segoe UI Variable, Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="14" fill="#666666">Fallbacks would collapse to bold/normal.</text>
+</svg>
