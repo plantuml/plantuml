@@ -315,13 +315,15 @@ public class SvgGraphics {
 	// This method returns a reference to a root node that
 	// has already been appended to the document.
 	private Element getRootNode() {
-		// Add PlantUML version as processing instruction
-		document.appendChild(document.createProcessingInstruction("plantuml", Version.versionString()));
-
 		// Create the root node named svg and append it to
 		// the document.
 		final Element svg = document.createElement("svg");
 		document.appendChild(svg);
+
+		// Add PlantUML version as processing instruction inside svg element
+		// (placed as first child of <svg> for Confluence compatibility)
+		// https://github.com/plantuml/plantuml/issues/2583
+		svg.appendChild(document.createProcessingInstruction("plantuml", Version.versionString()));
 
 		// Set some attributes on the root node that are
 		// required for proper rendering. Note that the

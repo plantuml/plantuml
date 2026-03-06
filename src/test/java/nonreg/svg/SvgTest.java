@@ -91,15 +91,21 @@ public class SvgTest {
 	}
 
 	private void removeProcessingInstructions(Document document) {
-		NodeList children = document.getChildNodes();
+		removeProcessingInstructionsRecursive(document);
+	}
+
+	private void removeProcessingInstructionsRecursive(Node parent) {
+		NodeList children = parent.getChildNodes();
 		List<Node> toRemove = new ArrayList<>();
 		for (int i = 0; i < children.getLength(); i++) {
 			Node child = children.item(i);
 			if (child.getNodeType() == Node.PROCESSING_INSTRUCTION_NODE)
 				toRemove.add(child);
+			else if (child.getNodeType() == Node.ELEMENT_NODE)
+				removeProcessingInstructionsRecursive(child);
 		}
 		for (Node node : toRemove)
-			document.removeChild(node);
+			parent.removeChild(node);
 	}
 
 	private Document parseXML(String xml) {

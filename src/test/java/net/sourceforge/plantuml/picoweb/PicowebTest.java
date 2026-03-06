@@ -53,7 +53,7 @@ class PicowebTest {
 	@BeforeEach
 	void startServer() throws Exception {
 		GraphvizRuntimeEnvironment.getInstance().setDotExecutable("this_exe_do_not_exist");
-		
+
 		PicoWebServer.enableStop = true;
 		final ServerSocket serverSocket = new ServerSocket(0, 0, InetAddress.getByName("localhost"));
 		port = serverSocket.getLocalPort();
@@ -300,8 +300,7 @@ class PicowebTest {
 
 	private void assertIsSvgResponse(HttpResponse<byte[]> resp) {
 		final String body = body(resp);
-		assertTrue(body.matches("(?s)^<\\?plantuml \\d+\\.\\d+(\\.\\d+)?(beta\\d+)?\\s*\\?>\\s*<svg .*"),
-				"Response should start with <?plantuml VERSION?> followed by <svg>");
+		assertTrue(body.matches("(?s)^<svg [^>]*>\\s*<\\?plantuml (\\$version\\$|\\d+\\.\\d+(\\.\\d+)?(beta\\d+)?)\\s*\\?>.*"), body);
 	}
 
 }
