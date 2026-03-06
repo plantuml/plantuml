@@ -488,8 +488,8 @@ public class JsonParser {
 	}
 
 	private ParseException expected(String expected) {
-<span class="pc bpc" id="L491" title="1 of 2 branches missed.">		if (isEndOfText()) {</span>
-<span class="nc" id="L492">			return error(&quot;Unexpected end of input&quot;);</span>
+<span class="fc bfc" id="L491" title="All 2 branches covered.">		if (isEndOfText()) {</span>
+<span class="fc" id="L492">			return error(&quot;Unexpected end of input&quot;);</span>
 		}
 <span class="fc" id="L494">		return error(&quot;Expected &quot; + expected);</span>
 	}

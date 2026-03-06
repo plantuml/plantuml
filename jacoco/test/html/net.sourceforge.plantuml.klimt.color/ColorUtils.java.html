@@ -94,24 +94,24 @@ import net.sourceforge.plantuml.utils.MathUtils;
 	 * 
 	 */
 	public static XColor reverseHsluv(XColor color) {
-<span class="nc" id="L97">		final int red = color.getRed();</span>
-<span class="nc" id="L98">		final int green = color.getGreen();</span>
-<span class="nc" id="L99">		final int blue = color.getBlue();</span>
+<span class="fc" id="L97">		final int red = color.getRed();</span>
+<span class="fc" id="L98">		final int green = color.getGreen();</span>
+<span class="fc" id="L99">		final int blue = color.getBlue();</span>
 
-<span class="nc" id="L101">		final double hsluv[] = HUSLColorConverter.rgbToHsluv(new double[] { red / 256.0, green / 256.0, blue / 256.0 });</span>
+<span class="fc" id="L101">		final double hsluv[] = HUSLColorConverter.rgbToHsluv(new double[] { red / 256.0, green / 256.0, blue / 256.0 });</span>
 
-<span class="nc" id="L103">		final double h = hsluv[0];</span>
-<span class="nc" id="L104">		final double s = hsluv[1];</span>
-<span class="nc" id="L105">		double l = (hsluv[2] + 50) % 100;</span>
-<span class="nc" id="L106">		l += 0.25 * (50 - l);</span>
+<span class="fc" id="L103">		final double h = hsluv[0];</span>
+<span class="fc" id="L104">		final double s = hsluv[1];</span>
+<span class="fc" id="L105">		double l = (hsluv[2] + 50) % 100;</span>
+<span class="fc" id="L106">		l += 0.25 * (50 - l);</span>
 
-<span class="nc" id="L108">		final double rgb[] = HUSLColorConverter.hsluvToRgb(new double[] { h, s, l });</span>
+<span class="fc" id="L108">		final double rgb[] = HUSLColorConverter.hsluvToRgb(new double[] { h, s, l });</span>
 
-<span class="nc" id="L110">		final int red2 = to255(rgb[0]);</span>
-<span class="nc" id="L111">		final int green2 = to255(rgb[1]);</span>
-<span class="nc" id="L112">		final int blue2 = to255(rgb[2]);</span>
+<span class="fc" id="L110">		final int red2 = to255(rgb[0]);</span>
+<span class="fc" id="L111">		final int green2 = to255(rgb[1]);</span>
+<span class="fc" id="L112">		final int blue2 = to255(rgb[2]);</span>
 
-<span class="nc" id="L114">		return new XColor(red2, green2, blue2);</span>
+<span class="fc" id="L114">		return new XColor(red2, green2, blue2);</span>
 	}
 
 	public static XColor grayToColor(double coef, XColor color) {
