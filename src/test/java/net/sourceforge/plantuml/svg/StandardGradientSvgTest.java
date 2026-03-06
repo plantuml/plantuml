@@ -27,39 +27,93 @@ class StandardGradientSvgTest {
 				"@enduml")
 				.asString(FileFormat.SVG);
 
-		final List<String> gradients = extractLinearGradientTags(svg);
-		assertTrue(hasGradientWith(gradients, "x1=\"0%\"", "y1=\"50%\"", "x2=\"100%\"", "y2=\"50%\""),
-				"Missing horizontal gradient (|) vector in SVG output");
-		assertTrue(hasGradientWith(gradients, "x1=\"50%\"", "y1=\"0%\"", "x2=\"50%\"", "y2=\"100%\""),
-				"Missing vertical gradient (-) vector in SVG output");
-		assertTrue(hasGradientWith(gradients, "x1=\"0%\"", "y1=\"0%\"", "x2=\"100%\"", "y2=\"100%\""),
-				"Missing diagonal gradient (/) vector in SVG output");
-		assertTrue(hasGradientWith(gradients, "x1=\"0%\"", "y1=\"100%\"", "x2=\"100%\"", "y2=\"0%\""),
-				"Missing diagonal gradient (\\) vector in SVG output");
+		final List<GradientVector> gradients = extractLinearGradientVectors(svg);
+		assertTrue(hasHorizontalGradient(gradients), "Missing horizontal gradient (|) vector in SVG output");
+		assertTrue(hasVerticalGradient(gradients), "Missing vertical gradient (-) vector in SVG output");
+		assertTrue(hasDiagonalTlBrGradient(gradients), "Missing diagonal gradient (/) vector in SVG output");
+		assertTrue(hasDiagonalBlTrGradient(gradients), "Missing diagonal gradient (\\) vector in SVG output");
 	}
 
-	private List<String> extractLinearGradientTags(String svg) {
-		final List<String> tags = new ArrayList<String>();
+	private List<GradientVector> extractLinearGradientVectors(String svg) {
+		final List<GradientVector> vectors = new ArrayList<GradientVector>();
 		final Pattern pattern = Pattern.compile("<linearGradient\\b[^>]*>");
 		final Matcher matcher = pattern.matcher(svg);
 		while (matcher.find()) {
-			tags.add(matcher.group());
+			final String tag = matcher.group();
+			final Double x1 = extractPercent(tag, "x1");
+			final Double y1 = extractPercent(tag, "y1");
+			final Double x2 = extractPercent(tag, "x2");
+			final Double y2 = extractPercent(tag, "y2");
+			if (x1 != null && y1 != null && x2 != null && y2 != null)
+				vectors.add(new GradientVector(x1, y1, x2, y2));
 		}
-		return tags;
+		return vectors;
 	}
 
-	private boolean hasGradientWith(List<String> tags, String... attrs) {
-		for (String tag : tags) {
-			boolean matches = true;
-			for (String attr : attrs) {
-				if (tag.contains(attr) == false) {
-					matches = false;
-					break;
-				}
-			}
-			if (matches)
+	private Double extractPercent(String tag, String attr) {
+		final Pattern attrPattern = Pattern.compile(attr + "=\\\"([^\\\"]+)\\\"");
+		final Matcher matcher = attrPattern.matcher(tag);
+		if (matcher.find() == false)
+			return null;
+
+		final String raw = matcher.group(1).trim();
+		final String value = raw.endsWith("%") ? raw.substring(0, raw.length() - 1) : raw;
+		try {
+			return Double.valueOf(Double.parseDouble(value));
+		} catch (NumberFormatException e) {
+			return null;
+		}
+	}
+
+	private boolean hasHorizontalGradient(List<GradientVector> gradients) {
+		for (GradientVector vector : gradients) {
+			if (approx(vector.x1, 0.0) && approx(vector.x2, 100.0) && approx(vector.y1, vector.y2))
 				return true;
 		}
 		return false;
+	}
+
+	private boolean hasVerticalGradient(List<GradientVector> gradients) {
+		for (GradientVector vector : gradients) {
+			if (approx(vector.y1, 0.0) && approx(vector.y2, 100.0) && approx(vector.x1, vector.x2))
+				return true;
+		}
+		return false;
+	}
+
+	private boolean hasDiagonalTlBrGradient(List<GradientVector> gradients) {
+		for (GradientVector vector : gradients) {
+			if (approx(vector.x1, 0.0) && approx(vector.y1, 0.0) && approx(vector.x2, 100.0)
+						&& approx(vector.y2, 100.0))
+				return true;
+		}
+		return false;
+	}
+
+	private boolean hasDiagonalBlTrGradient(List<GradientVector> gradients) {
+		for (GradientVector vector : gradients) {
+			if (approx(vector.x1, 0.0) && approx(vector.y1, 100.0) && approx(vector.x2, 100.0)
+						&& approx(vector.y2, 0.0))
+				return true;
+		}
+		return false;
+	}
+
+	private boolean approx(double left, double right) {
+		return Math.abs(left - right) < 0.001;
+	}
+
+	private static class GradientVector {
+		private final double x1;
+		private final double y1;
+		private final double x2;
+		private final double y2;
+
+		private GradientVector(double x1, double y1, double x2, double y2) {
+			this.x1 = x1;
+			this.y1 = y1;
+			this.x2 = x2;
+			this.y2 = y2;
+		}
 	}
 }
