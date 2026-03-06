@@ -39,7 +39,6 @@ import static java.lang.Math.max;
 
 import java.awt.BasicStroke;
 import java.awt.FontMetrics;
-import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
@@ -52,6 +51,7 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
+import net.sourceforge.plantuml.klimt.color.HColorLinearGradient;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontStyle;
@@ -137,8 +137,8 @@ public class DriverTextG2d implements UDriver&lt;UText, Graphics2D&gt; {
 
 <span class="pc bpc" id="L138" title="1 of 2 branches missed.">			if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {</span>
 <span class="nc" id="L139">				final Rectangle2D.Double area = new Rectangle2D.Double(x, y - height + 1.5, width, height);</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">				if (extended instanceof HColorGradient) {</span>
-<span class="nc" id="L141">					final GradientPaint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, width, height,</span>
+<span class="nc bnc" id="L140" title="All 4 branches missed.">				if (extended instanceof HColorGradient || extended instanceof HColorLinearGradient) {</span>
+<span class="nc" id="L141">					final java.awt.Paint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, width, height,</span>
 							extended);
 <span class="nc" id="L143">					g2d.setPaint(paint);</span>
 <span class="nc" id="L144">					g2d.fill(area);</span>

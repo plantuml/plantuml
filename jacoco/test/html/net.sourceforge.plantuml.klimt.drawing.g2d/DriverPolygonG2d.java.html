@@ -36,14 +36,15 @@
 package net.sourceforge.plantuml.klimt.drawing.g2d;
 
 import java.awt.BasicStroke;
-import java.awt.GradientPaint;
 import java.awt.Graphics2D;
+import java.awt.Paint;
 import java.awt.geom.GeneralPath;
 
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
+import net.sourceforge.plantuml.klimt.color.HColorLinearGradient;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
@@ -54,75 +55,56 @@ public class DriverPolygonG2d extends DriverShadowedG2d implements UDriver&lt;UP
 	private final double dpiFactor;
 	private final EnsureVisible visible;
 
-<span class="fc" id="L57">	public DriverPolygonG2d(double dpiFactor, EnsureVisible visible) {</span>
-<span class="fc" id="L58">		this.dpiFactor = dpiFactor;</span>
-<span class="fc" id="L59">		this.visible = visible;</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L58">	public DriverPolygonG2d(double dpiFactor, EnsureVisible visible) {</span>
+<span class="fc" id="L59">		this.dpiFactor = dpiFactor;</span>
+<span class="fc" id="L60">		this.visible = visible;</span>
+<span class="fc" id="L61">	}</span>
 
 	public void draw(UPolygon shape, double x, double y, ColorMapper mapper, UParam param, Graphics2D g2d) {
-<span class="fc" id="L63">		g2d.setStroke(new BasicStroke((float) param.getStroke().getThickness()));</span>
+<span class="fc" id="L64">		g2d.setStroke(new BasicStroke((float) param.getStroke().getThickness()));</span>
 
-<span class="fc" id="L65">		final GeneralPath path = new GeneralPath();</span>
+<span class="fc" id="L66">		final GeneralPath path = new GeneralPath();</span>
 
-<span class="fc" id="L67">		final HColor back = param.getBackcolor();</span>
+<span class="fc" id="L68">		final HColor back = param.getBackcolor();</span>
 
-<span class="fc" id="L69">		XPoint2D last = null;</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">		for (XPoint2D pt : shape.getPoints()) {</span>
-<span class="fc" id="L71">			final double xp = pt.getX() + x;</span>
-<span class="fc" id="L72">			final double yp = pt.getY() + y;</span>
-<span class="fc" id="L73">			visible.ensureVisible(xp, yp);</span>
-<span class="fc bfc" id="L74" title="All 2 branches covered.">			if (last == null)</span>
-<span class="fc" id="L75">				path.moveTo((float) xp, (float) yp);</span>
+<span class="fc" id="L70">		XPoint2D last = null;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		for (XPoint2D pt : shape.getPoints()) {</span>
+<span class="fc" id="L72">			final double xp = pt.getX() + x;</span>
+<span class="fc" id="L73">			final double yp = pt.getY() + y;</span>
+<span class="fc" id="L74">			visible.ensureVisible(xp, yp);</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">			if (last == null)</span>
+<span class="fc" id="L76">				path.moveTo((float) xp, (float) yp);</span>
 			else
-<span class="fc" id="L77">				path.lineTo((float) xp, (float) yp);</span>
+<span class="fc" id="L78">				path.lineTo((float) xp, (float) yp);</span>
 
-<span class="fc" id="L79">			last = new XPoint2D(xp, yp);</span>
-<span class="fc" id="L80">		}</span>
+<span class="fc" id="L80">			last = new XPoint2D(xp, yp);</span>
+<span class="fc" id="L81">		}</span>
 
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (last != null)</span>
-<span class="fc" id="L83">			path.closePath();</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (last != null)</span>
+<span class="fc" id="L84">			path.closePath();</span>
 
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (shape.getDeltaShadow() != 0)</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">			if (back.isTransparent())</span>
-<span class="nc" id="L87">				drawOnlyLineShadowSpecial(g2d, path, shape.getDeltaShadow(), dpiFactor);</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (shape.getDeltaShadow() != 0)</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">			if (back.isTransparent())</span>
+<span class="nc" id="L88">				drawOnlyLineShadowSpecial(g2d, path, shape.getDeltaShadow(), dpiFactor);</span>
 			else
-<span class="nc" id="L89">				drawShadow(g2d, path, shape.getDeltaShadow(), dpiFactor);</span>
+<span class="nc" id="L90">				drawShadow(g2d, path, shape.getDeltaShadow(), dpiFactor);</span>
 
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (back instanceof HColorGradient) {</span>
-<span class="nc" id="L92">			final HColorGradient gr = (HColorGradient) back;</span>
-<span class="nc" id="L93">			final char policy = gr.getPolicy();</span>
-			final GradientPaint paint;
-<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (policy == '|')</span>
-<span class="nc" id="L96">				paint = new GradientPaint((float) x, (float) (y + shape.getHeight()) / 2,</span>
-<span class="nc" id="L97">						gr.getColor1().toColor(mapper).toAwtColor(), (float) (x + shape.getWidth()),</span>
-<span class="nc" id="L98">						(float) (y + shape.getHeight()) / 2, gr.getColor2().toColor(mapper).toAwtColor());</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">			else if (policy == '\\')</span>
-<span class="nc" id="L100">				paint = new GradientPaint((float) x, (float) (y + shape.getHeight()), gr.getColor1().toColor(mapper).toAwtColor(),</span>
-<span class="nc" id="L101">						(float) (x + shape.getWidth()), (float) y, gr.getColor2().toColor(mapper).toAwtColor());</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">			else if (policy == '-')</span>
-<span class="nc" id="L103">				paint = new GradientPaint((float) (x + shape.getWidth()) / 2, (float) y, gr.getColor1().toColor(mapper).toAwtColor(),</span>
-<span class="nc" id="L104">						(float) (x + shape.getWidth()) / 2, (float) (y + shape.getHeight()),</span>
-<span class="nc" id="L105">						gr.getColor2().toColor(mapper).toAwtColor());</span>
-			else
-				// for /
-<span class="nc" id="L108">				paint = new GradientPaint((float) x, (float) y, gr.getColor1().toColor(mapper).toAwtColor(),</span>
-<span class="nc" id="L109">						(float) (x + shape.getWidth()), (float) (y + shape.getHeight()),</span>
-<span class="nc" id="L110">						gr.getColor2().toColor(mapper).toAwtColor());</span>
-
-<span class="nc" id="L112">			g2d.setPaint(paint);</span>
-<span class="nc" id="L113">			g2d.fill(path);</span>
-<span class="pc bfc" id="L114" title="All 2 branches covered.">		} else if (back.isTransparent() == false) {</span>
-<span class="fc" id="L115">			g2d.setColor(back.toColor(mapper).toAwtColor());</span>
-<span class="fc" id="L116">			DriverRectangleG2d.managePattern(param, g2d);</span>
-<span class="fc" id="L117">			g2d.fill(path);</span>
+<span class="pc bpc" id="L92" title="2 of 4 branches missed.">		if (back instanceof HColorGradient || back instanceof HColorLinearGradient) {</span>
+<span class="nc" id="L93">			final Paint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, shape.getWidth(), shape.getHeight(), back);</span>
+<span class="nc" id="L94">			g2d.setPaint(paint);</span>
+<span class="nc" id="L95">			g2d.fill(path);</span>
+<span class="pc bfc" id="L96" title="All 2 branches covered.">		} else if (back.isTransparent() == false) {</span>
+<span class="fc" id="L97">			g2d.setColor(back.toColor(mapper).toAwtColor());</span>
+<span class="fc" id="L98">			DriverRectangleG2d.managePattern(param, g2d);</span>
+<span class="fc" id="L99">			g2d.fill(path);</span>
 		}
 
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (param.getColor().isTransparent() == false) {</span>
-<span class="fc" id="L121">			g2d.setColor(param.getColor().toColor(mapper).toAwtColor());</span>
-<span class="fc" id="L122">			DriverLineG2d.manageStroke(param, g2d);</span>
-<span class="fc" id="L123">			g2d.draw(path);</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (param.getColor().isTransparent() == false) {</span>
+<span class="fc" id="L103">			g2d.setColor(param.getColor().toColor(mapper).toAwtColor());</span>
+<span class="fc" id="L104">			DriverLineG2d.manageStroke(param, g2d);</span>
+<span class="fc" id="L105">			g2d.draw(path);</span>
 		}
-<span class="fc" id="L125">	}</span>
+<span class="fc" id="L107">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

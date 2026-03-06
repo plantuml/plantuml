@@ -105,11 +105,11 @@ public class HColorSet {
 
 <span class="fc bfc" id="L106" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
 <span class="fc" id="L107">			final char c = s.charAt(i);</span>
-<span class="pc bpc" id="L108" title="3 of 8 branches missed.">			if (c == '-' || c == '\\' || c == '|' || c == '/') {</span>
+<span class="fc bfc" id="L108" title="All 8 branches covered.">			if (c == '-' || c == '\\' || c == '|' || c == '/') {</span>
 <span class="fc" id="L109">				final XColor col0 = parseSimpleColor(s.substring(0, i));</span>
 <span class="fc" id="L110">				final XColor col1 = parseSimpleColor(s.substring(i + 1));</span>
-<span class="pc bpc" id="L111" title="3 of 4 branches missed.">				if (col0 != null &amp;&amp; col1 != null)</span>
-<span class="nc" id="L112">					return HColors.gradient(HColors.simple(col0), HColors.simple(col1), c);</span>
+<span class="pc bpc" id="L111" title="1 of 4 branches missed.">				if (col0 != null &amp;&amp; col1 != null)</span>
+<span class="fc" id="L112">					return HColors.gradient(HColors.simple(col0), HColors.simple(col1), c);</span>
 			}
 		}
 

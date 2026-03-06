@@ -1808,8 +1808,8 @@ Total Classes: 3
 "net.sourceforge.plantuml.klimt.awt" --> "org.teavm.jso.dom.html"
 "net.sourceforge.plantuml.klimt.awt" --> "org.teavm.jso.typedarrays"
 
-class "net.sourceforge.plantuml.klimt.color" %lighten("red", 14) {
-Total Classes: 25
+class "net.sourceforge.plantuml.klimt.color" %lighten("red", 13) {
+Total Classes: 29
 }
 "net.sourceforge.plantuml.klimt.color" --> "com.plantuml.ubrex.builder"
 "net.sourceforge.plantuml.klimt.color" --> "java.awt"
@@ -1971,7 +1971,7 @@ Total Classes: 15
 "net.sourceforge.plantuml.klimt.drawing.eps" --> "net.sourceforge.plantuml.url"
 
 class "net.sourceforge.plantuml.klimt.drawing.g2d" %lighten("red", 94) {
-Total Classes: 13
+Total Classes: 14
 }
 "net.sourceforge.plantuml.klimt.drawing.g2d" --> "java.awt"
 "net.sourceforge.plantuml.klimt.drawing.g2d" --> "java.awt.geom"

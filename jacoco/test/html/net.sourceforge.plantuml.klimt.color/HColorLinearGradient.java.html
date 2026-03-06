@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HColorLinearGradient.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.color</a> &gt; <span class="el_source">HColorLinearGradient.java</span></div><h1>HColorLinearGradient.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.klimt.color;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.awt.XColor;
+
+/**
+ * Represents an SVG-like linear gradient with multiple stops, offsets, and
+ * optional stop opacity. This class models the SVG design concepts used by
+ * the SAX SVG sprite parser and is later translated into renderer-specific
+ * gradient primitives (SVG defs or Java2D paints).
+ *
+ * &lt;p&gt;Key SVG concepts reflected here:
+ * &lt;ul&gt;
+ * 	&lt;li&gt;Gradient vector from (x1,y1) to (x2,y2)&lt;/li&gt;
+ * 	&lt;li&gt;Coordinate system selection (objectBoundingBox vs userSpaceOnUse)&lt;/li&gt;
+ * 	&lt;li&gt;Multiple color stops with offsets in the 0..1 range&lt;/li&gt;
+ * 	&lt;li&gt;Per-stop opacity that multiplies the base color alpha&lt;/li&gt;
+ * 	&lt;li&gt;Spread method for behavior beyond the gradient vector&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+public class HColorLinearGradient extends HColor {
+
+	/**
+	 * Defines how the gradient behaves outside its vector range.
+	 * Mirrors SVG's spreadMethod values.
+	 */
+<span class="fc" id="L66">	public enum SpreadMethod {</span>
+		/**
+		 * Default SVG behavior: extend edge colors past the end stops.
+		 */
+<span class="fc" id="L70">		PAD,</span>
+		/**
+		 * Reflect the gradient back and forth past the end stops.
+		 */
+<span class="fc" id="L74">		REFLECT,</span>
+		/**
+		 * Repeat the gradient in the same direction past the end stops.
+		 */
+<span class="fc" id="L78">		REPEAT</span>
+	}
+
+	/**
+	 * A single gradient stop with offset, color, and opacity.
+	 *
+	 * &lt;p&gt;Offsets are normalized to the 0..1 range by the owning gradient.
+	 * Opacity multiplies the base color alpha when rendered.&lt;/p&gt;
+	 */
+	public static class Stop {
+		/**
+		 * Stop position along the gradient vector (0..1).
+		 */
+		private final double offset;
+		/**
+		 * Base color for the stop.
+		 */
+		private final HColor color;
+		/**
+		 * Opacity multiplier for this stop (0..1).
+		 */
+		private final double opacity;
+
+		/**
+		 * Creates a stop definition.
+		 *
+		 * @param offset stop offset in the 0..1 range (values are normalized by the gradient)
+		 * @param color stop color
+		 * @param opacity stop opacity multiplier (0..1)
+		 */
+<span class="fc" id="L108">		public Stop(double offset, HColor color, double opacity) {</span>
+<span class="fc" id="L109">			this.offset = offset;</span>
+<span class="fc" id="L110">			this.color = color;</span>
+<span class="fc" id="L111">			this.opacity = opacity;</span>
+<span class="fc" id="L112">		}</span>
+
+		/**
+		 * Returns the stop offset along the gradient vector.
+		 *
+		 * @return offset in the 0..1 range
+		 */
+		public double getOffset() {
+<span class="fc" id="L120">			return offset;</span>
+		}
+
+		/**
+		 * Returns the base color for this stop.
+		 *
+		 * @return stop color
+		 */
+		public HColor getColor() {
+<span class="fc" id="L129">			return color;</span>
+		}
+
+		/**
+		 * Returns the stop opacity multiplier.
+		 *
+		 * @return opacity in the 0..1 range
+		 */
+		public double getOpacity() {
+<span class="fc" id="L138">			return opacity;</span>
+		}
+	}
+
+	/**
+	 * Gradient vector start X.
+	 */
+	private final double x1;
+	/**
+	 * Gradient vector start Y.
+	 */
+	private final double y1;
+	/**
+	 * Gradient vector end X.
+	 */
+	private final double x2;
+	/**
+	 * Gradient vector end Y.
+	 */
+	private final double y2;
+	/**
+	 * Whether coordinates are interpreted in user space (true) or object bounding box (false).
+	 */
+	private final boolean userSpaceOnUse;
+	/**
+	 * Spread method used outside the gradient vector.
+	 */
+	private final SpreadMethod spreadMethod;
+	/**
+	 * Normalized, ordered list of gradient stops.
+	 */
+	private final List&lt;Stop&gt; stops;
+
+	/**
+	 * Creates a linear gradient definition.
+	 *
+	 * @param x1 start X
+	 * @param y1 start Y
+	 * @param x2 end X
+	 * @param y2 end Y
+	 * @param userSpaceOnUse true for userSpaceOnUse, false for objectBoundingBox
+	 * @param spreadMethod spread method (defaults to PAD if null)
+	 * @param stops stop list (normalized, clamped, and ordered internally)
+	 */
+	public HColorLinearGradient(double x1, double y1, double x2, double y2, boolean userSpaceOnUse,
+<span class="fc" id="L183">			SpreadMethod spreadMethod, List&lt;Stop&gt; stops) {</span>
+<span class="fc" id="L184">		this.x1 = x1;</span>
+<span class="fc" id="L185">		this.y1 = y1;</span>
+<span class="fc" id="L186">		this.x2 = x2;</span>
+<span class="fc" id="L187">		this.y2 = y2;</span>
+<span class="fc" id="L188">		this.userSpaceOnUse = userSpaceOnUse;</span>
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">		this.spreadMethod = spreadMethod == null ? SpreadMethod.PAD : spreadMethod;</span>
+<span class="fc" id="L190">		this.stops = normalizeStops(stops);</span>
+<span class="fc" id="L191">	}</span>
+
+	/**
+	 * Normalize stop ordering and offsets.
+	 *
+	 * &lt;p&gt;Stops are sorted by offset, clamped to 0..1, and de-duplicated
+	 * by nudging ties forward with a tiny epsilon. This mirrors SVG's
+	 * requirement for non-decreasing stop offsets.&lt;/p&gt;
+	 *
+	 * @param input raw stops
+	 * @return immutable normalized list
+	 */
+	private List&lt;Stop&gt; normalizeStops(List&lt;Stop&gt; input) {
+<span class="fc" id="L204">		final List&lt;Stop&gt; sorted = new ArrayList&lt;Stop&gt;(input);</span>
+<span class="fc" id="L205">		Collections.sort(sorted, new Comparator&lt;Stop&gt;() {</span>
+			public int compare(Stop o1, Stop o2) {
+<span class="fc" id="L207">				return Double.compare(o1.getOffset(), o2.getOffset());</span>
+			}
+		});
+
+<span class="fc" id="L211">		final List&lt;Stop&gt; normalized = new ArrayList&lt;Stop&gt;(sorted.size());</span>
+<span class="fc" id="L212">		double last = -1.0;</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">		for (Stop stop : sorted) {</span>
+<span class="fc" id="L214">			double offset = stop.getOffset();</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">			if (offset &lt; 0.0)</span>
+<span class="nc" id="L216">				offset = 0.0;</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">			if (offset &gt; 1.0)</span>
+<span class="nc" id="L218">				offset = 1.0;</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">			if (offset &lt;= last) {</span>
+<span class="nc" id="L220">				final double candidate = last + 0.000001;</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">				offset = candidate &gt; 1.0 ? last : candidate;</span>
+			}
+<span class="fc" id="L223">			last = offset;</span>
+<span class="fc" id="L224">			normalized.add(new Stop(offset, stop.getColor(), stop.getOpacity()));</span>
+<span class="fc" id="L225">		}</span>
+<span class="fc" id="L226">		return Collections.unmodifiableList(normalized);</span>
+	}
+
+	/**
+	 * Returns the gradient start X.
+	 *
+	 * @return start X
+	 */
+	public double getX1() {
+<span class="fc" id="L235">		return x1;</span>
+	}
+
+	/**
+	 * Returns the gradient start Y.
+	 *
+	 * @return start Y
+	 */
+	public double getY1() {
+<span class="fc" id="L244">		return y1;</span>
+	}
+
+	/**
+	 * Returns the gradient end X.
+	 *
+	 * @return end X
+	 */
+	public double getX2() {
+<span class="fc" id="L253">		return x2;</span>
+	}
+
+	/**
+	 * Returns the gradient end Y.
+	 *
+	 * @return end Y
+	 */
+	public double getY2() {
+<span class="fc" id="L262">		return y2;</span>
+	}
+
+	/**
+	 * Indicates whether coordinates are interpreted in user space.
+	 *
+	 * @return true for userSpaceOnUse, false for objectBoundingBox
+	 */
+	public boolean isUserSpaceOnUse() {
+<span class="fc" id="L271">		return userSpaceOnUse;</span>
+	}
+
+	/**
+	 * Returns the configured spread method.
+	 *
+	 * @return spread method
+	 */
+	public SpreadMethod getSpreadMethod() {
+<span class="fc" id="L280">		return spreadMethod;</span>
+	}
+
+	/**
+	 * Returns the normalized stop list.
+	 *
+	 * @return immutable list of stops
+	 */
+	public List&lt;Stop&gt; getStops() {
+<span class="fc" id="L289">		return stops;</span>
+	}
+
+	/**
+	 * Returns the first stop color.
+	 *
+	 * &lt;p&gt;This is used as a fallback for APIs that only accept a single
+	 * solid color.&lt;/p&gt;
+	 *
+	 * @return color of the first stop
+	 */
+	public HColor getColor1() {
+<span class="fc" id="L301">		return stops.get(0).getColor();</span>
+	}
+
+	/**
+	 * Converts to a single color by using the first stop color.
+	 *
+	 * @param mapper color mapper
+	 * @return mapped color
+	 */
+	@Override
+	public XColor toColor(ColorMapper mapper) {
+<span class="nc" id="L312">		return getColor1().toColor(mapper);</span>
+	}
+
+	/**
+	 * Returns the opposite of the first stop color.
+	 *
+	 * @return opposite color of the first stop
+	 */
+	@Override
+	public HColor opposite() {
+<span class="nc" id="L322">		return getColor1().opposite();</span>
+	}
+
+	/**
+	 * Returns whether the first stop color is dark.
+	 *
+	 * @return true if the first stop color is dark
+	 */
+	@Override
+	public boolean isDark() {
+<span class="nc" id="L332">		return getColor1().isDark();</span>
+	}
+
+	/**
+	 * Returns whether the first stop color is transparent.
+	 *
+	 * @return true if the first stop color is transparent
+	 */
+	@Override
+	public boolean isTransparent() {
+<span class="fc" id="L342">		return getColor1().isTransparent();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

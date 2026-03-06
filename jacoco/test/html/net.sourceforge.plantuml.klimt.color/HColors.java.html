@@ -139,42 +139,44 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 	public static HColor noGradient(HColor color) {
 <span class="nc bnc" id="L140" title="All 2 branches missed.">		if (color instanceof HColorGradient)</span>
 <span class="nc" id="L141">			return ((HColorGradient) color).getColor1();</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (color instanceof HColorLinearGradient)</span>
+<span class="nc" id="L143">			return ((HColorLinearGradient) color).getColor1();</span>
 
-<span class="nc" id="L143">		return color;</span>
+<span class="nc" id="L145">		return color;</span>
 	}
 
 	public static UChange changeBack(UGraphic ug) {
-<span class="nc" id="L147">		final HColor color = ug.getParam().getColor();</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (color == null)</span>
-<span class="nc" id="L149">			return HColors.none().bg();</span>
+<span class="nc" id="L149">		final HColor color = ug.getParam().getColor();</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (color == null)</span>
+<span class="nc" id="L151">			return HColors.none().bg();</span>
 
-<span class="nc" id="L151">		return color.bg();</span>
+<span class="nc" id="L153">		return color.bg();</span>
 	}
 
 	public static HColor unlinear(HColor color1, HColor color2, int completion) {
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (completion == 0)</span>
-<span class="nc" id="L156">			return color1;</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (completion == 0)</span>
+<span class="nc" id="L158">			return color1;</span>
 
-<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (completion == 100)</span>
-<span class="nc" id="L159">			return color2;</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (completion == 100)</span>
+<span class="nc" id="L161">			return color2;</span>
 
-<span class="nc bnc" id="L161" title="All 4 branches missed.">		if (color1 instanceof HColorSimple &amp;&amp; color2 instanceof HColorSimple)</span>
-<span class="nc" id="L162">			return HColorSimple.unlinear((HColorSimple) color1, (HColorSimple) color2, completion);</span>
+<span class="nc bnc" id="L163" title="All 4 branches missed.">		if (color1 instanceof HColorSimple &amp;&amp; color2 instanceof HColorSimple)</span>
+<span class="nc" id="L164">			return HColorSimple.unlinear((HColorSimple) color1, (HColorSimple) color2, completion);</span>
 
-<span class="nc" id="L164">		return color1;</span>
+<span class="nc" id="L166">		return color1;</span>
 	}
 
 	public static HColor middle(HColor c1, HColor c2) {
-<span class="fc" id="L168">		return new HColorMiddle(c1, c2);</span>
+<span class="fc" id="L170">		return new HColorMiddle(c1, c2);</span>
 	}
 	// ::done
 
 	public static HColorGradient gradient(HColor color1, HColor color2, char policy) {
-<span class="fc" id="L173">		return new HColorGradient(color1, color2, policy);</span>
+<span class="fc" id="L175">		return new HColorGradient(color1, color2, policy);</span>
 	}
 
 	public static HColor simple(XColor c) {
-<span class="fc" id="L177">		return HColorSimple.create(c);</span>
+<span class="fc" id="L179">		return HColorSimple.create(c);</span>
 	}
 
 }

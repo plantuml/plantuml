@@ -54,9 +54,9 @@ import net.sourceforge.plantuml.style.Style;
 public class Colors {
 	// ::remove file when __HAXE__
 
-<span class="pc" id="L57">	private final Map&lt;ColorType, HColor&gt; map = new EnumMap&lt;ColorType, HColor&gt;(ColorType.class);</span>
-<span class="pc" id="L58">	private LinkStyle lineStyle = null;</span>
-<span class="pc" id="L59">	private Boolean shadowing = null;</span>
+<span class="fc" id="L57">	private final Map&lt;ColorType, HColor&gt; map = new EnumMap&lt;ColorType, HColor&gt;(ColorType.class);</span>
+<span class="fc" id="L58">	private LinkStyle lineStyle = null;</span>
+<span class="fc" id="L59">	private Boolean shadowing = null;</span>
 
 	@Override
 	public String toString() {
@@ -93,15 +93,15 @@ public class Colors {
 <span class="fc" id="L93">	private Colors() {</span>
 <span class="fc" id="L94">	}</span>
 
-<span class="nc" id="L96">	public Colors(String data, HColorSet set, ColorType mainType) throws NoSuchColorException {</span>
-<span class="nc" id="L97">		data = StringUtils.goLowerCase(data).replaceAll(&quot;#&quot;, &quot;&quot;);</span>
+<span class="fc" id="L96">	public Colors(String data, HColorSet set, ColorType mainType) throws NoSuchColorException {</span>
+<span class="fc" id="L97">		data = StringUtils.goLowerCase(data).replaceAll(&quot;#&quot;, &quot;&quot;);</span>
 
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (final StringTokenizer st = new StringTokenizer(data, &quot;;&quot;); st.hasMoreTokens();) {</span>
-<span class="nc" id="L100">			final String s = st.nextToken();</span>
-<span class="nc" id="L101">			final int x = s.indexOf(':');</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">			if (x == -1) {</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">				if (s.contains(&quot;.&quot;) == false)</span>
-<span class="nc" id="L104">					map.put(mainType, set.getColor(s));</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		for (final StringTokenizer st = new StringTokenizer(data, &quot;;&quot;); st.hasMoreTokens();) {</span>
+<span class="fc" id="L100">			final String s = st.nextToken();</span>
+<span class="fc" id="L101">			final int x = s.indexOf(':');</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">			if (x == -1) {</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">				if (s.contains(&quot;.&quot;) == false)</span>
+<span class="fc" id="L104">					map.put(mainType, set.getColor(s));</span>
 
 			} else {
 <span class="nc" id="L107">				final String name = s.substring(0, x);</span>
@@ -114,15 +114,15 @@ public class Colors {
 <span class="nc" id="L114">					map.put(key, color);</span>
 				}
 			}
-<span class="nc" id="L117">		}</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (data.contains(&quot;line.dashed&quot;))</span>
+<span class="fc" id="L117">		}</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (data.contains(&quot;line.dashed&quot;))</span>
 <span class="nc" id="L119">			lineStyle = LinkStyle.DASHED();</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		else if (data.contains(&quot;line.dotted&quot;))</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		else if (data.contains(&quot;line.dotted&quot;))</span>
 <span class="nc" id="L121">			lineStyle = LinkStyle.DOTTED();</span>
-<span class="nc bnc" id="L122" title="All 2 branches missed.">		else if (data.contains(&quot;line.bold&quot;))</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		else if (data.contains(&quot;line.bold&quot;))</span>
 <span class="nc" id="L123">			lineStyle = LinkStyle.BOLD();</span>
 
-<span class="nc" id="L125">	}</span>
+<span class="fc" id="L125">	}</span>
 
 	public HColor getColor(ColorType key) {
 <span class="fc" id="L128">		return map.get(Objects.requireNonNull(key));</span>

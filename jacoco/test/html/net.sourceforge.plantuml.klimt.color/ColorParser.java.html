@@ -61,10 +61,10 @@ public class ColorParser {
 <span class="nc" id="L61">			throw new IllegalStateException();</span>
 
 <span class="fc" id="L63">		final String data = arg.getLazzy(name, 0);</span>
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (data == null)</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (data == null)</span>
 <span class="fc" id="L65">			return Colors.empty();</span>
 
-<span class="nc" id="L67">		return new Colors(data, set, mainType);</span>
+<span class="fc" id="L67">		return new Colors(data, set, mainType);</span>
 	}
 
 	// New Parsers

@@ -8877,14 +8877,14 @@
 
         <Package name="net.sourceforge.plantuml.klimt.color">
             <Stats>
-                <TotalClasses>25</TotalClasses>
-                <ConcreteClasses>24</ConcreteClasses>
+                <TotalClasses>29</TotalClasses>
+                <ConcreteClasses>28</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>95</Ca>
                 <Ce>10</Ce>
-                <A>0.04</A>
+                <A>0.03</A>
                 <I>0.1</I>
-                <D>0.86</D>
+                <D>0.87</D>
                 <V>1</V>
             </Stats>
 
@@ -8939,6 +8939,18 @@
                 </Class>
                 <Class sourceFile="HColorAutomagic.java">
                     net.sourceforge.plantuml.klimt.color.HColorAutomagic
+                </Class>
+                <Class sourceFile="HColorLinearGradient.java">
+                    net.sourceforge.plantuml.klimt.color.HColorLinearGradient
+                </Class>
+                <Class sourceFile="HColorLinearGradient.java">
+                    net.sourceforge.plantuml.klimt.color.HColorLinearGradient$1
+                </Class>
+                <Class sourceFile="HColorLinearGradient.java">
+                    net.sourceforge.plantuml.klimt.color.HColorLinearGradient$SpreadMethod
+                </Class>
+                <Class sourceFile="HColorLinearGradient.java">
+                    net.sourceforge.plantuml.klimt.color.HColorLinearGradient$Stop
                 </Class>
                 <Class sourceFile="HColorMiddle.java">
                     net.sourceforge.plantuml.klimt.color.HColorMiddle
@@ -9900,12 +9912,12 @@
 
         <Package name="net.sourceforge.plantuml.klimt.drawing.g2d">
             <Stats>
-                <TotalClasses>13</TotalClasses>
-                <ConcreteClasses>12</ConcreteClasses>
+                <TotalClasses>14</TotalClasses>
+                <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>3</Ca>
                 <Ce>19</Ce>
-                <A>0.08</A>
+                <A>0.07</A>
                 <I>0.86</I>
                 <D>0.06</D>
                 <V>1</V>
@@ -9941,6 +9953,9 @@
                 </Class>
                 <Class sourceFile="DriverRectangleG2d.java">
                     net.sourceforge.plantuml.klimt.drawing.g2d.DriverRectangleG2d
+                </Class>
+                <Class sourceFile="DriverRectangleG2d.java">
+                    net.sourceforge.plantuml.klimt.drawing.g2d.DriverRectangleG2d$1
                 </Class>
                 <Class sourceFile="DriverTextG2d.java">
                     net.sourceforge.plantuml.klimt.drawing.g2d.DriverTextG2d
