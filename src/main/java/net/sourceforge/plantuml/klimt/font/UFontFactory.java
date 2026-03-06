@@ -39,9 +39,30 @@ import java.awt.Font;
 
 public class UFontFactory {
 
+	/**
+	 * Builds a font using a legacy style flag and size.
+	 *
+	 * @deprecated Prefer {@link #build(String, UFontFace, int)} to separate
+	 *             style (italic) from weight.
+	 */
+	@Deprecated
 	public static UFont build(String fullDefinition, int fontStyle, int fontSize) {
 		final FontStack fontStack = new FontStack(fullDefinition);
 		return new UFontImpl(fontStack, fontStyle, fontSize);
+	}
+
+	/**
+	 * Builds a font using a face (weight + italic axis) and size.
+	 *
+	 * @param fullDefinition font family definition
+	 * @param face font face (style + weight)
+	 * @param fontSize font size
+	 * @return configured font
+	 */
+	public static UFont build(String fullDefinition, UFontFace face, int fontSize) {
+		final FontStack fontStack = new FontStack(fullDefinition);
+		final UFontFace safeFace = face == null ? UFontFace.normal() : face;
+		return new UFontImpl(fontStack, safeFace.toLegacyStyle(), fontSize);
 	}
 
 	public static UFont serif(int size) {

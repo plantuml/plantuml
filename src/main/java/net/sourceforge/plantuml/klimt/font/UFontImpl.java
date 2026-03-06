@@ -64,18 +64,32 @@ public final class UFontImpl implements UFont {
 		return new UFontImpl(fontStack, this.style, (int) size);
 	}
 
+	public UFontFace getFontFace() {
+		return UFontFace.fromLegacyStyle(style);
+	}
+
+	public UFont withFontFace(UFontFace face) {
+		if (face == null)
+			return this;
+		return new UFontImpl(fontStack, face.toLegacyStyle(), this.size);
+	}
+
+	@Deprecated
 	public UFont withStyle(int style) {
 		return new UFontImpl(fontStack, style, this.size);
 	}
 
+	@Deprecated
 	public UFont bold() {
-		return withStyle(Font.BOLD);
+		return withFontFace(UFontFace.bold());
 	}
 
+	@Deprecated
 	public UFont italic() {
-		return withStyle(Font.ITALIC);
+		return withFontFace(UFontFace.italic());
 	}
 
+	@Deprecated
 	public int getStyle() {
 		return style;
 	}
@@ -88,12 +102,14 @@ public final class UFontImpl implements UFont {
 		return size;
 	}
 
+	@Deprecated
 	public boolean isBold() {
-		return (style & Font.BOLD) != 0;
+		return getFontFace().isBold();
 	}
 
+	@Deprecated
 	public boolean isItalic() {
-		return (style & Font.ITALIC) != 0;
+		return getFontFace().isItalic();
 	}
 
 	public String getFamily(String text, UFontContext context) {
