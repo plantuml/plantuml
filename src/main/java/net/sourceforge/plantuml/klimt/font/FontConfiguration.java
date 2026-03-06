@@ -102,6 +102,39 @@ public class FontConfiguration {
 		return fontPosition.mute(result);
 	}
 
+	/**
+	 * Returns the {@link UFontFace} (weight + italic axis) carried by the current
+	 * font of this configuration.  The face is always consistent with the
+	 * underlying font: changing the font (e.g. via {@link #withFontFace(UFontFace)}
+	 * or {@link #changeFamily(String)}) automatically updates the returned value.
+	 *
+	 * @return the font face; never {@code null}
+	 */
+	public UFontFace getFontFace() {
+		return currentFont.getFontFace();
+	}
+
+	/**
+	 * Returns a new {@code FontConfiguration} whose underlying font has been
+	 * updated to reflect the supplied {@link UFontFace} (weight + italic axis).
+	 * All other configuration properties (colour, size, tab stop, etc.) are
+	 * preserved unchanged.
+	 *
+	 * <p>This is the preferred way to change bold/italic/weight instead of the
+	 * legacy {@link #bold()} / {@link #italic()} helpers, because it preserves
+	 * CSS font-weight information beyond the binary bold/non-bold distinction.
+	 *
+	 * @param face the new face to apply; if {@code null} the current face is kept
+	 * @return a new {@code FontConfiguration} with the updated face
+	 */
+	public FontConfiguration withFontFace(UFontFace face) {
+		if (face == null)
+			return this;
+		final UFont updatedFont = currentFont.withFontFace(face);
+		return new FontConfiguration(styles, motherFont, motherColor, updatedFont, currentColor,
+				extendedColor, fontPosition, svgAttributes, hyperlinkColor, hyperlinkUnderlineStroke, tabSize);
+	}
+
 	private final EnumSet<FontStyle> styles;
 	private final UFont currentFont;
 	private final UFont motherFont;
@@ -245,8 +278,16 @@ public class FontConfiguration {
 				fontPosition, svgAttributes, hyperlinkColor, hyperlinkUnderlineStroke, tabSize);
 	}
 
+	/**
+	 * Returns a new {@code FontConfiguration} identical to this one except that
+	 * the font family (typeface name) has been replaced.  The current
+	 * {@link UFontFace} (weight + italic axis) and point size are preserved.
+	 *
+	 * @param family the new font-family string (e.g. {@code "Arial"})
+	 * @return a new {@code FontConfiguration} with the updated family
+	 */
 	public FontConfiguration changeFamily(String family) {
-		final UFont font = UFontFactory.build(family, currentFont.getStyle(), currentFont.getSize());
+		final UFont font = UFontFactory.build(family, currentFont.getFontFace(), currentFont.getSize());
 		return new FontConfiguration(styles, motherFont, motherColor, font, currentColor, extendedColor, fontPosition,
 				svgAttributes, hyperlinkColor, hyperlinkUnderlineStroke, tabSize);
 	}
