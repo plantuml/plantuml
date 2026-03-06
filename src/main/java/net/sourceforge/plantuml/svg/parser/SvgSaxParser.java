@@ -1,6 +1,5 @@
 package net.sourceforge.plantuml.svg.parser;
 
-import java.awt.Font;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayDeque;
@@ -10,7 +9,6 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,7 +36,9 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontStyle;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFace;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
+import net.sourceforge.plantuml.klimt.font.UFontStyle;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -92,7 +92,6 @@ import net.sourceforge.plantuml.utils.Base64Coder;
 public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 
     private static final Logger LOG = Logger.getLogger(SvgSaxParser.class.getName());
-    private static final AtomicBoolean WARNED_NUMERIC_WEIGHT = new AtomicBoolean(false);
 
     private final List<String> svg;
 
@@ -604,14 +603,14 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 
             String textContent = content.trim();
             int fontSizeValue = parseFontSize(fontSize, 12);
-            int awtFontStyle = parseFontStyle(fontWeight, fontStyle);
+            UFontFace face = parseFontFace(fontWeight, fontStyle);
 
             // Use default font family if not specified
             if (fontFamily == null || fontFamily.isEmpty()) {
                 fontFamily = "SansSerif";
             }
 
-            UFont font = UFontFactory.build(fontFamily, awtFontStyle, fontSizeValue);
+            UFont font = UFontFactory.build(fontFamily, face, fontSizeValue);
 
             HColor textColor = elementUgs.getDefaultColor();
             if (fillString != null && !fillString.isEmpty() && !"none".equals(fillString)) {
@@ -1168,35 +1167,37 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
             }
         }
 
-        private static int parseFontStyle(String fontWeight, String fontStyle) {
-            int style = Font.PLAIN;
+        /**
+         * Parses {@code font-weight} and {@code font-style} SVG/CSS attribute values
+         * into a {@link UFontFace} carrying the full CSS weight (100–900) and the
+         * italic axis.
+         *
+         * <p>Weight keywords ({@code normal}, {@code bold}, {@code lighter},
+         * {@code bolder}) and numeric values (100–900) are all delegated to
+         * {@link UFontFace#fromCssWeight(String)}.  The italic axis is set when
+         * {@code font-style} is {@code italic} or {@code oblique}.
+         *
+         * @param fontWeight the {@code font-weight} attribute/style value, may be {@code null}
+         * @param fontStyle  the {@code font-style} attribute/style value, may be {@code null}
+         * @return a {@link UFontFace} for use with
+         *         {@link UFontFactory#build(String, UFontFace, int)}
+         */
+        private static UFontFace parseFontFace(String fontWeight, String fontStyle) {
+            UFontFace face = UFontFace.normal();
 
             if (fontWeight != null && !fontWeight.isEmpty()) {
-                if ("bold".equalsIgnoreCase(fontWeight) || "bolder".equalsIgnoreCase(fontWeight)) {
-                    style |= Font.BOLD;
-                } else {
-                    try {
-                        int weight = Integer.parseInt(fontWeight);
-                        if (WARNED_NUMERIC_WEIGHT.compareAndSet(false, true)) {
-                            LOG.warning("SVG font-weight numeric values are reduced to bold/normal; "
-                                    + "intermediate weights are not supported.");
-                        }
-                        if (weight >= 600) {
-                            style |= Font.BOLD;
-                        }
-                    } catch (NumberFormatException e) {
-                        // Ignore
-                    }
-                }
+                final UFontFace wf = UFontFace.fromCssWeight(fontWeight.trim());
+                if (wf != null)
+                    face = face.withWeight(wf.getCssWeight());
             }
 
             if (fontStyle != null && !fontStyle.isEmpty()) {
-                if ("italic".equalsIgnoreCase(fontStyle) || "oblique".equalsIgnoreCase(fontStyle)) {
-                    style |= Font.ITALIC;
-                }
+                final String s = fontStyle.trim();
+                if ("italic".equalsIgnoreCase(s) || "oblique".equalsIgnoreCase(s))
+                    face = face.withStyle(UFontStyle.ITALIC);
             }
 
-            return style;
+            return face;
         }
 
         private static FontConfiguration applyTextDecoration(FontConfiguration fontConfig, String textDecoration) {
