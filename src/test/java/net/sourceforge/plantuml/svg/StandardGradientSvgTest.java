@@ -24,28 +24,42 @@ import test.utils.PlantUmlTestUtils;
 class StandardGradientSvgTest {
 
 	@Test
-	void standardGradientPoliciesEmitExpectedVectors() throws IOException {
+	void standardGradientHorizontal() throws IOException {
+		final List<GradientVector> gradients = renderAndExtract("A", "#ffd200|8cfcff", "standard-gradient-horizontal.svg");
+		assertTrue(hasHorizontalGradient(gradients), failureMessage("horizontal", gradients));
+	}
+
+	@Test
+	void standardGradientVertical() throws IOException {
+		final List<GradientVector> gradients = renderAndExtract("B", "#ffd200-8cfcff", "standard-gradient-vertical.svg");
+		assertTrue(hasVerticalGradient(gradients), failureMessage("vertical", gradients));
+	}
+
+	@Test
+	void standardGradientDiagonalTlBr() throws IOException {
+		final List<GradientVector> gradients = renderAndExtract("C", "#ffd200/8cfcff", "standard-gradient-diagonal-tlbr.svg");
+		assertTrue(hasDiagonalTlBrGradient(gradients), failureMessage("diagonal TL-BR", gradients));
+	}
+
+	@Test
+	void standardGradientDiagonalBlTr() throws IOException {
+		final List<GradientVector> gradients = renderAndExtract("D", "#ffd200\\8cfcff", "standard-gradient-diagonal-bltr.svg");
+		assertTrue(hasDiagonalBlTrGradient(gradients), failureMessage("diagonal BL-TR", gradients));
+	}
+
+	private List<GradientVector> renderAndExtract(String label, String gradient, String outputFile) throws IOException {
 		final String svg = PlantUmlTestUtils.exportDiagram(
 				"@startuml",
 				"skinparam shadowing false",
-				"rectangle A #ffd200|8cfcff",  // #8cfcff
-
-				"rectangle B #ffd200-8cfcff",
-				"rectangle C #ffd200/8cfcff",
-				"rectangle D #ffd200\\8cfcff",
+				"rectangle " + label + " " + gradient,
 				"@enduml")
 				.asString(FileFormat.SVG);
 
-
-		final Path output = Paths.get("target/test-output/svg-sprites/standard-gradient.svg");
+		final Path output = Paths.get("target/test-output/svg-sprites/" + outputFile);
 		Files.createDirectories(output.getParent());
 		Files.writeString(output, svg, StandardCharsets.UTF_8);
 
-		final List<GradientVector> gradients = extractLinearGradientVectors(svg);
-		assertTrue(hasHorizontalGradient(gradients), failureMessage("horizontal", gradients));
-		assertTrue(hasVerticalGradient(gradients), failureMessage("vertical", gradients));
-		assertTrue(hasDiagonalTlBrGradient(gradients), failureMessage("diagonal TL-BR", gradients));
-		assertTrue(hasDiagonalBlTrGradient(gradients), failureMessage("diagonal BL-TR", gradients));
+		return extractLinearGradientVectors(svg);
 	}
 
 	private List<GradientVector> extractLinearGradientVectors(String svg) throws IOException {
