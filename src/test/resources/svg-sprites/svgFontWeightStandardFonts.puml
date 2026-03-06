@@ -1,0 +1,44 @@
+@startuml
+!pragma svgparser sax
+'
+' Tests SVG sprite text rendering with standard system fonts that offer only
+' binary bold/normal weight support (no CSS 100-900 granularity).
+' Fonts: Arial, Times New Roman, Verdana, Georgia, Tahoma, Courier New
+' Permutations: weight x style x decoration — pipeline must not break even
+' when the typeface ignores intermediate weights at the Java2D level.
+'
+sprite standardFonts <svg viewBox="0 0 370 290" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Arial: normal weight and bold weight -->
+  <text x="8" y="22"  font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="400" fill="#212529">Arial 400 Normal</text>
+  <text x="8" y="46"  font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="#212529">Arial 700 Bold</text>
+
+  <!-- Times New Roman: italic and bold-italic -->
+  <text x="8" y="74"  font-family="Times New Roman,Times,serif" font-size="13" font-weight="400" font-style="italic" fill="#495057">Times New Roman Italic</text>
+  <text x="8" y="98"  font-family="Times New Roman,Times,serif" font-size="13" font-weight="700" font-style="italic" fill="#495057">Times New Roman Bold Italic</text>
+
+  <!-- Verdana: normal + underline and bold + underline -->
+  <text x="8" y="126" font-family="Verdana,Geneva,sans-serif" font-size="13" font-weight="400" text-decoration="underline" fill="#0d6efd">Verdana 400 Underline</text>
+  <text x="8" y="150" font-family="Verdana,Geneva,sans-serif" font-size="13" font-weight="700" text-decoration="underline" fill="#0d6efd">Verdana 700 Bold Underline</text>
+
+  <!-- Georgia: regular and bold-italic (serif, common document font) -->
+  <text x="8" y="178" font-family="Georgia,serif" font-size="13" font-weight="400" fill="#6f42c1">Georgia 400 Normal</text>
+  <text x="8" y="202" font-family="Georgia,serif" font-size="13" font-weight="700" font-style="italic" fill="#6f42c1">Georgia 700 Bold Italic</text>
+
+  <!-- Tahoma: intermediate weight (500) — maps to normal at Java2D level -->
+  <text x="8" y="230" font-family="Tahoma,sans-serif" font-size="13" font-weight="500" fill="#198754">Tahoma 500 (no mid-weight; renders normal)</text>
+
+  <!-- Courier New: monospace bold -->
+  <text x="8" y="258" font-family="Courier New,monospace" font-size="13" font-weight="700" fill="#dc3545">Courier New 700 Bold</text>
+
+  <!-- Divider lines to visually separate font groups -->
+  <line x1="4" y1="56"  x2="366" y2="56"  stroke="#cccccc" stroke-width="0.5"/>
+  <line x1="4" y1="108" x2="366" y2="108" stroke="#cccccc" stroke-width="0.5"/>
+  <line x1="4" y1="160" x2="366" y2="160" stroke="#cccccc" stroke-width="0.5"/>
+  <line x1="4" y1="212" x2="366" y2="212" stroke="#cccccc" stroke-width="0.5"/>
+  <line x1="4" y1="240" x2="366" y2="240" stroke="#cccccc" stroke-width="0.5"/>
+
+</svg>
+
+Alice -> Bob : <$standardFonts> standard system fonts
+@enduml
