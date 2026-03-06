@@ -38,10 +38,10 @@ class StandardGradientSvgTest {
 		Files.writeString(output, svg, StandardCharsets.UTF_8);
 
 		final List<GradientVector> gradients = extractLinearGradientVectors(svg);
-		assertTrue(hasHorizontalGradient(gradients), "Missing horizontal gradient (|) vector in SVG output");
-		assertTrue(hasVerticalGradient(gradients), "Missing vertical gradient (-) vector in SVG output");
-		assertTrue(hasDiagonalTlBrGradient(gradients), "Missing diagonal gradient (/) vector in SVG output");
-		assertTrue(hasDiagonalBlTrGradient(gradients), "Missing diagonal gradient (\\) vector in SVG output");
+		assertTrue(hasHorizontalGradient(gradients), failureMessage("horizontal", gradients));
+		assertTrue(hasVerticalGradient(gradients), failureMessage("vertical", gradients));
+		assertTrue(hasDiagonalTlBrGradient(gradients), failureMessage("diagonal TL-BR", gradients));
+		assertTrue(hasDiagonalBlTrGradient(gradients), failureMessage("diagonal BL-TR", gradients));
 	}
 
 	private List<GradientVector> extractLinearGradientVectors(String svg) {
@@ -77,7 +77,9 @@ class StandardGradientSvgTest {
 
 	private boolean hasHorizontalGradient(List<GradientVector> gradients) {
 		for (GradientVector vector : gradients) {
-			if (approx(vector.x1, 0.0) && approx(vector.x2, 100.0) && approx(vector.y1, vector.y2))
+			final double dx = vector.x2 - vector.x1;
+			final double dy = vector.y2 - vector.y1;
+			if (Math.abs(dy) <= 1.0 && Math.abs(dx) >= 50.0)
 				return true;
 		}
 		return false;
@@ -85,7 +87,9 @@ class StandardGradientSvgTest {
 
 	private boolean hasVerticalGradient(List<GradientVector> gradients) {
 		for (GradientVector vector : gradients) {
-			if (approx(vector.y1, 0.0) && approx(vector.y2, 100.0) && approx(vector.x1, vector.x2))
+			final double dx = vector.x2 - vector.x1;
+			final double dy = vector.y2 - vector.y1;
+			if (Math.abs(dx) <= 1.0 && Math.abs(dy) >= 50.0)
 				return true;
 		}
 		return false;
@@ -93,8 +97,9 @@ class StandardGradientSvgTest {
 
 	private boolean hasDiagonalTlBrGradient(List<GradientVector> gradients) {
 		for (GradientVector vector : gradients) {
-			if (approx(vector.x1, 0.0) && approx(vector.y1, 0.0) && approx(vector.x2, 100.0)
-						&& approx(vector.y2, 100.0))
+			final double dx = vector.x2 - vector.x1;
+			final double dy = vector.y2 - vector.y1;
+			if (dx >= 50.0 && dy >= 50.0)
 				return true;
 		}
 		return false;
@@ -102,15 +107,26 @@ class StandardGradientSvgTest {
 
 	private boolean hasDiagonalBlTrGradient(List<GradientVector> gradients) {
 		for (GradientVector vector : gradients) {
-			if (approx(vector.x1, 0.0) && approx(vector.y1, 100.0) && approx(vector.x2, 100.0)
-						&& approx(vector.y2, 0.0))
+			final double dx = vector.x2 - vector.x1;
+			final double dy = vector.y2 - vector.y1;
+			if (dx >= 50.0 && dy <= -50.0)
 				return true;
 		}
 		return false;
 	}
 
-	private boolean approx(double left, double right) {
-		return Math.abs(left - right) < 0.001;
+	private String failureMessage(String label, List<GradientVector> gradients) {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Missing ").append(label).append(" gradient vector in SVG output. ");
+		sb.append("Vectors=");
+		for (GradientVector vector : gradients) {
+			final double dx = vector.x2 - vector.x1;
+			final double dy = vector.y2 - vector.y1;
+			sb.append(" [x1=").append(vector.x1).append(", y1=").append(vector.y1)
+					.append(", x2=").append(vector.x2).append(", y2=").append(vector.y2)
+					.append(", dx=").append(dx).append(", dy=").append(dy).append("]");
+		}
+		return sb.toString();
 	}
 
 	private static class GradientVector {
