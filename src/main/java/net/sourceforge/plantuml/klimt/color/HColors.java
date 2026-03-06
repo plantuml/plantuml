@@ -139,6 +139,8 @@ public class HColors {
 	public static HColor noGradient(HColor color) {
 		if (color instanceof HColorGradient)
 			return ((HColorGradient) color).getColor1();
+		if (color instanceof HColorLinearGradient)
+			return ((HColorLinearGradient) color).getColor1();
 
 		return color;
 	}

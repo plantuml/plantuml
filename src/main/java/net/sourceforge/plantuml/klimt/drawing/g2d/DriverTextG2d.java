@@ -39,7 +39,6 @@ import static java.lang.Math.max;
 
 import java.awt.BasicStroke;
 import java.awt.FontMetrics;
-import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
@@ -52,6 +51,7 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
+import net.sourceforge.plantuml.klimt.color.HColorLinearGradient;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontStyle;
@@ -137,8 +137,8 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 
 			if (fontConfiguration.containsStyle(FontStyle.BACKCOLOR)) {
 				final Rectangle2D.Double area = new Rectangle2D.Double(x, y - height + 1.5, width, height);
-				if (extended instanceof HColorGradient) {
-					final GradientPaint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, width, height,
+				if (extended instanceof HColorGradient || extended instanceof HColorLinearGradient) {
+					final java.awt.Paint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, width, height,
 							extended);
 					g2d.setPaint(paint);
 					g2d.fill(area);

@@ -36,9 +36,9 @@
 package net.sourceforge.plantuml.klimt.drawing.g2d;
 
 import java.awt.BasicStroke;
-import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import java.awt.Paint;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 
@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
+import net.sourceforge.plantuml.klimt.color.HColorLinearGradient;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
@@ -75,9 +76,9 @@ public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver<UElli
 			}
 
 			final HColor back = param.getBackcolor();
-			if (back instanceof HColorGradient) {
-				final GradientPaint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, ellipse.getWidth(),
-						ellipse.getHeight(), back);
+			if (back instanceof HColorGradient || back instanceof HColorLinearGradient) {
+				final Paint paint = DriverRectangleG2d.getPaintGradient(x, y, mapper, ellipse.getWidth(),
+							ellipse.getHeight(), back);
 				g2d.setPaint(paint);
 				g2d.fill(shape);
 				DriverRectangleG2d.drawBorder(param, color, mapper, ellipse, shape, g2d, x, y);

@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
+import net.sourceforge.plantuml.klimt.color.HColorLinearGradient;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 
@@ -80,7 +81,11 @@ public class DriverRectangleSvg implements UDriver<URectangle, SvgGraphics> {
 
 	public static void applyFillColor(SvgGraphics svg, ColorMapper mapper, UParam param) {
 		final HColor background = param.getBackcolor();
-		if (background instanceof HColorGradient) {
+		if (background instanceof HColorLinearGradient) {
+			final HColorLinearGradient gr = (HColorLinearGradient) background;
+			final String id = svg.createSvgGradient(gr, mapper);
+			svg.setFillColor("url(#" + id + ")");
+		} else if (background instanceof HColorGradient) {
 			final HColorGradient gr = (HColorGradient) background;
 			final String id = svg.createSvgGradient(gr.getColor1().toRGB(mapper), gr.getColor2().toRGB(mapper),
 					gr.getPolicy());
@@ -92,7 +97,11 @@ public class DriverRectangleSvg implements UDriver<URectangle, SvgGraphics> {
 
 	public static void applyStrokeColor(SvgGraphics svg, ColorMapper mapper, UParam param) {
 		final HColor color = param.getColor();
-		if (color instanceof HColorGradient) {
+		if (color instanceof HColorLinearGradient) {
+			final HColorLinearGradient gr = (HColorLinearGradient) color;
+			final String id = svg.createSvgGradient(gr, mapper);
+			svg.setStrokeColor("url(#" + id + ")");
+		} else if (color instanceof HColorGradient) {
 			final HColorGradient gr = (HColorGradient) color;
 			final String id = svg.createSvgGradient(gr.getColor1().toRGB(mapper), gr.getColor2().toRGB(mapper),
 					gr.getPolicy());

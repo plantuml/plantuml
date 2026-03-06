@@ -33,6 +33,7 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.color.HColorLinearGradient;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontStyle;
@@ -70,8 +71,7 @@ import net.sourceforge.plantuml.utils.Base64Coder;
  *   <li>Feature-frozen at SVG 1.1 core subset</li>
  *   <li>No SVG 2.0 extensions (use a full DOM-based parser for full support)</li>
  *   <li>Radial gradients are not supported (not in core PlantUML renderer)</li>
- *   <li>Linear gradients use only the first/last stops; intermediate stops, offsets, and stop-opacity are ignored</li>
- *   <li>Gradient direction is approximated to horizontal, vertical, or diagonal; arbitrary angles are not preserved</li>
+ *   <li>Linear gradients support multiple stops with stop-opacity</li>
  *   <li>Embedded raster images via data URIs only (PNG/JPEG); no external URLs or embedded SVG</li>
  *   <li>No clipPath, mask, filter, pattern</li>
  *   <li>Text: no tspan, overline, or advanced layout</li>
@@ -214,8 +214,16 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
                 if ("stop".equals(qName) && currentElement != null) {
                     String offset = attrs.getValue("offset");
                     String stopColor = attrs.getValue("stop-color");
+                    String stopOpacity = attrs.getValue("stop-opacity");
+                    final String style = attrs.getValue("style");
+                    if (style != null && style.isEmpty() == false) {
+                        if (stopColor == null)
+                            stopColor = getStyleValue(style, "stop-color");
+                        if (stopOpacity == null)
+                            stopOpacity = getStyleValue(style, "stop-opacity");
+                    }
                     if (offset != null && stopColor != null) {
-                        currentElement.stops.add(new GradientStop(offset, stopColor));
+                        currentElement.stops.add(new GradientStop(offset, stopColor, stopOpacity));
                     }
                 }
                 
@@ -269,6 +277,20 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
                       .replace(">", "&gt;")
                       .replace("\"", "&quot;");
         }
+
+        private String getStyleValue(String style, String key) {
+            final String[] parts = style.split(";");
+            for (String part : parts) {
+                final int idx = part.indexOf(':');
+                if (idx <= 0)
+                    continue;
+
+                final String name = part.substring(0, idx).trim();
+                if (name.equalsIgnoreCase(key))
+                    return part.substring(idx + 1).trim();
+            }
+            return null;
+        }
     }
 
     /**
@@ -294,10 +316,12 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
     private static class GradientStop {
         final String offset;
         final String color;
+        final String opacity;
 
-        GradientStop(String offset, String color) {
+        GradientStop(String offset, String color, String opacity) {
             this.offset = offset;
             this.color = color;
+            this.opacity = opacity;
         }
     }
 
@@ -884,56 +908,107 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
                 LOG.fine("Gradient not found: " + gradientId);
                 return null;
             }
-            
+
             final String tagName = gradientElement.tagName;
             LOG.fine("Extracting gradient: " + gradientId + " (tagName=" + tagName + ", stops=" + gradientElement.stops.size() + ")");
-            
-            // Handle linearGradient - try to create a PlantUML gradient
+
             if ("linearGradient".equals(tagName)) {
-                if (gradientElement.stops.size() >= 2) {
-                    // Get first and last stop colors
-                    final GradientStop firstStop = gradientElement.stops.get(0);
-                    final GradientStop lastStop = gradientElement.stops.get(gradientElement.stops.size() - 1);
-                    
-                    final String firstColor = firstStop.color;
-                    final String lastColor = lastStop.color;
-                    
-                    LOG.fine("Stop colors: first=" + firstColor + ", last=" + lastColor);
-                    
-                    if (firstColor != null && !firstColor.isEmpty() && 
-                        lastColor != null && !lastColor.isEmpty()) {
-                        
-                        final HColor color1 = ugs.getTrueColor(firstColor);
-                        final HColor color2 = ugs.getTrueColor(lastColor);
-                        
-                        if (color1 != null && color2 != null) {
-                            // Determine gradient direction from x1, y1, x2, y2 attributes
-                            final char policy = determineGradientPolicy(gradientElement.attributes);
-                            LOG.fine("Creating gradient with policy '" + policy + "' from " + firstColor + " to " + lastColor);
-                            return HColors.gradient(color1, color2, policy);
-                        }
-                    }
+                final List<HColorLinearGradient.Stop> stops = buildGradientStops(gradientElement.stops);
+                if (stops.size() >= 2) {
+                    final boolean userSpaceOnUse = "userSpaceOnUse".equals(gradientElement.attributes.get("gradientUnits"));
+                    final HColorLinearGradient.SpreadMethod spreadMethod =
+                            parseSpreadMethod(gradientElement.attributes.get("spreadMethod"));
+                    final double x1 = parsePercentOrNumber(gradientElement.attributes.get("x1"), 0.0);
+                    final double y1 = parsePercentOrNumber(gradientElement.attributes.get("y1"), 0.0);
+                    final double x2 = parsePercentOrNumber(gradientElement.attributes.get("x2"), 1.0);
+                    final double y2 = parsePercentOrNumber(gradientElement.attributes.get("y2"), 0.0);
+                    return new HColorLinearGradient(x1, y1, x2, y2, userSpaceOnUse, spreadMethod, stops);
                 }
-                // Fallback to first stop if gradient creation failed
                 if (gradientElement.stops.size() > 0) {
-                    final String stopColor = gradientElement.stops.get(0).color;
-                    if (stopColor != null && !stopColor.isEmpty()) {
-                        return ugs.getTrueColor(stopColor);
-                    }
+                    final HColor fallback = getStopColor(gradientElement.stops.get(0));
+                    if (fallback != null)
+                        return fallback;
                 }
             }
-            
-            // Handle radialGradient - just use first stop color
+
             if ("radialGradient".equals(tagName)) {
                 if (gradientElement.stops.size() > 0) {
-                    final String stopColor = gradientElement.stops.get(0).color;
-                    if (stopColor != null && !stopColor.isEmpty()) {
-                        return ugs.getTrueColor(stopColor);
-                    }
+                    final HColor fallback = getStopColor(gradientElement.stops.get(0));
+                    if (fallback != null)
+                        return fallback;
                 }
             }
-            
+
             return null;
+        }
+
+        private List<HColorLinearGradient.Stop> buildGradientStops(List<GradientStop> stops) {
+            final List<HColorLinearGradient.Stop> result = new ArrayList<HColorLinearGradient.Stop>();
+            for (GradientStop stop : stops) {
+                final HColor color = getStopColor(stop);
+                if (color == null)
+                    continue;
+
+                final double offset = parseOffset(stop.offset);
+                final double opacity = parseOpacity(stop.opacity);
+                result.add(new HColorLinearGradient.Stop(offset, color, opacity));
+            }
+            return result;
+        }
+
+        private HColor getStopColor(GradientStop stop) {
+            if (stop == null)
+                return null;
+            if (stop.color == null || stop.color.isEmpty())
+                return null;
+            if ("none".equalsIgnoreCase(stop.color))
+                return null;
+            return ugs.getTrueColor(stop.color);
+        }
+
+        private double parseOffset(String value) {
+            if (value == null || value.isEmpty())
+                return 0.0;
+
+            try {
+                if (value.endsWith("%"))
+                    return clamp01(Double.parseDouble(value.substring(0, value.length() - 1)) / 100.0);
+                return clamp01(Double.parseDouble(value));
+            } catch (NumberFormatException e) {
+                return 0.0;
+            }
+        }
+
+        private double parseOpacity(String value) {
+            if (value == null || value.isEmpty())
+                return 1.0;
+
+            try {
+                return clamp01(Double.parseDouble(value));
+            } catch (NumberFormatException e) {
+                return 1.0;
+            }
+        }
+
+        private double clamp01(double value) {
+            if (value < 0.0)
+                return 0.0;
+            if (value > 1.0)
+                return 1.0;
+            return value;
+        }
+
+        private HColorLinearGradient.SpreadMethod parseSpreadMethod(String value) {
+            if (value == null || value.isEmpty())
+                return HColorLinearGradient.SpreadMethod.PAD;
+
+            final String lower = value.toLowerCase();
+            if ("reflect".equals(lower))
+                return HColorLinearGradient.SpreadMethod.REFLECT;
+            if ("repeat".equals(lower))
+                return HColorLinearGradient.SpreadMethod.REPEAT;
+
+            return HColorLinearGradient.SpreadMethod.PAD;
         }
         
         /**
