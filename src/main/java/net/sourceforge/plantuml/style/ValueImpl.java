@@ -167,6 +167,47 @@ public class ValueImpl implements Value {
 		return Font.PLAIN;
 	}
 
+	/**
+	 * Parses the stored string as a CSS font-weight value.
+	 * <ul>
+	 *   <li>{@code normal} → 400</li>
+	 *   <li>{@code bold} → 700</li>
+	 *   <li>{@code lighter} → 300</li>
+	 *   <li>{@code bolder} → 800</li>
+	 *   <li>numeric 100-900 → that value (rounded down to nearest 100 is not
+	 *       enforced here — any integer in range is accepted)</li>
+	 *   <li>anything else / empty → 0 (not specified)</li>
+	 * </ul>
+	 *
+	 * @return CSS numeric weight, or {@code 0} if not present / not parseable
+	 */
+	public int asFontWeight() {
+		final String raw = value.getValue1();
+		if (raw == null || raw.isEmpty())
+			return 0;
+
+		final String s = raw.trim().toLowerCase();
+		switch (s) {
+		case "normal":
+			return 400;
+		case "bold":
+			return 700;
+		case "lighter":
+			return 300;
+		case "bolder":
+			return 800;
+		default:
+			try {
+				final int w = Integer.parseInt(s);
+				if (w >= 100 && w <= 900)
+					return w;
+			} catch (NumberFormatException e) {
+				// not a numeric weight — fall through
+			}
+			return 0;
+		}
+	}
+
 	public HorizontalAlignment asHorizontalAlignment() {
 		return HorizontalAlignment.fromString(asString());
 	}

@@ -70,6 +70,10 @@ public abstract class ValueAbstract implements Value {
 		throw new UnsupportedOperationException("Class=" + getClass());
 	}
 
+	public int asFontWeight() {
+		throw new UnsupportedOperationException("Class=" + getClass());
+	}
+
 	public HorizontalAlignment asHorizontalAlignment() {
 		throw new UnsupportedOperationException("Class=" + getClass());
 	}

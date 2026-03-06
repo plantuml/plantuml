@@ -56,6 +56,14 @@ public interface Value {
 
 	public int asFontStyle();
 
+	/**
+	 * Returns the CSS font-weight as a numeric value (100-900), or {@code 0} if
+	 * no weight was specified or the value could not be parsed.  Accepts the
+	 * keywords {@code normal} (400), {@code bold} (700), {@code lighter} (300),
+	 * {@code bolder} (800) as well as bare integers in the range 100-900.
+	 */
+	public int asFontWeight();
+
 	public HorizontalAlignment asHorizontalAlignment();
 
 	public int getPriority();

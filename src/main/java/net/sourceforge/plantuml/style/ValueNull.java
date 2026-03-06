@@ -80,6 +80,15 @@ public class ValueNull extends ValueAbstract implements Value {
 		return Font.PLAIN;
 	}
 
+	/**
+	 * Returns {@code 0} — no weight specified; callers should treat this as
+	 * "inherit" or fall back to the weight implied by {@link #asFontStyle()}.
+	 */
+	@Override
+	public int asFontWeight() {
+		return 0;
+	}
+
 	@Override
 	public HColor asColor(HColorSet set) {
 		return HColors.BLACK;
