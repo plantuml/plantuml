@@ -51,10 +51,11 @@ class StandardGradientSvgTest {
 	private List<GradientVector> extractLinearGradientVectors(String svg) throws IOException {
 		final List<GradientVector> vectors = new ArrayList<GradientVector>();
 		try {
+			final String xml = stripPlantumlHeader(svg);
 			final SAXParserFactory factory = SAXParserFactory.newInstance();
 			factory.setNamespaceAware(true);
 			final SAXParser parser = factory.newSAXParser();
-			parser.parse(new InputSource(new StringReader(svg)), new DefaultHandler() {
+			parser.parse(new InputSource(new StringReader(xml)), new DefaultHandler() {
 				@Override
 				public void startElement(String uri, String localName, String qName, Attributes attrs)
 						throws SAXException {
@@ -74,6 +75,19 @@ class StandardGradientSvgTest {
 			throw new IOException("Failed to parse SVG output for gradient vectors", e);
 		}
 		return vectors;
+	}
+
+	private String stripPlantumlHeader(String svg) {
+		if (svg == null)
+			return "";
+
+		final String trimmed = svg.trim();
+		if (trimmed.startsWith("<?plantuml")) {
+			final int idx = trimmed.indexOf("<svg");
+			if (idx >= 0)
+				return trimmed.substring(idx);
+		}
+		return trimmed;
 	}
 
 	private Double extractPercent(String raw) {
