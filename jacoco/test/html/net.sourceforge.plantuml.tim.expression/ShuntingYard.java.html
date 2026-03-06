@@ -154,7 +154,7 @@ public class ShuntingYard {
 	}
 
 	private boolean isOperatorOrAffectation(final Token token) {
-<span class="fc bfc" id="L157" title="All 4 branches covered.">		return token.getTokenType() == TokenType.OPERATOR || token.getTokenType() == TokenType.AFFECTATION;</span>
+<span class="pc bpc" id="L157" title="1 of 4 branches missed.">		return token.getTokenType() == TokenType.OPERATOR || token.getTokenType() == TokenType.AFFECTATION;</span>
 	}
 
 	private boolean theOperatorAtTheTopOfTheOperatorStackIsNotALeftParenthesis(Token token) {
