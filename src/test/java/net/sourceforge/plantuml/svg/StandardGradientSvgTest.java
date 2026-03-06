@@ -3,6 +3,10 @@ package net.sourceforge.plantuml.svg;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -20,12 +24,18 @@ class StandardGradientSvgTest {
 		final String svg = PlantUmlTestUtils.exportDiagram(
 				"@startuml",
 				"skinparam shadowing false",
-				"rectangle A #ffd200|8cfcff",
+				"rectangle A #ffd200|8cfcff",  // #8cfcff
+
 				"rectangle B #ffd200-8cfcff",
 				"rectangle C #ffd200/8cfcff",
 				"rectangle D #ffd200\\8cfcff",
 				"@enduml")
 				.asString(FileFormat.SVG);
+
+
+		final Path output = Paths.get("target/test-output/svg-sprites/standard-gradient.svg");
+		Files.createDirectories(output.getParent());
+		Files.writeString(output, svg, StandardCharsets.UTF_8);
 
 		final List<GradientVector> gradients = extractLinearGradientVectors(svg);
 		assertTrue(hasHorizontalGradient(gradients), "Missing horizontal gradient (|) vector in SVG output");
