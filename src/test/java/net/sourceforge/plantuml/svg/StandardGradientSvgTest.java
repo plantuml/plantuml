@@ -3,24 +3,26 @@ package net.sourceforge.plantuml.svg;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 import net.sourceforge.plantuml.FileFormat;
 import test.utils.PlantUmlTestUtils;
 
 class StandardGradientSvgTest {
 
-	@Disabled("Temporarily skipped due to CI inconsistencies in SVG gradient output detection")
 	@Test
 	void standardGradientPoliciesEmitExpectedVectors() throws IOException {
 		final String svg = PlantUmlTestUtils.exportDiagram(
@@ -46,26 +48,35 @@ class StandardGradientSvgTest {
 		assertTrue(hasDiagonalBlTrGradient(gradients), failureMessage("diagonal BL-TR", gradients));
 	}
 
-	private List<GradientVector> extractLinearGradientVectors(String svg) {
+	private List<GradientVector> extractLinearGradientVectors(String svg) throws IOException {
 		final List<GradientVector> vectors = new ArrayList<GradientVector>();
-		final Pattern pattern = Pattern.compile("(?i)<linearGradient\\b[^>]*>");
-		final Matcher matcher = pattern.matcher(svg);
-		while (matcher.find()) {
-			final String tag = matcher.group();
-			final Double x1 = extractPercent(tag, "x1");
-			final Double y1 = extractPercent(tag, "y1");
-			final Double x2 = extractPercent(tag, "x2");
-			final Double y2 = extractPercent(tag, "y2");
-			if (x1 != null && y1 != null && x2 != null && y2 != null)
-				vectors.add(new GradientVector(x1, y1, x2, y2));
+		try {
+			final SAXParserFactory factory = SAXParserFactory.newInstance();
+			factory.setNamespaceAware(true);
+			final SAXParser parser = factory.newSAXParser();
+			parser.parse(new InputSource(new StringReader(svg)), new DefaultHandler() {
+				@Override
+				public void startElement(String uri, String localName, String qName, Attributes attrs)
+						throws SAXException {
+					final String name = localName == null || localName.isEmpty() ? qName : localName;
+					if ("linearGradient".equalsIgnoreCase(name) == false)
+						return;
+
+					final Double x1 = extractPercent(attrs.getValue("x1"));
+					final Double y1 = extractPercent(attrs.getValue("y1"));
+					final Double x2 = extractPercent(attrs.getValue("x2"));
+					final Double y2 = extractPercent(attrs.getValue("y2"));
+					if (x1 != null && y1 != null && x2 != null && y2 != null)
+						vectors.add(new GradientVector(x1, y1, x2, y2));
+				}
+			});
+		} catch (Exception e) {
+			throw new IOException("Failed to parse SVG output for gradient vectors", e);
 		}
 		return vectors;
 	}
 
-	private Double extractPercent(String tag, String attr) {
-		String raw = extractAttribute(tag, attr, '"');
-		if (raw == null)
-			raw = extractAttribute(tag, attr, '\'');
+	private Double extractPercent(String raw) {
 		if (raw == null)
 			return null;
 
@@ -76,14 +87,6 @@ class StandardGradientSvgTest {
 		} catch (NumberFormatException e) {
 			return null;
 		}
-	}
-
-	private String extractAttribute(String tag, String attr, char quote) {
-		final Pattern attrPattern = Pattern.compile("(?i)" + attr + "=" + quote + "([^" + quote + "]+)" + quote);
-		final Matcher matcher = attrPattern.matcher(tag);
-		if (matcher.find())
-			return matcher.group(1);
-		return null;
 	}
 
 	private boolean hasHorizontalGradient(List<GradientVector> gradients) {
