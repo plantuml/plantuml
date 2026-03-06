@@ -1,0 +1,40 @@
+@startuml
+!pragma svgparser sax
+'
+' Tests SVG sprite text rendering with fonts that support multiple CSS weights.
+' Fonts: Open Sans, Roboto, Noto Sans, Source Sans Pro, Helvetica Neue
+' Permutations: weight x style x decoration
+'
+sprite weightyFonts <svg viewBox="0 0 370 310" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Open Sans: four weights, normal style -->
+  <text x="8" y="22"  font-family="Open Sans,Roboto,sans-serif" font-size="13" font-weight="300" fill="#1a1a2e">Open Sans 300 Light</text>
+  <text x="8" y="46"  font-family="Open Sans,Roboto,sans-serif" font-size="13" font-weight="400" fill="#1a1a2e">Open Sans 400 Regular</text>
+  <text x="8" y="70"  font-family="Open Sans,Roboto,sans-serif" font-size="13" font-weight="600" fill="#1a1a2e">Open Sans 600 SemiBold</text>
+  <text x="8" y="94"  font-family="Open Sans,Roboto,sans-serif" font-size="13" font-weight="700" fill="#1a1a2e">Open Sans 700 Bold</text>
+
+  <!-- Roboto: normal + italic axis at two weights -->
+  <text x="8" y="122" font-family="Roboto,Arial,sans-serif" font-size="13" font-weight="400" font-style="italic" fill="#0d6efd">Roboto 400 Italic</text>
+  <text x="8" y="146" font-family="Roboto,Arial,sans-serif" font-size="13" font-weight="700" font-style="italic" fill="#0d6efd">Roboto 700 Bold Italic</text>
+
+  <!-- Noto Sans: light and medium with underline decoration -->
+  <text x="8" y="174" font-family="Noto Sans,sans-serif" font-size="13" font-weight="300" text-decoration="underline" fill="#198754">Noto Sans 300 Light Underline</text>
+  <text x="8" y="198" font-family="Noto Sans,sans-serif" font-size="13" font-weight="500" text-decoration="underline" fill="#198754">Noto Sans 500 Medium Underline</text>
+
+  <!-- Source Sans Pro: bold italic underline (all three at once) -->
+  <text x="8" y="226" font-family="Source Sans Pro,Source Sans 3,sans-serif" font-size="13" font-weight="700" font-style="italic" text-decoration="underline" fill="#dc3545">Source Sans 700 Bold+Italic+Underline</text>
+
+  <!-- Helvetica Neue: regular and extra-bold -->
+  <text x="8" y="254" font-family="Helvetica Neue,Helvetica,sans-serif" font-size="13" font-weight="400" fill="#6f42c1">Helvetica Neue 400</text>
+  <text x="8" y="278" font-family="Helvetica Neue,Helvetica,sans-serif" font-size="13" font-weight="800" fill="#6f42c1">Helvetica Neue 800 ExtraBold</text>
+
+  <!-- Divider lines to visually separate font groups -->
+  <line x1="4" y1="104" x2="366" y2="104" stroke="#cccccc" stroke-width="0.5"/>
+  <line x1="4" y1="156" x2="366" y2="156" stroke="#cccccc" stroke-width="0.5"/>
+  <line x1="4" y1="208" x2="366" y2="208" stroke="#cccccc" stroke-width="0.5"/>
+  <line x1="4" y1="236" x2="366" y2="236" stroke="#cccccc" stroke-width="0.5"/>
+
+</svg>
+
+Alice -> Bob : <$weightyFonts> multi-weight fonts
+@enduml
