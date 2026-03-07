@@ -37,23 +37,80 @@ package net.sourceforge.plantuml.klimt.font;
 
 public interface UFont {
 
-	public UFont withSize(float size);
-
+	/**
+	 * Returns a new font with the given legacy style flags.
+	 *
+	 * @deprecated Use {@link #withFontFace(UFontFace)} to change weight and
+	 *             italic style independently.
+	 */
+	@Deprecated
 	public UFont withStyle(int style);
 
+	/**
+	 * Returns a bold variant of this font.
+	 *
+	 * @deprecated Use {@link #withFontFace(UFontFace)} and
+	 *             {@link UFontFace#bold()} instead.
+	 */
+	@Deprecated
 	public UFont bold();
 
+	/**
+	 * Returns an italic variant of this font.
+	 *
+	 * @deprecated Use {@link #withFontFace(UFontFace)} and
+	 *             {@link UFontFace#italic()} instead.
+	 */
+	@Deprecated
 	public UFont italic();
 
+	/**
+	 * Returns the legacy style flags for this font.
+	 *
+	 * @deprecated Use {@link #getFontFace()} and
+	 *             {@link UFontFace#toLegacyStyle()} if needed.
+	 */
+	@Deprecated
 	public int getStyle();
+
+	/**
+	 * Returns whether this font is bold according to legacy style flags.
+	 *
+	 * @deprecated Use {@link #getFontFace()} and
+	 *             {@link UFontFace#isBold()}.
+	 */
+	@Deprecated
+	public boolean isBold();
+
+	/**
+	 * Returns whether this font is italic according to legacy style flags.
+	 *
+	 * @deprecated Use {@link #getFontFace()} and
+	 *             {@link UFontFace#isItalic()}.
+	 */
+	@Deprecated
+	public boolean isItalic();
+
+	/**
+	 * Returns the font face (weight + italic axis) for this font.
+	 *
+	 * @return font face
+	 */
+	public UFontFace getFontFace();
+
+	/**
+	 * Returns a new font with the given face and the same size and family.
+	 *
+	 * @param face new face
+	 * @return new font with the requested face
+	 */
+	public UFont withFontFace(UFontFace face);
 
 	public int getSize();
 
 	public double getSize2D();
 
-	public boolean isBold();
-
-	public boolean isItalic();
+	public UFont withSize(float size);
 
 	public String getFamily(String text, UFontContext context);
 

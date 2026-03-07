@@ -1,0 +1,28 @@
+@startuml
+'
+' Visual inspection fixture for the PlantUML style system FontWeight attribute.
+' Verifies that FontWeight: 900 applied via <style> block produces a Heavy Bold + Italic
+' Roboto participant label in the rendered SVG (font-weight="900", font-style="italic").
+'
+<style>
+
+  /* Specific styles for a sequence diagram */
+  sequenceDiagram {
+    participant {
+      FontColor: green;
+      FontSize: 26;
+      FontStyle: italic;
+      LineColor: #E00;
+      FontName: Roboto;
+      FontWeight: 900
+    }
+
+  }
+</style>
+
+participant Alice
+participant Bob
+
+Alice -> Bob : hello
+
+@enduml

@@ -43,41 +43,96 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 public final class UFontImpl implements UFont {
 
 	private final FontStack fontStack;
-	private final int style;
+	/**
+	 * The full font face (italic axis + CSS weight 100-900).  This is the
+	 * canonical weight/style store; the legacy {@code int style} field has been
+	 * removed.  Use {@link UFontFace#toLegacyStyle()} when a binary
+	 * {@code java.awt.Font} style flag is needed (e.g. for EPS/SVG).
+	 */
+	private final UFontFace face;
 	private final int size;
 
 	public static Font getUnderlayingFont(final UFont font, final String text) {
 		return ((UFontImpl) font).getUnderlayingFont(text);
 	}
 
+	/**
+	 * Legacy constructor: converts the binary {@code java.awt.Font} style flag to
+	 * a {@link UFontFace} (bold → weight 700, italic → italic axis).  Any
+	 * intermediate CSS weight is not representable through this path; prefer
+	 * {@link #UFontImpl(FontStack, UFontFace, int)} for new code.
+	 */
 	UFontImpl(FontStack fontStack, int style, int size) {
 		this.fontStack = fontStack;
-		this.style = style;
+		this.face = UFontFace.fromLegacyStyle(style);
 		this.size = size;
 	}
 
+	/**
+	 * Face-aware constructor.  Stores the full {@link UFontFace} so that
+	 * intermediate CSS weights (100-900) are preserved and applied via
+	 * {@link TextAttribute#WEIGHT} during Java2D rendering.
+	 */
+	UFontImpl(FontStack fontStack, UFontFace face, int size) {
+		this.fontStack = fontStack;
+		this.face = face == null ? UFontFace.normal() : face;
+		this.size = size;
+	}
+
+	/**
+	 * Returns the underlying {@link java.awt.Font} for the given text, with all
+	 * font properties applied via {@link java.awt.font.TextAttribute}s.
+	 *
+	 * <p>Weight (CSS 100-900) and italic axis are both applied through
+	 * {@link UFontFace#deriveFont(Font)} so that fonts with intermediate weight
+	 * faces (e.g. Helvetica Neue Medium) render at the requested weight.
+	 * Fonts that only provide binary bold/normal fall back gracefully.
+	 */
 	public Font getUnderlayingFont(String text) {
-		return fontStack.getFont(text, style, size);
+		return fontStack.getFont(text, face, size);
 	}
 
 	public UFont withSize(float size) {
-		return new UFontImpl(fontStack, this.style, (int) size);
+		return new UFontImpl(fontStack, this.face, (int) size);
 	}
 
+	public UFontFace getFontFace() {
+		return face;
+	}
+
+	public UFont withFontFace(UFontFace newFace) {
+		if (newFace == null)
+			return this;
+		return new UFontImpl(fontStack, newFace, this.size);
+	}
+
+	/**
+	 * @deprecated Use {@link #withFontFace(UFontFace)} to preserve CSS weight.
+	 *             This method converts the binary italic/bold flags to a
+	 *             {@link UFontFace}, losing any intermediate weight.
+	 */
+	@Deprecated
 	public UFont withStyle(int style) {
-		return new UFontImpl(fontStack, style, this.size);
+		return new UFontImpl(fontStack, UFontFace.fromLegacyStyle(style), this.size);
 	}
 
+	@Deprecated
 	public UFont bold() {
-		return withStyle(Font.BOLD);
+		return withFontFace(UFontFace.bold());
 	}
 
+	@Deprecated
 	public UFont italic() {
-		return withStyle(Font.ITALIC);
+		return withFontFace(UFontFace.italic());
 	}
 
+	/**
+	 * @deprecated Use {@link #getFontFace()} and {@link UFontFace#toLegacyStyle()}
+	 *             instead.  This method discards any intermediate CSS weight.
+	 */
+	@Deprecated
 	public int getStyle() {
-		return style;
+		return face.toLegacyStyle();
 	}
 
 	public int getSize() {
@@ -88,12 +143,14 @@ public final class UFontImpl implements UFont {
 		return size;
 	}
 
+	@Deprecated
 	public boolean isBold() {
-		return (style & Font.BOLD) != 0;
+		return face.isBold();
 	}
 
+	@Deprecated
 	public boolean isItalic() {
-		return (style & Font.ITALIC) != 0;
+		return face.isItalic();
 	}
 
 	public String getFamily(String text, UFontContext context) {
@@ -148,7 +205,7 @@ public final class UFontImpl implements UFont {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(fontStack, style, size);
+		return Objects.hash(fontStack, face, size);
 	}
 
 	@Override
@@ -158,7 +215,7 @@ public final class UFontImpl implements UFont {
 		if (!(obj instanceof UFontImpl))
 			return false;
 		UFontImpl other = (UFontImpl) obj;
-		return Objects.equals(fontStack, other.fontStack) && style == other.style && size == other.size;
+		return Objects.equals(fontStack, other.fontStack) && Objects.equals(face, other.face) && size == other.size;
 	}
 
 }

@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.klimt.font.FontStyle;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontContext;
+import net.sourceforge.plantuml.klimt.font.UFontFace;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UText;
 
@@ -95,12 +96,21 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 			return;
 
 		final UFont font = fontConfiguration.getFont();
+		final UFontFace face = fontConfiguration.getFontFace();
+
+		// Emit full numeric CSS weight (e.g. "300", "500", "700") so that weights
+		// parsed by SvgSaxParser and set via FontWeight style property are preserved
+		// in SVG output rather than being collapsed to binary bold/normal.
 		String fontWeight = null;
-		if (fontConfiguration.containsStyle(FontStyle.BOLD) || font.isBold())
-			fontWeight = "bold";
+		if (fontConfiguration.containsStyle(FontStyle.BOLD))
+			// Explicit BOLD decoration: honour face weight if already >= 700, else force 700
+			fontWeight = (face.getCssWeight() >= 700) ? face.toCssWeightString() : "700";
+		else if (face.getCssWeight() != 400)
+			// Non-default weight from FontWeight style property or parsed SVG input
+			fontWeight = face.toCssWeightString();
 
 		String fontStyle = null;
-		if (fontConfiguration.containsStyle(FontStyle.ITALIC) || font.isItalic())
+		if (fontConfiguration.containsStyle(FontStyle.ITALIC) || face.isItalic())
 			fontStyle = "italic";
 
 		String text = shape.getText();

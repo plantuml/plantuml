@@ -73,6 +73,13 @@ public class FontStack {
 		return getFonts().get(index).canDisplayUpTo(text);
 	}
 
+	/**
+	 * Legacy font creation using binary bold/italic style flags.
+	 *
+	 * @deprecated Prefer {@link #getFont(String, UFontFace, int)} to honour
+	 *             intermediate CSS weights (100-900).
+	 */
+	@Deprecated
 	public Font getFont(String text, int style, int size) {
 		if (getFonts().size() > 1 && text != null)
 			for (Font font : getFonts())
@@ -80,6 +87,38 @@ public class FontStack {
 					return font.deriveFont(style, (float) size);
 
 		return getFonts().get(0).deriveFont(style, (float) size);
+	}
+
+	/**
+	 * Face-aware font creation.  Selects the first family font that can display
+	 * the given text (or falls back to the primary family), resizes it, then
+	 * applies both the italic axis and CSS weight via
+	 * {@link UFontFace#deriveFont(Font)}.
+	 *
+	 * <p>When the weight is a standard binary value (400 or 700) the result is
+	 * identical to the legacy path.  For intermediate weights (100-300, 500-600,
+	 * 800-900) {@link TextAttribute#WEIGHT} is used so that fonts with matching
+	 * weight faces (e.g. Helvetica Neue) render at the requested weight.
+	 *
+	 * @param text the string to be rendered (used for font-family fallback selection,
+	 *             may be {@code null})
+	 * @param face the font face (weight + italic axis)
+	 * @param size the point size
+	 * @return a {@link Font} ready for Java2D rendering or metric measurement
+	 */
+	public Font getFont(String text, UFontFace face, int size) {
+		Font base = null;
+		if (getFonts().size() > 1 && text != null)
+			for (Font font : getFonts())
+				if (font.canDisplayUpTo(text) == -1) {
+					base = font.deriveFont(Font.PLAIN, (float) size);
+					break;
+				}
+
+		if (base == null)
+			base = getFonts().get(0).deriveFont(Font.PLAIN, (float) size);
+
+		return face.deriveFont(base);
 	}
 
 	private static boolean isWhitespaceOrDoubleQuote(char c) {

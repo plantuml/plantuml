@@ -41,6 +41,8 @@ public enum PName {
 	FontColor, //
 	FontSize, //
 	FontStyle, //
+	/** CSS font-weight: accepts keywords (normal, bold, lighter, bolder) or numeric values 100-900. */
+	FontWeight, //
 	BackGroundColor, //
 	RoundCorner, //
 	LineThickness, //

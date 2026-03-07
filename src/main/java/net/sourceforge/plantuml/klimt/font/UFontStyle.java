@@ -30,42 +30,13 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.style;
+package net.sourceforge.plantuml.klimt.font;
 
-import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.color.HColorSet;
-import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+public enum UFontStyle {
 
-public interface Value {
-    // ::remove file when __HAXE__
-
-	public String asString();
-
-	public HColor asColor(HColorSet set);
-
-	public int asInt(boolean minusOneIfError);
-
-	public double asDouble();
-	
-	public double asDoubleDefaultTo(double defaultValue);
-
-	public boolean asBoolean();
-
-	public int asFontStyle();
-
-	/**
-	 * Returns the CSS font-weight as a numeric value (100-900), or {@code 0} if
-	 * no weight was specified or the value could not be parsed.  Accepts the
-	 * keywords {@code normal} (400), {@code bold} (700), {@code lighter} (300),
-	 * {@code bolder} (800) as well as bare integers in the range 100-900.
-	 */
-	public int asFontWeight();
-
-	public HorizontalAlignment asHorizontalAlignment();
-
-	public int getPriority();
+	NORMAL, ITALIC
 
 }

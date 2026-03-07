@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFace;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -188,6 +189,26 @@ public class Style {
 		return signature;
 	}
 
+	/**
+	 * Builds a {@link UFont} from the style properties {@code FontName},
+	 * {@code FontStyle}, {@code FontWeight} and {@code FontSize}.
+	 *
+	 * <p>The two weight-related properties are intentionally independent:
+	 * <ul>
+	 *   <li>{@code FontStyle} controls the italic axis ({@code italic},
+	 *       {@code bold}, {@code plain}) and is mapped to a {@link UFontFace}
+	 *       via {@link UFontFace#fromLegacyStyle(int)}.</li>
+	 *   <li>{@code FontWeight} — when present — overrides only the weight axis
+	 *       of that face (CSS values 100-900 or keywords).  This mirrors the CSS
+	 *       model where {@code font-style} and {@code font-weight} are
+	 *       independent axes.</li>
+	 * </ul>
+	 *
+	 * <p>If only {@code FontStyle=bold} is set and no {@code FontWeight} is
+	 * present, the result is identical to the previous behaviour (weight 700).
+	 *
+	 * @return a {@link UFont} for all style-driven text rendering paths
+	 */
 	public UFont getUFont() {
 		final String fontName = value(PName.FontName).asString();
 		// final String family = FontStack.getExistingFontFamily(fontName);
@@ -195,7 +216,13 @@ public class Style {
 		int size = value(PName.FontSize).asInt(true);
 		if (size == -1)
 			size = 14;
-		return UFontFactory.build(fontName, fontStyle, size);
+
+		UFontFace face = UFontFace.fromLegacyStyle(fontStyle);
+		final int cssWeight = value(PName.FontWeight).asFontWeight();
+		if (cssWeight > 0)
+			face = face.withWeight(cssWeight);
+
+		return UFontFactory.build(fontName, face, size);
 	}
 
 	public FontConfiguration getFontConfiguration(HColorSet set) {
