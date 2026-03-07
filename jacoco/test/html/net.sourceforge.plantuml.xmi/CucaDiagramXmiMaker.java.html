@@ -76,7 +76,7 @@ public final class CucaDiagramXmiMaker {
 <span class="nc" id="L76">				xmi = createClassDiagram();</span>
 			else
 <span class="nc" id="L78">				throw new UnsupportedOperationException(</span>
-<span class="nc" id="L79">						&quot;Diagram type &quot; + diagram.getUmlDiagramType() + &quot; is not supported in XMI&quot;);</span>
+<span class="nc" id="L79">						&quot;Diagram type &quot; + diagram.getDiagramType() + &quot; is not supported in XMI&quot;);</span>
 
 <span class="nc" id="L81">			xmi.transformerXml(fos);</span>
 <span class="nc" id="L82">		} catch (ParserConfigurationException e) {</span>

@@ -332,7 +332,7 @@ Total Classes: 3
 "net.atmp" --> "net.sourceforge.plantuml.klimt.geom"
 "net.atmp" --> "net.sourceforge.plantuml.klimt.shape"
 
-class "net.sourceforge.plantuml" %lighten("red", 59) {
+class "net.sourceforge.plantuml" %lighten("red", 60) {
 Total Classes: 42
 }
 "net.sourceforge.plantuml" --> "java.awt"
@@ -374,12 +374,13 @@ Total Classes: 42
 "net.sourceforge.plantuml" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.abel" %lighten("red", 61) {
+class "net.sourceforge.plantuml.abel" %lighten("red", 63) {
 Total Classes: 30
 }
 "net.sourceforge.plantuml.abel" --> "java.lang"
 "net.sourceforge.plantuml.abel" --> "java.util"
 "net.sourceforge.plantuml.abel" --> "net.sourceforge.plantuml"
+"net.sourceforge.plantuml.abel" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.abel" --> "net.sourceforge.plantuml.cucadiagram"
 "net.sourceforge.plantuml.abel" --> "net.sourceforge.plantuml.klimt"
 "net.sourceforge.plantuml.abel" --> "net.sourceforge.plantuml.klimt.color"
@@ -395,7 +396,7 @@ Total Classes: 30
 "net.sourceforge.plantuml.abel" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.abel" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.activitydiagram" %lighten("red", 87) {
+class "net.sourceforge.plantuml.activitydiagram" %lighten("red", 86) {
 Total Classes: 2
 }
 "net.sourceforge.plantuml.activitydiagram" --> "java.lang"
@@ -409,7 +410,6 @@ Total Classes: 2
 "net.sourceforge.plantuml.activitydiagram" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.activitydiagram" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.activitydiagram" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.activitydiagram" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.activitydiagram" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.activitydiagram.command" %lighten("red", 93) {
@@ -430,7 +430,7 @@ Total Classes: 9
 "net.sourceforge.plantuml.activitydiagram.command" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.activitydiagram.command" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.activitydiagram3" %lighten("red", 96) {
+class "net.sourceforge.plantuml.activitydiagram3" %lighten("red", 95) {
 Total Classes: 27
 }
 "net.sourceforge.plantuml.activitydiagram3" --> "java.lang"
@@ -455,7 +455,6 @@ Total Classes: 27
 "net.sourceforge.plantuml.activitydiagram3" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.activitydiagram3" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.activitydiagram3" --> "net.sourceforge.plantuml.sequencediagram"
-"net.sourceforge.plantuml.activitydiagram3" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.activitydiagram3" --> "net.sourceforge.plantuml.stereo"
 "net.sourceforge.plantuml.activitydiagram3" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.activitydiagram3" --> "net.sourceforge.plantuml.url"
@@ -481,7 +480,7 @@ Total Classes: 37
 "net.sourceforge.plantuml.activitydiagram3.command" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.activitydiagram3.command" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.activitydiagram3.ftile" %lighten("red", 76) {
+class "net.sourceforge.plantuml.activitydiagram3.ftile" %lighten("red", 77) {
 Total Classes: 62
 }
 "net.sourceforge.plantuml.activitydiagram3.ftile" --> "java.io"
@@ -492,6 +491,7 @@ Total Classes: 62
 "net.sourceforge.plantuml.activitydiagram3.ftile" --> "net.sourceforge.plantuml.activitydiagram3.ftile.vcompact"
 "net.sourceforge.plantuml.activitydiagram3.ftile" --> "net.sourceforge.plantuml.activitydiagram3.ftile.vertical"
 "net.sourceforge.plantuml.activitydiagram3.ftile" --> "net.sourceforge.plantuml.activitydiagram3.gtile"
+"net.sourceforge.plantuml.activitydiagram3.ftile" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.activitydiagram3.ftile" --> "net.sourceforge.plantuml.decoration"
 "net.sourceforge.plantuml.activitydiagram3.ftile" --> "net.sourceforge.plantuml.decoration.symbol"
 "net.sourceforge.plantuml.activitydiagram3.ftile" --> "net.sourceforge.plantuml.klimt"
@@ -625,7 +625,7 @@ Total Classes: 1
 "net.sourceforge.plantuml.ant" --> "java.util.concurrent"
 "net.sourceforge.plantuml.ant" --> "net.sourceforge.plantuml"
 
-class "net.sourceforge.plantuml.api" %lighten("red", 93) {
+class "net.sourceforge.plantuml.api" %lighten("red", 95) {
 Total Classes: 11
 }
 "net.sourceforge.plantuml.api" --> "java.lang"
@@ -637,7 +637,6 @@ Total Classes: 11
 "net.sourceforge.plantuml.api" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.api" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.api" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.api" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.api" --> "net.sourceforge.plantuml.url"
 
 class "net.sourceforge.plantuml.api.mda.option2" %lighten("red", 50) {
@@ -743,7 +742,6 @@ Total Classes: 7
 "net.sourceforge.plantuml.board" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.board" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.board" --> "net.sourceforge.plantuml.regex"
-"net.sourceforge.plantuml.board" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.board" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.board" --> "net.sourceforge.plantuml.utils"
 
@@ -811,7 +809,6 @@ Total Classes: 19
 "net.sourceforge.plantuml.chart" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.chart" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.chart" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.chart" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.chart" --> "net.sourceforge.plantuml.stereo"
 "net.sourceforge.plantuml.chart" --> "net.sourceforge.plantuml.style"
 
@@ -827,7 +824,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.chart.command" --> "net.sourceforge.plantuml.regex"
 "net.sourceforge.plantuml.chart.command" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.cheneer" %lighten("red", 91) {
+class "net.sourceforge.plantuml.cheneer" %lighten("red", 90) {
 Total Classes: 2
 }
 "net.sourceforge.plantuml.cheneer" --> "java.util"
@@ -839,7 +836,6 @@ Total Classes: 2
 "net.sourceforge.plantuml.cheneer" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.cheneer" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.cheneer" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.cheneer" --> "net.sourceforge.plantuml.skin"
 
 class "net.sourceforge.plantuml.cheneer.command" %lighten("red", 92) {
 Total Classes: 2
@@ -892,7 +888,7 @@ Total Classes: 12
 "net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.url"
 
-class "net.sourceforge.plantuml.classdiagram" %lighten("red", 65) {
+class "net.sourceforge.plantuml.classdiagram" %lighten("red", 67) {
 Total Classes: 3
 }
 "net.sourceforge.plantuml.classdiagram" --> "java.lang"
@@ -911,7 +907,6 @@ Total Classes: 3
 "net.sourceforge.plantuml.classdiagram" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.classdiagram" --> "net.sourceforge.plantuml.objectdiagram.command"
 "net.sourceforge.plantuml.classdiagram" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.classdiagram" --> "net.sourceforge.plantuml.skin"
 
 class "net.sourceforge.plantuml.classdiagram.command" %lighten("red", 77) {
 Total Classes: 12
@@ -964,7 +959,7 @@ Total Classes: 5
 "net.sourceforge.plantuml.code.deflate" --> "java.lang"
 "net.sourceforge.plantuml.code.deflate" --> "java.util"
 
-class "net.sourceforge.plantuml.command" %lighten("red", 51) {
+class "net.sourceforge.plantuml.command" %lighten("red", 52) {
 Total Classes: 51
 }
 "net.sourceforge.plantuml.command" --> "com.plantuml.ubrex"
@@ -1037,35 +1032,7 @@ Total Classes: 8
 "net.sourceforge.plantuml.command.note.sequence" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.command.note.sequence" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.compositediagram" %lighten("red", 91) {
-Total Classes: 2
-}
-"net.sourceforge.plantuml.compositediagram" --> "java.util"
-"net.sourceforge.plantuml.compositediagram" --> "net.sourceforge.plantuml"
-"net.sourceforge.plantuml.compositediagram" --> "net.sourceforge.plantuml.classdiagram"
-"net.sourceforge.plantuml.compositediagram" --> "net.sourceforge.plantuml.command"
-"net.sourceforge.plantuml.compositediagram" --> "net.sourceforge.plantuml.compositediagram.command"
-"net.sourceforge.plantuml.compositediagram" --> "net.sourceforge.plantuml.core"
-"net.sourceforge.plantuml.compositediagram" --> "net.sourceforge.plantuml.nio"
-"net.sourceforge.plantuml.compositediagram" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.compositediagram" --> "net.sourceforge.plantuml.skin"
-"net.sourceforge.plantuml.compositediagram" --> "net.sourceforge.plantuml.style"
-
-class "net.sourceforge.plantuml.compositediagram.command" %lighten("red", 91) {
-Total Classes: 2
-}
-"net.sourceforge.plantuml.compositediagram.command" --> "java.lang"
-"net.sourceforge.plantuml.compositediagram.command" --> "net.sourceforge.plantuml.abel"
-"net.sourceforge.plantuml.compositediagram.command" --> "net.sourceforge.plantuml.command"
-"net.sourceforge.plantuml.compositediagram.command" --> "net.sourceforge.plantuml.compositediagram"
-"net.sourceforge.plantuml.compositediagram.command" --> "net.sourceforge.plantuml.core"
-"net.sourceforge.plantuml.compositediagram.command" --> "net.sourceforge.plantuml.klimt.color"
-"net.sourceforge.plantuml.compositediagram.command" --> "net.sourceforge.plantuml.klimt.creole"
-"net.sourceforge.plantuml.compositediagram.command" --> "net.sourceforge.plantuml.plasma"
-"net.sourceforge.plantuml.compositediagram.command" --> "net.sourceforge.plantuml.regex"
-"net.sourceforge.plantuml.compositediagram.command" --> "net.sourceforge.plantuml.utils"
-
-class "net.sourceforge.plantuml.core" %lighten("red", 51) {
+class "net.sourceforge.plantuml.core" %lighten("red", 49) {
 Total Classes: 12
 }
 "net.sourceforge.plantuml.core" --> "java.awt"
@@ -1124,8 +1091,8 @@ Total Classes: 3
 "net.sourceforge.plantuml.cruise" --> "java.lang"
 "net.sourceforge.plantuml.cruise" --> "java.util"
 "net.sourceforge.plantuml.cruise" --> "net.sourceforge.plantuml.abel"
+"net.sourceforge.plantuml.cruise" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.cruise" --> "net.sourceforge.plantuml.klimt.geom"
-"net.sourceforge.plantuml.cruise" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.cruise" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.cruise" --> "net.sourceforge.plantuml.svek"
 
@@ -1294,7 +1261,6 @@ Total Classes: 3
 "net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.dot"
 "net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.skin"
 
 class "net.sourceforge.plantuml.ditaa" %lighten("red", 100) {
 Total Classes: 2
@@ -1313,7 +1279,6 @@ Total Classes: 2
 "net.sourceforge.plantuml.ditaa" --> "net.sourceforge.plantuml.klimt.awt"
 "net.sourceforge.plantuml.ditaa" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.ditaa" --> "net.sourceforge.plantuml.security"
-"net.sourceforge.plantuml.ditaa" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.ditaa" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.ditaa" --> "net.sourceforge.plantuml.utils"
 "net.sourceforge.plantuml.ditaa" --> "org.stathissideris.ascii2image.core"
@@ -1356,6 +1321,7 @@ Total Classes: 18
 "net.sourceforge.plantuml.dot" --> "net.sourceforge.plantuml.abel"
 "net.sourceforge.plantuml.dot" --> "net.sourceforge.plantuml.asciiart"
 "net.sourceforge.plantuml.dot" --> "net.sourceforge.plantuml.cli"
+"net.sourceforge.plantuml.dot" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.dot" --> "net.sourceforge.plantuml.cucadiagram"
 "net.sourceforge.plantuml.dot" --> "net.sourceforge.plantuml.decoration"
 "net.sourceforge.plantuml.dot" --> "net.sourceforge.plantuml.klimt"
@@ -1426,7 +1392,6 @@ Total Classes: 20
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.regex"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.security"
-"net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.version"
 
 class "net.sourceforge.plantuml.elk" %lighten("red", 100) {
@@ -1438,6 +1403,7 @@ Total Classes: 4
 "net.sourceforge.plantuml.elk" --> "net.atmp"
 "net.sourceforge.plantuml.elk" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.elk" --> "net.sourceforge.plantuml.abel"
+"net.sourceforge.plantuml.elk" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.elk" --> "net.sourceforge.plantuml.decoration.symbol"
 "net.sourceforge.plantuml.elk" --> "net.sourceforge.plantuml.elk.proxy.core"
 "net.sourceforge.plantuml.elk" --> "net.sourceforge.plantuml.elk.proxy.core.math"
@@ -1567,7 +1533,6 @@ Total Classes: 4
 "net.sourceforge.plantuml.filesdiagram" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.filesdiagram" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.filesdiagram" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.filesdiagram" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.filesdiagram" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.filesdiagram" --> "net.sourceforge.plantuml.style.parser"
 "net.sourceforge.plantuml.filesdiagram" --> "net.sourceforge.plantuml.text"
@@ -1599,7 +1564,6 @@ Total Classes: 6
 "net.sourceforge.plantuml.flowdiagram" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.flowdiagram" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.flowdiagram" --> "net.sourceforge.plantuml.regex"
-"net.sourceforge.plantuml.flowdiagram" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.flowdiagram" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.flowdiagram" --> "net.sourceforge.plantuml.utils"
 
@@ -1640,7 +1604,6 @@ Total Classes: 9
 "net.sourceforge.plantuml.gitlog" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.gitlog" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.gitlog" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.gitlog" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.gitlog" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.gitlog" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.gitlog" --> "net.sourceforge.plantuml.text"
@@ -1694,7 +1657,6 @@ Total Classes: 3
 "net.sourceforge.plantuml.hcl" --> "net.sourceforge.plantuml.log"
 "net.sourceforge.plantuml.hcl" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.hcl" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.hcl" --> "net.sourceforge.plantuml.skin"
 
 class "net.sourceforge.plantuml.help" %lighten("red", 100) {
 Total Classes: 2
@@ -1711,7 +1673,6 @@ Total Classes: 2
 "net.sourceforge.plantuml.help" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.help" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.help" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.help" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.help" --> "net.sourceforge.plantuml.style"
 
 class "net.sourceforge.plantuml.jaws" %lighten("red", 65) {
@@ -1745,7 +1706,7 @@ Total Classes: 18
 "net.sourceforge.plantuml.json" --> "java.lang"
 "net.sourceforge.plantuml.json" --> "java.util"
 
-class "net.sourceforge.plantuml.jsondiagram" %lighten("red", 86) {
+class "net.sourceforge.plantuml.jsondiagram" %lighten("red", 85) {
 Total Classes: 7
 }
 "net.sourceforge.plantuml.jsondiagram" --> "h"
@@ -1767,7 +1728,6 @@ Total Classes: 7
 "net.sourceforge.plantuml.jsondiagram" --> "net.sourceforge.plantuml.log"
 "net.sourceforge.plantuml.jsondiagram" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.jsondiagram" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.jsondiagram" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.jsondiagram" --> "net.sourceforge.plantuml.style.parser"
 "net.sourceforge.plantuml.jsondiagram" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.jsondiagram" --> "net.sourceforge.plantuml.yaml"
@@ -2091,9 +2051,9 @@ Total Classes: 10
 "net.sourceforge.plantuml.klimt.font" --> "java.lang"
 "net.sourceforge.plantuml.klimt.font" --> "java.util"
 "net.sourceforge.plantuml.klimt.font" --> "net.sourceforge.plantuml"
+"net.sourceforge.plantuml.klimt.font" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.klimt.font" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.klimt.font" --> "net.sourceforge.plantuml.klimt.shape"
-"net.sourceforge.plantuml.klimt.font" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.klimt.font" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.klimt.font" --> "net.sourceforge.plantuml.text"
 
@@ -2177,7 +2137,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.log" --> "java.util.logging"
 "net.sourceforge.plantuml.log" --> "net.sourceforge.plantuml.teavm"
 
-class "net.sourceforge.plantuml.math" %lighten("red", 94) {
+class "net.sourceforge.plantuml.math" %lighten("red", 93) {
 Total Classes: 13
 }
 "net.sourceforge.plantuml.math" --> "java.awt"
@@ -2197,7 +2157,6 @@ Total Classes: 13
 "net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.log"
 "net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.math" --> "org.w3c.dom"
 
 class "net.sourceforge.plantuml.mda" %lighten("red", 80) {
@@ -2260,7 +2219,6 @@ Total Classes: 12
 "net.sourceforge.plantuml.nwdiag" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.nwdiag" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.nwdiag" --> "net.sourceforge.plantuml.regex"
-"net.sourceforge.plantuml.nwdiag" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.nwdiag" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.nwdiag" --> "net.sourceforge.plantuml.utils"
 
@@ -2310,7 +2268,6 @@ Total Classes: 2
 "net.sourceforge.plantuml.objectdiagram" --> "net.sourceforge.plantuml.klimt.creole"
 "net.sourceforge.plantuml.objectdiagram" --> "net.sourceforge.plantuml.plasma"
 "net.sourceforge.plantuml.objectdiagram" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.objectdiagram" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.objectdiagram" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.objectdiagram" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.objectdiagram" --> "net.sourceforge.plantuml.utils"
@@ -2342,20 +2299,6 @@ Total Classes: 1
 }
 "net.sourceforge.plantuml.openiconic.data" --> "java.lang"
 
-class "net.sourceforge.plantuml.oregon" %lighten("red", 80) {
-Total Classes: 10
-}
-"net.sourceforge.plantuml.oregon" --> "java.io"
-"net.sourceforge.plantuml.oregon" --> "java.lang"
-"net.sourceforge.plantuml.oregon" --> "java.util"
-"net.sourceforge.plantuml.oregon" --> "net.sourceforge.plantuml"
-"net.sourceforge.plantuml.oregon" --> "net.sourceforge.plantuml.command"
-"net.sourceforge.plantuml.oregon" --> "net.sourceforge.plantuml.core"
-"net.sourceforge.plantuml.oregon" --> "net.sourceforge.plantuml.klimt.color"
-"net.sourceforge.plantuml.oregon" --> "net.sourceforge.plantuml.klimt.shape"
-"net.sourceforge.plantuml.oregon" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.oregon" --> "net.sourceforge.plantuml.skin"
-
 class "net.sourceforge.plantuml.packetdiag" %lighten("red", 100) {
 Total Classes: 11
 }
@@ -2374,7 +2317,6 @@ Total Classes: 11
 "net.sourceforge.plantuml.packetdiag" --> "net.sourceforge.plantuml.nwdiag"
 "net.sourceforge.plantuml.packetdiag" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.packetdiag" --> "net.sourceforge.plantuml.regex"
-"net.sourceforge.plantuml.packetdiag" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.packetdiag" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.packetdiag" --> "net.sourceforge.plantuml.utils"
 
@@ -2394,7 +2336,7 @@ Total Classes: 4
 "net.sourceforge.plantuml.picoweb" --> "java.util"
 "net.sourceforge.plantuml.picoweb" --> "net.sourceforge.plantuml.json"
 
-class "net.sourceforge.plantuml.plasma" %lighten("red", 18) {
+class "net.sourceforge.plantuml.plasma" %lighten("red", 20) {
 Total Classes: 2
 }
 "net.sourceforge.plantuml.plasma" --> "java.lang"
@@ -2443,7 +2385,7 @@ Total Classes: 5
 "net.sourceforge.plantuml.posimo" --> "net.sourceforge.plantuml.skin.rose"
 "net.sourceforge.plantuml.posimo" --> "net.sourceforge.plantuml.style"
 
-class "net.sourceforge.plantuml.preproc" %lighten("red", 37) {
+class "net.sourceforge.plantuml.preproc" %lighten("red", 38) {
 Total Classes: 17
 }
 "net.sourceforge.plantuml.preproc" --> "java.io"
@@ -2474,7 +2416,7 @@ Total Classes: 10
 "net.sourceforge.plantuml.preproc2" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.preproc2" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.project" %lighten("red", 90) {
+class "net.sourceforge.plantuml.project" %lighten("red", 89) {
 Total Classes: 17
 }
 "net.sourceforge.plantuml.project" --> "java.lang"
@@ -2506,7 +2448,6 @@ Total Classes: 17
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.time"
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.timescale"
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.real"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.stereo"
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.style"
 
@@ -2711,7 +2652,6 @@ Total Classes: 6
 "net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.regex"
-"net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.utils"
 
@@ -2954,13 +2894,14 @@ Total Classes: 51
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.skin" %lighten("red", 40) {
-Total Classes: 35
+class "net.sourceforge.plantuml.skin" %lighten("red", 53) {
+Total Classes: 34
 }
 "net.sourceforge.plantuml.skin" --> "java.io"
 "net.sourceforge.plantuml.skin" --> "java.lang"
 "net.sourceforge.plantuml.skin" --> "java.util"
 "net.sourceforge.plantuml.skin" --> "net.sourceforge.plantuml"
+"net.sourceforge.plantuml.skin" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.skin" --> "net.sourceforge.plantuml.cucadiagram"
 "net.sourceforge.plantuml.skin" --> "net.sourceforge.plantuml.decoration.symbol"
 "net.sourceforge.plantuml.skin" --> "net.sourceforge.plantuml.dot"
@@ -3000,7 +2941,7 @@ Total Classes: 23
 "net.sourceforge.plantuml.skin.rose" --> "net.sourceforge.plantuml.svek"
 "net.sourceforge.plantuml.skin.rose" --> "net.sourceforge.plantuml.svek.image"
 
-class "net.sourceforge.plantuml.statediagram" %lighten("red", 80) {
+class "net.sourceforge.plantuml.statediagram" %lighten("red", 79) {
 Total Classes: 1
 }
 "net.sourceforge.plantuml.statediagram" --> "java.util"
@@ -3013,7 +2954,6 @@ Total Classes: 1
 "net.sourceforge.plantuml.statediagram" --> "net.sourceforge.plantuml.objectdiagram.command"
 "net.sourceforge.plantuml.statediagram" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.statediagram" --> "net.sourceforge.plantuml.regex"
-"net.sourceforge.plantuml.statediagram" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.statediagram" --> "net.sourceforge.plantuml.statediagram.command"
 
 class "net.sourceforge.plantuml.statediagram.command" %lighten("red", 89) {
@@ -3068,13 +3008,14 @@ Total Classes: 3
 "net.sourceforge.plantuml.stereo" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.stereo" --> "net.sourceforge.plantuml.regex"
 
-class "net.sourceforge.plantuml.style" %lighten("red", 51) {
+class "net.sourceforge.plantuml.style" %lighten("red", 53) {
 Total Classes: 22
 }
 "net.sourceforge.plantuml.style" --> "java.awt"
 "net.sourceforge.plantuml.style" --> "java.lang"
 "net.sourceforge.plantuml.style" --> "java.util"
 "net.sourceforge.plantuml.style" --> "net.sourceforge.plantuml"
+"net.sourceforge.plantuml.style" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.style" --> "net.sourceforge.plantuml.dot"
 "net.sourceforge.plantuml.style" --> "net.sourceforge.plantuml.klimt"
 "net.sourceforge.plantuml.style" --> "net.sourceforge.plantuml.klimt.color"
@@ -3121,6 +3062,7 @@ Total Classes: 65
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.abel"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.activitydiagram3.ftile"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.cli"
+"net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.crash"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.cucadiagram"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.decoration.symbol"
@@ -3237,7 +3179,6 @@ Total Classes: 2
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.error"
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.utils"
 
@@ -3417,7 +3358,7 @@ Total Classes: 4
 "net.sourceforge.plantuml.url" --> "java.util"
 "net.sourceforge.plantuml.url" --> "net.sourceforge.plantuml.klimt.geom"
 
-class "net.sourceforge.plantuml.utils" %lighten("red", 57) {
+class "net.sourceforge.plantuml.utils" %lighten("red", 58) {
 Total Classes: 16
 }
 "net.sourceforge.plantuml.utils" --> "java.io"
@@ -3535,7 +3476,6 @@ Total Classes: 21
 "net.sourceforge.plantuml.wire" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.wire" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.wire" --> "net.sourceforge.plantuml.regex"
-"net.sourceforge.plantuml.wire" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.wire" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.wire" --> "net.sourceforge.plantuml.utils"
 
@@ -3597,7 +3537,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.xmlsc" --> "net.sourceforge.plantuml.xml"
 "net.sourceforge.plantuml.xmlsc" --> "org.w3c.dom"
 
-class "net.sourceforge.plantuml.yaml" %lighten("red", 95) {
+class "net.sourceforge.plantuml.yaml" %lighten("red", 94) {
 Total Classes: 2
 }
 "net.sourceforge.plantuml.yaml" --> "java.lang"
@@ -3614,7 +3554,6 @@ Total Classes: 2
 "net.sourceforge.plantuml.yaml" --> "net.sourceforge.plantuml.log"
 "net.sourceforge.plantuml.yaml" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.yaml" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.yaml" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.yaml" --> "net.sourceforge.plantuml.stereo"
 "net.sourceforge.plantuml.yaml" --> "net.sourceforge.plantuml.style.parser"
 "net.sourceforge.plantuml.yaml" --> "net.sourceforge.plantuml.yaml.parser"

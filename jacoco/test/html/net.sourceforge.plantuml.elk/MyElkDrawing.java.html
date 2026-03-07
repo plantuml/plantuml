@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.abel.CucaNote;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.decoration.symbol.USymbolFolder;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkEdge;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkNode;
@@ -63,7 +64,6 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.AlignmentParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -203,7 +203,7 @@ class MyElkDrawing implements TextBlock {
 <span class="nc" id="L203">	}</span>
 
 	private FontConfiguration getFontForLink(Link link, final ISkinParam skinParam) {
-<span class="nc" id="L206">		final SName styleName = skinParam.getUmlDiagramType().getStyleName();</span>
+<span class="nc" id="L206">		final SName styleName = skinParam.getDiagramType().getStyleName();</span>
 
 <span class="nc" id="L208">		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName)</span>
 <span class="nc" id="L209">				.getMergedStyle(link.getStyleBuilder());</span>
@@ -219,8 +219,8 @@ class MyElkDrawing implements TextBlock {
 <span class="nc" id="L219">		return result;</span>
 	}
 
-	private HorizontalAlignment getMessageTextAlignment(UmlDiagramType umlDiagramType, ISkinParam skinParam) {
-<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (umlDiagramType == UmlDiagramType.STATE)</span>
+	private HorizontalAlignment getMessageTextAlignment(DiagramType diagramType, ISkinParam skinParam) {
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (diagramType == DiagramType.STATE)</span>
 <span class="nc" id="L224">			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false, null);</span>
 
 <span class="nc" id="L226">		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);</span>
@@ -248,7 +248,7 @@ class MyElkDrawing implements TextBlock {
 //		TextBlock labelOnly = link.getLabel().create(labelFont,
 //				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 
-<span class="nc" id="L251">		final UmlDiagramType type = skinParam.getUmlDiagramType();</span>
+<span class="nc" id="L251">		final DiagramType type = skinParam.getDiagramType();</span>
 <span class="nc" id="L252">		final FontConfiguration font = getFontForLink(link, skinParam);</span>
 
 		TextBlock labelOnly;

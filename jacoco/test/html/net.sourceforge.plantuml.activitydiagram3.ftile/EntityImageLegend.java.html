@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 	public static TextBlock create(Display note, ISkinParam skinParam) {
 
 <span class="fc" id="L49">		final Style style = StyleSignatureBasic</span>
-<span class="fc" id="L50">				.of(SName.root, SName.root, SName.document, skinParam.getUmlDiagramType().getStyleName(), SName.legend)</span>
+<span class="fc" id="L50">				.of(SName.root, SName.root, SName.document, skinParam.getDiagramType().getStyleName(), SName.legend)</span>
 <span class="fc" id="L51">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 
 <span class="fc" id="L53">		return style.createTextBlockBordered(note, skinParam.getIHtmlColorSet(), skinParam, Style.ID_LEGEND,</span>

@@ -45,39 +45,30 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemSaltFactory extends PSystemCommandFactory {
 
-	public PSystemSaltFactory(DiagramType init) {
-<span class="fc" id="L53">		super(init);</span>
-<span class="fc" id="L54">	}</span>
+	public PSystemSaltFactory() {
+<span class="fc" id="L52">		super(DiagramType.SALT);</span>
+<span class="fc" id="L53">	}</span>
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (getDiagramType() == DiagramType.UML)</span>
-<span class="nc" id="L59">			cmds.add(new CommandSalt());</span>
-
-<span class="nc" id="L61">		CommonCommands.addCommonCommands2(cmds);</span>
-<span class="nc" id="L62">		CommonCommands.addCommonScaleCommands(cmds);</span>
-<span class="nc" id="L63">		CommonCommands.addTitleCommands(cmds);</span>
-<span class="nc" id="L64">		cmds.add(new CommandAnything());</span>
-<span class="nc" id="L65">	}</span>
+<span class="nc" id="L57">		CommonCommands.addCommonCommands2(cmds);</span>
+<span class="nc" id="L58">		CommonCommands.addCommonScaleCommands(cmds);</span>
+<span class="nc" id="L59">		CommonCommands.addTitleCommands(cmds);</span>
+<span class="nc" id="L60">		cmds.add(new CommandAnything());</span>
+<span class="nc" id="L61">	}</span>
 
 	@Override
-	public PSystemSalt createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L69">		final PSystemSalt result = new PSystemSalt(source, preprocessing);</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (getDiagramType() == DiagramType.SALT) {</span>
-<span class="nc" id="L71">			result.setIamSalt(true);</span>
+	public PSystemSalt createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
+<span class="nc" id="L66">		final PSystemSalt result = new PSystemSalt(source, preprocessing);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (getDiagramType() == DiagramType.SALT) {</span>
+<span class="nc" id="L68">			result.setIamSalt(true);</span>
 		}
-<span class="nc" id="L73">		return result;</span>
+<span class="nc" id="L70">		return result;</span>
 	}
-	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L78">		return UmlDiagramType.SALT;</span>
-	}
-
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

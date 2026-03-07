@@ -70,6 +70,7 @@ import net.sourceforge.plantuml.command.note.CommandFactoryNote;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnEntity;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
 import net.sourceforge.plantuml.command.note.CommandFactoryTipOnEntity;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementMultilines;
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementParenthesis;
@@ -83,92 +84,91 @@ import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJson;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJsonSingleLine;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateMap;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
-<span class="fc" id="L88">public class ClassDiagramFactory extends PSystemCommandFactory {</span>
+public class ClassDiagramFactory extends PSystemCommandFactory {
+
+	public ClassDiagramFactory() {
+<span class="fc" id="L91">		super(DiagramType.CLASS);</span>
+<span class="fc" id="L92">	}</span>
 
 	@Override
-	public ClassDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L92">		return new ClassDiagram(source, previous, preprocessing);</span>
+	public ClassDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
+<span class="fc" id="L97">		return new ClassDiagram(source, previous, preprocessing);</span>
 	}
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="fc" id="L97">		cmds.add(new CommandFootboxIgnored());</span>
+<span class="fc" id="L102">		cmds.add(new CommandFootboxIgnored());</span>
 
-<span class="fc" id="L99">		cmds.add(new CommandRankDir());</span>
-<span class="fc" id="L100">		cmds.add(new CommandNewpage(this));</span>
+<span class="fc" id="L104">		cmds.add(new CommandRankDir());</span>
+<span class="fc" id="L105">		cmds.add(new CommandNewpage(this));</span>
 
-<span class="fc" id="L102">		CommonCommands.addCommonScaleCommands(cmds);</span>
+<span class="fc" id="L107">		CommonCommands.addCommonScaleCommands(cmds);</span>
 
-<span class="fc" id="L104">		cmds.add(new CommandAddMethod());</span>
+<span class="fc" id="L109">		cmds.add(new CommandAddMethod());</span>
 
-<span class="fc" id="L106">		CommonCommands.addCommonHides(cmds);</span>
-<span class="fc" id="L107">		cmds.add(new CommandHideShow2());</span>
+<span class="fc" id="L111">		CommonCommands.addCommonHides(cmds);</span>
+<span class="fc" id="L112">		cmds.add(new CommandHideShow2());</span>
 
-<span class="fc" id="L109">		cmds.add(new CommandRemoveRestore());</span>
-<span class="fc" id="L110">		cmds.add(new CommandCreateClassMultilines());</span>
-<span class="fc" id="L111">		cmds.add(new CommandCreateEntityObjectMultilines());</span>
-<span class="fc" id="L112">		cmds.add(new CommandCreateMap());</span>
-<span class="fc" id="L113">		cmds.add(new CommandCreateJson());</span>
-<span class="fc" id="L114">		cmds.add(new CommandCreateJsonSingleLine());</span>
-<span class="fc" id="L115">		cmds.add(new CommandCreateClass());</span>
-<span class="fc" id="L116">		cmds.add(new CommandCreateEntityObject());</span>
+<span class="fc" id="L114">		cmds.add(new CommandRemoveRestore());</span>
+<span class="fc" id="L115">		cmds.add(new CommandCreateClassMultilines());</span>
+<span class="fc" id="L116">		cmds.add(new CommandCreateEntityObjectMultilines());</span>
+<span class="fc" id="L117">		cmds.add(new CommandCreateMap());</span>
+<span class="fc" id="L118">		cmds.add(new CommandCreateJson());</span>
+<span class="fc" id="L119">		cmds.add(new CommandCreateJsonSingleLine());</span>
+<span class="fc" id="L120">		cmds.add(new CommandCreateClass());</span>
+<span class="fc" id="L121">		cmds.add(new CommandCreateEntityObject());</span>
 
-<span class="fc" id="L118">		cmds.add(new CommandAllowMixing());</span>
-<span class="fc" id="L119">		cmds.add(new CommandCreateElementParenthesis());</span>
-<span class="fc" id="L120">		cmds.add(new CommandLayoutNewLine());</span>
+<span class="fc" id="L123">		cmds.add(new CommandAllowMixing());</span>
+<span class="fc" id="L124">		cmds.add(new CommandCreateElementParenthesis());</span>
+<span class="fc" id="L125">		cmds.add(new CommandLayoutNewLine());</span>
 
-<span class="fc" id="L122">		cmds.add(new CommandPackage());</span>
-<span class="fc" id="L123">		cmds.add(new CommandEndPackage());</span>
-<span class="fc" id="L124">		cmds.add(new CommandPackageEmpty());</span>
-<span class="fc" id="L125">		cmds.add(new CommandPackageWithUSymbol());</span>
-<span class="fc" id="L126">		cmds.add(new CommandTogether());</span>
+<span class="fc" id="L127">		cmds.add(new CommandPackage());</span>
+<span class="fc" id="L128">		cmds.add(new CommandEndPackage());</span>
+<span class="fc" id="L129">		cmds.add(new CommandPackageEmpty());</span>
+<span class="fc" id="L130">		cmds.add(new CommandPackageWithUSymbol());</span>
+<span class="fc" id="L131">		cmds.add(new CommandTogether());</span>
 
-<span class="fc" id="L128">		cmds.add(new CommandCreateElementFull2(Mode.NORMAL_KEYWORD));</span>
-<span class="fc" id="L129">		cmds.add(new CommandCreateElementFull2(Mode.WITH_MIX_PREFIX));</span>
-<span class="fc" id="L130">		final CommandFactoryNote factoryNoteCommand = CommandFactoryNote.ME;</span>
-<span class="fc" id="L131">		cmds.add(factoryNoteCommand.createSingleLine());</span>
+<span class="fc" id="L133">		cmds.add(new CommandCreateElementFull2(Mode.NORMAL_KEYWORD));</span>
+<span class="fc" id="L134">		cmds.add(new CommandCreateElementFull2(Mode.WITH_MIX_PREFIX));</span>
+<span class="fc" id="L135">		final CommandFactoryNote factoryNoteCommand = CommandFactoryNote.ME;</span>
+<span class="fc" id="L136">		cmds.add(factoryNoteCommand.createSingleLine());</span>
 
-<span class="fc" id="L133">		cmds.add(new CommandNamespace());</span>
-<span class="fc" id="L134">		cmds.add(new CommandNamespace2());</span>
-<span class="fc" id="L135">		cmds.add(new CommandNamespaceEmpty());</span>
-<span class="fc" id="L136">		cmds.add(new CommandStereotype());</span>
+<span class="fc" id="L138">		cmds.add(new CommandNamespace());</span>
+<span class="fc" id="L139">		cmds.add(new CommandNamespace2());</span>
+<span class="fc" id="L140">		cmds.add(new CommandNamespaceEmpty());</span>
+<span class="fc" id="L141">		cmds.add(new CommandStereotype());</span>
 
-<span class="fc" id="L138">		cmds.add(new CommandLinkClass(UmlDiagramType.CLASS));</span>
-<span class="fc" id="L139">		cmds.add(new CommandLinkLollipop(UmlDiagramType.CLASS));</span>
+<span class="fc" id="L143">		cmds.add(new CommandLinkClass(DiagramType.CLASS));</span>
+<span class="fc" id="L144">		cmds.add(new CommandLinkLollipop(DiagramType.CLASS));</span>
 
-<span class="fc" id="L141">		final CommandFactoryTipOnEntity factoryTipOnEntityCommand = new CommandFactoryTipOnEntity();</span>
-<span class="fc" id="L142">		cmds.add(factoryTipOnEntityCommand.createMultiLine(true));</span>
-<span class="fc" id="L143">		cmds.add(factoryTipOnEntityCommand.createMultiLine(false));</span>
+<span class="fc" id="L146">		final CommandFactoryTipOnEntity factoryTipOnEntityCommand = new CommandFactoryTipOnEntity();</span>
+<span class="fc" id="L147">		cmds.add(factoryTipOnEntityCommand.createMultiLine(true));</span>
+<span class="fc" id="L148">		cmds.add(factoryTipOnEntityCommand.createMultiLine(false));</span>
 
-<span class="fc" id="L145">		final CommandFactoryNoteOnEntity factoryNoteOnEntityCommand = new CommandFactoryNoteOnEntity(&quot;class&quot;,</span>
-<span class="fc" id="L146">				NameAndCodeParser.codeForClass(), ParserPass.ONE);</span>
-<span class="fc" id="L147">		cmds.add(factoryNoteOnEntityCommand.createSingleLine());</span>
-<span class="fc" id="L148">		cmds.add(new CommandUrl());</span>
+<span class="fc" id="L150">		final CommandFactoryNoteOnEntity factoryNoteOnEntityCommand = new CommandFactoryNoteOnEntity(&quot;class&quot;,</span>
+<span class="fc" id="L151">				NameAndCodeParser.codeForClass(), ParserPass.ONE);</span>
+<span class="fc" id="L152">		cmds.add(factoryNoteOnEntityCommand.createSingleLine());</span>
+<span class="fc" id="L153">		cmds.add(new CommandUrl());</span>
 
-<span class="fc" id="L150">		cmds.add(factoryNoteOnEntityCommand.createMultiLine(true));</span>
-<span class="fc" id="L151">		cmds.add(factoryNoteOnEntityCommand.createMultiLine(false));</span>
-<span class="fc" id="L152">		cmds.add(factoryNoteCommand.createMultiLine(false));</span>
+<span class="fc" id="L155">		cmds.add(factoryNoteOnEntityCommand.createMultiLine(true));</span>
+<span class="fc" id="L156">		cmds.add(factoryNoteOnEntityCommand.createMultiLine(false));</span>
+<span class="fc" id="L157">		cmds.add(factoryNoteCommand.createMultiLine(false));</span>
 
-<span class="fc" id="L154">		final CommandFactoryNoteOnLink factoryNoteOnLinkCommand = new CommandFactoryNoteOnLink(ParserPass.ONE);</span>
-<span class="fc" id="L155">		cmds.add(factoryNoteOnLinkCommand.createSingleLine());</span>
-<span class="fc" id="L156">		cmds.add(factoryNoteOnLinkCommand.createMultiLine(false));</span>
-<span class="fc" id="L157">		cmds.add(new CommandConstraintOnLinks());</span>
+<span class="fc" id="L159">		final CommandFactoryNoteOnLink factoryNoteOnLinkCommand = new CommandFactoryNoteOnLink(ParserPass.ONE);</span>
+<span class="fc" id="L160">		cmds.add(factoryNoteOnLinkCommand.createSingleLine());</span>
+<span class="fc" id="L161">		cmds.add(factoryNoteOnLinkCommand.createMultiLine(false));</span>
+<span class="fc" id="L162">		cmds.add(new CommandConstraintOnLinks());</span>
 
-<span class="fc" id="L159">		cmds.add(new CommandDiamondAssociation());</span>
+<span class="fc" id="L164">		cmds.add(new CommandDiamondAssociation());</span>
 
-<span class="fc" id="L161">		cmds.add(CommandCreateElementMultilines.TYPE0);</span>
-<span class="fc" id="L162">		cmds.add(CommandCreateElementMultilines.TYPE1);</span>
-<span class="fc" id="L163">		CommonCommands.addTitleCommands(cmds);</span>
-<span class="fc" id="L164">		CommonCommands.addCommonCommands2(cmds);</span>
+<span class="fc" id="L166">		cmds.add(CommandCreateElementMultilines.TYPE0);</span>
+<span class="fc" id="L167">		cmds.add(CommandCreateElementMultilines.TYPE1);</span>
+<span class="fc" id="L168">		CommonCommands.addTitleCommands(cmds);</span>
+<span class="fc" id="L169">		CommonCommands.addCommonCommands2(cmds);</span>
 
-<span class="fc" id="L166">	}</span>
-	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-<span class="fc" id="L170">		return UmlDiagramType.CLASS;</span>
-	}
+<span class="fc" id="L171">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

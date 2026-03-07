@@ -42,13 +42,13 @@ import java.util.List;
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.crash.GraphvizCrash;
 import net.sourceforge.plantuml.dot.CucaDiagramSimplifierActivity;
 import net.sourceforge.plantuml.dot.CucaDiagramSimplifierState;
 import net.sourceforge.plantuml.dot.DotData;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 
@@ -66,19 +66,19 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 <span class="nc" id="L66">		BrowserLog.consoleLog(CucaDiagramFileMakerTeaVM.class, &quot;getTextBlock12026&quot;);</span>
 <span class="nc" id="L67">		final StringBounder stringBounder = new StringBounderTeaVM();</span>
 
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY)</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (diagram.getDiagramType() == DiagramType.ACTIVITY)</span>
 <span class="nc" id="L70">			new CucaDiagramSimplifierActivity().simplify(diagram, stringBounder, DotMode.NORMAL);</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE)</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		else if (diagram.getDiagramType() == DiagramType.STATE)</span>
 <span class="nc" id="L72">			new CucaDiagramSimplifierState().simplify(diagram, stringBounder, DotMode.NORMAL);</span>
 
 <span class="nc" id="L74">		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, clusterManager.getCurrent(),</span>
-<span class="nc" id="L75">				diagram.getUmlDiagramType(), diagram.getSkinParam());</span>
+<span class="nc" id="L75">				diagram.getDiagramType(), diagram.getSkinParam());</span>
 
 <span class="nc" id="L77">		final DotData dotData = new DotData(diagram, diagram.getRootGroup(), getOrderedLinks(), diagram.leafs(),</span>
 				diagram, diagram);
 
 <span class="nc" id="L80">		GraphvizImageBuilder imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),</span>
-<span class="nc" id="L81">				diagram.getUmlDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager);</span>
+<span class="nc" id="L81">				diagram.getDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager);</span>
 
 <span class="nc" id="L83">		TextBlock result = imageBuilder.buildImage(stringBounder, null, diagram.getDotStringSkek(), false);</span>
 
@@ -90,7 +90,7 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 <span class="nc bnc" id="L90" title="All 2 branches missed.">		if (result instanceof GraphvizCrash) {</span>
 <span class="nc" id="L91">			status = 503;</span>
 <span class="nc" id="L92">			imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),</span>
-<span class="nc" id="L93">					diagram.getUmlDiagramType().getStyleName(), DotMode.NO_LEFT_RIGHT_AND_XLABEL, dotStringFactory,</span>
+<span class="nc" id="L93">					diagram.getDiagramType().getStyleName(), DotMode.NO_LEFT_RIGHT_AND_XLABEL, dotStringFactory,</span>
 					clusterManager);
 <span class="nc" id="L95">			result = imageBuilder.buildImage(stringBounder, null, diagram.getDotStringSkek(), false);</span>
 		}

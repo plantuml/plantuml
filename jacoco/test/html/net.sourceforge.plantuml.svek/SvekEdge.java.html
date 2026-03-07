@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.abel.LinkStrategy;
 import net.sourceforge.plantuml.abel.NoteLinkStrategy;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.cruise.XAbstractEdge;
 import net.sourceforge.plantuml.cruise.XEdge;
 import net.sourceforge.plantuml.cucadiagram.EntityPort;
@@ -93,7 +94,6 @@ import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.PragmaKey;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -366,8 +366,8 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 <span class="nc" id="L366">		return TextBlockUtils.withMargin(block, marginLabel, marginLabel);</span>
 	}
 
-	private HorizontalAlignment getMessageTextAlignment(UmlDiagramType umlDiagramType, ISkinParam skinParam) {
-<span class="nc bnc" id="L370" title="All 2 branches missed.">		if (umlDiagramType == UmlDiagramType.STATE)</span>
+	private HorizontalAlignment getMessageTextAlignment(DiagramType diagramType, ISkinParam skinParam) {
+<span class="nc bnc" id="L370" title="All 2 branches missed.">		if (diagramType == DiagramType.STATE)</span>
 <span class="nc" id="L371">			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false, null);</span>
 
 <span class="nc" id="L373">		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);</span>

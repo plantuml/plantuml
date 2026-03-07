@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPosition;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.Together;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
@@ -81,7 +82,6 @@ import net.sourceforge.plantuml.klimt.shape.UComment;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.skin.PragmaKey;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
@@ -310,7 +310,7 @@ public class Cluster implements Moveable {
 <span class="pc bpc" id="L310" title="1 of 2 branches missed.">		if (fullName.startsWith(&quot;##&quot;) == false)</span>
 <span class="fc" id="L311">			ug.draw(new UComment(&quot;cluster &quot; + fullName));</span>
 
-<span class="fc" id="L313">		final UmlDiagramType umlDiagramType = diagram.getUmlDiagramType();</span>
+<span class="fc" id="L313">		final DiagramType diagramType = diagram.getDiagramType();</span>
 <span class="fc" id="L314">		final Style style = getStyle();</span>
 <span class="fc" id="L315">		final double shadowing = style.getShadowing();</span>
 		HColor borderColor;
@@ -344,14 +344,14 @@ public class Cluster implements Moveable {
 <span class="pc bpc" id="L344" title="1 of 2 branches missed.">			if (entityPositionsExceptNormal().size() &gt; 0)</span>
 <span class="nc" id="L345">				manageEntryExitPoint(ug.getStringBounder());</span>
 
-<span class="pc bpc" id="L347" title="1 of 2 branches missed.">			if (skinParam.useSwimlanes(umlDiagramType)) {</span>
+<span class="pc bpc" id="L347" title="1 of 2 branches missed.">			if (skinParam.useSwimlanes(diagramType)) {</span>
 <span class="nc" id="L348">				drawSwinLinesState(ug, borderColor);</span>
 <span class="nc" id="L349">				return;</span>
 			}
-<span class="pc bpc" id="L351" title="1 of 2 branches missed.">			final boolean isState = umlDiagramType == UmlDiagramType.STATE;</span>
+<span class="pc bpc" id="L351" title="1 of 2 branches missed.">			final boolean isState = diagramType == DiagramType.STATE;</span>
 
 <span class="pc bpc" id="L353" title="3 of 4 branches missed.">			if (isState &amp;&amp; group.getUSymbol() == null) {</span>
-<span class="nc" id="L354">				drawUState(ug, umlDiagramType, rounded, shadowing);</span>
+<span class="nc" id="L354">				drawUState(ug, diagramType, rounded, shadowing);</span>
 <span class="nc" id="L355">				return;</span>
 			}
 <span class="fc" id="L357">			PackageStyle packageStyle = group.getPackageStyle();</span>
@@ -360,8 +360,8 @@ public class Cluster implements Moveable {
 
 <span class="fc" id="L361">			final UStroke stroke = getStrokeInternal(group, style);</span>
 
-<span class="fc" id="L363">			HColor backColor = getBackColor(umlDiagramType, style);</span>
-<span class="fc" id="L364">			backColor = getBackColor(backColor, group.getStereotype(), umlDiagramType.getStyleName(),</span>
+<span class="fc" id="L363">			HColor backColor = getBackColor(style);</span>
+<span class="fc" id="L364">			backColor = getBackColor(backColor, group.getStereotype(), diagramType.getStyleName(),</span>
 <span class="fc" id="L365">					group.getUSymbol(), skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet(),</span>
 <span class="fc" id="L366">					group.getGroupType());</span>
 
@@ -384,9 +384,9 @@ public class Cluster implements Moveable {
 <span class="fc" id="L384">	}</span>
 
 	private Style getStyle() {
-<span class="fc" id="L387">		final UmlDiagramType umlDiagramType = diagram.getUmlDiagramType();</span>
+<span class="fc" id="L387">		final DiagramType diagramType = diagram.getDiagramType();</span>
 <span class="pc bpc" id="L388" title="1 of 2 branches missed.">		final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();</span>
-<span class="fc" id="L389">		final Style style = getDefaultStyleDefinition(umlDiagramType.getStyleName(), uSymbol, group.getGroupType())</span>
+<span class="fc" id="L389">		final Style style = getDefaultStyleDefinition(diagramType.getStyleName(), uSymbol, group.getGroupType())</span>
 <span class="fc" id="L390">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 <span class="fc" id="L391">		return style;</span>
 	}
@@ -448,7 +448,7 @@ public class Cluster implements Moveable {
 
 	// GroupPngMakerState
 
-	private void drawUState(UGraphic ug, UmlDiagramType umlDiagramType, double rounded, double shadowing) {
+	private void drawUState(UGraphic ug, DiagramType diagramType, double rounded, double shadowing) {
 <span class="nc" id="L452">		final double suppY = clusterHeader.getTitle().calculateDimension(ug.getStringBounder()).getHeight()</span>
 				+ IEntityImage.MARGIN;
 
@@ -515,7 +515,7 @@ public class Cluster implements Moveable {
 
 	private void printTogether(Together together, Collection&lt;Together&gt; otherTogethers, StringBuilder sb,
 			List&lt;SvekNode&gt; nodesOrderedWithoutTop, StringBounder stringBounder, Collection&lt;SvekEdge&gt; lines,
-			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
+			DotMode dotMode, GraphvizVersion graphvizVersion, DiagramType type) {
 <span class="nc" id="L519">		sb.append(&quot;subgraph &quot; + getClusterId() + &quot;t&quot; + togetherCounter + &quot; {\n&quot;);</span>
 <span class="nc bnc" id="L520" title="All 2 branches missed.">		for (SvekNode node : nodesOrderedWithoutTop)</span>
 <span class="nc bnc" id="L521" title="All 2 branches missed.">			if (node.getTogether() == together)</span>
@@ -536,7 +536,7 @@ public class Cluster implements Moveable {
 <span class="nc" id="L536">	}</span>
 
 	public SvekNode printCluster2(StringBuilder sb, Collection&lt;SvekEdge&gt; lines, StringBounder stringBounder,
-			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
+			DotMode dotMode, GraphvizVersion graphvizVersion, DiagramType type) {
 
 <span class="nc" id="L541">		SvekNode added = null;</span>
 <span class="nc" id="L542">		final Collection&lt;Together&gt; togethers = new LinkedHashSet&lt;&gt;();</span>
@@ -581,7 +581,7 @@ public class Cluster implements Moveable {
 <span class="nc" id="L581">	}</span>
 
 	public void printCluster3_forKermor(StringBuilder sb, Collection&lt;SvekEdge&gt; lines, StringBounder stringBounder,
-			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
+			DotMode dotMode, GraphvizVersion graphvizVersion, DiagramType type) {
 <span class="nc" id="L585">		final List&lt;SvekNode&gt; tmp = getNodes(EntityPosition.getNormals());</span>
 
 <span class="nc bnc" id="L587" title="All 2 branches missed.">		if (tmp.size() == 0) {</span>
@@ -597,7 +597,7 @@ public class Cluster implements Moveable {
 <span class="nc" id="L597">	}</span>
 
 	private void printInternal(StringBuilder sb, Collection&lt;SvekEdge&gt; lines, StringBounder stringBounder,
-			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
+			DotMode dotMode, GraphvizVersion graphvizVersion, DiagramType type) {
 <span class="nc" id="L601">		new ClusterDotString(this, skinParam).printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);</span>
 <span class="nc" id="L602">	}</span>
 
@@ -642,14 +642,14 @@ public class Cluster implements Moveable {
 <span class="nc" id="L642">		return CENTER_ID + group.getUid();</span>
 	}
 
-	String getMinPoint(UmlDiagramType type) {
+	String getMinPoint(DiagramType type) {
 <span class="nc bnc" id="L646" title="All 2 branches missed.">		if (skinParam.useSwimlanes(type))</span>
 <span class="nc" id="L647">			return &quot;minPoint&quot; + color;</span>
 
 <span class="nc" id="L649">		return null;</span>
 	}
 
-	String getMaxPoint(UmlDiagramType type) {
+	String getMaxPoint(DiagramType type) {
 <span class="nc bnc" id="L653" title="All 2 branches missed.">		if (skinParam.useSwimlanes(type))</span>
 <span class="nc" id="L654">			return &quot;maxPoint&quot; + color;</span>
 
@@ -668,7 +668,7 @@ public class Cluster implements Moveable {
 <span class="nc" id="L668">		return colorTitle;</span>
 	}
 
-	private final HColor getBackColor(UmlDiagramType umlDiagramType, Style style) {
+	private final HColor getBackColor(Style style) {
 <span class="pc bpc" id="L672" title="1 of 2 branches missed.">		if (group.isRoot())</span>
 <span class="nc" id="L673">			return null;</span>
 
@@ -721,9 +721,9 @@ public class Cluster implements Moveable {
 <span class="nc bnc" id="L721" title="All 2 branches missed.">		if (packageStyle == null)</span>
 <span class="nc" id="L722">			packageStyle = skinParam.packageStyle();</span>
 
-<span class="nc" id="L724">		final UmlDiagramType umlDiagramType = UmlDiagramType.CLASS;</span>
+<span class="nc" id="L724">		final DiagramType diagramType = DiagramType.CLASS;</span>
 
-<span class="nc" id="L726">		final Style style = getDefaultStyleDefinition(umlDiagramType.getStyleName(), uSymbol, group.getGroupType())</span>
+<span class="nc" id="L726">		final Style style = getDefaultStyleDefinition(diagramType.getStyleName(), uSymbol, group.getGroupType())</span>
 <span class="nc" id="L727">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 
 <span class="nc" id="L729">		final UStroke stroke = getStrokeInternal(group, style);</span>

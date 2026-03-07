@@ -46,38 +46,32 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class NwDiagramFactory extends PSystemCommandFactory {
 
 	public NwDiagramFactory() {
-<span class="fc" id="L54">		super(DiagramType.NW);</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L53">		super(DiagramType.NWDIAG);</span>
+<span class="fc" id="L54">	}</span>
 
 	@Override
 	public NwDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing) {
-<span class="nc" id="L60">		return new NwDiagram(source, preprocessing);</span>
+<span class="nc" id="L59">		return new NwDiagram(source, preprocessing);</span>
 	}
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="nc" id="L65">		CommonCommands.addCommonCommands1(cmds);</span>
-<span class="nc" id="L66">		cmds.add(new CommandNwDiagInit());</span>
-<span class="nc" id="L67">		cmds.add(new CommandComment());</span>
-<span class="nc" id="L68">		cmds.add(new CommandElement());</span>
-<span class="nc" id="L69">		cmds.add(new CommandGroup());</span>
-<span class="nc" id="L70">		cmds.add(new CommandNetwork());</span>
-<span class="nc" id="L71">		cmds.add(new CommandLink());</span>
-<span class="nc" id="L72">		cmds.add(new CommandProperty());</span>
-<span class="nc" id="L73">		cmds.add(new CommandEndSomething());</span>
-<span class="nc" id="L74">		cmds.add(new CommandFootboxIgnored());</span>
-<span class="nc" id="L75">	}</span>
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L79">		return UmlDiagramType.NWDIAG;</span>
-	}
+<span class="nc" id="L64">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="nc" id="L65">		cmds.add(new CommandNwDiagInit());</span>
+<span class="nc" id="L66">		cmds.add(new CommandComment());</span>
+<span class="nc" id="L67">		cmds.add(new CommandElement());</span>
+<span class="nc" id="L68">		cmds.add(new CommandGroup());</span>
+<span class="nc" id="L69">		cmds.add(new CommandNetwork());</span>
+<span class="nc" id="L70">		cmds.add(new CommandLink());</span>
+<span class="nc" id="L71">		cmds.add(new CommandProperty());</span>
+<span class="nc" id="L72">		cmds.add(new CommandEndSomething());</span>
+<span class="nc" id="L73">		cmds.add(new CommandFootboxIgnored());</span>
+<span class="nc" id="L74">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

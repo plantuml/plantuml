@@ -45,14 +45,16 @@ import net.sourceforge.plantuml.text.StringLocated;
 
 public class PSystemErrorPreprocessor extends PSystemError {
 
-	public PSystemErrorPreprocessor(List&lt;StringLocated&gt; input, List&lt;StringLocated&gt; trace, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L49">		super(UmlSource.create(input,</span>
-<span class="pc bpc" id="L50" title="1 of 2 branches missed.">				DiagramType.getTypeFromArobaseStart(input.get(0).getString()) == DiagramType.UML), preprocessing);</span>
-<span class="fc" id="L51">		this.trace = trace;</span>
-<span class="fc" id="L52">		this.singleError = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, getLastLine().getPreprocessorError(), 0,</span>
-<span class="fc" id="L53">				getLastLine().getLocation(), null);</span>
+	public PSystemErrorPreprocessor(List&lt;StringLocated&gt; input, List&lt;StringLocated&gt; trace,
+			PreprocessingArtifact preprocessing) {
+<span class="fc" id="L50">		super(UmlSource.create(input,</span>
+<span class="fc" id="L51">				DiagramType.getTypesFromArobaseStart(input.get(0).getString()).contains(DiagramType.SEQUENCE)),</span>
+				preprocessing);
+<span class="fc" id="L53">		this.trace = trace;</span>
+<span class="fc" id="L54">		this.singleError = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, getLastLine().getPreprocessorError(), 0,</span>
+<span class="fc" id="L55">				getLastLine().getLocation(), null);</span>
 
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L57">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.yaml.parser.MonomorphToJson;
 import net.sourceforge.plantuml.yaml.parser.YamlParser;
@@ -62,11 +61,12 @@ import net.sourceforge.plantuml.yaml.parser.YamlParser;
 public class YamlDiagramFactory extends PSystemAbstractFactory {
 
 	public YamlDiagramFactory() {
-<span class="fc" id="L65">		super(DiagramType.YAML);</span>
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L64">		super(DiagramType.YAML);</span>
+<span class="fc" id="L65">	}</span>
 
 	@Override
-	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 <span class="nc" id="L70">		final List&lt;Highlighted&gt; highlighted = new ArrayList&lt;&gt;();</span>
 <span class="nc" id="L71">		JsonValue yaml = null;</span>
 <span class="nc" id="L72">		StyleExtractor styleExtractor = null;</span>
@@ -91,7 +91,7 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 <span class="nc" id="L91">		} catch (Exception e) {</span>
 <span class="nc" id="L92">			Logme.error(e);</span>
 <span class="nc" id="L93">		}</span>
-<span class="nc" id="L94">		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.YAML, yaml, highlighted, styleExtractor,</span>
+<span class="nc" id="L94">		final JsonDiagram result = new JsonDiagram(source, DiagramType.YAML, yaml, highlighted, styleExtractor,</span>
 				preprocessing);
 <span class="nc bnc" id="L96" title="All 2 branches missed.">		if (styleExtractor != null) {</span>
 			try {
@@ -105,11 +105,6 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 						HorizontalAlignment.CENTER, VerticalAlignment.CENTER));
 		}
 <span class="nc" id="L107">		return result;</span>
-	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L112">		return UmlDiagramType.YAML;</span>
 	}
 
 }

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.elk;
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkNode;
@@ -54,7 +55,6 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AlignmentParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -87,16 +87,16 @@ public class MyElkCluster {
 <span class="nc bnc" id="L87" title="All 2 branches missed.">		if (packageStyle == null)</span>
 <span class="nc" id="L88">			packageStyle = skinParam.packageStyle();</span>
 
-<span class="nc" id="L90">		final UmlDiagramType umlDiagramType = diagram.getUmlDiagramType();</span>
+<span class="nc" id="L90">		final DiagramType diagramType = diagram.getDiagramType();</span>
 
 <span class="nc" id="L92">		final Style style = Cluster</span>
-<span class="nc" id="L93">				.getDefaultStyleDefinition(umlDiagramType.getStyleName(), group.getUSymbol(), group.getGroupType())</span>
+<span class="nc" id="L93">				.getDefaultStyleDefinition(diagramType.getStyleName(), group.getUSymbol(), group.getGroupType())</span>
 <span class="nc" id="L94">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 <span class="nc" id="L95">		final double shadowing = style.getShadowing();</span>
 <span class="nc" id="L96">		final UStroke stroke = Cluster.getStrokeInternal(group, style);</span>
 
-<span class="nc" id="L98">		HColor backColor = getBackColor(umlDiagramType);</span>
-<span class="nc" id="L99">		backColor = Cluster.getBackColor(backColor, group.getStereotype(), umlDiagramType.getStyleName(),</span>
+<span class="nc" id="L98">		HColor backColor = getBackColor(diagramType);</span>
+<span class="nc" id="L99">		backColor = Cluster.getBackColor(backColor, group.getStereotype(), diagramType.getStyleName(),</span>
 <span class="nc" id="L100">				group.getUSymbol(), skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet(),</span>
 <span class="nc" id="L101">				group.getGroupType());</span>
 
@@ -119,7 +119,7 @@ public class MyElkCluster {
 //			ug.apply(HColorUtils.BLACK).apply(UStroke.withThickness(1.5)).apply(new UTranslate(corner)).draw(rect);
 <span class="nc" id="L120">	}</span>
 
-	private HColor getBackColor(UmlDiagramType umlDiagramType) {
+	private HColor getBackColor(DiagramType diagramType) {
 <span class="nc" id="L123">		return null;</span>
 	}
 
@@ -139,10 +139,10 @@ public class MyElkCluster {
 
 <span class="nc" id="L140">		final XPoint2D corner = CucaDiagramFileMakerElk.getPosition(elkNode);</span>
 
-<span class="nc" id="L142">		final UmlDiagramType umlDiagramType = UmlDiagramType.CLASS;</span>
+<span class="nc" id="L142">		final DiagramType diagramType = DiagramType.CLASS;</span>
 
 <span class="nc" id="L144">		final Style style = Cluster</span>
-<span class="nc" id="L145">				.getDefaultStyleDefinition(umlDiagramType.getStyleName(), uSymbol, group.getGroupType())</span>
+<span class="nc" id="L145">				.getDefaultStyleDefinition(diagramType.getStyleName(), uSymbol, group.getGroupType())</span>
 <span class="nc" id="L146">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 
 <span class="nc" id="L148">		final UStroke stroke = Cluster.getStrokeInternal(group, style);</span>

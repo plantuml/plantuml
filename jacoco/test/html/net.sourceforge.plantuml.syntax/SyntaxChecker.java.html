@@ -89,7 +89,7 @@ import net.sourceforge.plantuml.utils.LineLocationImpl;
 <span class="nc" id="L89">		final Diagram system = blocks.get(0).getDiagram();</span>
 <span class="nc" id="L90">		result.setCmapData(system.hasUrl());</span>
 <span class="nc bnc" id="L91" title="All 2 branches missed.">		if (system instanceof TitledDiagram) {</span>
-<span class="nc" id="L92">			result.setUmlDiagramType(((TitledDiagram) system).getUmlDiagramType());</span>
+<span class="nc" id="L92">			result.setDiagramType(((TitledDiagram) system).getDiagramType());</span>
 <span class="nc" id="L93">			result.setDescription(system.getDescription().getDescription());</span>
 <span class="nc bnc" id="L94" title="All 2 branches missed.">		} else if (system instanceof PSystemError) {</span>
 <span class="nc" id="L95">			result.setError(true);</span>
@@ -120,7 +120,7 @@ import net.sourceforge.plantuml.utils.LineLocationImpl;
 <span class="nc" id="L120">		final Diagram system = blocks.get(0).getDiagram();</span>
 <span class="nc" id="L121">		result.setCmapData(system.hasUrl());</span>
 <span class="nc bnc" id="L122" title="All 2 branches missed.">		if (system instanceof TitledDiagram) {</span>
-<span class="nc" id="L123">			result.setUmlDiagramType(((TitledDiagram) system).getUmlDiagramType());</span>
+<span class="nc" id="L123">			result.setDiagramType(((TitledDiagram) system).getDiagramType());</span>
 <span class="nc" id="L124">			result.setDescription(system.getDescription().getDescription());</span>
 <span class="nc bnc" id="L125" title="All 2 branches missed.">		} else if (system instanceof PSystemError) {</span>
 <span class="nc" id="L126">			result.setError(true);</span>

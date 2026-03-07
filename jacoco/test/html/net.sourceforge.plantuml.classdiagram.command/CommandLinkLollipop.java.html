@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -55,24 +56,23 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 final public class CommandLinkLollipop extends SingleLineCommand2&lt;AbstractClassOrObjectDiagram&gt; {
 
-	public CommandLinkLollipop(UmlDiagramType umlDiagramType) {
-<span class="fc" id="L64">		super(getRegexConcat(umlDiagramType));</span>
+	public CommandLinkLollipop(DiagramType diagramType) {
+<span class="fc" id="L64">		super(getRegexConcat(diagramType));</span>
 <span class="fc" id="L65">	}</span>
 
-	static RegexConcat getRegexConcat(UmlDiagramType umlDiagramType) {
-<span class="fc" id="L68">		return RegexConcat.build(CommandLinkLollipop.class.getName() + umlDiagramType, RegexLeaf.start(), //</span>
+	static RegexConcat getRegexConcat(DiagramType diagramType) {
+<span class="fc" id="L68">		return RegexConcat.build(CommandLinkLollipop.class.getName() + diagramType, RegexLeaf.start(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(1, &quot;HEADER&quot;, &quot;@([\\d.]+)&quot;), //
 <span class="fc" id="L72">								RegexLeaf.spaceOneOrMore() //</span>
 						)), //
 				new RegexLeaf(3, &quot;ENT1&quot;,
-<span class="fc" id="L75">						&quot;(?:&quot; + optionalKeywords(umlDiagramType) + &quot;[%s]+)?&quot;</span>
+<span class="fc" id="L75">						&quot;(?:&quot; + optionalKeywords(diagramType) + &quot;[%s]+)?&quot;</span>
 								+ &quot;(\\.?[%pLN_]+(?:\\.[%pLN_]+)*|[%g][^%g]+[%g])[%s]*(\\&lt;\\&lt;.*\\&gt;\\&gt;)?&quot;), //
 <span class="fc" id="L77">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;FIRST_LABEL&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
@@ -83,7 +83,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2&lt;AbstractCla
 				new RegexOptional(new RegexLeaf(1, &quot;SECOND_LABEL&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
 <span class="fc" id="L84">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(3, &quot;ENT2&quot;,
-<span class="fc" id="L86">						&quot;(?:&quot; + optionalKeywords(umlDiagramType) + &quot;[%s]+)?&quot;</span>
+<span class="fc" id="L86">						&quot;(?:&quot; + optionalKeywords(diagramType) + &quot;[%s]+)?&quot;</span>
 								+ &quot;(\\.?[%pLN_]+(?:\\.[%pLN_]+)*|[%g][^%g]+[%g])[%s]*(\\&lt;\\&lt;.*\\&gt;\\&gt;)?&quot;), //
 <span class="fc" id="L88">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional( //
@@ -94,11 +94,11 @@ final public class CommandLinkLollipop extends SingleLineCommand2&lt;AbstractCla
 <span class="fc" id="L94">						)), RegexLeaf.end());</span>
 	}
 
-	private static String optionalKeywords(UmlDiagramType type) {
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (type == UmlDiagramType.CLASS)</span>
+	private static String optionalKeywords(DiagramType type) {
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (type == DiagramType.CLASS)</span>
 <span class="fc" id="L99">			return &quot;(interface|enum|annotation|abstract[%s]+class|abstract|class|entity|protocol|struct|exception|metaclass|stereotype|dataclass|record)&quot;;</span>
 
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (type == UmlDiagramType.OBJECT)</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (type == DiagramType.OBJECT)</span>
 <span class="nc" id="L102">			return &quot;(object)&quot;;</span>
 
 <span class="nc" id="L104">		throw new IllegalArgumentException();</span>

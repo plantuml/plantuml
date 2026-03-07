@@ -42,79 +42,78 @@ import java.util.Collections;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.error.PSystemError;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 <span class="nc" id="L49">public class SyntaxResult {</span>
-	
 
-	private UmlDiagramType umlDiagramType;
+	private DiagramType diagramType;
 	private boolean isError;
 	private String description;
-<span class="nc" id="L55">	private Collection&lt;String&gt; errors = new TreeSet&lt;&gt;();</span>
+<span class="nc" id="L54">	private Collection&lt;String&gt; errors = new TreeSet&lt;&gt;();</span>
 	private boolean hasCmapData;
 	private PSystemError systemError;
 	private LineLocation lineLocation;
 
-	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L61">		return umlDiagramType;</span>
+	public DiagramType getDiagramType() {
+<span class="nc" id="L60">		return diagramType;</span>
 	}
 
 	public boolean isError() {
-<span class="nc" id="L65">		return isError;</span>
+<span class="nc" id="L64">		return isError;</span>
 	}
 
 	public String getDescription() {
-<span class="nc" id="L69">		return description;</span>
+<span class="nc" id="L68">		return description;</span>
 	}
 
 	public Collection&lt;String&gt; getErrors() {
-<span class="nc" id="L73">		return Collections.unmodifiableCollection(errors);</span>
+<span class="nc" id="L72">		return Collections.unmodifiableCollection(errors);</span>
 	}
 
-	public void setUmlDiagramType(UmlDiagramType umlDiagramType) {
-<span class="nc" id="L77">		this.umlDiagramType = umlDiagramType;</span>
-<span class="nc" id="L78">	}</span>
+	public void setDiagramType(DiagramType diagramType) {
+<span class="nc" id="L76">		this.diagramType = diagramType;</span>
+<span class="nc" id="L77">	}</span>
 
 	public void setError(boolean isError) {
-<span class="nc" id="L81">		this.isError = isError;</span>
-<span class="nc" id="L82">	}</span>
+<span class="nc" id="L80">		this.isError = isError;</span>
+<span class="nc" id="L81">	}</span>
 
 	public void setDescription(String description) {
-<span class="nc" id="L85">		this.description = description;</span>
-<span class="nc" id="L86">	}</span>
+<span class="nc" id="L84">		this.description = description;</span>
+<span class="nc" id="L85">	}</span>
 
 	public void addErrorText(String error) {
-<span class="nc" id="L89">		this.errors.add(error);</span>
-<span class="nc" id="L90">	}</span>
+<span class="nc" id="L88">		this.errors.add(error);</span>
+<span class="nc" id="L89">	}</span>
 
 	public final boolean hasCmapData() {
-<span class="nc" id="L93">		return hasCmapData;</span>
+<span class="nc" id="L92">		return hasCmapData;</span>
 	}
 
 	public final void setCmapData(boolean hasCmapData) {
-<span class="nc" id="L97">		this.hasCmapData = hasCmapData;</span>
-<span class="nc" id="L98">	}</span>
+<span class="nc" id="L96">		this.hasCmapData = hasCmapData;</span>
+<span class="nc" id="L97">	}</span>
 
 	public void setSystemError(PSystemError systemError) {
-<span class="nc" id="L101">		this.systemError = systemError;</span>
-<span class="nc" id="L102">	}</span>
+<span class="nc" id="L100">		this.systemError = systemError;</span>
+<span class="nc" id="L101">	}</span>
 
 	public void generateDiagramDescriptionForError(OutputStream os, FileFormatOption fileFormatOption)
 			throws IOException {
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (systemError == null)</span>
-<span class="nc" id="L107">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (systemError == null)</span>
+<span class="nc" id="L106">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L109">		systemError.exportDiagram(os, 0, fileFormatOption);</span>
-<span class="nc" id="L110">	}</span>
+<span class="nc" id="L108">		systemError.exportDiagram(os, 0, fileFormatOption);</span>
+<span class="nc" id="L109">	}</span>
 
 	public void setLineLocation(LineLocation lineLocation) {
-<span class="nc" id="L113">		this.lineLocation = lineLocation;</span>
-<span class="nc" id="L114">	}</span>
+<span class="nc" id="L112">		this.lineLocation = lineLocation;</span>
+<span class="nc" id="L113">	}</span>
 
 	public LineLocation getLineLocation() {
-<span class="nc" id="L117">		return lineLocation;</span>
+<span class="nc" id="L116">		return lineLocation;</span>
 	}
 
 }

@@ -59,8 +59,6 @@ net.sourceforge.plantuml.code.deflate
 net.sourceforge.plantuml.command
 net.sourceforge.plantuml.command.note
 net.sourceforge.plantuml.command.note.sequence
-net.sourceforge.plantuml.compositediagram
-net.sourceforge.plantuml.compositediagram.command
 net.sourceforge.plantuml.core
 net.sourceforge.plantuml.crash
 net.sourceforge.plantuml.cruise
@@ -140,7 +138,6 @@ net.sourceforge.plantuml.objectdiagram
 net.sourceforge.plantuml.objectdiagram.command
 net.sourceforge.plantuml.openiconic
 net.sourceforge.plantuml.openiconic.data
-net.sourceforge.plantuml.oregon
 net.sourceforge.plantuml.packetdiag
 net.sourceforge.plantuml.pdf
 net.sourceforge.plantuml.picoweb

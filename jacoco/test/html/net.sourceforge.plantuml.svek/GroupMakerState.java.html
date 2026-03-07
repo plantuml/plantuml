@@ -147,7 +147,7 @@ public final class GroupMakerState {
 <span class="nc" id="L147">		final Cluster root = new Cluster(group.getLocation(), diagram, bibliotekon.getColorSequence(), dotData.getRootGroup());</span>
 
 <span class="nc" id="L149">		final ClusterManager clusterManager = new ClusterManager(bibliotekon, root);</span>
-<span class="nc" id="L150">		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, root, diagram.getUmlDiagramType(),</span>
+<span class="nc" id="L150">		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, root, diagram.getDiagramType(),</span>
 <span class="nc" id="L151">				diagram.getSkinParam());</span>
 <span class="nc" id="L152">		return new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(), SName.stateDiagram, dotMode,</span>
 				dotStringFactory, clusterManager);

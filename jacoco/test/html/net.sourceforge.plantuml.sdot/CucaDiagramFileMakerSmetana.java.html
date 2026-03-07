@@ -68,6 +68,7 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
@@ -84,7 +85,6 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.AlignmentParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -496,7 +496,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	private Style getStyle() {
 <span class="nc" id="L498">		return StyleSignatureBasic</span>
-<span class="nc" id="L499">				.of(SName.root, SName.element, diagram.getUmlDiagramType().getStyleName(), SName.arrow)</span>
+<span class="nc" id="L499">				.of(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)</span>
 <span class="nc" id="L500">				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
@@ -510,15 +510,15 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	}
 
 	private FontConfiguration getFontForLink(Link link, final ISkinParam skinParam) {
-<span class="fc" id="L513">		final SName styleName = skinParam.getUmlDiagramType().getStyleName();</span>
+<span class="fc" id="L513">		final SName styleName = skinParam.getDiagramType().getStyleName();</span>
 
 <span class="fc" id="L515">		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName)</span>
 <span class="fc" id="L516">				.getMergedStyle(link.getStyleBuilder());</span>
 <span class="fc" id="L517">		return style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
 	}
 
-	private HorizontalAlignment getMessageTextAlignment(UmlDiagramType umlDiagramType, ISkinParam skinParam) {
-<span class="pc bpc" id="L521" title="1 of 2 branches missed.">		if (umlDiagramType == UmlDiagramType.STATE)</span>
+	private HorizontalAlignment getMessageTextAlignment(DiagramType diagramType, ISkinParam skinParam) {
+<span class="pc bpc" id="L521" title="1 of 2 branches missed.">		if (diagramType == DiagramType.STATE)</span>
 <span class="nc" id="L522">			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false, null);</span>
 
 <span class="fc" id="L524">		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);</span>
@@ -550,7 +550,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 //		TextBlock labelOnly = link.getLabel().create(labelFont,
 //				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 
-<span class="fc" id="L553">		final UmlDiagramType type = skinParam.getUmlDiagramType();</span>
+<span class="fc" id="L553">		final DiagramType type = skinParam.getDiagramType();</span>
 <span class="fc" id="L554">		final FontConfiguration font = getFontForLink(link, skinParam);</span>
 
 		TextBlock labelOnly;

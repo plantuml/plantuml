@@ -46,36 +46,30 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class MindMapDiagramFactory extends PSystemCommandFactory {
 
 	public MindMapDiagramFactory() {
-<span class="fc" id="L54">		super(DiagramType.MINDMAP);</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L53">		super(DiagramType.MINDMAP);</span>
+<span class="fc" id="L54">	}</span>
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="fc" id="L59">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="fc" id="L58">		CommonCommands.addCommonCommands1(cmds);</span>
 		// cmds.add(new CommandMindMapTabulation());
-<span class="fc" id="L61">		cmds.add(new CommandRankDir());</span>
-<span class="fc" id="L62">		cmds.add(new CommandMindMapOrgmodeMultiline());</span>
-<span class="fc" id="L63">		cmds.add(new CommandMindMapOrgmode());</span>
-<span class="fc" id="L64">		cmds.add(new CommandMindMapRoot());</span>
-<span class="fc" id="L65">		cmds.add(new CommandMindMapPlus());</span>
-<span class="fc" id="L66">		cmds.add(new CommandMindMapDirection());</span>
-<span class="fc" id="L67">	}</span>
+<span class="fc" id="L60">		cmds.add(new CommandRankDir());</span>
+<span class="fc" id="L61">		cmds.add(new CommandMindMapOrgmodeMultiline());</span>
+<span class="fc" id="L62">		cmds.add(new CommandMindMapOrgmode());</span>
+<span class="fc" id="L63">		cmds.add(new CommandMindMapRoot());</span>
+<span class="fc" id="L64">		cmds.add(new CommandMindMapPlus());</span>
+<span class="fc" id="L65">		cmds.add(new CommandMindMapDirection());</span>
+<span class="fc" id="L66">	}</span>
 
 	@Override
-	public MindMapDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public MindMapDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 <span class="fc" id="L71">		return new MindMapDiagram(source, preprocessing);</span>
 	}
-	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L76">		return UmlDiagramType.MINDMAP;</span>
-	}
-
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

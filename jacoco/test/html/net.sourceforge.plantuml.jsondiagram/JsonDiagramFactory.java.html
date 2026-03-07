@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.yaml.Highlighted;
@@ -62,11 +61,12 @@ import net.sourceforge.plantuml.yaml.Highlighted;
 public class JsonDiagramFactory extends PSystemAbstractFactory {
 
 	public JsonDiagramFactory() {
-<span class="fc" id="L65">		super(DiagramType.JSON);</span>
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L64">		super(DiagramType.JSON);</span>
+<span class="fc" id="L65">	}</span>
 
 	@Override
-	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 <span class="fc" id="L70">		final List&lt;Highlighted&gt; highlighted = new ArrayList&lt;&gt;();</span>
 <span class="fc" id="L71">		StyleExtractor styleExtractor = null;</span>
 		JsonValue json;
@@ -94,26 +94,21 @@ public class JsonDiagramFactory extends PSystemAbstractFactory {
 <span class="nc" id="L94">		} catch (ParseException e) {</span>
 <span class="nc" id="L95">			json = null;</span>
 <span class="fc" id="L96">		}</span>
-<span class="fc" id="L97">		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.JSON, json, highlighted, styleExtractor, preprocessing);</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (styleExtractor != null) {</span>
+<span class="fc" id="L97">		final JsonDiagram result = new JsonDiagram(source, DiagramType.JSON, json, highlighted, styleExtractor,</span>
+				preprocessing);
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (styleExtractor != null) {</span>
 			try {
-<span class="fc" id="L100">				styleExtractor.applyStyles(result.getSkinParam());</span>
-<span class="nc" id="L101">			} catch (StyleParsingException e) {</span>
-<span class="nc" id="L102">				Logme.error(e);</span>
-<span class="fc" id="L103">			}</span>
-<span class="fc" id="L104">			final String title = styleExtractor.getTitle();</span>
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">			if (title != null)</span>
-<span class="nc" id="L106">				result.setTitle(DisplayPositioned.single(Display.getWithNewlines(result.getPragma(), title), HorizontalAlignment.CENTER,</span>
-						VerticalAlignment.CENTER));
+<span class="fc" id="L101">				styleExtractor.applyStyles(result.getSkinParam());</span>
+<span class="nc" id="L102">			} catch (StyleParsingException e) {</span>
+<span class="nc" id="L103">				Logme.error(e);</span>
+<span class="fc" id="L104">			}</span>
+<span class="fc" id="L105">			final String title = styleExtractor.getTitle();</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">			if (title != null)</span>
+<span class="nc" id="L107">				result.setTitle(DisplayPositioned.single(Display.getWithNewlines(result.getPragma(), title),</span>
+						HorizontalAlignment.CENTER, VerticalAlignment.CENTER));
 		}
-<span class="fc" id="L109">		return result;</span>
+<span class="fc" id="L110">		return result;</span>
 	}
-	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L114">		return UmlDiagramType.JSON;</span>
-	}
-
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.elk;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
@@ -53,7 +52,7 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
-import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.DiagramType;
 
 /*
  * You can choose between real &quot;org.eclipse.elk...&quot; classes or proxied &quot;net.sourceforge.plantuml.elk.proxy...&quot;
@@ -107,7 +106,6 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.AlignmentParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -138,262 +136,262 @@ https://rtsys.informatik.uni-kiel.de/~biblio/downloads/theses/thw-bt.pdf
 @DuplicateCode(reference = &quot;SvekEdge, CucaDiagramFileMakerElk, CucaDiagramFileMakerSmetana&quot;)
 public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 
-<span class="nc" id="L141">	private final Map&lt;Entity, ElkNode&gt; nodes = new LinkedHashMap&lt;Entity, ElkNode&gt;();</span>
-<span class="nc" id="L142">	private final Map&lt;Entity, ElkNode&gt; clusters = new LinkedHashMap&lt;Entity, ElkNode&gt;();</span>
-<span class="nc" id="L143">	private final Map&lt;Link, ElkEdge&gt; edges = new LinkedHashMap&lt;Link, ElkEdge&gt;();</span>
+<span class="nc" id="L139">	private final Map&lt;Entity, ElkNode&gt; nodes = new LinkedHashMap&lt;Entity, ElkNode&gt;();</span>
+<span class="nc" id="L140">	private final Map&lt;Entity, ElkNode&gt; clusters = new LinkedHashMap&lt;Entity, ElkNode&gt;();</span>
+<span class="nc" id="L141">	private final Map&lt;Link, ElkEdge&gt; edges = new LinkedHashMap&lt;Link, ElkEdge&gt;();</span>
 
 	public CucaDiagramFileMakerElk(CucaDiagram diagram) {
-<span class="nc" id="L146">		super(diagram);</span>
-<span class="nc" id="L147">	}</span>
+<span class="nc" id="L144">		super(diagram);</span>
+<span class="nc" id="L145">	}</span>
 
 	// Duplication from SvekEdge
 	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
-<span class="nc" id="L151">		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);</span>
-<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L153">			result = result.withTOBECHANGED(stereotype);</span>
+<span class="nc" id="L149">		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L151">			result = result.withTOBECHANGED(stereotype);</span>
 
-<span class="nc" id="L155">		return result;</span>
+<span class="nc" id="L153">		return result;</span>
 	}
 
 	private FontConfiguration getFontForLink(Link link, final ISkinParam skinParam) {
-<span class="nc" id="L159">		final SName styleName = skinParam.getUmlDiagramType().getStyleName();</span>
+<span class="nc" id="L157">		final SName styleName = skinParam.getDiagramType().getStyleName();</span>
 
-<span class="nc" id="L161">		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName)</span>
-<span class="nc" id="L162">				.getMergedStyle(link.getStyleBuilder());</span>
-<span class="nc" id="L163">		return style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L159">		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName)</span>
+<span class="nc" id="L160">				.getMergedStyle(link.getStyleBuilder());</span>
+<span class="nc" id="L161">		return style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
 	}
 
-	private HorizontalAlignment getMessageTextAlignment(UmlDiagramType umlDiagramType, ISkinParam skinParam) {
-<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (umlDiagramType == UmlDiagramType.STATE)</span>
-<span class="nc" id="L168">			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false, null);</span>
+	private HorizontalAlignment getMessageTextAlignment(DiagramType diagramType, ISkinParam skinParam) {
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (diagramType == DiagramType.STATE)</span>
+<span class="nc" id="L166">			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false, null);</span>
 
-<span class="nc" id="L170">		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);</span>
+<span class="nc" id="L168">		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);</span>
 	}
 
 	private TextBlock addVisibilityModifier(TextBlock block, Link link, ISkinParam skinParam) {
-<span class="nc" id="L174">		final VisibilityModifier visibilityModifier = link.getVisibilityModifier();</span>
-<span class="nc bnc" id="L175" title="All 2 branches missed.">		if (visibilityModifier != null) {</span>
-<span class="nc" id="L176">			final Rose rose = new Rose();</span>
-<span class="nc" id="L177">			final HColor fore = rose.getHtmlColor(skinParam, visibilityModifier.getForeground());</span>
-<span class="nc" id="L178">			TextBlock visibility = visibilityModifier.getUBlock(skinParam.classAttributeIconSize(), fore, null, false);</span>
-<span class="nc" id="L179">			visibility = TextBlockUtils.withMargin(visibility, 0, 1, 2, 0);</span>
-<span class="nc" id="L180">			block = TextBlockUtils.mergeLR(visibility, block, VerticalAlignment.CENTER);</span>
+<span class="nc" id="L172">		final VisibilityModifier visibilityModifier = link.getVisibilityModifier();</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (visibilityModifier != null) {</span>
+<span class="nc" id="L174">			final Rose rose = new Rose();</span>
+<span class="nc" id="L175">			final HColor fore = rose.getHtmlColor(skinParam, visibilityModifier.getForeground());</span>
+<span class="nc" id="L176">			TextBlock visibility = visibilityModifier.getUBlock(skinParam.classAttributeIconSize(), fore, null, false);</span>
+<span class="nc" id="L177">			visibility = TextBlockUtils.withMargin(visibility, 0, 1, 2, 0);</span>
+<span class="nc" id="L178">			block = TextBlockUtils.mergeLR(visibility, block, VerticalAlignment.CENTER);</span>
 		}
-<span class="nc" id="L182">		final double marginLabel = 1; // startUid.equalsId(endUid) ? 6 : 1;</span>
-<span class="nc" id="L183">		return TextBlockUtils.withMargin(block, marginLabel, marginLabel);</span>
+<span class="nc" id="L180">		final double marginLabel = 1; // startUid.equalsId(endUid) ? 6 : 1;</span>
+<span class="nc" id="L181">		return TextBlockUtils.withMargin(block, marginLabel, marginLabel);</span>
 	}
 
 	private LinkArrow getLinkArrow(Link link) {
-<span class="nc" id="L187">		return link.getLinkArrow();</span>
+<span class="nc" id="L185">		return link.getLinkArrow();</span>
 	}
 
 	private TextBlock getLabel(StringBounder stringBounder, Link link) {
-<span class="nc" id="L191">		ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="nc" id="L192">		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;</span>
+<span class="nc" id="L189">		ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L190">		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;</span>
 
 		// final FontConfiguration labelFont =
 		// style.getFontConfiguration(skinParam.getIHtmlColorSet());
 //		TextBlock labelOnly = link.getLabel().create(labelFont,
 //				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 
-<span class="nc" id="L199">		final UmlDiagramType type = skinParam.getUmlDiagramType();</span>
-<span class="nc" id="L200">		final FontConfiguration font = getFontForLink(link, skinParam);</span>
+<span class="nc" id="L197">		final DiagramType type = skinParam.getDiagramType();</span>
+<span class="nc" id="L198">		final FontConfiguration font = getFontForLink(link, skinParam);</span>
 
 		TextBlock labelOnly;
 		// toto2
-<span class="nc bnc" id="L204" title="All 2 branches missed.">		if (Display.isNull(link.getLabel())) {</span>
-<span class="nc" id="L205">			labelOnly = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
-<span class="nc bnc" id="L206" title="All 2 branches missed.">			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL) {</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">		if (Display.isNull(link.getLabel())) {</span>
+<span class="nc" id="L203">			labelOnly = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL) {</span>
 				// labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);
 			}
 
 		} else {
-<span class="nc" id="L211">			final HorizontalAlignment alignment = getMessageTextAlignment(type, skinParam);</span>
-<span class="nc" id="L212">			final boolean hasSeveralGuideLines = link.getLabel().hasSeveralGuideLines();</span>
+<span class="nc" id="L209">			final HorizontalAlignment alignment = getMessageTextAlignment(type, skinParam);</span>
+<span class="nc" id="L210">			final boolean hasSeveralGuideLines = link.getLabel().hasSeveralGuideLines();</span>
 			final TextBlock block;
 			// if (hasSeveralGuideLines)
 			// block = StringWithArrow.addSeveralMagicArrows(link.getLabel(), this, font,
 			// alignment, skinParam);
 			// else
-<span class="nc" id="L218">			block = link.getLabel().create0(font, alignment, skinParam, skinParam.maxMessageSize(),</span>
+<span class="nc" id="L216">			block = link.getLabel().create0(font, alignment, skinParam, skinParam.maxMessageSize(),</span>
 					CreoleMode.SIMPLE_LINE, null, null);
 
-<span class="nc" id="L221">			labelOnly = addVisibilityModifier(block, link, skinParam);</span>
-<span class="nc bnc" id="L222" title="All 4 branches missed.">			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL &amp;&amp; hasSeveralGuideLines == false) {</span>
+<span class="nc" id="L219">			labelOnly = addVisibilityModifier(block, link, skinParam);</span>
+<span class="nc bnc" id="L220" title="All 4 branches missed.">			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL &amp;&amp; hasSeveralGuideLines == false) {</span>
 				// labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);
 			}
 
 		}
 
-<span class="nc" id="L228">		final CucaNote note = link.getNote();</span>
-<span class="nc bnc" id="L229" title="All 2 branches missed.">		if (note == null) {</span>
-<span class="nc bnc" id="L230" title="All 2 branches missed.">			if (TextBlockUtils.isEmpty(labelOnly, stringBounder) == false)</span>
-<span class="nc" id="L231">				labelOnly = TextBlockUtils.withMargin(labelOnly, marginLabel, marginLabel);</span>
-<span class="nc" id="L232">			return labelOnly;</span>
+<span class="nc" id="L226">		final CucaNote note = link.getNote();</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">		if (note == null) {</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">			if (TextBlockUtils.isEmpty(labelOnly, stringBounder) == false)</span>
+<span class="nc" id="L229">				labelOnly = TextBlockUtils.withMargin(labelOnly, marginLabel, marginLabel);</span>
+<span class="nc" id="L230">			return labelOnly;</span>
 		}
-<span class="nc" id="L234">		final TextBlock noteOnly = new EntityImageNoteLink(note.getDisplay(), note.getColors(), skinParam,</span>
-<span class="nc" id="L235">				link.getStyleBuilder());</span>
+<span class="nc" id="L232">		final TextBlock noteOnly = new EntityImageNoteLink(note.getDisplay(), note.getColors(), skinParam,</span>
+<span class="nc" id="L233">				link.getStyleBuilder());</span>
 
-<span class="nc bnc" id="L237" title="All 2 branches missed.">		if (note.getPosition() == Position.LEFT)</span>
-<span class="nc" id="L238">			return TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);</span>
-<span class="nc bnc" id="L239" title="All 2 branches missed.">		else if (note.getPosition() == Position.RIGHT)</span>
-<span class="nc" id="L240">			return TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);</span>
-<span class="nc bnc" id="L241" title="All 2 branches missed.">		else if (note.getPosition() == Position.TOP)</span>
-<span class="nc" id="L242">			return TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">		if (note.getPosition() == Position.LEFT)</span>
+<span class="nc" id="L236">			return TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">		else if (note.getPosition() == Position.RIGHT)</span>
+<span class="nc" id="L238">			return TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">		else if (note.getPosition() == Position.TOP)</span>
+<span class="nc" id="L240">			return TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);</span>
 		else
-<span class="nc" id="L244">			return TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);</span>
+<span class="nc" id="L242">			return TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);</span>
 
 	}
 
 	private TextBlock getQuantifier(StringBounder stringBounder, Link link, int n) {
-<span class="nc bnc" id="L249" title="All 2 branches missed.">		final String tmp = n == 1 ? link.getQuantifier1() : link.getQuantifier2();</span>
-<span class="nc bnc" id="L250" title="All 2 branches missed.">		if (tmp == null)</span>
-<span class="nc" id="L251">			return null;</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">		final String tmp = n == 1 ? link.getQuantifier1() : link.getQuantifier2();</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">		if (tmp == null)</span>
+<span class="nc" id="L249">			return null;</span>
 
-<span class="nc" id="L253">		final ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="nc" id="L254">		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);</span>
-<span class="nc" id="L255">		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), tmp).create(labelFont,</span>
-<span class="nc" id="L256">				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);</span>
-<span class="nc bnc" id="L257" title="All 2 branches missed.">		if (TextBlockUtils.isEmpty(label, stringBounder))</span>
-<span class="nc" id="L258">			return null;</span>
+<span class="nc" id="L251">		final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L252">		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);</span>
+<span class="nc" id="L253">		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), tmp).create(labelFont,</span>
+<span class="nc" id="L254">				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">		if (TextBlockUtils.isEmpty(label, stringBounder))</span>
+<span class="nc" id="L256">			return null;</span>
 
-<span class="nc" id="L260">		return label;</span>
+<span class="nc" id="L258">		return label;</span>
 	}
 
 	private TextBlock getRoleLabel(StringBounder stringBounder, Link link, int n) {
-<span class="nc bnc" id="L264" title="All 2 branches missed.">		final String role = n == 1 ? link.getRole1() : link.getRole2();</span>
-<span class="nc bnc" id="L265" title="All 2 branches missed.">		if (role == null)</span>
-<span class="nc" id="L266">			return null;</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">		final String role = n == 1 ? link.getRole1() : link.getRole2();</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">		if (role == null)</span>
+<span class="nc" id="L264">			return null;</span>
 
-<span class="nc" id="L268">		final ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="nc" id="L269">		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);</span>
-<span class="nc" id="L270">		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), role).create(labelFont,</span>
-<span class="nc" id="L271">				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);</span>
-<span class="nc bnc" id="L272" title="All 2 branches missed.">		if (TextBlockUtils.isEmpty(label, stringBounder))</span>
-<span class="nc" id="L273">			return null;</span>
+<span class="nc" id="L266">		final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L267">		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);</span>
+<span class="nc" id="L268">		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), role).create(labelFont,</span>
+<span class="nc" id="L269">				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">		if (TextBlockUtils.isEmpty(label, stringBounder))</span>
+<span class="nc" id="L271">			return null;</span>
 
-<span class="nc" id="L275">		return label;</span>
+<span class="nc" id="L273">		return label;</span>
 	}
 
 	// Retrieve the real position of a node, depending on its parents
 	public static XPoint2D getPosition(ElkNode elkNode) {
-<span class="nc" id="L280">		final ElkNode parent = elkNode.getParent();</span>
+<span class="nc" id="L278">		final ElkNode parent = elkNode.getParent();</span>
 
-<span class="nc" id="L282">		final double x = elkNode.getX();</span>
-<span class="nc" id="L283">		final double y = elkNode.getY();</span>
+<span class="nc" id="L280">		final double x = elkNode.getX();</span>
+<span class="nc" id="L281">		final double y = elkNode.getY();</span>
 
 		// This nasty test checks that parent is &quot;root&quot;
-<span class="nc bnc" id="L286" title="All 4 branches missed.">		if (parent == null || parent.getLabels().size() == 0) {</span>
-<span class="nc" id="L287">			return new XPoint2D(x, y);</span>
+<span class="nc bnc" id="L284" title="All 4 branches missed.">		if (parent == null || parent.getLabels().size() == 0) {</span>
+<span class="nc" id="L285">			return new XPoint2D(x, y);</span>
 		}
 
 		// Right now, this is recursive
-<span class="nc" id="L291">		final XPoint2D parentPosition = getPosition(parent);</span>
-<span class="nc" id="L292">		return new XPoint2D(parentPosition.getX() + x, parentPosition.getY() + y);</span>
+<span class="nc" id="L289">		final XPoint2D parentPosition = getPosition(parent);</span>
+<span class="nc" id="L290">		return new XPoint2D(parentPosition.getX() + x, parentPosition.getY() + y);</span>
 
 	}
 
 	private Collection&lt;Entity&gt; getUnpackagedEntities() {
-<span class="nc" id="L297">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L298" title="All 2 branches missed.">		for (Entity ent : diagram.leafs())</span>
-<span class="nc bnc" id="L299" title="All 2 branches missed.">			if (diagram.getRootGroup() == ent.getParentContainer())</span>
-<span class="nc" id="L300">				result.add(ent);</span>
+<span class="nc" id="L295">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">		for (Entity ent : diagram.leafs())</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">			if (diagram.getRootGroup() == ent.getParentContainer())</span>
+<span class="nc" id="L298">				result.add(ent);</span>
 
-<span class="nc" id="L302">		return result;</span>
+<span class="nc" id="L300">		return result;</span>
 	}
 
 	private ElkNode getElkNode(final Entity entity) {
-<span class="nc" id="L306">		ElkNode node = nodes.get(entity);</span>
-<span class="nc bnc" id="L307" title="All 2 branches missed.">		if (node == null)</span>
-<span class="nc" id="L308">			node = clusters.get(entity);</span>
+<span class="nc" id="L304">		ElkNode node = nodes.get(entity);</span>
+<span class="nc bnc" id="L305" title="All 2 branches missed.">		if (node == null)</span>
+<span class="nc" id="L306">			node = clusters.get(entity);</span>
 
-<span class="nc" id="L310">		return node;</span>
+<span class="nc" id="L308">		return node;</span>
 	}
 
 	private void printAllSubgroups(StringBounder stringBounder, ElkNode cluster, Entity group) {
-<span class="nc bnc" id="L314" title="All 2 branches missed.">		for (Entity g : diagram.getChildrenGroups(group)) {</span>
-<span class="nc bnc" id="L315" title="All 2 branches missed.">			if (g.isRemoved())</span>
-<span class="nc" id="L316">				continue;</span>
+<span class="nc bnc" id="L312" title="All 2 branches missed.">		for (Entity g : diagram.getChildrenGroups(group)) {</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">			if (g.isRemoved())</span>
+<span class="nc" id="L314">				continue;</span>
 
-<span class="nc bnc" id="L318" title="All 4 branches missed.">			if (diagram.isEmpty(g) &amp;&amp; g.getGroupType() == GroupType.PACKAGE) {</span>
-<span class="nc" id="L319">				g.muteToType(LeafType.EMPTY_PACKAGE);</span>
-<span class="nc" id="L320">				this.prinEntity(stringBounder, g, cluster);</span>
+<span class="nc bnc" id="L316" title="All 4 branches missed.">			if (diagram.isEmpty(g) &amp;&amp; g.getGroupType() == GroupType.PACKAGE) {</span>
+<span class="nc" id="L317">				g.muteToType(LeafType.EMPTY_PACKAGE);</span>
+<span class="nc" id="L318">				this.prinEntity(stringBounder, g, cluster);</span>
 			} else {
 
 				// We create the &quot;cluster&quot; in ELK for this group
-<span class="nc" id="L324">				final ElkNode elkCluster = ElkGraphUtil.createNode(cluster);</span>
-<span class="nc" id="L325">				elkCluster.setProperty(CoreOptions.DIRECTION, Direction.DOWN);</span>
+<span class="nc" id="L322">				final ElkNode elkCluster = ElkGraphUtil.createNode(cluster);</span>
+<span class="nc" id="L323">				elkCluster.setProperty(CoreOptions.DIRECTION, Direction.DOWN);</span>
 
-<span class="nc" id="L327">				final ClusterHeader clusterHeader = new ClusterHeader(g, diagram, stringBounder);</span>
+<span class="nc" id="L325">				final ClusterHeader clusterHeader = new ClusterHeader(g, diagram, stringBounder);</span>
 
-<span class="nc" id="L329">				final int titleAndAttributeHeight = clusterHeader.getTitleAndAttributeHeight();</span>
+<span class="nc" id="L327">				final int titleAndAttributeHeight = clusterHeader.getTitleAndAttributeHeight();</span>
 
-<span class="nc" id="L331">				final double topPadding = Math.max(25, titleAndAttributeHeight) + 15;</span>
-<span class="nc" id="L332">				elkCluster.setProperty(CoreOptions.PADDING, new ElkPadding(topPadding, 15, 15, 15));</span>
+<span class="nc" id="L329">				final double topPadding = Math.max(25, titleAndAttributeHeight) + 15;</span>
+<span class="nc" id="L330">				elkCluster.setProperty(CoreOptions.PADDING, new ElkPadding(topPadding, 15, 15, 15));</span>
 
 				// Not sure this is usefull to put a label on a &quot;cluster&quot;
-<span class="nc" id="L335">				final ElkLabel label = ElkGraphUtil.createLabel(elkCluster);</span>
-<span class="nc" id="L336">				label.setText(&quot;C&quot;);</span>
+<span class="nc" id="L333">				final ElkLabel label = ElkGraphUtil.createLabel(elkCluster);</span>
+<span class="nc" id="L334">				label.setText(&quot;C&quot;);</span>
 				// We need it anyway to recurse up to the real &quot;root&quot;
 
-<span class="nc" id="L339">				this.clusters.put(g, elkCluster);</span>
-<span class="nc" id="L340">				this.printSingleGroup(stringBounder, g);</span>
+<span class="nc" id="L337">				this.clusters.put(g, elkCluster);</span>
+<span class="nc" id="L338">				this.printSingleGroup(stringBounder, g);</span>
 			}
-<span class="nc" id="L342">		}</span>
+<span class="nc" id="L340">		}</span>
 
-<span class="nc" id="L344">	}</span>
+<span class="nc" id="L342">	}</span>
 
 	private void printSingleGroup(StringBounder stringBounder, Entity g) {
-<span class="nc bnc" id="L347" title="All 2 branches missed.">		if (g.getGroupType() == GroupType.CONCURRENT_STATE)</span>
-<span class="nc" id="L348">			return;</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">		if (g.getGroupType() == GroupType.CONCURRENT_STATE)</span>
+<span class="nc" id="L346">			return;</span>
 
-<span class="nc" id="L350">		this.printEntities(stringBounder, clusters.get(g), g.leafs());</span>
-<span class="nc" id="L351">		this.printAllSubgroups(stringBounder, clusters.get(g), g);</span>
-<span class="nc" id="L352">	}</span>
+<span class="nc" id="L348">		this.printEntities(stringBounder, clusters.get(g), g.leafs());</span>
+<span class="nc" id="L349">		this.printAllSubgroups(stringBounder, clusters.get(g), g);</span>
+<span class="nc" id="L350">	}</span>
 
 	private void printEntities(StringBounder stringBounder, ElkNode parent, Collection&lt;Entity&gt; entities) {
 		// Convert all &quot;leaf&quot; to ELK node
-<span class="nc bnc" id="L356" title="All 2 branches missed.">		for (Entity ent : entities) {</span>
-<span class="nc bnc" id="L357" title="All 2 branches missed.">			if (ent.isRemoved())</span>
-<span class="nc" id="L358">				continue;</span>
+<span class="nc bnc" id="L354" title="All 2 branches missed.">		for (Entity ent : entities) {</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">			if (ent.isRemoved())</span>
+<span class="nc" id="L356">				continue;</span>
 
-<span class="nc" id="L360">			this.prinEntity(stringBounder, ent, parent);</span>
-<span class="nc" id="L361">		}</span>
-<span class="nc" id="L362">	}</span>
+<span class="nc" id="L358">			this.prinEntity(stringBounder, ent, parent);</span>
+<span class="nc" id="L359">		}</span>
+<span class="nc" id="L360">	}</span>
 
 	private void manageAllEdges(StringBounder stringBounder) {
 		// Convert all &quot;link&quot; to ELK edge
-<span class="nc bnc" id="L366" title="All 2 branches missed.">		for (final Link link : diagram.getLinks())</span>
-<span class="nc" id="L367">			this.manageSingleEdge(stringBounder, link);</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">		for (final Link link : diagram.getLinks())</span>
+<span class="nc" id="L365">			this.manageSingleEdge(stringBounder, link);</span>
 
-<span class="nc" id="L369">	}</span>
+<span class="nc" id="L367">	}</span>
 
 	@DuplicateCode(reference = &quot;CucaDiagramFileMakerSmetana::printEntity&quot;)
 	private void prinEntity(StringBounder stringBounder, Entity ent, ElkNode parent) {
-<span class="nc" id="L373">		final IEntityImage image = printEntityInternal(ent);</span>
+<span class="nc" id="L371">		final IEntityImage image = printEntityInternal(ent);</span>
 
 		// Expected dimension of the node
-<span class="nc" id="L376">		final XDimension2D dimension = image.calculateDimension(stringBounder);</span>
+<span class="nc" id="L374">		final XDimension2D dimension = image.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L378">		final SvekNode node = getBibliotekon().createNode(ent, image, stringBounder);</span>
-<span class="nc" id="L379">		clusterManager.addNode(node);</span>
+<span class="nc" id="L376">		final SvekNode node = getBibliotekon().createNode(ent, image, stringBounder);</span>
+<span class="nc" id="L377">		clusterManager.addNode(node);</span>
 
 		// Here, we try to tell ELK to use this dimension as node dimension
-<span class="nc" id="L382">		final ElkNode elkNode = ElkGraphUtil.createNode(parent);</span>
-<span class="nc" id="L383">		elkNode.setDimensions(dimension.getWidth(), dimension.getHeight());</span>
+<span class="nc" id="L380">		final ElkNode elkNode = ElkGraphUtil.createNode(parent);</span>
+<span class="nc" id="L381">		elkNode.setDimensions(dimension.getWidth(), dimension.getHeight());</span>
 
 		// There is no real &quot;label&quot; here
 		// We just would like to force node dimension
-<span class="nc" id="L387">		final ElkLabel label = ElkGraphUtil.createLabel(elkNode);</span>
-<span class="nc" id="L388">		label.setText(&quot;X&quot;);</span>
+<span class="nc" id="L385">		final ElkLabel label = ElkGraphUtil.createLabel(elkNode);</span>
+<span class="nc" id="L386">		label.setText(&quot;X&quot;);</span>
 
 		// I don't know why we have to do this hack, but somebody has to fix it
-<span class="nc" id="L391">		final double VERY_STRANGE_OFFSET = 10;</span>
-<span class="nc" id="L392">		label.setDimensions(dimension.getWidth(), dimension.getHeight() - VERY_STRANGE_OFFSET);</span>
+<span class="nc" id="L389">		final double VERY_STRANGE_OFFSET = 10;</span>
+<span class="nc" id="L390">		label.setDimensions(dimension.getWidth(), dimension.getHeight() - VERY_STRANGE_OFFSET);</span>
 
 		// No idea of what we are doing here :-)
-<span class="nc" id="L395">		label.setProperty(CoreOptions.NODE_LABELS_PLACEMENT,</span>
-<span class="nc" id="L396">				EnumSet.of(NodeLabelPlacement.INSIDE, NodeLabelPlacement.H_CENTER, NodeLabelPlacement.V_CENTER));</span>
+<span class="nc" id="L393">		label.setProperty(CoreOptions.NODE_LABELS_PLACEMENT,</span>
+<span class="nc" id="L394">				EnumSet.of(NodeLabelPlacement.INSIDE, NodeLabelPlacement.H_CENTER, NodeLabelPlacement.V_CENTER));</span>
 
 		// This padding setting have no impact ?
 		// label.setProperty(CoreOptions.NODE_LABELS_PADDING, new ElkPadding(100.0));
@@ -406,93 +404,93 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 		// EnumSet.noneOf(SizeOptions.class));
 
 		// Let's store this
-<span class="nc" id="L409">		nodes.put(ent, elkNode);</span>
-<span class="nc" id="L410">	}</span>
+<span class="nc" id="L407">		nodes.put(ent, elkNode);</span>
+<span class="nc" id="L408">	}</span>
 
 	private void manageSingleEdge(StringBounder stringBounder, final Link link) {
-<span class="nc" id="L413">		final ElkNode node1 = getElkNode(link.getEntity1());</span>
-<span class="nc" id="L414">		final ElkNode node2 = getElkNode(link.getEntity2());</span>
+<span class="nc" id="L411">		final ElkNode node1 = getElkNode(link.getEntity1());</span>
+<span class="nc" id="L412">		final ElkNode node2 = getElkNode(link.getEntity2());</span>
 
-<span class="nc" id="L416">		final ElkEdge edge = ElkGraphUtil.createSimpleEdge(node1, node2);</span>
+<span class="nc" id="L414">		final ElkEdge edge = ElkGraphUtil.createSimpleEdge(node1, node2);</span>
 
-<span class="nc" id="L418">		final TextBlock labelLink = getLabel(stringBounder, link);</span>
-<span class="nc bnc" id="L419" title="All 2 branches missed.">		if (labelLink != null) {</span>
-<span class="nc" id="L420">			final ElkLabel edgeLabel = ElkGraphUtil.createLabel(edge);</span>
-<span class="nc" id="L421">			final XDimension2D dim = labelLink.calculateDimension(stringBounder);</span>
-<span class="nc" id="L422">			edgeLabel.setText(&quot;X&quot;);</span>
-<span class="nc" id="L423">			edgeLabel.setDimensions(dim.getWidth(), dim.getHeight());</span>
+<span class="nc" id="L416">		final TextBlock labelLink = getLabel(stringBounder, link);</span>
+<span class="nc bnc" id="L417" title="All 2 branches missed.">		if (labelLink != null) {</span>
+<span class="nc" id="L418">			final ElkLabel edgeLabel = ElkGraphUtil.createLabel(edge);</span>
+<span class="nc" id="L419">			final XDimension2D dim = labelLink.calculateDimension(stringBounder);</span>
+<span class="nc" id="L420">			edgeLabel.setText(&quot;X&quot;);</span>
+<span class="nc" id="L421">			edgeLabel.setDimensions(dim.getWidth(), dim.getHeight());</span>
 			// Duplicated, with qualifier, but who cares?
-<span class="nc" id="L425">			edge.setProperty(CoreOptions.EDGE_LABELS_INLINE, true);</span>
+<span class="nc" id="L423">			edge.setProperty(CoreOptions.EDGE_LABELS_INLINE, true);</span>
 			// edge.setProperty(CoreOptions.EDGE_TYPE, EdgeType.ASSOCIATION);
 		}
-<span class="nc bnc" id="L428" title="All 4 branches missed.">		if (link.getQuantifier1() != null || link.getRole1() != null) {</span>
-<span class="nc" id="L429">			final TextBlock q1 = getQuantifier(stringBounder, link, 1);</span>
-<span class="nc" id="L430">			final TextBlock r1 = getRoleLabel(stringBounder, link, 1);</span>
-<span class="nc bnc" id="L431" title="All 2 branches missed.">			final TextBlock forLayout = q1 != null ? q1 : r1;</span>
-<span class="nc" id="L432">			final ElkLabel edgeLabel = ElkGraphUtil.createLabel(edge);</span>
-<span class="nc" id="L433">			final XDimension2D dim = forLayout.calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L426" title="All 4 branches missed.">		if (link.getQuantifier1() != null || link.getRole1() != null) {</span>
+<span class="nc" id="L427">			final TextBlock q1 = getQuantifier(stringBounder, link, 1);</span>
+<span class="nc" id="L428">			final TextBlock r1 = getRoleLabel(stringBounder, link, 1);</span>
+<span class="nc bnc" id="L429" title="All 2 branches missed.">			final TextBlock forLayout = q1 != null ? q1 : r1;</span>
+<span class="nc" id="L430">			final ElkLabel edgeLabel = ElkGraphUtil.createLabel(edge);</span>
+<span class="nc" id="L431">			final XDimension2D dim = forLayout.calculateDimension(stringBounder);</span>
 			// Nasty trick, we store the kind of label in the text
-<span class="nc" id="L435">			edgeLabel.setText(&quot;1&quot;);</span>
-<span class="nc" id="L436">			edgeLabel.setDimensions(dim.getWidth(), dim.getHeight());</span>
-<span class="nc" id="L437">			edgeLabel.setProperty(CoreOptions.EDGE_LABELS_PLACEMENT, EdgeLabelPlacement.TAIL);</span>
+<span class="nc" id="L433">			edgeLabel.setText(&quot;1&quot;);</span>
+<span class="nc" id="L434">			edgeLabel.setDimensions(dim.getWidth(), dim.getHeight());</span>
+<span class="nc" id="L435">			edgeLabel.setProperty(CoreOptions.EDGE_LABELS_PLACEMENT, EdgeLabelPlacement.TAIL);</span>
 			// Duplicated, with main label, but who cares?
-<span class="nc" id="L439">			edge.setProperty(CoreOptions.EDGE_LABELS_INLINE, true);</span>
+<span class="nc" id="L437">			edge.setProperty(CoreOptions.EDGE_LABELS_INLINE, true);</span>
 			// edge.setProperty(CoreOptions.EDGE_TYPE, EdgeType.ASSOCIATION);
 		}
-<span class="nc bnc" id="L442" title="All 4 branches missed.">		if (link.getQuantifier2() != null || link.getRole2() != null) {</span>
-<span class="nc" id="L443">			final TextBlock q2 = getQuantifier(stringBounder, link, 2);</span>
-<span class="nc" id="L444">			final TextBlock r2 = getRoleLabel(stringBounder, link, 2);</span>
-<span class="nc bnc" id="L445" title="All 2 branches missed.">			final TextBlock forLayout = q2 != null ? q2 : r2;</span>
-<span class="nc" id="L446">			final ElkLabel edgeLabel = ElkGraphUtil.createLabel(edge);</span>
-<span class="nc" id="L447">			final XDimension2D dim = forLayout.calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L440" title="All 4 branches missed.">		if (link.getQuantifier2() != null || link.getRole2() != null) {</span>
+<span class="nc" id="L441">			final TextBlock q2 = getQuantifier(stringBounder, link, 2);</span>
+<span class="nc" id="L442">			final TextBlock r2 = getRoleLabel(stringBounder, link, 2);</span>
+<span class="nc bnc" id="L443" title="All 2 branches missed.">			final TextBlock forLayout = q2 != null ? q2 : r2;</span>
+<span class="nc" id="L444">			final ElkLabel edgeLabel = ElkGraphUtil.createLabel(edge);</span>
+<span class="nc" id="L445">			final XDimension2D dim = forLayout.calculateDimension(stringBounder);</span>
 			// Nasty trick, we store the kind of label in the text
-<span class="nc" id="L449">			edgeLabel.setText(&quot;2&quot;);</span>
-<span class="nc" id="L450">			edgeLabel.setDimensions(dim.getWidth(), dim.getHeight());</span>
-<span class="nc" id="L451">			edgeLabel.setProperty(CoreOptions.EDGE_LABELS_PLACEMENT, EdgeLabelPlacement.HEAD);</span>
+<span class="nc" id="L447">			edgeLabel.setText(&quot;2&quot;);</span>
+<span class="nc" id="L448">			edgeLabel.setDimensions(dim.getWidth(), dim.getHeight());</span>
+<span class="nc" id="L449">			edgeLabel.setProperty(CoreOptions.EDGE_LABELS_PLACEMENT, EdgeLabelPlacement.HEAD);</span>
 			// Duplicated, with main label, but who cares?
-<span class="nc" id="L453">			edge.setProperty(CoreOptions.EDGE_LABELS_INLINE, true);</span>
+<span class="nc" id="L451">			edge.setProperty(CoreOptions.EDGE_LABELS_INLINE, true);</span>
 			// edge.setProperty(CoreOptions.EDGE_TYPE, EdgeType.ASSOCIATION);
 		}
 
-<span class="nc" id="L457">		edges.put(link, edge);</span>
-<span class="nc" id="L458">	}</span>
+<span class="nc" id="L455">		edges.put(link, edge);</span>
+<span class="nc" id="L456">	}</span>
 
 	private IEntityImage printEntityInternal(Entity ent) {
-<span class="nc bnc" id="L461" title="All 2 branches missed.">		if (ent.isRemoved())</span>
-<span class="nc" id="L462">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L459" title="All 2 branches missed.">		if (ent.isRemoved())</span>
+<span class="nc" id="L460">			throw new IllegalStateException();</span>
 
-<span class="nc bnc" id="L464" title="All 2 branches missed.">		if (ent.getSvekImage() == null) {</span>
-<span class="nc" id="L465">			final ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="nc bnc" id="L466" title="All 2 branches missed.">			if (skinParam.sameClassWidth())</span>
-<span class="nc" id="L467">				System.err.println(&quot;NOT YET IMPLEMENED&quot;);</span>
+<span class="nc bnc" id="L462" title="All 2 branches missed.">		if (ent.getSvekImage() == null) {</span>
+<span class="nc" id="L463">			final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc bnc" id="L464" title="All 2 branches missed.">			if (skinParam.sameClassWidth())</span>
+<span class="nc" id="L465">				System.err.println(&quot;NOT YET IMPLEMENED&quot;);</span>
 
-<span class="nc" id="L469">			return GeneralImageBuilder.createEntityImageBlock(ent, diagram.isHideEmptyDescriptionForState(), diagram,</span>
-<span class="nc" id="L470">					getBibliotekon(), null, diagram.getLinks());</span>
+<span class="nc" id="L467">			return GeneralImageBuilder.createEntityImageBlock(ent, diagram.isHideEmptyDescriptionForState(), diagram,</span>
+<span class="nc" id="L468">					getBibliotekon(), null, diagram.getLinks());</span>
 		}
-<span class="nc" id="L472">		return ent.getSvekImage();</span>
+<span class="nc" id="L470">		return ent.getSvekImage();</span>
 	}
 
 	@Override
 	public TextBlock getTextBlock12026(List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
 
-<span class="nc" id="L479">		final ElkNode root = ElkGraphUtil.createGraph();</span>
-<span class="nc" id="L480">		root.setProperty(CoreOptions.DIRECTION, Direction.DOWN);</span>
-<span class="nc" id="L481">		root.setProperty(CoreOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);</span>
+<span class="nc" id="L477">		final ElkNode root = ElkGraphUtil.createGraph();</span>
+<span class="nc" id="L478">		root.setProperty(CoreOptions.DIRECTION, Direction.DOWN);</span>
+<span class="nc" id="L479">		root.setProperty(CoreOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);</span>
 
-<span class="nc" id="L483">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
+<span class="nc" id="L481">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
 
-<span class="nc" id="L485">		this.printAllSubgroups(stringBounder, root, diagram.getRootGroup());</span>
-<span class="nc" id="L486">		this.printEntities(stringBounder, root, getUnpackagedEntities());</span>
+<span class="nc" id="L483">		this.printAllSubgroups(stringBounder, root, diagram.getRootGroup());</span>
+<span class="nc" id="L484">		this.printEntities(stringBounder, root, getUnpackagedEntities());</span>
 
-<span class="nc" id="L488">		this.manageAllEdges(stringBounder);</span>
+<span class="nc" id="L486">		this.manageAllEdges(stringBounder);</span>
 
-<span class="nc" id="L490">		new RecursiveGraphLayoutEngine().layout(root, new NullElkProgressMonitor());</span>
+<span class="nc" id="L488">		new RecursiveGraphLayoutEngine().layout(root, new NullElkProgressMonitor());</span>
 
-<span class="nc" id="L492">		final MinMax minMax = TextBlockUtils.getMinMax(</span>
+<span class="nc" id="L490">		final MinMax minMax = TextBlockUtils.getMinMax(</span>
 				new MyElkDrawing(clusterManager, diagram, null, clusters, edges, nodes), stringBounder, false);
 
-<span class="nc" id="L495">		return new MyElkDrawing(clusterManager, diagram, minMax, clusters, edges, nodes);</span>
+<span class="nc" id="L493">		return new MyElkDrawing(clusterManager, diagram, minMax, clusters, edges, nodes);</span>
 	}
 
 }

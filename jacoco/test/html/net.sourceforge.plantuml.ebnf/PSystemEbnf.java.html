@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +43,7 @@ import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FloatingNote;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -55,7 +53,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.PragmaKey;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -64,59 +61,59 @@ import net.sourceforge.plantuml.utils.CharInspector;
 
 public class PSystemEbnf extends TitledDiagram {
 
-<span class="nc" id="L67">	private final List&lt;TextBlockable&gt; expressions = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L64">	private final List&lt;TextBlockable&gt; expressions = new ArrayList&lt;&gt;();</span>
 
 	public PSystemEbnf(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L70">		super(source, UmlDiagramType.EBNF, null, preprocessing);</span>
-<span class="nc" id="L71">	}</span>
+<span class="nc" id="L67">		super(source, DiagramType.EBNF, null, preprocessing);</span>
+<span class="nc" id="L68">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L74">		return new DiagramDescription(&quot;(EBNF)&quot;);</span>
+<span class="nc" id="L71">		return new DiagramDescription(&quot;(EBNF)&quot;);</span>
 	}
 
 	public CommandExecutionResult addBlocLines(BlocLines blines, String commentAbove, String commentBelow) {
-<span class="nc" id="L78">		final boolean isCompact = getPragma().isDefine(PragmaKey.COMPACT);</span>
-<span class="nc" id="L79">		final CharInspector it = blines.inspector();</span>
-<span class="nc" id="L80">		final EbnfExpression tmp1 = EbnfExpression.create(it, isCompact, commentAbove, commentBelow);</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (tmp1.isEmpty())</span>
-<span class="nc" id="L82">			return CommandExecutionResult.error(&quot;Unparsable expression&quot;);</span>
-<span class="nc" id="L83">		expressions.add(tmp1);</span>
-<span class="nc" id="L84">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L75">		final boolean isCompact = getPragma().isDefine(PragmaKey.COMPACT);</span>
+<span class="nc" id="L76">		final CharInspector it = blines.inspector();</span>
+<span class="nc" id="L77">		final EbnfExpression tmp1 = EbnfExpression.create(it, isCompact, commentAbove, commentBelow);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (tmp1.isEmpty())</span>
+<span class="nc" id="L79">			return CommandExecutionResult.error(&quot;Unparsable expression&quot;);</span>
+<span class="nc" id="L80">		expressions.add(tmp1);</span>
+<span class="nc" id="L81">		return CommandExecutionResult.ok();</span>
 
 	}
 
 	public CommandExecutionResult addNote(final Display note, Colors colors) {
-<span class="nc" id="L89">		expressions.add(new TextBlockable() {</span>
+<span class="nc" id="L86">		expressions.add(new TextBlockable() {</span>
 			@Override
 			public TextBlock getUDrawable(ISkinParam skinParam, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L92">				final FloatingNote f = FloatingNote.create(note, skinParam, SName.ebnf);</span>
-<span class="nc" id="L93">				return TextBlockUtils.withMargin(f, 0, 0, 5, 15);</span>
+<span class="nc" id="L89">				final FloatingNote f = FloatingNote.create(note, skinParam, SName.ebnf);</span>
+<span class="nc" id="L90">				return TextBlockUtils.withMargin(f, 0, 0, 5, 15);</span>
 			}
 		});
-<span class="nc" id="L96">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L93">		return CommandExecutionResult.ok();</span>
 	}
 
 	@Override
 	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (expressions.size() == 0) {</span>
-<span class="nc" id="L102">			final Style style = ETile.getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L103">			final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (expressions.size() == 0) {</span>
+<span class="nc" id="L99">			final Style style = ETile.getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L100">			final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="nc" id="L105">			final TextBlock tmp = EbnfEngine.syntaxError(fc, getSkinParam());</span>
-<span class="nc" id="L106">			return TextBlockUtils.addBackcolor(tmp, null);</span>
+<span class="nc" id="L102">			final TextBlock tmp = EbnfEngine.syntaxError(fc, getSkinParam());</span>
+<span class="nc" id="L103">			return TextBlockUtils.addBackcolor(tmp, null);</span>
 		}
 
-<span class="nc" id="L109">		TextBlock result = expressions.get(0).getUDrawable(getSkinParam(), getPreprocessingArtifact());</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		for (int i = 1; i &lt; expressions.size(); i++)</span>
-<span class="nc" id="L111">			result = TextBlockUtils.mergeTB(result,</span>
-<span class="nc" id="L112">					expressions.get(i).getUDrawable(getSkinParam(), getPreprocessingArtifact()),</span>
+<span class="nc" id="L106">		TextBlock result = expressions.get(0).getUDrawable(getSkinParam(), getPreprocessingArtifact());</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		for (int i = 1; i &lt; expressions.size(); i++)</span>
+<span class="nc" id="L108">			result = TextBlockUtils.mergeTB(result,</span>
+<span class="nc" id="L109">					expressions.get(i).getUDrawable(getSkinParam(), getPreprocessingArtifact()),</span>
 					HorizontalAlignment.LEFT);
-<span class="nc" id="L114">		return TextBlockUtils.addBackcolor(result, null);</span>
+<span class="nc" id="L111">		return TextBlockUtils.addBackcolor(result, null);</span>
 	}
 
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L119">		return getTextMainBlock01970(fileFormatOption);</span>
+<span class="nc" id="L116">		return getTextMainBlock01970(fileFormatOption);</span>
 	}
 
 }

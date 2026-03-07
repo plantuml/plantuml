@@ -162,8 +162,8 @@ implements <a href="../style/ISkinParam.html" title="interface in net.sourceforg
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#copyAllFrom(net.sourceforge.plantuml.Previous)" class="member-name-link">copyAllFrom</a><wbr>(<a href="../Previous.html" title="class in net.sourceforge.plantuml">Previous</a>&nbsp;previous)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SkinParam.html" title="class in net.sourceforge.plantuml.skin">SkinParam</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(net.sourceforge.plantuml.nio.PathSystem,net.sourceforge.plantuml.skin.UmlDiagramType,net.sourceforge.plantuml.skin.Pragma,net.sourceforge.plantuml.preproc.ConfigurationStore)" class="member-name-link">create</a><wbr>(<a href="../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a>&nbsp;pathSystem,
- <a href="UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;type,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(net.sourceforge.plantuml.nio.PathSystem,net.sourceforge.plantuml.core.DiagramType,net.sourceforge.plantuml.skin.Pragma,net.sourceforge.plantuml.preproc.ConfigurationStore)" class="member-name-link">create</a><wbr>(<a href="../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a>&nbsp;pathSystem,
+ <a href="../core/DiagramType.html" title="enum class in net.sourceforge.plantuml.core">DiagramType</a>&nbsp;type,
  <a href="Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma,
  <a href="../preproc/ConfigurationStore.html" title="class in net.sourceforge.plantuml.preproc">ConfigurationStore</a>&lt;<a href="../preproc/OptionKey.html" title="enum class in net.sourceforge.plantuml.preproc">OptionKey</a>&gt;&nbsp;option)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
@@ -211,102 +211,102 @@ implements <a href="../style/ISkinParam.html" title="interface in net.sourceforg
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDiagonalCorner(net.sourceforge.plantuml.skin.CornerParam,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">getDiagonalCorner</a><wbr>(<a href="CornerParam.html" title="enum class in net.sourceforge.plantuml.skin">CornerParam</a>&nbsp;param,
  <a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../dot/DotSplines.html" title="enum class in net.sourceforge.plantuml.dot">DotSplines</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDotSplines()" class="member-name-link">getDotSplines</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../core/DiagramType.html" title="enum class in net.sourceforge.plantuml.core">DiagramType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDiagramType()" class="member-name-link">getDiagramType</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDpi()" class="member-name-link">getDpi</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../dot/DotSplines.html" title="enum class in net.sourceforge.plantuml.dot">DotSplines</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDotSplines()" class="member-name-link">getDotSplines</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/font/UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFont(net.sourceforge.plantuml.stereo.Stereotype,boolean,net.sourceforge.plantuml.klimt.font.FontParam...)" class="member-name-link">getFont</a><wbr>(<a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDpi()" class="member-name-link">getDpi</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/font/UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFont(net.sourceforge.plantuml.stereo.Stereotype,boolean,net.sourceforge.plantuml.klimt.font.FontParam...)" class="member-name-link">getFont</a><wbr>(<a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
  boolean&nbsp;inPackageTitle,
  <a href="../klimt/font/FontParam.html" title="enum class in net.sourceforge.plantuml.klimt.font">FontParam</a>...&nbsp;fontParam)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFontHtmlColor(net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.klimt.font.FontParam...)" class="member-name-link">getFontHtmlColor</a><wbr>(<a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
- <a href="../klimt/font/FontParam.html" title="enum class in net.sourceforge.plantuml.klimt.font">FontParam</a>...&nbsp;param)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/geom/HorizontalAlignment.html" title="enum class in net.sourceforge.plantuml.klimt.geom">HorizontalAlignment</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHorizontalAlignment(net.sourceforge.plantuml.skin.AlignmentParam,net.sourceforge.plantuml.skin.ArrowDirection,boolean,net.sourceforge.plantuml.klimt.geom.HorizontalAlignment)" class="member-name-link">getHorizontalAlignment</a><wbr>(<a href="AlignmentParam.html" title="enum class in net.sourceforge.plantuml.skin">AlignmentParam</a>&nbsp;param,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFontHtmlColor(net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.klimt.font.FontParam...)" class="member-name-link">getFontHtmlColor</a><wbr>(<a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
+ <a href="../klimt/font/FontParam.html" title="enum class in net.sourceforge.plantuml.klimt.font">FontParam</a>...&nbsp;param)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/geom/HorizontalAlignment.html" title="enum class in net.sourceforge.plantuml.klimt.geom">HorizontalAlignment</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHorizontalAlignment(net.sourceforge.plantuml.skin.AlignmentParam,net.sourceforge.plantuml.skin.ArrowDirection,boolean,net.sourceforge.plantuml.klimt.geom.HorizontalAlignment)" class="member-name-link">getHorizontalAlignment</a><wbr>(<a href="AlignmentParam.html" title="enum class in net.sourceforge.plantuml.skin">AlignmentParam</a>&nbsp;param,
  <a href="ArrowDirection.html" title="enum class in net.sourceforge.plantuml.skin">ArrowDirection</a>&nbsp;arrowDirection,
  boolean&nbsp;isReverseDefine,
  <a href="../klimt/geom/HorizontalAlignment.html" title="enum class in net.sourceforge.plantuml.klimt.geom">HorizontalAlignment</a>&nbsp;overrideDefault)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHtmlColor(net.sourceforge.plantuml.skin.ColorParam,net.sourceforge.plantuml.stereo.Stereotype,boolean)" class="member-name-link">getHtmlColor</a><wbr>(<a href="ColorParam.html" title="enum class in net.sourceforge.plantuml.skin">ColorParam</a>&nbsp;param,
- <a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
- boolean&nbsp;clickable)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHyperlinkColor()" class="member-name-link">getHyperlinkColor</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHtmlColor(net.sourceforge.plantuml.skin.ColorParam,net.sourceforge.plantuml.stereo.Stereotype,boolean)" class="member-name-link">getHtmlColor</a><wbr>(<a href="ColorParam.html" title="enum class in net.sourceforge.plantuml.skin">ColorParam</a>&nbsp;param,
+ <a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
+ boolean&nbsp;clickable)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIHtmlColorSet()" class="member-name-link">getIHtmlColorSet</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHyperlinkColor()" class="member-name-link">getHyperlinkColor</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../style/LengthAdjust.html" title="enum class in net.sourceforge.plantuml.style">LengthAdjust</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getlengthAdjust()" class="member-name-link">getlengthAdjust</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIHtmlColorSet()" class="member-name-link">getIHtmlColorSet</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMonospacedFamily()" class="member-name-link">getMonospacedFamily</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNodesep()" class="member-name-link">getNodesep</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPadding()" class="member-name-link">getPadding</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPadding(net.sourceforge.plantuml.skin.PaddingParam)" class="member-name-link">getPadding</a><wbr>(<a href="PaddingParam.html" title="enum class in net.sourceforge.plantuml.skin">PaddingParam</a>&nbsp;param)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final double</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getParamSameClassWidth()" class="member-name-link">getParamSameClassWidth</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPathSystem()" class="member-name-link">getPathSystem</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getPossibleValues()" class="member-name-link">getPossibleValues</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPragma()" class="member-name-link">getPragma</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPreserveAspectRatio()" class="member-name-link">getPreserveAspectRatio</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../klimt/geom/Rankdir.html" title="enum class in net.sourceforge.plantuml.klimt.geom">Rankdir</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRankdir()" class="member-name-link">getRankdir</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRanksep()" class="member-name-link">getRanksep</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRoundCorner(net.sourceforge.plantuml.skin.CornerParam,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">getRoundCorner</a><wbr>(<a href="CornerParam.html" title="enum class in net.sourceforge.plantuml.skin">CornerParam</a>&nbsp;param,
- <a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SplitParam.html" title="class in net.sourceforge.plantuml.skin">SplitParam</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSplitParam()" class="member-name-link">getSplitParam</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/sprite/Sprite.html" title="interface in net.sourceforge.plantuml.klimt.sprite">Sprite</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSprite(java.lang.String)" class="member-name-link">getSprite</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/geom/HorizontalAlignment.html" title="enum class in net.sourceforge.plantuml.klimt.geom">HorizontalAlignment</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStereotypeAlignment()" class="member-name-link">getStereotypeAlignment</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../style/LengthAdjust.html" title="enum class in net.sourceforge.plantuml.style">LengthAdjust</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getlengthAdjust()" class="member-name-link">getlengthAdjust</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSvgLinkTarget()" class="member-name-link">getSvgLinkTarget</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMonospacedFamily()" class="member-name-link">getMonospacedFamily</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTabSize()" class="member-name-link">getTabSize</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNodesep()" class="member-name-link">getNodesep</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getThickness(net.sourceforge.plantuml.skin.LineParam,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">getThickness</a><wbr>(<a href="LineParam.html" title="enum class in net.sourceforge.plantuml.skin">LineParam</a>&nbsp;param,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPadding()" class="member-name-link">getPadding</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPadding(net.sourceforge.plantuml.skin.PaddingParam)" class="member-name-link">getPadding</a><wbr>(<a href="PaddingParam.html" title="enum class in net.sourceforge.plantuml.skin">PaddingParam</a>&nbsp;param)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getParamSameClassWidth()" class="member-name-link">getParamSameClassWidth</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPathSystem()" class="member-name-link">getPathSystem</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getPossibleValues()" class="member-name-link">getPossibleValues</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPragma()" class="member-name-link">getPragma</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPreserveAspectRatio()" class="member-name-link">getPreserveAspectRatio</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../klimt/geom/Rankdir.html" title="enum class in net.sourceforge.plantuml.klimt.geom">Rankdir</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRankdir()" class="member-name-link">getRankdir</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRanksep()" class="member-name-link">getRanksep</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRoundCorner(net.sourceforge.plantuml.skin.CornerParam,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">getRoundCorner</a><wbr>(<a href="CornerParam.html" title="enum class in net.sourceforge.plantuml.skin">CornerParam</a>&nbsp;param,
  <a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../TikzFontDistortion.html" title="class in net.sourceforge.plantuml">TikzFontDistortion</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTikzFontDistortion()" class="member-name-link">getTikzFontDistortion</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUmlDiagramType()" class="member-name-link">getUmlDiagramType</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SplitParam.html" title="class in net.sourceforge.plantuml.skin">SplitParam</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSplitParam()" class="member-name-link">getSplitParam</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/sprite/Sprite.html" title="interface in net.sourceforge.plantuml.klimt.sprite">Sprite</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSprite(java.lang.String)" class="member-name-link">getSprite</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/geom/HorizontalAlignment.html" title="enum class in net.sourceforge.plantuml.klimt.geom">HorizontalAlignment</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStereotypeAlignment()" class="member-name-link">getStereotypeAlignment</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSvgLinkTarget()" class="member-name-link">getSvgLinkTarget</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTabSize()" class="member-name-link">getTabSize</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getThickness(net.sourceforge.plantuml.skin.LineParam,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">getThickness</a><wbr>(<a href="LineParam.html" title="enum class in net.sourceforge.plantuml.skin">LineParam</a>&nbsp;param,
+ <a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../TikzFontDistortion.html" title="class in net.sourceforge.plantuml">TikzFontDistortion</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTikzFontDistortion()" class="member-name-link">getTikzFontDistortion</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getValue(java.lang.String)" class="member-name-link">getValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
@@ -422,7 +422,7 @@ implements <a href="../style/ISkinParam.html" title="interface in net.sourceforg
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useRankSame()" class="member-name-link">useRankSame</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useSwimlanes(net.sourceforge.plantuml.skin.UmlDiagramType)" class="member-name-link">useSwimlanes</a><wbr>(<a href="UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;type)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useSwimlanes(net.sourceforge.plantuml.core.DiagramType)" class="member-name-link">useSwimlanes</a><wbr>(<a href="../core/DiagramType.html" title="enum class in net.sourceforge.plantuml.core">DiagramType</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useUnderlineForHyperlink()" class="member-name-link">useUnderlineForHyperlink</a>()</code></div>
@@ -564,10 +564,10 @@ implements <a href="../style/ISkinParam.html" title="interface in net.sourceforg
 </section>
 </li>
 <li>
-<section class="detail" id="create(net.sourceforge.plantuml.nio.PathSystem,net.sourceforge.plantuml.skin.UmlDiagramType,net.sourceforge.plantuml.skin.Pragma,net.sourceforge.plantuml.preproc.ConfigurationStore)">
+<section class="detail" id="create(net.sourceforge.plantuml.nio.PathSystem,net.sourceforge.plantuml.core.DiagramType,net.sourceforge.plantuml.skin.Pragma,net.sourceforge.plantuml.preproc.ConfigurationStore)">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SkinParam.html" title="class in net.sourceforge.plantuml.skin">SkinParam</a></span>&nbsp;<span class="element-name">create</span><wbr><span class="parameters">(<a href="../nio/PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a>&nbsp;pathSystem,
- <a href="UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;type,
+ <a href="../core/DiagramType.html" title="enum class in net.sourceforge.plantuml.core">DiagramType</a>&nbsp;type,
  <a href="Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma,
  <a href="../preproc/ConfigurationStore.html" title="class in net.sourceforge.plantuml.preproc">ConfigurationStore</a>&lt;<a href="../preproc/OptionKey.html" title="enum class in net.sourceforge.plantuml.preproc">OptionKey</a>&gt;&nbsp;option)</span></div>
 </section>
@@ -825,12 +825,12 @@ implements <a href="../style/ISkinParam.html" title="interface in net.sourceforg
 </section>
 </li>
 <li>
-<section class="detail" id="useSwimlanes(net.sourceforge.plantuml.skin.UmlDiagramType)">
+<section class="detail" id="useSwimlanes(net.sourceforge.plantuml.core.DiagramType)">
 <h3>useSwimlanes</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">useSwimlanes</span><wbr><span class="parameters">(<a href="UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;type)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">useSwimlanes</span><wbr><span class="parameters">(<a href="../core/DiagramType.html" title="enum class in net.sourceforge.plantuml.core">DiagramType</a>&nbsp;type)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../style/ISkinParam.html#useSwimlanes(net.sourceforge.plantuml.skin.UmlDiagramType)">useSwimlanes</a></code>&nbsp;in interface&nbsp;<code><a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></code></dd>
+<dd><code><a href="../style/ISkinParam.html#useSwimlanes(net.sourceforge.plantuml.core.DiagramType)">useSwimlanes</a></code>&nbsp;in interface&nbsp;<code><a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></code></dd>
 </dl>
 </section>
 </li>
@@ -1124,12 +1124,12 @@ implements <a href="../style/ISkinParam.html" title="interface in net.sourceforg
 </section>
 </li>
 <li>
-<section class="detail" id="getUmlDiagramType()">
-<h3>getUmlDiagramType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a></span>&nbsp;<span class="element-name">getUmlDiagramType</span>()</div>
+<section class="detail" id="getDiagramType()">
+<h3>getDiagramType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../core/DiagramType.html" title="enum class in net.sourceforge.plantuml.core">DiagramType</a></span>&nbsp;<span class="element-name">getDiagramType</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../style/ISkinParam.html#getUmlDiagramType()">getUmlDiagramType</a></code>&nbsp;in interface&nbsp;<code><a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></code></dd>
+<dd><code><a href="../style/ISkinParam.html#getDiagramType()">getDiagramType</a></code>&nbsp;in interface&nbsp;<code><a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></code></dd>
 </dl>
 </section>
 </li>

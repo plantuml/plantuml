@@ -42,12 +42,12 @@ import java.util.List;
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.dot.CucaDiagramSimplifierActivity;
 import net.sourceforge.plantuml.dot.CucaDiagramSimplifierState;
 import net.sourceforge.plantuml.dot.DotData;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 
@@ -62,19 +62,19 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 
 <span class="fc" id="L63">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
 
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY)</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (diagram.getDiagramType() == DiagramType.ACTIVITY)</span>
 <span class="nc" id="L66">			new CucaDiagramSimplifierActivity().simplify(diagram, stringBounder, DotMode.NORMAL);</span>
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE)</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		else if (diagram.getDiagramType() == DiagramType.STATE)</span>
 <span class="nc" id="L68">			new CucaDiagramSimplifierState().simplify(diagram, stringBounder, DotMode.NORMAL);</span>
 
 <span class="fc" id="L70">		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, clusterManager.getCurrent(),</span>
-<span class="fc" id="L71">				diagram.getUmlDiagramType(), diagram.getSkinParam());</span>
+<span class="fc" id="L71">				diagram.getDiagramType(), diagram.getSkinParam());</span>
 
 <span class="fc" id="L73">		final DotData dotData = new DotData(diagram, diagram.getRootGroup(), getOrderedLinks(), diagram.leafs(),</span>
 				diagram, diagram);
 
 <span class="fc" id="L76">		GraphvizImageBuilder imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),</span>
-<span class="fc" id="L77">				diagram.getUmlDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager);</span>
+<span class="fc" id="L77">				diagram.getDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager);</span>
 <span class="fc" id="L78">		BaseFile basefile = null;</span>
 //		if (fileFormatOption.isDebugSvek() &amp;&amp; os instanceof NamedOutputStream)
 //			basefile = ((NamedOutputStream) os).getBasefile();

@@ -51,13 +51,13 @@ import h.ST_Agnode_s;
 import h.ST_Agnodeinfo_t;
 import h.ST_Agraph_s;
 import h.ST_GVC_s;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -110,7 +110,7 @@ public class SmetanaForJson {
 <span class="fc" id="L110">	}</span>
 
 	private SName getDiagramType() {
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (skinParam.getUmlDiagramType() == UmlDiagramType.JSON)</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (skinParam.getDiagramType() == DiagramType.JSON)</span>
 <span class="fc" id="L114">			return SName.jsonDiagram;</span>
 <span class="nc" id="L115">		return SName.yamlDiagram;</span>
 	}

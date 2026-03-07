@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
@@ -60,7 +61,6 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
@@ -74,12 +74,12 @@ final public class CommandLinkClass extends SingleLineCommand2&lt;AbstractClassO
 	private static final String SINGLE2 = &quot;(?:&quot; + SINGLE + &quot;|&quot; + SINGLE_GUILLEMENT + &quot;)&quot;;
 	private static final String COUPLE = &quot;\\([%s]*(&quot; + SINGLE2 + &quot;)[%s]*,[%s]*(&quot; + SINGLE2 + &quot;)[%s]*\\)&quot;;
 
-	public CommandLinkClass(UmlDiagramType umlDiagramType) {
-<span class="fc" id="L78">		super(getRegexConcat(umlDiagramType));</span>
+	public CommandLinkClass(DiagramType diagramType) {
+<span class="fc" id="L78">		super(getRegexConcat(diagramType));</span>
 <span class="fc" id="L79">	}</span>
 
-	static private RegexConcat getRegexConcat(UmlDiagramType umlDiagramType) {
-<span class="fc" id="L82">		return RegexConcat.build(CommandLinkClass.class.getName() + umlDiagramType, RegexLeaf.start(), //</span>
+	static private RegexConcat getRegexConcat(DiagramType diagramType) {
+<span class="fc" id="L82">		return RegexConcat.build(CommandLinkClass.class.getName() + diagramType, RegexLeaf.start(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(1, &quot;HEADER&quot;, &quot;@([\\d.]+)&quot;), //

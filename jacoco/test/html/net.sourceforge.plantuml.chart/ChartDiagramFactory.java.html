@@ -54,39 +54,35 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ChartDiagramFactory extends PSystemCommandFactory {
 
 	public ChartDiagramFactory() {
-<span class="fc" id="L62">		super(DiagramType.CHART);</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L61">		super(DiagramType.CHART);</span>
+<span class="fc" id="L62">	}</span>
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
 		// Add chart-specific commands first to take priority
-<span class="nc" id="L68">		cmds.add(new CommandChartHAxis());</span>
-<span class="nc" id="L69">		cmds.add(new CommandChartVAxis());</span>
-<span class="nc" id="L70">		cmds.add(new CommandChartBar());</span>
-<span class="nc" id="L71">		cmds.add(new CommandChartLine());</span>
-<span class="nc" id="L72">		cmds.add(new CommandChartArea());</span>
-<span class="nc" id="L73">		cmds.add(new CommandChartScatter());</span>
-<span class="nc" id="L74">		cmds.add(new CommandChartLegend());</span>
-<span class="nc" id="L75">		cmds.add(new CommandChartStackMode());</span>
-<span class="nc" id="L76">		cmds.add(new CommandChartOrientation());</span>
-<span class="nc" id="L77">		cmds.add(new CommandChartAnnotation());</span>
+<span class="nc" id="L67">		cmds.add(new CommandChartHAxis());</span>
+<span class="nc" id="L68">		cmds.add(new CommandChartVAxis());</span>
+<span class="nc" id="L69">		cmds.add(new CommandChartBar());</span>
+<span class="nc" id="L70">		cmds.add(new CommandChartLine());</span>
+<span class="nc" id="L71">		cmds.add(new CommandChartArea());</span>
+<span class="nc" id="L72">		cmds.add(new CommandChartScatter());</span>
+<span class="nc" id="L73">		cmds.add(new CommandChartLegend());</span>
+<span class="nc" id="L74">		cmds.add(new CommandChartStackMode());</span>
+<span class="nc" id="L75">		cmds.add(new CommandChartOrientation());</span>
+<span class="nc" id="L76">		cmds.add(new CommandChartAnnotation());</span>
 		// Add common commands last so they don't override chart-specific ones
-<span class="nc" id="L79">		CommonCommands.addCommonCommands1(cmds);</span>
-<span class="nc" id="L80">	}</span>
+<span class="nc" id="L78">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="nc" id="L79">	}</span>
 
 	@Override
-	public ChartDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public ChartDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 <span class="nc" id="L84">		return new ChartDiagram(source, preprocessing);</span>
 	}
 
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L89">		return UmlDiagramType.CHART;</span>
-	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -41,11 +41,8 @@ import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemDitaaFactory extends PSystemBasicFactory&lt;PSystemDitaa&gt; {
-	// ::remove folder when __HAXE__
-
 	// private StringBuilder data;
 	// // -E,--no-separation
 	// private boolean performSeparationOfCommonEdges;
@@ -54,35 +51,35 @@ public class PSystemDitaaFactory extends PSystemBasicFactory&lt;PSystemDitaa&gt;
 	// private boolean dropShadows;
 
 	public PSystemDitaaFactory() {
-<span class="fc" id="L57">		super(DiagramType.DITAA);</span>
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L54">		super(DiagramType.DITAA);</span>
+<span class="fc" id="L55">	}</span>
 
 	@Override
 	public PSystemDitaa initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L62">		boolean performSeparationOfCommonEdges = true;</span>
-<span class="nc bnc" id="L63" title="All 6 branches missed.">		if (startLine != null &amp;&amp; (startLine.contains(&quot;-E&quot;) || startLine.contains(&quot;--no-separation&quot;)))</span>
-<span class="nc" id="L64">			performSeparationOfCommonEdges = false;</span>
+<span class="nc" id="L59">		boolean performSeparationOfCommonEdges = true;</span>
+<span class="nc bnc" id="L60" title="All 6 branches missed.">		if (startLine != null &amp;&amp; (startLine.contains(&quot;-E&quot;) || startLine.contains(&quot;--no-separation&quot;)))</span>
+<span class="nc" id="L61">			performSeparationOfCommonEdges = false;</span>
 
-<span class="nc" id="L66">		boolean dropShadows = true;</span>
-<span class="nc bnc" id="L67" title="All 6 branches missed.">		if (startLine != null &amp;&amp; (startLine.contains(&quot;-S&quot;) || startLine.contains(&quot;--no-shadows&quot;)))</span>
-<span class="nc" id="L68">			dropShadows = false;</span>
+<span class="nc" id="L63">		boolean dropShadows = true;</span>
+<span class="nc bnc" id="L64" title="All 6 branches missed.">		if (startLine != null &amp;&amp; (startLine.contains(&quot;-S&quot;) || startLine.contains(&quot;--no-shadows&quot;)))</span>
+<span class="nc" id="L65">			dropShadows = false;</span>
 
-<span class="nc" id="L70">		boolean allCornersAreRound = false;</span>
-<span class="nc bnc" id="L71" title="All 6 branches missed.">		if (startLine != null &amp;&amp; (startLine.contains(&quot;-r&quot;) || startLine.contains(&quot;--round-corners&quot;)))</span>
-<span class="nc" id="L72">			allCornersAreRound = true;</span>
+<span class="nc" id="L67">		boolean allCornersAreRound = false;</span>
+<span class="nc bnc" id="L68" title="All 6 branches missed.">		if (startLine != null &amp;&amp; (startLine.contains(&quot;-r&quot;) || startLine.contains(&quot;--round-corners&quot;)))</span>
+<span class="nc" id="L69">			allCornersAreRound = true;</span>
 
-<span class="nc" id="L74">		boolean transparentBackground = false;</span>
-<span class="nc bnc" id="L75" title="All 6 branches missed.">		if (startLine != null &amp;&amp; (startLine.contains(&quot;-T&quot;) || startLine.contains(&quot;--transparent&quot;)))</span>
-<span class="nc" id="L76">			transparentBackground = true;</span>
+<span class="nc" id="L71">		boolean transparentBackground = false;</span>
+<span class="nc bnc" id="L72" title="All 6 branches missed.">		if (startLine != null &amp;&amp; (startLine.contains(&quot;-T&quot;) || startLine.contains(&quot;--transparent&quot;)))</span>
+<span class="nc" id="L73">			transparentBackground = true;</span>
 
 //		boolean forceFontSize = false;
 //		if (startLine != null &amp;&amp; startLine.contains(&quot;--font-size&quot;))
 //			forceFontSize = true;
 
-<span class="nc" id="L82">		final float scale = extractScale(startLine);</span>
+<span class="nc" id="L79">		final float scale = extractScale(startLine);</span>
 		// final Font font = extractFont(startLine);
 
-<span class="nc" id="L85">		return new PSystemDitaa(source, performSeparationOfCommonEdges, dropShadows, allCornersAreRound,</span>
+<span class="nc" id="L82">		return new PSystemDitaa(source, performSeparationOfCommonEdges, dropShadows, allCornersAreRound,</span>
 				transparentBackground, scale, preprocessing);
 
 	}
@@ -90,51 +87,51 @@ public class PSystemDitaaFactory extends PSystemBasicFactory&lt;PSystemDitaa&gt;
 	@Override
 	public PSystemDitaa executeLine(UmlSource source, PSystemDitaa system, String line,
 			PreprocessingArtifact preprocessing) {
-<span class="nc bnc" id="L93" title="All 6 branches missed.">		if (system == null &amp;&amp; (line.equals(&quot;ditaa&quot;) || line.startsWith(&quot;ditaa(&quot;))) {</span>
-<span class="nc" id="L94">			boolean performSeparationOfCommonEdges = true;</span>
-<span class="nc bnc" id="L95" title="All 4 branches missed.">			if (line.contains(&quot;-E&quot;) || line.contains(&quot;--no-separation&quot;))</span>
-<span class="nc" id="L96">				performSeparationOfCommonEdges = false;</span>
+<span class="nc bnc" id="L90" title="All 6 branches missed.">		if (system == null &amp;&amp; (line.equals(&quot;ditaa&quot;) || line.startsWith(&quot;ditaa(&quot;))) {</span>
+<span class="nc" id="L91">			boolean performSeparationOfCommonEdges = true;</span>
+<span class="nc bnc" id="L92" title="All 4 branches missed.">			if (line.contains(&quot;-E&quot;) || line.contains(&quot;--no-separation&quot;))</span>
+<span class="nc" id="L93">				performSeparationOfCommonEdges = false;</span>
 
-<span class="nc" id="L98">			boolean dropShadows = true;</span>
-<span class="nc bnc" id="L99" title="All 4 branches missed.">			if (line.contains(&quot;-S&quot;) || line.contains(&quot;--no-shadows&quot;))</span>
-<span class="nc" id="L100">				dropShadows = false;</span>
+<span class="nc" id="L95">			boolean dropShadows = true;</span>
+<span class="nc bnc" id="L96" title="All 4 branches missed.">			if (line.contains(&quot;-S&quot;) || line.contains(&quot;--no-shadows&quot;))</span>
+<span class="nc" id="L97">				dropShadows = false;</span>
 
-<span class="nc" id="L102">			boolean allCornersAreRound = false;</span>
-<span class="nc bnc" id="L103" title="All 4 branches missed.">			if (line.contains(&quot;-r&quot;) || line.contains(&quot;--round-corners&quot;))</span>
-<span class="nc" id="L104">				allCornersAreRound = true;</span>
+<span class="nc" id="L99">			boolean allCornersAreRound = false;</span>
+<span class="nc bnc" id="L100" title="All 4 branches missed.">			if (line.contains(&quot;-r&quot;) || line.contains(&quot;--round-corners&quot;))</span>
+<span class="nc" id="L101">				allCornersAreRound = true;</span>
 
-<span class="nc" id="L106">			boolean transparentBackground = false;</span>
-<span class="nc bnc" id="L107" title="All 4 branches missed.">			if (line.contains(&quot;-T&quot;) || line.contains(&quot;--transparent&quot;))</span>
-<span class="nc" id="L108">				transparentBackground = true;</span>
+<span class="nc" id="L103">			boolean transparentBackground = false;</span>
+<span class="nc bnc" id="L104" title="All 4 branches missed.">			if (line.contains(&quot;-T&quot;) || line.contains(&quot;--transparent&quot;))</span>
+<span class="nc" id="L105">				transparentBackground = true;</span>
 
 //			boolean forceFontSize = false;
 //			if (line.contains(&quot;--font-size&quot;))
 //				forceFontSize = true;
 
-<span class="nc" id="L114">			final float scale = extractScale(line);</span>
+<span class="nc" id="L111">			final float scale = extractScale(line);</span>
 			// final Font font = extractFont(line);
-<span class="nc" id="L116">			return new PSystemDitaa(source, performSeparationOfCommonEdges, dropShadows, allCornersAreRound,</span>
+<span class="nc" id="L113">			return new PSystemDitaa(source, performSeparationOfCommonEdges, dropShadows, allCornersAreRound,</span>
 					transparentBackground, scale, preprocessing);
 		}
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (system == null)</span>
-<span class="nc" id="L120">			return null;</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (system == null)</span>
+<span class="nc" id="L117">			return null;</span>
 
-<span class="nc" id="L122">		system.add(line);</span>
-<span class="nc" id="L123">		return system;</span>
+<span class="nc" id="L119">		system.add(line);</span>
+<span class="nc" id="L120">		return system;</span>
 	}
 
-<span class="fc" id="L126">	private static final Pattern SCALE = Pattern.compile(&quot;scale=([\\d.]+)&quot;);</span>
+<span class="fc" id="L123">	private static final Pattern SCALE = Pattern.compile(&quot;scale=([\\d.]+)&quot;);</span>
 
 	private float extractScale(String line) {
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (line == null)</span>
-<span class="nc" id="L130">			return 1;</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (line == null)</span>
+<span class="nc" id="L127">			return 1;</span>
 
-<span class="nc" id="L132">		final Matcher m = SCALE.matcher(line);</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (m.find()) {</span>
-<span class="nc" id="L134">			final String number = m.group(1);</span>
-<span class="nc" id="L135">			return Float.parseFloat(number);</span>
+<span class="nc" id="L129">		final Matcher m = SCALE.matcher(line);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (m.find()) {</span>
+<span class="nc" id="L131">			final String number = m.group(1);</span>
+<span class="nc" id="L132">			return Float.parseFloat(number);</span>
 		}
-<span class="nc" id="L137">		return 1;</span>
+<span class="nc" id="L134">		return 1;</span>
 	}
 
 //	private Font extractFont(String line) {
@@ -173,11 +170,6 @@ public class PSystemDitaaFactory extends PSystemBasicFactory&lt;PSystemDitaa&gt;
 //
 //		return new Font(fontName, fontVariant, fontSize);
 //	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-<span class="nc" id="L179">		return null;</span>
-	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

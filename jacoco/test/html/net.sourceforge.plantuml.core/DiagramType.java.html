@@ -35,160 +35,256 @@
  */
 package net.sourceforge.plantuml.core;
 
-// To be merged with UmlDiagramType
-<span class="fc" id="L39">public enum DiagramType {</span>
-	// ::remove folder when __HAXE__
-<span class="fc" id="L41">	UML, BPM, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, MATH, LATEX, DEFINITION, GANTT, CHRONOLOGY, NW, MINDMAP,</span>
-<span class="fc" id="L42">	WBS, WIRE, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES, CHEN_EER, CHART, PACKET, UNKNOWN;</span>
+import java.util.Collection;
+import java.util.EnumSet;
 
-	static public DiagramType getTypeFromArobaseStart(String text) {
-<span class="fc bfc" id="L45" title="All 2 branches covered.">		for (int i = 0; i &lt; text.length(); i++) {</span>
-<span class="fc" id="L46">			final char c = text.charAt(i);</span>
+import net.sourceforge.plantuml.style.SName;
 
-<span class="fc bfc" id="L48" title="All 2 branches covered.">			if (Character.isWhitespace(c))</span>
-<span class="fc" id="L49">				continue;</span>
+<span class="fc" id="L43">public enum DiagramType {</span>
 
-<span class="pc bpc" id="L51" title="1 of 4 branches missed.">			if (c != '@' &amp;&amp; c != '\\')</span>
-<span class="fc" id="L52">				return UNKNOWN;</span>
+<span class="fc" id="L45">	SEQUENCE, STATE, CLASS, OBJECT, ACTIVITY, DESCRIPTION, COMPOSITE, TIMING, HELP, BPM, DITAA, DOT, JCCKIT, SALT, FLOW,</span>
+<span class="fc" id="L46">	CREOLE, MATH, LATEX, DEFINITION, GANTT, CHRONOLOGY, NWDIAG, MINDMAP, WBS, WIRE, JSON, GIT, BOARD, YAML, HCL, EBNF,</span>
+<span class="fc" id="L47">	REGEX, FILES, CHEN_EER, CHART, PACKET, SPRITES, UNKNOWN;</span>
 
-<span class="fc" id="L54">			final int pos = i + 1;</span>
-
-<span class="fc bfc" id="L56" title="All 4 branches covered.">			if (text.length() - pos &lt; 5 || check(&quot;start&quot;, text, pos) == false)</span>
-<span class="fc" id="L57">				return UNKNOWN;</span>
-
-<span class="fc" id="L59">			final int p = pos + 5;</span>
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">			if (p &gt;= text.length())</span>
-<span class="nc" id="L61">				return UNKNOWN;</span>
-
-<span class="fc" id="L63">			return getType(text, p);</span>
+	public boolean isLegacyUML() {
+<span class="nc bnc" id="L50" title="All 2 branches missed.">		switch (this) {</span>
+		case SEQUENCE:
+		case STATE:
+		case CLASS:
+		case OBJECT:
+		case ACTIVITY:
+		case DESCRIPTION:
+		case COMPOSITE:
+		case TIMING:
+		case HELP:
+		case SPRITES:
+<span class="nc" id="L61">			return true;</span>
+		default:
+<span class="nc" id="L63">			return false;</span>
 		}
-
-<span class="fc" id="L66">		return UNKNOWN;</span>
 	}
 
-	private static DiagramType getType(String text, final int p) {
-<span class="pc bpc" id="L70" title="13 of 18 branches missed.">		switch (Character.toLowerCase(text.charAt(p))) {</span>
+	static public Collection&lt;DiagramType&gt; getTypesFromArobaseStart(String text) {
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		for (int i = 0; i &lt; text.length(); i++) {</span>
+<span class="fc" id="L69">			final char c = text.charAt(i);</span>
+
+<span class="fc bfc" id="L71" title="All 2 branches covered.">			if (Character.isWhitespace(c))</span>
+<span class="fc" id="L72">				continue;</span>
+
+<span class="pc bpc" id="L74" title="1 of 4 branches missed.">			if (c != '@' &amp;&amp; c != '\\')</span>
+<span class="fc" id="L75">				return EnumSet.of(UNKNOWN);</span>
+
+<span class="fc" id="L77">			final int pos = i + 1;</span>
+
+<span class="fc bfc" id="L79" title="All 4 branches covered.">			if (text.length() - pos &lt; 5 || check(&quot;start&quot;, text, pos) == false)</span>
+<span class="fc" id="L80">				return EnumSet.of(UNKNOWN);</span>
+
+<span class="fc" id="L82">			final int p = pos + 5;</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">			if (p &gt;= text.length())</span>
+<span class="nc" id="L84">				return EnumSet.of(UNKNOWN);</span>
+
+<span class="fc" id="L86">			return getTypes(text, p);</span>
+		}
+
+<span class="fc" id="L89">		return EnumSet.of(UNKNOWN);</span>
+	}
+
+	private static Collection&lt;DiagramType&gt; getTypes(String text, final int p) {
+<span class="pc bpc" id="L93" title="13 of 18 branches missed.">		switch (Character.toLowerCase(text.charAt(p))) {</span>
 
 		case 'b':
-<span class="nc bnc" id="L73" title="All 2 branches missed.">			if (check(&quot;bpm&quot;, text, p))</span>
-<span class="nc" id="L74">				return BPM;</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">			if (check(&quot;board&quot;, text, p))</span>
-<span class="nc" id="L76">				return BOARD;</span>
-<span class="nc" id="L77">			return UNKNOWN;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			if (check(&quot;bpm&quot;, text, p))</span>
+<span class="nc" id="L97">				return EnumSet.of(BPM);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (check(&quot;board&quot;, text, p))</span>
+<span class="nc" id="L99">				return EnumSet.of(BOARD);</span>
+<span class="nc" id="L100">			return EnumSet.of(UNKNOWN);</span>
 
 		case 'c':
-<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (check(&quot;chart&quot;, text, p))</span>
-<span class="nc" id="L81">				return CHART;</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">			if (check(&quot;creole&quot;, text, p))</span>
-<span class="nc" id="L83">				return CREOLE;</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">			if (check(&quot;chronology&quot;, text, p))</span>
-<span class="nc" id="L85">				return CHRONOLOGY;</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">			if (check(&quot;chen&quot;, text, p))</span>
-<span class="nc" id="L87">				return CHEN_EER;</span>
-<span class="nc" id="L88">			return UNKNOWN;</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			if (check(&quot;chart&quot;, text, p))</span>
+<span class="nc" id="L104">				return EnumSet.of(CHART);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (check(&quot;creole&quot;, text, p))</span>
+<span class="nc" id="L106">				return EnumSet.of(CREOLE);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">			if (check(&quot;chronology&quot;, text, p))</span>
+<span class="nc" id="L108">				return EnumSet.of(CHRONOLOGY);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (check(&quot;chen&quot;, text, p))</span>
+<span class="nc" id="L110">				return EnumSet.of(CHEN_EER);</span>
+<span class="nc" id="L111">			return EnumSet.of(UNKNOWN);</span>
 
 		case 'd':
-<span class="nc bnc" id="L91" title="All 2 branches missed.">			if (check(&quot;dot&quot;, text, p))</span>
-<span class="nc" id="L92">				return DOT;</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">			if (check(&quot;dot&quot;, text, p))</span>
+<span class="nc" id="L115">				return EnumSet.of(DOT);</span>
 			// ::comment when __MIT__ __EPL__ __BSD__ __ASL__
-<span class="nc bnc" id="L94" title="All 2 branches missed.">			if (check(&quot;ditaa&quot;, text, p))</span>
-<span class="nc" id="L95">				return DITAA;</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">			if (check(&quot;ditaa&quot;, text, p))</span>
+<span class="nc" id="L118">				return EnumSet.of(DITAA);</span>
 			// ::done
-<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (check(&quot;def&quot;, text, p))</span>
-<span class="nc" id="L98">				return DEFINITION;</span>
-<span class="nc" id="L99">			return UNKNOWN;</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">			if (check(&quot;def&quot;, text, p))</span>
+<span class="nc" id="L121">				return EnumSet.of(DEFINITION);</span>
+<span class="nc" id="L122">			return EnumSet.of(UNKNOWN);</span>
 
 		case 'e':
-<span class="nc bnc" id="L102" title="All 2 branches missed.">			if (check(&quot;ebnf&quot;, text, p))</span>
-<span class="nc" id="L103">				return EBNF;</span>
-<span class="nc" id="L104">			return UNKNOWN;</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">			if (check(&quot;ebnf&quot;, text, p))</span>
+<span class="nc" id="L126">				return EnumSet.of(EBNF);</span>
+<span class="nc" id="L127">			return EnumSet.of(UNKNOWN);</span>
 
 		case 'f':
-<span class="nc bnc" id="L107" title="All 2 branches missed.">			if (check(&quot;flow&quot;, text, p))</span>
-<span class="nc" id="L108">				return FLOW;</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (check(&quot;files&quot;, text, p))</span>
-<span class="nc" id="L110">				return FILES;</span>
-<span class="nc" id="L111">			return UNKNOWN;</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">			if (check(&quot;flow&quot;, text, p))</span>
+<span class="nc" id="L131">				return EnumSet.of(FLOW);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">			if (check(&quot;files&quot;, text, p))</span>
+<span class="nc" id="L133">				return EnumSet.of(FILES);</span>
+<span class="nc" id="L134">			return EnumSet.of(UNKNOWN);</span>
 
 		case 'g':
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">			if (check(&quot;gantt&quot;, text, p))</span>
-<span class="fc" id="L115">				return GANTT;</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">			if (check(&quot;git&quot;, text, p))</span>
-<span class="nc" id="L117">				return GIT;</span>
-<span class="nc" id="L118">			return UNKNOWN;</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">			if (check(&quot;gantt&quot;, text, p))</span>
+<span class="fc" id="L138">				return EnumSet.of(GANTT);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">			if (check(&quot;git&quot;, text, p))</span>
+<span class="nc" id="L140">				return EnumSet.of(GIT);</span>
+<span class="nc" id="L141">			return EnumSet.of(UNKNOWN);</span>
 
 		case 'h':
-<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (check(&quot;hcl&quot;, text, p))</span>
-<span class="nc" id="L122">				return HCL;</span>
-<span class="nc" id="L123">			return UNKNOWN;</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			if (check(&quot;hcl&quot;, text, p))</span>
+<span class="nc" id="L145">				return EnumSet.of(HCL);</span>
+<span class="nc" id="L146">			return EnumSet.of(UNKNOWN);</span>
 
 		case 'j':
 			// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">			if (check(&quot;jcckit&quot;, text, p))</span>
-<span class="nc" id="L128">				return JCCKIT;</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">			if (check(&quot;jcckit&quot;, text, p))</span>
+<span class="nc" id="L151">				return EnumSet.of(JCCKIT);</span>
 			// ::done
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">			if (check(&quot;json&quot;, text, p))</span>
-<span class="fc" id="L131">				return JSON;</span>
-<span class="nc" id="L132">			return UNKNOWN;</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">			if (check(&quot;json&quot;, text, p))</span>
+<span class="fc" id="L154">				return EnumSet.of(JSON);</span>
+<span class="nc" id="L155">			return EnumSet.of(UNKNOWN);</span>
 
 		case 'l':
-<span class="nc bnc" id="L135" title="All 2 branches missed.">			if (check(&quot;latex&quot;, text, p))</span>
-<span class="nc" id="L136">				return LATEX;</span>
-<span class="nc" id="L137">			return UNKNOWN;</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			if (check(&quot;latex&quot;, text, p))</span>
+<span class="nc" id="L159">				return EnumSet.of(LATEX);</span>
+<span class="nc" id="L160">			return EnumSet.of(UNKNOWN);</span>
 
 		case 'm':
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">			if (check(&quot;math&quot;, text, p))</span>
-<span class="nc" id="L141">				return MATH;</span>
-<span class="pc bpc" id="L142" title="1 of 2 branches missed.">			if (check(&quot;mindmap&quot;, text, p))</span>
-<span class="fc" id="L143">				return MINDMAP;</span>
-<span class="nc" id="L144">			return UNKNOWN;</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">			if (check(&quot;math&quot;, text, p))</span>
+<span class="nc" id="L164">				return EnumSet.of(MATH);</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">			if (check(&quot;mindmap&quot;, text, p))</span>
+<span class="fc" id="L166">				return EnumSet.of(MINDMAP);</span>
+<span class="nc" id="L167">			return EnumSet.of(UNKNOWN);</span>
 
 		case 'n':
-<span class="nc bnc" id="L147" title="All 2 branches missed.">			if (check(&quot;nwdiag&quot;, text, p))</span>
-<span class="nc" id="L148">				return NW;</span>
-<span class="nc" id="L149">			return UNKNOWN;</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">			if (check(&quot;nwdiag&quot;, text, p))</span>
+<span class="nc" id="L171">				return EnumSet.of(NWDIAG);</span>
+<span class="nc" id="L172">			return EnumSet.of(UNKNOWN);</span>
 
 		case 'p':
-<span class="nc bnc" id="L152" title="All 2 branches missed.">			if (check(&quot;project&quot;, text, p))</span>
-<span class="nc" id="L153">				return PROJECT;</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">			if (check(&quot;packetdiag&quot;, text, p))</span>
-<span class="nc" id="L155">				return PACKET;</span>
-<span class="nc" id="L156">			return UNKNOWN;</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">			if (check(&quot;project&quot;, text, p))</span>
+<span class="nc" id="L176">				return EnumSet.of(GANTT);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">			if (check(&quot;packetdiag&quot;, text, p))</span>
+<span class="nc" id="L178">				return EnumSet.of(PACKET);</span>
+<span class="nc" id="L179">			return EnumSet.of(UNKNOWN);</span>
 
 		case 'r':
-<span class="nc bnc" id="L159" title="All 2 branches missed.">			if (check(&quot;regex&quot;, text, p))</span>
-<span class="nc" id="L160">				return REGEX;</span>
-<span class="nc" id="L161">			return UNKNOWN;</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">			if (check(&quot;regex&quot;, text, p))</span>
+<span class="nc" id="L183">				return EnumSet.of(REGEX);</span>
+<span class="nc" id="L184">			return EnumSet.of(UNKNOWN);</span>
 
 		case 's':
-<span class="nc bnc" id="L164" title="All 2 branches missed.">			if (check(&quot;salt&quot;, text, p))</span>
-<span class="nc" id="L165">				return SALT;</span>
-<span class="nc" id="L166">			return UNKNOWN;</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">			if (check(&quot;salt&quot;, text, p))</span>
+<span class="nc" id="L188">				return EnumSet.of(SALT);</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">			if (check(&quot;sprites&quot;, text, p))</span>
+<span class="nc" id="L190">				return EnumSet.of(SPRITES);</span>
+<span class="nc" id="L191">			return EnumSet.of(UNKNOWN);</span>
 
 		case 'u':
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">			if (check(&quot;uml&quot;, text, p))</span>
-<span class="fc" id="L170">				return UML;</span>
-<span class="nc" id="L171">			return UNKNOWN;</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">			if (check(&quot;uml&quot;, text, p))</span>
+<span class="fc" id="L195">				return EnumSet.of(SEQUENCE, STATE, CLASS, OBJECT, ACTIVITY, DESCRIPTION, COMPOSITE, TIMING, HELP,</span>
+						SPRITES);
+<span class="nc" id="L197">			return EnumSet.of(UNKNOWN);</span>
 
 		case 'w':
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">			if (check(&quot;wire&quot;, text, p))</span>
-<span class="nc" id="L175">				return WIRE;</span>
-<span class="pc bpc" id="L176" title="1 of 2 branches missed.">			if (check(&quot;wbs&quot;, text, p))</span>
-<span class="fc" id="L177">				return WBS;</span>
-<span class="nc" id="L178">			return UNKNOWN;</span>
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">			if (check(&quot;wire&quot;, text, p))</span>
+<span class="nc" id="L201">				return EnumSet.of(WIRE);</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">			if (check(&quot;wbs&quot;, text, p))</span>
+<span class="fc" id="L203">				return EnumSet.of(WBS);</span>
+<span class="nc" id="L204">			return EnumSet.of(UNKNOWN);</span>
 
 		case 'y':
-<span class="nc bnc" id="L181" title="All 2 branches missed.">			if (check(&quot;yaml&quot;, text, p))</span>
-<span class="nc" id="L182">				return YAML;</span>
-<span class="nc" id="L183">			return UNKNOWN;</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">			if (check(&quot;yaml&quot;, text, p))</span>
+<span class="nc" id="L208">				return EnumSet.of(YAML);</span>
+<span class="nc" id="L209">			return EnumSet.of(UNKNOWN);</span>
 
 		default:
-<span class="nc" id="L186">			return UNKNOWN;</span>
+<span class="nc" id="L212">			return EnumSet.of(UNKNOWN);</span>
 		}
 	}
 
 	static boolean check(String key, String text, int p) {
-<span class="fc" id="L191">		return text.regionMatches(true, p, key, 0, key.length());</span>
+<span class="fc" id="L217">		return text.regionMatches(true, p, key, 0, key.length());</span>
+	}
+
+	public SName getStyleName() {
+<span class="fc bfc" id="L221" title="All 2 branches covered.">		if (this == SEQUENCE)</span>
+<span class="fc" id="L222">			return SName.sequenceDiagram;</span>
+
+<span class="fc bfc" id="L224" title="All 2 branches covered.">		if (this == STATE)</span>
+<span class="fc" id="L225">			return SName.stateDiagram;</span>
+
+<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (this == CLASS)</span>
+<span class="fc" id="L228">			return SName.classDiagram;</span>
+
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">		if (this == OBJECT)</span>
+<span class="nc" id="L231">			return SName.objectDiagram;</span>
+
+<span class="fc bfc" id="L233" title="All 2 branches covered.">		if (this == ACTIVITY)</span>
+<span class="fc" id="L234">			return SName.activityDiagram;</span>
+
+<span class="fc bfc" id="L236" title="All 2 branches covered.">		if (this == DESCRIPTION)</span>
+<span class="fc" id="L237">			return SName.componentDiagram;</span>
+
+<span class="fc bfc" id="L239" title="All 2 branches covered.">		if (this == MINDMAP)</span>
+<span class="fc" id="L240">			return SName.mindmapDiagram;</span>
+
+<span class="fc bfc" id="L242" title="All 2 branches covered.">		if (this == WBS)</span>
+<span class="fc" id="L243">			return SName.wbsDiagram;</span>
+
+<span class="pc bpc" id="L245" title="1 of 2 branches missed.">		if (this == GANTT)</span>
+<span class="nc" id="L246">			return SName.ganttDiagram;</span>
+
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">		if (this == SALT)</span>
+<span class="nc" id="L249">			return SName.saltDiagram;</span>
+
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">		if (this == YAML)</span>
+<span class="nc" id="L252">			return SName.yamlDiagram;</span>
+
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">		if (this == HCL)</span>
+<span class="nc" id="L255">			return SName.yamlDiagram;</span>
+
+<span class="fc bfc" id="L257" title="All 2 branches covered.">		if (this == JSON)</span>
+<span class="fc" id="L258">			return SName.jsonDiagram;</span>
+
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">		if (this == TIMING)</span>
+<span class="nc" id="L261">			return SName.timingDiagram;</span>
+
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">		if (this == NWDIAG)</span>
+<span class="nc" id="L264">			return SName.nwdiagDiagram;</span>
+
+<span class="pc bpc" id="L266" title="1 of 2 branches missed.">		if (this == EBNF)</span>
+<span class="nc" id="L267">			return SName.ebnf;</span>
+
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">		if (this == REGEX)</span>
+<span class="nc" id="L270">			return SName.regex;</span>
+
+<span class="pc bpc" id="L272" title="1 of 2 branches missed.">		if (this == CHRONOLOGY)</span>
+<span class="nc" id="L273">			return SName.ganttDiagram;</span>
+
+<span class="pc bpc" id="L275" title="1 of 2 branches missed.">		if (this == CHART)</span>
+<span class="nc" id="L276">			return SName.chartDiagram;</span>
+
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">		if (this == PACKET)</span>
+<span class="nc" id="L279">			return SName.packetdiagDiagram;</span>
+
+<span class="fc" id="L281">		return SName.activityDiagram;</span>
+	}
+
+	public String humanReadableName() {
+<span class="pc bpc" id="L285" title="1 of 2 branches missed.">		if (this == DESCRIPTION)</span>
+<span class="nc" id="L286">			return &quot;component&quot;;</span>
+<span class="fc" id="L287">		return name().toLowerCase();</span>
 	}
 
 }

@@ -243,13 +243,13 @@ public abstract class PSystemError extends PlainDiagram {
 <span class="fc" id="L243">			final int min = (int) (System.currentTimeMillis() / 60000L) % 60;</span>
 <span class="fc bfc" id="L244" title="All 2 branches covered.">			if (disableTimeBasedErrorDecorations) {</span>
 				// do nothing
-<span class="pc bpc" id="L246" title="4 of 8 branches missed.">			} else if (min == 1 || min == 8 || min == 13 || min == 55) {</span>
-<span class="nc" id="L247">				udrawable = addMessagePatreon(udrawable);</span>
-<span class="pc bpc" id="L248" title="1 of 2 branches missed.">			} else if (min == 15) {</span>
+<span class="pc bpc" id="L246" title="5 of 8 branches missed.">			} else if (min == 1 || min == 8 || min == 13 || min == 55) {</span>
+<span class="fc" id="L247">				udrawable = addMessagePatreon(udrawable);</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">			} else if (min == 15) {</span>
 <span class="nc" id="L249">				udrawable = addMessageLiberapay(udrawable);</span>
-<span class="pc bpc" id="L250" title="3 of 6 branches missed.">			} else if (min == 30 || min == 39 || min == 48) {</span>
+<span class="nc bnc" id="L250" title="All 6 branches missed.">			} else if (min == 30 || min == 39 || min == 48) {</span>
 <span class="nc" id="L251">				udrawable = addMessageDedication(udrawable);</span>
-<span class="pc bpc" id="L252" title="1 of 2 branches missed.">			} else if (getSource().containsIgnoreCase(&quot;arecibo&quot;)) {</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">			} else if (getSource().containsIgnoreCase(&quot;arecibo&quot;)) {</span>
 <span class="nc" id="L253">				udrawable = addMessageArecibo(udrawable);</span>
 			}
 		}
@@ -296,13 +296,13 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlock addMessagePatreon(final TextBlock source) throws IOException {
-<span class="nc bnc" id="L299" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
+<span class="pc bpc" id="L299" title="1 of 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
 <span class="nc" id="L300">			return source;</span>
 
-<span class="nc" id="L302">		final TextBlock message = getMessagePatreon();</span>
-<span class="nc" id="L303">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L304">		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L305">		return result;</span>
+<span class="fc" id="L302">		final TextBlock message = getMessagePatreon();</span>
+<span class="fc" id="L303">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
+<span class="fc" id="L304">		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);</span>
+<span class="fc" id="L305">		return result;</span>
 	}
 
 	private TextBlock addMessageDedication(final TextBlock source) throws IOException {
@@ -370,40 +370,40 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlock getMessagePatreon() {
-<span class="nc" id="L373">		final UImage message = new UImage(</span>
-<span class="nc" id="L374">				new PixelImage(PSystemVersion.getTime01(), AffineTransformType.TYPE_BILINEAR));</span>
-<span class="nc" id="L375">		final XColor back = XColor.from(message.getImage(1).getRGB(0, 0));</span>
-<span class="nc" id="L376">		final HColor backColor = HColors.simple(back);</span>
+<span class="fc" id="L373">		final UImage message = new UImage(</span>
+<span class="fc" id="L374">				new PixelImage(PSystemVersion.getTime01(), AffineTransformType.TYPE_BILINEAR));</span>
+<span class="fc" id="L375">		final XColor back = XColor.from(message.getImage(1).getRGB(0, 0));</span>
+<span class="fc" id="L376">		final HColor backColor = HColors.simple(back);</span>
 
-<span class="nc" id="L378">		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
-<span class="nc" id="L379">				.exportFlashcode(&quot;https://plantuml.com/patreon&quot;, XColor.BLACK, XColor.WHITE));</span>
+<span class="fc" id="L378">		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
+<span class="fc" id="L379">				.exportFlashcode(&quot;https://plantuml.com/patreon&quot;, XColor.BLACK, XColor.WHITE));</span>
 
-<span class="nc" id="L381">		final int scale = 2;</span>
+<span class="fc" id="L381">		final int scale = 2;</span>
 
 		final double imWidth;
 		final double imHeight;
-<span class="nc bnc" id="L385" title="All 2 branches missed.">		if (qrcode == null) {</span>
+<span class="pc bpc" id="L385" title="1 of 2 branches missed.">		if (qrcode == null) {</span>
 <span class="nc" id="L386">			imWidth = message.getWidth();</span>
 <span class="nc" id="L387">			imHeight = message.getHeight();</span>
 		} else {
-<span class="nc" id="L389">			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;</span>
-<span class="nc" id="L390">			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);</span>
+<span class="fc" id="L389">			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;</span>
+<span class="fc" id="L390">			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);</span>
 		}
-<span class="nc" id="L392">		return new TextBlock() {</span>
+<span class="fc" id="L392">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L395" title="All 2 branches missed.">				if (qrcode == null) {</span>
+<span class="pc bpc" id="L395" title="1 of 2 branches missed.">				if (qrcode == null) {</span>
 <span class="nc" id="L396">					ug.apply(new UTranslate(1, 1)).draw(message);</span>
 				} else {
-<span class="nc" id="L398">					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))</span>
-<span class="nc" id="L399">							.scale(scale);</span>
-<span class="nc" id="L400">					ug.apply(new UTranslate(1, (imHeight - message.getHeight()) / 2)).draw(message);</span>
-<span class="nc" id="L401">					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);</span>
+<span class="fc" id="L398">					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))</span>
+<span class="fc" id="L399">							.scale(scale);</span>
+<span class="fc" id="L400">					ug.apply(new UTranslate(1, (imHeight - message.getHeight()) / 2)).draw(message);</span>
+<span class="fc" id="L401">					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);</span>
 				}
-<span class="nc" id="L403">			}</span>
+<span class="fc" id="L403">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L406">				return new XDimension2D(imWidth + 1, imHeight + 1);</span>
+<span class="fc" id="L406">				return new XDimension2D(imWidth + 1, imHeight + 1);</span>
 			}
 
 			public MinMax getMinMax(StringBounder stringBounder) {
@@ -411,7 +411,7 @@ public abstract class PSystemError extends PlainDiagram {
 			}
 
 			public HColor getBackcolor() {
-<span class="nc" id="L414">				return backColor;</span>
+<span class="fc" id="L414">				return backColor;</span>
 			}
 		};
 
@@ -467,11 +467,11 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private PortableImage smaller(PortableImage im) {
-<span class="nc bnc" id="L470" title="All 2 branches missed.">		if (im == null)</span>
+<span class="pc bpc" id="L470" title="1 of 2 branches missed.">		if (im == null)</span>
 <span class="nc" id="L471">			return null;</span>
 
-<span class="nc" id="L473">		final int nb = 1;</span>
-<span class="nc" id="L474">		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);</span>
+<span class="fc" id="L473">		final int nb = 1;</span>
+<span class="fc" id="L474">		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);</span>
 	}
 
 	// ::done

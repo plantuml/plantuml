@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonObject.Member;
@@ -57,7 +58,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -109,7 +109,7 @@ public class TextBlockJson implements TextBlock {
 
 <span class="fc" id="L110">	TextBlockJson(ISkinParam skinParam, JsonValue root, List&lt;Highlighted&gt; allHighlighteds) {</span>
 <span class="fc" id="L111">		this.styleBuilder = skinParam.getCurrentStyleBuilder();</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		this.diagramType = skinParam.getUmlDiagramType() == UmlDiagramType.JSON ? SName.jsonDiagram : SName.yamlDiagram;</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		this.diagramType = skinParam.getDiagramType() == DiagramType.JSON ? SName.jsonDiagram : SName.yamlDiagram;</span>
 <span class="fc" id="L113">		this.skinParam = skinParam;</span>
 
 <span class="fc" id="L115">		this.root = root;</span>

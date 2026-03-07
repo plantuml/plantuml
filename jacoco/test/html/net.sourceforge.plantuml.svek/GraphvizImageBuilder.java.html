@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.GraphvizCrash;
 import net.sourceforge.plantuml.decoration.symbol.USymbolHexagon;
@@ -73,7 +74,6 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.SkinParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
@@ -208,7 +208,7 @@ public final class GraphvizImageBuilder {
 <span class="fc bfc" id="L208" title="All 2 branches covered.">		if (dotData.isDegeneratedWithFewEntities(0))</span>
 <span class="fc" id="L209">			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor());</span>
 
-<span class="pc bpc" id="L211" title="1 of 4 branches missed.">		if (dotData.isDegeneratedWithFewEntities(1) &amp;&amp; dotData.getUmlDiagramType() != UmlDiagramType.STATE) {</span>
+<span class="pc bpc" id="L211" title="1 of 4 branches missed.">		if (dotData.isDegeneratedWithFewEntities(1) &amp;&amp; dotData.geDiagramType() != DiagramType.STATE) {</span>
 <span class="fc" id="L212">			final Entity single = dotData.getLeafs().iterator().next();</span>
 <span class="fc" id="L213">			final Entity group = single.getParentContainer();</span>
 <span class="pc bpc" id="L214" title="2 of 4 branches missed.">			if (group.isRoot() &amp;&amp; single.getUSymbol() instanceof USymbolHexagon == false) {</span>

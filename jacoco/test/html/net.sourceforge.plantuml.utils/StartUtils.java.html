@@ -42,115 +42,114 @@ import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.text.StringLocated;
 
 <span class="nc" id="L44">public class StartUtils {</span>
-	// ::remove file when __HAXE__
 
-<span class="fc" id="L47">	public static final Pattern2 patternFilename = Pattern2</span>
-<span class="fc" id="L48">			.cmpile(&quot;^[@\\\\]start[^%s{}%g]+[%s{][%s%g]*([^%g]*?)[%s}%g]*$&quot;);</span>
+<span class="fc" id="L46">	public static final Pattern2 patternFilename = Pattern2</span>
+<span class="fc" id="L47">			.cmpile(&quot;^[@\\\\]start[^%s{}%g]+[%s{][%s%g]*([^%g]*?)[%s}%g]*$&quot;);</span>
 
 	public static final String PAUSE_PATTERN = &quot;((?:\\W|\\&lt;[^&lt;&gt;]*\\&gt;)*)[@\\\\]unpause&quot;;
 	public static final String START_PATTERN = &quot;((?:[^\\w~]|\\&lt;[^&lt;&gt;]*\\&gt;)*)[@\\\\]start&quot;;
 
 	public static boolean isArobaseStartDiagram(String s) {
-<span class="fc bfc" id="L54" title="All 2 branches covered.">		return DiagramType.getTypeFromArobaseStart(s) != DiagramType.UNKNOWN;</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		return !DiagramType.getTypesFromArobaseStart(s).contains(DiagramType.UNKNOWN);</span>
 	}
 
 	public static String beforeStartUml(final String s) {
-<span class="fc" id="L58">		final int n = s.length();</span>
-<span class="fc" id="L59">		boolean inside = false;</span>
+<span class="fc" id="L57">		final int n = s.length();</span>
+<span class="fc" id="L58">		boolean inside = false;</span>
 
-<span class="fc bfc" id="L61" title="All 2 branches covered.">		for (int i = 0; i &lt; n; i++) {</span>
-<span class="fc bfc" id="L62" title="All 2 branches covered.">			if (startsWithSymbolAndAt(s, i, &quot;start&quot;))</span>
-<span class="fc" id="L63">				return s.substring(0, i);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		for (int i = 0; i &lt; n; i++) {</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">			if (startsWithSymbolAndAt(s, i, &quot;start&quot;))</span>
+<span class="fc" id="L62">				return s.substring(0, i);</span>
 
-<span class="fc" id="L65">			final char c = s.charAt(i);</span>
+<span class="fc" id="L64">			final char c = s.charAt(i);</span>
 
-<span class="fc bfc" id="L67" title="All 2 branches covered.">			if (inside) {</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">				if (c == '&gt;') {</span>
-<span class="fc" id="L69">					inside = false;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">			if (inside) {</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">				if (c == '&gt;') {</span>
+<span class="fc" id="L68">					inside = false;</span>
 				}
 				continue;
 			}
 
-<span class="fc bfc" id="L74" title="All 2 branches covered.">			if (c == '&lt;')</span>
-<span class="fc" id="L75">				inside = true;</span>
-<span class="fc bfc" id="L76" title="All 2 branches covered.">			else if (isWordOrTilde(c))</span>
-<span class="fc" id="L77">				return null;</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">			if (c == '&lt;')</span>
+<span class="fc" id="L74">				inside = true;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">			else if (isWordOrTilde(c))</span>
+<span class="fc" id="L76">				return null;</span>
 
 		}
-<span class="fc" id="L80">		return null;</span>
+<span class="fc" id="L79">		return null;</span>
 	}
 
 	private static boolean isWordOrTilde(char c) {
-<span class="pc bpc" id="L84" title="2 of 6 branches missed.">		return c == '~' || Character.isLetterOrDigit(c) || c == '_';</span>
+<span class="pc bpc" id="L83" title="2 of 6 branches missed.">		return c == '~' || Character.isLetterOrDigit(c) || c == '_';</span>
 	}
 
 	private static boolean startsWithSymbolAndAt(String text, int from, String keyword) {
-<span class="fc" id="L88">		final int n = text.length();</span>
-<span class="fc" id="L89">		int i = from;</span>
+<span class="fc" id="L87">		final int n = text.length();</span>
+<span class="fc" id="L88">		int i = from;</span>
 
-<span class="fc bfc" id="L91" title="All 2 branches covered.">		while (i &lt; n) {</span>
-<span class="fc" id="L92">			final char c = text.charAt(i);</span>
-<span class="fc bfc" id="L93" title="All 2 branches covered.">			if (Character.isWhitespace(c)) {</span>
-<span class="fc" id="L94">				i++;</span>
-<span class="fc" id="L95">				continue;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		while (i &lt; n) {</span>
+<span class="fc" id="L91">			final char c = text.charAt(i);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">			if (Character.isWhitespace(c)) {</span>
+<span class="fc" id="L93">				i++;</span>
+<span class="fc" id="L94">				continue;</span>
 			}
 
-<span class="fc bfc" id="L98" title="All 4 branches covered.">			if (c != '@' &amp;&amp; c != '\\')</span>
-<span class="fc" id="L99">				return false;</span>
+<span class="fc bfc" id="L97" title="All 4 branches covered.">			if (c != '@' &amp;&amp; c != '\\')</span>
+<span class="fc" id="L98">				return false;</span>
 
-<span class="fc" id="L101">			final int kwLen = keyword.length();</span>
-<span class="fc" id="L102">			final int start = i + 1;</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">			if (start + kwLen &gt; n)</span>
-<span class="fc" id="L104">				return false;</span>
+<span class="fc" id="L100">			final int kwLen = keyword.length();</span>
+<span class="fc" id="L101">			final int start = i + 1;</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">			if (start + kwLen &gt; n)</span>
+<span class="fc" id="L103">				return false;</span>
 
-<span class="fc" id="L106">			return text.regionMatches(start, keyword, 0, kwLen);</span>
+<span class="fc" id="L105">			return text.regionMatches(start, keyword, 0, kwLen);</span>
 		}
-<span class="fc" id="L108">		return false;</span>
+<span class="fc" id="L107">		return false;</span>
 	}
 
 	public static boolean isArobaseEndDiagram(String s) {
-<span class="fc" id="L112">		return startsWithSymbolAndAt(s, 0, &quot;end&quot;);</span>
+<span class="fc" id="L111">		return startsWithSymbolAndAt(s, 0, &quot;end&quot;);</span>
 	}
 
 	public static boolean isArobasePauseDiagram(String s) {
-<span class="fc" id="L116">		return startsWithSymbolAndAt(s, 0, &quot;pause&quot;);</span>
+<span class="fc" id="L115">		return startsWithSymbolAndAt(s, 0, &quot;pause&quot;);</span>
 	}
 
 	public static boolean isArobaseUnpauseDiagram(String s) {
-<span class="fc" id="L120">		return startsWithSymbolAndAt(s, 0, &quot;unpause&quot;);</span>
+<span class="fc" id="L119">		return startsWithSymbolAndAt(s, 0, &quot;unpause&quot;);</span>
 	}
 
 	public static boolean isExit(CharSequence s) {
-<span class="fc" id="L124">		final int len = s.length();</span>
-<span class="fc" id="L125">		int start = 0;</span>
-<span class="fc" id="L126">		int end = len - 1;</span>
+<span class="fc" id="L123">		final int len = s.length();</span>
+<span class="fc" id="L124">		int start = 0;</span>
+<span class="fc" id="L125">		int end = len - 1;</span>
 
-<span class="fc bfc" id="L128" title="All 4 branches covered.">		while (start &lt; len &amp;&amp; Character.isWhitespace(s.charAt(start)))</span>
-<span class="fc" id="L129">			start++;</span>
+<span class="fc bfc" id="L127" title="All 4 branches covered.">		while (start &lt; len &amp;&amp; Character.isWhitespace(s.charAt(start)))</span>
+<span class="fc" id="L128">			start++;</span>
 
-<span class="fc bfc" id="L131" title="All 4 branches covered.">		while (end &gt;= start &amp;&amp; Character.isWhitespace(s.charAt(end)))</span>
-<span class="fc" id="L132">			end--;</span>
+<span class="fc bfc" id="L130" title="All 4 branches covered.">		while (end &gt;= start &amp;&amp; Character.isWhitespace(s.charAt(end)))</span>
+<span class="fc" id="L131">			end--;</span>
 
-<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (end - start + 1 != 5)</span>
-<span class="fc" id="L135">			return false;</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (end - start + 1 != 5)</span>
+<span class="fc" id="L134">			return false;</span>
 
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		return s.charAt(start) == '!' &amp;&amp; //</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">				s.charAt(start + 1) == 'e' &amp;&amp; //</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">				s.charAt(start + 2) == 'x' &amp;&amp; //</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">				s.charAt(start + 3) == 'i' &amp;&amp; //</span>
-<span class="pc bnc" id="L141" title="All 2 branches missed.">				s.charAt(start + 4) == 't';</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		return s.charAt(start) == '!' &amp;&amp; //</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">				s.charAt(start + 1) == 'e' &amp;&amp; //</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">				s.charAt(start + 2) == 'x' &amp;&amp; //</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">				s.charAt(start + 3) == 'i' &amp;&amp; //</span>
+<span class="pc bnc" id="L140" title="All 2 branches missed.">				s.charAt(start + 4) == 't';</span>
 	}
 
-<span class="fc" id="L144">	private static final Pattern2 append = Pattern2.cmpile(&quot;^\\W*[@\\\\](append|a)\\b&quot;);</span>
+<span class="fc" id="L143">	private static final Pattern2 append = Pattern2.cmpile(&quot;^\\W*[@\\\\](append|a)\\b&quot;);</span>
 
 	public static StringLocated getPossibleAppend(StringLocated cs) {
-<span class="nc" id="L147">		final String s = cs.getString();</span>
-<span class="nc" id="L148">		final Matcher2 m = append.matcher(s);</span>
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (m.find()) {</span>
-<span class="nc" id="L150">			final String tmp = s.substring(m.group(0).length(), s.length());</span>
-<span class="nc" id="L151">			return new StringLocated(StringUtils.trin(tmp), cs.getLocation(), cs.getPreprocessorError());</span>
+<span class="nc" id="L146">		final String s = cs.getString();</span>
+<span class="nc" id="L147">		final Matcher2 m = append.matcher(s);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (m.find()) {</span>
+<span class="nc" id="L149">			final String tmp = s.substring(m.group(0).length(), s.length());</span>
+<span class="nc" id="L150">			return new StringLocated(StringUtils.trin(tmp), cs.getLocation(), cs.getPreprocessorError());</span>
 		}
-<span class="nc" id="L153">		return null;</span>
+<span class="nc" id="L152">		return null;</span>
 	}
 
 }
