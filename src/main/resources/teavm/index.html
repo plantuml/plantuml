@@ -23,8 +23,16 @@ textarea {
 		Loading in progress...
 	</div>
 	<textarea id="src" rows="10">@startuml
-Alice->Bob : Hello
-return ok
+file n [
+Example of YAML file:
+{{yaml
+fruit: Apple
+size: Large
+color:
+ - Red
+ - Green
+}}
+]
 @enduml</textarea>
 	<div id="out"></div>
 
