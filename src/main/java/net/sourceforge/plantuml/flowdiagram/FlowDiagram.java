@@ -41,6 +41,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.golem.MinMaxGolem;
 import net.sourceforge.plantuml.golem.Path;
@@ -65,7 +66,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
 public class FlowDiagram extends TitledDiagram implements TextBlock {
@@ -87,7 +87,7 @@ public class FlowDiagram extends TitledDiagram implements TextBlock {
 	}
 
 	public FlowDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.FLOW, null, preprocessing);
+		super(source, DiagramType.FLOW, null, preprocessing);
 	}
 
 	public void lineSimple(TileGeometry orientation, String idDest, String label) {

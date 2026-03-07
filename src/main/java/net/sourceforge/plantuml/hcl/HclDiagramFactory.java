@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.yaml.Highlighted;
 
 public class HclDiagramFactory extends PSystemAbstractFactory {
@@ -60,7 +59,8 @@ public class HclDiagramFactory extends PSystemAbstractFactory {
 	}
 
 	@Override
-	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		final List<Highlighted> highlighted = new ArrayList<>();
 		JsonValue data = null;
 		StyleExtractor styleExtractor = null;
@@ -81,7 +81,8 @@ public class HclDiagramFactory extends PSystemAbstractFactory {
 		} catch (Exception e) {
 			Logme.error(e);
 		}
-		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.HCL, data, highlighted, styleExtractor, preprocessing);
+		final JsonDiagram result = new JsonDiagram(source, DiagramType.HCL, data, highlighted, styleExtractor,
+				preprocessing);
 //		if (styleExtractor != null) {
 //			styleExtractor.applyStyles(result.getSkinParam());
 //			final String title = styleExtractor.getTitle();
@@ -91,11 +92,5 @@ public class HclDiagramFactory extends PSystemAbstractFactory {
 //		}
 		return result;
 	}
-	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.HCL;
-	}
-
 
 }

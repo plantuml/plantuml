@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class StartUtils {
-	// ::remove file when __HAXE__
 
 	public static final Pattern2 patternFilename = Pattern2
 			.cmpile("^[@\\\\]start[^%s{}%g]+[%s{][%s%g]*([^%g]*?)[%s}%g]*$");
@@ -51,7 +50,7 @@ public class StartUtils {
 	public static final String START_PATTERN = "((?:[^\\w~]|\\<[^<>]*\\>)*)[@\\\\]start";
 
 	public static boolean isArobaseStartDiagram(String s) {
-		return DiagramType.getTypeFromArobaseStart(s) != DiagramType.UNKNOWN;
+		return !DiagramType.getTypesFromArobaseStart(s).contains(DiagramType.UNKNOWN);
 	}
 
 	public static String beforeStartUml(final String s) {

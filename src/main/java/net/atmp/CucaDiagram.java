@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.abel.Together;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.InstallationRequirement;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -82,7 +83,6 @@ import net.sourceforge.plantuml.dot.CucaDiagramTxtMaker;
 import net.sourceforge.plantuml.elk.CucaDiagramFileMakerElk;
 import net.sourceforge.plantuml.graphml.CucaDiagramGraphmlMaker;
 import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.plasma.Plasma;
 import net.sourceforge.plantuml.plasma.Quark;
@@ -90,7 +90,6 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
 import net.sourceforge.plantuml.skin.PragmaKey;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.statediagram.StateDiagram;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -147,7 +146,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 		this.setSeparator(namespaceSeparator);
 	}
 
-	public CucaDiagram(UmlSource source, UmlDiagramType type, Previous previous, PreprocessingArtifact preprocessing) {
+	public CucaDiagram(UmlSource source, DiagramType type, Previous previous, PreprocessingArtifact preprocessing) {
 		super(source, type, previous, preprocessing);
 		this.namespace = new Plasma<Entity>();
 		this.root = namespace.root();
@@ -266,7 +265,8 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 		if (x == -1) {
 			if (reuseExistingChild && this.countByName(full) == 1) {
 				final Quark<Entity> byName = this.firstWithName(full);
-				if (TeaVM.a()) assert byName != null;
+				if (TeaVM.a())
+					assert byName != null;
 				if (byName != currentQuark)
 					return Failable.ok(byName);
 			}
@@ -484,8 +484,8 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 //			return ImageDataSimple.ok();
 //		}
 
-		if (getUmlDiagramType() == UmlDiagramType.COMPOSITE)
-			throw new UnsupportedOperationException();
+//		if (getUmlDiagramType() == UmlDiagramType.COMPOSITE)
+//			throw new UnsupportedOperationException();
 
 		this.eventuallyBuildPhantomGroups(null);
 		final CucaDiagramFileMaker maker;
@@ -865,7 +865,8 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 	private Entity isNoteWithSingleLinkAttachedTo(Entity note) {
 		if (note.getLeafType() != LeafType.NOTE)
 			return null;
-		if (TeaVM.a()) assert note.getLeafType() == LeafType.NOTE;
+		if (TeaVM.a())
+			assert note.getLeafType() == LeafType.NOTE;
 		Entity other = null;
 		for (Link link : this.getLinks()) {
 			if (link.getType().isInvisible())

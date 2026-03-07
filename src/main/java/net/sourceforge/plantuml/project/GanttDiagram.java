@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.project;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -52,7 +50,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
@@ -89,7 +87,6 @@ import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.project.solver.ImpossibleSolvingException;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.time.WeekNumberStrategy;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;
@@ -144,7 +141,7 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	}
 
 	public GanttDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.GANTT, null, preprocessing);
+		super(source, DiagramType.GANTT, null, preprocessing);
 		this.timelineStyle = new TimelineStyleData(getSkinParam(), this, HColorSet.instance());
 	}
 

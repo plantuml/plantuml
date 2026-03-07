@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.elk;
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkNode;
@@ -54,7 +55,6 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AlignmentParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -87,16 +87,16 @@ public class MyElkCluster {
 		if (packageStyle == null)
 			packageStyle = skinParam.packageStyle();
 
-		final UmlDiagramType umlDiagramType = diagram.getUmlDiagramType();
+		final DiagramType diagramType = diagram.getDiagramType();
 
 		final Style style = Cluster
-				.getDefaultStyleDefinition(umlDiagramType.getStyleName(), group.getUSymbol(), group.getGroupType())
+				.getDefaultStyleDefinition(diagramType.getStyleName(), group.getUSymbol(), group.getGroupType())
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final double shadowing = style.getShadowing();
 		final UStroke stroke = Cluster.getStrokeInternal(group, style);
 
-		HColor backColor = getBackColor(umlDiagramType);
-		backColor = Cluster.getBackColor(backColor, group.getStereotype(), umlDiagramType.getStyleName(),
+		HColor backColor = getBackColor(diagramType);
+		backColor = Cluster.getBackColor(backColor, group.getStereotype(), diagramType.getStyleName(),
 				group.getUSymbol(), skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet(),
 				group.getGroupType());
 
@@ -119,7 +119,7 @@ public class MyElkCluster {
 //			ug.apply(HColorUtils.BLACK).apply(UStroke.withThickness(1.5)).apply(new UTranslate(corner)).draw(rect);
 	}
 
-	private HColor getBackColor(UmlDiagramType umlDiagramType) {
+	private HColor getBackColor(DiagramType diagramType) {
 		return null;
 	}
 
@@ -139,10 +139,10 @@ public class MyElkCluster {
 
 		final XPoint2D corner = CucaDiagramFileMakerElk.getPosition(elkNode);
 
-		final UmlDiagramType umlDiagramType = UmlDiagramType.CLASS;
+		final DiagramType diagramType = DiagramType.CLASS;
 
 		final Style style = Cluster
-				.getDefaultStyleDefinition(umlDiagramType.getStyleName(), uSymbol, group.getGroupType())
+				.getDefaultStyleDefinition(diagramType.getStyleName(), uSymbol, group.getGroupType())
 				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 
 		final UStroke stroke = Cluster.getStrokeInternal(group, style);

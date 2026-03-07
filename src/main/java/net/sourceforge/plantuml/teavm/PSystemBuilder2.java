@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.teavm;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.DefinitionsContainer;
@@ -128,7 +129,7 @@ public class PSystemBuilder2 {
 		// System.err.println("resultList=" + resultList);
 
 		final UmlSource source = UmlSource.create(tmp, false);
-		final DiagramType diagramType = source.getDiagramType();
+		final Collection<DiagramType> diagramTypes = source.getDiagramTypes();
 
 		final PreprocessingArtifact preprocessing = timLoader.getPreprocessingArtifact();
 
@@ -137,7 +138,7 @@ public class PSystemBuilder2 {
 
 		final List<PSystemError> errors = new ArrayList<>();
 
-		if (lastFactory != null && diagramType == lastFactory.getDiagramType()) {
+		if (lastFactory != null && diagramTypes.contains(lastFactory.getDiagramType())) {
 			final Diagram sys = lastFactory.createSystem(null, source, null, preprocessing);
 			if (isOk(sys))
 				return sys;
@@ -145,7 +146,7 @@ public class PSystemBuilder2 {
 		}
 
 		for (PSystemFactory f : factories) {
-			if (diagramType != f.getDiagramType())
+			if (!diagramTypes.contains(f.getDiagramType()))
 				continue;
 			if (f == lastFactory)
 				continue;

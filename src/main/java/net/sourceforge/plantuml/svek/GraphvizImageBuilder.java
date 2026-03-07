@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.GraphvizCrash;
 import net.sourceforge.plantuml.decoration.symbol.USymbolHexagon;
@@ -73,7 +74,6 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.SkinParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
@@ -208,7 +208,7 @@ public final class GraphvizImageBuilder {
 		if (dotData.isDegeneratedWithFewEntities(0))
 			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor());
 
-		if (dotData.isDegeneratedWithFewEntities(1) && dotData.getUmlDiagramType() != UmlDiagramType.STATE) {
+		if (dotData.isDegeneratedWithFewEntities(1) && dotData.geDiagramType() != DiagramType.STATE) {
 			final Entity single = dotData.getLeafs().iterator().next();
 			final Entity group = single.getParentContainer();
 			if (group.isRoot() && single.getUSymbol() instanceof USymbolHexagon == false) {

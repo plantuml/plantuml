@@ -88,12 +88,16 @@ import net.sourceforge.plantuml.command.CommandDecoratorMultine;
 import net.sourceforge.plantuml.command.CommandFootboxIgnored;
 import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ActivityDiagramFactory3 extends PSystemCommandFactory {
+
+	public ActivityDiagramFactory3() {
+		super(DiagramType.ACTIVITY);
+	}
 
 	@Override
 	protected void initCommandsList(List<Command> cmds) {
@@ -161,13 +165,9 @@ public class ActivityDiagramFactory3 extends PSystemCommandFactory {
 	}
 
 	@Override
-	public ActivityDiagram3 createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public ActivityDiagram3 createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		return new ActivityDiagram3(source, previous, preprocessing);
-	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.ACTIVITY;
 	}
 
 }

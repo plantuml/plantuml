@@ -41,13 +41,16 @@ import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ListSpriteDiagramFactory extends PSystemCommandFactory {
-	
+
+	public ListSpriteDiagramFactory() {
+		super(DiagramType.SPRITES);
+	}
 
 	@Override
 	protected void initCommandsList(List<Command> cmds) {
@@ -58,13 +61,9 @@ public class ListSpriteDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public ListSpriteDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public ListSpriteDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		return new ListSpriteDiagram(source, previous, preprocessing);
-	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return null;
 	}
 
 }

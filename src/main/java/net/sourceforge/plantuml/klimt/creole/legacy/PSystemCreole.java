@@ -41,6 +41,7 @@ import java.util.List;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
@@ -56,7 +57,6 @@ import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.SkinParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemCreole extends PlainDiagram {
 
@@ -79,7 +79,7 @@ public class PSystemCreole extends PlainDiagram {
 		final Display display = Display.create(lines);
 		final UFont font = UFontFactory.serif(14);
 		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);
-		final SkinParam skinParam = SkinParam.create(PathSystem.fetch(), UmlDiagramType.SEQUENCE, Pragma.createEmpty(),
+		final SkinParam skinParam = SkinParam.create(PathSystem.fetch(), DiagramType.SEQUENCE, Pragma.createEmpty(),
 				getPreprocessingArtifact().getOption());
 		final Sheet sheet = skinParam.sheet(fontConfiguration, HorizontalAlignment.LEFT, CreoleMode.FULL)
 				.createSheet(display);

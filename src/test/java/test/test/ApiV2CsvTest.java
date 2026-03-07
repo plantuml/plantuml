@@ -19,11 +19,11 @@ class ApiV2CsvTest {
 	@ParameterizedTest(name = "[{index}] ")
 	@CsvSource({
 		// diagSource,                                                             error, diagramType, className,     description, nbImages, totalLineCount, errorLine, nbTitle, title
-		" '@startuml\nERROR\n@enduml',                                             Syntax Error?, UML, PSystemErrorV2,           (Error), 1, 3, 1, 0, ",
-		" '@startuml\nstart\n:toto;<<#zzblue>>\n@enduml', No such color (Assumed diagram type: activity), UML, PSystemErrorV2,           (Error), 1, 4, 2, 0, ",
-		" '@startuml\nalice->bob:hello\n@enduml',                                               , UML, SequenceDiagram, (2 participants), 1, 3,  , 0, ",
-		" '@startuml\ntitle: this is the title\nalice->bob:hello\n@enduml',                     , UML, SequenceDiagram, (2 participants), 1, 4,  , 1, this is the title ",
-		" '@startuml\ntitle this is the title\nalice->bob:hello\ntitle another title\n@enduml', , UML, SequenceDiagram, (2 participants), 1, 5,  , 1, another title ",
+		" '@startuml\nERROR\n@enduml',                                             Syntax Error? (Assumed diagram type: sequence), SEQUENCE, PSystemErrorV2,           (Error), 1, 3, 1, 0, ",
+		" '@startuml\nstart\n:toto;<<#zzblue>>\n@enduml', No such color (Assumed diagram type: activity), SEQUENCE, PSystemErrorV2,           (Error), 1, 4, 2, 0, ",
+		" '@startuml\nalice->bob:hello\n@enduml',                                               , SEQUENCE, SequenceDiagram, (2 participants), 1, 3,  , 0, ",
+		" '@startuml\ntitle: this is the title\nalice->bob:hello\n@enduml',                     , SEQUENCE, SequenceDiagram, (2 participants), 1, 4,  , 1, this is the title ",
+		" '@startuml\ntitle this is the title\nalice->bob:hello\ntitle another title\n@enduml', , SEQUENCE, SequenceDiagram, (2 participants), 1, 5,  , 1, another title ",
 		" '@startmindmap\n* root\n@endmindmap',                                                 , MINDMAP, MindMapDiagram,       MindMap, 1, 3,  , 0, ",
 		" '@startwbs\n* root\n@endwbs',                                                         , WBS, WBSDiagram, Work Breakdown Structure, 1, 3,  , 0, ",
 		// TBC...
@@ -44,7 +44,7 @@ class ApiV2CsvTest {
  		}
 
 		assertThat(diagram).isNotNull();
-		assertThat(diagram.getSource().getDiagramType()).isEqualTo(DiagramType.valueOf(diagramType));
+		assertThat(diagram.getSource().getDiagramTypes()).contains(DiagramType.valueOf(diagramType));
 		assertThat(diagram.getClass().getSimpleName()).isEqualTo(className);
 		assertThat(diagram.getDescription().getDescription()).isEqualTo(description);
 		assertThat(diagram.getNbImages()).isEqualTo(nbImages);

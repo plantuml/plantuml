@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPosition;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.Together;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
@@ -81,7 +82,6 @@ import net.sourceforge.plantuml.klimt.shape.UComment;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.skin.PragmaKey;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
@@ -310,7 +310,7 @@ public class Cluster implements Moveable {
 		if (fullName.startsWith("##") == false)
 			ug.draw(new UComment("cluster " + fullName));
 
-		final UmlDiagramType umlDiagramType = diagram.getUmlDiagramType();
+		final DiagramType diagramType = diagram.getDiagramType();
 		final Style style = getStyle();
 		final double shadowing = style.getShadowing();
 		HColor borderColor;
@@ -344,14 +344,14 @@ public class Cluster implements Moveable {
 			if (entityPositionsExceptNormal().size() > 0)
 				manageEntryExitPoint(ug.getStringBounder());
 
-			if (skinParam.useSwimlanes(umlDiagramType)) {
+			if (skinParam.useSwimlanes(diagramType)) {
 				drawSwinLinesState(ug, borderColor);
 				return;
 			}
-			final boolean isState = umlDiagramType == UmlDiagramType.STATE;
+			final boolean isState = diagramType == DiagramType.STATE;
 
 			if (isState && group.getUSymbol() == null) {
-				drawUState(ug, umlDiagramType, rounded, shadowing);
+				drawUState(ug, diagramType, rounded, shadowing);
 				return;
 			}
 			PackageStyle packageStyle = group.getPackageStyle();
@@ -360,8 +360,8 @@ public class Cluster implements Moveable {
 
 			final UStroke stroke = getStrokeInternal(group, style);
 
-			HColor backColor = getBackColor(umlDiagramType, style);
-			backColor = getBackColor(backColor, group.getStereotype(), umlDiagramType.getStyleName(),
+			HColor backColor = getBackColor(style);
+			backColor = getBackColor(backColor, group.getStereotype(), diagramType.getStyleName(),
 					group.getUSymbol(), skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet(),
 					group.getGroupType());
 
@@ -384,9 +384,9 @@ public class Cluster implements Moveable {
 	}
 
 	private Style getStyle() {
-		final UmlDiagramType umlDiagramType = diagram.getUmlDiagramType();
+		final DiagramType diagramType = diagram.getDiagramType();
 		final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();
-		final Style style = getDefaultStyleDefinition(umlDiagramType.getStyleName(), uSymbol, group.getGroupType())
+		final Style style = getDefaultStyleDefinition(diagramType.getStyleName(), uSymbol, group.getGroupType())
 				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 		return style;
 	}
@@ -448,7 +448,7 @@ public class Cluster implements Moveable {
 
 	// GroupPngMakerState
 
-	private void drawUState(UGraphic ug, UmlDiagramType umlDiagramType, double rounded, double shadowing) {
+	private void drawUState(UGraphic ug, DiagramType diagramType, double rounded, double shadowing) {
 		final double suppY = clusterHeader.getTitle().calculateDimension(ug.getStringBounder()).getHeight()
 				+ IEntityImage.MARGIN;
 
@@ -515,7 +515,7 @@ public class Cluster implements Moveable {
 
 	private void printTogether(Together together, Collection<Together> otherTogethers, StringBuilder sb,
 			List<SvekNode> nodesOrderedWithoutTop, StringBounder stringBounder, Collection<SvekEdge> lines,
-			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
+			DotMode dotMode, GraphvizVersion graphvizVersion, DiagramType type) {
 		sb.append("subgraph " + getClusterId() + "t" + togetherCounter + " {\n");
 		for (SvekNode node : nodesOrderedWithoutTop)
 			if (node.getTogether() == together)
@@ -536,7 +536,7 @@ public class Cluster implements Moveable {
 	}
 
 	public SvekNode printCluster2(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder,
-			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
+			DotMode dotMode, GraphvizVersion graphvizVersion, DiagramType type) {
 
 		SvekNode added = null;
 		final Collection<Together> togethers = new LinkedHashSet<>();
@@ -581,7 +581,7 @@ public class Cluster implements Moveable {
 	}
 
 	public void printCluster3_forKermor(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder,
-			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
+			DotMode dotMode, GraphvizVersion graphvizVersion, DiagramType type) {
 		final List<SvekNode> tmp = getNodes(EntityPosition.getNormals());
 
 		if (tmp.size() == 0) {
@@ -597,7 +597,7 @@ public class Cluster implements Moveable {
 	}
 
 	private void printInternal(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder,
-			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
+			DotMode dotMode, GraphvizVersion graphvizVersion, DiagramType type) {
 		new ClusterDotString(this, skinParam).printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);
 	}
 
@@ -642,14 +642,14 @@ public class Cluster implements Moveable {
 		return CENTER_ID + group.getUid();
 	}
 
-	String getMinPoint(UmlDiagramType type) {
+	String getMinPoint(DiagramType type) {
 		if (skinParam.useSwimlanes(type))
 			return "minPoint" + color;
 
 		return null;
 	}
 
-	String getMaxPoint(UmlDiagramType type) {
+	String getMaxPoint(DiagramType type) {
 		if (skinParam.useSwimlanes(type))
 			return "maxPoint" + color;
 
@@ -668,7 +668,7 @@ public class Cluster implements Moveable {
 		return colorTitle;
 	}
 
-	private final HColor getBackColor(UmlDiagramType umlDiagramType, Style style) {
+	private final HColor getBackColor(Style style) {
 		if (group.isRoot())
 			return null;
 
@@ -721,9 +721,9 @@ public class Cluster implements Moveable {
 		if (packageStyle == null)
 			packageStyle = skinParam.packageStyle();
 
-		final UmlDiagramType umlDiagramType = UmlDiagramType.CLASS;
+		final DiagramType diagramType = DiagramType.CLASS;
 
-		final Style style = getDefaultStyleDefinition(umlDiagramType.getStyleName(), uSymbol, group.getGroupType())
+		final Style style = getDefaultStyleDefinition(diagramType.getStyleName(), uSymbol, group.getGroupType())
 				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 
 		final UStroke stroke = getStrokeInternal(group, style);

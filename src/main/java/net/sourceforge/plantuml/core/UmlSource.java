@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.core;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -142,8 +143,8 @@ final public class UmlSource {
 	 *
 	 * @return the type of the diagram.
 	 */
-	public DiagramType getDiagramType() {
-		return DiagramType.getTypeFromArobaseStart(source.get(0).getString());
+	public Collection<DiagramType> getDiagramTypes() {
+		return DiagramType.getTypesFromArobaseStart(source.get(0).getString());
 	}
 
 	/**

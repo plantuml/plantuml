@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.klimt.font;
 
 import java.awt.Font;
 
-import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
@@ -159,7 +159,7 @@ public enum FontParam {
 	}
 
 	public final int getDefaultSize(ISkinParam skinParam) {
-		if (this == ARROW && skinParam.getUmlDiagramType() == UmlDiagramType.ACTIVITY) {
+		if (this == ARROW && skinParam.getDiagramType() == DiagramType.ACTIVITY) {
 			return 11;
 		}
 		if (this == CLASS_ATTRIBUTE) {

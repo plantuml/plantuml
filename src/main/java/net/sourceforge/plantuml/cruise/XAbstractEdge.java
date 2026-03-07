@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.cruise;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.abel.Link;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 
@@ -54,8 +54,8 @@ public abstract class XAbstractEdge implements XEdge {
 		this.bibliotekon = Objects.requireNonNull(bibliotekon);
 	}
 
-	protected final UmlDiagramType diagramType() {
-		return this.skinParam.getUmlDiagramType();
+	protected final DiagramType diagramType() {
+		return this.skinParam.getDiagramType();
 	}
 
 }

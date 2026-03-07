@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -55,24 +56,23 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
 
-	public CommandLinkLollipop(UmlDiagramType umlDiagramType) {
-		super(getRegexConcat(umlDiagramType));
+	public CommandLinkLollipop(DiagramType diagramType) {
+		super(getRegexConcat(diagramType));
 	}
 
-	static RegexConcat getRegexConcat(UmlDiagramType umlDiagramType) {
-		return RegexConcat.build(CommandLinkLollipop.class.getName() + umlDiagramType, RegexLeaf.start(), //
+	static RegexConcat getRegexConcat(DiagramType diagramType) {
+		return RegexConcat.build(CommandLinkLollipop.class.getName() + diagramType, RegexLeaf.start(), //
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(1, "HEADER", "@([\\d.]+)"), //
 								RegexLeaf.spaceOneOrMore() //
 						)), //
 				new RegexLeaf(3, "ENT1",
-						"(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
+						"(?:" + optionalKeywords(diagramType) + "[%s]+)?"
 								+ "(\\.?[%pLN_]+(?:\\.[%pLN_]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
@@ -83,7 +83,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 				new RegexOptional(new RegexLeaf(1, "SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(3, "ENT2",
-						"(?:" + optionalKeywords(umlDiagramType) + "[%s]+)?"
+						"(?:" + optionalKeywords(diagramType) + "[%s]+)?"
 								+ "(\\.?[%pLN_]+(?:\\.[%pLN_]+)*|[%g][^%g]+[%g])[%s]*(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
@@ -94,11 +94,11 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 						)), RegexLeaf.end());
 	}
 
-	private static String optionalKeywords(UmlDiagramType type) {
-		if (type == UmlDiagramType.CLASS)
+	private static String optionalKeywords(DiagramType type) {
+		if (type == DiagramType.CLASS)
 			return "(interface|enum|annotation|abstract[%s]+class|abstract|class|entity|protocol|struct|exception|metaclass|stereotype|dataclass|record)";
 
-		if (type == UmlDiagramType.OBJECT)
+		if (type == DiagramType.OBJECT)
 			return "(object)";
 
 		throw new IllegalArgumentException();

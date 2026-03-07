@@ -39,17 +39,17 @@ import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.PragmaKey;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
 	public ClassDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessingArtifact) {
-		super(source, UmlDiagramType.CLASS, previous, preprocessingArtifact);
+		super(source, DiagramType.CLASS, previous, preprocessingArtifact);
 	}
 
 	private boolean allowMixing;

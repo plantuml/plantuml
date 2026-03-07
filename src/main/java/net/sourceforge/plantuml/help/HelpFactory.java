@@ -40,15 +40,20 @@ import java.util.List;
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class HelpFactory extends PSystemCommandFactory {
 
+	public HelpFactory() {
+		super(DiagramType.HELP);
+	}
+
 	@Override
-	public Help createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public Help createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		return new Help(source, preprocessing);
 	}
 
@@ -59,11 +64,6 @@ public class HelpFactory extends PSystemCommandFactory {
 		cmds.add(new CommandHelpKeyword());
 		cmds.add(new CommandHelpType());
 		cmds.add(new CommandHelpTheme());
-	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.HELP;
 	}
 
 }

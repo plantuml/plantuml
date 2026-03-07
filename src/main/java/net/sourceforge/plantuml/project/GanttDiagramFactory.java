@@ -77,7 +77,6 @@ import net.sourceforge.plantuml.project.lang.SubjectResource;
 import net.sourceforge.plantuml.project.lang.SubjectSeparator;
 import net.sourceforge.plantuml.project.lang.SubjectTask;
 import net.sourceforge.plantuml.project.lang.SubjectToday;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.CommandStyleImport;
 import net.sourceforge.plantuml.style.CommandStyleMultilinesCSS;
 
@@ -147,19 +146,15 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 						final String signatureC = sentenceC.getSignature();
 						if (signatureA.equals(signatureB) == false && signatureA.equals(signatureC) == false
 								&& signatureC.equals(signatureB) == false)
-							cmd.add(NaturalCommand.create(new SentenceAndAnd<GanttDiagram>(sentenceA, sentenceB, sentenceC)));
+							cmd.add(NaturalCommand
+									.create(new SentenceAndAnd<GanttDiagram>(sentenceA, sentenceB, sentenceC)));
 					}
 	}
 
 	@Override
-	public GanttDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public GanttDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		return new GanttDiagram(source, preprocessing);
 	}
-	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.GANTT;
-	}
-
 
 }

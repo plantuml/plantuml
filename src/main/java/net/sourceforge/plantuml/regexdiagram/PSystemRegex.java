@@ -36,8 +36,6 @@
  */
 package net.sourceforge.plantuml.regexdiagram;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -47,7 +45,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.ebnf.ETile;
 import net.sourceforge.plantuml.ebnf.ETileAlternation;
@@ -72,7 +70,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -83,7 +80,7 @@ import net.sourceforge.plantuml.utils.CharInspector;
 public class PSystemRegex extends TitledDiagram {
 
 	public PSystemRegex(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.REGEX, null, preprocessing);
+		super(source, DiagramType.REGEX, null, preprocessing);
 		final StyleExtractor styleExtractor = new StyleExtractor(source.iterator2());
 
 		final ISkinParam skinParam = getSkinParam();
@@ -108,7 +105,6 @@ public class PSystemRegex extends TitledDiagram {
 	private final Style style;
 	private final HColorSet colorSet;
 	private final HColor lineColor;
-
 
 	@Override
 	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {

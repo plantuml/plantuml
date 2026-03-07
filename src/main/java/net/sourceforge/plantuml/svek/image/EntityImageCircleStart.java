@@ -52,7 +52,7 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 	private final CircleStart circle;
 
 	public StyleSignatureBasic getDefaultStyleDefinitionCircle() {
-		return StyleSignatureBasic.of(SName.root, SName.element, getSkinParam().getUmlDiagramType().getStyleName(),
+		return StyleSignatureBasic.of(SName.root, SName.element, getSkinParam().getDiagramType().getStyleName(),
 				SName.circle, SName.start);
 	}
 

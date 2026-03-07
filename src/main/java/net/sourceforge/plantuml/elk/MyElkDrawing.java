@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.abel.CucaNote;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.decoration.symbol.USymbolFolder;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkEdge;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkNode;
@@ -63,7 +64,6 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.AlignmentParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -203,7 +203,7 @@ class MyElkDrawing implements TextBlock {
 	}
 
 	private FontConfiguration getFontForLink(Link link, final ISkinParam skinParam) {
-		final SName styleName = skinParam.getUmlDiagramType().getStyleName();
+		final SName styleName = skinParam.getDiagramType().getStyleName();
 
 		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName)
 				.getMergedStyle(link.getStyleBuilder());
@@ -219,8 +219,8 @@ class MyElkDrawing implements TextBlock {
 		return result;
 	}
 
-	private HorizontalAlignment getMessageTextAlignment(UmlDiagramType umlDiagramType, ISkinParam skinParam) {
-		if (umlDiagramType == UmlDiagramType.STATE)
+	private HorizontalAlignment getMessageTextAlignment(DiagramType diagramType, ISkinParam skinParam) {
+		if (diagramType == DiagramType.STATE)
 			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false, null);
 
 		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);
@@ -248,7 +248,7 @@ class MyElkDrawing implements TextBlock {
 //		TextBlock labelOnly = link.getLabel().create(labelFont,
 //				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 
-		final UmlDiagramType type = skinParam.getUmlDiagramType();
+		final DiagramType type = skinParam.getDiagramType();
 		final FontConfiguration font = getFontForLink(link, skinParam);
 
 		TextBlock labelOnly;

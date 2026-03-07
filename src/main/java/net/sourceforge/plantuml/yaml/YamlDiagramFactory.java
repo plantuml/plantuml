@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.yaml.parser.MonomorphToJson;
 import net.sourceforge.plantuml.yaml.parser.YamlParser;
@@ -66,7 +65,8 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 	}
 
 	@Override
-	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		final List<Highlighted> highlighted = new ArrayList<>();
 		JsonValue yaml = null;
 		StyleExtractor styleExtractor = null;
@@ -91,7 +91,7 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 		} catch (Exception e) {
 			Logme.error(e);
 		}
-		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.YAML, yaml, highlighted, styleExtractor,
+		final JsonDiagram result = new JsonDiagram(source, DiagramType.YAML, yaml, highlighted, styleExtractor,
 				preprocessing);
 		if (styleExtractor != null) {
 			try {
@@ -105,11 +105,6 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 						HorizontalAlignment.CENTER, VerticalAlignment.CENTER));
 		}
 		return result;
-	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.YAML;
 	}
 
 }

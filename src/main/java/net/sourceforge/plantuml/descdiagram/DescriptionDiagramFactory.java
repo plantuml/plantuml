@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.note.CommandFactoryNote;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnEntity;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.descdiagram.command.CommandArchimate;
 import net.sourceforge.plantuml.descdiagram.command.CommandArchimateMultilines;
@@ -68,13 +69,16 @@ import net.sourceforge.plantuml.objectdiagram.command.CommandCreateMap;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class DescriptionDiagramFactory extends PSystemCommandFactory {
 
+	public DescriptionDiagramFactory() {
+		super(DiagramType.DESCRIPTION);
+	}
+
 	@Override
-	public DescriptionDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source,
-			Previous previous, PreprocessingArtifact preprocessing) {
+	public DescriptionDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		return new DescriptionDiagram(source, previous, preprocessing);
 	}
 
@@ -131,11 +135,6 @@ public class DescriptionDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandArchimateMultilines());
 		cmds.add(new CommandArchimatePackage());
 		cmds.add(new CommandCreateDomain());
-	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.DESCRIPTION;
 	}
 
 }

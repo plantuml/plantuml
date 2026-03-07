@@ -87,7 +87,7 @@ public abstract class AbstractEntityImage implements IEntityImage {
 	}
 
 	public SName getStyleName() {
-		return entity.getUmlDiagramType().getStyleName();
+		return entity.getDiagramType().getStyleName();
 
 	}
 

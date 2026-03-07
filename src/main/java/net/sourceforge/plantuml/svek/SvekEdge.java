@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.abel.LinkStrategy;
 import net.sourceforge.plantuml.abel.NoteLinkStrategy;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.cruise.XAbstractEdge;
 import net.sourceforge.plantuml.cruise.XEdge;
 import net.sourceforge.plantuml.cucadiagram.EntityPort;
@@ -93,7 +94,6 @@ import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.PragmaKey;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -366,8 +366,8 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		return TextBlockUtils.withMargin(block, marginLabel, marginLabel);
 	}
 
-	private HorizontalAlignment getMessageTextAlignment(UmlDiagramType umlDiagramType, ISkinParam skinParam) {
-		if (umlDiagramType == UmlDiagramType.STATE)
+	private HorizontalAlignment getMessageTextAlignment(DiagramType diagramType, ISkinParam skinParam) {
+		if (diagramType == DiagramType.STATE)
 			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false, null);
 
 		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);

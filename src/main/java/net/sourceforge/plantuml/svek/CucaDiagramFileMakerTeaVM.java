@@ -42,13 +42,13 @@ import java.util.List;
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.crash.GraphvizCrash;
 import net.sourceforge.plantuml.dot.CucaDiagramSimplifierActivity;
 import net.sourceforge.plantuml.dot.CucaDiagramSimplifierState;
 import net.sourceforge.plantuml.dot.DotData;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 
@@ -66,19 +66,19 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 		BrowserLog.consoleLog(CucaDiagramFileMakerTeaVM.class, "getTextBlock12026");
 		final StringBounder stringBounder = new StringBounderTeaVM();
 
-		if (diagram.getUmlDiagramType() == UmlDiagramType.ACTIVITY)
+		if (diagram.getDiagramType() == DiagramType.ACTIVITY)
 			new CucaDiagramSimplifierActivity().simplify(diagram, stringBounder, DotMode.NORMAL);
-		else if (diagram.getUmlDiagramType() == UmlDiagramType.STATE)
+		else if (diagram.getDiagramType() == DiagramType.STATE)
 			new CucaDiagramSimplifierState().simplify(diagram, stringBounder, DotMode.NORMAL);
 
 		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, clusterManager.getCurrent(),
-				diagram.getUmlDiagramType(), diagram.getSkinParam());
+				diagram.getDiagramType(), diagram.getSkinParam());
 
 		final DotData dotData = new DotData(diagram, diagram.getRootGroup(), getOrderedLinks(), diagram.leafs(),
 				diagram, diagram);
 
 		GraphvizImageBuilder imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),
-				diagram.getUmlDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager);
+				diagram.getDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager);
 
 		TextBlock result = imageBuilder.buildImage(stringBounder, null, diagram.getDotStringSkek(), false);
 
@@ -90,7 +90,7 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 		if (result instanceof GraphvizCrash) {
 			status = 503;
 			imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),
-					diagram.getUmlDiagramType().getStyleName(), DotMode.NO_LEFT_RIGHT_AND_XLABEL, dotStringFactory,
+					diagram.getDiagramType().getStyleName(), DotMode.NO_LEFT_RIGHT_AND_XLABEL, dotStringFactory,
 					clusterManager);
 			result = imageBuilder.buildImage(stringBounder, null, diagram.getDotStringSkek(), false);
 		}

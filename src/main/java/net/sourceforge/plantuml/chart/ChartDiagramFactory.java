@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ChartDiagramFactory extends PSystemCommandFactory {
 
@@ -80,12 +79,9 @@ public class ChartDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public ChartDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public ChartDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		return new ChartDiagram(source, preprocessing);
 	}
 
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.CHART;
-	}
 }

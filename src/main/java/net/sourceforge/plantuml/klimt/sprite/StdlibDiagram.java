@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandFactorySprite;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -59,7 +60,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.Stdlib;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class StdlibDiagram extends TitledDiagram {
 
@@ -67,7 +67,8 @@ public class StdlibDiagram extends TitledDiagram {
 	private String name;
 
 	public StdlibDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.HELP, previous, preprocessing);
+		super(source, DiagramType.HELP, previous, preprocessing);
+		throw new UnsupportedOperationException();
 	}
 
 	public DiagramDescription getDescription() {

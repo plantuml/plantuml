@@ -39,13 +39,13 @@ import java.util.Collection;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class GitDiagram extends TitledDiagram {
 
@@ -53,7 +53,7 @@ public class GitDiagram extends TitledDiagram {
 	private SmetanaForGit smetana;
 
 	public GitDiagram(UmlSource source, GitTextArea textArea, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.GIT, null, preprocessing);
+		super(source, DiagramType.GIT, null, preprocessing);
 		this.gnodes = new GNodeBuilder(textArea.getAllCommits()).getAllNodes();
 		new GNodeBuilder(textArea.getAllCommits());
 	}

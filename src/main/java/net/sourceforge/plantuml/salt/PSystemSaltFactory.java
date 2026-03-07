@@ -45,19 +45,15 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemSaltFactory extends PSystemCommandFactory {
 
-	public PSystemSaltFactory(DiagramType init) {
-		super(init);
+	public PSystemSaltFactory() {
+		super(DiagramType.SALT);
 	}
 
 	@Override
 	protected void initCommandsList(List<Command> cmds) {
-		if (getDiagramType() == DiagramType.UML)
-			cmds.add(new CommandSalt());
-
 		CommonCommands.addCommonCommands2(cmds);
 		CommonCommands.addCommonScaleCommands(cmds);
 		CommonCommands.addTitleCommands(cmds);
@@ -65,18 +61,13 @@ public class PSystemSaltFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public PSystemSalt createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public PSystemSalt createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		final PSystemSalt result = new PSystemSalt(source, preprocessing);
 		if (getDiagramType() == DiagramType.SALT) {
 			result.setIamSalt(true);
 		}
 		return result;
 	}
-	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.SALT;
-	}
-
 
 }

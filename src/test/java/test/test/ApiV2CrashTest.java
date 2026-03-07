@@ -27,7 +27,7 @@ class ApiV2CrashTest {
 		final Diagram diagram = result.getDiagram();
 		assertNull(result.error());
 		assertNotNull(diagram);
-		assertEquals(DiagramType.UML, diagram.getSource().getDiagramType());
+		assertTrue(diagram.getSource().getDiagramTypes().contains(DiagramType.STATE));
 		assertEquals("StateDiagram", diagram.getClass().getSimpleName());
 		assertEquals("(4 entities)", diagram.getDescription().getDescription());
 		assertEquals(1, diagram.getNbImages());

@@ -34,35 +34,29 @@
  */
 package net.sourceforge.plantuml.directdot;
 
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemDotFactory extends PSystemBasicFactory<PSystemDot> {
 
 	private StringBuilder data;
-	private static final Pattern GRAPHVIZ_DOT_HEADER_PATTERN = Pattern.compile(
-		  "\\s*"                            // optional leading whitespace
-		+ "(strict\\s+)?"                   // optional 'strict'
-		+ "(di)?"                           // optional 'di'
-		+ "graph\\s+"                       // 'graph' keyword
-		+ "("
-		+     "[_\\p{L}][_\\p{L}\\p{N}]*"   // identifier
-		+   "|"
-		+     "-?(?:\\.[0-9]+|[0-9]+(?:\\.[0-9]*)?)" // number
-		+   "|"
-		+     "\"([^\"\\\\]|\\\\\")*\""     // quoted string
-		+ ")?"
-		+ "\\s*\\{\\s*"                     // opening brace
+	private static final Pattern GRAPHVIZ_DOT_HEADER_PATTERN = Pattern.compile("\\s*" // optional leading whitespace
+			+ "(strict\\s+)?" // optional 'strict'
+			+ "(di)?" // optional 'di'
+			+ "graph\\s+" // 'graph' keyword
+			+ "(" + "[_\\p{L}][_\\p{L}\\p{N}]*" // identifier
+			+ "|" + "-?(?:\\.[0-9]+|[0-9]+(?:\\.[0-9]*)?)" // number
+			+ "|" + "\"([^\"\\\\]|\\\\\")*\"" // quoted string
+			+ ")?" + "\\s*\\{\\s*" // opening brace
 	);
 
-	public PSystemDotFactory(DiagramType diagramType) {
-		super(diagramType);
+	public PSystemDotFactory() {
+		super(DiagramType.DOT);
 	}
 
 	@Override
@@ -72,7 +66,8 @@ public class PSystemDotFactory extends PSystemBasicFactory<PSystemDot> {
 	}
 
 	@Override
-	public PSystemDot executeLine(UmlSource source, PSystemDot system, String line, PreprocessingArtifact preprocessing) {
+	public PSystemDot executeLine(UmlSource source, PSystemDot system, String line,
+			PreprocessingArtifact preprocessing) {
 		if (system == null && isGraphvizDotHeader(line)) {
 			data = new StringBuilder(line);
 			data.append("\n");
@@ -86,14 +81,9 @@ public class PSystemDotFactory extends PSystemBasicFactory<PSystemDot> {
 		return new PSystemDot(source, data.toString(), preprocessing);
 	}
 
-    private boolean isGraphvizDotHeader(String line) {
-        Matcher matcher = GRAPHVIZ_DOT_HEADER_PATTERN.matcher(line);
-        return matcher.matches();
-    }
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return null;
+	private boolean isGraphvizDotHeader(String line) {
+		Matcher matcher = GRAPHVIZ_DOT_HEADER_PATTERN.matcher(line);
+		return matcher.matches();
 	}
 
 }

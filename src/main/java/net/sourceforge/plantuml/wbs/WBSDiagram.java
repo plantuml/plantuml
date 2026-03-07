@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.wbs;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -46,7 +44,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -62,7 +60,6 @@ import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
 import net.sourceforge.plantuml.style.PName;
@@ -85,7 +82,7 @@ public class WBSDiagram extends TitledDiagram {
 	}
 
 	public WBSDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.WBS, null, preprocessing);
+		super(source, DiagramType.WBS, null, preprocessing);
 	}
 
 	@Override
@@ -174,7 +171,8 @@ public class WBSDiagram extends TitledDiagram {
 
 	public int getSmartLevel(String type) {
 		if (root == null) {
-			if (TeaVM.a()) assert first == null;
+			if (TeaVM.a())
+				assert first == null;
 			first = type;
 			return 0;
 		}

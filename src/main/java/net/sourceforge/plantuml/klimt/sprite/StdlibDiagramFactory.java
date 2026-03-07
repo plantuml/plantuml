@@ -40,13 +40,17 @@ import java.util.List;
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class StdlibDiagramFactory extends PSystemCommandFactory {
-	
+
+	protected StdlibDiagramFactory(DiagramType type) {
+		super(type);
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	protected void initCommandsList(List<Command> cmds) {
@@ -54,14 +58,9 @@ public class StdlibDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public StdlibDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public StdlibDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		return new StdlibDiagram(source, previous, preprocessing);
 	}
-	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return null;
-	}
-
 
 }

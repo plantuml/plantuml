@@ -89,7 +89,7 @@ public class SyntaxChecker {
 		final Diagram system = blocks.get(0).getDiagram();
 		result.setCmapData(system.hasUrl());
 		if (system instanceof TitledDiagram) {
-			result.setUmlDiagramType(((TitledDiagram) system).getUmlDiagramType());
+			result.setDiagramType(((TitledDiagram) system).getDiagramType());
 			result.setDescription(system.getDescription().getDescription());
 		} else if (system instanceof PSystemError) {
 			result.setError(true);
@@ -120,7 +120,7 @@ public class SyntaxChecker {
 		final Diagram system = blocks.get(0).getDiagram();
 		result.setCmapData(system.hasUrl());
 		if (system instanceof TitledDiagram) {
-			result.setUmlDiagramType(((TitledDiagram) system).getUmlDiagramType());
+			result.setDiagramType(((TitledDiagram) system).getDiagramType());
 			result.setDescription(system.getDescription().getDescription());
 		} else if (system instanceof PSystemError) {
 			result.setError(true);

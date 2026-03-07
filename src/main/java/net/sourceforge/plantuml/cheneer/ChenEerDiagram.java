@@ -39,14 +39,14 @@ import java.util.Stack;
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ChenEerDiagram extends AbstractEntityDiagram {
 
 	public ChenEerDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessingArtifact) {
-		super(source, UmlDiagramType.CHEN_EER, previous, preprocessingArtifact);
+		super(source, DiagramType.CHEN_EER, previous, preprocessingArtifact);
 	}
 
 	private final Stack<Entity> ownerStack = new Stack<Entity>();
@@ -80,9 +80,9 @@ public class ChenEerDiagram extends AbstractEntityDiagram {
 	 *
 	 * <p>
 	 * This is used to link attributes based on their lexical position (how they
-	 * appear in sources) without nesting the entities (like how packages are
-	 * done). It is for this reason that we can't use CucaDiagram.getCurrentGroup,
-	 * as that method nests the entities.
+	 * appear in sources) without nesting the entities (like how packages are done).
+	 * It is for this reason that we can't use CucaDiagram.getCurrentGroup, as that
+	 * method nests the entities.
 	 *
 	 * @return the owner of the current attribute, or null if there is no owner
 	 */

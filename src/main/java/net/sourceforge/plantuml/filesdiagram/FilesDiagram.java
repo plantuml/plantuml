@@ -42,12 +42,12 @@ import java.util.List;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -60,7 +60,7 @@ public class FilesDiagram extends TitledDiagram {
 	private final FilesListing list;
 
 	public FilesDiagram(UmlSource source, StyleExtractor styleExtractor, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.FILES, null, preprocessing);
+		super(source, DiagramType.FILES, null, preprocessing);
 
 		final ISkinParam skinParam = getSkinParam();
 		try {
@@ -108,11 +108,10 @@ public class FilesDiagram extends TitledDiagram {
 	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 		return list;
 	}
-	
+
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		return getTextMainBlock01970(fileFormatOption);
 	}
-
 
 }

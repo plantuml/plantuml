@@ -47,7 +47,7 @@ class RunFlagPipeTest extends AbstractCliTest {
 		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
 			Run.main(new String[] { "-pipe", "-svg" });
 		});
-		assertLineSplitContains(err.capturedString(), "ERROR", "1", "Syntax Error?");
+		assertLineSplitContains(err.capturedString(), "ERROR", "1", "Syntax Error? (Assumed diagram type: sequence)");
 		assertTrue(out.capturedString().contains("<svg"));
 		assertTrue(out.capturedString().contains("foo"));
 		assertTrue(out.capturedString().contains("Syntax Error?"));

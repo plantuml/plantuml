@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.salt;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -45,15 +43,13 @@ import java.util.List;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ScaleSimple;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandFactorySprite;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.crash.CrashReportHandler;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -62,7 +58,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
-import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex;
@@ -84,7 +79,6 @@ import net.sourceforge.plantuml.salt.factory.ElementFactoryTab;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryText;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryTextField;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryTree;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -97,7 +91,7 @@ public class PSystemSalt extends TitledDiagram {
 
 	@Deprecated
 	public PSystemSalt(UmlSource source, List<String> data, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.SALT, null, preprocessing);
+		super(source, DiagramType.SALT, null, preprocessing);
 		this.dictionary = new SaltDictionary(source.getPathSystem(), preprocessing.getOption());
 		this.data = data;
 	}

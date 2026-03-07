@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.style;
 import java.util.Collection;
 
 import net.sourceforge.plantuml.TikzFontDistortion;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.klimt.Arrows;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
@@ -59,7 +60,6 @@ import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.skin.Padder;
 import net.sourceforge.plantuml.skin.PaddingParam;
 import net.sourceforge.plantuml.skin.SplitParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
@@ -112,7 +112,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public boolean stereotypePositionTop();
 
-	public boolean useSwimlanes(UmlDiagramType type);
+	public boolean useSwimlanes(DiagramType type);
 
 	public double getNodesep();
 
@@ -160,7 +160,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public int swimlaneWidth();
 
-	public UmlDiagramType getUmlDiagramType();
+	public DiagramType getDiagramType();
 
 	public HColor hoverPathColor();
 

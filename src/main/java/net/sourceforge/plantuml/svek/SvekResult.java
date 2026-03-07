@@ -109,7 +109,7 @@ public final class SvekResult implements IEntityImage {
 
 	private StyleSignature getDefaultStyleDefinition(Stereotype stereotype) {
 		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element,
-				dotData.getUmlDiagramType().getStyleName(), SName.arrow);
+				dotData.geDiagramType().getStyleName(), SName.arrow);
 
 		return result.withTOBECHANGED(stereotype);
 	}

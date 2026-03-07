@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -52,7 +53,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class WireDiagram extends TitledDiagram {
 
@@ -66,7 +66,7 @@ public class WireDiagram extends TitledDiagram {
 	}
 
 	public WireDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.WIRE, null, preprocessing);
+		super(source, DiagramType.WIRE, null, preprocessing);
 	}
 
 	@Override

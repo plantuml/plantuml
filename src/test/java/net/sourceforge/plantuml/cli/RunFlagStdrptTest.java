@@ -42,7 +42,7 @@ class RunFlagStdrptTest extends AbstractCliTest {
 		assertLs("[test.svg, test.txt]", tempDir);
 
 		assertLineSplitContains(err.capturedString(), "protocolVersion=1", "status=ERROR", "lineNumber=2",
-				"label=Syntax Error?", "Error line 2 in file: " + f.toAbsolutePath().toString(),
+				"label=Syntax Error? (Assumed diagram type: sequence)", "Error line 2 in file: " + f.toAbsolutePath().toString(),
 				"Some diagram description contains errors");
 
 	}
@@ -58,7 +58,7 @@ class RunFlagStdrptTest extends AbstractCliTest {
 
 		assertLs("[test.svg, test.txt]", tempDir);
 
-		assertEquals("test.txt:2:error:Syntax Error?", cleanControlChars(err.capturedString()));
+		assertEquals("test.txt:2:error:Syntax Error? (Assumed diagram type: sequence)", cleanControlChars(err.capturedString()));
 
 	}
 

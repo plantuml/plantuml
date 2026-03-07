@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.activitydiagram3;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.FileFormatOption;
@@ -46,7 +44,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
@@ -60,7 +58,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.url.Url;
@@ -76,7 +73,7 @@ public class ActivityDiagram3 extends TitledDiagram {
 	private final Swimlanes swimlanes = new Swimlanes(getSkinParam(), getPragma());
 
 	public ActivityDiagram3(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.ACTIVITY, previous, preprocessing);
+		super(source, DiagramType.ACTIVITY, previous, preprocessing);
 	}
 
 	private void manageSwimlaneStrategy() {

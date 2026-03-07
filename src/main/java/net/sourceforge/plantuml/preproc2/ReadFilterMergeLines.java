@@ -81,7 +81,8 @@ public class ReadFilterMergeLines implements ReadFilter {
 			}
 
 			private boolean isDitaa(String string) {
-				return DiagramType.getTypeFromArobaseStart(StringUtils.trinNoTrace((string))) == DiagramType.DITAA;
+				return DiagramType.getTypesFromArobaseStart(StringUtils.trinNoTrace((string)))
+						.contains(DiagramType.DITAA);
 			}
 		};
 	}

@@ -44,11 +44,10 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class BpmDiagramFactory extends PSystemCommandFactory {
 
-	public BpmDiagramFactory(DiagramType type) {
+	public BpmDiagramFactory() {
 		super(DiagramType.BPM);
 	}
 
@@ -64,14 +63,9 @@ public class BpmDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public BpmDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public BpmDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		return new BpmDiagram(source, preprocessing);
 	}
-	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.BPM;
-	}
-
 
 }

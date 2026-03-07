@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.packetdiag;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -47,7 +45,7 @@ import java.util.stream.IntStream;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -55,7 +53,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -119,7 +116,7 @@ public class PacketDiagram extends TitledDiagram {
 	private Style style;
 
 	public PacketDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.PACKET, null, preprocessing);
+		super(source, DiagramType.PACKET, null, preprocessing);
 	}
 
 	@Override
@@ -188,13 +185,11 @@ public class PacketDiagram extends TitledDiagram {
 			}
 		};
 	}
-	
+
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		return getTextMainBlock01970(fileFormatOption);
 	}
-
-
 
 	@Override
 	public DiagramDescription getDescription() {
@@ -366,7 +361,8 @@ public class PacketDiagram extends TitledDiagram {
 	}
 
 	private Optional<PacketItem> fitPacketInRow(PacketItem packet, int remainRowWidth, List<PacketBlock> row) {
-		if (TeaVM.a()) assert remainRowWidth > 0;
+		if (TeaVM.a())
+			assert remainRowWidth > 0;
 		int overflow = packet.width - remainRowWidth;
 		if (overflow > 0) {
 			int margin = packet.width - remainRowWidth;

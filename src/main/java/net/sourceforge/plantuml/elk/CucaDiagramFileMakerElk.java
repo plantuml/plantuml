@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.elk;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
@@ -53,7 +52,7 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
-import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.DiagramType;
 
 /*
  * You can choose between real "org.eclipse.elk..." classes or proxied "net.sourceforge.plantuml.elk.proxy..."
@@ -107,7 +106,6 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.AlignmentParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -156,15 +154,15 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 	}
 
 	private FontConfiguration getFontForLink(Link link, final ISkinParam skinParam) {
-		final SName styleName = skinParam.getUmlDiagramType().getStyleName();
+		final SName styleName = skinParam.getDiagramType().getStyleName();
 
 		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName)
 				.getMergedStyle(link.getStyleBuilder());
 		return style.getFontConfiguration(skinParam.getIHtmlColorSet());
 	}
 
-	private HorizontalAlignment getMessageTextAlignment(UmlDiagramType umlDiagramType, ISkinParam skinParam) {
-		if (umlDiagramType == UmlDiagramType.STATE)
+	private HorizontalAlignment getMessageTextAlignment(DiagramType diagramType, ISkinParam skinParam) {
+		if (diagramType == DiagramType.STATE)
 			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false, null);
 
 		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);
@@ -196,7 +194,7 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 //		TextBlock labelOnly = link.getLabel().create(labelFont,
 //				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 
-		final UmlDiagramType type = skinParam.getUmlDiagramType();
+		final DiagramType type = skinParam.getDiagramType();
 		final FontConfiguration font = getFontForLink(link, skinParam);
 
 		TextBlock labelOnly;

@@ -76,7 +76,7 @@ public final class CucaDiagramXmiMaker {
 				xmi = createClassDiagram();
 			else
 				throw new UnsupportedOperationException(
-						"Diagram type " + diagram.getUmlDiagramType() + " is not supported in XMI");
+						"Diagram type " + diagram.getDiagramType() + " is not supported in XMI");
 
 			xmi.transformerXml(fos);
 		} catch (ParserConfigurationException e) {

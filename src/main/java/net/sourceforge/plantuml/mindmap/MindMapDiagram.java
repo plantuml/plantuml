@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +42,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -56,7 +54,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.SkinParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.Direction;
 
@@ -75,7 +72,7 @@ public class MindMapDiagram extends TitledDiagram {
 	}
 
 	public MindMapDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.MINDMAP, null, preprocessing);
+		super(source, DiagramType.MINDMAP, null, preprocessing);
 		((SkinParam) getSkinParam()).setRankdir(Rankdir.LEFT_TO_RIGHT);
 		this.mindmaps.add(new MindMap(getSkinParam()));
 	}

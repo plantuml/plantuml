@@ -45,11 +45,11 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -58,7 +58,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 	private static final String CONCURRENT_PREFIX = "CONC";
 
 	public StateDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessingArtifact) {
-		super(source, UmlDiagramType.STATE, previous, preprocessingArtifact);
+		super(source, DiagramType.STATE, previous, preprocessingArtifact);
 		setNamespaceSeparator(".");
 	}
 
@@ -95,7 +95,8 @@ public class StateDiagram extends AbstractEntityDiagram {
 			final String idShort = "*start*";
 			final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 			if (quark.getData() == null)
-				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), ""), LeafType.CIRCLE_START, null);
+				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), ""), LeafType.CIRCLE_START,
+						null);
 			return quark.getData();
 		}
 		final String idShort = "*start*" + g.getName();
@@ -127,7 +128,8 @@ public class StateDiagram extends AbstractEntityDiagram {
 			final String idShort = "*historical*";
 			final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 			if (quark.getData() == null)
-				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), ""), LeafType.PSEUDO_STATE, null);
+				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), ""), LeafType.PSEUDO_STATE,
+						null);
 			return quark.getData();
 		}
 		final String idShort = "*historical*" + g.getName();
@@ -145,7 +147,8 @@ public class StateDiagram extends AbstractEntityDiagram {
 		final Quark<Entity> ident = quarkInContext(true, tmp);
 		final Entity result;
 		if (ident.getData() == null)
-			result = reallyCreateLeaf(location, ident, Display.getWithNewlines(getPragma(), ""), LeafType.PSEUDO_STATE, null);
+			result = reallyCreateLeaf(location, ident, Display.getWithNewlines(getPragma(), ""), LeafType.PSEUDO_STATE,
+					null);
 		else
 			result = ident.getData();
 		endGroup();
@@ -158,7 +161,8 @@ public class StateDiagram extends AbstractEntityDiagram {
 			final String idShort = "*deephistory*";
 			final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 			if (quark.getData() == null)
-				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), ""), LeafType.DEEP_HISTORY, null);
+				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), ""), LeafType.DEEP_HISTORY,
+						null);
 			return quark.getData();
 		}
 
@@ -179,7 +183,8 @@ public class StateDiagram extends AbstractEntityDiagram {
 		final Quark<Entity> ident = quarkInContext(true, cleanId(tmp));
 		final Entity result;
 		if (ident.getData() == null)
-			result = reallyCreateLeaf(location, ident, Display.getWithNewlines(getPragma(), ""), LeafType.DEEP_HISTORY, null);
+			result = reallyCreateLeaf(location, ident, Display.getWithNewlines(getPragma(), ""), LeafType.DEEP_HISTORY,
+					null);
 		else
 			result = ident.getData();
 		endGroup();
@@ -243,7 +248,8 @@ public class StateDiagram extends AbstractEntityDiagram {
 		if (parent1 != null ^ parent2 != null)
 			return false;
 
-		if (TeaVM.a()) assert parent1 != null && parent2 != null;
+		if (TeaVM.a())
+			assert parent1 != null && parent2 != null;
 		return parent1 == parent2;
 	}
 

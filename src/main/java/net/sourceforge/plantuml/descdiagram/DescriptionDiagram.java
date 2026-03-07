@@ -40,17 +40,17 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.PragmaKey;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class DescriptionDiagram extends AbstractEntityDiagram {
 
 	public DescriptionDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessingArtifact) {
-		super(source, UmlDiagramType.DESCRIPTION, previous, preprocessingArtifact);
+		super(source, DiagramType.DESCRIPTION, previous, preprocessingArtifact);
 	}
 
 	@Override

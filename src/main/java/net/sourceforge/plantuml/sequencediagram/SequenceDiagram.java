@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.abel.EntityPortion;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.Fashion;
@@ -70,7 +71,6 @@ import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker;
 import net.sourceforge.plantuml.sequencediagram.teoz.SequenceDiagramFileMakerTeoz;
 import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.PragmaKey;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
@@ -105,7 +105,7 @@ public class SequenceDiagram extends TitledDiagram {
 	}
 
 	public SequenceDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.SEQUENCE, previous, preprocessing);
+		super(source, DiagramType.SEQUENCE, previous, preprocessing);
 	}
 
 	@Deprecated

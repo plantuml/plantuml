@@ -68,6 +68,7 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
@@ -84,7 +85,6 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.AlignmentParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -496,7 +496,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	private Style getStyle() {
 		return StyleSignatureBasic
-				.of(SName.root, SName.element, diagram.getUmlDiagramType().getStyleName(), SName.arrow)
+				.of(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)
 				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 
@@ -510,15 +510,15 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	}
 
 	private FontConfiguration getFontForLink(Link link, final ISkinParam skinParam) {
-		final SName styleName = skinParam.getUmlDiagramType().getStyleName();
+		final SName styleName = skinParam.getDiagramType().getStyleName();
 
 		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName)
 				.getMergedStyle(link.getStyleBuilder());
 		return style.getFontConfiguration(skinParam.getIHtmlColorSet());
 	}
 
-	private HorizontalAlignment getMessageTextAlignment(UmlDiagramType umlDiagramType, ISkinParam skinParam) {
-		if (umlDiagramType == UmlDiagramType.STATE)
+	private HorizontalAlignment getMessageTextAlignment(DiagramType diagramType, ISkinParam skinParam) {
+		if (diagramType == DiagramType.STATE)
 			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false, null);
 
 		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);
@@ -550,7 +550,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 //		TextBlock labelOnly = link.getLabel().create(labelFont,
 //				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 
-		final UmlDiagramType type = skinParam.getUmlDiagramType();
+		final DiagramType type = skinParam.getDiagramType();
 		final FontConfiguration font = getFontForLink(link, skinParam);
 
 		TextBlock labelOnly;

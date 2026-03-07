@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.activitydiagram3.ftile.ArrowsRegular;
 import net.sourceforge.plantuml.activitydiagram3.ftile.ArrowsTriangle;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.decoration.LinkStyle;
 import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.klimt.Arrows;
@@ -134,7 +135,7 @@ public class SkinParam implements ISkinParam {
 		return s != null && INT_OR_DECIMAL.matcher(s).matches();
 	}
 
-	private SkinParam(PathSystem pathSystem, UmlDiagramType type, Pragma pragma, ConfigurationStore<OptionKey> option) {
+	private SkinParam(PathSystem pathSystem, DiagramType type, Pragma pragma, ConfigurationStore<OptionKey> option) {
 		this.type = type;
 		this.pragma = pragma;
 		this.option = option;
@@ -189,7 +190,7 @@ public class SkinParam implements ISkinParam {
 	private final Map<String, String> paramsPendingForStyleMigration = new LinkedHashMap<String, String>();
 	private final Map<String, String> svgCharSizes = new HashMap<String, String>();
 	private Rankdir rankdir = Rankdir.TOP_TO_BOTTOM;
-	private final UmlDiagramType type;
+	private final DiagramType type;
 	private boolean useVizJs;
 
 	@Override
@@ -239,7 +240,7 @@ public class SkinParam implements ISkinParam {
 		paramsPendingForStyleMigration.clear();
 	}
 
-	public static SkinParam create(PathSystem pathSystem, UmlDiagramType type, Pragma pragma,
+	public static SkinParam create(PathSystem pathSystem, DiagramType type, Pragma pragma,
 			ConfigurationStore<OptionKey> option) {
 		return new SkinParam(pathSystem, type, pragma, option);
 	}
@@ -357,7 +358,8 @@ public class SkinParam implements ISkinParam {
 		if (param == ColorParam.background)
 			return getIHtmlColorSet().getColorOrWhite(value);
 
-		if (TeaVM.a()) assert param != ColorParam.background;
+		if (TeaVM.a())
+			assert param != ColorParam.background;
 
 		return getIHtmlColorSet().getColorOrWhite(value);
 	}
@@ -812,8 +814,8 @@ public class SkinParam implements ISkinParam {
 	}
 
 	@Override
-	public boolean useSwimlanes(UmlDiagramType type) {
-		if (type != UmlDiagramType.ACTIVITY)
+	public boolean useSwimlanes(DiagramType type) {
+		if (type != DiagramType.ACTIVITY)
 			return false;
 
 		return swimlanes();
@@ -1081,7 +1083,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	@Override
-	public UmlDiagramType getUmlDiagramType() {
+	public DiagramType getDiagramType() {
 		return type;
 	}
 

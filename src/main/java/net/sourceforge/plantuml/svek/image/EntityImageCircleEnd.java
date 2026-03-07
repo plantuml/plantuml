@@ -53,7 +53,7 @@ public class EntityImageCircleEnd extends AbstractEntityImage {
 	private final CircleEnd circle;
 
 	public StyleSignatureBasic getDefaultStyleDefinitionCircle() {
-		return StyleSignatureBasic.of(SName.root, SName.element, getSkinParam().getUmlDiagramType().getStyleName(),
+		return StyleSignatureBasic.of(SName.root, SName.element, getSkinParam().getDiagramType().getStyleName(),
 				SName.circle, SName.end);
 	}
 

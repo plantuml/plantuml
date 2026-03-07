@@ -54,17 +54,20 @@ import net.sourceforge.plantuml.command.UBrexCommandFootboxIgnored;
 import net.sourceforge.plantuml.command.UBrexCommandRankDir;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteActivity;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ActivityDiagramFactory extends PSystemCommandFactory {
-	// ::remove folder when __HAXE__
+
+	public ActivityDiagramFactory() {
+		super(DiagramType.ACTIVITY);
+	}
 
 	@Override
-	public ActivityDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source,
-			Previous previous, PreprocessingArtifact preprocessing) {
+	public ActivityDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		return new ActivityDiagram(source, previous, preprocessing);
 	}
 
@@ -94,11 +97,6 @@ public class ActivityDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new UBrexCommandHideShow2());
 		// addCommand(new CommandInnerConcurrent(system));
 
-	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.ACTIVITY;
 	}
 
 }

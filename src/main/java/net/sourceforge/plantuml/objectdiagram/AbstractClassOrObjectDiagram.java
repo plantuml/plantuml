@@ -47,19 +47,20 @@ import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.abel.NoteLinkStrategy;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram {
 
-	public AbstractClassOrObjectDiagram(UmlSource source, UmlDiagramType type, Previous previous, PreprocessingArtifact preprocessingArtifact) {
+	public AbstractClassOrObjectDiagram(UmlSource source, DiagramType type, Previous previous,
+			PreprocessingArtifact preprocessingArtifact) {
 		super(source, type, previous, preprocessingArtifact);
 		setNamespaceSeparator(".");
 	}
@@ -110,8 +111,8 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 
 	private final List<Association> associations = new ArrayList<>();
 
-	public CommandExecutionResult associationClass(LineLocation location, Entity entity1A, Entity entity1B, Entity entity2A, Entity entity2B,
-			LinkType linkType, Display label) {
+	public CommandExecutionResult associationClass(LineLocation location, Entity entity1A, Entity entity1B,
+			Entity entity2A, Entity entity2B, LinkType linkType, Display label) {
 
 		final List<Association> same1 = getExistingAssociatedPoints(entity1A, entity1B);
 		final List<Association> same2 = getExistingAssociatedPoints(entity2A, entity2B);
@@ -120,11 +121,11 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			final String tmp2 = this.getUniqueSequence("apoint");
 
 			final Quark<Entity> code1 = getCurrentGroup().getQuark().child(tmp1);
-			final Entity point1 = reallyCreateLeaf(location, code1, Display.getWithNewlines(getPragma(), ""), LeafType.POINT_FOR_ASSOCIATION,
-					null);
+			final Entity point1 = reallyCreateLeaf(location, code1, Display.getWithNewlines(getPragma(), ""),
+					LeafType.POINT_FOR_ASSOCIATION, null);
 			final Quark<Entity> code2 = getCurrentGroup().getQuark().child(tmp2);
-			final Entity point2 = reallyCreateLeaf(location, code2, Display.getWithNewlines(getPragma(), ""), LeafType.POINT_FOR_ASSOCIATION,
-					null);
+			final Entity point2 = reallyCreateLeaf(location, code2, Display.getWithNewlines(getPragma(), ""),
+					LeafType.POINT_FOR_ASSOCIATION, null);
 
 			insertPointBetween(location, entity1A, entity1B, point1);
 			insertPointBetween(location, entity2A, entity2B, point2);
@@ -139,7 +140,8 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		return CommandExecutionResult.error("Cannot link two associations points");
 	}
 
-	private void insertPointBetween(LineLocation location, final Entity entity1A, final Entity entity1B, final Entity point1) {
+	private void insertPointBetween(LineLocation location, final Entity entity1A, final Entity entity1B,
+			final Entity point1) {
 		Link existingLink1 = foundLink(entity1A, entity1B);
 		if (existingLink1 == null)
 			existingLink1 = new Link(location, this, getSkinParam().getCurrentStyleBuilder(), entity1A, entity1B,
@@ -151,12 +153,14 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		final Entity entity2real = existingLink1.isInverted() ? existingLink1.getEntity1() : existingLink1.getEntity2();
 
 		final Link entity1ToPoint = new Link(location, this, getSkinParam().getCurrentStyleBuilder(), entity1real,
-				point1, existingLink1.getType().getPart2(), LinkArg.build(existingLink1.getLabel(), existingLink1.getLength())
+				point1, existingLink1.getType().getPart2(),
+				LinkArg.build(existingLink1.getLabel(), existingLink1.getLength())
 						.withQuantifier(existingLink1.getQuantifier1(), null)
 						.withDistanceAngle(existingLink1.getLabeldistance(), existingLink1.getLabelangle()));
 		entity1ToPoint.setLinkArrow(existingLink1.getLinkArrow());
-		final Link pointToEntity2 = new Link(location, this, getSkinParam().getCurrentStyleBuilder(), point1, entity2real,
-				existingLink1.getType().getPart1(), LinkArg.noDisplay(existingLink1.getLength()).withQuantifier(null, existingLink1.getQuantifier2())
+		final Link pointToEntity2 = new Link(location, this, getSkinParam().getCurrentStyleBuilder(), point1,
+				entity2real, existingLink1.getType().getPart1(),
+				LinkArg.noDisplay(existingLink1.getLength()).withQuantifier(null, existingLink1.getQuantifier2())
 						.withDistanceAngle(existingLink1.getLabeldistance(), existingLink1.getLabelangle()));
 
 		// int length = 1;
@@ -171,8 +175,8 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		addLink(pointToEntity2);
 	}
 
-	public boolean associationClass(LineLocation location, int mode, Entity entity1, Entity entity2, Entity associed, LinkType linkType,
-			Display label) {
+	public boolean associationClass(LineLocation location, int mode, Entity entity1, Entity entity2, Entity associed,
+			LinkType linkType, Display label) {
 		final List<Association> same = getExistingAssociatedPoints(entity1, entity2);
 		if (same.size() > 1) {
 			return false;
@@ -183,7 +187,8 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			this.associations.add(association);
 			return true;
 		}
-		if (TeaVM.a()) assert same.size() == 1;
+		if (TeaVM.a())
+			assert same.size() == 1;
 		final Association association = same.get(0).createSecondAssociation(location, mode, associed, label);
 		association.createInSecond(location, linkType, label);
 
@@ -224,7 +229,8 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 				quark = entity1.getQuark().getParent().child(idShort);
 			else
 				quark = quarkInContext(true, cleanId(idShort));
-			point = reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), ""), LeafType.POINT_FOR_ASSOCIATION, null);
+			point = reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), ""),
+					LeafType.POINT_FOR_ASSOCIATION, null);
 
 		}
 
@@ -244,9 +250,9 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		void createNew(LineLocation location, int mode, LinkType linkType, Display label) {
 			existingLink = foundLink(entity1, entity2);
 			if (existingLink == null)
-				existingLink = new Link(location, AbstractClassOrObjectDiagram.this, getSkinParam().getCurrentStyleBuilder(),
-						entity1, entity2, new LinkType(LinkDecor.NONE, LinkDecor.NONE),
-						LinkArg.noDisplay(2));
+				existingLink = new Link(location, AbstractClassOrObjectDiagram.this,
+						getSkinParam().getCurrentStyleBuilder(), entity1, entity2,
+						new LinkType(LinkDecor.NONE, LinkDecor.NONE), LinkArg.noDisplay(2));
 			else
 				removeLink(existingLink);
 
@@ -255,13 +261,15 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			final Entity entity2real = existingLink.isInverted() ? existingLink.getEntity1()
 					: existingLink.getEntity2();
 
-			entity1ToPoint = new Link(location, AbstractClassOrObjectDiagram.this, getSkinParam().getCurrentStyleBuilder(),
-					entity1real, point, existingLink.getType().getPart2(), LinkArg.build(existingLink.getLabel(), existingLink.getLength())
+			entity1ToPoint = new Link(location, AbstractClassOrObjectDiagram.this,
+					getSkinParam().getCurrentStyleBuilder(), entity1real, point, existingLink.getType().getPart2(),
+					LinkArg.build(existingLink.getLabel(), existingLink.getLength())
 							.withQuantifier(existingLink.getQuantifier1(), null)
 							.withDistanceAngle(existingLink.getLabeldistance(), existingLink.getLabelangle()));
 			entity1ToPoint.setLinkArrow(existingLink.getLinkArrow());
-			pointToEntity2 = new Link(location, AbstractClassOrObjectDiagram.this, getSkinParam().getCurrentStyleBuilder(),
-					point, entity2real, existingLink.getType().getPart1(), LinkArg.noDisplay(existingLink.getLength()).withQuantifier(null, existingLink.getQuantifier2())
+			pointToEntity2 = new Link(location, AbstractClassOrObjectDiagram.this,
+					getSkinParam().getCurrentStyleBuilder(), point, entity2real, existingLink.getType().getPart1(),
+					LinkArg.noDisplay(existingLink.getLength()).withQuantifier(null, existingLink.getQuantifier2())
 							.withDistanceAngle(existingLink.getLabeldistance(), existingLink.getLabelangle()));
 
 			int length = 1;
@@ -281,11 +289,13 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			addLink(pointToEntity2);
 
 			if (mode == 1)
-				pointToAssocied = new Link(location, AbstractClassOrObjectDiagram.this, getSkinParam().getCurrentStyleBuilder(),
-						point, associed, linkType, LinkArg.build(label, length));
+				pointToAssocied = new Link(location, AbstractClassOrObjectDiagram.this,
+						getSkinParam().getCurrentStyleBuilder(), point, associed, linkType,
+						LinkArg.build(label, length));
 			else
-				pointToAssocied = new Link(location, AbstractClassOrObjectDiagram.this, getSkinParam().getCurrentStyleBuilder(),
-						associed, point, linkType, LinkArg.build(label, length));
+				pointToAssocied = new Link(location, AbstractClassOrObjectDiagram.this,
+						getSkinParam().getCurrentStyleBuilder(), associed, point, linkType,
+						LinkArg.build(label, length));
 
 			addLink(pointToAssocied);
 		}
@@ -293,17 +303,19 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 		void createInSecond(LineLocation location, LinkType linkType, Display label) {
 			existingLink = foundLink(entity1, entity2);
 			if (existingLink == null)
-				existingLink = new Link(location, AbstractClassOrObjectDiagram.this, getSkinParam().getCurrentStyleBuilder(),
-						entity1, entity2, new LinkType(LinkDecor.NONE, LinkDecor.NONE),
-						LinkArg.noDisplay(2));
+				existingLink = new Link(location, AbstractClassOrObjectDiagram.this,
+						getSkinParam().getCurrentStyleBuilder(), entity1, entity2,
+						new LinkType(LinkDecor.NONE, LinkDecor.NONE), LinkArg.noDisplay(2));
 			else
 				removeLink(existingLink);
 
-			entity1ToPoint = new Link(location, AbstractClassOrObjectDiagram.this, getSkinParam().getCurrentStyleBuilder(),
-					entity1, point, existingLink.getType().getPart2(), LinkArg.build(existingLink.getLabel(), 2).withQuantifier(existingLink.getQuantifier1(), null)
+			entity1ToPoint = new Link(location, AbstractClassOrObjectDiagram.this,
+					getSkinParam().getCurrentStyleBuilder(), entity1, point, existingLink.getType().getPart2(),
+					LinkArg.build(existingLink.getLabel(), 2).withQuantifier(existingLink.getQuantifier1(), null)
 							.withDistanceAngle(existingLink.getLabeldistance(), existingLink.getLabelangle()));
-			pointToEntity2 = new Link(location, AbstractClassOrObjectDiagram.this, getSkinParam().getCurrentStyleBuilder(),
-					point, entity2, existingLink.getType().getPart1(), LinkArg.noDisplay(2).withQuantifier(null, existingLink.getQuantifier2())
+			pointToEntity2 = new Link(location, AbstractClassOrObjectDiagram.this,
+					getSkinParam().getCurrentStyleBuilder(), point, entity2, existingLink.getType().getPart1(),
+					LinkArg.noDisplay(2).withQuantifier(null, existingLink.getQuantifier2())
 							.withDistanceAngle(existingLink.getLabeldistance(), existingLink.getLabelangle()));
 			// entity1ToPoint = new Link(entity1, point, existingLink.getType(),
 			// null, 2);
@@ -316,13 +328,13 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 				other.pointToAssocied = other.pointToAssocied.getInv();
 				addLink(other.pointToAssocied);
 			}
-			pointToAssocied = new Link(location, AbstractClassOrObjectDiagram.this, getSkinParam().getCurrentStyleBuilder(),
-					point, associed, linkType, LinkArg.build(label, 1));
+			pointToAssocied = new Link(location, AbstractClassOrObjectDiagram.this,
+					getSkinParam().getCurrentStyleBuilder(), point, associed, linkType, LinkArg.build(label, 1));
 			addLink(pointToAssocied);
 
-			final Link lnode = new Link(location, AbstractClassOrObjectDiagram.this, getSkinParam().getCurrentStyleBuilder(),
-					other.point, this.point, new LinkType(LinkDecor.NONE, LinkDecor.NONE),
-					LinkArg.noDisplay(1));
+			final Link lnode = new Link(location, AbstractClassOrObjectDiagram.this,
+					getSkinParam().getCurrentStyleBuilder(), other.point, this.point,
+					new LinkType(LinkDecor.NONE, LinkDecor.NONE), LinkArg.noDisplay(1));
 			lnode.setInvis(true);
 			addLink(lnode);
 

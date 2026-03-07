@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.api.ApiStable;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramChromeFactory12026;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.file.SuggestedFile;
@@ -60,7 +61,6 @@ import net.sourceforge.plantuml.klimt.color.ColorOrder;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
@@ -73,7 +73,6 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.SkinParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
@@ -100,13 +99,12 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 	private DisplayPositioned header = DisplayPositioned.none(HorizontalAlignment.CENTER, null);
 	private DisplayPositioned footer = DisplayPositioned.none(HorizontalAlignment.CENTER, null);
 	private DisplayPositioned mainFrame = DisplayPositioned.none(null, null);
-	private final UmlDiagramType type;
+	private final DiagramType type;
 
 	private final SkinParam skinParam;
 	private String namespaceSeparator = null;
 
-	public TitledDiagram(UmlSource source, UmlDiagramType type, Previous previous,
-			PreprocessingArtifact preprocessing) {
+	public TitledDiagram(UmlSource source, DiagramType type, Previous previous, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
 		this.type = type;
 		this.skinParam = SkinParam.create(source.getPathSystem(), type, Pragma.createEmpty(),
@@ -135,7 +133,7 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 		return skinParam.getCurrentStyleBuilder();
 	}
 
-	final public UmlDiagramType getUmlDiagramType() {
+	final public DiagramType getDiagramType() {
 		return type;
 	}
 
@@ -270,7 +268,7 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 
 	@Override
 	public final HColor calculateBackColor() {
-		final Style style = StyleSignatureBasic.of(SName.root, SName.document, this.getUmlDiagramType().getStyleName())
+		final Style style = StyleSignatureBasic.of(SName.root, SName.document, this.getDiagramType().getStyleName())
 				.getMergedStyle(this.getSkinParam().getCurrentStyleBuilder());
 
 		HColor backgroundColor = style.value(PName.BackGroundColor).asColor(this.getSkinParam().getIHtmlColorSet());

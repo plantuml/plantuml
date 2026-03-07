@@ -66,10 +66,6 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	public abstract AbstractDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing);
 
-	protected PSystemCommandFactory() {
-		this(DiagramType.UML);
-	}
-
 	protected PSystemCommandFactory(DiagramType type) {
 		super(type);
 	}
@@ -140,7 +136,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 		final Step step = getCandidate(it);
 		if (step == null) {
 			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, it.peek().getLocation(),
-					getUmlDiagramType());
+					getDiagramType());
 			it.next();
 			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace(), preprocessing);
 		}
@@ -152,7 +148,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 		if (result.isOk() == false) {
 			final LineLocation location = ((StringLocated) step.blocLines.getFirst()).getLocation();
 			final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(), result.getScore(),
-					location, getUmlDiagramType());
+					location, getDiagramType());
 			sys = PSystemErrorUtils.buildV2(source, err, result.getDebugLines(), it.getTrace(), preprocessing);
 		}
 		if (result.getNewDiagram() != null)

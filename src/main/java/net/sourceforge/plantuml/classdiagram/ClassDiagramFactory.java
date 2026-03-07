@@ -70,6 +70,7 @@ import net.sourceforge.plantuml.command.note.CommandFactoryNote;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnEntity;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
 import net.sourceforge.plantuml.command.note.CommandFactoryTipOnEntity;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementMultilines;
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementParenthesis;
@@ -83,12 +84,16 @@ import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJson;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJsonSingleLine;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateMap;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ClassDiagramFactory extends PSystemCommandFactory {
 
+	public ClassDiagramFactory() {
+		super(DiagramType.CLASS);
+	}
+
 	@Override
-	public ClassDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public ClassDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		return new ClassDiagram(source, previous, preprocessing);
 	}
 
@@ -135,8 +140,8 @@ public class ClassDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandNamespaceEmpty());
 		cmds.add(new CommandStereotype());
 
-		cmds.add(new CommandLinkClass(UmlDiagramType.CLASS));
-		cmds.add(new CommandLinkLollipop(UmlDiagramType.CLASS));
+		cmds.add(new CommandLinkClass(DiagramType.CLASS));
+		cmds.add(new CommandLinkLollipop(DiagramType.CLASS));
 
 		final CommandFactoryTipOnEntity factoryTipOnEntityCommand = new CommandFactoryTipOnEntity();
 		cmds.add(factoryTipOnEntityCommand.createMultiLine(true));
@@ -163,11 +168,6 @@ public class ClassDiagramFactory extends PSystemCommandFactory {
 		CommonCommands.addTitleCommands(cmds);
 		CommonCommands.addCommonCommands2(cmds);
 
-	}
-	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.CLASS;
 	}
 
 }

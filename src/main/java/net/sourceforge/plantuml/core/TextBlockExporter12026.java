@@ -83,7 +83,6 @@ import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.SkinParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -106,10 +105,10 @@ import net.sourceforge.plantuml.url.Url;
  * UGraphic creation, margins, border, and stream writing.
  *
  * <p>
- * It does <b>not</b> handle diagram chrome (title, header, footer, etc.).
- * The input {@link TextBlock} is expected to be already fully decorated
- * (e.g. by {@link DiagramChromeFactory12026}). Handwritten mode is applied
- * automatically when {@code skinParam.handwritten()} is {@code true}.
+ * It does <b>not</b> handle diagram chrome (title, header, footer, etc.). The
+ * input {@link TextBlock} is expected to be already fully decorated (e.g. by
+ * {@link DiagramChromeFactory12026}). Handwritten mode is applied automatically
+ * when {@code skinParam.handwritten()} is {@code true}.
  */
 public class TextBlockExporter12026 {
 
@@ -128,7 +127,7 @@ public class TextBlockExporter12026 {
 	private final boolean isHandwritten;
 
 	// Optional diagram-level info for SVG attributes
-	private final UmlDiagramType diagramType;
+	private final DiagramType diagramType;
 
 	private TextBlockExporter12026(Builder builder) {
 		this.textBlock = builder.textBlock;
@@ -290,7 +289,7 @@ public class TextBlockExporter12026 {
 
 		if (p.isTrue(PragmaKey.SVG_INTERACTIVE)) {
 			String interactiveBaseFilename = "default";
-			if (diagramType == UmlDiagramType.SEQUENCE)
+			if (diagramType == DiagramType.SEQUENCE)
 				interactiveBaseFilename = "sequencediagram";
 			option = option.withInteractive(interactiveBaseFilename);
 		}
@@ -367,7 +366,7 @@ public class TextBlockExporter12026 {
 	 *
 	 * @param textBlock        the fully-decorated diagram content
 	 * @param fileFormatOption the desired output format and options
-	 * @param isHandwritten 
+	 * @param isHandwritten
 	 * @return a new builder
 	 */
 	public static Builder builder(TextBlock textBlock, FileFormatOption fileFormatOption, boolean isHandwritten) {
@@ -390,7 +389,7 @@ public class TextBlockExporter12026 {
 		private Scale scale;
 		private String warningOrError;
 		private Pragma pragma;
-		private UmlDiagramType diagramType;
+		private DiagramType diagramType;
 
 		private Builder(TextBlock textBlock, FileFormatOption fileFormatOption, boolean isHandwritten) {
 			this.textBlock = textBlock;
@@ -446,7 +445,7 @@ public class TextBlockExporter12026 {
 			return this;
 		}
 
-		public Builder diagramType(UmlDiagramType diagramType) {
+		public Builder diagramType(DiagramType diagramType) {
 			this.diagramType = diagramType;
 			return this;
 		}
@@ -468,7 +467,7 @@ public class TextBlockExporter12026 {
 			this.status = 0;
 			this.scale = diagram.getScale();
 			this.pragma = diagram.getPragma();
-			this.diagramType = diagram.getUmlDiagramType();
+			this.diagramType = diagram.getDiagramType();
 			return this;
 		}
 

@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -52,12 +53,11 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ListSpriteDiagram extends TitledDiagram {
 
 	public ListSpriteDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.HELP, previous, preprocessing);
+		super(source, DiagramType.HELP, previous, preprocessing);
 	}
 
 	public DiagramDescription getDescription() {

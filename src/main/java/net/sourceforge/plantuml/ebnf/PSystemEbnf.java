@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +43,7 @@ import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FloatingNote;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -55,7 +53,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.PragmaKey;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -67,7 +64,7 @@ public class PSystemEbnf extends TitledDiagram {
 	private final List<TextBlockable> expressions = new ArrayList<>();
 
 	public PSystemEbnf(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.EBNF, null, preprocessing);
+		super(source, DiagramType.EBNF, null, preprocessing);
 	}
 
 	public DiagramDescription getDescription() {

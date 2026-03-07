@@ -41,11 +41,8 @@ import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
-	// ::remove folder when __HAXE__
-
 	// private StringBuilder data;
 	// // -E,--no-separation
 	// private boolean performSeparationOfCommonEdges;
@@ -173,10 +170,5 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 //
 //		return new Font(fontName, fontVariant, fontSize);
 //	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return null;
-	}
 
 }

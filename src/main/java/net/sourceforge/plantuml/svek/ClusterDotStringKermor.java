@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.abel.EntityPosition;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
 import net.sourceforge.plantuml.klimt.awt.XColor;
@@ -51,12 +52,10 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.skin.AlignmentParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.utils.Position;
 
 public class ClusterDotStringKermor {
-	
 
 	private final Cluster cluster;
 	private final ISkinParam skinParam;
@@ -68,7 +67,7 @@ public class ClusterDotStringKermor {
 	}
 
 	void printInternal(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder, DotMode dotMode,
-			GraphvizVersion graphvizVersion, UmlDiagramType type) {
+			GraphvizVersion graphvizVersion, DiagramType type) {
 
 		final Set<EntityPosition> entityPositionsExceptNormal = entityPositionsExceptNormal();
 		if (entityPositionsExceptNormal.size() > 0)
@@ -174,14 +173,14 @@ public class ClusterDotStringKermor {
 		return false;
 	}
 
-	private String getSourceInPoint(UmlDiagramType type) {
+	private String getSourceInPoint(DiagramType type) {
 		if (skinParam.useSwimlanes(type))
 			return "sourceIn" + cluster.getColor();
 
 		return null;
 	}
 
-	private String getSinkInPoint(UmlDiagramType type) {
+	private String getSinkInPoint(DiagramType type) {
 		if (skinParam.useSwimlanes(type))
 			return "sinkIn" + cluster.getColor();
 
@@ -256,14 +255,14 @@ public class ClusterDotStringKermor {
 //		return result;
 //	}
 
-	private boolean protection0(UmlDiagramType type) {
+	private boolean protection0(DiagramType type) {
 		if (skinParam.useSwimlanes(type))
 			return false;
 
 		return true;
 	}
 
-	private boolean protection1(UmlDiagramType type) {
+	private boolean protection1(DiagramType type) {
 		if (cluster.getGroup().getUSymbol() == USymbols.NODE)
 			return true;
 

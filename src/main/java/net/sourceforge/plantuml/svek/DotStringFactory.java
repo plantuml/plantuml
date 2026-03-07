@@ -47,6 +47,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.dot.Graphviz;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
@@ -60,7 +61,6 @@ import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.skin.PragmaKey;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Position;
@@ -69,16 +69,15 @@ import net.sourceforge.plantuml.vizjs.GraphvizJsRuntimeException;
 
 public final class DotStringFactory implements Moveable {
 
-	private final UmlDiagramType umlDiagramType;
+	private final DiagramType diagramType;
 	private final ISkinParam skinParam;
 	private final Bibliotekon bibliotekon;
 	private final Cluster root;
 
-	public DotStringFactory(Bibliotekon bibliotekon, Cluster root, UmlDiagramType umlDiagramType,
-			ISkinParam skinParam) {
+	public DotStringFactory(Bibliotekon bibliotekon, Cluster root, DiagramType diagramType, ISkinParam skinParam) {
 		this.bibliotekon = bibliotekon;
 		this.skinParam = skinParam;
-		this.umlDiagramType = umlDiagramType;
+		this.diagramType = diagramType;
 		this.root = root;
 	}
 
@@ -179,7 +178,7 @@ public final class DotStringFactory implements Moveable {
 				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
 
 			root.printCluster3_forKermor(sb, getBibliotekon().allLines(), stringBounder, dotMode, getGraphvizVersion(),
-					umlDiagramType);
+					diagramType);
 
 		} else {
 			root.printCluster1(sb, getBibliotekon().allLines(), stringBounder);
@@ -188,7 +187,7 @@ public final class DotStringFactory implements Moveable {
 				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
 
 			root.printCluster2(sb, getBibliotekon().allLines(), stringBounder, dotMode, getGraphvizVersion(),
-					umlDiagramType);
+					diagramType);
 
 			for (SvekEdge line : getBibliotekon().lines1())
 				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
@@ -205,11 +204,11 @@ public final class DotStringFactory implements Moveable {
 		final List<String> minPointCluster = new ArrayList<>();
 		final List<String> maxPointCluster = new ArrayList<>();
 		for (Cluster cluster : getBibliotekon().allCluster()) {
-			final String minPoint = cluster.getMinPoint(umlDiagramType);
+			final String minPoint = cluster.getMinPoint(diagramType);
 			if (minPoint != null)
 				minPointCluster.add(minPoint);
 
-			final String maxPoint = cluster.getMaxPoint(umlDiagramType);
+			final String maxPoint = cluster.getMaxPoint(diagramType);
 			if (maxPoint != null)
 				maxPointCluster.add(maxPoint);
 
@@ -237,7 +236,7 @@ public final class DotStringFactory implements Moveable {
 	}
 
 	private int getMinRankSep() {
-		if (umlDiagramType == UmlDiagramType.ACTIVITY) {
+		if (diagramType == DiagramType.ACTIVITY) {
 			// return 29;
 			return 40;
 		}
@@ -247,7 +246,7 @@ public final class DotStringFactory implements Moveable {
 	}
 
 	private int getMinNodeSep() {
-		if (umlDiagramType == UmlDiagramType.ACTIVITY) {
+		if (diagramType == DiagramType.ACTIVITY) {
 			// return 15;
 			return 20;
 		}

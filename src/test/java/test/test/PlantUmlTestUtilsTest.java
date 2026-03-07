@@ -1,6 +1,7 @@
 package test.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static test.utils.PlantUmlTestUtils.exportDiagram;
 
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ class PlantUmlTestUtilsTest {
         assertEquals("(Definition)", d.getDescription().toString());
         assertEquals("NULL", d.getTitleDisplay().toString());
         assertEquals(1, d.getNbImages());
-        assertEquals(DiagramType.DEFINITION, d.getSource().getDiagramType());
+        assertTrue(d.getSource().getDiagramTypes().contains(DiagramType.DEFINITION));
         assertEquals("[]", d.getSource().getTitle().toString());
         assertEquals(3, d.getSource().getTotalLineCount());
         assertEquals("macro_def_id", d.getSource().getId());
@@ -45,7 +46,7 @@ class PlantUmlTestUtilsTest {
         assertEquals("(EBNF)", d.getDescription().toString());
         assertEquals("[ebnf-Title]", d.getTitleDisplay().toString());
         assertEquals(1, d.getNbImages());
-        assertEquals(DiagramType.EBNF, d.getSource().getDiagramType());
+        assertTrue(d.getSource().getDiagramTypes().contains(DiagramType.EBNF));
         assertEquals("[ebnf-Title]", d.getSource().getTitle().toString());
         assertEquals(4, d.getSource().getTotalLineCount());
         assertEquals(null, d.getSource().getId());
@@ -70,7 +71,7 @@ class PlantUmlTestUtilsTest {
         assertEquals("(4 participants)", d.getDescription().toString());
         assertEquals("[a seq title]", d.getTitleDisplay().toString());
         assertEquals(2, d.getNbImages());
-        assertEquals(DiagramType.UML, d.getSource().getDiagramType());
+        assertTrue(d.getSource().getDiagramTypes().contains(DiagramType.SEQUENCE));
         assertEquals("[a seq title]", d.getSource().getTitle().toString());
         assertEquals(6, d.getSource().getTotalLineCount());
         assertEquals(null, d.getSource().getId());
@@ -91,7 +92,7 @@ class PlantUmlTestUtilsTest {
         assertEquals("(1 entities)", d.getDescription().toString());
         assertEquals("[that is the title]", d.getTitleDisplay().toString());
         assertEquals(1, d.getNbImages());
-        assertEquals(DiagramType.UML, d.getSource().getDiagramType());
+        assertTrue(d.getSource().getDiagramTypes().contains(DiagramType.DESCRIPTION));
         assertEquals("[that is the title]", d.getSource().getTitle().toString());
         assertEquals(4, d.getSource().getTotalLineCount());
         assertEquals(null, d.getSource().getId());
@@ -111,7 +112,7 @@ class PlantUmlTestUtilsTest {
         assertEquals("MindMap", d.getDescription().toString());
         assertEquals("NULL", d.getTitleDisplay().toString());
         assertEquals(1, d.getNbImages());
-        assertEquals(DiagramType.MINDMAP, d.getSource().getDiagramType());
+        assertTrue(d.getSource().getDiagramTypes().contains(DiagramType.MINDMAP));
         assertEquals("[]", d.getSource().getTitle().toString());
         assertEquals(3, d.getSource().getTotalLineCount());
         assertEquals(null, d.getSource().getId());

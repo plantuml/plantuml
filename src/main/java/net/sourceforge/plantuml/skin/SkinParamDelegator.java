@@ -39,6 +39,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import net.sourceforge.plantuml.TikzFontDistortion;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.klimt.Arrows;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
@@ -158,7 +159,7 @@ public class SkinParamDelegator implements ISkinParam {
 	}
 
 	@Override
-	public boolean useSwimlanes(UmlDiagramType type) {
+	public boolean useSwimlanes(DiagramType type) {
 		return skinParam.useSwimlanes(type);
 	}
 
@@ -313,8 +314,8 @@ public class SkinParamDelegator implements ISkinParam {
 	}
 
 	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return skinParam.getUmlDiagramType();
+	public DiagramType getDiagramType() {
+		return skinParam.getDiagramType();
 	}
 
 	@Override

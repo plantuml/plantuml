@@ -47,9 +47,9 @@ import java.util.Objects;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityFactory;
 import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 
 final public class DotData {
@@ -74,8 +74,8 @@ final public class DotData {
 		return entityFactory.isHideEmptyDescriptionForState();
 	}
 
-	public UmlDiagramType getUmlDiagramType() {
-		return entityFactory.getUmlDiagramType();
+	public DiagramType geDiagramType() {
+		return entityFactory.getDiagramType();
 	}
 
 	public ISkinParam getSkinParam() {

@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.note.sequence.FactorySequenceNoteAcrossC
 import net.sourceforge.plantuml.command.note.sequence.FactorySequenceNoteCommand;
 import net.sourceforge.plantuml.command.note.sequence.FactorySequenceNoteOnArrowCommand;
 import net.sourceforge.plantuml.command.note.sequence.FactorySequenceNoteOverSeveralCommand;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -81,12 +82,16 @@ import net.sourceforge.plantuml.sequencediagram.command.CommandReferenceMultilin
 import net.sourceforge.plantuml.sequencediagram.command.CommandReferenceOverSeveral;
 import net.sourceforge.plantuml.sequencediagram.command.CommandReturn;
 import net.sourceforge.plantuml.sequencediagram.command.CommandUrl;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class SequenceDiagramFactory extends PSystemCommandFactory {
 
+	public SequenceDiagramFactory() {
+		super(DiagramType.SEQUENCE);
+	}
+
 	@Override
-	public SequenceDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public SequenceDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		return new SequenceDiagram(source, previous, preprocessing);
 	}
 
@@ -149,11 +154,5 @@ public class SequenceDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandUrl());
 		cmds.add(new CommandLinkAnchor());
 	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.SEQUENCE;
-	}
-
 
 }

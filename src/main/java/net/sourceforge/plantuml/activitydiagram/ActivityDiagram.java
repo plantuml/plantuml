@@ -45,11 +45,11 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -60,7 +60,7 @@ public class ActivityDiagram extends CucaDiagram {
 	private ConditionalContext currentContext;
 
 	public ActivityDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.ACTIVITY, previous, preprocessing);
+		super(source, DiagramType.ACTIVITY, previous, preprocessing);
 		setNamespaceSeparator(null);
 	}
 
@@ -82,7 +82,8 @@ public class ActivityDiagram extends CucaDiagram {
 	public Entity getStart(LineLocation location) {
 		final Quark<Entity> quark = quarkInContext(true, "start");
 		if (quark.getData() == null)
-			reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), "start"), LeafType.CIRCLE_START, null);
+			reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), "start"), LeafType.CIRCLE_START,
+					null);
 
 		return quark.getData();
 	}

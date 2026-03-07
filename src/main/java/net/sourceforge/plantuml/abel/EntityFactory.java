@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.abel;
 
 import java.util.Collection;
 
-import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 
 public interface EntityFactory {
@@ -48,7 +48,7 @@ public interface EntityFactory {
 
 	public boolean isHideEmptyDescriptionForState();
 
-	public UmlDiagramType getUmlDiagramType();
+	public DiagramType getDiagramType();
 
 	public ISkinParam getSkinParam();
 

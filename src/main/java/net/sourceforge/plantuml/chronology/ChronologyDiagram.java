@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.chronology;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -47,7 +45,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
@@ -70,7 +68,6 @@ import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealOrigin;
 import net.sourceforge.plantuml.real.RealUtils;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
@@ -129,13 +126,12 @@ public class ChronologyDiagram extends TitledDiagram implements GanttStyle {
 //	}
 
 	public ChronologyDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.CHRONOLOGY, null, preprocessing);
+		super(source, DiagramType.CHRONOLOGY, null, preprocessing);
 	}
 
 //	public final int getDpi(FileFormatOption fileFormatOption) {
 //		return 96;
 //	}
-
 
 //	public void setPrintScale(PrintScale printScale) {
 //		this.printScale = printScale;

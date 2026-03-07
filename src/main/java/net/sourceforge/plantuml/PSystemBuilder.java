@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -49,7 +50,6 @@ import net.sourceforge.plantuml.cheneer.ChenEerDiagramFactory;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
-import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -82,7 +82,6 @@ import net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory;
 import net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreoleFactory;
 import net.sourceforge.plantuml.klimt.sprite.ListSpriteDiagramFactory;
 import net.sourceforge.plantuml.klimt.sprite.PSystemListArchimateSpritesFactory;
-import net.sourceforge.plantuml.klimt.sprite.StdlibDiagramFactory;
 import net.sourceforge.plantuml.math.PSystemLatexFactory;
 import net.sourceforge.plantuml.math.PSystemMathFactory;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
@@ -90,7 +89,6 @@ import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
 import net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
 import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
-import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
 import net.sourceforge.plantuml.packetdiag.PacketDiagramFactory;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.project.GanttDiagramFactory;
@@ -132,8 +130,9 @@ public class PSystemBuilder {
 
 		Diagram result = null;
 		try {
-			final DiagramType type = DiagramType.getTypeFromArobaseStart(source.get(0).getString());
-			final UmlSource umlSource = UmlSource.createWithRaw(source, type == DiagramType.UML, rawSource);
+			final Collection<DiagramType> types = DiagramType.getTypesFromArobaseStart(source.get(0).getString());
+			final UmlSource umlSource = UmlSource.createWithRaw(source, types.contains(DiagramType.SEQUENCE),
+					rawSource);
 
 			for (StringLocated s : source) {
 				if (s.getPreprocessorError() != null) {
@@ -147,13 +146,13 @@ public class PSystemBuilder {
 				}
 			}
 
-			final DiagramType diagramType = umlSource.getDiagramType();
-			if (diagramType == DiagramType.UNKNOWN)
+			final Collection<DiagramType> diagramTypes = umlSource.getDiagramTypes();
+			if (diagramTypes.contains(DiagramType.UNKNOWN))
 				return new PSystemUnsupported(umlSource, preprocessing);
 
 			final List<PSystemError> errors = new ArrayList<>();
 			for (PSystemFactory systemFactory : factories) {
-				if (diagramType != systemFactory.getDiagramType())
+				if (!diagramTypes.contains(systemFactory.getDiagramType()))
 					continue;
 
 				try {
@@ -199,7 +198,7 @@ public class PSystemBuilder {
 		factories.add(new DescriptionDiagramFactory());
 		factories.add(new StateDiagramFactory());
 		factories.add(new ActivityDiagramFactory3());
-		factories.add(new BpmDiagramFactory(DiagramType.BPM));
+		factories.add(new BpmDiagramFactory());
 
 		// factories.add(new PostIdDiagramFactory());
 		factories.add(new PSystemLicenseFactory());
@@ -211,10 +210,8 @@ public class PSystemBuilder {
 		factories.add(new PSystemOpenIconicFactory());
 		factories.add(new PSystemListOpenIconicFactory());
 		factories.add(new PSystemListArchimateSpritesFactory());
-//		factories.add(new PSystemSaltFactory(DiagramType.UML));
-		factories.add(new PSystemSaltFactory(DiagramType.SALT));
-		factories.add(new PSystemDotFactory(DiagramType.DOT));
-//		factories.add(new PSystemDotFactory(DiagramType.UML));
+		factories.add(new PSystemSaltFactory());
+		factories.add(new PSystemDotFactory());
 		factories.add(new NwDiagramFactory());
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
@@ -232,15 +229,14 @@ public class PSystemBuilder {
 		factories.add(new PSystemDefinitionFactory());
 		factories.add(new ListSpriteDiagramFactory());
 		// factories.add(new StdlibDiagramFactory());
-		factories.add(new PSystemMathFactory(DiagramType.MATH));
-		factories.add(new PSystemLatexFactory(DiagramType.LATEX));
+		factories.add(new PSystemMathFactory());
+		factories.add(new PSystemLatexFactory());
 		factories.add(new PSystemCreoleFactory());
 		factories.add(new PSystemEggFactory());
 		factories.add(new PSystemAppleTwoFactory());
 		factories.add(new PSystemRIPFactory());
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 			factories.add(new PSystemPathFactory());
-		factories.add(new PSystemOregonFactory());
 
 		factories.add(new PSystemCharlieFactory());
 

@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ChenEerDiagramFactory extends PSystemCommandFactory {
 
@@ -74,13 +73,9 @@ public class ChenEerDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public ChenEerDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public ChenEerDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		return new ChenEerDiagram(source, previous, preprocessing);
-	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.CHEN_EER;
 	}
 
 }

@@ -54,10 +54,6 @@ public abstract class PSystemBasicFactory<P extends Diagram> extends PSystemAbst
 		super(diagramType);
 	}
 
-	public PSystemBasicFactory() {
-		this(DiagramType.UML);
-	}
-
 	public abstract P executeLine(UmlSource source, P system, String line, PreprocessingArtifact preprocessing);
 
 	public abstract P initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing);
@@ -87,7 +83,7 @@ public abstract class PSystemBasicFactory<P extends Diagram> extends PSystemAbst
 			}
 			system = executeLine(source, system, s.getString(), preprocessing);
 			if (system == null) {
-				final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, s.getLocation(), getUmlDiagramType());
+				final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, s.getLocation(), getDiagramType());
 				// return PSystemErrorUtils.buildV1(source, err, null);
 				return PSystemErrorUtils.buildV2(source, err, null, it.getTrace(), preprocessing);
 			}

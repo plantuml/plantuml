@@ -43,12 +43,12 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemWelcomeFactory implements PSystemFactory {
-	
+
 	@Override
-	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		if (source.getTotalLineCount() == 2)
 			return new PSystemWelcome(source, GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT, preprocessing);
 
@@ -56,13 +56,8 @@ public class PSystemWelcomeFactory implements PSystemFactory {
 	}
 
 	public DiagramType getDiagramType() {
-		return DiagramType.UML;
+		// This is a hack for "@startuml"
+		return DiagramType.SEQUENCE;
 	}
-	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return null;
-	}
-
 
 }

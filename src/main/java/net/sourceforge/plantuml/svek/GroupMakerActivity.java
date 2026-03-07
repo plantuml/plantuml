@@ -123,7 +123,7 @@ public final class GroupMakerActivity {
 		final Cluster root = new Cluster(group.getLocation(), diagram, bibliotekon.getColorSequence(), dotData.getRootGroup());
 
 		final ClusterManager clusterManager = new ClusterManager(bibliotekon, root);
-		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, root, diagram.getUmlDiagramType(),
+		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, root, diagram.getDiagramType(),
 				diagram.getSkinParam());
 		final GraphvizImageBuilder svek2 = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),
 				SName.activityDiagram, dotMode, dotStringFactory, clusterManager);

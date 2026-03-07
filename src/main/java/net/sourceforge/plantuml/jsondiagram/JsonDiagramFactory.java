@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.yaml.Highlighted;
@@ -66,7 +65,8 @@ public class JsonDiagramFactory extends PSystemAbstractFactory {
 	}
 
 	@Override
-	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		final List<Highlighted> highlighted = new ArrayList<>();
 		StyleExtractor styleExtractor = null;
 		JsonValue json;
@@ -94,7 +94,8 @@ public class JsonDiagramFactory extends PSystemAbstractFactory {
 		} catch (ParseException e) {
 			json = null;
 		}
-		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.JSON, json, highlighted, styleExtractor, preprocessing);
+		final JsonDiagram result = new JsonDiagram(source, DiagramType.JSON, json, highlighted, styleExtractor,
+				preprocessing);
 		if (styleExtractor != null) {
 			try {
 				styleExtractor.applyStyles(result.getSkinParam());
@@ -103,16 +104,10 @@ public class JsonDiagramFactory extends PSystemAbstractFactory {
 			}
 			final String title = styleExtractor.getTitle();
 			if (title != null)
-				result.setTitle(DisplayPositioned.single(Display.getWithNewlines(result.getPragma(), title), HorizontalAlignment.CENTER,
-						VerticalAlignment.CENTER));
+				result.setTitle(DisplayPositioned.single(Display.getWithNewlines(result.getPragma(), title),
+						HorizontalAlignment.CENTER, VerticalAlignment.CENTER));
 		}
 		return result;
 	}
-	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.JSON;
-	}
-
 
 }

@@ -37,7 +37,7 @@ package net.sourceforge.plantuml;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class ErrorUml {
@@ -47,9 +47,9 @@ public class ErrorUml {
 	private final ErrorUmlType errorType;
 	private final LineLocation lineLocation;
 	private final int score;
-	private final UmlDiagramType diagramType;
+	private final DiagramType diagramType;
 
-	public ErrorUml(ErrorUmlType type, String error, int score, LineLocation lineLocation, UmlDiagramType diagramType) {
+	public ErrorUml(ErrorUmlType type, String error, int score, LineLocation lineLocation, DiagramType diagramType) {
 		this.score = score;
 		this.error = Objects.requireNonNull(error);
 		this.errorType = Objects.requireNonNull(type);

@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -25,7 +26,6 @@ import net.sourceforge.plantuml.skin.PaddingParam;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.skin.SplitParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.LengthAdjust;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
@@ -44,10 +44,10 @@ class SkinParamTest {
 	 * changing a default style.
 	 */
 	@ParameterizedTest
-	@EnumSource(UmlDiagramType.class)
-	public void testDefaultValues(UmlDiagramType umlDiagramType) {
+	@EnumSource(DiagramType.class)
+	public void testDefaultValues(DiagramType diagramType) {
 
-		final SkinParam skinParam = SkinParam.create(PathSystem.fetch(), umlDiagramType, Pragma.createEmpty(),
+		final SkinParam skinParam = SkinParam.create(PathSystem.fetch(), diagramType, Pragma.createEmpty(),
 				ConfigurationStore.createEmpty());
 		final Stereotype fooStereotype = Stereotype.build("<<foo>>");
 
@@ -267,7 +267,7 @@ class SkinParamTest {
 
 		assertThat(skinParam.useRankSame()).isFalse();
 
-		assertThat(skinParam.useSwimlanes(umlDiagramType)).isFalse();
+		assertThat(skinParam.useSwimlanes(diagramType)).isFalse();
 
 		assertThat(skinParam.useUnderlineForHyperlink()).isNotNull();
 	}
@@ -447,7 +447,7 @@ class SkinParamTest {
 	private SkinParam createSkinParam(String... keyValuePairs) {
 		// Using SEQUENCE here is an arbitrary decision that should not affect test
 		// outcome
-		final SkinParam skinParam = SkinParam.create(PathSystem.fetch(), UmlDiagramType.SEQUENCE, Pragma.createEmpty(),
+		final SkinParam skinParam = SkinParam.create(PathSystem.fetch(), DiagramType.SEQUENCE, Pragma.createEmpty(),
 				ConfigurationStore.createEmpty());
 		for (int i = 0; i < keyValuePairs.length; i += 2) {
 			skinParam.setParam(StringUtils.goLowerCase(keyValuePairs[i]), keyValuePairs[i + 1]);
