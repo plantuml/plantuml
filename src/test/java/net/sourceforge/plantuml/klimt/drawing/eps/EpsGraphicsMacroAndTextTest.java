@@ -178,6 +178,53 @@ class EpsGraphicsMacroAndTextTest {
 	}
 
 	// -----------------------------------------------------------------------
+	// drawText — bold font
+	// -----------------------------------------------------------------------
+
+	@Test
+	void drawTextWithBoldFont() {
+		final UFont boldFont = UFontFactory.build("SansSerif", UFontFace.bold(), 12);
+		final EpsGraphicsMacroAndText eps = new EpsGraphicsMacroAndText();
+		eps.drawText("Bold", fc(boldFont), 0, 0);
+
+		final String expectedPSName = boldFont.getFamily("Bold", UFontContext.EPS);
+		final String code = eps.getEPSCode();
+		assertTrue(code.contains("/" + expectedPSName + " findfont 12 scalefont setfont"),
+				"Expected PS name for bold font: " + expectedPSName);
+		assertTrue(code.contains("(Bold) show"));
+	}
+
+	@Test
+	void boldFontProducesDifferentPSNameThanPlain() {
+		final UFont plain = UFontFactory.build("SansSerif", UFontFace.normal(), 12);
+		final UFont bold = UFontFactory.build("SansSerif", UFontFace.bold(), 12);
+
+		final String plainPSName = plain.getFamily("A", UFontContext.EPS);
+		final String boldPSName = bold.getFamily("A", UFontContext.EPS);
+
+		assertFalse(plainPSName.equals(boldPSName),
+				"Bold PS name (" + boldPSName + ") should differ from plain (" + plainPSName + ")");
+
+		final EpsGraphicsMacroAndText eps = new EpsGraphicsMacroAndText();
+		eps.drawText("A", fc(bold), 0, 0);
+		assertTrue(eps.getEPSCode().contains(
+				"/" + boldPSName + " findfont 12 scalefont setfont"));
+	}
+
+	@Test
+	void boldSerifFontProducesExpectedFindfontLine() {
+		final UFont boldSerif = UFontFactory.build("Serif", UFontFace.bold(), 18);
+		final EpsGraphicsMacroAndText eps = new EpsGraphicsMacroAndText();
+		eps.drawText("Title", fc(boldSerif), 10, 20);
+
+		final String expectedPSName = boldSerif.getFamily("Title", UFontContext.EPS);
+		final String code = eps.getEPSCode();
+		assertTrue(code.contains("/" + expectedPSName + " findfont 18 scalefont setfont"),
+				"Expected bold Serif PS name: " + expectedPSName);
+		assertTrue(code.contains("(Title) show"));
+	}
+
+	// -----------------------------------------------------------------------
 	// drawText — font size variations
 	// -----------------------------------------------------------------------
 
