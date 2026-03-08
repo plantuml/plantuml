@@ -10255,14 +10255,14 @@
 
         <Package name="net.sourceforge.plantuml.klimt.font">
             <Stats>
-                <TotalClasses>10</TotalClasses>
-                <ConcreteClasses>6</ConcreteClasses>
+                <TotalClasses>11</TotalClasses>
+                <ConcreteClasses>7</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
                 <Ca>82</Ca>
                 <Ce>10</Ce>
-                <A>0.4</A>
+                <A>0.36</A>
                 <I>0.11</I>
-                <D>0.49</D>
+                <D>0.53</D>
                 <V>1</V>
             </Stats>
 
@@ -10296,6 +10296,9 @@
                 </Class>
                 <Class sourceFile="UFontFactory.java">
                     net.sourceforge.plantuml.klimt.font.UFontFactory
+                </Class>
+                <Class sourceFile="UFontStyle.java">
+                    net.sourceforge.plantuml.klimt.font.UFontStyle
                 </Class>
                 <Class sourceFile="UnusedSpace.java">
                     net.sourceforge.plantuml.klimt.font.UnusedSpace$Point

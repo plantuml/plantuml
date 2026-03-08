@@ -73,53 +73,92 @@ public class FontStack {
 <span class="fc" id="L73">		return getFonts().get(index).canDisplayUpTo(text);</span>
 	}
 
+	/**
+	 * Legacy font creation using binary bold/italic style flags.
+	 *
+	 * @deprecated Prefer {@link #getFont(String, UFontFace, int)} to honour
+	 *             intermediate CSS weights (100-900).
+	 */
+	@Deprecated
 	public Font getFont(String text, int style, int size) {
-<span class="pc bpc" id="L77" title="3 of 4 branches missed.">		if (getFonts().size() &gt; 1 &amp;&amp; text != null)</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">			for (Font font : getFonts())</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">				if (font.canDisplayUpTo(text) == -1)</span>
-<span class="nc" id="L80">					return font.deriveFont(style, (float) size);</span>
+<span class="pc bpc" id="L84" title="3 of 4 branches missed.">		if (getFonts().size() &gt; 1 &amp;&amp; text != null)</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			for (Font font : getFonts())</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">				if (font.canDisplayUpTo(text) == -1)</span>
+<span class="nc" id="L87">					return font.deriveFont(style, (float) size);</span>
 
-<span class="fc" id="L82">		return getFonts().get(0).deriveFont(style, (float) size);</span>
+<span class="fc" id="L89">		return getFonts().get(0).deriveFont(style, (float) size);</span>
+	}
+
+	/**
+	 * Face-aware font creation.  Selects the first family font that can display
+	 * the given text (or falls back to the primary family), resizes it, then
+	 * applies both the italic axis and CSS weight via
+	 * {@link UFontFace#deriveFont(Font)}.
+	 *
+	 * &lt;p&gt;When the weight is a standard binary value (400 or 700) the result is
+	 * identical to the legacy path.  For intermediate weights (100-300, 500-600,
+	 * 800-900) {@link TextAttribute#WEIGHT} is used so that fonts with matching
+	 * weight faces (e.g. Helvetica Neue) render at the requested weight.
+	 *
+	 * @param text the string to be rendered (used for font-family fallback selection,
+	 *             may be {@code null})
+	 * @param face the font face (weight + italic axis)
+	 * @param size the point size
+	 * @return a {@link Font} ready for Java2D rendering or metric measurement
+	 */
+	public Font getFont(String text, UFontFace face, int size) {
+<span class="fc" id="L110">		Font base = null;</span>
+<span class="pc bpc" id="L111" title="1 of 4 branches missed.">		if (getFonts().size() &gt; 1 &amp;&amp; text != null)</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">			for (Font font : getFonts())</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">				if (font.canDisplayUpTo(text) == -1) {</span>
+<span class="fc" id="L114">					base = font.deriveFont(Font.PLAIN, (float) size);</span>
+<span class="fc" id="L115">					break;</span>
+				}
+
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		if (base == null)</span>
+<span class="fc" id="L119">			base = getFonts().get(0).deriveFont(Font.PLAIN, (float) size);</span>
+
+<span class="fc" id="L121">		return face.deriveFont(base);</span>
 	}
 
 	private static boolean isWhitespaceOrDoubleQuote(char c) {
-<span class="pc bpc" id="L86" title="2 of 4 branches missed.">		return Character.isWhitespace(c) || c == '&quot;';</span>
+<span class="pc bpc" id="L125" title="2 of 4 branches missed.">		return Character.isWhitespace(c) || c == '&quot;';</span>
 	}
 
 	private static String trimWhitespaceOrDoubleQuote(String s) {
-<span class="fc" id="L90">		int start = 0;</span>
-<span class="fc" id="L91">		int end = s.length();</span>
+<span class="fc" id="L129">		int start = 0;</span>
+<span class="fc" id="L130">		int end = s.length();</span>
 
-<span class="pc bpc" id="L93" title="2 of 4 branches missed.">		while (start &lt; end &amp;&amp; isWhitespaceOrDoubleQuote(s.charAt(start)))</span>
-<span class="nc" id="L94">			start++;</span>
+<span class="pc bpc" id="L132" title="2 of 4 branches missed.">		while (start &lt; end &amp;&amp; isWhitespaceOrDoubleQuote(s.charAt(start)))</span>
+<span class="nc" id="L133">			start++;</span>
 
-<span class="pc bpc" id="L96" title="2 of 4 branches missed.">		while (end &gt; start &amp;&amp; isWhitespaceOrDoubleQuote(s.charAt(end - 1)))</span>
-<span class="nc" id="L97">			end--;</span>
-<span class="fc" id="L98">		return s.substring(start, end);</span>
+<span class="pc bpc" id="L135" title="2 of 4 branches missed.">		while (end &gt; start &amp;&amp; isWhitespaceOrDoubleQuote(s.charAt(end - 1)))</span>
+<span class="nc" id="L136">			end--;</span>
+<span class="fc" id="L137">		return s.substring(start, end);</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (this == obj)</span>
-<span class="nc" id="L104">			return true;</span>
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (!(obj instanceof FontStack))</span>
-<span class="nc" id="L106">			return false;</span>
-<span class="fc" id="L107">		FontStack other = (FontStack) obj;</span>
-<span class="fc" id="L108">		return Objects.equals(fullDefinition, other.fullDefinition);</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if (this == obj)</span>
+<span class="nc" id="L143">			return true;</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		if (!(obj instanceof FontStack))</span>
+<span class="nc" id="L145">			return false;</span>
+<span class="fc" id="L146">		FontStack other = (FontStack) obj;</span>
+<span class="fc" id="L147">		return Objects.equals(fullDefinition, other.fullDefinition);</span>
 	}
 
 	@Override
 	public int hashCode() {
-<span class="fc" id="L113">		return Objects.hash(fullDefinition);</span>
+<span class="fc" id="L152">		return Objects.hash(fullDefinition);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L118">		return &quot;FontStack[&quot; + fullDefinition + &quot;]&quot;;</span>
+<span class="nc" id="L157">		return &quot;FontStack[&quot; + fullDefinition + &quot;]&quot;;</span>
 	}
 
 	public String getFullDefinition() {
-<span class="fc" id="L122">		return fullDefinition;</span>
+<span class="fc" id="L161">		return fullDefinition;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

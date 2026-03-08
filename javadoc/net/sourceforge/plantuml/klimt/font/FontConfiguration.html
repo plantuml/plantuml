@@ -130,7 +130,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changeFamily(java.lang.String)" class="member-name-link">changeFamily</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;family)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns a new <code>FontConfiguration</code> identical to this one except that
+ the font family (typeface name) has been replaced.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changeFontPosition(net.sourceforge.plantuml.klimt.font.FontPosition)" class="member-name-link">changeFontPosition</a><wbr>(<a href="FontPosition.html" title="enum class in net.sourceforge.plantuml.klimt.font">FontPosition</a>&nbsp;fontPosition)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -186,54 +189,66 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFont()" class="member-name-link">getFont</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSize2D()" class="member-name-link">getSize2D</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font">UFontFace</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFontFace()" class="member-name-link">getFontFace</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the <a href="UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font"><code>UFontFace</code></a> (weight + italic axis) carried by the current
+ font of this configuration.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSize2D()" class="member-name-link">getSize2D</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSpace()" class="member-name-link">getSpace</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSpace()" class="member-name-link">getSpace</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTabSize()" class="member-name-link">getTabSize</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTabSize()" class="member-name-link">getTabSize</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUnderlineStroke()" class="member-name-link">getUnderlineStroke</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../UStroke.html" title="class in net.sourceforge.plantuml.klimt">UStroke</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUnderlineStroke()" class="member-name-link">getUnderlineStroke</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hyperlink()" class="member-name-link">hyperlink</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#italic()" class="member-name-link">italic</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hyperlink()" class="member-name-link">hyperlink</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#mute(net.sourceforge.plantuml.klimt.color.Colors)" class="member-name-link">mute</a><wbr>(<a href="../color/Colors.html" title="class in net.sourceforge.plantuml.klimt.color">Colors</a>&nbsp;colors)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#italic()" class="member-name-link">italic</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#remove(net.sourceforge.plantuml.klimt.font.FontStyle)" class="member-name-link">remove</a><wbr>(<a href="FontStyle.html" title="enum class in net.sourceforge.plantuml.klimt.font">FontStyle</a>&nbsp;style)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#mute(net.sourceforge.plantuml.klimt.color.Colors)" class="member-name-link">mute</a><wbr>(<a href="../color/Colors.html" title="class in net.sourceforge.plantuml.klimt.color">Colors</a>&nbsp;colors)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetFont()" class="member-name-link">resetFont</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#remove(net.sourceforge.plantuml.klimt.font.FontStyle)" class="member-name-link">remove</a><wbr>(<a href="FontStyle.html" title="enum class in net.sourceforge.plantuml.klimt.font">FontStyle</a>&nbsp;style)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetFont()" class="member-name-link">resetFont</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toStringDebug()" class="member-name-link">toStringDebug</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unbold()" class="member-name-link">unbold</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toStringDebug()" class="member-name-link">toStringDebug</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#underline()" class="member-name-link">underline</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unbold()" class="member-name-link">unbold</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unitalic()" class="member-name-link">unitalic</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#underline()" class="member-name-link">underline</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#wave(net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">wave</a><wbr>(<a href="../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;color)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unitalic()" class="member-name-link">unitalic</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#wave(net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">wave</a><wbr>(<a href="../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;color)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withFontFace(net.sourceforge.plantuml.klimt.font.UFontFace)" class="member-name-link">withFontFace</a><wbr>(<a href="UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font">UFontFace</a>&nbsp;face)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns a new <code>FontConfiguration</code> whose underlying font has been
+ updated to reflect the supplied <a href="UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font"><code>UFontFace</code></a> (weight + italic axis).</div>
+</div>
 </div>
 </div>
 </div>
@@ -271,6 +286,40 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getFont()">
 <h3>getFont</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></span>&nbsp;<span class="element-name">getFont</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getFontFace()">
+<h3>getFontFace</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font">UFontFace</a></span>&nbsp;<span class="element-name">getFontFace</span>()</div>
+<div class="block">Returns the <a href="UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font"><code>UFontFace</code></a> (weight + italic axis) carried by the current
+ font of this configuration.  The face is always consistent with the
+ underlying font: changing the font (e.g. via <a href="#withFontFace(net.sourceforge.plantuml.klimt.font.UFontFace)"><code>withFontFace(UFontFace)</code></a>
+ or <a href="#changeFamily(java.lang.String)"><code>changeFamily(String)</code></a>) automatically updates the returned value.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the font face; never <code>null</code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="withFontFace(net.sourceforge.plantuml.klimt.font.UFontFace)">
+<h3>withFontFace</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></span>&nbsp;<span class="element-name">withFontFace</span><wbr><span class="parameters">(<a href="UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font">UFontFace</a>&nbsp;face)</span></div>
+<div class="block">Returns a new <code>FontConfiguration</code> whose underlying font has been
+ updated to reflect the supplied <a href="UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font"><code>UFontFace</code></a> (weight + italic axis).
+ All other configuration properties (colour, size, tab stop, etc.) are
+ preserved unchanged.
+
+ <p>This is the preferred way to change bold/italic/weight instead of the
+ legacy <a href="#bold()"><code>bold()</code></a> / <a href="#italic()"><code>italic()</code></a> helpers, because it preserves
+ CSS font-weight information beyond the binary bold/non-bold distinction.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>face</code> - the new face to apply; if <code>null</code> the current face is kept</dd>
+<dt>Returns:</dt>
+<dd>a new <code>FontConfiguration</code> with the updated face</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -394,6 +443,15 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="changeFamily(java.lang.String)">
 <h3>changeFamily</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></span>&nbsp;<span class="element-name">changeFamily</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;family)</span></div>
+<div class="block">Returns a new <code>FontConfiguration</code> identical to this one except that
+ the font family (typeface name) has been replaced.  The current
+ <a href="UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font"><code>UFontFace</code></a> (weight + italic axis) and point size are preserved.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>family</code> - the new font-family string (e.g. <code>"Arial"</code>)</dd>
+<dt>Returns:</dt>
+<dd>a new <code>FontConfiguration</code> with the updated family</dd>
+</dl>
 </section>
 </li>
 <li>

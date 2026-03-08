@@ -57,7 +57,7 @@ public class ValueImpl implements Value {
 	}
 
 	public static ValueImpl regular(String value, int priority) {
-<span class="nc" id="L60">		return new ValueImpl(new DarkString(Objects.requireNonNull(value), null, priority));</span>
+<span class="fc" id="L60">		return new ValueImpl(new DarkString(Objects.requireNonNull(value), null, priority));</span>
 	}
 
 	public Value mergeWith(Value other) {
@@ -167,12 +167,53 @@ public class ValueImpl implements Value {
 <span class="fc" id="L167">		return Font.PLAIN;</span>
 	}
 
+	/**
+	 * Parses the stored string as a CSS font-weight value.
+	 * &lt;ul&gt;
+	 *   &lt;li&gt;{@code normal} → 400&lt;/li&gt;
+	 *   &lt;li&gt;{@code bold} → 700&lt;/li&gt;
+	 *   &lt;li&gt;{@code lighter} → 300&lt;/li&gt;
+	 *   &lt;li&gt;{@code bolder} → 800&lt;/li&gt;
+	 *   &lt;li&gt;numeric 100-900 → that value (rounded down to nearest 100 is not
+	 *       enforced here — any integer in range is accepted)&lt;/li&gt;
+	 *   &lt;li&gt;anything else / empty → 0 (not specified)&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 *
+	 * @return CSS numeric weight, or {@code 0} if not present / not parseable
+	 */
+	public int asFontWeight() {
+<span class="fc" id="L185">		final String raw = value.getValue1();</span>
+<span class="pc bpc" id="L186" title="1 of 4 branches missed.">		if (raw == null || raw.isEmpty())</span>
+<span class="fc" id="L187">			return 0;</span>
+
+<span class="fc" id="L189">		final String s = raw.trim().toLowerCase();</span>
+<span class="fc bfc" id="L190" title="All 5 branches covered.">		switch (s) {</span>
+		case &quot;normal&quot;:
+<span class="fc" id="L192">			return 400;</span>
+		case &quot;bold&quot;:
+<span class="fc" id="L194">			return 700;</span>
+		case &quot;lighter&quot;:
+<span class="fc" id="L196">			return 300;</span>
+		case &quot;bolder&quot;:
+<span class="fc" id="L198">			return 800;</span>
+		default:
+			try {
+<span class="fc" id="L201">				final int w = Integer.parseInt(s);</span>
+<span class="pc bpc" id="L202" title="2 of 4 branches missed.">				if (w &gt;= 100 &amp;&amp; w &lt;= 900)</span>
+<span class="fc" id="L203">					return w;</span>
+<span class="fc" id="L204">			} catch (NumberFormatException e) {</span>
+				// not a numeric weight — fall through
+<span class="nc" id="L206">			}</span>
+<span class="fc" id="L207">			return 0;</span>
+		}
+	}
+
 	public HorizontalAlignment asHorizontalAlignment() {
-<span class="fc" id="L171">		return HorizontalAlignment.fromString(asString());</span>
+<span class="fc" id="L212">		return HorizontalAlignment.fromString(asString());</span>
 	}
 
 	public int getPriority() {
-<span class="fc" id="L175">		return value.getPriority();</span>
+<span class="fc" id="L216">		return value.getPriority();</span>
 	}
 
 }

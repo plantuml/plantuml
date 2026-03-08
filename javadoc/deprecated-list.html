@@ -193,6 +193,65 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">Use <a href="net/sourceforge/plantuml/json/ParseException.html#getLocation()"><code>ParseException.getLocation()</code></a> instead</div>
 </div>
+<div class="col-summary-item-name even-row-color"><a href="net/sourceforge/plantuml/klimt/font/FontStack.html#getFont(java.lang.String,int,int)">net.sourceforge.plantuml.klimt.font.FontStack.getFont<wbr>(String, int, int)</a></div>
+<div class="col-last even-row-color">
+<div class="block">Prefer <a href="net/sourceforge/plantuml/klimt/font/FontStack.html#getFont(java.lang.String,net.sourceforge.plantuml.klimt.font.UFontFace,int)"><code>FontStack.getFont(String, UFontFace, int)</code></a> to honour
+             intermediate CSS weights (100-900).</div>
+</div>
+<div class="col-summary-item-name odd-row-color"><a href="net/sourceforge/plantuml/klimt/font/UFont.html#bold()">net.sourceforge.plantuml.klimt.font.UFont.bold()</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Use <a href="net/sourceforge/plantuml/klimt/font/UFont.html#withFontFace(net.sourceforge.plantuml.klimt.font.UFontFace)"><code>UFont.withFontFace(UFontFace)</code></a> and
+             <a href="net/sourceforge/plantuml/klimt/font/UFontFace.html#bold()"><code>UFontFace.bold()</code></a> instead.</div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="net/sourceforge/plantuml/klimt/font/UFont.html#getStyle()">net.sourceforge.plantuml.klimt.font.UFont.getStyle()</a></div>
+<div class="col-last even-row-color">
+<div class="block">Use <a href="net/sourceforge/plantuml/klimt/font/UFont.html#getFontFace()"><code>UFont.getFontFace()</code></a> and
+             <a href="net/sourceforge/plantuml/klimt/font/UFontFace.html#toLegacyStyle()"><code>UFontFace.toLegacyStyle()</code></a> if needed.</div>
+</div>
+<div class="col-summary-item-name odd-row-color"><a href="net/sourceforge/plantuml/klimt/font/UFont.html#isBold()">net.sourceforge.plantuml.klimt.font.UFont.isBold()</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Use <a href="net/sourceforge/plantuml/klimt/font/UFont.html#getFontFace()"><code>UFont.getFontFace()</code></a> and
+             <a href="net/sourceforge/plantuml/klimt/font/UFontFace.html#isBold()"><code>UFontFace.isBold()</code></a>.</div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="net/sourceforge/plantuml/klimt/font/UFont.html#isItalic()">net.sourceforge.plantuml.klimt.font.UFont.isItalic()</a></div>
+<div class="col-last even-row-color">
+<div class="block">Use <a href="net/sourceforge/plantuml/klimt/font/UFont.html#getFontFace()"><code>UFont.getFontFace()</code></a> and
+             <a href="net/sourceforge/plantuml/klimt/font/UFontFace.html#isItalic()"><code>UFontFace.isItalic()</code></a>.</div>
+</div>
+<div class="col-summary-item-name odd-row-color"><a href="net/sourceforge/plantuml/klimt/font/UFont.html#italic()">net.sourceforge.plantuml.klimt.font.UFont.italic()</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Use <a href="net/sourceforge/plantuml/klimt/font/UFont.html#withFontFace(net.sourceforge.plantuml.klimt.font.UFontFace)"><code>UFont.withFontFace(UFontFace)</code></a> and
+             <a href="net/sourceforge/plantuml/klimt/font/UFontFace.html#italic()"><code>UFontFace.italic()</code></a> instead.</div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="net/sourceforge/plantuml/klimt/font/UFont.html#withStyle(int)">net.sourceforge.plantuml.klimt.font.UFont.withStyle<wbr>(int)</a></div>
+<div class="col-last even-row-color">
+<div class="block">Use <a href="net/sourceforge/plantuml/klimt/font/UFont.html#withFontFace(net.sourceforge.plantuml.klimt.font.UFontFace)"><code>UFont.withFontFace(UFontFace)</code></a> to change weight and
+             italic style independently.</div>
+</div>
+<div class="col-summary-item-name odd-row-color"><a href="net/sourceforge/plantuml/klimt/font/UFontFactory.html#build(java.lang.String,int,int)">net.sourceforge.plantuml.klimt.font.UFontFactory.build<wbr>(String, int, int)</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Prefer <a href="net/sourceforge/plantuml/klimt/font/UFontFactory.html#build(java.lang.String,net.sourceforge.plantuml.klimt.font.UFontFace,int)"><code>UFontFactory.build(String, UFontFace, int)</code></a> to separate
+             style (italic) from weight.</div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="net/sourceforge/plantuml/klimt/font/UFontImpl.html#bold()">net.sourceforge.plantuml.klimt.font.UFontImpl.bold()</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="net/sourceforge/plantuml/klimt/font/UFontImpl.html#getStyle()">net.sourceforge.plantuml.klimt.font.UFontImpl.getStyle()</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Use <a href="net/sourceforge/plantuml/klimt/font/UFontImpl.html#getFontFace()"><code>UFontImpl.getFontFace()</code></a> and <a href="net/sourceforge/plantuml/klimt/font/UFontFace.html#toLegacyStyle()"><code>UFontFace.toLegacyStyle()</code></a>
+             instead.  This method discards any intermediate CSS weight.</div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="net/sourceforge/plantuml/klimt/font/UFontImpl.html#isBold()">net.sourceforge.plantuml.klimt.font.UFontImpl.isBold()</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="net/sourceforge/plantuml/klimt/font/UFontImpl.html#isItalic()">net.sourceforge.plantuml.klimt.font.UFontImpl.isItalic()</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="net/sourceforge/plantuml/klimt/font/UFontImpl.html#italic()">net.sourceforge.plantuml.klimt.font.UFontImpl.italic()</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="net/sourceforge/plantuml/klimt/font/UFontImpl.html#withStyle(int)">net.sourceforge.plantuml.klimt.font.UFontImpl.withStyle<wbr>(int)</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Use <a href="net/sourceforge/plantuml/klimt/font/UFontImpl.html#withFontFace(net.sourceforge.plantuml.klimt.font.UFontFace)"><code>UFontImpl.withFontFace(UFontFace)</code></a> to preserve CSS weight.
+             This method converts the binary italic/bold flags to a
+             <a href="net/sourceforge/plantuml/klimt/font/UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font"><code>UFontFace</code></a>, losing any intermediate weight.</div>
+</div>
 <div class="col-summary-item-name even-row-color"><a href="net/sourceforge/plantuml/sequencediagram/AbstractMessage.html#isActivate()">net.sourceforge.plantuml.sequencediagram.AbstractMessage.isActivate()</a></div>
 <div class="col-last even-row-color"></div>
 <div class="col-summary-item-name odd-row-color"><a href="net/sourceforge/plantuml/sequencediagram/AbstractMessage.html#isDeactivate()">net.sourceforge.plantuml.sequencediagram.AbstractMessage.isDeactivate()</a></div>

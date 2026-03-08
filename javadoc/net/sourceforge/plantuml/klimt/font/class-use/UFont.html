@@ -277,57 +277,100 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">UFont.</span><code><a href="../UFont.html#bold()" class="member-name-link">bold</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="../UFont.html#withFontFace(net.sourceforge.plantuml.klimt.font.UFontFace)"><code>withFontFace(UFontFace)</code></a> and
+             <a href="../UFontFace.html#bold()"><code>UFontFace.bold()</code></a> instead.</div>
+</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">UFontImpl.</span><code><a href="../UFontImpl.html#bold()" class="member-name-link">bold</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code>static <a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">UFontFactory.</span><code><a href="../UFontFactory.html#build(java.lang.String,int,int)" class="member-name-link">build</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;fullDefinition,
  int&nbsp;fontStyle,
  int&nbsp;fontSize)</code></div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Prefer <a href="../UFontFactory.html#build(java.lang.String,net.sourceforge.plantuml.klimt.font.UFontFace,int)"><code>UFontFactory.build(String, UFontFace, int)</code></a> to separate
+             style (italic) from weight.</div>
+</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">UFontFactory.</span><code><a href="../UFontFactory.html#build(java.lang.String,net.sourceforge.plantuml.klimt.font.UFontFace,int)" class="member-name-link">build</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;fullDefinition,
+ <a href="../UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font">UFontFace</a>&nbsp;face,
+ int&nbsp;fontSize)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Builds a font using a face (weight + italic axis) and size.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">UFontFactory.</span><code><a href="../UFontFactory.html#byDefault(int)" class="member-name-link">byDefault</a><wbr>(int&nbsp;size)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">UFontFactory.</span><code><a href="../UFontFactory.html#byDefault(int)" class="member-name-link">byDefault</a><wbr>(int&nbsp;size)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">UFontFactory.</span><code><a href="../UFontFactory.html#courier(int)" class="member-name-link">courier</a><wbr>(int&nbsp;size)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FontConfiguration.</span><code><a href="../FontConfiguration.html#getFont()" class="member-name-link">getFont</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">UFontFactory.</span><code><a href="../UFontFactory.html#courier(int)" class="member-name-link">courier</a><wbr>(int&nbsp;size)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">UFont.</span><code><a href="../UFont.html#italic()" class="member-name-link">italic</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FontConfiguration.</span><code><a href="../FontConfiguration.html#getFont()" class="member-name-link">getFont</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">UFontImpl.</span><code><a href="../UFontImpl.html#italic()" class="member-name-link">italic</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">UFontFactory.</span><code><a href="../UFontFactory.html#monospaced(int)" class="member-name-link">monospaced</a><wbr>(int&nbsp;size)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FontStyle.</span><code><a href="../FontStyle.html#mutateFont(net.sourceforge.plantuml.klimt.font.UFont)" class="member-name-link">mutateFont</a><wbr>(<a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a>&nbsp;font)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">UFont.</span><code><a href="../UFont.html#italic()" class="member-name-link">italic</a>()</code></div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="../UFont.html#withFontFace(net.sourceforge.plantuml.klimt.font.UFontFace)"><code>withFontFace(UFontFace)</code></a> and
+             <a href="../UFontFace.html#italic()"><code>UFontFace.italic()</code></a> instead.</div>
+</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">UFontImpl.</span><code><a href="../UFontImpl.html#italic()" class="member-name-link">italic</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">UFontFactory.</span><code><a href="../UFontFactory.html#monospaced(int)" class="member-name-link">monospaced</a><wbr>(int&nbsp;size)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FontPosition.</span><code><a href="../FontPosition.html#mute(net.sourceforge.plantuml.klimt.font.UFont)" class="member-name-link">mute</a><wbr>(<a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a>&nbsp;font)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FontStyle.</span><code><a href="../FontStyle.html#mutateFont(net.sourceforge.plantuml.klimt.font.UFont)" class="member-name-link">mutateFont</a><wbr>(<a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a>&nbsp;font)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FontPosition.</span><code><a href="../FontPosition.html#mute(net.sourceforge.plantuml.klimt.font.UFont)" class="member-name-link">mute</a><wbr>(<a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a>&nbsp;font)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">UFontFactory.</span><code><a href="../UFontFactory.html#sansSerif(int)" class="member-name-link">sansSerif</a><wbr>(int&nbsp;size)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">UFontFactory.</span><code><a href="../UFontFactory.html#sansSerif(int)" class="member-name-link">sansSerif</a><wbr>(int&nbsp;size)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">UFontFactory.</span><code><a href="../UFontFactory.html#serif(int)" class="member-name-link">serif</a><wbr>(int&nbsp;size)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">UFont.</span><code><a href="../UFont.html#withSize(float)" class="member-name-link">withSize</a><wbr>(float&nbsp;size)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">UFontFactory.</span><code><a href="../UFontFactory.html#serif(int)" class="member-name-link">serif</a><wbr>(int&nbsp;size)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">UFontImpl.</span><code><a href="../UFontImpl.html#withSize(float)" class="member-name-link">withSize</a><wbr>(float&nbsp;size)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-second even-row-color"><span class="type-name-label">UFont.</span><code><a href="../UFont.html#withFontFace(net.sourceforge.plantuml.klimt.font.UFontFace)" class="member-name-link">withFontFace</a><wbr>(<a href="../UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font">UFontFace</a>&nbsp;face)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns a new font with the given face and the same size and family.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">UFont.</span><code><a href="../UFont.html#withStyle(int)" class="member-name-link">withStyle</a><wbr>(int&nbsp;style)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">UFontImpl.</span><code><a href="../UFontImpl.html#withFontFace(net.sourceforge.plantuml.klimt.font.UFontFace)" class="member-name-link">withFontFace</a><wbr>(<a href="../UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font">UFontFace</a>&nbsp;newFace)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">UFontImpl.</span><code><a href="../UFontImpl.html#withStyle(int)" class="member-name-link">withStyle</a><wbr>(int&nbsp;style)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">UFont.</span><code><a href="../UFont.html#withSize(float)" class="member-name-link">withSize</a><wbr>(float&nbsp;size)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">UFontImpl.</span><code><a href="../UFontImpl.html#withSize(float)" class="member-name-link">withSize</a><wbr>(float&nbsp;size)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">UFont.</span><code><a href="../UFont.html#withStyle(int)" class="member-name-link">withStyle</a><wbr>(int&nbsp;style)</code></div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="../UFont.html#withFontFace(net.sourceforge.plantuml.klimt.font.UFontFace)"><code>withFontFace(UFontFace)</code></a> to change weight and
+             italic style independently.</div>
+</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">UFontImpl.</span><code><a href="../UFontImpl.html#withStyle(int)" class="member-name-link">withStyle</a><wbr>(int&nbsp;style)</code></div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="../UFontImpl.html#withFontFace(net.sourceforge.plantuml.klimt.font.UFontFace)"><code>UFontImpl.withFontFace(UFontFace)</code></a> to preserve CSS weight.</div>
+</div>
+</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.klimt.font</a> with parameters of type <a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></span></div>
 <div class="summary-table three-column-summary">
@@ -596,7 +639,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">Style.</span><code><a href="../../../style/Style.html#getUFont()" class="member-name-link">getUFont</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Builds a <a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font"><code>UFont</code></a> from the style properties <code>FontName</code>,
+ <code>FontStyle</code>, <code>FontWeight</code> and <code>FontSize</code>.</div>
+</div>
 </div>
 </section>
 </li>

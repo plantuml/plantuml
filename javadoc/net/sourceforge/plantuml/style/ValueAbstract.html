@@ -144,18 +144,24 @@ implements <a href="Value.html" title="interface in net.sourceforge.plantuml.sty
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asFontStyle()" class="member-name-link">asFontStyle</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/geom/HorizontalAlignment.html" title="enum class in net.sourceforge.plantuml.klimt.geom">HorizontalAlignment</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asHorizontalAlignment()" class="member-name-link">asHorizontalAlignment</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asInt(boolean)" class="member-name-link">asInt</a><wbr>(boolean&nbsp;minusOneIfError)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asFontWeight()" class="member-name-link">asFontWeight</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the CSS font-weight as a numeric value (100-900), or <code>0</code> if
+ no weight was specified or the value could not be parsed.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/geom/HorizontalAlignment.html" title="enum class in net.sourceforge.plantuml.klimt.geom">HorizontalAlignment</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asHorizontalAlignment()" class="member-name-link">asHorizontalAlignment</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asString()" class="member-name-link">asString</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asInt(boolean)" class="member-name-link">asInt</a><wbr>(boolean&nbsp;minusOneIfError)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPriority()" class="member-name-link">getPriority</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asString()" class="member-name-link">asString</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPriority()" class="member-name-link">getPriority</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -254,6 +260,21 @@ implements <a href="Value.html" title="interface in net.sourceforge.plantuml.sty
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Value.html#asFontStyle()">asFontStyle</a></code>&nbsp;in interface&nbsp;<code><a href="Value.html" title="interface in net.sourceforge.plantuml.style">Value</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="asFontWeight()">
+<h3>asFontWeight</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">asFontWeight</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="Value.html#asFontWeight()">Value</a></code></span></div>
+<div class="block">Returns the CSS font-weight as a numeric value (100-900), or <code>0</code> if
+ no weight was specified or the value could not be parsed.  Accepts the
+ keywords <code>normal</code> (400), <code>bold</code> (700), <code>lighter</code> (300),
+ <code>bolder</code> (800) as well as bare integers in the range 100-900.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Value.html#asFontWeight()">asFontWeight</a></code>&nbsp;in interface&nbsp;<code><a href="Value.html" title="interface in net.sourceforge.plantuml.style">Value</a></code></dd>
 </dl>
 </section>
 </li>

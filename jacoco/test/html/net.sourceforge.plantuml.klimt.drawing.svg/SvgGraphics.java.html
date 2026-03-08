@@ -207,16 +207,16 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 <span class="fc" id="L207">	}</span>
 
 	private void addRoboto() {
-<span class="nc bnc" id="L210" title="All 2 branches missed.">		if (robotoAdded)</span>
-<span class="nc" id="L211">			return;</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">		if (robotoAdded)</span>
+<span class="fc" id="L211">			return;</span>
 		// https://stackoverflow.com/questions/36253961/using-google-fonts-with-svg-object
-<span class="nc" id="L213">		final Element style = document.createElement(&quot;style&quot;);</span>
-<span class="nc" id="L214">		style.setAttribute(&quot;type&quot;, &quot;text/css&quot;);</span>
-<span class="nc" id="L215">		style.setTextContent(</span>
+<span class="fc" id="L213">		final Element style = document.createElement(&quot;style&quot;);</span>
+<span class="fc" id="L214">		style.setAttribute(&quot;type&quot;, &quot;text/css&quot;);</span>
+<span class="fc" id="L215">		style.setTextContent(</span>
 				&quot;@import url('https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic');&quot;);
-<span class="nc" id="L217">		defs.appendChild(style);</span>
-<span class="nc" id="L218">		robotoAdded = true;</span>
-<span class="nc" id="L219">	}</span>
+<span class="fc" id="L217">		defs.appendChild(style);</span>
+<span class="fc" id="L218">		robotoAdded = true;</span>
+<span class="fc" id="L219">	}</span>
 
 	private void paintBackcolor(String back) {
 <span class="fc" id="L222">		setFillColor(back);</span>
@@ -696,8 +696,8 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 
 <span class="pc bpc" id="L697" title="1 of 2 branches missed.">			if (fontFamily != null) {</span>
 
-<span class="pc bpc" id="L699" title="1 of 2 branches missed.">				if (&quot;roboto&quot;.equalsIgnoreCase(fontFamily))</span>
-<span class="nc" id="L700">					addRoboto();</span>
+<span class="fc bfc" id="L699" title="All 2 branches covered.">				if (&quot;roboto&quot;.equalsIgnoreCase(fontFamily))</span>
+<span class="fc" id="L700">					addRoboto();</span>
 
 				// http://plantuml.sourceforge.net/qa/?qa=5432/svg-monospace-output-has-wrong-font-family
 <span class="fc bfc" id="L703" title="All 2 branches covered.">				if (&quot;monospaced&quot;.equalsIgnoreCase(fontFamily))</span>

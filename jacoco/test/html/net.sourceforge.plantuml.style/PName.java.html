@@ -41,37 +41,39 @@ package net.sourceforge.plantuml.style;
 <span class="fc" id="L41">	FontColor, //</span>
 <span class="fc" id="L42">	FontSize, //</span>
 <span class="fc" id="L43">	FontStyle, //</span>
-<span class="fc" id="L44">	BackGroundColor, //</span>
-<span class="fc" id="L45">	RoundCorner, //</span>
-<span class="fc" id="L46">	LineThickness, //</span>
-<span class="fc" id="L47">	DiagonalCorner, //</span>
-<span class="fc" id="L48">	HyperLinkColor, //</span>
-<span class="fc" id="L49">	HyperlinkUnderlineStyle, //</span>
-<span class="fc" id="L50">	HyperlinkUnderlineThickness, //</span>
-<span class="fc" id="L51">	HeadColor, //</span>
-<span class="fc" id="L52">	LineColor, //</span>
-<span class="fc" id="L53">	LineStyle, //</span>
-<span class="fc" id="L54">	Padding, //</span>
-<span class="fc" id="L55">	Margin, //</span>
-<span class="fc" id="L56">	MaximumWidth, //</span>
-<span class="fc" id="L57">	MinimumWidth, //</span>
-<span class="fc" id="L58">	ExportedName, //</span>
-<span class="fc" id="L59">	Image, //</span>
-<span class="fc" id="L60">	HorizontalAlignment, //</span>
-<span class="fc" id="L61">	ShowStereotype, //</span>
-<span class="fc" id="L62">	ImagePosition, //</span>
+	/** CSS font-weight: accepts keywords (normal, bold, lighter, bolder) or numeric values 100-900. */
+<span class="fc" id="L45">	FontWeight, //</span>
+<span class="fc" id="L46">	BackGroundColor, //</span>
+<span class="fc" id="L47">	RoundCorner, //</span>
+<span class="fc" id="L48">	LineThickness, //</span>
+<span class="fc" id="L49">	DiagonalCorner, //</span>
+<span class="fc" id="L50">	HyperLinkColor, //</span>
+<span class="fc" id="L51">	HyperlinkUnderlineStyle, //</span>
+<span class="fc" id="L52">	HyperlinkUnderlineThickness, //</span>
+<span class="fc" id="L53">	HeadColor, //</span>
+<span class="fc" id="L54">	LineColor, //</span>
+<span class="fc" id="L55">	LineStyle, //</span>
+<span class="fc" id="L56">	Padding, //</span>
+<span class="fc" id="L57">	Margin, //</span>
+<span class="fc" id="L58">	MaximumWidth, //</span>
+<span class="fc" id="L59">	MinimumWidth, //</span>
+<span class="fc" id="L60">	ExportedName, //</span>
+<span class="fc" id="L61">	Image, //</span>
+<span class="fc" id="L62">	HorizontalAlignment, //</span>
+<span class="fc" id="L63">	ShowStereotype, //</span>
+<span class="fc" id="L64">	ImagePosition, //</span>
 	// Chart-specific properties
-<span class="fc" id="L64">	MarkerShape, //</span>
-<span class="fc" id="L65">	MarkerSize, //</span>
-<span class="fc" id="L66">	MarkerColor, //</span>
-<span class="fc" id="L67">	BarWidth;</span>
+<span class="fc" id="L66">	MarkerShape, //</span>
+<span class="fc" id="L67">	MarkerSize, //</span>
+<span class="fc" id="L68">	MarkerColor, //</span>
+<span class="fc" id="L69">	BarWidth;</span>
 
 	public static PName getFromName(String name, StyleScheme scheme) {
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		for (PName prop : values())</span>
-<span class="fc bfc" id="L71" title="All 2 branches covered.">			if (prop.name().equalsIgnoreCase(name))</span>
-<span class="fc" id="L72">				return prop;</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		for (PName prop : values())</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">			if (prop.name().equalsIgnoreCase(name))</span>
+<span class="fc" id="L74">				return prop;</span>
 
-<span class="nc" id="L74">		return null;</span>
+<span class="nc" id="L76">		return null;</span>
 	}
 
 }

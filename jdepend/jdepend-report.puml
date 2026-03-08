@@ -2043,8 +2043,8 @@ Total Classes: 8
 "net.sourceforge.plantuml.klimt.drawing.visio" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.klimt.drawing.visio" --> "net.sourceforge.plantuml.klimt.shape"
 
-class "net.sourceforge.plantuml.klimt.font" %lighten("red", 51) {
-Total Classes: 10
+class "net.sourceforge.plantuml.klimt.font" %lighten("red", 47) {
+Total Classes: 11
 }
 "net.sourceforge.plantuml.klimt.font" --> "java.awt"
 "net.sourceforge.plantuml.klimt.font" --> "java.awt.font"

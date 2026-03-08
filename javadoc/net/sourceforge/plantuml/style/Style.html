@@ -214,7 +214,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/font/UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUFont()" class="member-name-link">getUFont</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Builds a <a href="../klimt/font/UFont.html" title="interface in net.sourceforge.plantuml.klimt.font"><code>UFont</code></a> from the style properties <code>FontName</code>,
+ <code>FontStyle</code>, <code>FontWeight</code> and <code>FontSize</code>.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasValue(net.sourceforge.plantuml.style.PName)" class="member-name-link">hasValue</a><wbr>(<a href="PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -406,6 +409,26 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getUFont()">
 <h3>getUFont</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../klimt/font/UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></span>&nbsp;<span class="element-name">getUFont</span>()</div>
+<div class="block">Builds a <a href="../klimt/font/UFont.html" title="interface in net.sourceforge.plantuml.klimt.font"><code>UFont</code></a> from the style properties <code>FontName</code>,
+ <code>FontStyle</code>, <code>FontWeight</code> and <code>FontSize</code>.
+
+ <p>The two weight-related properties are intentionally independent:
+ <ul>
+   <li><code>FontStyle</code> controls the italic axis (<code>italic</code>,
+       <code>bold</code>, <code>plain</code>) and is mapped to a <a href="../klimt/font/UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font"><code>UFontFace</code></a>
+       via <a href="../klimt/font/UFontFace.html#fromLegacyStyle(int)"><code>UFontFace.fromLegacyStyle(int)</code></a>.</li>
+   <li><code>FontWeight</code> — when present — overrides only the weight axis
+       of that face (CSS values 100-900 or keywords).  This mirrors the CSS
+       model where <code>font-style</code> and <code>font-weight</code> are
+       independent axes.</li>
+ </ul>
+
+ <p>If only <code>FontStyle=bold</code> is set and no <code>FontWeight</code> is
+ present, the result is identical to the previous behaviour (weight 700).</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>a <a href="../klimt/font/UFont.html" title="interface in net.sourceforge.plantuml.klimt.font"><code>UFont</code></a> for all style-driven text rendering paths</dd>
+</dl>
 </section>
 </li>
 <li>
