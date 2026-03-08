@@ -236,7 +236,7 @@ public class DriverTextEps implements UDriver<UText, EpsGraphics> {
 		return result;
 	}
 
-	static private MinMax getMinMax(double x, double y, PathIterator path) {
+	static MinMax getMinMax(double x, double y, PathIterator path) {
 
 		MinMax result = MinMax.getEmpty(false);
 
