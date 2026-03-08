@@ -57,27 +57,15 @@ public final class UFontImpl implements UFont {
 	}
 
 	/**
-	 * Legacy constructor: converts the binary {@code java.awt.Font} style flag to
-	 * a {@link UFontFace} (bold → weight 700, italic → italic axis).  Any
-	 * intermediate CSS weight is not representable through this path; prefer
-	 * {@link #UFontImpl(FontStack, UFontFace, int)} for new code.
-	 */
-<span class="fc" id="L65">	UFontImpl(FontStack fontStack, int style, int size) {</span>
-<span class="fc" id="L66">		this.fontStack = fontStack;</span>
-<span class="fc" id="L67">		this.face = UFontFace.fromLegacyStyle(style);</span>
-<span class="fc" id="L68">		this.size = size;</span>
-<span class="fc" id="L69">	}</span>
-
-	/**
 	 * Face-aware constructor.  Stores the full {@link UFontFace} so that
 	 * intermediate CSS weights (100-900) are preserved and applied via
 	 * {@link TextAttribute#WEIGHT} during Java2D rendering.
 	 */
-<span class="fc" id="L76">	UFontImpl(FontStack fontStack, UFontFace face, int size) {</span>
-<span class="fc" id="L77">		this.fontStack = fontStack;</span>
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		this.face = face == null ? UFontFace.normal() : face;</span>
-<span class="fc" id="L79">		this.size = size;</span>
-<span class="fc" id="L80">	}</span>
+<span class="fc" id="L64">	UFontImpl(FontStack fontStack, UFontFace face, int size) {</span>
+<span class="fc" id="L65">		this.fontStack = fontStack;</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		this.face = face == null ? UFontFace.normal() : face;</span>
+<span class="fc" id="L67">		this.size = size;</span>
+<span class="fc" id="L68">	}</span>
 
 	/**
 	 * Returns the underlying {@link java.awt.Font} for the given text, with all
@@ -89,133 +77,94 @@ public final class UFontImpl implements UFont {
 	 * Fonts that only provide binary bold/normal fall back gracefully.
 	 */
 	public Font getUnderlayingFont(String text) {
-<span class="fc" id="L92">		return fontStack.getFont(text, face, size);</span>
+<span class="fc" id="L80">		return fontStack.getFont(text, face, size);</span>
 	}
 
 	public UFont withSize(float size) {
-<span class="fc" id="L96">		return new UFontImpl(fontStack, this.face, (int) size);</span>
+<span class="fc" id="L84">		return new UFontImpl(fontStack, this.face, (int) size);</span>
 	}
 
 	public UFontFace getFontFace() {
-<span class="fc" id="L100">		return face;</span>
+<span class="fc" id="L88">		return face;</span>
 	}
 
 	public UFont withFontFace(UFontFace newFace) {
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (newFace == null)</span>
-<span class="nc" id="L105">			return this;</span>
-<span class="nc" id="L106">		return new UFontImpl(fontStack, newFace, this.size);</span>
-	}
-
-	/**
-	 * @deprecated Use {@link #withFontFace(UFontFace)} to preserve CSS weight.
-	 *             This method converts the binary italic/bold flags to a
-	 *             {@link UFontFace}, losing any intermediate weight.
-	 */
-	@Deprecated
-	public UFont withStyle(int style) {
-<span class="fc" id="L116">		return new UFontImpl(fontStack, UFontFace.fromLegacyStyle(style), this.size);</span>
-	}
-
-	@Deprecated
-	public UFont bold() {
-<span class="nc" id="L121">		return withFontFace(UFontFace.bold());</span>
-	}
-
-	@Deprecated
-	public UFont italic() {
-<span class="nc" id="L126">		return withFontFace(UFontFace.italic());</span>
-	}
-
-	/**
-	 * @deprecated Use {@link #getFontFace()} and {@link UFontFace#toLegacyStyle()}
-	 *             instead.  This method discards any intermediate CSS weight.
-	 */
-	@Deprecated
-	public int getStyle() {
-<span class="fc" id="L135">		return face.toLegacyStyle();</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (newFace == null)</span>
+<span class="nc" id="L93">			return this;</span>
+<span class="fc" id="L94">		return new UFontImpl(fontStack, newFace, this.size);</span>
 	}
 
 	public int getSize() {
-<span class="fc" id="L139">		return size;</span>
+<span class="fc" id="L98">		return size;</span>
 	}
 
 	public double getSize2D() {
-<span class="fc" id="L143">		return size;</span>
-	}
-
-	@Deprecated
-	public boolean isBold() {
-<span class="fc" id="L148">		return face.isBold();</span>
-	}
-
-	@Deprecated
-	public boolean isItalic() {
-<span class="fc" id="L153">		return face.isItalic();</span>
+<span class="fc" id="L102">		return size;</span>
 	}
 
 	public String getFamily(String text, UFontContext context) {
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L158">			final String fullDefinition = fontStack.getFullDefinition();</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L107">			final String fullDefinition = fontStack.getFullDefinition();</span>
 			// Map Java font name to web-safe equivalent
 			// http://plantuml.sourceforge.net/qa/?qa=5432/svg-monospace-output-has-wrong-font-family
-<span class="nc bnc" id="L161" title="All 2 branches missed.">			if (&quot;monospaced&quot;.equalsIgnoreCase(fullDefinition))</span>
-<span class="nc" id="L162">				return &quot;monospace&quot;;</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">			if (&quot;monospaced&quot;.equalsIgnoreCase(fullDefinition))</span>
+<span class="nc" id="L111">				return &quot;monospace&quot;;</span>
 
-<span class="nc" id="L164">			return fullDefinition.replace('&quot;', '\'').replaceAll(&quot;(?i)sansserif&quot;, &quot;sans-serif&quot;);</span>
+<span class="nc" id="L113">			return fullDefinition.replace('&quot;', '\'').replaceAll(&quot;(?i)sansserif&quot;, &quot;sans-serif&quot;);</span>
 		} else {
-<span class="fc bfc" id="L166" title="All 2 branches covered.">			if (context == UFontContext.EPS) {</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">			if (context == UFontContext.EPS) {</span>
 //			if (fontStack.getFamily() == null)
 //				return &quot;Times-Roman&quot;;
-<span class="fc" id="L169">				return getUnderlayingFont(text).getPSName();</span>
+<span class="fc" id="L118">				return getUnderlayingFont(text).getPSName();</span>
 			}
-<span class="pc bpc" id="L171" title="1 of 2 branches missed.">			if (context == UFontContext.SVG) {</span>
-<span class="fc" id="L172">				String result = fontStack.getFullDefinition().replace('&quot;', '\'');</span>
-<span class="fc" id="L173">				result = result.replaceAll(&quot;(?i)sansserif&quot;, &quot;sans-serif&quot;);</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">			if (context == UFontContext.SVG) {</span>
+<span class="fc" id="L121">				String result = fontStack.getFullDefinition().replace('&quot;', '\'');</span>
+<span class="fc" id="L122">				result = result.replaceAll(&quot;(?i)sansserif&quot;, &quot;sans-serif&quot;);</span>
 
-<span class="fc" id="L175">				return result;</span>
+<span class="fc" id="L124">				return result;</span>
 			}
 		}
-<span class="nc" id="L178">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L127">		throw new IllegalArgumentException();</span>
 	}
 
 	// Kludge for testing because font names on some machines (only macOS?) do not
 	// end with &lt;DOT&gt;&lt;STYLE&gt;
 	// See https://github.com/plantuml/plantuml/issues/720
 	private String getPortableFontName() {
-<span class="nc" id="L185">		final Font font = getUnderlayingFont(null);</span>
-<span class="nc" id="L186">		final String name = font.getFontName();</span>
-<span class="nc bnc" id="L187" title="All 4 branches missed.">		if (font.isBold() &amp;&amp; font.isItalic())</span>
-<span class="nc bnc" id="L188" title="All 2 branches missed.">			return name.endsWith(&quot;.bolditalic&quot;) ? name : name + &quot;.bolditalic&quot;;</span>
-<span class="nc bnc" id="L189" title="All 2 branches missed.">		else if (font.isBold())</span>
-<span class="nc bnc" id="L190" title="All 2 branches missed.">			return name.endsWith(&quot;.bold&quot;) ? name : name + &quot;.bold&quot;;</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">		else if (font.isItalic())</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">			return name.endsWith(&quot;.italic&quot;) ? name : name + &quot;.italic&quot;;</span>
+<span class="nc" id="L134">		final Font font = getUnderlayingFont(null);</span>
+<span class="nc" id="L135">		final String name = font.getFontName();</span>
+<span class="nc bnc" id="L136" title="All 4 branches missed.">		if (font.isBold() &amp;&amp; font.isItalic())</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">			return name.endsWith(&quot;.bolditalic&quot;) ? name : name + &quot;.bolditalic&quot;;</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		else if (font.isBold())</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">			return name.endsWith(&quot;.bold&quot;) ? name : name + &quot;.bold&quot;;</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		else if (font.isItalic())</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">			return name.endsWith(&quot;.italic&quot;) ? name : name + &quot;.italic&quot;;</span>
 		else
-<span class="nc bnc" id="L194" title="All 2 branches missed.">			return name.endsWith(&quot;.plain&quot;) ? name : name + &quot;.plain&quot;;</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">			return name.endsWith(&quot;.plain&quot;) ? name : name + &quot;.plain&quot;;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L199">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L200">		sb.append(getPortableFontName());</span>
-<span class="nc" id="L201">		sb.append(&quot;/&quot;);</span>
-<span class="nc" id="L202">		sb.append(getSize());</span>
-<span class="nc" id="L203">		return sb.toString();</span>
+<span class="nc" id="L148">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L149">		sb.append(getPortableFontName());</span>
+<span class="nc" id="L150">		sb.append(&quot;/&quot;);</span>
+<span class="nc" id="L151">		sb.append(getSize());</span>
+<span class="nc" id="L152">		return sb.toString();</span>
 	}
 
 	@Override
 	public int hashCode() {
-<span class="fc" id="L208">		return Objects.hash(fontStack, face, size);</span>
+<span class="fc" id="L157">		return Objects.hash(fontStack, face, size);</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="fc bfc" id="L213" title="All 2 branches covered.">		if (this == obj)</span>
-<span class="fc" id="L214">			return true;</span>
-<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if (!(obj instanceof UFontImpl))</span>
-<span class="nc" id="L216">			return false;</span>
-<span class="fc" id="L217">		UFontImpl other = (UFontImpl) obj;</span>
-<span class="pc bpc" id="L218" title="2 of 6 branches missed.">		return Objects.equals(fontStack, other.fontStack) &amp;&amp; Objects.equals(face, other.face) &amp;&amp; size == other.size;</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		if (this == obj)</span>
+<span class="fc" id="L163">			return true;</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		if (!(obj instanceof UFontImpl))</span>
+<span class="nc" id="L165">			return false;</span>
+<span class="fc" id="L166">		UFontImpl other = (UFontImpl) obj;</span>
+<span class="pc bpc" id="L167" title="2 of 6 branches missed.">		return Objects.equals(fontStack, other.fontStack) &amp;&amp; Objects.equals(face, other.face) &amp;&amp; size == other.size;</span>
 	}
 
 }

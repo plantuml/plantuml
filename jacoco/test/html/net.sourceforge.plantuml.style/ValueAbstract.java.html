@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.style;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.font.UFontFace;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 
-<span class="fc" id="L42">public abstract class ValueAbstract implements Value {</span>
-    // ::remove file when __HAXE__
+<span class="fc" id="L43">public abstract class ValueAbstract implements Value {</span>
 
 	public String asString() {
 <span class="nc" id="L46">		throw new UnsupportedOperationException(&quot;Class=&quot; + getClass());</span>
@@ -66,20 +66,16 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 <span class="nc" id="L66">		throw new UnsupportedOperationException(&quot;Class=&quot; + getClass());</span>
 	}
 
-	public int asFontStyle() {
+	public UFontFace asFontFace() {
 <span class="nc" id="L70">		throw new UnsupportedOperationException(&quot;Class=&quot; + getClass());</span>
 	}
 
-	public int asFontWeight() {
+	public HorizontalAlignment asHorizontalAlignment() {
 <span class="nc" id="L74">		throw new UnsupportedOperationException(&quot;Class=&quot; + getClass());</span>
 	}
 
-	public HorizontalAlignment asHorizontalAlignment() {
-<span class="nc" id="L78">		throw new UnsupportedOperationException(&quot;Class=&quot; + getClass());</span>
-	}
-
 	public int getPriority() {
-<span class="nc" id="L82">		throw new UnsupportedOperationException(&quot;Class=&quot; + getClass());</span>
+<span class="nc" id="L78">		throw new UnsupportedOperationException(&quot;Class=&quot; + getClass());</span>
 	}
 
 }

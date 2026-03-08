@@ -53,8 +53,8 @@ import net.sourceforge.plantuml.tikz.TikzGraphics;
 <span class="nc" id="L53">		final HColor col = fontConfiguration.getColor();</span>
 <span class="nc" id="L54">		tikz.setStrokeColor(col);</span>
 <span class="nc" id="L55">		final boolean underline = fontConfiguration.containsStyle(FontStyle.UNDERLINE);</span>
-<span class="nc" id="L56">		final boolean italic = font.isItalic();</span>
-<span class="nc" id="L57">		final boolean bold = font.isBold();</span>
+<span class="nc" id="L56">		final boolean italic = font.getFontFace().isItalic();</span>
+<span class="nc" id="L57">		final boolean bold = font.getFontFace().isBold();</span>
 <span class="nc" id="L58">		tikz.text(x, y, text.getText(), underline, italic, bold);</span>
 <span class="nc" id="L59">	}</span>
 

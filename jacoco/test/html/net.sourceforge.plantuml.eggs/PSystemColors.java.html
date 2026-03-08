@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFace;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -74,204 +75,204 @@ import net.sourceforge.plantuml.text.BackSlash;
 // http://www.redblobgames.com/grids/hexagons/
 public class PSystemColors extends PlainDiagram implements UDrawable {
 	
-<span class="nc" id="L77">	private final double rectangleHeight = 28;</span>
-<span class="nc" id="L78">	private final double rectangleWidth = 175;</span>
-<span class="nc" id="L79">	private final HColorSet colors = HColorSet.instance();</span>
+<span class="nc" id="L78">	private final double rectangleHeight = 28;</span>
+<span class="nc" id="L79">	private final double rectangleWidth = 175;</span>
+<span class="nc" id="L80">	private final HColorSet colors = HColorSet.instance();</span>
 	private final String paletteCentralColor;
-<span class="nc" id="L81">	private final double size = 60;</span>
+<span class="nc" id="L82">	private final double size = 60;</span>
 
 	public PSystemColors(UmlSource source, String option, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L84">		super(source, preprocessing);</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (option == null)</span>
-<span class="nc" id="L86">			this.paletteCentralColor = null;</span>
+<span class="nc" id="L85">		super(source, preprocessing);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (option == null)</span>
+<span class="nc" id="L87">			this.paletteCentralColor = null;</span>
 		else
-<span class="nc" id="L88">			this.paletteCentralColor = option.replaceAll(&quot;\\#&quot;, &quot;&quot;);</span>
+<span class="nc" id="L89">			this.paletteCentralColor = option.replaceAll(&quot;\\#&quot;, &quot;&quot;);</span>
 
-<span class="nc" id="L90">	}</span>
+<span class="nc" id="L91">	}</span>
 
 	@Override
 	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
-<span class="nc" id="L94">		return this;</span>
+<span class="nc" id="L95">		return this;</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L98">		return new DiagramDescription(&quot;(Colors)&quot;);</span>
+<span class="nc" id="L99">		return new DiagramDescription(&quot;(Colors)&quot;);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L102" title="All 4 branches missed.">		if (paletteCentralColor != null &amp;&amp; colors.getColorOrWhite(paletteCentralColor) instanceof HColorSimple)</span>
-<span class="nc" id="L103">			drawPalette(ug);</span>
+<span class="nc bnc" id="L103" title="All 4 branches missed.">		if (paletteCentralColor != null &amp;&amp; colors.getColorOrWhite(paletteCentralColor) instanceof HColorSimple)</span>
+<span class="nc" id="L104">			drawPalette(ug);</span>
 		else
-<span class="nc" id="L105">			drawFull(ug);</span>
-<span class="nc" id="L106">	}</span>
+<span class="nc" id="L106">			drawFull(ug);</span>
+<span class="nc" id="L107">	}</span>
 
 	private void drawPalette(UGraphic ug) {
-<span class="nc" id="L109">		double x = (centerHexa(2, 0).getX() + centerHexa(3, 0).getX()) / 2;</span>
-<span class="nc" id="L110">		double y = centerHexa(0, 2).getY() + corner(1).getY();</span>
-<span class="nc" id="L111">		ug = ug.apply(new UTranslate(x, y));</span>
-<span class="nc" id="L112">		final UPolygon hexa = getHexa();</span>
+<span class="nc" id="L110">		double x = (centerHexa(2, 0).getX() + centerHexa(3, 0).getX()) / 2;</span>
+<span class="nc" id="L111">		double y = centerHexa(0, 2).getY() + corner(1).getY();</span>
+<span class="nc" id="L112">		ug = ug.apply(new UTranslate(x, y));</span>
+<span class="nc" id="L113">		final UPolygon hexa = getHexa();</span>
 
-<span class="nc" id="L114">		final List&lt;String&gt; friends = getColorsCloseTo(paletteCentralColor);</span>
-<span class="nc" id="L115">		int idx = 0;</span>
-<span class="nc" id="L116">		drawOneHexa(ug, friends.get(idx++), 0, 0, hexa);</span>
+<span class="nc" id="L115">		final List&lt;String&gt; friends = getColorsCloseTo(paletteCentralColor);</span>
+<span class="nc" id="L116">		int idx = 0;</span>
+<span class="nc" id="L117">		drawOneHexa(ug, friends.get(idx++), 0, 0, hexa);</span>
 
-<span class="nc" id="L118">		drawOneHexa(ug, friends.get(idx++), 1, 0, hexa);</span>
-<span class="nc" id="L119">		drawOneHexa(ug, friends.get(idx++), 0, 1, hexa);</span>
-<span class="nc" id="L120">		drawOneHexa(ug, friends.get(idx++), -1, 1, hexa);</span>
-<span class="nc" id="L121">		drawOneHexa(ug, friends.get(idx++), -1, 0, hexa);</span>
-<span class="nc" id="L122">		drawOneHexa(ug, friends.get(idx++), -1, -1, hexa);</span>
-<span class="nc" id="L123">		drawOneHexa(ug, friends.get(idx++), 0, -1, hexa);</span>
+<span class="nc" id="L119">		drawOneHexa(ug, friends.get(idx++), 1, 0, hexa);</span>
+<span class="nc" id="L120">		drawOneHexa(ug, friends.get(idx++), 0, 1, hexa);</span>
+<span class="nc" id="L121">		drawOneHexa(ug, friends.get(idx++), -1, 1, hexa);</span>
+<span class="nc" id="L122">		drawOneHexa(ug, friends.get(idx++), -1, 0, hexa);</span>
+<span class="nc" id="L123">		drawOneHexa(ug, friends.get(idx++), -1, -1, hexa);</span>
+<span class="nc" id="L124">		drawOneHexa(ug, friends.get(idx++), 0, -1, hexa);</span>
 
-<span class="nc" id="L125">		drawOneHexa(ug, friends.get(idx++), 2, 0, hexa);</span>
-<span class="nc" id="L126">		drawOneHexa(ug, friends.get(idx++), 1, 1, hexa);</span>
-<span class="nc" id="L127">		drawOneHexa(ug, friends.get(idx++), 1, 2, hexa);</span>
-<span class="nc" id="L128">		drawOneHexa(ug, friends.get(idx++), 0, 2, hexa);</span>
-<span class="nc" id="L129">		drawOneHexa(ug, friends.get(idx++), -1, 2, hexa);</span>
-<span class="nc" id="L130">		drawOneHexa(ug, friends.get(idx++), -2, 1, hexa);</span>
-<span class="nc" id="L131">		drawOneHexa(ug, friends.get(idx++), -2, 0, hexa);</span>
-<span class="nc" id="L132">		drawOneHexa(ug, friends.get(idx++), -2, -1, hexa);</span>
-<span class="nc" id="L133">		drawOneHexa(ug, friends.get(idx++), -1, -2, hexa);</span>
-<span class="nc" id="L134">		drawOneHexa(ug, friends.get(idx++), 0, -2, hexa);</span>
-<span class="nc" id="L135">		drawOneHexa(ug, friends.get(idx++), 1, -2, hexa);</span>
-<span class="nc" id="L136">		drawOneHexa(ug, friends.get(idx++), 1, -1, hexa);</span>
-<span class="nc" id="L137">	}</span>
+<span class="nc" id="L126">		drawOneHexa(ug, friends.get(idx++), 2, 0, hexa);</span>
+<span class="nc" id="L127">		drawOneHexa(ug, friends.get(idx++), 1, 1, hexa);</span>
+<span class="nc" id="L128">		drawOneHexa(ug, friends.get(idx++), 1, 2, hexa);</span>
+<span class="nc" id="L129">		drawOneHexa(ug, friends.get(idx++), 0, 2, hexa);</span>
+<span class="nc" id="L130">		drawOneHexa(ug, friends.get(idx++), -1, 2, hexa);</span>
+<span class="nc" id="L131">		drawOneHexa(ug, friends.get(idx++), -2, 1, hexa);</span>
+<span class="nc" id="L132">		drawOneHexa(ug, friends.get(idx++), -2, 0, hexa);</span>
+<span class="nc" id="L133">		drawOneHexa(ug, friends.get(idx++), -2, -1, hexa);</span>
+<span class="nc" id="L134">		drawOneHexa(ug, friends.get(idx++), -1, -2, hexa);</span>
+<span class="nc" id="L135">		drawOneHexa(ug, friends.get(idx++), 0, -2, hexa);</span>
+<span class="nc" id="L136">		drawOneHexa(ug, friends.get(idx++), 1, -2, hexa);</span>
+<span class="nc" id="L137">		drawOneHexa(ug, friends.get(idx++), 1, -1, hexa);</span>
+<span class="nc" id="L138">	}</span>
 
 	private XPoint2D centerHexa(int i, int j) {
-<span class="nc" id="L140">		final double width = getWidth();</span>
-<span class="nc bnc" id="L141" title="All 2 branches missed.">		final double x = width * i + (j % 2 == 0 ? 0 : width / 2);</span>
-<span class="nc" id="L142">		final double y = size * j * 1.5;</span>
-<span class="nc" id="L143">		return new XPoint2D(x, y);</span>
+<span class="nc" id="L141">		final double width = getWidth();</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		final double x = width * i + (j % 2 == 0 ? 0 : width / 2);</span>
+<span class="nc" id="L143">		final double y = size * j * 1.5;</span>
+<span class="nc" id="L144">		return new XPoint2D(x, y);</span>
 
 	}
 
 	private double getWidth() {
-<span class="nc" id="L148">		return Math.sqrt(3) / 2 * 2 * size;</span>
+<span class="nc" id="L149">		return Math.sqrt(3) / 2 * 2 * size;</span>
 	}
 
 	private void drawOneHexa(UGraphic ug, String colorName, int i, int j, UPolygon hexa) {
-<span class="nc" id="L152">		final HColor color = colors.getColorOrWhite(colorName);</span>
-<span class="nc" id="L153">		ug = applyColor(ug, color);</span>
-<span class="nc" id="L154">		ug = ug.apply(UTranslate.point(centerHexa(i, j)));</span>
-<span class="nc" id="L155">		ug.draw(hexa);</span>
+<span class="nc" id="L153">		final HColor color = colors.getColorOrWhite(colorName);</span>
+<span class="nc" id="L154">		ug = applyColor(ug, color);</span>
+<span class="nc" id="L155">		ug = ug.apply(UTranslate.point(centerHexa(i, j)));</span>
+<span class="nc" id="L156">		ug.draw(hexa);</span>
 
-<span class="nc" id="L157">		final UFont font = UFontFactory.sansSerif(14).bold();</span>
+<span class="nc" id="L158">		final UFont font = UFontFactory.sansSerif(14).withFontFace(UFontFace.bold());</span>
 
-<span class="nc" id="L159">		TextBlock tt = getTextName(font, colorName, color);</span>
-<span class="nc" id="L160">		XDimension2D dimText = tt.calculateDimension(ug.getStringBounder());</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (dimText.getWidth() &gt; getWidth()) {</span>
-<span class="nc" id="L162">			tt = getTextName(font, findShortest(ug.getStringBounder(), font, colorName), color);</span>
-<span class="nc" id="L163">			dimText = tt.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L160">		TextBlock tt = getTextName(font, colorName, color);</span>
+<span class="nc" id="L161">		XDimension2D dimText = tt.calculateDimension(ug.getStringBounder());</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (dimText.getWidth() &gt; getWidth()) {</span>
+<span class="nc" id="L163">			tt = getTextName(font, findShortest(ug.getStringBounder(), font, colorName), color);</span>
+<span class="nc" id="L164">			dimText = tt.calculateDimension(ug.getStringBounder());</span>
 		}
-<span class="nc" id="L165">		tt.drawU(ug.apply(new UTranslate(-dimText.getWidth() / 2, -dimText.getHeight() / 2)));</span>
-<span class="nc" id="L166">	}</span>
+<span class="nc" id="L166">		tt.drawU(ug.apply(new UTranslate(-dimText.getWidth() / 2, -dimText.getHeight() / 2)));</span>
+<span class="nc" id="L167">	}</span>
 
 	@JawsStrange
 	private String findShortest(StringBounder stringBounder, UFont font, String colorName) {
-<span class="nc" id="L170">		String result = null;</span>
-<span class="nc" id="L171">		double min = Double.MAX_VALUE;</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">		for (int i = 1; i &lt; colorName.length() - 1; i++) {</span>
-<span class="nc bnc" id="L173" title="All 2 branches missed.">			if (Character.isLowerCase(colorName.charAt(i)))</span>
-<span class="nc" id="L174">				continue;</span>
+<span class="nc" id="L171">		String result = null;</span>
+<span class="nc" id="L172">		double min = Double.MAX_VALUE;</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		for (int i = 1; i &lt; colorName.length() - 1; i++) {</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">			if (Character.isLowerCase(colorName.charAt(i)))</span>
+<span class="nc" id="L175">				continue;</span>
 
-<span class="nc" id="L176">			final String candidat = colorName.substring(0, i) + BackSlash.BS_BS_N + colorName.substring(i);</span>
-<span class="nc" id="L177">			final TextBlock tt = getTextName(font, candidat, (HColorSimple) HColors.BLACK);</span>
-<span class="nc" id="L178">			final double width = tt.calculateDimension(stringBounder).getWidth();</span>
-<span class="nc bnc" id="L179" title="All 2 branches missed.">			if (width &lt; min) {</span>
-<span class="nc" id="L180">				result = candidat;</span>
-<span class="nc" id="L181">				min = width;</span>
+<span class="nc" id="L177">			final String candidat = colorName.substring(0, i) + BackSlash.BS_BS_N + colorName.substring(i);</span>
+<span class="nc" id="L178">			final TextBlock tt = getTextName(font, candidat, (HColorSimple) HColors.BLACK);</span>
+<span class="nc" id="L179">			final double width = tt.calculateDimension(stringBounder).getWidth();</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">			if (width &lt; min) {</span>
+<span class="nc" id="L181">				result = candidat;</span>
+<span class="nc" id="L182">				min = width;</span>
 			}
 		}
-<span class="nc" id="L184">		return result;</span>
+<span class="nc" id="L185">		return result;</span>
 	}
 
 	private UGraphic applyColor(UGraphic ug, HColor color) {
-<span class="nc" id="L188">		return ug.apply(color).apply(color.bg());</span>
+<span class="nc" id="L189">		return ug.apply(color).apply(color.bg());</span>
 	}
 
 	private XPoint2D corner(int i) {
-<span class="nc" id="L192">		double angle_deg = 60 * i + 30;</span>
-<span class="nc" id="L193">		double angle_rad = Math.PI / 180 * angle_deg;</span>
-<span class="nc" id="L194">		return new XPoint2D(size * Math.cos(angle_rad), size * Math.sin(angle_rad));</span>
+<span class="nc" id="L193">		double angle_deg = 60 * i + 30;</span>
+<span class="nc" id="L194">		double angle_rad = Math.PI / 180 * angle_deg;</span>
+<span class="nc" id="L195">		return new XPoint2D(size * Math.cos(angle_rad), size * Math.sin(angle_rad));</span>
 	}
 
 	private UPolygon getHexa() {
-<span class="nc" id="L198">		final UPolygon result = new UPolygon();</span>
-<span class="nc bnc" id="L199" title="All 2 branches missed.">		for (int i = 0; i &lt; 6; i++)</span>
-<span class="nc" id="L200">			result.addPoint(corner(i));</span>
+<span class="nc" id="L199">		final UPolygon result = new UPolygon();</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		for (int i = 0; i &lt; 6; i++)</span>
+<span class="nc" id="L201">			result.addPoint(corner(i));</span>
 
-<span class="nc" id="L202">		return result;</span>
+<span class="nc" id="L203">		return result;</span>
 	}
 
 	private List&lt;String&gt; getColorsCloseTo(String other) {
-<span class="nc" id="L206">		final List&lt;String&gt; result = new ArrayList&lt;&gt;(colors.names());</span>
-<span class="nc bnc" id="L207" title="All 2 branches missed.">		for (Iterator&lt;String&gt; it = result.iterator(); it.hasNext();) {</span>
-<span class="nc" id="L208">			final String candidat = it.next();</span>
-<span class="nc" id="L209">			final String similar = candidat.replaceAll(&quot;Gray&quot;, &quot;Grey&quot;);</span>
-<span class="nc bnc" id="L210" title="All 2 branches missed.">			if (candidat.equals(similar))</span>
-<span class="nc" id="L211">				continue;</span>
+<span class="nc" id="L207">		final List&lt;String&gt; result = new ArrayList&lt;&gt;(colors.names());</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		for (Iterator&lt;String&gt; it = result.iterator(); it.hasNext();) {</span>
+<span class="nc" id="L209">			final String candidat = it.next();</span>
+<span class="nc" id="L210">			final String similar = candidat.replaceAll(&quot;Gray&quot;, &quot;Grey&quot;);</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">			if (candidat.equals(similar))</span>
+<span class="nc" id="L212">				continue;</span>
 
-<span class="nc bnc" id="L213" title="All 2 branches missed.">			if (result.contains(similar))</span>
-<span class="nc" id="L214">				it.remove();</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">			if (result.contains(similar))</span>
+<span class="nc" id="L215">				it.remove();</span>
 
-<span class="nc" id="L216">		}</span>
-<span class="nc bnc" id="L217" title="All 2 branches missed.">		if (containsCaseInsensitive(result, other) == false)</span>
-<span class="nc" id="L218">			result.add(other);</span>
+<span class="nc" id="L217">		}</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (containsCaseInsensitive(result, other) == false)</span>
+<span class="nc" id="L219">			result.add(other);</span>
 
-<span class="nc" id="L220">		Collections.sort(result, closeComparator(paletteCentralColor));</span>
-<span class="nc" id="L221">		return result;</span>
+<span class="nc" id="L221">		Collections.sort(result, closeComparator(paletteCentralColor));</span>
+<span class="nc" id="L222">		return result;</span>
 	}
 
 	private boolean containsCaseInsensitive(Collection&lt;String&gt; source, String target) {
-<span class="nc bnc" id="L225" title="All 2 branches missed.">		for (String s : source)</span>
-<span class="nc bnc" id="L226" title="All 2 branches missed.">			if (s.equalsIgnoreCase(target))</span>
-<span class="nc" id="L227">				return true;</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		for (String s : source)</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">			if (s.equalsIgnoreCase(target))</span>
+<span class="nc" id="L228">				return true;</span>
 
-<span class="nc" id="L229">		return false;</span>
+<span class="nc" id="L230">		return false;</span>
 	}
 
 	private Comparator&lt;String&gt; closeComparator(String center) {
-<span class="nc" id="L233">		final HColorSimple centerColor = (HColorSimple) colors.getColorOrWhite(center);</span>
-<span class="nc" id="L234">		return new Comparator&lt;String&gt;() {</span>
+<span class="nc" id="L234">		final HColorSimple centerColor = (HColorSimple) colors.getColorOrWhite(center);</span>
+<span class="nc" id="L235">		return new Comparator&lt;String&gt;() {</span>
 			public int compare(String col1, String col2) {
-<span class="nc" id="L236">				final int dist1 = centerColor.distanceTo((HColorSimple) colors.getColorOrWhite(col1));</span>
-<span class="nc" id="L237">				final int dist2 = centerColor.distanceTo((HColorSimple) colors.getColorOrWhite(col2));</span>
-<span class="nc" id="L238">				return (int) Math.signum(dist1 - dist2);</span>
+<span class="nc" id="L237">				final int dist1 = centerColor.distanceTo((HColorSimple) colors.getColorOrWhite(col1));</span>
+<span class="nc" id="L238">				final int dist2 = centerColor.distanceTo((HColorSimple) colors.getColorOrWhite(col2));</span>
+<span class="nc" id="L239">				return (int) Math.signum(dist1 - dist2);</span>
 			}
 		};
 	}
 
 	private void drawFull(UGraphic ug) {
-<span class="nc" id="L244">		final UFont font = UFontFactory.sansSerif(14).bold();</span>
+<span class="nc" id="L245">		final UFont font = UFontFactory.sansSerif(14).withFontFace(UFontFace.bold());</span>
 
-<span class="nc" id="L246">		ug = ug.apply(HColors.BLACK);</span>
-<span class="nc" id="L247">		int i = 0;</span>
-<span class="nc" id="L248">		int j = 0;</span>
-<span class="nc bnc" id="L249" title="All 2 branches missed.">		for (String name : colors.names()) {</span>
-<span class="nc" id="L250">			UGraphic tmp = getPositioned(ug, i, j);</span>
-<span class="nc" id="L251">			final HColor color = colors.getColorOrWhite(name);</span>
-<span class="nc" id="L252">			applyColor(tmp, color).draw(URectangle.build(rectangleWidth, rectangleHeight));</span>
-<span class="nc" id="L253">			final TextBlock tt = getTextName(font, name, color);</span>
-<span class="nc" id="L254">			final XDimension2D dimText = tt.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L255">			final double dy = (rectangleHeight - dimText.getHeight()) / 2;</span>
-<span class="nc" id="L256">			final double dx = (rectangleWidth - dimText.getWidth()) / 2;</span>
-<span class="nc" id="L257">			tt.drawU(tmp.apply(new UTranslate(dx, dy)));</span>
-<span class="nc bnc" id="L258" title="All 2 branches missed.">			if (j++ == 20) {</span>
-<span class="nc" id="L259">				j = 0;</span>
-<span class="nc" id="L260">				i++;</span>
+<span class="nc" id="L247">		ug = ug.apply(HColors.BLACK);</span>
+<span class="nc" id="L248">		int i = 0;</span>
+<span class="nc" id="L249">		int j = 0;</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">		for (String name : colors.names()) {</span>
+<span class="nc" id="L251">			UGraphic tmp = getPositioned(ug, i, j);</span>
+<span class="nc" id="L252">			final HColor color = colors.getColorOrWhite(name);</span>
+<span class="nc" id="L253">			applyColor(tmp, color).draw(URectangle.build(rectangleWidth, rectangleHeight));</span>
+<span class="nc" id="L254">			final TextBlock tt = getTextName(font, name, color);</span>
+<span class="nc" id="L255">			final XDimension2D dimText = tt.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L256">			final double dy = (rectangleHeight - dimText.getHeight()) / 2;</span>
+<span class="nc" id="L257">			final double dx = (rectangleWidth - dimText.getWidth()) / 2;</span>
+<span class="nc" id="L258">			tt.drawU(tmp.apply(new UTranslate(dx, dy)));</span>
+<span class="nc bnc" id="L259" title="All 2 branches missed.">			if (j++ == 20) {</span>
+<span class="nc" id="L260">				j = 0;</span>
+<span class="nc" id="L261">				i++;</span>
 			}
-<span class="nc" id="L262">		}</span>
-<span class="nc" id="L263">	}</span>
+<span class="nc" id="L263">		}</span>
+<span class="nc" id="L264">	}</span>
 
 	private TextBlock getTextName(final UFont font, String name, final HColor color) {
-<span class="nc" id="L266">		final HColor opposite = color.opposite();</span>
-<span class="nc" id="L267">		final FontConfiguration fc = FontConfiguration.create(font, opposite, HColors.BLUE, UStroke.simple());</span>
-<span class="nc" id="L268">		final TextBlock tt = Display.getWithNewlines(Pragma.createEmpty(), name).create(fc, HorizontalAlignment.CENTER,</span>
+<span class="nc" id="L267">		final HColor opposite = color.opposite();</span>
+<span class="nc" id="L268">		final FontConfiguration fc = FontConfiguration.create(font, opposite, HColors.BLUE, UStroke.simple());</span>
+<span class="nc" id="L269">		final TextBlock tt = Display.getWithNewlines(Pragma.createEmpty(), name).create(fc, HorizontalAlignment.CENTER,</span>
 				new SpriteContainerEmpty());
-<span class="nc" id="L270">		return tt;</span>
+<span class="nc" id="L271">		return tt;</span>
 	}
 
 	private UGraphic getPositioned(UGraphic ug, int i, int j) {
-<span class="nc" id="L274">		return ug.apply(new UTranslate(rectangleWidth * i, rectangleHeight * j));</span>
+<span class="nc" id="L275">		return ug.apply(new UTranslate(rectangleWidth * i, rectangleHeight * j));</span>
 	}
 
 }

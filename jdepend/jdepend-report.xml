@@ -15482,10 +15482,10 @@
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>7</AbstractClasses>
                 <Ca>69</Ca>
-                <Ce>18</Ce>
+                <Ce>17</Ce>
                 <A>0.32</A>
-                <I>0.21</I>
-                <D>0.47</D>
+                <I>0.2</I>
+                <D>0.48</D>
                 <V>1</V>
             </Stats>
 
@@ -15562,7 +15562,6 @@
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>java.awt</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml</Package>

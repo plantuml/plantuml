@@ -59,16 +59,16 @@ class WritingBuffer extends Writer {
 
 	@Override
 	public void write(char[] cbuf, int off, int len) throws IOException {
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (fill &gt; buffer.length - len) {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (fill &gt; buffer.length - len) {</span>
 <span class="nc" id="L63">			flush();</span>
 <span class="nc bnc" id="L64" title="All 2 branches missed.">			if (len &gt; buffer.length) {</span>
 <span class="nc" id="L65">				writer.write(cbuf, off, len);</span>
 <span class="nc" id="L66">				return;</span>
 			}
 		}
-<span class="fc" id="L69">		System.arraycopy(cbuf, off, buffer, fill, len);</span>
-<span class="fc" id="L70">		fill += len;</span>
-<span class="fc" id="L71">	}</span>
+<span class="nc" id="L69">		System.arraycopy(cbuf, off, buffer, fill, len);</span>
+<span class="nc" id="L70">		fill += len;</span>
+<span class="nc" id="L71">	}</span>
 
 	@Override
 	public void write(String str, int off, int len) throws IOException {

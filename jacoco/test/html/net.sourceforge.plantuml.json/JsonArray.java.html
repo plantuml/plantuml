@@ -71,10 +71,10 @@ public class JsonArray extends JsonValue implements Iterable&lt;JsonValue&gt; {
 	 * Added for PlantUML
 	 */
 	public JsonValue cloneMe() {
-<span class="fc" id="L74">		final JsonArray copy = new JsonArray();</span>
-<span class="fc bfc" id="L75" title="All 2 branches covered.">		for (JsonValue value : values)</span>
-<span class="fc" id="L76">			copy.values.add(value.cloneMe());</span>
-<span class="fc" id="L77">		return copy;</span>
+<span class="nc" id="L74">		final JsonArray copy = new JsonArray();</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		for (JsonValue value : values)</span>
+<span class="nc" id="L76">			copy.values.add(value.cloneMe());</span>
+<span class="nc" id="L77">		return copy;</span>
 	}
 
 

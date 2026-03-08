@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.svg.parser;
 
-import java.awt.Font;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -60,6 +59,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFace;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -302,7 +302,7 @@ public class SvgNanoParser implements ISvgSpriteParser, GrayLevelRange {
 <span class="fc" id="L302">			String fontFamily = getTextFontFamily(s, stackG);</span>
 <span class="fc bfc" id="L303" title="All 2 branches covered.">			if (fontFamily == null)</span>
 <span class="fc" id="L304">				fontFamily = &quot;SansSerif&quot;;</span>
-<span class="fc" id="L305">			final UFont font = UFontFactory.build(fontFamily, Font.PLAIN, fontSize);</span>
+<span class="fc" id="L305">			final UFont font = UFontFactory.build(fontFamily, UFontFace.normal(), fontSize);</span>
 <span class="fc" id="L306">			final FontConfiguration fc = FontConfiguration.create(font, color, color, null);</span>
 <span class="fc" id="L307">			final UText utext = UText.build(text, fc);</span>
 <span class="fc" id="L308">			UGraphic ug = ugs.getUg();</span>

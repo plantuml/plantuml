@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import java.awt.Font;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -76,6 +75,7 @@ import net.sourceforge.plantuml.klimt.creole.legacy.CreoleParser;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFace;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
@@ -483,7 +483,7 @@ public class SkinParam implements ISkinParam {
 <span class="fc" id="L483">		return null;</span>
 	}
 
-	private int getFontStyle(Stereotype stereotype, boolean inPackageTitle, FontParam... param) {
+	private UFontFace getFontFace(Stereotype stereotype, boolean inPackageTitle, FontParam... param) {
 <span class="fc" id="L487">		String value = null;</span>
 <span class="fc bfc" id="L488" title="All 2 branches covered.">		if (stereotype != null) {</span>
 <span class="fc" id="L489">			checkStereotype(stereotype);</span>
@@ -497,784 +497,786 @@ public class SkinParam implements ISkinParam {
 <span class="fc" id="L497">			value = getValue(&quot;defaultfontstyle&quot;);</span>
 
 <span class="pc bpc" id="L499" title="1 of 2 branches missed.">		if (value == null)</span>
-<span class="fc" id="L500">			return param[0].getDefaultFontStyle(this, inPackageTitle);</span>
+<span class="fc" id="L500">			return param[0].getDefaultFontFace(this, inPackageTitle);</span>
 
-<span class="nc" id="L502">		int result = Font.PLAIN;</span>
-<span class="nc bnc" id="L503" title="All 2 branches missed.">		if (StringUtils.goLowerCase(value).contains(&quot;bold&quot;))</span>
-<span class="nc" id="L504">			result = result | Font.BOLD;</span>
-
-<span class="nc bnc" id="L506" title="All 2 branches missed.">		if (StringUtils.goLowerCase(value).contains(&quot;italic&quot;))</span>
-<span class="nc" id="L507">			result = result | Font.ITALIC;</span>
-
-<span class="nc" id="L509">		return result;</span>
+<span class="nc" id="L502">		final String lower = StringUtils.goLowerCase(value);</span>
+<span class="nc" id="L503">		final boolean bold = lower.contains(&quot;bold&quot;);</span>
+<span class="nc" id="L504">		final boolean italic = lower.contains(&quot;italic&quot;);</span>
+<span class="nc bnc" id="L505" title="All 4 branches missed.">		if (bold &amp;&amp; italic)</span>
+<span class="nc" id="L506">			return UFontFace.boldItalic();</span>
+<span class="nc bnc" id="L507" title="All 2 branches missed.">		if (bold)</span>
+<span class="nc" id="L508">			return UFontFace.bold();</span>
+<span class="nc bnc" id="L509" title="All 2 branches missed.">		if (italic)</span>
+<span class="nc" id="L510">			return UFontFace.italic();</span>
+<span class="nc" id="L511">		return UFontFace.normal();</span>
 	}
 
 	@Override
 	public UFont getFont(Stereotype stereotype, boolean inPackageTitle, FontParam... fontParam) {
-<span class="fc bfc" id="L514" title="All 2 branches covered.">		if (stereotype != null)</span>
-<span class="fc" id="L515">			checkStereotype(stereotype);</span>
+<span class="fc bfc" id="L516" title="All 2 branches covered.">		if (stereotype != null)</span>
+<span class="fc" id="L517">			checkStereotype(stereotype);</span>
 
-<span class="fc" id="L517">		final String fontFamily = getFontFamily(stereotype, fontParam);</span>
-<span class="fc" id="L518">		final int fontStyle = getFontStyle(stereotype, inPackageTitle, fontParam);</span>
-<span class="fc" id="L519">		final int fontSize = getFontSize(stereotype, fontParam);</span>
-<span class="fc" id="L520">		return UFontFactory.build(fontFamily, fontStyle, fontSize);</span>
+<span class="fc" id="L519">		final String fontFamily = getFontFamily(stereotype, fontParam);</span>
+<span class="fc" id="L520">		final UFontFace face = getFontFace(stereotype, inPackageTitle, fontParam);</span>
+<span class="fc" id="L521">		final int fontSize = getFontSize(stereotype, fontParam);</span>
+<span class="fc" id="L522">		return UFontFactory.build(fontFamily, face, fontSize);</span>
 	}
 
 	@Override
 	public int getCircledCharacterRadius() {
-<span class="fc" id="L525">		final int value = getAsInt(&quot;circledCharacterRadius&quot;, -1);</span>
-<span class="fc bfc" id="L526" title="All 2 branches covered.">		return value == -1 ? getFontSize(null, FontParam.CIRCLED_CHARACTER) / 3 + 6 : value;</span>
+<span class="fc" id="L527">		final int value = getAsInt(&quot;circledCharacterRadius&quot;, -1);</span>
+<span class="fc bfc" id="L528" title="All 2 branches covered.">		return value == -1 ? getFontSize(null, FontParam.CIRCLED_CHARACTER) / 3 + 6 : value;</span>
 	}
 
 	@Override
 	public int classAttributeIconSize() {
-<span class="fc" id="L531">		return getAsInt(&quot;classAttributeIconSize&quot;, 10);</span>
+<span class="fc" id="L533">		return getAsInt(&quot;classAttributeIconSize&quot;, 10);</span>
 	}
 
 	public static Collection&lt;String&gt; getPossibleValues() {
-<span class="fc" id="L535">		final Set&lt;String&gt; result = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L536">		result.add(&quot;Monochrome&quot;);</span>
+<span class="fc" id="L537">		final Set&lt;String&gt; result = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L538">		result.add(&quot;Monochrome&quot;);</span>
 		// result.add(&quot;BackgroundColor&quot;);
-<span class="fc" id="L538">		result.add(&quot;CircledCharacterRadius&quot;);</span>
-<span class="fc" id="L539">		result.add(&quot;ClassAttributeIconSize&quot;);</span>
-<span class="fc" id="L540">		result.add(&quot;DefaultFontName&quot;);</span>
-<span class="fc" id="L541">		result.add(&quot;DefaultFontStyle&quot;);</span>
-<span class="fc" id="L542">		result.add(&quot;DefaultFontSize&quot;);</span>
-<span class="fc" id="L543">		result.add(&quot;DefaultFontColor&quot;);</span>
-<span class="fc" id="L544">		result.add(&quot;MinClassWidth&quot;);</span>
-<span class="fc" id="L545">		result.add(&quot;MinClassWidth&quot;);</span>
-<span class="fc" id="L546">		result.add(&quot;Dpi&quot;);</span>
-<span class="fc" id="L547">		result.add(&quot;DefaultTextAlignment&quot;);</span>
-<span class="fc" id="L548">		result.add(&quot;Shadowing&quot;);</span>
-<span class="fc" id="L549">		result.add(&quot;NoteShadowing&quot;);</span>
-<span class="fc" id="L550">		result.add(&quot;Handwritten&quot;);</span>
-<span class="fc" id="L551">		result.add(&quot;CircledCharacterRadius&quot;);</span>
-<span class="fc" id="L552">		result.add(&quot;ClassAttributeIconSize&quot;);</span>
-<span class="fc" id="L553">		result.add(&quot;Linetype&quot;);</span>
-<span class="fc" id="L554">		result.add(&quot;PackageStyle&quot;);</span>
-<span class="fc" id="L555">		result.add(&quot;ComponentStyle&quot;);</span>
-<span class="fc" id="L556">		result.add(&quot;StereotypePosition&quot;);</span>
-<span class="fc" id="L557">		result.add(&quot;Nodesep&quot;);</span>
-<span class="fc" id="L558">		result.add(&quot;Ranksep&quot;);</span>
-<span class="fc" id="L559">		result.add(&quot;RoundCorner&quot;);</span>
-<span class="fc" id="L560">		result.add(&quot;TitleBorderRoundCorner&quot;);</span>
-<span class="fc" id="L561">		result.add(&quot;MaxMessageSize&quot;);</span>
-<span class="fc" id="L562">		result.add(&quot;Style&quot;);</span>
-<span class="fc" id="L563">		result.add(&quot;SequenceParticipant&quot;);</span>
-<span class="fc" id="L564">		result.add(&quot;ConditionStyle&quot;);</span>
-<span class="fc" id="L565">		result.add(&quot;ConditionEndStyle&quot;);</span>
-<span class="fc" id="L566">		result.add(&quot;SameClassWidth&quot;);</span>
-<span class="fc" id="L567">		result.add(&quot;HyperlinkUnderline&quot;);</span>
-<span class="fc" id="L568">		result.add(&quot;Padding&quot;);</span>
-<span class="fc" id="L569">		result.add(&quot;BoxPadding&quot;);</span>
-<span class="fc" id="L570">		result.add(&quot;ParticipantPadding&quot;);</span>
-<span class="fc" id="L571">		result.add(&quot;Guillemet&quot;);</span>
-<span class="fc" id="L572">		result.add(&quot;SvglinkTarget&quot;);</span>
-<span class="fc" id="L573">		result.add(&quot;DefaultMonospacedFontName&quot;);</span>
-<span class="fc" id="L574">		result.add(&quot;TabSize&quot;);</span>
-<span class="fc" id="L575">		result.add(&quot;MaxAsciiMessageLength&quot;);</span>
-<span class="fc" id="L576">		result.add(&quot;ColorArrowSeparationSpace&quot;);</span>
-<span class="fc" id="L577">		result.add(&quot;ResponseMessageBelowArrow&quot;);</span>
-<span class="fc" id="L578">		result.add(&quot;GenericDisplay&quot;);</span>
-<span class="fc" id="L579">		result.add(&quot;PathHoverColor&quot;);</span>
-<span class="fc" id="L580">		result.add(&quot;SwimlaneWidth&quot;);</span>
-<span class="fc" id="L581">		result.add(&quot;PageBorderColor&quot;);</span>
-<span class="fc" id="L582">		result.add(&quot;PageExternalColor&quot;);</span>
-<span class="fc" id="L583">		result.add(&quot;PageMargin&quot;);</span>
-<span class="fc" id="L584">		result.add(&quot;WrapWidth&quot;);</span>
-<span class="fc" id="L585">		result.add(&quot;SwimlaneWidth&quot;);</span>
-<span class="fc" id="L586">		result.add(&quot;SwimlaneWrapTitleWidth&quot;);</span>
-<span class="fc" id="L587">		result.add(&quot;FixCircleLabelOverlapping&quot;);</span>
+<span class="fc" id="L540">		result.add(&quot;CircledCharacterRadius&quot;);</span>
+<span class="fc" id="L541">		result.add(&quot;ClassAttributeIconSize&quot;);</span>
+<span class="fc" id="L542">		result.add(&quot;DefaultFontName&quot;);</span>
+<span class="fc" id="L543">		result.add(&quot;DefaultFontStyle&quot;);</span>
+<span class="fc" id="L544">		result.add(&quot;DefaultFontSize&quot;);</span>
+<span class="fc" id="L545">		result.add(&quot;DefaultFontColor&quot;);</span>
+<span class="fc" id="L546">		result.add(&quot;MinClassWidth&quot;);</span>
+<span class="fc" id="L547">		result.add(&quot;MinClassWidth&quot;);</span>
+<span class="fc" id="L548">		result.add(&quot;Dpi&quot;);</span>
+<span class="fc" id="L549">		result.add(&quot;DefaultTextAlignment&quot;);</span>
+<span class="fc" id="L550">		result.add(&quot;Shadowing&quot;);</span>
+<span class="fc" id="L551">		result.add(&quot;NoteShadowing&quot;);</span>
+<span class="fc" id="L552">		result.add(&quot;Handwritten&quot;);</span>
+<span class="fc" id="L553">		result.add(&quot;CircledCharacterRadius&quot;);</span>
+<span class="fc" id="L554">		result.add(&quot;ClassAttributeIconSize&quot;);</span>
+<span class="fc" id="L555">		result.add(&quot;Linetype&quot;);</span>
+<span class="fc" id="L556">		result.add(&quot;PackageStyle&quot;);</span>
+<span class="fc" id="L557">		result.add(&quot;ComponentStyle&quot;);</span>
+<span class="fc" id="L558">		result.add(&quot;StereotypePosition&quot;);</span>
+<span class="fc" id="L559">		result.add(&quot;Nodesep&quot;);</span>
+<span class="fc" id="L560">		result.add(&quot;Ranksep&quot;);</span>
+<span class="fc" id="L561">		result.add(&quot;RoundCorner&quot;);</span>
+<span class="fc" id="L562">		result.add(&quot;TitleBorderRoundCorner&quot;);</span>
+<span class="fc" id="L563">		result.add(&quot;MaxMessageSize&quot;);</span>
+<span class="fc" id="L564">		result.add(&quot;Style&quot;);</span>
+<span class="fc" id="L565">		result.add(&quot;SequenceParticipant&quot;);</span>
+<span class="fc" id="L566">		result.add(&quot;ConditionStyle&quot;);</span>
+<span class="fc" id="L567">		result.add(&quot;ConditionEndStyle&quot;);</span>
+<span class="fc" id="L568">		result.add(&quot;SameClassWidth&quot;);</span>
+<span class="fc" id="L569">		result.add(&quot;HyperlinkUnderline&quot;);</span>
+<span class="fc" id="L570">		result.add(&quot;Padding&quot;);</span>
+<span class="fc" id="L571">		result.add(&quot;BoxPadding&quot;);</span>
+<span class="fc" id="L572">		result.add(&quot;ParticipantPadding&quot;);</span>
+<span class="fc" id="L573">		result.add(&quot;Guillemet&quot;);</span>
+<span class="fc" id="L574">		result.add(&quot;SvglinkTarget&quot;);</span>
+<span class="fc" id="L575">		result.add(&quot;DefaultMonospacedFontName&quot;);</span>
+<span class="fc" id="L576">		result.add(&quot;TabSize&quot;);</span>
+<span class="fc" id="L577">		result.add(&quot;MaxAsciiMessageLength&quot;);</span>
+<span class="fc" id="L578">		result.add(&quot;ColorArrowSeparationSpace&quot;);</span>
+<span class="fc" id="L579">		result.add(&quot;ResponseMessageBelowArrow&quot;);</span>
+<span class="fc" id="L580">		result.add(&quot;GenericDisplay&quot;);</span>
+<span class="fc" id="L581">		result.add(&quot;PathHoverColor&quot;);</span>
+<span class="fc" id="L582">		result.add(&quot;SwimlaneWidth&quot;);</span>
+<span class="fc" id="L583">		result.add(&quot;PageBorderColor&quot;);</span>
+<span class="fc" id="L584">		result.add(&quot;PageExternalColor&quot;);</span>
+<span class="fc" id="L585">		result.add(&quot;PageMargin&quot;);</span>
+<span class="fc" id="L586">		result.add(&quot;WrapWidth&quot;);</span>
+<span class="fc" id="L587">		result.add(&quot;SwimlaneWidth&quot;);</span>
+<span class="fc" id="L588">		result.add(&quot;SwimlaneWrapTitleWidth&quot;);</span>
+<span class="fc" id="L589">		result.add(&quot;FixCircleLabelOverlapping&quot;);</span>
 		// result.add(&quot;LifelineStrategy&quot;);
 
-<span class="fc bfc" id="L590" title="All 2 branches covered.">		for (FontParam p : EnumSet.allOf(FontParam.class)) {</span>
-<span class="fc" id="L591">			final String h = humanName(p.name());</span>
-<span class="fc" id="L592">			result.add(h + &quot;FontStyle&quot;);</span>
-<span class="fc" id="L593">			result.add(h + &quot;FontName&quot;);</span>
-<span class="fc" id="L594">			result.add(h + &quot;FontSize&quot;);</span>
-<span class="fc" id="L595">			result.add(h + &quot;FontColor&quot;);</span>
-<span class="fc" id="L596">		}</span>
-<span class="fc bfc" id="L597" title="All 2 branches covered.">		for (ColorParam p : EnumSet.allOf(ColorParam.class)) {</span>
-<span class="fc" id="L598">			final String h = capitalize(p.name());</span>
-<span class="fc" id="L599">			result.add(h + &quot;Color&quot;);</span>
-<span class="fc" id="L600">		}</span>
-<span class="fc bfc" id="L601" title="All 2 branches covered.">		for (LineParam p : EnumSet.allOf(LineParam.class)) {</span>
-<span class="fc" id="L602">			final String h = capitalize(p.name());</span>
-<span class="fc" id="L603">			result.add(h + &quot;Thickness&quot;);</span>
-<span class="fc" id="L604">		}</span>
-<span class="fc bfc" id="L605" title="All 2 branches covered.">		for (AlignmentParam p : EnumSet.allOf(AlignmentParam.class)) {</span>
-<span class="fc" id="L606">			final String h = capitalize(p.name());</span>
-<span class="fc" id="L607">			result.add(h);</span>
-<span class="fc" id="L608">		}</span>
-<span class="fc" id="L609">		return Collections.unmodifiableSet(result);</span>
+<span class="fc bfc" id="L592" title="All 2 branches covered.">		for (FontParam p : EnumSet.allOf(FontParam.class)) {</span>
+<span class="fc" id="L593">			final String h = humanName(p.name());</span>
+<span class="fc" id="L594">			result.add(h + &quot;FontStyle&quot;);</span>
+<span class="fc" id="L595">			result.add(h + &quot;FontName&quot;);</span>
+<span class="fc" id="L596">			result.add(h + &quot;FontSize&quot;);</span>
+<span class="fc" id="L597">			result.add(h + &quot;FontColor&quot;);</span>
+<span class="fc" id="L598">		}</span>
+<span class="fc bfc" id="L599" title="All 2 branches covered.">		for (ColorParam p : EnumSet.allOf(ColorParam.class)) {</span>
+<span class="fc" id="L600">			final String h = capitalize(p.name());</span>
+<span class="fc" id="L601">			result.add(h + &quot;Color&quot;);</span>
+<span class="fc" id="L602">		}</span>
+<span class="fc bfc" id="L603" title="All 2 branches covered.">		for (LineParam p : EnumSet.allOf(LineParam.class)) {</span>
+<span class="fc" id="L604">			final String h = capitalize(p.name());</span>
+<span class="fc" id="L605">			result.add(h + &quot;Thickness&quot;);</span>
+<span class="fc" id="L606">		}</span>
+<span class="fc bfc" id="L607" title="All 2 branches covered.">		for (AlignmentParam p : EnumSet.allOf(AlignmentParam.class)) {</span>
+<span class="fc" id="L608">			final String h = capitalize(p.name());</span>
+<span class="fc" id="L609">			result.add(h);</span>
+<span class="fc" id="L610">		}</span>
+<span class="fc" id="L611">		return Collections.unmodifiableSet(result);</span>
 	}
 
 	private static String capitalize(String name) {
-<span class="fc" id="L613">		return StringUtils.goUpperCase(name.substring(0, 1)) + name.substring(1);</span>
+<span class="fc" id="L615">		return StringUtils.goUpperCase(name.substring(0, 1)) + name.substring(1);</span>
 	}
 
 	@Override
 	public int getDpi() {
-<span class="fc" id="L618">		final int defaultValue = 96;</span>
-<span class="fc" id="L619">		final int dpi = getAsInt(&quot;dpi&quot;, defaultValue);</span>
-<span class="pc bpc" id="L620" title="1 of 2 branches missed.">		if (dpi &lt;= 0)</span>
-<span class="nc" id="L621">			return defaultValue;</span>
-<span class="fc" id="L622">		return dpi;</span>
+<span class="fc" id="L620">		final int defaultValue = 96;</span>
+<span class="fc" id="L621">		final int dpi = getAsInt(&quot;dpi&quot;, defaultValue);</span>
+<span class="pc bpc" id="L622" title="1 of 2 branches missed.">		if (dpi &lt;= 0)</span>
+<span class="nc" id="L623">			return defaultValue;</span>
+<span class="fc" id="L624">		return dpi;</span>
 	}
 
 	@Override
 	public DotSplines getDotSplines() {
-<span class="fc" id="L627">		final String value = getValue(&quot;linetype&quot;);</span>
-<span class="pc bpc" id="L628" title="1 of 2 branches missed.">		if (&quot;polyline&quot;.equalsIgnoreCase(value))</span>
-<span class="nc" id="L629">			return DotSplines.POLYLINE;</span>
+<span class="fc" id="L629">		final String value = getValue(&quot;linetype&quot;);</span>
+<span class="pc bpc" id="L630" title="1 of 2 branches missed.">		if (&quot;polyline&quot;.equalsIgnoreCase(value))</span>
+<span class="nc" id="L631">			return DotSplines.POLYLINE;</span>
 
-<span class="pc bpc" id="L631" title="1 of 2 branches missed.">		if (&quot;ortho&quot;.equalsIgnoreCase(value))</span>
-<span class="nc" id="L632">			return DotSplines.ORTHO;</span>
+<span class="pc bpc" id="L633" title="1 of 2 branches missed.">		if (&quot;ortho&quot;.equalsIgnoreCase(value))</span>
+<span class="nc" id="L634">			return DotSplines.ORTHO;</span>
 
-<span class="fc" id="L634">		return DotSplines.SPLINES;</span>
+<span class="fc" id="L636">		return DotSplines.SPLINES;</span>
 	}
 
 	@Override
 	public HorizontalAlignment getHorizontalAlignment(AlignmentParam param, ArrowDirection arrowDirection,
 			boolean isReverseDefine, HorizontalAlignment overrideDefault) {
 		final String value;
-<span class="pc bpc" id="L641" title="2 of 3 branches missed.">		switch (param) {</span>
+<span class="pc bpc" id="L643" title="2 of 3 branches missed.">		switch (param) {</span>
 		case sequenceMessageAlignment:
-<span class="nc" id="L643">			value = getArg(getValue(AlignmentParam.sequenceMessageAlignment.name()), 0);</span>
-<span class="nc" id="L644">			break;</span>
+<span class="nc" id="L645">			value = getArg(getValue(AlignmentParam.sequenceMessageAlignment.name()), 0);</span>
+<span class="nc" id="L646">			break;</span>
 		case sequenceMessageTextAlignment:
-<span class="nc" id="L646">			value = getArg(getValue(AlignmentParam.sequenceMessageAlignment.name()), 1);</span>
-<span class="nc" id="L647">			break;</span>
+<span class="nc" id="L648">			value = getArg(getValue(AlignmentParam.sequenceMessageAlignment.name()), 1);</span>
+<span class="nc" id="L649">			break;</span>
 		default:
-<span class="fc" id="L649">			value = getValue(param.name());</span>
+<span class="fc" id="L651">			value = getValue(param.name());</span>
 		}
-<span class="pc bpc" id="L651" title="1 of 2 branches missed.">		if (&quot;first&quot;.equalsIgnoreCase(value)) {</span>
-<span class="nc bnc" id="L652" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {</span>
-<span class="nc bnc" id="L653" title="All 2 branches missed.">				if (isReverseDefine)</span>
-<span class="nc" id="L654">					return HorizontalAlignment.LEFT;</span>
+<span class="pc bpc" id="L653" title="1 of 2 branches missed.">		if (&quot;first&quot;.equalsIgnoreCase(value)) {</span>
+<span class="nc bnc" id="L654" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {</span>
+<span class="nc bnc" id="L655" title="All 2 branches missed.">				if (isReverseDefine)</span>
+<span class="nc" id="L656">					return HorizontalAlignment.LEFT;</span>
 
-<span class="nc" id="L656">				return HorizontalAlignment.RIGHT;</span>
+<span class="nc" id="L658">				return HorizontalAlignment.RIGHT;</span>
 			} else {
-<span class="nc bnc" id="L658" title="All 2 branches missed.">				if (isReverseDefine)</span>
-<span class="nc" id="L659">					return HorizontalAlignment.RIGHT;</span>
+<span class="nc bnc" id="L660" title="All 2 branches missed.">				if (isReverseDefine)</span>
+<span class="nc" id="L661">					return HorizontalAlignment.RIGHT;</span>
 
-<span class="nc" id="L661">				return HorizontalAlignment.LEFT;</span>
+<span class="nc" id="L663">				return HorizontalAlignment.LEFT;</span>
 			}
 		}
-<span class="pc bpc" id="L664" title="1 of 2 branches missed.">		if (&quot;direction&quot;.equalsIgnoreCase(value)) {</span>
-<span class="nc bnc" id="L665" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL)</span>
-<span class="nc" id="L666">				return HorizontalAlignment.LEFT;</span>
+<span class="pc bpc" id="L666" title="1 of 2 branches missed.">		if (&quot;direction&quot;.equalsIgnoreCase(value)) {</span>
+<span class="nc bnc" id="L667" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL)</span>
+<span class="nc" id="L668">				return HorizontalAlignment.LEFT;</span>
 
-<span class="nc bnc" id="L668" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE)</span>
-<span class="nc" id="L669">				return HorizontalAlignment.RIGHT;</span>
+<span class="nc bnc" id="L670" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE)</span>
+<span class="nc" id="L671">				return HorizontalAlignment.RIGHT;</span>
 
-<span class="nc bnc" id="L671" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.BOTH_DIRECTION)</span>
-<span class="nc" id="L672">				return HorizontalAlignment.CENTER;</span>
-
-		}
-<span class="pc bpc" id="L675" title="1 of 2 branches missed.">		if (&quot;reversedirection&quot;.equalsIgnoreCase(value)) {</span>
-<span class="nc bnc" id="L676" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL)</span>
-<span class="nc" id="L677">				return HorizontalAlignment.RIGHT;</span>
-
-<span class="nc bnc" id="L679" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE)</span>
-<span class="nc" id="L680">				return HorizontalAlignment.LEFT;</span>
-
-<span class="nc bnc" id="L682" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.BOTH_DIRECTION)</span>
-<span class="nc" id="L683">				return HorizontalAlignment.CENTER;</span>
+<span class="nc bnc" id="L673" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.BOTH_DIRECTION)</span>
+<span class="nc" id="L674">				return HorizontalAlignment.CENTER;</span>
 
 		}
-<span class="fc" id="L686">		final HorizontalAlignment result = HorizontalAlignment.fromString(value);</span>
-<span class="pc bpc" id="L687" title="1 of 4 branches missed.">		if (result == null &amp;&amp; param == AlignmentParam.noteTextAlignment)</span>
-<span class="pc bpc" id="L688" title="1 of 2 branches missed.">			return getDefaultTextAlignment(overrideDefault == null ? HorizontalAlignment.LEFT : overrideDefault);</span>
-<span class="pc bpc" id="L689" title="2 of 4 branches missed.">		else if (result == null &amp;&amp; param == AlignmentParam.stateMessageAlignment)</span>
-<span class="nc" id="L690">			return getDefaultTextAlignment(HorizontalAlignment.CENTER);</span>
-<span class="pc bpc" id="L691" title="1 of 2 branches missed.">		else if (result == null)</span>
-<span class="fc" id="L692">			return param.getDefaultValue();</span>
+<span class="pc bpc" id="L677" title="1 of 2 branches missed.">		if (&quot;reversedirection&quot;.equalsIgnoreCase(value)) {</span>
+<span class="nc bnc" id="L678" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL)</span>
+<span class="nc" id="L679">				return HorizontalAlignment.RIGHT;</span>
 
-<span class="nc" id="L694">		return result;</span>
+<span class="nc bnc" id="L681" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE)</span>
+<span class="nc" id="L682">				return HorizontalAlignment.LEFT;</span>
+
+<span class="nc bnc" id="L684" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.BOTH_DIRECTION)</span>
+<span class="nc" id="L685">				return HorizontalAlignment.CENTER;</span>
+
+		}
+<span class="fc" id="L688">		final HorizontalAlignment result = HorizontalAlignment.fromString(value);</span>
+<span class="pc bpc" id="L689" title="1 of 4 branches missed.">		if (result == null &amp;&amp; param == AlignmentParam.noteTextAlignment)</span>
+<span class="pc bpc" id="L690" title="1 of 2 branches missed.">			return getDefaultTextAlignment(overrideDefault == null ? HorizontalAlignment.LEFT : overrideDefault);</span>
+<span class="pc bpc" id="L691" title="2 of 4 branches missed.">		else if (result == null &amp;&amp; param == AlignmentParam.stateMessageAlignment)</span>
+<span class="nc" id="L692">			return getDefaultTextAlignment(HorizontalAlignment.CENTER);</span>
+<span class="pc bpc" id="L693" title="1 of 2 branches missed.">		else if (result == null)</span>
+<span class="fc" id="L694">			return param.getDefaultValue();</span>
+
+<span class="nc" id="L696">		return result;</span>
 	}
 
 	@Override
 	public HorizontalAlignment getDefaultTextAlignment(HorizontalAlignment defaultValue) {
-<span class="fc" id="L699">		final String value = getValue(&quot;defaulttextalignment&quot;);</span>
-<span class="fc" id="L700">		final HorizontalAlignment result = HorizontalAlignment.fromString(value);</span>
-<span class="fc bfc" id="L701" title="All 2 branches covered.">		if (result == null)</span>
-<span class="fc" id="L702">			return defaultValue;</span>
+<span class="fc" id="L701">		final String value = getValue(&quot;defaulttextalignment&quot;);</span>
+<span class="fc" id="L702">		final HorizontalAlignment result = HorizontalAlignment.fromString(value);</span>
+<span class="fc bfc" id="L703" title="All 2 branches covered.">		if (result == null)</span>
+<span class="fc" id="L704">			return defaultValue;</span>
 
-<span class="fc" id="L704">		return result;</span>
+<span class="fc" id="L706">		return result;</span>
 	}
 
 	@Override
 	public HorizontalAlignment getStereotypeAlignment() {
-<span class="fc" id="L709">		final String value = getValue(&quot;stereotypealignment&quot;);</span>
-<span class="fc" id="L710">		final HorizontalAlignment result = HorizontalAlignment.fromString(value);</span>
-<span class="pc bpc" id="L711" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="fc" id="L712">			return HorizontalAlignment.CENTER;</span>
+<span class="fc" id="L711">		final String value = getValue(&quot;stereotypealignment&quot;);</span>
+<span class="fc" id="L712">		final HorizontalAlignment result = HorizontalAlignment.fromString(value);</span>
+<span class="pc bpc" id="L713" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="fc" id="L714">			return HorizontalAlignment.CENTER;</span>
 
-<span class="nc" id="L714">		return result;</span>
+<span class="nc" id="L716">		return result;</span>
 	}
 
 	private String getArg(String value, int i) {
-<span class="nc bnc" id="L718" title="All 2 branches missed.">		if (value == null)</span>
-<span class="nc" id="L719">			return null;</span>
+<span class="nc bnc" id="L720" title="All 2 branches missed.">		if (value == null)</span>
+<span class="nc" id="L721">			return null;</span>
 
-<span class="nc" id="L721">		final String[] split = value.split(&quot;:&quot;);</span>
-<span class="nc bnc" id="L722" title="All 2 branches missed.">		if (i &gt;= split.length)</span>
-<span class="nc" id="L723">			return split[0];</span>
+<span class="nc" id="L723">		final String[] split = value.split(&quot;:&quot;);</span>
+<span class="nc bnc" id="L724" title="All 2 branches missed.">		if (i &gt;= split.length)</span>
+<span class="nc" id="L725">			return split[0];</span>
 
-<span class="nc" id="L725">		return split[i];</span>
+<span class="nc" id="L727">		return split[i];</span>
 	}
 
 	@Override
 	public boolean shadowing(Stereotype stereotype) {
-<span class="fc bfc" id="L730" title="All 2 branches covered.">		if (stereotype != null) {</span>
-<span class="fc" id="L731">			checkStereotype(stereotype);</span>
-<span class="fc" id="L732">			final String value2 = getValue(&quot;shadowing&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));</span>
-<span class="pc bpc" id="L733" title="1 of 2 branches missed.">			if (value2 != null)</span>
-<span class="nc" id="L734">				return value2.equalsIgnoreCase(&quot;true&quot;);</span>
+<span class="fc bfc" id="L732" title="All 2 branches covered.">		if (stereotype != null) {</span>
+<span class="fc" id="L733">			checkStereotype(stereotype);</span>
+<span class="fc" id="L734">			final String value2 = getValue(&quot;shadowing&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));</span>
+<span class="pc bpc" id="L735" title="1 of 2 branches missed.">			if (value2 != null)</span>
+<span class="nc" id="L736">				return value2.equalsIgnoreCase(&quot;true&quot;);</span>
 
 		}
-<span class="fc" id="L737">		final String value = getValue(&quot;shadowing&quot;);</span>
-<span class="fc bfc" id="L738" title="All 2 branches covered.">		if (&quot;false&quot;.equalsIgnoreCase(value))</span>
-<span class="fc" id="L739">			return false;</span>
+<span class="fc" id="L739">		final String value = getValue(&quot;shadowing&quot;);</span>
+<span class="fc bfc" id="L740" title="All 2 branches covered.">		if (&quot;false&quot;.equalsIgnoreCase(value))</span>
+<span class="fc" id="L741">			return false;</span>
 
-<span class="pc bpc" id="L741" title="1 of 2 branches missed.">		if (&quot;true&quot;.equalsIgnoreCase(value))</span>
-<span class="nc" id="L742">			return true;</span>
+<span class="pc bpc" id="L743" title="1 of 2 branches missed.">		if (&quot;true&quot;.equalsIgnoreCase(value))</span>
+<span class="nc" id="L744">			return true;</span>
 
-<span class="pc bpc" id="L744" title="1 of 2 branches missed.">		if (strictUmlStyle())</span>
-<span class="nc" id="L745">			return false;</span>
+<span class="pc bpc" id="L746" title="1 of 2 branches missed.">		if (strictUmlStyle())</span>
+<span class="nc" id="L747">			return false;</span>
 
-<span class="fc" id="L747">		return true;</span>
+<span class="fc" id="L749">		return true;</span>
 	}
 
 	@Override
 	public boolean shadowingForNote(Stereotype stereotype) {
-<span class="fc bfc" id="L752" title="All 2 branches covered.">		if (stereotype != null) {</span>
-<span class="fc" id="L753">			checkStereotype(stereotype);</span>
-<span class="fc" id="L754">			final String value2 = getValue(&quot;note&quot; + &quot;shadowing&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));</span>
-<span class="pc bpc" id="L755" title="1 of 2 branches missed.">			if (value2 != null)</span>
-<span class="nc" id="L756">				return value2.equalsIgnoreCase(&quot;true&quot;);</span>
+<span class="fc bfc" id="L754" title="All 2 branches covered.">		if (stereotype != null) {</span>
+<span class="fc" id="L755">			checkStereotype(stereotype);</span>
+<span class="fc" id="L756">			final String value2 = getValue(&quot;note&quot; + &quot;shadowing&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));</span>
+<span class="pc bpc" id="L757" title="1 of 2 branches missed.">			if (value2 != null)</span>
+<span class="nc" id="L758">				return value2.equalsIgnoreCase(&quot;true&quot;);</span>
 
 		}
-<span class="fc" id="L759">		final String value2 = getValue(&quot;note&quot; + &quot;shadowing&quot;);</span>
-<span class="pc bpc" id="L760" title="1 of 2 branches missed.">		if (value2 != null)</span>
-<span class="nc" id="L761">			return value2.equalsIgnoreCase(&quot;true&quot;);</span>
+<span class="fc" id="L761">		final String value2 = getValue(&quot;note&quot; + &quot;shadowing&quot;);</span>
+<span class="pc bpc" id="L762" title="1 of 2 branches missed.">		if (value2 != null)</span>
+<span class="nc" id="L763">			return value2.equalsIgnoreCase(&quot;true&quot;);</span>
 
-<span class="fc" id="L763">		return shadowing(stereotype);</span>
+<span class="fc" id="L765">		return shadowing(stereotype);</span>
 	}
 
-<span class="fc" id="L766">	private final Map&lt;String, Sprite&gt; sprites = new HashMap&lt;String, Sprite&gt;();</span>
+<span class="fc" id="L768">	private final Map&lt;String, Sprite&gt; sprites = new HashMap&lt;String, Sprite&gt;();</span>
 
 	@Override
 	public Collection&lt;String&gt; getAllSpriteNames() {
-<span class="fc" id="L770">		return Collections.unmodifiableCollection(new TreeSet&lt;&gt;(sprites.keySet()));</span>
+<span class="fc" id="L772">		return Collections.unmodifiableCollection(new TreeSet&lt;&gt;(sprites.keySet()));</span>
 	}
 
 	public void addSprite(String name, Sprite sprite) {
-<span class="fc" id="L774">		sprites.put(name, sprite);</span>
-<span class="fc" id="L775">	}</span>
+<span class="fc" id="L776">		sprites.put(name, sprite);</span>
+<span class="fc" id="L777">	}</span>
 
 	@Override
 	public Sprite getSprite(String name) {
-<span class="fc" id="L779">		Sprite result = sprites.get(name);</span>
-<span class="pc bpc" id="L780" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L781">			result = SpriteImage.fromInternal(name);</span>
+<span class="fc" id="L781">		Sprite result = sprites.get(name);</span>
+<span class="pc bpc" id="L782" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L783">			result = SpriteImage.fromInternal(name);</span>
 
-<span class="fc" id="L783">		return result;</span>
+<span class="fc" id="L785">		return result;</span>
 	}
 
 	@Override
 	public PackageStyle packageStyle() {
-<span class="fc" id="L788">		final String value = getValue(&quot;packageStyle&quot;);</span>
-<span class="fc" id="L789">		final PackageStyle p = PackageStyle.fromString(value);</span>
-<span class="pc bpc" id="L790" title="1 of 2 branches missed.">		if (p == null)</span>
-<span class="fc" id="L791">			return PackageStyle.FOLDER;</span>
+<span class="fc" id="L790">		final String value = getValue(&quot;packageStyle&quot;);</span>
+<span class="fc" id="L791">		final PackageStyle p = PackageStyle.fromString(value);</span>
+<span class="pc bpc" id="L792" title="1 of 2 branches missed.">		if (p == null)</span>
+<span class="fc" id="L793">			return PackageStyle.FOLDER;</span>
 
-<span class="nc" id="L793">		return p;</span>
+<span class="nc" id="L795">		return p;</span>
 	}
 
 	@Override
 	public ComponentStyle componentStyle() {
-<span class="pc bpc" id="L798" title="1 of 2 branches missed.">		if (strictUmlStyle())</span>
-<span class="nc" id="L799">			return ComponentStyle.UML2;</span>
+<span class="pc bpc" id="L800" title="1 of 2 branches missed.">		if (strictUmlStyle())</span>
+<span class="nc" id="L801">			return ComponentStyle.UML2;</span>
 
-<span class="fc" id="L801">		final String value = getValue(&quot;componentstyle&quot;);</span>
-<span class="pc bpc" id="L802" title="1 of 2 branches missed.">		if (&quot;uml1&quot;.equalsIgnoreCase(value))</span>
-<span class="nc" id="L803">			return ComponentStyle.UML1;</span>
-<span class="pc bpc" id="L804" title="1 of 2 branches missed.">		if (&quot;uml2&quot;.equalsIgnoreCase(value))</span>
-<span class="nc" id="L805">			return ComponentStyle.UML2;</span>
-<span class="pc bpc" id="L806" title="1 of 2 branches missed.">		if (&quot;rectangle&quot;.equalsIgnoreCase(value))</span>
-<span class="nc" id="L807">			return ComponentStyle.RECTANGLE;</span>
-<span class="fc" id="L808">		return ComponentStyle.UML2;</span>
+<span class="fc" id="L803">		final String value = getValue(&quot;componentstyle&quot;);</span>
+<span class="pc bpc" id="L804" title="1 of 2 branches missed.">		if (&quot;uml1&quot;.equalsIgnoreCase(value))</span>
+<span class="nc" id="L805">			return ComponentStyle.UML1;</span>
+<span class="pc bpc" id="L806" title="1 of 2 branches missed.">		if (&quot;uml2&quot;.equalsIgnoreCase(value))</span>
+<span class="nc" id="L807">			return ComponentStyle.UML2;</span>
+<span class="pc bpc" id="L808" title="1 of 2 branches missed.">		if (&quot;rectangle&quot;.equalsIgnoreCase(value))</span>
+<span class="nc" id="L809">			return ComponentStyle.RECTANGLE;</span>
+<span class="fc" id="L810">		return ComponentStyle.UML2;</span>
 	}
 
 	@Override
 	public boolean stereotypePositionTop() {
-<span class="fc bfc" id="L813" title="All 2 branches covered.">		return !valueIs(&quot;stereotypePosition&quot;, &quot;bottom&quot;);</span>
+<span class="fc bfc" id="L815" title="All 2 branches covered.">		return !valueIs(&quot;stereotypePosition&quot;, &quot;bottom&quot;);</span>
 	}
 
 	@Override
 	public boolean useSwimlanes(DiagramType type) {
-<span class="fc bfc" id="L818" title="All 2 branches covered.">		if (type != DiagramType.ACTIVITY)</span>
-<span class="fc" id="L819">			return false;</span>
+<span class="fc bfc" id="L820" title="All 2 branches covered.">		if (type != DiagramType.ACTIVITY)</span>
+<span class="fc" id="L821">			return false;</span>
 
-<span class="fc" id="L821">		return swimlanes();</span>
+<span class="fc" id="L823">		return swimlanes();</span>
 	}
 
 	public boolean swimlanes() {
-<span class="fc bfc" id="L825" title="All 4 branches covered.">		return isTrue(&quot;swimlane&quot;) || isTrue(&quot;swimlanes&quot;);</span>
+<span class="fc bfc" id="L827" title="All 4 branches covered.">		return isTrue(&quot;swimlane&quot;) || isTrue(&quot;swimlanes&quot;);</span>
 	}
 
 	@Override
 	public double getNodesep() {
 		// TODO strange, this returns a double but only accepts integer values
-<span class="fc" id="L831">		return getAsInt(&quot;nodesep&quot;, 0);</span>
+<span class="fc" id="L833">		return getAsInt(&quot;nodesep&quot;, 0);</span>
 	}
 
 	@Override
 	public double getRanksep() {
 		// TODO strange, this returns a double but only accepts integer values
-<span class="fc" id="L837">		return getAsInt(&quot;ranksep&quot;, 0);</span>
+<span class="fc" id="L839">		return getAsInt(&quot;ranksep&quot;, 0);</span>
 	}
 
 	@Override
 	public double getDiagonalCorner(CornerParam param, Stereotype stereotype) {
-<span class="fc" id="L842">		final String key = param.getDiagonalKey();</span>
-<span class="fc" id="L843">		Double result = getCornerInternal(key, param, stereotype);</span>
-<span class="pc bpc" id="L844" title="1 of 2 branches missed.">		if (result != null)</span>
-<span class="nc" id="L845">			return result;</span>
+<span class="fc" id="L844">		final String key = param.getDiagonalKey();</span>
+<span class="fc" id="L845">		Double result = getCornerInternal(key, param, stereotype);</span>
+<span class="pc bpc" id="L846" title="1 of 2 branches missed.">		if (result != null)</span>
+<span class="nc" id="L847">			return result;</span>
 
-<span class="fc" id="L847">		result = getCornerInternal(key, param, null);</span>
-<span class="pc bpc" id="L848" title="1 of 2 branches missed.">		if (result != null)</span>
-<span class="nc" id="L849">			return result;</span>
+<span class="fc" id="L849">		result = getCornerInternal(key, param, null);</span>
+<span class="pc bpc" id="L850" title="1 of 2 branches missed.">		if (result != null)</span>
+<span class="nc" id="L851">			return result;</span>
 
-<span class="fc bfc" id="L851" title="All 2 branches covered.">		if (param == CornerParam.DEFAULT)</span>
-<span class="fc" id="L852">			return 0;</span>
+<span class="fc bfc" id="L853" title="All 2 branches covered.">		if (param == CornerParam.DEFAULT)</span>
+<span class="fc" id="L854">			return 0;</span>
 
-<span class="fc" id="L854">		return getDiagonalCorner(CornerParam.DEFAULT, stereotype);</span>
+<span class="fc" id="L856">		return getDiagonalCorner(CornerParam.DEFAULT, stereotype);</span>
 	}
 
 	@Override
 	public double getRoundCorner(CornerParam param, Stereotype stereotype) {
-<span class="fc" id="L859">		final String key = param.getRoundKey();</span>
-<span class="fc" id="L860">		Double result = getCornerInternal(key, param, stereotype);</span>
-<span class="pc bpc" id="L861" title="1 of 2 branches missed.">		if (result != null)</span>
-<span class="nc" id="L862">			return result;</span>
+<span class="fc" id="L861">		final String key = param.getRoundKey();</span>
+<span class="fc" id="L862">		Double result = getCornerInternal(key, param, stereotype);</span>
+<span class="pc bpc" id="L863" title="1 of 2 branches missed.">		if (result != null)</span>
+<span class="nc" id="L864">			return result;</span>
 
-<span class="fc" id="L864">		result = getCornerInternal(key, param, null);</span>
-<span class="pc bpc" id="L865" title="1 of 2 branches missed.">		if (result != null)</span>
-<span class="nc" id="L866">			return result;</span>
+<span class="fc" id="L866">		result = getCornerInternal(key, param, null);</span>
+<span class="pc bpc" id="L867" title="1 of 2 branches missed.">		if (result != null)</span>
+<span class="nc" id="L868">			return result;</span>
 
-<span class="fc bfc" id="L868" title="All 2 branches covered.">		if (param == CornerParam.DEFAULT)</span>
-<span class="fc" id="L869">			return 0;</span>
+<span class="fc bfc" id="L870" title="All 2 branches covered.">		if (param == CornerParam.DEFAULT)</span>
+<span class="fc" id="L871">			return 0;</span>
 
-<span class="fc" id="L871">		return getRoundCorner(CornerParam.DEFAULT, stereotype);</span>
+<span class="fc" id="L873">		return getRoundCorner(CornerParam.DEFAULT, stereotype);</span>
 	}
 
 	private Double getCornerInternal(String key, CornerParam param, Stereotype stereotype) {
-<span class="fc bfc" id="L875" title="All 2 branches covered.">		if (stereotype != null)</span>
-<span class="fc" id="L876">			key += stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR);</span>
+<span class="fc bfc" id="L877" title="All 2 branches covered.">		if (stereotype != null)</span>
+<span class="fc" id="L878">			key += stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR);</span>
 
-<span class="fc" id="L878">		final String value = getValue(key);</span>
-<span class="pc bpc" id="L879" title="1 of 2 branches missed.">		if (isDigits(value))</span>
-<span class="nc" id="L880">			return Double.parseDouble(value);</span>
+<span class="fc" id="L880">		final String value = getValue(key);</span>
+<span class="pc bpc" id="L881" title="1 of 2 branches missed.">		if (isDigits(value))</span>
+<span class="nc" id="L882">			return Double.parseDouble(value);</span>
 
-<span class="fc" id="L882">		return null;</span>
+<span class="fc" id="L884">		return null;</span>
 	}
 
 	@Override
 	public UStroke getThickness(LineParam param, Stereotype stereotype) {
-<span class="fc" id="L887">		LinkStyle style = null;</span>
-<span class="fc bfc" id="L888" title="All 2 branches covered.">		if (stereotype != null) {</span>
-<span class="fc" id="L889">			checkStereotype(stereotype);</span>
+<span class="fc" id="L889">		LinkStyle style = null;</span>
+<span class="fc bfc" id="L890" title="All 2 branches covered.">		if (stereotype != null) {</span>
+<span class="fc" id="L891">			checkStereotype(stereotype);</span>
 
-<span class="fc" id="L891">			final String styleValue = getValue(</span>
-<span class="fc" id="L892">					param.name() + &quot;style&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));</span>
-<span class="pc bpc" id="L893" title="1 of 2 branches missed.">			if (styleValue != null)</span>
-<span class="nc" id="L894">				style = LinkStyle.fromString2(styleValue);</span>
+<span class="fc" id="L893">			final String styleValue = getValue(</span>
+<span class="fc" id="L894">					param.name() + &quot;style&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));</span>
+<span class="pc bpc" id="L895" title="1 of 2 branches missed.">			if (styleValue != null)</span>
+<span class="nc" id="L896">				style = LinkStyle.fromString2(styleValue);</span>
 
-<span class="fc" id="L896">			final String value2 = getValue(</span>
-<span class="fc" id="L897">					param.name() + &quot;thickness&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));</span>
-<span class="pc bpc" id="L898" title="1 of 2 branches missed.">			if (isDigitsOrDot(value2)) {</span>
-<span class="nc bnc" id="L899" title="All 2 branches missed.">				if (style == null)</span>
-<span class="nc" id="L900">					style = LinkStyle.NORMAL();</span>
+<span class="fc" id="L898">			final String value2 = getValue(</span>
+<span class="fc" id="L899">					param.name() + &quot;thickness&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));</span>
+<span class="pc bpc" id="L900" title="1 of 2 branches missed.">			if (isDigitsOrDot(value2)) {</span>
+<span class="nc bnc" id="L901" title="All 2 branches missed.">				if (style == null)</span>
+<span class="nc" id="L902">					style = LinkStyle.NORMAL();</span>
 
-<span class="nc" id="L902">				return style.goThickness(Double.parseDouble(value2)).getStroke3();</span>
+<span class="nc" id="L904">				return style.goThickness(Double.parseDouble(value2)).getStroke3();</span>
 			}
 		}
-<span class="fc" id="L905">		final String value = getValue(param.name() + &quot;thickness&quot;);</span>
-<span class="pc bpc" id="L906" title="1 of 2 branches missed.">		if (isDigitsOrDot(value)) {</span>
-<span class="nc bnc" id="L907" title="All 2 branches missed.">			if (style == null)</span>
-<span class="nc" id="L908">				style = LinkStyle.NORMAL();</span>
+<span class="fc" id="L907">		final String value = getValue(param.name() + &quot;thickness&quot;);</span>
+<span class="pc bpc" id="L908" title="1 of 2 branches missed.">		if (isDigitsOrDot(value)) {</span>
+<span class="nc bnc" id="L909" title="All 2 branches missed.">			if (style == null)</span>
+<span class="nc" id="L910">				style = LinkStyle.NORMAL();</span>
 
-<span class="nc" id="L910">			return style.goThickness(Double.parseDouble(value)).getStroke3();</span>
+<span class="nc" id="L912">			return style.goThickness(Double.parseDouble(value)).getStroke3();</span>
 		}
-<span class="pc bpc" id="L912" title="1 of 2 branches missed.">		if (style == null) {</span>
-<span class="fc" id="L913">			final String styleValue = getValue(param.name() + &quot;style&quot;);</span>
-<span class="pc bpc" id="L914" title="1 of 2 branches missed.">			if (styleValue != null)</span>
-<span class="nc" id="L915">				style = LinkStyle.fromString2(styleValue);</span>
+<span class="pc bpc" id="L914" title="1 of 2 branches missed.">		if (style == null) {</span>
+<span class="fc" id="L915">			final String styleValue = getValue(param.name() + &quot;style&quot;);</span>
+<span class="pc bpc" id="L916" title="1 of 2 branches missed.">			if (styleValue != null)</span>
+<span class="nc" id="L917">				style = LinkStyle.fromString2(styleValue);</span>
 
 		}
-<span class="pc bpc" id="L918" title="3 of 4 branches missed.">		if (style != null &amp;&amp; style.isNormal() == false)</span>
-<span class="nc" id="L919">			return style.getStroke3();</span>
+<span class="pc bpc" id="L920" title="3 of 4 branches missed.">		if (style != null &amp;&amp; style.isNormal() == false)</span>
+<span class="nc" id="L921">			return style.getStroke3();</span>
 
-<span class="fc" id="L921">		return null;</span>
+<span class="fc" id="L923">		return null;</span>
 	}
 
 	@Override
 	public LineBreakStrategy maxMessageSize() {
-<span class="fc" id="L926">		String value = getValue(&quot;wrapmessagewidth&quot;);</span>
-<span class="pc bpc" id="L927" title="1 of 2 branches missed.">		if (value == null)</span>
-<span class="fc" id="L928">			value = getValue(&quot;maxmessagesize&quot;);</span>
+<span class="fc" id="L928">		String value = getValue(&quot;wrapmessagewidth&quot;);</span>
+<span class="pc bpc" id="L929" title="1 of 2 branches missed.">		if (value == null)</span>
+<span class="fc" id="L930">			value = getValue(&quot;maxmessagesize&quot;);</span>
 
-<span class="fc" id="L930">		return new LineBreakStrategy(value);</span>
+<span class="fc" id="L932">		return new LineBreakStrategy(value);</span>
 	}
 
 	@Override
 	public LineBreakStrategy swimlaneWrapTitleWidth() {
-<span class="fc" id="L935">		final String value = getValue(&quot;swimlanewraptitlewidth&quot;);</span>
-<span class="fc" id="L936">		return new LineBreakStrategy(value);</span>
+<span class="fc" id="L937">		final String value = getValue(&quot;swimlanewraptitlewidth&quot;);</span>
+<span class="fc" id="L938">		return new LineBreakStrategy(value);</span>
 	}
 
 	@Override
 	public boolean strictUmlStyle() {
-<span class="fc" id="L941">		return valueIs(&quot;style&quot;, &quot;strictuml&quot;);</span>
+<span class="fc" id="L943">		return valueIs(&quot;style&quot;, &quot;strictuml&quot;);</span>
 	}
 
 	@Override
 	public boolean forceSequenceParticipantUnderlined() {
-<span class="fc" id="L946">		return valueIs(&quot;sequenceParticipant&quot;, &quot;underline&quot;);</span>
+<span class="fc" id="L948">		return valueIs(&quot;sequenceParticipant&quot;, &quot;underline&quot;);</span>
 	}
 
 	@Override
 	public ConditionStyle getConditionStyle() {
-<span class="fc" id="L951">		final String value = getValue(&quot;conditionStyle&quot;);</span>
-<span class="fc" id="L952">		final ConditionStyle p = ConditionStyle.fromString(value);</span>
-<span class="pc bpc" id="L953" title="1 of 2 branches missed.">		if (p == null)</span>
-<span class="fc" id="L954">			return ConditionStyle.INSIDE_HEXAGON;</span>
+<span class="fc" id="L953">		final String value = getValue(&quot;conditionStyle&quot;);</span>
+<span class="fc" id="L954">		final ConditionStyle p = ConditionStyle.fromString(value);</span>
+<span class="pc bpc" id="L955" title="1 of 2 branches missed.">		if (p == null)</span>
+<span class="fc" id="L956">			return ConditionStyle.INSIDE_HEXAGON;</span>
 
-<span class="nc" id="L956">		return p;</span>
+<span class="nc" id="L958">		return p;</span>
 	}
 
 	@Override
 	public ConditionEndStyle getConditionEndStyle() {
-<span class="fc" id="L961">		final String value = getValue(&quot;conditionEndStyle&quot;);</span>
-<span class="fc" id="L962">		final ConditionEndStyle p = ConditionEndStyle.fromString(value);</span>
-<span class="pc bpc" id="L963" title="1 of 2 branches missed.">		if (p == null)</span>
-<span class="fc" id="L964">			return ConditionEndStyle.DIAMOND;</span>
+<span class="fc" id="L963">		final String value = getValue(&quot;conditionEndStyle&quot;);</span>
+<span class="fc" id="L964">		final ConditionEndStyle p = ConditionEndStyle.fromString(value);</span>
+<span class="pc bpc" id="L965" title="1 of 2 branches missed.">		if (p == null)</span>
+<span class="fc" id="L966">			return ConditionEndStyle.DIAMOND;</span>
 
-<span class="nc" id="L966">		return p;</span>
+<span class="nc" id="L968">		return p;</span>
 	}
 
 	@Override
 	public boolean sameClassWidth() {
-<span class="fc" id="L971">		return isTrue(&quot;sameclasswidth&quot;);</span>
+<span class="fc" id="L973">		return isTrue(&quot;sameclasswidth&quot;);</span>
 	}
 
 	@Override
 	public final Rankdir getRankdir() {
-<span class="fc" id="L976">		return rankdir;</span>
+<span class="fc" id="L978">		return rankdir;</span>
 	}
 
 	public final void setRankdir(Rankdir rankdir) {
-<span class="fc" id="L980">		this.rankdir = rankdir;</span>
-<span class="fc" id="L981">	}</span>
+<span class="fc" id="L982">		this.rankdir = rankdir;</span>
+<span class="fc" id="L983">	}</span>
 
 	@Override
 	public boolean useOctagonForActivity(Stereotype stereotype) {
-<span class="fc" id="L985">		String value = getValue(&quot;activityshape&quot;);</span>
-<span class="fc bfc" id="L986" title="All 2 branches covered.">		if (stereotype != null) {</span>
-<span class="fc" id="L987">			checkStereotype(stereotype);</span>
-<span class="fc" id="L988">			final String value2 = getValue(&quot;activityshape&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));</span>
-<span class="pc bpc" id="L989" title="1 of 2 branches missed.">			if (value2 != null)</span>
-<span class="nc" id="L990">				value = value2;</span>
+<span class="fc" id="L987">		String value = getValue(&quot;activityshape&quot;);</span>
+<span class="fc bfc" id="L988" title="All 2 branches covered.">		if (stereotype != null) {</span>
+<span class="fc" id="L989">			checkStereotype(stereotype);</span>
+<span class="fc" id="L990">			final String value2 = getValue(&quot;activityshape&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR));</span>
+<span class="pc bpc" id="L991" title="1 of 2 branches missed.">			if (value2 != null)</span>
+<span class="nc" id="L992">				value = value2;</span>
 
 		}
-<span class="pc bpc" id="L993" title="1 of 2 branches missed.">		if (&quot;roundedbox&quot;.equalsIgnoreCase(value))</span>
-<span class="nc" id="L994">			return false;</span>
+<span class="pc bpc" id="L995" title="1 of 2 branches missed.">		if (&quot;roundedbox&quot;.equalsIgnoreCase(value))</span>
+<span class="nc" id="L996">			return false;</span>
 
-<span class="pc bpc" id="L996" title="1 of 2 branches missed.">		if (&quot;octagon&quot;.equalsIgnoreCase(value))</span>
-<span class="nc" id="L997">			return true;</span>
+<span class="pc bpc" id="L998" title="1 of 2 branches missed.">		if (&quot;octagon&quot;.equalsIgnoreCase(value))</span>
+<span class="nc" id="L999">			return true;</span>
 
-<span class="fc" id="L999">		return false;</span>
+<span class="fc" id="L1001">		return false;</span>
 	}
 
-<span class="fc" id="L1002">	private final HColorSet htmlColorSet = HColorSet.instance();</span>
+<span class="fc" id="L1004">	private final HColorSet htmlColorSet = HColorSet.instance();</span>
 
 	@Override
 	public HColorSet getIHtmlColorSet() {
-<span class="fc" id="L1006">		return htmlColorSet;</span>
+<span class="fc" id="L1008">		return htmlColorSet;</span>
 	}
 
 	@Override
 	public UStroke useUnderlineForHyperlink() {
-<span class="fc bfc" id="L1011" title="All 2 branches covered.">		if (valueIs(&quot;hyperlinkunderline&quot;, &quot;false&quot;) == false)</span>
-<span class="fc" id="L1012">			return UStroke.simple();</span>
-<span class="fc" id="L1013">		return null;</span>
+<span class="fc bfc" id="L1013" title="All 2 branches covered.">		if (valueIs(&quot;hyperlinkunderline&quot;, &quot;false&quot;) == false)</span>
+<span class="fc" id="L1014">			return UStroke.simple();</span>
+<span class="fc" id="L1015">		return null;</span>
 	}
 
 	@Override
 	public int groupInheritance() {
-<span class="fc" id="L1018">		final int value = getAsInt(&quot;groupinheritance&quot;, Integer.MAX_VALUE);</span>
-<span class="fc bfc" id="L1019" title="All 2 branches covered.">		return value &lt;= 1 ? Integer.MAX_VALUE : value;</span>
+<span class="fc" id="L1020">		final int value = getAsInt(&quot;groupinheritance&quot;, Integer.MAX_VALUE);</span>
+<span class="fc bfc" id="L1021" title="All 2 branches covered.">		return value &lt;= 1 ? Integer.MAX_VALUE : value;</span>
 	}
 
 	@Override
 	public Guillemet guillemet() {
-<span class="fc" id="L1024">		final String value = getValue(&quot;guillemet&quot;);</span>
-<span class="fc" id="L1025">		return Guillemet.GUILLEMET.fromDescription(value);</span>
+<span class="fc" id="L1026">		final String value = getValue(&quot;guillemet&quot;);</span>
+<span class="fc" id="L1027">		return Guillemet.GUILLEMET.fromDescription(value);</span>
 	}
 
 	@Override
 	public boolean handwritten() {
-<span class="fc" id="L1030">		return isTrue(&quot;handwritten&quot;);</span>
+<span class="fc" id="L1032">		return isTrue(&quot;handwritten&quot;);</span>
 	}
 
 	@Override
 	public String getSvgLinkTarget() {
-<span class="fc" id="L1035">		return getValue(&quot;svglinktarget&quot;, &quot;_top&quot;);</span>
+<span class="fc" id="L1037">		return getValue(&quot;svglinktarget&quot;, &quot;_top&quot;);</span>
 	}
 
 	@Override
 	public String getPreserveAspectRatio() {
-<span class="fc" id="L1040">		return getValue(&quot;preserveaspectratio&quot;, DEFAULT_PRESERVE_ASPECT_RATIO);</span>
+<span class="fc" id="L1042">		return getValue(&quot;preserveaspectratio&quot;, DEFAULT_PRESERVE_ASPECT_RATIO);</span>
 	}
 
 	@Override
 	public String getMonospacedFamily() {
-<span class="fc" id="L1045">		return getValue(&quot;defaultMonospacedFontName&quot;, Parser.MONOSPACED);</span>
+<span class="fc" id="L1047">		return getValue(&quot;defaultMonospacedFontName&quot;, Parser.MONOSPACED);</span>
 	}
 
 	@Override
 	public int getTabSize() {
-<span class="fc" id="L1050">		return getAsInt(&quot;tabsize&quot;, 8);</span>
+<span class="fc" id="L1052">		return getAsInt(&quot;tabsize&quot;, 8);</span>
 	}
 
 	@Override
 	public int maxAsciiMessageLength() {
-<span class="fc" id="L1055">		return getAsInt(&quot;maxasciimessagelength&quot;, -1);</span>
+<span class="fc" id="L1057">		return getAsInt(&quot;maxasciimessagelength&quot;, -1);</span>
 	}
 
 	@Override
 	public int colorArrowSeparationSpace() {
-<span class="fc" id="L1060">		return getAsInt(&quot;colorarrowseparationspace&quot;, 0);</span>
+<span class="fc" id="L1062">		return getAsInt(&quot;colorarrowseparationspace&quot;, 0);</span>
 	}
 
 	@Override
 	public SplitParam getSplitParam() {
-<span class="fc" id="L1065">		final String border = getValue(&quot;pageBorderColor&quot;);</span>
-<span class="fc" id="L1066">		final String external = getValue(&quot;pageExternalColor&quot;);</span>
-<span class="fc bfc" id="L1067" title="All 2 branches covered.">		final HColor borderColor = border == null ? null : getIHtmlColorSet().getColorOrWhite(border);</span>
-<span class="fc bfc" id="L1068" title="All 2 branches covered.">		final HColor externalColor = external == null ? null : getIHtmlColorSet().getColorOrWhite(external);</span>
-<span class="fc" id="L1069">		int margin = getAsInt(&quot;pageMargin&quot;, 0);</span>
-<span class="fc" id="L1070">		return new SplitParam(borderColor, externalColor, margin);</span>
+<span class="fc" id="L1067">		final String border = getValue(&quot;pageBorderColor&quot;);</span>
+<span class="fc" id="L1068">		final String external = getValue(&quot;pageExternalColor&quot;);</span>
+<span class="fc bfc" id="L1069" title="All 2 branches covered.">		final HColor borderColor = border == null ? null : getIHtmlColorSet().getColorOrWhite(border);</span>
+<span class="fc bfc" id="L1070" title="All 2 branches covered.">		final HColor externalColor = external == null ? null : getIHtmlColorSet().getColorOrWhite(external);</span>
+<span class="fc" id="L1071">		int margin = getAsInt(&quot;pageMargin&quot;, 0);</span>
+<span class="fc" id="L1072">		return new SplitParam(borderColor, externalColor, margin);</span>
 	}
 
 	@Override
 	public int swimlaneWidth() {
-<span class="fc" id="L1075">		final String value = getValue(&quot;swimlanewidth&quot;);</span>
-<span class="pc bpc" id="L1076" title="1 of 2 branches missed.">		if (&quot;same&quot;.equalsIgnoreCase(value))</span>
-<span class="nc" id="L1077">			return SWIMLANE_WIDTH_SAME;</span>
+<span class="fc" id="L1077">		final String value = getValue(&quot;swimlanewidth&quot;);</span>
+<span class="pc bpc" id="L1078" title="1 of 2 branches missed.">		if (&quot;same&quot;.equalsIgnoreCase(value))</span>
+<span class="nc" id="L1079">			return SWIMLANE_WIDTH_SAME;</span>
 
-<span class="pc bpc" id="L1079" title="1 of 2 branches missed.">		if (isDigits(value))</span>
-<span class="nc" id="L1080">			return Integer.parseInt(value);</span>
+<span class="pc bpc" id="L1081" title="1 of 2 branches missed.">		if (isDigits(value))</span>
+<span class="nc" id="L1082">			return Integer.parseInt(value);</span>
 
-<span class="fc" id="L1082">		return 0;</span>
+<span class="fc" id="L1084">		return 0;</span>
 	}
 
 	@Override
 	public DiagramType getDiagramType() {
-<span class="fc" id="L1087">		return type;</span>
+<span class="fc" id="L1089">		return type;</span>
 	}
 
 	@Override
 	public HColor hoverPathColor() {
-<span class="fc" id="L1092">		final String value = getValue(&quot;pathhovercolor&quot;);</span>
-<span class="pc bpc" id="L1093" title="1 of 2 branches missed.">		if (value == null)</span>
-<span class="fc" id="L1094">			return null;</span>
+<span class="fc" id="L1094">		final String value = getValue(&quot;pathhovercolor&quot;);</span>
+<span class="pc bpc" id="L1095" title="1 of 2 branches missed.">		if (value == null)</span>
+<span class="fc" id="L1096">			return null;</span>
 
-<span class="nc" id="L1096">		return getIHtmlColorSet().getColorOrWhite(value);</span>
+<span class="nc" id="L1098">		return getIHtmlColorSet().getColorOrWhite(value);</span>
 	}
 
 	@Override
 	public double getPadding() {
-<span class="fc" id="L1101">		final String name = &quot;padding&quot;;</span>
-<span class="fc" id="L1102">		return getAsDouble(name);</span>
+<span class="fc" id="L1103">		final String name = &quot;padding&quot;;</span>
+<span class="fc" id="L1104">		return getAsDouble(name);</span>
 	}
 
 	@Override
 	public double getPadding(PaddingParam param) {
-<span class="fc" id="L1107">		final String name = param.getSkinName();</span>
-<span class="fc" id="L1108">		return getAsDouble(name);</span>
+<span class="fc" id="L1109">		final String name = param.getSkinName();</span>
+<span class="fc" id="L1110">		return getAsDouble(name);</span>
 	}
 
 	private double getAsDouble(final String name) {
-<span class="fc" id="L1112">		final String value = getValue(name);</span>
-<span class="fc bfc" id="L1113" title="All 2 branches covered.">		if (isIntOrDecimal(value))</span>
-<span class="fc" id="L1114">			return Double.parseDouble(value);</span>
+<span class="fc" id="L1114">		final String value = getValue(name);</span>
+<span class="fc bfc" id="L1115" title="All 2 branches covered.">		if (isIntOrDecimal(value))</span>
+<span class="fc" id="L1116">			return Double.parseDouble(value);</span>
 
-<span class="fc" id="L1116">		return 0;</span>
+<span class="fc" id="L1118">		return 0;</span>
 	}
 
 	private int getAsInt(String key, int defaultValue) {
-<span class="fc" id="L1120">		final String value = getValue(key);</span>
-<span class="fc bfc" id="L1121" title="All 2 branches covered.">		if (isDigits(value))</span>
-<span class="fc" id="L1122">			return Integer.parseInt(value);</span>
+<span class="fc" id="L1122">		final String value = getValue(key);</span>
+<span class="fc bfc" id="L1123" title="All 2 branches covered.">		if (isDigits(value))</span>
+<span class="fc" id="L1124">			return Integer.parseInt(value);</span>
 
-<span class="fc" id="L1124">		return defaultValue;</span>
+<span class="fc" id="L1126">		return defaultValue;</span>
 	}
 
 	@Override
 	public boolean useRankSame() {
-<span class="fc" id="L1129">		return false;</span>
+<span class="fc" id="L1131">		return false;</span>
 	}
 
 	@Override
 	public boolean displayGenericWithOldFashion() {
-<span class="fc" id="L1134">		return valueIs(&quot;genericDisplay&quot;, &quot;old&quot;);</span>
+<span class="fc" id="L1136">		return valueIs(&quot;genericDisplay&quot;, &quot;old&quot;);</span>
 	}
 
 	@Override
 	public boolean responseMessageBelowArrow() {
-<span class="fc" id="L1139">		return isTrue(&quot;responsemessagebelowarrow&quot;);</span>
+<span class="fc" id="L1141">		return isTrue(&quot;responsemessagebelowarrow&quot;);</span>
 	}
 
 	@Override
 	public TikzFontDistortion getTikzFontDistortion() {
-<span class="fc" id="L1144">		final String value = getValue(&quot;tikzFont&quot;);</span>
-<span class="fc" id="L1145">		return TikzFontDistortion.fromValue(value);</span>
+<span class="fc" id="L1146">		final String value = getValue(&quot;tikzFont&quot;);</span>
+<span class="fc" id="L1147">		return TikzFontDistortion.fromValue(value);</span>
 	}
 
 	@Override
 	public boolean svgDimensionStyle() {
-<span class="fc bfc" id="L1150" title="All 2 branches covered.">		return !valueIs(&quot;svgdimensionstyle&quot;, &quot;false&quot;);</span>
+<span class="fc bfc" id="L1152" title="All 2 branches covered.">		return !valueIs(&quot;svgdimensionstyle&quot;, &quot;false&quot;);</span>
 	}
 
 	@Override
 	public boolean fixCircleLabelOverlapping() {
-<span class="fc" id="L1155">		return isTrue(&quot;fixcirclelabeloverlapping&quot;);</span>
+<span class="fc" id="L1157">		return isTrue(&quot;fixcirclelabeloverlapping&quot;);</span>
 	}
 
 	@Override
 	public void setUseVizJs(boolean useVizJs) {
-<span class="nc" id="L1160">		this.useVizJs = useVizJs;</span>
-<span class="nc" id="L1161">	}</span>
+<span class="nc" id="L1162">		this.useVizJs = useVizJs;</span>
+<span class="nc" id="L1163">	}</span>
 
 	@Override
 	public boolean isUseVizJs() {
-<span class="fc" id="L1165">		return useVizJs;</span>
+<span class="fc" id="L1167">		return useVizJs;</span>
 	}
 
 	@Override
 	public Padder sequenceDiagramPadder() {
-<span class="fc" id="L1170">		final double padding = getAsDouble(&quot;SequenceMessagePadding&quot;);</span>
-<span class="fc" id="L1171">		final double margin = getAsDouble(&quot;SequenceMessageMargin&quot;);</span>
-<span class="fc" id="L1172">		final String borderColor = getValue(&quot;SequenceMessageBorderColor&quot;);</span>
-<span class="fc" id="L1173">		final String backgroundColor = getValue(&quot;SequenceMessageBackGroundColor&quot;);</span>
-<span class="pc bpc" id="L1174" title="4 of 8 branches missed.">		if (padding == 0 &amp;&amp; margin == 0 &amp;&amp; borderColor == null &amp;&amp; backgroundColor == null)</span>
-<span class="fc" id="L1175">			return Padder.NONE;</span>
+<span class="fc" id="L1172">		final double padding = getAsDouble(&quot;SequenceMessagePadding&quot;);</span>
+<span class="fc" id="L1173">		final double margin = getAsDouble(&quot;SequenceMessageMargin&quot;);</span>
+<span class="fc" id="L1174">		final String borderColor = getValue(&quot;SequenceMessageBorderColor&quot;);</span>
+<span class="fc" id="L1175">		final String backgroundColor = getValue(&quot;SequenceMessageBackGroundColor&quot;);</span>
+<span class="pc bpc" id="L1176" title="4 of 8 branches missed.">		if (padding == 0 &amp;&amp; margin == 0 &amp;&amp; borderColor == null &amp;&amp; backgroundColor == null)</span>
+<span class="fc" id="L1177">			return Padder.NONE;</span>
 
-<span class="nc bnc" id="L1177" title="All 2 branches missed.">		final HColor border = borderColor == null ? null : getIHtmlColorSet().getColorOrWhite(borderColor);</span>
-<span class="nc bnc" id="L1178" title="All 2 branches missed.">		final HColor background = backgroundColor == null ? null : getIHtmlColorSet().getColorOrWhite(backgroundColor);</span>
-<span class="nc" id="L1179">		final double roundCorner = getRoundCorner(CornerParam.DEFAULT, null);</span>
-<span class="nc" id="L1180">		return Padder.NONE.withMargin(margin).withPadding(padding).withBackgroundColor(background)</span>
-<span class="nc" id="L1181">				.withBorderColor(border).withRoundCorner(roundCorner);</span>
+<span class="nc bnc" id="L1179" title="All 2 branches missed.">		final HColor border = borderColor == null ? null : getIHtmlColorSet().getColorOrWhite(borderColor);</span>
+<span class="nc bnc" id="L1180" title="All 2 branches missed.">		final HColor background = backgroundColor == null ? null : getIHtmlColorSet().getColorOrWhite(backgroundColor);</span>
+<span class="nc" id="L1181">		final double roundCorner = getRoundCorner(CornerParam.DEFAULT, null);</span>
+<span class="nc" id="L1182">		return Padder.NONE.withMargin(margin).withPadding(padding).withBackgroundColor(background)</span>
+<span class="nc" id="L1183">				.withBorderColor(border).withRoundCorner(roundCorner);</span>
 	}
 
 	@Override
 	public ActorStyle actorStyle() {
-<span class="fc" id="L1186">		final String value = getValue(&quot;actorstyle&quot;);</span>
-<span class="fc bfc" id="L1187" title="All 2 branches covered.">		if (&quot;awesome&quot;.equalsIgnoreCase(value))</span>
-<span class="fc" id="L1188">			return ActorStyle.AWESOME;</span>
+<span class="fc" id="L1188">		final String value = getValue(&quot;actorstyle&quot;);</span>
+<span class="fc bfc" id="L1189" title="All 2 branches covered.">		if (&quot;awesome&quot;.equalsIgnoreCase(value))</span>
+<span class="fc" id="L1190">			return ActorStyle.AWESOME;</span>
 
-<span class="pc bpc" id="L1190" title="1 of 2 branches missed.">		if (&quot;hollow&quot;.equalsIgnoreCase(value))</span>
-<span class="nc" id="L1191">			return ActorStyle.HOLLOW;</span>
+<span class="pc bpc" id="L1192" title="1 of 2 branches missed.">		if (&quot;hollow&quot;.equalsIgnoreCase(value))</span>
+<span class="nc" id="L1193">			return ActorStyle.HOLLOW;</span>
 
-<span class="fc" id="L1193">		return ActorStyle.STICKMAN;</span>
+<span class="fc" id="L1195">		return ActorStyle.STICKMAN;</span>
 	}
 
 	@Override
 	public void setSvgSize(String origin, String sizeToUse) {
-<span class="nc" id="L1198">		svgCharSizes.put(StringUtils.manageUnicodeNotationUplus(origin),</span>
-<span class="nc" id="L1199">				StringUtils.manageUnicodeNotationUplus(sizeToUse));</span>
-<span class="nc" id="L1200">	}</span>
+<span class="nc" id="L1200">		svgCharSizes.put(StringUtils.manageUnicodeNotationUplus(origin),</span>
+<span class="nc" id="L1201">				StringUtils.manageUnicodeNotationUplus(sizeToUse));</span>
+<span class="nc" id="L1202">	}</span>
 
 	@Override
 	public String transformStringForSizeHack(String s) {
-<span class="pc bpc" id="L1204" title="1 of 2 branches missed.">		for (Entry&lt;String, String&gt; ent : svgCharSizes.entrySet())</span>
-<span class="nc" id="L1205">			s = s.replace(ent.getKey(), ent.getValue());</span>
+<span class="pc bpc" id="L1206" title="1 of 2 branches missed.">		for (Entry&lt;String, String&gt; ent : svgCharSizes.entrySet())</span>
+<span class="nc" id="L1207">			s = s.replace(ent.getKey(), ent.getValue());</span>
 
-<span class="fc" id="L1207">		return s;</span>
+<span class="fc" id="L1209">		return s;</span>
 	}
 
 	@Override
 	public LengthAdjust getlengthAdjust() {
-<span class="fc" id="L1212">		final String value = getValue(&quot;lengthAdjust&quot;);</span>
-<span class="pc bpc" id="L1213" title="1 of 2 branches missed.">		if (&quot;spacingAndGlyphs&quot;.equalsIgnoreCase(value))</span>
-<span class="nc" id="L1214">			return LengthAdjust.SPACING_AND_GLYPHS;</span>
+<span class="fc" id="L1214">		final String value = getValue(&quot;lengthAdjust&quot;);</span>
+<span class="pc bpc" id="L1215" title="1 of 2 branches missed.">		if (&quot;spacingAndGlyphs&quot;.equalsIgnoreCase(value))</span>
+<span class="nc" id="L1216">			return LengthAdjust.SPACING_AND_GLYPHS;</span>
 
-<span class="pc bpc" id="L1216" title="1 of 2 branches missed.">		if (&quot;spacing&quot;.equalsIgnoreCase(value))</span>
-<span class="nc" id="L1217">			return LengthAdjust.SPACING;</span>
+<span class="pc bpc" id="L1218" title="1 of 2 branches missed.">		if (&quot;spacing&quot;.equalsIgnoreCase(value))</span>
+<span class="nc" id="L1219">			return LengthAdjust.SPACING;</span>
 
-<span class="pc bpc" id="L1219" title="1 of 2 branches missed.">		if (&quot;none&quot;.equalsIgnoreCase(value))</span>
-<span class="nc" id="L1220">			return LengthAdjust.NONE;</span>
+<span class="pc bpc" id="L1221" title="1 of 2 branches missed.">		if (&quot;none&quot;.equalsIgnoreCase(value))</span>
+<span class="nc" id="L1222">			return LengthAdjust.NONE;</span>
 
-<span class="fc" id="L1222">		return LengthAdjust.defaultValue();</span>
+<span class="fc" id="L1224">		return LengthAdjust.defaultValue();</span>
 	}
 
 	private double paramSameClassWidth;
 
 	public void setParamSameClassWidth(double width) {
-<span class="nc" id="L1228">		this.paramSameClassWidth = width;</span>
+<span class="nc" id="L1230">		this.paramSameClassWidth = width;</span>
 
-<span class="nc" id="L1230">	}</span>
+<span class="nc" id="L1232">	}</span>
 
 	@Override
 	public final double getParamSameClassWidth() {
-<span class="fc" id="L1234">		return paramSameClassWidth;</span>
+<span class="fc" id="L1236">		return paramSameClassWidth;</span>
 	}
 
 	@Override
 	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			CreoleMode creoleMode) {
-<span class="fc" id="L1240">		final FontConfiguration stereotype = fontConfiguration.forceFont(null, null);</span>
-<span class="fc" id="L1241">		return sheet(fontConfiguration, horizontalAlignment, creoleMode, stereotype);</span>
+<span class="fc" id="L1242">		final FontConfiguration stereotype = fontConfiguration.forceFont(null, null);</span>
+<span class="fc" id="L1243">		return sheet(fontConfiguration, horizontalAlignment, creoleMode, stereotype);</span>
 	}
 
-<span class="fc" id="L1244">	private final Map&lt;Object, CreoleParser&gt; cache = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L1246">	private final Map&lt;Object, CreoleParser&gt; cache = new HashMap&lt;&gt;();</span>
 
 	@Override
 	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			CreoleMode creoleMode, FontConfiguration stereo) {
-<span class="fc" id="L1249">		final Object key = Arrays.asList(horizontalAlignment, creoleMode, fontConfiguration, stereo);</span>
-<span class="fc" id="L1250">		CreoleParser result = cache.get(key);</span>
-<span class="fc bfc" id="L1251" title="All 2 branches covered.">		if (result == null) {</span>
-<span class="fc" id="L1252">			result = new CreoleParser(fontConfiguration, horizontalAlignment, this, creoleMode, stereo);</span>
-<span class="fc" id="L1253">			cache.put(key, result);</span>
+<span class="fc" id="L1251">		final Object key = Arrays.asList(horizontalAlignment, creoleMode, fontConfiguration, stereo);</span>
+<span class="fc" id="L1252">		CreoleParser result = cache.get(key);</span>
+<span class="fc bfc" id="L1253" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc" id="L1254">			result = new CreoleParser(fontConfiguration, horizontalAlignment, this, creoleMode, stereo);</span>
+<span class="fc" id="L1255">			cache.put(key, result);</span>
 		}
-<span class="fc" id="L1255">		return result;</span>
+<span class="fc" id="L1257">		return result;</span>
 	}
 
 	@Override
 	public Arrows arrows() {
-<span class="pc bpc" id="L1260" title="1 of 2 branches missed.">		if (strictUmlStyle())</span>
-<span class="nc" id="L1261">			return new ArrowsTriangle();</span>
-<span class="fc" id="L1262">		return new ArrowsRegular();</span>
+<span class="pc bpc" id="L1262" title="1 of 2 branches missed.">		if (strictUmlStyle())</span>
+<span class="nc" id="L1263">			return new ArrowsTriangle();</span>
+<span class="fc" id="L1264">		return new ArrowsRegular();</span>
 	}
 
 	@Override
 	public final Pragma getPragma() {
-<span class="fc" id="L1267">		return pragma;</span>
+<span class="fc" id="L1269">		return pragma;</span>
 	}
 
 	@Override
 	public ConfigurationStore&lt;OptionKey&gt; options() {
-<span class="fc" id="L1272">		return option;</span>
+<span class="fc" id="L1274">		return option;</span>
 	}
 
 	@Override
 	public PathSystem getPathSystem() {
-<span class="nc" id="L1277">		return pathSystem;</span>
+<span class="nc" id="L1279">		return pathSystem;</span>
 	}
 
 }

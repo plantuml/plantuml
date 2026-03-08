@@ -99,11 +99,11 @@ public class DriverTextTeaVM implements UDriver&lt;UText, SvgGraphicsTeaVM&gt; {
 <span class="nc" id="L99">		final int fontSize = font.getSize();</span>
 
 <span class="nc" id="L101">		String fontWeight = null;</span>
-<span class="nc bnc" id="L102" title="All 4 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.BOLD) || font.isBold())</span>
+<span class="nc bnc" id="L102" title="All 4 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.BOLD) || font.getFontFace().isBold())</span>
 <span class="nc" id="L103">			fontWeight = &quot;bold&quot;;</span>
 
 <span class="nc" id="L105">		String fontStyle = null;</span>
-<span class="nc bnc" id="L106" title="All 4 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.ITALIC) || font.isItalic())</span>
+<span class="nc bnc" id="L106" title="All 4 branches missed.">		if (fontConfiguration.containsStyle(FontStyle.ITALIC) || font.getFontFace().isItalic())</span>
 <span class="nc" id="L107">			fontStyle = &quot;italic&quot;;</span>
 
 		// Handle text decoration (underline, strike, wave)

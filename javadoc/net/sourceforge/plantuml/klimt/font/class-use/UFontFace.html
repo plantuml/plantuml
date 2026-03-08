@@ -57,6 +57,12 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.klimt.font">net.sourceforge.plantuml.klimt.font</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.style">net.sourceforge.plantuml.style</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Provides classes used to manage 
+ <a href="https://plantuml.com/style-evolution" target="_top">
+ Style</a>.</div>
+</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -83,13 +89,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Parses a CSS <code>font-weight</code> string.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font">UFontFace</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">UFontFace.</span><code><a href="../UFontFace.html#fromLegacyStyle(int)" class="member-name-link">fromLegacyStyle</a><wbr>(int&nbsp;fontStyle)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Creates a face from a legacy <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/Font.html" title="class or interface in java.awt" class="external-link"><code>Font</code></a> style constant
- (<code>Font.PLAIN</code>, <code>Font.BOLD</code>, <code>Font.ITALIC</code>,
- <code>Font.BOLD | Font.ITALIC</code>).</div>
-</div>
+<div class="col-first odd-row-color"><code>final <a href="../UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font">UFontFace</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FontParam.</span><code><a href="../FontParam.html#getDefaultFontFace(net.sourceforge.plantuml.style.ISkinParam,boolean)" class="member-name-link">getDefaultFontFace</a><wbr>(<a href="../../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
+ boolean&nbsp;inPackageTitle)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font">UFontFace</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">FontConfiguration.</span><code><a href="../FontConfiguration.html#getFontFace()" class="member-name-link">getFontFace</a>()</code></div>
 <div class="col-last even-row-color">
@@ -175,6 +178,31 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code><a href="../UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">UFontImpl.</span><code><a href="../UFontImpl.html#withFontFace(net.sourceforge.plantuml.klimt.font.UFontFace)" class="member-name-link">withFontFace</a><wbr>(<a href="../UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font">UFontFace</a>&nbsp;newFace)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.style">
+<h2>Uses of <a href="../UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font">UFontFace</a> in <a href="../../../style/package-summary.html">net.sourceforge.plantuml.style</a></h2>
+<div class="caption"><span>Methods in <a href="../../../style/package-summary.html">net.sourceforge.plantuml.style</a> that return <a href="../UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font">UFontFace</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font">UFontFace</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Value.</span><code><a href="../../../style/Value.html#asFontFace()" class="member-name-link">asFontFace</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the font face (weight + italic axis) represented by this value.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font">UFontFace</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ValueAbstract.</span><code><a href="../../../style/ValueAbstract.html#asFontFace()" class="member-name-link">asFontFace</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font">UFontFace</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ValueImpl.</span><code><a href="../../../style/ValueImpl.html#asFontFace()" class="member-name-link">asFontFace</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../UFontFace.html" title="class in net.sourceforge.plantuml.klimt.font">UFontFace</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ValueNull.</span><code><a href="../../../style/ValueNull.html#asFontFace()" class="member-name-link">asFontFace</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

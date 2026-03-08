@@ -332,8 +332,8 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 <span class="nc" id="L332">					return &quot;$&quot; + text + &quot;$&quot;;</span>
 				}
 <span class="nc" id="L334">				StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L335">				final boolean italic = font.isItalic();</span>
-<span class="nc" id="L336">				final boolean bold = font.isBold();</span>
+<span class="nc" id="L335">				final boolean italic = font.getFontFace().isItalic();</span>
+<span class="nc" id="L336">				final boolean bold = font.getFontFace().isBold();</span>
 
 <span class="nc bnc" id="L338" title="All 2 branches missed.">				if (italic)</span>
 <span class="nc" id="L339">					sb.append(&quot;\\textit{&quot;);</span>

@@ -39,29 +39,28 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 
 public class ValueColor extends ValueAbstract {
-    // ::remove file when __HAXE__
 
 	private final HColor color;
 	private final int priority;
 
 	@Override
 	public String toString() {
-<span class="nc" id="L49">		return color.toString();</span>
+<span class="nc" id="L48">		return color.toString();</span>
 	}
 
-<span class="fc" id="L52">	public ValueColor(HColor color, int priority) {</span>
-<span class="fc" id="L53">		this.color = color;</span>
-<span class="fc" id="L54">		this.priority = priority;</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L51">	public ValueColor(HColor color, int priority) {</span>
+<span class="fc" id="L52">		this.color = color;</span>
+<span class="fc" id="L53">		this.priority = priority;</span>
+<span class="fc" id="L54">	}</span>
 
 	@Override
 	public HColor asColor(HColorSet set) {
-<span class="fc" id="L59">		return color;</span>
+<span class="fc" id="L58">		return color;</span>
 	}
 
 	@Override
 	public int getPriority() {
-<span class="nc" id="L64">		return priority;</span>
+<span class="nc" id="L63">		return priority;</span>
 	}
 
 }

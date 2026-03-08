@@ -3008,10 +3008,9 @@ Total Classes: 3
 "net.sourceforge.plantuml.stereo" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.stereo" --> "net.sourceforge.plantuml.regex"
 
-class "net.sourceforge.plantuml.style" %lighten("red", 53) {
+class "net.sourceforge.plantuml.style" %lighten("red", 52) {
 Total Classes: 22
 }
-"net.sourceforge.plantuml.style" --> "java.awt"
 "net.sourceforge.plantuml.style" --> "java.lang"
 "net.sourceforge.plantuml.style" --> "java.util"
 "net.sourceforge.plantuml.style" --> "net.sourceforge.plantuml"

@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.swing;
 
-import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Shape;
 import java.awt.font.TextLayout;
@@ -63,6 +62,7 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontContext;
+import net.sourceforge.plantuml.klimt.font.UFontFace;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -224,7 +224,7 @@ public class FontChecker {
 <span class="nc" id="L224">		final int v2 = Integer.parseInt(args[3]);</span>
 <span class="nc" id="L225">		final SFile f = new SFile(&quot;fontchecker-&quot; + name + &quot;-&quot; + v1 + &quot;-&quot; + v2 + &quot;.html&quot;);</span>
 
-<span class="nc" id="L227">		final FontChecker fc = new FontChecker(UFontFactory.build(name, Font.PLAIN, size));</span>
+<span class="nc" id="L227">		final FontChecker fc = new FontChecker(UFontFactory.build(name, UFontFace.normal(), size));</span>
 <span class="nc" id="L228">		final PrintWriter pw = f.createPrintWriter();</span>
 <span class="nc" id="L229">		pw.println(&quot;&lt;html&gt;&quot;);</span>
 <span class="nc" id="L230">		pw.println(&quot;&lt;h1&gt;PROBLEM&lt;/h1&gt;&quot;);</span>
@@ -245,7 +245,7 @@ public class FontChecker {
 <span class="nc" id="L245">				fc.printChar(pw, c);</span>
 <span class="nc" id="L246">				final String desc = fc.getCharDescVerbose(c);</span>
 <span class="nc bnc" id="L247" title="All 2 branches missed.">				for (String n : allFontNames) {</span>
-<span class="nc" id="L248">					final FontChecker other = new FontChecker(UFontFactory.build(n, Font.PLAIN, size));</span>
+<span class="nc" id="L248">					final FontChecker other = new FontChecker(UFontFactory.build(n, UFontFace.normal(), size));</span>
 <span class="nc" id="L249">					final String descOther = other.getCharDescVerbose(c);</span>
 <span class="nc bnc" id="L250" title="All 2 branches missed.">					if (desc.equals(descOther)) {</span>
 <span class="nc" id="L251">						pw.println(&quot;&amp;nbsp;&quot;);</span>

@@ -10614,11 +10614,11 @@ Stats:
     Abstract Classes: 7
 
     Ca: 69
-    Ce: 18
+    Ce: 17
 
     A: 0.32
-    I: 0.21
-    D: 0.47
+    I: 0.2
+    D: 0.48
 
 Abstract Classes:
     net.sourceforge.plantuml.style.AutomaticCounter
@@ -10647,7 +10647,6 @@ Concrete Classes:
     net.sourceforge.plantuml.style.ValueNull
 
 Depends Upon:
-    java.awt
     java.lang
     java.util
     net.sourceforge.plantuml
@@ -14637,7 +14636,7 @@ gen.lib.pack,1,0,1,5,0,0.83,0.17,1
 gen.lib.pathplan,3,0,1,4,0,0.8,0.2,1
 gen.plugin.dot_layout,2,0,0,1,0,1,0,1
 h,95,2,12,3,0.02,0.2,0.78,1
-java.awt,0,0,25,0,0,0,1,1
+java.awt,0,0,24,0,0,0,1,1
 java.awt.datatransfer,0,0,1,0,0,0,1,1
 java.awt.event,0,0,1,0,0,0,1,1
 java.awt.font,0,0,5,0,0,0,1,1
@@ -14844,7 +14843,7 @@ net.sourceforge.plantuml.statediagram.command,7,0,2,17,0,0.89,0.11,1
 net.sourceforge.plantuml.stats,14,1,1,11,0.07,0.92,0.01,1
 net.sourceforge.plantuml.stats.api,4,3,1,2,0.75,0.67,0.42,1
 net.sourceforge.plantuml.stereo,3,0,36,6,0,0.14,0.86,1
-net.sourceforge.plantuml.style,22,7,69,18,0.32,0.21,0.47,1
+net.sourceforge.plantuml.style,22,7,69,17,0.32,0.2,0.48,1
 net.sourceforge.plantuml.style.parser,4,0,3,4,0,0.57,0.43,1
 net.sourceforge.plantuml.sudoku,4,1,0,8,0.25,1,0.25,1
 net.sourceforge.plantuml.svek,65,9,21,35,0.14,0.62,0.24,1

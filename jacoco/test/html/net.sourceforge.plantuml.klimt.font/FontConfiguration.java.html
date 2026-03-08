@@ -64,8 +64,8 @@ public class FontConfiguration {
 	}
 
 	private static EnumSet&lt;FontStyle&gt; getStyles(UFont font) {
-<span class="fc" id="L67">		final boolean bold = font.isBold();</span>
-<span class="fc" id="L68">		final boolean italic = font.isItalic();</span>
+<span class="fc" id="L67">		final boolean bold = font.getFontFace().isBold();</span>
+<span class="fc" id="L68">		final boolean italic = font.getFontFace().isItalic();</span>
 <span class="fc bfc" id="L69" title="All 4 branches covered.">		if (bold &amp;&amp; italic)</span>
 <span class="fc" id="L70">			return EnumSet.of(FontStyle.ITALIC, FontStyle.BOLD);</span>
 

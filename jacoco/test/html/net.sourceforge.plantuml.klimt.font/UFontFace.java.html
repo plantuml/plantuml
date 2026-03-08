@@ -108,17 +108,6 @@ public class UFontFace {
 	}
 
 	/**
-	 * Creates a face from a legacy {@link java.awt.Font} style constant
-	 * ({@code Font.PLAIN}, {@code Font.BOLD}, {@code Font.ITALIC},
-	 * {@code Font.BOLD | Font.ITALIC}).
-	 */
-	public static UFontFace fromLegacyStyle(int fontStyle) {
-<span class="fc bfc" id="L116" title="All 2 branches covered.">		final UFontStyle s = (fontStyle &amp; Font.ITALIC) != 0 ? UFontStyle.ITALIC : UFontStyle.NORMAL;</span>
-<span class="fc bfc" id="L117" title="All 2 branches covered.">		final int w = (fontStyle &amp; Font.BOLD) != 0 ? 700 : 400;</span>
-<span class="fc" id="L118">		return new UFontFace(s, UFontWeight.fromCssValue(w));</span>
-	}
-
-	/**
 	 * Parses a CSS {@code font-weight} string. Accepts numeric values (100-900)
 	 * and keywords: {@code normal}, {@code bold}, {@code lighter},
 	 * {@code bolder}.
@@ -127,47 +116,47 @@ public class UFontFace {
 	 *         the input cannot be parsed
 	 */
 	public static UFontFace fromCssWeight(String cssValue) {
-<span class="fc bfc" id="L130" title="All 2 branches covered.">		if (cssValue == null)</span>
-<span class="fc" id="L131">			return null;</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (cssValue == null)</span>
+<span class="fc" id="L120">			return null;</span>
 
-<span class="fc" id="L133">		final String trimmed = cssValue.trim().toLowerCase();</span>
-<span class="fc bfc" id="L134" title="All 5 branches covered.">		switch (trimmed) {</span>
+<span class="fc" id="L122">		final String trimmed = cssValue.trim().toLowerCase();</span>
+<span class="fc bfc" id="L123" title="All 5 branches covered.">		switch (trimmed) {</span>
 		case &quot;normal&quot;:
-<span class="fc" id="L136">			return NORMAL;</span>
+<span class="fc" id="L125">			return NORMAL;</span>
 		case &quot;bold&quot;:
-<span class="fc" id="L138">			return BOLD;</span>
+<span class="fc" id="L127">			return BOLD;</span>
 		case &quot;lighter&quot;:
-<span class="fc" id="L140">			return of(UFontStyle.NORMAL, 300);</span>
+<span class="fc" id="L129">			return of(UFontStyle.NORMAL, 300);</span>
 		case &quot;bolder&quot;:
-<span class="fc" id="L142">			return of(UFontStyle.NORMAL, 800);</span>
+<span class="fc" id="L131">			return of(UFontStyle.NORMAL, 800);</span>
 		default:
 			try {
-<span class="fc" id="L145">				final int w = Integer.parseInt(trimmed);</span>
-<span class="fc" id="L146">				return of(UFontStyle.NORMAL, w);</span>
-<span class="fc" id="L147">			} catch (NumberFormatException e) {</span>
-<span class="fc" id="L148">				return null;</span>
+<span class="fc" id="L134">				final int w = Integer.parseInt(trimmed);</span>
+<span class="fc" id="L135">				return of(UFontStyle.NORMAL, w);</span>
+<span class="fc" id="L136">			} catch (NumberFormatException e) {</span>
+<span class="fc" id="L137">				return null;</span>
 			}
 		}
 	}
 
 	public UFontStyle getStyle() {
-<span class="nc" id="L154">		return style;</span>
+<span class="nc" id="L143">		return style;</span>
 	}
 
 	public UFontWeight getWeight() {
-<span class="nc" id="L158">		return weight;</span>
+<span class="nc" id="L147">		return weight;</span>
 	}
 
 	public int getCssWeight() {
-<span class="fc" id="L162">		return weight.getWeight();</span>
+<span class="fc" id="L151">		return weight.getWeight();</span>
 	}
 
 	public boolean isItalic() {
-<span class="fc bfc" id="L166" title="All 2 branches covered.">		return style == UFontStyle.ITALIC;</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		return style == UFontStyle.ITALIC;</span>
 	}
 
 	public boolean isBold() {
-<span class="fc bfc" id="L170" title="All 2 branches covered.">		return weight.getWeight() &gt;= 700;</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		return weight.getWeight() &gt;= 700;</span>
 	}
 
 	/**
@@ -176,38 +165,38 @@ public class UFontFace {
 	 * (e.g. EPS).
 	 */
 	public int toLegacyStyle() {
-<span class="fc" id="L179">		int result = Font.PLAIN;</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">		if (isItalic())</span>
-<span class="fc" id="L181">			result |= Font.ITALIC;</span>
-<span class="fc bfc" id="L182" title="All 2 branches covered.">		if (isBold())</span>
-<span class="fc" id="L183">			result |= Font.BOLD;</span>
-<span class="fc" id="L184">		return result;</span>
+<span class="fc" id="L168">		int result = Font.PLAIN;</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (isItalic())</span>
+<span class="fc" id="L170">			result |= Font.ITALIC;</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">		if (isBold())</span>
+<span class="fc" id="L172">			result |= Font.BOLD;</span>
+<span class="fc" id="L173">		return result;</span>
 	}
 
 	/**
 	 * Returns a new face with the given style, keeping the current weight.
 	 */
 	public UFontFace withStyle(UFontStyle newStyle) {
-<span class="fc bfc" id="L191" title="All 2 branches covered.">		if (this.style == newStyle)</span>
-<span class="fc" id="L192">			return this;</span>
-<span class="fc" id="L193">		return new UFontFace(newStyle, this.weight);</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">		if (this.style == newStyle)</span>
+<span class="fc" id="L181">			return this;</span>
+<span class="fc" id="L182">		return new UFontFace(newStyle, this.weight);</span>
 	}
 
 	/**
 	 * Returns a new face with the given CSS weight, keeping the current style.
 	 */
 	public UFontFace withWeight(int cssWeight) {
-<span class="fc" id="L200">		final UFontWeight newWeight = UFontWeight.fromCssValue(cssWeight);</span>
-<span class="fc bfc" id="L201" title="All 2 branches covered.">		if (this.weight.equals(newWeight))</span>
-<span class="fc" id="L202">			return this;</span>
-<span class="fc" id="L203">		return new UFontFace(this.style, newWeight);</span>
+<span class="fc" id="L189">		final UFontWeight newWeight = UFontWeight.fromCssValue(cssWeight);</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		if (this.weight.equals(newWeight))</span>
+<span class="fc" id="L191">			return this;</span>
+<span class="fc" id="L192">		return new UFontFace(this.style, newWeight);</span>
 	}
 
 	/**
 	 * Returns a new face with the given weight, keeping the current style.
 	 */
 	public UFontFace withWeight(UFontWeight newWeight) {
-<span class="nc" id="L210">		return new UFontFace(this.style, newWeight);</span>
+<span class="nc" id="L199">		return new UFontFace(this.style, newWeight);</span>
 	}
 
 	// ::remove folder when __HAXE__
@@ -217,22 +206,22 @@ public class UFontFace {
 	 * {@link TextAttribute#WEIGHT} float constant.
 	 */
 	public float toTextAttributeWeight() {
-<span class="fc" id="L220">		final int w = weight.getWeight();</span>
-<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (w &lt;= 200)</span>
-<span class="nc" id="L222">			return TextAttribute.WEIGHT_EXTRA_LIGHT;</span>
-<span class="fc bfc" id="L223" title="All 2 branches covered.">		if (w &lt;= 300)</span>
-<span class="fc" id="L224">			return TextAttribute.WEIGHT_LIGHT;</span>
-<span class="fc bfc" id="L225" title="All 2 branches covered.">		if (w &lt;= 400)</span>
-<span class="fc" id="L226">			return TextAttribute.WEIGHT_REGULAR;</span>
-<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (w &lt;= 500)</span>
-<span class="fc" id="L228">			return TextAttribute.WEIGHT_MEDIUM;</span>
-<span class="fc bfc" id="L229" title="All 2 branches covered.">		if (w &lt;= 600)</span>
-<span class="fc" id="L230">			return TextAttribute.WEIGHT_SEMIBOLD;</span>
-<span class="pc bpc" id="L231" title="1 of 2 branches missed.">		if (w &lt;= 700)</span>
-<span class="fc" id="L232">			return TextAttribute.WEIGHT_BOLD;</span>
-<span class="nc bnc" id="L233" title="All 2 branches missed.">		if (w &lt;= 800)</span>
-<span class="nc" id="L234">			return TextAttribute.WEIGHT_HEAVY;</span>
-<span class="nc" id="L235">		return TextAttribute.WEIGHT_ULTRABOLD;</span>
+<span class="fc" id="L209">		final int w = weight.getWeight();</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">		if (w &lt;= 200)</span>
+<span class="nc" id="L211">			return TextAttribute.WEIGHT_EXTRA_LIGHT;</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">		if (w &lt;= 300)</span>
+<span class="fc" id="L213">			return TextAttribute.WEIGHT_LIGHT;</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">		if (w &lt;= 400)</span>
+<span class="fc" id="L215">			return TextAttribute.WEIGHT_REGULAR;</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">		if (w &lt;= 500)</span>
+<span class="fc" id="L217">			return TextAttribute.WEIGHT_MEDIUM;</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">		if (w &lt;= 600)</span>
+<span class="fc" id="L219">			return TextAttribute.WEIGHT_SEMIBOLD;</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (w &lt;= 700)</span>
+<span class="fc" id="L221">			return TextAttribute.WEIGHT_BOLD;</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (w &lt;= 800)</span>
+<span class="nc" id="L223">			return TextAttribute.WEIGHT_HEAVY;</span>
+<span class="nc" id="L224">		return TextAttribute.WEIGHT_ULTRABOLD;</span>
 	}
 
 	/**
@@ -244,11 +233,11 @@ public class UFontFace {
 	 * {@link #toLegacyStyle()} instead.
 	 */
 	public Font deriveFont(Font baseFont) {
-<span class="fc" id="L247">		final Map&lt;TextAttribute, Object&gt; attrs = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L248">		attrs.put(TextAttribute.WEIGHT, toTextAttributeWeight());</span>
-<span class="fc bfc" id="L249" title="All 2 branches covered.">		if (isItalic())</span>
-<span class="fc" id="L250">			attrs.put(TextAttribute.POSTURE, TextAttribute.POSTURE_OBLIQUE);</span>
-<span class="fc" id="L251">		return baseFont.deriveFont(attrs);</span>
+<span class="fc" id="L236">		final Map&lt;TextAttribute, Object&gt; attrs = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L237">		attrs.put(TextAttribute.WEIGHT, toTextAttributeWeight());</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">		if (isItalic())</span>
+<span class="fc" id="L239">			attrs.put(TextAttribute.POSTURE, TextAttribute.POSTURE_OBLIQUE);</span>
+<span class="fc" id="L240">		return baseFont.deriveFont(attrs);</span>
 	}
 
 	// ::done
@@ -257,34 +246,34 @@ public class UFontFace {
 	 * Returns a CSS-compatible {@code font-weight} string for SVG output.
 	 */
 	public String toCssWeightString() {
-<span class="fc" id="L260">		return String.valueOf(weight.getWeight());</span>
+<span class="fc" id="L249">		return String.valueOf(weight.getWeight());</span>
 	}
 
 	/**
 	 * Returns a CSS-compatible {@code font-style} string for SVG output.
 	 */
 	public String toCssStyleString() {
-<span class="fc bfc" id="L267" title="All 2 branches covered.">		return isItalic() ? &quot;italic&quot; : &quot;normal&quot;;</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">		return isItalic() ? &quot;italic&quot; : &quot;normal&quot;;</span>
 	}
 
 	@Override
 	public int hashCode() {
-<span class="fc" id="L272">		return Objects.hash(style, weight.getWeight());</span>
+<span class="fc" id="L261">		return Objects.hash(style, weight.getWeight());</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="pc bpc" id="L277" title="1 of 2 branches missed.">		if (this == obj)</span>
-<span class="nc" id="L278">			return true;</span>
-<span class="pc bpc" id="L279" title="1 of 2 branches missed.">		if (!(obj instanceof UFontFace))</span>
-<span class="nc" id="L280">			return false;</span>
-<span class="fc" id="L281">		final UFontFace other = (UFontFace) obj;</span>
-<span class="fc bfc" id="L282" title="All 4 branches covered.">		return this.style == other.style &amp;&amp; this.weight.getWeight() == other.weight.getWeight();</span>
+<span class="fc bfc" id="L266" title="All 2 branches covered.">		if (this == obj)</span>
+<span class="fc" id="L267">			return true;</span>
+<span class="pc bpc" id="L268" title="1 of 2 branches missed.">		if (!(obj instanceof UFontFace))</span>
+<span class="nc" id="L269">			return false;</span>
+<span class="fc" id="L270">		final UFontFace other = (UFontFace) obj;</span>
+<span class="fc bfc" id="L271" title="All 4 branches covered.">		return this.style == other.style &amp;&amp; this.weight.getWeight() == other.weight.getWeight();</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L287">		return &quot;UFontFace[&quot; + style + &quot;, weight=&quot; + weight.getWeight() + &quot;]&quot;;</span>
+<span class="nc" id="L276">		return &quot;UFontFace[&quot; + style + &quot;, weight=&quot; + weight.getWeight() + &quot;]&quot;;</span>
 	}
 
 }
