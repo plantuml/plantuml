@@ -66,7 +66,7 @@ public abstract class UgDiagram extends AbstractDiagram {
 
 	public abstract TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception;
 
-	public TextBlock addChrome(TextBlock result, FileFormatOption fileFormatOption) {
+	public TextBlock addChrome(TextBlock result) {
 		return result;
 	}
 
@@ -121,7 +121,7 @@ public abstract class UgDiagram extends AbstractDiagram {
 
 		final int status = computeStatus(result);
 
-		result = addChrome(result, fileFormatOption);
+		result = addChrome(result);
 
 		final HColor backColor = calculateBackColor();
 		if (backColor != null)

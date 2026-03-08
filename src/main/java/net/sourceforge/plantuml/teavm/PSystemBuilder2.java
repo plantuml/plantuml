@@ -80,10 +80,12 @@ import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 public class PSystemBuilder2 {
 	// ::remove file when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
 
+	private final static PSystemBuilder2 singleton = new PSystemBuilder2();
+
 	private final List<PSystemFactory> factories = new ArrayList<>();
 	private PSystemFactory lastFactory;
 
-	public PSystemBuilder2() {
+	private PSystemBuilder2() {
 		factories.add(new SequenceDiagramFactory());
 		factories.add(new ClassDiagramFactory());
 		factories.add(new ActivityDiagramFactory());
@@ -107,6 +109,14 @@ public class PSystemBuilder2 {
 		factories.add(new PSystemSudokuFactory());
 	}
 
+	public static PSystemBuilder2 getInstance() {
+		return singleton;
+	}
+
+	public void reset() {
+		lastFactory = null;
+	}
+
 	public Diagram createDiagram(String[] split) {
 		BrowserLog.consoleLog(PSystemBuilder2.class, "createDiagram start");
 		final List<StringLocated> rawSource = new ArrayList<>();
@@ -126,15 +136,18 @@ public class PSystemBuilder2 {
 		List<StringLocated> tmp = timLoader.getResultList();
 		tmp = Jaws.expands0(tmp);
 		tmp = Jaws.expandsJawsForPreprocessor(tmp);
-		// System.err.println("resultList=" + resultList);
-
-		final UmlSource source = UmlSource.create(tmp, false);
-		final Collection<DiagramType> diagramTypes = source.getDiagramTypes();
 
 		final PreprocessingArtifact preprocessing = timLoader.getPreprocessingArtifact();
 
 		if (timLoader.isPreprocessorError())
-			return new PSystemErrorPreprocessor(tmp, timLoader.getDebug(), timLoader.getPreprocessingArtifact());
+			return new PSystemErrorPreprocessor(tmp, timLoader.getDebug(), preprocessing);
+
+		return createDiagramFromPreprocessed(tmp, preprocessing);
+	}
+
+	public Diagram createDiagramFromPreprocessed(List<StringLocated> data, PreprocessingArtifact preprocessing) {
+		final UmlSource source = UmlSource.create(data, false);
+		final Collection<DiagramType> diagramTypes = source.getDiagramTypes();
 
 		final List<PSystemError> errors = new ArrayList<>();
 
@@ -142,7 +155,6 @@ public class PSystemBuilder2 {
 			final Diagram sys = lastFactory.createSystem(null, source, null, preprocessing);
 			if (isOk(sys))
 				return sys;
-
 		}
 
 		for (PSystemFactory f : factories) {
@@ -165,7 +177,6 @@ public class PSystemBuilder2 {
 			return new PSystemUnsupported(source, preprocessing);
 
 		return PSystemErrorUtils.merge(errors);
-
 	}
 
 	private boolean isOk(Diagram ps) {

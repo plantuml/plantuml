@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
 import net.sourceforge.plantuml.regex.Matcher2;
+import net.sourceforge.plantuml.teavm.PSystemBuilder2;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -71,7 +72,6 @@ import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.Version;
 
 public class BlockUml {
-	// ::remove file when __HAXE__
 
 	private final List<StringLocated> rawSource;
 	private final List<StringLocated> data;
@@ -92,14 +92,12 @@ public class BlockUml {
 		this(null, PathSystem.fetch(), convert(strings), Defines.createEmpty(), null, null);
 	}
 
-	// ::comment when __TEAVM__
 	public String getEncodedUrl() throws IOException {
 		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoder();
 		final String source = getDiagram().getSource().getPlainString("\n");
 		final String encoded = transcoder.encode(source);
 		return encoded;
 	}
-	// ::done
 
 	public String getFlashData() {
 		final StringBuilder sb = new StringBuilder();
@@ -160,7 +158,6 @@ public class BlockUml {
 		}
 	}
 
-	// ::comment when __TEAVM__
 	public String getFileOrDirname() {
 		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD))
 			return null;
@@ -187,29 +184,24 @@ public class BlockUml {
 		result = result.replaceAll("\\.\\w\\w\\w$", "");
 		return result;
 	}
-	// ::done
 
 	public Diagram getDiagram() {
-		if (!TeaVM.isTeaVM()) {
-			if (system == null) {
-				if (preprocessorError)
-					system = new PSystemErrorPreprocessor(data, debug, preprocessingArtifact);
-				else
-					system = new PSystemBuilder().createPSystem(pathSystem, data, rawSource, previous,
-							preprocessingArtifact);
-			}
-			return system;
-		} else {
-			throw new UnsupportedOperationException("TEAVM113");
+		if (system == null) {
+			if (preprocessorError)
+				system = new PSystemErrorPreprocessor(data, debug, preprocessingArtifact);
+			else if (!TeaVM.isTeaVM())
+				system = PSystemBuilder.getInstance().createPSystem(pathSystem, data, rawSource, previous,
+						preprocessingArtifact);
+			else
+				system = PSystemBuilder2.getInstance().createDiagramFromPreprocessed(data, preprocessingArtifact);
 		}
-
+		return system;
 	}
 
 	public final List<StringLocated> getData() {
 		return data;
 	}
 
-	// ::comment when __TEAVM__
 	private String internalEtag() {
 		try {
 			final AsciiEncoder coder = new AsciiEncoder();
@@ -228,7 +220,6 @@ public class BlockUml {
 	public String etag() {
 		return Version.etag() + internalEtag();
 	}
-	// ::done
 
 	public long lastModified() {
 		return (Version.compileTime() / 1000L / 60) * 1000L * 60 + Version.beta() * 1000L * 3600;

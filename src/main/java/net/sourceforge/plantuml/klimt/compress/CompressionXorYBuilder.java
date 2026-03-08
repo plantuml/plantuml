@@ -35,23 +35,64 @@
  */
 package net.sourceforge.plantuml.klimt.compress;
 
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 
-public class CompressionXorYBuilder {
-    // ::remove file when __HAXE__
+public class CompressionXorYBuilder implements TextBlock {
+	private final CompressionMode mode;
+	private final TextBlock textBlock;
 
-	public static TextBlock build(CompressionMode mode, TextBlock textBlock, StringBounder stringBounder) {
-		final PiecewiseAffineTransform affine = getPiecewiseAffineTransform(mode, textBlock, stringBounder);
-		return PiecewiseAffineOnXorYBuilder.build(mode, textBlock, affine);
+	private PiecewiseAffineTransform cachedAffine;
+	private MinMax cachedMinMax;
+
+	public static TextBlock build(CompressionMode mode, TextBlock textBlock) {
+		return new CompressionXorYBuilder(mode, textBlock);
 	}
 
-	private static PiecewiseAffineTransform getPiecewiseAffineTransform(CompressionMode mode, TextBlock textBlock,
-			StringBounder stringBounder) {
-		final SlotFinder slotFinder = SlotFinder.create(mode, stringBounder);
-		textBlock.drawU(slotFinder);
-		final SlotSet ysSlotSet = slotFinder.getSlotSet().reverse().smaller(5.0);
-		return new CompressionTransform(ysSlotSet);
+	private CompressionXorYBuilder(CompressionMode mode, TextBlock textBlock) {
+		this.mode = mode;
+		this.textBlock = textBlock;
+	}
+
+	private PiecewiseAffineTransform getAffineTransform(StringBounder stringBounder) {
+		if (cachedAffine == null) {
+			final SlotFinder slotFinder = SlotFinder.create(mode, stringBounder);
+			textBlock.drawU(slotFinder);
+			final SlotSet slotSet = slotFinder.getSlotSet().reverse().smaller(5.0);
+			cachedAffine = new CompressionTransform(slotSet);
+		}
+		return cachedAffine;
+	}
+
+	public void drawU(final UGraphic ug) {
+		final PiecewiseAffineTransform affine = getAffineTransform(ug.getStringBounder());
+		textBlock.drawU(UGraphicCompressOnXorY.create(mode, ug, affine));
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final PiecewiseAffineTransform affine = getAffineTransform(stringBounder);
+		final XDimension2D dim = textBlock.calculateDimension(stringBounder);
+		if (mode == CompressionMode.ON_X)
+			return new XDimension2D(affine.transform(dim.getWidth()), dim.getHeight());
+		else
+			return new XDimension2D(dim.getWidth(), affine.transform(dim.getHeight()));
+	}
+
+	@Override
+	public MinMax getMinMax(StringBounder stringBounder) {
+		if (cachedMinMax == null)
+			cachedMinMax = TextBlockUtils.getMinMax(this, stringBounder, false);
+
+		return cachedMinMax;
+	}
+
+	public HColor getBackcolor() {
+		return null;
 	}
 
 }

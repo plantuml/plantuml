@@ -216,16 +216,22 @@ public class Swimlanes implements TextBlock, Styleable {
 
 	}
 
-	public final void computeSize(StringBounder stringBounder) {
-		final SlotFinder ug = SlotFinder.create(CompressionMode.ON_Y, stringBounder);
-		if (swimlanes().size() > 1) {
-			TextBlock full = root.createFtile(getFtileFactory(stringBounder));
-			computeSizeInternal(ug, full);
-		}
+	private boolean sizeComputed;
 
+	private void ensureSizeComputed(StringBounder stringBounder) {
+		if (sizeComputed == false) {
+			sizeComputed = true;
+			if (swimlanes().size() > 1) {
+				final SlotFinder ug = SlotFinder.create(CompressionMode.ON_Y, stringBounder);
+				final TextBlock full = root.createFtile(getFtileFactory(stringBounder));
+				computeSizeInternal(ug, full);
+			}
+		}
 	}
 
 	public final void drawU(UGraphic ug) {
+		ensureSizeComputed(ug.getStringBounder());
+
 		if (Gtile.USE_GTILE) {
 			drawGtile(ug);
 			return;
@@ -435,6 +441,7 @@ public class Swimlanes implements TextBlock, Styleable {
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		ensureSizeComputed(stringBounder);
 		return getMinMax(stringBounder).getDimension();
 	}
 

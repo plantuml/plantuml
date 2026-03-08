@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.Line;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 import net.sourceforge.plantuml.log.Logme;
@@ -61,6 +62,8 @@ import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.teavm.PSystemBuilder2;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 
@@ -71,6 +74,8 @@ public class EmbeddedDiagram implements Line, Atom {
 
 	private PortableImage image;
 	private String svg;
+	private TextBlock textBlock;
+
 	private final Diagram diagram;
 
 	private EmbeddedDiagram(ISkinSimple skinParam, List<StringLocated> strings) {
@@ -114,36 +119,54 @@ public class EmbeddedDiagram implements Line, Atom {
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		try {
-			if (stringBounder.matchesProperty("SVG")) {
-				final String imageSvg = getImageSvg();
-				final UImageSvg svg = new UImageSvg(imageSvg, 1);
-				return new XDimension2D(svg.getWidth(), svg.getHeight());
+			if (!TeaVM.isTeaVM()) {
+				if (stringBounder.matchesProperty("SVG")) {
+					final String imageSvg = getImageSvg();
+					final UImageSvg svg = new UImageSvg(imageSvg, 1);
+					return new XDimension2D(svg.getWidth(), svg.getHeight());
+				}
+				final PortableImage im = getImage();
+				return new XDimension2D(im.getWidth(), im.getHeight());
+			} else {
+				final TextBlock tb = getInternalTextBlock();
+				final XDimension2D result = tb.calculateDimension(stringBounder);
+				PSystemBuilder2.getInstance().reset();
+				return result;
 			}
-			final PortableImage im = getImage();
-			return new XDimension2D(im.getWidth(), im.getHeight());
-		} catch (IOException e) {
-			Logme.error(e);
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 			Logme.error(e);
 		}
 		return new XDimension2D(42, 42);
 	}
 
+	public TextBlock getInternalTextBlock() throws Exception {
+		if (textBlock == null) {
+			PSystemBuilder2.getInstance().reset();
+			final UgDiagram ugDiagram = (UgDiagram) diagram;
+			textBlock = ugDiagram.getTextBlock12026(0, new FileFormatOption(FileFormat.SVG));
+		}
+		return textBlock;
+	}
+
 	public void drawU(UGraphic ug) {
 		try {
-			final boolean isSvg = ug.matchesProperty("SVG");
-			if (isSvg) {
-				final String imageSvg = getImageSvg();
-				final UImageSvg svg = new UImageSvg(imageSvg, 1);
-				ug.draw(svg);
-				return;
+			if (!TeaVM.isTeaVM()) {
+				final boolean isSvg = ug.matchesProperty("SVG");
+				if (isSvg) {
+					final String imageSvg = getImageSvg();
+					final UImageSvg svg = new UImageSvg(imageSvg, 1);
+					ug.draw(svg);
+					return;
+				}
+				final PortableImage im = getImage();
+				final UShape image = new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));
+				ug.draw(image);
+			} else {
+				final TextBlock tb = getInternalTextBlock();
+				tb.drawU(ug);
+				PSystemBuilder2.getInstance().reset();
 			}
-			final PortableImage im = getImage();
-			final UShape image = new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));
-			ug.draw(image);
-		} catch (IOException e) {
-			Logme.error(e);
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 			Logme.error(e);
 		}
 
@@ -158,10 +181,13 @@ public class EmbeddedDiagram implements Line, Atom {
 	}
 
 	private String getImageSvgSlow() throws IOException, InterruptedException {
-		final ByteArrayOutputStream os = new ByteArrayOutputStream();
-		diagram.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));
-		os.close();
-		return new String(os.toByteArray());
+		if (!TeaVM.isTeaVM()) {
+			final ByteArrayOutputStream os = new ByteArrayOutputStream();
+			diagram.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));
+			os.close();
+			return new String(os.toByteArray());
+		}
+		throw new UnsupportedOperationException("TEAVM4586");
 	}
 
 	private PortableImage getImage() throws IOException, InterruptedException {
@@ -173,10 +199,13 @@ public class EmbeddedDiagram implements Line, Atom {
 
 	private PortableImage getImageSlow() throws IOException, InterruptedException {
 		BrowserLog.consoleLog(getClass(), "=======getImageSlow");
-		final ByteArrayOutputStream os = new ByteArrayOutputStream();
-		diagram.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));
-		os.close();
-		return SImageIO.read(os.toByteArray());
+		if (!TeaVM.isTeaVM()) {
+			final ByteArrayOutputStream os = new ByteArrayOutputStream();
+			diagram.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));
+			os.close();
+			return SImageIO.read(os.toByteArray());
+		}
+		throw new UnsupportedOperationException("TEAVM4585");
 	}
 
 	public HorizontalAlignment getHorizontalAlignment() {

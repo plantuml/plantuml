@@ -62,7 +62,6 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -460,7 +459,7 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 	}
 
 	@Override
-	public TextBlock addChrome(TextBlock result, FileFormatOption fileFormatOption) {
+	public TextBlock addChrome(TextBlock result) {
 		final TitledDiagram titledDiagram = (TitledDiagram) this;
 		result = DiagramChromeFactory12026.create(result, titledDiagram, titledDiagram.getSkinParam(), getWarnings());
 		return result;

@@ -138,7 +138,6 @@ public class PlantUMLBrowser {
 	private static final StringBounder STRING_BOUNDER = new StringBounderTeaVM();
 	private static final ColorMapper COLOR_MAPPER = ColorMapper.TEAVM;
 	private static final HColor BACK = HColors.WHITE;
-	private static final PSystemBuilder2 BUILDER = new PSystemBuilder2();
 
 	// =========================================================================
 	// Worker thread synchronization
@@ -342,7 +341,7 @@ public class PlantUMLBrowser {
 			// Parse and render the diagram.
 			// For class diagrams, this will call GraphVizjsTeaVMEngine internally,
 			// which uses Viz.js for layout. The @Async magic happens here.
-			Diagram diagram = BUILDER.createDiagram(lines);
+			Diagram diagram = PSystemBuilder2.getInstance().createDiagram(lines);
 			final FileFormatOption fileFormat = new FileFormatOption(FileFormat.SVG);
 			if (diagram instanceof UgDiagram) {
 				BrowserLog.consoleLog(PlantUMLBrowser.class, "doRender new10");
