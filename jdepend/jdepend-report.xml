@@ -1857,13 +1857,13 @@
 
         <Package name="net.sourceforge.plantuml">
             <Stats>
-                <TotalClasses>42</TotalClasses>
-                <ConcreteClasses>29</ConcreteClasses>
+                <TotalClasses>39</TotalClasses>
+                <ConcreteClasses>26</ConcreteClasses>
                 <AbstractClasses>13</AbstractClasses>
                 <Ca>94</Ca>
-                <Ce>38</Ce>
-                <A>0.31</A>
-                <I>0.29</I>
+                <Ce>34</Ce>
+                <A>0.33</A>
+                <I>0.27</I>
                 <D>0.4</D>
                 <V>1</V>
             </Stats>
@@ -1913,15 +1913,6 @@
             <ConcreteClasses>
                 <Class sourceFile="AnimatedGifEncoder.java">
                     net.sourceforge.plantuml.AnimatedGifEncoder
-                </Class>
-                <Class sourceFile="AnnotatedBuilder.java">
-                    net.sourceforge.plantuml.AnnotatedBuilder
-                </Class>
-                <Class sourceFile="AnnotatedBuilder.java">
-                    net.sourceforge.plantuml.AnnotatedBuilder$1
-                </Class>
-                <Class sourceFile="AnnotatedWorker.java">
-                    net.sourceforge.plantuml.AnnotatedWorker
                 </Class>
                 <Class sourceFile="BlockUmlBuilder.java">
                     net.sourceforge.plantuml.BlockUmlBuilder
@@ -2010,7 +2001,6 @@
                 <Package>java.util</Package>
                 <Package>java.util.logging</Package>
                 <Package>net.sourceforge.plantuml.abel</Package>
-                <Package>net.sourceforge.plantuml.activitydiagram3.ftile</Package>
                 <Package>net.sourceforge.plantuml.api</Package>
                 <Package>net.sourceforge.plantuml.braille</Package>
                 <Package>net.sourceforge.plantuml.cli</Package>
@@ -2019,10 +2009,8 @@
                 <Package>net.sourceforge.plantuml.crash</Package>
                 <Package>net.sourceforge.plantuml.eggs</Package>
                 <Package>net.sourceforge.plantuml.error</Package>
-                <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
-                <Package>net.sourceforge.plantuml.klimt.creole</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
                 <Package>net.sourceforge.plantuml.klimt.font</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
@@ -2034,7 +2022,6 @@
                 <Package>net.sourceforge.plantuml.preproc2</Package>
                 <Package>net.sourceforge.plantuml.security</Package>
                 <Package>net.sourceforge.plantuml.stats</Package>
-                <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
@@ -2144,11 +2131,11 @@
                 <TotalClasses>30</TotalClasses>
                 <ConcreteClasses>22</ConcreteClasses>
                 <AbstractClasses>8</AbstractClasses>
-                <Ca>31</Ca>
+                <Ca>30</Ca>
                 <Ce>18</Ce>
                 <A>0.27</A>
-                <I>0.37</I>
-                <D>0.37</D>
+                <I>0.38</I>
+                <D>0.36</D>
                 <V>1</V>
             </Stats>
 
@@ -2294,7 +2281,6 @@
                 <Package>net.sourceforge.plantuml.posimo</Package>
                 <Package>net.sourceforge.plantuml.sdot</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
-                <Package>net.sourceforge.plantuml.sequencediagram.teoz</Package>
                 <Package>net.sourceforge.plantuml.statediagram.command</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>
@@ -2716,11 +2702,11 @@
                 <TotalClasses>62</TotalClasses>
                 <ConcreteClasses>56</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
-                <Ca>12</Ca>
+                <Ca>10</Ca>
                 <Ce>25</Ce>
                 <A>0.1</A>
-                <I>0.68</I>
-                <D>0.23</D>
+                <I>0.71</I>
+                <D>0.19</D>
                 <V>1</V>
             </Stats>
 
@@ -2945,7 +2931,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.command</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.ftile.vcompact</Package>
@@ -2953,7 +2938,6 @@
                 <Package>net.sourceforge.plantuml.activitydiagram3.ftile.vertical</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.gtile</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
-                <Package>net.sourceforge.plantuml.sequencediagram.teoz</Package>
                 <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>
@@ -8520,7 +8504,7 @@
                 <TotalClasses>21</TotalClasses>
                 <ConcreteClasses>11</ConcreteClasses>
                 <AbstractClasses>10</AbstractClasses>
-                <Ca>81</Ca>
+                <Ca>80</Ca>
                 <Ce>19</Ce>
                 <A>0.48</A>
                 <I>0.19</I>
@@ -8621,7 +8605,6 @@
 
             <UsedBy>
                 <Package>net.atmp</Package>
-                <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.abel</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.ftile</Package>
@@ -9068,7 +9051,7 @@
                 <TotalClasses>19</TotalClasses>
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
-                <Ca>67</Ca>
+                <Ca>66</Ca>
                 <Ce>12</Ce>
                 <A>0.21</A>
                 <I>0.15</I>
@@ -9155,7 +9138,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.abel</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram.command</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3</Package>
@@ -14655,11 +14637,11 @@
 
         <Package name="net.sourceforge.plantuml.sequencediagram.teoz">
             <Stats>
-                <TotalClasses>51</TotalClasses>
-                <ConcreteClasses>45</ConcreteClasses>
+                <TotalClasses>50</TotalClasses>
+                <ConcreteClasses>44</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>21</Ce>
+                <Ce>18</Ce>
                 <A>0.12</A>
                 <I>1</I>
                 <D>0.12</D>
@@ -14784,9 +14766,6 @@
                 <Class sourceFile="SequenceDiagramFileMakerTeoz.java">
                     net.sourceforge.plantuml.sequencediagram.teoz.SequenceDiagramFileMakerTeoz$1
                 </Class>
-                <Class sourceFile="SequenceDiagramFileMakerTeoz.java">
-                    net.sourceforge.plantuml.sequencediagram.teoz.SequenceDiagramFileMakerTeoz$Foo
-                </Class>
                 <Class sourceFile="Stairs.java">
                     net.sourceforge.plantuml.sequencediagram.teoz.Stairs
                 </Class>
@@ -14829,8 +14808,6 @@
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml</Package>
-                <Package>net.sourceforge.plantuml.abel</Package>
-                <Package>net.sourceforge.plantuml.activitydiagram3.ftile</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>
@@ -14846,7 +14823,6 @@
                 <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
-                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -15481,7 +15457,7 @@
                 <TotalClasses>22</TotalClasses>
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>7</AbstractClasses>
-                <Ca>69</Ca>
+                <Ca>68</Ca>
                 <Ce>17</Ce>
                 <A>0.32</A>
                 <I>0.2</I>
@@ -15582,7 +15558,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.abel</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram.command</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3</Package>
@@ -17935,7 +17910,7 @@
                 <TotalClasses>16</TotalClasses>
                 <ConcreteClasses>11</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>58</Ca>
+                <Ca>57</Ca>
                 <Ce>21</Ce>
                 <A>0.31</A>
                 <I>0.27</I>
@@ -18068,7 +18043,6 @@
                 <Package>net.sourceforge.plantuml.salt.element</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.command</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
-                <Package>net.sourceforge.plantuml.sequencediagram.teoz</Package>
                 <Package>net.sourceforge.plantuml.statediagram.command</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>

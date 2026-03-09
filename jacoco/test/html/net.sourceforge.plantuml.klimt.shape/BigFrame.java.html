@@ -43,74 +43,98 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
 public class BigFrame implements TextBlock {
 
 	private final TextBlock title;
-	private final double width;
-	private final double height;
+	private final TextBlock original;
+	private final ClockwiseTopRightBottomLeft padding;
 	private final Fashion symbolContext;
 
-<span class="nc" id="L55">	public BigFrame(final TextBlock title, final double width, final double height, final Fashion symbolContext) {</span>
-<span class="nc" id="L56">		this.title = title;</span>
-<span class="nc" id="L57">		this.width = width;</span>
-<span class="nc" id="L58">		this.height = height;</span>
-<span class="nc" id="L59">		this.symbolContext = symbolContext;</span>
-<span class="nc" id="L60">	}</span>
+	public BigFrame(final TextBlock title, final TextBlock original, final ClockwiseTopRightBottomLeft padding,
+<span class="nc" id="L58">			final Fashion symbolContext) {</span>
+<span class="nc" id="L59">		this.title = title;</span>
+<span class="nc" id="L60">		this.original = original;</span>
+<span class="nc" id="L61">		this.padding = padding;</span>
+<span class="nc" id="L62">		this.symbolContext = symbolContext;</span>
+<span class="nc" id="L63">	}</span>
 
 	private double getYpos(XDimension2D dimTitle) {
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (dimTitle.getWidth() == 0)</span>
-<span class="nc" id="L64">			return 12;</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (dimTitle.getWidth() == 0)</span>
+<span class="nc" id="L67">			return 12;</span>
 
-<span class="nc" id="L66">		return dimTitle.getHeight() + 3;</span>
+<span class="nc" id="L69">		return dimTitle.getHeight() + 3;</span>
+	}
+
+	private ClockwiseTopRightBottomLeft getEffectivePadding(StringBounder stringBounder) {
+<span class="nc" id="L73">		final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
+<span class="nc" id="L74">		return padding.incTop(dimTitle.getHeight() + 10);</span>
+	}
+
+	private double computeWidth(StringBounder stringBounder) {
+<span class="nc" id="L78">		final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
+<span class="nc" id="L79">		final ClockwiseTopRightBottomLeft effectivePadding = getEffectivePadding(stringBounder);</span>
+<span class="nc" id="L80">		final MinMax originalMinMax = TextBlockUtils.getMinMax(original, stringBounder, false);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		final double ww = originalMinMax.getMinX() &gt;= 0 ? originalMinMax.getMaxX() : originalMinMax.getWidth();</span>
+<span class="nc" id="L82">		return effectivePadding.getLeft() + Math.max(ww + 12, dimTitle.getWidth() + 10) + effectivePadding.getRight();</span>
+	}
+
+	private double computeHeight(StringBounder stringBounder) {
+<span class="nc" id="L86">		final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
+<span class="nc" id="L87">		final ClockwiseTopRightBottomLeft effectivePadding = getEffectivePadding(stringBounder);</span>
+<span class="nc" id="L88">		final MinMax originalMinMax = TextBlockUtils.getMinMax(original, stringBounder, false);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		final double hh = originalMinMax.getMinY() &gt;= 0 ? originalMinMax.getMaxY() : originalMinMax.getHeight();</span>
+<span class="nc" id="L90">		return effectivePadding.getTop() + dimTitle.getHeight() + hh + effectivePadding.getBottom();</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L70">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L71">		final XDimension2D dim = calculateDimension(stringBounder);</span>
-<span class="nc" id="L72">		ug = symbolContext.apply(ug);</span>
-<span class="nc" id="L73">		final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
-<span class="nc" id="L74">		final double widthFull = dim.getWidth();</span>
-<span class="nc" id="L75">		final Shadowable rectangle = URectangle.build(widthFull, dim.getHeight())</span>
-<span class="nc" id="L76">				.rounded(symbolContext.getRoundCorner()).ignoreForCompressionOnX().ignoreForCompressionOnY();</span>
-<span class="nc" id="L77">		rectangle.setDeltaShadow(symbolContext.getDeltaShadow());</span>
+<span class="nc" id="L94">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L95">		final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="nc" id="L96">		ug = symbolContext.apply(ug);</span>
+<span class="nc" id="L97">		final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
+<span class="nc" id="L98">		final double widthFull = dim.getWidth();</span>
+<span class="nc" id="L99">		final Shadowable rectangle = URectangle.build(widthFull, dim.getHeight())</span>
+<span class="nc" id="L100">				.rounded(symbolContext.getRoundCorner()).ignoreForCompressionOnX().ignoreForCompressionOnY();</span>
+<span class="nc" id="L101">		rectangle.setDeltaShadow(symbolContext.getDeltaShadow());</span>
 
-<span class="nc" id="L79">		ug.draw(rectangle);</span>
+<span class="nc" id="L103">		ug.draw(rectangle);</span>
 
 		final double textWidth;
 		final int cornersize;
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (dimTitle.getWidth() == 0) {</span>
-<span class="nc" id="L84">			textWidth = widthFull / 3;</span>
-<span class="nc" id="L85">			cornersize = 7;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (dimTitle.getWidth() == 0) {</span>
+<span class="nc" id="L108">			textWidth = widthFull / 3;</span>
+<span class="nc" id="L109">			cornersize = 7;</span>
 		} else {
-<span class="nc" id="L87">			textWidth = dimTitle.getWidth() + 10;</span>
-<span class="nc" id="L88">			cornersize = 10;</span>
+<span class="nc" id="L111">			textWidth = dimTitle.getWidth() + 10;</span>
+<span class="nc" id="L112">			cornersize = 10;</span>
 		}
-<span class="nc" id="L90">		final double textHeight = getYpos(dimTitle);</span>
+<span class="nc" id="L114">		final double textHeight = getYpos(dimTitle);</span>
 
-<span class="nc" id="L92">		final UPath line = UPath.none();</span>
-<span class="nc" id="L93">		line.setIgnoreForCompressionOnX();</span>
-<span class="nc" id="L94">		line.moveTo(textWidth, 0);</span>
+<span class="nc" id="L116">		final UPath line = UPath.none();</span>
+<span class="nc" id="L117">		line.setIgnoreForCompressionOnX();</span>
+<span class="nc" id="L118">		line.moveTo(textWidth, 0);</span>
 
-<span class="nc" id="L96">		line.lineTo(textWidth, textHeight - cornersize);</span>
-<span class="nc" id="L97">		line.lineTo(textWidth - cornersize, textHeight);</span>
+<span class="nc" id="L120">		line.lineTo(textWidth, textHeight - cornersize);</span>
+<span class="nc" id="L121">		line.lineTo(textWidth - cornersize, textHeight);</span>
 
-<span class="nc" id="L99">		line.lineTo(0, textHeight);</span>
-<span class="nc" id="L100">		ug.apply(HColors.none().bg()).draw(line);</span>
-<span class="nc" id="L101">		final double widthTitle = title.calculateDimension(stringBounder).getWidth();</span>
+<span class="nc" id="L123">		line.lineTo(0, textHeight);</span>
+<span class="nc" id="L124">		ug.apply(HColors.none().bg()).draw(line);</span>
+<span class="nc" id="L125">		final double widthTitle = title.calculateDimension(stringBounder).getWidth();</span>
 
 		// Temporary hack...
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (widthFull - widthTitle &lt; 25)</span>
-<span class="nc" id="L105">			title.drawU(ug.apply(new UTranslate(3, 1)));</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (widthFull - widthTitle &lt; 25)</span>
+<span class="nc" id="L129">			title.drawU(ug.apply(new UTranslate(3, 1)));</span>
 		else
-<span class="nc" id="L107">			ug.apply(new UTranslate(3, 1)).draw(new SpecialText(title));</span>
+<span class="nc" id="L131">			ug.apply(new UTranslate(3, 1)).draw(new SpecialText(title));</span>
 
-<span class="nc" id="L109">	}</span>
+<span class="nc" id="L133">	}</span>
 
 	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L113">		return new XDimension2D(width, height);</span>
+<span class="nc" id="L137">		return new XDimension2D(computeWidth(stringBounder), computeHeight(stringBounder));</span>
 	}
 
 }

@@ -120,53 +120,52 @@ public class NewpagedDiagram extends UgDiagram {
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception {
 <span class="nc" id="L121">		final TitledDiagram titledDiagram = (TitledDiagram) diagrams.get(num);</span>
 <span class="nc" id="L122">		TextBlock result = titledDiagram.getTextBlock12026(num, fileFormatOption);</span>
-<span class="nc" id="L123">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(titledDiagram.getSkinParam());</span>
-<span class="nc" id="L124">		result = DiagramChromeFactory12026.create(result, titledDiagram, titledDiagram.getSkinParam(), stringBounder,</span>
-<span class="nc" id="L125">				titledDiagram.getWarnings());</span>
+<span class="nc" id="L123">		result = DiagramChromeFactory12026.create(result, titledDiagram, titledDiagram.getSkinParam(),</span>
+<span class="nc" id="L124">				titledDiagram.getWarnings());</span>
 
-<span class="nc" id="L127">		return result;</span>
+<span class="nc" id="L126">		return result;</span>
 	}
 
 	@Override
 	protected TextBlockExporter12026 getExporter(int num, FileFormatOption fileFormatOption) throws Exception {
 
-<span class="nc" id="L133">		TextBlock result = getTextBlock12026(num, fileFormatOption);</span>
+<span class="nc" id="L132">		TextBlock result = getTextBlock12026(num, fileFormatOption);</span>
 
-<span class="nc" id="L135">		final HColor backColor = calculateBackColor();</span>
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (backColor != null)</span>
-<span class="nc" id="L137">			result = TextBlockUtils.addBackcolor(result, backColor);</span>
+<span class="nc" id="L134">		final HColor backColor = calculateBackColor();</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (backColor != null)</span>
+<span class="nc" id="L136">			result = TextBlockUtils.addBackcolor(result, backColor);</span>
 
-<span class="nc" id="L139">		final ColorMapper mutedMapper = muteColorMapper(fileFormatOption.getColorMapper());</span>
-<span class="nc" id="L140">		final FileFormatOption effectiveFormat = fileFormatOption.withColorMapper(mutedMapper);</span>
+<span class="nc" id="L138">		final ColorMapper mutedMapper = muteColorMapper(fileFormatOption.getColorMapper());</span>
+<span class="nc" id="L139">		final FileFormatOption effectiveFormat = fileFormatOption.withColorMapper(mutedMapper);</span>
 
-<span class="nc" id="L142">		final TitledDiagram titledDiagram = (TitledDiagram) diagrams.get(num);</span>
+<span class="nc" id="L141">		final TitledDiagram titledDiagram = (TitledDiagram) diagrams.get(num);</span>
 
-<span class="nc" id="L144">		final TextBlockExporter12026.Builder builder = TextBlockExporter12026.builder(result, effectiveFormat,</span>
-<span class="nc" id="L145">				titledDiagram.isHandwritten());</span>
+<span class="nc" id="L143">		final TextBlockExporter12026.Builder builder = TextBlockExporter12026.builder(result, effectiveFormat,</span>
+<span class="nc" id="L144">				titledDiagram.isHandwritten());</span>
 
-<span class="nc" id="L147">		builder.styled(titledDiagram);</span>
+<span class="nc" id="L146">		builder.styled(titledDiagram);</span>
 
-<span class="nc" id="L149">		return builder.build();</span>
+<span class="nc" id="L148">		return builder.build();</span>
 
 	}
 
 	public int getCardinality() {
-<span class="nc" id="L154">		int nb = 0;</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		for (UgDiagram d : diagrams)</span>
-<span class="nc" id="L156">			nb += d.getNbImages();</span>
+<span class="nc" id="L153">		int nb = 0;</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		for (UgDiagram d : diagrams)</span>
+<span class="nc" id="L155">			nb += d.getNbImages();</span>
 
-<span class="nc" id="L158">		return nb;</span>
+<span class="nc" id="L157">		return nb;</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L162">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L163" title="All 2 branches missed.">		for (UgDiagram d : diagrams) {</span>
-<span class="nc bnc" id="L164" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
-<span class="nc" id="L165">				sb.append(&quot; &quot;);</span>
+<span class="nc" id="L161">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		for (UgDiagram d : diagrams) {</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
+<span class="nc" id="L164">				sb.append(&quot; &quot;);</span>
 
-<span class="nc" id="L167">			sb.append(d.getDescription());</span>
-<span class="nc" id="L168">		}</span>
-<span class="nc" id="L169">		return new DiagramDescription(sb.toString());</span>
+<span class="nc" id="L166">			sb.append(d.getDescription());</span>
+<span class="nc" id="L167">		}</span>
+<span class="nc" id="L168">		return new DiagramDescription(sb.toString());</span>
 	}
 
 //	public String getWarningOrError() {
@@ -187,25 +186,25 @@ public class NewpagedDiagram extends UgDiagram {
 
 	@Override
 	public void makeDiagramReady() {
-<span class="nc" id="L190">		super.makeDiagramReady();</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">		for (UgDiagram diagram : diagrams)</span>
-<span class="nc" id="L192">			diagram.makeDiagramReady();</span>
+<span class="nc" id="L189">		super.makeDiagramReady();</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		for (UgDiagram diagram : diagrams)</span>
+<span class="nc" id="L191">			diagram.makeDiagramReady();</span>
 
-<span class="nc" id="L194">	}</span>
+<span class="nc" id="L193">	}</span>
 
 	@Override
 	public String checkFinalError() {
-<span class="nc bnc" id="L198" title="All 2 branches missed.">		for (UgDiagram p : getDiagrams()) {</span>
-<span class="nc" id="L199">			final String check = ((Diagram) p).checkFinalError();</span>
-<span class="nc bnc" id="L200" title="All 2 branches missed.">			if (check != null)</span>
-<span class="nc" id="L201">				return check;</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		for (UgDiagram p : getDiagrams()) {</span>
+<span class="nc" id="L198">			final String check = ((Diagram) p).checkFinalError();</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">			if (check != null)</span>
+<span class="nc" id="L200">				return check;</span>
 
-<span class="nc" id="L203">		}</span>
-<span class="nc" id="L204">		return super.checkFinalError();</span>
+<span class="nc" id="L202">		}</span>
+<span class="nc" id="L203">		return super.checkFinalError();</span>
 	}
 
 	public final List&lt;UgDiagram&gt; getDiagrams() {
-<span class="nc" id="L208">		return Collections.unmodifiableList(diagrams);</span>
+<span class="nc" id="L207">		return Collections.unmodifiableList(diagrams);</span>
 	}
 
 }
