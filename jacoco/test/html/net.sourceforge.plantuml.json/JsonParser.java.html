@@ -194,10 +194,10 @@ public class JsonParser {
 <span class="nc" id="L194">			throw error(&quot;Nesting too deep&quot;);</span>
 		}
 <span class="fc" id="L196">		skipWhiteSpace();</span>
-<span class="pc bpc" id="L197" title="1 of 2 branches missed.">		if (readChar(']')) {</span>
-<span class="nc" id="L198">			nestingLevel--;</span>
-<span class="nc" id="L199">			handler.endArray(array);</span>
-<span class="nc" id="L200">			return;</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">		if (readChar(']')) {</span>
+<span class="fc" id="L198">			nestingLevel--;</span>
+<span class="fc" id="L199">			handler.endArray(array);</span>
+<span class="fc" id="L200">			return;</span>
 		}
 		do {
 <span class="fc" id="L203">			skipWhiteSpace();</span>
@@ -375,7 +375,7 @@ public class JsonParser {
 <span class="pc bpc" id="L375" title="1 of 2 branches missed.">		if (!readDigit()) {</span>
 <span class="nc" id="L376">			throw expected(&quot;digit&quot;);</span>
 		}
-<span class="pc bpc" id="L378" title="1 of 2 branches missed.">		if (firstDigit != '0') {</span>
+<span class="fc bfc" id="L378" title="All 2 branches covered.">		if (firstDigit != '0') {</span>
 <span class="fc bfc" id="L379" title="All 2 branches covered.">			while (readDigit()) {</span>
 			}
 		}
@@ -391,7 +391,7 @@ public class JsonParser {
 <span class="pc bpc" id="L391" title="1 of 2 branches missed.">		if (!readDigit()) {</span>
 <span class="nc" id="L392">			throw expected(&quot;digit&quot;);</span>
 		}
-<span class="pc bpc" id="L394" title="1 of 2 branches missed.">		while (readDigit()) {</span>
+<span class="fc bfc" id="L394" title="All 2 branches covered.">		while (readDigit()) {</span>
 		}
 <span class="fc" id="L396">		return true;</span>
 	}
@@ -435,9 +435,9 @@ public class JsonParser {
 
 	private void read() throws IOException {
 <span class="fc bfc" id="L437" title="All 2 branches covered.">		if (index == fill) {</span>
-<span class="pc bpc" id="L438" title="1 of 2 branches missed.">			if (captureStart != -1) {</span>
-<span class="nc" id="L439">				captureBuffer.append(buffer, captureStart, fill - captureStart);</span>
-<span class="nc" id="L440">				captureStart = 0;</span>
+<span class="fc bfc" id="L438" title="All 2 branches covered.">			if (captureStart != -1) {</span>
+<span class="fc" id="L439">				captureBuffer.append(buffer, captureStart, fill - captureStart);</span>
+<span class="fc" id="L440">				captureStart = 0;</span>
 			}
 <span class="fc" id="L442">			bufferOffset += fill;</span>
 <span class="fc" id="L443">			fill = reader.read(buffer, 0, buffer.length);</span>

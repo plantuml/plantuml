@@ -72,32 +72,32 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
 
-<span class="nc bnc" id="L75" title="All 3 branches missed.">		switch (values.size()) {</span>
+<span class="pc bpc" id="L75" title="1 of 3 branches missed.">		switch (values.size()) {</span>
 		case 0:
-<span class="nc" id="L77">			final JsonArray result = new JsonArray();</span>
+<span class="fc" id="L77">			final JsonArray result = new JsonArray();</span>
 			try {
-<span class="nc bnc" id="L79" title="All 2 branches missed.">				for (String name : Stdlib.getAllFolderNames()) {</span>
-<span class="nc" id="L80">					result.add(name);</span>
-<span class="nc" id="L81">				}</span>
-<span class="nc" id="L82">				return TValue.fromJson(result);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">				for (String name : Stdlib.getAllFolderNames()) {</span>
+<span class="fc" id="L80">					result.add(name);</span>
+<span class="fc" id="L81">				}</span>
+<span class="fc" id="L82">				return TValue.fromJson(result);</span>
 <span class="nc" id="L83">			} catch (IOException e) {</span>
 <span class="nc" id="L84">				Logme.error(e);</span>
 <span class="nc" id="L85">				return TValue.fromJson(result);</span>
 			}
 
 		case 1:
-<span class="nc" id="L89">			final JsonObject res = new JsonObject();</span>
+<span class="fc" id="L89">			final JsonObject res = new JsonObject();</span>
 			try {
 				// Inspired by Stdlib.addInfoVersion
-<span class="nc bnc" id="L92" title="All 2 branches missed.">				for (String name : Stdlib.getAllFolderNames()) {</span>
-<span class="nc" id="L93">					final Stdlib folder = Stdlib.retrieve(name);</span>
-<span class="nc" id="L94">					final JsonObject object = Json.object() //</span>
-<span class="nc" id="L95">							.add(&quot;name&quot;, name) //</span>
-<span class="nc" id="L96">							.add(&quot;version&quot;, folder.getVersion()) //</span>
-<span class="nc" id="L97">							.add(&quot;source&quot;, folder.getSource());</span>
-<span class="nc" id="L98">					res.add(name, object);</span>
-<span class="nc" id="L99">				}</span>
-<span class="nc" id="L100">				return TValue.fromJson(res);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">				for (String name : Stdlib.getAllFolderNames()) {</span>
+<span class="fc" id="L93">					final Stdlib folder = Stdlib.retrieve(name);</span>
+<span class="fc" id="L94">					final JsonObject object = Json.object() //</span>
+<span class="fc" id="L95">							.add(&quot;name&quot;, name) //</span>
+<span class="fc" id="L96">							.add(&quot;version&quot;, folder.getVersion()) //</span>
+<span class="fc" id="L97">							.add(&quot;source&quot;, folder.getSource());</span>
+<span class="fc" id="L98">					res.add(name, object);</span>
+<span class="fc" id="L99">				}</span>
+<span class="fc" id="L100">				return TValue.fromJson(res);</span>
 <span class="nc" id="L101">			} catch (IOException e) {</span>
 <span class="nc" id="L102">				Logme.error(e);</span>
 <span class="nc" id="L103">				return TValue.fromJson(res);</span>
