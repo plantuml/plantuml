@@ -134,7 +134,7 @@ import net.sourceforge.plantuml.utils.Log;
 	}
 
 	private static Theme loadFileTheme(PathSystem pathSystem, String name, String from) throws IOException {
-<span class="nc" id="L137">		final InputFile file = pathSystem.getInputFile(from + getFilename(name));</span>
+<span class="nc" id="L137">		final InputFile file = pathSystem.getInputFile(getFullPath(from, name));</span>
 <span class="nc" id="L138">		final InputStream is = file.newInputStream();</span>
 <span class="nc bnc" id="L139" title="All 2 branches missed.">		if (is == null)</span>
 <span class="nc" id="L140">			return null;</span>

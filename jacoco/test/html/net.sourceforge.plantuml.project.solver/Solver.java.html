@@ -60,10 +60,10 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 //	}
 
 	public final void setData(TaskAttribute attribute, PValue value) {
-<span class="fc bfc" id="L63" title="All 2 branches covered.">		if (value instanceof TimePoint) {</span>
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">			if (value.toString().endsWith(&quot;T00:00&quot;) == false)</span>
-<span class="nc" id="L65">				throw new IllegalArgumentException(value.toString());</span>
-		}
+//		if (value instanceof TimePoint) {
+//			if (value.toString().endsWith(&quot;T00:00&quot;) == false)
+//				throw new IllegalArgumentException(value.toString());
+//		}
 <span class="fc" id="L67">		final PValue previous = values.remove(attribute);</span>
 <span class="pc bpc" id="L68" title="1 of 4 branches missed.">		if (previous != null &amp;&amp; attribute == TaskAttribute.START) {</span>
 <span class="nc" id="L69">			final TimePoint previousInstant = (TimePoint) previous;</span>
