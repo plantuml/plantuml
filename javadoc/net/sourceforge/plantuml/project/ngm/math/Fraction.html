@@ -215,33 +215,39 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <div class="block">Multiplies this fraction by another fraction.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#negate()" class="member-name-link">negate</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#multiplyByLong(long)" class="member-name-link">multiplyByLong</a><wbr>(long&nbsp;scalar)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Negates this fraction.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#of(long)" class="member-name-link">of</a><wbr>(long&nbsp;value)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Creates a fraction representing an integer.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#reciprocal()" class="member-name-link">reciprocal</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Calculate reciprocal fraction.</div>
+<div class="block">Multiplies this fraction by a long integer, avoiding the overhead of
+ creating an intermediate <a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math"><code>Fraction</code></a> object.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#subtract(net.sourceforge.plantuml.project.ngm.math.Fraction)" class="member-name-link">subtract</a><wbr>(<a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a>&nbsp;other)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#negate()" class="member-name-link">negate</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Negates this fraction.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#of(long)" class="member-name-link">of</a><wbr>(long&nbsp;value)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a fraction representing an integer.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#reciprocal()" class="member-name-link">reciprocal</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Calculate reciprocal fraction.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#subtract(net.sourceforge.plantuml.project.ngm.math.Fraction)" class="member-name-link">subtract</a><wbr>(<a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a>&nbsp;other)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Subtracts another fraction from this one.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a human-readable representation such as "3/4" or "5".</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#wholePart()" class="member-name-link">wholePart</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#wholePart()" class="member-name-link">wholePart</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the whole part of the fraction (integer division).</div>
 </div>
 </div>
@@ -427,6 +433,20 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <dd>the product of this fraction and the other fraction</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if other is null</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="multiplyByLong(long)">
+<h3>multiplyByLong</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math">Fraction</a></span>&nbsp;<span class="element-name">multiplyByLong</span><wbr><span class="parameters">(long&nbsp;scalar)</span></div>
+<div class="block">Multiplies this fraction by a long integer, avoiding the overhead of
+ creating an intermediate <a href="Fraction.html" title="class in net.sourceforge.plantuml.project.ngm.math"><code>Fraction</code></a> object.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>scalar</code> - the integer to multiply with</dd>
+<dt>Returns:</dt>
+<dd>the product of this fraction and the scalar</dd>
 </dl>
 </section>
 </li>

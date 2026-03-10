@@ -108,7 +108,7 @@ public class LoadIntegrator {
 
 <span class="fc" id="L109">			final long segmentSeconds = Math.abs(Duration.between(effectiveStart, segment.endExclusive()).getSeconds());</span>
 			// Load consumed in this segment = loadRate * duration (in seconds)
-<span class="fc" id="L111">			final Fraction segmentLoad = loadRate.multiply(new Fraction(segmentSeconds, 1));</span>
+<span class="fc" id="L111">			final Fraction segmentLoad = loadRate.multiplyByLong(segmentSeconds);</span>
 
 <span class="fc bfc" id="L113" title="All 2 branches covered.">			if (segmentLoad.compareTo(remainingLoad) &gt;= 0) {</span>
 				// This segment completes the work

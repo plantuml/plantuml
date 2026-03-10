@@ -1319,6 +1319,10 @@
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
 
+        <Package name="java.util.function">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
         <Package name="java.util.logging">
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
@@ -13087,14 +13091,14 @@
 
         <Package name="net.sourceforge.plantuml.project.ngm.math">
             <Stats>
-                <TotalClasses>10</TotalClasses>
-                <ConcreteClasses>8</ConcreteClasses>
+                <TotalClasses>11</TotalClasses>
+                <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>6</Ca>
-                <Ce>4</Ce>
-                <A>0.2</A>
-                <I>0.4</I>
-                <D>0.4</D>
+                <Ce>5</Ce>
+                <A>0.18</A>
+                <I>0.45</I>
+                <D>0.36</D>
                 <V>1</V>
             </Stats>
 
@@ -13110,6 +13114,9 @@
             <ConcreteClasses>
                 <Class sourceFile="AbstractPiecewiseConstant.java">
                     net.sourceforge.plantuml.project.ngm.math.AbstractPiecewiseConstant$1
+                </Class>
+                <Class sourceFile="Combiner.java">
+                    net.sourceforge.plantuml.project.ngm.math.Combiner
                 </Class>
                 <Class sourceFile="LoadIntegrator.java">
                     net.sourceforge.plantuml.project.ngm.math.LoadIntegrator
@@ -13138,6 +13145,7 @@
                 <Package>java.lang</Package>
                 <Package>java.time</Package>
                 <Package>java.util</Package>
+                <Package>java.util.function</Package>
                 <Package>net.sourceforge.plantuml.project.ngm</Package>
             </DependsUpon>
 

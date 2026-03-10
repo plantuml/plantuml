@@ -107,6 +107,24 @@ public final class PiecewiseConstantSpecificDays extends AbstractPiecewiseConsta
 	}
 
 	/**
+	 * Creates a PiecewiseConstantSpecificDays with the given default value and
+	 * a pre-built day-to-fraction mapping.
+	 *
+	 * &lt;p&gt;
+	 * This factory method avoids the O(N²) cost of chaining N calls to
+	 * {@link #withDay(LocalDate, Fraction)}, each of which copies the internal
+	 * map. Instead, the caller builds the map once and passes it in.
+	 * &lt;/p&gt;
+	 *
+	 * @param defaultValue  The default workload fraction.
+	 * @param dayToFraction Mapping of specific dates to their workload fractions.
+	 * @return A new PiecewiseConstantSpecificDays instance.
+	 */
+	public static PiecewiseConstantSpecificDays of(Fraction defaultValue, Map&lt;LocalDate, Fraction&gt; dayToFraction) {
+<span class="nc" id="L124">		return new PiecewiseConstantSpecificDays(defaultValue, new HashMap&lt;&gt;(dayToFraction));</span>
+	}
+
+	/**
 	 * Returns a new PiecewiseConstantSpecificDays with the specified day associated
 	 * with the given fraction.
 	 * 
@@ -116,31 +134,31 @@ public final class PiecewiseConstantSpecificDays extends AbstractPiecewiseConsta
 	 *         mapping.
 	 */
 	public PiecewiseConstantSpecificDays withDay(LocalDate day, Fraction value) {
-<span class="fc" id="L119">		final Map&lt;LocalDate, Fraction&gt; newDayToFraction = new HashMap&lt;&gt;(dayToFraction);</span>
-<span class="fc" id="L120">		newDayToFraction.put(day, value);</span>
-<span class="fc" id="L121">		return new PiecewiseConstantSpecificDays(defaultValue, newDayToFraction);</span>
+<span class="fc" id="L137">		final Map&lt;LocalDate, Fraction&gt; newDayToFraction = new HashMap&lt;&gt;(dayToFraction);</span>
+<span class="fc" id="L138">		newDayToFraction.put(day, value);</span>
+<span class="fc" id="L139">		return new PiecewiseConstantSpecificDays(defaultValue, newDayToFraction);</span>
 	}
 
 	@Override
 	public Segment segmentAt(LocalDateTime instant, TimeDirection direction) {
-<span class="fc bfc" id="L126" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD) {</span>
-<span class="fc" id="L127">			final LocalDate day = instant.toLocalDate();</span>
-<span class="fc" id="L128">			final LocalDateTime start = day.atStartOfDay();</span>
-<span class="fc" id="L129">			final Fraction value = getValue(day);</span>
-<span class="fc" id="L130">			return Segment.forward(start, start.plusDays(1), value);</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD) {</span>
+<span class="fc" id="L145">			final LocalDate day = instant.toLocalDate();</span>
+<span class="fc" id="L146">			final LocalDateTime start = day.atStartOfDay();</span>
+<span class="fc" id="L147">			final Fraction value = getValue(day);</span>
+<span class="fc" id="L148">			return Segment.forward(start, start.plusDays(1), value);</span>
 		}
 
 		// BACKWARD: determine which day contains the instant
 		final LocalDate day;
-<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (instant.toLocalTime().equals(LocalTime.MIDNIGHT))</span>
-<span class="fc" id="L136">			day = instant.toLocalDate().minusDays(1);</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		if (instant.toLocalTime().equals(LocalTime.MIDNIGHT))</span>
+<span class="fc" id="L154">			day = instant.toLocalDate().minusDays(1);</span>
 		else
-<span class="fc" id="L138">			day = instant.toLocalDate();</span>
+<span class="fc" id="L156">			day = instant.toLocalDate();</span>
 
-<span class="fc" id="L140">		final LocalDateTime end = day.atStartOfDay();</span>
-<span class="fc" id="L141">		final Fraction value = getValue(day);</span>
+<span class="fc" id="L158">		final LocalDateTime end = day.atStartOfDay();</span>
+<span class="fc" id="L159">		final Fraction value = getValue(day);</span>
 
-<span class="fc" id="L143">		return Segment.backward(end.plusDays(1), end, value);</span>
+<span class="fc" id="L161">		return Segment.backward(end.plusDays(1), end, value);</span>
 
 	}
 

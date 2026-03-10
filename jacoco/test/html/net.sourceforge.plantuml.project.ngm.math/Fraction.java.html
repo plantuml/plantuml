@@ -180,6 +180,17 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	}
 
 	/**
+	 * Multiplies this fraction by a long integer, avoiding the overhead of
+	 * creating an intermediate {@link Fraction} object.
+	 *
+	 * @param scalar the integer to multiply with
+	 * @return the product of this fraction and the scalar
+	 */
+	public Fraction multiplyByLong(long scalar) {
+<span class="fc" id="L190">		return new Fraction(this.num * scalar, this.den);</span>
+	}
+
+	/**
 	 * Divides this fraction by another fraction.
 	 * 
 	 * @param other the other fraction to divide by
@@ -187,7 +198,7 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 * @throws NullPointerException if other is null
 	 */
 	public Fraction divide(Fraction other) {
-<span class="fc" id="L190">		return this.multiply(other.reciprocal());</span>
+<span class="fc" id="L201">		return this.multiply(other.reciprocal());</span>
 	}
 
 	/**
@@ -196,7 +207,7 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 * @return the whole part
 	 */
 	public long wholePart() {
-<span class="fc" id="L199">		return this.num / this.den;</span>
+<span class="fc" id="L210">		return this.num / this.den;</span>
 	}
 
 	/**
@@ -206,10 +217,10 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 */
 	@Override
 	public String toString() {
-<span class="fc bfc" id="L209" title="All 2 branches covered.">		if (den == 1)</span>
-<span class="fc" id="L210">			return Long.toString(num);</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">		if (den == 1)</span>
+<span class="fc" id="L221">			return Long.toString(num);</span>
 
-<span class="fc" id="L212">		return num + &quot;/&quot; + den;</span>
+<span class="fc" id="L223">		return num + &quot;/&quot; + den;</span>
 	}
 
 	/**
@@ -223,12 +234,12 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 */
 	@Override
 	public int compareTo(Fraction other) {
-<span class="fc" id="L226">		Objects.requireNonNull(other, &quot;other fraction must not be null&quot;);</span>
+<span class="fc" id="L237">		Objects.requireNonNull(other, &quot;other fraction must not be null&quot;);</span>
 
 		// Compare a/b and c/d by cross-products: ad ? bc
-<span class="fc" id="L229">		long lhs = this.num * other.den;</span>
-<span class="fc" id="L230">		long rhs = other.num * this.den;</span>
-<span class="fc" id="L231">		return Long.compare(lhs, rhs);</span>
+<span class="fc" id="L240">		long lhs = this.num * other.den;</span>
+<span class="fc" id="L241">		long rhs = other.num * this.den;</span>
+<span class="fc" id="L242">		return Long.compare(lhs, rhs);</span>
 	}
 
 	/**
@@ -236,36 +247,36 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-<span class="fc bfc" id="L239" title="All 2 branches covered.">		if (this == obj)</span>
-<span class="fc" id="L240">			return true;</span>
-<span class="pc bpc" id="L241" title="1 of 2 branches missed.">		if (!(obj instanceof Fraction))</span>
-<span class="nc" id="L242">			return false;</span>
-<span class="fc" id="L243">		Fraction other = (Fraction) obj;</span>
-<span class="pc bpc" id="L244" title="1 of 4 branches missed.">		return this.num == other.num &amp;&amp; this.den == other.den;</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">		if (this == obj)</span>
+<span class="fc" id="L251">			return true;</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">		if (!(obj instanceof Fraction))</span>
+<span class="nc" id="L253">			return false;</span>
+<span class="fc" id="L254">		Fraction other = (Fraction) obj;</span>
+<span class="pc bpc" id="L255" title="1 of 4 branches missed.">		return this.num == other.num &amp;&amp; this.den == other.den;</span>
 	}
 
 	@Override
 	public int hashCode() {
 		// Simple and stable hash since the class is immutable
-<span class="fc" id="L250">		int result = Long.hashCode(num);</span>
-<span class="fc" id="L251">		result = 31 * result + Long.hashCode(den);</span>
-<span class="fc" id="L252">		return result;</span>
+<span class="fc" id="L261">		int result = Long.hashCode(num);</span>
+<span class="fc" id="L262">		result = 31 * result + Long.hashCode(den);</span>
+<span class="fc" id="L263">		return result;</span>
 	}
 
 	/**
 	 * Computes the greatest common divisor using the Euclidean algorithm.
 	 */
 	private static long gcd(long a, long b) {
-<span class="fc bfc" id="L259" title="All 2 branches covered.">		while (b != 0) {</span>
-<span class="fc" id="L260">			long t = b;</span>
-<span class="fc" id="L261">			b = a % b;</span>
-<span class="fc" id="L262">			a = t;</span>
-<span class="fc" id="L263">		}</span>
-<span class="fc" id="L264">		return a;</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">		while (b != 0) {</span>
+<span class="fc" id="L271">			long t = b;</span>
+<span class="fc" id="L272">			b = a % b;</span>
+<span class="fc" id="L273">			a = t;</span>
+<span class="fc" id="L274">		}</span>
+<span class="fc" id="L275">		return a;</span>
 	}
 
 	public boolean isZero() {
-<span class="nc bnc" id="L268" title="All 2 branches missed.">		return num == 0;</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">		return num == 0;</span>
 	}
 
 }

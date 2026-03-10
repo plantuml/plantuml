@@ -203,6 +203,10 @@ class "java.util.concurrent.atomic"{
 
 }
 
+class "java.util.function"{
+
+}
+
 class "java.util.logging"{
 
 }
@@ -2578,12 +2582,13 @@ Total Classes: 4
 "net.sourceforge.plantuml.project.ngm" --> "java.time"
 "net.sourceforge.plantuml.project.ngm" --> "net.sourceforge.plantuml.project.ngm.math"
 
-class "net.sourceforge.plantuml.project.ngm.math" %lighten("red", 60) {
-Total Classes: 10
+class "net.sourceforge.plantuml.project.ngm.math" %lighten("red", 64) {
+Total Classes: 11
 }
 "net.sourceforge.plantuml.project.ngm.math" --> "java.lang"
 "net.sourceforge.plantuml.project.ngm.math" --> "java.time"
 "net.sourceforge.plantuml.project.ngm.math" --> "java.util"
+"net.sourceforge.plantuml.project.ngm.math" --> "java.util.function"
 "net.sourceforge.plantuml.project.ngm.math" --> "net.sourceforge.plantuml.project.ngm"
 
 class "net.sourceforge.plantuml.project.solver" %lighten("red", 88) {

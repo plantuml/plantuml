@@ -334,7 +334,7 @@ public final class Segment {
 	 *                                  overlapping range exists among the segments
 	 * @throws NullPointerException     if {@code segments} is {@code null}
 	 */
-	public static Segment intersection(List&lt;Segment&gt; segments) {
+	public static Segment intersection(Segment[] segments) {
 <span class="fc" id="L338">		return intersection(segments, Fraction.PRODUCT);</span>
 	}
 
@@ -369,23 +369,23 @@ public final class Segment {
 	 * @throws NullPointerException     if {@code segments} or {@code valueFunction}
 	 *                                  is {@code null}
 	 */
-	public static Segment intersection(List&lt;Segment&gt; segments, BiFunction&lt;Fraction, Fraction, Fraction&gt; valueFunction) {
+	public static Segment intersection(Segment[] segments, BiFunction&lt;Fraction, Fraction, Fraction&gt; valueFunction) {
 <span class="fc" id="L373">		Objects.requireNonNull(valueFunction, &quot;valueFunction must not be null&quot;);</span>
 
-<span class="fc bfc" id="L375" title="All 2 branches covered.">		if (segments.isEmpty())</span>
+<span class="fc bfc" id="L375" title="All 2 branches covered.">		if (segments.length == 0)</span>
 <span class="fc" id="L376">			throw new IllegalArgumentException(&quot;No segments to intersect&quot;);</span>
 
-<span class="fc bfc" id="L378" title="All 2 branches covered.">		if (segments.size() == 1)</span>
-<span class="fc" id="L379">			return segments.get(0);</span>
+<span class="fc bfc" id="L378" title="All 2 branches covered.">		if (segments.length == 1)</span>
+<span class="fc" id="L379">			return segments[0];</span>
 
-<span class="fc" id="L381">		final TimeDirection direction = segments.get(0).getTimeDirection();</span>
+<span class="fc" id="L381">		final TimeDirection direction = segments[0].getTimeDirection();</span>
 
-<span class="fc" id="L383">		LocalDateTime start = segments.get(0).startExclusive();</span>
-<span class="fc" id="L384">		LocalDateTime end = segments.get(0).endExclusive();</span>
-<span class="fc" id="L385">		Fraction combinedValue = segments.get(0).getValue();</span>
+<span class="fc" id="L383">		LocalDateTime start = segments[0].startExclusive();</span>
+<span class="fc" id="L384">		LocalDateTime end = segments[0].endExclusive();</span>
+<span class="fc" id="L385">		Fraction combinedValue = segments[0].getValue();</span>
 
-<span class="fc bfc" id="L387" title="All 2 branches covered.">		for (int i = 1; i &lt; segments.size(); i++) {</span>
-<span class="fc" id="L388">			final Segment segment = segments.get(i);</span>
+<span class="fc bfc" id="L387" title="All 2 branches covered.">		for (int i = 1; i &lt; segments.length; i++) {</span>
+<span class="fc" id="L388">			final Segment segment = segments[i];</span>
 
 <span class="fc bfc" id="L390" title="All 2 branches covered.">			if (segment.getTimeDirection() != direction)</span>
 <span class="fc" id="L391">				throw new IllegalArgumentException(&quot;All segments must have the same direction&quot;);</span>
@@ -416,11 +416,12 @@ public final class Segment {
 		}
 	}
 
+
 	public LocalDateTime computeClampedStart(LocalDateTime current) {
-<span class="fc bfc" id="L420" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD)</span>
-<span class="fc bfc" id="L421" title="All 2 branches covered.">			return current.isAfter(startExclusive()) ? current : startExclusive();</span>
+<span class="fc bfc" id="L421" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD)</span>
+<span class="fc bfc" id="L422" title="All 2 branches covered.">			return current.isAfter(startExclusive()) ? current : startExclusive();</span>
 		else
-<span class="fc bfc" id="L423" title="All 2 branches covered.">			return current.isBefore(startExclusive()) ? current : startExclusive();</span>
+<span class="fc bfc" id="L424" title="All 2 branches covered.">			return current.isBefore(startExclusive()) ? current : startExclusive();</span>
 	}
 
 }

@@ -786,6 +786,11 @@ No stats available: package referenced, but not analyzed.
 No stats available: package referenced, but not analyzed.
 
 --------------------------------------------------
+- Package: java.util.function
+--------------------------------------------------
+No stats available: package referenced, but not analyzed.
+
+--------------------------------------------------
 - Package: java.util.logging
 --------------------------------------------------
 No stats available: package referenced, but not analyzed.
@@ -9022,16 +9027,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 10
-    Concrete Classes: 8
+    Total Classes: 11
+    Concrete Classes: 9
     Abstract Classes: 2
 
     Ca: 6
-    Ce: 4
+    Ce: 5
 
-    A: 0.2
-    I: 0.4
-    D: 0.4
+    A: 0.18
+    I: 0.45
+    D: 0.36
 
 Abstract Classes:
     net.sourceforge.plantuml.project.ngm.math.AbstractPiecewiseConstant
@@ -9039,6 +9044,7 @@ Abstract Classes:
 
 Concrete Classes:
     net.sourceforge.plantuml.project.ngm.math.AbstractPiecewiseConstant$1
+    net.sourceforge.plantuml.project.ngm.math.Combiner
     net.sourceforge.plantuml.project.ngm.math.LoadIntegrator
     net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantHours
     net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantSpecificDays
@@ -9051,6 +9057,7 @@ Depends Upon:
     java.lang
     java.time
     java.util
+    java.util.function
     net.sourceforge.plantuml.project.ngm
 
 Used By:
@@ -14640,6 +14647,7 @@ java.time,0,0,12,0,0,0,1,1
 java.util,0,0,169,0,0,0,1,1
 java.util.concurrent,0,0,6,0,0,0,1,1
 java.util.concurrent.atomic,0,0,4,0,0,0,1,1
+java.util.function,0,0,1,0,0,0,1,1
 java.util.logging,0,0,2,0,0,0,1,1
 java.util.regex,0,0,16,0,0,0,1,1
 java.util.zip,0,0,2,0,0,0,1,1
@@ -14797,7 +14805,7 @@ net.sourceforge.plantuml.project.draw,9,2,5,25,0.22,0.83,0.06,1
 net.sourceforge.plantuml.project.draw.header,5,3,2,19,0.6,0.9,0.5,1
 net.sourceforge.plantuml.project.lang,64,4,5,14,0.06,0.74,0.2,1
 net.sourceforge.plantuml.project.ngm,4,1,2,3,0.25,0.6,0.15,1
-net.sourceforge.plantuml.project.ngm.math,10,2,6,4,0.2,0.4,0.4,1
+net.sourceforge.plantuml.project.ngm.math,11,2,6,5,0.18,0.45,0.36,1
 net.sourceforge.plantuml.project.solver,2,0,1,7,0,0.88,0.12,1
 net.sourceforge.plantuml.project.time,1,0,9,2,0,0.18,0.82,1
 net.sourceforge.plantuml.project.timescale,5,1,5,6,0.2,0.55,0.25,1
