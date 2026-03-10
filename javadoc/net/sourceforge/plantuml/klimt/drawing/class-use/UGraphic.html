@@ -552,11 +552,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../../activitydiagram3/ftile/vcompact/UGraphicInterceptorGoto.html" class="type-name-link" title="class in net.sourceforge.plantuml.activitydiagram3.ftile.vcompact">UGraphicInterceptorGoto</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-second even-row-color"><code><a href="../../../activitydiagram3/ftile/vcompact/UGraphicInterceptorAllSwimlanes.html" class="type-name-link" title="class in net.sourceforge.plantuml.activitydiagram3.ftile.vcompact">UGraphicInterceptorAllSwimlanes</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">A UGraphic interceptor that dispatches drawing operations to multiple
+ swimlane-specific UGraphics in a single traversal of the Ftile tree.</div>
+</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../../activitydiagram3/ftile/vcompact/UGraphicInterceptorOneSwimlane.html" class="type-name-link" title="class in net.sourceforge.plantuml.activitydiagram3.ftile.vcompact">UGraphicInterceptorOneSwimlane</a></code></div>
+<div class="col-second odd-row-color"><code><a href="../../../activitydiagram3/ftile/vcompact/UGraphicInterceptorGoto.html" class="type-name-link" title="class in net.sourceforge.plantuml.activitydiagram3.ftile.vcompact">UGraphicInterceptorGoto</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../../activitydiagram3/ftile/vcompact/UGraphicInterceptorOneSwimlane.html" class="type-name-link" title="class in net.sourceforge.plantuml.activitydiagram3.ftile.vcompact">UGraphicInterceptorOneSwimlane</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../../../activitydiagram3/ftile/vcompact/package-summary.html">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact</a> that return <a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a></span></div>
 <div class="summary-table three-column-summary">
@@ -564,11 +570,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">UGraphicInterceptorGoto.</span><code><a href="../../../activitydiagram3/ftile/vcompact/UGraphicInterceptorGoto.html#apply(net.sourceforge.plantuml.klimt.UChange)" class="member-name-link">apply</a><wbr>(<a href="../../UChange.html" title="interface in net.sourceforge.plantuml.klimt">UChange</a>&nbsp;change)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">UGraphicInterceptorAllSwimlanes.</span><code><a href="../../../activitydiagram3/ftile/vcompact/UGraphicInterceptorAllSwimlanes.html#apply(net.sourceforge.plantuml.klimt.UChange)" class="member-name-link">apply</a><wbr>(<a href="../../UChange.html" title="interface in net.sourceforge.plantuml.klimt">UChange</a>&nbsp;change)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">UGraphicInterceptorOneSwimlane.</span><code><a href="../../../activitydiagram3/ftile/vcompact/UGraphicInterceptorOneSwimlane.html#apply(net.sourceforge.plantuml.klimt.UChange)" class="member-name-link">apply</a><wbr>(<a href="../../UChange.html" title="interface in net.sourceforge.plantuml.klimt">UChange</a>&nbsp;change)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">UGraphicInterceptorGoto.</span><code><a href="../../../activitydiagram3/ftile/vcompact/UGraphicInterceptorGoto.html#apply(net.sourceforge.plantuml.klimt.UChange)" class="member-name-link">apply</a><wbr>(<a href="../../UChange.html" title="interface in net.sourceforge.plantuml.klimt">UChange</a>&nbsp;change)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">UGraphicInterceptorOneSwimlane.</span><code><a href="../../../activitydiagram3/ftile/vcompact/UGraphicInterceptorOneSwimlane.html#apply(net.sourceforge.plantuml.klimt.UChange)" class="member-name-link">apply</a><wbr>(<a href="../../UChange.html" title="interface in net.sourceforge.plantuml.klimt">UChange</a>&nbsp;change)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../../../activitydiagram3/ftile/vcompact/package-summary.html">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact</a> with parameters of type <a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a></span></div>
 <div class="summary-table three-column-summary">
@@ -615,6 +624,17 @@ loadScripts(document, 'script');</script>
  <a href="../../../activitydiagram3/ftile/Swimlane.html" title="class in net.sourceforge.plantuml.activitydiagram3.ftile">Swimlane</a>&nbsp;swimlane,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../activitydiagram3/ftile/Swimlane.html" title="class in net.sourceforge.plantuml.activitydiagram3.ftile">Swimlane</a>&gt;&nbsp;orderedList)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Constructor parameters in <a href="../../../activitydiagram3/ftile/vcompact/package-summary.html">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact</a> with type arguments of type <a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../../activitydiagram3/ftile/vcompact/UGraphicInterceptorAllSwimlanes.html#%3Cinit%3E(java.util.Map,java.util.List,net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">UGraphicInterceptorAllSwimlanes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../../../activitydiagram3/ftile/Swimlane.html" title="class in net.sourceforge.plantuml.activitydiagram3.ftile">Swimlane</a>,<wbr><a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&gt;&nbsp;swimlaneToUg,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../activitydiagram3/ftile/Swimlane.html" title="class in net.sourceforge.plantuml.activitydiagram3.ftile">Swimlane</a>&gt;&nbsp;orderedList,
+ <a href="../../font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

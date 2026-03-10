@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.UGraphicDelegator;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 public class UGraphicForSnake extends UGraphicDelegator {
 
@@ -53,11 +54,11 @@ public class UGraphicForSnake extends UGraphicDelegator {
 
 	@Override
 	public String toString() {
-<span class="nc" id="L56">		return &quot;UGraphicForSnake &quot; + getUg();</span>
+<span class="nc" id="L57">		return &quot;UGraphicForSnake &quot; + getUg();</span>
 	}
 
 	public UTranslate getTranslation() {
-<span class="nc" id="L60">		return new UTranslate(dx, dy);</span>
+<span class="nc" id="L61">		return new UTranslate(dx, dy);</span>
 	}
 
 	static class PendingSnake {
@@ -66,99 +67,111 @@ public class UGraphicForSnake extends UGraphicDelegator {
 		private final double dx;
 		private final double dy;
 
-<span class="fc" id="L69">		private PendingSnake(Snake snake, UGraphic ug, double dx, double dy) {</span>
-<span class="fc" id="L70">			this.snake = snake;</span>
-<span class="fc" id="L71">			this.ug = ug;</span>
-<span class="fc" id="L72">			this.dx = dx;</span>
-<span class="fc" id="L73">			this.dy = dy;</span>
-<span class="fc" id="L74">		}</span>
+<span class="fc" id="L70">		private PendingSnake(Snake snake, UGraphic ug, double dx, double dy) {</span>
+<span class="fc" id="L71">			this.snake = snake;</span>
+<span class="fc" id="L72">			this.ug = ug;</span>
+<span class="fc" id="L73">			this.dx = dx;</span>
+<span class="fc" id="L74">			this.dy = dy;</span>
+<span class="fc" id="L75">		}</span>
 
 		void drawInternal() {
-<span class="fc" id="L77">			snake.drawInternal(ug);</span>
-<span class="fc" id="L78">		}</span>
+<span class="fc" id="L78">			snake.drawInternal(ug);</span>
+<span class="fc" id="L79">		}</span>
 
 		void removeEndDecorationIfTouches(List&lt;PendingSnake&gt; snakes) {
-<span class="fc bfc" id="L81" title="All 2 branches covered.">			for (PendingSnake other : snakes) {</span>
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">				if (moved().touches(other.moved())) {</span>
-<span class="nc" id="L83">					this.snake = this.snake.withoutEndDecoration();</span>
-<span class="nc" id="L84">					return;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">			for (PendingSnake other : snakes) {</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">				if (touchesOther(other)) {</span>
+<span class="nc" id="L84">					this.snake = this.snake.withoutEndDecoration();</span>
+<span class="nc" id="L85">					return;</span>
 				}
-<span class="fc" id="L86">			}</span>
-<span class="fc" id="L87">		}</span>
+<span class="fc" id="L87">			}</span>
+<span class="fc" id="L88">		}</span>
+
+		// Check if this snake's last point (translated) touches other snake's first point (translated)
+		// without creating intermediate Snake/Worm objects
+		private boolean touchesOther(PendingSnake other) {
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">			if (other.snake.cannotBeTouched())</span>
+<span class="nc" id="L94">				return false;</span>
+
+<span class="fc" id="L96">			final XPoint2D thisLast = snake.getLast();</span>
+<span class="fc" id="L97">			final XPoint2D otherFirst = other.snake.getFirst();</span>
+<span class="fc" id="L98">			return Snake.same(new XPoint2D(thisLast.getX() + dx, thisLast.getY() + dy),</span>
+<span class="fc" id="L99">					new XPoint2D(otherFirst.getX() + other.dx, otherFirst.getY() + other.dy));</span>
+		}
 
 		private Snake moved() {
-<span class="fc" id="L90">			return snake.move(dx, dy);</span>
+<span class="nc" id="L103">			return snake.move(dx, dy);</span>
 		}
 
 		@Override
 		public String toString() {
-<span class="nc" id="L95">			return &quot;dx=&quot; + dx + &quot; dy=&quot; + dy + &quot; &quot; + snake.move(dx, dy).toString();</span>
+<span class="nc" id="L108">			return &quot;dx=&quot; + dx + &quot; dy=&quot; + dy + &quot; &quot; + snake.move(dx, dy).toString();</span>
 		}
 
 		public PendingSnake merge(PendingSnake newItem) {
 			// if (snake.isMergeable() == false || newItem.snake.isMergeable() == false) {
 			// return null;
 			// }
-<span class="fc" id="L102">			final Snake s1 = snake.move(dx, dy);</span>
-<span class="fc" id="L103">			final Snake s2 = newItem.snake.move(newItem.dx, newItem.dy);</span>
-<span class="fc" id="L104">			final Snake merge = s1.merge(s2, ug.getStringBounder());</span>
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">			if (merge == null) {</span>
-<span class="fc" id="L106">				return null;</span>
+<span class="fc" id="L115">			final Snake s1 = snake.move(dx, dy);</span>
+<span class="fc" id="L116">			final Snake s2 = newItem.snake.move(newItem.dx, newItem.dy);</span>
+<span class="fc" id="L117">			final Snake merge = s1.merge(s2, ug.getStringBounder());</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">			if (merge == null) {</span>
+<span class="fc" id="L119">				return null;</span>
 			}
-<span class="nc" id="L108">			return new PendingSnake(merge.move(-dx, -dy), ug, dx, dy);</span>
+<span class="nc" id="L121">			return new PendingSnake(merge.move(-dx, -dy), ug, dx, dy);</span>
 		}
 
 	}
 
 	public UGraphicForSnake(UGraphic ug) {
-<span class="fc" id="L114">		this(ug, 0, 0, new ArrayList&lt;PendingSnake&gt;());</span>
-<span class="fc" id="L115">	}</span>
+<span class="fc" id="L127">		this(ug, 0, 0, new ArrayList&lt;PendingSnake&gt;());</span>
+<span class="fc" id="L128">	}</span>
 
 	private UGraphicForSnake(UGraphic ug, double dx, double dy, List&lt;PendingSnake&gt; snakes) {
-<span class="fc" id="L118">		super(ug);</span>
-<span class="fc" id="L119">		this.dx = dx;</span>
-<span class="fc" id="L120">		this.dy = dy;</span>
-<span class="fc" id="L121">		this.snakes = snakes;</span>
-<span class="fc" id="L122">	}</span>
+<span class="fc" id="L131">		super(ug);</span>
+<span class="fc" id="L132">		this.dx = dx;</span>
+<span class="fc" id="L133">		this.dy = dy;</span>
+<span class="fc" id="L134">		this.snakes = snakes;</span>
+<span class="fc" id="L135">	}</span>
 
 	public void draw(UShape shape) {
-<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (shape instanceof Snake) {</span>
-<span class="fc" id="L126">			final Snake snake = (Snake) shape;</span>
-<span class="fc" id="L127">			addPendingSnake(snake);</span>
-<span class="fc" id="L128">		} else {</span>
-<span class="fc" id="L129">			getUg().draw(shape);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		if (shape instanceof Snake) {</span>
+<span class="fc" id="L139">			final Snake snake = (Snake) shape;</span>
+<span class="fc" id="L140">			addPendingSnake(snake);</span>
+<span class="fc" id="L141">		} else {</span>
+<span class="fc" id="L142">			getUg().draw(shape);</span>
 		}
-<span class="fc" id="L131">	}</span>
+<span class="fc" id="L144">	}</span>
 
 	private void addPendingSnake(final Snake snake) {
-<span class="fc" id="L134">		final PendingSnake newItem = new PendingSnake(snake, getUg(), dx, dy);</span>
-<span class="fc bfc" id="L135" title="All 2 branches covered.">		for (int pos = 0; pos &lt; snakes.size(); pos++) {</span>
-<span class="fc" id="L136">			final PendingSnake merge = snakes.get(pos).merge(newItem);</span>
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">			if (merge != null) {</span>
-<span class="nc" id="L138">				snakes.set(pos, merge);</span>
-<span class="nc" id="L139">				return;</span>
+<span class="fc" id="L147">		final PendingSnake newItem = new PendingSnake(snake, getUg(), dx, dy);</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		for (int pos = 0; pos &lt; snakes.size(); pos++) {</span>
+<span class="fc" id="L149">			final PendingSnake merge = snakes.get(pos).merge(newItem);</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">			if (merge != null) {</span>
+<span class="nc" id="L151">				snakes.set(pos, merge);</span>
+<span class="nc" id="L152">				return;</span>
 			}
 		}
-<span class="fc" id="L142">		snakes.add(newItem);</span>
-<span class="fc" id="L143">	}</span>
+<span class="fc" id="L155">		snakes.add(newItem);</span>
+<span class="fc" id="L156">	}</span>
 
 	@Override
 	public void flushUg() {
-<span class="fc bfc" id="L147" title="All 2 branches covered.">		for (PendingSnake snake : snakes) {</span>
-<span class="fc" id="L148">			snake.removeEndDecorationIfTouches(snakes);</span>
-<span class="fc" id="L149">			snake.drawInternal();</span>
-<span class="fc" id="L150">		}</span>
-<span class="fc" id="L151">		snakes.clear();</span>
-<span class="fc" id="L152">	}</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		for (PendingSnake snake : snakes) {</span>
+<span class="fc" id="L161">			snake.removeEndDecorationIfTouches(snakes);</span>
+<span class="fc" id="L162">			snake.drawInternal();</span>
+<span class="fc" id="L163">		}</span>
+<span class="fc" id="L164">		snakes.clear();</span>
+<span class="fc" id="L165">	}</span>
 
 	public UGraphic apply(UChange change) {
-<span class="fc" id="L155">		double newdx = dx;</span>
-<span class="fc" id="L156">		double newdy = dy;</span>
-<span class="fc bfc" id="L157" title="All 2 branches covered.">		if (change instanceof UTranslate) {</span>
-<span class="fc" id="L158">			newdx += ((UTranslate) change).getDx();</span>
-<span class="fc" id="L159">			newdy += ((UTranslate) change).getDy();</span>
+<span class="fc" id="L168">		double newdx = dx;</span>
+<span class="fc" id="L169">		double newdy = dy;</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (change instanceof UTranslate) {</span>
+<span class="fc" id="L171">			newdx += ((UTranslate) change).getDx();</span>
+<span class="fc" id="L172">			newdy += ((UTranslate) change).getDy();</span>
 		}
-<span class="fc" id="L161">		return new UGraphicForSnake(getUg().apply(change), newdx, newdy, snakes);</span>
+<span class="fc" id="L174">		return new UGraphicForSnake(getUg().apply(change), newdx, newdy, snakes);</span>
 	}
 
 }

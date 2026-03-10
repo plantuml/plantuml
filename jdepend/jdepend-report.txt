@@ -1862,16 +1862,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 74
-    Concrete Classes: 73
+    Total Classes: 75
+    Concrete Classes: 74
     Abstract Classes: 1
 
     Ca: 5
-    Ce: 26
+    Ce: 27
 
     A: 0.01
     I: 0.84
-    D: 0.15
+    D: 0.14
 
 Abstract Classes:
     net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.AbstractParallelFtilesBuilder
@@ -1948,10 +1948,12 @@ Concrete Classes:
     net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.ParallelBuilderSplit
     net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.ParallelBuilderSplit$ConnectionIn
     net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.ParallelBuilderSplit$ConnectionOut
+    net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorAllSwimlanes
     net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane
     net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.VCompactFactory
 
 Depends Upon:
+    java.io
     java.lang
     java.util
     net.sourceforge.plantuml.activitydiagram3
@@ -14631,7 +14633,7 @@ java.awt.event,0,0,1,0,0,0,1,1
 java.awt.font,0,0,5,0,0,0,1,1
 java.awt.geom,0,0,9,0,0,0,1,1
 java.awt.image,0,0,13,0,0,0,1,1
-java.io,0,0,74,0,0,0,1,1
+java.io,0,0,75,0,0,0,1,1
 java.lang,0,0,227,0,0,0,1,1
 java.lang.annotation,0,0,5,0,0,0,1,1
 java.lang.reflect,0,0,5,0,0,0,1,1
@@ -14677,7 +14679,7 @@ net.sourceforge.plantuml.activitydiagram.command,9,0,1,14,0,0.93,0.07,1
 net.sourceforge.plantuml.activitydiagram3,27,4,6,25,0.15,0.81,0.05,1
 net.sourceforge.plantuml.activitydiagram3.command,37,0,1,17,0,0.94,0.06,1
 net.sourceforge.plantuml.activitydiagram3.ftile,62,6,10,25,0.1,0.71,0.19,1
-net.sourceforge.plantuml.activitydiagram3.ftile.vcompact,74,1,5,26,0.01,0.84,0.15,1
+net.sourceforge.plantuml.activitydiagram3.ftile.vcompact,75,1,5,27,0.01,0.84,0.14,1
 net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond,24,1,1,21,0.04,0.95,0,1
 net.sourceforge.plantuml.activitydiagram3.ftile.vertical,20,1,5,17,0.05,0.77,0.18,1
 net.sourceforge.plantuml.activitydiagram3.gtile,35,6,3,22,0.17,0.88,0.05,1

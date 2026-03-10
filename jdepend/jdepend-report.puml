@@ -509,9 +509,10 @@ Total Classes: 62
 "net.sourceforge.plantuml.activitydiagram3.ftile" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.activitydiagram3.ftile" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.activitydiagram3.ftile.vcompact" %lighten("red", 85) {
-Total Classes: 74
+class "net.sourceforge.plantuml.activitydiagram3.ftile.vcompact" %lighten("red", 86) {
+Total Classes: 75
 }
+"net.sourceforge.plantuml.activitydiagram3.ftile.vcompact" --> "java.io"
 "net.sourceforge.plantuml.activitydiagram3.ftile.vcompact" --> "java.lang"
 "net.sourceforge.plantuml.activitydiagram3.ftile.vcompact" --> "java.util"
 "net.sourceforge.plantuml.activitydiagram3.ftile.vcompact" --> "net.sourceforge.plantuml.activitydiagram3"

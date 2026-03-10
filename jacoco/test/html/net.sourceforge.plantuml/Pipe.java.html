@@ -208,13 +208,13 @@ public class Pipe {
 			}
 		}
 
-<span class="pc bpc" id="L211" title="1 of 5 branches missed.">		switch (state) {</span>
+<span class="pc bpc" id="L211" title="2 of 5 branches missed.">		switch (state) {</span>
 		case NO_CONTENT:
 <span class="fc" id="L213">			return null;</span>
 		case START_MARK_NOT_FOUND:
 <span class="fc bfc" id="L215" title="All 2 branches covered.">			return (unmarkedAllowed) ? &quot;@startuml\n&quot; + sb.toString() + &quot;@enduml\n&quot; : null;</span>
 		case START_MARK_FOUND:
-<span class="fc" id="L217">			return sb.toString() + expectedEnd;</span>
+<span class="nc" id="L217">			return sb.toString() + expectedEnd;</span>
 		case COMPLETE:
 <span class="fc" id="L219">			return sb.toString();</span>
 		default:

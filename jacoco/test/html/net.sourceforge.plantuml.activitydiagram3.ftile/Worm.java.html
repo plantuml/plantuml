@@ -58,175 +58,187 @@ import net.sourceforge.plantuml.utils.Direction;
 
 public class Worm {
 
-	private final List&lt;XPoint2D&gt; points;
+	private List&lt;XPoint2D&gt; points;
+	private boolean sharedPoints;
 	private final Style style;
 	private final Arrows arrows;
 	private UTranslate tr;
 
 	public Worm move(double dx, double dy) {
-<span class="fc" id="L67">		final Worm result = cloneEmpty();</span>
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (this.tr == null)</span>
-<span class="fc" id="L69">			result.tr = new UTranslate(dx, dy);</span>
+<span class="fc" id="L68">		final Worm result = cloneEmpty();</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (this.tr == null)</span>
+<span class="fc" id="L70">			result.tr = new UTranslate(dx, dy);</span>
 		else
-<span class="nc" id="L71">			result.tr = this.tr.compose(new UTranslate(dx, dy));</span>
+<span class="nc" id="L72">			result.tr = this.tr.compose(new UTranslate(dx, dy));</span>
 
-<span class="fc" id="L73">		result.points.addAll(points);</span>
-<span class="fc" id="L74">		return result;</span>
+		// Share the points list instead of copying it
+<span class="fc" id="L75">		result.points = this.points;</span>
+<span class="fc" id="L76">		result.sharedPoints = true;</span>
+<span class="fc" id="L77">		this.sharedPoints = true;</span>
+<span class="fc" id="L78">		return result;</span>
 	}
 
+	// Must be called before any mutation of the points list
+	private void ensureOwnPoints() {
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (sharedPoints) {</span>
+<span class="nc" id="L84">			this.points = new ArrayList&lt;&gt;(this.points);</span>
+<span class="nc" id="L85">			this.sharedPoints = false;</span>
+		}
+<span class="fc" id="L87">	}</span>
+
 	public Worm(Style style, Arrows arrows) {
-<span class="fc" id="L78">		this(style, arrows, 10);</span>
+<span class="fc" id="L90">		this(style, arrows, 10);</span>
 
-<span class="fc" id="L80">	}</span>
+<span class="fc" id="L92">	}</span>
 
-<span class="fc" id="L82">	private Worm(Style style, Arrows arrows, int initSize) {</span>
-<span class="fc" id="L83">		this.style = style;</span>
-<span class="fc" id="L84">		this.arrows = arrows;</span>
-<span class="fc" id="L85">		this.points = new ArrayList&lt;&gt;(Math.max(initSize, 10));</span>
-<span class="fc" id="L86">	}</span>
+<span class="fc" id="L94">	private Worm(Style style, Arrows arrows, int initSize) {</span>
+<span class="fc" id="L95">		this.style = style;</span>
+<span class="fc" id="L96">		this.arrows = arrows;</span>
+<span class="fc" id="L97">		this.points = new ArrayList&lt;&gt;(Math.max(initSize, 10));</span>
+<span class="fc" id="L98">	}</span>
 
 	public boolean isPureHorizontal() {
-<span class="pc bpc" id="L89" title="1 of 4 branches missed.">		return size() == 2 &amp;&amp; getPoint(0).getY() == getPoint(1).getY();</span>
+<span class="pc bpc" id="L101" title="1 of 4 branches missed.">		return size() == 2 &amp;&amp; getPoint(0).getY() == getPoint(1).getY();</span>
 	}
 
 	private boolean ignoreForCompression;
 
 	public Worm cloneEmpty() {
-<span class="fc" id="L95">		final Worm result = new Worm(style, arrows, size());</span>
-<span class="fc" id="L96">		result.ignoreForCompression = this.ignoreForCompression;</span>
-<span class="fc" id="L97">		return result;</span>
+<span class="fc" id="L107">		final Worm result = new Worm(style, arrows, size());</span>
+<span class="fc" id="L108">		result.ignoreForCompression = this.ignoreForCompression;</span>
+<span class="fc" id="L109">		return result;</span>
 	}
 
 	public final void setIgnoreForCompression() {
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (size() &gt; 0)</span>
-<span class="nc" id="L102">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (size() &gt; 0)</span>
+<span class="nc" id="L114">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L104">		this.ignoreForCompression = true;</span>
-<span class="nc" id="L105">	}</span>
+<span class="nc" id="L116">		this.ignoreForCompression = true;</span>
+<span class="nc" id="L117">	}</span>
 
 	public void drawInternalOneColor(UPolygon startDecoration, UGraphic ug, HtmlColorAndStyle colorAndStyle,
 			double strokeValue, Direction emphasizeDirection, UPolygon endDecoration) {
-<span class="fc" id="L109">		final HColor arrowColor = Objects.requireNonNull(colorAndStyle.getArrowColor());</span>
-<span class="fc" id="L110">		final LinkStyle linkStyle = colorAndStyle.getStyle();</span>
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (linkStyle.isInvisible())</span>
-<span class="nc" id="L112">			return;</span>
+<span class="fc" id="L121">		final HColor arrowColor = Objects.requireNonNull(colorAndStyle.getArrowColor());</span>
+<span class="fc" id="L122">		final LinkStyle linkStyle = colorAndStyle.getStyle();</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (linkStyle.isInvisible())</span>
+<span class="nc" id="L124">			return;</span>
 
-<span class="fc" id="L114">		ug = ug.apply(arrowColor);</span>
-<span class="fc" id="L115">		ug = ug.apply(arrowColor.bg());</span>
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (linkStyle.isNormal())</span>
-<span class="fc" id="L117">			ug = ug.apply(style.getStroke());</span>
+<span class="fc" id="L126">		ug = ug.apply(arrowColor);</span>
+<span class="fc" id="L127">		ug = ug.apply(arrowColor.bg());</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (linkStyle.isNormal())</span>
+<span class="fc" id="L129">			ug = ug.apply(style.getStroke());</span>
 		else
-<span class="nc" id="L119">			ug = ug.apply(linkStyle.goThickness(strokeValue).getStroke3());</span>
+<span class="nc" id="L131">			ug = ug.apply(linkStyle.goThickness(strokeValue).getStroke3());</span>
 
-<span class="fc" id="L121">		boolean drawn = false;</span>
-<span class="fc bfc" id="L122" title="All 2 branches covered.">		for (int i = 0; i &lt; size() - 1; i++) {</span>
-<span class="fc" id="L123">			final XPoint2D p1 = getPoint(i);</span>
-<span class="fc" id="L124">			final XPoint2D p2 = getPoint(i + 1);</span>
-<span class="fc" id="L125">			final XLine2D line = XLine2D.line(p1, p2);</span>
-<span class="fc bfc" id="L126" title="All 6 branches covered.">			if (drawn == false &amp;&amp; emphasizeDirection != null &amp;&amp; Direction.fromVector(p1, p2) == emphasizeDirection) {</span>
-<span class="fc" id="L127">				drawLine(ug, line, emphasizeDirection);</span>
-<span class="fc" id="L128">				drawn = true;</span>
+<span class="fc" id="L133">		boolean drawn = false;</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		for (int i = 0; i &lt; size() - 1; i++) {</span>
+<span class="fc" id="L135">			final XPoint2D p1 = getPoint(i);</span>
+<span class="fc" id="L136">			final XPoint2D p2 = getPoint(i + 1);</span>
+<span class="fc" id="L137">			final XLine2D line = XLine2D.line(p1, p2);</span>
+<span class="fc bfc" id="L138" title="All 6 branches covered.">			if (drawn == false &amp;&amp; emphasizeDirection != null &amp;&amp; Direction.fromVector(p1, p2) == emphasizeDirection) {</span>
+<span class="fc" id="L139">				drawLine(ug, line, emphasizeDirection);</span>
+<span class="fc" id="L140">				drawn = true;</span>
 			} else {
-<span class="fc" id="L130">				drawLine(ug, line, null);</span>
+<span class="fc" id="L142">				drawLine(ug, line, null);</span>
 			}
 		}
 
-<span class="fc" id="L134">		final HColor arrowHeadColor = colorAndStyle.getArrowHeadColor();</span>
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (arrowHeadColor == null)</span>
-<span class="nc" id="L136">			throw new IllegalStateException();</span>
+<span class="fc" id="L146">		final HColor arrowHeadColor = colorAndStyle.getArrowHeadColor();</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (arrowHeadColor == null)</span>
+<span class="nc" id="L148">			throw new IllegalStateException();</span>
 
 //		if (arrowHeadColor == null || arrowHeadColor.equals(HColorUtils.transparent())) {
 //			return;
 //		}
-<span class="fc" id="L141">		ug = ug.apply(arrowHeadColor);</span>
-<span class="fc" id="L142">		ug = ug.apply(arrowHeadColor.bg());</span>
+<span class="fc" id="L153">		ug = ug.apply(arrowHeadColor);</span>
+<span class="fc" id="L154">		ug = ug.apply(arrowHeadColor.bg());</span>
 
-<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		if (startDecoration != null) {</span>
-<span class="nc" id="L145">			ug = ug.apply(UStroke.withThickness(1.5));</span>
-<span class="nc" id="L146">			final XPoint2D start = getPoint(0);</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">			if (ignoreForCompression)</span>
-<span class="nc" id="L148">				startDecoration.setCompressionMode(CompressionMode.ON_X);</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (startDecoration != null) {</span>
+<span class="nc" id="L157">			ug = ug.apply(UStroke.withThickness(1.5));</span>
+<span class="nc" id="L158">			final XPoint2D start = getPoint(0);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">			if (ignoreForCompression)</span>
+<span class="nc" id="L160">				startDecoration.setCompressionMode(CompressionMode.ON_X);</span>
 
-<span class="nc" id="L150">			ug.apply(UTranslate.point(start)).apply(UStroke.simple()).draw(startDecoration);</span>
+<span class="nc" id="L162">			ug.apply(UTranslate.point(start)).apply(UStroke.simple()).draw(startDecoration);</span>
 		}
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (endDecoration != null) {</span>
-<span class="fc" id="L153">			ug = ug.apply(UStroke.withThickness(1.5));</span>
-<span class="fc" id="L154">			final XPoint2D end = getPoint(size() - 1);</span>
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">			if (ignoreForCompression)</span>
-<span class="nc" id="L156">				endDecoration.setCompressionMode(CompressionMode.ON_X);</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		if (endDecoration != null) {</span>
+<span class="fc" id="L165">			ug = ug.apply(UStroke.withThickness(1.5));</span>
+<span class="fc" id="L166">			final XPoint2D end = getPoint(size() - 1);</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">			if (ignoreForCompression)</span>
+<span class="nc" id="L168">				endDecoration.setCompressionMode(CompressionMode.ON_X);</span>
 
-<span class="fc" id="L158">			ug.apply(UTranslate.point(end)).apply(UStroke.simple()).draw(endDecoration);</span>
+<span class="fc" id="L170">			ug.apply(UTranslate.point(end)).apply(UStroke.simple()).draw(endDecoration);</span>
 		}
-<span class="fc" id="L160">	}</span>
-
-	private void drawLine(UGraphic ug, XLine2D line, Direction direction) {
-<span class="fc" id="L163">		drawLine(ug, line.getX1(), line.getY1(), line.getX2(), line.getY2(), direction);</span>
-<span class="fc" id="L164">	}</span>
-
-	private void drawLine(UGraphic ug, double x1, double y1, double x2, double y2, Direction direction) {
-<span class="fc" id="L167">		ug = ug.apply(new UTranslate(x1, y1));</span>
-<span class="fc bfc" id="L168" title="All 2 branches covered.">		if (direction != null)</span>
-<span class="fc" id="L169">			ug.apply(new UTranslate((x2 - x1) / 2, (y2 - y1) / 2)).draw(arrows.asTo(direction));</span>
-
-<span class="fc" id="L171">		ug.draw(new ULine(x2 - x1, y2 - y1));</span>
 <span class="fc" id="L172">	}</span>
 
+	private void drawLine(UGraphic ug, XLine2D line, Direction direction) {
+<span class="fc" id="L175">		drawLine(ug, line.getX1(), line.getY1(), line.getX2(), line.getY2(), direction);</span>
+<span class="fc" id="L176">	}</span>
+
+	private void drawLine(UGraphic ug, double x1, double y1, double x2, double y2, Direction direction) {
+<span class="fc" id="L179">		ug = ug.apply(new UTranslate(x1, y1));</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">		if (direction != null)</span>
+<span class="fc" id="L181">			ug.apply(new UTranslate((x2 - x1) / 2, (y2 - y1) / 2)).draw(arrows.asTo(direction));</span>
+
+<span class="fc" id="L183">		ug.draw(new ULine(x2 - x1, y2 - y1));</span>
+<span class="fc" id="L184">	}</span>
+
 	public Worm moveFirstPoint(UTranslate move) {
-<span class="nc" id="L175">		final double dx = move.getDx();</span>
-<span class="nc" id="L176">		final double dy = move.getDy();</span>
-<span class="nc bnc" id="L177" title="All 4 branches missed.">		if (dx != 0 &amp;&amp; dy != 0)</span>
-<span class="nc" id="L178">			throw new IllegalArgumentException(&quot;move=&quot; + move);</span>
+<span class="nc" id="L187">		final double dx = move.getDx();</span>
+<span class="nc" id="L188">		final double dy = move.getDy();</span>
+<span class="nc bnc" id="L189" title="All 4 branches missed.">		if (dx != 0 &amp;&amp; dy != 0)</span>
+<span class="nc" id="L190">			throw new IllegalArgumentException(&quot;move=&quot; + move);</span>
 
-<span class="nc" id="L180">		final Worm result = new Worm(style, arrows, size());</span>
-<span class="nc" id="L181">		double x0 = getPoint(0).getX();</span>
-<span class="nc" id="L182">		double y0 = getPoint(0).getY();</span>
-<span class="nc" id="L183">		double x1 = getPoint(1).getX();</span>
-<span class="nc" id="L184">		double y1 = getPoint(1).getY();</span>
+<span class="nc" id="L192">		final Worm result = new Worm(style, arrows, size());</span>
+<span class="nc" id="L193">		double x0 = getPoint(0).getX();</span>
+<span class="nc" id="L194">		double y0 = getPoint(0).getY();</span>
+<span class="nc" id="L195">		double x1 = getPoint(1).getX();</span>
+<span class="nc" id="L196">		double y1 = getPoint(1).getY();</span>
 
-<span class="nc bnc" id="L186" title="All 4 branches missed.">		if (dx != 0 &amp;&amp; x0 == x1)</span>
-<span class="nc" id="L187">			x1 += dx;</span>
+<span class="nc bnc" id="L198" title="All 4 branches missed.">		if (dx != 0 &amp;&amp; x0 == x1)</span>
+<span class="nc" id="L199">			x1 += dx;</span>
 
-<span class="nc bnc" id="L189" title="All 4 branches missed.">		if (dy != 0 &amp;&amp; y0 == y1)</span>
-<span class="nc" id="L190">			y1 += dy;</span>
+<span class="nc bnc" id="L201" title="All 4 branches missed.">		if (dy != 0 &amp;&amp; y0 == y1)</span>
+<span class="nc" id="L202">			y1 += dy;</span>
 
-<span class="nc" id="L192">		x0 += dx;</span>
-<span class="nc" id="L193">		y0 += dy;</span>
+<span class="nc" id="L204">		x0 += dx;</span>
+<span class="nc" id="L205">		y0 += dy;</span>
 
-<span class="nc" id="L195">		result.addPoint(x0, y0);</span>
-<span class="nc" id="L196">		result.addPoint(x1, y1);</span>
-<span class="nc bnc" id="L197" title="All 2 branches missed.">		for (int i = 2; i &lt; size(); i++)</span>
-<span class="nc" id="L198">			result.addPoint(getPoint(i));</span>
+<span class="nc" id="L207">		result.addPoint(x0, y0);</span>
+<span class="nc" id="L208">		result.addPoint(x1, y1);</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">		for (int i = 2; i &lt; size(); i++)</span>
+<span class="nc" id="L210">			result.addPoint(getPoint(i));</span>
 
-<span class="nc" id="L200">		return result;</span>
+<span class="nc" id="L212">		return result;</span>
 	}
 
 	public Worm moveLastPoint(UTranslate move) {
-<span class="nc" id="L204">		final double dx = move.getDx();</span>
-<span class="nc" id="L205">		final double dy = move.getDy();</span>
-<span class="nc bnc" id="L206" title="All 4 branches missed.">		if (dx != 0 &amp;&amp; dy != 0)</span>
-<span class="nc" id="L207">			throw new IllegalArgumentException(&quot;move=&quot; + move);</span>
+<span class="nc" id="L216">		final double dx = move.getDx();</span>
+<span class="nc" id="L217">		final double dy = move.getDy();</span>
+<span class="nc bnc" id="L218" title="All 4 branches missed.">		if (dx != 0 &amp;&amp; dy != 0)</span>
+<span class="nc" id="L219">			throw new IllegalArgumentException(&quot;move=&quot; + move);</span>
 
-<span class="nc" id="L209">		final Worm result = new Worm(style, arrows, size());</span>
-<span class="nc" id="L210">		double x8 = getPoint(size() - 2).getX();</span>
-<span class="nc" id="L211">		double y8 = getPoint(size() - 2).getY();</span>
-<span class="nc" id="L212">		double x9 = getPoint(size() - 1).getX();</span>
-<span class="nc" id="L213">		double y9 = getPoint(size() - 1).getY();</span>
+<span class="nc" id="L221">		final Worm result = new Worm(style, arrows, size());</span>
+<span class="nc" id="L222">		double x8 = getPoint(size() - 2).getX();</span>
+<span class="nc" id="L223">		double y8 = getPoint(size() - 2).getY();</span>
+<span class="nc" id="L224">		double x9 = getPoint(size() - 1).getX();</span>
+<span class="nc" id="L225">		double y9 = getPoint(size() - 1).getY();</span>
 
-<span class="nc bnc" id="L215" title="All 4 branches missed.">		if (dx != 0 &amp;&amp; x8 == x9)</span>
-<span class="nc" id="L216">			x8 += dx;</span>
+<span class="nc bnc" id="L227" title="All 4 branches missed.">		if (dx != 0 &amp;&amp; x8 == x9)</span>
+<span class="nc" id="L228">			x8 += dx;</span>
 
-<span class="nc bnc" id="L218" title="All 4 branches missed.">		if (dy != 0 &amp;&amp; y8 == y9)</span>
-<span class="nc" id="L219">			y8 += dy;</span>
+<span class="nc bnc" id="L230" title="All 4 branches missed.">		if (dy != 0 &amp;&amp; y8 == y9)</span>
+<span class="nc" id="L231">			y8 += dy;</span>
 
-<span class="nc" id="L221">		x9 += dx;</span>
-<span class="nc" id="L222">		y9 += dy;</span>
+<span class="nc" id="L233">		x9 += dx;</span>
+<span class="nc" id="L234">		y9 += dy;</span>
 
-<span class="nc bnc" id="L224" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 2; i++)</span>
-<span class="nc" id="L225">			result.addPoint(getPoint(i));</span>
+<span class="nc bnc" id="L236" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 2; i++)</span>
+<span class="nc" id="L237">			result.addPoint(getPoint(i));</span>
 
-<span class="nc" id="L227">		result.addPoint(x8, y8);</span>
-<span class="nc" id="L228">		result.addPoint(x9, y9);</span>
-<span class="nc" id="L229">		return result;</span>
+<span class="nc" id="L239">		result.addPoint(x8, y8);</span>
+<span class="nc" id="L240">		result.addPoint(x9, y9);</span>
+<span class="nc" id="L241">		return result;</span>
 	}
 
 //	@Override
@@ -239,304 +251,306 @@ public class Worm {
 //	}
 
 	public void addPoint(double x, double y) {
-<span class="pc bpc" id="L242" title="1 of 2 branches missed.">		if (tr != null) {</span>
-<span class="nc" id="L243">			x -= tr.getDx();</span>
-<span class="nc" id="L244">			y -= tr.getDy();</span>
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">		if (tr != null) {</span>
+<span class="nc" id="L255">			x -= tr.getDx();</span>
+<span class="nc" id="L256">			y -= tr.getDy();</span>
 		}
-<span class="pc bpc" id="L246" title="1 of 2 branches missed.">		if (Double.isNaN(x))</span>
-<span class="nc" id="L247">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">		if (Double.isNaN(x))</span>
+<span class="nc" id="L259">			throw new IllegalArgumentException();</span>
 
-<span class="pc bpc" id="L249" title="1 of 2 branches missed.">		if (Double.isNaN(y))</span>
-<span class="nc" id="L250">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">		if (Double.isNaN(y))</span>
+<span class="nc" id="L262">			throw new IllegalArgumentException();</span>
 
-<span class="fc bfc" id="L252" title="All 2 branches covered.">		if (size() &gt; 0) {</span>
-<span class="fc" id="L253">			final XPoint2D last = getLast();</span>
-<span class="pc bpc" id="L254" title="1 of 4 branches missed.">			if (last.getX() == x &amp;&amp; last.getY() == y)</span>
-<span class="nc" id="L255">				return;</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">		if (size() &gt; 0) {</span>
+<span class="fc" id="L265">			final XPoint2D last = getLast();</span>
+<span class="pc bpc" id="L266" title="1 of 4 branches missed.">			if (last.getX() == x &amp;&amp; last.getY() == y)</span>
+<span class="nc" id="L267">				return;</span>
 		}
 
-<span class="fc" id="L258">		this.points.add(new XPoint2D(x, y));</span>
-<span class="fc" id="L259">	}</span>
+<span class="fc" id="L270">		ensureOwnPoints();</span>
+<span class="fc" id="L271">		this.points.add(new XPoint2D(x, y));</span>
+<span class="fc" id="L272">	}</span>
 
 	public void addPoint(XPoint2D pt) {
-<span class="nc" id="L262">		this.addPoint(pt.getX(), pt.getY());</span>
-<span class="nc" id="L263">	}</span>
+<span class="nc" id="L275">		this.addPoint(pt.getX(), pt.getY());</span>
+<span class="nc" id="L276">	}</span>
 
 	SnakeDirection getDirection() {
-<span class="nc bnc" id="L266" title="All 2 branches missed.">		if (size() &lt; 2)</span>
-<span class="nc" id="L267">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">		if (size() &lt; 2)</span>
+<span class="nc" id="L280">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L269">		return SnakeDirection.getDirection(getPoint(0), getPoint(1));</span>
+<span class="nc" id="L282">		return SnakeDirection.getDirection(getPoint(0), getPoint(1));</span>
 	}
 
 	String getDirectionsCode() {
-<span class="nc" id="L273">		final StringBuilder result = new StringBuilder();</span>
-<span class="nc bnc" id="L274" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 1; i++) {</span>
-<span class="nc" id="L275">			final Direction direction = Direction.fromVector(getPoint(i), getPoint(i + 1));</span>
-<span class="nc" id="L276">			result.append(direction.getShortCode());</span>
+<span class="nc" id="L286">		final StringBuilder result = new StringBuilder();</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 1; i++) {</span>
+<span class="nc" id="L288">			final Direction direction = Direction.fromVector(getPoint(i), getPoint(i + 1));</span>
+<span class="nc" id="L289">			result.append(direction.getShortCode());</span>
 		}
-<span class="nc" id="L278">		return result.toString();</span>
+<span class="nc" id="L291">		return result.toString();</span>
 	}
 
 	private List&lt;Direction&gt; getPatternAt(int i) {
-<span class="nc" id="L282">		return Arrays.asList(getDirectionAtPoint(i), getDirectionAtPoint(i + 1), getDirectionAtPoint(i + 2),</span>
-<span class="nc" id="L283">				getDirectionAtPoint(i + 3));</span>
+<span class="nc" id="L295">		return Arrays.asList(getDirectionAtPoint(i), getDirectionAtPoint(i + 1), getDirectionAtPoint(i + 2),</span>
+<span class="nc" id="L296">				getDirectionAtPoint(i + 3));</span>
 	}
 
 	private boolean isForwardAndBackwardAt(int i) {
-<span class="nc bnc" id="L287" title="All 2 branches missed.">		return getDirectionAtPoint(i) == getDirectionAtPoint(i + 1).getInv();</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">		return getDirectionAtPoint(i) == getDirectionAtPoint(i + 1).getInv();</span>
 	}
 
 	private Direction getDirectionAtPoint(int i) {
-<span class="nc" id="L291">		return Direction.fromVector(getPoint(i), getPoint(i + 1));</span>
+<span class="nc" id="L304">		return Direction.fromVector(getPoint(i), getPoint(i + 1));</span>
 	}
 
 	public boolean doesHorizontalCross(MinMax area) {
-<span class="nc bnc" id="L295" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 1; i++) {</span>
-<span class="nc" id="L296">			final XPoint2D pt1 = getPoint(i);</span>
-<span class="nc" id="L297">			final XPoint2D pt2 = getPoint(i + 1);</span>
-<span class="nc bnc" id="L298" title="All 4 branches missed.">			if (pt1.getY() == pt2.getY() &amp;&amp; area.doesHorizontalCross(pt1, pt2))</span>
-<span class="nc" id="L299">				return true;</span>
+<span class="nc bnc" id="L308" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 1; i++) {</span>
+<span class="nc" id="L309">			final XPoint2D pt1 = getPoint(i);</span>
+<span class="nc" id="L310">			final XPoint2D pt2 = getPoint(i + 1);</span>
+<span class="nc bnc" id="L311" title="All 4 branches missed.">			if (pt1.getY() == pt2.getY() &amp;&amp; area.doesHorizontalCross(pt1, pt2))</span>
+<span class="nc" id="L312">				return true;</span>
 
 		}
-<span class="nc" id="L302">		return false;</span>
+<span class="nc" id="L315">		return false;</span>
 	}
 
 	public int size() {
-<span class="fc" id="L306">		return points.size();</span>
+<span class="fc" id="L319">		return points.size();</span>
 	}
 
 	public XPoint2D getPoint(int i) {
-<span class="fc" id="L310">		return resolve(points.get(i));</span>
+<span class="fc" id="L323">		return resolve(points.get(i));</span>
 	}
 
 	private XPoint2D resolve(XPoint2D point) {
-<span class="fc bfc" id="L314" title="All 2 branches covered.">		if (tr == null)</span>
-<span class="fc" id="L315">			return point;</span>
-<span class="fc" id="L316">		return tr.getTranslated(point);</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">		if (tr == null)</span>
+<span class="fc" id="L328">			return point;</span>
+<span class="fc" id="L329">		return tr.getTranslated(point);</span>
 	}
 
 	public XPoint2D getFirst() {
-<span class="nc" id="L320">		return getPoint(0);</span>
+<span class="nc" id="L333">		return getPoint(0);</span>
 	}
 
 	public XPoint2D getLast() {
-<span class="fc" id="L324">		return getPoint(size() - 1);</span>
+<span class="fc" id="L337">		return getPoint(size() - 1);</span>
 	}
 
 	public double getMinX() {
-<span class="nc" id="L328">		double result = getPoint(0).getX();</span>
-<span class="nc bnc" id="L329" title="All 2 branches missed.">		for (XPoint2D pt : points)</span>
-<span class="nc" id="L330">			result = Math.min(result, resolve(pt).getX());</span>
-<span class="nc" id="L331">		return result;</span>
+<span class="nc" id="L341">		double result = getPoint(0).getX();</span>
+<span class="nc bnc" id="L342" title="All 2 branches missed.">		for (XPoint2D pt : points)</span>
+<span class="nc" id="L343">			result = Math.min(result, resolve(pt).getX());</span>
+<span class="nc" id="L344">		return result;</span>
 	}
 
 	public double getMaxX() {
-<span class="nc" id="L335">		double result = getPoint(0).getX();</span>
-<span class="nc bnc" id="L336" title="All 2 branches missed.">		for (XPoint2D pt : points)</span>
-<span class="nc" id="L337">			result = Math.max(result, resolve(pt).getX());</span>
-<span class="nc" id="L338">		return result;</span>
+<span class="nc" id="L348">		double result = getPoint(0).getX();</span>
+<span class="nc bnc" id="L349" title="All 2 branches missed.">		for (XPoint2D pt : points)</span>
+<span class="nc" id="L350">			result = Math.max(result, resolve(pt).getX());</span>
+<span class="nc" id="L351">		return result;</span>
 	}
 
 	public double getMaxY() {
-<span class="nc" id="L342">		double result = getPoint(0).getY();</span>
-<span class="nc bnc" id="L343" title="All 2 branches missed.">		for (XPoint2D pt : points)</span>
-<span class="nc" id="L344">			result = Math.max(result, resolve(pt).getY());</span>
-<span class="nc" id="L345">		return result;</span>
-	}
-
-	public Worm merge(Worm other, MergeStrategy merge) {
-<span class="nc bnc" id="L349" title="All 2 branches missed.">		if (Snake.same(this.getLast(), other.getFirst()) == false)</span>
-<span class="nc" id="L350">			throw new IllegalArgumentException();</span>
-
-<span class="nc" id="L352">		final Worm result = new Worm(style, arrows, size() + other.size());</span>
-<span class="nc bnc" id="L353" title="All 2 branches missed.">		for (XPoint2D pt : this.points)</span>
-<span class="nc" id="L354">			result.addPoint(this.resolve(pt));</span>
-<span class="nc bnc" id="L355" title="All 2 branches missed.">		for (XPoint2D pt : other.points)</span>
-<span class="nc" id="L356">			result.addPoint(other.resolve(pt));</span>
-<span class="nc" id="L357">		result.mergeMe(merge);</span>
+<span class="nc" id="L355">		double result = getPoint(0).getY();</span>
+<span class="nc bnc" id="L356" title="All 2 branches missed.">		for (XPoint2D pt : points)</span>
+<span class="nc" id="L357">			result = Math.max(result, resolve(pt).getY());</span>
 <span class="nc" id="L358">		return result;</span>
 	}
 
-	private void mergeMe(MergeStrategy merge) {
-<span class="nc bnc" id="L362" title="All 2 branches missed.">		if (tr != null)</span>
-<span class="nc" id="L363">			throw new UnsupportedOperationException();</span>
-<span class="nc" id="L364">		boolean change = false;</span>
-		do {
-<span class="nc" id="L366">			change = false;</span>
-<span class="nc bnc" id="L367" title="All 4 branches missed.">			change = change || removeNullVector();</span>
-<span class="nc bnc" id="L368" title="All 4 branches missed.">			change = change || removeRedondantDirection();</span>
-<span class="nc bnc" id="L369" title="All 4 branches missed.">			change = change || removePattern1();</span>
-<span class="nc bnc" id="L370" title="All 4 branches missed.">			change = change || removePattern2();</span>
-<span class="nc bnc" id="L371" title="All 4 branches missed.">			change = change || removePattern3();</span>
-<span class="nc bnc" id="L372" title="All 4 branches missed.">			change = change || removePattern4();</span>
-<span class="nc bnc" id="L373" title="All 4 branches missed.">			change = change || removePattern5();</span>
-<span class="nc bnc" id="L374" title="All 4 branches missed.">			change = change || removePattern6();</span>
-<span class="nc bnc" id="L375" title="All 4 branches missed.">			change = change || removePattern7();</span>
-<span class="nc bnc" id="L376" title="All 2 branches missed.">			if (merge == MergeStrategy.FULL)</span>
-<span class="nc bnc" id="L377" title="All 4 branches missed.">				change = change || removePattern8();</span>
+	public Worm merge(Worm other, MergeStrategy merge) {
+<span class="nc bnc" id="L362" title="All 2 branches missed.">		if (Snake.same(this.getLast(), other.getFirst()) == false)</span>
+<span class="nc" id="L363">			throw new IllegalArgumentException();</span>
 
-<span class="nc bnc" id="L379" title="All 2 branches missed.">		} while (change);</span>
-<span class="nc" id="L380">	}</span>
+<span class="nc" id="L365">		final Worm result = new Worm(style, arrows, size() + other.size());</span>
+<span class="nc bnc" id="L366" title="All 2 branches missed.">		for (XPoint2D pt : this.points)</span>
+<span class="nc" id="L367">			result.addPoint(this.resolve(pt));</span>
+<span class="nc bnc" id="L368" title="All 2 branches missed.">		for (XPoint2D pt : other.points)</span>
+<span class="nc" id="L369">			result.addPoint(other.resolve(pt));</span>
+<span class="nc" id="L370">		result.mergeMe(merge);</span>
+<span class="nc" id="L371">		return result;</span>
+	}
+
+	private void mergeMe(MergeStrategy merge) {
+<span class="nc bnc" id="L375" title="All 2 branches missed.">		if (tr != null)</span>
+<span class="nc" id="L376">			throw new UnsupportedOperationException();</span>
+<span class="nc" id="L377">		ensureOwnPoints();</span>
+<span class="nc" id="L378">		boolean change = false;</span>
+		do {
+<span class="nc" id="L380">			change = false;</span>
+<span class="nc bnc" id="L381" title="All 4 branches missed.">			change = change || removeNullVector();</span>
+<span class="nc bnc" id="L382" title="All 4 branches missed.">			change = change || removeRedondantDirection();</span>
+<span class="nc bnc" id="L383" title="All 4 branches missed.">			change = change || removePattern1();</span>
+<span class="nc bnc" id="L384" title="All 4 branches missed.">			change = change || removePattern2();</span>
+<span class="nc bnc" id="L385" title="All 4 branches missed.">			change = change || removePattern3();</span>
+<span class="nc bnc" id="L386" title="All 4 branches missed.">			change = change || removePattern4();</span>
+<span class="nc bnc" id="L387" title="All 4 branches missed.">			change = change || removePattern5();</span>
+<span class="nc bnc" id="L388" title="All 4 branches missed.">			change = change || removePattern6();</span>
+<span class="nc bnc" id="L389" title="All 4 branches missed.">			change = change || removePattern7();</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">			if (merge == MergeStrategy.FULL)</span>
+<span class="nc bnc" id="L391" title="All 4 branches missed.">				change = change || removePattern8();</span>
+
+<span class="nc bnc" id="L393" title="All 2 branches missed.">		} while (change);</span>
+<span class="nc" id="L394">	}</span>
 
 	private boolean removeNullVector() {
-<span class="nc bnc" id="L383" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 1; i++) {</span>
-<span class="nc" id="L384">			final Direction dir = getDirectionAtPoint(i);</span>
-<span class="nc bnc" id="L385" title="All 2 branches missed.">			if (dir == null) {</span>
-<span class="nc" id="L386">				points.remove(i);</span>
-<span class="nc" id="L387">				return true;</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 1; i++) {</span>
+<span class="nc" id="L398">			final Direction dir = getDirectionAtPoint(i);</span>
+<span class="nc bnc" id="L399" title="All 2 branches missed.">			if (dir == null) {</span>
+<span class="nc" id="L400">				points.remove(i);</span>
+<span class="nc" id="L401">				return true;</span>
 			}
 		}
-<span class="nc" id="L390">		return false;</span>
+<span class="nc" id="L404">		return false;</span>
 	}
 
 	private boolean removeRedondantDirection() {
-<span class="nc bnc" id="L394" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 2; i++) {</span>
-<span class="nc" id="L395">			final Direction dir1 = getDirectionAtPoint(i);</span>
-<span class="nc" id="L396">			final Direction dir2 = getDirectionAtPoint(i + 1);</span>
-<span class="nc bnc" id="L397" title="All 2 branches missed.">			if (dir1 == dir2) {</span>
-<span class="nc" id="L398">				points.remove(i + 1);</span>
-<span class="nc" id="L399">				return true;</span>
+<span class="nc bnc" id="L408" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 2; i++) {</span>
+<span class="nc" id="L409">			final Direction dir1 = getDirectionAtPoint(i);</span>
+<span class="nc" id="L410">			final Direction dir2 = getDirectionAtPoint(i + 1);</span>
+<span class="nc bnc" id="L411" title="All 2 branches missed.">			if (dir1 == dir2) {</span>
+<span class="nc" id="L412">				points.remove(i + 1);</span>
+<span class="nc" id="L413">				return true;</span>
 			}
 		}
-<span class="nc" id="L402">		return false;</span>
+<span class="nc" id="L416">		return false;</span>
 	}
 
 	private boolean removePattern1() {
-<span class="nc bnc" id="L406" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 5; i++) {</span>
-<span class="nc" id="L407">			final List&lt;Direction&gt; patternAt = getPatternAt(i);</span>
-<span class="nc bnc" id="L408" title="All 2 branches missed.">			if (Arrays.asList(Direction.DOWN, Direction.LEFT, Direction.DOWN, Direction.RIGHT).equals(patternAt)</span>
-<span class="nc" id="L409">					|| Arrays.asList(Direction.DOWN, Direction.RIGHT, Direction.DOWN, Direction.LEFT)</span>
-<span class="nc bnc" id="L410" title="All 2 branches missed.">							.equals(patternAt)) {</span>
-<span class="nc" id="L411">				final XPoint2D newPoint = new XPoint2D(getPoint(i + 1).x, getPoint(i + 3).y);</span>
-<span class="nc" id="L412">				points.remove(i + 3);</span>
-<span class="nc" id="L413">				points.remove(i + 2);</span>
-<span class="nc" id="L414">				points.remove(i + 1);</span>
-<span class="nc" id="L415">				points.add(i + 1, newPoint);</span>
-<span class="nc" id="L416">				return true;</span>
+<span class="nc bnc" id="L420" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 5; i++) {</span>
+<span class="nc" id="L421">			final List&lt;Direction&gt; patternAt = getPatternAt(i);</span>
+<span class="nc bnc" id="L422" title="All 2 branches missed.">			if (Arrays.asList(Direction.DOWN, Direction.LEFT, Direction.DOWN, Direction.RIGHT).equals(patternAt)</span>
+<span class="nc" id="L423">					|| Arrays.asList(Direction.DOWN, Direction.RIGHT, Direction.DOWN, Direction.LEFT)</span>
+<span class="nc bnc" id="L424" title="All 2 branches missed.">							.equals(patternAt)) {</span>
+<span class="nc" id="L425">				final XPoint2D newPoint = new XPoint2D(getPoint(i + 1).x, getPoint(i + 3).y);</span>
+<span class="nc" id="L426">				points.remove(i + 3);</span>
+<span class="nc" id="L427">				points.remove(i + 2);</span>
+<span class="nc" id="L428">				points.remove(i + 1);</span>
+<span class="nc" id="L429">				points.add(i + 1, newPoint);</span>
+<span class="nc" id="L430">				return true;</span>
 			}
 		}
-<span class="nc" id="L419">		return false;</span>
+<span class="nc" id="L433">		return false;</span>
 	}
 
 	private boolean removePattern7() {
-<span class="nc bnc" id="L423" title="All 2 branches missed.">		if (size() &gt; 4) {</span>
-<span class="nc" id="L424">			final int i = 0;</span>
-<span class="nc" id="L425">			final List&lt;Direction&gt; patternAt = getPatternAt(i);</span>
-<span class="nc bnc" id="L426" title="All 2 branches missed.">			if (Arrays.asList(Direction.RIGHT, Direction.DOWN, Direction.LEFT, Direction.DOWN).equals(patternAt)</span>
-<span class="nc bnc" id="L427" title="All 2 branches missed.">					&amp;&amp; getPoint(i + 3).x &gt; getPoint(i).x) {</span>
-<span class="nc" id="L428">				final XPoint2D newPoint = new XPoint2D(getPoint(i + 3).x, getPoint(i).y);</span>
-<span class="nc" id="L429">				points.remove(i + 2);</span>
-<span class="nc" id="L430">				points.remove(i + 1);</span>
-<span class="nc" id="L431">				points.add(i + 1, newPoint);</span>
-<span class="nc" id="L432">				return true;</span>
+<span class="nc bnc" id="L437" title="All 2 branches missed.">		if (size() &gt; 4) {</span>
+<span class="nc" id="L438">			final int i = 0;</span>
+<span class="nc" id="L439">			final List&lt;Direction&gt; patternAt = getPatternAt(i);</span>
+<span class="nc bnc" id="L440" title="All 2 branches missed.">			if (Arrays.asList(Direction.RIGHT, Direction.DOWN, Direction.LEFT, Direction.DOWN).equals(patternAt)</span>
+<span class="nc bnc" id="L441" title="All 2 branches missed.">					&amp;&amp; getPoint(i + 3).x &gt; getPoint(i).x) {</span>
+<span class="nc" id="L442">				final XPoint2D newPoint = new XPoint2D(getPoint(i + 3).x, getPoint(i).y);</span>
+<span class="nc" id="L443">				points.remove(i + 2);</span>
+<span class="nc" id="L444">				points.remove(i + 1);</span>
+<span class="nc" id="L445">				points.add(i + 1, newPoint);</span>
+<span class="nc" id="L446">				return true;</span>
 			}
 		}
-<span class="nc" id="L435">		return false;</span>
+<span class="nc" id="L449">		return false;</span>
 	}
 
 	private boolean removePattern2() {
-<span class="nc bnc" id="L439" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 5; i++) {</span>
-<span class="nc" id="L440">			final List&lt;Direction&gt; patternAt = getPatternAt(i);</span>
-<span class="nc bnc" id="L441" title="All 2 branches missed.">			if (Arrays.asList(Direction.RIGHT, Direction.DOWN, Direction.RIGHT, Direction.UP).equals(patternAt)</span>
-<span class="nc bnc" id="L442" title="All 2 branches missed.">					|| Arrays.asList(Direction.LEFT, Direction.DOWN, Direction.LEFT, Direction.UP).equals(patternAt)) {</span>
-<span class="nc" id="L443">				final XPoint2D newPoint = new XPoint2D(getPoint(i + 3).x, getPoint(i + 1).y);</span>
-<span class="nc" id="L444">				points.remove(i + 3);</span>
-<span class="nc" id="L445">				points.remove(i + 2);</span>
-<span class="nc" id="L446">				points.remove(i + 1);</span>
-<span class="nc" id="L447">				points.add(i + 1, newPoint);</span>
-<span class="nc" id="L448">				return true;</span>
+<span class="nc bnc" id="L453" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 5; i++) {</span>
+<span class="nc" id="L454">			final List&lt;Direction&gt; patternAt = getPatternAt(i);</span>
+<span class="nc bnc" id="L455" title="All 2 branches missed.">			if (Arrays.asList(Direction.RIGHT, Direction.DOWN, Direction.RIGHT, Direction.UP).equals(patternAt)</span>
+<span class="nc bnc" id="L456" title="All 2 branches missed.">					|| Arrays.asList(Direction.LEFT, Direction.DOWN, Direction.LEFT, Direction.UP).equals(patternAt)) {</span>
+<span class="nc" id="L457">				final XPoint2D newPoint = new XPoint2D(getPoint(i + 3).x, getPoint(i + 1).y);</span>
+<span class="nc" id="L458">				points.remove(i + 3);</span>
+<span class="nc" id="L459">				points.remove(i + 2);</span>
+<span class="nc" id="L460">				points.remove(i + 1);</span>
+<span class="nc" id="L461">				points.add(i + 1, newPoint);</span>
+<span class="nc" id="L462">				return true;</span>
 			}
 		}
-<span class="nc" id="L451">		return false;</span>
+<span class="nc" id="L465">		return false;</span>
 	}
 
 	private boolean removePattern3() {
-<span class="nc bnc" id="L455" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 4; i++) {</span>
-<span class="nc" id="L456">			final List&lt;Direction&gt; patternAt = getPatternAt(i);</span>
-<span class="nc bnc" id="L457" title="All 2 branches missed.">			if (Arrays.asList(Direction.DOWN, Direction.RIGHT, Direction.DOWN, Direction.RIGHT).equals(patternAt)</span>
-<span class="nc" id="L458">					|| Arrays.asList(Direction.DOWN, Direction.LEFT, Direction.DOWN, Direction.LEFT)</span>
-<span class="nc bnc" id="L459" title="All 2 branches missed.">							.equals(patternAt)) {</span>
-<span class="nc" id="L460">				final XPoint2D newPoint = new XPoint2D(getPoint(i + 1).x, getPoint(i + 3).y);</span>
-<span class="nc" id="L461">				points.remove(i + 3);</span>
-<span class="nc" id="L462">				points.remove(i + 2);</span>
-<span class="nc" id="L463">				points.remove(i + 1);</span>
-<span class="nc" id="L464">				points.add(i + 1, newPoint);</span>
-<span class="nc" id="L465">				return true;</span>
+<span class="nc bnc" id="L469" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 4; i++) {</span>
+<span class="nc" id="L470">			final List&lt;Direction&gt; patternAt = getPatternAt(i);</span>
+<span class="nc bnc" id="L471" title="All 2 branches missed.">			if (Arrays.asList(Direction.DOWN, Direction.RIGHT, Direction.DOWN, Direction.RIGHT).equals(patternAt)</span>
+<span class="nc" id="L472">					|| Arrays.asList(Direction.DOWN, Direction.LEFT, Direction.DOWN, Direction.LEFT)</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">							.equals(patternAt)) {</span>
+<span class="nc" id="L474">				final XPoint2D newPoint = new XPoint2D(getPoint(i + 1).x, getPoint(i + 3).y);</span>
+<span class="nc" id="L475">				points.remove(i + 3);</span>
+<span class="nc" id="L476">				points.remove(i + 2);</span>
+<span class="nc" id="L477">				points.remove(i + 1);</span>
+<span class="nc" id="L478">				points.add(i + 1, newPoint);</span>
+<span class="nc" id="L479">				return true;</span>
 			}
 		}
-<span class="nc" id="L468">		return false;</span>
+<span class="nc" id="L482">		return false;</span>
 	}
 
 	private boolean removePattern4() {
-<span class="nc" id="L472">		final int i = size() - 5;</span>
-<span class="nc bnc" id="L473" title="All 2 branches missed.">		if (i &gt;= 0) {</span>
-<span class="nc" id="L474">			final List&lt;Direction&gt; patternAt = getPatternAt(i);</span>
-<span class="nc bnc" id="L475" title="All 2 branches missed.">			if (Arrays.asList(Direction.DOWN, Direction.LEFT, Direction.DOWN, Direction.RIGHT).equals(patternAt)) {</span>
-<span class="nc" id="L476">				final XPoint2D p1 = getPoint(i + 1);</span>
-<span class="nc" id="L477">				final XPoint2D p4 = getPoint(i + 4);</span>
-<span class="nc bnc" id="L478" title="All 2 branches missed.">				if (p4.x &gt; p1.x) {</span>
-<span class="nc" id="L479">					final XPoint2D newPoint = new XPoint2D(getPoint(i + 1).x, getPoint(i + 3).y);</span>
-<span class="nc" id="L480">					points.remove(i + 3);</span>
-<span class="nc" id="L481">					points.remove(i + 2);</span>
-<span class="nc" id="L482">					points.remove(i + 1);</span>
-<span class="nc" id="L483">					points.add(i + 1, newPoint);</span>
-<span class="nc" id="L484">					return true;</span>
+<span class="nc" id="L486">		final int i = size() - 5;</span>
+<span class="nc bnc" id="L487" title="All 2 branches missed.">		if (i &gt;= 0) {</span>
+<span class="nc" id="L488">			final List&lt;Direction&gt; patternAt = getPatternAt(i);</span>
+<span class="nc bnc" id="L489" title="All 2 branches missed.">			if (Arrays.asList(Direction.DOWN, Direction.LEFT, Direction.DOWN, Direction.RIGHT).equals(patternAt)) {</span>
+<span class="nc" id="L490">				final XPoint2D p1 = getPoint(i + 1);</span>
+<span class="nc" id="L491">				final XPoint2D p4 = getPoint(i + 4);</span>
+<span class="nc bnc" id="L492" title="All 2 branches missed.">				if (p4.x &gt; p1.x) {</span>
+<span class="nc" id="L493">					final XPoint2D newPoint = new XPoint2D(getPoint(i + 1).x, getPoint(i + 3).y);</span>
+<span class="nc" id="L494">					points.remove(i + 3);</span>
+<span class="nc" id="L495">					points.remove(i + 2);</span>
+<span class="nc" id="L496">					points.remove(i + 1);</span>
+<span class="nc" id="L497">					points.add(i + 1, newPoint);</span>
+<span class="nc" id="L498">					return true;</span>
 				}
 			}
 		}
-<span class="nc" id="L488">		return false;</span>
+<span class="nc" id="L502">		return false;</span>
 	}
 
 	private boolean removePattern5() {
-<span class="nc" id="L492">		final int i = size() - 5;</span>
-<span class="nc bnc" id="L493" title="All 2 branches missed.">		if (i &gt;= 0) {</span>
-<span class="nc" id="L494">			final List&lt;Direction&gt; patternAt = getPatternAt(i);</span>
-<span class="nc bnc" id="L495" title="All 2 branches missed.">			if (Arrays.asList(Direction.DOWN, Direction.RIGHT, Direction.DOWN, Direction.LEFT).equals(patternAt)) {</span>
-<span class="nc" id="L496">				final XPoint2D p1 = getPoint(i + 1);</span>
-<span class="nc" id="L497">				final XPoint2D p4 = getPoint(i + 4);</span>
-<span class="nc bnc" id="L498" title="All 2 branches missed.">				if (p4.x + 4 &lt; p1.x) {</span>
-<span class="nc" id="L499">					final XPoint2D newPoint = new XPoint2D(getPoint(i + 1).x, getPoint(i + 3).y);</span>
-<span class="nc" id="L500">					points.remove(i + 3);</span>
-<span class="nc" id="L501">					points.remove(i + 2);</span>
-<span class="nc" id="L502">					points.remove(i + 1);</span>
-<span class="nc" id="L503">					points.add(i + 1, newPoint);</span>
-<span class="nc" id="L504">					return true;</span>
+<span class="nc" id="L506">		final int i = size() - 5;</span>
+<span class="nc bnc" id="L507" title="All 2 branches missed.">		if (i &gt;= 0) {</span>
+<span class="nc" id="L508">			final List&lt;Direction&gt; patternAt = getPatternAt(i);</span>
+<span class="nc bnc" id="L509" title="All 2 branches missed.">			if (Arrays.asList(Direction.DOWN, Direction.RIGHT, Direction.DOWN, Direction.LEFT).equals(patternAt)) {</span>
+<span class="nc" id="L510">				final XPoint2D p1 = getPoint(i + 1);</span>
+<span class="nc" id="L511">				final XPoint2D p4 = getPoint(i + 4);</span>
+<span class="nc bnc" id="L512" title="All 2 branches missed.">				if (p4.x + 4 &lt; p1.x) {</span>
+<span class="nc" id="L513">					final XPoint2D newPoint = new XPoint2D(getPoint(i + 1).x, getPoint(i + 3).y);</span>
+<span class="nc" id="L514">					points.remove(i + 3);</span>
+<span class="nc" id="L515">					points.remove(i + 2);</span>
+<span class="nc" id="L516">					points.remove(i + 1);</span>
+<span class="nc" id="L517">					points.add(i + 1, newPoint);</span>
+<span class="nc" id="L518">					return true;</span>
 				}
 			}
 		}
-<span class="nc" id="L508">		return false;</span>
+<span class="nc" id="L522">		return false;</span>
 	}
 
 	private boolean removePattern6() {
-<span class="nc bnc" id="L512" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 2; i++) {</span>
-<span class="nc bnc" id="L513" title="All 2 branches missed.">			if (isForwardAndBackwardAt(i)) {</span>
-<span class="nc" id="L514">				points.remove(i + 1);</span>
-<span class="nc" id="L515">				return true;</span>
+<span class="nc bnc" id="L526" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 2; i++) {</span>
+<span class="nc bnc" id="L527" title="All 2 branches missed.">			if (isForwardAndBackwardAt(i)) {</span>
+<span class="nc" id="L528">				points.remove(i + 1);</span>
+<span class="nc" id="L529">				return true;</span>
 			}
 		}
-<span class="nc" id="L518">		return false;</span>
+<span class="nc" id="L532">		return false;</span>
 	}
 
 	private boolean removePattern8() {
-<span class="nc bnc" id="L522" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 4; i++) {</span>
-<span class="nc" id="L523">			final List&lt;Direction&gt; patternAt = getPatternAt(i);</span>
-<span class="nc bnc" id="L524" title="All 2 branches missed.">			if (Arrays.asList(Direction.LEFT, Direction.DOWN, Direction.LEFT, Direction.DOWN).equals(patternAt)</span>
-<span class="nc" id="L525">					|| Arrays.asList(Direction.RIGHT, Direction.DOWN, Direction.RIGHT, Direction.DOWN)</span>
-<span class="nc bnc" id="L526" title="All 2 branches missed.">							.equals(patternAt)) {</span>
-<span class="nc" id="L527">				final XPoint2D newPoint = new XPoint2D(getPoint(i + 3).x, getPoint(i + 1).y);</span>
-<span class="nc" id="L528">				points.remove(i + 3);</span>
-<span class="nc" id="L529">				points.remove(i + 2);</span>
-<span class="nc" id="L530">				points.remove(i + 1);</span>
-<span class="nc" id="L531">				points.add(i + 1, newPoint);</span>
-<span class="nc" id="L532">				return true;</span>
+<span class="nc bnc" id="L536" title="All 2 branches missed.">		for (int i = 0; i &lt; size() - 4; i++) {</span>
+<span class="nc" id="L537">			final List&lt;Direction&gt; patternAt = getPatternAt(i);</span>
+<span class="nc bnc" id="L538" title="All 2 branches missed.">			if (Arrays.asList(Direction.LEFT, Direction.DOWN, Direction.LEFT, Direction.DOWN).equals(patternAt)</span>
+<span class="nc" id="L539">					|| Arrays.asList(Direction.RIGHT, Direction.DOWN, Direction.RIGHT, Direction.DOWN)</span>
+<span class="nc bnc" id="L540" title="All 2 branches missed.">							.equals(patternAt)) {</span>
+<span class="nc" id="L541">				final XPoint2D newPoint = new XPoint2D(getPoint(i + 3).x, getPoint(i + 1).y);</span>
+<span class="nc" id="L542">				points.remove(i + 3);</span>
+<span class="nc" id="L543">				points.remove(i + 2);</span>
+<span class="nc" id="L544">				points.remove(i + 1);</span>
+<span class="nc" id="L545">				points.add(i + 1, newPoint);</span>
+<span class="nc" id="L546">				return true;</span>
 			}
 		}
-<span class="nc" id="L535">		return false;</span>
+<span class="nc" id="L549">		return false;</span>
 	}
 
 	public Style getStyle() {
-<span class="nc" id="L539">		return style;</span>
+<span class="nc" id="L553">		return style;</span>
 	}
 
 }

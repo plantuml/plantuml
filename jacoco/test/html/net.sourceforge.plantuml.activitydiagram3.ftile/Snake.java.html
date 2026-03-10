@@ -283,56 +283,61 @@ public class Snake implements UShape {
 
 	}
 
-	private XPoint2D getFirst() {
+	public XPoint2D getFirst() {
 <span class="fc" id="L287">		return worm.getPoint(0);</span>
 	}
 
-	public XPoint2D getLast() {
-<span class="fc" id="L291">		return worm.getPoint(worm.size() - 1);</span>
+	// Returns true if this snake cannot be the target of a touches() check
+	public boolean cannotBeTouched() {
+<span class="pc bpc" id="L292" title="2 of 4 branches missed.">		return mergeable != MergeStrategy.FULL || worm.isPureHorizontal();</span>
 	}
 
-	static boolean same(XPoint2D pt1, XPoint2D pt2) {
-<span class="pc bpc" id="L295" title="1 of 2 branches missed.">		return pt1.distance(pt2) &lt; 0.001;</span>
+	public XPoint2D getLast() {
+<span class="fc" id="L296">		return worm.getPoint(worm.size() - 1);</span>
+	}
+
+	static public boolean same(XPoint2D pt1, XPoint2D pt2) {
+<span class="pc bpc" id="L300" title="1 of 2 branches missed.">		return pt1.distance(pt2) &lt; 0.001;</span>
 	}
 
 	public Snake merge(Snake other, StringBounder stringBounder) {
-<span class="fc" id="L299">		final MergeStrategy strategy = this.mergeable.max(other.mergeable);</span>
-<span class="pc bpc" id="L300" title="1 of 2 branches missed.">		if (strategy == MergeStrategy.NONE)</span>
-<span class="nc" id="L301">			return null;</span>
+<span class="fc" id="L304">		final MergeStrategy strategy = this.mergeable.max(other.mergeable);</span>
+<span class="pc bpc" id="L305" title="1 of 2 branches missed.">		if (strategy == MergeStrategy.NONE)</span>
+<span class="nc" id="L306">			return null;</span>
 
-<span class="fc bfc" id="L303" title="All 2 branches covered.">		for (Text text : other.texts)</span>
-<span class="pc bpc" id="L304" title="1 of 2 branches missed.">			if (text.hasText(stringBounder))</span>
-<span class="nc" id="L305">				return null;</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">		for (Text text : other.texts)</span>
+<span class="pc bpc" id="L309" title="1 of 2 branches missed.">			if (text.hasText(stringBounder))</span>
+<span class="nc" id="L310">				return null;</span>
 
-<span class="pc bpc" id="L307" title="1 of 2 branches missed.">		if (same(this.getLast(), other.getFirst())) {</span>
-<span class="nc bnc" id="L308" title="All 2 branches missed.">			final UPolygon oneOf = other.endDecoration == null ? endDecoration : other.endDecoration;</span>
-<span class="nc bnc" id="L309" title="All 4 branches missed.">			if (this.startDecoration != null || other.startDecoration != null)</span>
-<span class="nc" id="L310">				throw new UnsupportedOperationException(&quot;Not yet coded: to be done&quot;);</span>
+<span class="pc bpc" id="L312" title="1 of 2 branches missed.">		if (same(this.getLast(), other.getFirst())) {</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">			final UPolygon oneOf = other.endDecoration == null ? endDecoration : other.endDecoration;</span>
+<span class="nc bnc" id="L314" title="All 4 branches missed.">			if (this.startDecoration != null || other.startDecoration != null)</span>
+<span class="nc" id="L315">				throw new UnsupportedOperationException(&quot;Not yet coded: to be done&quot;);</span>
 
-<span class="nc" id="L312">			final ArrayList&lt;Text&gt; mergeTexts = new ArrayList&lt;Text&gt;(this.texts);</span>
-<span class="nc" id="L313">			mergeTexts.addAll(other.texts);</span>
-<span class="nc" id="L314">			final Snake result = new Snake(skinParam, null, color, oneOf, this.worm.merge(other.worm, strategy),</span>
-<span class="nc bnc" id="L315" title="All 2 branches missed.">					strategy, emphasizeDirection == null ? other.emphasizeDirection : emphasizeDirection, mergeTexts);</span>
-<span class="nc" id="L316">			return result;</span>
+<span class="nc" id="L317">			final ArrayList&lt;Text&gt; mergeTexts = new ArrayList&lt;Text&gt;(this.texts);</span>
+<span class="nc" id="L318">			mergeTexts.addAll(other.texts);</span>
+<span class="nc" id="L319">			final Snake result = new Snake(skinParam, null, color, oneOf, this.worm.merge(other.worm, strategy),</span>
+<span class="nc bnc" id="L320" title="All 2 branches missed.">					strategy, emphasizeDirection == null ? other.emphasizeDirection : emphasizeDirection, mergeTexts);</span>
+<span class="nc" id="L321">			return result;</span>
 		}
-<span class="pc bpc" id="L318" title="1 of 2 branches missed.">		if (same(this.getFirst(), other.getLast()))</span>
-<span class="nc" id="L319">			return other.merge(this, stringBounder);</span>
+<span class="pc bpc" id="L323" title="1 of 2 branches missed.">		if (same(this.getFirst(), other.getLast()))</span>
+<span class="nc" id="L324">			return other.merge(this, stringBounder);</span>
 
-<span class="fc" id="L321">		return null;</span>
+<span class="fc" id="L326">		return null;</span>
 	}
 
 	public boolean touches(Snake other) {
-<span class="pc bpc" id="L325" title="1 of 2 branches missed.">		if (other.mergeable != MergeStrategy.FULL)</span>
-<span class="nc" id="L326">			return false;</span>
+<span class="nc bnc" id="L330" title="All 2 branches missed.">		if (other.mergeable != MergeStrategy.FULL)</span>
+<span class="nc" id="L331">			return false;</span>
 
-<span class="pc bpc" id="L328" title="1 of 2 branches missed.">		if (other.worm.isPureHorizontal())</span>
-<span class="nc" id="L329">			return false;</span>
+<span class="nc bnc" id="L333" title="All 2 branches missed.">		if (other.worm.isPureHorizontal())</span>
+<span class="nc" id="L334">			return false;</span>
 
-<span class="fc" id="L331">		return same(this.getLast(), other.getFirst());</span>
+<span class="nc" id="L336">		return same(this.getLast(), other.getFirst());</span>
 	}
 
 	public boolean doesHorizontalCross(MinMax minMax) {
-<span class="nc" id="L335">		return worm.doesHorizontalCross(minMax);</span>
+<span class="nc" id="L340">		return worm.doesHorizontalCross(minMax);</span>
 	}
 
 }

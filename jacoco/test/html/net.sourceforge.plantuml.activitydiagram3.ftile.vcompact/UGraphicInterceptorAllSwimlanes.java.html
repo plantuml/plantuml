@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UGraphicInterceptorAllSwimlanes.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact</a> &gt; <span class="el_source">UGraphicInterceptorAllSwimlanes.java</span></div><h1>UGraphicInterceptorAllSwimlanes.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.activitydiagram3.ftile.vcompact;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.Connection;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
+import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GConnection;
+import net.sourceforge.plantuml.activitydiagram3.gtile.GPoint;
+import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
+import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.UGroup;
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.url.Url;
+
+/**
+ * A UGraphic interceptor that dispatches drawing operations to multiple
+ * swimlane-specific UGraphics in a single traversal of the Ftile tree.
+ * &lt;p&gt;
+ * This replaces the pattern of N separate traversals with N
+ * UGraphicInterceptorOneSwimlane instances, turning O(N * tree_size) into
+ * O(tree_size).
+ * &lt;p&gt;
+ * The {@code activeSwimlanes} set tracks which swimlanes are relevant at the
+ * current depth in the Ftile tree, so primitive shapes are dispatched only to
+ * the correct LimitFinders.
+ */
+public class UGraphicInterceptorAllSwimlanes implements UGraphic {
+
+	private final Map&lt;Swimlane, UGraphic&gt; swimlaneToUg;
+	private final List&lt;Swimlane&gt; orderedList;
+	private final Set&lt;Swimlane&gt; activeSwimlanes;
+	private final StringBounder stringBounder;
+
+	public UGraphicInterceptorAllSwimlanes(Map&lt;Swimlane, UGraphic&gt; swimlaneToUg, List&lt;Swimlane&gt; orderedList,
+			StringBounder stringBounder) {
+<span class="nc" id="L77">		this(swimlaneToUg, orderedList, swimlaneToUg.keySet(), stringBounder);</span>
+<span class="nc" id="L78">	}</span>
+
+	private UGraphicInterceptorAllSwimlanes(Map&lt;Swimlane, UGraphic&gt; swimlaneToUg, List&lt;Swimlane&gt; orderedList,
+<span class="nc" id="L81">			Set&lt;Swimlane&gt; activeSwimlanes, StringBounder stringBounder) {</span>
+<span class="nc" id="L82">		this.swimlaneToUg = swimlaneToUg;</span>
+<span class="nc" id="L83">		this.orderedList = orderedList;</span>
+<span class="nc" id="L84">		this.activeSwimlanes = activeSwimlanes;</span>
+<span class="nc" id="L85">		this.stringBounder = stringBounder;</span>
+<span class="nc" id="L86">	}</span>
+
+	public void draw(UShape shape) {
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (shape instanceof Ftile) {</span>
+<span class="nc" id="L90">			final Ftile tile = (Ftile) shape;</span>
+<span class="nc" id="L91">			final Set&lt;Swimlane&gt; tileSwimlanes = tile.getSwimlanes();</span>
+			// Check if any active swimlane is in this tile
+<span class="nc" id="L93">			boolean hasMatch = false;</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">			for (Swimlane swimlane : activeSwimlanes)</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">				if (tileSwimlanes.contains(swimlane)) {</span>
+<span class="nc" id="L96">					hasMatch = true;</span>
+<span class="nc" id="L97">					break;</span>
+				}
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (hasMatch) {</span>
+				// Narrow the active swimlanes to the intersection with this tile's swimlanes
+<span class="nc" id="L101">				final UGraphicInterceptorAllSwimlanes narrowed = withActiveSwimlanes(tileSwimlanes);</span>
+<span class="nc" id="L102">				tile.drawU(narrowed);</span>
+			}
+
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		} else if (shape instanceof Gtile) {</span>
+<span class="nc" id="L106">			final Gtile tile = (Gtile) shape;</span>
+<span class="nc" id="L107">			final Set&lt;Swimlane&gt; tileSwimlanes = tile.getSwimlanes();</span>
+<span class="nc" id="L108">			boolean hasMatch = false;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			for (Swimlane swimlane : activeSwimlanes)</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">				if (tileSwimlanes.contains(swimlane)) {</span>
+<span class="nc" id="L111">					hasMatch = true;</span>
+<span class="nc" id="L112">					break;</span>
+				}
+<span class="nc bnc" id="L114" title="All 2 branches missed.">			if (hasMatch) {</span>
+<span class="nc" id="L115">				final UGraphicInterceptorAllSwimlanes narrowed = withActiveSwimlanes(tileSwimlanes);</span>
+<span class="nc" id="L116">				tile.drawU(narrowed);</span>
+			}
+
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		} else if (shape instanceof GConnection) {</span>
+<span class="nc" id="L120">			final GConnection connection = (GConnection) shape;</span>
+<span class="nc" id="L121">			final List&lt;GPoint&gt; hooks = connection.getHooks();</span>
+<span class="nc" id="L122">			final GPoint point0 = hooks.get(0);</span>
+<span class="nc" id="L123">			final GPoint point1 = hooks.get(1);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">			for (Swimlane swimlane : activeSwimlanes)</span>
+<span class="nc bnc" id="L125" title="All 4 branches missed.">				if (point0.match(swimlane) &amp;&amp; point1.match(swimlane)) {</span>
+<span class="nc" id="L126">					connection.drawU(swimlaneToUg.get(swimlane));</span>
+				}
+
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		} else if (shape instanceof Connection) {</span>
+<span class="nc" id="L130">			final Connection connection = (Connection) shape;</span>
+<span class="nc" id="L131">			final Ftile tile1 = connection.getFtile1();</span>
+<span class="nc" id="L132">			final Ftile tile2 = connection.getFtile2();</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">			for (Swimlane swimlane : activeSwimlanes) {</span>
+<span class="nc bnc" id="L134" title="All 4 branches missed.">				final boolean contained1 = tile1 == null || tile1.getSwimlaneOut() == null</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">						|| tile1.getSwimlaneOut() == swimlane;</span>
+<span class="nc bnc" id="L136" title="All 4 branches missed.">				final boolean contained2 = tile2 == null || tile2.getSwimlaneIn() == null</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">						|| tile2.getSwimlaneIn() == swimlane;</span>
+<span class="nc bnc" id="L138" title="All 4 branches missed.">				if (contained1 &amp;&amp; contained2) {</span>
+<span class="nc" id="L139">					final UGraphic ug = swimlaneToUg.get(swimlane);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">					if (ug != null)</span>
+<span class="nc" id="L141">						connection.drawU(ug);</span>
+				}
+<span class="nc" id="L143">			}</span>
+
+<span class="nc" id="L145">		} else {</span>
+			// Primitive shape: dispatch only to the currently active swimlanes
+<span class="nc bnc" id="L147" title="All 2 branches missed.">			for (Swimlane swimlane : activeSwimlanes) {</span>
+<span class="nc" id="L148">				final UGraphic ug = swimlaneToUg.get(swimlane);</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">				if (ug != null)</span>
+<span class="nc" id="L150">					ug.draw(shape);</span>
+<span class="nc" id="L151">			}</span>
+		}
+<span class="nc" id="L153">	}</span>
+
+	/**
+	 * Returns a new instance with the active swimlanes narrowed to the
+	 * intersection of the current active set and the given tile swimlanes.
+	 * If the sets are identical, returns {@code this} to avoid allocation.
+	 */
+	private UGraphicInterceptorAllSwimlanes withActiveSwimlanes(Set&lt;Swimlane&gt; tileSwimlanes) {
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (tileSwimlanes.containsAll(activeSwimlanes))</span>
+<span class="nc" id="L162">			return this;</span>
+
+<span class="nc" id="L164">		final Set&lt;Swimlane&gt; narrowed = new java.util.LinkedHashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		for (Swimlane s : activeSwimlanes)</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">			if (tileSwimlanes.contains(s))</span>
+<span class="nc" id="L167">				narrowed.add(s);</span>
+
+<span class="nc" id="L169">		return new UGraphicInterceptorAllSwimlanes(swimlaneToUg, orderedList, narrowed, stringBounder);</span>
+	}
+
+	public UGraphic apply(UChange change) {
+<span class="nc" id="L173">		final Map&lt;Swimlane, UGraphic&gt; newMap = new LinkedHashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		for (Map.Entry&lt;Swimlane, UGraphic&gt; entry : swimlaneToUg.entrySet())</span>
+<span class="nc" id="L175">			newMap.put(entry.getKey(), entry.getValue().apply(change));</span>
+
+<span class="nc" id="L177">		return new UGraphicInterceptorAllSwimlanes(newMap, orderedList, activeSwimlanes, stringBounder);</span>
+	}
+
+	public StringBounder getStringBounder() {
+<span class="nc" id="L181">		return stringBounder;</span>
+	}
+
+	public UParam getParam() {
+<span class="nc" id="L185">		return swimlaneToUg.values().iterator().next().getParam();</span>
+	}
+
+	public ColorMapper getColorMapper() {
+<span class="nc" id="L189">		return swimlaneToUg.values().iterator().next().getColorMapper();</span>
+	}
+
+	public void startUrl(Url url) {
+<span class="nc" id="L193">	}</span>
+
+	public void closeUrl() {
+<span class="nc" id="L196">	}</span>
+
+	public void startGroup(UGroup group) {
+<span class="nc" id="L199">	}</span>
+
+	public void closeGroup() {
+<span class="nc" id="L202">	}</span>
+
+	public void flushUg() {
+<span class="nc bnc" id="L205" title="All 2 branches missed.">		for (UGraphic ug : swimlaneToUg.values())</span>
+<span class="nc" id="L206">			ug.flushUg();</span>
+<span class="nc" id="L207">	}</span>
+
+	public boolean matchesProperty(String propertyName) {
+<span class="nc" id="L210">		return false;</span>
+	}
+
+	public HColor getDefaultBackground() {
+<span class="nc" id="L214">		return swimlaneToUg.values().iterator().next().getDefaultBackground();</span>
+	}
+
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
+<span class="nc" id="L218">		throw new UnsupportedOperationException();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -2950,14 +2950,14 @@
 
         <Package name="net.sourceforge.plantuml.activitydiagram3.ftile.vcompact">
             <Stats>
-                <TotalClasses>74</TotalClasses>
-                <ConcreteClasses>73</ConcreteClasses>
+                <TotalClasses>75</TotalClasses>
+                <ConcreteClasses>74</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>5</Ca>
-                <Ce>26</Ce>
+                <Ce>27</Ce>
                 <A>0.01</A>
                 <I>0.84</I>
-                <D>0.15</D>
+                <D>0.14</D>
                 <V>1</V>
             </Stats>
 
@@ -3181,6 +3181,9 @@
                 <Class sourceFile="ParallelBuilderSplit.java">
                     net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.ParallelBuilderSplit$ConnectionOut
                 </Class>
+                <Class sourceFile="UGraphicInterceptorAllSwimlanes.java">
+                    net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorAllSwimlanes
+                </Class>
                 <Class sourceFile="UGraphicInterceptorOneSwimlane.java">
                     net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorOneSwimlane
                 </Class>
@@ -3190,6 +3193,7 @@
             </ConcreteClasses>
 
             <DependsUpon>
+                <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3</Package>
