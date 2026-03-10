@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TextBlock calculateDimension() review</title>
+<style>
+  body { font-family: sans-serif; margin: 2em; }
+  h1 { margin-bottom: 0.2em; }
+  .summary { color: #555; margin-bottom: 1em; }
+  .legend { margin-bottom: 1.5em; }
+  .legend span { margin-right: 1.5em; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #ccc; padding: 4px 8px; text-align: left; }
+  th { background: #f0f0f0; position: sticky; top: 0; }
+  tr:hover { background: #f8f8e0; }
+  code { font-size: 0.85em; color: #333; }
+</style>
+</head>
+<body>
+<h1>TextBlock calculateDimension() review</h1>
+<div class="summary">Total: 150 implementations</div>
+<div class="legend">
+  <span>⚡ Fast (117)</span>
+  <span>🧠 Memoized (1)</span>
+  <span>❓ To review (32)</span>
+</div>
+<table>
+  <thead>
+    <tr><th>#</th><th>Class</th><th>File</th><th>Line</th><th>Status</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td><b>BoardDiagram</b></td><td><code>net/sourceforge/plantuml/board/BoardDiagram.java</code></td><td>79</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>2</td><td><b>BpmElement</b></td><td><code>net/sourceforge/plantuml/bpm/BpmElement.java</code></td><td>115</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>3</td><td><b>ChartDiagram</b></td><td><code>net/sourceforge/plantuml/chart/ChartDiagram.java</code></td><td>102</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>4</td><td><b>ChartRenderer</b></td><td><code>net/sourceforge/plantuml/chart/ChartRenderer.java</code></td><td>135</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>5</td><td><b>ChronologyDiagram</b></td><td><code>net/sourceforge/plantuml/chronology/ChronologyDiagram.java</code></td><td>187</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>6</td><td><b>ChronologyDiagram</b></td><td><code>net/sourceforge/plantuml/chronology/ChronologyDiagram.java</code></td><td>216</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>7</td><td><b>DiagramChromeFactory12026</b></td><td><code>net/sourceforge/plantuml/core/DiagramChromeFactory12026.java</code></td><td>171</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>8</td><td><b>DiagramChromeFactory12026</b></td><td><code>net/sourceforge/plantuml/core/DiagramChromeFactory12026.java</code></td><td>229</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>9</td><td><b>DiagramChromeFactory12026</b></td><td><code>net/sourceforge/plantuml/core/DiagramChromeFactory12026.java</code></td><td>296</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>10</td><td><b>FEntry</b></td><td><code>net/sourceforge/plantuml/filesdiagram/FEntry.java</code></td><td>140</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>11</td><td><b>FlowDiagram</b></td><td><code>net/sourceforge/plantuml/flowdiagram/FlowDiagram.java</code></td><td>197</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>12</td><td><b>GitDiagram</b></td><td><code>net/sourceforge/plantuml/gitlog/GitDiagram.java</code></td><td>80</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>13</td><td><b>JsonDiagram</b></td><td><code>net/sourceforge/plantuml/jsondiagram/JsonDiagram.java</code></td><td>132</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>14</td><td><b>ListSpriteDiagram</b></td><td><code>net/sourceforge/plantuml/klimt/sprite/ListSpriteDiagram.java</code></td><td>75</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>15</td><td><b>MindMapDiagram</b></td><td><code>net/sourceforge/plantuml/mindmap/MindMapDiagram.java</code></td><td>97</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>16</td><td><b>NwDiagram</b></td><td><code>net/sourceforge/plantuml/nwdiag/NwDiagram.java</code></td><td>312</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>17</td><td><b>PSystemRegex</b></td><td><code>net/sourceforge/plantuml/regexdiagram/PSystemRegex.java</code></td><td>123</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>18</td><td><b>PSystemSalt</b></td><td><code>net/sourceforge/plantuml/salt/PSystemSalt.java</code></td><td>129</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>19</td><td><b>PacketDiagram</b></td><td><code>net/sourceforge/plantuml/packetdiag/PacketDiagram.java</code></td><td>126</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>20</td><td><b>PlainDiagram</b></td><td><code>net/sourceforge/plantuml/PlainDiagram.java</code></td><td>68</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>21</td><td><b>SmetanaForGit</b></td><td><code>net/sourceforge/plantuml/gitlog/SmetanaForGit.java</code></td><td>115</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>22</td><td><b>StdlibDiagram</b></td><td><code>net/sourceforge/plantuml/klimt/sprite/StdlibDiagram.java</code></td><td>90</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>23</td><td><b>StringBounder</b></td><td><code>net/sourceforge/plantuml/klimt/font/StringBounder.java</code></td><td>42</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>24</td><td><b>StringBounderRaw</b></td><td><code>net/sourceforge/plantuml/klimt/font/StringBounderRaw.java</code></td><td>53</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>25</td><td><b>StringBounderTeaVM</b></td><td><code>net/sourceforge/plantuml/teavm/StringBounderTeaVM.java</code></td><td>46</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>26</td><td><b>Swimlanes</b></td><td><code>net/sourceforge/plantuml/activitydiagram3/ftile/Swimlanes.java</code></td><td>437</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>27</td><td><b>TextBlock</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TextBlock.java</code></td><td>49</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>28</td><td><b>TextBlockMemoized</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TextBlockMemoized.java</code></td><td>56</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>29</td><td><b>TimingDiagram</b></td><td><code>net/sourceforge/plantuml/timingdiagram/TimingDiagram.java</code></td><td>106</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>30</td><td><b>UText</b></td><td><code>net/sourceforge/plantuml/klimt/shape/UText.java</code></td><td>89</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>31</td><td><b>WBSDiagram</b></td><td><code>net/sourceforge/plantuml/wbs/WBSDiagram.java</code></td><td>96</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>32</td><td><b>WireDiagram</b></td><td><code>net/sourceforge/plantuml/wire/WireDiagram.java</code></td><td>80</td><td style="text-align:center; font-size:1.4em">❓</td></tr>
+    <tr><td>33</td><td><b>ActivityBox</b></td><td><code>net/sourceforge/plantuml/flowdiagram/ActivityBox.java</code></td><td>104</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>34</td><td><b>ActorAwesome</b></td><td><code>net/sourceforge/plantuml/skin/ActorAwesome.java</code></td><td>108</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>35</td><td><b>ActorHollow</b></td><td><code>net/sourceforge/plantuml/skin/ActorHollow.java</code></td><td>115</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>36</td><td><b>ActorStickMan</b></td><td><code>net/sourceforge/plantuml/skin/ActorStickMan.java</code></td><td>126</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>37</td><td><b>Block</b></td><td><code>net/sourceforge/plantuml/wire/Block.java</code></td><td>121</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>38</td><td><b>BodyEnhancedAbstract</b></td><td><code>net/sourceforge/plantuml/cucadiagram/BodyEnhancedAbstract.java</code></td><td>85</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>39</td><td><b>Boundary</b></td><td><code>net/sourceforge/plantuml/svek/Boundary.java</code></td><td>97</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>40</td><td><b>BoxedCharacter</b></td><td><code>net/sourceforge/plantuml/descdiagram/BoxedCharacter.java</code></td><td>93</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>41</td><td><b>BrailleDrawer</b></td><td><code>net/sourceforge/plantuml/braille/BrailleDrawer.java</code></td><td>62</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>42</td><td><b>CardBox</b></td><td><code>net/sourceforge/plantuml/board/CardBox.java</code></td><td>68</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>43</td><td><b>CircleEnd</b></td><td><code>net/sourceforge/plantuml/svek/image/CircleEnd.java</code></td><td>68</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>44</td><td><b>CircleInterface2</b></td><td><code>net/sourceforge/plantuml/svek/CircleInterface2.java</code></td><td>77</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>45</td><td><b>CircleStart</b></td><td><code>net/sourceforge/plantuml/svek/image/CircleStart.java</code></td><td>65</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>46</td><td><b>CircledCharacter</b></td><td><code>net/sourceforge/plantuml/klimt/shape/CircledCharacter.java</code></td><td>85</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>47</td><td><b>ComponentAdapter</b></td><td><code>net/sourceforge/plantuml/sequencediagram/teoz/ComponentAdapter.java</code></td><td>65</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>48</td><td><b>ConnectorPuzzleEmpty</b></td><td><code>net/sourceforge/plantuml/bpm/ConnectorPuzzleEmpty.java</code></td><td>118</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>49</td><td><b>Control</b></td><td><code>net/sourceforge/plantuml/svek/Control.java</code></td><td>87</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>50</td><td><b>CrashImage</b></td><td><code>net/sourceforge/plantuml/crash/CrashImage.java</code></td><td>77</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>51</td><td><b>CucaDiagramFileMakerSmetana</b></td><td><code>net/sourceforge/plantuml/sdot/CucaDiagramFileMakerSmetana.java</code></td><td>209</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>52</td><td><b>DecorateEntityImage</b></td><td><code>net/sourceforge/plantuml/svek/DecorateEntityImage.java</code></td><td>161</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>53</td><td><b>DecorateEntityImage3</b></td><td><code>net/sourceforge/plantuml/svek/DecorateEntityImage3.java</code></td><td>57</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>54</td><td><b>DirectionalTextBlock</b></td><td><code>net/sourceforge/plantuml/svek/DirectionalTextBlock.java</code></td><td>83</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>55</td><td><b>DrawableSet</b></td><td><code>net/sourceforge/plantuml/sequencediagram/graphic/DrawableSet.java</code></td><td>293</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>56</td><td><b>EntityDomain</b></td><td><code>net/sourceforge/plantuml/svek/EntityDomain.java</code></td><td>74</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>57</td><td><b>EntityImageDegenerated</b></td><td><code>net/sourceforge/plantuml/svek/EntityImageDegenerated.java</code></td><td>72</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>58</td><td><b>EntityImageProtected</b></td><td><code>net/sourceforge/plantuml/svek/EntityImageProtected.java</code></td><td>78</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>59</td><td><b>FloatingNote</b></td><td><code>net/sourceforge/plantuml/activitydiagram3/ftile/vcompact/FloatingNote.java</code></td><td>106</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>60</td><td><b>FontChecker</b></td><td><code>net/sourceforge/plantuml/swing/FontChecker.java</code></td><td>187</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>61</td><td><b>GotoInterceptor</b></td><td><code>net/sourceforge/plantuml/activitydiagram3/ftile/GotoInterceptor.java</code></td><td>60</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>62</td><td><b>GraphicsSudoku</b></td><td><code>net/sourceforge/plantuml/sudoku/GraphicsSudoku.java</code></td><td>87</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>63</td><td><b>GraphvizImageBuilder</b></td><td><code>net/sourceforge/plantuml/svek/GraphvizImageBuilder.java</code></td><td>168</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>64</td><td><b>IEntityImageUtils</b></td><td><code>net/sourceforge/plantuml/svek/IEntityImageUtils.java</code></td><td>78</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>65</td><td><b>ITFLeaf</b></td><td><code>net/sourceforge/plantuml/wbs/ITFLeaf.java</code></td><td>75</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>66</td><td><b>InnerActivity</b></td><td><code>net/sourceforge/plantuml/svek/InnerActivity.java</code></td><td>79</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>67</td><td><b>LaneDivider</b></td><td><code>net/sourceforge/plantuml/activitydiagram3/ftile/LaneDivider.java</code></td><td>84</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>68</td><td><b>MethodsOrFieldsArea</b></td><td><code>net/sourceforge/plantuml/cucadiagram/MethodsOrFieldsArea.java</code></td><td>278</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>69</td><td><b>MethodsOrFieldsArea</b></td><td><code>net/sourceforge/plantuml/cucadiagram/MethodsOrFieldsArea.java</code></td><td>329</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>70</td><td><b>MethodsOrFieldsArea</b></td><td><code>net/sourceforge/plantuml/cucadiagram/MethodsOrFieldsArea.java</code></td><td>355</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>71</td><td><b>MyElkDrawing</b></td><td><code>net/sourceforge/plantuml/elk/MyElkDrawing.java</code></td><td>334</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>72</td><td><b>PSystemError</b></td><td><code>net/sourceforge/plantuml/error/PSystemError.java</code></td><td>408</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>73</td><td><b>PSystemError</b></td><td><code>net/sourceforge/plantuml/error/PSystemError.java</code></td><td>459</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>74</td><td><b>PacketBlock</b></td><td><code>net/sourceforge/plantuml/packetdiag/PacketBlock.java</code></td><td>187</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>75</td><td><b>Padder</b></td><td><code>net/sourceforge/plantuml/skin/Padder.java</code></td><td>113</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>76</td><td><b>Recentred</b></td><td><code>net/sourceforge/plantuml/activitydiagram3/Recentred.java</code></td><td>70</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>77</td><td><b>SequenceDiagramFileMakerTeoz</b></td><td><code>net/sourceforge/plantuml/sequencediagram/teoz/SequenceDiagramFileMakerTeoz.java</code></td><td>143</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>78</td><td><b>SheetBlock2</b></td><td><code>net/sourceforge/plantuml/klimt/creole/SheetBlock2.java</code></td><td>92</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>79</td><td><b>SimpleTextBlockBordered</b></td><td><code>net/sourceforge/plantuml/klimt/shape/SimpleTextBlockBordered.java</code></td><td>57</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>80</td><td><b>SpriteColor</b></td><td><code>net/sourceforge/plantuml/klimt/sprite/SpriteColor.java</code></td><td>135</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>81</td><td><b>SpriteImage</b></td><td><code>net/sourceforge/plantuml/klimt/sprite/SpriteImage.java</code></td><td>86</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>82</td><td><b>SpriteMonochrome</b></td><td><code>net/sourceforge/plantuml/klimt/sprite/SpriteMonochrome.java</code></td><td>223</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>83</td><td><b>StripeLatex</b></td><td><code>net/sourceforge/plantuml/klimt/creole/legacy/StripeLatex.java</code></td><td>101</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>84</td><td><b>SvekResult</b></td><td><code>net/sourceforge/plantuml/svek/SvekResult.java</code></td><td>130</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>85</td><td><b>SvgNanoParser</b></td><td><code>net/sourceforge/plantuml/svg/parser/SvgNanoParser.java</code></td><td>482</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>86</td><td><b>SvgSaxParser</b></td><td><code>net/sourceforge/plantuml/svg/parser/SvgSaxParser.java</code></td><td>137</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>87</td><td><b>TeozLayer</b></td><td><code>net/sourceforge/plantuml/sequencediagram/teoz/TeozLayer.java</code></td><td>64</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>88</td><td><b>TextBlockArrow</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TextBlockArrow.java</code></td><td>103</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>89</td><td><b>TextBlockArrow2</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TextBlockArrow2.java</code></td><td>87</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>90</td><td><b>TextBlockBordered</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TextBlockBordered.java</code></td><td>95</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>91</td><td><b>TextBlockCucaJSon</b></td><td><code>net/sourceforge/plantuml/cucadiagram/TextBlockCucaJSon.java</code></td><td>109</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>92</td><td><b>TextBlockEmpty</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TextBlockEmpty.java</code></td><td>59</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>93</td><td><b>TextBlockGeneric</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TextBlockGeneric.java</code></td><td>59</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>94</td><td><b>TextBlockInterceptorUDrawable</b></td><td><code>net/sourceforge/plantuml/activitydiagram3/ftile/TextBlockInterceptorUDrawable.java</code></td><td>72</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>95</td><td><b>TextBlockLineBefore</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TextBlockLineBefore.java</code></td><td>72</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>96</td><td><b>TextBlockMap</b></td><td><code>net/sourceforge/plantuml/cucadiagram/TextBlockMap.java</code></td><td>190</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>97</td><td><b>TextBlockMarged</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TextBlockMarged.java</code></td><td>74</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>98</td><td><b>TextBlockMinWidth</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TextBlockMinWidth.java</code></td><td>58</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>99</td><td><b>TextBlockSprited</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TextBlockSprited.java</code></td><td>56</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>100</td><td><b>TextBlockTitle</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TextBlockTitle.java</code></td><td>76</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>101</td><td><b>TextBlockUtils</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TextBlockUtils.java</code></td><td>93</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>102</td><td><b>TextBlockUtils</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TextBlockUtils.java</code></td><td>177</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>103</td><td><b>TextBlockUtils</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TextBlockUtils.java</code></td><td>200</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>104</td><td><b>TextBlockVertical2</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TextBlockVertical2.java</code></td><td>76</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>105</td><td><b>TextBlockWithUrl</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TextBlockWithUrl.java</code></td><td>74</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>106</td><td><b>Tile</b></td><td><code>net/sourceforge/plantuml/golem/Tile.java</code></td><td>97</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>107</td><td><b>TileImage</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TileImage.java</code></td><td>62</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>108</td><td><b>TileImageSvg</b></td><td><code>net/sourceforge/plantuml/klimt/shape/TileImageSvg.java</code></td><td>54</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>109</td><td><b>USymbolAction</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolAction.java</code></td><td>97</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>110</td><td><b>USymbolAction</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolAction.java</code></td><td>138</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>111</td><td><b>USymbolArtifact</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolArtifact.java</code></td><td>113</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>112</td><td><b>USymbolArtifact</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolArtifact.java</code></td><td>142</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>113</td><td><b>USymbolCard</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolCard.java</code></td><td>91</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>114</td><td><b>USymbolCard</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolCard.java</code></td><td>120</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>115</td><td><b>USymbolCloud</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolCloud.java</code></td><td>239</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>116</td><td><b>USymbolCloud</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolCloud.java</code></td><td>267</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>117</td><td><b>USymbolCollections</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolCollections.java</code></td><td>95</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>118</td><td><b>USymbolCollections</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolCollections.java</code></td><td>131</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>119</td><td><b>USymbolComponent1</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolComponent1.java</code></td><td>97</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>120</td><td><b>USymbolComponent2</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolComponent2.java</code></td><td>101</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>121</td><td><b>USymbolComponent2</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolComponent2.java</code></td><td>130</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>122</td><td><b>USymbolDatabase</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolDatabase.java</code></td><td>137</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>123</td><td><b>USymbolDatabase</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolDatabase.java</code></td><td>166</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>124</td><td><b>USymbolFile</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolFile.java</code></td><td>126</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>125</td><td><b>USymbolFile</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolFile.java</code></td><td>163</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>126</td><td><b>USymbolFolder</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolFolder.java</code></td><td>177</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>127</td><td><b>USymbolFolder</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolFolder.java</code></td><td>237</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>128</td><td><b>USymbolFrame</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolFrame.java</code></td><td>128</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>129</td><td><b>USymbolFrame</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolFrame.java</code></td><td>166</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>130</td><td><b>USymbolHexagon</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolHexagon.java</code></td><td>75</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>131</td><td><b>USymbolHexagon</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolHexagon.java</code></td><td>142</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>132</td><td><b>USymbolLabel</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolLabel.java</code></td><td>77</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>133</td><td><b>USymbolLabel</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolLabel.java</code></td><td>117</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>134</td><td><b>USymbolNode</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolNode.java</code></td><td>147</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>135</td><td><b>USymbolNode</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolNode.java</code></td><td>185</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>136</td><td><b>USymbolPerson</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolPerson.java</code></td><td>99</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>137</td><td><b>USymbolProcess</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolProcess.java</code></td><td>98</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>138</td><td><b>USymbolProcess</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolProcess.java</code></td><td>139</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>139</td><td><b>USymbolQueue</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolQueue.java</code></td><td>152</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>140</td><td><b>USymbolQueue</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolQueue.java</code></td><td>181</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>141</td><td><b>USymbolRectangle</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolRectangle.java</code></td><td>95</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>142</td><td><b>USymbolRectangle</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolRectangle.java</code></td><td>138</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>143</td><td><b>USymbolSimpleAbstract</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolSimpleAbstract.java</code></td><td>83</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>144</td><td><b>USymbolStack</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolStack.java</code></td><td>113</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>145</td><td><b>USymbolStack</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolStack.java</code></td><td>142</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>146</td><td><b>USymbolStorage</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolStorage.java</code></td><td>86</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>147</td><td><b>USymbolStorage</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolStorage.java</code></td><td>115</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>148</td><td><b>USymbolUsecase</b></td><td><code>net/sourceforge/plantuml/decoration/symbol/USymbolUsecase.java</code></td><td>118</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>149</td><td><b>VisibilityModifier</b></td><td><code>net/sourceforge/plantuml/skin/VisibilityModifier.java</code></td><td>100</td><td style="text-align:center; font-size:1.4em">⚡</td></tr>
+    <tr><td>150</td><td><b>PacketIndicator</b></td><td><code>net/sourceforge/plantuml/packetdiag/PacketIndicator.java</code></td><td>123</td><td style="text-align:center; font-size:1.4em">🧠</td></tr>
+  </tbody>
+</table>
+</body>
+</html>
