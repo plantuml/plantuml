@@ -96,8 +96,8 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
-		return new TextBlock() {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+		final TextBlock result = new TextBlock() {
 
 			public void drawU(UGraphic ug) {
 				drawInternal(ug);
@@ -110,11 +110,7 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 			}
 
 		};
-	}
-
-	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-		return TextBlockUtils.withMargin(getTextMainBlock01970(fileFormatOption), 10, 10);
+		return TextBlockUtils.withMargin(result, 10, 10);
 	}
 
 	private StyleSignatureBasic getStyleSignature() {

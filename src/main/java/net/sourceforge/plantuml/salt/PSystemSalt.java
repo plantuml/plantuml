@@ -105,16 +105,11 @@ public class PSystemSalt extends TitledDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		final Element salt = createElement(manageSprite());
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 		final XDimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);
 		return getTextBlock(salt, size);
-	}
-
-	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-		return getTextMainBlock01970(fileFormatOption);
 	}
 
 	private TextBlock getTextBlock(final Element salt, final XDimension2D size) {

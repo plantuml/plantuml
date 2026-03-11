@@ -76,7 +76,7 @@ public class StdlibDiagram extends TitledDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
@@ -91,11 +91,6 @@ public class StdlibDiagram extends TitledDiagram {
 				return new XDimension2D(WIDTH, 4096);
 			}
 		};
-	}
-
-	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-		return getTextMainBlock01970(fileFormatOption);
 	}
 
 	public void setStdlibName(String name) {

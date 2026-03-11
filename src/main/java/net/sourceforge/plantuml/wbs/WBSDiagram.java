@@ -86,7 +86,7 @@ public class WBSDiagram extends TitledDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
@@ -97,11 +97,6 @@ public class WBSDiagram extends TitledDiagram {
 				return getDrawingElement().calculateDimension(stringBounder).delta(20);
 			}
 		};
-	}
-
-	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-		return getTextMainBlock01970(fileFormatOption);
 	}
 
 	private void drawMe(UGraphic ug) {

@@ -320,11 +320,6 @@ public class SequenceDiagram extends TitledDiagram {
 		return sequenceDiagramPngMaker.getTextBlock12026(num, fileFormat);
 	}
 
-	@Override
-	final protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
-		throw new UnsupportedOperationException();
-	}
-
 	// support for CommandReturn
 	private final Stack<AbstractMessage> activationState = new Stack<>();
 

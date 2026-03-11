@@ -39,6 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.PerformanceIssue;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandControl;
 import net.sourceforge.plantuml.command.CommonCommands;
@@ -64,11 +65,13 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.yaml.Highlighted;
 
-public class JsonDiagram extends TitledDiagram {
+public class JsonDiagram extends TitledDiagram implements TextBlock {
 
 	private final JsonValue root;
 	private final List<Highlighted> highlighted;
 	private final boolean handwritten;
+	private XDimension2D cachedDimension;
+	private Class<? extends StringBounder> lastCaller;
 
 	public JsonDiagram(UmlSource source, DiagramType type, JsonValue json, List<Highlighted> highlighted,
 			StyleExtractor styleExtractor, PreprocessingArtifact preprocessing) {
@@ -106,7 +109,8 @@ public class JsonDiagram extends TitledDiagram {
 		return new DiagramDescription("(Json)");
 	}
 
-	private void drawInternal(UGraphic ug) {
+	@Override
+	public void drawU(UGraphic ug) {
 		if (handwritten)
 			ug = new UGraphicHandwritten(ug);
 		if (root == null) {
@@ -121,23 +125,20 @@ public class JsonDiagram extends TitledDiagram {
 		}
 	}
 
-	private TextBlock getTextMainBlock01970(final FileFormatOption fileFormatOption) {
-		return new TextBlock() {
-
-			public void drawU(UGraphic ug) {
-				drawInternal(ug);
-			}
-
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				final TextBlock tmp = getTextMainBlock01970(fileFormatOption);
-				return TextBlockUtils.getMinMax(tmp, stringBounder, true).getDimension();
-			}
-		};
+	@Override
+	@PerformanceIssue
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		final Class<? extends StringBounder> currentCaller = stringBounder.getClass();
+		if (cachedDimension == null || lastCaller != currentCaller) {
+			cachedDimension = TextBlockUtils.getMinMax(this, stringBounder, true).getDimension();
+			lastCaller = currentCaller;
+		}
+		return cachedDimension;
 	}
 
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-		return getTextMainBlock01970(fileFormatOption);
+		return this;
 	}
 
 }

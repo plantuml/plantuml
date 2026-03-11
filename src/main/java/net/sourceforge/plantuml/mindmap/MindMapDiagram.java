@@ -79,11 +79,6 @@ public class MindMapDiagram extends TitledDiagram {
 
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-		return getTextMainBlock01970(fileFormatOption);
-	}
-
-	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
 		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {

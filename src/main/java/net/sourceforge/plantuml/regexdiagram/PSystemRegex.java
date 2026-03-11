@@ -107,7 +107,7 @@ public class PSystemRegex extends TitledDiagram {
 	private final HColor lineColor;
 
 	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 //		while (stack.size() > 1)
 //			concatenation();
 		final ETile peekFirst = stack.peekFirst();
@@ -126,11 +126,6 @@ public class PSystemRegex extends TitledDiagram {
 		};
 		return TextBlockUtils.addBackcolor(tb, null);
 
-	}
-
-	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-		return getTextMainBlock01970(fileFormatOption);
 	}
 
 	public CommandExecutionResult addBlocLines(BlocLines from) {
