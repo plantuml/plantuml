@@ -43,6 +43,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.UgSimpleDiagram;
+import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.jaws.JawsStrange;
@@ -53,7 +54,6 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -93,10 +93,29 @@ public class PSystemColors extends UgSimpleDiagram {
 		return new DiagramDescription("(Colors)");
 	}
 
-	public XDimension2D calculateDimension(StringBounder sb) {
-		final LimitFinder limitFinder = LimitFinder.create(sb, true);
-		drawU(limitFinder);
-		return new XDimension2D(limitFinder.getMaxX() + 1, limitFinder.getMaxY() + 1);
+	@Fast
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		if (paletteCentralColor != null && colors.getColorOrWhite(paletteCentralColor) instanceof HColorSimple)
+			return calculateDimensionPalette();
+		return calculateDimensionFull();
+	}
+
+	private XDimension2D calculateDimensionFull() {
+		final int totalColors = colors.names().size();
+		final int nbRows = 21;
+		final int nbColumns = (totalColors + nbRows - 1) / nbRows;
+		return new XDimension2D(nbColumns * rectangleWidth, nbRows * rectangleHeight);
+	}
+
+	private XDimension2D calculateDimensionPalette() {
+		final double translateX = (centerHexa(2, 0).getX() + centerHexa(3, 0).getX()) / 2;
+		final double translateY = centerHexa(0, 2).getY() + corner(1).getY();
+		final double maxI = 2;
+		final double maxJ = 2;
+		final double maxCenterX = getWidth() * maxI + getWidth() / 2;
+		final double maxCenterY = size * maxJ * 1.5;
+		return new XDimension2D(translateX + maxCenterX + size + 1, translateY + maxCenterY + size + 1);
 	}
 
 	public void drawU(UGraphic ug) {
