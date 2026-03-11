@@ -112,37 +112,38 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 <span class="nc" id="L112">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L116">		return new XDimension2D(SIZE, SIZE);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L117">		return new XDimension2D(SIZE, SIZE);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (url != null) {</span>
-<span class="nc" id="L121">			ug.startUrl(url);</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (url != null) {</span>
+<span class="nc" id="L122">			ug.startUrl(url);</span>
 		}
-<span class="nc" id="L123">		final UEllipse circle = UEllipse.build(SIZE, SIZE);</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (getSkinParam().shadowing(getEntity().getStereotype())) {</span>
-<span class="nc" id="L125">			circle.setDeltaShadow(4);</span>
+<span class="nc" id="L124">		final UEllipse circle = UEllipse.build(SIZE, SIZE);</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (getSkinParam().shadowing(getEntity().getStereotype())) {</span>
+<span class="nc" id="L126">			circle.setDeltaShadow(4);</span>
 		}
-<span class="nc" id="L127">		ctx.apply(ug).draw(circle);</span>
+<span class="nc" id="L128">		ctx.apply(ug).draw(circle);</span>
 
-<span class="nc" id="L129">		final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L130">		final double x1 = SIZE / 2 - dimDesc.getWidth() / 2;</span>
-<span class="nc" id="L131">		final double y1 = SIZE * 1.4;</span>
-<span class="nc" id="L132">		desc.drawU(ug.apply(new UTranslate(x1, y1)));</span>
+<span class="nc" id="L130">		final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L131">		final double x1 = SIZE / 2 - dimDesc.getWidth() / 2;</span>
+<span class="nc" id="L132">		final double y1 = SIZE * 1.4;</span>
+<span class="nc" id="L133">		desc.drawU(ug.apply(new UTranslate(x1, y1)));</span>
 
-<span class="nc" id="L134">		final XDimension2D dimStereo = stereo.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L135">		final double x2 = SIZE / 2 - dimStereo.getWidth() / 2;</span>
-<span class="nc" id="L136">		final double y2 = -dimStereo.getHeight();</span>
-<span class="nc" id="L137">		stereo.drawU(ug.apply(new UTranslate(x2, y2)));</span>
+<span class="nc" id="L135">		final XDimension2D dimStereo = stereo.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L136">		final double x2 = SIZE / 2 - dimStereo.getWidth() / 2;</span>
+<span class="nc" id="L137">		final double y2 = -dimStereo.getHeight();</span>
+<span class="nc" id="L138">		stereo.drawU(ug.apply(new UTranslate(x2, y2)));</span>
 
-<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (url != null) {</span>
-<span class="nc" id="L140">			ug.closeUrl();</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (url != null) {</span>
+<span class="nc" id="L141">			ug.closeUrl();</span>
 		}
-<span class="nc" id="L142">	}</span>
+<span class="nc" id="L143">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L145">		return ShapeType.CIRCLE;</span>
+<span class="nc" id="L146">		return ShapeType.CIRCLE;</span>
 	}
 
 }

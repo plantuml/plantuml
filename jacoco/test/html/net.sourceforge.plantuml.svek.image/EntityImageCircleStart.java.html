@@ -62,24 +62,25 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 <span class="fc" id="L62">		this.circle = new CircleStart(getSkinParam(), style, entity.getColors());</span>
 <span class="fc" id="L63">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L66">		return circle.calculateDimension(stringBounder);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="fc" id="L67">		return circle.calculateDimension(stringBounder);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="fc" id="L70">		final UGroup group = new UGroup(getEntity().getLocation());</span>
-<span class="fc" id="L71">		group.put(UGroupType.CLASS, &quot;start_entity&quot;);</span>
-<span class="fc" id="L72">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
-<span class="fc" id="L73">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
-<span class="fc" id="L74">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
-<span class="fc" id="L75">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
-<span class="fc" id="L76">		ug.startGroup(group);</span>
-<span class="fc" id="L77">		circle.drawU(ug);</span>
-<span class="fc" id="L78">		ug.closeGroup();</span>
-<span class="fc" id="L79">	}</span>
+<span class="fc" id="L71">		final UGroup group = new UGroup(getEntity().getLocation());</span>
+<span class="fc" id="L72">		group.put(UGroupType.CLASS, &quot;start_entity&quot;);</span>
+<span class="fc" id="L73">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
+<span class="fc" id="L74">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
+<span class="fc" id="L75">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
+<span class="fc" id="L76">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
+<span class="fc" id="L77">		ug.startGroup(group);</span>
+<span class="fc" id="L78">		circle.drawU(ug);</span>
+<span class="fc" id="L79">		ug.closeGroup();</span>
+<span class="fc" id="L80">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="fc" id="L82">		return ShapeType.CIRCLE;</span>
+<span class="fc" id="L83">		return ShapeType.CIRCLE;</span>
 	}
 
 }

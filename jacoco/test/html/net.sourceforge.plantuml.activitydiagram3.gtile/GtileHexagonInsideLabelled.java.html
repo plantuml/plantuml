@@ -99,7 +99,7 @@ public class GtileHexagonInsideLabelled extends GtileWithMargin {
 <span class="nc" id="L99">	}</span>
 
 	@Override
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
 <span class="nc" id="L103">		final XDimension2D tmp = super.calculateDimension(stringBounder);</span>
 <span class="nc" id="L104">		final UTranslate south = getCoord(GPoint.SOUTH_HOOK);</span>
 <span class="nc" id="L105">		final XDimension2D southCorner = southLabel.calculateDimension(stringBounder).applyTranslate(south);</span>

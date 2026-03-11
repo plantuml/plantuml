@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -55,7 +56,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 	private final SequenceDiagram diagram;
-	private final FileFormatOption fileFormatOption;
+
 	private final Rose skin;
 	private Dolls dolls;
 	private final StringBounder stringBounder;
@@ -64,15 +65,14 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 	private final Real min1;
 
-<span class="nc" id="L67">	private final LivingSpaces livingSpaces = new LivingSpaces();</span>
+<span class="nc" id="L68">	private final LivingSpaces livingSpaces = new LivingSpaces();</span>
 	private final double heightEnglober1;
 	private final double heightEnglober2;
 
 	public SequenceDiagramFileMakerTeoz(SequenceDiagram diagram, Rose skin, FileFormatOption fileFormatOption,
-<span class="nc" id="L72">			int index) {</span>
-<span class="nc" id="L73">		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
-<span class="nc" id="L74">		this.diagram = diagram;</span>
-<span class="nc" id="L75">		this.fileFormatOption = fileFormatOption;</span>
+<span class="nc" id="L73">			int index) {</span>
+<span class="nc" id="L74">		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
+<span class="nc" id="L75">		this.diagram = diagram;</span>
 <span class="nc" id="L76">		this.skin = skin;</span>
 <span class="nc" id="L77">		this.body = new PlayingSpaceWithParticipants(createMainTile());</span>
 
@@ -82,72 +82,73 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 <span class="nc bnc" id="L82" title="All 2 branches missed.">		this.heightEnglober2 = heightEnglober1 == 0 ? 0 : 10;</span>
 <span class="nc" id="L83">	}</span>
 
-
 	private PlayingSpace createMainTile() {
-<span class="nc" id="L87">		final RealOrigin xorigin = RealUtils.createOrigin();</span>
-<span class="nc" id="L88">		Real xcurrent = xorigin.addAtLeast(0);</span>
-<span class="nc" id="L89">		final RealOrigin yorigin = RealUtils.createOrigin();</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		for (Participant p : diagram.participants()) {</span>
-<span class="nc" id="L91">			final LivingSpace livingSpace = new LivingSpace(p, diagram.getEnglober(p), skin, getSkinParam(), xcurrent,</span>
-<span class="nc" id="L92">					diagram.events());</span>
-<span class="nc" id="L93">			livingSpaces.put(p, livingSpace);</span>
-<span class="nc" id="L94">			xcurrent = livingSpace.getPosD(stringBounder).addAtLeast(0);</span>
-<span class="nc" id="L95">		}</span>
+<span class="nc" id="L86">		final RealOrigin xorigin = RealUtils.createOrigin();</span>
+<span class="nc" id="L87">		Real xcurrent = xorigin.addAtLeast(0);</span>
+<span class="nc" id="L88">		final RealOrigin yorigin = RealUtils.createOrigin();</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		for (Participant p : diagram.participants()) {</span>
+<span class="nc" id="L90">			final LivingSpace livingSpace = new LivingSpace(p, diagram.getEnglober(p), skin, getSkinParam(), xcurrent,</span>
+<span class="nc" id="L91">					diagram.events());</span>
+<span class="nc" id="L92">			livingSpaces.put(p, livingSpace);</span>
+<span class="nc" id="L93">			xcurrent = livingSpace.getPosD(stringBounder).addAtLeast(0);</span>
+<span class="nc" id="L94">		}</span>
 
-<span class="nc" id="L97">		final TileArguments tileArguments = new TileArguments(stringBounder, livingSpaces, skin, diagram.getSkinParam(),</span>
+<span class="nc" id="L96">		final TileArguments tileArguments = new TileArguments(stringBounder, livingSpaces, skin, diagram.getSkinParam(),</span>
 				xorigin, yorigin);
 
-<span class="nc" id="L100">		this.dolls = new Dolls(tileArguments);</span>
-<span class="nc" id="L101">		final PlayingSpace mainTile = new PlayingSpace(diagram, dolls, tileArguments);</span>
-<span class="nc" id="L102">		this.livingSpaces.addConstraints(stringBounder);</span>
-<span class="nc" id="L103">		mainTile.addConstraints();</span>
-<span class="nc" id="L104">		this.dolls.addConstraints(stringBounder);</span>
-<span class="nc" id="L105">		xorigin.compileNow();</span>
+<span class="nc" id="L99">		this.dolls = new Dolls(tileArguments);</span>
+<span class="nc" id="L100">		final PlayingSpace mainTile = new PlayingSpace(diagram, dolls, tileArguments);</span>
+<span class="nc" id="L101">		this.livingSpaces.addConstraints(stringBounder);</span>
+<span class="nc" id="L102">		mainTile.addConstraints();</span>
+<span class="nc" id="L103">		this.dolls.addConstraints(stringBounder);</span>
+<span class="nc" id="L104">		xorigin.compileNow();</span>
 		if (YGauge.USE_ME)
 			System.err.println(&quot;COMPILING Y&quot;);
-<span class="nc" id="L108">		yorigin.compileNow();</span>
-<span class="nc" id="L109">		tileArguments.setBordered(mainTile);</span>
-<span class="nc" id="L110">		return mainTile;</span>
+<span class="nc" id="L107">		yorigin.compileNow();</span>
+<span class="nc" id="L108">		tileArguments.setBordered(mainTile);</span>
+<span class="nc" id="L109">		return mainTile;</span>
 	}
 
 	public ISkinParam getSkinParam() {
-<span class="nc" id="L114">		return diagram.getSkinParam();</span>
+<span class="nc" id="L113">		return diagram.getSkinParam();</span>
 	}
 
 	public int getNbPages() {
-<span class="nc" id="L118">		return body.getNbPages();</span>
+<span class="nc" id="L117">		return body.getNbPages();</span>
 	}
 
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormat) {
-<span class="nc" id="L123">		return new TextBlock() {</span>
+<span class="nc" id="L122">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L126">				ug = ug.apply(new UTranslate(5, 5));</span>
+<span class="nc" id="L125">				ug = ug.apply(new UTranslate(5, 5));</span>
 
-<span class="nc" id="L128">				body.setIndex(num);</span>
-<span class="nc" id="L129">				final UTranslate min1translate = UTranslate.dx(-min1.getCurrentValue());</span>
-<span class="nc" id="L130">				ug = ug.apply(min1translate);</span>
+<span class="nc" id="L127">				body.setIndex(num);</span>
+<span class="nc" id="L128">				final UTranslate min1translate = UTranslate.dx(-min1.getCurrentValue());</span>
+<span class="nc" id="L129">				ug = ug.apply(min1translate);</span>
 
-<span class="nc" id="L132">				dolls.drawEnglobers(ug,</span>
-<span class="nc" id="L133">						body.calculateDimension(stringBounder).getHeight() + heightEnglober1 + heightEnglober2 / 2,</span>
+<span class="nc" id="L131">				dolls.drawEnglobers(ug,</span>
+<span class="nc" id="L132">						body.calculateDimension(stringBounder).getHeight() + heightEnglober1 + heightEnglober2 / 2,</span>
 						new SimpleContext2D(true));
 
-<span class="nc" id="L136">				ug = ug.apply(UTranslate.dy(heightEnglober1));</span>
-<span class="nc" id="L137">				body.drawU(ug);</span>
-<span class="nc" id="L138">				ug = ug.apply(UTranslate.dy(body.calculateDimension(stringBounder).getHeight()));</span>
-<span class="nc" id="L139">				ug = ug.apply(UTranslate.dy(heightEnglober2));</span>
-<span class="nc" id="L140">			}</span>
+<span class="nc" id="L135">				ug = ug.apply(UTranslate.dy(heightEnglober1));</span>
+<span class="nc" id="L136">				body.drawU(ug);</span>
+<span class="nc" id="L137">				ug = ug.apply(UTranslate.dy(body.calculateDimension(stringBounder).getHeight()));</span>
+<span class="nc" id="L138">				ug = ug.apply(UTranslate.dy(heightEnglober2));</span>
+<span class="nc" id="L139">			}</span>
 
+			@Fast
+			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L143">				final double totalWidth = body.calculateDimension(stringBounder).getWidth();</span>
-<span class="nc" id="L144">				final double totalHeight = body.calculateDimension(stringBounder).getHeight() + heightEnglober1</span>
+<span class="nc" id="L144">				final double totalWidth = body.calculateDimension(stringBounder).getWidth();</span>
+<span class="nc" id="L145">				final double totalHeight = body.calculateDimension(stringBounder).getHeight() + heightEnglober1</span>
 						+ heightEnglober2;
-<span class="nc" id="L146">				return new XDimension2D(totalWidth + 10, totalHeight + 10);</span>
+<span class="nc" id="L147">				return new XDimension2D(totalWidth + 10, totalHeight + 10);</span>
 			}
 
 			public HColor getBackcolor() {
-<span class="nc" id="L150">				return null;</span>
+<span class="nc" id="L151">				return null;</span>
 			}
 
 		};

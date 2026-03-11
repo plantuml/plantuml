@@ -46,96 +46,95 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 
-public class PlayingSpaceWithParticipants implements TextBlock {
+public class PlayingSpaceWithParticipants extends TextBlockMemoized {
 
 	private final PlayingSpace playingSpace;
-	private XDimension2D cacheDimension;
+
 	private double ymin;
 	private double ymax;
 
-<span class="nc" id="L61">	public PlayingSpaceWithParticipants(PlayingSpace playingSpace) {</span>
-<span class="nc" id="L62">		this.playingSpace = Objects.requireNonNull(playingSpace);</span>
-<span class="nc" id="L63">	}</span>
+<span class="nc" id="L62">	public PlayingSpaceWithParticipants(PlayingSpace playingSpace) {</span>
+<span class="nc" id="L63">		this.playingSpace = Objects.requireNonNull(playingSpace);</span>
+<span class="nc" id="L64">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (cacheDimension == null) {</span>
-<span class="nc" id="L67">			final double width = playingSpace.getMaxX(stringBounder).getCurrentValue()</span>
-<span class="nc" id="L68">					- playingSpace.getMinX(stringBounder).getCurrentValue();</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L68">		final double width = playingSpace.getMaxX(stringBounder).getCurrentValue()</span>
+<span class="nc" id="L69">				- playingSpace.getMinX(stringBounder).getCurrentValue();</span>
 
-<span class="nc bnc" id="L70" title="All 2 branches missed.">			final int factor = playingSpace.isShowFootbox() ? 2 : 1;</span>
-<span class="nc" id="L71">			final double height = playingSpace.getPreferredHeight(stringBounder)</span>
-<span class="nc" id="L72">					+ factor * playingSpace.getLivingSpaces().getHeadHeight(stringBounder);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		final int factor = playingSpace.isShowFootbox() ? 2 : 1;</span>
+<span class="nc" id="L72">		final double height = playingSpace.getPreferredHeight(stringBounder)</span>
+<span class="nc" id="L73">				+ factor * playingSpace.getLivingSpaces().getHeadHeight(stringBounder);</span>
 
-<span class="nc" id="L74">			cacheDimension = new XDimension2D(width, height);</span>
-		}
-<span class="nc" id="L76">		return cacheDimension;</span>
+<span class="nc" id="L75">		return new XDimension2D(width, height);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L80">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L79">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc" id="L82">		final Context2D context = new SimpleContext2D(false);</span>
-<span class="nc" id="L83">		final double height = playingSpace.getPreferredHeight(stringBounder);</span>
-<span class="nc" id="L84">		final LivingSpaces livingSpaces = playingSpace.getLivingSpaces();</span>
+<span class="nc" id="L81">		final Context2D context = new SimpleContext2D(false);</span>
+<span class="nc" id="L82">		final double height = playingSpace.getPreferredHeight(stringBounder);</span>
+<span class="nc" id="L83">		final LivingSpaces livingSpaces = playingSpace.getLivingSpaces();</span>
 
-<span class="nc" id="L86">		final double headHeight = livingSpaces.getHeadHeight(stringBounder);</span>
+<span class="nc" id="L85">		final double headHeight = livingSpaces.getHeadHeight(stringBounder);</span>
 
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (ymax == 0) {</span>
-<span class="nc" id="L89">			playingSpace.drawBackground(ug.apply(UTranslate.dy(headHeight)));</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (ymax == 0) {</span>
+<span class="nc" id="L88">			playingSpace.drawBackground(ug.apply(UTranslate.dy(headHeight)));</span>
 		} else {
-<span class="nc" id="L91">			final UClip clip = new UClip(-1000, ymin, Double.MAX_VALUE, ymax - ymin + 1);</span>
-<span class="nc" id="L92">			playingSpace.drawBackground(ug.apply(UTranslate.dy(headHeight)).apply(clip));</span>
+<span class="nc" id="L90">			final UClip clip = new UClip(-1000, ymin, Double.MAX_VALUE, ymax - ymin + 1);</span>
+<span class="nc" id="L91">			playingSpace.drawBackground(ug.apply(UTranslate.dy(headHeight)).apply(clip));</span>
 		}
 
-<span class="nc" id="L95">		livingSpaces.drawLifeLines(ug.apply(UTranslate.dy(headHeight)), height, context);</span>
+<span class="nc" id="L94">		livingSpaces.drawLifeLines(ug.apply(UTranslate.dy(headHeight)), height, context);</span>
 
-<span class="nc" id="L97">		livingSpaces.drawHeads(ug, context, VerticalAlignment.BOTTOM);</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (playingSpace.isShowFootbox()) {</span>
-<span class="nc" id="L99">			livingSpaces.drawHeads(ug.apply(UTranslate.dy(height + headHeight)), context, VerticalAlignment.TOP);</span>
+<span class="nc" id="L96">		livingSpaces.drawHeads(ug, context, VerticalAlignment.BOTTOM);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (playingSpace.isShowFootbox()) {</span>
+<span class="nc" id="L98">			livingSpaces.drawHeads(ug.apply(UTranslate.dy(height + headHeight)), context, VerticalAlignment.TOP);</span>
 		}
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (ymax == 0) {</span>
-<span class="nc" id="L102">			playingSpace.drawForeground(ug.apply(UTranslate.dy(headHeight)));</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (ymax == 0) {</span>
+<span class="nc" id="L101">			playingSpace.drawForeground(ug.apply(UTranslate.dy(headHeight)));</span>
 		} else {
-<span class="nc" id="L104">			final UClip clip = new UClip(-1000, ymin, Double.MAX_VALUE, ymax - ymin + 1);</span>
+<span class="nc" id="L103">			final UClip clip = new UClip(-1000, ymin, Double.MAX_VALUE, ymax - ymin + 1);</span>
 			// playingSpace.drawForeground(new
 			// UGraphicNewpages(ug.apply(UTranslate.dy(headHeight)), ymin, ymax));
-<span class="nc" id="L107">			playingSpace.drawForeground(ug.apply(UTranslate.dy(headHeight)).apply(clip));</span>
+<span class="nc" id="L106">			playingSpace.drawForeground(ug.apply(UTranslate.dy(headHeight)).apply(clip));</span>
 		}
 		// drawNewPages(ug.apply(UTranslate.dy(headHeight)));
-<span class="nc" id="L110">	}</span>
+<span class="nc" id="L109">	}</span>
 
 	public Real getMinX(StringBounder stringBounder) {
-<span class="nc" id="L113">		return playingSpace.getMinX(stringBounder);</span>
+<span class="nc" id="L112">		return playingSpace.getMinX(stringBounder);</span>
 	}
 
 	public int getNbPages() {
-<span class="nc" id="L117">		return playingSpace.getNbPages();</span>
+<span class="nc" id="L116">		return playingSpace.getNbPages();</span>
 	}
 
 	public void setIndex(int index) {
-<span class="nc" id="L121">		final List&lt;Double&gt; yNewPages = playingSpace.yNewPages();</span>
-<span class="nc" id="L122">		this.ymin = yNewPages.get(index);</span>
-<span class="nc" id="L123">		this.ymax = yNewPages.get(index + 1);</span>
-<span class="nc" id="L124">	}</span>
+<span class="nc" id="L120">		final List&lt;Double&gt; yNewPages = playingSpace.yNewPages();</span>
+<span class="nc" id="L121">		this.ymin = yNewPages.get(index);</span>
+<span class="nc" id="L122">		this.ymax = yNewPages.get(index + 1);</span>
+<span class="nc" id="L123">	}</span>
 
 	private List&lt;Double&gt; yNewPages() {
-<span class="nc" id="L127">		return playingSpace.yNewPages();</span>
+<span class="nc" id="L126">		return playingSpace.yNewPages();</span>
 	}
 
 	private void drawNewPages(UGraphic ug) {
-<span class="nc" id="L131">		ug = ug.apply(HColors.BLUE);</span>
-<span class="nc bnc" id="L132" title="All 2 branches missed.">		for (Double change : yNewPages()) {</span>
-<span class="nc bnc" id="L133" title="All 4 branches missed.">			if (change == 0 || change == Double.MAX_VALUE) {</span>
-<span class="nc" id="L134">				continue;</span>
+<span class="nc" id="L130">		ug = ug.apply(HColors.BLUE);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		for (Double change : yNewPages()) {</span>
+<span class="nc bnc" id="L132" title="All 4 branches missed.">			if (change == 0 || change == Double.MAX_VALUE) {</span>
+<span class="nc" id="L133">				continue;</span>
 			}
-<span class="nc" id="L136">			ug.apply(UTranslate.dy(change)).draw(ULine.hline(100));</span>
-<span class="nc" id="L137">		}</span>
-<span class="nc" id="L138">	}</span>
+<span class="nc" id="L135">			ug.apply(UTranslate.dy(change)).draw(ULine.hline(100));</span>
+<span class="nc" id="L136">		}</span>
+<span class="nc" id="L137">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

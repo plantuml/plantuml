@@ -107,21 +107,22 @@ import net.sourceforge.plantuml.utils.Direction;
 
 <span class="fc" id="L108">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L111">		double width = 0;</span>
-<span class="fc" id="L112">		double height = 0;</span>
-<span class="fc bfc" id="L113" title="All 2 branches covered.">		for (ITF child : right) {</span>
-<span class="fc" id="L114">			final XDimension2D childDim = child.calculateDimension(stringBounder);</span>
-<span class="fc" id="L115">			height = Math.max(height, childDim.getHeight());</span>
-<span class="fc" id="L116">			width += childDim.getWidth();</span>
-<span class="fc" id="L117">		}</span>
-<span class="fc bfc" id="L118" title="All 2 branches covered.">		if (right.size() &gt; 1)</span>
-<span class="fc" id="L119">			width += (right.size() - 1) * delta1x;</span>
-<span class="fc" id="L120">		final XDimension2D mainDim = main.calculateDimension(stringBounder);</span>
-<span class="fc" id="L121">		height += mainDim.getHeight();</span>
-<span class="fc" id="L122">		height += deltay;</span>
-<span class="fc" id="L123">		width = Math.max(width, mainDim.getWidth());</span>
-<span class="fc" id="L124">		return new XDimension2D(width, height);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="fc" id="L112">		double width = 0;</span>
+<span class="fc" id="L113">		double height = 0;</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		for (ITF child : right) {</span>
+<span class="fc" id="L115">			final XDimension2D childDim = child.calculateDimension(stringBounder);</span>
+<span class="fc" id="L116">			height = Math.max(height, childDim.getHeight());</span>
+<span class="fc" id="L117">			width += childDim.getWidth();</span>
+<span class="fc" id="L118">		}</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (right.size() &gt; 1)</span>
+<span class="fc" id="L120">			width += (right.size() - 1) * delta1x;</span>
+<span class="fc" id="L121">		final XDimension2D mainDim = main.calculateDimension(stringBounder);</span>
+<span class="fc" id="L122">		height += mainDim.getHeight();</span>
+<span class="fc" id="L123">		height += deltay;</span>
+<span class="fc" id="L124">		width = Math.max(width, mainDim.getWidth());</span>
+<span class="fc" id="L125">		return new XDimension2D(width, height);</span>
 	}
 
 }

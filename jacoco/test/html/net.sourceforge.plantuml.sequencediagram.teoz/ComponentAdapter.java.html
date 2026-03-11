@@ -43,29 +43,32 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 
+import net.sourceforge.plantuml.annotation.Fast;
+
 public class ComponentAdapter implements TextBlock {
 
 	private final Component component;
 
-<span class="nc" id="L50">	public ComponentAdapter(Component component) {</span>
-<span class="nc" id="L51">		this.component = component;</span>
-<span class="nc" id="L52">	}</span>
+<span class="nc" id="L52">	public ComponentAdapter(Component component) {</span>
+<span class="nc" id="L53">		this.component = component;</span>
+<span class="nc" id="L54">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (component == null) {</span>
-<span class="nc" id="L56">			return;</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (component == null) {</span>
+<span class="nc" id="L58">			return;</span>
 		}
-<span class="nc" id="L58">		component.drawU(ug, new Area(calculateDimension(ug.getStringBounder())), new SimpleContext2D(false));</span>
+<span class="nc" id="L60">		component.drawU(ug, new Area(calculateDimension(ug.getStringBounder())), new SimpleContext2D(false));</span>
 
-<span class="nc" id="L60">	}</span>
+<span class="nc" id="L62">	}</span>
 
+	@Fast
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (component == null) {</span>
-<span class="nc" id="L64">			return new XDimension2D(0, 0);</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (component == null) {</span>
+<span class="nc" id="L67">			return new XDimension2D(0, 0);</span>
 		}
-<span class="nc" id="L66">		final double width = component.getPreferredWidth(stringBounder);</span>
-<span class="nc" id="L67">		final double height = component.getPreferredHeight(stringBounder);</span>
-<span class="nc" id="L68">		return new XDimension2D(width, height);</span>
+<span class="nc" id="L69">		final double width = component.getPreferredWidth(stringBounder);</span>
+<span class="nc" id="L70">		final double height = component.getPreferredHeight(stringBounder);</span>
+<span class="nc" id="L71">		return new XDimension2D(width, height);</span>
 	}
 
 }

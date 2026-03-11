@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.UGraphicInterceptorGoto;
+import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -45,17 +46,19 @@ public class GotoInterceptor implements TextBlock {
 
 	private final TextBlock swimlanes;
 
-<span class="nc" id="L48">	public GotoInterceptor(TextBlock swimlanes) {</span>
-<span class="nc" id="L49">		this.swimlanes = swimlanes;</span>
-<span class="nc" id="L50">	}</span>
+<span class="nc" id="L49">	public GotoInterceptor(TextBlock swimlanes) {</span>
+<span class="nc" id="L50">		this.swimlanes = swimlanes;</span>
+<span class="nc" id="L51">	}</span>
 
+	@Override
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L53">		new UGraphicInterceptorGoto(ug).draw(swimlanes);</span>
+<span class="nc" id="L55">		new UGraphicInterceptorGoto(ug).draw(swimlanes);</span>
+<span class="nc" id="L56">	}</span>
 
-<span class="nc" id="L55">	}</span>
-
+	@Override
+	@Fast
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L58">		return swimlanes.calculateDimension(stringBounder);</span>
+<span class="nc" id="L61">		return swimlanes.calculateDimension(stringBounder);</span>
 	}
 
 }

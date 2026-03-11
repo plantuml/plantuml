@@ -88,23 +88,25 @@ public class CreoleHorizontalLine extends AbstractAtom implements Atom {
 <span class="nc" id="L88">		return tb;</span>
 	}
 
+	@Override
 	public void drawU(UGraphic ug) {
 		// ug = ug.apply(UChangeColor.nnn(fontConfiguration.getColor()));
-<span class="fc" id="L93">		final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L94">		ug = ug.apply(UTranslate.dy(dim.getHeight() / 2));</span>
-<span class="fc" id="L95">		ug.draw(getHorizontalLine());</span>
-<span class="fc" id="L96">	}</span>
+<span class="fc" id="L94">		final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L95">		ug = ug.apply(UTranslate.dy(dim.getHeight() / 2));</span>
+<span class="fc" id="L96">		ug.draw(getHorizontalLine());</span>
+<span class="fc" id="L97">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (line.length() == 0)</span>
-<span class="fc" id="L100">			return new XDimension2D(10, 10);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if (line.length() == 0)</span>
+<span class="fc" id="L102">			return new XDimension2D(10, 10);</span>
 
-<span class="nc" id="L102">		final TextBlock tb = getTitle();</span>
-<span class="nc" id="L103">		return tb.calculateDimension(stringBounder);</span>
+<span class="nc" id="L104">		final TextBlock tb = getTitle();</span>
+<span class="nc" id="L105">		return tb.calculateDimension(stringBounder);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="fc" id="L107">		return 0;</span>
+<span class="fc" id="L109">		return 0;</span>
 	}
 
 }

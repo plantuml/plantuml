@@ -96,7 +96,7 @@ public class GtileHexagonInside extends AbstractGtile {
 <span class="nc" id="L96">	}</span>
 
 	@Override
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
 		final XDimension2D dim;
 <span class="nc bnc" id="L101" title="All 4 branches missed.">		if (dimLabel.getWidth() == 0 || dimLabel.getHeight() == 0) {</span>
 <span class="nc" id="L102">			dim = new XDimension2D(Hexagon.hexagonHalfSize * 2, Hexagon.hexagonHalfSize * 2);</span>

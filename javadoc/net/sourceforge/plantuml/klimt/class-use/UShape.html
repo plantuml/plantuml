@@ -159,42 +159,54 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.klimt.shape">net.sourceforge.plantuml.klimt.shape</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.nwdiag.next">net.sourceforge.plantuml.nwdiag.next</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.packetdiag">net.sourceforge.plantuml.packetdiag</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.mindmap">net.sourceforge.plantuml.mindmap</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Provides classes used to manage 
+ <a href="https://plantuml.com/mindmap-diagram" target="_top">
+ Mindmap Diagram</a>.</div>
+</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.nwdiag.next">net.sourceforge.plantuml.nwdiag.next</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.packetdiag">net.sourceforge.plantuml.packetdiag</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides classes used to manage
  <a href="https://plantuml.com/packetdiag" target="_top">
  packet diagram</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.project">net.sourceforge.plantuml.project</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.project">net.sourceforge.plantuml.project</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/gantt-diagram" target="_top">
  Gantt Diagram</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.sequencediagram.teoz">net.sourceforge.plantuml.sequencediagram.teoz</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.skin">net.sourceforge.plantuml.skin</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.sequencediagram.teoz">net.sourceforge.plantuml.sequencediagram.teoz</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.skin">net.sourceforge.plantuml.skin</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage Skin and 
  <a href="https://plantuml.com/skinparam" target="_top">
  Skinparameter</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.sudoku">net.sourceforge.plantuml.sudoku</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.sudoku">net.sourceforge.plantuml.sudoku</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/sudoku" target="_top">
  Sudoku Grid on PlantUML</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.svek">net.sourceforge.plantuml.svek</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.svek">net.sourceforge.plantuml.svek</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/svek" target="_top">
  PlantUML Svek Architecture</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.svek.image">net.sourceforge.plantuml.svek.image</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.svek.image">net.sourceforge.plantuml.svek.image</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.wire">net.sourceforge.plantuml.wire</a></div>
+<div class="col-last even-row-color">
+<div class="block">Provides classes used to manage 
+ <a href="http://alphadoc.plantuml.com/doc/markdown/en/wire-diagram" target="_top">
+ Wire or Block Diagram</a>.</div>
+</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -1208,64 +1220,84 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><code><a href="../shape/TextBlockLineBefore.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockLineBefore</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../shape/TextBlockRaw.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockRaw</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-second odd-row-color"><code><a href="../shape/TextBlockMemoized.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockMemoized</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Abstract base class for TextBlock implementations where
+ calculateDimension() is expensive.</div>
+</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../shape/TextBlockSprited.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockSprited</a></code></div>
+<div class="col-second even-row-color"><code><a href="../shape/TextBlockRaw.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockRaw</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../shape/TextBlockTitle.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockTitle</a></code></div>
+<div class="col-second odd-row-color"><code><a href="../shape/TextBlockSprited.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockSprited</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../shape/TextBlockVertical2.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockVertical2</a></code></div>
+<div class="col-second even-row-color"><code><a href="../shape/TextBlockTitle.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockTitle</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../shape/TextBlockWithUrl.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockWithUrl</a></code></div>
+<div class="col-second odd-row-color"><code><a href="../shape/TextBlockVertical2.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockVertical2</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../shape/TileImage.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TileImage</a></code></div>
+<div class="col-second even-row-color"><code><a href="../shape/TextBlockWithUrl.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockWithUrl</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../shape/TileImageSvg.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TileImageSvg</a></code></div>
+<div class="col-second odd-row-color"><code><a href="../shape/TileImage.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TileImage</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../shape/TileText.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TileText</a></code></div>
+<div class="col-second even-row-color"><code><a href="../shape/TileImageSvg.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TileImageSvg</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../shape/UCenteredCharacter.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UCenteredCharacter</a></code></div>
+<div class="col-second odd-row-color"><code><a href="../shape/TileText.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TileText</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../shape/UComment.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UComment</a></code></div>
+<div class="col-second even-row-color"><code><a href="../shape/UCenteredCharacter.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UCenteredCharacter</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../shape/UEllipse.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UEllipse</a></code></div>
+<div class="col-second odd-row-color"><code><a href="../shape/UComment.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UComment</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../shape/UEmpty.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UEmpty</a></code></div>
+<div class="col-second even-row-color"><code><a href="../shape/UEllipse.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UEllipse</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../shape/UHorizontalLine.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UHorizontalLine</a></code></div>
+<div class="col-second odd-row-color"><code><a href="../shape/UEmpty.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UEmpty</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../shape/UImage.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UImage</a></code></div>
+<div class="col-second even-row-color"><code><a href="../shape/UHorizontalLine.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UHorizontalLine</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../shape/UImageSvg.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UImageSvg</a></code></div>
+<div class="col-second odd-row-color"><code><a href="../shape/UImage.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UImage</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../shape/ULine.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">ULine</a></code></div>
+<div class="col-second even-row-color"><code><a href="../shape/UImageSvg.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UImageSvg</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../shape/UPixel.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UPixel</a></code></div>
+<div class="col-second odd-row-color"><code><a href="../shape/ULine.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">ULine</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../shape/UPolygon.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UPolygon</a></code></div>
+<div class="col-second even-row-color"><code><a href="../shape/UPixel.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UPixel</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../shape/URectangle.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">URectangle</a></code></div>
+<div class="col-second odd-row-color"><code><a href="../shape/UPolygon.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UPolygon</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../shape/UText.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UText</a></code></div>
+<div class="col-second even-row-color"><code><a href="../shape/URectangle.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">URectangle</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../shape/UText.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UText</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.mindmap">
+<h2>Uses of <a href="../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a> in <a href="../../mindmap/package-summary.html">net.sourceforge.plantuml.mindmap</a></h2>
+<div class="caption"><span>Classes in <a href="../../mindmap/package-summary.html">net.sourceforge.plantuml.mindmap</a> that implement <a href="../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../mindmap/MindMap.html" class="type-name-link" title="class in net.sourceforge.plantuml.mindmap">MindMap</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -1467,6 +1499,12 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><code><a href="../../svek/image/AbstractEntityImageBorder.html" class="type-name-link" title="class in net.sourceforge.plantuml.svek.image">AbstractEntityImageBorder</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../svek/image/CircleEnd.html" class="type-name-link" title="class in net.sourceforge.plantuml.svek.image">CircleEnd</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../svek/image/CircleStart.html" class="type-name-link" title="class in net.sourceforge.plantuml.svek.image">CircleStart</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../svek/image/EntityImageActivity.html" class="type-name-link" title="class in net.sourceforge.plantuml.svek.image">EntityImageActivity</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
@@ -1577,6 +1615,20 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../svek/image/Opale.html" class="type-name-link" title="class in net.sourceforge.plantuml.svek.image">Opale</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.wire">
+<h2>Uses of <a href="../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a> in <a href="../../wire/package-summary.html">net.sourceforge.plantuml.wire</a></h2>
+<div class="caption"><span>Classes in <a href="../../wire/package-summary.html">net.sourceforge.plantuml.wire</a> that implement <a href="../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../wire/Block.html" class="type-name-link" title="class in net.sourceforge.plantuml.wire">Block</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

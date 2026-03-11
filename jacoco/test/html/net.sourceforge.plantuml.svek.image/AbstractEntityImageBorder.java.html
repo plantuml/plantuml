@@ -53,6 +53,8 @@ import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ShapeType;
 
+import net.sourceforge.plantuml.annotation.Fast;
+
 public abstract class AbstractEntityImageBorder extends AbstractEntityImage {
 	public final EntityPosition entityPosition;
 	protected final Cluster parent;
@@ -62,35 +64,36 @@ public abstract class AbstractEntityImageBorder extends AbstractEntityImage {
 	protected abstract StyleSignatureBasic getSignature();
 
 	final protected Style getStyle() {
-<span class="nc" id="L65">		final Stereotype stereotype = getEntity().getStereotype();</span>
-<span class="nc" id="L66">		return getSignature().withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L67">		final Stereotype stereotype = getEntity().getStereotype();</span>
+<span class="nc" id="L68">		return getSignature().withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
 	AbstractEntityImageBorder(Entity leaf, Cluster parent, Bibliotekon bibliotekon,
 			FontParam fontParam) {
-<span class="nc" id="L71">		super(leaf);</span>
+<span class="nc" id="L73">		super(leaf);</span>
 
-<span class="nc" id="L73">		this.parent = parent;</span>
-<span class="nc" id="L74">		this.bibliotekon = bibliotekon;</span>
-<span class="nc" id="L75">		this.entityPosition = leaf.getEntityPosition();</span>
-<span class="nc" id="L76">		this.rankdir = getSkinParam().getRankdir();</span>
+<span class="nc" id="L75">		this.parent = parent;</span>
+<span class="nc" id="L76">		this.bibliotekon = bibliotekon;</span>
+<span class="nc" id="L77">		this.entityPosition = leaf.getEntityPosition();</span>
+<span class="nc" id="L78">		this.rankdir = getSkinParam().getRankdir();</span>
 
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (entityPosition == EntityPosition.NORMAL)</span>
-<span class="nc" id="L79">			throw new IllegalArgumentException();</span>
-<span class="nc" id="L80">	}</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (entityPosition == EntityPosition.NORMAL)</span>
+<span class="nc" id="L81">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L82">	}</span>
 
 	protected final TextBlock getDesc() {
-<span class="nc" id="L83">		final Entity leaf = (Entity) getEntity();</span>
-<span class="nc" id="L84">		final FontConfiguration fc = FontConfiguration.create(getSkinParam(), getStyle());</span>
-<span class="nc" id="L85">		return leaf.getDisplay().create(fc, HorizontalAlignment.CENTER, getSkinParam());</span>
+<span class="nc" id="L85">		final Entity leaf = (Entity) getEntity();</span>
+<span class="nc" id="L86">		final FontConfiguration fc = FontConfiguration.create(getSkinParam(), getStyle());</span>
+<span class="nc" id="L87">		return leaf.getDisplay().create(fc, HorizontalAlignment.CENTER, getSkinParam());</span>
 	}
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L89">		return entityPosition.getDimension(rankdir);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L92">		return entityPosition.getDimension(rankdir);</span>
 	}
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L93">		return entityPosition.getShapeType();</span>
+<span class="nc" id="L96">		return entityPosition.getShapeType();</span>
 	}
 
 }

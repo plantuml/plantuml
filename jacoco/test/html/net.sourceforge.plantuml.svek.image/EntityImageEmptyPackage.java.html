@@ -129,42 +129,43 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 
 <span class="nc" id="L130">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L133">		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);</span>
-<span class="nc" id="L134">		XDimension2D dim = TextBlockUtils.mergeTB(desc, stereoBlock, HorizontalAlignment.LEFT)</span>
-<span class="nc" id="L135">				.calculateDimension(stringBounder);</span>
-<span class="nc" id="L136">		dim = dim.atLeast(0, 2 * dimDesc.getHeight());</span>
-<span class="nc" id="L137">		return dim.delta(MARGIN * 2, MARGIN * 2);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L134">		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);</span>
+<span class="nc" id="L135">		XDimension2D dim = TextBlockUtils.mergeTB(desc, stereoBlock, HorizontalAlignment.LEFT)</span>
+<span class="nc" id="L136">				.calculateDimension(stringBounder);</span>
+<span class="nc" id="L137">		dim = dim.atLeast(0, 2 * dimDesc.getHeight());</span>
+<span class="nc" id="L138">		return dim.delta(MARGIN * 2, MARGIN * 2);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L142">			ug.startUrl(url);</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L143">			ug.startUrl(url);</span>
 
-<span class="nc" id="L144">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L145">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="nc" id="L145">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L146">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L147">		final double widthTotal = dimTotal.getWidth();</span>
-<span class="nc" id="L148">		final double heightTotal = dimTotal.getHeight();</span>
+<span class="nc" id="L148">		final double widthTotal = dimTotal.getWidth();</span>
+<span class="nc" id="L149">		final double heightTotal = dimTotal.getHeight();</span>
 
-<span class="nc" id="L150">		final RectangleArea rectangleArea = new RectangleArea(0, 0, widthTotal, heightTotal);</span>
-<span class="nc" id="L151">		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().packageStyle(), null, desc,</span>
+<span class="nc" id="L151">		final RectangleArea rectangleArea = new RectangleArea(0, 0, widthTotal, heightTotal);</span>
+<span class="nc" id="L152">		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().packageStyle(), null, desc,</span>
 				stereoBlock, rectangleArea, stroke);
 
-<span class="nc" id="L154">		final HorizontalAlignment horizontalAlignment = getSkinParam()</span>
-<span class="nc" id="L155">				.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null);</span>
-<span class="nc" id="L156">		final HorizontalAlignment stereotypeAlignment = getSkinParam().getStereotypeAlignment();</span>
+<span class="nc" id="L155">		final HorizontalAlignment horizontalAlignment = getSkinParam()</span>
+<span class="nc" id="L156">				.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null);</span>
+<span class="nc" id="L157">		final HorizontalAlignment stereotypeAlignment = getSkinParam().getStereotypeAlignment();</span>
 
-<span class="nc" id="L158">		decoration.drawU(ug, back, borderColor, shadowing, roundCorner, horizontalAlignment, stereotypeAlignment,</span>
+<span class="nc" id="L159">		decoration.drawU(ug, back, borderColor, shadowing, roundCorner, horizontalAlignment, stereotypeAlignment,</span>
 				diagonalCorner);
 
-<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L162">			ug.closeUrl();</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L163">			ug.closeUrl();</span>
 
-<span class="nc" id="L164">	}</span>
+<span class="nc" id="L165">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L167">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L168">		return ShapeType.RECTANGLE;</span>
 	}
 
 }

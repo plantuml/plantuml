@@ -121,76 +121,77 @@ class ITFComposed extends WBSTextBlock implements ITF {
 <span class="fc" id="L121">		return new XPoint2D(x, y);</span>
 	}
 
-	public final XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L125">		final XDimension2D mainDim = main.calculateDimension(stringBounder);</span>
-<span class="fc" id="L126">		final double mainWidth = mainDim.getWidth();</span>
-<span class="fc" id="L127">		final double height = mainDim.getHeight() + Math.max(getCollHeight(stringBounder, left, marginBottom),</span>
-<span class="fc" id="L128">				getCollHeight(stringBounder, right, marginBottom));</span>
-<span class="fc" id="L129">		final double width = Math.max(mainWidth / 2, delta1x + getCollWidth(stringBounder, left))</span>
-<span class="fc" id="L130">				+ Math.max(mainWidth / 2, delta1x + getCollWidth(stringBounder, right));</span>
-<span class="fc" id="L131">		return new XDimension2D(width, height);</span>
+	@Override
+	public final XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="fc" id="L126">		final XDimension2D mainDim = main.calculateDimension(stringBounder);</span>
+<span class="fc" id="L127">		final double mainWidth = mainDim.getWidth();</span>
+<span class="fc" id="L128">		final double height = mainDim.getHeight() + Math.max(getCollHeight(stringBounder, left, marginBottom),</span>
+<span class="fc" id="L129">				getCollHeight(stringBounder, right, marginBottom));</span>
+<span class="fc" id="L130">		final double width = Math.max(mainWidth / 2, delta1x + getCollWidth(stringBounder, left))</span>
+<span class="fc" id="L131">				+ Math.max(mainWidth / 2, delta1x + getCollWidth(stringBounder, right));</span>
+<span class="fc" id="L132">		return new XDimension2D(width, height);</span>
 	}
 
 	public void drawU(final UGraphic ug) {
-<span class="fc" id="L135">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L136">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="fc" id="L137">		final XDimension2D mainDim = main.calculateDimension(stringBounder);</span>
+<span class="fc" id="L138">		final XDimension2D mainDim = main.calculateDimension(stringBounder);</span>
 
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (ug instanceof AbstractCommonUGraphic) {</span>
-<span class="fc" id="L140">			final UTranslate translate = ((AbstractCommonUGraphic) ug).getTranslate();</span>
-<span class="fc" id="L141">			idea.setGeometry(translate, mainDim);</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (ug instanceof AbstractCommonUGraphic) {</span>
+<span class="fc" id="L141">			final UTranslate translate = ((AbstractCommonUGraphic) ug).getTranslate();</span>
+<span class="fc" id="L142">			idea.setGeometry(translate, mainDim);</span>
 		}
 
-<span class="fc" id="L144">		final double wx = getw1(stringBounder) - mainDim.getWidth() / 2;</span>
-<span class="fc" id="L145">		main.drawU(ug.apply(UTranslate.dx(wx)));</span>
-<span class="fc" id="L146">		final double x = getw1(stringBounder);</span>
-<span class="fc" id="L147">		double y = mainDim.getHeight();</span>
-<span class="fc" id="L148">		double lastY1 = y;</span>
-<span class="fc" id="L149">		final HColor lineColor = getLinkColor();</span>
-<span class="fc bfc" id="L150" title="All 2 branches covered.">		for (ITF child : left) {</span>
-<span class="fc" id="L151">			y += marginBottom;</span>
-<span class="fc" id="L152">			final XDimension2D childDim = child.calculateDimension(stringBounder);</span>
-<span class="fc" id="L153">			lastY1 = y + child.getF2(stringBounder).getY();</span>
-<span class="fc" id="L154">			drawLine(ug.apply(lineColor), x - childDim.getWidth() - delta1x + child.getF2(stringBounder).getX(), lastY1, x, lastY1);</span>
-<span class="fc" id="L155">			child.drawU(ug.apply(new UTranslate(x - childDim.getWidth() - delta1x, y)));</span>
-<span class="fc" id="L156">			y += childDim.getHeight();</span>
-<span class="fc" id="L157">		}</span>
+<span class="fc" id="L145">		final double wx = getw1(stringBounder) - mainDim.getWidth() / 2;</span>
+<span class="fc" id="L146">		main.drawU(ug.apply(UTranslate.dx(wx)));</span>
+<span class="fc" id="L147">		final double x = getw1(stringBounder);</span>
+<span class="fc" id="L148">		double y = mainDim.getHeight();</span>
+<span class="fc" id="L149">		double lastY1 = y;</span>
+<span class="fc" id="L150">		final HColor lineColor = getLinkColor();</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		for (ITF child : left) {</span>
+<span class="fc" id="L152">			y += marginBottom;</span>
+<span class="fc" id="L153">			final XDimension2D childDim = child.calculateDimension(stringBounder);</span>
+<span class="fc" id="L154">			lastY1 = y + child.getF2(stringBounder).getY();</span>
+<span class="fc" id="L155">			drawLine(ug.apply(lineColor), x - childDim.getWidth() - delta1x + child.getF2(stringBounder).getX(), lastY1, x, lastY1);</span>
+<span class="fc" id="L156">			child.drawU(ug.apply(new UTranslate(x - childDim.getWidth() - delta1x, y)));</span>
+<span class="fc" id="L157">			y += childDim.getHeight();</span>
+<span class="fc" id="L158">		}</span>
 
-<span class="fc" id="L159">		y = mainDim.getHeight();</span>
-<span class="fc" id="L160">		double lastY2 = y;</span>
-<span class="fc bfc" id="L161" title="All 2 branches covered.">		for (ITF child : right) {</span>
-<span class="fc" id="L162">			y += marginBottom;</span>
-<span class="fc" id="L163">			final XDimension2D childDim = child.calculateDimension(stringBounder);</span>
-<span class="fc" id="L164">			lastY2 = y + child.getF1(stringBounder).getY();</span>
-<span class="fc" id="L165">			drawLine(ug.apply(lineColor), x, lastY2, x + delta1x + child.getF1(stringBounder).getX(), lastY2);</span>
-<span class="fc" id="L166">			child.drawU(ug.apply(new UTranslate(x + delta1x, y)));</span>
-<span class="fc" id="L167">			y += childDim.getHeight();</span>
+<span class="fc" id="L160">		y = mainDim.getHeight();</span>
+<span class="fc" id="L161">		double lastY2 = y;</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		for (ITF child : right) {</span>
+<span class="fc" id="L163">			y += marginBottom;</span>
+<span class="fc" id="L164">			final XDimension2D childDim = child.calculateDimension(stringBounder);</span>
+<span class="fc" id="L165">			lastY2 = y + child.getF1(stringBounder).getY();</span>
+<span class="fc" id="L166">			drawLine(ug.apply(lineColor), x, lastY2, x + delta1x + child.getF1(stringBounder).getX(), lastY2);</span>
+<span class="fc" id="L167">			child.drawU(ug.apply(new UTranslate(x + delta1x, y)));</span>
+<span class="fc" id="L168">			y += childDim.getHeight();</span>
 
-<span class="fc" id="L169">		}</span>
-<span class="fc" id="L170">		drawLine(ug.apply(lineColor), x, mainDim.getHeight(), x, Math.max(lastY1, lastY2));</span>
-<span class="fc" id="L171">	}</span>
+<span class="fc" id="L170">		}</span>
+<span class="fc" id="L171">		drawLine(ug.apply(lineColor), x, mainDim.getHeight(), x, Math.max(lastY1, lastY2));</span>
+<span class="fc" id="L172">	}</span>
 
 	private HColor getLinkColor() {
-<span class="fc" id="L174">		final Style styleArrow = idea.getStyle().getSignature().withTOBECHANGED(idea.getStereotype())</span>
-<span class="fc" id="L175">				.getMergedStyle(idea.getStyleBuilder());</span>
-<span class="fc" id="L176">		return styleArrow.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L175">		final Style styleArrow = idea.getStyle().getSignature().withTOBECHANGED(idea.getStereotype())</span>
+<span class="fc" id="L176">				.getMergedStyle(idea.getStyleBuilder());</span>
+<span class="fc" id="L177">		return styleArrow.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
 	}
 
 	final private double getCollWidth(StringBounder stringBounder, Collection&lt;? extends TextBlock&gt; all) {
-<span class="fc" id="L180">		double result = 0;</span>
-<span class="fc bfc" id="L181" title="All 2 branches covered.">		for (TextBlock child : all)</span>
-<span class="fc" id="L182">			result = Math.max(result, child.calculateDimension(stringBounder).getWidth());</span>
+<span class="fc" id="L181">		double result = 0;</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		for (TextBlock child : all)</span>
+<span class="fc" id="L183">			result = Math.max(result, child.calculateDimension(stringBounder).getWidth());</span>
 
-<span class="fc" id="L184">		return result;</span>
+<span class="fc" id="L185">		return result;</span>
 	}
 
 	final private double getCollHeight(StringBounder stringBounder, Collection&lt;? extends TextBlock&gt; all,
 			double deltay) {
-<span class="fc" id="L189">		double result = 0;</span>
-<span class="fc bfc" id="L190" title="All 2 branches covered.">		for (TextBlock child : all)</span>
-<span class="fc" id="L191">			result += deltay + child.calculateDimension(stringBounder).getHeight();</span>
+<span class="fc" id="L190">		double result = 0;</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">		for (TextBlock child : all)</span>
+<span class="fc" id="L192">			result += deltay + child.calculateDimension(stringBounder).getHeight();</span>
 
-<span class="fc" id="L193">		return result;</span>
+<span class="fc" id="L194">		return result;</span>
 	}
 
 }

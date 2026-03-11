@@ -45,47 +45,46 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
-import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 
-public class Body3 implements TextBlock, WithPorts {
+public class Body3 extends TextBlockMemoized implements WithPorts {
 
 <span class="nc" id="L57">	private final List&lt;CharSequence&gt; rawBody = new ArrayList&lt;&gt;();</span>
 	private final ISkinParam skinParam;
-	private final Stereotype stereotype;
 	private final Style style;
 
-<span class="nc" id="L62">	public Body3(List&lt;CharSequence&gt; rawBody_, ISkinParam skinParam, Stereotype stereotype, Style style) {</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		for (CharSequence s : rawBody_)</span>
-<span class="nc" id="L64">			this.rawBody.add(VisibilityModifier.replaceVisibilityModifierByUnicodeChar(s.toString(), true));</span>
+<span class="nc" id="L61">	public Body3(List&lt;CharSequence&gt; rawBody_, ISkinParam skinParam, Style style) {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		for (CharSequence s : rawBody_)</span>
+<span class="nc" id="L63">			this.rawBody.add(VisibilityModifier.replaceVisibilityModifierByUnicodeChar(s.toString(), true));</span>
 
-<span class="nc" id="L66">		this.skinParam = skinParam;</span>
-<span class="nc" id="L67">		this.stereotype = stereotype;</span>
-<span class="nc" id="L68">		this.style = style;</span>
-<span class="nc" id="L69">	}</span>
+<span class="nc" id="L65">		this.skinParam = skinParam;</span>
+<span class="nc" id="L66">		this.style = style;</span>
+<span class="nc" id="L67">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L72">		getTextBlock().drawU(ug);</span>
+<span class="nc" id="L70">		getTextBlock().drawU(ug);</span>
 
-<span class="nc" id="L74">	}</span>
+<span class="nc" id="L72">	}</span>
 
 	private TextBlock getTextBlock() {
-<span class="nc" id="L77">		final Display display = Display.create(rawBody);</span>
-<span class="nc" id="L78">		final FontConfiguration config = FontConfiguration.create(skinParam, style);</span>
-<span class="nc" id="L79">		return display.create(config, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="nc" id="L75">		final Display display = Display.create(rawBody);</span>
+<span class="nc" id="L76">		final FontConfiguration config = FontConfiguration.create(skinParam, style);</span>
+<span class="nc" id="L77">		return display.create(config, HorizontalAlignment.LEFT, skinParam);</span>
 	}
 
 	@Override
 	public Ports getPorts(StringBounder stringBounder) {
-<span class="nc" id="L84">		return new Ports();</span>
+<span class="nc" id="L82">		return new Ports();</span>
 	}
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L88">		return getTextBlock().calculateDimension(stringBounder);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L87">		return getTextBlock().calculateDimension(stringBounder);</span>
 	}
 
 }

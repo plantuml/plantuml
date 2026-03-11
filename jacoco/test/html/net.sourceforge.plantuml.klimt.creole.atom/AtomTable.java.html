@@ -82,13 +82,13 @@ public class AtomTable extends AbstractAtom implements Atom {
 <span class="fc" id="L82">	private final List&lt;Line&gt; lines = new ArrayList&lt;&gt;();</span>
 <span class="fc" id="L83">	private final Map&lt;Atom, Position&gt; positions = new HashMap&lt;Atom, Position&gt;();</span>
 	private final HColor lineColor;
-	private Class&lt;? extends StringBounder&gt; lastCaller;
 
-<span class="fc" id="L87">	public AtomTable(HColor lineColor) {</span>
-<span class="fc" id="L88">		this.lineColor = lineColor;</span>
-<span class="fc" id="L89">	}</span>
+<span class="fc" id="L86">	public AtomTable(HColor lineColor) {</span>
+<span class="fc" id="L87">		this.lineColor = lineColor;</span>
+<span class="fc" id="L88">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
 <span class="fc" id="L92">		initMap(stringBounder);</span>
 <span class="fc" id="L93">		final double width = getEndingX(getNbCols() - 1);</span>
 <span class="fc" id="L94">		final double height = getEndingY(getNbLines() - 1);</span>
@@ -167,126 +167,120 @@ public class AtomTable extends AbstractAtom implements Atom {
 	}
 
 	private void initMap(StringBounder stringBounder) {
-<span class="fc" id="L170">		final Class&lt;? extends StringBounder&gt; currentCaller = stringBounder.getClass();</span>
-<span class="fc bfc" id="L171" title="All 2 branches covered.">		if (lastCaller != currentCaller)</span>
-<span class="fc" id="L172">			positions.clear();</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (positions.size() &gt; 0)</span>
+<span class="fc" id="L171">			return;</span>
 
-<span class="fc" id="L174">		this.lastCaller = currentCaller;</span>
-
-<span class="fc bfc" id="L176" title="All 2 branches covered.">		if (positions.size() &gt; 0)</span>
-<span class="fc" id="L177">			return;</span>
-
-<span class="fc bfc" id="L179" title="All 2 branches covered.">		for (Line line : lines) {</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">			for (Atom cell : line.cells) {</span>
-<span class="fc" id="L181">				final XDimension2D dim = cell.calculateDimension(stringBounder);</span>
-<span class="fc" id="L182">				final Position pos = new Position(0, 0, dim);</span>
-<span class="fc" id="L183">				positions.put(cell, pos);</span>
-<span class="fc" id="L184">			}</span>
-<span class="fc" id="L185">		}</span>
-<span class="fc bfc" id="L186" title="All 2 branches covered.">		for (int i = 0; i &lt; lines.size(); i++) {</span>
-<span class="fc bfc" id="L187" title="All 2 branches covered.">			for (int j = 0; j &lt; lines.get(i).size(); j++) {</span>
-<span class="fc" id="L188">				final Atom cell = lines.get(i).cells.get(j);</span>
-<span class="fc" id="L189">				final XDimension2D dim = cell.calculateDimension(stringBounder);</span>
-<span class="fc" id="L190">				final double x = getStartingX(j);</span>
-<span class="fc" id="L191">				final double y = getStartingY(i);</span>
-<span class="fc" id="L192">				final Position pos = new Position(x, y, dim);</span>
-<span class="fc" id="L193">				positions.put(cell, pos);</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">		for (Line line : lines) {</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">			for (Atom cell : line.cells) {</span>
+<span class="fc" id="L175">				final XDimension2D dim = cell.calculateDimension(stringBounder);</span>
+<span class="fc" id="L176">				final Position pos = new Position(0, 0, dim);</span>
+<span class="fc" id="L177">				positions.put(cell, pos);</span>
+<span class="fc" id="L178">			}</span>
+<span class="fc" id="L179">		}</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">		for (int i = 0; i &lt; lines.size(); i++) {</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">			for (int j = 0; j &lt; lines.get(i).size(); j++) {</span>
+<span class="fc" id="L182">				final Atom cell = lines.get(i).cells.get(j);</span>
+<span class="fc" id="L183">				final XDimension2D dim = cell.calculateDimension(stringBounder);</span>
+<span class="fc" id="L184">				final double x = getStartingX(j);</span>
+<span class="fc" id="L185">				final double y = getStartingY(i);</span>
+<span class="fc" id="L186">				final Position pos = new Position(x, y, dim);</span>
+<span class="fc" id="L187">				positions.put(cell, pos);</span>
 			}
 		}
-<span class="fc" id="L196">	}</span>
+<span class="fc" id="L190">	}</span>
 
 	private double getStartingX(int col) {
-<span class="fc" id="L199">		double result = 0;</span>
-<span class="fc bfc" id="L200" title="All 2 branches covered.">		for (int i = 0; i &lt; col; i++)</span>
-<span class="fc" id="L201">			result += getColWidth(i);</span>
+<span class="fc" id="L193">		double result = 0;</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">		for (int i = 0; i &lt; col; i++)</span>
+<span class="fc" id="L195">			result += getColWidth(i);</span>
 
-<span class="fc" id="L203">		return result;</span>
+<span class="fc" id="L197">		return result;</span>
 	}
 
 	private double getEndingX(int col) {
-<span class="fc" id="L207">		double result = 0;</span>
-<span class="fc bfc" id="L208" title="All 2 branches covered.">		for (int i = 0; i &lt;= col; i++)</span>
-<span class="fc" id="L209">			result += getColWidth(i);</span>
+<span class="fc" id="L201">		double result = 0;</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">		for (int i = 0; i &lt;= col; i++)</span>
+<span class="fc" id="L203">			result += getColWidth(i);</span>
 
-<span class="fc" id="L211">		return result;</span>
+<span class="fc" id="L205">		return result;</span>
 	}
 
 	private double getStartingY(int line) {
-<span class="fc" id="L215">		double result = 0;</span>
-<span class="fc bfc" id="L216" title="All 2 branches covered.">		for (int i = 0; i &lt; line; i++)</span>
-<span class="fc" id="L217">			result += getLineHeight(i);</span>
+<span class="fc" id="L209">		double result = 0;</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">		for (int i = 0; i &lt; line; i++)</span>
+<span class="fc" id="L211">			result += getLineHeight(i);</span>
 
-<span class="fc" id="L219">		return result;</span>
+<span class="fc" id="L213">		return result;</span>
 	}
 
 	private double getEndingY(int line) {
-<span class="fc" id="L223">		double result = 0;</span>
-<span class="fc bfc" id="L224" title="All 2 branches covered.">		for (int i = 0; i &lt;= line; i++)</span>
-<span class="fc" id="L225">			result += getLineHeight(i);</span>
+<span class="fc" id="L217">		double result = 0;</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">		for (int i = 0; i &lt;= line; i++)</span>
+<span class="fc" id="L219">			result += getLineHeight(i);</span>
 
-<span class="fc" id="L227">		return result;</span>
+<span class="fc" id="L221">		return result;</span>
 	}
 
 	private double getColWidth(int col) {
-<span class="fc" id="L231">		double result = 0;</span>
-<span class="fc bfc" id="L232" title="All 2 branches covered.">		for (int i = 0; i &lt; getNbLines(); i++) {</span>
-<span class="fc" id="L233">			final Position position = getPosition(i, col);</span>
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">			if (position == null)</span>
-<span class="nc" id="L235">				continue;</span>
+<span class="fc" id="L225">		double result = 0;</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">		for (int i = 0; i &lt; getNbLines(); i++) {</span>
+<span class="fc" id="L227">			final Position position = getPosition(i, col);</span>
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">			if (position == null)</span>
+<span class="nc" id="L229">				continue;</span>
 
-<span class="fc" id="L237">			final double width = position.getWidth();</span>
-<span class="fc" id="L238">			result = Math.max(result, width);</span>
+<span class="fc" id="L231">			final double width = position.getWidth();</span>
+<span class="fc" id="L232">			result = Math.max(result, width);</span>
 		}
-<span class="fc" id="L240">		return result;</span>
+<span class="fc" id="L234">		return result;</span>
 	}
 
 	private double getLineHeight(int line) {
-<span class="fc" id="L244">		double result = 0;</span>
-<span class="fc bfc" id="L245" title="All 2 branches covered.">		for (int i = 0; i &lt; getNbCols(); i++) {</span>
-<span class="fc" id="L246">			final Position position = getPosition(line, i);</span>
-<span class="pc bpc" id="L247" title="1 of 2 branches missed.">			if (position == null)</span>
-<span class="nc" id="L248">				continue;</span>
+<span class="fc" id="L238">		double result = 0;</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">		for (int i = 0; i &lt; getNbCols(); i++) {</span>
+<span class="fc" id="L240">			final Position position = getPosition(line, i);</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">			if (position == null)</span>
+<span class="nc" id="L242">				continue;</span>
 
-<span class="fc" id="L250">			final double height = position.getHeight();</span>
-<span class="fc" id="L251">			result = Math.max(result, height);</span>
+<span class="fc" id="L244">			final double height = position.getHeight();</span>
+<span class="fc" id="L245">			result = Math.max(result, height);</span>
 		}
-<span class="fc" id="L253">		return result;</span>
+<span class="fc" id="L247">		return result;</span>
 	}
 
 	private Position getPosition(int line, int col) {
-<span class="pc bpc" id="L257" title="1 of 2 branches missed.">		if (line &gt;= lines.size())</span>
-<span class="nc" id="L258">			return null;</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">		if (line &gt;= lines.size())</span>
+<span class="nc" id="L252">			return null;</span>
 
-<span class="fc" id="L260">		final Line l = lines.get(line);</span>
-<span class="pc bpc" id="L261" title="1 of 2 branches missed.">		if (col &gt;= l.cells.size())</span>
-<span class="nc" id="L262">			return null;</span>
+<span class="fc" id="L254">		final Line l = lines.get(line);</span>
+<span class="pc bpc" id="L255" title="1 of 2 branches missed.">		if (col &gt;= l.cells.size())</span>
+<span class="nc" id="L256">			return null;</span>
 
-<span class="fc" id="L264">		final Atom atom = l.cells.get(col);</span>
-<span class="fc" id="L265">		return positions.get(atom);</span>
+<span class="fc" id="L258">		final Atom atom = l.cells.get(col);</span>
+<span class="fc" id="L259">		return positions.get(atom);</span>
 	}
 
 	private int getNbCols() {
-<span class="fc" id="L269">		int result = lines.get(0).size();</span>
-<span class="fc bfc" id="L270" title="All 2 branches covered.">		for (int i = 1; i &lt; lines.size(); i++)</span>
-<span class="fc" id="L271">			result = Math.max(result, lines.get(i).size());</span>
-<span class="fc" id="L272">		return result;</span>
+<span class="fc" id="L263">		int result = lines.get(0).size();</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">		for (int i = 1; i &lt; lines.size(); i++)</span>
+<span class="fc" id="L265">			result = Math.max(result, lines.get(i).size());</span>
+<span class="fc" id="L266">		return result;</span>
 	}
 
 	private int getNbLines() {
-<span class="fc" id="L276">		return lines.size();</span>
+<span class="fc" id="L270">		return lines.size();</span>
 	}
 
 	private Line lastLine() {
-<span class="fc" id="L280">		return lines.get(lines.size() - 1);</span>
+<span class="fc" id="L274">		return lines.get(lines.size() - 1);</span>
 	}
 
 	public void addCell(Atom cell, HColor cellBackColor) {
-<span class="fc" id="L284">		lastLine().add(cell, cellBackColor);</span>
-<span class="fc" id="L285">		positions.clear();</span>
-<span class="fc" id="L286">	}</span>
+<span class="fc" id="L278">		lastLine().add(cell, cellBackColor);</span>
+<span class="fc" id="L279">		positions.clear();</span>
+<span class="fc" id="L280">	}</span>
 
 	public void newLine(HColor lineBackColor) {
-<span class="fc" id="L289">		lines.add(new Line(lineBackColor));</span>
-<span class="fc" id="L290">	}</span>
+<span class="fc" id="L283">		lines.add(new Line(lineBackColor));</span>
+<span class="fc" id="L284">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

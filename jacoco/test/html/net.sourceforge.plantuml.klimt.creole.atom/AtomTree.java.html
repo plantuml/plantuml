@@ -58,46 +58,47 @@ public class AtomTree extends AbstractAtom implements Atom {
 <span class="nc" id="L58">		this.lineColor = lineColor;</span>
 <span class="nc" id="L59">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L62">		final Skeleton2 skeleton = new Skeleton2();</span>
-<span class="nc" id="L63">		double width = 0;</span>
-<span class="nc" id="L64">		double height = 0;</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		for (Atom cell : cells) {</span>
-<span class="nc" id="L66">			final XDimension2D dim = cell.calculateDimension(stringBounder);</span>
-<span class="nc" id="L67">			height += dim.getHeight();</span>
-<span class="nc" id="L68">			final int level = getLevel(cell);</span>
-<span class="nc" id="L69">			width = Math.max(width, skeleton.getXEndForLevel(level) + margin + dim.getWidth());</span>
-<span class="nc" id="L70">		}</span>
-<span class="nc" id="L71">		return new XDimension2D(width, height);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L63">		final Skeleton2 skeleton = new Skeleton2();</span>
+<span class="nc" id="L64">		double width = 0;</span>
+<span class="nc" id="L65">		double height = 0;</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		for (Atom cell : cells) {</span>
+<span class="nc" id="L67">			final XDimension2D dim = cell.calculateDimension(stringBounder);</span>
+<span class="nc" id="L68">			height += dim.getHeight();</span>
+<span class="nc" id="L69">			final int level = getLevel(cell);</span>
+<span class="nc" id="L70">			width = Math.max(width, skeleton.getXEndForLevel(level) + margin + dim.getWidth());</span>
+<span class="nc" id="L71">		}</span>
+<span class="nc" id="L72">		return new XDimension2D(width, height);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L75">		return 0;</span>
+<span class="nc" id="L76">		return 0;</span>
 	}
 
 	public void drawU(final UGraphic ugInit) {
-<span class="nc" id="L79">		final Skeleton2 skeleton = new Skeleton2();</span>
-<span class="nc" id="L80">		double y = 0;</span>
-<span class="nc" id="L81">		UGraphic ug = ugInit;</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		for (Atom cell : cells) {</span>
-<span class="nc" id="L83">			final int level = getLevel(cell);</span>
-<span class="nc" id="L84">			cell.drawU(ug.apply(UTranslate.dx(margin + skeleton.getXEndForLevel(level))));</span>
-<span class="nc" id="L85">			final XDimension2D dim = cell.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L86">			skeleton.add(level, y + dim.getHeight() / 2);</span>
-<span class="nc" id="L87">			ug = ug.apply(UTranslate.dy(dim.getHeight()));</span>
-<span class="nc" id="L88">			y += dim.getHeight();</span>
-<span class="nc" id="L89">		}</span>
-<span class="nc" id="L90">		skeleton.draw(ugInit.apply(this.lineColor));</span>
-<span class="nc" id="L91">	}</span>
+<span class="nc" id="L80">		final Skeleton2 skeleton = new Skeleton2();</span>
+<span class="nc" id="L81">		double y = 0;</span>
+<span class="nc" id="L82">		UGraphic ug = ugInit;</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		for (Atom cell : cells) {</span>
+<span class="nc" id="L84">			final int level = getLevel(cell);</span>
+<span class="nc" id="L85">			cell.drawU(ug.apply(UTranslate.dx(margin + skeleton.getXEndForLevel(level))));</span>
+<span class="nc" id="L86">			final XDimension2D dim = cell.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L87">			skeleton.add(level, y + dim.getHeight() / 2);</span>
+<span class="nc" id="L88">			ug = ug.apply(UTranslate.dy(dim.getHeight()));</span>
+<span class="nc" id="L89">			y += dim.getHeight();</span>
+<span class="nc" id="L90">		}</span>
+<span class="nc" id="L91">		skeleton.draw(ugInit.apply(this.lineColor));</span>
+<span class="nc" id="L92">	}</span>
 
 	private int getLevel(Atom atom) {
-<span class="nc" id="L94">		return levels.get(atom);</span>
+<span class="nc" id="L95">		return levels.get(atom);</span>
 	}
 
 	public void addCell(Atom cell, int level) {
-<span class="nc" id="L98">		this.cells.add(cell);</span>
-<span class="nc" id="L99">		this.levels.put(cell, level);</span>
-<span class="nc" id="L100">	}</span>
+<span class="nc" id="L99">		this.cells.add(cell);</span>
+<span class="nc" id="L100">		this.levels.put(cell, level);</span>
+<span class="nc" id="L101">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

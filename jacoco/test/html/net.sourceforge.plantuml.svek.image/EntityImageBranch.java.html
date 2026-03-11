@@ -63,38 +63,39 @@ public class EntityImageBranch extends AbstractEntityImage {
 <span class="nc" id="L63">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);</span>
 	}
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L67">		return new XDimension2D(SIZE * 2, SIZE * 2);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L68">		return new XDimension2D(SIZE * 2, SIZE * 2);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc" id="L71">		final UPolygon diams = new UPolygon();</span>
-<span class="nc" id="L72">		diams.addPoint(SIZE, 0);</span>
-<span class="nc" id="L73">		diams.addPoint(SIZE * 2, SIZE);</span>
-<span class="nc" id="L74">		diams.addPoint(SIZE, SIZE * 2);</span>
-<span class="nc" id="L75">		diams.addPoint(0, SIZE);</span>
-<span class="nc" id="L76">		diams.addPoint(SIZE, 0);</span>
+<span class="nc" id="L72">		final UPolygon diams = new UPolygon();</span>
+<span class="nc" id="L73">		diams.addPoint(SIZE, 0);</span>
+<span class="nc" id="L74">		diams.addPoint(SIZE * 2, SIZE);</span>
+<span class="nc" id="L75">		diams.addPoint(SIZE, SIZE * 2);</span>
+<span class="nc" id="L76">		diams.addPoint(0, SIZE);</span>
+<span class="nc" id="L77">		diams.addPoint(SIZE, 0);</span>
 
-<span class="nc" id="L78">		final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L79">		final HColor border = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L80">		final HColor back = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L81">		final UStroke stroke = style.getStroke();</span>
-<span class="nc" id="L82">		final double shadowing = style.getShadowing();</span>
+<span class="nc" id="L79">		final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L80">		final HColor border = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L81">		final HColor back = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L82">		final UStroke stroke = style.getStroke();</span>
+<span class="nc" id="L83">		final double shadowing = style.getShadowing();</span>
 
-<span class="nc" id="L84">		diams.setDeltaShadow(shadowing);</span>
-<span class="nc" id="L85">		final UGroup group = new UGroup();</span>
-<span class="nc" id="L86">		group.put(UGroupType.CLASS, &quot;entity&quot;);</span>
-<span class="nc" id="L87">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
-<span class="nc" id="L88">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
-<span class="nc" id="L89">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
-<span class="nc" id="L90">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
-<span class="nc" id="L91">		ug.startGroup(group);</span>
-<span class="nc" id="L92">		ug.apply(border).apply(back.bg()).apply(stroke).draw(diams);</span>
-<span class="nc" id="L93">		ug.closeGroup();</span>
-<span class="nc" id="L94">	}</span>
+<span class="nc" id="L85">		diams.setDeltaShadow(shadowing);</span>
+<span class="nc" id="L86">		final UGroup group = new UGroup();</span>
+<span class="nc" id="L87">		group.put(UGroupType.CLASS, &quot;entity&quot;);</span>
+<span class="nc" id="L88">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
+<span class="nc" id="L89">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
+<span class="nc" id="L90">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
+<span class="nc" id="L91">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
+<span class="nc" id="L92">		ug.startGroup(group);</span>
+<span class="nc" id="L93">		ug.apply(border).apply(back.bg()).apply(stroke).draw(diams);</span>
+<span class="nc" id="L94">		ug.closeGroup();</span>
+<span class="nc" id="L95">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L97">		return ShapeType.DIAMOND;</span>
+<span class="nc" id="L98">		return ShapeType.DIAMOND;</span>
 	}
 
 }

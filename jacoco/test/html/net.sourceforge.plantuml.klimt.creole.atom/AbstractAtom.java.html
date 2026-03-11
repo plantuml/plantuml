@@ -39,11 +39,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.creole.Neutron;
+import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
 
-<span class="fc" id="L43">public abstract class AbstractAtom implements Atom {</span>
+<span class="fc" id="L44">public abstract class AbstractAtom extends TextBlockMemoized implements Atom {</span>
 
 	public List&lt;Neutron&gt; getNeutrons() {
-<span class="fc" id="L46">		return Arrays.asList(Neutron.create(this));</span>
+<span class="fc" id="L47">		return Arrays.asList(Neutron.create(this));</span>
 	}
 
 }

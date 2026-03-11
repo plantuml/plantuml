@@ -53,18 +53,19 @@ public class AtomEmoji extends AbstractAtom implements Atom {
 <span class="nc" id="L53">		this.color = color;</span>
 <span class="nc" id="L54">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L57">		final double size = 36 * factor;</span>
-<span class="nc" id="L58">		return new XDimension2D(size, size);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L58">		final double size = 36 * factor;</span>
+<span class="nc" id="L59">		return new XDimension2D(size, size);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L62">		return -3 * factor;</span>
+<span class="nc" id="L63">		return -3 * factor;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L66">		emoji.drawU(ug, this.factor, this.color);</span>
-<span class="nc" id="L67">	}</span>
+<span class="nc" id="L67">		emoji.drawU(ug, this.factor, this.color);</span>
+<span class="nc" id="L68">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

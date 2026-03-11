@@ -51,16 +51,17 @@ public class AtomSpace extends AbstractAtom implements Atom {
 <span class="nc" id="L51">		this.width = width;</span>
 <span class="nc" id="L52">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L55">		return new XDimension2D(width, 1);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L56">		return new XDimension2D(width, 1);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L59">		return 0;</span>
+<span class="nc" id="L60">		return 0;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L63">	}</span>
+<span class="nc" id="L64">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

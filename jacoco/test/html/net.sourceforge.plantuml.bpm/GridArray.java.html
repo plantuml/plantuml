@@ -41,11 +41,11 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.ISkinParam;
 
-public class GridArray implements TextBlock {
+public class GridArray extends TextBlockMemoized {
 
 	private final int lines;
 	private final int cols;
@@ -108,22 +108,23 @@ public class GridArray implements TextBlock {
 
 <span class="nc" id="L109">	private final double margin = 30;</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L112">		double heightMax = 0;</span>
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		for (int l = 0; l &lt; lines; l++)</span>
-<span class="nc" id="L114">			heightMax += getHeightOfLine(stringBounder, l) + margin;</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L113">		double heightMax = 0;</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		for (int l = 0; l &lt; lines; l++)</span>
+<span class="nc" id="L115">			heightMax += getHeightOfLine(stringBounder, l) + margin;</span>
 
-<span class="nc" id="L116">		double widthMax = 0;</span>
-<span class="nc bnc" id="L117" title="All 2 branches missed.">		for (int c = 0; c &lt; cols; c++)</span>
-<span class="nc" id="L118">			widthMax += getWidthOfCol(stringBounder, c) + margin;</span>
+<span class="nc" id="L117">		double widthMax = 0;</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		for (int c = 0; c &lt; cols; c++)</span>
+<span class="nc" id="L119">			widthMax += getWidthOfCol(stringBounder, c) + margin;</span>
 
-<span class="nc" id="L120">		return new XDimension2D(widthMax, heightMax);</span>
+<span class="nc" id="L121">		return new XDimension2D(widthMax, heightMax);</span>
 	}
 
 	public void drawU(UGraphic ug) {
 		// printMe();
 
-<span class="nc" id="L126">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L127">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
 		// for (GridEdge edge : edges) {
 		// // System.err.println(&quot;Drawing &quot; + edge);
@@ -134,93 +135,93 @@ public class GridArray implements TextBlock {
 		// drawArrow(ug, pt1, pt2);
 		// }
 
-<span class="nc" id="L137">		double dy = 0;</span>
-<span class="nc" id="L138">		drawInternalGrid(ug);</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">		for (int l = 0; l &lt; lines; l++) {</span>
-<span class="nc" id="L140">			double dx = 0;</span>
-<span class="nc" id="L141">			final double heightOfLine = getHeightOfLine(stringBounder, l);</span>
-<span class="nc bnc" id="L142" title="All 2 branches missed.">			for (int r = 0; r &lt; cols; r++) {</span>
-<span class="nc" id="L143">				final double widthOfCol = getWidthOfCol(stringBounder, r);</span>
-<span class="nc" id="L144">				final Placeable cell = data[l][r];</span>
-<span class="nc bnc" id="L145" title="All 2 branches missed.">				if (cell != null) {</span>
-<span class="nc" id="L146">					final XDimension2D dim = cell.getDimension(stringBounder, skinParam);</span>
+<span class="nc" id="L138">		double dy = 0;</span>
+<span class="nc" id="L139">		drawInternalGrid(ug);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		for (int l = 0; l &lt; lines; l++) {</span>
+<span class="nc" id="L141">			double dx = 0;</span>
+<span class="nc" id="L142">			final double heightOfLine = getHeightOfLine(stringBounder, l);</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">			for (int r = 0; r &lt; cols; r++) {</span>
+<span class="nc" id="L144">				final double widthOfCol = getWidthOfCol(stringBounder, r);</span>
+<span class="nc" id="L145">				final Placeable cell = data[l][r];</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">				if (cell != null) {</span>
+<span class="nc" id="L147">					final XDimension2D dim = cell.getDimension(stringBounder, skinParam);</span>
 
-<span class="nc" id="L148">					cell.toTextBlock(skinParam)</span>
-<span class="nc" id="L149">							.drawU(ug.apply(new UTranslate(dx + (widthOfCol + margin - dim.getWidth()) / 2,</span>
-<span class="nc" id="L150">									dy + (heightOfLine + margin - dim.getHeight()) / 2)));</span>
+<span class="nc" id="L149">					cell.toTextBlock(skinParam)</span>
+<span class="nc" id="L150">							.drawU(ug.apply(new UTranslate(dx + (widthOfCol + margin - dim.getWidth()) / 2,</span>
+<span class="nc" id="L151">									dy + (heightOfLine + margin - dim.getHeight()) / 2)));</span>
 				}
-<span class="nc" id="L152">				dx += widthOfCol + margin;</span>
+<span class="nc" id="L153">				dx += widthOfCol + margin;</span>
 			}
-<span class="nc" id="L154">			dy += heightOfLine + margin;</span>
+<span class="nc" id="L155">			dy += heightOfLine + margin;</span>
 		}
 
-<span class="nc" id="L157">	}</span>
+<span class="nc" id="L158">	}</span>
 
 	private void drawInternalGrid(UGraphic ug) {
-<span class="nc" id="L160">		double heightMax = 0;</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">		for (int l = 0; l &lt; lines; l++) {</span>
-<span class="nc" id="L162">			heightMax += getHeightOfLine(ug.getStringBounder(), l) + margin;</span>
+<span class="nc" id="L161">		double heightMax = 0;</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		for (int l = 0; l &lt; lines; l++) {</span>
+<span class="nc" id="L163">			heightMax += getHeightOfLine(ug.getStringBounder(), l) + margin;</span>
 		}
-<span class="nc" id="L164">		double widthMax = 0;</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		for (int c = 0; c &lt; cols; c++) {</span>
-<span class="nc" id="L166">			widthMax += getWidthOfCol(ug.getStringBounder(), c) + margin;</span>
+<span class="nc" id="L165">		double widthMax = 0;</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		for (int c = 0; c &lt; cols; c++) {</span>
+<span class="nc" id="L167">			widthMax += getWidthOfCol(ug.getStringBounder(), c) + margin;</span>
 		}
-<span class="nc" id="L168">		ug = ug.apply(HColors.BLACK);</span>
-<span class="nc" id="L169">		double y = 0;</span>
-<span class="nc bnc" id="L170" title="All 2 branches missed.">		for (int l = 0; l &lt; lines; l++) {</span>
-<span class="nc" id="L171">			ug.apply(UTranslate.dy(y)).draw(ULine.hline(widthMax));</span>
-<span class="nc" id="L172">			y += getHeightOfLine(ug.getStringBounder(), l) + margin;</span>
+<span class="nc" id="L169">		ug = ug.apply(HColors.BLACK);</span>
+<span class="nc" id="L170">		double y = 0;</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		for (int l = 0; l &lt; lines; l++) {</span>
+<span class="nc" id="L172">			ug.apply(UTranslate.dy(y)).draw(ULine.hline(widthMax));</span>
+<span class="nc" id="L173">			y += getHeightOfLine(ug.getStringBounder(), l) + margin;</span>
 		}
-<span class="nc" id="L174">		double x = 0;</span>
-<span class="nc bnc" id="L175" title="All 2 branches missed.">		for (int c = 0; c &lt; cols; c++) {</span>
-<span class="nc" id="L176">			ug.apply(UTranslate.dx(x)).draw(ULine.vline(heightMax));</span>
-<span class="nc" id="L177">			x += getWidthOfCol(ug.getStringBounder(), c) + margin;</span>
+<span class="nc" id="L175">		double x = 0;</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">		for (int c = 0; c &lt; cols; c++) {</span>
+<span class="nc" id="L177">			ug.apply(UTranslate.dx(x)).draw(ULine.vline(heightMax));</span>
+<span class="nc" id="L178">			x += getWidthOfCol(ug.getStringBounder(), c) + margin;</span>
 		}
 
-<span class="nc" id="L180">	}</span>
+<span class="nc" id="L181">	}</span>
 
 	private void drawArrow(UGraphic ug, XPoint2D pt1, XPoint2D pt2) {
-<span class="nc" id="L183">		ug = ug.apply(HColors.BLUE);</span>
-<span class="nc" id="L184">		final ULine line = new ULine(pt2.getX() - pt1.getX(), pt2.getY() - pt1.getY());</span>
-<span class="nc" id="L185">		ug.apply(UTranslate.point(pt1)).draw(line);</span>
-<span class="nc" id="L186">	}</span>
+<span class="nc" id="L184">		ug = ug.apply(HColors.BLUE);</span>
+<span class="nc" id="L185">		final ULine line = new ULine(pt2.getX() - pt1.getX(), pt2.getY() - pt1.getY());</span>
+<span class="nc" id="L186">		ug.apply(UTranslate.point(pt1)).draw(line);</span>
+<span class="nc" id="L187">	}</span>
 
 	private XPoint2D getCenterOf(StringBounder stringBounder, int c, int l) {
-<span class="nc" id="L189">		double x = getWidthOfCol(stringBounder, c) / 2 + margin / 2;</span>
-<span class="nc bnc" id="L190" title="All 2 branches missed.">		for (int i = 0; i &lt; c; i++) {</span>
-<span class="nc" id="L191">			final double widthOfCol = getWidthOfCol(stringBounder, i);</span>
-<span class="nc" id="L192">			x += widthOfCol + margin;</span>
+<span class="nc" id="L190">		double x = getWidthOfCol(stringBounder, c) / 2 + margin / 2;</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">		for (int i = 0; i &lt; c; i++) {</span>
+<span class="nc" id="L192">			final double widthOfCol = getWidthOfCol(stringBounder, i);</span>
+<span class="nc" id="L193">			x += widthOfCol + margin;</span>
 		}
-<span class="nc" id="L194">		double y = getHeightOfLine(stringBounder, l) / 2 + margin / 2;</span>
-<span class="nc bnc" id="L195" title="All 2 branches missed.">		for (int i = 0; i &lt; l; i++) {</span>
-<span class="nc" id="L196">			final double heightOfLine = getHeightOfLine(stringBounder, i);</span>
-<span class="nc" id="L197">			y += heightOfLine + margin;</span>
+<span class="nc" id="L195">		double y = getHeightOfLine(stringBounder, l) / 2 + margin / 2;</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		for (int i = 0; i &lt; l; i++) {</span>
+<span class="nc" id="L197">			final double heightOfLine = getHeightOfLine(stringBounder, i);</span>
+<span class="nc" id="L198">			y += heightOfLine + margin;</span>
 		}
-<span class="nc" id="L199">		return new XPoint2D(x, y);</span>
+<span class="nc" id="L200">		return new XPoint2D(x, y);</span>
 	}
 
 	private int[] getCoord(Cell someCell) {
-<span class="nc bnc" id="L203" title="All 2 branches missed.">		for (int l = 0; l &lt; lines; l++) {</span>
-<span class="nc bnc" id="L204" title="All 2 branches missed.">			for (int c = 0; c &lt; cols; c++) {</span>
-<span class="nc" id="L205">				final Placeable cell = data[l][c];</span>
-<span class="nc bnc" id="L206" title="All 2 branches missed.">				if (cell == someCell.getData()) {</span>
-<span class="nc" id="L207">					return new int[] { c, l };</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		for (int l = 0; l &lt; lines; l++) {</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">			for (int c = 0; c &lt; cols; c++) {</span>
+<span class="nc" id="L206">				final Placeable cell = data[l][c];</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">				if (cell == someCell.getData()) {</span>
+<span class="nc" id="L208">					return new int[] { c, l };</span>
 				}
 			}
 		}
-<span class="nc" id="L211">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L212">		throw new IllegalArgumentException();</span>
 	}
 
 	private void printMe() {
-<span class="nc bnc" id="L215" title="All 2 branches missed.">		for (int l = 0; l &lt; lines; l++) {</span>
-<span class="nc bnc" id="L216" title="All 2 branches missed.">			for (int c = 0; c &lt; cols; c++) {</span>
-<span class="nc" id="L217">				final Placeable cell = data[l][c];</span>
-<span class="nc" id="L218">				System.err.print(cell);</span>
-<span class="nc" id="L219">				System.err.print(&quot;  ;  &quot;);</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		for (int l = 0; l &lt; lines; l++) {</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">			for (int c = 0; c &lt; cols; c++) {</span>
+<span class="nc" id="L218">				final Placeable cell = data[l][c];</span>
+<span class="nc" id="L219">				System.err.print(cell);</span>
+<span class="nc" id="L220">				System.err.print(&quot;  ;  &quot;);</span>
 			}
-<span class="nc" id="L221">			System.err.println();</span>
+<span class="nc" id="L222">			System.err.println();</span>
 		}
-<span class="nc" id="L223">	}</span>
+<span class="nc" id="L224">	}</span>
 
 	// void addEdgesInternal(List&lt;GridEdge&gt; edges) {
 	// this.edges.addAll(edges);

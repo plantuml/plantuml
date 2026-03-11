@@ -68,16 +68,17 @@ public class Bullet extends AbstractAtom implements Atom {
 
 <span class="fc" id="L69">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (order == 0)</span>
-<span class="fc" id="L73">			return new XDimension2D(12, 5);</span>
-<span class="nc" id="L74">		return new XDimension2D(8 + 8 * order, 3);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (order == 0)</span>
+<span class="fc" id="L74">			return new XDimension2D(12, 5);</span>
+<span class="nc" id="L75">		return new XDimension2D(8 + 8 * order, 3);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (order == 0)</span>
-<span class="fc" id="L79">			return -5;</span>
-<span class="nc" id="L80">		return -7;</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (order == 0)</span>
+<span class="fc" id="L80">			return -5;</span>
+<span class="nc" id="L81">		return -7;</span>
 	}
 
 }

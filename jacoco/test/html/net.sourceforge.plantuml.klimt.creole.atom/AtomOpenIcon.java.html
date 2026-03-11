@@ -64,23 +64,24 @@ public class AtomOpenIcon extends AbstractAtom implements Atom {
 <span class="nc" id="L64">		return TextBlockUtils.withMargin(openIcon.asTextBlock(color, factor), 1, 0);</span>
 	}
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L68">		return asTextBlock().calculateDimension(stringBounder);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L69">		return asTextBlock().calculateDimension(stringBounder);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L72">		return -3 * factor;</span>
+<span class="nc" id="L73">		return -3 * factor;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L77">			ug.startUrl(url);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L78">			ug.startUrl(url);</span>
 
-<span class="nc" id="L79">		asTextBlock().drawU(ug);</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L81">			ug.closeUrl();</span>
+<span class="nc" id="L80">		asTextBlock().drawU(ug);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L82">			ug.closeUrl();</span>
 
-<span class="nc" id="L83">	}</span>
+<span class="nc" id="L84">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

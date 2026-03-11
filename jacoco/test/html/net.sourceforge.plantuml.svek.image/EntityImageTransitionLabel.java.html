@@ -75,35 +75,36 @@ public class EntityImageTransitionLabel extends AbstractEntityImage {
 		}
 <span class="nc" id="L76">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
 		try {
 			// Return dimensions based on the text content plus margins
-<span class="nc" id="L81">			XDimension2D textDim = textBlock.calculateDimension(stringBounder);</span>
-<span class="nc" id="L82">			return textDim.delta(MARGIN * 2, MARGIN * 2);</span>
-<span class="nc" id="L83">		} catch (Exception e) {</span>
+<span class="nc" id="L82">			XDimension2D textDim = textBlock.calculateDimension(stringBounder);</span>
+<span class="nc" id="L83">			return textDim.delta(MARGIN * 2, MARGIN * 2);</span>
+<span class="nc" id="L84">		} catch (Exception e) {</span>
 			// Fallback to safe default dimensions if calculation fails
-<span class="nc" id="L85">			return new XDimension2D(20, 20);</span>
+<span class="nc" id="L86">			return new XDimension2D(20, 20);</span>
 		}
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc" id="L90">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L91">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
-<span class="nc" id="L92">		final XDimension2D dimText = textBlock.calculateDimension(stringBounder);</span>
+<span class="nc" id="L91">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L92">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="nc" id="L93">		final XDimension2D dimText = textBlock.calculateDimension(stringBounder);</span>
 
 		// Draw a rounded rectangle background for the label
-<span class="nc" id="L95">		final URectangle rect = URectangle.build(dimTotal.getWidth(), dimTotal.getHeight()).rounded(5);</span>
-<span class="nc" id="L96">		ug.draw(rect);</span>
+<span class="nc" id="L96">		final URectangle rect = URectangle.build(dimTotal.getWidth(), dimTotal.getHeight()).rounded(5);</span>
+<span class="nc" id="L97">		ug.draw(rect);</span>
 
 		// Center the text within the rectangle
-<span class="nc" id="L99">		final double xText = (dimTotal.getWidth() - dimText.getWidth()) / 2;</span>
-<span class="nc" id="L100">		final double yText = (dimTotal.getHeight() - dimText.getHeight()) / 2;</span>
-<span class="nc" id="L101">		textBlock.drawU(ug.apply(new UTranslate(xText, yText)));</span>
-<span class="nc" id="L102">	}</span>
+<span class="nc" id="L100">		final double xText = (dimTotal.getWidth() - dimText.getWidth()) / 2;</span>
+<span class="nc" id="L101">		final double yText = (dimTotal.getHeight() - dimText.getHeight()) / 2;</span>
+<span class="nc" id="L102">		textBlock.drawU(ug.apply(new UTranslate(xText, yText)));</span>
+<span class="nc" id="L103">	}</span>
 
 	public ShapeType getShapeType() {
 		// Use RECTANGLE for a proper node shape
-<span class="nc" id="L106">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L107">		return ShapeType.RECTANGLE;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

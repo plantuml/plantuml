@@ -76,38 +76,39 @@ public class EntityImageArcCircle extends AbstractEntityImage {
 
 <span class="nc" id="L77">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L80">		final XDimension2D dimName = name.calculateDimension(stringBounder);</span>
-<span class="nc" id="L81">		final XDimension2D dimStereo = getStereoDimension(stringBounder);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L81">		final XDimension2D dimName = name.calculateDimension(stringBounder);</span>
+<span class="nc" id="L82">		final XDimension2D dimStereo = getStereoDimension(stringBounder);</span>
 		// final Dimension2D circle = new Dimension2DDouble(SIZE, SIZE);
-<span class="nc" id="L83">		return dimStereo.mergeTB(dimName);</span>
+<span class="nc" id="L84">		return dimStereo.mergeTB(dimName);</span>
 	}
 
 	private XDimension2D getStereoDimension(StringBounder stringBounder) {
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (stereo == null) {</span>
-<span class="nc" id="L88">			return new XDimension2D(0, 0);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (stereo == null) {</span>
+<span class="nc" id="L89">			return new XDimension2D(0, 0);</span>
 		}
-<span class="nc" id="L90">		return stereo.calculateDimension(stringBounder);</span>
+<span class="nc" id="L91">		return stereo.calculateDimension(stringBounder);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc" id="L94">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L95">		final XDimension2D dimStereo = getStereoDimension(stringBounder);</span>
-<span class="nc" id="L96">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
-<span class="nc" id="L97">		final XDimension2D dimName = name.calculateDimension(stringBounder);</span>
+<span class="nc" id="L95">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L96">		final XDimension2D dimStereo = getStereoDimension(stringBounder);</span>
+<span class="nc" id="L97">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="nc" id="L98">		final XDimension2D dimName = name.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L99">		final double nameX = (dimTotal.getWidth() - dimName.getWidth()) / 2;</span>
-<span class="nc" id="L100">		final double nameY = dimStereo.getHeight();</span>
-<span class="nc" id="L101">		name.drawU(ug.apply(new UTranslate(nameX, nameY)));</span>
+<span class="nc" id="L100">		final double nameX = (dimTotal.getWidth() - dimName.getWidth()) / 2;</span>
+<span class="nc" id="L101">		final double nameY = dimStereo.getHeight();</span>
+<span class="nc" id="L102">		name.drawU(ug.apply(new UTranslate(nameX, nameY)));</span>
 
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (stereo != null) {</span>
-<span class="nc" id="L104">			final double stereoX = (dimTotal.getWidth() - dimStereo.getWidth()) / 2;</span>
-<span class="nc" id="L105">			stereo.drawU(ug.apply(UTranslate.dx(stereoX)));</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (stereo != null) {</span>
+<span class="nc" id="L105">			final double stereoX = (dimTotal.getWidth() - dimStereo.getWidth()) / 2;</span>
+<span class="nc" id="L106">			stereo.drawU(ug.apply(UTranslate.dx(stereoX)));</span>
 		}
-<span class="nc" id="L107">	}</span>
+<span class="nc" id="L108">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L110">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L111">		return ShapeType.RECTANGLE;</span>
 	}
 
 }

@@ -45,49 +45,52 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 
+import net.sourceforge.plantuml.annotation.Fast;
+
 public class BrailleDrawer implements TextBlock {
 
 	private final BrailleGrid grid;
-<span class="nc" id="L51">	private final double step = 9;</span>
-<span class="nc" id="L52">	private final double spotSize = 5;</span>
+<span class="nc" id="L53">	private final double step = 9;</span>
+<span class="nc" id="L54">	private final double spotSize = 5;</span>
 
-<span class="nc" id="L54">	public BrailleDrawer(BrailleGrid grid) {</span>
-<span class="nc" id="L55">		this.grid = grid;</span>
-<span class="nc" id="L56">	}</span>
+<span class="nc" id="L56">	public BrailleDrawer(BrailleGrid grid) {</span>
+<span class="nc" id="L57">		this.grid = grid;</span>
+<span class="nc" id="L58">	}</span>
 
+	@Fast
 	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L60">		final double width = (grid.getMaxX() - grid.getMinX()) * step + spotSize + 2;</span>
-<span class="nc" id="L61">		final double height = (grid.getMaxY() - grid.getMinY()) * step + spotSize + 2;</span>
-<span class="nc" id="L62">		return new XDimension2D(width, height);</span>
+<span class="nc" id="L63">		final double width = (grid.getMaxX() - grid.getMinX()) * step + spotSize + 2;</span>
+<span class="nc" id="L64">		final double height = (grid.getMaxY() - grid.getMinY()) * step + spotSize + 2;</span>
+<span class="nc" id="L65">		return new XDimension2D(width, height);</span>
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L67">		ug = ug.apply(HColorSet.instance().getColorOrWhite(&quot;#F0F0F0&quot;));</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		for (int x = grid.getMinX(); x &lt;= grid.getMaxX(); x++) {</span>
-<span class="nc" id="L69">			ug.apply(UTranslate.dx(x * step + spotSize + 1))</span>
-<span class="nc" id="L70">					.draw(ULine.vline((grid.getMaxY() - grid.getMinY()) * step));</span>
+<span class="nc" id="L70">		ug = ug.apply(HColorSet.instance().getColorOrWhite(&quot;#F0F0F0&quot;));</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		for (int x = grid.getMinX(); x &lt;= grid.getMaxX(); x++) {</span>
+<span class="nc" id="L72">			ug.apply(UTranslate.dx(x * step + spotSize + 1))</span>
+<span class="nc" id="L73">					.draw(ULine.vline((grid.getMaxY() - grid.getMinY()) * step));</span>
 		}
-<span class="nc bnc" id="L72" title="All 2 branches missed.">		for (int y = grid.getMinY(); y &lt;= grid.getMaxY(); y++) {</span>
-<span class="nc" id="L73">			ug.apply(UTranslate.dy(y * step + spotSize + 1))</span>
-<span class="nc" id="L74">					.draw(ULine.hline((grid.getMaxX() - grid.getMinX()) * step));</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		for (int y = grid.getMinY(); y &lt;= grid.getMaxY(); y++) {</span>
+<span class="nc" id="L76">			ug.apply(UTranslate.dy(y * step + spotSize + 1))</span>
+<span class="nc" id="L77">					.draw(ULine.hline((grid.getMaxX() - grid.getMinX()) * step));</span>
 		}
-<span class="nc" id="L76">		ug = ug.apply(HColors.BLACK).apply(HColors.BLACK.bg());</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (int x = grid.getMinX(); x &lt;= grid.getMaxX(); x++) {</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">			for (int y = grid.getMinY(); y &lt;= grid.getMaxY(); y++) {</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">				if (grid.getState(x, y)) {</span>
-<span class="nc" id="L80">					drawCircle(ug, x, y);</span>
+<span class="nc" id="L79">		ug = ug.apply(HColors.BLACK).apply(HColors.BLACK.bg());</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		for (int x = grid.getMinX(); x &lt;= grid.getMaxX(); x++) {</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">			for (int y = grid.getMinY(); y &lt;= grid.getMaxY(); y++) {</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">				if (grid.getState(x, y)) {</span>
+<span class="nc" id="L83">					drawCircle(ug, x, y);</span>
 				}
 			}
 		}
-<span class="nc" id="L84">	}</span>
+<span class="nc" id="L87">	}</span>
 
 	private void drawCircle(UGraphic ug, int x, int y) {
-<span class="nc" id="L87">		final double cx = x * step;</span>
-<span class="nc" id="L88">		final double cy = y * step;</span>
-<span class="nc" id="L89">		ug.apply(new UTranslate(cx, cy)).draw(UEllipse.build(spotSize, spotSize));</span>
-<span class="nc" id="L90">	}</span>
+<span class="nc" id="L90">		final double cx = x * step;</span>
+<span class="nc" id="L91">		final double cy = y * step;</span>
+<span class="nc" id="L92">		ug.apply(new UTranslate(cx, cy)).draw(UEllipse.build(spotSize, spotSize));</span>
+<span class="nc" id="L93">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

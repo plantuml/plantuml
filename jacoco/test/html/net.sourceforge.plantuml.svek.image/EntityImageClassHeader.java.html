@@ -250,20 +250,21 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="nc" id="L250">		return '?';</span>
 	}
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L254">		return headerLayout.getDimension(stringBounder);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="fc" id="L255">		return headerLayout.getDimension(stringBounder);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc" id="L258">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L259">		throw new UnsupportedOperationException();</span>
 	}
 
 	public void drawU(UGraphic ug, double width, double height) {
-<span class="fc" id="L262">		headerLayout.drawU(ug, width, height);</span>
-<span class="fc" id="L263">	}</span>
+<span class="fc" id="L263">		headerLayout.drawU(ug, width, height);</span>
+<span class="fc" id="L264">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L266">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L267">		return ShapeType.RECTANGLE;</span>
 	}
 
 }

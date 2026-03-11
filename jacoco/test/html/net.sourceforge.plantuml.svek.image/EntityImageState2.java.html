@@ -89,20 +89,21 @@ public class EntityImageState2 extends AbstractEntityImage {
 <span class="nc" id="L89">		return ShapeType.RECTANGLE;</span>
 	}
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L93">		return asSmall.calculateDimension(stringBounder);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L94">		return asSmall.calculateDimension(stringBounder);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L98">			ug.startUrl(url);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L99">			ug.startUrl(url);</span>
 
-<span class="nc" id="L100">		asSmall.drawU(ug);</span>
+<span class="nc" id="L101">		asSmall.drawU(ug);</span>
 
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L103">			ug.closeUrl();</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L104">			ug.closeUrl();</span>
 
-<span class="nc" id="L105">	}</span>
+<span class="nc" id="L106">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

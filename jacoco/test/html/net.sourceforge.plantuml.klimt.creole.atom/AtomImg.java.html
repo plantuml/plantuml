@@ -218,25 +218,26 @@ public class AtomImg extends AbstractAtom implements Atom {
 
 	// End
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L222">		return new XDimension2D(image.getWidth() * scale, image.getHeight() * scale);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L223">		return new XDimension2D(image.getWidth() * scale, image.getHeight() * scale);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L226">		return 0;</span>
+<span class="nc" id="L227">		return 0;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L230" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L231">			ug.startUrl(url);</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L232">			ug.startUrl(url);</span>
 
-<span class="nc" id="L233">		ug.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)).withRawFileName(rawFileName)</span>
-<span class="nc" id="L234">				.scale(scale));</span>
+<span class="nc" id="L234">		ug.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)).withRawFileName(rawFileName)</span>
+<span class="nc" id="L235">				.scale(scale));</span>
 
-<span class="nc bnc" id="L236" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L237">			ug.closeUrl();</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L238">			ug.closeUrl();</span>
 
-<span class="nc" id="L239">	}</span>
+<span class="nc" id="L240">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

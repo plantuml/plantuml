@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class SingleLine implements TextBlock, Line {
+public class SingleLine extends TextBlockMemoized implements Line {
 
 <span class="fc" id="L50">	private final List&lt;TextBlock&gt; blocs = new ArrayList&lt;&gt;();</span>
 	private final HorizontalAlignment horizontalAlignment;
@@ -63,15 +63,16 @@ public class SingleLine implements TextBlock, Line {
 <span class="fc" id="L63">		this.horizontalAlignment = horizontalAlignment;</span>
 <span class="fc" id="L64">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L67">		double width = 0;</span>
-<span class="fc" id="L68">		double height = 0;</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">		for (TextBlock b : blocs) {</span>
-<span class="fc" id="L70">			final XDimension2D size2D = b.calculateDimension(stringBounder);</span>
-<span class="fc" id="L71">			width += size2D.getWidth();</span>
-<span class="fc" id="L72">			height = Math.max(height, size2D.getHeight());</span>
-<span class="fc" id="L73">		}</span>
-<span class="fc" id="L74">		return new XDimension2D(width, height);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="fc" id="L68">		double width = 0;</span>
+<span class="fc" id="L69">		double height = 0;</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		for (TextBlock b : blocs) {</span>
+<span class="fc" id="L71">			final XDimension2D size2D = b.calculateDimension(stringBounder);</span>
+<span class="fc" id="L72">			width += size2D.getWidth();</span>
+<span class="fc" id="L73">			height = Math.max(height, size2D.getHeight());</span>
+<span class="fc" id="L74">		}</span>
+<span class="fc" id="L75">		return new XDimension2D(width, height);</span>
 	}
 
 	// private double maxDeltaY(Graphics2D g2d) {
@@ -92,37 +93,37 @@ public class SingleLine implements TextBlock, Line {
 	// }
 
 	private double maxDeltaY(UGraphic ug) {
-<span class="fc" id="L95">		double result = 0;</span>
-<span class="fc" id="L96">		final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">		for (TextBlock b : blocs) {</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">			if (b instanceof TileText == false)</span>
-<span class="nc" id="L99">				continue;</span>
+<span class="fc" id="L96">		double result = 0;</span>
+<span class="fc" id="L97">		final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		for (TextBlock b : blocs) {</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">			if (b instanceof TileText == false)</span>
+<span class="nc" id="L100">				continue;</span>
 
-<span class="fc" id="L101">			final XDimension2D dimBloc = b.calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L102">			final double deltaY = dim.getHeight() - dimBloc.getHeight() + ((TileText) b).getFontSize2D();</span>
-<span class="fc" id="L103">			result = Math.max(result, deltaY);</span>
-<span class="fc" id="L104">		}</span>
-<span class="fc" id="L105">		return result;</span>
+<span class="fc" id="L102">			final XDimension2D dimBloc = b.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L103">			final double deltaY = dim.getHeight() - dimBloc.getHeight() + ((TileText) b).getFontSize2D();</span>
+<span class="fc" id="L104">			result = Math.max(result, deltaY);</span>
+<span class="fc" id="L105">		}</span>
+<span class="fc" id="L106">		return result;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L109">		final double deltaY = maxDeltaY(ug);</span>
-<span class="fc" id="L110">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L111">		final XDimension2D dim = calculateDimension(stringBounder);</span>
-<span class="fc" id="L112">		double x = 0;</span>
-<span class="fc bfc" id="L113" title="All 2 branches covered.">		for (TextBlock b : blocs) {</span>
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">			if (b instanceof TileText) {</span>
-<span class="fc" id="L115">				b.drawU(ug.apply(new UTranslate(x, deltaY)));</span>
+<span class="fc" id="L110">		final double deltaY = maxDeltaY(ug);</span>
+<span class="fc" id="L111">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L112">		final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="fc" id="L113">		double x = 0;</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		for (TextBlock b : blocs) {</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">			if (b instanceof TileText) {</span>
+<span class="fc" id="L116">				b.drawU(ug.apply(new UTranslate(x, deltaY)));</span>
 			} else {
-<span class="nc" id="L117">				final double dy = dim.getHeight() - b.calculateDimension(stringBounder).getHeight();</span>
-<span class="nc" id="L118">				b.drawU(ug.apply(new UTranslate(x, dy)));</span>
+<span class="nc" id="L118">				final double dy = dim.getHeight() - b.calculateDimension(stringBounder).getHeight();</span>
+<span class="nc" id="L119">				b.drawU(ug.apply(new UTranslate(x, dy)));</span>
 			}
-<span class="fc" id="L120">			x += b.calculateDimension(stringBounder).getWidth();</span>
-<span class="fc" id="L121">		}</span>
-<span class="fc" id="L122">	}</span>
+<span class="fc" id="L121">			x += b.calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L122">		}</span>
+<span class="fc" id="L123">	}</span>
 
 	public HorizontalAlignment getHorizontalAlignment() {
-<span class="nc" id="L125">		return horizontalAlignment;</span>
+<span class="nc" id="L126">		return horizontalAlignment;</span>
 	}
 
 }

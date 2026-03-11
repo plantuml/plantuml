@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
+import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -45,33 +46,35 @@ public class TextBlockSprited implements TextBlock {
 	private final TextBlock parent;
 	private final TextBlock sprite;
 
-<span class="nc" id="L48">	public TextBlockSprited(TextBlock sprite, TextBlock parent) {</span>
-<span class="nc" id="L49">		this.sprite = sprite;</span>
-<span class="nc" id="L50">		this.parent = parent;</span>
-<span class="nc" id="L51">	}</span>
+<span class="nc" id="L49">	public TextBlockSprited(TextBlock sprite, TextBlock parent) {</span>
+<span class="nc" id="L50">		this.sprite = sprite;</span>
+<span class="nc" id="L51">		this.parent = parent;</span>
+<span class="nc" id="L52">	}</span>
 
+	@Fast
+	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L54">		final double widthCircledCharacter = getCircledCharacterWithAndMargin(stringBounder);</span>
-<span class="nc" id="L55">		final double heightCircledCharacter = sprite.calculateDimension(stringBounder).getHeight();</span>
+<span class="nc" id="L57">		final double widthCircledCharacter = getCircledCharacterWithAndMargin(stringBounder);</span>
+<span class="nc" id="L58">		final double heightCircledCharacter = sprite.calculateDimension(stringBounder).getHeight();</span>
 
-<span class="nc" id="L57">		final XDimension2D dim = parent.calculateDimension(stringBounder);</span>
-<span class="nc" id="L58">		return new XDimension2D(dim.getWidth() + widthCircledCharacter,</span>
-<span class="nc" id="L59">				Math.max(heightCircledCharacter, dim.getHeight()));</span>
+<span class="nc" id="L60">		final XDimension2D dim = parent.calculateDimension(stringBounder);</span>
+<span class="nc" id="L61">		return new XDimension2D(dim.getWidth() + widthCircledCharacter,</span>
+<span class="nc" id="L62">				Math.max(heightCircledCharacter, dim.getHeight()));</span>
 	}
 
 	private double getCircledCharacterWithAndMargin(StringBounder stringBounder) {
-<span class="nc" id="L63">		return sprite.calculateDimension(stringBounder).getWidth() + 6.0;</span>
+<span class="nc" id="L66">		return sprite.calculateDimension(stringBounder).getWidth() + 6.0;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L67">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L70">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc" id="L69">		sprite.drawU(ug);</span>
+<span class="nc" id="L72">		sprite.drawU(ug);</span>
 
-<span class="nc" id="L71">		final double widthCircledCharacter = getCircledCharacterWithAndMargin(stringBounder);</span>
+<span class="nc" id="L74">		final double widthCircledCharacter = getCircledCharacterWithAndMargin(stringBounder);</span>
 
-<span class="nc" id="L73">		parent.drawU(ug.apply(UTranslate.dx(widthCircledCharacter)));</span>
-<span class="nc" id="L74">	}</span>
+<span class="nc" id="L76">		parent.drawU(ug.apply(UTranslate.dx(widthCircledCharacter)));</span>
+<span class="nc" id="L77">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -83,36 +83,37 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 <span class="nc" id="L83">		this.desc = Display.create(historyText).create(fontConfiguration, HorizontalAlignment.CENTER, getSkinParam());</span>
 <span class="nc" id="L84">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L87">		return new XDimension2D(SIZE, SIZE);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L88">		return new XDimension2D(SIZE, SIZE);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc" id="L91">		final UEllipse circle = UEllipse.build(SIZE, SIZE);</span>
+<span class="nc" id="L92">		final UEllipse circle = UEllipse.build(SIZE, SIZE);</span>
 
-<span class="nc" id="L93">		final Style style = getStyle();</span>
-<span class="nc" id="L94">		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L95">		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L96">		final double shadow = style.getShadowing();</span>
-<span class="nc" id="L97">		final UStroke stroke = style.getStroke();</span>
+<span class="nc" id="L94">		final Style style = getStyle();</span>
+<span class="nc" id="L95">		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L96">		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L97">		final double shadow = style.getShadowing();</span>
+<span class="nc" id="L98">		final UStroke stroke = style.getStroke();</span>
 
-<span class="nc" id="L99">		circle.setDeltaShadow(shadow);</span>
-<span class="nc" id="L100">		ug = ug.apply(stroke);</span>
-<span class="nc" id="L101">		ug = ug.apply(backgroundColor.bg()).apply(borderColor);</span>
-<span class="nc" id="L102">		ug.draw(circle);</span>
+<span class="nc" id="L100">		circle.setDeltaShadow(shadow);</span>
+<span class="nc" id="L101">		ug = ug.apply(stroke);</span>
+<span class="nc" id="L102">		ug = ug.apply(backgroundColor.bg()).apply(borderColor);</span>
+<span class="nc" id="L103">		ug.draw(circle);</span>
 		// ug = ug.apply(UStroke.simple());
 
-<span class="nc" id="L105">		final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L106">		final double widthDesc = dimDesc.getWidth();</span>
-<span class="nc" id="L107">		final double heightDesc = dimDesc.getHeight();</span>
+<span class="nc" id="L106">		final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L107">		final double widthDesc = dimDesc.getWidth();</span>
+<span class="nc" id="L108">		final double heightDesc = dimDesc.getHeight();</span>
 
-<span class="nc" id="L109">		final double x = (SIZE - widthDesc) / 2;</span>
-<span class="nc" id="L110">		final double y = (SIZE - heightDesc) / 2;</span>
-<span class="nc" id="L111">		desc.drawU(ug.apply(new UTranslate(x, y)));</span>
-<span class="nc" id="L112">	}</span>
+<span class="nc" id="L110">		final double x = (SIZE - widthDesc) / 2;</span>
+<span class="nc" id="L111">		final double y = (SIZE - heightDesc) / 2;</span>
+<span class="nc" id="L112">		desc.drawU(ug.apply(new UTranslate(x, y)));</span>
+<span class="nc" id="L113">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L115">		return ShapeType.CIRCLE;</span>
+<span class="nc" id="L116">		return ShapeType.CIRCLE;</span>
 	}
 
 }

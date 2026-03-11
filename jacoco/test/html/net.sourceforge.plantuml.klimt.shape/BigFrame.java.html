@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
-public class BigFrame implements TextBlock {
+public class BigFrame extends TextBlockMemoized {
 
 	private final TextBlock title;
 	private final TextBlock original;
@@ -133,7 +133,7 @@ public class BigFrame implements TextBlock {
 <span class="nc" id="L133">	}</span>
 
 	@Override
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
 <span class="nc" id="L137">		return new XDimension2D(computeWidth(stringBounder), computeHeight(stringBounder));</span>
 	}
 

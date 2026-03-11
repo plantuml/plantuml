@@ -55,15 +55,16 @@ public class EntityImageGroup extends AbstractEntityImage {
 		// HorizontalAlignment.CENTER);
 <span class="nc" id="L56">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L59">		return new XDimension2D(30, 30);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L60">		return new XDimension2D(30, 30);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc" id="L63">	}</span>
+<span class="nc" id="L64">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L66">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L67">		return ShapeType.RECTANGLE;</span>
 	}
 
 }

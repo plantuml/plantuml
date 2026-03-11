@@ -49,6 +49,8 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
+import net.sourceforge.plantuml.annotation.Fast;
+
 public abstract class BodyEnhancedAbstract implements TextBlock {
 
 	protected final HorizontalAlignment align;
@@ -56,43 +58,44 @@ public abstract class BodyEnhancedAbstract implements TextBlock {
 	protected TextBlock area;
 	private final Style style;
 
-<span class="fc" id="L59">	BodyEnhancedAbstract(HorizontalAlignment align, FontConfiguration titleConfig, Style style) {</span>
-<span class="fc" id="L60">		this.align = align;</span>
-<span class="fc" id="L61">		this.titleConfig = titleConfig;</span>
-<span class="fc" id="L62">		this.style = style;</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L61">	BodyEnhancedAbstract(HorizontalAlignment align, FontConfiguration titleConfig, Style style) {</span>
+<span class="fc" id="L62">		this.align = align;</span>
+<span class="fc" id="L63">		this.titleConfig = titleConfig;</span>
+<span class="fc" id="L64">		this.style = style;</span>
+<span class="fc" id="L65">	}</span>
 
 	public static boolean isBlockSeparator(CharSequence cs) {
-<span class="fc" id="L66">		final String s = cs.toString();</span>
-<span class="pc bpc" id="L67" title="3 of 4 branches missed.">		if (s.startsWith(&quot;--&quot;) &amp;&amp; s.endsWith(&quot;--&quot;))</span>
-<span class="nc" id="L68">			return true;</span>
+<span class="fc" id="L68">		final String s = cs.toString();</span>
+<span class="pc bpc" id="L69" title="3 of 4 branches missed.">		if (s.startsWith(&quot;--&quot;) &amp;&amp; s.endsWith(&quot;--&quot;))</span>
+<span class="nc" id="L70">			return true;</span>
 
-<span class="fc bfc" id="L70" title="All 4 branches covered.">		if (s.startsWith(&quot;==&quot;) &amp;&amp; s.endsWith(&quot;==&quot;))</span>
-<span class="fc" id="L71">			return true;</span>
+<span class="fc bfc" id="L72" title="All 4 branches covered.">		if (s.startsWith(&quot;==&quot;) &amp;&amp; s.endsWith(&quot;==&quot;))</span>
+<span class="fc" id="L73">			return true;</span>
 
-<span class="pc bpc" id="L73" title="5 of 6 branches missed.">		if (s.startsWith(&quot;..&quot;) &amp;&amp; s.endsWith(&quot;..&quot;) &amp;&amp; s.equals(&quot;...&quot;) == false)</span>
-<span class="nc" id="L74">			return true;</span>
+<span class="pc bpc" id="L75" title="5 of 6 branches missed.">		if (s.startsWith(&quot;..&quot;) &amp;&amp; s.endsWith(&quot;..&quot;) &amp;&amp; s.equals(&quot;...&quot;) == false)</span>
+<span class="nc" id="L76">			return true;</span>
 
-<span class="pc bpc" id="L76" title="3 of 4 branches missed.">		if (s.startsWith(&quot;__&quot;) &amp;&amp; s.endsWith(&quot;__&quot;))</span>
-<span class="nc" id="L77">			return true;</span>
+<span class="pc bpc" id="L78" title="3 of 4 branches missed.">		if (s.startsWith(&quot;__&quot;) &amp;&amp; s.endsWith(&quot;__&quot;))</span>
+<span class="nc" id="L79">			return true;</span>
 
-<span class="fc" id="L79">		return false;</span>
+<span class="fc" id="L81">		return false;</span>
 	}
 
+	@Fast
 	public final XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L83">		return getArea(stringBounder).calculateDimension(stringBounder);</span>
+<span class="fc" id="L86">		return getArea(stringBounder).calculateDimension(stringBounder);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="fc" id="L87">		getArea(ug.getStringBounder()).drawU(ug);</span>
-<span class="fc" id="L88">	}</span>
+<span class="fc" id="L90">		getArea(ug.getStringBounder()).drawU(ug);</span>
+<span class="fc" id="L91">	}</span>
 
 	final protected TextBlock getTitle(String s, ISkinSimple spriteContainer) {
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (s.length() &lt;= 4)</span>
-<span class="nc" id="L92">			return null;</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (s.length() &lt;= 4)</span>
+<span class="nc" id="L95">			return null;</span>
 
-<span class="fc" id="L94">		s = StringUtils.trin(s.substring(2, s.length() - 2));</span>
-<span class="fc" id="L95">		return Display.getWithNewlines(spriteContainer.getPragma(), s).create(titleConfig, HorizontalAlignment.LEFT,</span>
+<span class="fc" id="L97">		s = StringUtils.trin(s.substring(2, s.length() - 2));</span>
+<span class="fc" id="L98">		return Display.getWithNewlines(spriteContainer.getPragma(), s).create(titleConfig, HorizontalAlignment.LEFT,</span>
 				spriteContainer);
 	}
 
@@ -101,26 +104,26 @@ public abstract class BodyEnhancedAbstract implements TextBlock {
 	abstract protected double getMarginX();
 
 	final protected TextBlock decorate(TextBlock block, char separator, TextBlock title, StringBounder stringBounder) {
-<span class="fc" id="L104">		final double marginX = getMarginX();</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (separator == 0)</span>
-<span class="fc" id="L106">			return TextBlockUtils.withMargin(block, marginX, 0);</span>
+<span class="fc" id="L107">		final double marginX = getMarginX();</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (separator == 0)</span>
+<span class="fc" id="L109">			return TextBlockUtils.withMargin(block, marginX, 0);</span>
 
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (title == null)</span>
-<span class="nc" id="L109">			return new TextBlockLineBefore(getDefaultThickness(), TextBlockUtils.withMargin(block, marginX, 4),</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (title == null)</span>
+<span class="nc" id="L112">			return new TextBlockLineBefore(getDefaultThickness(), TextBlockUtils.withMargin(block, marginX, 4),</span>
 					separator);
 
-<span class="fc" id="L112">		final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
-<span class="fc" id="L113">		final TextBlock raw = new TextBlockLineBefore(getDefaultThickness(),</span>
-<span class="fc" id="L114">				TextBlockUtils.withMargin(block, marginX, 6, dimTitle.getHeight() / 2, 4), separator, title);</span>
-<span class="fc" id="L115">		return TextBlockUtils.withMargin(raw, 0, 0, dimTitle.getHeight() / 2, 0);</span>
+<span class="fc" id="L115">		final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
+<span class="fc" id="L116">		final TextBlock raw = new TextBlockLineBefore(getDefaultThickness(),</span>
+<span class="fc" id="L117">				TextBlockUtils.withMargin(block, marginX, 6, dimTitle.getHeight() / 2, 4), separator, title);</span>
+<span class="fc" id="L118">		return TextBlockUtils.withMargin(raw, 0, 0, dimTitle.getHeight() / 2, 0);</span>
 	}
 
 	final protected double getDefaultThickness() {
-<span class="fc" id="L119">		return style.value(PName.LineThickness).asDouble();</span>
+<span class="fc" id="L122">		return style.value(PName.LineThickness).asDouble();</span>
 	}
 
 	public final Style getStyle() {
-<span class="fc" id="L123">		return style;</span>
+<span class="fc" id="L126">		return style;</span>
 	}
 
 }

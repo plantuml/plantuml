@@ -61,23 +61,24 @@ public class AtomSprite extends AbstractAtom implements Atom {
 <span class="fc" id="L61">		this.backColor = backColor;</span>
 <span class="fc" id="L62">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L65">		return sprite.asTextBlock(fontColor, forcedColor, scale, null).calculateDimension(stringBounder);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="fc" id="L66">		return sprite.asTextBlock(fontColor, forcedColor, scale, null).calculateDimension(stringBounder);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="fc" id="L69">		return 0;</span>
+<span class="fc" id="L70">		return 0;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L74">			ug.startUrl(url);</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L75">			ug.startUrl(url);</span>
 
-<span class="fc" id="L76">		sprite.asTextBlock(fontColor, forcedColor, scale, backColor).drawU(ug);</span>
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L78">			ug.closeUrl();</span>
+<span class="fc" id="L77">		sprite.asTextBlock(fontColor, forcedColor, scale, backColor).drawU(ug);</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L79">			ug.closeUrl();</span>
 
-<span class="fc" id="L80">	}</span>
+<span class="fc" id="L81">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

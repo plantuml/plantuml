@@ -52,17 +52,19 @@ public class AtomWithMargin extends AbstractAtom implements Atom {
 <span class="fc" id="L52">		this.marginY2 = marginY2;</span>
 <span class="fc" id="L53">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L56">		return atom.calculateDimension(stringBounder).delta(0, marginY1 + marginY2);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="fc" id="L57">		return atom.calculateDimension(stringBounder).delta(0, marginY1 + marginY2);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="fc" id="L60">		return atom.getStartingAltitude(stringBounder);</span>
+<span class="fc" id="L61">		return atom.getStartingAltitude(stringBounder);</span>
 	}
 
+	@Override
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L64">		atom.drawU(ug.apply(UTranslate.dy(marginY1)));</span>
-<span class="fc" id="L65">	}</span>
+<span class="fc" id="L66">		atom.drawU(ug.apply(UTranslate.dy(marginY1)));</span>
+<span class="fc" id="L67">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

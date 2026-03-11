@@ -2213,9 +2213,9 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 4
+    Total Classes: 5
     Concrete Classes: 0
-    Abstract Classes: 4
+    Abstract Classes: 5
 
     Ca: 0
     Ce: 2
@@ -2227,6 +2227,7 @@ Stats:
 Abstract Classes:
     net.sourceforge.plantuml.annotation.DeadCode
     net.sourceforge.plantuml.annotation.DuplicateCode
+    net.sourceforge.plantuml.annotation.Fast
     net.sourceforge.plantuml.annotation.Foo
     net.sourceforge.plantuml.annotation.PerformanceIssue
 
@@ -6248,10 +6249,10 @@ Stats:
     Abstract Classes: 2
 
     Ca: 2
-    Ce: 18
+    Ce: 17
 
     A: 0.14
-    I: 0.9
+    I: 0.89
     D: 0.04
 
 Abstract Classes:
@@ -6281,7 +6282,6 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.creole
     net.sourceforge.plantuml.klimt.drawing
-    net.sourceforge.plantuml.klimt.drawing.debug
     net.sourceforge.plantuml.klimt.font
     net.sourceforge.plantuml.klimt.geom
     net.sourceforge.plantuml.klimt.shape
@@ -6570,12 +6570,12 @@ Stats:
     Concrete Classes: 1
     Abstract Classes: 0
 
-    Ca: 3
+    Ca: 2
     Ce: 8
 
     A: 0
-    I: 0.73
-    D: 0.27
+    I: 0.8
+    D: 0.2
 
 Abstract Classes:
 
@@ -6594,7 +6594,6 @@ Depends Upon:
 
 Used By:
     net.sourceforge.plantuml.core
-    net.sourceforge.plantuml.klimt.creole.atom
     net.sourceforge.plantuml.klimt.drawing.txt
 
 --------------------------------------------------
@@ -7259,19 +7258,20 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 41
+    Total Classes: 42
     Concrete Classes: 39
-    Abstract Classes: 2
+    Abstract Classes: 3
 
     Ca: 84
     Ce: 16
 
-    A: 0.05
+    A: 0.07
     I: 0.16
-    D: 0.79
+    D: 0.77
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.shape.Line
+    net.sourceforge.plantuml.klimt.shape.TextBlockMemoized
     net.sourceforge.plantuml.klimt.shape.UDrawable
 
 Concrete Classes:
@@ -14683,7 +14683,7 @@ net.sourceforge.plantuml.activitydiagram3.ftile.vcompact,75,1,5,27,0.01,0.84,0.1
 net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond,24,1,1,21,0.04,0.95,0,1
 net.sourceforge.plantuml.activitydiagram3.ftile.vertical,20,1,5,17,0.05,0.77,0.18,1
 net.sourceforge.plantuml.activitydiagram3.gtile,35,6,3,22,0.17,0.88,0.05,1
-net.sourceforge.plantuml.annotation,4,4,0,2,1,1,1,1
+net.sourceforge.plantuml.annotation,5,5,0,2,1,1,1,1
 net.sourceforge.plantuml.ant,1,0,0,4,0,1,0,1
 net.sourceforge.plantuml.api,11,6,10,10,0.55,0.5,0.05,1
 net.sourceforge.plantuml.api.mda.option2,4,3,1,3,0.75,0.75,0.5,1
@@ -14759,11 +14759,11 @@ net.sourceforge.plantuml.klimt.awt,3,1,29,8,0.33,0.22,0.45,1
 net.sourceforge.plantuml.klimt.color,29,1,93,10,0.03,0.1,0.87,1
 net.sourceforge.plantuml.klimt.compress,11,2,3,9,0.18,0.75,0.07,1
 net.sourceforge.plantuml.klimt.creole,19,4,66,12,0.21,0.15,0.64,1
-net.sourceforge.plantuml.klimt.creole.atom,14,2,2,18,0.14,0.9,0.04,1
+net.sourceforge.plantuml.klimt.creole.atom,14,2,2,17,0.14,0.89,0.04,1
 net.sourceforge.plantuml.klimt.creole.command,19,2,2,14,0.11,0.88,0.02,1
 net.sourceforge.plantuml.klimt.creole.legacy,16,2,7,27,0.12,0.79,0.08,1
 net.sourceforge.plantuml.klimt.drawing,14,5,80,14,0.36,0.15,0.49,1
-net.sourceforge.plantuml.klimt.drawing.debug,1,0,3,8,0,0.73,0.27,1
+net.sourceforge.plantuml.klimt.drawing.debug,1,0,2,8,0,0.8,0.2,1
 net.sourceforge.plantuml.klimt.drawing.eps,15,1,1,14,0.07,0.93,0,1
 net.sourceforge.plantuml.klimt.drawing.g2d,14,1,3,19,0.07,0.86,0.06,1
 net.sourceforge.plantuml.klimt.drawing.hand,8,0,1,8,0,0.89,0.11,1
@@ -14774,7 +14774,7 @@ net.sourceforge.plantuml.klimt.drawing.txt,1,0,4,12,0,0.75,0.25,1
 net.sourceforge.plantuml.klimt.drawing.visio,8,1,1,10,0.12,0.91,0.03,1
 net.sourceforge.plantuml.klimt.font,11,4,82,10,0.36,0.11,0.53,1
 net.sourceforge.plantuml.klimt.geom,34,6,88,9,0.18,0.09,0.73,1
-net.sourceforge.plantuml.klimt.shape,41,2,84,16,0.05,0.16,0.79,1
+net.sourceforge.plantuml.klimt.shape,42,3,84,16,0.07,0.16,0.77,1
 net.sourceforge.plantuml.klimt.sprite,22,2,13,26,0.09,0.67,0.24,1
 net.sourceforge.plantuml.licensing,7,0,0,5,0,1,0,1
 net.sourceforge.plantuml.log,2,0,28,4,0,0.12,0.88,1

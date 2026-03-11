@@ -201,7 +201,7 @@ public class GtileWithNotes extends AbstractGtile {
 //	}
 
 	@Override
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
 <span class="nc" id="L205">		final XDimension2D dimTile = tile.calculateDimension(stringBounder);</span>
 <span class="nc" id="L206">		final XDimension2D dimLeft = left.calculateDimension(stringBounder);</span>
 <span class="nc" id="L207">		final XDimension2D dimRight = right.calculateDimension(stringBounder);</span>

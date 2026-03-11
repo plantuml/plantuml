@@ -85,7 +85,25 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.ebnf.<a href="CornerCurved.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">CornerCurved</a> (implements net.sourceforge.plantuml.klimt.shape.<a href="../klimt/shape/UDrawable.html" title="interface in net.sourceforge.plantuml.klimt.shape">UDrawable</a>)</li>
 <li class="circle">net.sourceforge.plantuml.ebnf.<a href="EbnfEngine.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">EbnfEngine</a></li>
 <li class="circle">net.sourceforge.plantuml.ebnf.<a href="EbnfExpression.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">EbnfExpression</a> (implements net.sourceforge.plantuml.ebnf.<a href="TextBlockable.html" title="interface in net.sourceforge.plantuml.ebnf">TextBlockable</a>)</li>
-<li class="circle">net.sourceforge.plantuml.ebnf.<a href="ETile.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">ETile</a> (implements net.sourceforge.plantuml.klimt.shape.<a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>)
+<li class="circle">net.sourceforge.plantuml.command.<a href="../command/PSystemAbstractFactory.html" class="type-name-link" title="class in net.sourceforge.plantuml.command">PSystemAbstractFactory</a> (implements net.sourceforge.plantuml.api.<a href="../api/PSystemFactory.html" title="interface in net.sourceforge.plantuml.api">PSystemFactory</a>)
+<ul>
+<li class="circle">net.sourceforge.plantuml.command.<a href="../command/PSystemCommandFactory.html" class="type-name-link" title="class in net.sourceforge.plantuml.command">PSystemCommandFactory</a>
+<ul>
+<li class="circle">net.sourceforge.plantuml.ebnf.<a href="PSystemEbnfFactory.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">PSystemEbnfFactory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="circle">net.sourceforge.plantuml.ebnf.<a href="ShuntingYard.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">ShuntingYard</a></li>
+<li class="circle">net.sourceforge.plantuml.command.<a href="../command/SingleLineCommand2.html" class="type-name-link" title="class in net.sourceforge.plantuml.command">SingleLineCommand2</a>&lt;S&gt; (implements net.sourceforge.plantuml.command.<a href="../command/Command.html" title="interface in net.sourceforge.plantuml.command">Command</a>&lt;D&gt;)
+<ul>
+<li class="circle">net.sourceforge.plantuml.ebnf.<a href="CommandComment.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">CommandComment</a></li>
+<li class="circle">net.sourceforge.plantuml.ebnf.<a href="CommandEBnfSingleLine.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">CommandEBnfSingleLine</a></li>
+</ul>
+</li>
+<li class="circle">net.sourceforge.plantuml.klimt.shape.<a href="../klimt/shape/TextBlockMemoized.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockMemoized</a> (implements net.sourceforge.plantuml.klimt.shape.<a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>)
+<ul>
+<li class="circle">net.sourceforge.plantuml.ebnf.<a href="ETile.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">ETile</a>
 <ul>
 <li class="circle">net.sourceforge.plantuml.ebnf.<a href="ETileAlternation.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">ETileAlternation</a></li>
 <li class="circle">net.sourceforge.plantuml.ebnf.<a href="ETileBox.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">ETileBox</a></li>
@@ -106,23 +124,9 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.ebnf.<a href="ETileWithCircles.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">ETileWithCircles</a></li>
 </ul>
 </li>
-<li class="circle">net.sourceforge.plantuml.command.<a href="../command/PSystemAbstractFactory.html" class="type-name-link" title="class in net.sourceforge.plantuml.command">PSystemAbstractFactory</a> (implements net.sourceforge.plantuml.api.<a href="../api/PSystemFactory.html" title="interface in net.sourceforge.plantuml.api">PSystemFactory</a>)
-<ul>
-<li class="circle">net.sourceforge.plantuml.command.<a href="../command/PSystemCommandFactory.html" class="type-name-link" title="class in net.sourceforge.plantuml.command">PSystemCommandFactory</a>
-<ul>
-<li class="circle">net.sourceforge.plantuml.ebnf.<a href="PSystemEbnfFactory.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">PSystemEbnfFactory</a></li>
+<li class="circle">net.sourceforge.plantuml.ebnf.<a href="TitleBox.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">TitleBox</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="circle">net.sourceforge.plantuml.ebnf.<a href="ShuntingYard.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">ShuntingYard</a></li>
-<li class="circle">net.sourceforge.plantuml.command.<a href="../command/SingleLineCommand2.html" class="type-name-link" title="class in net.sourceforge.plantuml.command">SingleLineCommand2</a>&lt;S&gt; (implements net.sourceforge.plantuml.command.<a href="../command/Command.html" title="interface in net.sourceforge.plantuml.command">Command</a>&lt;D&gt;)
-<ul>
-<li class="circle">net.sourceforge.plantuml.ebnf.<a href="CommandComment.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">CommandComment</a></li>
-<li class="circle">net.sourceforge.plantuml.ebnf.<a href="CommandEBnfSingleLine.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">CommandEBnfSingleLine</a></li>
-</ul>
-</li>
-<li class="circle">net.sourceforge.plantuml.ebnf.<a href="TitleBox.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">TitleBox</a> (implements net.sourceforge.plantuml.klimt.shape.<a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>)</li>
 <li class="circle">net.sourceforge.plantuml.ebnf.<a href="Token.html" class="type-name-link" title="class in net.sourceforge.plantuml.ebnf">Token</a></li>
 <li class="circle">net.sourceforge.plantuml.command.<a href="../command/UBrexCommandMultilines2.html" class="type-name-link" title="class in net.sourceforge.plantuml.command">UBrexCommandMultilines2</a>&lt;S&gt; (implements net.sourceforge.plantuml.command.<a href="../command/Command.html" title="interface in net.sourceforge.plantuml.command">Command</a>&lt;D&gt;)
 <ul>

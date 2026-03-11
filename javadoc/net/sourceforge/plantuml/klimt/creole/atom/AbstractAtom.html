@@ -87,12 +87,14 @@ loadScripts(document, 'script');</script>
 <h1 title="Class AbstractAtom" class="title">Class AbstractAtom</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance"><a href="../../shape/TextBlockMemoized.html" title="class in net.sourceforge.plantuml.klimt.shape">net.sourceforge.plantuml.klimt.shape.TextBlockMemoized</a>
 <div class="inheritance">net.sourceforge.plantuml.klimt.creole.atom.AbstractAtom</div>
+</div>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="Atom.html" title="interface in net.sourceforge.plantuml.klimt.creole.atom">Atom</a></code>, <code><a href="../../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a></code></dd>
+<dd><code><a href="Atom.html" title="interface in net.sourceforge.plantuml.klimt.creole.atom">Atom</a></code>, <code><a href="../../shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code>, <code><a href="../../shape/UDrawable.html" title="interface in net.sourceforge.plantuml.klimt.shape">UDrawable</a></code>, <code><a href="../../UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
@@ -100,7 +102,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">AbstractAtom</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
+<span class="extends-implements">extends <a href="../../shape/TextBlockMemoized.html" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockMemoized</a>
 implements <a href="Atom.html" title="interface in net.sourceforge.plantuml.klimt.creole.atom">Atom</a></span></div>
 </section>
 <section class="summary">
@@ -136,11 +138,20 @@ implements <a href="Atom.html" title="interface in net.sourceforge.plantuml.klim
 </div>
 </div>
 <div class="inherited-list">
+<h3 id="methods-inherited-from-class-net.sourceforge.plantuml.klimt.shape.TextBlockMemoized">Methods inherited from class&nbsp;net.sourceforge.plantuml.klimt.shape.<a href="../../shape/TextBlockMemoized.html" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockMemoized</a></h3>
+<code><a href="../../shape/TextBlockMemoized.html#calculateDimension(net.sourceforge.plantuml.klimt.font.StringBounder)">calculateDimension</a>, <a href="../../shape/TextBlockMemoized.html#calculateDimensionSlow(net.sourceforge.plantuml.klimt.font.StringBounder)">calculateDimensionSlow</a>, <a href="../../shape/TextBlockMemoized.html#invalidateDimensionCache()">invalidateDimensionCache</a></code></div>
+<div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-net.sourceforge.plantuml.klimt.creole.atom.Atom">Methods inherited from interface&nbsp;net.sourceforge.plantuml.klimt.creole.atom.<a href="Atom.html" title="interface in net.sourceforge.plantuml.klimt.creole.atom">Atom</a></h3>
-<code><a href="Atom.html#calculateDimension(net.sourceforge.plantuml.klimt.font.StringBounder)">calculateDimension</a>, <a href="Atom.html#drawU(net.sourceforge.plantuml.klimt.drawing.UGraphic)">drawU</a>, <a href="Atom.html#getStartingAltitude(net.sourceforge.plantuml.klimt.font.StringBounder)">getStartingAltitude</a></code></div>
+<code><a href="Atom.html#getStartingAltitude(net.sourceforge.plantuml.klimt.font.StringBounder)">getStartingAltitude</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-net.sourceforge.plantuml.klimt.shape.TextBlock">Methods inherited from interface&nbsp;net.sourceforge.plantuml.klimt.shape.<a href="../../shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></h3>
+<code><a href="../../shape/TextBlock.html#calculateDimension(net.sourceforge.plantuml.klimt.font.StringBounder)">calculateDimension</a>, <a href="../../shape/TextBlock.html#getBackcolor()">getBackcolor</a>, <a href="../../shape/TextBlock.html#getInnerPosition(java.lang.CharSequence,net.sourceforge.plantuml.klimt.font.StringBounder)">getInnerPosition</a>, <a href="../../shape/TextBlock.html#getMagneticBorder()">getMagneticBorder</a>, <a href="../../shape/TextBlock.html#getMinMax(net.sourceforge.plantuml.klimt.font.StringBounder)">getMinMax</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-net.sourceforge.plantuml.klimt.shape.UDrawable">Methods inherited from interface&nbsp;net.sourceforge.plantuml.klimt.shape.<a href="../../shape/UDrawable.html" title="interface in net.sourceforge.plantuml.klimt.shape">UDrawable</a></h3>
+<code><a href="../../shape/UDrawable.html#drawU(net.sourceforge.plantuml.klimt.drawing.UGraphic)">drawU</a></code></div>
 </section>
 </li>
 </ul>

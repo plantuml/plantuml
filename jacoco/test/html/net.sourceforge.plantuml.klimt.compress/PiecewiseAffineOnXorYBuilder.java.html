@@ -41,9 +41,10 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 
-public class PiecewiseAffineOnXorYBuilder implements TextBlock {
+public class PiecewiseAffineOnXorYBuilder extends TextBlockMemoized {
 
 	private final TextBlock textBlock;
 	private final CompressionMode mode;
@@ -51,41 +52,42 @@ public class PiecewiseAffineOnXorYBuilder implements TextBlock {
 
 	public static TextBlock build(CompressionMode mode, TextBlock textBlock,
 			PiecewiseAffineTransform piecewiseAffineTransform) {
-<span class="fc" id="L54">		return new PiecewiseAffineOnXorYBuilder(mode, textBlock, piecewiseAffineTransform);</span>
+<span class="fc" id="L55">		return new PiecewiseAffineOnXorYBuilder(mode, textBlock, piecewiseAffineTransform);</span>
 	}
 
 	private PiecewiseAffineOnXorYBuilder(CompressionMode mode, TextBlock textBlock,
-<span class="fc" id="L58">			PiecewiseAffineTransform piecewiseAffineTransform) {</span>
-<span class="fc" id="L59">		this.textBlock = textBlock;</span>
-<span class="fc" id="L60">		this.mode = mode;</span>
-<span class="fc" id="L61">		this.piecewiseAffineTransform = piecewiseAffineTransform;</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L59">			PiecewiseAffineTransform piecewiseAffineTransform) {</span>
+<span class="fc" id="L60">		this.textBlock = textBlock;</span>
+<span class="fc" id="L61">		this.mode = mode;</span>
+<span class="fc" id="L62">		this.piecewiseAffineTransform = piecewiseAffineTransform;</span>
+<span class="fc" id="L63">	}</span>
 
 	public void drawU(final UGraphic ug) {
-<span class="fc" id="L65">		textBlock.drawU(UGraphicCompressOnXorY.create(mode, ug, piecewiseAffineTransform));</span>
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L66">		textBlock.drawU(UGraphicCompressOnXorY.create(mode, ug, piecewiseAffineTransform));</span>
+<span class="fc" id="L67">	}</span>
 
 	private MinMax cachedMinMax;
 
 	@Override
 	public MinMax getMinMax(StringBounder stringBounder) {
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (cachedMinMax == null) {</span>
-<span class="fc" id="L73">			cachedMinMax = TextBlockUtils.getMinMax(this, stringBounder, false);</span>
-		}
-<span class="fc" id="L75">		return cachedMinMax;</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (cachedMinMax == null)</span>
+<span class="fc" id="L74">			cachedMinMax = TextBlockUtils.getMinMax(this, stringBounder, false);</span>
+
+<span class="fc" id="L76">		return cachedMinMax;</span>
 	}
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L79">		final XDimension2D dim = textBlock.calculateDimension(stringBounder);</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (mode == CompressionMode.ON_X) {</span>
-<span class="nc" id="L81">			return new XDimension2D(piecewiseAffineTransform.transform(dim.getWidth()), dim.getHeight());</span>
-		} else {
-<span class="nc" id="L83">			return new XDimension2D(dim.getWidth(), piecewiseAffineTransform.transform(dim.getHeight()));</span>
-		}
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L81">		final XDimension2D dim = textBlock.calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (mode == CompressionMode.ON_X)</span>
+<span class="nc" id="L83">			return new XDimension2D(piecewiseAffineTransform.transform(dim.getWidth()), dim.getHeight());</span>
+		else
+<span class="nc" id="L85">			return new XDimension2D(dim.getWidth(), piecewiseAffineTransform.transform(dim.getHeight()));</span>
+
 	}
 
 	public HColor getBackcolor() {
-<span class="nc" id="L88">		return null;</span>
+<span class="nc" id="L90">		return null;</span>
 	}
 
 }

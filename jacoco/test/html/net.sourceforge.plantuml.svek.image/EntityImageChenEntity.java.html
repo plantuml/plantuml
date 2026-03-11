@@ -105,7 +105,7 @@ public class EntityImageChenEntity extends AbstractEntityImage {
 	}
 
 	@Override
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
 <span class="nc" id="L109">		final XDimension2D dim = title.calculateDimension(stringBounder);</span>
 
 <span class="nc" id="L111">		return dim.delta(MARGIN * 2 + 2 * MARGIN_LINE);</span>

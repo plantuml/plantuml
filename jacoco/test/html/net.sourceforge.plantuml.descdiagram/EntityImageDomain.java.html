@@ -160,12 +160,13 @@ public class EntityImageDomain extends AbstractEntityImage {
 <span class="nc" id="L160">		return ShapeType.RECTANGLE;</span>
 	}
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L164">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
-<span class="nc" id="L165">		final double width = dimTitle.getWidth();</span>
-<span class="nc" id="L166">		final double height = dimTitle.getHeight();</span>
-<span class="nc" id="L167">		final XDimension2D dimTag = getTagDimension(stringBounder);</span>
-<span class="nc" id="L168">		return new XDimension2D(width, height + dimTag.getHeight());</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L165">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
+<span class="nc" id="L166">		final double width = dimTitle.getWidth();</span>
+<span class="nc" id="L167">		final double height = dimTitle.getHeight();</span>
+<span class="nc" id="L168">		final XDimension2D dimTag = getTagDimension(stringBounder);</span>
+<span class="nc" id="L169">		return new XDimension2D(width, height + dimTag.getHeight());</span>
 	}
 
 }

@@ -150,11 +150,12 @@ public class EntityImageMachine extends AbstractEntityImage {
 <span class="nc" id="L150">		return ShapeType.RECTANGLE;</span>
 	}
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L154">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
-<span class="nc" id="L155">		final double width = dimTitle.getWidth();</span>
-<span class="nc" id="L156">		final double height = dimTitle.getHeight();</span>
-<span class="nc" id="L157">		return new XDimension2D(width + 10, height);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L155">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
+<span class="nc" id="L156">		final double width = dimTitle.getWidth();</span>
+<span class="nc" id="L157">		final double height = dimTitle.getHeight();</span>
+<span class="nc" id="L158">		return new XDimension2D(width + 10, height);</span>
 	}
 
 }

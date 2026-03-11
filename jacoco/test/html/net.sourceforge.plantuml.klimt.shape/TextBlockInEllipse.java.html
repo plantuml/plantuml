@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.svek.image.ContainingEllipse;
 import net.sourceforge.plantuml.svek.image.Footprint;
 
-public class TextBlockInEllipse implements TextBlock {
+public class TextBlockInEllipse extends TextBlockMemoized {
 
 	private final TextBlock text;
 	private final ContainingEllipse ellipse;
@@ -66,24 +66,26 @@ public class TextBlockInEllipse implements TextBlock {
 <span class="nc" id="L66">		return ellipse.asUEllipse().bigger(6);</span>
 	}
 
+	@Override
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L70">		final UEllipse sh = getUEllipse();</span>
-<span class="nc" id="L71">		final XPoint2D center = ellipse.getCenter();</span>
+<span class="nc" id="L71">		final UEllipse sh = getUEllipse();</span>
+<span class="nc" id="L72">		final XPoint2D center = ellipse.getCenter();</span>
 
-<span class="nc" id="L73">		final double dx = sh.getWidth() / 2 - center.getX();</span>
-<span class="nc" id="L74">		final double dy = sh.getHeight() / 2 - center.getY();</span>
+<span class="nc" id="L74">		final double dx = sh.getWidth() / 2 - center.getX();</span>
+<span class="nc" id="L75">		final double dy = sh.getHeight() / 2 - center.getY();</span>
 
-<span class="nc" id="L76">		ug.draw(sh);</span>
+<span class="nc" id="L77">		ug.draw(sh);</span>
 
-<span class="nc" id="L78">		text.drawU(ug.apply(new UTranslate(dx, (dy - 2))));</span>
-<span class="nc" id="L79">	}</span>
+<span class="nc" id="L79">		text.drawU(ug.apply(new UTranslate(dx, (dy - 2))));</span>
+<span class="nc" id="L80">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L82">		return getUEllipse().getDimension();</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L84">		return getUEllipse().getDimension();</span>
 	}
 
 	public void setDeltaShadow(double deltaShadow) {
-<span class="nc" id="L86">		ellipse.setDeltaShadow(deltaShadow);</span>
-<span class="nc" id="L87">	}</span>
+<span class="nc" id="L88">		ellipse.setDeltaShadow(deltaShadow);</span>
+<span class="nc" id="L89">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

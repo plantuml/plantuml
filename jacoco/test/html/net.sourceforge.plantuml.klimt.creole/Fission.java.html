@@ -229,16 +229,17 @@ public class Fission {
 
 <span class="nc" id="L230">		return new AbstractAtom() {</span>
 
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L233">				return header.calculateDimension(stringBounder);</span>
+			@Override
+			public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L234">				return header.calculateDimension(stringBounder);</span>
 			}
 
 			public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L237">				return header.getStartingAltitude(stringBounder);</span>
+<span class="nc" id="L238">				return header.getStartingAltitude(stringBounder);</span>
 			}
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L241">			}</span>
+<span class="nc" id="L242">			}</span>
 
 		};
 	}

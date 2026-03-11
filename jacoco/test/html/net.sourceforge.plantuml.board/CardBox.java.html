@@ -48,34 +48,37 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
 
+import net.sourceforge.plantuml.annotation.Fast;
+
 public class CardBox implements TextBlock {
 
 	private final Display label;
 	private final ISkinParam skinParam;
 
-<span class="nc" id="L56">	public CardBox(Display label, ISkinParam skinParam) {</span>
-<span class="nc" id="L57">		this.label = label;</span>
-<span class="nc" id="L58">		this.skinParam = skinParam;</span>
-<span class="nc" id="L59">	}</span>
+<span class="nc" id="L58">	public CardBox(Display label, ISkinParam skinParam) {</span>
+<span class="nc" id="L59">		this.label = label;</span>
+<span class="nc" id="L60">		this.skinParam = skinParam;</span>
+<span class="nc" id="L61">	}</span>
 
 //	private StyleSignature getDefaultStyleDefinitionNode() {
 //		return StyleSignature.of(SName.root, SName.element, SName.mindmapDiagram, SName.node);
 //	}
 
+	@Fast
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L66">		return new XDimension2D(150, 70);</span>
+<span class="nc" id="L69">		return new XDimension2D(150, 70);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L70">		final URectangle rect = URectangle.build(calculateDimension(ug.getStringBounder()));</span>
-<span class="nc" id="L71">		rect.setDeltaShadow(1);</span>
+<span class="nc" id="L73">		final URectangle rect = URectangle.build(calculateDimension(ug.getStringBounder()));</span>
+<span class="nc" id="L74">		rect.setDeltaShadow(1);</span>
 
-<span class="nc" id="L73">		ug.apply(HColors.BLACK).apply(HColors.LIGHT_GRAY.bg()).draw(rect);</span>
+<span class="nc" id="L76">		ug.apply(HColors.BLACK).apply(HColors.LIGHT_GRAY.bg()).draw(rect);</span>
 
-<span class="nc" id="L75">		label.create(FontConfiguration.blackBlueTrue(UFontFactory.sansSerif(14)), HorizontalAlignment.LEFT, skinParam)</span>
-<span class="nc" id="L76">				.drawU(ug.apply(new UTranslate(3, 3)));</span>
+<span class="nc" id="L78">		label.create(FontConfiguration.blackBlueTrue(UFontFactory.sansSerif(14)), HorizontalAlignment.LEFT, skinParam)</span>
+<span class="nc" id="L79">				.drawU(ug.apply(new UTranslate(3, 3)));</span>
 
-<span class="nc" id="L78">	}</span>
+<span class="nc" id="L81">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

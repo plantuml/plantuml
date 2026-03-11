@@ -98,7 +98,7 @@ public class GtileColumns extends AbstractGtile {
 <span class="nc" id="L98">	}</span>
 
 	@Override
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
 <span class="nc" id="L102">		XDimension2D result = new XDimension2D(0, 0);</span>
 <span class="nc bnc" id="L103" title="All 2 branches missed.">		for (int i = 0; i &lt; gtiles.size(); i++) {</span>
 <span class="nc" id="L104">			final XDimension2D dim = gtiles.get(i).calculateDimension(stringBounder);</span>

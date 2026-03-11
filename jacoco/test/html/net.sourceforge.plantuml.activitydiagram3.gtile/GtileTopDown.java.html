@@ -115,7 +115,7 @@ public class GtileTopDown extends AbstractGtile {
 <span class="nc" id="L115">	}</span>
 
 	@Override
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
 <span class="nc" id="L119">		final XDimension2D corner1 = dim1.applyTranslate(getPos1());</span>
 <span class="nc" id="L120">		final XDimension2D corner2 = dim2.applyTranslate(getPos2());</span>
 <span class="nc" id="L121">		return MathUtils.maxDim(corner1, corner2);</span>

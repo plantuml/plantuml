@@ -51,12 +51,12 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
-public class SheetBlock1 implements TextBlock, Atom, Stencil {
+public class SheetBlock1 extends TextBlockMemoized implements Atom, Stencil {
 
 	private final Sheet sheet;
 	private List&lt;Stripe&gt; stripes;
@@ -192,48 +192,50 @@ public class SheetBlock1 implements TextBlock, Atom, Stencil {
 		}
 	}
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L196">		initMap(stringBounder);</span>
-<span class="fc" id="L197">		return minMax.getDimension().delta(padding.getBottom() + padding.getTop());</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="fc" id="L197">		initMap(stringBounder);</span>
+<span class="fc" id="L198">		return minMax.getDimension().delta(padding.getBottom() + padding.getTop());</span>
 	}
 
 	@Override
 	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
-<span class="nc" id="L202">		return null;</span>
+<span class="nc" id="L203">		return null;</span>
 	}
 
+	@Override
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L206">		initMap(ug.getStringBounder());</span>
-<span class="pc bpc" id="L207" title="1 of 4 branches missed.">		if (padding.getLeft() &gt; 0 || padding.getTop() &gt; 0)</span>
-<span class="fc" id="L208">			ug = ug.apply(new UTranslate(padding.getLeft(), padding.getTop()));</span>
+<span class="fc" id="L208">		initMap(ug.getStringBounder());</span>
+<span class="pc bpc" id="L209" title="1 of 4 branches missed.">		if (padding.getLeft() &gt; 0 || padding.getTop() &gt; 0)</span>
+<span class="fc" id="L210">			ug = ug.apply(new UTranslate(padding.getLeft(), padding.getTop()));</span>
 
-<span class="fc bfc" id="L210" title="All 2 branches covered.">		for (Stripe stripe : stripes)</span>
-<span class="fc bfc" id="L211" title="All 2 branches covered.">			for (Atom atom : stripe.getAtoms()) {</span>
-<span class="fc" id="L212">				final Position position = positions.get(atom);</span>
-<span class="fc" id="L213">				atom.drawU(position.translate(ug));</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">		for (Stripe stripe : stripes)</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">			for (Atom atom : stripe.getAtoms()) {</span>
+<span class="fc" id="L214">				final Position position = positions.get(atom);</span>
+<span class="fc" id="L215">				atom.drawU(position.translate(ug));</span>
 				// position.drawDebug(ug);
-<span class="fc" id="L215">			}</span>
-<span class="fc" id="L216">	}</span>
+<span class="fc" id="L217">			}</span>
+<span class="fc" id="L218">	}</span>
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L219">		return 0;</span>
+<span class="nc" id="L221">		return 0;</span>
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L223">		return -marginX1;</span>
+<span class="fc" id="L225">		return -marginX1;</span>
 	}
 
 	public double getEndingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L227">		return calculateDimension(stringBounder).getWidth() + marginX2;</span>
+<span class="fc" id="L229">		return calculateDimension(stringBounder).getWidth() + marginX2;</span>
 	}
 
 	public final double getMinimumWidth() {
-<span class="fc" id="L231">		return minimumWidth;</span>
+<span class="fc" id="L233">		return minimumWidth;</span>
 	}
 
 	@Override
 	public List&lt;Neutron&gt; getNeutrons() {
-<span class="nc" id="L236">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L238">		throw new UnsupportedOperationException();</span>
 	}
 
 }

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.klimt.shape;
 
 import java.util.Objects;
 
+import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -50,55 +51,57 @@ public class TextBlockArrow implements TextBlock {
 	private final Direction arrow;
 	private final HColor color;
 
-<span class="nc" id="L53">	public TextBlockArrow(Direction arrow, FontConfiguration fontConfiguration) {</span>
-<span class="nc" id="L54">		this.arrow = Objects.requireNonNull(arrow);</span>
+<span class="nc" id="L54">	public TextBlockArrow(Direction arrow, FontConfiguration fontConfiguration) {</span>
+<span class="nc" id="L55">		this.arrow = Objects.requireNonNull(arrow);</span>
 		// this.size = fontConfiguration.getFont().getSize2D() * 0 + 30;
-<span class="nc" id="L56">		this.size = fontConfiguration.getFont().getSize2D();</span>
-<span class="nc" id="L57">		this.color = fontConfiguration.getColor();</span>
+<span class="nc" id="L57">		this.size = fontConfiguration.getFont().getSize2D();</span>
+<span class="nc" id="L58">		this.color = fontConfiguration.getColor();</span>
 
-<span class="nc" id="L59">	}</span>
+<span class="nc" id="L60">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L62">		ug = ug.apply(color.bg());</span>
-<span class="nc" id="L63">		ug = ug.apply(color);</span>
-<span class="nc" id="L64">		int triSize = (int) (size * .8 - 3);</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (triSize % 2 == 1) {</span>
-<span class="nc" id="L66">			triSize--;</span>
+<span class="nc" id="L63">		ug = ug.apply(color.bg());</span>
+<span class="nc" id="L64">		ug = ug.apply(color);</span>
+<span class="nc" id="L65">		int triSize = (int) (size * .8 - 3);</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (triSize % 2 == 1) {</span>
+<span class="nc" id="L67">			triSize--;</span>
 		}
-<span class="nc" id="L68">		final UPolygon triangle = getTriangle(triSize);</span>
-<span class="nc" id="L69">		ug.apply(new UTranslate(2, (size - triSize) - 2)).draw(triangle);</span>
-<span class="nc" id="L70">	}</span>
+<span class="nc" id="L69">		final UPolygon triangle = getTriangle(triSize);</span>
+<span class="nc" id="L70">		ug.apply(new UTranslate(2, (size - triSize) - 2)).draw(triangle);</span>
+<span class="nc" id="L71">	}</span>
 
 	private UPolygon getTriangle(int triSize) {
-<span class="nc" id="L73">		final UPolygon triangle = new UPolygon();</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (arrow == Direction.RIGHT) {</span>
-<span class="nc" id="L75">			triangle.addPoint(0, 0);</span>
-<span class="nc" id="L76">			triangle.addPoint(triSize, triSize / 2);</span>
-<span class="nc" id="L77">			triangle.addPoint(0, triSize);</span>
-<span class="nc" id="L78">			triangle.addPoint(0, 0);</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		} else if (arrow == Direction.LEFT) {</span>
-<span class="nc" id="L80">			triangle.addPoint(triSize, 0);</span>
-<span class="nc" id="L81">			triangle.addPoint(0, triSize / 2);</span>
-<span class="nc" id="L82">			triangle.addPoint(triSize, triSize);</span>
-<span class="nc" id="L83">			triangle.addPoint(triSize, 0);</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		} else if (arrow == Direction.UP) {</span>
-<span class="nc" id="L85">			triangle.addPoint(0, triSize);</span>
-<span class="nc" id="L86">			triangle.addPoint(triSize / 2, 0);</span>
-<span class="nc" id="L87">			triangle.addPoint(triSize, triSize);</span>
-<span class="nc" id="L88">			triangle.addPoint(0, triSize);</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		} else if (arrow == Direction.DOWN) {</span>
-<span class="nc" id="L90">			triangle.addPoint(0, 0);</span>
-<span class="nc" id="L91">			triangle.addPoint(triSize / 2, triSize);</span>
-<span class="nc" id="L92">			triangle.addPoint(triSize, 0);</span>
-<span class="nc" id="L93">			triangle.addPoint(0, 0);</span>
+<span class="nc" id="L74">		final UPolygon triangle = new UPolygon();</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (arrow == Direction.RIGHT) {</span>
+<span class="nc" id="L76">			triangle.addPoint(0, 0);</span>
+<span class="nc" id="L77">			triangle.addPoint(triSize, triSize / 2);</span>
+<span class="nc" id="L78">			triangle.addPoint(0, triSize);</span>
+<span class="nc" id="L79">			triangle.addPoint(0, 0);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		} else if (arrow == Direction.LEFT) {</span>
+<span class="nc" id="L81">			triangle.addPoint(triSize, 0);</span>
+<span class="nc" id="L82">			triangle.addPoint(0, triSize / 2);</span>
+<span class="nc" id="L83">			triangle.addPoint(triSize, triSize);</span>
+<span class="nc" id="L84">			triangle.addPoint(triSize, 0);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		} else if (arrow == Direction.UP) {</span>
+<span class="nc" id="L86">			triangle.addPoint(0, triSize);</span>
+<span class="nc" id="L87">			triangle.addPoint(triSize / 2, 0);</span>
+<span class="nc" id="L88">			triangle.addPoint(triSize, triSize);</span>
+<span class="nc" id="L89">			triangle.addPoint(0, triSize);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		} else if (arrow == Direction.DOWN) {</span>
+<span class="nc" id="L91">			triangle.addPoint(0, 0);</span>
+<span class="nc" id="L92">			triangle.addPoint(triSize / 2, triSize);</span>
+<span class="nc" id="L93">			triangle.addPoint(triSize, 0);</span>
+<span class="nc" id="L94">			triangle.addPoint(0, 0);</span>
 		} else {
-<span class="nc" id="L95">			throw new IllegalStateException();</span>
+<span class="nc" id="L96">			throw new IllegalStateException();</span>
 		}
-<span class="nc" id="L97">		return triangle;</span>
+<span class="nc" id="L98">		return triangle;</span>
 	}
 
+	@Fast
+	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L101">		return new XDimension2D(size, size);</span>
+<span class="nc" id="L104">		return new XDimension2D(size, size);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

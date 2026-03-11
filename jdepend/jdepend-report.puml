@@ -613,7 +613,7 @@ Total Classes: 35
 "net.sourceforge.plantuml.activitydiagram3.gtile" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.annotation" %lighten("red", 0) {
-Total Classes: 4
+Total Classes: 5
 }
 "net.sourceforge.plantuml.annotation" --> "java.lang"
 "net.sourceforge.plantuml.annotation" --> "java.lang.annotation"
@@ -1823,7 +1823,6 @@ Total Classes: 14
 "net.sourceforge.plantuml.klimt.creole.atom" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.klimt.creole.atom" --> "net.sourceforge.plantuml.klimt.creole"
 "net.sourceforge.plantuml.klimt.creole.atom" --> "net.sourceforge.plantuml.klimt.drawing"
-"net.sourceforge.plantuml.klimt.creole.atom" --> "net.sourceforge.plantuml.klimt.drawing.debug"
 "net.sourceforge.plantuml.klimt.creole.atom" --> "net.sourceforge.plantuml.klimt.font"
 "net.sourceforge.plantuml.klimt.creole.atom" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.klimt.creole.atom" --> "net.sourceforge.plantuml.klimt.shape"
@@ -1901,7 +1900,7 @@ Total Classes: 14
 "net.sourceforge.plantuml.klimt.drawing" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.klimt.drawing" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.klimt.drawing.debug" %lighten("red", 73) {
+class "net.sourceforge.plantuml.klimt.drawing.debug" %lighten("red", 80) {
 Total Classes: 1
 }
 "net.sourceforge.plantuml.klimt.drawing.debug" --> "java.awt"
@@ -2071,8 +2070,8 @@ Total Classes: 34
 "net.sourceforge.plantuml.klimt.geom" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.klimt.geom" --> "net.sourceforge.plantuml.teavm"
 
-class "net.sourceforge.plantuml.klimt.shape" %lighten("red", 21) {
-Total Classes: 41
+class "net.sourceforge.plantuml.klimt.shape" %lighten("red", 23) {
+Total Classes: 42
 }
 "net.sourceforge.plantuml.klimt.shape" --> "java.lang"
 "net.sourceforge.plantuml.klimt.shape" --> "java.util"

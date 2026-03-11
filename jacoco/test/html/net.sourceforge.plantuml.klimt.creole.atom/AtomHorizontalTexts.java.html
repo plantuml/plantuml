@@ -49,37 +49,38 @@ public class AtomHorizontalTexts extends AbstractAtom implements Atom {
 <span class="nc" id="L49">		this.all = texts;</span>
 <span class="nc" id="L50">	}</span>
 
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L53">		double width = 0;</span>
-<span class="nc" id="L54">		double height = 0;</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">		for (Atom text : all) {</span>
-<span class="nc" id="L56">			final XDimension2D dim = text.calculateDimension(stringBounder);</span>
-<span class="nc" id="L57">			height = Math.max(height, dim.getHeight());</span>
-<span class="nc" id="L58">			width += dim.getWidth();</span>
-<span class="nc" id="L59">		}</span>
-<span class="nc" id="L60">		return new XDimension2D(width, height);</span>
+	@Override
+	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L54">		double width = 0;</span>
+<span class="nc" id="L55">		double height = 0;</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		for (Atom text : all) {</span>
+<span class="nc" id="L57">			final XDimension2D dim = text.calculateDimension(stringBounder);</span>
+<span class="nc" id="L58">			height = Math.max(height, dim.getHeight());</span>
+<span class="nc" id="L59">			width += dim.getWidth();</span>
+<span class="nc" id="L60">		}</span>
+<span class="nc" id="L61">		return new XDimension2D(width, height);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (all.size() == 0)</span>
-<span class="nc" id="L65">			return 0;</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (all.size() == 0)</span>
+<span class="nc" id="L66">			return 0;</span>
 
-<span class="nc" id="L67">		return all.get(0).getStartingAltitude(stringBounder);</span>
+<span class="nc" id="L68">		return all.get(0).getStartingAltitude(stringBounder);</span>
 	}
 
 	public void drawU(UGraphic ug) {
 
-<span class="nc" id="L72">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L73">		final double startingAltitude = getStartingAltitude(stringBounder);</span>
+<span class="nc" id="L73">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L74">		final double startingAltitude = getStartingAltitude(stringBounder);</span>
 
-<span class="nc" id="L75">		double x = 0;</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (Atom text : all) {</span>
-<span class="nc" id="L77">			final XDimension2D dim = text.calculateDimension(stringBounder);</span>
-<span class="nc" id="L78">			final double localStartingAltitude = text.getStartingAltitude(stringBounder);</span>
-<span class="nc" id="L79">			text.drawU(ug.apply(new UTranslate(x, startingAltitude - localStartingAltitude)));</span>
-<span class="nc" id="L80">			x += dim.getWidth();</span>
-<span class="nc" id="L81">		}</span>
-<span class="nc" id="L82">	}</span>
+<span class="nc" id="L76">		double x = 0;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (Atom text : all) {</span>
+<span class="nc" id="L78">			final XDimension2D dim = text.calculateDimension(stringBounder);</span>
+<span class="nc" id="L79">			final double localStartingAltitude = text.getStartingAltitude(stringBounder);</span>
+<span class="nc" id="L80">			text.drawU(ug.apply(new UTranslate(x, startingAltitude - localStartingAltitude)));</span>
+<span class="nc" id="L81">			x += dim.getWidth();</span>
+<span class="nc" id="L82">		}</span>
+<span class="nc" id="L83">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
