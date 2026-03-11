@@ -121,8 +121,7 @@ public class JsonDiagram extends TitledDiagram {
 		}
 	}
 
-	@Override
-	protected TextBlock getTextMainBlock01970(final FileFormatOption fileFormatOption) {
+	private TextBlock getTextMainBlock01970(final FileFormatOption fileFormatOption) {
 		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
@@ -130,8 +129,8 @@ public class JsonDiagram extends TitledDiagram {
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return TextBlockUtils.getMinMax(getTextMainBlock01970(fileFormatOption), stringBounder, true)
-						.getDimension();
+				final TextBlock tmp = getTextMainBlock01970(fileFormatOption);
+				return TextBlockUtils.getMinMax(tmp, stringBounder, true).getDimension();
 			}
 		};
 	}

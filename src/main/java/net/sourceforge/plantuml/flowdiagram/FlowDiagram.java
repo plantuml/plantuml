@@ -209,11 +209,6 @@ public class FlowDiagram extends TitledDiagram implements TextBlock {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
-		return this;
-	}
-
-	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		return this;
 	}

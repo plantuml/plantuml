@@ -178,11 +178,6 @@ public class BpmDiagram extends TitledDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		final Grid grid = createGrid();
 		cleanGrid(grid);

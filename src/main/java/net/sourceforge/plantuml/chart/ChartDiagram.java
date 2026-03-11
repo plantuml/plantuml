@@ -91,20 +91,6 @@ public class ChartDiagram extends TitledDiagram {
 		super(source, DiagramType.CHART, null, preprocessing);
 	}
 
-	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
-		return new TextBlock() {
-
-			public void drawU(UGraphic ug) {
-				drawMe(ug);
-			}
-
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return getRenderer().calculateDimension(stringBounder);
-			}
-		};
-	}
-
 	private void drawMe(UGraphic ug) {
 		final ChartRenderer renderer = getRenderer();
 		renderer.drawU(ug);
@@ -346,6 +332,15 @@ public class ChartDiagram extends TitledDiagram {
 
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-		return getTextMainBlock01970(fileFormatOption);
+		return new TextBlock() {
+
+			public void drawU(UGraphic ug) {
+				drawMe(ug);
+			}
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return getRenderer().calculateDimension(stringBounder);
+			}
+		};
 	}
 }

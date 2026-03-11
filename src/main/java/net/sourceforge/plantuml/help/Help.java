@@ -77,11 +77,6 @@ public class Help extends TitledDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		final Display display = Display.create(lines);
 		final UFont font = UFontFactory.serif(16);

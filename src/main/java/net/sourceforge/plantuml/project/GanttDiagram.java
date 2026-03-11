@@ -168,7 +168,7 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 		if (this.timeBounds.getPrintStart() == null) {
 			initMinMax();
@@ -183,11 +183,6 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 
 		return new GanttDiagramMainBlock(this.timeBounds, this.modelData, this.drawRegistry, this.displayConfig,
 				this.timelineStyle, this, timeHeader, stringBounder);
-	}
-
-	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-		return getTextMainBlock01970(fileFormatOption);
 	}
 
 	private void initMinMax() {

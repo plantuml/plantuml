@@ -69,7 +69,7 @@ public class BoardDiagram extends TitledDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {
@@ -81,11 +81,6 @@ public class BoardDiagram extends TitledDiagram {
 				return minMax.getDimension().delta(10, 10);
 			}
 		};
-	}
-
-	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-		return getTextMainBlock01970(fileFormatOption);
 	}
 
 	private void drawMe(final UGraphic ug) {

@@ -513,11 +513,6 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 //
 	}
 
-	@Override
-	final protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
-		throw new UnsupportedOperationException();
-	}
-
 //	@Override
 //	protected ImageData exportDiagramInternal01970(OutputStream os, int index, FileFormatOption fileFormatOption)
 //			throws IOException {

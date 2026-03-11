@@ -303,7 +303,7 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 
 	}
 
-	protected abstract TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption);
+	// protected abstract TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption);
 
 	final public Pragma getPragma() {
 		return skinParam.getPragma();
