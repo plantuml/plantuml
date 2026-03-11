@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -52,13 +52,13 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.SkinParam;
 
-public class PSystemCreole extends PlainDiagram {
+public class PSystemCreole extends UgDiagram {
 
 	private final List<String> lines = new ArrayList<>();
 
@@ -75,7 +75,7 @@ public class PSystemCreole extends PlainDiagram {
 	}
 
 	@Override
-	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		final Display display = Display.create(lines);
 		final UFont font = UFontFactory.serif(14);
 		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);
@@ -85,12 +85,6 @@ public class PSystemCreole extends PlainDiagram {
 				.createSheet(display);
 		return new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
 
-		// final Dimension2D dim = TextBlockUtils.getDimension(sheetBlock);
-		// final UGraphic2 ug = fileFormat.createUGraphic(ColorMapper.IDENTITY, 1,
-		// dim, null, false);
-		// // sheetBlock.drawU(ug.apply(UTranslate.dy(10)));
-		// sheetBlock.drawU(ug);
-		// ug.writeImageTOBEMOVED(os, null, 96);
-		// return new ImageDataSimple(dim);
 	}
+
 }

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,47 +30,22 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.openiconic;
+package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.UgDiagram;
-import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
-public class PSystemOpenIconic extends UgDiagram {
+public abstract class UgSimpleDiagram extends UgDiagram implements TextBlock {
 
-	private final String iconName;
-	private final double factor;
-
-	public PSystemOpenIconic(UmlSource source, String iconName, double factor, PreprocessingArtifact preprocessing) {
+	public UgSimpleDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
-		this.iconName = iconName;
-		this.factor = factor;
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-		final OpenIcon icon = OpenIcon.retrieve(iconName);
-		// final Dimension2D dim = new Dimension2DDouble(100, 100);
-
-		return icon.asTextBlock(HColors.BLACK, factor);
-
+	public final TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+		return this;
 	}
-
-	public DiagramDescription getDescription() {
-		return new DiagramDescription("(Open iconic)");
-	}
-
-	@Override
-	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-		return ClockwiseTopRightBottomLeft.same(5);
-	}
-
 }

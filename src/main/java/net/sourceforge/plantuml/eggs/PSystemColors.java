@@ -42,8 +42,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.UgSimpleDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.jaws.JawsStrange;
@@ -54,6 +53,7 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -64,7 +64,6 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
@@ -73,8 +72,8 @@ import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.text.BackSlash;
 
 // http://www.redblobgames.com/grids/hexagons/
-public class PSystemColors extends PlainDiagram implements UDrawable {
-	
+public class PSystemColors extends UgSimpleDiagram {
+
 	private final double rectangleHeight = 28;
 	private final double rectangleWidth = 175;
 	private final HColorSet colors = HColorSet.instance();
@@ -90,13 +89,14 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 
 	}
 
-	@Override
-	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
-		return this;
-	}
-
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("(Colors)");
+	}
+
+	public XDimension2D calculateDimension(StringBounder sb) {
+		final LimitFinder limitFinder = LimitFinder.create(sb, true);
+		drawU(limitFinder);
+		return new XDimension2D(limitFinder.getMaxX() + 1, limitFinder.getMaxY() + 1);
 	}
 
 	public void drawU(UGraphic ug) {
