@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -49,31 +49,39 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.SkinParam;
 
-public class PSystemSkinparameterList extends PlainDiagram {
-	
+public class PSystemSkinparameterList extends UgDiagram {
 
 	public PSystemSkinparameterList(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
 	}
 
 	@Override
-	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception {
 		final List<TextBlock> cols = getCols(getDonors(), 5);
-		return new UDrawable() {
+		return new TextBlock() {
 			public void drawU(UGraphic ug) {
 				final StringBounder stringBounder = ug.getStringBounder();
 				double x = 0;
-				double y = 0;
 				for (TextBlock tb : cols) {
 					final XDimension2D dim = tb.calculateDimension(stringBounder);
 					tb.drawU(ug.apply(UTranslate.dx(x)));
 					x += dim.getWidth() + 10;
-					y = Math.max(y, dim.getHeight());
 				}
+			}
+
+			@Override
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				double totalWidth = 0;
+				double maxHeight = 0;
+				for (TextBlock tb : cols) {
+					final XDimension2D dim = tb.calculateDimension(stringBounder);
+					totalWidth += dim.getWidth() + 10;
+					maxHeight = Math.max(maxHeight, dim.getHeight());
+				}
+				return new XDimension2D(totalWidth, maxHeight);
 			}
 		};
 	}
