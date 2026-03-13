@@ -35,27 +35,28 @@
  */
 package net.sourceforge.plantuml.definition;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.UgSimpleDiagram;
+import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.Pragma;
 
-public class PSystemDefinition extends PlainDiagram implements UDrawable {
+public class PSystemDefinition extends UgSimpleDiagram {
 
 	private final List<String> lines = new ArrayList<>();
 	private final String startLine;
@@ -70,14 +71,21 @@ public class PSystemDefinition extends PlainDiagram implements UDrawable {
 	}
 
 	@Override
-	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
-		return this;
+	public void drawU(UGraphic ug) {
+		getTextBlock().drawU(ug);
 	}
 
-	public void drawU(UGraphic ug) {
+	@Fast
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return getTextBlock().calculateDimension(stringBounder);
+	}
+
+	private TextBlock getTextBlock() {
 		final UFont font = UFontFactory.sansSerif(14);
 		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);
-		Display.getWithNewlines(Pragma.createEmpty(), startLine).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()).drawU(ug);
+		return Display.getWithNewlines(Pragma.createEmpty(), startLine).create(fc, HorizontalAlignment.LEFT,
+				new SpriteContainerEmpty());
 	}
 
 	public void doCommandLine(String line) {

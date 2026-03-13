@@ -35,33 +35,26 @@
  */
 package net.sourceforge.plantuml.openiconic;
 
-import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.UgDiagram;
+import net.sourceforge.plantuml.UgSimpleDiagram;
+import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
-public class PSystemOpenIconic extends UgDiagram {
+public class PSystemOpenIconic extends UgSimpleDiagram {
 
-	private final String iconName;
-	private final double factor;
+	private final TextBlock textBlock;
 
 	public PSystemOpenIconic(UmlSource source, String iconName, double factor, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
-		this.iconName = iconName;
-		this.factor = factor;
-	}
-
-	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		final OpenIcon icon = OpenIcon.retrieve(iconName);
-		// final Dimension2D dim = new Dimension2DDouble(100, 100);
-
-		return icon.asTextBlock(HColors.BLACK, factor);
-
+		this.textBlock = icon.asTextBlock(HColors.BLACK, factor);
 	}
 
 	public DiagramDescription getDescription() {
@@ -71,6 +64,17 @@ public class PSystemOpenIconic extends UgDiagram {
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
 		return ClockwiseTopRightBottomLeft.same(5);
+	}
+
+	@Override
+	@Fast
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return textBlock.calculateDimension(stringBounder);
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+		textBlock.drawU(ug);
 	}
 
 }
