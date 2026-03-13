@@ -59,7 +59,7 @@ public class TextBlockInterceptorUDrawable implements TextBlock {
 
 	@Fast
 	public void drawU(UGraphic ug) {
-		new UGraphicInterceptorUDrawable2(ug, emptyHashMap(), gotoColor, isDebug).draw(textBlock);
+		new UGraphicDispatchFtile(ug, emptyHashMap(), gotoColor, isDebug).draw(textBlock);
 		ug.flushUg();
 	}
 

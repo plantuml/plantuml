@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.drawing.UGraphicInterceptorUDrawable;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicDispatchDrawable;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
@@ -150,7 +150,7 @@ public class FtileGroup extends AbstractFtile {
 	private MinMax getInnerMinMax(StringBounder stringBounder) {
 		final LimitFinder limitFinder = LimitFinder.create(stringBounder, false);
 		final UGraphicForSnake interceptor = new UGraphicForSnake(limitFinder);
-		final UGraphicInterceptorUDrawable interceptor2 = new UGraphicInterceptorUDrawable(interceptor);
+		final UGraphicDispatchDrawable interceptor2 = new UGraphicDispatchDrawable(interceptor);
 
 		inner.drawU(interceptor2);
 		interceptor2.flushUg();

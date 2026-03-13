@@ -40,9 +40,9 @@ import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 
-public class UGraphicInterceptorUDrawable extends UGraphicDelegator {
+public class UGraphicDispatchDrawable extends UGraphicDelegator {
 
-	public UGraphicInterceptorUDrawable(UGraphic ug) {
+	public UGraphicDispatchDrawable(UGraphic ug) {
 		super(ug);
 	}
 
@@ -58,7 +58,7 @@ public class UGraphicInterceptorUDrawable extends UGraphicDelegator {
 	}
 
 	public UGraphic apply(UChange change) {
-		return new UGraphicInterceptorUDrawable(getUg().apply(change));
+		return new UGraphicDispatchDrawable(getUg().apply(change));
 	}
 
 }

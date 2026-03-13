@@ -51,13 +51,13 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 
-public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
+public class UGraphicDispatchFtile extends UGraphicDelegator {
 
 	private final Map<String, UTranslate> positions;
 	private final HColor gotoColor;
 	private final boolean isDebug;
 
-	public UGraphicInterceptorUDrawable2(UGraphic ug, Map<String, UTranslate> positions, HColor gotoColor,
+	public UGraphicDispatchFtile(UGraphic ug, Map<String, UTranslate> positions, HColor gotoColor,
 			boolean isDebug) {
 		super(ug);
 		this.positions = positions;
@@ -119,7 +119,7 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 	}
 
 	public UGraphic apply(UChange change) {
-		return new UGraphicInterceptorUDrawable2(getUg().apply(change), positions, gotoColor, isDebug);
+		return new UGraphicDispatchFtile(getUg().apply(change), positions, gotoColor, isDebug);
 	}
 
 }
