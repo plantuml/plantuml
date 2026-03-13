@@ -52,8 +52,8 @@ import java.util.LinkedList;
 <span class="fc" id="L52">	}</span>
 
 	public void addForeach(ExecutionContextForeach value) {
-<span class="nc" id="L55">		allForeachs.addLast(value);</span>
-<span class="nc" id="L56">	}</span>
+<span class="fc" id="L55">		allForeachs.addLast(value);</span>
+<span class="fc" id="L56">	}</span>
 
 	public ExecutionContextIf peekIf() {
 <span class="fc" id="L59">		return allIfs.peekLast();</span>
@@ -76,7 +76,7 @@ import java.util.LinkedList;
 	}
 
 	public ExecutionContextForeach pollForeach() {
-<span class="nc" id="L79">		return allForeachs.pollLast();</span>
+<span class="fc" id="L79">		return allForeachs.pollLast();</span>
 	}
 
 	public boolean areAllIfOk(TContext context, TMemory memory) throws EaterException {

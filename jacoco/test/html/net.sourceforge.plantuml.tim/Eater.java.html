@@ -80,7 +80,7 @@ public abstract class Eater {
 
 	final public TValue eatExpression(TContext context, TMemory memory) throws EaterException {
 <span class="fc" id="L82">		final char ch = peekChar();</span>
-<span class="pc bpc" id="L83" title="1 of 4 branches missed.">		if (ch == '{' || ch == '[') {</span>
+<span class="fc bfc" id="L83" title="All 4 branches covered.">		if (ch == '{' || ch == '[') {</span>
 <span class="fc" id="L84">			final String data = eatAllToEnd();</span>
 			// System.err.println(&quot;data=&quot; + data);
 <span class="fc" id="L86">			final JsonValue json = Json.parse(data);</span>

@@ -98,8 +98,8 @@ public class ArrowConfiguration {
 	}
 
 	public static ArrowConfiguration withDirectionSelf(boolean reverseDefine) {
-<span class="nc" id="L101">		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create(),</span>
-<span class="nc" id="L102">				ArrowDressing.create().withHead(ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null,</span>
+<span class="fc" id="L101">		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create(),</span>
+<span class="fc" id="L102">				ArrowDressing.create().withHead(ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null,</span>
 				true, 1, reverseDefine, 0);
 	}
 
@@ -137,18 +137,18 @@ public class ArrowConfiguration {
 	}
 
 	public ArrowConfiguration withHead1(ArrowHead head) {
-<span class="nc" id="L140">		return new ArrowConfiguration(body, dressing1.withHead(head), dressing2, decoration1, decoration2, color,</span>
+<span class="fc" id="L140">		return new ArrowConfiguration(body, dressing1.withHead(head), dressing2, decoration1, decoration2, color,</span>
 				isSelf, thickness, reverseDefine, inclination);
 	}
 
 	public ArrowConfiguration withHead2(ArrowHead head) {
-<span class="nc" id="L145">		return new ArrowConfiguration(body, dressing1, dressing2.withHead(head), decoration1, decoration2, color,</span>
+<span class="fc" id="L145">		return new ArrowConfiguration(body, dressing1, dressing2.withHead(head), decoration1, decoration2, color,</span>
 				isSelf, thickness, reverseDefine, inclination);
 	}
 
 	public ArrowConfiguration withPart(ArrowPart part) {
-<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (dressing2.getHead() != ArrowHead.NONE)</span>
-<span class="nc" id="L151">			return new ArrowConfiguration(body, dressing1, dressing2.withPart(part), decoration1, decoration2, color,</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		if (dressing2.getHead() != ArrowHead.NONE)</span>
+<span class="fc" id="L151">			return new ArrowConfiguration(body, dressing1, dressing2.withPart(part), decoration1, decoration2, color,</span>
 					isSelf, thickness, reverseDefine, inclination);
 
 <span class="nc" id="L154">		return new ArrowConfiguration(body, dressing1.withPart(part), dressing2, decoration1, decoration2, color,</span>
@@ -156,12 +156,12 @@ public class ArrowConfiguration {
 	}
 
 	public ArrowConfiguration withDecoration1(ArrowDecoration decoration1) {
-<span class="nc" id="L159">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness,</span>
+<span class="fc" id="L159">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness,</span>
 				reverseDefine, inclination);
 	}
 
 	public ArrowConfiguration withDecoration2(ArrowDecoration decoration2) {
-<span class="nc" id="L164">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness,</span>
+<span class="fc" id="L164">		return new ArrowConfiguration(body, dressing1, dressing2, decoration1, decoration2, color, isSelf, thickness,</span>
 				reverseDefine, inclination);
 	}
 
@@ -179,8 +179,8 @@ public class ArrowConfiguration {
 	}
 
 	public final ArrowDirection getArrowDirection() {
-<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		if (isSelf)</span>
-<span class="nc" id="L183">			return ArrowDirection.SELF;</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		if (isSelf)</span>
+<span class="fc" id="L183">			return ArrowDirection.SELF;</span>
 
 <span class="pc bpc" id="L185" title="1 of 4 branches missed.">		if (this.dressing1.getHead() == ArrowHead.NONE &amp;&amp; this.dressing2.getHead() != ArrowHead.NONE)</span>
 <span class="fc" id="L186">			return ArrowDirection.LEFT_TO_RIGHT_NORMAL;</span>
@@ -192,7 +192,7 @@ public class ArrowConfiguration {
 	}
 
 	public boolean isSelfArrow() {
-<span class="nc bnc" id="L195" title="All 2 branches missed.">		return getArrowDirection() == ArrowDirection.SELF;</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		return getArrowDirection() == ArrowDirection.SELF;</span>
 	}
 
 	public boolean isDotted() {
@@ -219,8 +219,8 @@ public class ArrowConfiguration {
 	}
 
 	public final ArrowPart getPart() {
-<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (dressing2.getHead() != ArrowHead.NONE)</span>
-<span class="nc" id="L223">			return dressing2.getPart();</span>
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">		if (dressing2.getHead() != ArrowHead.NONE)</span>
+<span class="fc" id="L223">			return dressing2.getPart();</span>
 
 <span class="nc" id="L225">		return dressing1.getPart();</span>
 	}
@@ -274,7 +274,7 @@ public class ArrowConfiguration {
 	}
 
 	public final boolean isReverseDefine() {
-<span class="nc" id="L277">		return reverseDefine;</span>
+<span class="fc" id="L277">		return reverseDefine;</span>
 	}
 
 	public ArrowConfiguration withInclination(int inclination) {
