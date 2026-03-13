@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.version;
 
-
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -42,8 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.atmp.PixelImage;
-import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.UgSimpleDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
@@ -53,16 +51,16 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
-public class PSystemKeycheck extends PlainDiagram {
-	
+public class PSystemKeycheck extends UgSimpleDiagram {
 
 	final private String key;
 	final private String sig;
@@ -74,16 +72,13 @@ public class PSystemKeycheck extends PlainDiagram {
 	}
 
 	@Override
-	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
-		return new UDrawable() {
-			public void drawU(UGraphic ug) {
-				try {
-					drawInternal(ug);
-				} catch (Exception e) {
-					Logme.error(e);
-				}
-			}
-		};
+	public void drawU(UGraphic ug) {
+		try {
+			drawInternal(ug);
+		} catch (Exception e) {
+			Logme.error(e);
+		}
+
 	}
 
 	public DiagramDescription getDescription() {
@@ -91,6 +86,15 @@ public class PSystemKeycheck extends PlainDiagram {
 	}
 
 	private void drawInternal(UGraphic ug) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+		getTextBlock().drawU(ug);
+	}
+
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return getTextBlock().calculateDimension(stringBounder);
+	}
+
+	public TextBlock getTextBlock() {
 		final List<String> strings = header();
 		try {
 			final LicenseInfo info = PLSSignature.retrieveNamed(sig, key, false);
@@ -101,9 +105,7 @@ public class PSystemKeycheck extends PlainDiagram {
 			Logme.error(e);
 			strings.add("<i>Error:</i> " + e);
 		}
-
-		final TextBlock disp = GraphicStrings.createBlackOnWhite(strings);
-		disp.drawU(ug);
+		return GraphicStrings.createBlackOnWhite(strings);
 	}
 
 	private ArrayList<String> header() {
@@ -146,4 +148,5 @@ public class PSystemKeycheck extends PlainDiagram {
 		}
 
 	}
+
 }

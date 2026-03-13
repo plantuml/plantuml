@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.version;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +41,7 @@ import java.util.prefs.BackingStoreException;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.UgSimpleDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
@@ -52,6 +51,8 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
@@ -61,8 +62,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
-public class PSystemKeygen extends PlainDiagram {
-	
+public class PSystemKeygen extends UgSimpleDiagram {
 
 	final private String key;
 
@@ -167,5 +167,17 @@ public class PSystemKeygen extends PlainDiagram {
 			disp.drawU(ug);
 		}
 
+	}
+
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+		// TODO Auto-generated method stub
+		
 	}
 }
