@@ -39,26 +39,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.atmp.PixelImage;
-import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.UgSimpleDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-public class PSystemLicense extends PlainDiagram implements UDrawable {
-
-	@Override
-	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
-		return this;
-	}
+public class PSystemLicense extends UgSimpleDiagram {
 
 	public static PSystemLicense create(UmlSource source, PreprocessingArtifact preprocessing) throws IOException {
 		return new PSystemLicense(source, preprocessing);
@@ -77,36 +72,48 @@ public class PSystemLicense extends PlainDiagram implements UDrawable {
 	}
 
 	public void drawU(UGraphic ug) {
+		getTextBlock().drawU(ug);
+	}
 
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return getTextBlock().calculateDimension(stringBounder);
+	}
+
+	private TextBlock getTextBlock() {
 		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();
 		final PortableImage logo = LicenseInfo.retrieveDistributorImage(licenseInfo);
 
 		if (logo == null) {
-			getTextBlock(licenseInfo).drawU(ug);
-		} else {
-			final List<String> strings1 = new ArrayList<>();
-			final List<String> strings2 = new ArrayList<>();
-
-			strings1.addAll(License.getCurrent().getText1(licenseInfo));
-			strings2.addAll(License.getCurrent().getText2(licenseInfo));
-
-			final TextBlock result1 = getGraphicStrings(strings1);
-			result1.drawU(ug);
-			ug = ug.apply(UTranslate.dy(4 + result1.calculateDimension(ug.getStringBounder()).getHeight()));
-			UImage im = new UImage(new PixelImage(logo, AffineTransformType.TYPE_BILINEAR));
-			ug.apply(UTranslate.dx(20)).draw(im);
-
-			ug = ug.apply(UTranslate.dy(im.getHeight()));
-			final TextBlock result2 = getGraphicStrings(strings2);
-			result2.drawU(ug);
+			final List<String> strings = new ArrayList<>();
+			strings.addAll(License.getCurrent().getText1(licenseInfo));
+			strings.addAll(License.getCurrent().getText2(licenseInfo));
+			return getGraphicStrings(strings);
 		}
-	}
 
-	protected TextBlock getTextBlock(final LicenseInfo licenseInfo) {
-		final List<String> strings = new ArrayList<>();
-		strings.addAll(License.getCurrent().getText1(licenseInfo));
-		strings.addAll(License.getCurrent().getText2(licenseInfo));
-		return getGraphicStrings(strings);
+		final TextBlock result1 = getGraphicStrings(License.getCurrent().getText1(licenseInfo));
+		final TextBlock result2 = getGraphicStrings(License.getCurrent().getText2(licenseInfo));
+		final UImage im = new UImage(new PixelImage(logo, AffineTransformType.TYPE_BILINEAR));
+
+		return new TextBlock() {
+			@Override
+			public void drawU(UGraphic ug) {
+				result1.drawU(ug);
+				ug = ug.apply(UTranslate.dy(4 + result1.calculateDimension(ug.getStringBounder()).getHeight()));
+				ug.apply(UTranslate.dx(20)).draw(im);
+				ug = ug.apply(UTranslate.dy(im.getHeight()));
+				result2.drawU(ug);
+			}
+
+			@Override
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				final XDimension2D dim1 = result1.calculateDimension(stringBounder);
+				final XDimension2D dim2 = result2.calculateDimension(stringBounder);
+				final double width = Math.max(Math.max(dim1.getWidth(), dim2.getWidth()), 20 + im.getWidth());
+				final double height = dim1.getHeight() + 4 + im.getHeight() + dim2.getHeight();
+				return new XDimension2D(width, height);
+			}
+		};
 	}
 
 }
