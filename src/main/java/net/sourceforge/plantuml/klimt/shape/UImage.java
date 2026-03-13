@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 
 public class UImage implements UShape {
-    // ::remove file when __HAXE__
 
 	private final MutableImage image;
 	private final String formula;
