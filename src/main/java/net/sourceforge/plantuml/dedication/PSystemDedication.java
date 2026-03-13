@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.dedication;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.UgSimpleDiagram;
+import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
@@ -63,8 +64,9 @@ public class PSystemDedication extends UgSimpleDiagram {
 	}
 
 	@Override
+	@Fast
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		return new XDimension2D(image.getWidth(), image.getHeight());
+		return image.calculateDimension(stringBounder);
 	}
 
 	public DiagramDescription getDescription() {

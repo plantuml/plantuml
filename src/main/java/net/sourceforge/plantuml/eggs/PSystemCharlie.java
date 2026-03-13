@@ -61,7 +61,7 @@ public class PSystemCharlie extends UgSimpleDiagram {
 
 	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		return new XDimension2D(image.getWidth(), image.getHeight());
+		return image.calculateDimension(stringBounder);
 	}
 
 	@Override
