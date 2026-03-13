@@ -42,11 +42,10 @@ import java.util.List;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-public abstract class PlainStringsDiagram extends PlainDiagram {
-	// ::remove file when __HAXE__
+public abstract class PlainStringsDiagram extends UgDiagram {
 
 	protected PortableImage image = null;
 	protected GraphicPosition imagePosition = null;
@@ -58,7 +57,8 @@ public abstract class PlainStringsDiagram extends PlainDiagram {
 	}
 
 	@Override
-	public UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
+	public final TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 		return createBlackOnWhite(strings, image, imagePosition);
 	}
+
 }
