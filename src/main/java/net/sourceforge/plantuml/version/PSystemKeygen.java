@@ -74,6 +74,11 @@ public class PSystemKeygen extends UgSimpleDiagram {
 		return getTextBlock().calculateDimension(stringBounder);
 	}
 
+	@Override
+	public void drawU(UGraphic ug) {
+		getTextBlock().drawU(ug);
+	}
+
 	private TextBlock getTextBlock() {
 		final LicenseInfo installed = LicenseInfo.retrieveNamedSlow();
 		if (key.length() == 0 || LicenseInfo.retrieveNamed(key).isNone())
@@ -109,27 +114,65 @@ public class PSystemKeygen extends UgSimpleDiagram {
 		final List<String> strings = header();
 		strings.add("To get your <i>Professional Edition License</i>,");
 		strings.add("please send this qrcode to <b>plantuml@gmail.com</b> :");
-		if (info.isNone() == false) {
-			strings.add(" ");
-			strings.add("<u>Installed license</u>:");
-			License.addLicenseInfo(strings, info);
-			strings.add(" ");
+		final TextBlock header = GraphicStrings.createBlackOnWhite(strings);
+
+		UImage flash = null;
+		try {
+			final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
+			final PortableImage im = utils.exportFlashcode(
+					Version.versionString() + "\n" + SignatureUtils.toHexString(PLSSignature.signature()), XColor.BLACK,
+					XColor.WHITE);
+			if (im != null)
+				flash = new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(4);
+		} catch (IOException e) {
+			Logme.error(e);
 		}
-		return GraphicStrings.createBlackOnWhite(strings);
+
+		TextBlock footer = null;
+		if (info.isNone() == false) {
+			final List<String> footerStrings = new ArrayList<>();
+			footerStrings.add("<u>Installed license</u>:");
+			License.addLicenseInfo(footerStrings, info);
+			footerStrings.add(" ");
+			footer = GraphicStrings.createBlackOnWhite(footerStrings);
+		}
+
+		final UImage finalFlash = flash;
+		final TextBlock finalFooter = footer;
+		return new TextBlock() {
+			@Override
+			public void drawU(UGraphic ug) {
+				header.drawU(ug);
+				ug = ug.apply(UTranslate.dy(header.calculateDimension(ug.getStringBounder()).getHeight()));
+				if (finalFlash != null) {
+					ug.draw(finalFlash);
+					ug = ug.apply(UTranslate.dy(finalFlash.getHeight()));
+				}
+				if (finalFooter != null)
+					finalFooter.drawU(ug);
+			}
+
+			@Override
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				final XDimension2D dimHeader = header.calculateDimension(stringBounder);
+				double width = dimHeader.getWidth();
+				double height = dimHeader.getHeight();
+				if (finalFlash != null) {
+					width = Math.max(width, finalFlash.getWidth());
+					height += finalFlash.getHeight();
+				}
+				if (finalFooter != null) {
+					final XDimension2D dimFooter = finalFooter.calculateDimension(stringBounder);
+					width = Math.max(width, dimFooter.getWidth());
+					height += dimFooter.getHeight();
+				}
+				return new XDimension2D(width, height);
+			}
+		};
 	}
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("(Key)");
-	}
-
-	@Override
-	public void drawU(UGraphic ug) {
-		final LicenseInfo installed = LicenseInfo.retrieveNamedSlow();
-		if (key.length() == 0 || LicenseInfo.retrieveNamed(key).isNone()) {
-			drawFlash(ug, installed);
-			return;
-		}
-		getTextBlock().drawU(ug);
 	}
 
 	private ArrayList<String> header() {
@@ -141,26 +184,6 @@ public class PSystemKeygen extends UgSimpleDiagram {
 //		}
 		strings.add(" ");
 		return strings;
-	}
-
-	private void drawFlash(UGraphic ug, LicenseInfo info) {
-		final TextBlock disp = getFlashTextBlock(info);
-		disp.drawU(ug);
-
-		ug = ug.apply(UTranslate.dy(disp.calculateDimension(ug.getStringBounder()).getHeight()));
-		try {
-			final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-			final PortableImage im = utils.exportFlashcode(
-					Version.versionString() + "\n" + SignatureUtils.toHexString(PLSSignature.signature()),
-					XColor.BLACK, XColor.WHITE);
-			if (im != null) {
-				final UImage flash = new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
-						.scale(4);
-				ug.draw(flash);
-			}
-		} catch (IOException e) {
-			Logme.error(e);
-		}
 	}
 
 }
