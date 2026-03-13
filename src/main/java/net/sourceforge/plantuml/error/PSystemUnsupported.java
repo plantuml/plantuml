@@ -35,40 +35,36 @@
  */
 package net.sourceforge.plantuml.error;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.Version;
 
-public class PSystemUnsupported extends PlainDiagram {
+public class PSystemUnsupported extends UgDiagram {
 
 	private final List<String> strings = new ArrayList<>();
 
 	public PSystemUnsupported(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
 		strings.add("<b>Diagram not supported by this release of PlantUML");
-		// ::comment when __TEAVM__
-		strings.add(Version.fullDescription());
-		strings.add("License " + new License().toString());
-		// ::done
+
+		if (!TeaVM.isTeaVM()) {
+			strings.add(Version.fullDescription());
+			strings.add("License " + new License().toString());
+		}
 	}
 
 	@Override
-	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
-		return getGraphicStrings();
-	}
-
-	public TextBlock getGraphicStrings() {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception {
 		return GraphicStrings.createBlackOnWhite(strings);
 	}
 
