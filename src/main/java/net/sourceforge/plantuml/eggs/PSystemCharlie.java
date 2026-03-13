@@ -36,18 +36,20 @@ package net.sourceforge.plantuml.eggs;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
-public class PSystemCharlie extends PlainDiagram {
+public class PSystemCharlie extends UgDiagram {
 
 	private PortableImage image;
 
@@ -56,18 +58,26 @@ public class PSystemCharlie extends PlainDiagram {
 		image = PSystemVersion.getCharlieImage();
 	}
 
-	@Override
-	public UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
-		return new UDrawable() {
-			public void drawU(UGraphic ug) {
-				final UImage im = new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR));
-				ug.draw(im);
-			}
-		};
-	}
-
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("(Je Suis Charlie)");
+	}
+
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+		final UImage im = new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR));
+		return new TextBlock() {
+
+			@Override
+			public void drawU(UGraphic ug) {
+				ug.draw(im);
+
+			}
+
+			@Override
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return new XDimension2D(im.getWidth(), im.getHeight());
+			}
+		};
 	}
 
 }
