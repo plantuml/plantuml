@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphicDelegator;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
 
@@ -56,7 +57,8 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 	private final HColor gotoColor;
 	private final boolean isDebug;
 
-	public UGraphicInterceptorUDrawable2(UGraphic ug, Map<String, UTranslate> positions, HColor gotoColor, boolean isDebug) {
+	public UGraphicInterceptorUDrawable2(UGraphic ug, Map<String, UTranslate> positions, HColor gotoColor,
+			boolean isDebug) {
 		super(ug);
 		this.positions = positions;
 		this.gotoColor = gotoColor;
@@ -68,8 +70,7 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 			final Gtile gtile = (Gtile) shape;
 			// System.err.println("gtile=" + gtile);
 			gtile.drawU(this);
-		} else
-		if (shape instanceof Ftile) {
+		} else if (shape instanceof Ftile) {
 			final Ftile ftile = (Ftile) shape;
 			// System.err.println("ftile=" + ftile);
 			ftile.drawU(this);
@@ -81,7 +82,8 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 				// System.err.println("positions=" + positions);
 				drawGoto((FtileGoto) ftile);
 			}
-		} else if (shape instanceof UDrawable) {
+		} else if (shape instanceof UDrawable && !(shape instanceof UImage)) {
+			// UImage implements TextBlock/UDrawable but must be drawn by the low-level driver
 			final UDrawable drawable = (UDrawable) shape;
 			drawable.drawU(this);
 		} else {
@@ -95,7 +97,7 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 	}
 
 	private void drawGoto(FtileGoto ftile) {
-		//final HColor gotoColor = HColors.MY_RED;
+		// final HColor gotoColor = HColors.MY_RED;
 
 		final FtileGeometry geom = ftile.calculateDimension(getStringBounder());
 		final XPoint2D pt = geom.getPointIn();
@@ -108,8 +110,8 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 		final double dx = dest.getDx() - posNow.getDx();
 		final double dy = dest.getDy() - posNow.getDy();
 		if (isDebug) {
-		ugGoto.draw(UEllipse.build(3, 3));
-		ugGoto.apply(new UTranslate(dx, dy)).draw(UEllipse.build(3, 3));
+			ugGoto.draw(UEllipse.build(3, 3));
+			ugGoto.apply(new UTranslate(dx, dy)).draw(UEllipse.build(3, 3));
 		}
 		ugGoto.draw(ULine.hline(dx));
 		ugGoto.apply(UTranslate.dx(dx)).draw(ULine.vline(dy));

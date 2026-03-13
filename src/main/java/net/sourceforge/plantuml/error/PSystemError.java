@@ -45,14 +45,12 @@ import net.atmp.PixelImage;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UgDiagram;
-import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.eggs.PSystemWelcome;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
-import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -60,16 +58,12 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockRaw;
@@ -185,29 +179,29 @@ public abstract class PSystemError extends UgDiagram {
 		result.add(" ");
 		final int traceSize = trace.size();
 		if (traceSize > 40) {
-			for (StringLocated s : trace.subList(0, 5)) {
+			for (StringLocated s : trace.subList(0, 5))
 				addToResult(result, s);
-			}
+
 			result.add("...");
 			final int skipped = traceSize - 5 - 20;
 			result.add("... ( skipping " + skipped + " lines )");
 			result.add("...");
-			for (StringLocated s : trace.subList(traceSize - 20, traceSize)) {
+			for (StringLocated s : trace.subList(traceSize - 20, traceSize))
 				addToResult(result, s);
-			}
+
 		} else {
-			for (StringLocated s : trace) {
+			for (StringLocated s : trace)
 				addToResult(result, s);
-			}
+
 		}
 		return result;
 	}
 
 	private void addToResult(final List<String> result, StringLocated s) {
 		String tmp = s.getString();
-		if (tmp.length() > 120) {
+		if (tmp.length() > 120)
 			tmp = tmp.substring(0, 120) + " ...";
-		}
+
 		result.add(tmp);
 	}
 
@@ -297,9 +291,9 @@ public abstract class PSystemError extends UgDiagram {
 	}
 
 	private TextBlock addMessageAdopt(final TextBlock source) throws IOException {
-		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid()) {
+		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())
 			return source;
-		}
+
 		final TextBlock message = getMessageAdopt();
 		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
 		return result;
@@ -351,104 +345,29 @@ public abstract class PSystemError extends UgDiagram {
 	}
 
 	private TextBlock getMessagePatreon() {
-		final UImage message = new UImage(
-				new PixelImage(PSystemVersion.getTime01(), AffineTransformType.TYPE_BILINEAR));
-		final XColor back = XColor.from(message.getImage(1).getRGB(0, 0));
-		final HColor backColor = HColors.simple(back);
-
-		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
-				.exportFlashcode("https://plantuml.com/patreon", XColor.BLACK, XColor.WHITE));
-
-		final int scale = 2;
-
-		final double imWidth;
-		final double imHeight;
-		if (qrcode == null) {
-			imWidth = message.getWidth();
-			imHeight = message.getHeight();
-		} else {
-			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;
-			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);
-		}
-		return new TextBlock() {
-
-			public void drawU(UGraphic ug) {
-				if (qrcode == null) {
-					ug.apply(new UTranslate(1, 1)).draw(message);
-				} else {
-					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
-							.scale(scale);
-					ug.apply(new UTranslate(1, (imHeight - message.getHeight()) / 2)).draw(message);
-					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);
-				}
-			}
-
-			@Fast
-			@Override
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return new XDimension2D(imWidth + 1, imHeight + 1);
-			}
-
-			public MinMax getMinMax(StringBounder stringBounder) {
-				return MinMax.fromMax(imWidth + 1, imHeight + 1);
-			}
-
-			public HColor getBackcolor() {
-				return backColor;
-			}
-		};
-
+		return buildMessageWithQrcode(PSystemVersion.getTime01(), "https://plantuml.com/patreon");
 	}
 
 	private TextBlock getMessageLiberapay() {
-		final UImage message = new UImage(
-				new PixelImage(PSystemVersion.getTime15(), AffineTransformType.TYPE_BILINEAR));
+		return buildMessageWithQrcode(PSystemVersion.getTime15(), "https://plantuml.com/lp");
+	}
+
+	private TextBlock buildMessageWithQrcode(PortableImage banner, String url) {
+		final UImage message = new UImage(new PixelImage(banner, AffineTransformType.TYPE_BILINEAR));
 		final XColor back = XColor.from(message.getImage(1).getRGB(0, 0));
 		final HColor backColor = HColors.simple(back);
 
-		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()
-				.exportFlashcode("https://plantuml.com/lp", XColor.BLACK, XColor.WHITE));
+		final PortableImage qrcode = smaller(
+				FlashCodeFactory.getFlashCodeUtils().exportFlashcode(url, XColor.BLACK, XColor.WHITE));
 
-		final int scale = 2;
-
-		final double imWidth;
-		final double imHeight;
+		TextBlock result;
 		if (qrcode == null) {
-			imWidth = message.getWidth();
-			imHeight = message.getHeight();
+			result = message;
 		} else {
-			imWidth = message.getWidth() + qrcode.getWidth() * scale + 20;
-			imHeight = Math.max(message.getHeight(), qrcode.getHeight() * scale + 10);
+			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(2);
+			result = TextBlockUtils.mergeLR(message, qr, VerticalAlignment.CENTER);
 		}
-
-		return new TextBlock() {
-
-			public void drawU(UGraphic ug) {
-				if (qrcode == null) {
-					ug.apply(new UTranslate(1, 1)).draw(message);
-				} else {
-					final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
-							.scale(scale);
-					ug.apply(new UTranslate(1, (imHeight - message.getHeight()) / 2)).draw(message);
-					ug.apply(new UTranslate(1 + message.getWidth(), (imHeight - qr.getHeight()) / 2)).draw(qr);
-				}
-			}
-
-			@Fast
-			@Override
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return new XDimension2D(imWidth + 1, imHeight + 1);
-			}
-
-			public MinMax getMinMax(StringBounder stringBounder) {
-				return MinMax.fromMax(imWidth + 1, imHeight + 1);
-			}
-
-			public HColor getBackcolor() {
-				return backColor;
-			}
-		};
-
+		return TextBlockUtils.addBackcolor(TextBlockUtils.withMargin(result, 1, 1), backColor);
 	}
 
 	private PortableImage smaller(PortableImage im) {

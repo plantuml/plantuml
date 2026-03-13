@@ -38,16 +38,17 @@ package net.sourceforge.plantuml.klimt.drawing;
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.UImage;
 
 public class UGraphicInterceptorUDrawable extends UGraphicDelegator {
-    // ::remove file when __HAXE__
 
 	public UGraphicInterceptorUDrawable(UGraphic ug) {
 		super(ug);
 	}
 
 	public void draw(UShape shape) {
-		if (shape instanceof UDrawable) {
+		if (shape instanceof UDrawable && !(shape instanceof UImage)) {
+			// UImage implements TextBlock/UDrawable but must be drawn by the low-level driver
 			final UDrawable drawable = (UDrawable) shape;
 			drawable.drawU(this);
 		} else {
