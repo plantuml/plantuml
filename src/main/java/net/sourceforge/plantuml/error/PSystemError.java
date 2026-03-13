@@ -275,13 +275,12 @@ public abstract class PSystemError extends PlainDiagram {
 		return full.subList(full.size() - 1, full.size());
 	}
 
-	// ::comment when __TEAVM__
-	private TextBlock getWelcome() throws IOException {
+	private TextBlock getWelcome() {
 		return new PSystemWelcome(getSource(), GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT, getPreprocessingArtifact())
-				.getGraphicStrings();
+				.getTextBlock12026(0, null);
 	}
 
-	private TextBlock addWelcome(final TextBlock result) throws IOException {
+	private TextBlock addWelcome(final TextBlock result) {
 		final TextBlock welcome = getWelcome();
 		return TextBlockUtils.mergeTB(welcome, result, HorizontalAlignment.LEFT);
 	}
@@ -478,8 +477,6 @@ public abstract class PSystemError extends PlainDiagram {
 		final int nb = 1;
 		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);
 	}
-
-	// ::done
 
 	public int score() {
 		final int result = trace.size() * 10 + singleError.score();
