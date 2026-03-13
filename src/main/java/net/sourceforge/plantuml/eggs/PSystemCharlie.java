@@ -35,27 +35,24 @@
 package net.sourceforge.plantuml.eggs;
 
 import net.atmp.PixelImage;
-import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.UgDiagram;
+import net.sourceforge.plantuml.UgSimpleDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
-import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
-public class PSystemCharlie extends UgDiagram {
+public class PSystemCharlie extends UgSimpleDiagram {
 
-	private PortableImage image;
+	private final UImage image;
 
 	PSystemCharlie(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
-		image = PSystemVersion.getCharlieImage();
+		this.image = new UImage(new PixelImage(PSystemVersion.getCharlieImage(), AffineTransformType.TYPE_BILINEAR));
 	}
 
 	public DiagramDescription getDescription() {
@@ -63,21 +60,13 @@ public class PSystemCharlie extends UgDiagram {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-		final UImage im = new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR));
-		return new TextBlock() {
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(image.getWidth(), image.getHeight());
+	}
 
-			@Override
-			public void drawU(UGraphic ug) {
-				ug.draw(im);
-
-			}
-
-			@Override
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return new XDimension2D(im.getWidth(), im.getHeight());
-			}
-		};
+	@Override
+	public void drawU(UGraphic ug) {
+		ug.draw(image);
 	}
 
 }

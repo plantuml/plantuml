@@ -43,7 +43,7 @@ import java.util.StringTokenizer;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.code.AsciiEncoder;
 import net.sourceforge.plantuml.code.CompressionBrotli;
 import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
@@ -59,15 +59,13 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
-public class PSystemDonors extends PlainDiagram {
-	
+public class PSystemDonors extends UgDiagram {
 
 	private static final int COLS = 6;
 	private static final int FREE_LINES = 6;
@@ -96,23 +94,21 @@ public class PSystemDonors extends PlainDiagram {
 			+ "OjhwVifDdXn8d00TKAawZPqUneneXKCjlscp98DAuauL_ti6qjqbLTwgc3JAaAXwWysIs3hlpD3fdDmg"
 			+ "N5xFyVJ632dr2-eBWZs6kbpF3NW20meXhW05oLNpljMACsHKbbNZmoeKHWws5JKqsWmMsHtZqr0shvYj"
 			+ "yUpO5i08L0pzWmjxZuP6JgXesUQ4CXiH1ObIQ0ieiySejc6VaYvkEJMTj_PENUY7pPDDDVeMbUB0EZoZ" + "yWe1";
-	/*
-	 * Special thanks to our sponsors and donors:
-	 * 
-	 * - Noam Tamim
-	 */
 
 	public PSystemDonors(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
 	}
 
+	public TextBlock getHeader() {
+		return GraphicStrings.createBlackOnWhite(Arrays.asList("<b>Special thanks to our sponsors and donors !"));
+	}
+
 	@Override
-	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception {
 		final List<TextBlock> cols = getCols(getDonors(), COLS, FREE_LINES);
-		return new UDrawable() {
+		return new TextBlock() {
 			public void drawU(UGraphic ug) {
-				final TextBlock header = GraphicStrings
-						.createBlackOnWhite(Arrays.asList("<b>Special thanks to our sponsors and donors !"));
+				final TextBlock header = getHeader();
 				header.drawU(ug);
 				final StringBounder stringBounder = ug.getStringBounder();
 				ug = ug.apply(UTranslate.dy(header.calculateDimension(stringBounder).getHeight()));
@@ -129,6 +125,20 @@ public class PSystemDonors extends PlainDiagram {
 				final UImage logo = new UImage(
 						new PixelImage(PSystemVersion.getPlantumlImage(), AffineTransformType.TYPE_BILINEAR));
 				ug.apply(new UTranslate(lastX, y - logo.getHeight())).draw(logo);
+			}
+
+			@Override
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				final TextBlock header = getHeader();
+				double totalWidth = 0;
+				double colsHeight = 0;
+				for (TextBlock tb : cols) {
+					final XDimension2D dim = tb.calculateDimension(stringBounder);
+					totalWidth += dim.getWidth() + 10;
+					colsHeight = Math.max(colsHeight, dim.getHeight());
+				}
+				final double headerHeight = header.calculateDimension(stringBounder).getHeight();
+				return new XDimension2D(totalWidth, headerHeight + colsHeight);
 			}
 		};
 	}

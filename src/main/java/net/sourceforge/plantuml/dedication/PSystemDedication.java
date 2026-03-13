@@ -35,11 +35,8 @@
  */
 package net.sourceforge.plantuml.dedication;
 
-import java.util.Objects;
-
 import net.atmp.PixelImage;
-import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.UgDiagram;
+import net.sourceforge.plantuml.UgSimpleDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
@@ -47,35 +44,27 @@ import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-public class PSystemDedication extends UgDiagram {
+public class PSystemDedication extends UgSimpleDiagram {
 
-	private final PortableImage image;
+	private final UImage image;
 
-	public PSystemDedication(UmlSource source, PortableImage image, PreprocessingArtifact preprocessing) {
+	public PSystemDedication(UmlSource source, PortableImage portableImage, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
-		this.image = Objects.requireNonNull(image);
+		this.image = new UImage(new PixelImage(portableImage, AffineTransformType.TYPE_BILINEAR));
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception {
-		final UImage im = new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR));
-		return new TextBlock() {
+	public void drawU(UGraphic ug) {
+		ug.draw(image);
 
-			@Override
-			public void drawU(UGraphic ug) {
-				ug.draw(im);
+	}
 
-			}
-
-			@Override
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return new XDimension2D(im.getWidth(), im.getHeight());
-			}
-		};
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(image.getWidth(), image.getHeight());
 	}
 
 	public DiagramDescription getDescription() {
