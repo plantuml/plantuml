@@ -48,18 +48,18 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.svek.Ports;
 import net.sourceforge.plantuml.svek.WithPorts;
 
-public class TextBlockVertical2 extends TextBlockMemoized implements WithPorts {
+public class TextBlockVertical extends TextBlockMemoized implements WithPorts {
 
 	private final List<TextBlock> blocks = new ArrayList<>();
 	private final HorizontalAlignment horizontalAlignment;
 
-	TextBlockVertical2(TextBlock b1, TextBlock b2, HorizontalAlignment horizontalAlignment) {
+	TextBlockVertical(TextBlock b1, TextBlock b2, HorizontalAlignment horizontalAlignment) {
 		this.blocks.add(b1);
 		this.blocks.add(b2);
 		this.horizontalAlignment = horizontalAlignment;
 	}
 
-	public TextBlockVertical2(List<TextBlock> all, HorizontalAlignment horizontalAlignment) {
+	public TextBlockVertical(List<TextBlock> all, HorizontalAlignment horizontalAlignment) {
 		if (all.size() < 2)
 			throw new IllegalArgumentException();
 

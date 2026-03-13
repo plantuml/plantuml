@@ -127,7 +127,7 @@ public class TextBlockUtils {
 		if (b2 == EMPTY_TEXT_BLOCK)
 			return b1;
 
-		return new TextBlockVertical2(b1, b2, horizontalAlignment);
+		return new TextBlockVertical(b1, b2, horizontalAlignment);
 	}
 
 	// public static TextBlockBackcolored mergeColoredTB(TextBlockBackcolored b1,

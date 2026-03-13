@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
-import net.sourceforge.plantuml.klimt.shape.TextBlockVertical2;
+import net.sourceforge.plantuml.klimt.shape.TextBlockVertical;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -109,7 +109,7 @@ public class BodyEnhanced2 extends BodyEnhancedAbstract {
 		if (blocks.size() == 1)
 			this.area = blocks.get(0);
 		else
-			this.area = new TextBlockVertical2(blocks, align);
+			this.area = new TextBlockVertical(blocks, align);
 
 		final double minClassWidth = getStyle().value(PName.MinimumWidth).asDouble();
 		if (minClassWidth > 0)
