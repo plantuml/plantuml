@@ -40,7 +40,6 @@ import java.util.List;
 import java.util.prefs.BackingStoreException;
 
 import net.atmp.PixelImage;
-import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UgSimpleDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -55,7 +54,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -72,33 +70,16 @@ public class PSystemKeygen extends UgSimpleDiagram {
 	}
 
 	@Override
-	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
-		return new UDrawable() {
-			public void drawU(UGraphic ug) {
-				try {
-					drawInternal(ug);
-				} catch (IOException e) {
-					Logme.error(e);
-				}
-			}
-		};
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return getTextBlock().calculateDimension(stringBounder);
 	}
 
-	public DiagramDescription getDescription() {
-		return new DiagramDescription("(Key)");
-	}
-
-	private void drawInternal(UGraphic ug) throws IOException {
+	private TextBlock getTextBlock() {
 		final LicenseInfo installed = LicenseInfo.retrieveNamedSlow();
-		if (key.length() == 0) {
-			drawFlash(ug, installed);
-			return;
-		}
+		if (key.length() == 0 || LicenseInfo.retrieveNamed(key).isNone())
+			return getFlashTextBlock(installed);
+
 		final LicenseInfo info = LicenseInfo.retrieveNamed(key);
-		if (info.isNone()) {
-			drawFlash(ug, installed);
-			return;
-		}
 		final List<String> strings = header();
 		strings.add("<u>Provided license information</u>:");
 		License.addLicenseInfo(strings, info);
@@ -109,23 +90,46 @@ public class PSystemKeygen extends UgSimpleDiagram {
 		} catch (BackingStoreException e) {
 			strings.add("<i>Error: Cannot store license key.</i>");
 		}
-
 		if (installed.isNone()) {
 			strings.add("No license currently installed.");
 			strings.add(" ");
 			strings.add("<b>Please copy license.txt to one of those files</b>:");
-			for (SFile f : LicenseInfo.fileCandidates()) {
+			for (SFile f : LicenseInfo.fileCandidates())
 				strings.add(f.getAbsolutePath());
-			}
 			strings.add(" ");
 		} else {
 			strings.add("<u>Installed license</u>:");
 			License.addLicenseInfo(strings, installed);
 			strings.add(" ");
 		}
+		return GraphicStrings.createBlackOnWhite(strings);
+	}
 
-		final TextBlock disp = GraphicStrings.createBlackOnWhite(strings);
-		disp.drawU(ug);
+	private TextBlock getFlashTextBlock(LicenseInfo info) {
+		final List<String> strings = header();
+		strings.add("To get your <i>Professional Edition License</i>,");
+		strings.add("please send this qrcode to <b>plantuml@gmail.com</b> :");
+		if (info.isNone() == false) {
+			strings.add(" ");
+			strings.add("<u>Installed license</u>:");
+			License.addLicenseInfo(strings, info);
+			strings.add(" ");
+		}
+		return GraphicStrings.createBlackOnWhite(strings);
+	}
+
+	public DiagramDescription getDescription() {
+		return new DiagramDescription("(Key)");
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+		final LicenseInfo installed = LicenseInfo.retrieveNamedSlow();
+		if (key.length() == 0 || LicenseInfo.retrieveNamed(key).isNone()) {
+			drawFlash(ug, installed);
+			return;
+		}
+		getTextBlock().drawU(ug);
 	}
 
 	private ArrayList<String> header() {
@@ -139,45 +143,24 @@ public class PSystemKeygen extends UgSimpleDiagram {
 		return strings;
 	}
 
-	private void drawFlash(UGraphic ug, LicenseInfo info) throws IOException {
-		final List<String> strings = header();
-		strings.add("To get your <i>Professional Edition License</i>,");
-		strings.add("please send this qrcode to <b>plantuml@gmail.com</b> :");
-
-		TextBlock disp = GraphicStrings.createBlackOnWhite(strings);
+	private void drawFlash(UGraphic ug, LicenseInfo info) {
+		final TextBlock disp = getFlashTextBlock(info);
 		disp.drawU(ug);
 
 		ug = ug.apply(UTranslate.dy(disp.calculateDimension(ug.getStringBounder()).getHeight()));
-		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-		final PortableImage im = utils.exportFlashcode(
-				Version.versionString() + "\n" + SignatureUtils.toHexString(PLSSignature.signature()), XColor.BLACK,
-				XColor.WHITE);
-		if (im != null) {
-			final UImage flash = new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(4);
-			ug.draw(flash);
-			ug = ug.apply(UTranslate.dy(flash.getHeight()));
+		try {
+			final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
+			final PortableImage im = utils.exportFlashcode(
+					Version.versionString() + "\n" + SignatureUtils.toHexString(PLSSignature.signature()),
+					XColor.BLACK, XColor.WHITE);
+			if (im != null) {
+				final UImage flash = new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR))
+						.scale(4);
+				ug.draw(flash);
+			}
+		} catch (IOException e) {
+			Logme.error(e);
 		}
-
-		if (info.isNone() == false) {
-			strings.clear();
-			strings.add("<u>Installed license</u>:");
-			License.addLicenseInfo(strings, info);
-			strings.add(" ");
-			disp = GraphicStrings.createBlackOnWhite(strings);
-			disp.drawU(ug);
-		}
-
 	}
 
-	@Override
-	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void drawU(UGraphic ug) {
-		// TODO Auto-generated method stub
-		
-	}
 }

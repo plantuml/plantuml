@@ -35,8 +35,6 @@
 package net.sourceforge.plantuml.version;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +72,7 @@ public class PSystemKeycheck extends UgSimpleDiagram {
 	@Override
 	public void drawU(UGraphic ug) {
 		try {
-			drawInternal(ug);
+			getTextBlock().drawU(ug);
 		} catch (Exception e) {
 			Logme.error(e);
 		}
@@ -85,16 +83,12 @@ public class PSystemKeycheck extends UgSimpleDiagram {
 		return new DiagramDescription("(Key)");
 	}
 
-	private void drawInternal(UGraphic ug) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-		getTextBlock().drawU(ug);
-	}
-
 	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return getTextBlock().calculateDimension(stringBounder);
 	}
 
-	public TextBlock getTextBlock() {
+	private TextBlock getTextBlock() {
 		final List<String> strings = header();
 		try {
 			final LicenseInfo info = PLSSignature.retrieveNamed(sig, key, false);
