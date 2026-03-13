@@ -89,9 +89,7 @@ loadScripts(document, 'script');</script>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="core/AbstractDiagram.html" title="class in net.sourceforge.plantuml.core">net.sourceforge.plantuml.core.AbstractDiagram</a>
 <div class="inheritance"><a href="UgDiagram.html" title="class in net.sourceforge.plantuml">net.sourceforge.plantuml.UgDiagram</a>
-<div class="inheritance"><a href="PlainDiagram.html" title="class in net.sourceforge.plantuml">net.sourceforge.plantuml.PlainDiagram</a>
 <div class="inheritance">net.sourceforge.plantuml.PlainStringsDiagram</div>
-</div>
 </div>
 </div>
 </div>
@@ -106,7 +104,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">PlainStringsDiagram</span>
-<span class="extends-implements">extends <a href="PlainDiagram.html" title="class in net.sourceforge.plantuml">PlainDiagram</a></span></div>
+<span class="extends-implements">extends <a href="UgDiagram.html" title="class in net.sourceforge.plantuml">UgDiagram</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -156,15 +154,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="klimt/shape/UDrawable.html" title="interface in net.sourceforge.plantuml.klimt.shape">UDrawable</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRootDrawable(net.sourceforge.plantuml.FileFormatOption)" class="member-name-link">getRootDrawable</a><wbr>(<a href="FileFormatOption.html" title="class in net.sourceforge.plantuml">FileFormatOption</a>&nbsp;fileFormatOption)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTextBlock12026(int,net.sourceforge.plantuml.FileFormatOption)" class="member-name-link">getTextBlock12026</a><wbr>(int&nbsp;num,
+ <a href="FileFormatOption.html" title="class in net.sourceforge.plantuml">FileFormatOption</a>&nbsp;fileFormatOption)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
-<div class="inherited-list">
-<h3 id="methods-inherited-from-class-net.sourceforge.plantuml.PlainDiagram">Methods inherited from class&nbsp;net.sourceforge.plantuml.<a href="PlainDiagram.html" title="class in net.sourceforge.plantuml">PlainDiagram</a></h3>
-<code><a href="PlainDiagram.html#getTextBlock12026(int,net.sourceforge.plantuml.FileFormatOption)">getTextBlock12026</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-net.sourceforge.plantuml.UgDiagram">Methods inherited from class&nbsp;net.sourceforge.plantuml.<a href="UgDiagram.html" title="class in net.sourceforge.plantuml">UgDiagram</a></h3>
 <code><a href="UgDiagram.html#addChrome(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.FileFormatOption)">addChrome</a>, <a href="UgDiagram.html#exportDiagram(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormatOption)">exportDiagram</a>, <a href="UgDiagram.html#getExporter(int,net.sourceforge.plantuml.FileFormatOption)">getExporter</a>, <a href="UgDiagram.html#isHandwritten()">isHandwritten</a></code></div>
@@ -230,12 +226,13 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="getRootDrawable(net.sourceforge.plantuml.FileFormatOption)">
-<h3>getRootDrawable</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="klimt/shape/UDrawable.html" title="interface in net.sourceforge.plantuml.klimt.shape">UDrawable</a></span>&nbsp;<span class="element-name">getRootDrawable</span><wbr><span class="parameters">(<a href="FileFormatOption.html" title="class in net.sourceforge.plantuml">FileFormatOption</a>&nbsp;fileFormatOption)</span></div>
+<section class="detail" id="getTextBlock12026(int,net.sourceforge.plantuml.FileFormatOption)">
+<h3>getTextBlock12026</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></span>&nbsp;<span class="element-name">getTextBlock12026</span><wbr><span class="parameters">(int&nbsp;num,
+ <a href="FileFormatOption.html" title="class in net.sourceforge.plantuml">FileFormatOption</a>&nbsp;fileFormatOption)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="PlainDiagram.html#getRootDrawable(net.sourceforge.plantuml.FileFormatOption)">getRootDrawable</a></code>&nbsp;in class&nbsp;<code><a href="PlainDiagram.html" title="class in net.sourceforge.plantuml">PlainDiagram</a></code></dd>
+<dd><code><a href="UgDiagram.html#getTextBlock12026(int,net.sourceforge.plantuml.FileFormatOption)">getTextBlock12026</a></code>&nbsp;in class&nbsp;<code><a href="UgDiagram.html" title="class in net.sourceforge.plantuml">UgDiagram</a></code></dd>
 </dl>
 </section>
 </li>

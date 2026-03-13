@@ -178,16 +178,11 @@ public class BpmDiagram extends TitledDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
-<span class="nc" id="L182">		throw new UnsupportedOperationException();</span>
-	}
-
-	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L187">		final Grid grid = createGrid();</span>
-<span class="nc" id="L188">		cleanGrid(grid);</span>
-<span class="nc" id="L189">		return grid.toArray(SkinParam.create(PathSystem.fetch(), getDiagramType(), getPragma(),</span>
-<span class="nc" id="L190">				getPreprocessingArtifact().getOption()));</span>
+<span class="nc" id="L182">		final Grid grid = createGrid();</span>
+<span class="nc" id="L183">		cleanGrid(grid);</span>
+<span class="nc" id="L184">		return grid.toArray(SkinParam.create(PathSystem.fetch(), getDiagramType(), getPragma(),</span>
+<span class="nc" id="L185">				getPreprocessingArtifact().getOption()));</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

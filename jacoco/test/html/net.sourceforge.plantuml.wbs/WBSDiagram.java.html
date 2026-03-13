@@ -86,7 +86,7 @@ public class WBSDiagram extends TitledDiagram {
 <span class="fc" id="L86">	}</span>
 
 	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 <span class="fc" id="L90">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
@@ -99,145 +99,140 @@ public class WBSDiagram extends TitledDiagram {
 		};
 	}
 
-	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="fc" id="L104">		return getTextMainBlock01970(fileFormatOption);</span>
-	}
-
 	private void drawMe(UGraphic ug) {
-<span class="fc" id="L108">		UTranslate translate = null;</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (ug instanceof AbstractCommonUGraphic)</span>
-<span class="fc" id="L110">			translate = ((AbstractCommonUGraphic) ug).getTranslate();</span>
+<span class="fc" id="L103">		UTranslate translate = null;</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (ug instanceof AbstractCommonUGraphic)</span>
+<span class="fc" id="L105">			translate = ((AbstractCommonUGraphic) ug).getTranslate();</span>
 
-<span class="fc" id="L112">		final Fork fork = getDrawingElement();</span>
-<span class="fc" id="L113">		fork.drawU(ug);</span>
+<span class="fc" id="L107">		final Fork fork = getDrawingElement();</span>
+<span class="fc" id="L108">		fork.drawU(ug);</span>
 
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (translate == null)</span>
-<span class="nc" id="L116">			return;</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (translate == null)</span>
+<span class="nc" id="L111">			return;</span>
 
-<span class="fc" id="L118">		ug = ug.apply(translate.reverse());</span>
-<span class="fc bfc" id="L119" title="All 2 branches covered.">		for (WBSLink link : links)</span>
-<span class="fc" id="L120">			link.drawU(ug);</span>
+<span class="fc" id="L113">		ug = ug.apply(translate.reverse());</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		for (WBSLink link : links)</span>
+<span class="fc" id="L115">			link.drawU(ug);</span>
 
-<span class="fc" id="L122">	}</span>
+<span class="fc" id="L117">	}</span>
 
 	private Fork getDrawingElement() {
-<span class="fc" id="L125">		return new Fork(getSkinParam(), root);</span>
+<span class="fc" id="L120">		return new Fork(getSkinParam(), root);</span>
 	}
 
-<span class="fc" id="L128">	public final static Pattern2 patternStereotype = Pattern2.cmpile(&quot;^\\s*(.*?)\\s*(\\&lt;\\&lt;\\s*(.*)\\s*\\&gt;\\&gt;)\\s*$&quot;);</span>
+<span class="fc" id="L123">	public final static Pattern2 patternStereotype = Pattern2.cmpile(&quot;^\\s*(.*?)\\s*(\\&lt;\\&lt;\\s*(.*)\\s*\\&gt;\\&gt;)\\s*$&quot;);</span>
 
 	public CommandExecutionResult addIdea(String code, HColor backColor, int level, String label, Direction direction,
 			IdeaShape shape) {
-<span class="fc" id="L132">		final Matcher2 m = patternStereotype.matcher(label);</span>
-<span class="fc" id="L133">		String stereotype = null;</span>
-<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (m.matches()) {</span>
-<span class="nc" id="L135">			label = m.group(1);</span>
-<span class="nc" id="L136">			stereotype = m.group(2);</span>
+<span class="fc" id="L127">		final Matcher2 m = patternStereotype.matcher(label);</span>
+<span class="fc" id="L128">		String stereotype = null;</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		if (m.matches()) {</span>
+<span class="nc" id="L130">			label = m.group(1);</span>
+<span class="nc" id="L131">			stereotype = m.group(2);</span>
 		}
-<span class="fc" id="L138">		final Display display = Display.getWithNewlines(getPragma(), label);</span>
-<span class="fc" id="L139">		return addIdea(code, backColor, level, display, Stereotype.build(stereotype), direction, shape);</span>
+<span class="fc" id="L133">		final Display display = Display.getWithNewlines(getPragma(), label);</span>
+<span class="fc" id="L134">		return addIdea(code, backColor, level, display, Stereotype.build(stereotype), direction, shape);</span>
 	}
 
 	public CommandExecutionResult addIdea(String code, HColor backColor, int level, Display display,
 			Stereotype stereotype, Direction direction, IdeaShape shape) {
 		try {
-<span class="fc bfc" id="L145" title="All 2 branches covered.">			if (level == 0) {</span>
-<span class="pc bpc" id="L146" title="1 of 2 branches missed.">				if (root != null)</span>
-<span class="nc" id="L147">					return CommandExecutionResult.error(&quot;WBS diagram only accepts one root first declared.&quot;);</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">			if (level == 0) {</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">				if (root != null)</span>
+<span class="nc" id="L142">					return CommandExecutionResult.error(&quot;WBS diagram only accepts one root first declared.&quot;);</span>
 
-<span class="fc" id="L149">				initRoot(backColor, display, stereotype, shape);</span>
-<span class="fc" id="L150">				return CommandExecutionResult.ok();</span>
+<span class="fc" id="L144">				initRoot(backColor, display, stereotype, shape);</span>
+<span class="fc" id="L145">				return CommandExecutionResult.ok();</span>
 			}
-<span class="fc" id="L152">			return add(code, backColor, level, display, stereotype, direction, shape);</span>
-<span class="nc" id="L153">		} catch (NoStyleAvailableException e) {</span>
+<span class="fc" id="L147">			return add(code, backColor, level, display, stereotype, direction, shape);</span>
+<span class="nc" id="L148">		} catch (NoStyleAvailableException e) {</span>
 			// Logme.error(e);
-<span class="nc" id="L155">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
+<span class="nc" id="L150">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
 		}
 	}
 
 	private void initRoot(HColor backColor, Display display, Stereotype stereotype, IdeaShape shape) {
-<span class="fc" id="L160">		root = new WElement(backColor, display, stereotype, getSkinParam().getCurrentStyleBuilder(), shape);</span>
-<span class="fc" id="L161">		last = root;</span>
-<span class="fc" id="L162">	}</span>
+<span class="fc" id="L155">		root = new WElement(backColor, display, stereotype, getSkinParam().getCurrentStyleBuilder(), shape);</span>
+<span class="fc" id="L156">		last = root;</span>
+<span class="fc" id="L157">	}</span>
 
 	private WElement getParentOfLast(int nb) {
-<span class="fc" id="L165">		WElement result = last;</span>
-<span class="fc bfc" id="L166" title="All 2 branches covered.">		for (int i = 0; i &lt; nb; i++)</span>
-<span class="fc" id="L167">			result = result.getParent();</span>
+<span class="fc" id="L160">		WElement result = last;</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		for (int i = 0; i &lt; nb; i++)</span>
+<span class="fc" id="L162">			result = result.getParent();</span>
 
-<span class="fc" id="L169">		return result;</span>
+<span class="fc" id="L164">		return result;</span>
 	}
 
 	public int getSmartLevel(String type) {
-<span class="fc bfc" id="L173" title="All 2 branches covered.">		if (root == null) {</span>
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">			if (TeaVM.a())</span>
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">				assert first == null;</span>
-<span class="fc" id="L176">			first = type;</span>
-<span class="fc" id="L177">			return 0;</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">		if (root == null) {</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">			if (TeaVM.a())</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">				assert first == null;</span>
+<span class="fc" id="L171">			first = type;</span>
+<span class="fc" id="L172">			return 0;</span>
 		}
-<span class="fc" id="L179">		type = type.replace('\t', ' ');</span>
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">		if (type.contains(&quot; &quot;) == false)</span>
-<span class="fc" id="L181">			return type.length() - 1;</span>
+<span class="fc" id="L174">		type = type.replace('\t', ' ');</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		if (type.contains(&quot; &quot;) == false)</span>
+<span class="fc" id="L176">			return type.length() - 1;</span>
 
-<span class="nc bnc" id="L183" title="All 2 branches missed.">		if (type.endsWith(first))</span>
-<span class="nc" id="L184">			return type.length() - first.length();</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		if (type.endsWith(first))</span>
+<span class="nc" id="L179">			return type.length() - first.length();</span>
 
-<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (type.trim().length() == 1)</span>
-<span class="nc" id="L187">			return type.length() - 1;</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (type.trim().length() == 1)</span>
+<span class="nc" id="L182">			return type.length() - 1;</span>
 
-<span class="nc bnc" id="L189" title="All 2 branches missed.">		if (type.startsWith(first))</span>
-<span class="nc" id="L190">			return type.length() - first.length();</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (type.startsWith(first))</span>
+<span class="nc" id="L185">			return type.length() - first.length();</span>
 
-<span class="nc" id="L192">		throw new UnsupportedOperationException(&quot;type=&lt;&quot; + type + &quot;&gt;[&quot; + first + &quot;]&quot;);</span>
+<span class="nc" id="L187">		throw new UnsupportedOperationException(&quot;type=&lt;&quot; + type + &quot;&gt;[&quot; + first + &quot;]&quot;);</span>
 	}
 
 	private CommandExecutionResult add(String code, HColor backColor, int level, Display display, Stereotype stereotype,
 			Direction direction, IdeaShape shape) {
 		try {
-<span class="fc bfc" id="L198" title="All 2 branches covered.">			if (level == last.getLevel() + 1) {</span>
-<span class="fc" id="L199">				final WElement newIdea = last.createElement(backColor, level, display, stereotype, direction, shape,</span>
-<span class="fc" id="L200">						getSkinParam().getCurrentStyleBuilder());</span>
-<span class="fc" id="L201">				last = newIdea;</span>
-<span class="fc bfc" id="L202" title="All 2 branches covered.">				if (code != null)</span>
-<span class="fc" id="L203">					codes.put(code, newIdea);</span>
-<span class="fc" id="L204">				return CommandExecutionResult.ok();</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">			if (level == last.getLevel() + 1) {</span>
+<span class="fc" id="L194">				final WElement newIdea = last.createElement(backColor, level, display, stereotype, direction, shape,</span>
+<span class="fc" id="L195">						getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L196">				last = newIdea;</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">				if (code != null)</span>
+<span class="fc" id="L198">					codes.put(code, newIdea);</span>
+<span class="fc" id="L199">				return CommandExecutionResult.ok();</span>
 			}
-<span class="pc bpc" id="L206" title="1 of 2 branches missed.">			if (level &lt;= last.getLevel()) {</span>
-<span class="fc" id="L207">				final int diff = last.getLevel() - level + 1;</span>
-<span class="fc" id="L208">				final WElement newIdea = getParentOfLast(diff).createElement(backColor, level, display, stereotype,</span>
-<span class="fc" id="L209">						direction, shape, getSkinParam().getCurrentStyleBuilder());</span>
-<span class="fc" id="L210">				last = newIdea;</span>
-<span class="fc bfc" id="L211" title="All 2 branches covered.">				if (code != null)</span>
-<span class="fc" id="L212">					codes.put(code, newIdea);</span>
-<span class="fc" id="L213">				return CommandExecutionResult.ok();</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">			if (level &lt;= last.getLevel()) {</span>
+<span class="fc" id="L202">				final int diff = last.getLevel() - level + 1;</span>
+<span class="fc" id="L203">				final WElement newIdea = getParentOfLast(diff).createElement(backColor, level, display, stereotype,</span>
+<span class="fc" id="L204">						direction, shape, getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L205">				last = newIdea;</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">				if (code != null)</span>
+<span class="fc" id="L207">					codes.put(code, newIdea);</span>
+<span class="fc" id="L208">				return CommandExecutionResult.ok();</span>
 			}
-<span class="nc" id="L215">			return CommandExecutionResult.error(&quot;Bad tree structure&quot;);</span>
-<span class="nc" id="L216">		} catch (NoStyleAvailableException e) {</span>
+<span class="nc" id="L210">			return CommandExecutionResult.error(&quot;Bad tree structure&quot;);</span>
+<span class="nc" id="L211">		} catch (NoStyleAvailableException e) {</span>
 			// Logme.error(e);
-<span class="nc" id="L218">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
+<span class="nc" id="L213">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
 		}
 	}
 
 	public CommandExecutionResult link(String code1, String code2, Colors colors, Stereotype stereotype) {
-<span class="fc" id="L223">		final WElement element1 = codes.get(code1);</span>
-<span class="pc bpc" id="L224" title="1 of 2 branches missed.">		if (element1 == null)</span>
-<span class="nc" id="L225">			return CommandExecutionResult.error(&quot;No such node &quot; + code1);</span>
-<span class="fc" id="L226">		final WElement element2 = codes.get(code2);</span>
-<span class="pc bpc" id="L227" title="1 of 2 branches missed.">		if (element2 == null)</span>
-<span class="nc" id="L228">			return CommandExecutionResult.error(&quot;No such node &quot; + code2);</span>
-<span class="fc" id="L229">		HColor color = colors.getColor(ColorType.LINE);</span>
+<span class="fc" id="L218">		final WElement element1 = codes.get(code1);</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">		if (element1 == null)</span>
+<span class="nc" id="L220">			return CommandExecutionResult.error(&quot;No such node &quot; + code1);</span>
+<span class="fc" id="L221">		final WElement element2 = codes.get(code2);</span>
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">		if (element2 == null)</span>
+<span class="nc" id="L223">			return CommandExecutionResult.error(&quot;No such node &quot; + code2);</span>
+<span class="fc" id="L224">		HColor color = colors.getColor(ColorType.LINE);</span>
 
-<span class="pc bpc" id="L231" title="1 of 2 branches missed.">		if (color == null) {</span>
-<span class="fc" id="L232">			final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.arrow)</span>
-<span class="fc" id="L233">					.withTOBECHANGED(stereotype).getMergedStyle(getCurrentStyleBuilder());</span>
+<span class="pc bpc" id="L226" title="1 of 2 branches missed.">		if (color == null) {</span>
+<span class="fc" id="L227">			final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.arrow)</span>
+<span class="fc" id="L228">					.withTOBECHANGED(stereotype).getMergedStyle(getCurrentStyleBuilder());</span>
 
-<span class="fc" id="L235">			color = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L230">			color = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 		}
 
-<span class="fc" id="L238">		links.add(new WBSLink(element1, element2, color));</span>
+<span class="fc" id="L233">		links.add(new WBSLink(element1, element2, color));</span>
 
-<span class="fc" id="L240">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L235">		return CommandExecutionResult.ok();</span>
 	}
 
 }

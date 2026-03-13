@@ -65,7 +65,7 @@ public class ListSpriteDiagram extends TitledDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 <span class="nc" id="L69">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
@@ -104,11 +104,6 @@ public class ListSpriteDiagram extends TitledDiagram {
 <span class="nc" id="L104">				return new XDimension2D(totalWidth, y + rawHeight);</span>
 			}
 		};
-	}
-
-	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L111">		return getTextMainBlock01970(fileFormatOption);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

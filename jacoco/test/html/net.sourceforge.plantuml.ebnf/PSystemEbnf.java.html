@@ -94,7 +94,7 @@ public class PSystemEbnf extends TitledDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 <span class="nc bnc" id="L98" title="All 2 branches missed.">		if (expressions.size() == 0) {</span>
 <span class="nc" id="L99">			final Style style = ETile.getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 <span class="nc" id="L100">			final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
@@ -109,11 +109,6 @@ public class PSystemEbnf extends TitledDiagram {
 <span class="nc" id="L109">					expressions.get(i).getUDrawable(getSkinParam(), getPreprocessingArtifact()),</span>
 					HorizontalAlignment.LEFT);
 <span class="nc" id="L111">		return TextBlockUtils.addBackcolor(result, null);</span>
-	}
-
-	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L116">		return getTextMainBlock01970(fileFormatOption);</span>
 	}
 
 }

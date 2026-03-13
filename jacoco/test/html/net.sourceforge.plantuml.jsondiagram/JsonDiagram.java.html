@@ -39,6 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.PerformanceIssue;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandControl;
 import net.sourceforge.plantuml.command.CommonCommands;
@@ -64,81 +65,80 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.yaml.Highlighted;
 
-public class JsonDiagram extends TitledDiagram {
+public class JsonDiagram extends TitledDiagram implements TextBlock {
 
 	private final JsonValue root;
 	private final List&lt;Highlighted&gt; highlighted;
 	private final boolean handwritten;
+	private XDimension2D cachedDimension;
+	private Class&lt;? extends StringBounder&gt; lastCaller;
 
 	public JsonDiagram(UmlSource source, DiagramType type, JsonValue json, List&lt;Highlighted&gt; highlighted,
 			StyleExtractor styleExtractor, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L75">		super(source, type, null, preprocessing);</span>
-<span class="fc" id="L76">		this.handwritten = styleExtractor.isHandwritten();</span>
-<span class="pc bpc" id="L77" title="5 of 10 branches missed.">		if (json != null &amp;&amp; (json.isString() || json.isBoolean() || json.isNumber() || json.isNull())) {</span>
-<span class="nc" id="L78">			this.root = new JsonArray();</span>
-<span class="nc" id="L79">			((JsonArray) this.root).add(json);</span>
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		} else if (json != null</span>
-<span class="pc bpc" id="L81" title="5 of 8 branches missed.">				&amp;&amp; ((json.isArray() &amp;&amp; json.asArray().isEmpty()) || (json.isObject() &amp;&amp; json.asObject().isEmpty()))) {</span>
-<span class="nc" id="L82">			this.root = new JsonArray();</span>
-<span class="nc" id="L83">			((JsonArray) this.root).add(&quot;&quot;);</span>
+<span class="fc" id="L78">		super(source, type, null, preprocessing);</span>
+<span class="fc" id="L79">		this.handwritten = styleExtractor.isHandwritten();</span>
+<span class="pc bpc" id="L80" title="5 of 10 branches missed.">		if (json != null &amp;&amp; (json.isString() || json.isBoolean() || json.isNumber() || json.isNull())) {</span>
+<span class="nc" id="L81">			this.root = new JsonArray();</span>
+<span class="nc" id="L82">			((JsonArray) this.root).add(json);</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		} else if (json != null</span>
+<span class="pc bpc" id="L84" title="5 of 8 branches missed.">				&amp;&amp; ((json.isArray() &amp;&amp; json.asArray().isEmpty()) || (json.isObject() &amp;&amp; json.asObject().isEmpty()))) {</span>
+<span class="nc" id="L85">			this.root = new JsonArray();</span>
+<span class="nc" id="L86">			((JsonArray) this.root).add(&quot;&quot;);</span>
 		} else {
-<span class="fc" id="L85">			this.root = json;</span>
+<span class="fc" id="L88">			this.root = json;</span>
 		}
-<span class="fc" id="L87">		this.highlighted = highlighted;</span>
-<span class="fc" id="L88">		final String scale = styleExtractor.getScale();</span>
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (scale != null) {</span>
-<span class="nc" id="L90">			final List&lt;Command&gt; cmds = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L91">			CommonCommands.addCommonScaleCommands(cmds);</span>
-<span class="nc" id="L92">			final BlocLines lines = BlocLines.singleString(scale);</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">			for (Command cmd : cmds)</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">				if (cmd.isValid(lines) == CommandControl.OK)</span>
-<span class="nc" id="L95">					((SingleLineCommand2&lt;Diagram&gt;) cmd).execute(this, lines, ParserPass.ONE);</span>
+<span class="fc" id="L90">		this.highlighted = highlighted;</span>
+<span class="fc" id="L91">		final String scale = styleExtractor.getScale();</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (scale != null) {</span>
+<span class="nc" id="L93">			final List&lt;Command&gt; cmds = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L94">			CommonCommands.addCommonScaleCommands(cmds);</span>
+<span class="nc" id="L95">			final BlocLines lines = BlocLines.singleString(scale);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			for (Command cmd : cmds)</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">				if (cmd.isValid(lines) == CommandControl.OK)</span>
+<span class="nc" id="L98">					((SingleLineCommand2&lt;Diagram&gt;) cmd).execute(this, lines, ParserPass.ONE);</span>
 		}
-<span class="fc" id="L97">	}</span>
+<span class="fc" id="L100">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (getDiagramType() == DiagramType.YAML)</span>
-<span class="nc" id="L101">			return new DiagramDescription(&quot;(Yaml)&quot;);</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (getDiagramType() == DiagramType.YAML)</span>
+<span class="nc" id="L104">			return new DiagramDescription(&quot;(Yaml)&quot;);</span>
 
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (getDiagramType() == DiagramType.HCL)</span>
-<span class="nc" id="L104">			return new DiagramDescription(&quot;(HCL)&quot;);</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (getDiagramType() == DiagramType.HCL)</span>
+<span class="nc" id="L107">			return new DiagramDescription(&quot;(HCL)&quot;);</span>
 
-<span class="fc" id="L106">		return new DiagramDescription(&quot;(Json)&quot;);</span>
+<span class="fc" id="L109">		return new DiagramDescription(&quot;(Json)&quot;);</span>
 	}
 
-	private void drawInternal(UGraphic ug) {
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (handwritten)</span>
-<span class="nc" id="L111">			ug = new UGraphicHandwritten(ug);</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (root == null) {</span>
-<span class="nc" id="L113">			final Display display = Display.getWithNewlines(getSkinParam().getPragma(),</span>
-<span class="nc" id="L114">					&quot;Your data does not sound like &quot; + getDiagramType() + &quot; data&quot;);</span>
-<span class="nc" id="L115">			final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFontFactory.courier(14));</span>
-<span class="nc" id="L116">			TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, getSkinParam());</span>
-<span class="nc" id="L117">			result = TextBlockUtils.withMargin(result, 5, 2);</span>
-<span class="nc" id="L118">			result.drawU(ug);</span>
-<span class="nc" id="L119">		} else {</span>
-<span class="fc" id="L120">			new SmetanaForJson(ug, getSkinParam()).drawMe(root, highlighted);</span>
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (handwritten)</span>
+<span class="nc" id="L115">			ug = new UGraphicHandwritten(ug);</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (root == null) {</span>
+<span class="nc" id="L117">			final Display display = Display.getWithNewlines(getSkinParam().getPragma(),</span>
+<span class="nc" id="L118">					&quot;Your data does not sound like &quot; + getDiagramType() + &quot; data&quot;);</span>
+<span class="nc" id="L119">			final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFontFactory.courier(14));</span>
+<span class="nc" id="L120">			TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, getSkinParam());</span>
+<span class="nc" id="L121">			result = TextBlockUtils.withMargin(result, 5, 2);</span>
+<span class="nc" id="L122">			result.drawU(ug);</span>
+<span class="nc" id="L123">		} else {</span>
+<span class="fc" id="L124">			new SmetanaForJson(ug, getSkinParam()).drawMe(root, highlighted);</span>
 		}
-<span class="fc" id="L122">	}</span>
+<span class="fc" id="L126">	}</span>
 
 	@Override
-	protected TextBlock getTextMainBlock01970(final FileFormatOption fileFormatOption) {
-<span class="fc" id="L126">		return new TextBlock() {</span>
-
-			public void drawU(UGraphic ug) {
-<span class="fc" id="L129">				drawInternal(ug);</span>
-<span class="fc" id="L130">			}</span>
-
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L133">				return TextBlockUtils.getMinMax(getTextMainBlock01970(fileFormatOption), stringBounder, true)</span>
-<span class="fc" id="L134">						.getDimension();</span>
-			}
-		};
+	@PerformanceIssue
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L131">		final Class&lt;? extends StringBounder&gt; currentCaller = stringBounder.getClass();</span>
+<span class="pc bpc" id="L132" title="3 of 4 branches missed.">		if (cachedDimension == null || lastCaller != currentCaller) {</span>
+<span class="fc" id="L133">			cachedDimension = TextBlockUtils.getMinMax(this, stringBounder, true).getDimension();</span>
+<span class="fc" id="L134">			lastCaller = currentCaller;</span>
+		}
+<span class="fc" id="L136">		return cachedDimension;</span>
 	}
 
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="fc" id="L141">		return getTextMainBlock01970(fileFormatOption);</span>
+<span class="fc" id="L141">		return this;</span>
 	}
 
 }

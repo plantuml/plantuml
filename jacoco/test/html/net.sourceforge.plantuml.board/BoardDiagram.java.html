@@ -69,7 +69,7 @@ public class BoardDiagram extends TitledDiagram {
 <span class="nc" id="L69">	}</span>
 
 	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 <span class="nc" id="L73">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
@@ -83,54 +83,49 @@ public class BoardDiagram extends TitledDiagram {
 		};
 	}
 
-	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L88">		return getTextMainBlock01970(fileFormatOption);</span>
-	}
-
 	private void drawMe(final UGraphic ug) {
-<span class="nc" id="L92">		UGraphic mug = ug;</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		for (Activity activity : activities) {</span>
-<span class="nc" id="L94">			activity.drawMe(mug);</span>
-<span class="nc" id="L95">			mug = mug.apply(UTranslate.dx(activity.getFullWidth()));</span>
-<span class="nc" id="L96">		}</span>
+<span class="nc" id="L87">		UGraphic mug = ug;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		for (Activity activity : activities) {</span>
+<span class="nc" id="L89">			activity.drawMe(mug);</span>
+<span class="nc" id="L90">			mug = mug.apply(UTranslate.dx(activity.getFullWidth()));</span>
+<span class="nc" id="L91">		}</span>
 
-<span class="nc" id="L98">		final ULine line = ULine.hline(getFullWidth());</span>
+<span class="nc" id="L93">		final ULine line = ULine.hline(getFullWidth());</span>
 
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		for (int i = 0; i &lt; getMaxStage(); i++) {</span>
-<span class="nc" id="L101">			final double dy = (i + 1) * PostIt.getHeight() - 10;</span>
-<span class="nc" id="L102">			ug.apply(HColors.BLACK).apply(new UStroke(5, 5, 0.5)).apply(UTranslate.dy(dy)).draw(line);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		for (int i = 0; i &lt; getMaxStage(); i++) {</span>
+<span class="nc" id="L96">			final double dy = (i + 1) * PostIt.getHeight() - 10;</span>
+<span class="nc" id="L97">			ug.apply(HColors.BLACK).apply(new UStroke(5, 5, 0.5)).apply(UTranslate.dy(dy)).draw(line);</span>
 		}
-<span class="nc" id="L104">	}</span>
+<span class="nc" id="L99">	}</span>
 
 	private double getFullWidth() {
-<span class="nc" id="L107">		double width = 0;</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">		for (Activity activity : activities) {</span>
-<span class="nc" id="L109">			width += activity.getFullWidth();</span>
-<span class="nc" id="L110">		}</span>
-<span class="nc" id="L111">		return width;</span>
+<span class="nc" id="L102">		double width = 0;</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		for (Activity activity : activities) {</span>
+<span class="nc" id="L104">			width += activity.getFullWidth();</span>
+<span class="nc" id="L105">		}</span>
+<span class="nc" id="L106">		return width;</span>
 	}
 
 	private int getMaxStage() {
-<span class="nc" id="L115">		int max = 0;</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		for (Activity activity : activities) {</span>
-<span class="nc" id="L117">			max = Math.max(max, activity.getMaxStage());</span>
-<span class="nc" id="L118">		}</span>
-<span class="nc" id="L119">		return max;</span>
+<span class="nc" id="L110">		int max = 0;</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		for (Activity activity : activities) {</span>
+<span class="nc" id="L112">			max = Math.max(max, activity.getMaxStage());</span>
+<span class="nc" id="L113">		}</span>
+<span class="nc" id="L114">		return max;</span>
 	}
 
 	private Activity getLastActivity() {
-<span class="nc" id="L123">		return this.activities.get(this.activities.size() - 1);</span>
+<span class="nc" id="L118">		return this.activities.get(this.activities.size() - 1);</span>
 	}
 
 	public CommandExecutionResult addLine(String plus, String label) {
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (plus.length() == 0) {</span>
-<span class="nc" id="L128">			final Activity activity = new Activity(this, label, getSkinParam());</span>
-<span class="nc" id="L129">			this.activities.add(activity);</span>
-<span class="nc" id="L130">			return CommandExecutionResult.ok();</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (plus.length() == 0) {</span>
+<span class="nc" id="L123">			final Activity activity = new Activity(this, label, getSkinParam());</span>
+<span class="nc" id="L124">			this.activities.add(activity);</span>
+<span class="nc" id="L125">			return CommandExecutionResult.ok();</span>
 		}
-<span class="nc" id="L132">		getLastActivity().addRelease(plus.length(), label);</span>
-<span class="nc" id="L133">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L127">		getLastActivity().addRelease(plus.length(), label);</span>
+<span class="nc" id="L128">		return CommandExecutionResult.ok();</span>
 	}
 
 }

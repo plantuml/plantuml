@@ -35,52 +35,49 @@
  */
 package net.sourceforge.plantuml.klimt.sprite;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.donors.PSystemDonors;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockHorizontal;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-public class PSystemListArchimateSprites extends PlainDiagram {
-	
+public class PSystemListArchimateSprites extends UgDiagram {
 
 	public PSystemListArchimateSprites(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L57">		super(source, preprocessing);</span>
-<span class="nc" id="L58">	}</span>
+<span class="nc" id="L54">		super(source, preprocessing);</span>
+<span class="nc" id="L55">	}</span>
 
 	@Override
-	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L62">		final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L63">		lines.add(&quot;&lt;b&gt;List Current Sprites&quot;);</span>
-<span class="nc" id="L64">		lines.add(&quot;&lt;i&gt;Credit to&quot;);</span>
-<span class="nc" id="L65">		lines.add(&quot;http://www.archimatetool.com&quot;);</span>
-<span class="nc" id="L66">		lines.add(&quot; &quot;);</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		for (String folder : ResourcesUtils.getJarFile(&quot;sprites&quot;, true)) {</span>
-<span class="nc" id="L68">			lines.add(&quot;&lt;u&gt;&quot; + folder + &quot;&lt;/u&gt; :&quot;);</span>
-<span class="nc" id="L69">			lines.add(&quot; &quot;);</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">			for (String file : ResourcesUtils.getJarFile(&quot;sprites/&quot; + folder, false))</span>
-<span class="nc bnc" id="L71" title="All 4 branches missed.">				if (file.endsWith(&quot;.png&quot;) || file.endsWith(&quot;.svg&quot;)) {</span>
-<span class="nc" id="L72">					final String format = file.substring(file.length() - 3);</span>
-<span class="nc" id="L73">					final String spriteName = file.substring(0, file.length() - 4);</span>
-<span class="nc" id="L74">					lines.add(&quot;&lt;$archimate/&quot; + spriteName + &quot;&gt; &quot; + spriteName + &quot; (&quot; + format + &quot;)&quot;);</span>
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception {
+<span class="nc" id="L59">		final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L60">		lines.add(&quot;&lt;b&gt;List Current Sprites&quot;);</span>
+<span class="nc" id="L61">		lines.add(&quot;&lt;i&gt;Credit to&quot;);</span>
+<span class="nc" id="L62">		lines.add(&quot;http://www.archimatetool.com&quot;);</span>
+<span class="nc" id="L63">		lines.add(&quot; &quot;);</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		for (String folder : ResourcesUtils.getJarFile(&quot;sprites&quot;, true)) {</span>
+<span class="nc" id="L65">			lines.add(&quot;&lt;u&gt;&quot; + folder + &quot;&lt;/u&gt; :&quot;);</span>
+<span class="nc" id="L66">			lines.add(&quot; &quot;);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">			for (String file : ResourcesUtils.getJarFile(&quot;sprites/&quot; + folder, false))</span>
+<span class="nc bnc" id="L68" title="All 4 branches missed.">				if (file.endsWith(&quot;.png&quot;) || file.endsWith(&quot;.svg&quot;)) {</span>
+<span class="nc" id="L69">					final String format = file.substring(file.length() - 3);</span>
+<span class="nc" id="L70">					final String spriteName = file.substring(0, file.length() - 4);</span>
+<span class="nc" id="L71">					lines.add(&quot;&lt;$archimate/&quot; + spriteName + &quot;&gt; &quot; + spriteName + &quot; (&quot; + format + &quot;)&quot;);</span>
 				}
 
-<span class="nc" id="L77">		}</span>
-<span class="nc" id="L78">		final List&lt;TextBlock&gt; cols = PSystemDonors.getCols(lines, 4, 0);</span>
-<span class="nc" id="L79">		return new TextBlockHorizontal(cols, VerticalAlignment.TOP);</span>
+<span class="nc" id="L74">		}</span>
+<span class="nc" id="L75">		final List&lt;TextBlock&gt; cols = PSystemDonors.getCols(lines, 4, 0);</span>
+<span class="nc" id="L76">		return new TextBlockHorizontal(cols, VerticalAlignment.TOP);</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L83">		return new DiagramDescription(&quot;(Sprites)&quot;);</span>
+<span class="nc" id="L80">		return new DiagramDescription(&quot;(Sprites)&quot;);</span>
 	}
 
 }

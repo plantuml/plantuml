@@ -34,15 +34,13 @@
  */
 package net.sourceforge.plantuml.version;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
 
 import net.atmp.PixelImage;
-import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.UgSimpleDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
@@ -52,121 +50,141 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
-public class PSystemKeygen extends PlainDiagram {
-	
+public class PSystemKeygen extends UgSimpleDiagram {
 
 	final private String key;
 
 	public PSystemKeygen(UmlSource source, String key, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L70">		super(source, preprocessing);</span>
-<span class="nc" id="L71">		this.key = key;</span>
-<span class="nc" id="L72">	}</span>
+<span class="nc" id="L68">		super(source, preprocessing);</span>
+<span class="nc" id="L69">		this.key = key;</span>
+<span class="nc" id="L70">	}</span>
 
 	@Override
-	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) {
-<span class="nc" id="L76">		return new UDrawable() {</span>
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L74">		return getTextBlock().calculateDimension(stringBounder);</span>
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L79">		getTextBlock().drawU(ug);</span>
+<span class="nc" id="L80">	}</span>
+
+	private TextBlock getTextBlock() {
+<span class="nc" id="L83">		final LicenseInfo installed = LicenseInfo.retrieveNamedSlow();</span>
+<span class="nc bnc" id="L84" title="All 4 branches missed.">		if (key.length() == 0 || LicenseInfo.retrieveNamed(key).isNone())</span>
+<span class="nc" id="L85">			return getFlashTextBlock(installed);</span>
+
+<span class="nc" id="L87">		final LicenseInfo info = LicenseInfo.retrieveNamed(key);</span>
+<span class="nc" id="L88">		final List&lt;String&gt; strings = header();</span>
+<span class="nc" id="L89">		strings.add(&quot;&lt;u&gt;Provided license information&lt;/u&gt;:&quot;);</span>
+<span class="nc" id="L90">		License.addLicenseInfo(strings, info);</span>
+<span class="nc" id="L91">		strings.add(&quot; &quot;);</span>
+<span class="nc" id="L92">		strings.add(&quot;========================================================================&quot;);</span>
+		try {
+<span class="nc" id="L94">			LicenseInfo.persistMe(key);</span>
+<span class="nc" id="L95">		} catch (BackingStoreException e) {</span>
+<span class="nc" id="L96">			strings.add(&quot;&lt;i&gt;Error: Cannot store license key.&lt;/i&gt;&quot;);</span>
+<span class="nc" id="L97">		}</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (installed.isNone()) {</span>
+<span class="nc" id="L99">			strings.add(&quot;No license currently installed.&quot;);</span>
+<span class="nc" id="L100">			strings.add(&quot; &quot;);</span>
+<span class="nc" id="L101">			strings.add(&quot;&lt;b&gt;Please copy license.txt to one of those files&lt;/b&gt;:&quot;);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">			for (SFile f : LicenseInfo.fileCandidates())</span>
+<span class="nc" id="L103">				strings.add(f.getAbsolutePath());</span>
+<span class="nc" id="L104">			strings.add(&quot; &quot;);</span>
+		} else {
+<span class="nc" id="L106">			strings.add(&quot;&lt;u&gt;Installed license&lt;/u&gt;:&quot;);</span>
+<span class="nc" id="L107">			License.addLicenseInfo(strings, installed);</span>
+<span class="nc" id="L108">			strings.add(&quot; &quot;);</span>
+		}
+<span class="nc" id="L110">		return GraphicStrings.createBlackOnWhite(strings);</span>
+	}
+
+	private TextBlock getFlashTextBlock(LicenseInfo info) {
+<span class="nc" id="L114">		final List&lt;String&gt; strings = header();</span>
+<span class="nc" id="L115">		strings.add(&quot;To get your &lt;i&gt;Professional Edition License&lt;/i&gt;,&quot;);</span>
+<span class="nc" id="L116">		strings.add(&quot;please send this qrcode to &lt;b&gt;plantuml@gmail.com&lt;/b&gt; :&quot;);</span>
+<span class="nc" id="L117">		final TextBlock header = GraphicStrings.createBlackOnWhite(strings);</span>
+
+<span class="nc" id="L119">		UImage flash = null;</span>
+		try {
+<span class="nc" id="L121">			final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();</span>
+<span class="nc" id="L122">			final PortableImage im = utils.exportFlashcode(</span>
+<span class="nc" id="L123">					Version.versionString() + &quot;\n&quot; + SignatureUtils.toHexString(PLSSignature.signature()), XColor.BLACK,</span>
+					XColor.WHITE);
+<span class="nc bnc" id="L125" title="All 2 branches missed.">			if (im != null)</span>
+<span class="nc" id="L126">				flash = new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(4);</span>
+<span class="nc" id="L127">		} catch (IOException e) {</span>
+<span class="nc" id="L128">			Logme.error(e);</span>
+<span class="nc" id="L129">		}</span>
+
+<span class="nc" id="L131">		TextBlock footer = null;</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (info.isNone() == false) {</span>
+<span class="nc" id="L133">			final List&lt;String&gt; footerStrings = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L134">			footerStrings.add(&quot;&lt;u&gt;Installed license&lt;/u&gt;:&quot;);</span>
+<span class="nc" id="L135">			License.addLicenseInfo(footerStrings, info);</span>
+<span class="nc" id="L136">			footerStrings.add(&quot; &quot;);</span>
+<span class="nc" id="L137">			footer = GraphicStrings.createBlackOnWhite(footerStrings);</span>
+		}
+
+<span class="nc" id="L140">		final UImage finalFlash = flash;</span>
+<span class="nc" id="L141">		final TextBlock finalFooter = footer;</span>
+<span class="nc" id="L142">		return new TextBlock() {</span>
+			@Override
 			public void drawU(UGraphic ug) {
-				try {
-<span class="nc" id="L79">					drawInternal(ug);</span>
-<span class="nc" id="L80">				} catch (IOException e) {</span>
-<span class="nc" id="L81">					Logme.error(e);</span>
-<span class="nc" id="L82">				}</span>
-<span class="nc" id="L83">			}</span>
+<span class="nc" id="L145">				header.drawU(ug);</span>
+<span class="nc" id="L146">				ug = ug.apply(UTranslate.dy(header.calculateDimension(ug.getStringBounder()).getHeight()));</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">				if (finalFlash != null) {</span>
+<span class="nc" id="L148">					ug.draw(finalFlash);</span>
+<span class="nc" id="L149">					ug = ug.apply(UTranslate.dy(finalFlash.getHeight()));</span>
+				}
+<span class="nc bnc" id="L151" title="All 2 branches missed.">				if (finalFooter != null)</span>
+<span class="nc" id="L152">					finalFooter.drawU(ug);</span>
+<span class="nc" id="L153">			}</span>
+
+			@Override
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L157">				final XDimension2D dimHeader = header.calculateDimension(stringBounder);</span>
+<span class="nc" id="L158">				double width = dimHeader.getWidth();</span>
+<span class="nc" id="L159">				double height = dimHeader.getHeight();</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">				if (finalFlash != null) {</span>
+<span class="nc" id="L161">					width = Math.max(width, finalFlash.getWidth());</span>
+<span class="nc" id="L162">					height += finalFlash.getHeight();</span>
+				}
+<span class="nc bnc" id="L164" title="All 2 branches missed.">				if (finalFooter != null) {</span>
+<span class="nc" id="L165">					final XDimension2D dimFooter = finalFooter.calculateDimension(stringBounder);</span>
+<span class="nc" id="L166">					width = Math.max(width, dimFooter.getWidth());</span>
+<span class="nc" id="L167">					height += dimFooter.getHeight();</span>
+				}
+<span class="nc" id="L169">				return new XDimension2D(width, height);</span>
+			}
 		};
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L88">		return new DiagramDescription(&quot;(Key)&quot;);</span>
+<span class="nc" id="L175">		return new DiagramDescription(&quot;(Key)&quot;);</span>
 	}
 
-	private void drawInternal(UGraphic ug) throws IOException {
-<span class="nc" id="L92">		final LicenseInfo installed = LicenseInfo.retrieveNamedSlow();</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (key.length() == 0) {</span>
-<span class="nc" id="L94">			drawFlash(ug, installed);</span>
-<span class="nc" id="L95">			return;</span>
-		}
-<span class="nc" id="L97">		final LicenseInfo info = LicenseInfo.retrieveNamed(key);</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (info.isNone()) {</span>
-<span class="nc" id="L99">			drawFlash(ug, installed);</span>
-<span class="nc" id="L100">			return;</span>
-		}
-<span class="nc" id="L102">		final List&lt;String&gt; strings = header();</span>
-<span class="nc" id="L103">		strings.add(&quot;&lt;u&gt;Provided license information&lt;/u&gt;:&quot;);</span>
-<span class="nc" id="L104">		License.addLicenseInfo(strings, info);</span>
-<span class="nc" id="L105">		strings.add(&quot; &quot;);</span>
-<span class="nc" id="L106">		strings.add(&quot;========================================================================&quot;);</span>
-		try {
-<span class="nc" id="L108">			LicenseInfo.persistMe(key);</span>
-<span class="nc" id="L109">		} catch (BackingStoreException e) {</span>
-<span class="nc" id="L110">			strings.add(&quot;&lt;i&gt;Error: Cannot store license key.&lt;/i&gt;&quot;);</span>
-<span class="nc" id="L111">		}</span>
-
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (installed.isNone()) {</span>
-<span class="nc" id="L114">			strings.add(&quot;No license currently installed.&quot;);</span>
-<span class="nc" id="L115">			strings.add(&quot; &quot;);</span>
-<span class="nc" id="L116">			strings.add(&quot;&lt;b&gt;Please copy license.txt to one of those files&lt;/b&gt;:&quot;);</span>
-<span class="nc bnc" id="L117" title="All 2 branches missed.">			for (SFile f : LicenseInfo.fileCandidates()) {</span>
-<span class="nc" id="L118">				strings.add(f.getAbsolutePath());</span>
-<span class="nc" id="L119">			}</span>
-<span class="nc" id="L120">			strings.add(&quot; &quot;);</span>
-		} else {
-<span class="nc" id="L122">			strings.add(&quot;&lt;u&gt;Installed license&lt;/u&gt;:&quot;);</span>
-<span class="nc" id="L123">			License.addLicenseInfo(strings, installed);</span>
-<span class="nc" id="L124">			strings.add(&quot; &quot;);</span>
-		}
-
-<span class="nc" id="L127">		final TextBlock disp = GraphicStrings.createBlackOnWhite(strings);</span>
-<span class="nc" id="L128">		disp.drawU(ug);</span>
-<span class="nc" id="L129">	}</span>
-
 	private ArrayList&lt;String&gt; header() {
-<span class="nc" id="L132">		final ArrayList&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L133">		strings.add(&quot;&lt;b&gt;PlantUML version &quot; + Version.versionString() + &quot;&lt;/b&gt; (&quot; + Version.compileTimeString() + &quot;)&quot;);</span>
-<span class="nc" id="L134">		strings.add(&quot;(&quot; + License.getCurrent() + &quot; source distribution)&quot;);</span>
+<span class="nc" id="L179">		final ArrayList&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L180">		strings.add(&quot;&lt;b&gt;PlantUML version &quot; + Version.versionString() + &quot;&lt;/b&gt; (&quot; + Version.compileTimeString() + &quot;)&quot;);</span>
+<span class="nc" id="L181">		strings.add(&quot;(&quot; + License.getCurrent() + &quot; source distribution)&quot;);</span>
 //		if (OptionFlags.ALLOW_INCLUDE) {
 //			strings.add(&quot;Loaded from &quot; + Version.getJarPath());
 //		}
-<span class="nc" id="L138">		strings.add(&quot; &quot;);</span>
-<span class="nc" id="L139">		return strings;</span>
+<span class="nc" id="L185">		strings.add(&quot; &quot;);</span>
+<span class="nc" id="L186">		return strings;</span>
 	}
 
-	private void drawFlash(UGraphic ug, LicenseInfo info) throws IOException {
-<span class="nc" id="L143">		final List&lt;String&gt; strings = header();</span>
-<span class="nc" id="L144">		strings.add(&quot;To get your &lt;i&gt;Professional Edition License&lt;/i&gt;,&quot;);</span>
-<span class="nc" id="L145">		strings.add(&quot;please send this qrcode to &lt;b&gt;plantuml@gmail.com&lt;/b&gt; :&quot;);</span>
-
-<span class="nc" id="L147">		TextBlock disp = GraphicStrings.createBlackOnWhite(strings);</span>
-<span class="nc" id="L148">		disp.drawU(ug);</span>
-
-<span class="nc" id="L150">		ug = ug.apply(UTranslate.dy(disp.calculateDimension(ug.getStringBounder()).getHeight()));</span>
-<span class="nc" id="L151">		final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();</span>
-<span class="nc" id="L152">		final PortableImage im = utils.exportFlashcode(</span>
-<span class="nc" id="L153">				Version.versionString() + &quot;\n&quot; + SignatureUtils.toHexString(PLSSignature.signature()), XColor.BLACK,</span>
-				XColor.WHITE);
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (im != null) {</span>
-<span class="nc" id="L156">			final UImage flash = new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(4);</span>
-<span class="nc" id="L157">			ug.draw(flash);</span>
-<span class="nc" id="L158">			ug = ug.apply(UTranslate.dy(flash.getHeight()));</span>
-		}
-
-<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (info.isNone() == false) {</span>
-<span class="nc" id="L162">			strings.clear();</span>
-<span class="nc" id="L163">			strings.add(&quot;&lt;u&gt;Installed license&lt;/u&gt;:&quot;);</span>
-<span class="nc" id="L164">			License.addLicenseInfo(strings, info);</span>
-<span class="nc" id="L165">			strings.add(&quot; &quot;);</span>
-<span class="nc" id="L166">			disp = GraphicStrings.createBlackOnWhite(strings);</span>
-<span class="nc" id="L167">			disp.drawU(ug);</span>
-		}
-
-<span class="nc" id="L170">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -35,87 +35,115 @@
  */
 package net.sourceforge.plantuml.emoji;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.UgSimpleDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-public class PSystemListEmoji extends PlainDiagram {
-	
+public class PSystemListEmoji extends UgSimpleDiagram {
 
 	private final String text;
 
+	public PSystemListEmoji(UmlSource source, String text, PreprocessingArtifact preprocessing) {
+<span class="nc" id="L60">		super(source, preprocessing);</span>
+<span class="nc" id="L61">		this.text = text;</span>
+<span class="nc" id="L62">	}</span>
+
 	@Override
-	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L62">		return new UDrawable() {</span>
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L66">		return getTextBlock().calculateDimension(stringBounder);</span>
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L71">		getTextBlock().drawU(ug);</span>
+<span class="nc" id="L72">	}</span>
+
+	private TextBlock getTextBlock() {
+<span class="nc" id="L75">		final TextBlock header = GraphicStrings</span>
+<span class="nc" id="L76">				.createBlackOnWhite(Arrays.asList(&quot;&lt;b&gt;&lt;size:16&gt;Emoji available on Unicode Block &quot; + text,</span>
+						&quot;(Blocks available: 26, 27, 1F3, 1F4, 1F5, 1F6, 1F9)&quot;));
+
+<span class="nc" id="L79">		final Map&lt;String, Emoji&gt; some = new TreeMap&lt;&gt;();</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		for (Map.Entry&lt;String, Emoji&gt; ent : Emoji.getAll().entrySet())</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">			if (ent.getKey().startsWith(text))</span>
+<span class="nc" id="L82">				some.put(ent.getKey(), ent.getValue());</span>
+
+<span class="nc" id="L84">		final List&lt;TextBlock&gt; items = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		for (Map.Entry&lt;String, Emoji&gt; ent : some.entrySet()) {</span>
+<span class="nc" id="L86">			final String code = ent.getKey();</span>
+<span class="nc" id="L87">			final String shortcut = ent.getValue().getShortcut();</span>
+<span class="nc" id="L88">			final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L89">			sb.append(&quot;&lt;size:13&gt;&quot;);</span>
+<span class="nc" id="L90">			sb.append(&quot;\&quot;\&quot;&lt;U+003C&gt;:&quot; + code + &quot;:&lt;U+003E&gt; \&quot;\&quot;&quot;);</span>
+<span class="nc" id="L91">			sb.append(&quot;&lt;:&quot; + code + &quot;:&gt;&quot;);</span>
+<span class="nc" id="L92">			sb.append(&quot; &quot;);</span>
+<span class="nc" id="L93">			sb.append(&quot;&lt;#0:&quot; + code + &quot;:&gt;&quot;);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">			if (shortcut != null) {</span>
+<span class="nc" id="L95">				sb.append(&quot; &quot;);</span>
+<span class="nc" id="L96">				sb.append(&quot;\&quot;\&quot;&lt;U+003C&gt;:&quot; + shortcut + &quot;:&lt;U+003E&gt; \&quot;\&quot;&quot;);</span>
+			}
+<span class="nc" id="L98">			items.add(GraphicStrings.createBlackOnWhite(Arrays.asList(sb.toString())));</span>
+<span class="nc" id="L99">		}</span>
+
+<span class="nc" id="L101">		final int third = (items.size() + 2) / 3;</span>
+
+<span class="nc" id="L103">		return new TextBlock() {</span>
+			@Override
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L64">				final TextBlock header = GraphicStrings</span>
-<span class="nc" id="L65">						.createBlackOnWhite(Arrays.asList(&quot;&lt;b&gt;&lt;size:16&gt;Emoji available on Unicode Block &quot; + text,</span>
-								&quot;(Blocks available: 26, 27, 1F3, 1F4, 1F5, 1F6, 1F9)&quot;));
-<span class="nc" id="L67">				header.drawU(ug);</span>
-<span class="nc" id="L68">				final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L69">				ug = ug.apply(UTranslate.dy(header.calculateDimension(stringBounder).getHeight()));</span>
+<span class="nc" id="L106">				header.drawU(ug);</span>
+<span class="nc" id="L107">				final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L108">				ug = ug.apply(UTranslate.dy(header.calculateDimension(stringBounder).getHeight()));</span>
+<span class="nc" id="L109">				final UGraphic top = ug;</span>
+<span class="nc" id="L110">				int i = 0;</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">				for (TextBlock item : items) {</span>
+<span class="nc" id="L112">					item.drawU(ug);</span>
+<span class="nc" id="L113">					ug = ug.apply(UTranslate.dy(item.calculateDimension(stringBounder).getHeight()));</span>
+<span class="nc" id="L114">					i++;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">					if (i == third)</span>
+<span class="nc" id="L116">						ug = top.apply(UTranslate.dx(500));</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">					if (i == 2 * third)</span>
+<span class="nc" id="L118">						ug = top.apply(UTranslate.dx(1000));</span>
+<span class="nc" id="L119">				}</span>
+<span class="nc" id="L120">			}</span>
 
-<span class="nc" id="L71">				final UGraphic top = ug;</span>
-
-<span class="nc" id="L73">				final Map&lt;String, Emoji&gt; some = new TreeMap&lt;&gt;();</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">				for (Map.Entry&lt;String, Emoji&gt; ent : Emoji.getAll().entrySet())</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">					if (ent.getKey().startsWith(text))</span>
-<span class="nc" id="L76">						some.put(ent.getKey(), ent.getValue());</span>
-
-<span class="nc" id="L78">				final int third = (some.size() + 2) / 3;</span>
-<span class="nc" id="L79">				int i = 0;</span>
-
-<span class="nc bnc" id="L81" title="All 2 branches missed.">				for (Map.Entry&lt;String, Emoji&gt; ent : some.entrySet()) {</span>
-<span class="nc" id="L82">					final String code = ent.getKey();</span>
-<span class="nc" id="L83">					final String shortcut = ent.getValue().getShortcut();</span>
-
-<span class="nc" id="L85">					final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L86">					sb.append(&quot;&lt;size:13&gt;&quot;);</span>
-<span class="nc" id="L87">					sb.append(&quot;\&quot;\&quot;&lt;U+003C&gt;:&quot; + code + &quot;:&lt;U+003E&gt; \&quot;\&quot;&quot;);</span>
-<span class="nc" id="L88">					sb.append(&quot;&lt;:&quot; + code + &quot;:&gt;&quot;);</span>
-<span class="nc" id="L89">					sb.append(&quot; &quot;);</span>
-<span class="nc" id="L90">					sb.append(&quot;&lt;#0:&quot; + code + &quot;:&gt;&quot;);</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">					if (shortcut != null) {</span>
-<span class="nc" id="L92">						sb.append(&quot; &quot;);</span>
-<span class="nc" id="L93">						sb.append(&quot;\&quot;\&quot;&lt;U+003C&gt;:&quot; + shortcut + &quot;:&lt;U+003E&gt; \&quot;\&quot;&quot;);</span>
-					}
-
-<span class="nc" id="L96">					final TextBlock tmp = GraphicStrings.createBlackOnWhite(Arrays.asList(sb.toString()));</span>
-<span class="nc" id="L97">					tmp.drawU(ug);</span>
-<span class="nc" id="L98">					ug = ug.apply(UTranslate.dy(tmp.calculateDimension(stringBounder).getHeight()));</span>
-
-<span class="nc" id="L100">					i++;</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">					if (i == third)</span>
-<span class="nc" id="L102">						ug = top.apply(UTranslate.dx(500));</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">					if (i == 2 * third)</span>
-<span class="nc" id="L104">						ug = top.apply(UTranslate.dx(1000));</span>
-
-<span class="nc" id="L106">				}</span>
-
-<span class="nc" id="L108">			}</span>
+			@Override
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L124">				final double headerHeight = header.calculateDimension(stringBounder).getHeight();</span>
+<span class="nc" id="L125">				double col1Height = 0;</span>
+<span class="nc" id="L126">				double col2Height = 0;</span>
+<span class="nc" id="L127">				double col3Height = 0;</span>
+<span class="nc" id="L128">				int i = 0;</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">				for (TextBlock item : items) {</span>
+<span class="nc" id="L130">					final double h = item.calculateDimension(stringBounder).getHeight();</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">					if (i &lt; third)</span>
+<span class="nc" id="L132">						col1Height += h;</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">					else if (i &lt; 2 * third)</span>
+<span class="nc" id="L134">						col2Height += h;</span>
+					else
+<span class="nc" id="L136">						col3Height += h;</span>
+<span class="nc" id="L137">					i++;</span>
+<span class="nc" id="L138">				}</span>
+<span class="nc" id="L139">				final double maxColHeight = Math.max(col1Height, Math.max(col2Height, col3Height));</span>
+<span class="nc" id="L140">				return new XDimension2D(1500, headerHeight + maxColHeight);</span>
+			}
 		};
 	}
 
-	public PSystemListEmoji(UmlSource source, String text, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L113">		super(source, preprocessing);</span>
-<span class="nc" id="L114">		this.text = text;</span>
-<span class="nc" id="L115">	}</span>
-
 	public DiagramDescription getDescription() {
-<span class="nc" id="L118">		return new DiagramDescription(&quot;(List Emoji)&quot;);</span>
+<span class="nc" id="L146">		return new DiagramDescription(&quot;(List Emoji)&quot;);</span>
 	}
 
 }

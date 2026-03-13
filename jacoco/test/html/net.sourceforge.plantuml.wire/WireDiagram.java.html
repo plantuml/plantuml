@@ -70,7 +70,7 @@ public class WireDiagram extends TitledDiagram {
 <span class="nc" id="L70">	}</span>
 
 	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 <span class="nc" id="L74">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
@@ -84,100 +84,95 @@ public class WireDiagram extends TitledDiagram {
 		};
 	}
 
-	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L89">		return getTextMainBlock01970(fileFormatOption);</span>
-	}
-
 	private void drawMe(UGraphic ug) {
-<span class="nc" id="L93">		root.drawMe(ug);</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		for (Spot spot : spots)</span>
-<span class="nc" id="L95">			spot.drawMe(ug);</span>
+<span class="nc" id="L88">		root.drawMe(ug);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		for (Spot spot : spots)</span>
+<span class="nc" id="L90">			spot.drawMe(ug);</span>
 
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		for (WLinkHorizontal link : hlinks)</span>
-<span class="nc" id="L98">			link.drawMe(ug);</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		for (WLinkHorizontal link : hlinks)</span>
+<span class="nc" id="L93">			link.drawMe(ug);</span>
 
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		for (WLinkVertical link : vlinks)</span>
-<span class="nc" id="L101">			link.drawMe(ug);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		for (WLinkVertical link : vlinks)</span>
+<span class="nc" id="L96">			link.drawMe(ug);</span>
 
-<span class="nc" id="L103">	}</span>
+<span class="nc" id="L98">	}</span>
 
 	public CommandExecutionResult addComponent(String indent, String name, int width, int height, HColor color) {
-<span class="nc" id="L106">		final int level = computeIndentationLevel(indent);</span>
-<span class="nc" id="L107">		return this.root.addBlock(level, name, width, height, color);</span>
+<span class="nc" id="L101">		final int level = computeIndentationLevel(indent);</span>
+<span class="nc" id="L102">		return this.root.addBlock(level, name, width, height, color);</span>
 	}
 
 	public CommandExecutionResult newColumn(String indent) {
-<span class="nc" id="L111">		final int level = computeIndentationLevel(indent);</span>
-<span class="nc" id="L112">		return this.root.newColumn(level);</span>
+<span class="nc" id="L106">		final int level = computeIndentationLevel(indent);</span>
+<span class="nc" id="L107">		return this.root.newColumn(level);</span>
 	}
 
 	public CommandExecutionResult spot(String name, HColor color, String x, String y) {
-<span class="nc" id="L116">		final WBlock block = this.root.getBlock(name);</span>
-<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (block == null)</span>
-<span class="nc" id="L118">			return CommandExecutionResult.error(&quot;No such element &quot; + name);</span>
+<span class="nc" id="L111">		final WBlock block = this.root.getBlock(name);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (block == null)</span>
+<span class="nc" id="L113">			return CommandExecutionResult.error(&quot;No such element &quot; + name);</span>
 
-<span class="nc" id="L120">		final Spot spot = new Spot(block, color, x, y);</span>
-<span class="nc" id="L121">		this.spots.add(spot);</span>
-<span class="nc" id="L122">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L115">		final Spot spot = new Spot(block, color, x, y);</span>
+<span class="nc" id="L116">		this.spots.add(spot);</span>
+<span class="nc" id="L117">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult wgoto(String indent, double x, double y) {
-<span class="nc" id="L126">		final int level = computeIndentationLevel(indent);</span>
-<span class="nc" id="L127">		return this.root.wgoto(level, x, y);</span>
+<span class="nc" id="L121">		final int level = computeIndentationLevel(indent);</span>
+<span class="nc" id="L122">		return this.root.wgoto(level, x, y);</span>
 	}
 
 	public CommandExecutionResult wmove(String indent, double x, double y) {
-<span class="nc" id="L131">		final int level = computeIndentationLevel(indent);</span>
-<span class="nc" id="L132">		return this.root.wmove(level, x, y);</span>
+<span class="nc" id="L126">		final int level = computeIndentationLevel(indent);</span>
+<span class="nc" id="L127">		return this.root.wmove(level, x, y);</span>
 	}
 
 	public CommandExecutionResult print(String indent, String text) {
-<span class="nc" id="L136">		final int level = computeIndentationLevel(indent);</span>
+<span class="nc" id="L131">		final int level = computeIndentationLevel(indent);</span>
 
-<span class="nc" id="L138">		final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();</span>
-<span class="nc" id="L139">		return this.root.print(stringBounder, getSkinParam(), level, text);</span>
+<span class="nc" id="L133">		final StringBounder stringBounder = FileFormat.PNG.getDefaultStringBounder();</span>
+<span class="nc" id="L134">		return this.root.print(stringBounder, getSkinParam(), level, text);</span>
 	}
 
 	private int computeIndentationLevel(String indent) {
-<span class="nc" id="L143">		final int level = indent.replace(&quot;    &quot;, &quot;\t&quot;).length();</span>
-<span class="nc" id="L144">		return level;</span>
+<span class="nc" id="L138">		final int level = indent.replace(&quot;    &quot;, &quot;\t&quot;).length();</span>
+<span class="nc" id="L139">		return level;</span>
 	}
 
 	public CommandExecutionResult vlink(String name1, String x1, String y1, String name2, WLinkType type,
 			WArrowDirection direction, HColor color, Display label) {
-<span class="nc" id="L149">		final WBlock block1 = this.root.getBlock(name1);</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (block1 == null)</span>
-<span class="nc" id="L151">			return CommandExecutionResult.error(&quot;No such element &quot; + name1);</span>
+<span class="nc" id="L144">		final WBlock block1 = this.root.getBlock(name1);</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		if (block1 == null)</span>
+<span class="nc" id="L146">			return CommandExecutionResult.error(&quot;No such element &quot; + name1);</span>
 
-<span class="nc" id="L153">		final WBlock block2 = this.root.getBlock(name2);</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (block2 == null)</span>
-<span class="nc" id="L155">			return CommandExecutionResult.error(&quot;No such element &quot; + name2);</span>
+<span class="nc" id="L148">		final WBlock block2 = this.root.getBlock(name2);</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (block2 == null)</span>
+<span class="nc" id="L150">			return CommandExecutionResult.error(&quot;No such element &quot; + name2);</span>
 
-<span class="nc" id="L157">		final UTranslate start = block1.getNextOutVertical(x1, y1, type);</span>
-<span class="nc" id="L158">		final double destination = block2.getAbsolutePosition(&quot;0&quot;, &quot;0&quot;).getDy();</span>
+<span class="nc" id="L152">		final UTranslate start = block1.getNextOutVertical(x1, y1, type);</span>
+<span class="nc" id="L153">		final double destination = block2.getAbsolutePosition(&quot;0&quot;, &quot;0&quot;).getDy();</span>
 
-<span class="nc" id="L160">		this.vlinks.add(new WLinkVertical(getSkinParam(), start, destination, type, direction, color, label));</span>
+<span class="nc" id="L155">		this.vlinks.add(new WLinkVertical(getSkinParam(), start, destination, type, direction, color, label));</span>
 
-<span class="nc" id="L162">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L157">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult hlink(String name1, String x1, String y1, String name2, WLinkType type,
 			WArrowDirection direction, HColor color, Display label) {
-<span class="nc" id="L167">		final WBlock block1 = this.root.getBlock(name1);</span>
-<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (block1 == null)</span>
-<span class="nc" id="L169">			return CommandExecutionResult.error(&quot;No such element &quot; + name1);</span>
+<span class="nc" id="L162">		final WBlock block1 = this.root.getBlock(name1);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (block1 == null)</span>
+<span class="nc" id="L164">			return CommandExecutionResult.error(&quot;No such element &quot; + name1);</span>
 
-<span class="nc" id="L171">		final WBlock block2 = this.root.getBlock(name2);</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (block2 == null)</span>
-<span class="nc" id="L173">			return CommandExecutionResult.error(&quot;No such element &quot; + name2);</span>
+<span class="nc" id="L166">		final WBlock block2 = this.root.getBlock(name2);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (block2 == null)</span>
+<span class="nc" id="L168">			return CommandExecutionResult.error(&quot;No such element &quot; + name2);</span>
 
-<span class="nc" id="L175">		final UTranslate start = block1.getNextOutHorizontal(x1, y1, type);</span>
-<span class="nc" id="L176">		final double destination = block2.getAbsolutePosition(&quot;0&quot;, &quot;0&quot;).getDx();</span>
+<span class="nc" id="L170">		final UTranslate start = block1.getNextOutHorizontal(x1, y1, type);</span>
+<span class="nc" id="L171">		final double destination = block2.getAbsolutePosition(&quot;0&quot;, &quot;0&quot;).getDx();</span>
 
-<span class="nc" id="L178">		this.hlinks.add(new WLinkHorizontal(getSkinParam(), start, destination, type, direction, color, label));</span>
+<span class="nc" id="L173">		this.hlinks.add(new WLinkHorizontal(getSkinParam(), start, destination, type, direction, color, label));</span>
 
-<span class="nc" id="L180">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L175">		return CommandExecutionResult.ok();</span>
 	}
 
 }

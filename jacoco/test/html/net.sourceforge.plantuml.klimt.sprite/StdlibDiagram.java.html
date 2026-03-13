@@ -76,7 +76,7 @@ public class StdlibDiagram extends TitledDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextMainBlock01970(FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 <span class="nc" id="L80">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
@@ -93,24 +93,19 @@ public class StdlibDiagram extends TitledDiagram {
 		};
 	}
 
-	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L98">		return getTextMainBlock01970(fileFormatOption);</span>
-	}
-
 	public void setStdlibName(String name) {
-<span class="nc" id="L102">		this.name = name;</span>
-<span class="nc" id="L103">	}</span>
+<span class="nc" id="L97">		this.name = name;</span>
+<span class="nc" id="L98">	}</span>
 
 	private void drawInternal(UGraphic ug) throws IOException {
-<span class="nc" id="L106">		double x = 0;</span>
-<span class="nc" id="L107">		double y = 0;</span>
-<span class="nc" id="L108">		double rawHeight = 0;</span>
-<span class="nc" id="L109">		final Stdlib folder = Stdlib.retrieve(name);</span>
+<span class="nc" id="L101">		double x = 0;</span>
+<span class="nc" id="L102">		double y = 0;</span>
+<span class="nc" id="L103">		double rawHeight = 0;</span>
+<span class="nc" id="L104">		final Stdlib folder = Stdlib.retrieve(name);</span>
 
-<span class="nc" id="L111">		final CommandFactorySprite factorySpriteCommand = CommandFactorySprite.ME;</span>
+<span class="nc" id="L106">		final CommandFactorySprite factorySpriteCommand = CommandFactorySprite.ME;</span>
 
-<span class="nc" id="L113">		Command&lt;TitledDiagram&gt; cmd = factorySpriteCommand.createMultiLine(false);</span>
+<span class="nc" id="L108">		Command&lt;TitledDiagram&gt; cmd = factorySpriteCommand.createMultiLine(false);</span>
 
 //		final List&lt;String&gt; all = folder.extractAllSprites();
 //		int nb = 0;
@@ -126,30 +121,30 @@ public class StdlibDiagram extends TitledDiagram {
 //			nb++;
 //		}
 
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		for (String n : getSkinParam().getAllSpriteNames()) {</span>
-<span class="nc" id="L130">			final Sprite sprite = getSkinParam().getSprite(n);</span>
-<span class="nc" id="L131">			TextBlock blockName = Display.create(n).create(FontConfiguration.blackBlueTrue(UFontFactory.sansSerif(14)),</span>
-<span class="nc" id="L132">					HorizontalAlignment.LEFT, getSkinParam());</span>
-<span class="nc" id="L133">			TextBlock tb = sprite.asTextBlock(getBlack(), null, 1.0, null);</span>
-<span class="nc" id="L134">			tb = TextBlockUtils.mergeTB(tb, blockName, HorizontalAlignment.CENTER);</span>
-<span class="nc" id="L135">			tb.drawU(ug.apply(new UTranslate(x, y)));</span>
-<span class="nc" id="L136">			final XDimension2D dim = tb.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L137">			rawHeight = Math.max(rawHeight, dim.getHeight());</span>
-<span class="nc" id="L138">			x += dim.getWidth();</span>
-<span class="nc" id="L139">			x += 30;</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">			if (x &gt; WIDTH) {</span>
-<span class="nc" id="L141">				x = 0;</span>
-<span class="nc" id="L142">				y += rawHeight + 50;</span>
-<span class="nc" id="L143">				rawHeight = 0;</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">				if (y &gt; 1024) {</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		for (String n : getSkinParam().getAllSpriteNames()) {</span>
+<span class="nc" id="L125">			final Sprite sprite = getSkinParam().getSprite(n);</span>
+<span class="nc" id="L126">			TextBlock blockName = Display.create(n).create(FontConfiguration.blackBlueTrue(UFontFactory.sansSerif(14)),</span>
+<span class="nc" id="L127">					HorizontalAlignment.LEFT, getSkinParam());</span>
+<span class="nc" id="L128">			TextBlock tb = sprite.asTextBlock(getBlack(), null, 1.0, null);</span>
+<span class="nc" id="L129">			tb = TextBlockUtils.mergeTB(tb, blockName, HorizontalAlignment.CENTER);</span>
+<span class="nc" id="L130">			tb.drawU(ug.apply(new UTranslate(x, y)));</span>
+<span class="nc" id="L131">			final XDimension2D dim = tb.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L132">			rawHeight = Math.max(rawHeight, dim.getHeight());</span>
+<span class="nc" id="L133">			x += dim.getWidth();</span>
+<span class="nc" id="L134">			x += 30;</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">			if (x &gt; WIDTH) {</span>
+<span class="nc" id="L136">				x = 0;</span>
+<span class="nc" id="L137">				y += rawHeight + 50;</span>
+<span class="nc" id="L138">				rawHeight = 0;</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">				if (y &gt; 1024) {</span>
 //					break;
 				}
 			}
-<span class="nc" id="L148">		}</span>
-<span class="nc" id="L149">	}</span>
+<span class="nc" id="L143">		}</span>
+<span class="nc" id="L144">	}</span>
 
 	private HColor getBlack() {
-<span class="nc" id="L152">		return HColors.BLACK.withDark(HColors.WHITE);</span>
+<span class="nc" id="L147">		return HColors.BLACK.withDark(HColors.WHITE);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

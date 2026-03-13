@@ -116,8 +116,8 @@ public final class LimitFinder extends UGraphicNo {
 <span class="fc" id="L116">			drawRectangle(x, y, (URectangle) shape);</span>
 <span class="pc bpc" id="L117" title="1 of 2 branches missed.">		} else if (shape instanceof DotPath) {</span>
 <span class="nc" id="L118">			drawDotPath(x, y, (DotPath) shape);</span>
-<span class="fc bfc" id="L119" title="All 2 branches covered.">		} else if (shape instanceof UImage) {</span>
-<span class="fc" id="L120">			drawImage(x, y, (UImage) shape);</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		} else if (shape instanceof UImage) {</span>
+<span class="nc" id="L120">			drawImage(x, y, (UImage) shape);</span>
 <span class="pc bpc" id="L121" title="1 of 2 branches missed.">		} else if (shape instanceof UImageSvg) {</span>
 <span class="nc" id="L122">			drawImageSvg(x, y, (UImageSvg) shape);</span>
 <span class="pc bpc" id="L123" title="1 of 2 branches missed.">		} else if (shape instanceof UComment) {</span>
@@ -185,9 +185,9 @@ public final class LimitFinder extends UGraphicNo {
 <span class="nc" id="L185">	}</span>
 
 	private void drawImage(double x, double y, UImage shape) {
-<span class="fc" id="L188">		addPoint(x, y);</span>
-<span class="fc" id="L189">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
-<span class="fc" id="L190">	}</span>
+<span class="nc" id="L188">		addPoint(x, y);</span>
+<span class="nc" id="L189">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
+<span class="nc" id="L190">	}</span>
 
 	private void drawImageSvg(double x, double y, UImageSvg shape) {
 <span class="nc" id="L193">		addPoint(x, y);</span>
@@ -215,11 +215,11 @@ public final class LimitFinder extends UGraphicNo {
 	}
 
 	public double getMaxX() {
-<span class="fc" id="L218">		return minmax.getMaxX();</span>
+<span class="nc" id="L218">		return minmax.getMaxX();</span>
 	}
 
 	public double getMaxY() {
-<span class="fc" id="L222">		return minmax.getMaxY();</span>
+<span class="nc" id="L222">		return minmax.getMaxY();</span>
 	}
 
 	public double getMinX() {

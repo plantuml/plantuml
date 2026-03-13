@@ -36,56 +36,52 @@
 package net.sourceforge.plantuml.openiconic;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.PlainDiagram;
+import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.donors.PSystemDonors;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockHorizontal;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.openiconic.data.DummyIcon;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-public class PSystemListOpenIconic extends PlainDiagram {
-	
+public class PSystemListOpenIconic extends UgDiagram {
 
 	public PSystemListOpenIconic(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L61">		super(source, preprocessing);</span>
-<span class="nc" id="L62">	}</span>
+<span class="nc" id="L58">		super(source, preprocessing);</span>
+<span class="nc" id="L59">	}</span>
 
-	@Override
-	protected UDrawable getRootDrawable(FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L66">		final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L67">		lines.add(&quot;&lt;b&gt;List Open Iconic&quot;);</span>
-<span class="nc" id="L68">		lines.add(&quot;&lt;i&gt;Credit to&quot;);</span>
-<span class="nc" id="L69">		lines.add(&quot;https://useiconic.com/open&quot;);</span>
-<span class="nc" id="L70">		lines.add(&quot; &quot;);</span>
-<span class="nc" id="L71">		try (BufferedReader br = new BufferedReader(new InputStreamReader(getResourceAllTxt()))) {</span>
-<span class="nc" id="L72">			String s = null;</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">			while ((s = br.readLine()) != null) {</span>
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception {
+<span class="nc" id="L62">		final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L63">		lines.add(&quot;&lt;b&gt;List Open Iconic&quot;);</span>
+<span class="nc" id="L64">		lines.add(&quot;&lt;i&gt;Credit to&quot;);</span>
+<span class="nc" id="L65">		lines.add(&quot;https://useiconic.com/open&quot;);</span>
+<span class="nc" id="L66">		lines.add(&quot; &quot;);</span>
+<span class="nc" id="L67">		try (BufferedReader br = new BufferedReader(new InputStreamReader(getResourceAllTxt()))) {</span>
+<span class="nc" id="L68">			String s = null;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">			while ((s = br.readLine()) != null) {</span>
 				// lines.add(&quot;&lt;&amp;yen&gt; &quot; + s);
 				// System.err.println(&quot;s=&quot; + s);
-<span class="nc" id="L76">				lines.add(&quot;&lt;&amp;&quot; + s + &quot;&gt; &quot; + s);</span>
+<span class="nc" id="L72">				lines.add(&quot;&lt;&amp;&quot; + s + &quot;&gt; &quot; + s);</span>
 			}
 		}
-<span class="nc" id="L79">		final List&lt;TextBlock&gt; cols = PSystemDonors.getCols(lines, 7, 0);</span>
-<span class="nc" id="L80">		return new TextBlockHorizontal(cols, VerticalAlignment.TOP);</span>
+<span class="nc" id="L75">		final List&lt;TextBlock&gt; cols = PSystemDonors.getCols(lines, 7, 0);</span>
+<span class="nc" id="L76">		return new TextBlockHorizontal(cols, VerticalAlignment.TOP);</span>
 	}
 
 	private InputStream getResourceAllTxt() {
-<span class="nc" id="L84">		return DummyIcon.class.getResourceAsStream(&quot;all.txt&quot;);</span>
+<span class="nc" id="L80">		return DummyIcon.class.getResourceAsStream(&quot;all.txt&quot;);</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L88">		return new DiagramDescription(&quot;(Open iconic)&quot;);</span>
+<span class="nc" id="L84">		return new DiagramDescription(&quot;(Open iconic)&quot;);</span>
 	}
 
 }

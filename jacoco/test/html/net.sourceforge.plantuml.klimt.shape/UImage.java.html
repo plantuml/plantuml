@@ -35,76 +35,93 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
-
-
+import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.klimt.MutableImage;
-import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.awt.XColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class UImage implements UShape {
-    // ::remove file when __HAXE__
+public class UImage implements TextBlock {
 
 	private final MutableImage image;
 	private final String formula;
 	private final String rawFileName;
 
 	public UImage(MutableImage image) {
-<span class="fc" id="L53">		this(image, null, null);</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L54">		this(image, null, null);</span>
+<span class="fc" id="L55">	}</span>
 
-<span class="fc" id="L56">	private UImage(MutableImage image, String rawFileName, String formula) {</span>
-<span class="fc" id="L57">		this.image = image;</span>
-<span class="fc" id="L58">		this.formula = formula;</span>
-<span class="fc" id="L59">		this.rawFileName = rawFileName;</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L57">	private UImage(MutableImage image, String rawFileName, String formula) {</span>
+<span class="fc" id="L58">		this.image = image;</span>
+<span class="fc" id="L59">		this.formula = formula;</span>
+<span class="fc" id="L60">		this.rawFileName = rawFileName;</span>
+<span class="fc" id="L61">	}</span>
 
 	public final UImage withRawFileName(String rawFileName) {
-<span class="nc" id="L63">		return new UImage(image, rawFileName, formula);</span>
+<span class="nc" id="L64">		return new UImage(image, rawFileName, formula);</span>
 	}
 
 	public final UImage withFormula(String formula) {
-<span class="nc" id="L67">		return new UImage(image, rawFileName, formula);</span>
+<span class="nc" id="L68">		return new UImage(image, rawFileName, formula);</span>
 	}
 
 	public final String getRawFileName() {
-<span class="nc" id="L71">		return rawFileName;</span>
+<span class="nc" id="L72">		return rawFileName;</span>
 	}
 
 	public final String getFormula() {
-<span class="nc" id="L75">		return formula;</span>
+<span class="nc" id="L76">		return formula;</span>
 	}
 
 	public UImage scale(double scale) {
-<span class="fc" id="L79">		return new UImage(image.withScale(scale), rawFileName, formula);</span>
+<span class="fc" id="L80">		return new UImage(image.withScale(scale), rawFileName, formula);</span>
 	}
 
 	public final PortableImage getImage(double withScale) {
-<span class="fc" id="L83">		return image.withScale(withScale).getImage();</span>
+<span class="fc" id="L84">		return image.withScale(withScale).getImage();</span>
 	}
 
 	public int getWidth() {
-<span class="fc" id="L87">		return image.getImage().getWidth() - 1;</span>
+<span class="fc" id="L88">		return image.getImage().getWidth() - 1;</span>
 	}
 
 	public int getHeight() {
-<span class="fc" id="L91">		return image.getImage().getHeight() - 1;</span>
+<span class="fc" id="L92">		return image.getImage().getHeight() - 1;</span>
 	}
 
 	public UImage muteColor(XColor newColor) {
-<span class="nc" id="L95">		return new UImage(image.muteColor(newColor), rawFileName, formula);</span>
+<span class="nc" id="L96">		return new UImage(image.muteColor(newColor), rawFileName, formula);</span>
 	}
 
 	public UImage muteTransparentColor(XColor newColor) {
-<span class="nc" id="L99">		return new UImage(image.muteTransparentColor(newColor), rawFileName, formula);</span>
+<span class="nc" id="L100">		return new UImage(image.muteTransparentColor(newColor), rawFileName, formula);</span>
 	}
 
 	public UImage monochrome() {
-<span class="nc" id="L103">		return new UImage(image.monochrome(), rawFileName, formula);</span>
+<span class="nc" id="L104">		return new UImage(image.monochrome(), rawFileName, formula);</span>
 	}
 
 	public double getScale() {
-<span class="nc" id="L107">		return image.getScale();</span>
+<span class="nc" id="L108">		return image.getScale();</span>
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="nc" id="L113">		ug.draw(this);</span>
+<span class="nc" id="L114">	}</span>
+
+	@Override
+	@Fast
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L119">		return new XDimension2D(getWidth(), getHeight());</span>
+	}
+
+	@Override
+	public MinMax getMinMax(StringBounder stringBounder) {
+<span class="nc" id="L124">		return MinMax.fromMax(getWidth(), getHeight());</span>
 	}
 
 }

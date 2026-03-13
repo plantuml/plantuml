@@ -322,7 +322,7 @@ Total Classes: 7
 "jcckit.util" --> "java.lang"
 "jcckit.util" --> "java.util"
 
-class "net.atmp" %lighten("red", 33) {
+class "net.atmp" %lighten("red", 34) {
 Total Classes: 3
 }
 "net.atmp" --> "java.lang"
@@ -337,7 +337,7 @@ Total Classes: 3
 "net.atmp" --> "net.sourceforge.plantuml.klimt.shape"
 
 class "net.sourceforge.plantuml" %lighten("red", 60) {
-Total Classes: 39
+Total Classes: 38
 }
 "net.sourceforge.plantuml" --> "java.awt"
 "net.sourceforge.plantuml" --> "java.awt.font"
@@ -358,7 +358,6 @@ Total Classes: 39
 "net.sourceforge.plantuml" --> "net.sourceforge.plantuml.error"
 "net.sourceforge.plantuml" --> "net.sourceforge.plantuml.klimt.awt"
 "net.sourceforge.plantuml" --> "net.sourceforge.plantuml.klimt.color"
-"net.sourceforge.plantuml" --> "net.sourceforge.plantuml.klimt.drawing"
 "net.sourceforge.plantuml" --> "net.sourceforge.plantuml.klimt.font"
 "net.sourceforge.plantuml" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml" --> "net.sourceforge.plantuml.klimt.shape"
@@ -1151,8 +1150,8 @@ Total Classes: 77
 "net.sourceforge.plantuml.decoration.symbol" --> "net.sourceforge.plantuml.svek"
 "net.sourceforge.plantuml.decoration.symbol" --> "net.sourceforge.plantuml.svek.image"
 
-class "net.sourceforge.plantuml.dedication" %lighten("red", 91) {
-Total Classes: 11
+class "net.sourceforge.plantuml.dedication" %lighten("red", 90) {
+Total Classes: 10
 }
 "net.sourceforge.plantuml.dedication" --> "java.io"
 "net.sourceforge.plantuml.dedication" --> "java.lang"
@@ -1169,6 +1168,8 @@ Total Classes: 11
 "net.sourceforge.plantuml.dedication" --> "net.sourceforge.plantuml.klimt"
 "net.sourceforge.plantuml.dedication" --> "net.sourceforge.plantuml.klimt.awt"
 "net.sourceforge.plantuml.dedication" --> "net.sourceforge.plantuml.klimt.drawing"
+"net.sourceforge.plantuml.dedication" --> "net.sourceforge.plantuml.klimt.font"
+"net.sourceforge.plantuml.dedication" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.dedication" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.dedication" --> "net.sourceforge.plantuml.log"
 "net.sourceforge.plantuml.dedication" --> "net.sourceforge.plantuml.preproc"
@@ -1178,7 +1179,6 @@ Total Classes: 11
 class "net.sourceforge.plantuml.definition" %lighten("red", 100) {
 Total Classes: 2
 }
-"net.sourceforge.plantuml.definition" --> "java.io"
 "net.sourceforge.plantuml.definition" --> "java.lang"
 "net.sourceforge.plantuml.definition" --> "java.util"
 "net.sourceforge.plantuml.definition" --> "net.sourceforge.plantuml"
@@ -1367,7 +1367,7 @@ Total Classes: 28
 "net.sourceforge.plantuml.ebnf" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.eggs" %lighten("red", 96) {
-Total Classes: 20
+Total Classes: 19
 }
 "net.sourceforge.plantuml.eggs" --> "java.awt"
 "net.sourceforge.plantuml.eggs" --> "java.io"
@@ -1386,6 +1386,7 @@ Total Classes: 20
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.klimt.drawing"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.klimt.drawing.g2d"
+"net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.klimt.font"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.eggs" --> "net.sourceforge.plantuml.nio"
@@ -1474,11 +1475,11 @@ Total Classes: 1
 "net.sourceforge.plantuml.elk.proxy.graph.util" --> "net.sourceforge.plantuml.elk.proxy"
 "net.sourceforge.plantuml.elk.proxy.graph.util" --> "net.sourceforge.plantuml.elk.proxy.graph"
 
-class "net.sourceforge.plantuml.emoji" %lighten("red", 88) {
+class "net.sourceforge.plantuml.emoji" %lighten("red", 87) {
 Total Classes: 5
 }
-"net.sourceforge.plantuml.emoji" --> "java.io"
 "net.sourceforge.plantuml.emoji" --> "java.lang"
+"net.sourceforge.plantuml.emoji" --> "java.util"
 "net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.command"
 "net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.core"
@@ -1486,6 +1487,8 @@ Total Classes: 5
 "net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.klimt.awt"
 "net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.klimt.drawing"
+"net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.klimt.font"
+"net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.emoji" --> "net.sourceforge.plantuml.preproc"
 
@@ -1494,21 +1497,13 @@ Total Classes: 1
 }
 "net.sourceforge.plantuml.emoji.data" --> "java.lang"
 
-class "net.sourceforge.plantuml.error" %lighten("red", 78) {
-Total Classes: 5
+class "net.sourceforge.plantuml.error" %lighten("red", 60) {
+Total Classes: 3
 }
 "net.sourceforge.plantuml.error" --> "java.lang"
 "net.sourceforge.plantuml.error" --> "java.util"
-"net.sourceforge.plantuml.error" --> "net.atmp"
 "net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.core"
-"net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.klimt"
-"net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.klimt.awt"
-"net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.klimt.color"
-"net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.klimt.drawing"
-"net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.klimt.font"
-"net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.klimt.geom"
-"net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.text"
 
@@ -1708,7 +1703,7 @@ Total Classes: 18
 "net.sourceforge.plantuml.json" --> "java.util"
 
 class "net.sourceforge.plantuml.jsondiagram" %lighten("red", 85) {
-Total Classes: 7
+Total Classes: 6
 }
 "net.sourceforge.plantuml.jsondiagram" --> "h"
 "net.sourceforge.plantuml.jsondiagram" --> "java.io"
@@ -1757,7 +1752,7 @@ Total Classes: 21
 "net.sourceforge.plantuml.klimt" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.klimt" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.klimt.awt" %lighten("red", 55) {
+class "net.sourceforge.plantuml.klimt.awt" %lighten("red", 56) {
 Total Classes: 3
 }
 "net.sourceforge.plantuml.klimt.awt" --> "java.awt"
@@ -2070,8 +2065,8 @@ Total Classes: 34
 "net.sourceforge.plantuml.klimt.geom" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.klimt.geom" --> "net.sourceforge.plantuml.teavm"
 
-class "net.sourceforge.plantuml.klimt.shape" %lighten("red", 23) {
-Total Classes: 42
+class "net.sourceforge.plantuml.klimt.shape" %lighten("red", 24) {
+Total Classes: 40
 }
 "net.sourceforge.plantuml.klimt.shape" --> "java.lang"
 "net.sourceforge.plantuml.klimt.shape" --> "java.util"
@@ -2129,7 +2124,7 @@ Total Classes: 7
 "net.sourceforge.plantuml.licensing" --> "java.security"
 "net.sourceforge.plantuml.licensing" --> "java.util"
 
-class "net.sourceforge.plantuml.log" %lighten("red", 12) {
+class "net.sourceforge.plantuml.log" %lighten("red", 13) {
 Total Classes: 2
 }
 "net.sourceforge.plantuml.log" --> "java.io"
@@ -3392,9 +3387,9 @@ Total Classes: 7
 "net.sourceforge.plantuml.version" --> "net.sourceforge.plantuml.klimt"
 "net.sourceforge.plantuml.version" --> "net.sourceforge.plantuml.klimt.awt"
 "net.sourceforge.plantuml.version" --> "net.sourceforge.plantuml.klimt.drawing"
+"net.sourceforge.plantuml.version" --> "net.sourceforge.plantuml.klimt.font"
 "net.sourceforge.plantuml.version" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.version" --> "net.sourceforge.plantuml.klimt.shape"
-"net.sourceforge.plantuml.version" --> "net.sourceforge.plantuml.log"
 "net.sourceforge.plantuml.version" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.version" --> "net.sourceforge.plantuml.text"
 
