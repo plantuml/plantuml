@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.shape;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -58,25 +57,6 @@ public class TextBlockVertical2 extends TextBlockMemoized implements WithPorts {
 		this.blocks.add(b1);
 		this.blocks.add(b2);
 		this.horizontalAlignment = horizontalAlignment;
-	}
-
-	TextBlockVertical2(TextBlock b1, final UImage image, HorizontalAlignment horizontalAlignment) {
-		this(b1, convertImage(image), horizontalAlignment);
-	}
-
-	static private TextBlock convertImage(final UImage image) {
-		return new TextBlock() {
-
-			public void drawU(UGraphic ug) {
-				ug.draw(image);
-			}
-
-			@Fast
-			@Override
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return new XDimension2D(image.getWidth(), image.getHeight());
-			}
-		};
 	}
 
 	public TextBlockVertical2(List<TextBlock> all, HorizontalAlignment horizontalAlignment) {

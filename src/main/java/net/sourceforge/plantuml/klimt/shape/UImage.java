@@ -35,14 +35,16 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
-
-
+import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.klimt.MutableImage;
-import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.awt.XColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class UImage implements UShape {
+public class UImage implements TextBlock {
 
 	private final MutableImage image;
 	private final String formula;
@@ -104,6 +106,22 @@ public class UImage implements UShape {
 
 	public double getScale() {
 		return image.getScale();
+	}
+
+	@Override
+	public void drawU(UGraphic ug) {
+		ug.draw(this);
+	}
+
+	@Override
+	@Fast
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return new XDimension2D(getWidth(), getHeight());
+	}
+
+	@Override
+	public MinMax getMinMax(StringBounder stringBounder) {
+		return MinMax.fromMax(getWidth(), getHeight());
 	}
 
 }

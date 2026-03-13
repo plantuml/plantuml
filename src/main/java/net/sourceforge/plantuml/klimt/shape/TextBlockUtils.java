@@ -130,13 +130,6 @@ public class TextBlockUtils {
 		return new TextBlockVertical2(b1, b2, horizontalAlignment);
 	}
 
-	public static TextBlock mergeTB(TextBlock b1, UImage image, HorizontalAlignment horizontalAlignment) {
-		if (b1 == EMPTY_TEXT_BLOCK)
-			throw new IllegalArgumentException();
-
-		return new TextBlockVertical2(b1, image, horizontalAlignment);
-	}
-
 	// public static TextBlockBackcolored mergeColoredTB(TextBlockBackcolored b1,
 	// TextBlockBackcolored b2,
 	// HorizontalAlignment horizontalAlignment) {
@@ -185,26 +178,6 @@ public class TextBlockUtils {
 			public MagneticBorder getMagneticBorder() {
 				return text.getMagneticBorder();
 			}
-		};
-	}
-
-	public static TextBlock fromUImage(final UImage image) {
-		return new TextBlock() {
-
-			public void drawU(UGraphic ug) {
-				ug.draw(image);
-			}
-
-			@Fast
-			@Override
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return new XDimension2D(image.getWidth(), image.getHeight());
-			}
-
-			public MinMax getMinMax(StringBounder stringBounder) {
-				return MinMax.fromMax(image.getWidth(), image.getHeight());
-			}
-
 		};
 	}
 

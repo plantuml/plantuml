@@ -308,8 +308,7 @@ public abstract class PSystemError extends UgDiagram {
 	private TextBlock addMessageArecibo(final TextBlock source) throws IOException {
 		final UImage message = new UImage(
 				new PixelImage(PSystemVersion.getArecibo(), AffineTransformType.TYPE_BILINEAR));
-		TextBlock result = TextBlockUtils.mergeLR(source, TextBlockUtils.fromUImage(message), VerticalAlignment.TOP);
-		return result;
+		return TextBlockUtils.mergeLR(source, message, VerticalAlignment.TOP);
 	}
 
 	private TextBlock getMessageDedication() {
@@ -329,7 +328,7 @@ public abstract class PSystemError extends UgDiagram {
 			result = text;
 		} else {
 			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);
-			result = TextBlockUtils.mergeLR(text, TextBlockUtils.fromUImage(qr), VerticalAlignment.CENTER);
+			result = TextBlockUtils.mergeLR(text, qr, VerticalAlignment.CENTER);
 		}
 		return TextBlockUtils.addBackcolor(result, backColor);
 
