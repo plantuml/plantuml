@@ -104,17 +104,21 @@ public class StripeCode extends TextBlockMemoized implements StripeRaw {
 	public void drawU(UGraphic ug) {
 <span class="fc" id="L105">		double y = 0;</span>
 <span class="fc bfc" id="L106" title="All 2 branches covered.">		for (String s : raw) {</span>
-<span class="fc" id="L107">			final UText shape = UText.build(s, fontConfiguration);</span>
-<span class="fc" id="L108">			final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L109">			final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);</span>
-<span class="fc" id="L110">			y += dim.getHeight();</span>
-<span class="fc" id="L111">			ug.apply(UTranslate.dy(y - shape.getDescent(stringBounder))).draw(shape);</span>
-<span class="fc" id="L112">		}</span>
-<span class="fc" id="L113">	}</span>
+			
+<span class="fc" id="L108">			final FontConfiguration useFontConfiguration = fontConfiguration.adjustColorForBackground(ug);</span>
+
+			
+<span class="fc" id="L111">			final UText shape = UText.build(s, useFontConfiguration);</span>
+<span class="fc" id="L112">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L113">			final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);</span>
+<span class="fc" id="L114">			y += dim.getHeight();</span>
+<span class="fc" id="L115">			ug.apply(UTranslate.dy(y - shape.getDescent(stringBounder))).draw(shape);</span>
+<span class="fc" id="L116">		}</span>
+<span class="fc" id="L117">	}</span>
 
 	@Override
 	public List&lt;Neutron&gt; getNeutrons() {
-<span class="nc" id="L117">		return Arrays.asList(Neutron.create(this));</span>
+<span class="nc" id="L121">		return Arrays.asList(Neutron.create(this));</span>
 	}
 
 }

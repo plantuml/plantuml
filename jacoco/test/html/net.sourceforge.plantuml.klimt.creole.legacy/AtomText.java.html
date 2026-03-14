@@ -43,7 +43,6 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.UTranslate;
-import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Neutron;
 import net.sourceforge.plantuml.klimt.creole.NeutronType;
 import net.sourceforge.plantuml.klimt.creole.atom.AbstractAtom;
@@ -72,155 +71,148 @@ public final class AtomText extends AbstractAtom implements Atom {
 
 	@JawsStrange
 	protected AtomText(String text, FontConfiguration style, Url url, DelayedDouble marginLeft,
-<span class="fc" id="L75">			DelayedDouble marginRight, boolean manageSpecialChars) {</span>
+<span class="fc" id="L74">			DelayedDouble marginRight, boolean manageSpecialChars) {</span>
 //		if (text.contains(&quot;&quot; + BackSlash.hiddenNewLine()))
 //			throw new IllegalArgumentException(text);
 
-<span class="fc" id="L79">		this.marginLeft = marginLeft;</span>
-<span class="fc" id="L80">		this.marginRight = marginRight;</span>
-<span class="fc" id="L81">		String s = CharHidder.unhide(text);</span>
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (manageSpecialChars) {</span>
-<span class="fc" id="L83">			s = StringUtils.showComparatorCharacters(s);</span>
-<span class="fc" id="L84">			s = StringUtils.manageAmpDiese(s);</span>
-<span class="fc" id="L85">			s = StringUtils.manageUnicodeNotationUplus(s);</span>
-<span class="fc" id="L86">			s = StringUtils.manageTildeArobaseStart(s);</span>
-<span class="fc" id="L87">			s = StringUtils.manageEscapedTabs(s);</span>
+<span class="fc" id="L78">		this.marginLeft = marginLeft;</span>
+<span class="fc" id="L79">		this.marginRight = marginRight;</span>
+<span class="fc" id="L80">		String s = CharHidder.unhide(text);</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (manageSpecialChars) {</span>
+<span class="fc" id="L82">			s = StringUtils.showComparatorCharacters(s);</span>
+<span class="fc" id="L83">			s = StringUtils.manageAmpDiese(s);</span>
+<span class="fc" id="L84">			s = StringUtils.manageUnicodeNotationUplus(s);</span>
+<span class="fc" id="L85">			s = StringUtils.manageTildeArobaseStart(s);</span>
+<span class="fc" id="L86">			s = StringUtils.manageEscapedTabs(s);</span>
 		}
-<span class="fc" id="L89">		this.manageSpecialChars = manageSpecialChars;</span>
-<span class="fc" id="L90">		this.text = s;</span>
-<span class="fc" id="L91">		this.fontConfiguration = style;</span>
-<span class="fc" id="L92">		this.url = url;</span>
-<span class="fc" id="L93">	}</span>
+<span class="fc" id="L88">		this.manageSpecialChars = manageSpecialChars;</span>
+<span class="fc" id="L89">		this.text = s;</span>
+<span class="fc" id="L90">		this.fontConfiguration = style;</span>
+<span class="fc" id="L91">		this.url = url;</span>
+<span class="fc" id="L92">	}</span>
 
 	private AtomText withText(String text) {
-<span class="fc" id="L96">		return new AtomText(text, fontConfiguration, url, marginLeft, marginRight, manageSpecialChars);</span>
+<span class="fc" id="L95">		return new AtomText(text, fontConfiguration, url, marginLeft, marginRight, manageSpecialChars);</span>
 	}
 
 	@JawsStrange
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="fc" id="L102">		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);</span>
-<span class="pc" id="L103">		Log.debug(() -&gt; &quot;g2d=&quot; + rect);</span>
-<span class="pc" id="L104">		Log.debug(() -&gt; &quot;Size for &quot; + text + &quot; is &quot; + rect);</span>
-<span class="fc" id="L105">		double h = rect.getHeight();</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">		if (h &lt; 10)</span>
-<span class="fc" id="L107">			h = 10;</span>
+<span class="fc" id="L101">		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);</span>
+<span class="pc" id="L102">		Log.debug(() -&gt; &quot;g2d=&quot; + rect);</span>
+<span class="pc" id="L103">		Log.debug(() -&gt; &quot;Size for &quot; + text + &quot; is &quot; + rect);</span>
+<span class="fc" id="L104">		double h = rect.getHeight();</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (h &lt; 10)</span>
+<span class="fc" id="L106">			h = 10;</span>
 
-<span class="pc bpc" id="L109" title="1 of 4 branches missed.">		double width = (text.indexOf(&quot;\t&quot;) == -1 &amp;&amp; text.indexOf(Jaws.BLOCK_E1_REAL_TABULATION) == -1)</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">				|| stringBounder.matchesProperty(&quot;TIKZ&quot;) ? rect.getWidth() : getWidth(stringBounder, text);</span>
-<span class="fc" id="L111">		final double left = marginLeft.getDouble(stringBounder);</span>
-<span class="fc" id="L112">		final double right = marginRight.getDouble(stringBounder);</span>
-<span class="fc" id="L113">		return new XDimension2D(width + left + right, h);</span>
+<span class="pc bpc" id="L108" title="1 of 4 branches missed.">		double width = (text.indexOf(&quot;\t&quot;) == -1 &amp;&amp; text.indexOf(Jaws.BLOCK_E1_REAL_TABULATION) == -1)</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">				|| stringBounder.matchesProperty(&quot;TIKZ&quot;) ? rect.getWidth() : getWidth(stringBounder, text);</span>
+<span class="fc" id="L110">		final double left = marginLeft.getDouble(stringBounder);</span>
+<span class="fc" id="L111">		final double right = marginRight.getDouble(stringBounder);</span>
+<span class="fc" id="L112">		return new XDimension2D(width + left + right, h);</span>
 	}
 
 	public double getFontHeight(StringBounder stringBounder) {
-<span class="nc" id="L117">		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);</span>
-<span class="nc" id="L118">		final double descent = stringBounder.getDescent(fontConfiguration.getFont(), text);</span>
-<span class="nc" id="L119">		return rect.getHeight() - descent;</span>
+<span class="nc" id="L116">		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);</span>
+<span class="nc" id="L117">		final double descent = stringBounder.getDescent(fontConfiguration.getFont(), text);</span>
+<span class="nc" id="L118">		return rect.getHeight() - descent;</span>
 	}
 
 	@JawsStrange
 	public void drawU(UGraphic ug) {
-<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (url != null)</span>
-<span class="fc" id="L125">			ug.startUrl(url);</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		if (url != null)</span>
+<span class="fc" id="L124">			ug.startUrl(url);</span>
 
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (ug.matchesProperty(&quot;SPECIALTXT&quot;)) {</span>
-<span class="nc" id="L128">			ug.draw(this);</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (ug.matchesProperty(&quot;SPECIALTXT&quot;)) {</span>
+<span class="nc" id="L127">			ug.draw(this);</span>
 		} else {
-<span class="fc" id="L130">			HColor textColor = fontConfiguration.getColor();</span>
-<span class="fc" id="L131">			FontConfiguration useFontConfiguration = fontConfiguration;</span>
+			
+<span class="fc" id="L130">			final FontConfiguration useFontConfiguration = fontConfiguration.adjustColorForBackground(ug);</span>
 
-<span class="fc" id="L133">			HColor backcolor = ug.getParam().getBackcolor();</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">			if (backcolor.isTransparent())</span>
-<span class="fc" id="L135">				backcolor = ug.getDefaultBackground();</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">			if (marginLeft != AtomTextUtils.ZERO)</span>
+<span class="nc" id="L133">				ug = ug.apply(UTranslate.dx(marginLeft.getDouble(ug.getStringBounder())));</span>
 
-<span class="fc" id="L137">			textColor = textColor.getAppropriateColor(backcolor);</span>
-<span class="fc" id="L138">			useFontConfiguration = fontConfiguration.changeColor(textColor);</span>
-
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">			if (marginLeft != AtomTextUtils.ZERO)</span>
-<span class="nc" id="L141">				ug = ug.apply(UTranslate.dx(marginLeft.getDouble(ug.getStringBounder())));</span>
-
-<span class="fc" id="L143">			final StringTokenizer tokenizer = new StringTokenizer(text, &quot;\t&quot; + Jaws.BLOCK_E1_REAL_TABULATION, true);</span>
+<span class="fc" id="L135">			final StringTokenizer tokenizer = new StringTokenizer(text, &quot;\t&quot; + Jaws.BLOCK_E1_REAL_TABULATION, true);</span>
 
 			// final int ypos = fontConfiguration.getSpace();
-<span class="fc" id="L146">			final XDimension2D rect = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), text);</span>
-<span class="fc" id="L147">			final double descent = getDescent(ug.getStringBounder());</span>
-<span class="fc" id="L148">			final double ypos = rect.getHeight() - descent;</span>
+<span class="fc" id="L138">			final XDimension2D rect = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), text);</span>
+<span class="fc" id="L139">			final double descent = getDescent(ug.getStringBounder());</span>
+<span class="fc" id="L140">			final double ypos = rect.getHeight() - descent;</span>
 
-<span class="fc" id="L150">			double x = 0;</span>
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">			if (tokenizer.hasMoreTokens()) {</span>
-<span class="fc" id="L152">				final double tabSize = getTabSize(ug.getStringBounder());</span>
-<span class="fc bfc" id="L153" title="All 2 branches covered.">				while (tokenizer.hasMoreTokens()) {</span>
-<span class="fc" id="L154">					final String s = tokenizer.nextToken();</span>
-<span class="pc bpc" id="L155" title="1 of 4 branches missed.">					if (s.equals(&quot;\t&quot;) || s.equals(&quot;&quot; + Jaws.BLOCK_E1_REAL_TABULATION)) {</span>
-<span class="fc" id="L156">						final double remainder = x % tabSize;</span>
-<span class="fc" id="L157">						x += tabSize - remainder;</span>
-<span class="fc" id="L158">					} else {</span>
-<span class="fc" id="L159">						final XDimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(),</span>
+<span class="fc" id="L142">			double x = 0;</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">			if (tokenizer.hasMoreTokens()) {</span>
+<span class="fc" id="L144">				final double tabSize = getTabSize(ug.getStringBounder());</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">				while (tokenizer.hasMoreTokens()) {</span>
+<span class="fc" id="L146">					final String s = tokenizer.nextToken();</span>
+<span class="pc bpc" id="L147" title="1 of 4 branches missed.">					if (s.equals(&quot;\t&quot;) || s.equals(&quot;&quot; + Jaws.BLOCK_E1_REAL_TABULATION)) {</span>
+<span class="fc" id="L148">						final double remainder = x % tabSize;</span>
+<span class="fc" id="L149">						x += tabSize - remainder;</span>
+<span class="fc" id="L150">					} else {</span>
+<span class="fc" id="L151">						final XDimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(),</span>
 								s);
-<span class="fc" id="L161">						final UText utext = UText.build(s, useFontConfiguration);</span>
-<span class="fc" id="L162">						ug.apply(new UTranslate(x, ypos)).draw(utext);</span>
-<span class="fc" id="L163">						x += dim.getWidth();</span>
+<span class="fc" id="L153">						final UText utext = UText.build(s, useFontConfiguration);</span>
+<span class="fc" id="L154">						ug.apply(new UTranslate(x, ypos)).draw(utext);</span>
+<span class="fc" id="L155">						x += dim.getWidth();</span>
 					}
-<span class="fc" id="L165">				}</span>
+<span class="fc" id="L157">				}</span>
 			}
 		}
-<span class="fc bfc" id="L168" title="All 2 branches covered.">		if (url != null)</span>
-<span class="fc" id="L169">			ug.closeUrl();</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (url != null)</span>
+<span class="fc" id="L161">			ug.closeUrl();</span>
 
-<span class="fc" id="L171">	}</span>
+<span class="fc" id="L163">	}</span>
 
 	@JawsStrange
 	private double getWidth(StringBounder stringBounder, String text) {
-<span class="fc" id="L175">		final StringTokenizer tokenizer = new StringTokenizer(text, &quot;\t&quot; + Jaws.BLOCK_E1_REAL_TABULATION, true);</span>
-<span class="fc" id="L176">		final double tabSize = getTabSize(stringBounder);</span>
-<span class="fc" id="L177">		double x = 0;</span>
-<span class="fc bfc" id="L178" title="All 2 branches covered.">		while (tokenizer.hasMoreTokens()) {</span>
-<span class="fc" id="L179">			final String s = tokenizer.nextToken();</span>
-<span class="pc bpc" id="L180" title="1 of 4 branches missed.">			if (s.equals(&quot;\t&quot;) || s.equals(&quot;&quot; + Jaws.BLOCK_E1_REAL_TABULATION)) {</span>
-<span class="fc" id="L181">				final double remainder = x % tabSize;</span>
-<span class="fc" id="L182">				x += tabSize - remainder;</span>
-<span class="fc" id="L183">			} else {</span>
-<span class="fc" id="L184">				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);</span>
-<span class="fc" id="L185">				x += dim.getWidth();</span>
+<span class="fc" id="L167">		final StringTokenizer tokenizer = new StringTokenizer(text, &quot;\t&quot; + Jaws.BLOCK_E1_REAL_TABULATION, true);</span>
+<span class="fc" id="L168">		final double tabSize = getTabSize(stringBounder);</span>
+<span class="fc" id="L169">		double x = 0;</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		while (tokenizer.hasMoreTokens()) {</span>
+<span class="fc" id="L171">			final String s = tokenizer.nextToken();</span>
+<span class="pc bpc" id="L172" title="1 of 4 branches missed.">			if (s.equals(&quot;\t&quot;) || s.equals(&quot;&quot; + Jaws.BLOCK_E1_REAL_TABULATION)) {</span>
+<span class="fc" id="L173">				final double remainder = x % tabSize;</span>
+<span class="fc" id="L174">				x += tabSize - remainder;</span>
+<span class="fc" id="L175">			} else {</span>
+<span class="fc" id="L176">				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);</span>
+<span class="fc" id="L177">				x += dim.getWidth();</span>
 			}
-<span class="fc" id="L187">		}</span>
-<span class="fc" id="L188">		return x;</span>
+<span class="fc" id="L179">		}</span>
+<span class="fc" id="L180">		return x;</span>
 	}
 
 	private String tabString() {
-<span class="fc" id="L192">		final int nb = fontConfiguration.getTabSize();</span>
-<span class="pc bpc" id="L193" title="2 of 4 branches missed.">		if (nb &gt;= 1 &amp;&amp; nb &lt; 7)</span>
-<span class="nc" id="L194">			return &quot;        &quot;.substring(0, nb);</span>
+<span class="fc" id="L184">		final int nb = fontConfiguration.getTabSize();</span>
+<span class="pc bpc" id="L185" title="2 of 4 branches missed.">		if (nb &gt;= 1 &amp;&amp; nb &lt; 7)</span>
+<span class="nc" id="L186">			return &quot;        &quot;.substring(0, nb);</span>
 
-<span class="fc" id="L196">		return &quot;        &quot;;</span>
+<span class="fc" id="L188">		return &quot;        &quot;;</span>
 	}
 
 	private double getDescent(StringBounder stringBounder) {
-<span class="fc" id="L200">		return stringBounder.getDescent(fontConfiguration.getFont(), text);</span>
+<span class="fc" id="L192">		return stringBounder.getDescent(fontConfiguration.getFont(), text);</span>
 	}
 
 	private double getTabSize(StringBounder stringBounder) {
-<span class="fc" id="L204">		return stringBounder.calculateDimension(fontConfiguration.getFont(), tabString()).getWidth();</span>
+<span class="fc" id="L196">		return stringBounder.calculateDimension(fontConfiguration.getFont(), tabString()).getWidth();</span>
 	}
 
 	@Override
 	public final List&lt;Neutron&gt; getNeutrons() {
-<span class="fc" id="L209">		final List&lt;Neutron&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L210">		final StringBuilder pending = new StringBuilder();</span>
-<span class="fc bfc" id="L211" title="All 2 branches covered.">		for (int i = 0; i &lt; text.length(); i++) {</span>
-<span class="fc" id="L212">			final char ch = text.charAt(i);</span>
-<span class="fc bfc" id="L213" title="All 2 branches covered.">			if (pending.length() == 0) {</span>
-<span class="fc" id="L214">				pending.append(ch);</span>
-<span class="fc" id="L215">				continue;</span>
+<span class="fc" id="L201">		final List&lt;Neutron&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L202">		final StringBuilder pending = new StringBuilder();</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		for (int i = 0; i &lt; text.length(); i++) {</span>
+<span class="fc" id="L204">			final char ch = text.charAt(i);</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">			if (pending.length() == 0) {</span>
+<span class="fc" id="L206">				pending.append(ch);</span>
+<span class="fc" id="L207">				continue;</span>
 			}
-<span class="fc" id="L217">			final NeutronType pendingType = Neutron.getNeutronTypeFromChar(pending.charAt(0));</span>
-<span class="fc" id="L218">			final NeutronType currentType = Neutron.getNeutronTypeFromChar(ch);</span>
-<span class="pc bpc" id="L219" title="1 of 4 branches missed.">			if (pendingType != currentType || pendingType == NeutronType.CJK_IDEOGRAPH) {</span>
-<span class="fc" id="L220">				addPending(result, pending.toString());</span>
-<span class="fc" id="L221">				pending.setLength(0);</span>
+<span class="fc" id="L209">			final NeutronType pendingType = Neutron.getNeutronTypeFromChar(pending.charAt(0));</span>
+<span class="fc" id="L210">			final NeutronType currentType = Neutron.getNeutronTypeFromChar(ch);</span>
+<span class="pc bpc" id="L211" title="1 of 4 branches missed.">			if (pendingType != currentType || pendingType == NeutronType.CJK_IDEOGRAPH) {</span>
+<span class="fc" id="L212">				addPending(result, pending.toString());</span>
+<span class="fc" id="L213">				pending.setLength(0);</span>
 			}
-<span class="fc" id="L223">			pending.append(ch);</span>
+<span class="fc" id="L215">			pending.append(ch);</span>
 			// if (Neutron.isSentenceBoundary(ch) || Neutron.isChineseSentenceBoundary(ch))
 //			if (Neutron.isChineseSentenceBoundary(ch)) {
 //				addPending(result, pending.toString());
@@ -229,36 +221,36 @@ public final class AtomText extends AbstractAtom implements Atom {
 //			}
 
 		}
-<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		if (pending.length() &gt; 0)</span>
-<span class="fc" id="L233">			addPending(result, pending.toString());</span>
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">		if (pending.length() &gt; 0)</span>
+<span class="fc" id="L225">			addPending(result, pending.toString());</span>
 
-<span class="fc" id="L235">		return result;</span>
+<span class="fc" id="L227">		return result;</span>
 	}
 
 	private void addPending(List&lt;Neutron&gt; result, String pending) {
-<span class="fc" id="L239">		final Neutron tmp = Neutron.create(withText(pending));</span>
-<span class="pc bpc" id="L240" title="1 of 4 branches missed.">		if (tmp.getType() == NeutronType.WHITESPACE || tmp.getType() == NeutronType.CJK_IDEOGRAPH)</span>
-<span class="fc" id="L241">			result.add(Neutron.zwspSeparator());</span>
-<span class="fc" id="L242">		result.add(tmp);</span>
-<span class="pc bpc" id="L243" title="1 of 4 branches missed.">		if (tmp.getType() == NeutronType.WHITESPACE || tmp.getType() == NeutronType.CJK_IDEOGRAPH)</span>
-<span class="fc" id="L244">			result.add(Neutron.zwspSeparator());</span>
-<span class="fc" id="L245">	}</span>
+<span class="fc" id="L231">		final Neutron tmp = Neutron.create(withText(pending));</span>
+<span class="pc bpc" id="L232" title="1 of 4 branches missed.">		if (tmp.getType() == NeutronType.WHITESPACE || tmp.getType() == NeutronType.CJK_IDEOGRAPH)</span>
+<span class="fc" id="L233">			result.add(Neutron.zwspSeparator());</span>
+<span class="fc" id="L234">		result.add(tmp);</span>
+<span class="pc bpc" id="L235" title="1 of 4 branches missed.">		if (tmp.getType() == NeutronType.WHITESPACE || tmp.getType() == NeutronType.CJK_IDEOGRAPH)</span>
+<span class="fc" id="L236">			result.add(Neutron.zwspSeparator());</span>
+<span class="fc" id="L237">	}</span>
 
 	public final String getText() {
-<span class="fc" id="L248">		return text;</span>
+<span class="fc" id="L240">		return text;</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="fc" id="L252">		return fontConfiguration.getSpace();</span>
+<span class="fc" id="L244">		return fontConfiguration.getSpace();</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L257">		return text + &quot; &quot; + fontConfiguration;</span>
+<span class="nc" id="L249">		return text + &quot; &quot; + fontConfiguration;</span>
 	}
 
 	public FontConfiguration getFontConfiguration() {
-<span class="nc" id="L261">		return fontConfiguration;</span>
+<span class="nc" id="L253">		return fontConfiguration;</span>
 	}
 
 }
