@@ -501,6 +501,11 @@ tasks.register("siteAssemble") {
 			from(layout.buildDirectory.dir("reports/tests"))
 			into("$siteDir/tests")
 		}
+
+		copy {
+			from(layout.buildDirectory.dir("reports/problems"))
+			into("$siteDir/problems")
+		}
 		
 		copy {
 			from(layout.buildDirectory.dir("reports/jacoco"))
