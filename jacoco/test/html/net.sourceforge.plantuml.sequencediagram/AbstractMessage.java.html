@@ -52,69 +52,69 @@ import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.warning.Warning;
 
 public abstract class AbstractMessage extends AbstractEvent implements EventWithDeactivate, WithStyle, EventWithNote {
 
 	private Stereotype stereotype;
 
 	public void getStereotype(Stereotype stereotype) {
-<span class="nc" id="L61">		this.stereotype = stereotype;</span>
-<span class="nc" id="L62">	}</span>
+<span class="nc" id="L62">		this.stereotype = stereotype;</span>
+<span class="nc" id="L63">	}</span>
 
 	final public Style[] getUsedStyles() {
-<span class="fc" id="L65">		Style style = getStyleSignature().getMergedStyle(styleBuilder);</span>
-<span class="pc bpc" id="L66" title="1 of 4 branches missed.">		if (style != null &amp;&amp; arrowConfiguration.getColor() != null)</span>
-<span class="fc" id="L67">			style = style.eventuallyOverride(PName.LineColor, arrowConfiguration.getColor());</span>
+<span class="fc" id="L66">		Style style = getStyleSignature().getMergedStyle(styleBuilder);</span>
+<span class="pc bpc" id="L67" title="1 of 4 branches missed.">		if (style != null &amp;&amp; arrowConfiguration.getColor() != null)</span>
+<span class="fc" id="L68">			style = style.eventuallyOverride(PName.LineColor, arrowConfiguration.getColor());</span>
 
-<span class="fc" id="L69">		return new Style[] { style };</span>
+<span class="fc" id="L70">		return new Style[] { style };</span>
 	}
 
 	public StyleSignature getStyleSignature() {
-<span class="fc" id="L73">		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.arrow)</span>
-<span class="fc" id="L74">				.withTOBECHANGED(stereotype);</span>
+<span class="fc" id="L74">		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.arrow)</span>
+<span class="fc" id="L75">				.withTOBECHANGED(stereotype);</span>
 	}
 
 	private final Display label;
 	private final ArrowConfiguration arrowConfiguration;
-<span class="fc" id="L79">	private final Set&lt;LifeEventType&gt; lifeEventsType = EnumSet.noneOf(LifeEventType.class);</span>
+<span class="fc" id="L80">	private final Set&lt;LifeEventType&gt; lifeEventsType = EnumSet.noneOf(LifeEventType.class);</span>
 
 	private Url url;
 	private final String messageNumber;
-<span class="fc" id="L83">	private boolean parallel = false;</span>
+<span class="fc" id="L84">	private boolean parallel = false;</span>
 	private AbstractMessage parallelBrother;
 	private final StyleBuilder styleBuilder;
 
-<span class="fc" id="L87">	private List&lt;Note&gt; noteOnMessages = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L88">	private List&lt;Note&gt; noteOnMessages = new ArrayList&lt;&gt;();</span>
 
 	public AbstractMessage(StyleBuilder styleBuilder, Display label, ArrowConfiguration arrowConfiguration,
-<span class="fc" id="L90">			String messageNumber) {</span>
-<span class="fc" id="L91">		this.styleBuilder = styleBuilder;</span>
-<span class="fc" id="L92">		this.url = null;</span>
-<span class="fc" id="L93">		this.label = label;</span>
-<span class="fc" id="L94">		this.arrowConfiguration = arrowConfiguration;</span>
-<span class="fc" id="L95">		this.messageNumber = messageNumber;</span>
-<span class="fc" id="L96">	}</span>
+<span class="fc" id="L91">			String messageNumber) {</span>
+<span class="fc" id="L92">		this.styleBuilder = styleBuilder;</span>
+<span class="fc" id="L93">		this.url = null;</span>
+<span class="fc" id="L94">		this.label = label;</span>
+<span class="fc" id="L95">		this.arrowConfiguration = arrowConfiguration;</span>
+<span class="fc" id="L96">		this.messageNumber = messageNumber;</span>
+<span class="fc" id="L97">	}</span>
 
 	public final void setUrl(Url url) {
-<span class="nc" id="L99">		this.url = url;</span>
-<span class="nc" id="L100">	}</span>
+<span class="nc" id="L100">		this.url = url;</span>
+<span class="nc" id="L101">	}</span>
 
 	public void goParallel() {
-<span class="nc" id="L103">		this.parallel = true;</span>
-<span class="nc" id="L104">	}</span>
+<span class="nc" id="L104">		this.parallel = true;</span>
+<span class="nc" id="L105">	}</span>
 
 	public void setParallelBrother(AbstractMessage brother) {
-<span class="nc" id="L107">		this.parallelBrother = brother;</span>
-<span class="nc" id="L108">	}</span>
+<span class="nc" id="L108">		this.parallelBrother = brother;</span>
+<span class="nc" id="L109">	}</span>
 
 	public boolean isParallel() {
-<span class="fc" id="L111">		return parallel;</span>
+<span class="fc" id="L112">		return parallel;</span>
 	}
 
 	public boolean isParallelWith(AbstractMessage message) {
-<span class="nc bnc" id="L115" title="All 2 branches missed.">		boolean hasParallelBrother = parallelBrother != null;</span>
-<span class="nc bnc" id="L116" title="All 8 branches missed.">		return (this == message)</span>
-				|| (hasParallelBrother &amp;&amp; parallelBrother == message)
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		boolean hasParallelBrother = parallelBrother != null;</span>
+<span class="nc bnc" id="L117" title="All 8 branches missed.">		return (this == message) || (hasParallelBrother &amp;&amp; parallelBrother == message)</span>
 <span class="nc bnc" id="L118" title="All 2 branches missed.">				|| (hasParallelBrother &amp;&amp; parallelBrother.isParallelWith(message));</span>
 	}
 
@@ -169,12 +169,12 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 
 	@Deprecated
 	public boolean isActivate() {
-<span class="fc" id="L172">		return lifeEventsType.contains(LifeEventType.ACTIVATE);</span>
+<span class="nc" id="L172">		return lifeEventsType.contains(LifeEventType.ACTIVATE);</span>
 	}
 
 	@Deprecated
 	public boolean isDeactivate() {
-<span class="fc" id="L177">		return lifeEventsType.contains(LifeEventType.DEACTIVATE);</span>
+<span class="nc" id="L177">		return lifeEventsType.contains(LifeEventType.DEACTIVATE);</span>
 	}
 
 	public boolean isDestroy() {
@@ -213,21 +213,22 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	}
 
 	@Override
-	public final void addNote(Note note) {
+	public final Warning addNote(Note note) {
 <span class="pc bpc" id="L217" title="1 of 4 branches missed.">		if (note.getPosition() != NotePosition.LEFT &amp;&amp; note.getPosition() != NotePosition.RIGHT</span>
 <span class="nc bnc" id="L218" title="All 4 branches missed.">				&amp;&amp; note.getPosition() != NotePosition.BOTTOM &amp;&amp; note.getPosition() != NotePosition.TOP)</span>
-<span class="nc" id="L219">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L219">			return new Warning(&quot;This position is ignored: &quot; + note.getPosition());</span>
 
 <span class="fc" id="L221">		note = note.withPosition(overrideNotePosition(note.getPosition()));</span>
 <span class="fc" id="L222">		this.noteOnMessages.add(note);</span>
-<span class="fc" id="L223">	}</span>
+<span class="fc" id="L223">		return null;</span>
+	}
 
 	protected NotePosition overrideNotePosition(NotePosition notePosition) {
-<span class="fc" id="L226">		return notePosition;</span>
+<span class="fc" id="L227">		return notePosition;</span>
 	}
 
 	public final String getMessageNumber() {
-<span class="fc" id="L230">		return messageNumber;</span>
+<span class="fc" id="L231">		return messageNumber;</span>
 	}
 
 	public abstract boolean compatibleForCreate(Participant p);
@@ -238,19 +239,19 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	private double posYstartLevel;
 
 	public double getPosYstartLevel() {
-<span class="nc" id="L241">		return posYstartLevel;</span>
+<span class="nc" id="L242">		return posYstartLevel;</span>
 	}
 
 	public void setPosYstartLevel(double posYstartLevel) {
-<span class="fc" id="L245">		this.posYstartLevel = posYstartLevel;</span>
-<span class="fc" id="L246">	}</span>
+<span class="fc" id="L246">		this.posYstartLevel = posYstartLevel;</span>
+<span class="fc" id="L247">	}</span>
 
 	public void setPosYendLevel(double posYendLevel) {
-<span class="fc" id="L249">		this.posYendLevel = posYendLevel;</span>
-<span class="fc" id="L250">	}</span>
+<span class="fc" id="L250">		this.posYendLevel = posYendLevel;</span>
+<span class="fc" id="L251">	}</span>
 
 	public double getPosYendLevel() {
-<span class="nc" id="L253">		return posYendLevel;</span>
+<span class="nc" id="L254">		return posYendLevel;</span>
 	}
 
 	private String anchor;
@@ -258,41 +259,39 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	private String anchor2;
 
 	public void setAnchor(String anchor) {
-<span class="fc" id="L261">		this.anchor = anchor;</span>
-<span class="pc bpc" id="L262" title="3 of 4 branches missed.">		if (anchor != null &amp;&amp; anchor.startsWith(&quot;{&quot;))</span>
-<span class="nc" id="L263">			throw new IllegalArgumentException(anchor);</span>
+<span class="fc" id="L262">		this.anchor = anchor;</span>
+<span class="pc bpc" id="L263" title="3 of 4 branches missed.">		if (anchor != null &amp;&amp; anchor.startsWith(&quot;{&quot;))</span>
+<span class="nc" id="L264">			throw new IllegalArgumentException(anchor);</span>
 
-<span class="fc" id="L265">	}</span>
+<span class="fc" id="L266">	}</span>
 
 	public void setPart1Anchor(String anchor) {
-<span class="fc" id="L268">		this.anchor1 = anchor;</span>
-<span class="fc" id="L269">	}</span>
+<span class="fc" id="L269">		this.anchor1 = anchor;</span>
+<span class="fc" id="L270">	}</span>
 
 	public void setPart2Anchor(String anchor) {
-<span class="fc" id="L272">		this.anchor2 = anchor;</span>
-<span class="fc" id="L273">	}</span>
+<span class="fc" id="L273">		this.anchor2 = anchor;</span>
+<span class="fc" id="L274">	}</span>
 
 	public String getAnchor() {
-<span class="nc" id="L276">		return anchor;</span>
+<span class="nc" id="L277">		return anchor;</span>
 	}
 
 	public String getPart1Anchor() {
-<span class="nc" id="L280">		return this.anchor1;</span>
+<span class="nc" id="L281">		return this.anchor1;</span>
 	}
 
 	public String getPart2Anchor() {
-<span class="nc" id="L284">		return this.anchor2;</span>
+<span class="nc" id="L285">		return this.anchor2;</span>
 	}
 
 	public abstract Participant getParticipant1();
 
 	public abstract Participant getParticipant2();
-	
+
 	public StyleBuilder getStyleBuilder() {
-<span class="nc" id="L292">		return styleBuilder;</span>
+<span class="nc" id="L293">		return styleBuilder;</span>
 	}
-
-
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

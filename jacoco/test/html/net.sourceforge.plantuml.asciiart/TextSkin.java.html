@@ -61,14 +61,14 @@ public class TextSkin extends Rose {
 	@Override
 	public ArrowComponent createComponentArrow(Style[] styles, ArrowConfiguration config, ISkinParam param,
 			Display stringsToDisplay) {
-<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL</span>
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">				|| config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE</span>
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">				|| config.getArrowDirection() == ArrowDirection.BOTH_DIRECTION)</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">				|| config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">				|| config.getArrowDirection() == ArrowDirection.BOTH_DIRECTION)</span>
 <span class="fc" id="L67">			return new ComponentTextArrow(ComponentType.ARROW, config, stringsToDisplay, fileFormat,</span>
 <span class="fc" id="L68">					param.maxAsciiMessageLength());</span>
 
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (config.isSelfArrow())</span>
-<span class="fc" id="L71">			return new ComponentTextSelfArrow(ComponentType.ARROW, config, stringsToDisplay, fileFormat);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (config.isSelfArrow())</span>
+<span class="nc" id="L71">			return new ComponentTextSelfArrow(ComponentType.ARROW, config, stringsToDisplay, fileFormat);</span>
 
 <span class="nc" id="L73">		throw new UnsupportedOperationException();</span>
 	}

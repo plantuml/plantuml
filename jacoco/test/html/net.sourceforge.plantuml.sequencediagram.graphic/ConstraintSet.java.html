@@ -92,7 +92,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	public Constraint getConstraintAfter(Pushable p1) {
-<span class="fc" id="L95">		return getConstraint(Objects.requireNonNull(p1), getNext(p1));</span>
+<span class="nc" id="L95">		return getConstraint(Objects.requireNonNull(p1), getNext(p1));</span>
 	}
 
 	public Constraint getConstraintBefore(Pushable p1) {
@@ -104,15 +104,15 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	public Pushable getNext(Pushable p) {
-<span class="fc" id="L107">		return getOtherParticipant(p, 1);</span>
+<span class="nc" id="L107">		return getOtherParticipant(p, 1);</span>
 	}
 
 	private Pushable getOtherParticipant(Pushable p, int delta) {
-<span class="fc" id="L111">		final int i = participantList.indexOf(p);</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (i == -1)</span>
+<span class="nc" id="L111">		final int i = participantList.indexOf(p);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (i == -1)</span>
 <span class="nc" id="L113">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L115">		return participantList.get(i + delta);</span>
+<span class="nc" id="L115">		return participantList.get(i + delta);</span>
 	}
 
 	public void takeConstraintIntoAccount(StringBounder stringBounder) {

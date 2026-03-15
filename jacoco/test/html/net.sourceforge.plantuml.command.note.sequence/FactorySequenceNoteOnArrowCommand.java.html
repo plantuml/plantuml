@@ -163,8 +163,9 @@ import net.sourceforge.plantuml.utils.LineLocation;
 <span class="fc" id="L163">		note.setUrl(url);</span>
 <span class="fc" id="L164">		note.setColors(colors);</span>
 <span class="fc" id="L165">		event.addNote(note);</span>
+<span class="fc" id="L166">		diagram.addWarning(event.addNote(note));</span>
 
-<span class="fc" id="L167">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L168">		return CommandExecutionResult.ok();</span>
 	}
 
 }

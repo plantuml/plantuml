@@ -2785,7 +2785,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.security.authentication.token" --> "net.sourceforge.plantuml.security.authentication"
 
 class "net.sourceforge.plantuml.sequencediagram" %lighten("red", 83) {
-Total Classes: 27
+Total Classes: 24
 }
 "net.sourceforge.plantuml.sequencediagram" --> "java.lang"
 "net.sourceforge.plantuml.sequencediagram" --> "java.text"
@@ -2804,6 +2804,7 @@ Total Classes: 27
 "net.sourceforge.plantuml.sequencediagram" --> "net.sourceforge.plantuml.stereo"
 "net.sourceforge.plantuml.sequencediagram" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.sequencediagram" --> "net.sourceforge.plantuml.url"
+"net.sourceforge.plantuml.sequencediagram" --> "net.sourceforge.plantuml.warning"
 
 class "net.sourceforge.plantuml.sequencediagram.command" %lighten("red", 88) {
 Total Classes: 30
@@ -3403,7 +3404,7 @@ Total Classes: 7
 "net.sourceforge.plantuml.vizjs" --> "net.sourceforge.plantuml.dot"
 "net.sourceforge.plantuml.vizjs" --> "net.sourceforge.plantuml.log"
 
-class "net.sourceforge.plantuml.warning" %lighten("red", 83) {
+class "net.sourceforge.plantuml.warning" %lighten("red", 79) {
 Total Classes: 2
 }
 "net.sourceforge.plantuml.warning" --> "java.lang"

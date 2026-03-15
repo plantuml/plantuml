@@ -93,12 +93,13 @@ public class Pragma implements WarningHandler {
 
 	@Override
 	public void addWarning(Warning warning) {
-<span class="nc" id="L96">		this.warnings.add(warning);</span>
-<span class="nc" id="L97">	}</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (warning != null)</span>
+<span class="nc" id="L97">			this.warnings.add(warning);</span>
+<span class="fc" id="L98">	}</span>
 
 	@Override
 	public Collection&lt;Warning&gt; getWarnings() {
-<span class="fc" id="L101">		return this.warnings;</span>
+<span class="fc" id="L102">		return this.warnings;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

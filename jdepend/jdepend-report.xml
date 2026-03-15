@@ -14095,13 +14095,13 @@
 
         <Package name="net.sourceforge.plantuml.sequencediagram">
             <Stats>
-                <TotalClasses>27</TotalClasses>
-                <ConcreteClasses>21</ConcreteClasses>
-                <AbstractClasses>6</AbstractClasses>
+                <TotalClasses>24</TotalClasses>
+                <ConcreteClasses>19</ConcreteClasses>
+                <AbstractClasses>5</AbstractClasses>
                 <Ca>11</Ca>
-                <Ce>17</Ce>
-                <A>0.22</A>
-                <I>0.61</I>
+                <Ce>18</Ce>
+                <A>0.21</A>
+                <I>0.62</I>
                 <D>0.17</D>
                 <V>1</V>
             </Stats>
@@ -14109,9 +14109,6 @@
             <AbstractClasses>
                 <Class sourceFile="AbstractEvent.java">
                     net.sourceforge.plantuml.sequencediagram.AbstractEvent
-                </Class>
-                <Class sourceFile="AbstractMessage.java">
-                    net.sourceforge.plantuml.sequencediagram.AbstractMessage
                 </Class>
                 <Class sourceFile="Event.java">
                     net.sourceforge.plantuml.sequencediagram.Event
@@ -14136,9 +14133,6 @@
                 </Class>
                 <Class sourceFile="Divider.java">
                     net.sourceforge.plantuml.sequencediagram.Divider
-                </Class>
-                <Class sourceFile="GroupingLeaf.java">
-                    net.sourceforge.plantuml.sequencediagram.GroupingLeaf
                 </Class>
                 <Class sourceFile="GroupingStart.java">
                     net.sourceforge.plantuml.sequencediagram.GroupingStart
@@ -14182,9 +14176,6 @@
                 <Class sourceFile="ParticipantType.java">
                     net.sourceforge.plantuml.sequencediagram.ParticipantType
                 </Class>
-                <Class sourceFile="Reference.java">
-                    net.sourceforge.plantuml.sequencediagram.Reference
-                </Class>
                 <Class sourceFile="SequenceDiagram.java">
                     net.sourceforge.plantuml.sequencediagram.SequenceDiagram$1
                 </Class>
@@ -14211,6 +14202,7 @@
                 <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
+                <Package>net.sourceforge.plantuml.warning</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -18165,11 +18157,11 @@
                 <TotalClasses>2</TotalClasses>
                 <ConcreteClasses>1</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>4</Ca>
+                <Ca>5</Ca>
                 <Ce>2</Ce>
                 <A>0.5</A>
-                <I>0.33</I>
-                <D>0.17</D>
+                <I>0.29</I>
+                <D>0.21</D>
                 <V>1</V>
             </Stats>
 
@@ -18194,6 +18186,7 @@
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
+                <Package>net.sourceforge.plantuml.sequencediagram</Package>
                 <Package>net.sourceforge.plantuml.skin</Package>
             </UsedBy>
         </Package>
