@@ -64,17 +64,18 @@ public class CommandLinkStateReverse extends CommandLinkStateCommon {
 <span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L65">				getStatePattern(&quot;ENT1&quot;), //</span>
 <span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L67">				getLinkStereotypePattern(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(&quot;:&quot;), //
-<span class="fc" id="L70">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L71">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.+)&quot;) //
-<span class="fc" id="L72">						)), RegexLeaf.end());</span>
+<span class="fc" id="L73">						)), RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected Direction getDefaultDirection() {
-<span class="nc" id="L77">		return Direction.LEFT;</span>
+<span class="nc" id="L78">		return Direction.LEFT;</span>
 	}
 
 }

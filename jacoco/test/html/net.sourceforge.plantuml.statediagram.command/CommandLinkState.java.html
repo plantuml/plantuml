@@ -63,12 +63,13 @@ public class CommandLinkState extends CommandLinkStateCommon {
 <span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L64">				getStatePattern(&quot;ENT2&quot;), //</span>
 <span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L66">				getLinkStereotypePattern(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(&quot;:&quot;), //
-<span class="fc" id="L69">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L70">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.+)&quot;) //
-<span class="fc" id="L71">						)), RegexLeaf.end());</span>
+<span class="fc" id="L72">						)), RegexLeaf.end());</span>
 	}
 
 }
