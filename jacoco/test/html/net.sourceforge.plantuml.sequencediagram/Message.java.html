@@ -41,6 +41,7 @@ import java.util.List;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public final class Message extends AbstractMessage {
 
@@ -48,48 +49,48 @@ public final class Message extends AbstractMessage {
 	final private Participant p2;
 
 	public Message(StyleBuilder styleBuilder, Participant p1, Participant p2, Display label,
-			ArrowConfiguration arrowConfiguration, String messageNumber) {
-<span class="fc" id="L52">		super(styleBuilder, label, arrowConfiguration, messageNumber);</span>
-<span class="fc" id="L53">		this.p1 = p1;</span>
-<span class="fc" id="L54">		this.p2 = p2;</span>
-<span class="fc" id="L55">	}</span>
+			ArrowConfiguration arrowConfiguration, String messageNumber, LineLocation location) {
+<span class="fc" id="L53">		super(styleBuilder, label, arrowConfiguration, messageNumber, location);</span>
+<span class="fc" id="L54">		this.p1 = p1;</span>
+<span class="fc" id="L55">		this.p2 = p2;</span>
+<span class="fc" id="L56">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L59">		return super.toString() + &quot; &quot; + p1 + &quot;-&gt;&quot; + p2 + &quot; &quot; + getLabel();</span>
+<span class="nc" id="L60">		return super.toString() + &quot; &quot; + p1 + &quot;-&gt;&quot; + p2 + &quot; &quot; + getLabel();</span>
 	}
 
 	@Override
 	public Participant getParticipant1() {
-<span class="fc" id="L64">		return p1;</span>
+<span class="fc" id="L65">		return p1;</span>
 	}
 
 	@Override
 	public Participant getParticipant2() {
-<span class="fc" id="L69">		return p2;</span>
+<span class="fc" id="L70">		return p2;</span>
 	}
 
 	public boolean dealWith(Participant someone) {
-<span class="nc bnc" id="L73" title="All 4 branches missed.">		return someone == p1 || someone == p2;</span>
+<span class="nc bnc" id="L74" title="All 4 branches missed.">		return someone == p1 || someone == p2;</span>
 	}
 
 	@Override
 	public boolean compatibleForCreate(Participant p) {
-<span class="nc bnc" id="L78" title="All 4 branches missed.">		return p1 != p &amp;&amp; p2 == p;</span>
+<span class="nc bnc" id="L79" title="All 4 branches missed.">		return p1 != p &amp;&amp; p2 == p;</span>
 	}
 
 	public boolean isSelfMessage() {
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		return p1 == p2;</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		return p1 == p2;</span>
 	}
 
-<span class="fc" id="L85">	private List&lt;Participant&gt; multicast = Collections.emptyList();</span>
+<span class="fc" id="L86">	private List&lt;Participant&gt; multicast = Collections.emptyList();</span>
 
 	public void setMulticast(List&lt;Participant&gt; multicast) {
-<span class="fc" id="L88">		this.multicast = multicast;</span>
-<span class="fc" id="L89">	}</span>
+<span class="fc" id="L89">		this.multicast = multicast;</span>
+<span class="fc" id="L90">	}</span>
 
 	public List&lt;Participant&gt; getMulticast() {
-<span class="nc" id="L92">		return multicast;</span>
+<span class="nc" id="L93">		return multicast;</span>
 	}
 
 }

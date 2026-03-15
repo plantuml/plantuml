@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 class ArrowAndParticipant extends Arrow implements InGroupable {
 
@@ -52,118 +53,119 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 	private final ParticipantBox participantBox;
 	private final double paddingParticipant;
 
-	public ArrowAndParticipant(AtomicInteger counter, Pragma pragma, StringBounder stringBounder, Arrow arrow, ParticipantBox participantBox,
-			double paddingParticipant) {
-<span class="nc" id="L57">		super(counter, pragma, arrow.getStartingY(), arrow.getSkin(), arrow.getArrowComponent(), arrow.getUrl());</span>
-<span class="nc" id="L58">		this.arrow = arrow;</span>
-<span class="nc" id="L59">		this.participantBox = participantBox;</span>
-<span class="nc" id="L60">		this.paddingParticipant = paddingParticipant;</span>
-<span class="nc" id="L61">		arrow.setPaddingArrowHead(participantBox.getPreferredWidth(stringBounder) / 2 - paddingParticipant);</span>
-<span class="nc" id="L62">	}</span>
+	public ArrowAndParticipant(AtomicInteger counter, Pragma pragma, StringBounder stringBounder, Arrow arrow,
+			ParticipantBox participantBox, double paddingParticipant, LineLocation location) {
+<span class="nc" id="L58">		super(counter, pragma, arrow.getStartingY(), arrow.getSkin(), arrow.getArrowComponent(), arrow.getUrl(),</span>
+				location);
+<span class="nc" id="L60">		this.arrow = arrow;</span>
+<span class="nc" id="L61">		this.participantBox = participantBox;</span>
+<span class="nc" id="L62">		this.paddingParticipant = paddingParticipant;</span>
+<span class="nc" id="L63">		arrow.setPaddingArrowHead(participantBox.getPreferredWidth(stringBounder) / 2 - paddingParticipant);</span>
+<span class="nc" id="L64">	}</span>
 
 	@Override
 	public void setMaxX(double m) {
-<span class="nc" id="L66">		super.setMaxX(m);</span>
-<span class="nc" id="L67">		arrow.setMaxX(m);</span>
-<span class="nc" id="L68">	}</span>
+<span class="nc" id="L68">		super.setMaxX(m);</span>
+<span class="nc" id="L69">		arrow.setMaxX(m);</span>
+<span class="nc" id="L70">	}</span>
 
 	@Override
 	final public double getArrowOnlyWidth(StringBounder stringBounder) {
-<span class="nc" id="L72">		return arrow.getPreferredWidth(stringBounder) + participantBox.getPreferredWidth(stringBounder) / 2;</span>
+<span class="nc" id="L74">		return arrow.getPreferredWidth(stringBounder) + participantBox.getPreferredWidth(stringBounder) / 2;</span>
 	}
 
 	@Override
 	public double getArrowYEndLevel(StringBounder stringBounder) {
-<span class="nc" id="L77">		return arrow.getArrowYEndLevel(stringBounder);</span>
+<span class="nc" id="L79">		return arrow.getArrowYEndLevel(stringBounder);</span>
 	}
 
 	@Override
 	public double getArrowYStartLevel(StringBounder stringBounder) {
-<span class="nc" id="L82">		return arrow.getArrowYStartLevel(stringBounder);</span>
+<span class="nc" id="L84">		return arrow.getArrowYStartLevel(stringBounder);</span>
 	}
 
 	@Override
 	public int getDirection(StringBounder stringBounder) {
-<span class="nc" id="L87">		return arrow.getDirection(stringBounder);</span>
+<span class="nc" id="L89">		return arrow.getDirection(stringBounder);</span>
 	}
 
 	@Override
 	public LivingParticipantBox getParticipantAt(StringBounder stringBounder, NotePosition position) {
-<span class="nc" id="L92">		return arrow.getParticipantAt(stringBounder, position);</span>
+<span class="nc" id="L94">		return arrow.getParticipantAt(stringBounder, position);</span>
 	}
 
 	@Override
 	protected Participant getParticipant1() {
-<span class="nc" id="L97">		return arrow.getParticipant1();</span>
+<span class="nc" id="L99">		return arrow.getParticipant1();</span>
 	}
 
 	@Override
 	protected Participant getParticipant2() {
-<span class="nc" id="L102">		return arrow.getParticipant2();</span>
+<span class="nc" id="L104">		return arrow.getParticipant2();</span>
 	}
 
 	@Override
 	protected void drawInternalU(final UGraphic ug, double maxX, Context2D context) {
-<span class="nc" id="L107">		final double participantBoxStartingX = participantBox.getStartingX();</span>
-<span class="nc" id="L108">		final double arrowStartingX = arrow.getStartingX(ug.getStringBounder());</span>
+<span class="nc" id="L109">		final double participantBoxStartingX = participantBox.getStartingX();</span>
+<span class="nc" id="L110">		final double arrowStartingX = arrow.getStartingX(ug.getStringBounder());</span>
 
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (arrowStartingX &lt; participantBoxStartingX) {</span>
-<span class="nc" id="L111">			arrow.drawInternalU(ug, maxX, context);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (arrowStartingX &lt; participantBoxStartingX) {</span>
+<span class="nc" id="L113">			arrow.drawInternalU(ug, maxX, context);</span>
 		} else {
-<span class="nc" id="L113">			final double boxWidth = participantBox.getPreferredWidth(ug.getStringBounder());</span>
-<span class="nc" id="L114">			arrow.drawInternalU(ug.apply(UTranslate.dx(boxWidth / 2 - paddingParticipant)), maxX, context);</span>
+<span class="nc" id="L115">			final double boxWidth = participantBox.getPreferredWidth(ug.getStringBounder());</span>
+<span class="nc" id="L116">			arrow.drawInternalU(ug.apply(UTranslate.dx(boxWidth / 2 - paddingParticipant)), maxX, context);</span>
 		}
 
-<span class="nc" id="L117">		final double arrowHeight = arrow.getPreferredHeight(ug.getStringBounder());</span>
-<span class="nc" id="L118">		final double boxHeight = participantBox.getHeadHeight(ug.getStringBounder());</span>
+<span class="nc" id="L119">		final double arrowHeight = arrow.getPreferredHeight(ug.getStringBounder());</span>
+<span class="nc" id="L120">		final double boxHeight = participantBox.getHeadHeight(ug.getStringBounder());</span>
 		// final double diff = getDiff(ug);
-<span class="nc" id="L120">		double diff = 0;</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (arrowHeight &gt; boxHeight) {</span>
-<span class="nc" id="L122">			diff = arrowHeight - boxHeight;</span>
+<span class="nc" id="L122">		double diff = 0;</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (arrowHeight &gt; boxHeight) {</span>
+<span class="nc" id="L124">			diff = arrowHeight - boxHeight;</span>
 		}
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (context.isBackground() == false) {</span>
-<span class="nc" id="L125">			participantBox</span>
-<span class="nc" id="L126">					.drawParticipantHead(ug.apply(new UTranslate(participantBoxStartingX, getStartingY() + diff)));</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (context.isBackground() == false) {</span>
+<span class="nc" id="L127">			participantBox</span>
+<span class="nc" id="L128">					.drawParticipantHead(ug.apply(new UTranslate(participantBoxStartingX, getStartingY() + diff)));</span>
 		}
-<span class="nc" id="L128">	}</span>
+<span class="nc" id="L130">	}</span>
 
 	private double getDiff(UGraphic ug) {
-<span class="nc" id="L131">		final double y1 = arrow.getPreferredHeight(ug.getStringBounder());</span>
-<span class="nc" id="L132">		final double y2 = participantBox.getHeadHeight(ug.getStringBounder());</span>
-<span class="nc" id="L133">		final double diff = y1 - y2;</span>
-<span class="nc" id="L134">		return diff;</span>
+<span class="nc" id="L133">		final double y1 = arrow.getPreferredHeight(ug.getStringBounder());</span>
+<span class="nc" id="L134">		final double y2 = participantBox.getHeadHeight(ug.getStringBounder());</span>
+<span class="nc" id="L135">		final double diff = y1 - y2;</span>
+<span class="nc" id="L136">		return diff;</span>
 	}
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="nc" id="L139">		return Math.max(arrow.getPreferredHeight(stringBounder), participantBox.getHeadHeight(stringBounder));</span>
+<span class="nc" id="L141">		return Math.max(arrow.getPreferredHeight(stringBounder), participantBox.getHeadHeight(stringBounder));</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L144">		return arrow.getPreferredWidth(stringBounder) + participantBox.getPreferredWidth(stringBounder) / 2;</span>
+<span class="nc" id="L146">		return arrow.getPreferredWidth(stringBounder) + participantBox.getPreferredWidth(stringBounder) / 2;</span>
 	}
 
 	@Override
 	public double getActualWidth(StringBounder stringBounder) {
-<span class="nc" id="L149">		return arrow.getActualWidth(stringBounder) + participantBox.getPreferredWidth(stringBounder) / 2;</span>
+<span class="nc" id="L151">		return arrow.getActualWidth(stringBounder) + participantBox.getPreferredWidth(stringBounder) / 2;</span>
 	}
 
 	@Override
 	public double getStartingX(StringBounder stringBounder) {
-<span class="nc" id="L154">		return arrow.getStartingX(stringBounder);</span>
+<span class="nc" id="L156">		return arrow.getStartingX(stringBounder);</span>
 	}
 
 	public double getMaxX(StringBounder stringBounder) {
-<span class="nc" id="L158">		return arrow.getMaxX(stringBounder);</span>
+<span class="nc" id="L160">		return arrow.getMaxX(stringBounder);</span>
 	}
 
 	public double getMinX(StringBounder stringBounder) {
-<span class="nc" id="L162">		return arrow.getMinX(stringBounder);</span>
+<span class="nc" id="L164">		return arrow.getMinX(stringBounder);</span>
 	}
 
 	public String toString(StringBounder stringBounder) {
-<span class="nc" id="L166">		return arrow.toString(stringBounder);</span>
+<span class="nc" id="L168">		return arrow.toString(stringBounder);</span>
 	}
 
 }

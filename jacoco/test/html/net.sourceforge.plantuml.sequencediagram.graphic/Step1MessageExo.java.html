@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L64">		this.messageArrow = new MessageExoArrow(getDrawingSet().getCounter(),</span>
 <span class="nc" id="L65">				getDrawingSet().getSkinParam().getPragma(), freeY.getFreeY(range), drawingSet.getSkin(), comp,</span>
 <span class="nc" id="L66">				getLivingParticipantBox(), message.getType(), message.getUrl(), message.isShortArrow(),</span>
-<span class="nc" id="L67">				message.getArrowConfiguration());</span>
+<span class="nc" id="L67">				message.getArrowConfiguration(), message.getLineLocation());</span>
 
 <span class="nc" id="L69">		final List&lt;Note&gt; noteOnMessages = message.getNoteOnMessages();</span>
 <span class="nc bnc" id="L70" title="All 2 branches missed.">		for (Note noteOnMessage : noteOnMessages) {</span>
@@ -105,45 +105,46 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L105">		final double posYendLevel = arrowYEndLevel + marginActivateAndDeactive;</span>
 <span class="nc" id="L106">		getMessage().setPosYendLevel(posYendLevel);</span>
 
-<span class="nc bnc" id="L108" title="All 4 branches missed.">		if (TeaVM.a()) assert graphic instanceof InGroupable;</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (graphic instanceof InGroupable) {</span>
-<span class="nc" id="L110">			inGroupablesStack.addElement((InGroupable) graphic);</span>
-<span class="nc" id="L111">			inGroupablesStack.addElement(livingParticipantBox);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (TeaVM.a())</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			assert graphic instanceof InGroupable;</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (graphic instanceof InGroupable) {</span>
+<span class="nc" id="L111">			inGroupablesStack.addElement((InGroupable) graphic);</span>
+<span class="nc" id="L112">			inGroupablesStack.addElement(livingParticipantBox);</span>
 		}
 
-<span class="nc" id="L114">		return getFreeY();</span>
+<span class="nc" id="L115">		return getFreeY();</span>
 	}
 
 	private LivingParticipantBox getLivingParticipantBox() {
-<span class="nc" id="L118">		return getDrawingSet().getLivingParticipantBox(((MessageExo) getMessage()).getParticipant());</span>
+<span class="nc" id="L119">		return getDrawingSet().getLivingParticipantBox(((MessageExo) getMessage()).getParticipant());</span>
 	}
 
 	private Arrow createArrow() {
-<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (getMessage().getNoteOnMessages().size() == 0) {</span>
-<span class="nc" id="L123">			return messageArrow;</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (getMessage().getNoteOnMessages().size() == 0) {</span>
+<span class="nc" id="L124">			return messageArrow;</span>
 		}
-<span class="nc" id="L125">		final List&lt;NoteBox&gt; noteBoxes = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">		for (int i = 0; i &lt; getNotes().size(); i++) {</span>
-<span class="nc" id="L127">			final Component note = getNotes().get(i);</span>
-<span class="nc" id="L128">			final Note noteOnMessage = getMessage().getNoteOnMessages().get(i);</span>
-<span class="nc" id="L129">			noteBoxes.add(createNoteBox(getStringBounder(), messageArrow, note, noteOnMessage));</span>
+<span class="nc" id="L126">		final List&lt;NoteBox&gt; noteBoxes = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		for (int i = 0; i &lt; getNotes().size(); i++) {</span>
+<span class="nc" id="L128">			final Component note = getNotes().get(i);</span>
+<span class="nc" id="L129">			final Note noteOnMessage = getMessage().getNoteOnMessages().get(i);</span>
+<span class="nc" id="L130">			noteBoxes.add(createNoteBox(getStringBounder(), messageArrow, note, noteOnMessage));</span>
 		}
-<span class="nc" id="L131">		return new ArrowAndNoteBox(getDrawingSet().getCounter(), getDrawingSet().getSkinParam().getPragma(),</span>
-<span class="nc" id="L132">				getStringBounder(), messageArrow, noteBoxes);</span>
+<span class="nc" id="L132">		return new ArrowAndNoteBox(getDrawingSet().getCounter(), getDrawingSet().getSkinParam().getPragma(),</span>
+<span class="nc" id="L133">				getStringBounder(), messageArrow, noteBoxes, getMessage().getLineLocation());</span>
 	}
 
 	private ArrowConfiguration getArrowType(MessageExo m) {
-<span class="nc" id="L136">		final MessageExoType type = m.getType();</span>
-<span class="nc" id="L137">		ArrowConfiguration result = null;</span>
+<span class="nc" id="L137">		final MessageExoType type = m.getType();</span>
+<span class="nc" id="L138">		ArrowConfiguration result = null;</span>
 
-<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (type.getDirection() == 1)</span>
-<span class="nc" id="L140">			result = m.getArrowConfiguration();</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (type.getDirection() == 1)</span>
+<span class="nc" id="L141">			result = m.getArrowConfiguration();</span>
 		else
-<span class="nc" id="L142">			result = m.getArrowConfiguration().reverse();</span>
+<span class="nc" id="L143">			result = m.getArrowConfiguration().reverse();</span>
 
 //		result = result.withDecoration1(m.getArrowConfiguration().getDecoration1());
 //		result = result.withDecoration2(m.getArrowConfiguration().getDecoration2());
-<span class="nc" id="L146">		return result;</span>
+<span class="nc" id="L147">		return result;</span>
 		// ArrowConfiguration result = null;
 		// if (type.getDirection() == 1) {
 		// result = ArrowConfiguration.withDirectionNormal();

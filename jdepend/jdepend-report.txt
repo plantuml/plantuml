@@ -9768,11 +9768,11 @@ Stats:
     Abstract Classes: 5
 
     Ca: 11
-    Ce: 18
+    Ce: 19
 
     A: 0.21
-    I: 0.62
-    D: 0.17
+    I: 0.63
+    D: 0.16
 
 Abstract Classes:
     net.sourceforge.plantuml.sequencediagram.AbstractEvent
@@ -9820,6 +9820,7 @@ Depends Upon:
     net.sourceforge.plantuml.stereo
     net.sourceforge.plantuml.style
     net.sourceforge.plantuml.url
+    net.sourceforge.plantuml.utils
     net.sourceforge.plantuml.warning
 
 Used By:
@@ -12078,7 +12079,7 @@ Stats:
     Concrete Classes: 11
     Abstract Classes: 5
 
-    Ca: 57
+    Ca: 58
     Ce: 21
 
     A: 0.31
@@ -12173,6 +12174,7 @@ Used By:
     net.sourceforge.plantuml.regexdiagram
     net.sourceforge.plantuml.salt
     net.sourceforge.plantuml.salt.element
+    net.sourceforge.plantuml.sequencediagram
     net.sourceforge.plantuml.sequencediagram.command
     net.sourceforge.plantuml.sequencediagram.graphic
     net.sourceforge.plantuml.statediagram.command
@@ -14842,7 +14844,7 @@ net.sourceforge.plantuml.security.authentication,6,3,4,3,0.5,0.43,0.07,1
 net.sourceforge.plantuml.security.authentication.basicauth,1,0,1,3,0,0.75,0.25,1
 net.sourceforge.plantuml.security.authentication.oauth,4,1,0,11,0.25,1,0.25,1
 net.sourceforge.plantuml.security.authentication.token,2,0,0,4,0,1,0,1
-net.sourceforge.plantuml.sequencediagram,24,5,11,18,0.21,0.62,0.17,1
+net.sourceforge.plantuml.sequencediagram,24,5,11,19,0.21,0.63,0.16,1
 net.sourceforge.plantuml.sequencediagram.command,30,1,3,17,0.03,0.85,0.12,1
 net.sourceforge.plantuml.sequencediagram.graphic,50,8,3,28,0.16,0.9,0.06,1
 net.sourceforge.plantuml.sequencediagram.puma,6,0,0,3,0,1,0,1
@@ -14877,7 +14879,7 @@ net.sourceforge.plantuml.timingdiagram,25,4,2,25,0.16,0.93,0.09,1
 net.sourceforge.plantuml.timingdiagram.command,13,1,1,10,0.08,0.91,0.01,1
 net.sourceforge.plantuml.timingdiagram.graphic,17,3,1,15,0.18,0.94,0.11,1
 net.sourceforge.plantuml.url,4,0,30,4,0,0.12,0.88,1
-net.sourceforge.plantuml.utils,16,5,57,21,0.31,0.27,0.42,1
+net.sourceforge.plantuml.utils,16,5,58,21,0.31,0.27,0.42,1
 net.sourceforge.plantuml.version,7,1,6,14,0.14,0.7,0.16,1
 net.sourceforge.plantuml.vizjs,7,0,0,6,0,1,0,1
 net.sourceforge.plantuml.warning,2,1,5,2,0.5,0.29,0.21,1

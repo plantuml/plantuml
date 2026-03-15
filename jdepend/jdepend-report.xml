@@ -14099,10 +14099,10 @@
                 <ConcreteClasses>19</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
                 <Ca>11</Ca>
-                <Ce>18</Ce>
+                <Ce>19</Ce>
                 <A>0.21</A>
-                <I>0.62</I>
-                <D>0.17</D>
+                <I>0.63</I>
+                <D>0.16</D>
                 <V>1</V>
             </Stats>
 
@@ -14202,6 +14202,7 @@
                 <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
                 <Package>net.sourceforge.plantuml.warning</Package>
             </DependsUpon>
 
@@ -17885,7 +17886,7 @@
                 <TotalClasses>16</TotalClasses>
                 <ConcreteClasses>11</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>57</Ca>
+                <Ca>58</Ca>
                 <Ce>21</Ce>
                 <A>0.31</A>
                 <I>0.27</I>
@@ -18016,6 +18017,7 @@
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.salt.element</Package>
+                <Package>net.sourceforge.plantuml.sequencediagram</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.command</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.statediagram.command</Package>

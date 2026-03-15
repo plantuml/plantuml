@@ -40,26 +40,25 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.skin.Context2D;
 
 abstract class GraphicalElement {
-    // ::remove folder when __HAXE__
 
 	private double startingY;
 
-<span class="fc" id="L47">	GraphicalElement(double startingY) {</span>
-<span class="fc" id="L48">		this.startingY = startingY;</span>
-<span class="fc" id="L49">	}</span>
+<span class="fc" id="L46">	GraphicalElement(double startingY) {</span>
+<span class="fc" id="L47">		this.startingY = startingY;</span>
+<span class="fc" id="L48">	}</span>
 
 	void pushToDown(double delta) {
-<span class="fc" id="L52">		startingY += delta;</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L51">		startingY += delta;</span>
+<span class="fc" id="L52">	}</span>
 
 	protected final double getStartingY() {
-<span class="fc" id="L56">		return startingY;</span>
+<span class="fc" id="L55">		return startingY;</span>
 	}
 
 	public final void drawU(UGraphic ug, double maxX, Context2D context) {
 		// bugnewway
-<span class="fc" id="L61">		drawInternalU(ug, maxX, context);</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L60">		drawInternalU(ug, maxX, context);</span>
+<span class="fc" id="L61">	}</span>
 
 	protected abstract void drawInternalU(UGraphic ug, double maxX, Context2D context);
 

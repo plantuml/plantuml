@@ -69,8 +69,8 @@ abstract class CommandExoArrowAny extends SingleLineCommand2&lt;SequenceDiagram&
 <span class="fc" id="L69">	}</span>
 
 	@Override
-	final protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	final protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 <span class="nc" id="L74">		final String body = arg.getLazzy(&quot;ARROW_BODYA&quot;, 0) + arg.getLazzy(&quot;ARROW_BODYB&quot;, 0);</span>
 <span class="nc" id="L75">		final String dressing = arg.getLazzy(&quot;ARROW_DRESSING&quot;, 0);</span>
 <span class="nc" id="L76">		final Participant p = diagram.getOrCreateParticipant(location,</span>
@@ -134,7 +134,7 @@ abstract class CommandExoArrowAny extends SingleLineCommand2&lt;SequenceDiagram&
 		}
 
 <span class="nc" id="L136">		final MessageExo msg = new MessageExo(diagram.getSkinParam().getCurrentStyleBuilder(), p, messageExoType,</span>
-<span class="nc" id="L137">				labels, config, diagram.getNextMessageNumber(), isShortArrow(arg));</span>
+<span class="nc" id="L137">				labels, config, diagram.getNextMessageNumber(), isShortArrow(arg), location);</span>
 <span class="nc bnc" id="L138" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null) {</span>
 <span class="nc" id="L139">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
 <span class="nc" id="L140">			final Url urlLink = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));</span>

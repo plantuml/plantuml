@@ -101,10 +101,10 @@ public class CommandReturn extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 <span class="nc bnc" id="L101" title="All 2 branches missed.">		if (message1 instanceof MessageExo) {</span>
 <span class="nc" id="L102">			final MessageExo exo1 = (MessageExo) message1;</span>
 <span class="nc" id="L103">			message2 = new MessageExo(diagram.getSkinParam().getCurrentStyleBuilder(), exo1.getParticipant(),</span>
-<span class="nc" id="L104">					exo1.getType().reverse(), display, arrow, diagram.getNextMessageNumber(), false);</span>
+<span class="nc" id="L104">					exo1.getType().reverse(), display, arrow, diagram.getNextMessageNumber(), false, location);</span>
 <span class="nc" id="L105">		} else {</span>
 <span class="nc" id="L106">			message2 = new Message(diagram.getSkinParam().getCurrentStyleBuilder(), message1.getParticipant2(),</span>
-<span class="nc" id="L107">					message1.getParticipant1(), display, arrow, diagram.getNextMessageNumber());</span>
+<span class="nc" id="L107">					message1.getParticipant1(), display, arrow, diagram.getNextMessageNumber(), location);</span>
 <span class="nc bnc" id="L108" title="All 2 branches missed.">			final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
 <span class="nc bnc" id="L109" title="All 2 branches missed.">			if (parallel)</span>
 <span class="nc" id="L110">				message2.goParallel();</span>

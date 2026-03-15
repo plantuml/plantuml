@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class MessageExo extends AbstractMessage {
 
@@ -46,57 +47,57 @@ public class MessageExo extends AbstractMessage {
 	final private boolean shortArrow;
 
 	public MessageExo(StyleBuilder styleBuilder, Participant p, MessageExoType type, Display label,
-			ArrowConfiguration arrowConfiguration, String messageNumber, boolean shortArrow) {
-<span class="nc" id="L50">		super(styleBuilder, label, arrowConfiguration, messageNumber);</span>
-<span class="nc" id="L51">		this.participant = p;</span>
-<span class="nc" id="L52">		this.type = type;</span>
-<span class="nc" id="L53">		this.shortArrow = shortArrow;</span>
-<span class="nc" id="L54">	}</span>
+			ArrowConfiguration arrowConfiguration, String messageNumber, boolean shortArrow, LineLocation location) {
+<span class="nc" id="L51">		super(styleBuilder, label, arrowConfiguration, messageNumber, location);</span>
+<span class="nc" id="L52">		this.participant = p;</span>
+<span class="nc" id="L53">		this.type = type;</span>
+<span class="nc" id="L54">		this.shortArrow = shortArrow;</span>
+<span class="nc" id="L55">	}</span>
 
 	public boolean isShortArrow() {
-<span class="nc" id="L57">		return shortArrow;</span>
+<span class="nc" id="L58">		return shortArrow;</span>
 	}
 
 	@Override
 	protected NotePosition overrideNotePosition(NotePosition notePosition) {
-<span class="nc bnc" id="L62" title="All 4 branches missed.">		if (type == MessageExoType.FROM_LEFT || type == MessageExoType.TO_LEFT) {</span>
-<span class="nc" id="L63">			return NotePosition.RIGHT;</span>
+<span class="nc bnc" id="L63" title="All 4 branches missed.">		if (type == MessageExoType.FROM_LEFT || type == MessageExoType.TO_LEFT) {</span>
+<span class="nc" id="L64">			return NotePosition.RIGHT;</span>
 		}
-<span class="nc bnc" id="L65" title="All 4 branches missed.">		if (type == MessageExoType.FROM_RIGHT || type == MessageExoType.TO_RIGHT) {</span>
-<span class="nc" id="L66">			return NotePosition.LEFT;</span>
+<span class="nc bnc" id="L66" title="All 4 branches missed.">		if (type == MessageExoType.FROM_RIGHT || type == MessageExoType.TO_RIGHT) {</span>
+<span class="nc" id="L67">			return NotePosition.LEFT;</span>
 		}
-<span class="nc" id="L68">		throw new IllegalStateException();</span>
+<span class="nc" id="L69">		throw new IllegalStateException();</span>
 	}
 
 	@Override
 	public Participant getParticipant1() {
-<span class="nc" id="L73">		return participant;</span>
+<span class="nc" id="L74">		return participant;</span>
 	}
 
 	@Override
 	public Participant getParticipant2() {
-<span class="nc" id="L78">		return participant;</span>
+<span class="nc" id="L79">		return participant;</span>
 	}
 
 	public Participant getParticipant() {
-<span class="nc" id="L82">		return participant;</span>
+<span class="nc" id="L83">		return participant;</span>
 	}
 
 	public final MessageExoType getType() {
-<span class="nc" id="L86">		return type;</span>
+<span class="nc" id="L87">		return type;</span>
 	}
 
 	public boolean dealWith(Participant someone) {
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		return participant == someone;</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		return participant == someone;</span>
 	}
 
 	@Override
 	public boolean compatibleForCreate(Participant p) {
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		return p == participant;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		return p == participant;</span>
 	}
 
 	public boolean isSelfMessage() {
-<span class="nc" id="L99">		return false;</span>
+<span class="nc" id="L100">		return false;</span>
 	}
 
 }

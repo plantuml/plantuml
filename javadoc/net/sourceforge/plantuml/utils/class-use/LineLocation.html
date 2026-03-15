@@ -1973,8 +1973,11 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Participant.</span><code><a href="../../sequencediagram/Participant.html#getLocation()" class="member-name-link">getLocation</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AbstractMessage.</span><code><a href="../../sequencediagram/AbstractMessage.html#getLineLocation()" class="member-name-link">getLineLocation</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Participant.</span><code><a href="../../sequencediagram/Participant.html#getLocation()" class="member-name-link">getLocation</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../../sequencediagram/package-summary.html">net.sourceforge.plantuml.sequencediagram</a> with parameters of type <a href="../LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a></span></div>
 <div class="summary-table three-column-summary">
@@ -2006,7 +2009,33 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../sequencediagram/Participant.html#%3Cinit%3E(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.sequencediagram.ParticipantType,java.lang.String,net.sourceforge.plantuml.klimt.creole.Display,java.util.Set,int,net.sourceforge.plantuml.style.StyleBuilder,java.lang.String)" class="member-name-link">Participant</a><wbr>(<a href="../LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+<div class="col-second even-row-color"><code><a href="../../sequencediagram/AbstractMessage.html#%3Cinit%3E(net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.klimt.creole.Display,net.sourceforge.plantuml.skin.ArrowConfiguration,java.lang.String,net.sourceforge.plantuml.utils.LineLocation)" class="member-name-link">AbstractMessage</a><wbr>(<a href="../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
+ <a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;label,
+ <a href="../../skin/ArrowConfiguration.html" title="class in net.sourceforge.plantuml.skin">ArrowConfiguration</a>&nbsp;arrowConfiguration,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;messageNumber,
+ <a href="../LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../sequencediagram/Message.html#%3Cinit%3E(net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.sequencediagram.Participant,net.sourceforge.plantuml.sequencediagram.Participant,net.sourceforge.plantuml.klimt.creole.Display,net.sourceforge.plantuml.skin.ArrowConfiguration,java.lang.String,net.sourceforge.plantuml.utils.LineLocation)" class="member-name-link">Message</a><wbr>(<a href="../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
+ <a href="../../sequencediagram/Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a>&nbsp;p1,
+ <a href="../../sequencediagram/Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a>&nbsp;p2,
+ <a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;label,
+ <a href="../../skin/ArrowConfiguration.html" title="class in net.sourceforge.plantuml.skin">ArrowConfiguration</a>&nbsp;arrowConfiguration,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;messageNumber,
+ <a href="../LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../sequencediagram/MessageExo.html#%3Cinit%3E(net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.sequencediagram.Participant,net.sourceforge.plantuml.sequencediagram.MessageExoType,net.sourceforge.plantuml.klimt.creole.Display,net.sourceforge.plantuml.skin.ArrowConfiguration,java.lang.String,boolean,net.sourceforge.plantuml.utils.LineLocation)" class="member-name-link">MessageExo</a><wbr>(<a href="../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
+ <a href="../../sequencediagram/Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a>&nbsp;p,
+ <a href="../../sequencediagram/MessageExoType.html" title="enum class in net.sourceforge.plantuml.sequencediagram">MessageExoType</a>&nbsp;type,
+ <a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;label,
+ <a href="../../skin/ArrowConfiguration.html" title="class in net.sourceforge.plantuml.skin">ArrowConfiguration</a>&nbsp;arrowConfiguration,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;messageNumber,
+ boolean&nbsp;shortArrow,
+ <a href="../LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../sequencediagram/Participant.html#%3Cinit%3E(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.sequencediagram.ParticipantType,java.lang.String,net.sourceforge.plantuml.klimt.creole.Display,java.util.Set,int,net.sourceforge.plantuml.style.StyleBuilder,java.lang.String)" class="member-name-link">Participant</a><wbr>(<a href="../LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../sequencediagram/ParticipantType.html" title="enum class in net.sourceforge.plantuml.sequencediagram">ParticipantType</a>&nbsp;type,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
  <a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;display,
@@ -2014,7 +2043,7 @@ loadScripts(document, 'script');</script>
  int&nbsp;order,
  <a href="../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;uid)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -2200,7 +2229,20 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../sequencediagram/graphic/ParticipantBox.html#%3Cinit%3E(net.sourceforge.plantuml.skin.Pragma,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,double,int,net.sourceforge.plantuml.sequencediagram.Participant)" class="member-name-link">ParticipantBox</a><wbr>(<a href="../../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma,
+<div class="col-second even-row-color"><code><a href="../../sequencediagram/graphic/MessageExoArrow.html#%3Cinit%3E(java.util.concurrent.atomic.AtomicInteger,net.sourceforge.plantuml.skin.Pragma,double,net.sourceforge.plantuml.skin.rose.Rose,net.sourceforge.plantuml.skin.ArrowComponent,net.sourceforge.plantuml.sequencediagram.graphic.LivingParticipantBox,net.sourceforge.plantuml.sequencediagram.MessageExoType,net.sourceforge.plantuml.url.Url,boolean,net.sourceforge.plantuml.skin.ArrowConfiguration,net.sourceforge.plantuml.utils.LineLocation)" class="member-name-link">MessageExoArrow</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/atomic/AtomicInteger.html" title="class or interface in java.util.concurrent.atomic" class="external-link">AtomicInteger</a>&nbsp;counter,
+ <a href="../../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma,
+ double&nbsp;startingY,
+ <a href="../../skin/rose/Rose.html" title="class in net.sourceforge.plantuml.skin.rose">Rose</a>&nbsp;skin,
+ <a href="../../skin/ArrowComponent.html" title="interface in net.sourceforge.plantuml.skin">ArrowComponent</a>&nbsp;arrow,
+ <a href="../../sequencediagram/graphic/LivingParticipantBox.html" title="class in net.sourceforge.plantuml.sequencediagram.graphic">LivingParticipantBox</a>&nbsp;p,
+ <a href="../../sequencediagram/MessageExoType.html" title="enum class in net.sourceforge.plantuml.sequencediagram">MessageExoType</a>&nbsp;type,
+ <a href="../../url/Url.html" title="class in net.sourceforge.plantuml.url">Url</a>&nbsp;url,
+ boolean&nbsp;shortArrow,
+ <a href="../../skin/ArrowConfiguration.html" title="class in net.sourceforge.plantuml.skin">ArrowConfiguration</a>&nbsp;arrowConfiguration,
+ <a href="../LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../sequencediagram/graphic/ParticipantBox.html#%3Cinit%3E(net.sourceforge.plantuml.skin.Pragma,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,double,int,net.sourceforge.plantuml.sequencediagram.Participant)" class="member-name-link">ParticipantBox</a><wbr>(<a href="../../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma,
  <a href="../LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../skin/Component.html" title="interface in net.sourceforge.plantuml.skin">Component</a>&nbsp;head,
  <a href="../../skin/Component.html" title="interface in net.sourceforge.plantuml.skin">Component</a>&nbsp;line,
@@ -2209,7 +2251,7 @@ loadScripts(document, 'script');</script>
  double&nbsp;startingX,
  int&nbsp;outMargin,
  <a href="../../sequencediagram/Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a>&nbsp;p)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

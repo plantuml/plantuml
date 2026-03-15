@@ -151,78 +151,79 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 <span class="nc" id="L151">		return Collections.emptyList();</span>
 	}
 
-	private Participant getOrCreateParticipant(LineLocation location, SequenceDiagram system, RegexResult arg2, String n) {
+	private Participant getOrCreateParticipant(LineLocation location, SequenceDiagram system, RegexResult arg2,
+			String n) {
 		final String code;
 		final Display display;
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (arg2.get(n + &quot;CODE&quot;, 0) != null) {</span>
-<span class="fc" id="L158">			code = arg2.get(n + &quot;CODE&quot;, 0);</span>
-<span class="fc" id="L159">			display = Display.getWithNewlines(system.getPragma(), code);</span>
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		} else if (arg2.get(n + &quot;LONG&quot;, 0) != null) {</span>
-<span class="nc" id="L161">			code = arg2.get(n + &quot;LONG&quot;, 0);</span>
-<span class="nc" id="L162">			display = Display.getWithNewlines(system.getPragma(), code);</span>
-<span class="nc bnc" id="L163" title="All 2 branches missed.">		} else if (arg2.get(n + &quot;LONGCODE&quot;, 0) != null) {</span>
-<span class="nc" id="L164">			display = Display.getWithNewlines(system.getPragma(), arg2.get(n + &quot;LONGCODE&quot;, 0));</span>
-<span class="nc" id="L165">			code = arg2.get(n + &quot;LONGCODE&quot;, 1);</span>
-<span class="nc bnc" id="L166" title="All 2 branches missed.">		} else if (arg2.get(n + &quot;CODELONG&quot;, 0) != null) {</span>
-<span class="nc" id="L167">			code = arg2.get(n + &quot;CODELONG&quot;, 0);</span>
-<span class="nc" id="L168">			display = Display.getWithNewlines(system.getPragma(), arg2.get(n + &quot;CODELONG&quot;, 1));</span>
-<span class="nc" id="L169">			return system.getOrCreateParticipant(location, code, display);</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (arg2.get(n + &quot;CODE&quot;, 0) != null) {</span>
+<span class="fc" id="L159">			code = arg2.get(n + &quot;CODE&quot;, 0);</span>
+<span class="fc" id="L160">			display = Display.getWithNewlines(system.getPragma(), code);</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		} else if (arg2.get(n + &quot;LONG&quot;, 0) != null) {</span>
+<span class="nc" id="L162">			code = arg2.get(n + &quot;LONG&quot;, 0);</span>
+<span class="nc" id="L163">			display = Display.getWithNewlines(system.getPragma(), code);</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">		} else if (arg2.get(n + &quot;LONGCODE&quot;, 0) != null) {</span>
+<span class="nc" id="L165">			display = Display.getWithNewlines(system.getPragma(), arg2.get(n + &quot;LONGCODE&quot;, 0));</span>
+<span class="nc" id="L166">			code = arg2.get(n + &quot;LONGCODE&quot;, 1);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		} else if (arg2.get(n + &quot;CODELONG&quot;, 0) != null) {</span>
+<span class="nc" id="L168">			code = arg2.get(n + &quot;CODELONG&quot;, 0);</span>
+<span class="nc" id="L169">			display = Display.getWithNewlines(system.getPragma(), arg2.get(n + &quot;CODELONG&quot;, 1));</span>
+<span class="nc" id="L170">			return system.getOrCreateParticipant(location, code, display);</span>
 		} else {
-<span class="nc" id="L171">			throw new IllegalStateException();</span>
+<span class="nc" id="L172">			throw new IllegalStateException();</span>
 		}
-<span class="fc" id="L173">		return system.getOrCreateParticipant(location, code, display);</span>
+<span class="fc" id="L174">		return system.getOrCreateParticipant(location, code, display);</span>
 	}
 
 	private boolean contains(String string, String... totest) {
-<span class="fc bfc" id="L177" title="All 2 branches covered.">		for (String t : totest)</span>
-<span class="fc bfc" id="L178" title="All 2 branches covered.">			if (string.contains(t))</span>
-<span class="fc" id="L179">				return true;</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		for (String t : totest)</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">			if (string.contains(t))</span>
+<span class="fc" id="L180">				return true;</span>
 
-<span class="fc" id="L181">		return false;</span>
+<span class="fc" id="L182">		return false;</span>
 	}
 
 	private String getDressing(RegexResult arg, String key) {
-<span class="fc" id="L185">		String value = arg.get(key, 0);</span>
-<span class="fc" id="L186">		value = CommandLinkClass.notNull(value);</span>
-<span class="fc" id="L187">		value = value.replace(&quot;_&quot;, &quot;&quot;);</span>
-<span class="fc" id="L188">		return StringUtils.goLowerCase(value);</span>
+<span class="fc" id="L186">		String value = arg.get(key, 0);</span>
+<span class="fc" id="L187">		value = CommandLinkClass.notNull(value);</span>
+<span class="fc" id="L188">		value = value.replace(&quot;_&quot;, &quot;&quot;);</span>
+<span class="fc" id="L189">		return StringUtils.goLowerCase(value);</span>
 	}
 
 	private int getInclination(String key) {
-<span class="fc bfc" id="L192" title="All 2 branches covered.">		if (key == null)</span>
-<span class="fc" id="L193">			return 0;</span>
-<span class="fc" id="L194">		final int x1 = key.indexOf('(');</span>
-<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		if (x1 == -1)</span>
-<span class="fc" id="L196">			return 0;</span>
-<span class="nc" id="L197">		final int x2 = key.indexOf(')');</span>
-<span class="nc bnc" id="L198" title="All 2 branches missed.">		if (x2 == -1)</span>
-<span class="nc" id="L199">			return 0;</span>
-<span class="nc" id="L200">		return Integer.parseInt(key.substring(x1 + 1, x2));</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (key == null)</span>
+<span class="fc" id="L194">			return 0;</span>
+<span class="fc" id="L195">		final int x1 = key.indexOf('(');</span>
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">		if (x1 == -1)</span>
+<span class="fc" id="L197">			return 0;</span>
+<span class="nc" id="L198">		final int x2 = key.indexOf(')');</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">		if (x2 == -1)</span>
+<span class="nc" id="L200">			return 0;</span>
+<span class="nc" id="L201">		return Integer.parseInt(key.substring(x1 + 1, x2));</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 
-<span class="fc" id="L207">		final String dressing1 = getDressing(arg, &quot;ARROW_DRESSING1&quot;);</span>
-<span class="fc" id="L208">		final String dressing2 = getDressing(arg, &quot;ARROW_DRESSING2&quot;);</span>
-<span class="fc" id="L209">		final int inclination1 = getInclination(arg.get(&quot;ARROW_DRESSING1&quot;, 0));</span>
-<span class="fc" id="L210">		final int inclination2 = getInclination(arg.get(&quot;ARROW_DRESSING2&quot;, 0));</span>
+<span class="fc" id="L208">		final String dressing1 = getDressing(arg, &quot;ARROW_DRESSING1&quot;);</span>
+<span class="fc" id="L209">		final String dressing2 = getDressing(arg, &quot;ARROW_DRESSING2&quot;);</span>
+<span class="fc" id="L210">		final int inclination1 = getInclination(arg.get(&quot;ARROW_DRESSING1&quot;, 0));</span>
+<span class="fc" id="L211">		final int inclination2 = getInclination(arg.get(&quot;ARROW_DRESSING2&quot;, 0));</span>
 
 		// Sorry, this code is note very clear
-<span class="fc" id="L213">		final boolean hasDressing1butx = contains(dressing1, &quot;&lt;&quot;, &quot;\\&quot;, &quot;/&quot;);</span>
-<span class="fc" id="L214">		final boolean xInDressing1 = dressing1.contains(&quot;x&quot;);</span>
-<span class="fc" id="L215">		final boolean hasDressing2butx = contains(dressing2, &quot;&gt;&quot;, &quot;\\&quot;, &quot;/&quot;);</span>
-<span class="fc" id="L216">		final boolean xInDressing2 = dressing2.contains(&quot;x&quot;);</span>
+<span class="fc" id="L214">		final boolean hasDressing1butx = contains(dressing1, &quot;&lt;&quot;, &quot;\\&quot;, &quot;/&quot;);</span>
+<span class="fc" id="L215">		final boolean xInDressing1 = dressing1.contains(&quot;x&quot;);</span>
+<span class="fc" id="L216">		final boolean hasDressing2butx = contains(dressing2, &quot;&gt;&quot;, &quot;\\&quot;, &quot;/&quot;);</span>
+<span class="fc" id="L217">		final boolean xInDressing2 = dressing2.contains(&quot;x&quot;);</span>
 		final boolean reverseDefine;
-<span class="pc bpc" id="L218" title="5 of 6 branches missed.">		if (hasDressing2butx || (xInDressing1 &amp;&amp; xInDressing2))</span>
-<span class="fc" id="L219">			reverseDefine = false;</span>
-<span class="nc bnc" id="L220" title="All 2 branches missed.">		else if (hasDressing1butx)</span>
-<span class="nc" id="L221">			reverseDefine = true;</span>
-<span class="nc bnc" id="L222" title="All 4 branches missed.">		else if (xInDressing1 || xInDressing2)</span>
-<span class="nc" id="L223">			reverseDefine = false;</span>
+<span class="pc bpc" id="L219" title="5 of 6 branches missed.">		if (hasDressing2butx || (xInDressing1 &amp;&amp; xInDressing2))</span>
+<span class="fc" id="L220">			reverseDefine = false;</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">		else if (hasDressing1butx)</span>
+<span class="nc" id="L222">			reverseDefine = true;</span>
+<span class="nc bnc" id="L223" title="All 4 branches missed.">		else if (xInDressing1 || xInDressing2)</span>
+<span class="nc" id="L224">			reverseDefine = false;</span>
 		else
-<span class="nc" id="L225">			return CommandExecutionResult.error(&quot;Illegal sequence arrow&quot;);</span>
+<span class="nc" id="L226">			return CommandExecutionResult.error(&quot;Illegal sequence arrow&quot;);</span>
 
 		final Participant p1;
 		final Participant p2;
@@ -230,24 +231,23 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 		final boolean circleAtEnd;
 		final boolean sync1;
 		final boolean sync2;
-<span class="pc bpc" id="L233" title="1 of 2 branches missed.">		if (reverseDefine) {</span>
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">		if (reverseDefine) {</span>
 			// Keep the order
 			// See https://github.com/plantuml/plantuml/issues/1819#issuecomment-2158524871
-<span class="nc" id="L236">			p2 = getOrCreateParticipant(location, diagram, arg, &quot;PART1&quot;);</span>
-<span class="nc" id="L237">			p1 = getOrCreateParticipant(location, diagram, arg, &quot;PART2&quot;);</span>
-<span class="nc" id="L238">			circleAtStart = dressing2.contains(&quot;o&quot;);</span>
-<span class="nc" id="L239">			circleAtEnd = dressing1.contains(&quot;o&quot;);</span>
-<span class="nc" id="L240">			sync2 = contains(dressing1, &quot;&lt;&lt;&quot;, &quot;\\\\&quot;, &quot;//&quot;);</span>
-<span class="nc" id="L241">			sync1 = contains(dressing2, &quot;&gt;&gt;&quot;, &quot;\\\\&quot;, &quot;//&quot;);</span>
+<span class="nc" id="L237">			p2 = getOrCreateParticipant(location, diagram, arg, &quot;PART1&quot;);</span>
+<span class="nc" id="L238">			p1 = getOrCreateParticipant(location, diagram, arg, &quot;PART2&quot;);</span>
+<span class="nc" id="L239">			circleAtStart = dressing2.contains(&quot;o&quot;);</span>
+<span class="nc" id="L240">			circleAtEnd = dressing1.contains(&quot;o&quot;);</span>
+<span class="nc" id="L241">			sync2 = contains(dressing1, &quot;&lt;&lt;&quot;, &quot;\\\\&quot;, &quot;//&quot;);</span>
+<span class="nc" id="L242">			sync1 = contains(dressing2, &quot;&gt;&gt;&quot;, &quot;\\\\&quot;, &quot;//&quot;);</span>
 		} else {
-<span class="fc" id="L243">			p1 = getOrCreateParticipant(location, diagram, arg, &quot;PART1&quot;);</span>
-<span class="fc" id="L244">			p2 = getOrCreateParticipant(location, diagram, arg, &quot;PART2&quot;);</span>
-<span class="fc" id="L245">			circleAtStart = dressing1.contains(&quot;o&quot;);</span>
-<span class="fc" id="L246">			circleAtEnd = dressing2.contains(&quot;o&quot;);</span>
-<span class="fc" id="L247">			sync1 = contains(dressing1, &quot;&lt;&lt;&quot;, &quot;\\\\&quot;, &quot;//&quot;);</span>
-<span class="fc" id="L248">			sync2 = contains(dressing2, &quot;&gt;&gt;&quot;, &quot;\\\\&quot;, &quot;//&quot;);</span>
+<span class="fc" id="L244">			p1 = getOrCreateParticipant(location, diagram, arg, &quot;PART1&quot;);</span>
+<span class="fc" id="L245">			p2 = getOrCreateParticipant(location, diagram, arg, &quot;PART2&quot;);</span>
+<span class="fc" id="L246">			circleAtStart = dressing1.contains(&quot;o&quot;);</span>
+<span class="fc" id="L247">			circleAtEnd = dressing2.contains(&quot;o&quot;);</span>
+<span class="fc" id="L248">			sync1 = contains(dressing1, &quot;&lt;&lt;&quot;, &quot;\\\\&quot;, &quot;//&quot;);</span>
+<span class="fc" id="L249">			sync2 = contains(dressing2, &quot;&gt;&gt;&quot;, &quot;\\\\&quot;, &quot;//&quot;);</span>
 		}
-
 
 <span class="pc bpc" id="L252" title="1 of 2 branches missed.">		final boolean dotted = getLength(arg) &gt; 1;</span>
 
@@ -311,7 +311,7 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 <span class="fc" id="L312">		final String messageNumber = diagram.getNextMessageNumber();</span>
 <span class="fc" id="L313">		final Message msg = new Message(diagram.getSkinParam().getCurrentStyleBuilder(), p1, p2,</span>
-<span class="fc" id="L314">				diagram.manageVariable(labels), config, messageNumber);</span>
+<span class="fc" id="L314">				diagram.manageVariable(labels), config, messageNumber, location);</span>
 <span class="fc" id="L315">		msg.setMulticast(getMulticasts(location, diagram, arg));</span>
 <span class="fc" id="L316">		final String url = arg.get(UrlBuilder.URL_KEY, 0);</span>
 <span class="pc bpc" id="L317" title="1 of 2 branches missed.">		if (url != null) {</span>
