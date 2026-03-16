@@ -365,7 +365,7 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 <span class="fc" id="L365">                return;</span>
             }
 <span class="fc" id="L367">            LOG.fine(&quot;Starting element: &quot; + qName + &quot; with &quot; + attrs.getLength() + &quot; attributes&quot;);</span>
-<span class="pc bpc" id="L368" title="3 of 15 branches missed.">            switch (qName) {</span>
+<span class="pc bpc" id="L368" title="2 of 15 branches missed.">            switch (qName) {</span>
                 case &quot;svg&quot;:
                     // Root element, just continue
 <span class="fc" id="L371">                    break;</span>
@@ -399,8 +399,8 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 <span class="fc" id="L399">                    textAttrs = new AttributesAdapter(attrs);</span>
 <span class="fc" id="L400">                    break;</span>
                 case &quot;image&quot;:
-<span class="nc" id="L402">                    handleImage(attrs);</span>
-<span class="nc" id="L403">                    break;</span>
+<span class="fc" id="L402">                    handleImage(attrs);</span>
+<span class="fc" id="L403">                    break;</span>
                 case &quot;use&quot;:
 <span class="fc" id="L405">                    handleUse(attrs);</span>
 <span class="fc" id="L406">                    break;</span>
@@ -667,106 +667,106 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 <span class="fc" id="L667">        }</span>
 
         private void handleImage(Attributes attrs) {
-<span class="nc" id="L670">            final String href = getHref(attrs);</span>
-<span class="nc bnc" id="L671" title="All 4 branches missed.">            if (href == null || href.isEmpty())</span>
+<span class="fc" id="L670">            final String href = getHref(attrs);</span>
+<span class="pc bpc" id="L671" title="2 of 4 branches missed.">            if (href == null || href.isEmpty())</span>
 <span class="nc" id="L672">                return;</span>
 
-<span class="nc" id="L674">            final DataImage dataImage = decodeDataImage(href);</span>
-<span class="nc bnc" id="L675" title="All 2 branches missed.">            if (dataImage == null)</span>
+<span class="fc" id="L674">            final DataImage dataImage = decodeDataImage(href);</span>
+<span class="pc bpc" id="L675" title="1 of 2 branches missed.">            if (dataImage == null)</span>
 <span class="nc" id="L676">                return;</span>
 
-<span class="nc" id="L678">            final PortableImage image = dataImage.image;</span>
-<span class="nc bnc" id="L679" title="All 2 branches missed.">            if (image == null)</span>
+<span class="fc" id="L678">            final PortableImage image = dataImage.image;</span>
+<span class="pc bpc" id="L679" title="1 of 2 branches missed.">            if (image == null)</span>
 <span class="nc" id="L680">                return;</span>
 
-<span class="nc" id="L682">            final UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
-<span class="nc" id="L683">            final double x = getDoubleAttr(attrs, &quot;x&quot;, 0);</span>
-<span class="nc" id="L684">            final double y = getDoubleAttr(attrs, &quot;y&quot;, 0);</span>
+<span class="fc" id="L682">            final UGraphicWithScale elementUgs = applyStyleAndTransform(attrs, ugs);</span>
+<span class="fc" id="L683">            final double x = getDoubleAttr(attrs, &quot;x&quot;, 0);</span>
+<span class="fc" id="L684">            final double y = getDoubleAttr(attrs, &quot;y&quot;, 0);</span>
 
-<span class="nc" id="L686">            final String widthAttr = attrs.getValue(&quot;width&quot;);</span>
-<span class="nc" id="L687">            final String heightAttr = attrs.getValue(&quot;height&quot;);</span>
-<span class="nc" id="L688">            final double width = getDoubleAttr(attrs, &quot;width&quot;, image.getWidth());</span>
-<span class="nc" id="L689">            final double height = getDoubleAttr(attrs, &quot;height&quot;, image.getHeight());</span>
+<span class="fc" id="L686">            final String widthAttr = attrs.getValue(&quot;width&quot;);</span>
+<span class="fc" id="L687">            final String heightAttr = attrs.getValue(&quot;height&quot;);</span>
+<span class="fc" id="L688">            final double width = getDoubleAttr(attrs, &quot;width&quot;, image.getWidth());</span>
+<span class="fc" id="L689">            final double height = getDoubleAttr(attrs, &quot;height&quot;, image.getHeight());</span>
 
-<span class="nc bnc" id="L691" title="All 4 branches missed.">            if (width &lt;= 0 || height &lt;= 0)</span>
+<span class="pc bpc" id="L691" title="2 of 4 branches missed.">            if (width &lt;= 0 || height &lt;= 0)</span>
 <span class="nc" id="L692">                return;</span>
 
-<span class="nc" id="L694">            final double scale = resolveImageScale(widthAttr, heightAttr, width, height, image.getWidth(), image.getHeight());</span>
-<span class="nc bnc" id="L695" title="All 2 branches missed.">            if (scale &lt;= 0)</span>
+<span class="fc" id="L694">            final double scale = resolveImageScale(widthAttr, heightAttr, width, height, image.getWidth(), image.getHeight());</span>
+<span class="pc bpc" id="L695" title="1 of 2 branches missed.">            if (scale &lt;= 0)</span>
 <span class="nc" id="L696">                return;</span>
 
-<span class="nc bnc" id="L698" title="All 2 branches missed.">            if (elementUgs.getUg().matchesProperty(&quot;SVG&quot;)) {</span>
-<span class="nc" id="L699">                final String svgImage = buildSvgImage(href, width, height);</span>
-<span class="nc" id="L700">                final UImageSvg imageSvg = new UImageSvg(svgImage, 1.0);</span>
-<span class="nc" id="L701">                elementUgs.apply(new UTranslate(x, y)).draw(imageSvg);</span>
-<span class="nc" id="L702">                return;</span>
+<span class="fc bfc" id="L698" title="All 2 branches covered.">            if (elementUgs.getUg().matchesProperty(&quot;SVG&quot;)) {</span>
+<span class="fc" id="L699">                final String svgImage = buildSvgImage(href, width, height);</span>
+<span class="fc" id="L700">                final UImageSvg imageSvg = new UImageSvg(svgImage, 1.0);</span>
+<span class="fc" id="L701">                elementUgs.apply(new UTranslate(x, y)).draw(imageSvg);</span>
+<span class="fc" id="L702">                return;</span>
             }
 
-<span class="nc" id="L705">            UImage uimage = new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR));</span>
-<span class="nc bnc" id="L706" title="All 2 branches missed.">            if (scale != 1.0) {</span>
-<span class="nc" id="L707">                final PortableImage scaled = uimage.getImage(scale);</span>
-<span class="nc" id="L708">                uimage = new UImage(new PixelImage(scaled, AffineTransformType.TYPE_BILINEAR));</span>
+<span class="fc" id="L705">            UImage uimage = new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR));</span>
+<span class="pc bpc" id="L706" title="1 of 2 branches missed.">            if (scale != 1.0) {</span>
+<span class="fc" id="L707">                final PortableImage scaled = uimage.getImage(scale);</span>
+<span class="fc" id="L708">                uimage = new UImage(new PixelImage(scaled, AffineTransformType.TYPE_BILINEAR));</span>
             }
 
-<span class="nc" id="L711">            elementUgs.apply(new UTranslate(x, y)).draw(uimage);</span>
-<span class="nc" id="L712">        }</span>
+<span class="fc" id="L711">            elementUgs.apply(new UTranslate(x, y)).draw(uimage);</span>
+<span class="fc" id="L712">        }</span>
 
         private String getHref(Attributes attrs) {
-<span class="nc" id="L715">            String href = attrs.getValue(&quot;href&quot;);</span>
-<span class="nc bnc" id="L716" title="All 4 branches missed.">            if (href == null || href.isEmpty())</span>
+<span class="fc" id="L715">            String href = attrs.getValue(&quot;href&quot;);</span>
+<span class="pc bpc" id="L716" title="2 of 4 branches missed.">            if (href == null || href.isEmpty())</span>
 <span class="nc" id="L717">                href = attrs.getValue(&quot;xlink:href&quot;);</span>
 
-<span class="nc" id="L719">            return href;</span>
+<span class="fc" id="L719">            return href;</span>
         }
 
         private double resolveImageScale(String widthAttr, String heightAttr, double width, double height,
                 int imageWidth, int imageHeight) {
-<span class="nc bnc" id="L724" title="All 4 branches missed.">            if (imageWidth &lt;= 0 || imageHeight &lt;= 0)</span>
+<span class="pc bpc" id="L724" title="2 of 4 branches missed.">            if (imageWidth &lt;= 0 || imageHeight &lt;= 0)</span>
 <span class="nc" id="L725">                return 1.0;</span>
 
-<span class="nc" id="L727">            final double scaleX = width / imageWidth;</span>
-<span class="nc" id="L728">            final double scaleY = height / imageHeight;</span>
+<span class="fc" id="L727">            final double scaleX = width / imageWidth;</span>
+<span class="fc" id="L728">            final double scaleY = height / imageHeight;</span>
 
-<span class="nc bnc" id="L730" title="All 4 branches missed.">            if (widthAttr == null &amp;&amp; heightAttr == null)</span>
+<span class="pc bpc" id="L730" title="3 of 4 branches missed.">            if (widthAttr == null &amp;&amp; heightAttr == null)</span>
 <span class="nc" id="L731">                return 1.0;</span>
 
-<span class="nc bnc" id="L733" title="All 2 branches missed.">            if (Math.abs(scaleX - scaleY) &lt; 0.0001)</span>
+<span class="pc bpc" id="L733" title="1 of 2 branches missed.">            if (Math.abs(scaleX - scaleY) &lt; 0.0001)</span>
 <span class="nc" id="L734">                return scaleX;</span>
 
-<span class="nc bnc" id="L736" title="All 2 branches missed.">            if (widthAttr != null)</span>
-<span class="nc" id="L737">                return scaleX;</span>
+<span class="pc bpc" id="L736" title="1 of 2 branches missed.">            if (widthAttr != null)</span>
+<span class="fc" id="L737">                return scaleX;</span>
 
 <span class="nc" id="L739">            return scaleY;</span>
         }
 
         private DataImage decodeDataImage(String href) {
-<span class="nc" id="L743">            final String lowerHref = href.toLowerCase();</span>
-<span class="nc bnc" id="L744" title="All 2 branches missed.">            if (lowerHref.startsWith(&quot;data:image/svg+xml;base64,&quot;)) {</span>
+<span class="fc" id="L743">            final String lowerHref = href.toLowerCase();</span>
+<span class="pc bpc" id="L744" title="1 of 2 branches missed.">            if (lowerHref.startsWith(&quot;data:image/svg+xml;base64,&quot;)) {</span>
 <span class="nc" id="L745">                LOG.fine(&quot;Skipping embedded SVG image data URI&quot;);</span>
 <span class="nc" id="L746">                return null;</span>
             }
 
-<span class="nc" id="L749">            final String prefix = getDataImagePrefix(lowerHref);</span>
-<span class="nc bnc" id="L750" title="All 2 branches missed.">            if (prefix == null) {</span>
+<span class="fc" id="L749">            final String prefix = getDataImagePrefix(lowerHref);</span>
+<span class="pc bpc" id="L750" title="1 of 2 branches missed.">            if (prefix == null) {</span>
 <span class="nc" id="L751">                LOG.fine(&quot;Skipping non-data image href&quot;);</span>
 <span class="nc" id="L752">                return null;</span>
             }
 
-<span class="nc" id="L755">            final String data = href.substring(prefix.length());</span>
+<span class="fc" id="L755">            final String data = href.substring(prefix.length());</span>
             final byte[] bytes;
             try {
-<span class="nc" id="L758">                bytes = Base64Coder.decode(data);</span>
+<span class="fc" id="L758">                bytes = Base64Coder.decode(data);</span>
 <span class="nc" id="L759">            } catch (IllegalArgumentException e) {</span>
 <span class="nc" id="L760">                LOG.warning(&quot;Failed to decode embedded image: &quot; + e.getMessage());</span>
 <span class="nc" id="L761">                return null;</span>
-<span class="nc" id="L762">            }</span>
+<span class="fc" id="L762">            }</span>
 
             try {
-<span class="nc" id="L765">                final PortableImage image = SImageIO.read(bytes);</span>
-<span class="nc bnc" id="L766" title="All 2 branches missed.">                if (image == null)</span>
+<span class="fc" id="L765">                final PortableImage image = SImageIO.read(bytes);</span>
+<span class="pc bpc" id="L766" title="1 of 2 branches missed.">                if (image == null)</span>
 <span class="nc" id="L767">                    return null;</span>
 
-<span class="nc" id="L769">                return new DataImage(image);</span>
+<span class="fc" id="L769">                return new DataImage(image);</span>
 <span class="nc" id="L770">            } catch (IOException e) {</span>
 <span class="nc" id="L771">                LOG.warning(&quot;Failed to read embedded image: &quot; + e.getMessage());</span>
 <span class="nc" id="L772">                return null;</span>
@@ -774,11 +774,11 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
         }
 
         private String getDataImagePrefix(String lowerHref) {
-<span class="nc bnc" id="L777" title="All 2 branches missed.">            if (lowerHref.startsWith(&quot;data:image/png;base64,&quot;))</span>
-<span class="nc" id="L778">                return &quot;data:image/png;base64,&quot;;</span>
+<span class="fc bfc" id="L777" title="All 2 branches covered.">            if (lowerHref.startsWith(&quot;data:image/png;base64,&quot;))</span>
+<span class="fc" id="L778">                return &quot;data:image/png;base64,&quot;;</span>
 
-<span class="nc bnc" id="L780" title="All 2 branches missed.">            if (lowerHref.startsWith(&quot;data:image/jpeg;base64,&quot;))</span>
-<span class="nc" id="L781">                return &quot;data:image/jpeg;base64,&quot;;</span>
+<span class="pc bpc" id="L780" title="1 of 2 branches missed.">            if (lowerHref.startsWith(&quot;data:image/jpeg;base64,&quot;))</span>
+<span class="fc" id="L781">                return &quot;data:image/jpeg;base64,&quot;;</span>
 
 <span class="nc bnc" id="L783" title="All 2 branches missed.">            if (lowerHref.startsWith(&quot;data:image/jpg;base64,&quot;))</span>
 <span class="nc" id="L784">                return &quot;data:image/jpg;base64,&quot;;</span>
@@ -787,17 +787,17 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
         }
 
         private String buildSvgImage(String href, double width, double height) {
-<span class="nc" id="L790">            final String safeHref = href.replace(&quot;&amp;&quot;, &quot;&amp;amp;&quot;).replace(&quot;\&quot;&quot;, &quot;&amp;quot;&quot;);</span>
-<span class="nc" id="L791">            return &quot;&lt;svg xmlns=\&quot;http://www.w3.org/2000/svg\&quot; xmlns:xlink=\&quot;http://www.w3.org/1999/xlink\&quot; &quot;</span>
-<span class="nc" id="L792">                    + &quot;width=\&quot;&quot; + formatNumber(width) + &quot;\&quot; height=\&quot;&quot; + formatNumber(height) + &quot;\&quot;&gt;&quot;</span>
-<span class="nc" id="L793">                    + &quot;&lt;image x=\&quot;0\&quot; y=\&quot;0\&quot; width=\&quot;&quot; + formatNumber(width) + &quot;\&quot; height=\&quot;&quot;</span>
-<span class="nc" id="L794">                    + formatNumber(height) + &quot;\&quot; xlink:href=\&quot;&quot; + safeHref + &quot;\&quot;/&gt;&quot;</span>
+<span class="fc" id="L790">            final String safeHref = href.replace(&quot;&amp;&quot;, &quot;&amp;amp;&quot;).replace(&quot;\&quot;&quot;, &quot;&amp;quot;&quot;);</span>
+<span class="fc" id="L791">            return &quot;&lt;svg xmlns=\&quot;http://www.w3.org/2000/svg\&quot; xmlns:xlink=\&quot;http://www.w3.org/1999/xlink\&quot; &quot;</span>
+<span class="fc" id="L792">                    + &quot;width=\&quot;&quot; + formatNumber(width) + &quot;\&quot; height=\&quot;&quot; + formatNumber(height) + &quot;\&quot;&gt;&quot;</span>
+<span class="fc" id="L793">                    + &quot;&lt;image x=\&quot;0\&quot; y=\&quot;0\&quot; width=\&quot;&quot; + formatNumber(width) + &quot;\&quot; height=\&quot;&quot;</span>
+<span class="fc" id="L794">                    + formatNumber(height) + &quot;\&quot; xlink:href=\&quot;&quot; + safeHref + &quot;\&quot;/&gt;&quot;</span>
                     + &quot;&lt;/svg&gt;&quot;;
         }
 
         private String formatNumber(double value) {
-<span class="nc bnc" id="L799" title="All 2 branches missed.">            if (value == Math.rint(value))</span>
-<span class="nc" id="L800">                return Long.toString(Math.round(value));</span>
+<span class="pc bpc" id="L799" title="1 of 2 branches missed.">            if (value == Math.rint(value))</span>
+<span class="fc" id="L800">                return Long.toString(Math.round(value));</span>
 
 <span class="nc" id="L802">            return Double.toString(value);</span>
         }
@@ -1006,10 +1006,10 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 <span class="fc" id="L1006">            final String lower = value.toLowerCase();</span>
 <span class="fc bfc" id="L1007" title="All 2 branches covered.">            if (&quot;reflect&quot;.equals(lower))</span>
 <span class="fc" id="L1008">                return HColorLinearGradient.SpreadMethod.REFLECT;</span>
-<span class="pc bpc" id="L1009" title="1 of 2 branches missed.">            if (&quot;repeat&quot;.equals(lower))</span>
+<span class="fc bfc" id="L1009" title="All 2 branches covered.">            if (&quot;repeat&quot;.equals(lower))</span>
 <span class="fc" id="L1010">                return HColorLinearGradient.SpreadMethod.REPEAT;</span>
 
-<span class="nc" id="L1012">            return HColorLinearGradient.SpreadMethod.PAD;</span>
+<span class="fc" id="L1012">            return HColorLinearGradient.SpreadMethod.PAD;</span>
         }
         
         /**
@@ -1325,9 +1325,9 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
     private static class DataImage {
         private final PortableImage image;
 
-<span class="nc" id="L1328">        private DataImage(PortableImage image) {</span>
-<span class="nc" id="L1329">            this.image = image;</span>
-<span class="nc" id="L1330">        }</span>
+<span class="fc" id="L1328">        private DataImage(PortableImage image) {</span>
+<span class="fc" id="L1329">            this.image = image;</span>
+<span class="fc" id="L1330">        }</span>
     }
 
     /**

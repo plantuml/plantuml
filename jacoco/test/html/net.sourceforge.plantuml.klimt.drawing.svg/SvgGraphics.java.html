@@ -1035,46 +1035,46 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 <span class="nc" id="L1035">	}</span>
 
 	public void svgImage(UImageSvg image, double x, double y) {
-<span class="nc bnc" id="L1038" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+<span class="pc bpc" id="L1038" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
 <span class="nc" id="L1039">			svgImageUnsecure(image, x, y);</span>
 <span class="nc" id="L1040">			return;</span>
 		}
 
 		// https://developer.mozilla.org/fr/docs/Web/SVG/Element/image
-<span class="nc bnc" id="L1044" title="All 2 branches missed.">		if (hidden == false) {</span>
-<span class="nc" id="L1045">			final Element elt = document.createElement(&quot;image&quot;);</span>
-<span class="nc" id="L1046">			elt.setAttribute(&quot;width&quot;, format(image.getWidth()));</span>
-<span class="nc" id="L1047">			elt.setAttribute(&quot;height&quot;, format(image.getHeight()));</span>
-<span class="nc" id="L1048">			elt.setAttribute(&quot;x&quot;, format(x));</span>
-<span class="nc" id="L1049">			elt.setAttribute(&quot;y&quot;, format(y));</span>
+<span class="pc bpc" id="L1044" title="1 of 2 branches missed.">		if (hidden == false) {</span>
+<span class="fc" id="L1045">			final Element elt = document.createElement(&quot;image&quot;);</span>
+<span class="fc" id="L1046">			elt.setAttribute(&quot;width&quot;, format(image.getWidth()));</span>
+<span class="fc" id="L1047">			elt.setAttribute(&quot;height&quot;, format(image.getHeight()));</span>
+<span class="fc" id="L1048">			elt.setAttribute(&quot;x&quot;, format(x));</span>
+<span class="fc" id="L1049">			elt.setAttribute(&quot;y&quot;, format(y));</span>
 
-<span class="nc" id="L1051">			String svg = manageScale(image);</span>
+<span class="fc" id="L1051">			String svg = manageScale(image);</span>
 
 			final String svgHeader;
-<span class="nc bnc" id="L1054" title="All 2 branches missed.">			if (image.containsXlink())</span>
-<span class="nc" id="L1055">				svgHeader = &quot;&lt;svg height=\&quot;&quot; + (int) (image.getHeight() * option.getScale()) + &quot;\&quot; width=\&quot;&quot;</span>
-<span class="nc" id="L1056">						+ (int) (image.getWidth() * option.getScale())</span>
+<span class="pc bpc" id="L1054" title="1 of 2 branches missed.">			if (image.containsXlink())</span>
+<span class="fc" id="L1055">				svgHeader = &quot;&lt;svg height=\&quot;&quot; + (int) (image.getHeight() * option.getScale()) + &quot;\&quot; width=\&quot;&quot;</span>
+<span class="fc" id="L1056">						+ (int) (image.getWidth() * option.getScale())</span>
 						+ &quot;\&quot; xmlns:xlink=\&quot;http://www.w3.org/1999/xlink\&quot; xmlns=\&quot;http://www.w3.org/2000/svg\&quot; &gt;&quot;;
 			else
 <span class="nc" id="L1059">				svgHeader = &quot;&lt;svg height=\&quot;&quot; + (int) (image.getHeight() * option.getScale()) + &quot;\&quot; width=\&quot;&quot;</span>
 <span class="nc" id="L1060">						+ (int) (image.getWidth() * option.getScale()) + &quot;\&quot; xmlns=\&quot;http://www.w3.org/2000/svg\&quot; &gt;&quot;;</span>
 
-<span class="nc" id="L1062">			svg = svgHeader + svg.substring(5);</span>
+<span class="fc" id="L1062">			svg = svgHeader + svg.substring(5);</span>
 
-<span class="nc" id="L1064">			final String s = toBase64(svg);</span>
-<span class="nc" id="L1065">			elt.setAttribute(&quot;xlink:href&quot;, &quot;data:image/svg+xml;base64,&quot; + s);</span>
+<span class="fc" id="L1064">			final String s = toBase64(svg);</span>
+<span class="fc" id="L1065">			elt.setAttribute(&quot;xlink:href&quot;, &quot;data:image/svg+xml;base64,&quot; + s);</span>
 
-<span class="nc" id="L1067">			getG().appendChild(elt);</span>
+<span class="fc" id="L1067">			getG().appendChild(elt);</span>
 		}
-<span class="nc" id="L1069">		ensureVisible(x, y);</span>
-<span class="nc" id="L1070">		ensureVisible(x + image.getData(&quot;width&quot;), y + image.getData(&quot;height&quot;));</span>
-<span class="nc" id="L1071">	}</span>
+<span class="fc" id="L1069">		ensureVisible(x, y);</span>
+<span class="fc" id="L1070">		ensureVisible(x + image.getData(&quot;width&quot;), y + image.getData(&quot;height&quot;));</span>
+<span class="fc" id="L1071">	}</span>
 
 	private String manageScale(UImageSvg svgImage) {
-<span class="nc" id="L1074">		final double svgScale = svgImage.getScale();</span>
-<span class="nc" id="L1075">		String svg = svgImage.getSvg(false);</span>
-<span class="nc bnc" id="L1076" title="All 2 branches missed.">		if (svgScale * option.getScale() == 1)</span>
-<span class="nc" id="L1077">			return svg;</span>
+<span class="fc" id="L1074">		final double svgScale = svgImage.getScale();</span>
+<span class="fc" id="L1075">		String svg = svgImage.getSvg(false);</span>
+<span class="pc bpc" id="L1076" title="1 of 2 branches missed.">		if (svgScale * option.getScale() == 1)</span>
+<span class="fc" id="L1077">			return svg;</span>
 
 <span class="nc" id="L1079">		final String svg2 = svg.replace('\n', ' ').replace('\r', ' ');</span>
 <span class="nc bnc" id="L1080" title="All 4 branches missed.">		if (svg2.contains(&quot;&lt;g &quot;) == false &amp;&amp; svg2.contains(&quot;&lt;g&gt;&quot;) == false) {</span>
@@ -1096,8 +1096,8 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 	}
 
 	private String toBase64(String s) {
-<span class="nc" id="L1099">		final byte data[] = s.getBytes(Charset.forName(&quot;UTF8&quot;));</span>
-<span class="nc" id="L1100">		return new String(Base64Coder.encode(data));</span>
+<span class="fc" id="L1099">		final byte data[] = s.getBytes(Charset.forName(&quot;UTF8&quot;));</span>
+<span class="fc" id="L1100">		return new String(Base64Coder.encode(data));</span>
 	}
 
 	// Shadow

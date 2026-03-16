@@ -59,24 +59,24 @@ public class UImageSvg implements UShape {
 	}
 
 	public boolean containsXlink() {
-<span class="nc" id="L62">		return svg.contains(&quot;xmlns:xlink=\&quot;http://www.w3.org/1999/xlink\&quot;&quot;);</span>
+<span class="fc" id="L62">		return svg.contains(&quot;xmlns:xlink=\&quot;http://www.w3.org/1999/xlink\&quot;&quot;);</span>
 	}
 
 	public String getSvg(boolean raw) {
-<span class="nc" id="L66">		String result = svg;</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (raw)</span>
+<span class="fc" id="L66">		String result = svg;</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (raw)</span>
 <span class="nc" id="L68">			return result;</span>
 
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (result.startsWith(&quot;&lt;?xml&quot;)) {</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (result.startsWith(&quot;&lt;?xml&quot;)) {</span>
 <span class="nc" id="L71">			final int idx = result.indexOf(&quot;&lt;svg&quot;);</span>
 <span class="nc" id="L72">			result = result.substring(idx);</span>
 		}
-<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (result.startsWith(&quot;&lt;svg&quot;)) {</span>
-<span class="nc" id="L75">			final int idx = result.indexOf(&quot;&gt;&quot;);</span>
-<span class="nc" id="L76">			result = &quot;&lt;svg&gt;&quot; + result.substring(idx + 1);</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (result.startsWith(&quot;&lt;svg&quot;)) {</span>
+<span class="fc" id="L75">			final int idx = result.indexOf(&quot;&gt;&quot;);</span>
+<span class="fc" id="L76">			result = &quot;&lt;svg&gt;&quot; + result.substring(idx + 1);</span>
 		}
-<span class="nc" id="L78">		final String style = extractSvgStyle();</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (style != null) {</span>
+<span class="fc" id="L78">		final String style = extractSvgStyle();</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (style != null) {</span>
 <span class="nc" id="L80">			final String background = extractBackground(style);</span>
 <span class="nc bnc" id="L81" title="All 2 branches missed.">			if (background != null) {</span>
 <span class="nc" id="L82">				final int width = getData(&quot;width&quot;);</span>
@@ -86,10 +86,10 @@ public class UImageSvg implements UShape {
 			}
 
 		}
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (result.startsWith(&quot;&lt;svg&gt;&quot;) == false)</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (result.startsWith(&quot;&lt;svg&gt;&quot;) == false)</span>
 <span class="nc" id="L90">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L92">		return result;</span>
+<span class="fc" id="L92">		return result;</span>
 	}
 
 <span class="fc" id="L95">	private static final Pattern BACKGROUND = Pattern.compile(&quot;background:([^;]+)&quot;);</span>
@@ -105,11 +105,11 @@ public class UImageSvg implements UShape {
 <span class="fc" id="L105">	private static final Pattern STYLE = Pattern.compile(&quot;(?i)\\&lt;svg[^&gt;]+style=\&quot;([^\&quot;&gt;]+)\&quot;&quot;);</span>
 
 	private String extractSvgStyle() {
-<span class="nc" id="L108">		final Matcher m = STYLE.matcher(svg);</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (m.find())</span>
+<span class="fc" id="L108">		final Matcher m = STYLE.matcher(svg);</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (m.find())</span>
 <span class="nc" id="L110">			return m.group(1);</span>
 
-<span class="nc" id="L112">		return null;</span>
+<span class="fc" id="L112">		return null;</span>
 	}
 
 <span class="fc" id="L115">	private static final Pattern VIEWBOX = Pattern</span>
@@ -117,7 +117,7 @@ public class UImageSvg implements UShape {
 
 	public int getData(String name) {
 <span class="fc" id="L119">		final Matcher m2 = VIEWBOX.matcher(svg);</span>
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (m2.find()) {</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (m2.find()) {</span>
 <span class="fc bfc" id="L121" title="All 2 branches covered.">			if (&quot;width&quot;.equals(name)) {</span>
 <span class="fc" id="L122">				final String s = m2.group(3);</span>
 <span class="fc" id="L123">				final int width = (int) Double.parseDouble(s);</span>
@@ -129,30 +129,30 @@ public class UImageSvg implements UShape {
 <span class="fc" id="L129">				return result;</span>
 			}
 		}
-<span class="nc" id="L132">		final Pattern p = Pattern.compile(&quot;(?i)&lt;svg[^&gt;]+&quot; + name + &quot;\\W+(\\d+)&quot;);</span>
-<span class="nc" id="L133">		final Matcher m = p.matcher(svg);</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (m.find()) {</span>
-<span class="nc" id="L135">			final String s = m.group(1);</span>
-<span class="nc" id="L136">			return Integer.parseInt(s);</span>
+<span class="fc" id="L132">		final Pattern p = Pattern.compile(&quot;(?i)&lt;svg[^&gt;]+&quot; + name + &quot;\\W+(\\d+)&quot;);</span>
+<span class="fc" id="L133">		final Matcher m = p.matcher(svg);</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (m.find()) {</span>
+<span class="fc" id="L135">			final String s = m.group(1);</span>
+<span class="fc" id="L136">			return Integer.parseInt(s);</span>
 		}
 
 <span class="nc" id="L139">		throw new IllegalStateException(&quot;Cannot find &quot; + name);</span>
 	}
 
 	public double getHeight() {
-<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		if (cachedHeight == -1)</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (cachedHeight == -1)</span>
 <span class="fc" id="L144">			cachedHeight = getData(&quot;height&quot;);</span>
 <span class="fc" id="L145">		return cachedHeight * scale;</span>
 	}
 
 	public double getWidth() {
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (cachedWidth == -1)</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (cachedWidth == -1)</span>
 <span class="fc" id="L150">			cachedWidth = getData(&quot;width&quot;);</span>
 <span class="fc" id="L151">		return cachedWidth * scale;</span>
 	}
 
 	public double getScale() {
-<span class="nc" id="L155">		return scale;</span>
+<span class="fc" id="L155">		return scale;</span>
 	}
 
 }
