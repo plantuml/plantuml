@@ -55,6 +55,7 @@ public class LanguageDescriptor {
 
 		addArobase("board");
 		addArobase("bpm");
+		addArobase("chart");
 		addArobase("chen");
 		addArobase("chronology");
 		addArobase("creole");
@@ -77,6 +78,7 @@ public class LanguageDescriptor {
 		addArobase("project");
 		addArobase("regex");
 		addArobase("salt");
+		addArobase("sprites");
 		addArobase("tree");
 		addArobase("uml");
 		addArobase("wbs");
