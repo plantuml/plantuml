@@ -143,16 +143,20 @@ public class LanguageDescriptor {
 		keyword.add("across");
 		keyword.add("activate");
 		keyword.add("address");
+		keyword.add("area");
 		keyword.add("again");
 		keyword.add("allow_mixing");
 		keyword.add("allowmixing");
 		keyword.add("also");
 		keyword.add("alt");
+		keyword.add("annotation");
 		keyword.add("as");
+		keyword.add("at");
 		keyword.add("attribute");
 		keyword.add("attributes");
 		keyword.add("autonumber");
 		keyword.add("backward");
+		keyword.add("bar");
 		keyword.add("bold");
 		keyword.add("bottom");
 		keyword.add("box");
@@ -196,7 +200,9 @@ public class LanguageDescriptor {
 		keyword.add("footer");
 		keyword.add("fork");
 		keyword.add("goto");
+		keyword.add("grid");
 		keyword.add("group");
+		keyword.add("h-axis");
 		keyword.add("header");
 		keyword.add("hide");
 		keyword.add("highlight");
@@ -209,6 +215,7 @@ public class LanguageDescriptor {
 		keyword.add("left");
 		keyword.add("left to right direction");
 		keyword.add("legend");
+		keyword.add("line");
 		keyword.add("link");
 		keyword.add("loop");
 		keyword.add("mainframe");
@@ -227,6 +234,7 @@ public class LanguageDescriptor {
 		keyword.add("on");
 		keyword.add("opt");
 		keyword.add("order");
+		keyword.add("orientation");
 		keyword.add("over");
 		keyword.add("package");
 		keyword.add("page");
@@ -243,12 +251,15 @@ public class LanguageDescriptor {
 		keyword.add("right");
 		keyword.add("rnote");
 		keyword.add("rotate");
+		keyword.add("scatter");
 		keyword.add("shape");
 		keyword.add("show");
 		keyword.add("skin");
 		keyword.add("skinparam");
+		keyword.add("spacing");
 		keyword.add("split");
 		keyword.add("sprite");
+		keyword.add("stackMode");
 		keyword.add("start");
 		keyword.add("stereotype");
 		keyword.add("stereotypes");
@@ -256,12 +267,15 @@ public class LanguageDescriptor {
 		keyword.add("style");
 		keyword.add("switch");
 		keyword.add("then");
+		keyword.add("ticks");
 		keyword.add("title");
 		keyword.add("together");
 		keyword.add("top");
 		keyword.add("top to bottom direction");
 		keyword.add("true");
 		keyword.add("up");
+		keyword.add("v-axis");
+		keyword.add("v2-axis");
 		keyword.add("while");
 
 		preproc.add("!assert");
