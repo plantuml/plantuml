@@ -751,11 +751,9 @@ tasks.register("teavm") {
 	val outputDir = teavmJsOutputDir.get().asFile
 	
 	doLast {
-		// Copy the HTML template and all js files (without erasing existing files)
+		// Copy the HTML template and other resources (without erasing existing files)
 		copy {
-			from("src/main/resources/teavm") {
-				include("index.html", "*.js")
-			}
+			from("src/main/resources/teavm")
 			into(outputDir)
 		}
 
