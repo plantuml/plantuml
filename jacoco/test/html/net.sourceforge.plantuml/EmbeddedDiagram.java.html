@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Neutron;
 import net.sourceforge.plantuml.klimt.creole.atom.Atom;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -54,6 +55,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.Line;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
@@ -62,6 +64,8 @@ import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.teavm.PSystemBuilder2;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 
@@ -72,175 +76,208 @@ public class EmbeddedDiagram extends TextBlockMemoized implements Line, Atom {
 
 	private PortableImage image;
 	private String svg;
+	private TextBlock textBlock;
+
 	private final Diagram diagram;
 
-<span class="fc" id="L77">	private EmbeddedDiagram(ISkinSimple skinParam, List&lt;StringLocated&gt; strings) {</span>
+<span class="fc" id="L83">	private EmbeddedDiagram(ISkinSimple skinParam, List&lt;StringLocated&gt; strings) {</span>
 
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		final Previous previous = skinParam == null ? Previous.createEmpty() : Previous.createFrom(skinParam.values());</span>
-<span class="fc" id="L80">		final BlockUml blockUml = new BlockUml(null, PathSystem.fetch(), strings, Defines.createEmpty(), previous,</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		final Previous previous = skinParam == null ? Previous.createEmpty() : Previous.createFrom(skinParam.values());</span>
+<span class="fc" id="L86">		final BlockUml blockUml = new BlockUml(null, PathSystem.fetch(), strings, Defines.createEmpty(), previous,</span>
 				null);
 
-<span class="fc" id="L83">		this.diagram = blockUml.getDiagram();</span>
+<span class="fc" id="L89">		this.diagram = blockUml.getDiagram();</span>
 
-<span class="fc" id="L85">	}</span>
+<span class="fc" id="L91">	}</span>
 
 	public static EmbeddedDiagram createAndSkip(String type, Iterator&lt;CharSequence&gt; it, ISkinSimple skinParam) {
-<span class="fc" id="L88">		final List&lt;String&gt; result = new ArrayList&lt;String&gt;();</span>
-<span class="fc" id="L89">		result.add(&quot;@start&quot; + type);</span>
-<span class="fc" id="L90">		int nested = 1;</span>
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		while (it.hasNext()) {</span>
-<span class="fc" id="L92">			final CharSequence s2 = it.next();</span>
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">			if (EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(s2)) != null)</span>
+<span class="fc" id="L94">		final List&lt;String&gt; result = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L95">		result.add(&quot;@start&quot; + type);</span>
+<span class="fc" id="L96">		int nested = 1;</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="fc" id="L98">			final CharSequence s2 = it.next();</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">			if (EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(s2)) != null)</span>
 				// if (StringUtils.trinNoTrace(s2).startsWith(EmbeddedDiagram.EMBEDDED_START))
-<span class="nc" id="L95">				nested++;</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">			else if (StringUtils.trinNoTrace(s2).equals(EmbeddedDiagram.EMBEDDED_END)) {</span>
-<span class="fc" id="L97">				nested--;</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">				if (nested == 0)</span>
-<span class="fc" id="L99">					break;</span>
+<span class="nc" id="L101">				nested++;</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">			else if (StringUtils.trinNoTrace(s2).equals(EmbeddedDiagram.EMBEDDED_END)) {</span>
+<span class="fc" id="L103">				nested--;</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">				if (nested == 0)</span>
+<span class="fc" id="L105">					break;</span>
 			}
-<span class="fc" id="L101">			result.add(s2.toString());</span>
-<span class="fc" id="L102">		}</span>
-<span class="fc" id="L103">		result.add(&quot;@end&quot; + type);</span>
-<span class="fc" id="L104">		return EmbeddedDiagram.from(skinParam, result);</span>
+<span class="fc" id="L107">			result.add(s2.toString());</span>
+<span class="fc" id="L108">		}</span>
+<span class="fc" id="L109">		result.add(&quot;@end&quot; + type);</span>
+<span class="fc" id="L110">		return EmbeddedDiagram.from(skinParam, result);</span>
 
 	}
 
 	public static EmbeddedDiagram from(ISkinSimple skinParam, List&lt;String&gt; strings) {
-<span class="fc" id="L109">		return new EmbeddedDiagram(skinParam, BlockUml.convert(strings));</span>
+<span class="fc" id="L115">		return new EmbeddedDiagram(skinParam, BlockUml.convert(strings));</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="fc" id="L113">		return 0;</span>
+<span class="fc" id="L119">		return 0;</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
 		try {
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">			if (stringBounder.matchesProperty(&quot;SVG&quot;)) {</span>
-<span class="nc" id="L120">				final String imageSvg = getImageSvg();</span>
-<span class="nc" id="L121">				final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
-<span class="nc" id="L122">				return new XDimension2D(svg.getWidth(), svg.getHeight());</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">				if (stringBounder.matchesProperty(&quot;SVG&quot;)) {</span>
+<span class="nc" id="L127">					final String imageSvg = getImageSvg();</span>
+<span class="nc" id="L128">					final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
+<span class="nc" id="L129">					return new XDimension2D(svg.getWidth(), svg.getHeight());</span>
+				}
+<span class="fc" id="L131">				final PortableImage im = getImage();</span>
+<span class="fc" id="L132">				return new XDimension2D(im.getWidth(), im.getHeight());</span>
+			} else {
+				// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
+<span class="nc" id="L135">				final TextBlock tb = getInternalTextBlock();</span>
+<span class="nc" id="L136">				final XDimension2D result = tb.calculateDimension(stringBounder);</span>
+<span class="nc" id="L137">				PSystemBuilder2.getInstance().reset();</span>
+<span class="nc" id="L138">				return result;</span>
+				// ::done
 			}
-<span class="fc" id="L124">			final PortableImage im = getImage();</span>
-<span class="fc" id="L125">			return new XDimension2D(im.getWidth(), im.getHeight());</span>
-<span class="nc" id="L126">		} catch (IOException e) {</span>
-<span class="nc" id="L127">			Logme.error(e);</span>
-<span class="nc" id="L128">		} catch (InterruptedException e) {</span>
-<span class="nc" id="L129">			Logme.error(e);</span>
-<span class="nc" id="L130">		}</span>
-<span class="nc" id="L131">		return new XDimension2D(42, 42);</span>
+<span class="nc" id="L141">		} catch (Exception e) {</span>
+<span class="nc" id="L142">			Logme.error(e);</span>
+		}
+<span class="nc" id="L144">		return new XDimension2D(42, 42);</span>
+	}
+
+	public TextBlock getInternalTextBlock() throws Exception {
+		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (textBlock == null) {</span>
+<span class="nc" id="L150">			PSystemBuilder2.getInstance().reset();</span>
+<span class="nc" id="L151">			final UgDiagram ugDiagram = (UgDiagram) diagram;</span>
+<span class="nc" id="L152">			textBlock = ugDiagram.getTextBlock12026(0, new FileFormatOption(FileFormat.SVG));</span>
+		}
+		// ::done
+<span class="nc" id="L155">		return textBlock;</span>
 	}
 
 	public void drawU(UGraphic ug) {
 		try {
-<span class="fc" id="L136">			final boolean isSvg = ug.matchesProperty(&quot;SVG&quot;);</span>
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">			if (isSvg) {</span>
-<span class="nc" id="L138">				final String imageSvg = getImageSvg();</span>
-<span class="nc" id="L139">				final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
-<span class="nc" id="L140">				ug.draw(svg);</span>
-<span class="nc" id="L141">				return;</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L161">				final boolean isSvg = ug.matchesProperty(&quot;SVG&quot;);</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">				if (isSvg) {</span>
+<span class="nc" id="L163">					final String imageSvg = getImageSvg();</span>
+<span class="nc" id="L164">					final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
+<span class="nc" id="L165">					ug.draw(svg);</span>
+<span class="nc" id="L166">					return;</span>
+				}
+<span class="fc" id="L168">				final PortableImage im = getImage();</span>
+<span class="fc" id="L169">				final UShape image = new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));</span>
+<span class="fc" id="L170">				ug.draw(image);</span>
+<span class="fc" id="L171">			} else {</span>
+				// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
+<span class="nc" id="L173">				final TextBlock tb = getInternalTextBlock();</span>
+<span class="nc" id="L174">				ug = ug.apply(HColors.transparent().bg());</span>
+<span class="nc" id="L175">				tb.drawU(ug);</span>
+<span class="nc" id="L176">				PSystemBuilder2.getInstance().reset();</span>
+				// ::done
 			}
-<span class="fc" id="L143">			final PortableImage im = getImage();</span>
-<span class="fc" id="L144">			final UShape image = new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));</span>
-<span class="fc" id="L145">			ug.draw(image);</span>
-<span class="nc" id="L146">		} catch (IOException e) {</span>
-<span class="nc" id="L147">			Logme.error(e);</span>
-<span class="nc" id="L148">		} catch (InterruptedException e) {</span>
-<span class="nc" id="L149">			Logme.error(e);</span>
-<span class="pc" id="L150">		}</span>
+<span class="nc" id="L179">		} catch (Exception e) {</span>
+<span class="nc" id="L180">			Logme.error(e);</span>
+<span class="fc" id="L181">		}</span>
 
-<span class="fc" id="L152">	}</span>
+<span class="fc" id="L183">	}</span>
 
 	private String getImageSvg() throws IOException, InterruptedException {
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (svg == null)</span>
-<span class="nc" id="L156">			svg = getImageSvgSlow().replaceAll(&quot;&lt;\\?plantuml.+?\\?&gt;&quot;, &quot;&quot;);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (svg == null)</span>
+<span class="nc" id="L187">			svg = getImageSvgSlow().replaceAll(&quot;&lt;\\?plantuml.+?\\?&gt;&quot;, &quot;&quot;);</span>
 
-<span class="nc" id="L158">		return svg;</span>
+<span class="nc" id="L189">		return svg;</span>
 
 	}
 
 	private String getImageSvgSlow() throws IOException, InterruptedException {
-<span class="nc" id="L163">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
-<span class="nc" id="L164">		diagram.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));</span>
-<span class="nc" id="L165">		os.close();</span>
-<span class="nc" id="L166">		return new String(os.toByteArray());</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L195">			final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
+<span class="nc" id="L196">			diagram.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));</span>
+<span class="nc" id="L197">			os.close();</span>
+<span class="nc" id="L198">			return new String(os.toByteArray());</span>
+		}
+<span class="nc" id="L200">		throw new UnsupportedOperationException(&quot;TEAVM4586&quot;);</span>
 	}
 
 	private PortableImage getImage() throws IOException, InterruptedException {
-<span class="fc" id="L170">		BrowserLog.consoleLog(getClass(), &quot;=======getImage&quot;);</span>
-<span class="fc bfc" id="L171" title="All 2 branches covered.">		if (image == null)</span>
-<span class="fc" id="L172">			image = getImageSlow();</span>
-<span class="fc" id="L173">		return image;</span>
+<span class="fc" id="L204">		BrowserLog.consoleLog(getClass(), &quot;=======getImage&quot;);</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">		if (image == null)</span>
+<span class="fc" id="L206">			image = getImageSlow();</span>
+<span class="fc" id="L207">		return image;</span>
 	}
 
 	private PortableImage getImageSlow() throws IOException, InterruptedException {
-<span class="fc" id="L177">		BrowserLog.consoleLog(getClass(), &quot;=======getImageSlow&quot;);</span>
-<span class="fc" id="L178">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
-<span class="fc" id="L179">		diagram.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));</span>
-<span class="fc" id="L180">		os.close();</span>
-<span class="fc" id="L181">		return SImageIO.read(os.toByteArray());</span>
+<span class="fc" id="L211">		BrowserLog.consoleLog(getClass(), &quot;=======getImageSlow&quot;);</span>
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L213">			final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
+<span class="fc" id="L214">			diagram.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));</span>
+<span class="fc" id="L215">			os.close();</span>
+<span class="fc" id="L216">			return SImageIO.read(os.toByteArray());</span>
+		}
+<span class="nc" id="L218">		throw new UnsupportedOperationException(&quot;TEAVM4585&quot;);</span>
 	}
 
 	public HorizontalAlignment getHorizontalAlignment() {
-<span class="nc" id="L185">		return HorizontalAlignment.LEFT;</span>
+<span class="nc" id="L222">		return HorizontalAlignment.LEFT;</span>
 	}
 
 	@Override
 	public List&lt;Neutron&gt; getNeutrons() {
-<span class="nc" id="L190">		return Arrays.asList(Neutron.create(this));</span>
+<span class="nc" id="L227">		return Arrays.asList(Neutron.create(this));</span>
 	}
 
 	public static String getEmbeddedType(CharSequence cs) {
-<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		if (cs == null)</span>
-<span class="nc" id="L195">			return null;</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">		if (cs == null)</span>
+<span class="nc" id="L232">			return null;</span>
 
-<span class="fc" id="L197">		final String s = StringUtils.trin(cs.toString());</span>
-<span class="fc bfc" id="L198" title="All 2 branches covered.">		if (s.startsWith(EMBEDDED_START) == false)</span>
-<span class="fc" id="L199">			return null;</span>
+<span class="fc" id="L234">		final String s = StringUtils.trin(cs.toString());</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">		if (s.startsWith(EMBEDDED_START) == false)</span>
+<span class="fc" id="L236">			return null;</span>
 
-<span class="pc bpc" id="L201" title="20 of 21 branches missed.">		switch (s) {</span>
+<span class="pc bpc" id="L238" title="20 of 21 branches missed.">		switch (s) {</span>
 		case EMBEDDED_START:
-<span class="fc" id="L203">			return &quot;uml&quot;;</span>
+<span class="fc" id="L240">			return &quot;uml&quot;;</span>
 		case EMBEDDED_START + &quot;ditaa&quot;:
-<span class="nc" id="L205">			return &quot;ditaa&quot;;</span>
+<span class="nc" id="L242">			return &quot;ditaa&quot;;</span>
 		case EMBEDDED_START + &quot;salt&quot;:
-<span class="nc" id="L207">			return &quot;salt&quot;;</span>
+<span class="nc" id="L244">			return &quot;salt&quot;;</span>
 		case EMBEDDED_START + &quot;uml&quot;:
-<span class="nc" id="L209">			return &quot;uml&quot;;</span>
+<span class="nc" id="L246">			return &quot;uml&quot;;</span>
 		case EMBEDDED_START + &quot;wbs&quot;:
-<span class="nc" id="L211">			return &quot;wbs&quot;;</span>
+<span class="nc" id="L248">			return &quot;wbs&quot;;</span>
 		case EMBEDDED_START + &quot;mindmap&quot;:
-<span class="nc" id="L213">			return &quot;mindmap&quot;;</span>
+<span class="nc" id="L250">			return &quot;mindmap&quot;;</span>
 		case EMBEDDED_START + &quot;gantt&quot;:
-<span class="nc" id="L215">			return &quot;gantt&quot;;</span>
+<span class="nc" id="L252">			return &quot;gantt&quot;;</span>
 		case EMBEDDED_START + &quot;json&quot;:
-<span class="nc" id="L217">			return &quot;json&quot;;</span>
+<span class="nc" id="L254">			return &quot;json&quot;;</span>
 		case EMBEDDED_START + &quot;yaml&quot;:
-<span class="nc" id="L219">			return &quot;yaml&quot;;</span>
+<span class="nc" id="L256">			return &quot;yaml&quot;;</span>
 		case EMBEDDED_START + &quot;wire&quot;:
-<span class="nc" id="L221">			return &quot;wire&quot;;</span>
+<span class="nc" id="L258">			return &quot;wire&quot;;</span>
 		case EMBEDDED_START + &quot;creole&quot;:
-<span class="nc" id="L223">			return &quot;creole&quot;;</span>
+<span class="nc" id="L260">			return &quot;creole&quot;;</span>
 		case EMBEDDED_START + &quot;board&quot;:
-<span class="nc" id="L225">			return &quot;board&quot;;</span>
+<span class="nc" id="L262">			return &quot;board&quot;;</span>
 		case EMBEDDED_START + &quot;ebnf&quot;:
-<span class="nc" id="L227">			return &quot;ebnf&quot;;</span>
+<span class="nc" id="L264">			return &quot;ebnf&quot;;</span>
 		case EMBEDDED_START + &quot;regex&quot;:
-<span class="nc" id="L229">			return &quot;regex&quot;;</span>
+<span class="nc" id="L266">			return &quot;regex&quot;;</span>
 		case EMBEDDED_START + &quot;files&quot;:
-<span class="nc" id="L231">			return &quot;files&quot;;</span>
+<span class="nc" id="L268">			return &quot;files&quot;;</span>
 		case EMBEDDED_START + &quot;chronology&quot;:
-<span class="nc" id="L233">			return &quot;chronology&quot;;</span>
+<span class="nc" id="L270">			return &quot;chronology&quot;;</span>
 		case EMBEDDED_START + &quot;chen&quot;:
-<span class="nc" id="L235">			return &quot;chen&quot;;</span>
+<span class="nc" id="L272">			return &quot;chen&quot;;</span>
 		case EMBEDDED_START + &quot;chart&quot;:
-<span class="nc" id="L237">			return &quot;chart&quot;;</span>
+<span class="nc" id="L274">			return &quot;chart&quot;;</span>
 		case EMBEDDED_START + &quot;nwdiag&quot;:
-<span class="nc" id="L239">			return &quot;nwdiag&quot;;</span>
+<span class="nc" id="L276">			return &quot;nwdiag&quot;;</span>
 		case EMBEDDED_START + &quot;packetdiag&quot;:
-<span class="nc" id="L241">			return &quot;packetdiag&quot;;</span>
+<span class="nc" id="L278">			return &quot;packetdiag&quot;;</span>
 		default:
-<span class="nc" id="L243">			return null;</span>
+<span class="nc" id="L280">			return null;</span>
 		}
 	}
 

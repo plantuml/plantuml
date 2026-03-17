@@ -35,23 +35,64 @@
  */
 package net.sourceforge.plantuml.klimt.compress;
 
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 
-<span class="nc" id="L41">public class CompressionXorYBuilder {</span>
-    // ::remove file when __HAXE__
+public class CompressionXorYBuilder implements TextBlock {
+	private final CompressionMode mode;
+	private final TextBlock textBlock;
 
-	public static TextBlock build(CompressionMode mode, TextBlock textBlock, StringBounder stringBounder) {
-<span class="fc" id="L45">		final PiecewiseAffineTransform affine = getPiecewiseAffineTransform(mode, textBlock, stringBounder);</span>
-<span class="fc" id="L46">		return PiecewiseAffineOnXorYBuilder.build(mode, textBlock, affine);</span>
+	private PiecewiseAffineTransform cachedAffine;
+	private MinMax cachedMinMax;
+
+	public static TextBlock build(CompressionMode mode, TextBlock textBlock) {
+<span class="fc" id="L54">		return new CompressionXorYBuilder(mode, textBlock);</span>
 	}
 
-	private static PiecewiseAffineTransform getPiecewiseAffineTransform(CompressionMode mode, TextBlock textBlock,
-			StringBounder stringBounder) {
-<span class="fc" id="L51">		final SlotFinder slotFinder = SlotFinder.create(mode, stringBounder);</span>
-<span class="fc" id="L52">		textBlock.drawU(slotFinder);</span>
-<span class="fc" id="L53">		final SlotSet ysSlotSet = slotFinder.getSlotSet().reverse().smaller(5.0);</span>
-<span class="fc" id="L54">		return new CompressionTransform(ysSlotSet);</span>
+<span class="fc" id="L57">	private CompressionXorYBuilder(CompressionMode mode, TextBlock textBlock) {</span>
+<span class="fc" id="L58">		this.mode = mode;</span>
+<span class="fc" id="L59">		this.textBlock = textBlock;</span>
+<span class="fc" id="L60">	}</span>
+
+	private PiecewiseAffineTransform getAffineTransform(StringBounder stringBounder) {
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		if (cachedAffine == null) {</span>
+<span class="fc" id="L64">			final SlotFinder slotFinder = SlotFinder.create(mode, stringBounder);</span>
+<span class="fc" id="L65">			textBlock.drawU(slotFinder);</span>
+<span class="fc" id="L66">			final SlotSet slotSet = slotFinder.getSlotSet().reverse().smaller(5.0);</span>
+<span class="fc" id="L67">			cachedAffine = new CompressionTransform(slotSet);</span>
+		}
+<span class="fc" id="L69">		return cachedAffine;</span>
+	}
+
+	public void drawU(final UGraphic ug) {
+<span class="fc" id="L73">		final PiecewiseAffineTransform affine = getAffineTransform(ug.getStringBounder());</span>
+<span class="fc" id="L74">		textBlock.drawU(UGraphicCompressOnXorY.create(mode, ug, affine));</span>
+<span class="fc" id="L75">	}</span>
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="nc" id="L78">		final PiecewiseAffineTransform affine = getAffineTransform(stringBounder);</span>
+<span class="nc" id="L79">		final XDimension2D dim = textBlock.calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (mode == CompressionMode.ON_X)</span>
+<span class="nc" id="L81">			return new XDimension2D(affine.transform(dim.getWidth()), dim.getHeight());</span>
+		else
+<span class="nc" id="L83">			return new XDimension2D(dim.getWidth(), affine.transform(dim.getHeight()));</span>
+	}
+
+	@Override
+	public MinMax getMinMax(StringBounder stringBounder) {
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (cachedMinMax == null)</span>
+<span class="fc" id="L89">			cachedMinMax = TextBlockUtils.getMinMax(this, stringBounder, false);</span>
+
+<span class="fc" id="L91">		return cachedMinMax;</span>
+	}
+
+	public HColor getBackcolor() {
+<span class="nc" id="L95">		return null;</span>
 	}
 
 }
