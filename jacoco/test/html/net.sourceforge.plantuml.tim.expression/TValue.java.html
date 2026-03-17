@@ -77,8 +77,8 @@ public final class TValue {
 
 	@Override
 	public String toString() {
-<span class="fc bfc" id="L80" title="All 4 branches covered.">		if (jsonValue != null &amp;&amp; jsonValue.isString()) {</span>
-<span class="fc" id="L81">			return jsonValue.asString();</span>
+<span class="pc bpc" id="L80" title="1 of 4 branches missed.">		if (jsonValue != null &amp;&amp; jsonValue.isString()) {</span>
+<span class="nc" id="L81">			return jsonValue.asString();</span>
 		}
 <span class="fc bfc" id="L83" title="All 2 branches covered.">		if (jsonValue != null) {</span>
 <span class="fc" id="L84">			return jsonValue.toString();</span>
@@ -144,7 +144,7 @@ public final class TValue {
 	}
 
 	public boolean isString() {
-<span class="fc bfc" id="L147" title="All 2 branches covered.">		return this.stringValue != null;</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		return this.stringValue != null;</span>
 	}
 
 	public Token toToken() {

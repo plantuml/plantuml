@@ -45,44 +45,43 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 public class ULayoutGroup {
-	// ::remove file when __HAXE__
 
 	private final PlacementStrategy placementStrategy;
 
-<span class="fc" id="L52">	public ULayoutGroup(PlacementStrategy placementStrategy) {</span>
-<span class="fc" id="L53">		this.placementStrategy = placementStrategy;</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L51">	public ULayoutGroup(PlacementStrategy placementStrategy) {</span>
+<span class="fc" id="L52">		this.placementStrategy = placementStrategy;</span>
+<span class="fc" id="L53">	}</span>
 
 	public void drawU(UGraphic ug, double width, double height) {
-<span class="fc bfc" id="L57" title="All 2 branches covered.">		for (Map.Entry&lt;TextBlock, XPoint2D&gt; ent : placementStrategy.getPositions(width, height).entrySet()) {</span>
-<span class="fc" id="L58">			final TextBlock block = ent.getKey();</span>
-<span class="fc" id="L59">			final XPoint2D pos = ent.getValue();</span>
-<span class="fc" id="L60">			block.drawU(ug.apply(UTranslate.point(pos)));</span>
-<span class="fc" id="L61">		}</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		for (Map.Entry&lt;TextBlock, XPoint2D&gt; ent : placementStrategy.getPositions(width, height).entrySet()) {</span>
+<span class="fc" id="L57">			final TextBlock block = ent.getKey();</span>
+<span class="fc" id="L58">			final XPoint2D pos = ent.getValue();</span>
+<span class="fc" id="L59">			block.drawU(ug.apply(UTranslate.point(pos)));</span>
+<span class="fc" id="L60">		}</span>
+<span class="fc" id="L61">	}</span>
 
 	public void add(TextBlock block) {
-<span class="fc" id="L65">		placementStrategy.add(block);</span>
+<span class="fc" id="L64">		placementStrategy.add(block);</span>
 
-<span class="fc" id="L67">	}</span>
+<span class="fc" id="L66">	}</span>
 
 	public XRectangle2D getInnerPosition(CharSequence member, double width, double height,
 			StringBounder stringBounder) {
-<span class="nc" id="L71">		final Set&lt;Entry&lt;TextBlock, XPoint2D&gt;&gt; all = placementStrategy.getPositions(width, height).entrySet();</span>
-<span class="nc" id="L72">		return tryOne(all, member, stringBounder);</span>
+<span class="nc" id="L70">		final Set&lt;Entry&lt;TextBlock, XPoint2D&gt;&gt; all = placementStrategy.getPositions(width, height).entrySet();</span>
+<span class="nc" id="L71">		return tryOne(all, member, stringBounder);</span>
 	}
 
 	private XRectangle2D tryOne(final Set&lt;Entry&lt;TextBlock, XPoint2D&gt;&gt; all, CharSequence member,
 			StringBounder stringBounder) {
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (Map.Entry&lt;TextBlock, XPoint2D&gt; ent : all) {</span>
-<span class="nc" id="L78">			final TextBlock block = ent.getKey();</span>
-<span class="nc" id="L79">			final XRectangle2D result = block.getInnerPosition(member, stringBounder);</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (result != null) {</span>
-<span class="nc" id="L81">				final UTranslate translate = UTranslate.point(ent.getValue());</span>
-<span class="nc" id="L82">				return translate.apply(result);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (Map.Entry&lt;TextBlock, XPoint2D&gt; ent : all) {</span>
+<span class="nc" id="L77">			final TextBlock block = ent.getKey();</span>
+<span class="nc" id="L78">			final XRectangle2D result = block.getInnerPosition(member, stringBounder);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">			if (result != null) {</span>
+<span class="nc" id="L80">				final UTranslate translate = UTranslate.point(ent.getValue());</span>
+<span class="nc" id="L81">				return translate.apply(result);</span>
 			}
-<span class="nc" id="L84">		}</span>
-<span class="nc" id="L85">		return null;</span>
+<span class="nc" id="L83">		}</span>
+<span class="nc" id="L84">		return null;</span>
 	}
 
 }

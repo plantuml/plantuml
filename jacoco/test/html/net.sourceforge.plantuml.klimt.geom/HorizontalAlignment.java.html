@@ -40,38 +40,38 @@ import java.util.Objects;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
-<span class="fc" id="L45">public enum HorizontalAlignment {</span>
-<span class="fc" id="L46">	LEFT, CENTER, RIGHT;</span>
+<span class="fc" id="L46">public enum HorizontalAlignment {</span>
+<span class="fc" id="L47">	LEFT, CENTER, RIGHT;</span>
 
 	public static HorizontalAlignment fromString(String s) {
-<span class="fc bfc" id="L49" title="All 2 branches covered.">		if (LEFT.name().equalsIgnoreCase(s))</span>
-<span class="fc" id="L50">			return LEFT;</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">		if (LEFT.name().equalsIgnoreCase(s))</span>
+<span class="fc" id="L51">			return LEFT;</span>
 
-<span class="fc bfc" id="L52" title="All 2 branches covered.">		if (CENTER.name().equalsIgnoreCase(s))</span>
-<span class="fc" id="L53">			return CENTER;</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (CENTER.name().equalsIgnoreCase(s))</span>
+<span class="fc" id="L54">			return CENTER;</span>
 
-<span class="pc bpc" id="L55" title="1 of 2 branches missed.">		if (RIGHT.name().equalsIgnoreCase(s))</span>
-<span class="nc" id="L56">			return RIGHT;</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (RIGHT.name().equalsIgnoreCase(s))</span>
+<span class="nc" id="L57">			return RIGHT;</span>
 
-<span class="fc" id="L58">		return null;</span>
+<span class="fc" id="L59">		return null;</span>
 	}
 
 	public static HorizontalAlignment fromString(String s, HorizontalAlignment defaultValue) {
-<span class="fc" id="L62">		Objects.requireNonNull(defaultValue);</span>
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (s == null)</span>
-<span class="fc" id="L64">			return defaultValue;</span>
+<span class="fc" id="L63">		Objects.requireNonNull(defaultValue);</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (s == null)</span>
+<span class="fc" id="L65">			return defaultValue;</span>
 
-<span class="nc" id="L66">		s = StringUtils.goUpperCase(s);</span>
-<span class="nc" id="L67">		final HorizontalAlignment result = fromString(s);</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L69">			return defaultValue;</span>
+<span class="nc" id="L67">		s = StringUtils.goUpperCase(s);</span>
+<span class="nc" id="L68">		final HorizontalAlignment result = fromString(s);</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L70">			return defaultValue;</span>
 
-<span class="nc" id="L71">		return result;</span>
+<span class="nc" id="L72">		return result;</span>
 	}
 
-	// ::comment when __HAXE__
 	public String getGraphVizValue() {
 <span class="nc" id="L76">		return toString().substring(0, 1).toLowerCase();</span>
 	}
@@ -88,7 +88,24 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 		}
 
 <span class="fc" id="L90">	}</span>
-	// ::done
+
+	public double getPosition(double width, double fullWidth) {
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (this == HorizontalAlignment.RIGHT)</span>
+<span class="nc" id="L94">			return fullWidth - width;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		else if (this == HorizontalAlignment.CENTER)</span>
+<span class="nc" id="L96">			return (fullWidth - width) / 2;</span>
+<span class="nc" id="L97">		return 0;</span>
+	}
+
+	public PlacementStrategy asPlacementStrategy(StringBounder sb) {
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (this == HorizontalAlignment.RIGHT)</span>
+<span class="nc" id="L102">			return new PlacementStrategyY1Y2Right(sb);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		else if (this == HorizontalAlignment.CENTER)</span>
+<span class="nc" id="L104">			return new PlacementStrategyY1Y2(sb);</span>
+
+<span class="nc" id="L106">		return new PlacementStrategyY1Y2Left(sb);</span>
+
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

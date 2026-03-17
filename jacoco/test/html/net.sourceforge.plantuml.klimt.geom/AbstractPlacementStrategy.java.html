@@ -43,73 +43,72 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 public abstract class AbstractPlacementStrategy implements PlacementStrategy {
-	// ::remove file when __HAXE__
 
 	private final StringBounder stringBounder;
-<span class="fc" id="L49">	private final Map&lt;TextBlock, XDimension2D&gt; dimensions = new LinkedHashMap&lt;TextBlock, XDimension2D&gt;();</span>
+<span class="fc" id="L48">	private final Map&lt;TextBlock, XDimension2D&gt; dimensions = new LinkedHashMap&lt;TextBlock, XDimension2D&gt;();</span>
 
-<span class="fc" id="L51">	public AbstractPlacementStrategy(StringBounder stringBounder) {</span>
-<span class="fc" id="L52">		this.stringBounder = stringBounder;</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L50">	public AbstractPlacementStrategy(StringBounder stringBounder) {</span>
+<span class="fc" id="L51">		this.stringBounder = stringBounder;</span>
+<span class="fc" id="L52">	}</span>
 
 	public void add(TextBlock block) {
-<span class="fc" id="L56">		this.dimensions.put(block, block.calculateDimension(stringBounder));</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L55">		this.dimensions.put(block, block.calculateDimension(stringBounder));</span>
+<span class="fc" id="L56">	}</span>
 
 	protected Map&lt;TextBlock, XDimension2D&gt; getDimensions() {
-<span class="fc" id="L60">		return dimensions;</span>
+<span class="fc" id="L59">		return dimensions;</span>
 	}
 
 	protected double getSumWidth() {
-<span class="nc" id="L64">		return getSumWidth(dimensions.values().iterator());</span>
+<span class="nc" id="L63">		return getSumWidth(dimensions.values().iterator());</span>
 	}
 
 	protected double getSumHeight() {
-<span class="fc" id="L68">		return getSumHeight(dimensions.values().iterator());</span>
+<span class="fc" id="L67">		return getSumHeight(dimensions.values().iterator());</span>
 	}
 
 	protected double getMaxHeight() {
-<span class="nc" id="L72">		return getMaxHeight(dimensions.values().iterator());</span>
+<span class="nc" id="L71">		return getMaxHeight(dimensions.values().iterator());</span>
 	}
 
 	protected double getMaxWidth() {
-<span class="nc" id="L76">		return getMaxWidth(dimensions.values().iterator());</span>
+<span class="nc" id="L75">		return getMaxWidth(dimensions.values().iterator());</span>
 	}
 
 	protected double getSumWidth(Iterator&lt;XDimension2D&gt; it) {
-<span class="nc" id="L80">		double result = 0;</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		while (it.hasNext()) {</span>
-<span class="nc" id="L82">			result += it.next().getWidth();</span>
+<span class="nc" id="L79">		double result = 0;</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L81">			result += it.next().getWidth();</span>
 		}
-<span class="nc" id="L84">		return result;</span>
+<span class="nc" id="L83">		return result;</span>
 	}
 
 	protected double getSumHeight(Iterator&lt;XDimension2D&gt; it) {
-<span class="fc" id="L88">		double result = 0;</span>
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		while (it.hasNext()) {</span>
-<span class="nc" id="L90">			result += it.next().getHeight();</span>
+<span class="fc" id="L87">		double result = 0;</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L89">			result += it.next().getHeight();</span>
 		}
-<span class="fc" id="L92">		return result;</span>
+<span class="fc" id="L91">		return result;</span>
 	}
 
 	protected double getMaxWidth(Iterator&lt;XDimension2D&gt; it) {
-<span class="nc" id="L96">		double result = 0;</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		while (it.hasNext()) {</span>
-<span class="nc" id="L98">			result = Math.max(result, it.next().getWidth());</span>
+<span class="nc" id="L95">		double result = 0;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L97">			result = Math.max(result, it.next().getWidth());</span>
 		}
-<span class="nc" id="L100">		return result;</span>
+<span class="nc" id="L99">		return result;</span>
 	}
 
 	protected double getMaxHeight(Iterator&lt;XDimension2D&gt; it) {
-<span class="nc" id="L104">		double result = 0;</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		while (it.hasNext()) {</span>
-<span class="nc" id="L106">			result = Math.max(result, it.next().getHeight());</span>
+<span class="nc" id="L103">		double result = 0;</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L105">			result = Math.max(result, it.next().getHeight());</span>
 		}
-<span class="nc" id="L108">		return result;</span>
+<span class="nc" id="L107">		return result;</span>
 	}
 
 	protected final StringBounder getStringBounder() {
-<span class="nc" id="L112">		return stringBounder;</span>
+<span class="nc" id="L111">		return stringBounder;</span>
 	}
 
 }
