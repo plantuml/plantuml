@@ -98,7 +98,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2&lt;ClassDia
 	private static IRegex getRegexConcat() {
 <span class="fc" id="L99">		return RegexConcat.build(CommandCreateClassMultilines.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;VISIBILITY&quot;,
-<span class="fc" id="L101">						&quot;(&quot; + VisibilityModifier.regexForVisibilityCharacterInClassName() + &quot;)?&quot;), //</span>
+<span class="fc" id="L101">						&quot;(&quot; + VisibilityModifier.regexForVisibilityCharacter() + &quot;)?&quot;), //</span>
 <span class="fc" id="L102">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;TYPE&quot;,
 						&quot;(interface|enum|annotation|abstract[%s]+class|static[%s]+class|abstract|class|entity|protocol|struct|exception|metaclass|stereotype|dataclass|record)&quot;), //

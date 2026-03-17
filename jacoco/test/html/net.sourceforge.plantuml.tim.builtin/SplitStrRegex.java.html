@@ -62,16 +62,16 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="nc" id="L65">		final JsonArray result = new JsonArray();</span>
+<span class="fc" id="L65">		final JsonArray result = new JsonArray();</span>
 
-<span class="nc" id="L67">		final String str = values.get(0).toString();</span>
-<span class="nc" id="L68">		final String separator = values.get(1).toString();</span>
+<span class="fc" id="L67">		final String str = values.get(0).toString();</span>
+<span class="fc" id="L68">		final String separator = values.get(1).toString();</span>
 
-<span class="nc" id="L70">		final String[] parts = str.split(separator);</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		for(String part : parts)</span>
-<span class="nc" id="L72">			result.add(part);</span>
+<span class="fc" id="L70">		final String[] parts = str.split(separator);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		for(String part : parts)</span>
+<span class="fc" id="L72">			result.add(part);</span>
 
-<span class="nc" id="L74">		return TValue.fromJson(result);</span>
+<span class="fc" id="L74">		return TValue.fromJson(result);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
