@@ -51,12 +51,12 @@ class JsonWriter {
 <span class="fc" id="L51">	}</span>
 
 	protected void writeLiteral(String value) throws IOException {
-<span class="fc" id="L54">		writer.write(value);</span>
-<span class="fc" id="L55">	}</span>
+<span class="nc" id="L54">		writer.write(value);</span>
+<span class="nc" id="L55">	}</span>
 
 	protected void writeNumber(String string) throws IOException {
-<span class="fc" id="L58">		writer.write(string);</span>
-<span class="fc" id="L59">	}</span>
+<span class="nc" id="L58">		writer.write(string);</span>
+<span class="nc" id="L59">	}</span>
 
 	protected void writeString(String string) throws IOException {
 <span class="fc" id="L62">		writer.write('&quot;');</span>
@@ -73,8 +73,8 @@ class JsonWriter {
 <span class="fc" id="L73">	}</span>
 
 	protected void writeArraySeparator() throws IOException {
-<span class="fc" id="L76">		writer.write(',');</span>
-<span class="fc" id="L77">	}</span>
+<span class="nc" id="L76">		writer.write(',');</span>
+<span class="nc" id="L77">	}</span>
 
 	protected void writeObjectOpen() throws IOException {
 <span class="fc" id="L80">		writer.write('{');</span>
@@ -103,10 +103,10 @@ class JsonWriter {
 <span class="fc" id="L103">		int start = 0;</span>
 <span class="fc bfc" id="L104" title="All 2 branches covered.">		for (int index = 0; index &lt; length; index++) {</span>
 <span class="fc" id="L105">			char[] replacement = getReplacementChars(string.charAt(index));</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">			if (replacement != null) {</span>
-<span class="fc" id="L107">				writer.write(string, start, index - start);</span>
-<span class="fc" id="L108">				writer.write(replacement);</span>
-<span class="fc" id="L109">				start = index + 1;</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">			if (replacement != null) {</span>
+<span class="nc" id="L107">				writer.write(string, start, index - start);</span>
+<span class="nc" id="L108">				writer.write(replacement);</span>
+<span class="nc" id="L109">				start = index + 1;</span>
 			}
 		}
 <span class="fc" id="L112">		writer.write(string, start, length - start);</span>
@@ -127,8 +127,8 @@ class JsonWriter {
 			// This range contains '0' .. '9' and 'A' .. 'Z'. Need 3 checks to get here.
 <span class="fc" id="L128">			return null;</span>
 		}
-<span class="fc bfc" id="L130" title="All 2 branches covered.">		if (ch == '&quot;') {</span>
-<span class="fc" id="L131">			return QUOT_CHARS;</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (ch == '&quot;') {</span>
+<span class="nc" id="L131">			return QUOT_CHARS;</span>
 		}
 <span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (ch &gt; CONTROL_CHARACTERS_END) {</span>
 <span class="fc" id="L134">			return null;</span>

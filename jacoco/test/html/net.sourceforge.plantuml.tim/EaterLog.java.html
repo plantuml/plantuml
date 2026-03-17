@@ -50,7 +50,7 @@ public class EaterLog extends Eater {
 <span class="nc" id="L50">		skipSpaces();</span>
 <span class="nc" id="L51">		final String logData = context.applyFunctionsAndVariables(memory,</span>
 <span class="nc" id="L52">				new StringLocated(this.eatAllToEnd(), getLineLocation()));</span>
-<span class="nc" id="L53">		Log.error(&quot;[Log] &quot; + logData);</span>
+<span class="nc" id="L53">		Log.info(() -&gt; &quot;[Log] &quot; + logData);</span>
 <span class="nc" id="L54">	}</span>
 
 }
