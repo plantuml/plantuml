@@ -207,7 +207,7 @@ public class PSystemBuilder {
 
 <span class="fc" id="L208">		Diagram result = null;</span>
 		try {
-<span class="fc" id="L210">			final Collection&lt;DiagramType&gt; types = DiagramType.getTypesFromArobaseStart(source.get(0).getString());</span>
+<span class="fc" id="L210">			final Collection&lt;DiagramType&gt; types = DiagramType.findStartTypes(source.get(0).getString());</span>
 <span class="fc" id="L211">			final UmlSource umlSource = UmlSource.createWithRaw(source, types.contains(DiagramType.SEQUENCE),</span>
 					rawSource);
 
@@ -224,8 +224,8 @@ public class PSystemBuilder {
 <span class="fc" id="L224">			}</span>
 
 <span class="fc" id="L226">			final Collection&lt;DiagramType&gt; diagramTypes = umlSource.getDiagramTypes();</span>
-<span class="pc bpc" id="L227" title="1 of 2 branches missed.">			if (diagramTypes.contains(DiagramType.UNKNOWN))</span>
-<span class="nc" id="L228">				return new PSystemUnsupported(umlSource, preprocessing);</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">			if (diagramTypes.contains(DiagramType.UNKNOWN))</span>
+<span class="fc" id="L228">				return new PSystemUnsupported(umlSource, preprocessing);</span>
 
 <span class="fc" id="L230">			final List&lt;PSystemError&gt; errors = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L231" title="All 2 branches covered.">			for (PSystemFactory systemFactory : factories) {</span>
@@ -256,7 +256,7 @@ public class PSystemBuilder {
 <span class="fc" id="L256">			return result;</span>
 		} finally {
 
-<span class="pc bpc" id="L259" title="1 of 4 branches missed.">			if (result != null &amp;&amp; GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS)) {</span>
+<span class="fc bfc" id="L259" title="All 4 branches covered.">			if (result != null &amp;&amp; GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS)) {</span>
 <span class="fc" id="L260">				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());</span>
 			}
 <span class="fc" id="L262">			Log.info(() -&gt; &quot;Compilation duration &quot; + (System.currentTimeMillis() - now));</span>
@@ -265,7 +265,7 @@ public class PSystemBuilder {
 	}
 
 	private boolean isOk(Diagram ps) {
-<span class="fc bfc" id="L268" title="All 4 branches covered.">		if (ps == null || ps instanceof PSystemError)</span>
+<span class="pc bpc" id="L268" title="1 of 6 branches missed.">		if (ps == null || ps instanceof PSystemError || ps instanceof PSystemUnsupported)</span>
 <span class="fc" id="L269">			return false;</span>
 
 <span class="fc" id="L271">		return true;</span>

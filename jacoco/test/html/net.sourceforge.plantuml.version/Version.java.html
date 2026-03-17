@@ -49,8 +49,8 @@ import net.sourceforge.plantuml.utils.SignatureUtils;
 	}
 
 	public static String fullDescription() {
-<span class="nc" id="L52">		return &quot;PlantUML version &quot; + Version.versionString() + &quot; / &quot; + CompilationInfo.COMMIT + &quot; [&quot;</span>
-<span class="nc" id="L53">				+ Version.compileTimeString() + &quot;]&quot;;</span>
+<span class="fc" id="L52">		return &quot;PlantUML version &quot; + Version.versionString() + &quot; / &quot; + CompilationInfo.COMMIT + &quot; [&quot;</span>
+<span class="fc" id="L53">				+ Version.compileTimeString() + &quot;]&quot;;</span>
 	}
 
 	public static String versionString(int size) {
@@ -84,8 +84,8 @@ import net.sourceforge.plantuml.utils.SignatureUtils;
 		if (CompilationInfo.COMPILE_TIMESTAMP == 0L)
 			return &quot;Unknown compile time&quot;;
 
-<span class="nc" id="L87">		return Instant.ofEpochMilli(CompilationInfo.COMPILE_TIMESTAMP).atZone(ZoneOffset.UTC)</span>
-<span class="nc" id="L88">				.format(DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss 'UTC'&quot;));</span>
+<span class="fc" id="L87">		return Instant.ofEpochMilli(CompilationInfo.COMPILE_TIMESTAMP).atZone(ZoneOffset.UTC)</span>
+<span class="fc" id="L88">				.format(DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss 'UTC'&quot;));</span>
 	}
 
 	// ::comment when __TEAVM__

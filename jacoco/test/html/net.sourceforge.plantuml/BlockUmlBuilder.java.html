@@ -98,11 +98,11 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 <span class="fc" id="L98">			boolean paused = false;</span>
 
 <span class="fc bfc" id="L100" title="All 2 branches covered.">			while ((s = includer.readLine()) != null) {</span>
-<span class="fc bfc" id="L101" title="All 2 branches covered.">				if (StartUtils.isArobaseStartDiagram(s.getString())) {</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">				if (StartUtils.isStartDirective(s.getString())) {</span>
 <span class="fc" id="L102">					current = new ArrayList&lt;&gt;();</span>
 <span class="fc" id="L103">					paused = false;</span>
 				}
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">				if (StartUtils.isArobasePauseDiagram(s.getString())) {</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">				if (StartUtils.isPauseDirective(s.getString())) {</span>
 <span class="nc" id="L106">					paused = true;</span>
 <span class="nc" id="L107">					reader.setPaused(true);</span>
 				}
@@ -119,11 +119,11 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 
 				}
 
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">				if (StartUtils.isArobaseUnpauseDiagram(s.getString())) {</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">				if (StartUtils.isUnpauseDirective(s.getString())) {</span>
 <span class="nc" id="L123">					paused = false;</span>
 <span class="nc" id="L124">					reader.setPaused(false);</span>
 				}
-<span class="pc bpc" id="L126" title="1 of 4 branches missed.">				if (StartUtils.isArobaseEndDiagram(s.getString()) &amp;&amp; current != null) {</span>
+<span class="pc bpc" id="L126" title="1 of 4 branches missed.">				if (StartUtils.isEndDirective(s.getString()) &amp;&amp; current != null) {</span>
 <span class="pc bpc" id="L127" title="1 of 2 branches missed.">					if (paused)</span>
 <span class="nc" id="L128">						current.add(s);</span>
 

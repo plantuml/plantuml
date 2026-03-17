@@ -41,15 +41,15 @@ import java.io.IOException;
 	
 
 	// Legacy encoder
-<span class="fc" id="L44">	private final Transcoder oldOne = TranscoderImpl.utf8(new AsciiEncoder(), new ArobaseStringCompressor(),</span>
+<span class="fc" id="L44">	private final Transcoder oldOne = TranscoderImpl.utf8(new AsciiEncoder(), new DiagramSourceCompressor(),</span>
 			new CompressionHuffman());
-<span class="fc" id="L46">	private final Transcoder zlib = TranscoderImpl.utf8(new AsciiEncoder(), new ArobaseStringCompressor(),</span>
+<span class="fc" id="L46">	private final Transcoder zlib = TranscoderImpl.utf8(new AsciiEncoder(), new DiagramSourceCompressor(),</span>
 			new CompressionZlib());
-<span class="fc" id="L48">	private final Transcoder hexOnly = TranscoderImpl.utf8(new AsciiEncoderHex(), new ArobaseStringCompressor(),</span>
+<span class="fc" id="L48">	private final Transcoder hexOnly = TranscoderImpl.utf8(new AsciiEncoderHex(), new DiagramSourceCompressor(),</span>
 			new CompressionNone());
-<span class="fc" id="L50">	private final Transcoder zip = TranscoderImpl.utf8(new AsciiEncoder(), new ArobaseStringCompressor(),</span>
+<span class="fc" id="L50">	private final Transcoder zip = TranscoderImpl.utf8(new AsciiEncoder(), new DiagramSourceCompressor(),</span>
 			new CompressionZip());
-<span class="fc" id="L52">	private final Transcoder gzip = TranscoderImpl.utf8(new AsciiEncoder(), new ArobaseStringCompressor(),</span>
+<span class="fc" id="L52">	private final Transcoder gzip = TranscoderImpl.utf8(new AsciiEncoder(), new DiagramSourceCompressor(),</span>
 			new CompressionGZip());
 
 	public String decode(String code) throws NoPlantumlCompressionException {

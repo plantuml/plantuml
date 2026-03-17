@@ -49,8 +49,8 @@ import net.sourceforge.plantuml.text.StringLocated;
 	public static final String PAUSE_PATTERN = &quot;((?:\\W|\\&lt;[^&lt;&gt;]*\\&gt;)*)[@\\\\]unpause&quot;;
 	public static final String START_PATTERN = &quot;((?:[^\\w~]|\\&lt;[^&lt;&gt;]*\\&gt;)*)[@\\\\]start&quot;;
 
-	public static boolean isArobaseStartDiagram(String s) {
-<span class="fc bfc" id="L53" title="All 2 branches covered.">		return !DiagramType.getTypesFromArobaseStart(s).contains(DiagramType.UNKNOWN);</span>
+	public static boolean isStartDirective(String s) {
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		return DiagramType.findStartTypes(s).size() &gt; 0;</span>
 	}
 
 	public static String beforeStartUml(final String s) {
@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 <span class="fc" id="L58">		boolean inside = false;</span>
 
 <span class="fc bfc" id="L60" title="All 2 branches covered.">		for (int i = 0; i &lt; n; i++) {</span>
-<span class="fc bfc" id="L61" title="All 2 branches covered.">			if (startsWithSymbolAndAt(s, i, &quot;start&quot;))</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">			if (startsWithDirectiveKeyword(s, i, &quot;start&quot;))</span>
 <span class="fc" id="L62">				return s.substring(0, i);</span>
 
 <span class="fc" id="L64">			final char c = s.charAt(i);</span>
@@ -83,7 +83,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 <span class="pc bpc" id="L83" title="2 of 6 branches missed.">		return c == '~' || Character.isLetterOrDigit(c) || c == '_';</span>
 	}
 
-	private static boolean startsWithSymbolAndAt(String text, int from, String keyword) {
+	private static boolean startsWithDirectiveKeyword(String text, int from, String keyword) {
 <span class="fc" id="L87">		final int n = text.length();</span>
 <span class="fc" id="L88">		int i = from;</span>
 
@@ -107,16 +107,16 @@ import net.sourceforge.plantuml.text.StringLocated;
 <span class="fc" id="L107">		return false;</span>
 	}
 
-	public static boolean isArobaseEndDiagram(String s) {
-<span class="fc" id="L111">		return startsWithSymbolAndAt(s, 0, &quot;end&quot;);</span>
+	public static boolean isEndDirective(String s) {
+<span class="fc" id="L111">		return startsWithDirectiveKeyword(s, 0, &quot;end&quot;);</span>
 	}
 
-	public static boolean isArobasePauseDiagram(String s) {
-<span class="fc" id="L115">		return startsWithSymbolAndAt(s, 0, &quot;pause&quot;);</span>
+	public static boolean isPauseDirective(String s) {
+<span class="fc" id="L115">		return startsWithDirectiveKeyword(s, 0, &quot;pause&quot;);</span>
 	}
 
-	public static boolean isArobaseUnpauseDiagram(String s) {
-<span class="fc" id="L119">		return startsWithSymbolAndAt(s, 0, &quot;unpause&quot;);</span>
+	public static boolean isUnpauseDirective(String s) {
+<span class="fc" id="L119">		return startsWithDirectiveKeyword(s, 0, &quot;unpause&quot;);</span>
 	}
 
 	public static boolean isExit(CharSequence s) {

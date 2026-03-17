@@ -78,7 +78,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 <span class="fc" id="L79">		IteratorCounter2 it = source.iterator2();</span>
 <span class="fc" id="L80">		final StringLocated startLine = it.next();</span>
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (StartUtils.isArobaseStartDiagram(startLine.getString()) == false)</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (StartUtils.isStartDirective(startLine.getString()) == false)</span>
 <span class="nc" id="L82">			throw new UnsupportedOperationException();</span>
 
 <span class="fc bfc" id="L84" title="All 2 branches covered.">		if (source.isEmpty()) {</span>
@@ -94,7 +94,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 <span class="fc bfc" id="L94" title="All 2 branches covered.">		for (ParserPass pass : requiredPass) {</span>
 <span class="fc" id="L95">			sys.startingPass(pass);</span>
 <span class="pc bpc" id="L96" title="1 of 2 branches missed.">			while (it.hasNext()) {</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">				if (StartUtils.isArobaseEndDiagram(it.peek().getString())) {</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">				if (StartUtils.isEndDirective(it.peek().getString())) {</span>
 <span class="fc" id="L98">					it = source.iterator2();</span>
 <span class="fc" id="L99">					it.next();</span>
 					// For next pass

@@ -47,18 +47,18 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public abstract class PlainStringsDiagram extends UgDiagram {
 
-<span class="nc" id="L50">	protected PortableImage image = null;</span>
-<span class="nc" id="L51">	protected GraphicPosition imagePosition = null;</span>
+<span class="fc" id="L50">	protected PortableImage image = null;</span>
+<span class="fc" id="L51">	protected GraphicPosition imagePosition = null;</span>
 
-<span class="nc" id="L53">	protected final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L53">	protected final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
 
 	public PlainStringsDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L56">		super(source, preprocessing);</span>
-<span class="nc" id="L57">	}</span>
+<span class="fc" id="L56">		super(source, preprocessing);</span>
+<span class="fc" id="L57">	}</span>
 
 	@Override
 	public final TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L61">		return createBlackOnWhite(strings, image, imagePosition);</span>
+<span class="fc" id="L61">		return createBlackOnWhite(strings, image, imagePosition);</span>
 	}
 
 }

@@ -65,7 +65,7 @@ public class DiagramExtractor implements ReadLine {
 <span class="fc" id="L65">		StringLocated s = null;</span>
 		try {
 <span class="pc bpc" id="L67" title="1 of 2 branches missed.">			while ((s = raw.readLine()) != null) {</span>
-<span class="pc bpc" id="L68" title="2 of 4 branches missed.">				if (StartUtils.isArobaseStartDiagram(s.getString()) &amp;&amp; checkUid(uid, s)) {</span>
+<span class="pc bpc" id="L68" title="2 of 4 branches missed.">				if (StartUtils.isStartDirective(s.getString()) &amp;&amp; checkUid(uid, s)) {</span>
 <span class="pc bpc" id="L69" title="1 of 2 branches missed.">					if (bloc == 0)</span>
 <span class="fc" id="L70">						return;</span>
 <span class="nc" id="L71">					bloc--;</span>
@@ -93,7 +93,7 @@ public class DiagramExtractor implements ReadLine {
 <span class="nc" id="L93">			return null;</span>
 
 <span class="fc" id="L95">		final StringLocated result = raw.readLine();</span>
-<span class="pc bpc" id="L96" title="1 of 4 branches missed.">		if (result != null &amp;&amp; StartUtils.isArobaseEndDiagram(result.getString())) {</span>
+<span class="pc bpc" id="L96" title="1 of 4 branches missed.">		if (result != null &amp;&amp; StartUtils.isEndDirective(result.getString())) {</span>
 <span class="fc" id="L97">			finished = true;</span>
 <span class="fc" id="L98">			return null;</span>
 		}

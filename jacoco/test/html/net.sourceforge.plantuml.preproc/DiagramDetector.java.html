@@ -102,7 +102,7 @@ import net.sourceforge.plantuml.utils.StartUtils;
 		try {
 <span class="fc" id="L103">			StringLocated s = null;</span>
 <span class="fc bfc" id="L104" title="All 2 branches covered.">			while ((s = r.readLine()) != null)</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">				if (StartUtils.isArobaseStartDiagram(s.getString()))</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">				if (StartUtils.isStartDirective(s.getString()))</span>
 <span class="fc" id="L106">					return true;</span>
 
 		} finally {

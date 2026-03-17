@@ -144,7 +144,7 @@ final public class UmlSource {
 	 * @return the type of the diagram.
 	 */
 	public Collection&lt;DiagramType&gt; getDiagramTypes() {
-<span class="fc" id="L147">		return DiagramType.getTypesFromArobaseStart(source.get(0).getString());</span>
+<span class="fc" id="L147">		return DiagramType.findStartTypes(source.get(0).getString());</span>
 	}
 
 	/**
@@ -227,9 +227,9 @@ final public class UmlSource {
 <span class="fc bfc" id="L227" title="All 2 branches covered.">		for (StringLocated sl : source) {</span>
 <span class="fc" id="L228">			final String line = sl.getString();</span>
 
-<span class="fc bfc" id="L230" title="All 2 branches covered.">			if (StartUtils.isArobaseStartDiagram(line))</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">			if (StartUtils.isStartDirective(line))</span>
 <span class="fc" id="L231">				continue;</span>
-<span class="fc bfc" id="L232" title="All 2 branches covered.">			if (StartUtils.isArobaseEndDiagram(line))</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">			if (StartUtils.isEndDirective(line))</span>
 <span class="fc" id="L233">				continue;</span>
 <span class="pc bpc" id="L234" title="1 of 2 branches missed.">			if (COMMENT_LINE.matcher(line).matches())</span>
 <span class="nc" id="L235">				continue;</span>

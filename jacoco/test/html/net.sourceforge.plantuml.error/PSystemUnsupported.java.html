@@ -51,25 +51,25 @@ import net.sourceforge.plantuml.version.Version;
 
 public class PSystemUnsupported extends UgDiagram {
 
-<span class="nc" id="L54">	private final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L54">	private final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
 
 	public PSystemUnsupported(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L57">		super(source, preprocessing);</span>
-<span class="nc" id="L58">		strings.add(&quot;&lt;b&gt;Diagram not supported by this release of PlantUML&quot;);</span>
+<span class="fc" id="L57">		super(source, preprocessing);</span>
+<span class="fc" id="L58">		strings.add(&quot;&lt;b&gt;Diagram not supported by this release of PlantUML&quot;);</span>
 
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L61">			strings.add(Version.fullDescription());</span>
-<span class="nc" id="L62">			strings.add(&quot;License &quot; + new License().toString());</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L61">			strings.add(Version.fullDescription());</span>
+<span class="fc" id="L62">			strings.add(&quot;License &quot; + new License().toString());</span>
 		}
-<span class="nc" id="L64">	}</span>
+<span class="fc" id="L64">	}</span>
 
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception {
-<span class="nc" id="L68">		return GraphicStrings.createBlackOnWhite(strings);</span>
+<span class="fc" id="L68">		return GraphicStrings.createBlackOnWhite(strings);</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L72">		return new DiagramDescription(&quot;(Unsupported)&quot;);</span>
+<span class="fc" id="L72">		return new DiagramDescription(&quot;(Unsupported)&quot;);</span>
 	}
 
 }

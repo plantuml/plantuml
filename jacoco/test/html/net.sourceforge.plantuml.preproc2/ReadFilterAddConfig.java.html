@@ -74,7 +74,7 @@ public class ReadFilterAddConfig implements ReadFilter {
 					}
 				}
 <span class="fc" id="L76">				result = raw.readLine();</span>
-<span class="fc bfc" id="L77" title="All 6 branches covered.">				if (result != null &amp;&amp; StartUtils.isArobaseStartDiagram(result.getString()) &amp;&amp; config.size() &gt; 0) {</span>
+<span class="fc bfc" id="L77" title="All 6 branches covered.">				if (result != null &amp;&amp; StartUtils.isStartDirective(result.getString()) &amp;&amp; config.size() &gt; 0) {</span>
 <span class="fc" id="L78">					inserted = new ReadFilterQuoteComment().applyFilter(new ReadLineList(config, result.getLocation()));</span>
 				}
 <span class="fc" id="L80">				return result;</span>

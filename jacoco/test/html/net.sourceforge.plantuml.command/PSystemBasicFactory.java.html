@@ -75,7 +75,7 @@ public abstract class PSystemBasicFactory&lt;P extends Diagram&gt; extends PSyst
 <span class="nc" id="L75">				continue;</span>
 
 <span class="nc" id="L77">			first = false;</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (StartUtils.isArobaseEndDiagram(s.getString())) {</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (StartUtils.isEndDirective(s.getString())) {</span>
 <span class="nc bnc" id="L79" title="All 4 branches missed.">				if (source.getTotalLineCount() == 2 &amp;&amp; source.isStartDef() == false)</span>
 <span class="nc" id="L80">					return buildEmptyError(source, s.getLocation(), it.getTrace(), preprocessing);</span>
 
