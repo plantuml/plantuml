@@ -68,7 +68,7 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 <span class="fc" id="L68">				return null;</span>
 
 <span class="fc" id="L70">			final ExecutionContextForeach foreach = memory.peekForeach();</span>
-<span class="pc bpc" id="L71" title="3 of 4 branches missed.">			if (foreach != null &amp;&amp; foreach.isSkipMe()) {</span>
+<span class="pc bpc" id="L71" title="1 of 4 branches missed.">			if (foreach != null &amp;&amp; foreach.isSkipMe()) {</span>
 <span class="nc bnc" id="L72" title="All 2 branches missed.">				if (result.getType() == TLineType.FOREACH) {</span>
 <span class="nc" id="L73">					level++;</span>
 <span class="nc bnc" id="L74" title="All 2 branches missed.">				} else if (result.getType() == TLineType.ENDFOREACH) {</span>
@@ -82,25 +82,25 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 <span class="nc" id="L82">				continue;</span>
 			}
 
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">			if (result.getType() == TLineType.FOREACH) {</span>
-<span class="nc" id="L86">				logs.add(result);</span>
-<span class="nc" id="L87">				executeForeach(memory, result.getTrimmed());</span>
-<span class="nc" id="L88">				next();</span>
-<span class="nc" id="L89">				continue;</span>
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">			} else if (result.getType() == TLineType.ENDFOREACH) {</span>
-<span class="nc" id="L91">				logs.add(result);</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">				if (foreach == null)</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">			if (result.getType() == TLineType.FOREACH) {</span>
+<span class="fc" id="L86">				logs.add(result);</span>
+<span class="fc" id="L87">				executeForeach(memory, result.getTrimmed());</span>
+<span class="fc" id="L88">				next();</span>
+<span class="fc" id="L89">				continue;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">			} else if (result.getType() == TLineType.ENDFOREACH) {</span>
+<span class="fc" id="L91">				logs.add(result);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">				if (foreach == null)</span>
 <span class="nc" id="L93">					throw new EaterException(&quot;No foreach related to this endforeach&quot;, result);</span>
 
-<span class="nc" id="L95">				foreach.inc();</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">				if (foreach.isSkipMe()) {</span>
-<span class="nc" id="L97">					memory.pollForeach();</span>
+<span class="fc" id="L95">				foreach.inc();</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">				if (foreach.isSkipMe()) {</span>
+<span class="fc" id="L97">					memory.pollForeach();</span>
 				} else {
-<span class="nc" id="L99">					setLoopVariable(memory, foreach, result);</span>
-<span class="nc" id="L100">					source.jumpToCodePosition(foreach.getStartForeach(), result);</span>
+<span class="fc" id="L99">					setLoopVariable(memory, foreach, result);</span>
+<span class="fc" id="L100">					source.jumpToCodePosition(foreach.getStartForeach(), result);</span>
 				}
-<span class="nc" id="L102">				next();</span>
-<span class="nc" id="L103">				continue;</span>
+<span class="fc" id="L102">				next();</span>
+<span class="fc" id="L103">				continue;</span>
 			}
 
 <span class="fc" id="L106">			return result;</span>
@@ -108,23 +108,23 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 	}
 
 	private void executeForeach(TMemory memory, StringLocated s) throws EaterException {
-<span class="nc" id="L111">		final EaterForeach condition = new EaterForeach(s);</span>
-<span class="nc" id="L112">		condition.analyze(context, memory);</span>
-<span class="nc" id="L113">		final ExecutionContextForeach foreach = ExecutionContextForeach.fromValue(condition.getVarname(),</span>
-<span class="nc" id="L114">				condition.getJsonValue(), source.getCodePosition());</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (condition.isSkip())</span>
+<span class="fc" id="L111">		final EaterForeach condition = new EaterForeach(s);</span>
+<span class="fc" id="L112">		condition.analyze(context, memory);</span>
+<span class="fc" id="L113">		final ExecutionContextForeach foreach = ExecutionContextForeach.fromValue(condition.getVarname(),</span>
+<span class="fc" id="L114">				condition.getJsonValue(), source.getCodePosition());</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (condition.isSkip())</span>
 <span class="nc" id="L116">			foreach.skipMeNow();</span>
 		else
-<span class="nc" id="L118">			setLoopVariable(memory, foreach, s);</span>
+<span class="fc" id="L118">			setLoopVariable(memory, foreach, s);</span>
 
-<span class="nc" id="L120">		memory.addForeach(foreach);</span>
-<span class="nc" id="L121">	}</span>
+<span class="fc" id="L120">		memory.addForeach(foreach);</span>
+<span class="fc" id="L121">	}</span>
 
 	private void setLoopVariable(TMemory memory, ExecutionContextForeach foreach, StringLocated position)
 			throws EaterException {
-<span class="nc" id="L125">		final JsonValue first = foreach.currentValue();</span>
-<span class="nc" id="L126">		memory.putVariable(foreach.getVarname(), TValue.fromJson(first), TVariableScope.GLOBAL, position);</span>
-<span class="nc" id="L127">	}</span>
+<span class="fc" id="L125">		final JsonValue first = foreach.currentValue();</span>
+<span class="fc" id="L126">		memory.putVariable(foreach.getVarname(), TValue.fromJson(first), TVariableScope.GLOBAL, position);</span>
+<span class="fc" id="L127">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

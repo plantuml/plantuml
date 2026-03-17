@@ -134,25 +134,25 @@ package net.sourceforge.plantuml.asciiart;
 			{ 0xE0100, 0xE01EF } };
 
 	static boolean bisearch(int ucs) {
-<span class="nc" id="L137">		int min = 0;</span>
+<span class="fc" id="L137">		int min = 0;</span>
 		int mid;
-<span class="nc" id="L139">		int max = COMBINING.length - 1;</span>
+<span class="fc" id="L139">		int max = COMBINING.length - 1;</span>
 
-<span class="nc bnc" id="L141" title="All 4 branches missed.">		if (ucs &lt; COMBINING[0][0] || ucs &gt; COMBINING[max][1]) {</span>
+<span class="pc bpc" id="L141" title="2 of 4 branches missed.">		if (ucs &lt; COMBINING[0][0] || ucs &gt; COMBINING[max][1]) {</span>
 <span class="nc" id="L142">			return false;</span>
 		}
-<span class="nc bnc" id="L144" title="All 2 branches missed.">		while (max &gt;= min) {</span>
-<span class="nc" id="L145">			mid = (min + max) / 2;</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">			if (ucs &gt; COMBINING[mid][1]) {</span>
-<span class="nc" id="L147">				min = mid + 1;</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">			} else if (ucs &lt; COMBINING[mid][0]) {</span>
-<span class="nc" id="L149">				max = mid - 1;</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		while (max &gt;= min) {</span>
+<span class="fc" id="L145">			mid = (min + max) / 2;</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">			if (ucs &gt; COMBINING[mid][1]) {</span>
+<span class="fc" id="L147">				min = mid + 1;</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">			} else if (ucs &lt; COMBINING[mid][0]) {</span>
+<span class="fc" id="L149">				max = mid - 1;</span>
 			} else {
 <span class="nc" id="L151">				return true;</span>
 			}
 		}
 
-<span class="nc" id="L155">		return false;</span>
+<span class="fc" id="L155">		return false;</span>
 	}
 
 	/**
@@ -189,20 +189,20 @@ package net.sourceforge.plantuml.asciiart;
 <span class="pc bpc" id="L189" title="1 of 2 branches missed.">		if (codePoint == 0) {</span>
 <span class="nc" id="L190">			return 0;</span>
 		}
-<span class="pc bpc" id="L192" title="4 of 6 branches missed.">		if (codePoint &lt; 32 || (codePoint &gt;= 0x7f &amp;&amp; codePoint &lt; 0xa0)) {</span>
+<span class="pc bpc" id="L192" title="2 of 6 branches missed.">		if (codePoint &lt; 32 || (codePoint &gt;= 0x7f &amp;&amp; codePoint &lt; 0xa0)) {</span>
 <span class="nc" id="L193">			return -1;</span>
 		}
 		// Added by Arnaud : Usual 8 bit char
-<span class="pc bpc" id="L196" title="1 of 2 branches missed.">		if (codePoint &lt; 127) {</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">		if (codePoint &lt; 127) {</span>
 <span class="fc" id="L197">			return 1;</span>
 		}
 		// binary search in table of non-spacing characters
-<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (bisearch(codePoint)) {</span>
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">		if (bisearch(codePoint)) {</span>
 <span class="nc" id="L201">			return 0;</span>
 		}
 
 		// if we arrive here, ucs is not a combining or C0/C1 control character
-<span class="nc bnc" id="L205" title="All 46 branches missed.">		return 1 + ((codePoint &gt;= 0x1100 &amp;&amp; (codePoint &lt;= 0x115f || // Hangul Jamo init. consonants</span>
+<span class="pc bpc" id="L205" title="33 of 46 branches missed.">		return 1 + ((codePoint &gt;= 0x1100 &amp;&amp; (codePoint &lt;= 0x115f || // Hangul Jamo init. consonants</span>
 				codePoint == 0x2329 || codePoint == 0x232a
 				|| (codePoint &gt;= 0x2e80 &amp;&amp; codePoint &lt;= 0xa4cf &amp;&amp; codePoint != 0x303f) || // CJK ... Yi
 				(codePoint &gt;= 0xac00 &amp;&amp; codePoint &lt;= 0xd7a3) || // Hangul Syllables
@@ -211,7 +211,7 @@ package net.sourceforge.plantuml.asciiart;
 				(codePoint &gt;= 0xfe30 &amp;&amp; codePoint &lt;= 0xfe6f) || // CJK Compatibility Forms
 				(codePoint &gt;= 0xff00 &amp;&amp; codePoint &lt;= 0xff60) || // Fullwidth Forms
 				(codePoint &gt;= 0xffe0 &amp;&amp; codePoint &lt;= 0xffe6) || (codePoint &gt;= 0x20000 &amp;&amp; codePoint &lt;= 0x2fffd)
-<span class="nc" id="L214">				|| (codePoint &gt;= 0x30000 &amp;&amp; codePoint &lt;= 0x3fffd))) ? 1 : 0);</span>
+<span class="pc" id="L214">				|| (codePoint &gt;= 0x30000 &amp;&amp; codePoint &lt;= 0x3fffd))) ? 1 : 0);</span>
 	}
 
 	public static int length(CharSequence s) {

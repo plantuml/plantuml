@@ -167,8 +167,8 @@ public class Stdlib {
 			try {
 <span class="fc" id="L168">				final Stdlib result = new Stdlib(key);</span>
 <span class="fc" id="L169">				final String link = result.getLinkFromInfo();</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">				if (link != null)</span>
-<span class="nc" id="L171">					return retrieve(link);</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">				if (link != null)</span>
+<span class="fc" id="L171">					return retrieve(link);</span>
 
 <span class="fc" id="L173">				return result;</span>
 <span class="nc" id="L174">			} catch (IOException e) {</span>
@@ -201,12 +201,12 @@ public class Stdlib {
 //	}
 
 	public static Collection&lt;String&gt; getAllFolderNames() throws IOException {
-<span class="nc" id="L204">		final InputStream home = SpmChannel.inputStream(&quot;stdlib/home.spm&quot;);</span>
-<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (home == null)</span>
+<span class="fc" id="L204">		final InputStream home = SpmChannel.inputStream(&quot;stdlib/home.spm&quot;);</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">		if (home == null)</span>
 <span class="nc" id="L206">			throw new IOException(&quot;Cannot access to /stdlib files&quot;);</span>
 
-<span class="nc" id="L208">		try (final BufferedReader br = new BufferedReader(new InputStreamReader(home))) {</span>
-<span class="nc" id="L209">			return new TreeSet&lt;&gt;(br.lines().collect(Collectors.toList()));</span>
+<span class="fc" id="L208">		try (final BufferedReader br = new BufferedReader(new InputStreamReader(home))) {</span>
+<span class="fc" id="L209">			return new TreeSet&lt;&gt;(br.lines().collect(Collectors.toList()));</span>
 		}
 	}
 
@@ -318,35 +318,35 @@ public class Stdlib {
 
 	public static void addInfoVersion(List&lt;String&gt; strings, boolean details) {
 		try {
-<span class="nc bnc" id="L321" title="All 2 branches missed.">			for (String name : getAllFolderNames()) {</span>
-<span class="nc" id="L322">				final Stdlib folder = Stdlib.retrieve(name);</span>
-<span class="nc bnc" id="L323" title="All 2 branches missed.">				if (details) {</span>
-<span class="nc" id="L324">					strings.add(&quot;&lt;b&gt;&quot; + name);</span>
-<span class="nc" id="L325">					strings.add(&quot;Version &quot; + folder.getVersion());</span>
-<span class="nc" id="L326">					strings.add(&quot;Delivered by &quot; + folder.getSource());</span>
-<span class="nc" id="L327">					strings.add(&quot; &quot;);</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">			for (String name : getAllFolderNames()) {</span>
+<span class="fc" id="L322">				final Stdlib folder = Stdlib.retrieve(name);</span>
+<span class="pc bpc" id="L323" title="1 of 2 branches missed.">				if (details) {</span>
+<span class="fc" id="L324">					strings.add(&quot;&lt;b&gt;&quot; + name);</span>
+<span class="fc" id="L325">					strings.add(&quot;Version &quot; + folder.getVersion());</span>
+<span class="fc" id="L326">					strings.add(&quot;Delivered by &quot; + folder.getSource());</span>
+<span class="fc" id="L327">					strings.add(&quot; &quot;);</span>
 				} else {
 <span class="nc" id="L329">					strings.add(&quot;* &quot; + name + &quot; (Version &quot; + folder.getVersion() + &quot;)&quot;);</span>
 				}
-<span class="nc" id="L331">			}</span>
+<span class="fc" id="L331">			}</span>
 <span class="nc" id="L332">		} catch (IOException e) {</span>
 <span class="nc" id="L333">			Log.error(&quot;Error &quot; + e);</span>
 <span class="nc" id="L334">			return;</span>
-<span class="nc" id="L335">		}</span>
-<span class="nc" id="L336">	}</span>
+<span class="fc" id="L335">		}</span>
+<span class="fc" id="L336">	}</span>
 
 	public String getVersion() {
-<span class="nc" id="L339">		String result = info.get(&quot;VERSION&quot;);</span>
-<span class="nc bnc" id="L340" title="All 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L341">			result = info.get(&quot;version&quot;);</span>
-<span class="nc" id="L342">		return result;</span>
+<span class="fc" id="L339">		String result = info.get(&quot;VERSION&quot;);</span>
+<span class="pc bpc" id="L340" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="fc" id="L341">			result = info.get(&quot;version&quot;);</span>
+<span class="fc" id="L342">		return result;</span>
 	}
 
 	public String getSource() {
-<span class="nc" id="L346">		String result = info.get(&quot;SOURCE&quot;);</span>
-<span class="nc bnc" id="L347" title="All 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L348">			result = info.get(&quot;source&quot;);</span>
-<span class="nc" id="L349">		return result;</span>
+<span class="fc" id="L346">		String result = info.get(&quot;SOURCE&quot;);</span>
+<span class="pc bpc" id="L347" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="fc" id="L348">			result = info.get(&quot;source&quot;);</span>
+<span class="fc" id="L349">		return result;</span>
 	}
 
 	public Map&lt;String, String&gt; getMetadata() {
