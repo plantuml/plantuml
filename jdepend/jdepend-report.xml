@@ -18708,8 +18708,8 @@
 
         <Package name="net.sourceforge.plantuml.yaml.parser">
             <Stats>
-                <TotalClasses>8</TotalClasses>
-                <ConcreteClasses>8</ConcreteClasses>
+                <TotalClasses>7</TotalClasses>
+                <ConcreteClasses>7</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>3</Ce>
@@ -18723,9 +18723,6 @@
             </AbstractClasses>
 
             <ConcreteClasses>
-                <Class sourceFile="IndentationStack.java">
-                    net.sourceforge.plantuml.yaml.parser.IndentationStack
-                </Class>
                 <Class sourceFile="Monomorph.java">
                     net.sourceforge.plantuml.yaml.parser.Monomorph
                 </Class>

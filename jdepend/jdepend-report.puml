@@ -3553,7 +3553,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.yaml" --> "net.sourceforge.plantuml.yaml.parser"
 
 class "net.sourceforge.plantuml.yaml.parser" %lighten("red", 75) {
-Total Classes: 8
+Total Classes: 7
 }
 "net.sourceforge.plantuml.yaml.parser" --> "java.lang"
 "net.sourceforge.plantuml.yaml.parser" --> "java.util"
