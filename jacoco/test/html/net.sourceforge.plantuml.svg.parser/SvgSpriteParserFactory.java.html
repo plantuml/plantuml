@@ -60,7 +60,7 @@ public final class SvgSpriteParserFactory {
 	 * @return parser instance
 	 */
 	public static ISvgSpriteParser create(String svg) {
-<span class="nc" id="L63">		return create(Collections.singletonList(svg), null);</span>
+<span class="fc" id="L63">		return create(Collections.singletonList(svg), null);</span>
 	}
 
 	/**
@@ -110,7 +110,7 @@ public final class SvgSpriteParserFactory {
 	 * Resolve the parser selector value from the pragma, defaulting to {@code nano}.
 	 */
 	private static String getParserSelector(Pragma pragma) {
-<span class="pc bpc" id="L113" title="2 of 4 branches missed.">		if (pragma != null &amp;&amp; pragma.isDefine(PragmaKey.SVG_PARSER)) {</span>
+<span class="pc bpc" id="L113" title="1 of 4 branches missed.">		if (pragma != null &amp;&amp; pragma.isDefine(PragmaKey.SVG_PARSER)) {</span>
 <span class="fc" id="L114">			String value = pragma.getValue(PragmaKey.SVG_PARSER);</span>
 <span class="pc bpc" id="L115" title="1 of 2 branches missed.">			if (value == null)</span>
 <span class="nc" id="L116">				return &quot;nano&quot;;</span>
@@ -120,7 +120,7 @@ public final class SvgSpriteParserFactory {
 <span class="fc" id="L120">			return value;</span>
 		}
 
-<span class="nc" id="L123">		return &quot;nano&quot;;</span>
+<span class="fc" id="L123">		return &quot;nano&quot;;</span>
 	}
 
 }

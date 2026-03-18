@@ -91,8 +91,8 @@ public abstract class UgDiagram extends AbstractDiagram {
 <span class="fc" id="L91">		final long now = System.currentTimeMillis();</span>
 		try {
 <span class="fc" id="L93">			return getExporter(index, fileFormatOption).exportTo(os);</span>
-<span class="fc" id="L94">		} catch (Throwable e) {</span>
-<span class="fc" id="L95">			Logme.error(e);</span>
+<span class="nc" id="L94">		} catch (Throwable e) {</span>
+<span class="nc" id="L95">			Logme.error(e);</span>
 <span class="nc" id="L96">			final CrashReportHandler report = new CrashReportHandler(e, getMetadata(), getFlashData());</span>
 <span class="nc" id="L97">			report.anErrorHasOccured(e, getFlashData());</span>
 <span class="nc" id="L98">			report.addProperties();</span>

@@ -132,12 +132,11 @@ public class Obfuscate {
 
 	public void addException(String word) {
 <span class="fc" id="L134">		word = word.toLowerCase();</span>
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (words.contains(word)) {</span>
-<span class="nc" id="L136">			System.err.println(&quot;Obfuscate Warning:&quot; + word);</span>
-<span class="nc" id="L137">			words.remove(word);</span>
-		}
-<span class="fc" id="L139">		except.add(word);</span>
-<span class="fc" id="L140">	}</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (words.contains(word))</span>
+<span class="nc" id="L136">			throw new IllegalArgumentException(&quot;Obfuscate collision on word: &quot; + word);</span>
+
+<span class="fc" id="L138">		except.add(word);</span>
+<span class="fc" id="L139">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
