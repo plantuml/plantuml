@@ -97,7 +97,7 @@ final public class UmlSource {
 <span class="fc" id="L97">	}</span>
 
 	public static UmlSource create(List&lt;StringLocated&gt; source, boolean checkEndingBackslash) {
-<span class="fc" id="L100">		return createWithRaw(source, checkEndingBackslash, emptyArrayList());</span>
+<span class="fc" id="L100">		return createWithRaw(source, checkEndingBackslash, new ArrayList&lt;&gt;());</span>
 	}
 
 	/**
@@ -110,32 +110,28 @@ final public class UmlSource {
 	 */
 	public static UmlSource createWithRaw(List&lt;StringLocated&gt; source, boolean checkEndingBackslash,
 			List&lt;StringLocated&gt; rawSource) {
-<span class="fc" id="L113">		final UmlSource result = new UmlSource(emptyArrayList(), rawSource);</span>
+<span class="fc" id="L113">		final UmlSource result = new UmlSource(new ArrayList&lt;&gt;(), rawSource);</span>
 <span class="fc" id="L114">		result.loadInternal(source, checkEndingBackslash);</span>
 <span class="fc" id="L115">		return result;</span>
 	}
 
-	private static ArrayList&lt;StringLocated&gt; emptyArrayList() {
-<span class="fc" id="L119">		return new ArrayList&lt;&gt;();</span>
-	}
-
 	private void loadInternal(List&lt;StringLocated&gt; source, boolean checkEndingBackslash) {
-<span class="fc bfc" id="L123" title="All 2 branches covered.">		if (checkEndingBackslash) {</span>
-<span class="fc" id="L124">			final StringBuilder pending = new StringBuilder();</span>
-<span class="fc bfc" id="L125" title="All 2 branches covered.">			for (StringLocated cs : source) {</span>
-<span class="fc" id="L126">				final String s = cs.getString();</span>
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">				if (StringUtils.endsWithBackslash(s)) {</span>
-<span class="nc" id="L128">					pending.append(s, 0, s.length() - 1);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (checkEndingBackslash) {</span>
+<span class="fc" id="L120">			final StringBuilder pending = new StringBuilder();</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">			for (StringLocated cs : source) {</span>
+<span class="fc" id="L122">				final String s = cs.getString();</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">				if (StringUtils.endsWithBackslash(s)) {</span>
+<span class="nc" id="L124">					pending.append(s, 0, s.length() - 1);</span>
 				} else {
-<span class="fc" id="L130">					pending.append(s);</span>
-<span class="fc" id="L131">					this.source.add(new StringLocated(pending.toString(), cs.getLocation()));</span>
-<span class="fc" id="L132">					pending.setLength(0);</span>
+<span class="fc" id="L126">					pending.append(s);</span>
+<span class="fc" id="L127">					this.source.add(new StringLocated(pending.toString(), cs.getLocation()));</span>
+<span class="fc" id="L128">					pending.setLength(0);</span>
 				}
-<span class="fc" id="L134">			}</span>
-<span class="fc" id="L135">		} else {</span>
-<span class="fc" id="L136">			this.source.addAll(source);</span>
+<span class="fc" id="L130">			}</span>
+<span class="fc" id="L131">		} else {</span>
+<span class="fc" id="L132">			this.source.addAll(source);</span>
 		}
-<span class="fc" id="L138">	}</span>
+<span class="fc" id="L134">	}</span>
 
 	/**
 	 * Retrieve the type of the diagram. This is based on the first line
@@ -144,7 +140,7 @@ final public class UmlSource {
 	 * @return the type of the diagram.
 	 */
 	public Collection&lt;DiagramType&gt; getDiagramTypes() {
-<span class="fc" id="L147">		return DiagramType.findStartTypes(source.get(0).getString());</span>
+<span class="fc" id="L143">		return DiagramType.findStartTypes(source.get(0).getString());</span>
 	}
 
 	/**
@@ -153,7 +149,7 @@ final public class UmlSource {
 	 * @return a iterator that allow counting line number.
 	 */
 	public IteratorCounter2 iterator2() {
-<span class="fc" id="L156">		return new IteratorCounter2Impl(source);</span>
+<span class="fc" id="L152">		return new IteratorCounter2Impl(source);</span>
 	}
 
 //	public Iterator&lt;StringLocated&gt; iteratorRaw() {
@@ -166,7 +162,7 @@ final public class UmlSource {
 	 */
 	@Deprecated()
 	public String getPlainString() {
-<span class="nc" id="L169">		return getPlainString(&quot;\n&quot;);</span>
+<span class="nc" id="L165">		return getPlainString(&quot;\n&quot;);</span>
 	}
 
 	/**
@@ -175,44 +171,36 @@ final public class UmlSource {
 	 * @return the whole diagram source
 	 */
 	public String getPlainString(String separator) {
-<span class="fc" id="L178">		final StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L179" title="All 2 branches covered.">		for (StringLocated s : source) {</span>
-<span class="fc" id="L180">			sb.append(s.getString());</span>
-<span class="fc" id="L181">			sb.append(separator);</span>
-<span class="fc" id="L182">		}</span>
-<span class="fc" id="L183">		return sb.toString();</span>
+<span class="fc" id="L174">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">		for (StringLocated s : source) {</span>
+<span class="fc" id="L176">			sb.append(s.getString());</span>
+<span class="fc" id="L177">			sb.append(separator);</span>
+<span class="fc" id="L178">		}</span>
+<span class="fc" id="L179">		return sb.toString();</span>
 	}
 
 	public String getRawString(String separator) {
-<span class="fc" id="L187">		final StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L188" title="All 2 branches covered.">		for (StringLocated s : rawSource) {</span>
-<span class="fc" id="L189">			sb.append(s.getString());</span>
-<span class="fc" id="L190">			sb.append(separator);</span>
-<span class="fc" id="L191">		}</span>
-<span class="fc" id="L192">		return sb.toString();</span>
+<span class="fc" id="L183">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">		for (StringLocated s : rawSource) {</span>
+<span class="fc" id="L185">			sb.append(s.getString());</span>
+<span class="fc" id="L186">			sb.append(separator);</span>
+<span class="fc" id="L187">		}</span>
+<span class="fc" id="L188">		return sb.toString();</span>
 	}
 
 	public long seed() {
-<span class="fc" id="L196">		return StringUtils.seed(getPlainString(&quot;\n&quot;));</span>
-	}
-
-	private String getLine(LineLocation n) {
-<span class="nc bnc" id="L200" title="All 2 branches missed.">		for (StringLocated s : source)</span>
-<span class="nc bnc" id="L201" title="All 2 branches missed.">			if (s.getLocation().compareTo(n) == 0)</span>
-<span class="nc" id="L202">				return s.getString();</span>
-
-<span class="nc" id="L204">		return null;</span>
+<span class="fc" id="L192">		return StringUtils.seed(getPlainString(&quot;\n&quot;));</span>
 	}
 
 	/**
 	 * Return the number of line in the diagram.
 	 */
 	public int getTotalLineCount() {
-<span class="fc" id="L211">		return source.size();</span>
+<span class="fc" id="L199">		return source.size();</span>
 	}
 
 	public boolean getTotalLineCountLessThan5() {
-<span class="fc bfc" id="L215" title="All 2 branches covered.">		return getTotalLineCount() &lt; 5;</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		return getTotalLineCount() &lt; 5;</span>
 	}
 
 	/**
@@ -221,57 +209,57 @@ final public class UmlSource {
 	 *
 	 * @return &lt;code&gt;true&lt;/code&gt; if the diagram does not contain information.
 	 */
-<span class="fc" id="L224">	private static final Pattern COMMENT_LINE = Pattern.compile(&quot;\\s*'.*&quot;);</span>
+<span class="fc" id="L212">	private static final Pattern COMMENT_LINE = Pattern.compile(&quot;\\s*'.*&quot;);</span>
 
 	public boolean isEmpty() {
-<span class="fc bfc" id="L227" title="All 2 branches covered.">		for (StringLocated sl : source) {</span>
-<span class="fc" id="L228">			final String line = sl.getString();</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">		for (StringLocated sl : source) {</span>
+<span class="fc" id="L216">			final String line = sl.getString();</span>
 
-<span class="fc bfc" id="L230" title="All 2 branches covered.">			if (StartUtils.isStartDirective(line))</span>
-<span class="fc" id="L231">				continue;</span>
-<span class="fc bfc" id="L232" title="All 2 branches covered.">			if (StartUtils.isEndDirective(line))</span>
-<span class="fc" id="L233">				continue;</span>
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">			if (COMMENT_LINE.matcher(line).matches())</span>
-<span class="nc" id="L235">				continue;</span>
-<span class="fc bfc" id="L236" title="All 2 branches covered.">			if (StringUtils.trin(line).length() != 0)</span>
-<span class="fc" id="L237">				return false;</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">			if (StartUtils.isStartDirective(line))</span>
+<span class="fc" id="L219">				continue;</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">			if (StartUtils.isEndDirective(line))</span>
+<span class="fc" id="L221">				continue;</span>
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">			if (COMMENT_LINE.matcher(line).matches())</span>
+<span class="nc" id="L223">				continue;</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">			if (StringUtils.trin(line).length() != 0)</span>
+<span class="fc" id="L225">				return false;</span>
 
-<span class="fc" id="L239">		}</span>
-<span class="fc" id="L240">		return true;</span>
+<span class="fc" id="L227">		}</span>
+<span class="fc" id="L228">		return true;</span>
 	}
 
-<span class="fc" id="L243">	private static final Pattern2 TITLE = Pattern2.cmpile(&quot;^[%s]*title[%s]+(.+)$&quot;);</span>
+<span class="fc" id="L231">	private static final Pattern2 TITLE = Pattern2.cmpile(&quot;^[%s]*title[%s]+(.+)$&quot;);</span>
 
 	/**
 	 * Retrieve the title, if defined in the diagram source. Never return
 	 * &lt;code&gt;null&lt;/code&gt;.
 	 */
 	public Display getTitle() {
-<span class="fc bfc" id="L250" title="All 2 branches covered.">		for (StringLocated s : source) {</span>
-<span class="fc" id="L251">			final Matcher2 m = TITLE.matcher(s.getString());</span>
-<span class="fc" id="L252">			final boolean ok = m.matches();</span>
-<span class="pc bpc" id="L253" title="1 of 2 branches missed.">			if (ok)</span>
-<span class="nc" id="L254">				return Display.create(m.group(1));</span>
-<span class="fc" id="L255">		}</span>
-<span class="fc" id="L256">		return Display.empty();</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">		for (StringLocated s : source) {</span>
+<span class="fc" id="L239">			final Matcher2 m = TITLE.matcher(s.getString());</span>
+<span class="fc" id="L240">			final boolean ok = m.matches();</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">			if (ok)</span>
+<span class="nc" id="L242">				return Display.create(m.group(1));</span>
+<span class="fc" id="L243">		}</span>
+<span class="fc" id="L244">		return Display.empty();</span>
 	}
 
 	public boolean isStartDef() {
-<span class="nc" id="L260">		return source.get(0).getString().startsWith(&quot;@startdef&quot;);</span>
+<span class="nc" id="L248">		return source.get(0).getString().startsWith(&quot;@startdef&quot;);</span>
 	}
 
-<span class="fc" id="L263">	private static final Pattern ID = Pattern.compile(&quot;id=([\\w]+)\\b&quot;);</span>
+<span class="fc" id="L251">	private static final Pattern ID = Pattern.compile(&quot;id=([\\w]+)\\b&quot;);</span>
 
 	public String getId() {
-<span class="fc" id="L266">		final Matcher m = ID.matcher(source.get(0).getString());</span>
-<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (m.find())</span>
-<span class="nc" id="L268">			return m.group(1);</span>
+<span class="fc" id="L254">		final Matcher m = ID.matcher(source.get(0).getString());</span>
+<span class="pc bpc" id="L255" title="1 of 2 branches missed.">		if (m.find())</span>
+<span class="nc" id="L256">			return m.group(1);</span>
 
-<span class="fc" id="L270">		return null;</span>
+<span class="fc" id="L258">		return null;</span>
 	}
 
 	public PathSystem getPathSystem() {
-<span class="fc" id="L274">		return pathSystem;</span>
+<span class="fc" id="L262">		return pathSystem;</span>
 	}
 
 }

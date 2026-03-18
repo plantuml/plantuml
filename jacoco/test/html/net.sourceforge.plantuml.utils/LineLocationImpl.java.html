@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.utils;
 import java.util.Objects;
 
 public class LineLocationImpl implements LineLocation {
-	// ::remove file when __HAXE__
 
 	private final String desc;
 	private final int position;
@@ -46,48 +45,48 @@ public class LineLocationImpl implements LineLocation {
 
 	@Override
 	public String toString() {
-<span class="fc" id="L49">		return desc + &quot; : &quot; + position;</span>
+<span class="fc" id="L48">		return desc + &quot; : &quot; + position;</span>
 	}
 
 	public LineLocationImpl(String desc, LineLocation parent) {
-<span class="fc" id="L53">		this(desc, parent, -1);</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L52">		this(desc, parent, -1);</span>
+<span class="fc" id="L53">	}</span>
 
-<span class="fc" id="L56">	private LineLocationImpl(String desc, LineLocation parent, int position) {</span>
-<span class="fc" id="L57">		this.parent = parent;</span>
-<span class="fc" id="L58">		this.desc = Objects.requireNonNull(desc);</span>
-<span class="fc" id="L59">		this.position = position;</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L55">	private LineLocationImpl(String desc, LineLocation parent, int position) {</span>
+<span class="fc" id="L56">		this.parent = parent;</span>
+<span class="fc" id="L57">		this.desc = Objects.requireNonNull(desc);</span>
+<span class="fc" id="L58">		this.position = position;</span>
+<span class="fc" id="L59">	}</span>
 
 	public LineLocationImpl oneLineRead() {
-<span class="fc" id="L63">		return new LineLocationImpl(desc, parent, position + 1);</span>
+<span class="fc" id="L62">		return new LineLocationImpl(desc, parent, position + 1);</span>
 	}
 
 	public int getPosition() {
-<span class="fc" id="L67">		return position;</span>
+<span class="fc" id="L66">		return position;</span>
 	}
 
 	public String getDescription() {
-<span class="fc" id="L71">		return desc;</span>
+<span class="fc" id="L70">		return desc;</span>
 	}
 
 	public LineLocation getParent() {
-<span class="fc" id="L75">		return parent;</span>
+<span class="fc" id="L74">		return parent;</span>
 	}
 
 	private boolean isStandardLibrary() {
-<span class="nc" id="L79">		return desc.startsWith(&quot;&lt;&quot;);</span>
+<span class="nc" id="L78">		return desc.startsWith(&quot;&lt;&quot;);</span>
 	}
 
 	public int compareTo(LineLocation other) {
-<span class="nc" id="L83">		final LineLocationImpl other2 = (LineLocationImpl) other;</span>
-<span class="nc bnc" id="L84" title="All 4 branches missed.">		if (this.isStandardLibrary() &amp;&amp; other2.isStandardLibrary() == false) {</span>
-<span class="nc" id="L85">			return -1;</span>
+<span class="nc" id="L82">		final LineLocationImpl other2 = (LineLocationImpl) other;</span>
+<span class="nc bnc" id="L83" title="All 4 branches missed.">		if (this.isStandardLibrary() &amp;&amp; other2.isStandardLibrary() == false) {</span>
+<span class="nc" id="L84">			return -1;</span>
 		}
-<span class="nc bnc" id="L87" title="All 4 branches missed.">		if (this.isStandardLibrary() == false &amp;&amp; other2.isStandardLibrary()) {</span>
-<span class="nc" id="L88">			return 1;</span>
+<span class="nc bnc" id="L86" title="All 4 branches missed.">		if (this.isStandardLibrary() == false &amp;&amp; other2.isStandardLibrary()) {</span>
+<span class="nc" id="L87">			return 1;</span>
 		}
-<span class="nc" id="L90">		return this.position - other2.position;</span>
+<span class="nc" id="L89">		return this.position - other2.position;</span>
 	}
 
 }

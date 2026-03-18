@@ -103,7 +103,7 @@ public class GraphicStrings extends TextBlockMemoized implements IEntityImage {
 	}
 
 	public static TextBlock createBlackOnWhite(List&lt;String&gt; strings) {
-<span class="fc" id="L106">		return new GraphicStrings(strings, sansSerif12(TEXTCOLOR), HColors.WHITE, null, null, CreoleMode.FULL, false);</span>
+<span class="nc" id="L106">		return new GraphicStrings(strings, sansSerif12(TEXTCOLOR), HColors.WHITE, null, null, CreoleMode.FULL, false);</span>
 	}
 
 	public static TextBlock createBlackOnWhiteMonospaced(List&lt;String&gt; strings) {
@@ -161,9 +161,9 @@ public class GraphicStrings extends TextBlockMemoized implements IEntityImage {
 <span class="pc bpc" id="L161" title="1 of 2 branches missed.">			if (position == GraphicPosition.BOTTOM)</span>
 <span class="nc" id="L162">				ug.apply(new UTranslate((size.getWidth() - image.getWidth()) / 2, size.getHeight() - image.getHeight()))</span>
 <span class="nc" id="L163">						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));</span>
-<span class="fc bfc" id="L164" title="All 2 branches covered.">			else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT)</span>
-<span class="fc" id="L165">				ug.apply(new UTranslate(size.getWidth() - image.getWidth(), size.getHeight() - image.getHeight()))</span>
-<span class="fc" id="L166">						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">			else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT)</span>
+<span class="nc" id="L165">				ug.apply(new UTranslate(size.getWidth() - image.getWidth(), size.getHeight() - image.getHeight()))</span>
+<span class="nc" id="L166">						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));</span>
 <span class="pc bpc" id="L167" title="1 of 2 branches missed.">			else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT)</span>
 <span class="fc" id="L168">				ug.apply(new UTranslate(size.getWidth() - image.getWidth() - 1, 1))</span>
 <span class="fc" id="L169">						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));</span>
@@ -181,8 +181,8 @@ public class GraphicStrings extends TextBlockMemoized implements IEntityImage {
 <span class="fc bfc" id="L181" title="All 2 branches covered.">		if (image != null) {</span>
 <span class="pc bpc" id="L182" title="1 of 2 branches missed.">			if (position == GraphicPosition.BOTTOM)</span>
 <span class="nc" id="L183">				dim = new XDimension2D(dim.getWidth(), dim.getHeight() + image.getHeight());</span>
-<span class="fc bfc" id="L184" title="All 2 branches covered.">			else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT)</span>
-<span class="fc" id="L185">				dim = new XDimension2D(dim.getWidth() + imagePadding + image.getWidth(), dim.getHeight());</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">			else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT)</span>
+<span class="nc" id="L185">				dim = new XDimension2D(dim.getWidth() + imagePadding + image.getWidth(), dim.getHeight());</span>
 <span class="pc bpc" id="L186" title="1 of 2 branches missed.">			else if (position == GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT)</span>
 <span class="fc" id="L187">				dim = new XDimension2D(dim.getWidth() + imagePadding + image.getWidth(), dim.getHeight());</span>
 

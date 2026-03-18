@@ -62,12 +62,12 @@ public class VariableManager {
 <span class="fc" id="L62">		final TValue value = memory.getVariable(presentVariable);</span>
 <span class="fc" id="L63">		i += presentVariable.length() - 1;</span>
 <span class="fc bfc" id="L64" title="All 2 branches covered.">		if (value.isJson()) {</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">			if (value.toJson().isString()) {</span>
-<span class="fc" id="L66">				result.append(value.toJson().asString());</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">			} else if (value.toJson().isNumber()) {</span>
-<span class="fc" id="L68">				result.append(value.toJson().toString());</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">			if (value.toJson().isString()) {</span>
+<span class="nc" id="L66">				result.append(value.toJson().asString());</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">			} else if (value.toJson().isNumber()) {</span>
+<span class="nc" id="L68">				result.append(value.toJson().toString());</span>
 			} else {
-<span class="fc bfc" id="L70" title="All 2 branches covered.">				JsonValue jsonValue = (value.toJson().isArray()) ? (JsonArray) value.toJson()</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">				JsonValue jsonValue = (value.toJson().isArray()) ? (JsonArray) value.toJson()</span>
 <span class="fc" id="L71">						: (JsonObject) value.toJson();</span>
 <span class="fc" id="L72">				i++;</span>
 <span class="fc" id="L73">				i = replaceJson(jsonValue, str, i, result) - 1;</span>
@@ -95,46 +95,46 @@ public class VariableManager {
 <span class="fc" id="L95">					i++;</span>
 				}
 <span class="fc" id="L97">				jsonValue = ((JsonObject) jsonValue).get(fieldName.toString());</span>
-<span class="fc bfc" id="L98" title="All 2 branches covered.">			} else if (n == '[') {</span>
-<span class="fc" id="L99">				i++;</span>
-<span class="fc" id="L100">				final StringBuilder inBracket = new StringBuilder();</span>
-<span class="fc" id="L101">				int level = 0;</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">			} else if (n == '[') {</span>
+<span class="nc" id="L99">				i++;</span>
+<span class="nc" id="L100">				final StringBuilder inBracket = new StringBuilder();</span>
+<span class="nc" id="L101">				int level = 0;</span>
 				while (true) {
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">					if (str.charAt(i) == '[')</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">					if (str.charAt(i) == '[')</span>
 <span class="nc" id="L104">						level++;</span>
 
-<span class="fc bfc" id="L106" title="All 2 branches covered.">					if (str.charAt(i) == ']') {</span>
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">						if (level == 0)</span>
-<span class="fc" id="L108">							break;</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">					if (str.charAt(i) == ']') {</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">						if (level == 0)</span>
+<span class="nc" id="L108">							break;</span>
 <span class="nc" id="L109">						level--;</span>
 					}
-<span class="fc" id="L111">					inBracket.append(str.charAt(i));</span>
-<span class="fc" id="L112">					i++;</span>
+<span class="nc" id="L111">					inBracket.append(str.charAt(i));</span>
+<span class="nc" id="L112">					i++;</span>
 				}
-<span class="fc" id="L114">				final String nbString = context.applyFunctionsAndVariables(memory,</span>
-<span class="fc" id="L115">						new StringLocated(inBracket.toString(), location.getLocation()));</span>
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">				if (jsonValue instanceof JsonArray) {</span>
-<span class="fc" id="L117">					final int nb = Integer.parseInt(nbString);</span>
-<span class="fc" id="L118">					jsonValue = ((JsonArray) jsonValue).get(nb);</span>
-<span class="pc bnc" id="L119" title="All 2 branches missed.">				} else if (jsonValue instanceof JsonObject) {</span>
+<span class="nc" id="L114">				final String nbString = context.applyFunctionsAndVariables(memory,</span>
+<span class="nc" id="L115">						new StringLocated(inBracket.toString(), location.getLocation()));</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">				if (jsonValue instanceof JsonArray) {</span>
+<span class="nc" id="L117">					final int nb = Integer.parseInt(nbString);</span>
+<span class="nc" id="L118">					jsonValue = ((JsonArray) jsonValue).get(nb);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">				} else if (jsonValue instanceof JsonObject) {</span>
 <span class="nc" id="L120">					jsonValue = ((JsonObject) jsonValue).get(nbString);</span>
 				} else {
 <span class="nc" id="L122">					throw new EaterException(&quot;Major parsing error&quot;, location);</span>
 				}
 
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">				if (jsonValue == null)</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">				if (jsonValue == null)</span>
 <span class="nc" id="L126">					throw new EaterException(&quot;Data parsing error&quot;, location);</span>
 
-<span class="fc" id="L128">				i++;</span>
+<span class="nc" id="L128">				i++;</span>
 			} else {
 				break;
 			}
 <span class="fc" id="L132">		}</span>
 <span class="fc bfc" id="L133" title="All 2 branches covered.">		if (jsonValue != null) {</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">			if (jsonValue.isString())</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">			if (jsonValue.isString())</span>
 <span class="fc" id="L135">				result.append(jsonValue.asString());</span>
 			else
-<span class="fc" id="L137">				result.append(jsonValue.toString());</span>
+<span class="nc" id="L137">				result.append(jsonValue.toString());</span>
 		}
 <span class="fc" id="L139">		return i;</span>
 	}

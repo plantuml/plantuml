@@ -48,14 +48,14 @@ public class ExecutionContextForeach {
 	private boolean skipMe;
 	private int currentIndex;
 
-<span class="fc" id="L51">	private ExecutionContextForeach(String varname, JsonValue jsonValue, CodePosition codePosition) {</span>
-<span class="fc" id="L52">		this.varname = varname;</span>
-<span class="fc" id="L53">		this.jsonValue = jsonValue;</span>
-<span class="fc" id="L54">		this.codePosition = codePosition;</span>
-<span class="fc" id="L55">	}</span>
+<span class="nc" id="L51">	private ExecutionContextForeach(String varname, JsonValue jsonValue, CodePosition codePosition) {</span>
+<span class="nc" id="L52">		this.varname = varname;</span>
+<span class="nc" id="L53">		this.jsonValue = jsonValue;</span>
+<span class="nc" id="L54">		this.codePosition = codePosition;</span>
+<span class="nc" id="L55">	}</span>
 
 	public static ExecutionContextForeach fromValue(String varname, JsonValue jsonValue, CodePosition codePosition) {
-<span class="fc" id="L58">		return new ExecutionContextForeach(varname, jsonValue, codePosition);</span>
+<span class="nc" id="L58">		return new ExecutionContextForeach(varname, jsonValue, codePosition);</span>
 	}
 
 	public void skipMeNow() {
@@ -63,16 +63,16 @@ public class ExecutionContextForeach {
 <span class="nc" id="L63">	}</span>
 
 	public final boolean isSkipMe() {
-<span class="fc" id="L66">		return skipMe;</span>
+<span class="nc" id="L66">		return skipMe;</span>
 	}
 
 	public CodePosition getStartForeach() {
-<span class="fc" id="L70">		return codePosition;</span>
+<span class="nc" id="L70">		return codePosition;</span>
 	}
 
 	public JsonValue currentValue() {
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (jsonValue instanceof JsonArray)</span>
-<span class="fc" id="L75">			return ((JsonArray) jsonValue).get(currentIndex);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (jsonValue instanceof JsonArray)</span>
+<span class="nc" id="L75">			return ((JsonArray) jsonValue).get(currentIndex);</span>
 <span class="nc bnc" id="L76" title="All 2 branches missed.">		if (jsonValue instanceof JsonObject) {</span>
 <span class="nc" id="L77">			final JsonObject tmp = (JsonObject) jsonValue;</span>
 <span class="nc" id="L78">			return Json.value(tmp.names().get(currentIndex));</span>
@@ -81,14 +81,14 @@ public class ExecutionContextForeach {
 	}
 
 	public final void inc() {
-<span class="fc" id="L84">		this.currentIndex++;</span>
-<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (currentIndex &gt;= EaterForeach.size(jsonValue))</span>
-<span class="fc" id="L86">			this.skipMe = true;</span>
+<span class="nc" id="L84">		this.currentIndex++;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (currentIndex &gt;= EaterForeach.size(jsonValue))</span>
+<span class="nc" id="L86">			this.skipMe = true;</span>
 
-<span class="fc" id="L88">	}</span>
+<span class="nc" id="L88">	}</span>
 
 	public final String getVarname() {
-<span class="fc" id="L91">		return varname;</span>
+<span class="nc" id="L91">		return varname;</span>
 	}
 
 	public final JsonValue getJsonValue() {
