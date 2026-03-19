@@ -224,6 +224,52 @@ jobs:
             echo "::warning::$skipped test(s) were skipped"
           fi
 
+      - name: Vega Test Summary
+        if: needs.workflow_config.outputs.do_test_linux == 'true' && always()
+        run: |
+          VEGA_JSON="src/test/resources/vega/vega.json"
+          if [ ! -f "$VEGA_JSON" ]; then
+            echo "::warning::vega.json not found, skipping Vega summary"
+            exit 0
+          fi
+          # Parse summary from vega.json
+          total=$(python3 -c "import json; d=json.load(open('$VEGA_JSON')); print(d['summary']['total'])")
+          pass=$(python3 -c "import json; d=json.load(open('$VEGA_JSON')); print(d['summary']['passed'])")
+          fail=$(python3 -c "import json; d=json.load(open('$VEGA_JSON')); print(d['summary']['failed'])")
+          skip=$(python3 -c "import json; d=json.load(open('$VEGA_JSON')); print(d['summary']['skipped'])")
+          echo "## Vega Test Results"                              >> $GITHUB_STEP_SUMMARY
+          echo "| Metric   | Count |"                              >> $GITHUB_STEP_SUMMARY
+          echo "|----------|------:|"                              >> $GITHUB_STEP_SUMMARY
+          echo "| Total    | $total |"                             >> $GITHUB_STEP_SUMMARY
+          echo "| :white_check_mark: Passed  | $pass |"            >> $GITHUB_STEP_SUMMARY
+          echo "| :fast_forward: Skipped | $skip |"                >> $GITHUB_STEP_SUMMARY
+          echo "| :x: Failed  | $fail |"                           >> $GITHUB_STEP_SUMMARY
+          # List skipped tests
+          if [ "$skip" -gt 0 ]; then
+            echo ""                                                >> $GITHUB_STEP_SUMMARY
+            echo "### Skipped Vega Tests"                          >> $GITHUB_STEP_SUMMARY
+            python3 -c "
+import json
+d = json.load(open('$VEGA_JSON'))
+for t in d['tests']:
+    if t['status'] == 'skipped':
+        print('- \`' + t['file'] + '\`')
+" >> $GITHUB_STEP_SUMMARY
+          fi
+          # List failed tests
+          if [ "$fail" -gt 0 ]; then
+            echo ""                                                >> $GITHUB_STEP_SUMMARY
+            echo "### Failed Vega Tests"                           >> $GITHUB_STEP_SUMMARY
+            python3 -c "
+import json
+d = json.load(open('$VEGA_JSON'))
+for t in d['tests']:
+    if t['status'] == 'fail':
+        msg = t.get('message', '')
+        print('- \`' + t['file'] + '\` — ' + msg)
+" >> $GITHUB_STEP_SUMMARY
+          fi
+
       - name: Upload test reports
         uses: actions/upload-artifact@v7
         if: needs.workflow_config.outputs.do_test_linux == 'true'
