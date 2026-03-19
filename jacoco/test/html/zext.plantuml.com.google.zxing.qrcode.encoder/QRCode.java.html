@@ -38,18 +38,18 @@ public final class QRCode {
   private int numRSBlocks;
   private ByteMatrix matrix;
 
-<span class="nc" id="L41">  public QRCode() {</span>
-<span class="nc" id="L42">    mode = null;</span>
-<span class="nc" id="L43">    ecLevel = null;</span>
-<span class="nc" id="L44">    version = -1;</span>
-<span class="nc" id="L45">    matrixWidth = -1;</span>
-<span class="nc" id="L46">    maskPattern = -1;</span>
-<span class="nc" id="L47">    numTotalBytes = -1;</span>
-<span class="nc" id="L48">    numDataBytes = -1;</span>
-<span class="nc" id="L49">    numECBytes = -1;</span>
-<span class="nc" id="L50">    numRSBlocks = -1;</span>
-<span class="nc" id="L51">    matrix = null;</span>
-<span class="nc" id="L52">  }</span>
+<span class="fc" id="L41">  public QRCode() {</span>
+<span class="fc" id="L42">    mode = null;</span>
+<span class="fc" id="L43">    ecLevel = null;</span>
+<span class="fc" id="L44">    version = -1;</span>
+<span class="fc" id="L45">    matrixWidth = -1;</span>
+<span class="fc" id="L46">    maskPattern = -1;</span>
+<span class="fc" id="L47">    numTotalBytes = -1;</span>
+<span class="fc" id="L48">    numDataBytes = -1;</span>
+<span class="fc" id="L49">    numECBytes = -1;</span>
+<span class="fc" id="L50">    numRSBlocks = -1;</span>
+<span class="fc" id="L51">    matrix = null;</span>
+<span class="fc" id="L52">  }</span>
 
   // Mode of the QR Code.
   public Mode getMode() {
@@ -58,32 +58,32 @@ public final class QRCode {
 
   // Error correction level of the QR Code.
   public ErrorCorrectionLevel getECLevel() {
-<span class="nc" id="L61">    return ecLevel;</span>
+<span class="fc" id="L61">    return ecLevel;</span>
   }
 
   // Version of the QR Code.  The bigger size, the bigger version.
   public int getVersion() {
-<span class="nc" id="L66">    return version;</span>
+<span class="fc" id="L66">    return version;</span>
   }
 
   // ByteMatrix width of the QR Code.
   public int getMatrixWidth() {
-<span class="nc" id="L71">    return matrixWidth;</span>
+<span class="fc" id="L71">    return matrixWidth;</span>
   }
 
   // Mask pattern of the QR Code.
   public int getMaskPattern() {
-<span class="nc" id="L76">    return maskPattern;</span>
+<span class="fc" id="L76">    return maskPattern;</span>
   }
 
   // Number of total bytes in the QR Code.
   public int getNumTotalBytes() {
-<span class="nc" id="L81">    return numTotalBytes;</span>
+<span class="fc" id="L81">    return numTotalBytes;</span>
   }
 
   // Number of data bytes in the QR Code.
   public int getNumDataBytes() {
-<span class="nc" id="L86">    return numDataBytes;</span>
+<span class="fc" id="L86">    return numDataBytes;</span>
   }
 
   // Number of error correction bytes in the QR Code.
@@ -93,12 +93,12 @@ public final class QRCode {
 
   // Number of Reedsolomon blocks in the QR Code.
   public int getNumRSBlocks() {
-<span class="nc" id="L96">    return numRSBlocks;</span>
+<span class="fc" id="L96">    return numRSBlocks;</span>
   }
 
   // ByteMatrix data of the QR Code.
   public ByteMatrix getMatrix() {
-<span class="nc" id="L101">    return matrix;</span>
+<span class="fc" id="L101">    return matrix;</span>
   }
   
 
@@ -117,7 +117,7 @@ public final class QRCode {
   // Checks all the member variables are set properly. Returns true on success. Otherwise, returns
   // false.
   public boolean isValid() {
-<span class="nc bnc" id="L120" title="All 18 branches missed.">    return</span>
+<span class="pc bpc" id="L120" title="9 of 18 branches missed.">    return</span>
         // First check if all version are not uninitialized.
         mode != null &amp;&amp;
         ecLevel != null &amp;&amp;
@@ -129,13 +129,13 @@ public final class QRCode {
         numECBytes != -1 &amp;&amp;
         numRSBlocks != -1 &amp;&amp;
         // Then check them in other ways..
-<span class="nc bnc" id="L132" title="All 6 branches missed.">        isValidMaskPattern(maskPattern) &amp;&amp;</span>
+<span class="pc bpc" id="L132" title="3 of 6 branches missed.">        isValidMaskPattern(maskPattern) &amp;&amp;</span>
         numTotalBytes == numDataBytes + numECBytes &amp;&amp;
         // ByteMatrix stuff.
         matrix != null &amp;&amp;
-<span class="nc bnc" id="L136" title="All 2 branches missed.">        matrixWidth == matrix.getWidth() &amp;&amp;</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">        matrixWidth == matrix.getWidth() &amp;&amp;</span>
         // See 7.3.1 of JISX0510:2004 (p.5).
-<span class="nc bnc" id="L138" title="All 2 branches missed.">        matrix.getWidth() == matrix.getHeight(); // Must be square.</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">        matrix.getWidth() == matrix.getHeight(); // Must be square.</span>
   }
 
   // Return debug String.
@@ -171,49 +171,49 @@ public final class QRCode {
   }
 
   public void setMode(Mode value) {
-<span class="nc" id="L174">    mode = value;</span>
-<span class="nc" id="L175">  }</span>
+<span class="fc" id="L174">    mode = value;</span>
+<span class="fc" id="L175">  }</span>
 
   public void setECLevel(ErrorCorrectionLevel value) {
-<span class="nc" id="L178">    ecLevel = value;</span>
-<span class="nc" id="L179">  }</span>
+<span class="fc" id="L178">    ecLevel = value;</span>
+<span class="fc" id="L179">  }</span>
 
   public void setVersion(int value) {
-<span class="nc" id="L182">    version = value;</span>
-<span class="nc" id="L183">  }</span>
+<span class="fc" id="L182">    version = value;</span>
+<span class="fc" id="L183">  }</span>
 
   public void setMatrixWidth(int value) {
-<span class="nc" id="L186">    matrixWidth = value;</span>
-<span class="nc" id="L187">  }</span>
+<span class="fc" id="L186">    matrixWidth = value;</span>
+<span class="fc" id="L187">  }</span>
 
   public void setMaskPattern(int value) {
-<span class="nc" id="L190">    maskPattern = value;</span>
-<span class="nc" id="L191">  }</span>
+<span class="fc" id="L190">    maskPattern = value;</span>
+<span class="fc" id="L191">  }</span>
 
   public void setNumTotalBytes(int value) {
-<span class="nc" id="L194">    numTotalBytes = value;</span>
-<span class="nc" id="L195">  }</span>
+<span class="fc" id="L194">    numTotalBytes = value;</span>
+<span class="fc" id="L195">  }</span>
 
   public void setNumDataBytes(int value) {
-<span class="nc" id="L198">    numDataBytes = value;</span>
-<span class="nc" id="L199">  }</span>
+<span class="fc" id="L198">    numDataBytes = value;</span>
+<span class="fc" id="L199">  }</span>
 
   public void setNumECBytes(int value) {
-<span class="nc" id="L202">    numECBytes = value;</span>
-<span class="nc" id="L203">  }</span>
+<span class="fc" id="L202">    numECBytes = value;</span>
+<span class="fc" id="L203">  }</span>
 
   public void setNumRSBlocks(int value) {
-<span class="nc" id="L206">    numRSBlocks = value;</span>
-<span class="nc" id="L207">  }</span>
+<span class="fc" id="L206">    numRSBlocks = value;</span>
+<span class="fc" id="L207">  }</span>
 
   // This takes ownership of the 2D array.
   public void setMatrix(ByteMatrix value) {
-<span class="nc" id="L211">    matrix = value;</span>
-<span class="nc" id="L212">  }</span>
+<span class="fc" id="L211">    matrix = value;</span>
+<span class="fc" id="L212">  }</span>
 
   // Check if &quot;mask_pattern&quot; is valid.
   public static boolean isValidMaskPattern(int maskPattern) {
-<span class="nc bnc" id="L216" title="All 4 branches missed.">    return maskPattern &gt;= 0 &amp;&amp; maskPattern &lt; NUM_MASK_PATTERNS;</span>
+<span class="pc bpc" id="L216" title="2 of 4 branches missed.">    return maskPattern &gt;= 0 &amp;&amp; maskPattern &lt; NUM_MASK_PATTERNS;</span>
   }
 
   // Return true if the all values in the matrix are binary numbers.
