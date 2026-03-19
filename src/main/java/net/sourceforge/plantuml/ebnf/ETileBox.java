@@ -260,7 +260,7 @@ public class ETileBox extends ETile {
 			return value;
 
 		final String language = option.getValue(OptionKey.LANGUAGE);
-		return I18n.getLocalizedValue(language, "ebnf." + VALUE_MAP.get(value), value);
+		return I18n.getLocalizedValue(language, "regex." + VALUE_MAP.get(value), value);
 	}
 
 }
