@@ -218,7 +218,7 @@ public abstract class PSystemError extends UgDiagram {
 <span class="fc" id="L218">			final int min = (int) (System.currentTimeMillis() / 60000L) % 60;</span>
 <span class="fc bfc" id="L219" title="All 2 branches covered.">			if (disableTimeBasedErrorDecorations) {</span>
 				// do nothing
-<span class="pc bpc" id="L221" title="4 of 8 branches missed.">			} else if (min == 1 || min == 8 || min == 13 || min == 55) {</span>
+<span class="pc bpc" id="L221" title="6 of 8 branches missed.">			} else if (min == 1 || min == 8 || min == 13 || min == 55) {</span>
 <span class="fc" id="L222">				result = addMessagePatreon(result);</span>
 <span class="nc bnc" id="L223" title="All 2 branches missed.">			} else if (min == 15) {</span>
 <span class="nc" id="L224">				result = addMessageLiberapay(result);</span>
