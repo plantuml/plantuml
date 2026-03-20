@@ -62,8 +62,8 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
 		try {
-<span class="nc" id="L65">			final int codePoint = values.get(0).toString().codePointAt(0);</span>
-<span class="nc" id="L66">			return TValue.fromInt(codePoint);</span>
+<span class="fc" id="L65">			final int codePoint = values.get(0).toString().codePointAt(0);</span>
+<span class="fc" id="L66">			return TValue.fromInt(codePoint);</span>
 <span class="nc" id="L67">		} catch (Throwable t) {</span>
 <span class="nc" id="L68">			return TValue.fromInt(0);</span>
 		}

@@ -331,16 +331,16 @@ import net.sourceforge.plantuml.utils.PeekerUtils;
 <span class="fc" id="L331">			char ch = ins.peek(0);</span>
 <span class="pc bpc" id="L332" title="1 of 4 branches missed.">			if (ch == '\n' || ch == '\r')</span>
 <span class="nc" id="L333">				break;</span>
-<span class="pc bpc" id="L334" title="1 of 4 branches missed.">			if (ch == ' ' &amp;&amp; result.charAt(0) != '.')</span>
+<span class="fc bfc" id="L334" title="All 4 branches covered.">			if (ch == ' ' &amp;&amp; result.charAt(0) != '.')</span>
 <span class="fc" id="L335">				break;</span>
-<span class="pc bpc" id="L336" title="3 of 12 branches missed.">			if (ch == '{' || ch == '}' || ch == ';' || ch == ',' || ch == ':' || ch == '\t')</span>
+<span class="pc bpc" id="L336" title="2 of 12 branches missed.">			if (ch == '{' || ch == '}' || ch == ';' || ch == ',' || ch == ':' || ch == '\t')</span>
 <span class="nc" id="L337">				break;</span>
 <span class="fc" id="L338">			ins.jump();</span>
 			// System.err.println(&quot;ch=&quot; + ch);
 <span class="fc" id="L340">			result.append(ch);</span>
 <span class="fc" id="L341">		}</span>
-<span class="pc bpc" id="L342" title="1 of 2 branches missed.">		if (result.charAt(0) == '.')</span>
-<span class="nc" id="L343">			return result.toString().trim();</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">		if (result.charAt(0) == '.')</span>
+<span class="fc" id="L343">			return result.toString().trim();</span>
 <span class="fc" id="L344">		return result.toString();</span>
 	}
 

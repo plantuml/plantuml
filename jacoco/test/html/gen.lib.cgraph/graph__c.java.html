@@ -321,7 +321,7 @@ try {
 <span class="fc" id="L321">public static CFunction agraphidcmpf = new CFunctionAbstract(&quot;agraphidcmpf&quot;) {</span>
 	
 	public Object exe(Globals zz, Object... args) {
-<span class="nc" id="L324">		return agraphidcmpf((ST_dt_s)args[0], (ST_Agraph_s)args[1], (ST_Agraph_s)args[2], (ST_dtdisc_s)args[3]);</span>
+<span class="fc" id="L324">		return agraphidcmpf((ST_dt_s)args[0], (ST_Agraph_s)args[1], (ST_Agraph_s)args[2], (ST_dtdisc_s)args[3]);</span>
 	}};
 	
 //3 dhbtfzzp8n5yygqmhmluo9bxl
@@ -329,16 +329,16 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/cgraph/graph.c&quot;, name=&quot;agraphidcmpf&quot;, key=&quot;dhbtfzzp8n5yygqmhmluo9bxl&quot;, definition=&quot;int agraphidcmpf(Dict_t * d, void *arg0, void *arg1, Dtdisc_t * disc)&quot;)
 public static int agraphidcmpf(ST_dt_s d, ST_Agraph_s arg0, ST_Agraph_s arg1, ST_dtdisc_s disc) {
-<span class="nc" id="L332">ENTERING(&quot;dhbtfzzp8n5yygqmhmluo9bxl&quot;,&quot;agraphidcmpf&quot;);</span>
+<span class="fc" id="L332">ENTERING(&quot;dhbtfzzp8n5yygqmhmluo9bxl&quot;,&quot;agraphidcmpf&quot;);</span>
 try {
     int v;
     ST_Agraph_s sg0, sg1;
-<span class="nc" id="L336">    sg0 = (ST_Agraph_s) arg0;</span>
-<span class="nc" id="L337">    sg1 = (ST_Agraph_s) arg1;</span>
-<span class="nc" id="L338">    v = (sg0.tag.id - sg1.tag.id);</span>
-<span class="nc bnc" id="L339" title="All 4 branches missed.">    return ((v==0)?0:(v&lt;0?-1:1));</span>
+<span class="fc" id="L336">    sg0 = (ST_Agraph_s) arg0;</span>
+<span class="fc" id="L337">    sg1 = (ST_Agraph_s) arg1;</span>
+<span class="fc" id="L338">    v = (sg0.tag.id - sg1.tag.id);</span>
+<span class="pc bpc" id="L339" title="1 of 4 branches missed.">    return ((v==0)?0:(v&lt;0?-1:1));</span>
 } finally {
-<span class="nc" id="L341">LEAVING(&quot;dhbtfzzp8n5yygqmhmluo9bxl&quot;,&quot;agraphidcmpf&quot;);</span>
+<span class="fc" id="L341">LEAVING(&quot;dhbtfzzp8n5yygqmhmluo9bxl&quot;,&quot;agraphidcmpf&quot;);</span>
 }
 }
 

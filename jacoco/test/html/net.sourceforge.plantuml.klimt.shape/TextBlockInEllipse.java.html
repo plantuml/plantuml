@@ -48,22 +48,22 @@ public class TextBlockInEllipse extends TextBlockMemoized {
 	private final TextBlock text;
 	private final ContainingEllipse ellipse;
 
-<span class="nc" id="L51">	public TextBlockInEllipse(TextBlock text, StringBounder stringBounder) {</span>
-<span class="nc" id="L52">		this.text = text;</span>
-<span class="nc" id="L53">		final XDimension2D textDim = text.calculateDimension(stringBounder);</span>
-<span class="nc" id="L54">		double alpha = textDim.getHeight() / textDim.getWidth();</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (alpha &lt; .2) {</span>
-<span class="nc" id="L56">			alpha = .2;</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		} else if (alpha &gt; .8) {</span>
+<span class="fc" id="L51">	public TextBlockInEllipse(TextBlock text, StringBounder stringBounder) {</span>
+<span class="fc" id="L52">		this.text = text;</span>
+<span class="fc" id="L53">		final XDimension2D textDim = text.calculateDimension(stringBounder);</span>
+<span class="fc" id="L54">		double alpha = textDim.getHeight() / textDim.getWidth();</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		if (alpha &lt; .2) {</span>
+<span class="fc" id="L56">			alpha = .2;</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		} else if (alpha &gt; .8) {</span>
 <span class="nc" id="L58">			alpha = .8;</span>
 		}
-<span class="nc" id="L60">		final Footprint footprint = new Footprint(stringBounder);</span>
-<span class="nc" id="L61">		ellipse = footprint.getEllipse(text, alpha);</span>
+<span class="fc" id="L60">		final Footprint footprint = new Footprint(stringBounder);</span>
+<span class="fc" id="L61">		ellipse = footprint.getEllipse(text, alpha);</span>
 
-<span class="nc" id="L63">	}</span>
+<span class="fc" id="L63">	}</span>
 
 	public UEllipse getUEllipse() {
-<span class="nc" id="L66">		return ellipse.asUEllipse().bigger(6);</span>
+<span class="fc" id="L66">		return ellipse.asUEllipse().bigger(6);</span>
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class TextBlockInEllipse extends TextBlockMemoized {
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L84">		return getUEllipse().getDimension();</span>
+<span class="fc" id="L84">		return getUEllipse().getDimension();</span>
 	}
 
 	public void setDeltaShadow(double deltaShadow) {

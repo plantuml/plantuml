@@ -81,233 +81,233 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-<span class="nc" id="L84">		final UGraphicDebug result = new UGraphicDebug(this, output, scaleFactor, dim, svgLinkTarget, hoverPathColorRGB,</span>
+<span class="fc" id="L84">		final UGraphicDebug result = new UGraphicDebug(this, output, scaleFactor, dim, svgLinkTarget, hoverPathColorRGB,</span>
 				seed, preserveAspectRatio);
-<span class="nc" id="L86">		return result;</span>
+<span class="fc" id="L86">		return result;</span>
 	}
 
 	private UGraphicDebug(UGraphicDebug other, List&lt;String&gt; output, double scaleFactor, XDimension2D dim,
 			String svgLinkTarget, String hoverPathColorRGB, long seed, String preserveAspectRatio) {
-<span class="nc" id="L91">		super(other.getStringBounder());</span>
-<span class="nc" id="L92">		basicCopy(other);</span>
-<span class="nc" id="L93">		this.output = output;</span>
-<span class="nc" id="L94">		this.scaleFactor = scaleFactor;</span>
-<span class="nc" id="L95">		this.dim = dim;</span>
-<span class="nc" id="L96">		this.svgLinkTarget = svgLinkTarget;</span>
-<span class="nc" id="L97">		this.hoverPathColorRGB = hoverPathColorRGB;</span>
-<span class="nc" id="L98">		this.seed = seed;</span>
-<span class="nc" id="L99">		this.preserveAspectRatio = preserveAspectRatio;</span>
-<span class="nc" id="L100">	}</span>
+<span class="fc" id="L91">		super(other.getStringBounder());</span>
+<span class="fc" id="L92">		basicCopy(other);</span>
+<span class="fc" id="L93">		this.output = output;</span>
+<span class="fc" id="L94">		this.scaleFactor = scaleFactor;</span>
+<span class="fc" id="L95">		this.dim = dim;</span>
+<span class="fc" id="L96">		this.svgLinkTarget = svgLinkTarget;</span>
+<span class="fc" id="L97">		this.hoverPathColorRGB = hoverPathColorRGB;</span>
+<span class="fc" id="L98">		this.seed = seed;</span>
+<span class="fc" id="L99">		this.preserveAspectRatio = preserveAspectRatio;</span>
+<span class="fc" id="L100">	}</span>
 
 	public UGraphicDebug(double scaleFactor, XDimension2D dim, String svgLinkTarget, String hoverPathColorRGB,
 			long seed, String preserveAspectRatio) {
-<span class="nc" id="L104">		super(new StringBounderDebug());</span>
-<span class="nc" id="L105">		basicCopy(HColors.WHITE, ColorMapper.IDENTITY);</span>
-<span class="nc" id="L106">		this.output = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L107">		this.scaleFactor = scaleFactor;</span>
-<span class="nc" id="L108">		this.dim = dim;</span>
-<span class="nc" id="L109">		this.svgLinkTarget = svgLinkTarget;</span>
-<span class="nc" id="L110">		this.hoverPathColorRGB = hoverPathColorRGB;</span>
-<span class="nc" id="L111">		this.seed = seed;</span>
-<span class="nc" id="L112">		this.preserveAspectRatio = preserveAspectRatio;</span>
-<span class="nc" id="L113">	}</span>
+<span class="fc" id="L104">		super(new StringBounderDebug());</span>
+<span class="fc" id="L105">		basicCopy(HColors.WHITE, ColorMapper.IDENTITY);</span>
+<span class="fc" id="L106">		this.output = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L107">		this.scaleFactor = scaleFactor;</span>
+<span class="fc" id="L108">		this.dim = dim;</span>
+<span class="fc" id="L109">		this.svgLinkTarget = svgLinkTarget;</span>
+<span class="fc" id="L110">		this.hoverPathColorRGB = hoverPathColorRGB;</span>
+<span class="fc" id="L111">		this.seed = seed;</span>
+<span class="fc" id="L112">		this.preserveAspectRatio = preserveAspectRatio;</span>
+<span class="fc" id="L113">	}</span>
 
 	public void draw(UShape shape) {
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (isOutOfClip(shape))</span>
-<span class="nc" id="L117">			return;</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		if (isOutOfClip(shape))</span>
+<span class="fc" id="L117">			return;</span>
 
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (shape instanceof ULine) {</span>
-<span class="nc" id="L120">			outLine((ULine) shape);</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		} else if (shape instanceof URectangle) {</span>
-<span class="nc" id="L122">			outRectangle((URectangle) shape);</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		} else if (shape instanceof UText) {</span>
-<span class="nc" id="L124">			outText((UText) shape);</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">		} else if (shape instanceof UPolygon) {</span>
-<span class="nc" id="L126">			outPolygon((UPolygon) shape);</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		} else if (shape instanceof UEllipse) {</span>
-<span class="nc" id="L128">			outEllipse((UEllipse) shape);</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		} else if (shape instanceof UEmpty) {</span>
-<span class="nc" id="L130">			outEmpty((UEmpty) shape);</span>
-<span class="nc bnc" id="L131" title="All 2 branches missed.">		} else if (shape instanceof UPath) {</span>
-<span class="nc" id="L132">			outPath((UPath) shape);</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">		} else if (shape instanceof UComment) {</span>
-<span class="nc" id="L134">			outComment((UComment) shape);</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		} else if (shape instanceof DotPath) {</span>
-<span class="nc" id="L136">			outPath(((DotPath) shape).toUPath());</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		} else if (shape instanceof UCenteredCharacter) {</span>
-<span class="nc" id="L138">			outCenteredCharacter(((UCenteredCharacter) shape));</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (shape instanceof ULine) {</span>
+<span class="fc" id="L120">			outLine((ULine) shape);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		} else if (shape instanceof URectangle) {</span>
+<span class="fc" id="L122">			outRectangle((URectangle) shape);</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		} else if (shape instanceof UText) {</span>
+<span class="fc" id="L124">			outText((UText) shape);</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		} else if (shape instanceof UPolygon) {</span>
+<span class="fc" id="L126">			outPolygon((UPolygon) shape);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		} else if (shape instanceof UEllipse) {</span>
+<span class="fc" id="L128">			outEllipse((UEllipse) shape);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		} else if (shape instanceof UEmpty) {</span>
+<span class="fc" id="L130">			outEmpty((UEmpty) shape);</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		} else if (shape instanceof UPath) {</span>
+<span class="fc" id="L132">			outPath((UPath) shape);</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		} else if (shape instanceof UComment) {</span>
+<span class="fc" id="L134">			outComment((UComment) shape);</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		} else if (shape instanceof DotPath) {</span>
+<span class="fc" id="L136">			outPath(((DotPath) shape).toUPath());</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		} else if (shape instanceof UCenteredCharacter) {</span>
+<span class="fc" id="L138">			outCenteredCharacter(((UCenteredCharacter) shape));</span>
 		} else {
 <span class="nc" id="L140">			System.err.println(&quot;UGraphicDebug &quot; + shape.getClass().getSimpleName());</span>
 <span class="nc" id="L141">			output.add(&quot;UGraphicDebug &quot; + shape.getClass().getSimpleName() + &quot; &quot; + new Date());</span>
 		}
-<span class="nc" id="L143">	}</span>
+<span class="fc" id="L143">	}</span>
 
 	private boolean isOutOfClip(UShape shape) {
-<span class="nc" id="L146">		final UClip clip = getClip();</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (clip == null)</span>
-<span class="nc" id="L148">			return false;</span>
+<span class="fc" id="L146">		final UClip clip = getClip();</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		if (clip == null)</span>
+<span class="fc" id="L148">			return false;</span>
 
-<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (shape instanceof URectangle) {</span>
-<span class="nc" id="L151">			final URectangle rect = (URectangle) shape;</span>
-<span class="nc bnc" id="L152" title="All 2 branches missed.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
-<span class="nc bnc" id="L153" title="All 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + rect.getWidth(), getTranslateY() + rect.getHeight()) == false;</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (shape instanceof URectangle) {</span>
+<span class="fc" id="L151">			final URectangle rect = (URectangle) shape;</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
+<span class="pc bnc" id="L153" title="All 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + rect.getWidth(), getTranslateY() + rect.getHeight()) == false;</span>
 		}
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (shape instanceof UEllipse) {</span>
-<span class="nc" id="L156">			final UEllipse ell = (UEllipse) shape;</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + ell.getWidth(), getTranslateY() + ell.getHeight()) == false;</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (shape instanceof UEllipse) {</span>
+<span class="fc" id="L156">			final UEllipse ell = (UEllipse) shape;</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
+<span class="pc bnc" id="L158" title="All 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + ell.getWidth(), getTranslateY() + ell.getHeight()) == false;</span>
 		}
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (shape instanceof ULine) {</span>
-<span class="nc" id="L161">			final ULine line = (ULine) shape;</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
-<span class="nc bnc" id="L163" title="All 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + line.getDX(), getTranslateY() + line.getDY()) == false;</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (shape instanceof ULine) {</span>
+<span class="fc" id="L161">			final ULine line = (ULine) shape;</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + line.getDX(), getTranslateY() + line.getDY()) == false;</span>
 		}
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (shape instanceof UText) {</span>
-<span class="nc" id="L166">			final UText text = (UText) shape;</span>
-<span class="nc" id="L167">			final XDimension2D textDim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),</span>
-<span class="nc" id="L168">					text.getText());</span>
-<span class="nc bnc" id="L169" title="All 2 branches missed.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
-<span class="nc bnc" id="L170" title="All 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + textDim.getWidth(),</span>
-<span class="nc" id="L171">							getTranslateY() - textDim.getHeight()) == false;</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		if (shape instanceof UText) {</span>
+<span class="fc" id="L166">			final UText text = (UText) shape;</span>
+<span class="fc" id="L167">			final XDimension2D textDim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),</span>
+<span class="fc" id="L168">					text.getText());</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">					&amp;&amp; clip.isInside(getTranslateX() + textDim.getWidth(),</span>
+<span class="fc" id="L171">							getTranslateY() - textDim.getHeight()) == false;</span>
 		}
-<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (shape instanceof UPath) {</span>
-<span class="nc bnc" id="L174" title="All 2 branches missed.">			return clip.isInside(getTranslateX(), getTranslateY(), (UPath) shape) == false;</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">		if (shape instanceof UPath) {</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">			return clip.isInside(getTranslateX(), getTranslateY(), (UPath) shape) == false;</span>
 		}
-<span class="nc" id="L176">		return false;</span>
+<span class="fc" id="L176">		return false;</span>
 	}
 
 	private void outCenteredCharacter(UCenteredCharacter shape) {
-<span class="nc" id="L180">		output.add(&quot;CENTERED_CHAR:&quot;);</span>
-<span class="nc" id="L181">		output.add(&quot;  char: &quot; + shape.getChar());</span>
-<span class="nc" id="L182">		output.add(&quot;  position: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
-<span class="nc" id="L183">		output.add(&quot;  font: &quot; + shape.getFont().toString());</span>
-<span class="nc" id="L184">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
-<span class="nc" id="L185">		output.add(&quot;&quot;);</span>
+<span class="fc" id="L180">		output.add(&quot;CENTERED_CHAR:&quot;);</span>
+<span class="fc" id="L181">		output.add(&quot;  char: &quot; + shape.getChar());</span>
+<span class="fc" id="L182">		output.add(&quot;  position: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
+<span class="fc" id="L183">		output.add(&quot;  font: &quot; + shape.getFont().toString());</span>
+<span class="fc" id="L184">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
+<span class="fc" id="L185">		output.add(&quot;&quot;);</span>
 
-<span class="nc" id="L187">	}</span>
+<span class="fc" id="L187">	}</span>
 
 	private void outComment(UComment shape) {
-<span class="nc" id="L190">		output.add(&quot;COMMENT: &quot; + shape.getComment());</span>
-<span class="nc" id="L191">	}</span>
+<span class="fc" id="L190">		output.add(&quot;COMMENT: &quot; + shape.getComment());</span>
+<span class="fc" id="L191">	}</span>
 
 	private void outPath(UPath shape) {
-<span class="nc" id="L194">		output.add(&quot;PATH:&quot;);</span>
-<span class="nc bnc" id="L195" title="All 2 branches missed.">		for (USegment seg : shape) {</span>
-<span class="nc" id="L196">			final USegmentType type = seg.getSegmentType();</span>
-<span class="nc" id="L197">			final double coord[] = seg.getCoord();</span>
-<span class="nc" id="L198">			output.add(&quot;   - type: &quot; + type);</span>
-<span class="nc bnc" id="L199" title="All 2 branches missed.">			if (type == USegmentType.SEG_ARCTO) {</span>
-<span class="nc" id="L200">				output.add(&quot;     radius: &quot; + pointd(coord[0], coord[1]));</span>
-<span class="nc" id="L201">				output.add(&quot;     angle: &quot; + coord[2]);</span>
-<span class="nc bnc" id="L202" title="All 2 branches missed.">				output.add(&quot;     largeArcFlag: &quot; + (coord[3] != 0));</span>
-<span class="nc bnc" id="L203" title="All 2 branches missed.">				output.add(&quot;     sweepFlag: &quot; + (coord[4] != 0));</span>
-<span class="nc" id="L204">				output.add(&quot;     dest: &quot; + pointd(coord[5], coord[6]));</span>
+<span class="fc" id="L194">		output.add(&quot;PATH:&quot;);</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">		for (USegment seg : shape) {</span>
+<span class="fc" id="L196">			final USegmentType type = seg.getSegmentType();</span>
+<span class="fc" id="L197">			final double coord[] = seg.getCoord();</span>
+<span class="fc" id="L198">			output.add(&quot;   - type: &quot; + type);</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">			if (type == USegmentType.SEG_ARCTO) {</span>
+<span class="fc" id="L200">				output.add(&quot;     radius: &quot; + pointd(coord[0], coord[1]));</span>
+<span class="fc" id="L201">				output.add(&quot;     angle: &quot; + coord[2]);</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">				output.add(&quot;     largeArcFlag: &quot; + (coord[3] != 0));</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">				output.add(&quot;     sweepFlag: &quot; + (coord[4] != 0));</span>
+<span class="fc" id="L204">				output.add(&quot;     dest: &quot; + pointd(coord[5], coord[6]));</span>
 			} else
-<span class="nc bnc" id="L206" title="All 2 branches missed.">				for (int i = 0; i &lt; type.getNbPoints(); i++) {</span>
-<span class="nc" id="L207">					final String key = &quot;     pt&quot; + (i + 1) + &quot;: &quot;;</span>
-<span class="nc" id="L208">					output.add(key + pointd(coord[2 * i], coord[2 * i + 1]));</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">				for (int i = 0; i &lt; type.getNbPoints(); i++) {</span>
+<span class="fc" id="L207">					final String key = &quot;     pt&quot; + (i + 1) + &quot;: &quot;;</span>
+<span class="fc" id="L208">					output.add(key + pointd(coord[2 * i], coord[2 * i + 1]));</span>
 				}
-<span class="nc" id="L210">		}</span>
+<span class="fc" id="L210">		}</span>
 
-<span class="nc" id="L212">		output.add(&quot;  stroke: &quot; + getParam().getStroke());</span>
-<span class="nc" id="L213">		output.add(&quot;  shadow: &quot; + (int) shape.getDeltaShadow());</span>
-<span class="nc" id="L214">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
-<span class="nc" id="L215">		output.add(&quot;  backcolor: &quot; + colorToString(getParam().getBackcolor()));</span>
-<span class="nc" id="L216">		output.add(&quot;&quot;);</span>
+<span class="fc" id="L212">		output.add(&quot;  stroke: &quot; + getParam().getStroke());</span>
+<span class="fc" id="L213">		output.add(&quot;  shadow: &quot; + (int) shape.getDeltaShadow());</span>
+<span class="fc" id="L214">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
+<span class="fc" id="L215">		output.add(&quot;  backcolor: &quot; + colorToString(getParam().getBackcolor()));</span>
+<span class="fc" id="L216">		output.add(&quot;&quot;);</span>
 
-<span class="nc" id="L218">	}</span>
+<span class="fc" id="L218">	}</span>
 
 	private void outPolygon(UPolygon shape) {
-<span class="nc" id="L221">		output.add(&quot;POLYGON:&quot;);</span>
-<span class="nc" id="L222">		output.add(&quot;  points:&quot;);</span>
-<span class="nc bnc" id="L223" title="All 2 branches missed.">		for (XPoint2D pt : shape.getPoints()) {</span>
-<span class="nc" id="L224">			final double xp = getTranslateX() + pt.getX();</span>
-<span class="nc" id="L225">			final double yp = getTranslateY() + pt.getY();</span>
-<span class="nc" id="L226">			output.add(&quot;   - &quot; + pointd(xp, yp));</span>
-<span class="nc" id="L227">		}</span>
-<span class="nc" id="L228">		output.add(&quot;  stroke: &quot; + getParam().getStroke());</span>
-<span class="nc" id="L229">		output.add(&quot;  shadow: &quot; + (int) shape.getDeltaShadow());</span>
-<span class="nc" id="L230">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
-<span class="nc" id="L231">		output.add(&quot;  backcolor: &quot; + colorToString(getParam().getBackcolor()));</span>
-<span class="nc" id="L232">		output.add(&quot;&quot;);</span>
+<span class="fc" id="L221">		output.add(&quot;POLYGON:&quot;);</span>
+<span class="fc" id="L222">		output.add(&quot;  points:&quot;);</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">		for (XPoint2D pt : shape.getPoints()) {</span>
+<span class="fc" id="L224">			final double xp = getTranslateX() + pt.getX();</span>
+<span class="fc" id="L225">			final double yp = getTranslateY() + pt.getY();</span>
+<span class="fc" id="L226">			output.add(&quot;   - &quot; + pointd(xp, yp));</span>
+<span class="fc" id="L227">		}</span>
+<span class="fc" id="L228">		output.add(&quot;  stroke: &quot; + getParam().getStroke());</span>
+<span class="fc" id="L229">		output.add(&quot;  shadow: &quot; + (int) shape.getDeltaShadow());</span>
+<span class="fc" id="L230">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
+<span class="fc" id="L231">		output.add(&quot;  backcolor: &quot; + colorToString(getParam().getBackcolor()));</span>
+<span class="fc" id="L232">		output.add(&quot;&quot;);</span>
 
-<span class="nc" id="L234">	}</span>
+<span class="fc" id="L234">	}</span>
 
 	private void outText(UText shape) {
-<span class="nc" id="L237">		output.add(&quot;TEXT:&quot;);</span>
-<span class="nc" id="L238">		output.add(&quot;  text: &quot; + shape.getText());</span>
-<span class="nc" id="L239">		output.add(&quot;  position: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
-<span class="nc" id="L240">		output.add(&quot;  orientation: &quot; + shape.getOrientation());</span>
-<span class="nc" id="L241">		output.add(&quot;  font: &quot; + shape.getFontConfiguration().toStringDebug());</span>
-<span class="nc" id="L242">		output.add(&quot;  color: &quot; + colorToString(shape.getFontConfiguration().getColor()));</span>
-<span class="nc" id="L243">		output.add(&quot;  extendedColor: &quot; + colorToString(shape.getFontConfiguration().getExtendedColor()));</span>
-<span class="nc" id="L244">		output.add(&quot;&quot;);</span>
-<span class="nc" id="L245">	}</span>
+<span class="fc" id="L237">		output.add(&quot;TEXT:&quot;);</span>
+<span class="fc" id="L238">		output.add(&quot;  text: &quot; + shape.getText());</span>
+<span class="fc" id="L239">		output.add(&quot;  position: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
+<span class="fc" id="L240">		output.add(&quot;  orientation: &quot; + shape.getOrientation());</span>
+<span class="fc" id="L241">		output.add(&quot;  font: &quot; + shape.getFontConfiguration().toStringDebug());</span>
+<span class="fc" id="L242">		output.add(&quot;  color: &quot; + colorToString(shape.getFontConfiguration().getColor()));</span>
+<span class="fc" id="L243">		output.add(&quot;  extendedColor: &quot; + colorToString(shape.getFontConfiguration().getExtendedColor()));</span>
+<span class="fc" id="L244">		output.add(&quot;&quot;);</span>
+<span class="fc" id="L245">	}</span>
 
 	private void outEmpty(UEmpty shape) {
-<span class="nc" id="L248">		output.add(&quot;EMPTY:&quot;);</span>
-<span class="nc" id="L249">		output.add(&quot;  pt1: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
-<span class="nc" id="L250">		output.add(&quot;  pt2: &quot; + pointd(getTranslateX() + shape.getWidth(), getTranslateY() + shape.getHeight()));</span>
-<span class="nc" id="L251">		output.add(&quot;&quot;);</span>
+<span class="fc" id="L248">		output.add(&quot;EMPTY:&quot;);</span>
+<span class="fc" id="L249">		output.add(&quot;  pt1: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
+<span class="fc" id="L250">		output.add(&quot;  pt2: &quot; + pointd(getTranslateX() + shape.getWidth(), getTranslateY() + shape.getHeight()));</span>
+<span class="fc" id="L251">		output.add(&quot;&quot;);</span>
 
-<span class="nc" id="L253">	}</span>
+<span class="fc" id="L253">	}</span>
 
 	private void outEllipse(UEllipse shape) {
-<span class="nc" id="L256">		output.add(&quot;ELLIPSE:&quot;);</span>
-<span class="nc" id="L257">		output.add(&quot;  pt1: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
-<span class="nc" id="L258">		output.add(&quot;  pt2: &quot; + pointd(getTranslateX() + shape.getWidth(), getTranslateY() + shape.getHeight()));</span>
-<span class="nc" id="L259">		output.add(&quot;  start: &quot; + shape.getStart());</span>
-<span class="nc" id="L260">		output.add(&quot;  extend: &quot; + shape.getExtend());</span>
-<span class="nc" id="L261">		output.add(&quot;  stroke: &quot; + getParam().getStroke());</span>
-<span class="nc" id="L262">		output.add(&quot;  shadow: &quot; + (int) shape.getDeltaShadow());</span>
-<span class="nc" id="L263">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
-<span class="nc" id="L264">		output.add(&quot;  backcolor: &quot; + colorToString(getParam().getBackcolor()));</span>
-<span class="nc" id="L265">		output.add(&quot;&quot;);</span>
+<span class="fc" id="L256">		output.add(&quot;ELLIPSE:&quot;);</span>
+<span class="fc" id="L257">		output.add(&quot;  pt1: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
+<span class="fc" id="L258">		output.add(&quot;  pt2: &quot; + pointd(getTranslateX() + shape.getWidth(), getTranslateY() + shape.getHeight()));</span>
+<span class="fc" id="L259">		output.add(&quot;  start: &quot; + shape.getStart());</span>
+<span class="fc" id="L260">		output.add(&quot;  extend: &quot; + shape.getExtend());</span>
+<span class="fc" id="L261">		output.add(&quot;  stroke: &quot; + getParam().getStroke());</span>
+<span class="fc" id="L262">		output.add(&quot;  shadow: &quot; + (int) shape.getDeltaShadow());</span>
+<span class="fc" id="L263">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
+<span class="fc" id="L264">		output.add(&quot;  backcolor: &quot; + colorToString(getParam().getBackcolor()));</span>
+<span class="fc" id="L265">		output.add(&quot;&quot;);</span>
 
-<span class="nc" id="L267">	}</span>
+<span class="fc" id="L267">	}</span>
 
 	private void outRectangle(URectangle shape) {
-<span class="nc" id="L270">		output.add(&quot;RECTANGLE:&quot;);</span>
-<span class="nc" id="L271">		output.add(&quot;  pt1: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
-<span class="nc" id="L272">		output.add(&quot;  pt2: &quot; + pointd(getTranslateX() + shape.getWidth(), getTranslateY() + shape.getHeight()));</span>
-<span class="nc" id="L273">		output.add(&quot;  xCorner: &quot; + (int) shape.getRx());</span>
-<span class="nc" id="L274">		output.add(&quot;  yCorner: &quot; + (int) shape.getRy());</span>
-<span class="nc" id="L275">		output.add(&quot;  stroke: &quot; + getParam().getStroke());</span>
-<span class="nc" id="L276">		output.add(&quot;  shadow: &quot; + (int) shape.getDeltaShadow());</span>
-<span class="nc" id="L277">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
-<span class="nc" id="L278">		output.add(&quot;  backcolor: &quot; + colorToString(getParam().getBackcolor()));</span>
-<span class="nc" id="L279">		output.add(&quot;&quot;);</span>
+<span class="fc" id="L270">		output.add(&quot;RECTANGLE:&quot;);</span>
+<span class="fc" id="L271">		output.add(&quot;  pt1: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
+<span class="fc" id="L272">		output.add(&quot;  pt2: &quot; + pointd(getTranslateX() + shape.getWidth(), getTranslateY() + shape.getHeight()));</span>
+<span class="fc" id="L273">		output.add(&quot;  xCorner: &quot; + (int) shape.getRx());</span>
+<span class="fc" id="L274">		output.add(&quot;  yCorner: &quot; + (int) shape.getRy());</span>
+<span class="fc" id="L275">		output.add(&quot;  stroke: &quot; + getParam().getStroke());</span>
+<span class="fc" id="L276">		output.add(&quot;  shadow: &quot; + (int) shape.getDeltaShadow());</span>
+<span class="fc" id="L277">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
+<span class="fc" id="L278">		output.add(&quot;  backcolor: &quot; + colorToString(getParam().getBackcolor()));</span>
+<span class="fc" id="L279">		output.add(&quot;&quot;);</span>
 
-<span class="nc" id="L281">	}</span>
+<span class="fc" id="L281">	}</span>
 
 	private void outLine(ULine shape) {
-<span class="nc" id="L284">		output.add(&quot;LINE:&quot;);</span>
-<span class="nc" id="L285">		output.add(&quot;  pt1: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
-<span class="nc" id="L286">		output.add(&quot;  pt2: &quot; + pointd(getTranslateX() + shape.getDX(), getTranslateY() + shape.getDY()));</span>
-<span class="nc" id="L287">		output.add(&quot;  stroke: &quot; + getParam().getStroke());</span>
-<span class="nc" id="L288">		output.add(&quot;  shadow: &quot; + (int) shape.getDeltaShadow());</span>
-<span class="nc" id="L289">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
-<span class="nc" id="L290">		output.add(&quot;&quot;);</span>
+<span class="fc" id="L284">		output.add(&quot;LINE:&quot;);</span>
+<span class="fc" id="L285">		output.add(&quot;  pt1: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
+<span class="fc" id="L286">		output.add(&quot;  pt2: &quot; + pointd(getTranslateX() + shape.getDX(), getTranslateY() + shape.getDY()));</span>
+<span class="fc" id="L287">		output.add(&quot;  stroke: &quot; + getParam().getStroke());</span>
+<span class="fc" id="L288">		output.add(&quot;  shadow: &quot; + (int) shape.getDeltaShadow());</span>
+<span class="fc" id="L289">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
+<span class="fc" id="L290">		output.add(&quot;&quot;);</span>
 
-<span class="nc" id="L292">	}</span>
+<span class="fc" id="L292">	}</span>
 
 	private String pointd(double x, double y) {
-<span class="nc" id="L295">		return String.format(Locale.US, &quot;[ %.4f ; %.4f ]&quot;, x, y);</span>
+<span class="fc" id="L295">		return String.format(Locale.US, &quot;[ %.4f ; %.4f ]&quot;, x, y);</span>
 	}
 
 	private String colorToString(HColor color) {
-<span class="nc bnc" id="L299" title="All 4 branches missed.">		if (color == null || color.isTransparent())</span>
-<span class="nc" id="L300">			return &quot;NULL_COLOR&quot;;</span>
+<span class="fc bfc" id="L299" title="All 4 branches covered.">		if (color == null || color.isTransparent())</span>
+<span class="fc" id="L300">			return &quot;NULL_COLOR&quot;;</span>
 
-<span class="nc bnc" id="L302" title="All 2 branches missed.">		if (color instanceof HColorSimple) {</span>
-<span class="nc" id="L303">			final HColorSimple simple = (HColorSimple) color;</span>
-<span class="nc" id="L304">			final XColor internal = simple.getAwtColor();</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">		if (color instanceof HColorSimple) {</span>
+<span class="fc" id="L303">			final HColorSimple simple = (HColorSimple) color;</span>
+<span class="fc" id="L304">			final XColor internal = simple.getAwtColor();</span>
 
-<span class="nc" id="L306">			return Integer.toHexString(internal.getRGB());</span>
+<span class="fc" id="L306">			return Integer.toHexString(internal.getRGB());</span>
 		}
-<span class="nc bnc" id="L308" title="All 2 branches missed.">		if (color instanceof HColorMiddle) {</span>
-<span class="nc" id="L309">			final HColorMiddle middle = (HColorMiddle) color;</span>
-<span class="nc" id="L310">			return &quot;middle(&quot; + colorToString(middle.getColor1()) + &quot; &amp; &quot; + colorToString(middle.getColor1()) + &quot; )&quot;;</span>
+<span class="pc bpc" id="L308" title="1 of 2 branches missed.">		if (color instanceof HColorMiddle) {</span>
+<span class="fc" id="L309">			final HColorMiddle middle = (HColorMiddle) color;</span>
+<span class="fc" id="L310">			return &quot;middle(&quot; + colorToString(middle.getColor1()) + &quot; &amp; &quot; + colorToString(middle.getColor1()) + &quot; )&quot;;</span>
 		}
 <span class="nc" id="L312">		System.err.println(&quot;Error colorToString &quot; + color.getClass().getSimpleName());</span>
 <span class="nc" id="L313">		return color.getClass().getSimpleName() + &quot; &quot; + new Date();</span>
@@ -315,25 +315,25 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
-<span class="nc" id="L318">		print(os, &quot;DPI: &quot; + dpi);</span>
-<span class="nc" id="L319">		print(os, &quot;dimension: &quot; + pointd(dim.getWidth(), dim.getHeight()));</span>
-<span class="nc" id="L320">		print(os, &quot;scaleFactor: &quot; + String.format(Locale.US, &quot;%.4f&quot;, scaleFactor));</span>
-<span class="nc" id="L321">		print(os, &quot;seed: &quot; + seed);</span>
-<span class="nc" id="L322">		print(os, &quot;svgLinkTarget: &quot; + svgLinkTarget);</span>
-<span class="nc" id="L323">		print(os, &quot;hoverPathColorRGB: &quot; + hoverPathColorRGB);</span>
-<span class="nc" id="L324">		print(os, &quot;preserveAspectRatio: &quot; + preserveAspectRatio);</span>
-<span class="nc" id="L325">		print(os, &quot;&quot;);</span>
+<span class="fc" id="L318">		print(os, &quot;DPI: &quot; + dpi);</span>
+<span class="fc" id="L319">		print(os, &quot;dimension: &quot; + pointd(dim.getWidth(), dim.getHeight()));</span>
+<span class="fc" id="L320">		print(os, &quot;scaleFactor: &quot; + String.format(Locale.US, &quot;%.4f&quot;, scaleFactor));</span>
+<span class="fc" id="L321">		print(os, &quot;seed: &quot; + seed);</span>
+<span class="fc" id="L322">		print(os, &quot;svgLinkTarget: &quot; + svgLinkTarget);</span>
+<span class="fc" id="L323">		print(os, &quot;hoverPathColorRGB: &quot; + hoverPathColorRGB);</span>
+<span class="fc" id="L324">		print(os, &quot;preserveAspectRatio: &quot; + preserveAspectRatio);</span>
+<span class="fc" id="L325">		print(os, &quot;&quot;);</span>
 
-<span class="nc bnc" id="L327" title="All 2 branches missed.">		for (String s : output)</span>
-<span class="nc" id="L328">			print(os, s);</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">		for (String s : output)</span>
+<span class="fc" id="L328">			print(os, s);</span>
 
-<span class="nc" id="L330">		os.flush();</span>
-<span class="nc" id="L331">	}</span>
+<span class="fc" id="L330">		os.flush();</span>
+<span class="fc" id="L331">	}</span>
 
 	private void print(OutputStream os, String out) throws UnsupportedEncodingException, IOException {
-<span class="nc" id="L334">		os.write(out.getBytes(UTF_8));</span>
-<span class="nc" id="L335">		os.write(&quot;\n&quot;.getBytes(UTF_8));</span>
-<span class="nc" id="L336">	}</span>
+<span class="fc" id="L334">		os.write(out.getBytes(UTF_8));</span>
+<span class="fc" id="L335">		os.write(&quot;\n&quot;.getBytes(UTF_8));</span>
+<span class="fc" id="L336">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

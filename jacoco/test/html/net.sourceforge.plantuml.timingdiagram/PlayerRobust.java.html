@@ -46,18 +46,18 @@ public final class PlayerRobust extends AbstractStatePlayer {
 
 	public PlayerRobust(String full, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
 			HColor generalBackgroundColor) {
-<span class="nc" id="L49">		super(full, skinParam, ruler, compact, stereotype, generalBackgroundColor, SName.robust, 2.5);</span>
-<span class="nc" id="L50">	}</span>
+<span class="fc" id="L49">		super(full, skinParam, ruler, compact, stereotype, generalBackgroundColor, SName.robust, 2.5);</span>
+<span class="fc" id="L50">	}</span>
 
 	@Override
 	protected Panels buildPlayerPanels() {
-<span class="nc" id="L54">		final PanelsRobust result = new PanelsRobust(getRuler(), getSkinParam(), getStatesLabel().values(),</span>
-<span class="nc" id="L55">				getSuggestedHeight(), getStyle(), getConstraints());</span>
-<span class="nc" id="L56">		result.setInitialState(getInitialState(), getInitialColors());</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		for (ChangeState change : getChanges())</span>
-<span class="nc" id="L58">			result.addChange(change);</span>
+<span class="fc" id="L54">		final PanelsRobust result = new PanelsRobust(getRuler(), getSkinParam(), getStatesLabel().values(),</span>
+<span class="fc" id="L55">				getSuggestedHeight(), getStyle(), getConstraints());</span>
+<span class="fc" id="L56">		result.setInitialState(getInitialState(), getInitialColors());</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		for (ChangeState change : getChanges())</span>
+<span class="fc" id="L58">			result.addChange(change);</span>
 
-<span class="nc" id="L60">		return result;</span>
+<span class="fc" id="L60">		return result;</span>
 	}
 
 }

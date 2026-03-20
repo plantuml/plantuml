@@ -69,19 +69,19 @@ public class CommandScale extends SingleLineCommand2&lt;AbstractDiagram&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L72">		double scale = Double.parseDouble(arg.get(&quot;SCALE&quot;, 0));</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (scale == 0)</span>
+<span class="fc" id="L72">		double scale = Double.parseDouble(arg.get(&quot;SCALE&quot;, 0));</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (scale == 0)</span>
 <span class="nc" id="L74">			return CommandExecutionResult.error(&quot;Scale cannot be zero&quot;);</span>
 
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (arg.get(&quot;DIV&quot;, 0) != null) {</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (arg.get(&quot;DIV&quot;, 0) != null) {</span>
 <span class="nc" id="L77">			final double div = Double.parseDouble(arg.get(&quot;DIV&quot;, 0));</span>
 <span class="nc bnc" id="L78" title="All 2 branches missed.">			if (div == 0)</span>
 <span class="nc" id="L79">				return CommandExecutionResult.error(&quot;Scale cannot be zero&quot;);</span>
 
 <span class="nc" id="L81">			scale /= div;</span>
 		}
-<span class="nc" id="L83">		diagram.setScale(new ScaleSimple(scale));</span>
-<span class="nc" id="L84">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L83">		diagram.setScale(new ScaleSimple(scale));</span>
+<span class="fc" id="L84">		return CommandExecutionResult.ok();</span>
 	}
 
 }

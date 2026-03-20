@@ -106,8 +106,8 @@ public class Stereogroup {
 	}
 
 	public Colors getColors(HColorSet colorSet) throws NoSuchColorException {
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		for (String label : getLabels())</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">			if (label.startsWith(&quot;#&quot;))</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		for (String label : getLabels())</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">			if (label.startsWith(&quot;#&quot;))</span>
 <span class="nc" id="L111">				return new Colors(label, colorSet, ColorType.BACK);</span>
 
 <span class="fc" id="L113">		return Colors.empty();</span>

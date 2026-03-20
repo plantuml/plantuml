@@ -66,12 +66,12 @@ public class CommandStart3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L69">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="nc" id="L70">		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L69">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="fc" id="L70">		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());</span>
 
-<span class="nc" id="L72">		diagram.start(colors);</span>
+<span class="fc" id="L72">		diagram.start(colors);</span>
 
-<span class="nc" id="L74">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L74">		return CommandExecutionResult.ok();</span>
 	}
 
 }

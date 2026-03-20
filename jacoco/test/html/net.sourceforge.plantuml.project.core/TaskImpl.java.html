@@ -129,8 +129,8 @@ public class TaskImpl extends AbstractTask implements Task {
 
 
 	public PiecewiseConstant asPiecewiseConstant() {
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (cachedPiecewiseConstant != null)</span>
-<span class="nc" id="L133">			return cachedPiecewiseConstant;</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (cachedPiecewiseConstant != null)</span>
+<span class="fc" id="L133">			return cachedPiecewiseConstant;</span>
 
 <span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (resources.size() &gt; 0)</span>
 <span class="nc" id="L136">			cachedPiecewiseConstant = Combiner.product(getDefaultPlan(), allRessources());</span>
@@ -205,7 +205,7 @@ public class TaskImpl extends AbstractTask implements Task {
 	}
 
 	public String getPrettyDisplay() {
-<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (resources.size() &gt; 0) {</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (resources.size() &gt; 0) {</span>
 <span class="nc" id="L209">			final StringBuilder result = new StringBuilder(getCode().getDisplay());</span>
 <span class="nc" id="L210">			result.append(&quot; &quot;);</span>
 <span class="nc bnc" id="L211" title="All 2 branches missed.">			for (Iterator&lt;Map.Entry&lt;Resource, Integer&gt;&gt; it = resources.entrySet().iterator(); it.hasNext();) {</span>
@@ -223,7 +223,7 @@ public class TaskImpl extends AbstractTask implements Task {
 <span class="nc" id="L223">			}</span>
 <span class="nc" id="L224">			return result.toString();</span>
 		}
-<span class="nc" id="L226">		return getCode().getDisplay();</span>
+<span class="fc" id="L226">		return getCode().getDisplay();</span>
 	}
 
 	@Override
@@ -237,24 +237,24 @@ public class TaskImpl extends AbstractTask implements Task {
 
 	@Override
 	public TimePoint getStart() {
-<span class="nc bnc" id="L240" title="All 2 branches missed.">		if (cachedStart != null)</span>
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">		if (cachedStart != null)</span>
 <span class="nc" id="L241">			return cachedStart;</span>
 
-<span class="nc" id="L243">		final NGMAllocation allocation = NGMAllocation.of(this.asPiecewiseConstant());</span>
-<span class="nc" id="L244">		TimePoint result = (TimePoint) solver.getData(allocation, TaskAttribute.START);</span>
-<span class="nc bnc" id="L245" title="All 2 branches missed.">		if (diamond == false) {</span>
-<span class="nc" id="L246">			final PiecewiseConstant cal = asPiecewiseConstant();</span>
-<span class="nc bnc" id="L247" title="All 2 branches missed.">			while (PiecewiseConstantUtils.isZeroOnDay(cal, result.toDay()))</span>
+<span class="fc" id="L243">		final NGMAllocation allocation = NGMAllocation.of(this.asPiecewiseConstant());</span>
+<span class="fc" id="L244">		TimePoint result = (TimePoint) solver.getData(allocation, TaskAttribute.START);</span>
+<span class="pc bpc" id="L245" title="1 of 2 branches missed.">		if (diamond == false) {</span>
+<span class="fc" id="L246">			final PiecewiseConstant cal = asPiecewiseConstant();</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">			while (PiecewiseConstantUtils.isZeroOnDay(cal, result.toDay()))</span>
 <span class="nc" id="L248">				result = result.increment();</span>
 		}
-<span class="nc" id="L250">		cachedStart = result;</span>
-<span class="nc" id="L251">		return cachedStart;</span>
+<span class="fc" id="L250">		cachedStart = result;</span>
+<span class="fc" id="L251">		return cachedStart;</span>
 	}
 
 	@Override
 	public TimePoint getEnd() {
-<span class="pc bpc" id="L256" title="1 of 2 branches missed.">		if (cachedEnd != null)</span>
-<span class="nc" id="L257">			return cachedEnd;</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">		if (cachedEnd != null)</span>
+<span class="fc" id="L257">			return cachedEnd;</span>
 
 <span class="fc" id="L259">		final NGMAllocation allocation = NGMAllocation.of(this.asPiecewiseConstant());</span>
 <span class="fc" id="L260">		cachedEnd = (TimePoint) solver.getData(allocation, TaskAttribute.END);</span>
@@ -291,8 +291,8 @@ public class TaskImpl extends AbstractTask implements Task {
 
 	@Override
 	public void setColors(CenterBorderColor... colors) {
-<span class="nc" id="L294">		this.colors = colors;</span>
-<span class="nc" id="L295">	}</span>
+<span class="fc" id="L294">		this.colors = colors;</span>
+<span class="fc" id="L295">	}</span>
 
 	@Override
 	public void addResource(Resource resource, int percentage) {
@@ -313,7 +313,7 @@ public class TaskImpl extends AbstractTask implements Task {
 
 	@Override
 	public boolean isDiamond() {
-<span class="nc" id="L316">		return this.diamond;</span>
+<span class="fc" id="L316">		return this.diamond;</span>
 	}
 
 	@Override
@@ -322,29 +322,29 @@ public class TaskImpl extends AbstractTask implements Task {
 <span class="nc" id="L322">	}</span>
 
 	public final Url getUrl() {
-<span class="nc" id="L325">		return url;</span>
+<span class="fc" id="L325">		return url;</span>
 	}
 
 	public final CenterBorderColor getColors() {
-<span class="nc bnc" id="L329" title="All 2 branches missed.">		if (colors == null)</span>
-<span class="nc" id="L330">			return null;</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">		if (colors == null)</span>
+<span class="fc" id="L330">			return null;</span>
 
-<span class="nc bnc" id="L332" title="All 2 branches missed.">		if (colors.length == 1)</span>
-<span class="nc" id="L333">			return colors[0];</span>
+<span class="pc bpc" id="L332" title="1 of 2 branches missed.">		if (colors.length == 1)</span>
+<span class="fc" id="L333">			return colors[0];</span>
 
 <span class="nc" id="L335">		return colors[0].unlinearTo(colors[1], completion);</span>
 	}
 
 	public final int getCompletion() {
-<span class="nc" id="L339">		return completion;</span>
+<span class="fc" id="L339">		return completion;</span>
 	}
 
 	public final Collection&lt;LocalDate&gt; getAllPaused() {
-<span class="nc" id="L343">		final SortedSet&lt;LocalDate&gt; result = new TreeSet&lt;&gt;(pausedDay);</span>
-<span class="nc bnc" id="L344" title="All 2 branches missed.">		for (DayOfWeek dayOfWeek : pausedDayOfWeek)</span>
+<span class="fc" id="L343">		final SortedSet&lt;LocalDate&gt; result = new TreeSet&lt;&gt;(pausedDay);</span>
+<span class="pc bpc" id="L344" title="1 of 2 branches missed.">		for (DayOfWeek dayOfWeek : pausedDayOfWeek)</span>
 <span class="nc" id="L345">			addAll(result, dayOfWeek);</span>
 
-<span class="nc" id="L347">		return Collections.unmodifiableCollection(result);</span>
+<span class="fc" id="L347">		return Collections.unmodifiableCollection(result);</span>
 	}
 
 	private void addAll(SortedSet&lt;LocalDate&gt; result, DayOfWeek dayOfWeek) {
@@ -363,11 +363,11 @@ public class TaskImpl extends AbstractTask implements Task {
 <span class="nc" id="L363">	}</span>
 
 	public Display getNote() {
-<span class="nc" id="L366">		return note;</span>
+<span class="fc" id="L366">		return note;</span>
 	}
 
 	public Stereotype getNoteStereotype() {
-<span class="nc" id="L370">		return noteStereotype;</span>
+<span class="fc" id="L370">		return noteStereotype;</span>
 	}
 
 	@Override

@@ -301,12 +301,12 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 <span class="fc bfc" id="L301" title="All 2 branches covered.">				} else if (c2 == 't') {</span>
 <span class="fc" id="L302">					current.append('\t');</span>
 <span class="fc" id="L303">					addWarning(pragma, JawsWarning.BACKSLASH_TABULATION);</span>
-<span class="pc bpc" id="L304" title="1 of 2 branches missed.">				} else if (c2 == '\\') {</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">				} else if (c2 == '\\') {</span>
 <span class="fc" id="L305">					current.append(c2);</span>
 <span class="fc" id="L306">					addWarning(pragma, JawsWarning.BACKSLASH_BACKSLASH);</span>
 				} else {
-<span class="nc" id="L308">					current.append(c);</span>
-<span class="nc" id="L309">					current.append(c2);</span>
+<span class="fc" id="L308">					current.append(c);</span>
+<span class="fc" id="L309">					current.append(c2);</span>
 				}
 <span class="pc bpc" id="L311" title="1 of 2 branches missed.">			} else if (c == Jaws.BLOCK_E1_REAL_TABULATION) {</span>
 				// current.append('\t');
@@ -499,9 +499,9 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 	}
 
 	public Display addAll(Display other) {
-<span class="nc" id="L502">		final Display result = new Display(this.showStereotype, this, this.defaultCreoleMode);</span>
-<span class="nc" id="L503">		result.displayData.addAll(other.displayData);</span>
-<span class="nc" id="L504">		return result;</span>
+<span class="fc" id="L502">		final Display result = new Display(this.showStereotype, this, this.defaultCreoleMode);</span>
+<span class="fc" id="L503">		result.displayData.addAll(other.displayData);</span>
+<span class="fc" id="L504">		return result;</span>
 	}
 
 	public Display addFirst(CharSequence s) {
@@ -549,13 +549,13 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 	}
 
 	public Display subList(int i, int size) {
-<span class="nc" id="L552">		return new Display(showStereotype, displayData.subList(i, size), this.naturalHorizontalAlignment, this.isNull,</span>
+<span class="fc" id="L552">		return new Display(showStereotype, displayData.subList(i, size), this.naturalHorizontalAlignment, this.isNull,</span>
 				this.defaultCreoleMode);
 	}
 
 	public List&lt;? extends CharSequence&gt; asList() {
-<span class="pc bpc" id="L557" title="1 of 2 branches missed.">		if (displayData == null)</span>
-<span class="nc" id="L558">			return Collections.emptyList();</span>
+<span class="fc bfc" id="L557" title="All 2 branches covered.">		if (displayData == null)</span>
+<span class="fc" id="L558">			return Collections.emptyList();</span>
 <span class="fc" id="L559">		return Collections.unmodifiableList(displayData);</span>
 	}
 
@@ -595,8 +595,8 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 	}
 
 	public String toTooltipText() {
-<span class="pc bpc" id="L598" title="1 of 2 branches missed.">		if (size() == 0)</span>
-<span class="nc" id="L599">			return &quot;&quot;;</span>
+<span class="fc bfc" id="L598" title="All 2 branches covered.">		if (size() == 0)</span>
+<span class="fc" id="L599">			return &quot;&quot;;</span>
 <span class="fc" id="L600">		return get(0).toString();</span>
 	}
 
@@ -655,8 +655,8 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 <span class="nc" id="L655">				return createStereotype(fontConfiguration, horizontalAlignment, spriteContainer, size() - 1,</span>
 						fontForStereotype, htmlColorForStereotype, maxMessageSize, creoleMode, marginX1, marginX2);
 
-<span class="pc bpc" id="L658" title="1 of 2 branches missed.">			if (get(0) instanceof MessageNumber)</span>
-<span class="nc" id="L659">				return createMessageNumber(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize,</span>
+<span class="fc bfc" id="L658" title="All 2 branches covered.">			if (get(0) instanceof MessageNumber)</span>
+<span class="fc" id="L659">				return createMessageNumber(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize,</span>
 						stereotypeConfiguration, marginX1, marginX2);
 		}
 
@@ -698,12 +698,12 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 	private TextBlock createMessageNumber(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, FontConfiguration stereotypeConfiguration,
 			double marginX1, double marginX2) {
-<span class="nc" id="L701">		TextBlock tb1 = subList(0, 1).getCreole(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize,</span>
+<span class="fc" id="L701">		TextBlock tb1 = subList(0, 1).getCreole(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize,</span>
 				CreoleMode.FULL, stereotypeConfiguration, marginX1, marginX2);
-<span class="nc" id="L703">		tb1 = TextBlockUtils.withMargin(tb1, 0, 4, 0, 0);</span>
-<span class="nc" id="L704">		final TextBlock tb2 = subList(1, size()).getCreole(fontConfiguration, horizontalAlignment, spriteContainer,</span>
+<span class="fc" id="L703">		tb1 = TextBlockUtils.withMargin(tb1, 0, 4, 0, 0);</span>
+<span class="fc" id="L704">		final TextBlock tb2 = subList(1, size()).getCreole(fontConfiguration, horizontalAlignment, spriteContainer,</span>
 				maxMessageSize, CreoleMode.FULL, stereotypeConfiguration, marginX1, marginX2);
-<span class="nc" id="L706">		return TextBlockUtils.mergeLR(tb1, tb2, VerticalAlignment.CENTER);</span>
+<span class="fc" id="L706">		return TextBlockUtils.mergeLR(tb1, tb2, VerticalAlignment.CENTER);</span>
 
 	}
 

@@ -142,12 +142,12 @@ public class DecorateEntityImage implements TextBlock {
 	}
 
 	private double getTextX(final XDimension2D dimText, final XDimension2D dimTotal, HorizontalAlignment h) {
-<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		if (h == HorizontalAlignment.CENTER)</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		if (h == HorizontalAlignment.CENTER)</span>
 <span class="fc" id="L146">			return (dimTotal.getWidth() - dimText.getWidth()) / 2;</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">		else if (h == HorizontalAlignment.LEFT)</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		else if (h == HorizontalAlignment.LEFT)</span>
 <span class="nc" id="L148">			return 0;</span>
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		else if (h == HorizontalAlignment.RIGHT)</span>
-<span class="nc" id="L150">			return dimTotal.getWidth() - dimText.getWidth();</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		else if (h == HorizontalAlignment.RIGHT)</span>
+<span class="fc" id="L150">			return dimTotal.getWidth() - dimText.getWidth();</span>
 		else
 <span class="nc" id="L152">			throw new IllegalStateException();</span>
 

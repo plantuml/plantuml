@@ -390,10 +390,10 @@ public final class DiagramChromeFactory12026 {
 <span class="fc" id="L390">		group1.put(UGroupType.CLASS, &quot;header&quot;);</span>
 
 <span class="fc" id="L392">		TextBlock textHeader = null;</span>
-<span class="pc bpc" id="L393" title="1 of 2 branches missed.">		if (!header.isNull()) {</span>
-<span class="nc" id="L394">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.header)</span>
-<span class="nc" id="L395">					.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="nc" id="L396">			textHeader = header.createRibbon(FontConfiguration.create(skinParam, FontParam.HEADER, null), skinParam,</span>
+<span class="fc bfc" id="L393" title="All 2 branches covered.">		if (!header.isNull()) {</span>
+<span class="fc" id="L394">			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.header)</span>
+<span class="fc" id="L395">					.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L396">			textHeader = header.createRibbon(FontConfiguration.create(skinParam, FontParam.HEADER, null), skinParam,</span>
 					style);
 		}
 

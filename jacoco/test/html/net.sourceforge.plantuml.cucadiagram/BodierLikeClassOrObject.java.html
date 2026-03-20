@@ -100,13 +100,13 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 
 	private boolean isMethod(CharSequence s) {
 <span class="fc" id="L102">		final String purged = s.toString().replaceAll(UrlBuilder.getRegexp(), &quot;&quot;);</span>
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (purged.contains(&quot;{method}&quot;))</span>
-<span class="nc" id="L104">			return true;</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (purged.contains(&quot;{method}&quot;))</span>
+<span class="fc" id="L104">			return true;</span>
 
 <span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (purged.contains(&quot;{field}&quot;))</span>
 <span class="nc" id="L107">			return false;</span>
 
-<span class="pc bpc" id="L109" title="3 of 4 branches missed.">		return purged.contains(&quot;(&quot;) || purged.contains(&quot;)&quot;);</span>
+<span class="pc bpc" id="L109" title="1 of 4 branches missed.">		return purged.contains(&quot;(&quot;) || purged.contains(&quot;)&quot;);</span>
 	}
 
 	@Override
@@ -115,8 +115,8 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 <span class="fc" id="L115">			methodsToDisplay = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L116" title="All 2 branches covered.">			for (int i = 0; i &lt; rawBody.size(); i++) {</span>
 <span class="fc" id="L117">				final CharSequence s = rawBody.get(i);</span>
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">				if (isMethod(i, rawBody) == false)</span>
-<span class="nc" id="L119">					continue;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">				if (isMethod(i, rawBody) == false)</span>
+<span class="fc" id="L119">					continue;</span>
 
 <span class="pc bpc" id="L121" title="3 of 4 branches missed.">				if (s.length() == 0 &amp;&amp; methodsToDisplay.size() == 0)</span>
 <span class="nc" id="L122">					continue;</span>
@@ -133,7 +133,7 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 	}
 
 	private boolean isMethod(int i, List&lt;CharSequence&gt; rawBody) {
-<span class="pc bpc" id="L136" title="7 of 8 branches missed.">		if (i &gt; 0 &amp;&amp; i &lt; rawBody.size() - 1 &amp;&amp; rawBody.get(i).length() == 0 &amp;&amp; isMethod(rawBody.get(i - 1))</span>
+<span class="pc bpc" id="L136" title="3 of 8 branches missed.">		if (i &gt; 0 &amp;&amp; i &lt; rawBody.size() - 1 &amp;&amp; rawBody.get(i).length() == 0 &amp;&amp; isMethod(rawBody.get(i - 1))</span>
 <span class="nc bnc" id="L137" title="All 2 branches missed.">				&amp;&amp; isMethod(rawBody.get(i + 1))) {</span>
 <span class="nc" id="L138">			return true;</span>
 		}
@@ -145,18 +145,18 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 <span class="pc bpc" id="L145" title="1 of 2 branches missed.">		if (fieldsToDisplay == null) {</span>
 <span class="fc" id="L146">			fieldsToDisplay = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L147" title="All 2 branches covered.">			for (CharSequence s : rawBody) {</span>
-<span class="pc bpc" id="L148" title="2 of 4 branches missed.">				if (type != LeafType.OBJECT &amp;&amp; isMethod(s) == true)</span>
+<span class="pc bpc" id="L148" title="1 of 4 branches missed.">				if (type != LeafType.OBJECT &amp;&amp; isMethod(s) == true)</span>
 <span class="fc" id="L149">					continue;</span>
 
-<span class="nc bnc" id="L151" title="All 4 branches missed.">				if (s.length() == 0 &amp;&amp; fieldsToDisplay.size() == 0)</span>
+<span class="pc bpc" id="L151" title="3 of 4 branches missed.">				if (s.length() == 0 &amp;&amp; fieldsToDisplay.size() == 0)</span>
 <span class="nc" id="L152">					continue;</span>
 
-<span class="nc" id="L154">				final Member m = Member.field(s);</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">				if (hideVisibilityModifier == null</span>
-<span class="nc bnc" id="L156" title="All 2 branches missed.">						|| hideVisibilityModifier.contains(m.getVisibilityModifier()) == false)</span>
-<span class="nc" id="L157">					fieldsToDisplay.add(m);</span>
+<span class="fc" id="L154">				final Member m = Member.field(s);</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">				if (hideVisibilityModifier == null</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">						|| hideVisibilityModifier.contains(m.getVisibilityModifier()) == false)</span>
+<span class="fc" id="L157">					fieldsToDisplay.add(m);</span>
 
-<span class="nc" id="L159">			}</span>
+<span class="fc" id="L159">			}</span>
 <span class="fc" id="L160">			removeFinalEmptyMembers(fieldsToDisplay);</span>
 		}
 <span class="fc" id="L162">		return Display.create(fieldsToDisplay);</span>
@@ -236,12 +236,12 @@ import net.sourceforge.plantuml.url.UrlBuilder;
 <span class="fc" id="L236">		final MethodsOrFieldsArea fields = new MethodsOrFieldsArea(getFieldsToDisplay(), skinParam, leaf, style);</span>
 
 <span class="fc" id="L238">		final MethodsOrFieldsArea methods = new MethodsOrFieldsArea(getMethodsToDisplay(), skinParam, leaf, style);</span>
-<span class="pc bpc" id="L239" title="2 of 4 branches missed.">		if (showFields &amp;&amp; showMethods == false)</span>
+<span class="pc bpc" id="L239" title="1 of 4 branches missed.">		if (showFields &amp;&amp; showMethods == false)</span>
 <span class="nc" id="L240">			return fields.asBlockMemberImpl();</span>
-<span class="pc bpc" id="L241" title="2 of 4 branches missed.">		else if (showMethods &amp;&amp; showFields == false)</span>
-<span class="nc" id="L242">			return methods.asBlockMemberImpl();</span>
-<span class="pc bpc" id="L243" title="3 of 4 branches missed.">		else if (showFields == false &amp;&amp; showMethods == false)</span>
-<span class="nc" id="L244">			return TextBlockUtils.empty(0, 0);</span>
+<span class="fc bfc" id="L241" title="All 4 branches covered.">		else if (showMethods &amp;&amp; showFields == false)</span>
+<span class="fc" id="L242">			return methods.asBlockMemberImpl();</span>
+<span class="pc bpc" id="L243" title="1 of 4 branches missed.">		else if (showFields == false &amp;&amp; showMethods == false)</span>
+<span class="fc" id="L244">			return TextBlockUtils.empty(0, 0);</span>
 
 <span class="fc" id="L246">		final TextBlock bb1 = fields.asBlockMemberImpl();</span>
 <span class="fc" id="L247">		final TextBlock bb2 = methods.asBlockMemberImpl();</span>

@@ -139,8 +139,8 @@ public class Cluster implements Moveable {
 	private Set&lt;EntityPosition&gt; entityPositionsExceptNormal() {
 <span class="fc" id="L140">		final Set&lt;EntityPosition&gt; result = EnumSet.&lt;EntityPosition&gt;noneOf(EntityPosition.class);</span>
 <span class="fc bfc" id="L141" title="All 2 branches covered.">		for (SvekNode sh : nodes)</span>
-<span class="pc bpc" id="L142" title="1 of 2 branches missed.">			if (sh.getEntityPosition() != EntityPosition.NORMAL)</span>
-<span class="nc" id="L143">				result.add(sh.getEntityPosition());</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">			if (sh.getEntityPosition() != EntityPosition.NORMAL)</span>
+<span class="fc" id="L143">				result.add(sh.getEntityPosition());</span>
 
 <span class="fc" id="L145">		return Collections.unmodifiableSet(result);</span>
 	}
@@ -212,7 +212,7 @@ public class Cluster implements Moveable {
 	}
 
 	private boolean isNormalPosition(final SvekNode sh) {
-<span class="nc bnc" id="L215" title="All 2 branches missed.">		return sh.getEntityPosition() == EntityPosition.NORMAL;</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		return sh.getEntityPosition() == EntityPosition.NORMAL;</span>
 	}
 
 	private List&lt;SvekNode&gt; getNodesOrderedWithoutTop(Collection&lt;SvekEdge&gt; lines) {
@@ -268,7 +268,7 @@ public class Cluster implements Moveable {
 	}
 
 	public RectangleArea getRectangleArea() {
-<span class="nc" id="L271">		return rectangleArea;</span>
+<span class="fc" id="L271">		return rectangleArea;</span>
 	}
 
 	public void setTitlePosition(XPoint2D pos) {
@@ -287,10 +287,10 @@ public class Cluster implements Moveable {
 			GroupType groupType) {
 <span class="pc bpc" id="L288" title="1 of 2 branches missed.">		if (diagramStyleName == SName.stateDiagram)</span>
 <span class="nc" id="L289">			return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group);</span>
-<span class="pc bpc" id="L290" title="1 of 2 branches missed.">		if (symbol != null)</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">		if (symbol != null)</span>
 <span class="fc" id="L291">			return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.group, symbol.getSNames());</span>
-<span class="nc bnc" id="L292" title="All 2 branches missed.">		if (groupType == GroupType.PACKAGE)</span>
-<span class="nc" id="L293">			return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.package_, SName.group);</span>
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">		if (groupType == GroupType.PACKAGE)</span>
+<span class="fc" id="L293">			return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.package_, SName.group);</span>
 
 <span class="nc" id="L295">		return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.group);</span>
 	}
@@ -341,8 +341,8 @@ public class Cluster implements Moveable {
 <span class="nc" id="L341">			ug.startUrl(url);</span>
 
 		try {
-<span class="pc bpc" id="L344" title="1 of 2 branches missed.">			if (entityPositionsExceptNormal().size() &gt; 0)</span>
-<span class="nc" id="L345">				manageEntryExitPoint(ug.getStringBounder());</span>
+<span class="fc bfc" id="L344" title="All 2 branches covered.">			if (entityPositionsExceptNormal().size() &gt; 0)</span>
+<span class="fc" id="L345">				manageEntryExitPoint(ug.getStringBounder());</span>
 
 <span class="pc bpc" id="L347" title="1 of 2 branches missed.">			if (skinParam.useSwimlanes(diagramType)) {</span>
 <span class="nc" id="L348">				drawSwinLinesState(ug, borderColor);</span>
@@ -385,7 +385,7 @@ public class Cluster implements Moveable {
 
 	private Style getStyle() {
 <span class="fc" id="L387">		final DiagramType diagramType = diagram.getDiagramType();</span>
-<span class="pc bpc" id="L388" title="1 of 2 branches missed.">		final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();</span>
+<span class="fc bfc" id="L388" title="All 2 branches covered.">		final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();</span>
 <span class="fc" id="L389">		final Style style = getDefaultStyleDefinition(diagramType.getStyleName(), uSymbol, group.getGroupType())</span>
 <span class="fc" id="L390">				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 <span class="fc" id="L391">		return style;</span>
@@ -409,32 +409,32 @@ public class Cluster implements Moveable {
 	}
 
 	void manageEntryExitPoint(StringBounder stringBounder) {
-<span class="nc" id="L412">		final Collection&lt;RectangleArea&gt; insides = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L413">		final List&lt;XPoint2D&gt; points = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L414" title="All 2 branches missed.">		for (SvekNode sh : nodes)</span>
-<span class="nc bnc" id="L415" title="All 2 branches missed.">			if (isNormalPosition(sh))</span>
+<span class="fc" id="L412">		final Collection&lt;RectangleArea&gt; insides = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L413">		final List&lt;XPoint2D&gt; points = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L414" title="All 2 branches covered.">		for (SvekNode sh : nodes)</span>
+<span class="pc bpc" id="L415" title="1 of 2 branches missed.">			if (isNormalPosition(sh))</span>
 <span class="nc" id="L416">				insides.add(sh.getRectangleArea());</span>
 			else
-<span class="nc" id="L418">				points.add(sh.getRectangleArea().getPointCenter());</span>
+<span class="fc" id="L418">				points.add(sh.getRectangleArea().getPointCenter());</span>
 
-<span class="nc bnc" id="L420" title="All 2 branches missed.">		for (Cluster in : children)</span>
+<span class="pc bpc" id="L420" title="1 of 2 branches missed.">		for (Cluster in : children)</span>
 <span class="nc bnc" id="L421" title="All 2 branches missed.">			if (in.getRectangleArea() == null)</span>
 <span class="nc" id="L422">				System.err.println(&quot;Frontier null for &quot; + in);</span>
 			else
 <span class="nc" id="L424">				insides.add(in.getRectangleArea());</span>
 
-<span class="nc" id="L426">		final FrontierCalculator frontierCalculator = new FrontierCalculator(getRectangleArea(), insides, points,</span>
-<span class="nc" id="L427">				skinParam.getRankdir());</span>
-<span class="nc bnc" id="L428" title="All 4 branches missed.">		if (getTitleAndAttributeWidth() &gt; 0 &amp;&amp; getTitleAndAttributeHeight() &gt; 0)</span>
-<span class="nc" id="L429">			frontierCalculator.ensureMinWidth(getTitleAndAttributeWidth() + 10);</span>
+<span class="fc" id="L426">		final FrontierCalculator frontierCalculator = new FrontierCalculator(getRectangleArea(), insides, points,</span>
+<span class="fc" id="L427">				skinParam.getRankdir());</span>
+<span class="pc bpc" id="L428" title="2 of 4 branches missed.">		if (getTitleAndAttributeWidth() &gt; 0 &amp;&amp; getTitleAndAttributeHeight() &gt; 0)</span>
+<span class="fc" id="L429">			frontierCalculator.ensureMinWidth(getTitleAndAttributeWidth() + 10);</span>
 
-<span class="nc" id="L431">		this.rectangleArea = frontierCalculator.getSuggestedPosition();</span>
+<span class="fc" id="L431">		this.rectangleArea = frontierCalculator.getSuggestedPosition();</span>
 
-<span class="nc" id="L433">		final double widthTitle = clusterHeader.getTitle().calculateDimension(stringBounder).getWidth();</span>
-<span class="nc" id="L434">		final double minX = rectangleArea.getMinX();</span>
-<span class="nc" id="L435">		final double minY = rectangleArea.getMinY();</span>
-<span class="nc" id="L436">		this.xyTitle = new XPoint2D(minX + ((rectangleArea.getWidth() - widthTitle) / 2), minY + IEntityImage.MARGIN);</span>
-<span class="nc" id="L437">	}</span>
+<span class="fc" id="L433">		final double widthTitle = clusterHeader.getTitle().calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L434">		final double minX = rectangleArea.getMinX();</span>
+<span class="fc" id="L435">		final double minY = rectangleArea.getMinY();</span>
+<span class="fc" id="L436">		this.xyTitle = new XPoint2D(minX + ((rectangleArea.getWidth() - widthTitle) / 2), minY + IEntityImage.MARGIN);</span>
+<span class="fc" id="L437">	}</span>
 
 	private void drawSwinLinesState(UGraphic ug, HColor borderColor) {
 <span class="nc" id="L440">		clusterHeader.getTitle().drawU(ug.apply(UTranslate.dx(xyTitle.x)));</span>
@@ -693,7 +693,7 @@ public class Cluster implements Moveable {
 <span class="pc bpc" id="L693" title="1 of 2 branches missed.">		if (backColor == null)</span>
 <span class="nc" id="L694">			backColor = style.value(PName.BackGroundColor).asColor(colorSet);</span>
 
-<span class="pc bpc" id="L696" title="2 of 4 branches missed.">		if (backColor == null || backColor.equals(HColors.transparent()))</span>
+<span class="pc bpc" id="L696" title="1 of 4 branches missed.">		if (backColor == null || backColor.equals(HColors.transparent()))</span>
 <span class="fc" id="L697">			backColor = HColors.transparent();</span>
 
 <span class="fc" id="L699">		return backColor;</span>

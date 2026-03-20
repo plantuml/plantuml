@@ -61,10 +61,10 @@ public class Monomorph {
 	private List&lt;Monomorph&gt; list;
 	private Map&lt;String, Monomorph&gt; map;
 
-<span class="nc" id="L64">	public Monomorph() {</span>
+<span class="fc" id="L64">	public Monomorph() {</span>
 		// At creation, the Monomorph is undetermined
-<span class="nc" id="L66">		this.type = MonomorphType.UNDETERMINATE;</span>
-<span class="nc" id="L67">	}</span>
+<span class="fc" id="L66">		this.type = MonomorphType.UNDETERMINATE;</span>
+<span class="fc" id="L67">	}</span>
 
 	@Override
 	public String toString() {
@@ -82,69 +82,69 @@ public class Monomorph {
 	}
 
 	public void setValue(String value) {
-<span class="nc bnc" id="L85" title="All 4 branches missed.">		if (this.type == MonomorphType.LIST || this.type == MonomorphType.MAP)</span>
+<span class="pc bpc" id="L85" title="2 of 4 branches missed.">		if (this.type == MonomorphType.LIST || this.type == MonomorphType.MAP)</span>
 <span class="nc" id="L86">			throw new IllegalStateException();</span>
-<span class="nc" id="L87">		this.value = value;</span>
-<span class="nc" id="L88">		this.list = null;</span>
-<span class="nc" id="L89">		this.map = null;</span>
-<span class="nc" id="L90">		this.type = MonomorphType.SCALAR;</span>
-<span class="nc" id="L91">	}</span>
+<span class="fc" id="L87">		this.value = value;</span>
+<span class="fc" id="L88">		this.list = null;</span>
+<span class="fc" id="L89">		this.map = null;</span>
+<span class="fc" id="L90">		this.type = MonomorphType.SCALAR;</span>
+<span class="fc" id="L91">	}</span>
 
 	public void addInList(Monomorph elementToBeAdded) {
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (this.type == MonomorphType.UNDETERMINATE) {</span>
-<span class="nc" id="L95">			this.list = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L96">			this.type = MonomorphType.LIST;</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		} else if (this.type != MonomorphType.LIST) {</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (this.type == MonomorphType.UNDETERMINATE) {</span>
+<span class="fc" id="L95">			this.list = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L96">			this.type = MonomorphType.LIST;</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		} else if (this.type != MonomorphType.LIST) {</span>
 <span class="nc" id="L98">			throw new IllegalStateException(&quot;Monomorph is not of type LIST.&quot;);</span>
 		}
-<span class="nc" id="L100">		this.list.add(elementToBeAdded);</span>
-<span class="nc" id="L101">	}</span>
+<span class="fc" id="L100">		this.list.add(elementToBeAdded);</span>
+<span class="fc" id="L101">	}</span>
 
 	public void putInMap(String key, Monomorph value) {
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (this.type == MonomorphType.UNDETERMINATE) {</span>
-<span class="nc" id="L105">			this.map = new LinkedHashMap&lt;&gt;();</span>
-<span class="nc" id="L106">			this.type = MonomorphType.MAP;</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		} else if (this.type != MonomorphType.MAP) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (this.type == MonomorphType.UNDETERMINATE) {</span>
+<span class="fc" id="L105">			this.map = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L106">			this.type = MonomorphType.MAP;</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		} else if (this.type != MonomorphType.MAP) {</span>
 <span class="nc" id="L108">			throw new IllegalStateException(&quot;Monomorph is not of type MAP.&quot;);</span>
 		}
-<span class="nc" id="L110">		this.map.put(key, value);</span>
-<span class="nc" id="L111">	}</span>
+<span class="fc" id="L110">		this.map.put(key, value);</span>
+<span class="fc" id="L111">	}</span>
 
 	public MonomorphType getType() {
-<span class="nc" id="L114">		return type;</span>
+<span class="fc" id="L114">		return type;</span>
 	}
 
 	public String getValue() {
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (this.type != MonomorphType.SCALAR)</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (this.type != MonomorphType.SCALAR)</span>
 <span class="nc" id="L119">			throw new IllegalStateException(&quot;Not a scalar value.&quot;);</span>
 
-<span class="nc" id="L121">		return this.value;</span>
+<span class="fc" id="L121">		return this.value;</span>
 	}
 
 	public Monomorph getElementAt(int index) {
-<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (this.type != MonomorphType.LIST)</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (this.type != MonomorphType.LIST)</span>
 <span class="nc" id="L126">			throw new IllegalStateException(&quot;Not a list.&quot;);</span>
 
-<span class="nc" id="L128">		return this.list.get(index);</span>
+<span class="fc" id="L128">		return this.list.get(index);</span>
 	}
 
 	public Monomorph getMapValue(String key) {
-<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (this.type != MonomorphType.MAP)</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (this.type != MonomorphType.MAP)</span>
 <span class="nc" id="L133">			throw new IllegalStateException(&quot;Not a map.&quot;);</span>
 
-<span class="nc" id="L135">		return this.map.get(key);</span>
+<span class="fc" id="L135">		return this.map.get(key);</span>
 	}
 
 	public Set&lt;String&gt; keys() {
-<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (this.type != MonomorphType.MAP)</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (this.type != MonomorphType.MAP)</span>
 <span class="nc" id="L140">			throw new IllegalStateException(&quot;Not a map.&quot;);</span>
 
-<span class="nc" id="L142">		return this.map.keySet();</span>
+<span class="fc" id="L142">		return this.map.keySet();</span>
 	}
 
 	public int size() {
-<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (this.type == MonomorphType.LIST)</span>
-<span class="nc" id="L147">			return this.list.size();</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		if (this.type == MonomorphType.LIST)</span>
+<span class="fc" id="L147">			return this.list.size();</span>
 <span class="nc bnc" id="L148" title="All 2 branches missed.">		else if (this.type == MonomorphType.MAP)</span>
 <span class="nc" id="L149">			return this.map.size();</span>
 
@@ -152,21 +152,21 @@ public class Monomorph {
 	}
 
 	public static Monomorph scalar(String value) {
-<span class="nc" id="L155">		final Monomorph result = new Monomorph();</span>
-<span class="nc" id="L156">		result.setValue(value);</span>
-<span class="nc" id="L157">		return result;</span>
+<span class="fc" id="L155">		final Monomorph result = new Monomorph();</span>
+<span class="fc" id="L156">		result.setValue(value);</span>
+<span class="fc" id="L157">		return result;</span>
 	}
 
 	public static Monomorph list(List&lt;String&gt; input) {
-<span class="nc" id="L161">		final Monomorph result = new Monomorph();</span>
+<span class="fc" id="L161">		final Monomorph result = new Monomorph();</span>
 		// If input is an empty list!
-<span class="nc" id="L163">		result.list = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L164">		result.type = MonomorphType.LIST;</span>
+<span class="fc" id="L163">		result.list = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L164">		result.type = MonomorphType.LIST;</span>
 
-<span class="nc bnc" id="L166" title="All 2 branches missed.">		for (String s : input)</span>
-<span class="nc" id="L167">			result.addInList(Monomorph.scalar(s));</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		for (String s : input)</span>
+<span class="fc" id="L167">			result.addInList(Monomorph.scalar(s));</span>
 
-<span class="nc" id="L169">		return result;</span>
+<span class="fc" id="L169">		return result;</span>
 	}
 
 }

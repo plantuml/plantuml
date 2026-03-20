@@ -88,7 +88,7 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 <span class="fc" id="L88">	private boolean compactByDefault = false;</span>
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L91">		return new DiagramDescription(&quot;(Timing Diagram)&quot;);</span>
+<span class="fc" id="L91">		return new DiagramDescription(&quot;(Timing Diagram)&quot;);</span>
 	}
 
 	public TimingDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
@@ -97,191 +97,191 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L100">		final TextBlock result = new TextBlock() {</span>
+<span class="fc" id="L100">		final TextBlock result = new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L103">				drawInternal(ug);</span>
-<span class="nc" id="L104">			}</span>
+<span class="fc" id="L103">				drawInternal(ug);</span>
+<span class="fc" id="L104">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L107">				final double withBeforeRuler = getPart1MaxWidth(stringBounder);</span>
-<span class="nc" id="L108">				final double totalWith = withBeforeRuler + ruler.getWidth() + marginX1 + marginX2;</span>
-<span class="nc" id="L109">				return new XDimension2D(totalWith, getHeightTotal(stringBounder));</span>
+<span class="fc" id="L107">				final double withBeforeRuler = getPart1MaxWidth(stringBounder);</span>
+<span class="fc" id="L108">				final double totalWith = withBeforeRuler + ruler.getWidth() + marginX1 + marginX2;</span>
+<span class="fc" id="L109">				return new XDimension2D(totalWith, getHeightTotal(stringBounder));</span>
 			}
 
 		};
-<span class="nc" id="L113">		return TextBlockUtils.withMargin(result, 10, 10);</span>
+<span class="fc" id="L113">		return TextBlockUtils.withMargin(result, 10, 10);</span>
 	}
 
 	private StyleSignatureBasic getStyleSignature() {
-<span class="nc" id="L117">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram);</span>
+<span class="fc" id="L117">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram);</span>
 	}
 
 	private HColor black() {
-<span class="nc" id="L121">		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L122">		return style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L121">		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L122">		return style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
 	}
 
 	private void drawInternal(UGraphic ug) {
-<span class="nc" id="L127">		ruler.ensureNotEmpty();</span>
-<span class="nc" id="L128">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L129">		final double part1MaxWidth = getPart1MaxWidth(stringBounder);</span>
+<span class="fc" id="L127">		ruler.ensureNotEmpty();</span>
+<span class="fc" id="L128">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L129">		final double part1MaxWidth = getPart1MaxWidth(stringBounder);</span>
 
-<span class="nc bnc" id="L131" title="All 2 branches missed.">		for (Player player : players.values()) {</span>
-<span class="nc" id="L132">			final HColor generalBackgroundColor = player.getGeneralBackgroundColor();</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">			if (generalBackgroundColor != null) {</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		for (Player player : players.values()) {</span>
+<span class="fc" id="L132">			final HColor generalBackgroundColor = player.getGeneralBackgroundColor();</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">			if (generalBackgroundColor != null) {</span>
 <span class="nc" id="L134">				UGraphic ugPlayer = ug.apply(getUTranslateForPlayerFrame(player, stringBounder));</span>
 <span class="nc" id="L135">				final double fullHeight = player.getFrameHeight(stringBounder)</span>
 <span class="nc" id="L136">						+ player.panels().getFullHeight(stringBounder);</span>
 <span class="nc" id="L137">				ugPlayer = ugPlayer.apply(generalBackgroundColor).apply(generalBackgroundColor.bg());</span>
 <span class="nc" id="L138">				ugPlayer.draw(URectangle.build(getWidthTotal(stringBounder), fullHeight));</span>
 			}
-<span class="nc" id="L140">		}</span>
+<span class="fc" id="L140">		}</span>
 
-<span class="nc" id="L142">		final UTranslate widthPart1 = UTranslate.dx(part1MaxWidth);</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (compactByDefault == false)</span>
-<span class="nc" id="L144">			drawBorder(ug);</span>
+<span class="fc" id="L142">		final UTranslate widthPart1 = UTranslate.dx(part1MaxWidth);</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		if (compactByDefault == false)</span>
+<span class="fc" id="L144">			drawBorder(ug);</span>
 
-<span class="nc" id="L146">		ug = ug.apply(UTranslate.dx(marginX1));</span>
+<span class="fc" id="L146">		ug = ug.apply(UTranslate.dx(marginX1));</span>
 
-<span class="nc" id="L148">		drawHighlightsBack(ug.apply(widthPart1));</span>
-<span class="nc" id="L149">		ruler.drawVlines(ug.apply(widthPart1), getHeightInner(stringBounder));</span>
+<span class="fc" id="L148">		drawHighlightsBack(ug.apply(widthPart1));</span>
+<span class="fc" id="L149">		ruler.drawVlines(ug.apply(widthPart1), getHeightInner(stringBounder));</span>
 
-<span class="nc bnc" id="L151" title="All 2 branches missed.">		for (Player player : players.values()) {</span>
-<span class="nc" id="L152">			final UGraphic ugPlayer = ug.apply(getUTranslateForPlayer(player, stringBounder));</span>
-<span class="nc" id="L153">			final UGraphic ugFrame = ug.apply(getUTranslateForPlayerFrame(player, stringBounder));</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">			if (player.isCompact() == false)</span>
-<span class="nc" id="L155">				drawHorizontalSeparator(ugFrame);</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		for (Player player : players.values()) {</span>
+<span class="fc" id="L152">			final UGraphic ugPlayer = ug.apply(getUTranslateForPlayer(player, stringBounder));</span>
+<span class="fc" id="L153">			final UGraphic ugFrame = ug.apply(getUTranslateForPlayerFrame(player, stringBounder));</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">			if (player.isCompact() == false)</span>
+<span class="fc" id="L155">				drawHorizontalSeparator(ugFrame);</span>
 
-<span class="nc" id="L157">			player.drawFrameTitle(ugFrame);</span>
-<span class="nc" id="L158">			final Panels panels = player.panels();</span>
-<span class="nc" id="L159">			panels.drawLeftPanel(ugPlayer, part1MaxWidth);</span>
-<span class="nc" id="L160">			panels.drawRightPanel(ugPlayer.apply(widthPart1));</span>
-<span class="nc" id="L161">		}</span>
+<span class="fc" id="L157">			player.drawFrameTitle(ugFrame);</span>
+<span class="fc" id="L158">			final Panels panels = player.panels();</span>
+<span class="fc" id="L159">			panels.drawLeftPanel(ugPlayer, part1MaxWidth);</span>
+<span class="fc" id="L160">			panels.drawRightPanel(ugPlayer.apply(widthPart1));</span>
+<span class="fc" id="L161">		}</span>
 
-<span class="nc" id="L163">		ug = ug.apply(widthPart1);</span>
-<span class="nc" id="L164">		ruler.drawTimeAxis(ug.apply(getLastTranslate(stringBounder)), this.timeAxisStategy, codes);</span>
+<span class="fc" id="L163">		ug = ug.apply(widthPart1);</span>
+<span class="fc" id="L164">		ruler.drawTimeAxis(ug.apply(getLastTranslate(stringBounder)), this.timeAxisStategy, codes);</span>
 
-<span class="nc bnc" id="L166" title="All 2 branches missed.">		for (TimeMessage timeMessage : messages)</span>
-<span class="nc" id="L167">			drawMessages(ug, timeMessage);</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		for (TimeMessage timeMessage : messages)</span>
+<span class="fc" id="L167">			drawMessages(ug, timeMessage);</span>
 
-<span class="nc" id="L169">		drawHighlightsLines(ug);</span>
-<span class="nc" id="L170">	}</span>
+<span class="fc" id="L169">		drawHighlightsLines(ug);</span>
+<span class="fc" id="L170">	}</span>
 
 	private void drawHorizontalSeparator(UGraphic ug) {
-<span class="nc" id="L173">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L174">		ug = ug.apply(black());</span>
-<span class="nc" id="L175">		ug = ug.apply(getBorderStroke());</span>
-<span class="nc" id="L176">		ug = ug.apply(UTranslate.dx(-marginX1));</span>
-<span class="nc" id="L177">		ug.draw(ULine.hline(getWidthTotal(stringBounder)));</span>
-<span class="nc" id="L178">	}</span>
+<span class="fc" id="L173">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L174">		ug = ug.apply(black());</span>
+<span class="fc" id="L175">		ug = ug.apply(getBorderStroke());</span>
+<span class="fc" id="L176">		ug = ug.apply(UTranslate.dx(-marginX1));</span>
+<span class="fc" id="L177">		ug.draw(ULine.hline(getWidthTotal(stringBounder)));</span>
+<span class="fc" id="L178">	}</span>
 
 	private void drawBorder(UGraphic ug) {
-<span class="nc" id="L181">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L182">		final ULine border = ULine.vline(getLastTranslate(stringBounder).getDy());</span>
-<span class="nc" id="L183">		ug = ug.apply(black()).apply(getBorderStroke());</span>
-<span class="nc" id="L184">		ug.draw(border);</span>
-<span class="nc" id="L185">		ug.apply(UTranslate.dx(getWidthTotal(stringBounder))).draw(border);</span>
-<span class="nc" id="L186">	}</span>
+<span class="fc" id="L181">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L182">		final ULine border = ULine.vline(getLastTranslate(stringBounder).getDy());</span>
+<span class="fc" id="L183">		ug = ug.apply(black()).apply(getBorderStroke());</span>
+<span class="fc" id="L184">		ug.draw(border);</span>
+<span class="fc" id="L185">		ug.apply(UTranslate.dx(getWidthTotal(stringBounder))).draw(border);</span>
+<span class="fc" id="L186">	}</span>
 
 	private UStroke getBorderStroke() {
-<span class="nc" id="L189">		return getStyleSignature().getMergedStyle(getCurrentStyleBuilder()).getStroke();</span>
+<span class="fc" id="L189">		return getStyleSignature().getMergedStyle(getCurrentStyleBuilder()).getStroke();</span>
 	}
 
 	private UTranslate getLastTranslate(final StringBounder stringBounder) {
-<span class="nc" id="L193">		return getUTranslateForPlayer(null, stringBounder);</span>
+<span class="fc" id="L193">		return getUTranslateForPlayer(null, stringBounder);</span>
 	}
 
 	private void drawHighlightsBack(UGraphic ug) {
-<span class="nc" id="L197">		final double height = getHeightInner(ug.getStringBounder());</span>
-<span class="nc bnc" id="L198" title="All 2 branches missed.">		for (Highlight highlight : highlights)</span>
+<span class="fc" id="L197">		final double height = getHeightInner(ug.getStringBounder());</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">		for (Highlight highlight : highlights)</span>
 <span class="nc" id="L199">			highlight.drawHighlightsBack(ug, ruler, height);</span>
 
-<span class="nc" id="L201">	}</span>
+<span class="fc" id="L201">	}</span>
 
 	private void drawHighlightsLines(UGraphic ug) {
-<span class="nc" id="L204">		final double height = getHeightInner(ug.getStringBounder());</span>
-<span class="nc bnc" id="L205" title="All 2 branches missed.">		for (Highlight highlight : highlights) {</span>
+<span class="fc" id="L204">		final double height = getHeightInner(ug.getStringBounder());</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">		for (Highlight highlight : highlights) {</span>
 <span class="nc" id="L206">			highlight.drawHighlightsLines(ug, ruler, height);</span>
 <span class="nc" id="L207">			final double start = ruler.getPosInPixel(highlight.getTickFrom());</span>
 <span class="nc" id="L208">			highlight.getCaption(getSkinParam()).drawU(ug.apply(new UTranslate(start + 3, 2)));</span>
 <span class="nc" id="L209">		}</span>
-<span class="nc" id="L210">	}</span>
+<span class="fc" id="L210">	}</span>
 
 	private double getHeightTotal(StringBounder stringBounder) {
-<span class="nc" id="L213">		return getHeightInner(stringBounder) + ruler.getHeight(stringBounder);</span>
+<span class="fc" id="L213">		return getHeightInner(stringBounder) + ruler.getHeight(stringBounder);</span>
 	}
 
 	private double getHeightInner(StringBounder stringBounder) {
-<span class="nc" id="L217">		return getLastTranslate(stringBounder).getDy();</span>
+<span class="fc" id="L217">		return getLastTranslate(stringBounder).getDy();</span>
 	}
 
 	private double getWidthTotal(final StringBounder stringBounder) {
-<span class="nc" id="L221">		return getPart1MaxWidth(stringBounder) + ruler.getWidth() + marginX1 + marginX2;</span>
+<span class="fc" id="L221">		return getPart1MaxWidth(stringBounder) + ruler.getWidth() + marginX1 + marginX2;</span>
 	}
 
 	private double getPart1MaxWidth(StringBounder stringBounder) {
-<span class="nc" id="L225">		double width = 0;</span>
-<span class="nc bnc" id="L226" title="All 2 branches missed.">		for (Player player : players.values()) {</span>
-<span class="nc" id="L227">			final double widthLeftPanel = player.panels().getLeftPanelWidth(stringBounder);</span>
-<span class="nc" id="L228">			width = Math.max(width, widthLeftPanel);</span>
-<span class="nc" id="L229">		}</span>
+<span class="fc" id="L225">		double width = 0;</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">		for (Player player : players.values()) {</span>
+<span class="fc" id="L227">			final double widthLeftPanel = player.panels().getLeftPanelWidth(stringBounder);</span>
+<span class="fc" id="L228">			width = Math.max(width, widthLeftPanel);</span>
+<span class="fc" id="L229">		}</span>
 
-<span class="nc" id="L231">		return width;</span>
+<span class="fc" id="L231">		return width;</span>
 	}
 
 	private void drawMessages(UGraphic ug, TimeMessage message) {
-<span class="nc" id="L235">		final Player player1 = message.getPlayer1();</span>
-<span class="nc" id="L236">		final Player player2 = message.getPlayer2();</span>
+<span class="fc" id="L235">		final Player player1 = message.getPlayer1();</span>
+<span class="fc" id="L236">		final Player player2 = message.getPlayer2();</span>
 
-<span class="nc" id="L238">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L238">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc" id="L240">		final UTranslate translate1 = getUTranslateForPlayer(player1, stringBounder);</span>
-<span class="nc" id="L241">		final UTranslate translate2 = getUTranslateForPlayer(player2, stringBounder);</span>
+<span class="fc" id="L240">		final UTranslate translate1 = getUTranslateForPlayer(player1, stringBounder);</span>
+<span class="fc" id="L241">		final UTranslate translate2 = getUTranslateForPlayer(player2, stringBounder);</span>
 
-<span class="nc" id="L243">		final IntricatedPoint pt1 = player1.panels().getTimeProjection(stringBounder, message.getTick1());</span>
-<span class="nc" id="L244">		final IntricatedPoint pt2 = player2.panels().getTimeProjection(stringBounder, message.getTick2());</span>
+<span class="fc" id="L243">		final IntricatedPoint pt1 = player1.panels().getTimeProjection(stringBounder, message.getTick1());</span>
+<span class="fc" id="L244">		final IntricatedPoint pt2 = player2.panels().getTimeProjection(stringBounder, message.getTick2());</span>
 
-<span class="nc bnc" id="L246" title="All 4 branches missed.">		if (pt1 == null || pt2 == null)</span>
+<span class="pc bpc" id="L246" title="2 of 4 branches missed.">		if (pt1 == null || pt2 == null)</span>
 <span class="nc" id="L247">			return;</span>
 
-<span class="nc" id="L249">		final TimeArrow timeArrow = TimeArrow.create(pt1.translated(translate1), pt2.translated(translate2),</span>
-<span class="nc" id="L250">				message.getLabel(), getSkinParam(), message);</span>
-<span class="nc" id="L251">		timeArrow.drawU(ug);</span>
+<span class="fc" id="L249">		final TimeArrow timeArrow = TimeArrow.create(pt1.translated(translate1), pt2.translated(translate2),</span>
+<span class="fc" id="L250">				message.getLabel(), getSkinParam(), message);</span>
+<span class="fc" id="L251">		timeArrow.drawU(ug);</span>
 
-<span class="nc" id="L253">	}</span>
+<span class="fc" id="L253">	}</span>
 
 	private UTranslate getUTranslateForPlayer(Player candidat, StringBounder stringBounder) {
-<span class="nc" id="L256">		double y = 0;</span>
-<span class="nc bnc" id="L257" title="All 2 branches missed.">		for (Player player : players.values()) {</span>
-<span class="nc" id="L258">			y += player.getFrameHeight(stringBounder);</span>
-<span class="nc bnc" id="L259" title="All 2 branches missed.">			if (candidat == player)</span>
-<span class="nc" id="L260">				return UTranslate.dy(y);</span>
+<span class="fc" id="L256">		double y = 0;</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">		for (Player player : players.values()) {</span>
+<span class="fc" id="L258">			y += player.getFrameHeight(stringBounder);</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">			if (candidat == player)</span>
+<span class="fc" id="L260">				return UTranslate.dy(y);</span>
 
 //			if (y == 0) {
 //				y += getHeightHighlights(stringBounder);
 //			}
-<span class="nc" id="L265">			y += player.panels().getFullHeight(stringBounder);</span>
-<span class="nc" id="L266">		}</span>
-<span class="nc bnc" id="L267" title="All 2 branches missed.">		if (candidat == null)</span>
-<span class="nc" id="L268">			return UTranslate.dy(y);</span>
+<span class="fc" id="L265">			y += player.panels().getFullHeight(stringBounder);</span>
+<span class="fc" id="L266">		}</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (candidat == null)</span>
+<span class="fc" id="L268">			return UTranslate.dy(y);</span>
 
 <span class="nc" id="L270">		throw new IllegalArgumentException();</span>
 	}
 
 	private UTranslate getUTranslateForPlayerFrame(Player candidat, StringBounder stringBounder) {
-<span class="nc" id="L274">		double y = 0;</span>
-<span class="nc bnc" id="L275" title="All 2 branches missed.">		for (Player player : players.values()) {</span>
-<span class="nc bnc" id="L276" title="All 2 branches missed.">			if (candidat == player)</span>
-<span class="nc" id="L277">				return UTranslate.dy(y);</span>
+<span class="fc" id="L274">		double y = 0;</span>
+<span class="pc bpc" id="L275" title="1 of 2 branches missed.">		for (Player player : players.values()) {</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">			if (candidat == player)</span>
+<span class="fc" id="L277">				return UTranslate.dy(y);</span>
 
 //			if (y == 0) {
 //				y += getHeightHighlights(stringBounder);
 //			}
-<span class="nc" id="L282">			y += player.getFrameHeight(stringBounder);</span>
-<span class="nc" id="L283">			y += player.panels().getFullHeight(stringBounder);</span>
-<span class="nc" id="L284">		}</span>
+<span class="fc" id="L282">			y += player.getFrameHeight(stringBounder);</span>
+<span class="fc" id="L283">			y += player.panels().getFullHeight(stringBounder);</span>
+<span class="fc" id="L284">		}</span>
 <span class="nc bnc" id="L285" title="All 2 branches missed.">		if (candidat == null)</span>
 <span class="nc" id="L286">			return UTranslate.dy(y);</span>
 
@@ -290,20 +290,20 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 
 	public Player createPlayerRobust(String code, String full, boolean compact, Stereotype stereotype,
 			HColor backColor) {
-<span class="nc bnc" id="L293" title="All 4 branches missed.">		final Player player = new PlayerRobust(full, getSkinParam(), ruler, compactByDefault || compact, stereotype,</span>
+<span class="pc bpc" id="L293" title="2 of 4 branches missed.">		final Player player = new PlayerRobust(full, getSkinParam(), ruler, compactByDefault || compact, stereotype,</span>
 				backColor);
-<span class="nc" id="L295">		players.put(code, player);</span>
-<span class="nc" id="L296">		lastPlayer = player;</span>
-<span class="nc" id="L297">		return player;</span>
+<span class="fc" id="L295">		players.put(code, player);</span>
+<span class="fc" id="L296">		lastPlayer = player;</span>
+<span class="fc" id="L297">		return player;</span>
 	}
 
 	public Player createPlayerConcise(String code, String full, boolean compact, Stereotype stereotype,
 			HColor backColor) {
-<span class="nc bnc" id="L302" title="All 4 branches missed.">		final Player player = new PlayerConcise(full, getSkinParam(), ruler, compactByDefault || compact, stereotype,</span>
+<span class="pc bpc" id="L302" title="2 of 4 branches missed.">		final Player player = new PlayerConcise(full, getSkinParam(), ruler, compactByDefault || compact, stereotype,</span>
 				backColor);
-<span class="nc" id="L304">		players.put(code, player);</span>
-<span class="nc" id="L305">		lastPlayer = player;</span>
-<span class="nc" id="L306">		return player;</span>
+<span class="fc" id="L304">		players.put(code, player);</span>
+<span class="fc" id="L305">		lastPlayer = player;</span>
+<span class="fc" id="L306">		return player;</span>
 	}
 
 	public Player createPlayerRectangle(String code, String full, boolean compact, Stereotype stereotype,
@@ -339,34 +339,34 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 	}
 
 	public TimeMessage createTimeMessage(Player player1, TimeTick time1, Player player2, TimeTick time2, String label) {
-<span class="nc" id="L342">		final TimeMessage message = new TimeMessage(new TickInPlayer(player1, time1), new TickInPlayer(player2, time2),</span>
-<span class="nc" id="L343">				label, getSkinParam());</span>
-<span class="nc" id="L344">		messages.add(message);</span>
-<span class="nc" id="L345">		return message;</span>
+<span class="fc" id="L342">		final TimeMessage message = new TimeMessage(new TickInPlayer(player1, time1), new TickInPlayer(player2, time2),</span>
+<span class="fc" id="L343">				label, getSkinParam());</span>
+<span class="fc" id="L344">		messages.add(message);</span>
+<span class="fc" id="L345">		return message;</span>
 	}
 
 	public void addTime(TimeTick time, String code) {
-<span class="nc" id="L349">		this.now = time;</span>
-<span class="nc" id="L350">		ruler.addTime(time);</span>
-<span class="nc bnc" id="L351" title="All 2 branches missed.">		if (code != null)</span>
+<span class="fc" id="L349">		this.now = time;</span>
+<span class="fc" id="L350">		ruler.addTime(time);</span>
+<span class="pc bpc" id="L351" title="1 of 2 branches missed.">		if (code != null)</span>
 <span class="nc" id="L352">			this.codes.put(code, time);</span>
 
-<span class="nc" id="L354">	}</span>
+<span class="fc" id="L354">	}</span>
 
 	public TimeTick getCodeValue(String code) {
 <span class="nc" id="L357">		return codes.get(code);</span>
 	}
 
 	public void updateNow(TimeTick time) {
-<span class="nc" id="L361">		this.now = time;</span>
-<span class="nc" id="L362">	}</span>
+<span class="fc" id="L361">		this.now = time;</span>
+<span class="fc" id="L362">	}</span>
 
 	public Player getPlayer(String code) {
-<span class="nc" id="L365">		return players.get(code);</span>
+<span class="fc" id="L365">		return players.get(code);</span>
 	}
 
 	public TimeTick getNow() {
-<span class="nc" id="L369">		return now;</span>
+<span class="fc" id="L369">		return now;</span>
 	}
 
 	public TimeTick getClockValue(String clockName, int nb) {
@@ -378,11 +378,11 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 	}
 
 	public void setLastPlayer(Player player) {
-<span class="nc" id="L381">		this.lastPlayer = player;</span>
-<span class="nc" id="L382">	}</span>
+<span class="fc" id="L381">		this.lastPlayer = player;</span>
+<span class="fc" id="L382">	}</span>
 
 	public Player getLastPlayer() {
-<span class="nc" id="L385">		return lastPlayer;</span>
+<span class="fc" id="L385">		return lastPlayer;</span>
 	}
 
 	public void scaleInPixels(long tick, long pixel) {

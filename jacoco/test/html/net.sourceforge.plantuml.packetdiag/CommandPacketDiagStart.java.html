@@ -48,19 +48,19 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandPacketDiagStart extends SingleLineCommand2&lt;PacketDiagram&gt; {
 
 	public CommandPacketDiagStart() {
-<span class="nc" id="L51">		super(getRegexConcat());</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L51">		super(getRegexConcat());</span>
+<span class="fc" id="L52">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L55">		return RegexConcat.build(CommandPacketDiagStart.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L55">		return RegexConcat.build(CommandPacketDiagStart.class.getName(), RegexLeaf.start(), //</span>
 						new RegexLeaf(1, &quot;TYPE&quot;, &quot;(packetdiag)?&quot;), //
-<span class="nc" id="L57">						RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="nc" id="L58">						new RegexLeaf(&quot;\\{?&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L57">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L58">						new RegexLeaf(&quot;\\{?&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L63">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L63">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

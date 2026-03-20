@@ -172,8 +172,8 @@ public class CommandCreateElementFull extends SingleLineCommand2&lt;DescriptionD
 			} else {
 <span class="fc" id="L173">				symbol = &quot;actor&quot;;</span>
 			}
-<span class="pc bpc" id="L175" title="2 of 4 branches missed.">		} else if (codeChar == '[' || codeDisplay == '[') {</span>
-<span class="nc" id="L176">			symbol = &quot;component&quot;;</span>
+<span class="pc bpc" id="L175" title="1 of 4 branches missed.">		} else if (codeChar == '[' || codeDisplay == '[') {</span>
+<span class="fc" id="L176">			symbol = &quot;component&quot;;</span>
 		} else {
 <span class="fc" id="L178">			symbol = arg.get(&quot;SYMBOL&quot;, 0);</span>
 		}
@@ -184,12 +184,12 @@ public class CommandCreateElementFull extends SingleLineCommand2&lt;DescriptionD
 <span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (symbol == null) {</span>
 <span class="nc" id="L185">			type = LeafType.DESCRIPTION;</span>
 <span class="nc" id="L186">			usymbol = diagram.getSkinParam().actorStyle().toUSymbol();</span>
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;portin&quot;)) {</span>
-<span class="nc" id="L188">			type = LeafType.PORTIN;</span>
-<span class="nc" id="L189">			usymbol = null;</span>
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;portout&quot;)) {</span>
-<span class="nc" id="L191">			type = LeafType.PORTOUT;</span>
-<span class="nc" id="L192">			usymbol = null;</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">		} else if (symbol.equalsIgnoreCase(&quot;portin&quot;)) {</span>
+<span class="fc" id="L188">			type = LeafType.PORTIN;</span>
+<span class="fc" id="L189">			usymbol = null;</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		} else if (symbol.equalsIgnoreCase(&quot;portout&quot;)) {</span>
+<span class="fc" id="L191">			type = LeafType.PORTOUT;</span>
+<span class="fc" id="L192">			usymbol = null;</span>
 <span class="pc bpc" id="L193" title="1 of 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;port&quot;)) {</span>
 <span class="nc" id="L194">			type = LeafType.PORTIN;</span>
 <span class="nc" id="L195">			usymbol = null;</span>
@@ -224,7 +224,7 @@ public class CommandCreateElementFull extends SingleLineCommand2&lt;DescriptionD
 <span class="pc bpc" id="L224" title="1 of 2 branches missed.">		if (existsWithBadType3(diagram, quark, type, usymbol))</span>
 <span class="nc" id="L225">			return CommandExecutionResult.error(&quot;This element (&quot; + quark.getName() + &quot;) is already defined&quot;);</span>
 
-<span class="pc bpc" id="L227" title="4 of 6 branches missed.">		if ((type == LeafType.PORTIN || type == LeafType.PORTOUT) &amp;&amp; diagram.getCurrentGroup().isRoot())</span>
+<span class="pc bpc" id="L227" title="1 of 6 branches missed.">		if ((type == LeafType.PORTIN || type == LeafType.PORTOUT) &amp;&amp; diagram.getCurrentGroup().isRoot())</span>
 <span class="nc" id="L228">			return CommandExecutionResult.error(&quot;Port can only be used inside an element and not at root level&quot;);</span>
 
 <span class="fc" id="L230">		Entity entity = quark.getData();</span>

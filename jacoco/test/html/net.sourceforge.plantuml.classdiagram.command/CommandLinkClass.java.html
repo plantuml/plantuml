@@ -192,18 +192,18 @@ final public class CommandLinkClass extends SingleLineCommand2&lt;AbstractClassO
 <span class="nc" id="L192">			return CommandExecutionResult.error(quark2.getError());</span>
 
 <span class="fc" id="L194">		Entity cl1 = quark1.get().getData();</span>
-<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		if (cl1 == null)</span>
-<span class="nc" id="L196">			cl1 = diagram.reallyCreateLeaf(location, quark1.get(),</span>
-<span class="nc" id="L197">					Display.getWithNewlines(diagram.getPragma(), quark1.get().getName()), LeafType.CLASS, null);</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">		if (cl1 == null)</span>
+<span class="fc" id="L196">			cl1 = diagram.reallyCreateLeaf(location, quark1.get(),</span>
+<span class="fc" id="L197">					Display.getWithNewlines(diagram.getPragma(), quark1.get().getName()), LeafType.CLASS, null);</span>
 <span class="fc" id="L198">		Entity cl2 = quark2.get().getData();</span>
-<span class="pc bpc" id="L199" title="1 of 2 branches missed.">		if (cl2 == null)</span>
-<span class="nc" id="L200">			cl2 = diagram.reallyCreateLeaf(location, quark2.get(),</span>
-<span class="nc" id="L201">					Display.getWithNewlines(diagram.getPragma(), quark2.get().getName()), LeafType.CLASS, null);</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">		if (cl2 == null)</span>
+<span class="fc" id="L200">			cl2 = diagram.reallyCreateLeaf(location, quark2.get(),</span>
+<span class="fc" id="L201">					Display.getWithNewlines(diagram.getPragma(), quark2.get().getName()), LeafType.CLASS, null);</span>
 
 <span class="fc" id="L203">		final Direction dir = getDirection(arg);</span>
 		final int queue;
-<span class="pc bpc" id="L205" title="2 of 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.RIGHT)</span>
-<span class="nc" id="L206">			queue = 1;</span>
+<span class="fc bfc" id="L205" title="All 4 branches covered.">		if (dir == Direction.LEFT || dir == Direction.RIGHT)</span>
+<span class="fc" id="L206">			queue = 1;</span>
 		else
 <span class="fc" id="L208">			queue = getQueueLength(arg);</span>
 
@@ -228,8 +228,8 @@ final public class CommandLinkClass extends SingleLineCommand2&lt;AbstractClassO
 		}
 <span class="fc" id="L229">		link.setPortMembers(port1, port2);</span>
 
-<span class="pc bpc" id="L231" title="2 of 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.UP)</span>
-<span class="nc" id="L232">			link = link.getInv();</span>
+<span class="fc bfc" id="L231" title="All 4 branches covered.">		if (dir == Direction.LEFT || dir == Direction.UP)</span>
+<span class="fc" id="L232">			link = link.getInv();</span>
 
 <span class="fc" id="L234">		link.setLinkArrow(labels.getLinkArrow());</span>
 <span class="fc" id="L235">		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));</span>
@@ -360,8 +360,8 @@ final public class CommandLinkClass extends SingleLineCommand2&lt;AbstractClassO
 <span class="fc" id="L360">		final LinkDecor decors2 = LinkDecor.lookupDecors2(getArrowHead2(arg));</span>
 
 <span class="fc" id="L362">		LinkType result = new LinkType(decors2, decors1);</span>
-<span class="pc bpc" id="L363" title="2 of 4 branches missed.">		if (arg.get(&quot;ARROW_BODY1&quot;, 0).contains(&quot;.&quot;) || arg.get(&quot;ARROW_BODY2&quot;, 0).contains(&quot;.&quot;))</span>
-<span class="nc" id="L364">			result = result.goDashed();</span>
+<span class="pc bpc" id="L363" title="1 of 4 branches missed.">		if (arg.get(&quot;ARROW_BODY1&quot;, 0).contains(&quot;.&quot;) || arg.get(&quot;ARROW_BODY2&quot;, 0).contains(&quot;.&quot;))</span>
+<span class="fc" id="L364">			result = result.goDashed();</span>
 
 <span class="fc" id="L366">		final String middle = arg.get(&quot;INSIDE&quot;, 0);</span>
 <span class="pc bpc" id="L367" title="1 of 2 branches missed.">		if (&quot;0&quot;.equals(middle))</span>
@@ -385,8 +385,8 @@ final public class CommandLinkClass extends SingleLineCommand2&lt;AbstractClassO
 	private Direction getDirection(RegexResult arg) {
 <span class="fc" id="L386">		String s = getFullArrow(arg);</span>
 <span class="fc" id="L387">		s = s.replaceAll(&quot;[^-.=\\w]&quot;, &quot;&quot;);</span>
-<span class="pc bpc" id="L388" title="1 of 2 branches missed.">		if (s.startsWith(&quot;o&quot;))</span>
-<span class="nc" id="L389">			s = s.substring(1);</span>
+<span class="fc bfc" id="L388" title="All 2 branches covered.">		if (s.startsWith(&quot;o&quot;))</span>
+<span class="fc" id="L389">			s = s.substring(1);</span>
 
 <span class="pc bpc" id="L391" title="1 of 2 branches missed.">		if (s.endsWith(&quot;o&quot;))</span>
 <span class="nc" id="L392">			s = s.substring(0, s.length() - 1);</span>

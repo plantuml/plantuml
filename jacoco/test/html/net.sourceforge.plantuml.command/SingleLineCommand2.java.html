@@ -124,7 +124,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 	}
 
 	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass) {
-<span class="pc bpc" id="L127" title="3 of 4 branches missed.">		if (syntaxWithFinalBracket() &amp;&amp; lines.size() == 2) {</span>
+<span class="pc bpc" id="L127" title="1 of 4 branches missed.">		if (syntaxWithFinalBracket() &amp;&amp; lines.size() == 2) {</span>
 <span class="nc bnc" id="L128" title="All 4 branches missed.">			if (TeaVM.a()) assert myTrim(lines.getAt(1)).equals(&quot;{&quot;);</span>
 <span class="nc" id="L129">			lines = BlocLines.singleString(lines.getFirst().getString() + &quot; {&quot;);</span>
 		}
@@ -145,8 +145,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 		try {
 <span class="fc" id="L147">			return executeArg(system, first.getLocation(), arg, currentPass);</span>
-<span class="nc" id="L148">		} catch (NoSuchColorException e) {</span>
-<span class="nc" id="L149">			return CommandExecutionResult.badColor();</span>
+<span class="fc" id="L148">		} catch (NoSuchColorException e) {</span>
+<span class="fc" id="L149">			return CommandExecutionResult.badColor();</span>
 		}
 	}
 

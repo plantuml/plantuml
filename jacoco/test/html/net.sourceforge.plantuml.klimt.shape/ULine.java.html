@@ -57,8 +57,8 @@ public class ULine extends AbstractShadowable implements UShapeSized {
 <span class="fc" id="L57">	}</span>
 
 	public ULine rotate(double theta) {
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (theta == 0)</span>
-<span class="nc" id="L61">			return this;</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (theta == 0)</span>
+<span class="fc" id="L61">			return this;</span>
 <span class="nc" id="L62">		final XAffineTransform rot = XAffineTransform.getRotateInstance(theta);</span>
 <span class="nc" id="L63">		final XPoint2D tmp = new XPoint2D(dx, dy).transform(rot);</span>
 <span class="nc" id="L64">		return new ULine(tmp.getX(), tmp.getY());</span>

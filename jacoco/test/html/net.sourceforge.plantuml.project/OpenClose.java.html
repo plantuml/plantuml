@@ -129,9 +129,9 @@ import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday;
 	}
 
 	public void close(DayOfWeek day) {
-<span class="nc" id="L132">		weekdayStatus.put(day, DayStatus.CLOSE);</span>
-<span class="nc" id="L133">		cachedPiecewiseConstant = null;</span>
-<span class="nc" id="L134">	}</span>
+<span class="fc" id="L132">		weekdayStatus.put(day, DayStatus.CLOSE);</span>
+<span class="fc" id="L133">		cachedPiecewiseConstant = null;</span>
+<span class="fc" id="L134">	}</span>
 
 	public void open(DayOfWeek day) {
 <span class="nc" id="L137">		weekdayStatus.put(day, DayStatus.OPEN);</span>
@@ -174,14 +174,14 @@ import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday;
 	}
 
 	public PiecewiseConstant asPiecewiseConstant() {
-<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		if (cachedPiecewiseConstant != null)</span>
-<span class="nc" id="L178">			return cachedPiecewiseConstant;</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">		if (cachedPiecewiseConstant != null)</span>
+<span class="fc" id="L178">			return cachedPiecewiseConstant;</span>
 
 <span class="fc" id="L180">		PiecewiseConstantWeekday weekPattern = PiecewiseConstantWeekday.of(Fraction.ONE);</span>
 
-<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		for (DayOfWeek day : weekdayStatus.keySet())</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">			if (weekdayStatus.get(day) == DayStatus.CLOSE)</span>
-<span class="nc" id="L184">				weekPattern = weekPattern.with(day, Fraction.ZERO);</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		for (DayOfWeek day : weekdayStatus.keySet())</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">			if (weekdayStatus.get(day) == DayStatus.CLOSE)</span>
+<span class="fc" id="L184">				weekPattern = weekPattern.with(day, Fraction.ZERO);</span>
 
 <span class="fc" id="L186">		PiecewiseConstant result = weekPattern;</span>
 

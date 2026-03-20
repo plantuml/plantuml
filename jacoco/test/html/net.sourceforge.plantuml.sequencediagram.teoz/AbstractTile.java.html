@@ -40,13 +40,13 @@ import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="nc" id="L43">public abstract class AbstractTile extends CommonTile implements Tile {</span>
+<span class="fc" id="L43">public abstract class AbstractTile extends CommonTile implements Tile {</span>
 
 	public AbstractTile(StringBounder stringBounder, YGauge currentY) {
-<span class="nc" id="L46">		super(stringBounder);</span>
+<span class="fc" id="L46">		super(stringBounder);</span>
 		if (YGauge.USE_ME)
 			System.err.println(&quot;CREATING &quot; + getClass());
-<span class="nc" id="L49">	}</span>
+<span class="fc" id="L49">	}</span>
 
 	public AbstractTile(StringBounder stringBounder) {
 <span class="nc" id="L52">		super(stringBounder);</span>
@@ -62,9 +62,9 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	final public double getZZZ() {
-<span class="nc" id="L65">		final double result = getPreferredHeight() - getContactPointRelative();</span>
-<span class="nc bnc" id="L66" title="All 4 branches missed.">		if (TeaVM.a()) assert result &gt;= 0;</span>
-<span class="nc" id="L67">		return result;</span>
+<span class="fc" id="L65">		final double result = getPreferredHeight() - getContactPointRelative();</span>
+<span class="pc bpc" id="L66" title="2 of 4 branches missed.">		if (TeaVM.a()) assert result &gt;= 0;</span>
+<span class="fc" id="L67">		return result;</span>
 	}
 
 	public boolean matchAnchor(String anchor) {

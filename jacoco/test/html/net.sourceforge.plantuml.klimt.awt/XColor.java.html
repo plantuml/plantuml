@@ -106,10 +106,10 @@ public class XColor {
 <span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (alpha == 0)</span>
 <span class="nc" id="L107">			return &quot;#00000000&quot;;</span>
 
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (alpha == 255)</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (alpha == 255)</span>
 <span class="fc" id="L110">			return String.format(&quot;#%02X%02X%02X&quot;, red, green, blue);</span>
 
-<span class="nc" id="L112">		return String.format(&quot;#%02X%02X%02X%02X&quot;, red, green, blue, alpha);</span>
+<span class="fc" id="L112">		return String.format(&quot;#%02X%02X%02X%02X&quot;, red, green, blue, alpha);</span>
 	}
 
 	public static String toHexRGBColor(int rgb) {

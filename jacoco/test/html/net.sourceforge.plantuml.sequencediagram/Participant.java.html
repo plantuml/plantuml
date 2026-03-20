@@ -150,12 +150,12 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 <span class="fc" id="L150">	private List&lt;Fashion&gt; liveBackcolors = new ArrayList&lt;&gt;();</span>
 
 	public final void incInitialLife(Fashion colors) {
-<span class="nc" id="L153">		initialLife++;</span>
-<span class="nc" id="L154">		this.liveBackcolors.add(colors);</span>
-<span class="nc" id="L155">	}</span>
+<span class="fc" id="L153">		initialLife++;</span>
+<span class="fc" id="L154">		this.liveBackcolors.add(colors);</span>
+<span class="fc" id="L155">	}</span>
 
 	public Fashion getLiveSpecificBackColors(int which) {
-<span class="nc" id="L158">		return liveBackcolors.get(which);</span>
+<span class="fc" id="L158">		return liveBackcolors.get(which);</span>
 	}
 
 	public Colors getColors() {
@@ -163,8 +163,8 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 	}
 
 	public void setSpecificColorTOBEREMOVED(ColorType type, HColor color) {
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (color != null)</span>
-<span class="nc" id="L167">			this.colors = colors.add(type, color);</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		if (color != null)</span>
+<span class="fc" id="L167">			this.colors = colors.add(type, color);</span>
 
 <span class="fc" id="L169">	}</span>
 

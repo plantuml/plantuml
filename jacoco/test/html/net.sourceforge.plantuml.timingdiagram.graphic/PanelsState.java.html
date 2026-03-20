@@ -61,74 +61,74 @@ import net.sourceforge.plantuml.timingdiagram.TimingNote;
 import net.sourceforge.plantuml.timingdiagram.TimingRuler;
 import net.sourceforge.plantuml.utils.Position;
 
-<span class="nc" id="L64">public abstract class PanelsState extends Panels {</span>
+<span class="fc" id="L64">public abstract class PanelsState extends Panels {</span>
 
 	private static final int DEFAULT_RIBBON_HEIGHT = 24;
 
-<span class="nc" id="L68">	private final List&lt;ChangeState&gt; changes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L68">	private final List&lt;ChangeState&gt; changes = new ArrayList&lt;&gt;();</span>
 
 	private String initialState;
 	private Colors initialColors;
 
 	protected PanelsState(TimingRuler ruler, ISkinParam skinParam, int suggestedHeight, Style style,
 			List&lt;TimingNote&gt; notes, List&lt;TimeConstraint&gt; constraints) {
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		super(ruler, skinParam, suggestedHeight == 0 ? DEFAULT_RIBBON_HEIGHT : suggestedHeight, style, notes,</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		super(ruler, skinParam, suggestedHeight == 0 ? DEFAULT_RIBBON_HEIGHT : suggestedHeight, style, notes,</span>
 				constraints);
-<span class="nc" id="L77">	}</span>
+<span class="fc" id="L77">	}</span>
 
 	public final IntricatedPoint getTimeProjection(StringBounder stringBounder, TimeTick tick) {
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (tick == null)</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (tick == null)</span>
 <span class="nc" id="L81">			return null;</span>
-<span class="nc" id="L82">		final double x = ruler.getPosInPixel(tick);</span>
-<span class="nc" id="L83">		final double y = getHeightForConstraints(stringBounder) + getHeightForNotes(stringBounder, Position.TOP)</span>
-<span class="nc" id="L84">				+ getHeightForTopComment(stringBounder) + getRibbonHeight() / 2;</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		for (ChangeState change : changes)</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">			if (change.getWhen().compareTo(tick) == 0)</span>
-<span class="nc" id="L87">				return new IntricatedPoint(new XPoint2D(x, y), new XPoint2D(x, y));</span>
+<span class="fc" id="L82">		final double x = ruler.getPosInPixel(tick);</span>
+<span class="fc" id="L83">		final double y = getHeightForConstraints(stringBounder) + getHeightForNotes(stringBounder, Position.TOP)</span>
+<span class="fc" id="L84">				+ getHeightForTopComment(stringBounder) + getRibbonHeight() / 2;</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		for (ChangeState change : changes)</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">			if (change.getWhen().compareTo(tick) == 0)</span>
+<span class="fc" id="L87">				return new IntricatedPoint(new XPoint2D(x, y), new XPoint2D(x, y));</span>
 
 <span class="nc" id="L89">		return new IntricatedPoint(new XPoint2D(x, y - getRibbonHeight() / 2),</span>
 <span class="nc" id="L90">				new XPoint2D(x, y + getRibbonHeight() / 2));</span>
 	}
 
 	public final void addChange(ChangeState change) {
-<span class="nc" id="L94">		this.changes.add(change);</span>
-<span class="nc" id="L95">	}</span>
+<span class="fc" id="L94">		this.changes.add(change);</span>
+<span class="fc" id="L95">	}</span>
 
 	protected final double getPosInPixel(ChangeState change) {
-<span class="nc" id="L98">		return ruler.getPosInPixel(change.getWhen());</span>
+<span class="fc" id="L98">		return ruler.getPosInPixel(change.getWhen());</span>
 	}
 
 	@Override
 	public final void drawLeftPanel(UGraphic ug, double fullAvailableWidth) {
-<span class="nc" id="L103">	}</span>
+<span class="fc" id="L103">	}</span>
 
 	@Override
 	public final double getLeftPanelWidth(StringBounder stringBounder) {
-<span class="nc" id="L107">		return getInitialWidth(stringBounder);</span>
+<span class="fc" id="L107">		return getInitialWidth(stringBounder);</span>
 	}
 
 	@Override
 	public final void drawRightPanel(UGraphic ug) {
-<span class="nc" id="L112">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L112">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc" id="L114">		final UGraphic ugRibbon = ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder)</span>
-<span class="nc" id="L115">				+ getHeightForTopComment(stringBounder) + getHeightForNotes(stringBounder, Position.TOP)));</span>
+<span class="fc" id="L114">		final UGraphic ugRibbon = ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder)</span>
+<span class="fc" id="L115">				+ getHeightForTopComment(stringBounder) + getHeightForNotes(stringBounder, Position.TOP)));</span>
 
-<span class="nc" id="L117">		drawBeforeZeroState(ugRibbon);</span>
-<span class="nc" id="L118">		drawBeforeZeroStateLabel(ugRibbon.apply(UTranslate.dy(getRibbonHeight() / 2)));</span>
-<span class="nc" id="L119">		drawStates(ugRibbon);</span>
-<span class="nc" id="L120">		drawStatesLabels(ugRibbon.apply(UTranslate.dy(getRibbonHeight() / 2)));</span>
+<span class="fc" id="L117">		drawBeforeZeroState(ugRibbon);</span>
+<span class="fc" id="L118">		drawBeforeZeroStateLabel(ugRibbon.apply(UTranslate.dy(getRibbonHeight() / 2)));</span>
+<span class="fc" id="L119">		drawStates(ugRibbon);</span>
+<span class="fc" id="L120">		drawStatesLabels(ugRibbon.apply(UTranslate.dy(getRibbonHeight() / 2)));</span>
 
-<span class="nc" id="L122">		drawConstraints(ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder) / 2)));</span>
+<span class="fc" id="L122">		drawConstraints(ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder) / 2)));</span>
 
-<span class="nc" id="L124">		drawNotes(ug, Position.TOP);</span>
-<span class="nc" id="L125">		drawNotes(ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder) + getRibbonHeight()</span>
-<span class="nc" id="L126">				+ getHeightForNotes(stringBounder, Position.TOP))), Position.BOTTOM);</span>
-<span class="nc" id="L127">	}</span>
+<span class="fc" id="L124">		drawNotes(ug, Position.TOP);</span>
+<span class="fc" id="L125">		drawNotes(ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder) + getRibbonHeight()</span>
+<span class="fc" id="L126">				+ getHeightForNotes(stringBounder, Position.TOP))), Position.BOTTOM);</span>
+<span class="fc" id="L127">	}</span>
 
 	private double getInitialWidth(final StringBounder stringBounder) {
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (initialState == null)</span>
-<span class="nc" id="L131">			return 0;</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (initialState == null)</span>
+<span class="fc" id="L131">			return 0;</span>
 
 <span class="nc" id="L133">		return createTextBlock(initialState).calculateDimension(stringBounder).getWidth() + 2 * MARGIN_X;</span>
 	}
@@ -145,13 +145,13 @@ import net.sourceforge.plantuml.utils.Position;
 <span class="nc" id="L145">	}</span>
 
 	protected final double getRibbonHeight() {
-<span class="nc" id="L148">		return suggestedHeight;</span>
+<span class="fc" id="L148">		return suggestedHeight;</span>
 	}
 
 	public final void setInitialState(String initialState, Colors initialColors) {
-<span class="nc" id="L152">		this.initialState = initialState;</span>
-<span class="nc" id="L153">		this.initialColors = initialColors;</span>
-<span class="nc" id="L154">	}</span>
+<span class="fc" id="L152">		this.initialState = initialState;</span>
+<span class="fc" id="L153">		this.initialColors = initialColors;</span>
+<span class="fc" id="L154">	}</span>
 
 	protected final String getInitialState() {
 <span class="nc" id="L157">		return initialState;</span>
@@ -166,8 +166,8 @@ import net.sourceforge.plantuml.utils.Position;
 	}
 
 	private void drawBeforeZeroState(UGraphic ug) {
-<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (initialState == null)</span>
-<span class="nc" id="L170">			return;</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (initialState == null)</span>
+<span class="fc" id="L170">			return;</span>
 <span class="nc" id="L171">		final StringBounder stringBounder = ug.getStringBounder();</span>
 <span class="nc bnc" id="L172" title="All 2 branches missed.">		if (changes.size() == 0) {</span>
 <span class="nc" id="L173">			drawSingle(ug.apply(UTranslate.dx(-getInitialWidth(stringBounder))),</span>
@@ -184,13 +184,13 @@ import net.sourceforge.plantuml.utils.Position;
 <span class="nc" id="L184">	}</span>
 
 	private void drawBeforeZeroStateLabel(final UGraphic ug) {
-<span class="nc" id="L187">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc bnc" id="L188" title="All 4 branches missed.">		if (initialState != null &amp;&amp; ChangeState.isFlat(initialState) == false) {</span>
+<span class="fc" id="L187">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="pc bpc" id="L188" title="3 of 4 branches missed.">		if (initialState != null &amp;&amp; ChangeState.isFlat(initialState) == false) {</span>
 <span class="nc" id="L189">			final TextBlock initial = createTextBlock(initialState);</span>
 <span class="nc" id="L190">			final XDimension2D dimInital = initial.calculateDimension(stringBounder);</span>
 <span class="nc" id="L191">			initial.drawU(ug.apply(new UTranslate(-MARGIN_X - dimInital.getWidth(), -dimInital.getHeight() / 2)));</span>
 		}
-<span class="nc" id="L193">	}</span>
+<span class="fc" id="L193">	}</span>
 
 	private void drawSingle(UGraphic ug, double len) {
 <span class="nc" id="L196">		final HColor back = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
@@ -216,62 +216,62 @@ import net.sourceforge.plantuml.utils.Position;
 <span class="nc" id="L216">	}</span>
 
 	private void drawStates(UGraphic ug) {
-<span class="nc bnc" id="L219" title="All 2 branches missed.">		for (int i = 0; i &lt; changes.size() - 1; i++) {</span>
-<span class="nc" id="L220">			final double a = getPosInPixel(changes.get(i));</span>
-<span class="nc" id="L221">			final double b = getPosInPixel(changes.get(i + 1));</span>
-<span class="nc bnc" id="L222" title="All 4 branches missed.">			if (TeaVM.a()) assert b &gt; a;</span>
-<span class="nc bnc" id="L223" title="All 2 branches missed.">			if (changes.get(i).isFlat())</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">		for (int i = 0; i &lt; changes.size() - 1; i++) {</span>
+<span class="fc" id="L220">			final double a = getPosInPixel(changes.get(i));</span>
+<span class="fc" id="L221">			final double b = getPosInPixel(changes.get(i + 1));</span>
+<span class="pc bpc" id="L222" title="2 of 4 branches missed.">			if (TeaVM.a()) assert b &gt; a;</span>
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">			if (changes.get(i).isFlat())</span>
 <span class="nc" id="L224">				drawFlat(ug.apply(UTranslate.dx(a)), b - a, changes.get(i));</span>
-<span class="nc bnc" id="L225" title="All 2 branches missed.">			else if (changes.get(i).isCompletelyHidden() == false)</span>
-<span class="nc" id="L226">				drawHexa(ug.apply(UTranslate.dx(a)), b - a, changes.get(i));</span>
+<span class="pc bpc" id="L225" title="1 of 2 branches missed.">			else if (changes.get(i).isCompletelyHidden() == false)</span>
+<span class="fc" id="L226">				drawHexa(ug.apply(UTranslate.dx(a)), b - a, changes.get(i));</span>
 		}
-<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (changes.size() &gt;= 1) {</span>
-<span class="nc" id="L229">			final ChangeState last = changes.get(changes.size() - 1);</span>
-<span class="nc" id="L230">			final double a = getPosInPixel(last);</span>
-<span class="nc bnc" id="L231" title="All 2 branches missed.">			if (last.isFlat())</span>
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">		if (changes.size() &gt;= 1) {</span>
+<span class="fc" id="L229">			final ChangeState last = changes.get(changes.size() - 1);</span>
+<span class="fc" id="L230">			final double a = getPosInPixel(last);</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">			if (last.isFlat())</span>
 <span class="nc" id="L232">				drawFlat(ug.apply(UTranslate.dx(a)), ruler.getWidth() - a, last);</span>
-<span class="nc bnc" id="L233" title="All 2 branches missed.">			else if (last.isCompletelyHidden() == false)</span>
-<span class="nc" id="L234">				drawPentaB(ug.apply(UTranslate.dx(a)), ruler.getWidth() - a, last);</span>
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">			else if (last.isCompletelyHidden() == false)</span>
+<span class="fc" id="L234">				drawPentaB(ug.apply(UTranslate.dx(a)), ruler.getWidth() - a, last);</span>
 		}
-<span class="nc" id="L236">	}</span>
+<span class="fc" id="L236">	}</span>
 
 	private void drawStatesLabels(UGraphic ug) {
-<span class="nc" id="L239">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc bnc" id="L240" title="All 2 branches missed.">		for (int i = 0; i &lt; changes.size(); i++) {</span>
-<span class="nc" id="L241">			final ChangeState change = changes.get(i);</span>
-<span class="nc" id="L242">			final double x = ruler.getPosInPixel(change.getWhen());</span>
-<span class="nc bnc" id="L243" title="All 6 branches missed.">			if (change.isBlank() == false &amp;&amp; change.isCompletelyHidden() == false &amp;&amp; change.isFlat() == false) {</span>
-<span class="nc" id="L244">				final TextBlock state = createTextBlock(change.getState());</span>
-<span class="nc" id="L245">				final XDimension2D dim = state.calculateDimension(stringBounder);</span>
+<span class="fc" id="L239">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">		for (int i = 0; i &lt; changes.size(); i++) {</span>
+<span class="fc" id="L241">			final ChangeState change = changes.get(i);</span>
+<span class="fc" id="L242">			final double x = ruler.getPosInPixel(change.getWhen());</span>
+<span class="pc bpc" id="L243" title="3 of 6 branches missed.">			if (change.isBlank() == false &amp;&amp; change.isCompletelyHidden() == false &amp;&amp; change.isFlat() == false) {</span>
+<span class="fc" id="L244">				final TextBlock state = createTextBlock(change.getState());</span>
+<span class="fc" id="L245">				final XDimension2D dim = state.calculateDimension(stringBounder);</span>
 				final double xtext;
-<span class="nc bnc" id="L247" title="All 2 branches missed.">				if (i == changes.size() - 1) {</span>
-<span class="nc" id="L248">					xtext = x + MARGIN_X;</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">				if (i == changes.size() - 1) {</span>
+<span class="fc" id="L248">					xtext = x + MARGIN_X;</span>
 				} else {
-<span class="nc" id="L250">					final double x2 = ruler.getPosInPixel(changes.get(i + 1).getWhen());</span>
-<span class="nc" id="L251">					xtext = (x + x2) / 2 - dim.getWidth() / 2;</span>
+<span class="fc" id="L250">					final double x2 = ruler.getPosInPixel(changes.get(i + 1).getWhen());</span>
+<span class="fc" id="L251">					xtext = (x + x2) / 2 - dim.getWidth() / 2;</span>
 				}
-<span class="nc" id="L253">				state.drawU(ug.apply(new UTranslate(xtext, -dim.getHeight() / 2)));</span>
+<span class="fc" id="L253">				state.drawU(ug.apply(new UTranslate(xtext, -dim.getHeight() / 2)));</span>
 			}
-<span class="nc" id="L255">			final TextBlock commentTopBlock = getCommentTopBlock(change);</span>
-<span class="nc" id="L256">			final XDimension2D dimComment = commentTopBlock.calculateDimension(stringBounder);</span>
-<span class="nc" id="L257">			commentTopBlock</span>
-<span class="nc" id="L258">					.drawU(ug.apply(new UTranslate(x + MARGIN_X, -getRibbonHeight() / 2 - dimComment.getHeight())));</span>
+<span class="fc" id="L255">			final TextBlock commentTopBlock = getCommentTopBlock(change);</span>
+<span class="fc" id="L256">			final XDimension2D dimComment = commentTopBlock.calculateDimension(stringBounder);</span>
+<span class="fc" id="L257">			commentTopBlock</span>
+<span class="fc" id="L258">					.drawU(ug.apply(new UTranslate(x + MARGIN_X, -getRibbonHeight() / 2 - dimComment.getHeight())));</span>
 		}
-<span class="nc" id="L260">	}</span>
+<span class="fc" id="L260">	}</span>
 
 	private TextBlock getCommentTopBlock(final ChangeState change) {
-<span class="nc bnc" id="L263" title="All 2 branches missed.">		if (change.getComment() == null)</span>
-<span class="nc" id="L264">			return TextBlockUtils.empty(0, 0);</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">		if (change.getComment() == null)</span>
+<span class="fc" id="L264">			return TextBlockUtils.empty(0, 0);</span>
 
 <span class="nc" id="L266">		return createTextBlock(change.getComment());</span>
 	}
 
 	protected double getHeightForTopComment(StringBounder stringBounder) {
-<span class="nc" id="L270">		double result = 0;</span>
-<span class="nc bnc" id="L271" title="All 2 branches missed.">		for (ChangeState change : changes)</span>
-<span class="nc" id="L272">			result = Math.max(result, getCommentTopBlock(change).calculateDimension(stringBounder).getHeight());</span>
+<span class="fc" id="L270">		double result = 0;</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">		for (ChangeState change : changes)</span>
+<span class="fc" id="L272">			result = Math.max(result, getCommentTopBlock(change).calculateDimension(stringBounder).getHeight());</span>
 
-<span class="nc" id="L274">		return result;</span>
+<span class="fc" id="L274">		return result;</span>
 	}
 
 	protected final Fashion getContextWithInitialColors(ChangeState change) {
@@ -287,14 +287,14 @@ import net.sourceforge.plantuml.utils.Position;
 
 	@Override
 	final protected double getHeightForConstraints(StringBounder stringBounder) {
-<span class="nc" id="L290">		return Math.max(5, super.getHeightForConstraints(stringBounder));</span>
+<span class="fc" id="L290">		return Math.max(5, super.getHeightForConstraints(stringBounder));</span>
 	}
 
 	@Override
 	final public double getFullHeight(StringBounder stringBounder) {
-<span class="nc" id="L295">		return getHeightForConstraints(stringBounder) + getHeightForTopComment(stringBounder)</span>
-<span class="nc" id="L296">				+ getHeightForNotes(stringBounder, Position.TOP) + getRibbonHeight()</span>
-<span class="nc" id="L297">				+ getHeightForNotes(stringBounder, Position.BOTTOM) + BOTTOM_MARGIN;</span>
+<span class="fc" id="L295">		return getHeightForConstraints(stringBounder) + getHeightForTopComment(stringBounder)</span>
+<span class="fc" id="L296">				+ getHeightForNotes(stringBounder, Position.TOP) + getRibbonHeight()</span>
+<span class="fc" id="L297">				+ getHeightForNotes(stringBounder, Position.BOTTOM) + BOTTOM_MARGIN;</span>
 	}
 
 }

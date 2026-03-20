@@ -139,8 +139,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
 			@Override
 			protected CommandExecutionResult executeArg(final SequenceDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L142">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
-<span class="nc" id="L143">				return executeInternal(location, diagram, arg, diagram.manageVariable(display));</span>
+<span class="fc" id="L142">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
+<span class="fc" id="L143">				return executeInternal(location, diagram, arg, diagram.manageVariable(display));</span>
 			}
 
 		};
@@ -155,7 +155,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 <span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (display.size() &gt; 0) {</span>
 <span class="pc bpc" id="L157" title="1 of 2 branches missed.">			final boolean tryMerge = arg.get(&quot;VMERGE&quot;, 0) != null;</span>
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">			final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">			final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
 
 <span class="fc" id="L160">			final Note note = new Note(p, position, display, diagram.getSkinParam().getCurrentStyleBuilder());</span>
 <span class="fc" id="L161">			Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
@@ -173,8 +173,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
 <span class="nc" id="L173">				final Url urlLink = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));</span>
 <span class="nc" id="L174">				note.setUrl(urlLink);</span>
 			}
-<span class="pc bpc" id="L176" title="1 of 2 branches missed.">			if (parallel) {</span>
-<span class="nc" id="L177">				note.goParallel();</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">			if (parallel) {</span>
+<span class="fc" id="L177">				note.goParallel();</span>
 			}
 <span class="fc" id="L179">			diagram.addNote(note, tryMerge);</span>
 		}

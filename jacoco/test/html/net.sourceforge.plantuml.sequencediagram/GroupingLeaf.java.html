@@ -51,11 +51,11 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate,
 
 	public GroupingLeaf(String title, String comment, GroupingType type, HColor backColorGeneral,
 			HColor backColorElement, GroupingStart start, StyleBuilder styleBuilder) {
-<span class="nc" id="L54">		super(title, comment, type, backColorElement, styleBuilder);</span>
-<span class="nc" id="L55">		this.backColorGeneral = backColorGeneral;</span>
-<span class="nc" id="L56">		this.start = Objects.requireNonNull(start);</span>
-<span class="nc" id="L57">		start.addChildren(this);</span>
-<span class="nc" id="L58">	}</span>
+<span class="fc" id="L54">		super(title, comment, type, backColorElement, styleBuilder);</span>
+<span class="fc" id="L55">		this.backColorGeneral = backColorGeneral;</span>
+<span class="fc" id="L56">		this.start = Objects.requireNonNull(start);</span>
+<span class="fc" id="L57">		start.addChildren(this);</span>
+<span class="fc" id="L58">	}</span>
 
 	public Grouping getJustAfter() {
 <span class="nc" id="L61">		final int idx = start.getChildren().indexOf(this);</span>
@@ -69,7 +69,7 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate,
 	}
 
 	public GroupingStart getGroupingStart() {
-<span class="nc" id="L72">		return start;</span>
+<span class="fc" id="L72">		return start;</span>
 	}
 
 	@Override
@@ -79,8 +79,8 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate,
 
 	@Override
 	public final HColor getBackColorGeneral() {
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (backColorGeneral == null)</span>
-<span class="nc" id="L83">			return start.getBackColorGeneral();</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (backColorGeneral == null)</span>
+<span class="fc" id="L83">			return start.getBackColorGeneral();</span>
 
 <span class="nc" id="L85">		return backColorGeneral;</span>
 	}
@@ -100,7 +100,7 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate,
 	@Override
 	public boolean isParallel() {
 		// only Par2 Group Leafs should return true.
-<span class="nc" id="L103">		return start.isPar2GroupStart();</span>
+<span class="fc" id="L103">		return start.isPar2GroupStart();</span>
 	}
 
 	private double posYendLevel;
@@ -117,7 +117,7 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate,
 <span class="nc" id="L117">		return true;</span>
 	}
 
-<span class="nc" id="L120">	private List&lt;Note&gt; noteOnMessages = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L120">	private List&lt;Note&gt; noteOnMessages = new ArrayList&lt;&gt;();</span>
 
 	@Override
 	public final Warning addNote(Note note) {
@@ -128,7 +128,7 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate,
 	}
 
 	public final List&lt;Note&gt; getNoteOnMessages() {
-<span class="nc" id="L131">		return noteOnMessages;</span>
+<span class="fc" id="L131">		return noteOnMessages;</span>
 	}
 
 }

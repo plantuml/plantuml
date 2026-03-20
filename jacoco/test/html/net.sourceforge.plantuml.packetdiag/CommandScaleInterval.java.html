@@ -48,17 +48,17 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandScaleInterval extends SingleLineCommand2&lt;PacketDiagram&gt; {
 
 	public CommandScaleInterval() {
-<span class="nc" id="L51">		super(getRegexConcat());</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L51">		super(getRegexConcat());</span>
+<span class="fc" id="L52">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L55">		return RegexConcat.build(CommandScaleInterval.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L55">		return RegexConcat.build(CommandScaleInterval.class.getName(), RegexLeaf.start(), //</span>
 						new RegexLeaf(&quot;scale_interval&quot;), //
-<span class="nc" id="L57">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L57">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;=&quot;), //
-<span class="nc" id="L59">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L59">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(1, &quot;INTERVAL&quot;, &quot;(\\d+);?&quot;), //
-<span class="nc" id="L61">						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
+<span class="fc" id="L61">						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
 	}
 
 	@Override

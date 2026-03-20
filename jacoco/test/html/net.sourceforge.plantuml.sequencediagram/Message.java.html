@@ -71,7 +71,7 @@ public final class Message extends AbstractMessage {
 	}
 
 	public boolean dealWith(Participant someone) {
-<span class="nc bnc" id="L74" title="All 4 branches missed.">		return someone == p1 || someone == p2;</span>
+<span class="pc bpc" id="L74" title="1 of 4 branches missed.">		return someone == p1 || someone == p2;</span>
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public final class Message extends AbstractMessage {
 	}
 
 	public boolean isSelfMessage() {
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		return p1 == p2;</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		return p1 == p2;</span>
 	}
 
 <span class="fc" id="L86">	private List&lt;Participant&gt; multicast = Collections.emptyList();</span>
@@ -90,7 +90,7 @@ public final class Message extends AbstractMessage {
 <span class="fc" id="L90">	}</span>
 
 	public List&lt;Participant&gt; getMulticast() {
-<span class="nc" id="L93">		return multicast;</span>
+<span class="fc" id="L93">		return multicast;</span>
 	}
 
 }

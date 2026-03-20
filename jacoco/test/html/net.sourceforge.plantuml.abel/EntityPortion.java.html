@@ -42,10 +42,10 @@ import java.util.Set;
 <span class="fc" id="L42">	FIELD, METHOD, MEMBER, CIRCLED_CHARACTER, STEREOTYPE;</span>
 
 	public Set&lt;EntityPortion&gt; asSet() {
-<span class="nc bnc" id="L45" title="All 2 branches missed.">		if (this == MEMBER)</span>
-<span class="nc" id="L46">			return EnumSet.&lt;EntityPortion&gt;of(FIELD, METHOD);</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">		if (this == MEMBER)</span>
+<span class="fc" id="L46">			return EnumSet.&lt;EntityPortion&gt;of(FIELD, METHOD);</span>
 
-<span class="nc" id="L48">		return EnumSet.&lt;EntityPortion&gt;of(this);</span>
+<span class="fc" id="L48">		return EnumSet.&lt;EntityPortion&gt;of(this);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

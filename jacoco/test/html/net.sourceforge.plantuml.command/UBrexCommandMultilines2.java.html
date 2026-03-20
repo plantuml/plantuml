@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 
-<span class="nc" id="L48">public abstract class UBrexCommandMultilines2&lt;S extends Diagram&gt; implements Command&lt;S&gt; {</span>
+<span class="fc" id="L48">public abstract class UBrexCommandMultilines2&lt;S extends Diagram&gt; implements Command&lt;S&gt; {</span>
 
 	private final UnicodeBracketedExpression starting;
 
@@ -56,14 +56,14 @@ import net.sourceforge.plantuml.utils.BlocLines;
 	private final Lazy&lt;UnicodeBracketedExpression&gt; end;
 
 	public UBrexCommandMultilines2(UnicodeBracketedExpression patternStart, MultilinesStrategy strategy, Trim trimEnd,
-<span class="nc" id="L59">			Lazy&lt;UnicodeBracketedExpression&gt; end) {</span>
-<span class="nc bnc" id="L60" title="All 4 branches missed.">		if (TeaVM.a()) assert end != null;</span>
+<span class="fc" id="L59">			Lazy&lt;UnicodeBracketedExpression&gt; end) {</span>
+<span class="pc bpc" id="L60" title="2 of 4 branches missed.">		if (TeaVM.a()) assert end != null;</span>
 
-<span class="nc" id="L62">		this.strategy = strategy;</span>
-<span class="nc" id="L63">		this.starting = patternStart;</span>
-<span class="nc" id="L64">		this.trimEnd = trimEnd;</span>
-<span class="nc" id="L65">		this.end = end;</span>
-<span class="nc" id="L66">	}</span>
+<span class="fc" id="L62">		this.strategy = strategy;</span>
+<span class="fc" id="L63">		this.starting = patternStart;</span>
+<span class="fc" id="L64">		this.trimEnd = trimEnd;</span>
+<span class="fc" id="L65">		this.end = end;</span>
+<span class="fc" id="L66">	}</span>
 
 	public boolean syntaxWithFinalBracket() {
 <span class="nc" id="L69">		return false;</span>

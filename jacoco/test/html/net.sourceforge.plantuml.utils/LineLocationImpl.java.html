@@ -75,18 +75,18 @@ public class LineLocationImpl implements LineLocation {
 	}
 
 	private boolean isStandardLibrary() {
-<span class="nc" id="L78">		return desc.startsWith(&quot;&lt;&quot;);</span>
+<span class="fc" id="L78">		return desc.startsWith(&quot;&lt;&quot;);</span>
 	}
 
 	public int compareTo(LineLocation other) {
-<span class="nc" id="L82">		final LineLocationImpl other2 = (LineLocationImpl) other;</span>
-<span class="nc bnc" id="L83" title="All 4 branches missed.">		if (this.isStandardLibrary() &amp;&amp; other2.isStandardLibrary() == false) {</span>
-<span class="nc" id="L84">			return -1;</span>
+<span class="fc" id="L82">		final LineLocationImpl other2 = (LineLocationImpl) other;</span>
+<span class="fc bfc" id="L83" title="All 4 branches covered.">		if (this.isStandardLibrary() &amp;&amp; other2.isStandardLibrary() == false) {</span>
+<span class="fc" id="L84">			return -1;</span>
 		}
-<span class="nc bnc" id="L86" title="All 4 branches missed.">		if (this.isStandardLibrary() == false &amp;&amp; other2.isStandardLibrary()) {</span>
-<span class="nc" id="L87">			return 1;</span>
+<span class="fc bfc" id="L86" title="All 4 branches covered.">		if (this.isStandardLibrary() == false &amp;&amp; other2.isStandardLibrary()) {</span>
+<span class="fc" id="L87">			return 1;</span>
 		}
-<span class="nc" id="L89">		return this.position - other2.position;</span>
+<span class="fc" id="L89">		return this.position - other2.position;</span>
 	}
 
 }

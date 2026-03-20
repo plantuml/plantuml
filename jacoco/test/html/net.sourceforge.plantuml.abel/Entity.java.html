@@ -308,9 +308,9 @@ import net.sourceforge.plantuml.utils.Position;
 <span class="fc" id="L308">	}</span>
 
 	public final void setGeneric(String generic) {
-<span class="nc" id="L311">		checkNotGroup();</span>
-<span class="nc" id="L312">		this.generic = generic;</span>
-<span class="nc" id="L313">	}</span>
+<span class="fc" id="L311">		checkNotGroup();</span>
+<span class="fc" id="L312">		this.generic = generic;</span>
+<span class="fc" id="L313">	}</span>
 
 	public final String getGeneric() {
 <span class="fc" id="L316">		checkNotGroup();</span>
@@ -325,11 +325,11 @@ import net.sourceforge.plantuml.utils.Position;
 //		if (leafType == LeafType.PORT)
 //			return EntityPosition.PORT;
 
-<span class="pc bpc" id="L328" title="1 of 2 branches missed.">		if (leafType == LeafType.PORTIN)</span>
-<span class="nc" id="L329">			return EntityPosition.PORTIN;</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">		if (leafType == LeafType.PORTIN)</span>
+<span class="fc" id="L329">			return EntityPosition.PORTIN;</span>
 
-<span class="pc bpc" id="L331" title="1 of 2 branches missed.">		if (leafType == LeafType.PORTOUT)</span>
-<span class="nc" id="L332">			return EntityPosition.PORTOUT;</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">		if (leafType == LeafType.PORTOUT)</span>
+<span class="fc" id="L332">			return EntityPosition.PORTOUT;</span>
 
 <span class="fc bfc" id="L334" title="All 2 branches covered.">		if (leafType != LeafType.STATE)</span>
 <span class="fc" id="L335">			return EntityPosition.NORMAL;</span>
@@ -522,10 +522,10 @@ import net.sourceforge.plantuml.utils.Position;
 <span class="fc" id="L522">	}</span>
 
 	public void setSpecificColorTOBEREMOVED(ColorType type, HColor color) {
-<span class="nc bnc" id="L525" title="All 2 branches missed.">		if (color != null)</span>
+<span class="pc bpc" id="L525" title="1 of 2 branches missed.">		if (color != null)</span>
 <span class="nc" id="L526">			this.colors = colors.add(type, color);</span>
 
-<span class="nc" id="L528">	}</span>
+<span class="fc" id="L528">	}</span>
 
 	public Collection&lt;String&gt; getPortShortNames() {
 <span class="fc" id="L531">		checkNotGroup();</span>
@@ -595,11 +595,11 @@ import net.sourceforge.plantuml.utils.Position;
 	}
 
 	public void setStatic(boolean isStatic) {
-<span class="nc" id="L598">		this.isStatic = isStatic;</span>
-<span class="nc" id="L599">	}</span>
+<span class="fc" id="L598">		this.isStatic = isStatic;</span>
+<span class="fc" id="L599">	}</span>
 
 	public boolean isStatic() {
-<span class="nc" id="L602">		return isStatic;</span>
+<span class="fc" id="L602">		return isStatic;</span>
 	}
 
 	// For group

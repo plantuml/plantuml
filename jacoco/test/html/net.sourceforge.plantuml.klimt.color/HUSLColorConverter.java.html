@@ -178,8 +178,8 @@ import java.util.List;
 	}
 
 	private static double yToL(double Y) {
-<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (Y &lt;= epsilon) {</span>
-<span class="nc" id="L182">			return (Y / refY) * kappa;</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">		if (Y &lt;= epsilon) {</span>
+<span class="fc" id="L182">			return (Y / refY) * kappa;</span>
 		} else {
 <span class="fc" id="L184">			return 116 * Math.pow(Y / refY, 1.0 / 3.0) - 16;</span>
 		}
@@ -203,8 +203,8 @@ import java.util.List;
 
 <span class="fc" id="L204">		double L = yToL(Y);</span>
 
-<span class="pc bpc" id="L206" title="1 of 2 branches missed.">		if (L == 0) {</span>
-<span class="nc" id="L207">			return new double[] { 0, 0, 0 };</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		if (L == 0) {</span>
+<span class="fc" id="L207">			return new double[] { 0, 0, 0 };</span>
 		}
 
 <span class="fc" id="L210">		double U = 13 * L * (varU - refU);</span>
@@ -240,16 +240,16 @@ import java.util.List;
 <span class="fc" id="L240">		double C = Math.sqrt(U * U + V * V);</span>
 		double H;
 
-<span class="pc bpc" id="L243" title="1 of 2 branches missed.">		if (C &lt; 0.00000001) {</span>
-<span class="nc" id="L244">			H = 0;</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">		if (C &lt; 0.00000001) {</span>
+<span class="fc" id="L244">			H = 0;</span>
 		} else {
 <span class="fc" id="L246">			double Hrad = Math.atan2(V, U);</span>
 
 			// pi to more digits than they provide it in the stdlib
 <span class="fc" id="L249">			H = (Hrad * 180.0) / 3.1415926535897932;</span>
 
-<span class="pc bpc" id="L251" title="1 of 2 branches missed.">			if (H &lt; 0) {</span>
-<span class="nc" id="L252">				H = 360 + H;</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">			if (H &lt; 0) {</span>
+<span class="fc" id="L252">				H = 360 + H;</span>
 			}
 		}
 
@@ -296,8 +296,8 @@ import java.util.List;
 <span class="nc" id="L296">			return new double[] { H, 0, 100 };</span>
 		}
 
-<span class="pc bpc" id="L299" title="1 of 2 branches missed.">		if (L &lt; 0.00000001) {</span>
-<span class="nc" id="L300">			return new double[] { H, 0, 0 };</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">		if (L &lt; 0.00000001) {</span>
+<span class="fc" id="L300">			return new double[] { H, 0, 0 };</span>
 		}
 
 <span class="fc" id="L303">		double max = maxChromaForLH(L, H);</span>

@@ -148,8 +148,8 @@ public class CommandCreateClassMultilines extends CommandMultilines2&lt;ClassDia
 <span class="fc" id="L148">		final LeafType type = LeafType.getLeafType(typeString);</span>
 <span class="fc" id="L149">		final String visibilityString = line0.get(&quot;VISIBILITY&quot;, 0);</span>
 <span class="fc" id="L150">		VisibilityModifier visibilityModifier = null;</span>
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (visibilityString != null)</span>
-<span class="nc" id="L152">			visibilityModifier = VisibilityModifier.getVisibilityModifier(visibilityString + &quot;FOO&quot;, false);</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (visibilityString != null)</span>
+<span class="fc" id="L152">			visibilityModifier = VisibilityModifier.getVisibilityModifier(visibilityString + &quot;FOO&quot;, false);</span>
 
 <span class="fc" id="L154">		final String idShort = diagram.cleanId(line0.getLazzy(&quot;CODE&quot;, 0));</span>
 
@@ -213,8 +213,8 @@ public class CommandCreateClassMultilines extends CommandMultilines2&lt;ClassDia
 <span class="pc bpc" id="L213" title="1 of 2 branches missed.">		if (generic != null)</span>
 <span class="nc" id="L214">			entity.setGeneric(generic);</span>
 
-<span class="pc bpc" id="L216" title="1 of 2 branches missed.">		if (typeString.contains(&quot;STATIC&quot;))</span>
-<span class="nc" id="L217">			entity.setStatic(true);</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">		if (typeString.contains(&quot;STATIC&quot;))</span>
+<span class="fc" id="L217">			entity.setStatic(true);</span>
 
 <span class="pc bpc" id="L219" title="1 of 2 branches missed.">		if (lines.size() &gt; 1) {</span>
 			// entity.setCodeLine(lines.getAt(0).getLocation());
@@ -231,7 +231,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2&lt;ClassDia
 			// lines = lines.subExtract(1, 0);
 			// }
 <span class="fc bfc" id="L233" title="All 2 branches covered.">			for (StringLocated s : lines) {</span>
-<span class="pc bpc" id="L234" title="2 of 4 branches missed.">				if (s.getString().length() &gt; 0 &amp;&amp; VisibilityModifier.isVisibilityCharacter(s.getString()))</span>
+<span class="pc bpc" id="L234" title="1 of 4 branches missed.">				if (s.getString().length() &gt; 0 &amp;&amp; VisibilityModifier.isVisibilityCharacter(s.getString()))</span>
 <span class="fc" id="L235">					diagram.setVisibilityModifierPresent(true);</span>
 
 <span class="fc" id="L237">				entity.getBodier().addFieldOrMethod(s.getString());</span>

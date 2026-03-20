@@ -147,8 +147,8 @@ public class CommandCreateState extends SingleLineCommand2&lt;StateDiagram&gt; {
 
 <span class="fc" id="L148">			ent.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));</span>
 
-<span class="pc bpc" id="L150" title="1 of 2 branches missed.">			if (stereotype != null)</span>
-<span class="nc" id="L151">				ent.setStereotype(Stereotype.build(stereotype));</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">			if (stereotype != null)</span>
+<span class="fc" id="L151">				ent.setStereotype(Stereotype.build(stereotype));</span>
 
 <span class="fc" id="L153">			final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
 <span class="pc bpc" id="L154" title="1 of 2 branches missed.">			if (urlString != null) {</span>
@@ -170,8 +170,8 @@ public class CommandCreateState extends SingleLineCommand2&lt;StateDiagram&gt; {
 <span class="fc" id="L170">			ent.setColors(colors);</span>
 
 <span class="fc" id="L172">			final String addFields = arg.get(&quot;ADDFIELD&quot;, 0);</span>
-<span class="pc bpc" id="L173" title="1 of 2 branches missed.">			if (addFields != null)</span>
-<span class="nc" id="L174">				ent.getBodier().addFieldOrMethod(addFields);</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">			if (addFields != null)</span>
+<span class="fc" id="L174">				ent.getBodier().addFieldOrMethod(addFields);</span>
 
 <span class="fc" id="L176">			CommandCreateClassMultilines.addTags(ent, arg.getLazzy(&quot;TAGS&quot;, 0));</span>
 		}

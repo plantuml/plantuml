@@ -68,8 +68,8 @@ final public class UmlSource {
 <span class="fc" id="L68">	final private PathSystem pathSystem = PathSystem.fetch();</span>
 
 	public UmlSource removeInitialSkinparam() {
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (hasInitialSkinparam(source) == false)</span>
-<span class="nc" id="L72">			return this;</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (hasInitialSkinparam(source) == false)</span>
+<span class="fc" id="L72">			return this;</span>
 
 <span class="nc" id="L74">		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;(source);</span>
 <span class="nc bnc" id="L75" title="All 2 branches missed.">		while (hasInitialSkinparam(copy))</span>
@@ -87,8 +87,8 @@ final public class UmlSource {
 	}
 
 	private static boolean hasInitialSkinparam(final List&lt;StringLocated&gt; copy) {
-<span class="nc bnc" id="L90" title="All 4 branches missed.">		return copy.size() &gt; 1 &amp;&amp; (copy.get(1).getString().startsWith(&quot;skinparam &quot;)</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">				|| copy.get(1).getString().startsWith(&quot;skinparamlocked &quot;));</span>
+<span class="pc bpc" id="L90" title="2 of 4 branches missed.">		return copy.size() &gt; 1 &amp;&amp; (copy.get(1).getString().startsWith(&quot;skinparam &quot;)</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">				|| copy.get(1).getString().startsWith(&quot;skinparamlocked &quot;));</span>
 	}
 
 <span class="fc" id="L94">	private UmlSource(List&lt;StringLocated&gt; source, List&lt;StringLocated&gt; rawSource) {</span>
@@ -238,8 +238,8 @@ final public class UmlSource {
 <span class="fc bfc" id="L238" title="All 2 branches covered.">		for (StringLocated s : source) {</span>
 <span class="fc" id="L239">			final Matcher2 m = TITLE.matcher(s.getString());</span>
 <span class="fc" id="L240">			final boolean ok = m.matches();</span>
-<span class="pc bpc" id="L241" title="1 of 2 branches missed.">			if (ok)</span>
-<span class="nc" id="L242">				return Display.create(m.group(1));</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">			if (ok)</span>
+<span class="fc" id="L242">				return Display.create(m.group(1));</span>
 <span class="fc" id="L243">		}</span>
 <span class="fc" id="L244">		return Display.empty();</span>
 	}
@@ -252,8 +252,8 @@ final public class UmlSource {
 
 	public String getId() {
 <span class="fc" id="L254">		final Matcher m = ID.matcher(source.get(0).getString());</span>
-<span class="pc bpc" id="L255" title="1 of 2 branches missed.">		if (m.find())</span>
-<span class="nc" id="L256">			return m.group(1);</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">		if (m.find())</span>
+<span class="fc" id="L256">			return m.group(1);</span>
 
 <span class="fc" id="L258">		return null;</span>
 	}

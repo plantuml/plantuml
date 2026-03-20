@@ -109,7 +109,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 <span class="fc" id="L109">			final int len = link.getLength();</span>
 <span class="fc bfc" id="L110" title="All 2 branches covered.">			if (len == 1)</span>
 <span class="fc bfc" id="L111" title="All 2 branches covered.">				for (Link link2 : this.getLinks())</span>
-<span class="pc bpc" id="L112" title="2 of 4 branches missed.">					if (link2.sameConnections(link) &amp;&amp; link2.getLength() != 1)</span>
+<span class="pc bpc" id="L112" title="1 of 4 branches missed.">					if (link2.sameConnections(link) &amp;&amp; link2.getLength() != 1)</span>
 <span class="nc" id="L113">						link2.setLength(1);</span>
 
 <span class="fc" id="L115">		}</span>
@@ -123,10 +123,10 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
 	public CommandExecutionResult checkIfPackageHierarchyIsOk(Entity entity) {
 <span class="fc" id="L125">		Quark&lt;Entity&gt; current = entity.getQuark().getParent();</span>
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		while (current.isRoot() == false) {</span>
-<span class="nc bnc" id="L127" title="All 4 branches missed.">			if (current.getData() != null &amp;&amp; current.getData().isGroup() == false)</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		while (current.isRoot() == false) {</span>
+<span class="pc bpc" id="L127" title="2 of 4 branches missed.">			if (current.getData() != null &amp;&amp; current.getData().isGroup() == false)</span>
 <span class="nc" id="L128">				return CommandExecutionResult.error(&quot;Bad hierarchy for class &quot; + entity.getQuark().getQualifiedName());</span>
-<span class="nc" id="L129">			current = current.getParent();</span>
+<span class="fc" id="L129">			current = current.getParent();</span>
 		}
 <span class="fc" id="L131">		return CommandExecutionResult.ok();</span>
 	}

@@ -68,7 +68,7 @@ public class SvgOption {
 	private ConfigurationStore&lt;OptionKey&gt; options;
 
 	public String getInteractiveBaseFilename() {
-<span class="nc" id="L71">		return interactiveBaseFilename;</span>
+<span class="fc" id="L71">		return interactiveBaseFilename;</span>
 	}
 
 	public static SvgOption basic() {
@@ -122,8 +122,8 @@ public class SvgOption {
 
 
 	public SvgOption withInteractive(String interactiveBaseFilename) {
-<span class="nc" id="L125">		this.interactiveBaseFilename = interactiveBaseFilename;</span>
-<span class="nc" id="L126">		return this;</span>
+<span class="fc" id="L125">		this.interactiveBaseFilename = interactiveBaseFilename;</span>
+<span class="fc" id="L126">		return this;</span>
 	}
 
 	public SvgOption withLengthAdjust(LengthAdjust lengthAdjust) {
@@ -190,7 +190,7 @@ public class SvgOption {
 	}
 
 	public boolean isInteractive() {
-<span class="pc bpc" id="L193" title="1 of 2 branches missed.">		return interactiveBaseFilename != null;</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		return interactiveBaseFilename != null;</span>
 	}
 
 	public LengthAdjust getLengthAdjust() {

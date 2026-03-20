@@ -150,8 +150,8 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	}
 
 	public void setPrintScale(PrintScale printScale) {
-<span class="nc" id="L153">		this.scaleConfig.setPrintScale(printScale);</span>
-<span class="nc" id="L154">	}</span>
+<span class="fc" id="L153">		this.scaleConfig.setPrintScale(printScale);</span>
+<span class="fc" id="L154">	}</span>
 
 	public void setFactorScale(double factorScale) {
 <span class="nc" id="L157">		this.scaleConfig.setFactorScale(factorScale);</span>
@@ -169,19 +169,19 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L172">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());</span>
-<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (this.timeBounds.getPrintStart() == null) {</span>
-<span class="nc" id="L174">			initMinMax();</span>
+<span class="fc" id="L172">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		if (this.timeBounds.getPrintStart() == null) {</span>
+<span class="fc" id="L174">			initMinMax();</span>
 		} else {
 <span class="nc" id="L176">			this.timeBounds.setMinDay(this.timeBounds.getPrintStart());</span>
 <span class="nc" id="L177">			this.timeBounds.setMaxDay(this.timeBounds.getPrintEnd());</span>
 		}
-<span class="nc" id="L179">		final TimeHeaderFactory factory = new TimeHeaderFactory(this.weekConfig, this.dayCalendar, this.timeBounds,</span>
+<span class="fc" id="L179">		final TimeHeaderFactory factory = new TimeHeaderFactory(this.weekConfig, this.dayCalendar, this.timeBounds,</span>
 				this.scaleConfig, this.timelineStyle);
 
-<span class="nc" id="L182">		final TimeHeader timeHeader = factory.createTimeHeader();</span>
+<span class="fc" id="L182">		final TimeHeader timeHeader = factory.createTimeHeader();</span>
 
-<span class="nc" id="L184">		return new GanttDiagramMainBlock(this.timeBounds, this.modelData, this.drawRegistry, this.displayConfig,</span>
+<span class="fc" id="L184">		return new GanttDiagramMainBlock(this.timeBounds, this.modelData, this.drawRegistry, this.displayConfig,</span>
 				this.timelineStyle, this, timeHeader, stringBounder);
 	}
 
@@ -191,14 +191,14 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 
 	@Override
 	public final Style getStyle(SName param) {
-<span class="nc" id="L194">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, param)</span>
-<span class="nc" id="L195">				.getMergedStyle(getCurrentStyleBuilder());</span>
+<span class="fc" id="L194">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, param)</span>
+<span class="fc" id="L195">				.getMergedStyle(getCurrentStyleBuilder());</span>
 	}
 
 	@Override
 	public final Style getStyle(SName param1, SName param2) {
-<span class="nc" id="L200">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, param1, param2)</span>
-<span class="nc" id="L201">				.getMergedStyle(getCurrentStyleBuilder());</span>
+<span class="fc" id="L200">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, param1, param2)</span>
+<span class="fc" id="L201">				.getMergedStyle(getCurrentStyleBuilder());</span>
 	}
 
 	public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
@@ -206,8 +206,8 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	}
 
 	public void closeDayOfWeek(DayOfWeek day, String task) {
-<span class="nc" id="L209">		this.dayCalendar.getOpenClose().close(day);</span>
-<span class="nc" id="L210">	}</span>
+<span class="fc" id="L209">		this.dayCalendar.getOpenClose().close(day);</span>
+<span class="fc" id="L210">	}</span>
 
 	public void openDayOfWeek(DayOfWeek day, String task) {
 <span class="nc bnc" id="L213" title="All 2 branches missed.">		if (task.length() == 0)</span>
@@ -251,17 +251,17 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	}
 
 	public GanttConstraint forceTaskOrder(Task task1, Task task2) {
-<span class="nc" id="L254">		final TaskInstant end1 = new TaskInstant(task1, TaskAttribute.END);</span>
-<span class="nc" id="L255">		task2.setStart(end1.getInstantPrecise());</span>
-<span class="nc" id="L256">		final GanttConstraint result = new GanttConstraint(this.getIHtmlColorSet(),</span>
-<span class="nc" id="L257">				getSkinParam().getCurrentStyleBuilder(), end1, new TaskInstant(task2, TaskAttribute.START));</span>
-<span class="nc" id="L258">		addContraint(result);</span>
-<span class="nc" id="L259">		return result;</span>
+<span class="fc" id="L254">		final TaskInstant end1 = new TaskInstant(task1, TaskAttribute.END);</span>
+<span class="fc" id="L255">		task2.setStart(end1.getInstantPrecise());</span>
+<span class="fc" id="L256">		final GanttConstraint result = new GanttConstraint(this.getIHtmlColorSet(),</span>
+<span class="fc" id="L257">				getSkinParam().getCurrentStyleBuilder(), end1, new TaskInstant(task2, TaskAttribute.START));</span>
+<span class="fc" id="L258">		addContraint(result);</span>
+<span class="fc" id="L259">		return result;</span>
 	}
 
 	public Task getOrCreateTask(TaskCode code, boolean linkedToPrevious) {
 <span class="fc" id="L263">		Task result = this.modelData.getTask(Objects.requireNonNull(code));</span>
-<span class="pc bpc" id="L264" title="1 of 2 branches missed.">		if (result == null) {</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">		if (result == null) {</span>
 <span class="fc" id="L265">			Task previous = null;</span>
 <span class="pc bpc" id="L266" title="1 of 2 branches missed.">			if (linkedToPrevious)</span>
 <span class="nc" id="L267">				previous = getLastCreatedTask();</span>
@@ -321,15 +321,15 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	}
 
 	public void addContraint(GanttConstraint constraint) {
-<span class="nc" id="L324">		this.modelData.addConstraint(constraint);</span>
-<span class="nc" id="L325">	}</span>
+<span class="fc" id="L324">		this.modelData.addConstraint(constraint);</span>
+<span class="fc" id="L325">	}</span>
 
 	public CommandExecutionResult updateStartingPoint(LocalDate start) {
-<span class="nc bnc" id="L328" title="All 2 branches missed.">		if (this.modelData.getTasks().size() &gt; 0)</span>
+<span class="pc bpc" id="L328" title="1 of 2 branches missed.">		if (this.modelData.getTasks().size() &gt; 0)</span>
 <span class="nc" id="L329">			return CommandExecutionResult.error(&quot;Starting point must be set before task definition&quot;);</span>
 
-<span class="nc" id="L331">		this.timeBounds.setMinDay(start);</span>
-<span class="nc" id="L332">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L331">		this.timeBounds.setMinDay(start);</span>
+<span class="fc" id="L332">		return CommandExecutionResult.ok();</span>
 	}
 
 	public LocalDate getMinDay() {
@@ -428,8 +428,8 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	}
 
 	public void colorDay(LocalDate day, HColor color) {
-<span class="nc" id="L431">		this.dayCalendar.putColorDay(TimePoint.ofStartOfDay(day), color);</span>
-<span class="nc" id="L432">	}</span>
+<span class="fc" id="L431">		this.dayCalendar.putColorDay(TimePoint.ofStartOfDay(day), color);</span>
+<span class="fc" id="L432">	}</span>
 
 	public void colorDay(DayOfWeek day, HColor color) {
 <span class="nc" id="L435">		this.dayCalendar.putColorDayOfWeek(day, color);</span>
@@ -485,7 +485,7 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="nc" id="L488">		return ClockwiseTopRightBottomLeft.none();</span>
+<span class="fc" id="L488">		return ClockwiseTopRightBottomLeft.none();</span>
 	}
 
 	public void setLabelStrategy(LabelStrategy strategy) {
@@ -551,7 +551,7 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	}
 
 	public HColorSet getIHtmlColorSet() {
-<span class="nc" id="L554">		return this.timelineStyle.getColorSet();</span>
+<span class="fc" id="L554">		return this.timelineStyle.getColorSet();</span>
 	}
 
 }

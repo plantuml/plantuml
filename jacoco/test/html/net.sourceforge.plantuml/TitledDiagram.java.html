@@ -160,14 +160,14 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 
 	@DuplicateCode(reference = &quot;StyleExtractor&quot;)
 	public CommandExecutionResult loadSkin(String newSkin) throws IOException {
-<span class="nc" id="L163">		final String filename = newSkin + &quot;.skin&quot;;</span>
-<span class="nc" id="L164">		final InputStream is = StyleLoader.getInputStreamForStyle(filename);</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (is == null)</span>
+<span class="fc" id="L163">		final String filename = newSkin + &quot;.skin&quot;;</span>
+<span class="fc" id="L164">		final InputStream is = StyleLoader.getInputStreamForStyle(filename);</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (is == null)</span>
 <span class="nc" id="L166">			return CommandExecutionResult.error(&quot;Cannot find style &quot; + newSkin);</span>
-<span class="nc" id="L167">		is.close();</span>
+<span class="fc" id="L167">		is.close();</span>
 
-<span class="nc" id="L169">		getSkinParam().setDefaultSkin(filename);</span>
-<span class="nc" id="L170">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L169">		getSkinParam().setDefaultSkin(filename);</span>
+<span class="fc" id="L170">		return CommandExecutionResult.ok();</span>
 	}
 
 	final public void setTitle(DisplayPositioned title) {
@@ -218,9 +218,9 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 <span class="fc" id="L218">	}</span>
 
 	public void updateHeader(LineLocation location, Display display, HorizontalAlignment horizontalAlignment) {
-<span class="nc" id="L221">		this.header = this.header.withDisplay(display).withHorizontalAlignment(horizontalAlignment)</span>
-<span class="nc" id="L222">				.withLocation(location);</span>
-<span class="nc" id="L223">	}</span>
+<span class="fc" id="L221">		this.header = this.header.withDisplay(display).withHorizontalAlignment(horizontalAlignment)</span>
+<span class="fc" id="L222">				.withLocation(location);</span>
+<span class="fc" id="L223">	}</span>
 
 	@Override
 	final public DisplayPositioned getLegend() {
@@ -254,8 +254,8 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 	}
 
 	public boolean isUseSmetana() {
-<span class="pc bpc" id="L257" title="1 of 2 branches missed.">		if (FORCE_SMETANA)</span>
-<span class="nc" id="L258">			return true;</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">		if (FORCE_SMETANA)</span>
+<span class="fc" id="L258">			return true;</span>
 <span class="fc" id="L259">		return useSmetana;</span>
 		// return true;
 	}

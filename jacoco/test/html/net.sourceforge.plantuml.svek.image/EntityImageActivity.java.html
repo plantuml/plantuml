@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.url.Url;
 
 public class EntityImageActivity extends AbstractEntityImage {
 
-<span class="nc" id="L65">	private double shadowing = 0;</span>
+<span class="fc" id="L65">	private double shadowing = 0;</span>
 	public static final int CORNER = 25;
 	final private TextBlock desc;
 	final private static int MARGIN = 10;
@@ -70,39 +70,39 @@ public class EntityImageActivity extends AbstractEntityImage {
 	private final Bibliotekon bibliotekon;
 
 	public EntityImageActivity(Entity entity, Bibliotekon bibliotekon) {
-<span class="nc" id="L73">		super(entity);</span>
-<span class="nc" id="L74">		this.bibliotekon = bibliotekon;</span>
+<span class="fc" id="L73">		super(entity);</span>
+<span class="fc" id="L74">		this.bibliotekon = bibliotekon;</span>
 
-<span class="nc" id="L76">		final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L77">		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L78">		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();</span>
-<span class="nc" id="L79">		this.shadowing = style.getShadowing();</span>
+<span class="fc" id="L76">		final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L77">		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L78">		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();</span>
+<span class="fc" id="L79">		this.shadowing = style.getShadowing();</span>
 
-<span class="nc" id="L81">		this.desc = entity.getDisplay().create(fontConfiguration, horizontalAlignment, getSkinParam());</span>
-<span class="nc" id="L82">		this.url = entity.getUrl99();</span>
-<span class="nc" id="L83">	}</span>
+<span class="fc" id="L81">		this.desc = entity.getDisplay().create(fontConfiguration, horizontalAlignment, getSkinParam());</span>
+<span class="fc" id="L82">		this.url = entity.getUrl99();</span>
+<span class="fc" id="L83">	}</span>
 
 	@Override
 	final public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L87">		final XDimension2D dim = desc.calculateDimension(stringBounder);</span>
-<span class="nc" id="L88">		return dim.delta(MARGIN * 2);</span>
+<span class="fc" id="L87">		final XDimension2D dim = desc.calculateDimension(stringBounder);</span>
+<span class="fc" id="L88">		return dim.delta(MARGIN * 2);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (url != null)</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (url != null)</span>
 <span class="nc" id="L93">			ug.startUrl(url);</span>
 
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (getShapeType() == ShapeType.ROUND_RECTANGLE)</span>
-<span class="nc" id="L96">			ug = drawNormal(ug);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (getShapeType() == ShapeType.ROUND_RECTANGLE)</span>
+<span class="fc" id="L96">			ug = drawNormal(ug);</span>
 <span class="nc bnc" id="L97" title="All 2 branches missed.">		else if (getShapeType() == ShapeType.OCTAGON)</span>
 <span class="nc" id="L98">			ug = drawOctagon(ug);</span>
 		else
 <span class="nc" id="L100">			throw new UnsupportedOperationException();</span>
 
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (url != null)</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (url != null)</span>
 <span class="nc" id="L103">			ug.closeUrl();</span>
 
-<span class="nc" id="L105">	}</span>
+<span class="fc" id="L105">	}</span>
 
 	private UGraphic drawOctagon(UGraphic ug) {
 <span class="nc" id="L108">		final SvekNode node = bibliotekon.getNode(getEntity());</span>
@@ -119,49 +119,49 @@ public class EntityImageActivity extends AbstractEntityImage {
 	}
 
 	private UGraphic drawNormal(UGraphic ug) {
-<span class="nc" id="L122">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L123">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="fc" id="L122">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L123">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L125">		final double widthTotal = dimTotal.getWidth();</span>
-<span class="nc" id="L126">		final double heightTotal = dimTotal.getHeight();</span>
-<span class="nc" id="L127">		final Shadowable rect = URectangle.build(widthTotal, heightTotal).rounded(CORNER);</span>
-<span class="nc" id="L128">		rect.setDeltaShadow(shadowing);</span>
+<span class="fc" id="L125">		final double widthTotal = dimTotal.getWidth();</span>
+<span class="fc" id="L126">		final double heightTotal = dimTotal.getHeight();</span>
+<span class="fc" id="L127">		final Shadowable rect = URectangle.build(widthTotal, heightTotal).rounded(CORNER);</span>
+<span class="fc" id="L128">		rect.setDeltaShadow(shadowing);</span>
 
-<span class="nc" id="L130">		ug = applyColors(ug);</span>
+<span class="fc" id="L130">		ug = applyColors(ug);</span>
 
-<span class="nc" id="L132">		final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L133">		final UStroke stroke = style.getStroke();</span>
+<span class="fc" id="L132">		final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L133">		final UStroke stroke = style.getStroke();</span>
 
-<span class="nc" id="L135">		ug.apply(stroke).draw(rect);</span>
+<span class="fc" id="L135">		ug.apply(stroke).draw(rect);</span>
 
-<span class="nc" id="L137">		desc.drawU(ug.apply(new UTranslate(MARGIN, MARGIN)));</span>
-<span class="nc" id="L138">		return ug;</span>
+<span class="fc" id="L137">		desc.drawU(ug.apply(new UTranslate(MARGIN, MARGIN)));</span>
+<span class="fc" id="L138">		return ug;</span>
 	}
 
 	public StyleSignature getDefaultStyleDefinition() {
-<span class="nc" id="L142">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity)</span>
-<span class="nc" id="L143">				.withTOBECHANGED(getStereo());</span>
+<span class="fc" id="L142">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity)</span>
+<span class="fc" id="L143">				.withTOBECHANGED(getStereo());</span>
 	}
 
 	private UGraphic applyColors(UGraphic ug) {
 
-<span class="nc" id="L148">		final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L149">		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L150">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
-<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (backcolor == null)</span>
-<span class="nc" id="L152">			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L148">		final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L149">		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L150">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (backcolor == null)</span>
+<span class="fc" id="L152">			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="nc" id="L154">		ug = ug.apply(borderColor);</span>
-<span class="nc" id="L155">		ug = ug.apply(backcolor.bg());</span>
-<span class="nc" id="L156">		return ug;</span>
+<span class="fc" id="L154">		ug = ug.apply(borderColor);</span>
+<span class="fc" id="L155">		ug = ug.apply(backcolor.bg());</span>
+<span class="fc" id="L156">		return ug;</span>
 	}
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L160">		final Stereotype stereotype = getStereo();</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (getSkinParam().useOctagonForActivity(stereotype))</span>
+<span class="fc" id="L160">		final Stereotype stereotype = getStereo();</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if (getSkinParam().useOctagonForActivity(stereotype))</span>
 <span class="nc" id="L162">			return ShapeType.OCTAGON;</span>
 
-<span class="nc" id="L164">		return ShapeType.ROUND_RECTANGLE;</span>
+<span class="fc" id="L164">		return ShapeType.ROUND_RECTANGLE;</span>
 	}
 
 }

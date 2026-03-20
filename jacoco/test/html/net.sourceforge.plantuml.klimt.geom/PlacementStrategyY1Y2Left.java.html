@@ -54,11 +54,11 @@ public class PlacementStrategyY1Y2Left extends AbstractPlacementStrategy {
 <span class="fc" id="L54">		final double space = (height - usedHeight) / (getDimensions().size() + 1);</span>
 <span class="fc" id="L55">		final Map&lt;TextBlock, XPoint2D&gt; result = new LinkedHashMap&lt;&gt;();</span>
 <span class="fc" id="L56">		double y = space;</span>
-<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		for (Map.Entry&lt;TextBlock, XDimension2D&gt; ent : getDimensions().entrySet()) {</span>
-<span class="nc" id="L58">			final double x = 0;</span>
-<span class="nc" id="L59">			result.put(ent.getKey(), new XPoint2D(x, y));</span>
-<span class="nc" id="L60">			y += ent.getValue().getHeight() + space;</span>
-<span class="nc" id="L61">		}</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		for (Map.Entry&lt;TextBlock, XDimension2D&gt; ent : getDimensions().entrySet()) {</span>
+<span class="fc" id="L58">			final double x = 0;</span>
+<span class="fc" id="L59">			result.put(ent.getKey(), new XPoint2D(x, y));</span>
+<span class="fc" id="L60">			y += ent.getValue().getHeight() + space;</span>
+<span class="fc" id="L61">		}</span>
 <span class="fc" id="L62">		return result;</span>
 	}
 

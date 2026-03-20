@@ -86,9 +86,9 @@ public class SlotFinder extends UGraphicNo {
 <span class="fc" id="L86">		final double y = getTranslate().getDy();</span>
 <span class="fc bfc" id="L87" title="All 2 branches covered.">		if (sh instanceof UShapeIgnorableForCompression) {</span>
 <span class="fc" id="L88">			final UShapeIgnorableForCompression shape = (UShapeIgnorableForCompression) sh;</span>
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">			if (shape.isIgnoreForCompressionOn(mode)) {</span>
-<span class="nc" id="L90">				shape.drawWhenCompressed(this, mode);</span>
-<span class="nc" id="L91">				return;</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">			if (shape.isIgnoreForCompressionOn(mode)) {</span>
+<span class="fc" id="L90">				shape.drawWhenCompressed(this, mode);</span>
+<span class="fc" id="L91">				return;</span>
 			}
 
 		}
@@ -103,8 +103,8 @@ public class SlotFinder extends UGraphicNo {
 <span class="fc bfc" id="L103" title="All 2 branches covered.">		} else if (sh instanceof UText) {</span>
 <span class="fc" id="L104">			final UText text = (UText) sh;</span>
 <span class="fc" id="L105">			drawText(x, y, text);</span>
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		} else if (sh instanceof UEmpty) {</span>
-<span class="nc" id="L107">			drawEmpty(x, y, (UEmpty) sh);</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		} else if (sh instanceof UEmpty) {</span>
+<span class="fc" id="L107">			drawEmpty(x, y, (UEmpty) sh);</span>
 		}
 <span class="fc" id="L109">	}</span>
 
@@ -117,12 +117,12 @@ public class SlotFinder extends UGraphicNo {
 <span class="fc" id="L117">	}</span>
 
 	private void drawEmpty(double x, double y, UEmpty shape) {
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (mode == CompressionMode.ON_X)</span>
-<span class="nc" id="L121">			slot.addSlot(x, x + shape.getWidth());</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (mode == CompressionMode.ON_X)</span>
+<span class="fc" id="L121">			slot.addSlot(x, x + shape.getWidth());</span>
 		else
-<span class="nc" id="L123">			slot.addSlot(y, y + shape.getHeight());</span>
+<span class="fc" id="L123">			slot.addSlot(y, y + shape.getHeight());</span>
 
-<span class="nc" id="L125">	}</span>
+<span class="fc" id="L125">	}</span>
 
 	private void drawText(double x, double y, UText shape) {
 <span class="fc" id="L128">		final TextLimitFinder finder = TextLimitFinder.create(getStringBounder(), false);</span>

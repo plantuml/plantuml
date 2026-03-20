@@ -91,9 +91,9 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	public boolean isInside(double xp, double yp) {
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (xp &lt; x) {</span>
-<span class="nc bnc" id="L95" title="All 4 branches missed.">			if (TeaVM.a()) assert getClippedX(xp) != xp;</span>
-<span class="nc" id="L96">			return false;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (xp &lt; x) {</span>
+<span class="pc bpc" id="L95" title="2 of 4 branches missed.">			if (TeaVM.a()) assert getClippedX(xp) != xp;</span>
+<span class="fc" id="L96">			return false;</span>
 		}
 <span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (xp &gt; x + width) {</span>
 <span class="nc bnc" id="L99" title="All 4 branches missed.">			if (TeaVM.a()) assert getClippedX(xp) != xp;</span>
@@ -113,7 +113,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	public Rectangle2D.Double getClippedRectangle(Rectangle2D.Double r) {
-<span class="nc" id="L116">		return (Rectangle2D.Double) r.createIntersection(new Rectangle2D.Double(x, y, width, height));</span>
+<span class="fc" id="L116">		return (Rectangle2D.Double) r.createIntersection(new Rectangle2D.Double(x, y, width, height));</span>
 	}
 
 	public Line2D.Double getClippedLine(Line2D.Double line) {
@@ -148,12 +148,12 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	public boolean isInside(double x, double y, UPath shape) {
-<span class="pc bpc" id="L151" title="2 of 4 branches missed.">		return isInside(x + shape.getMinX(), y + shape.getMinY()) &amp;&amp; isInside(x + shape.getMaxX(), y + shape.getMaxY());</span>
+<span class="pc bpc" id="L151" title="1 of 4 branches missed.">		return isInside(x + shape.getMinX(), y + shape.getMinY()) &amp;&amp; isInside(x + shape.getMaxX(), y + shape.getMaxY());</span>
 	}
 
 	private double getClippedX(double xp) {
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (xp &lt; x)</span>
-<span class="nc" id="L156">			return x;</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (xp &lt; x)</span>
+<span class="fc" id="L156">			return x;</span>
 
 <span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (xp &gt; x + width)</span>
 <span class="nc" id="L159">			return x + width;</span>

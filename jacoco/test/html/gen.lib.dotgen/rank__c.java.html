@@ -183,8 +183,8 @@ try {
 <span class="fc bfc" id="L183" title="All 2 branches covered.">		    for (e1 = agfstout(zz, g, n1); e1!=null; e1 = agnxtout(zz, g, e1)) {</span>
 <span class="fc bfc" id="L184" title="All 2 branches covered.">			if ((e != e1)) {</span>
 <span class="fc" id="L185">			    f1 = ED_to_virt(e1);</span>
-<span class="pc bpc" id="L186" title="1 of 4 branches missed.">			    if (f1!=null &amp;&amp; f == f1) {</span>
-<span class="nc" id="L187">				ED_to_virt(e1, null);</span>
+<span class="fc bfc" id="L186" title="All 4 branches covered.">			    if (f1!=null &amp;&amp; f == f1) {</span>
+<span class="fc" id="L187">				ED_to_virt(e1, null);</span>
 			    }
 			}
 		    }
@@ -371,10 +371,10 @@ try {
     /* find number of ranks and select a leader */
 <span class="fc" id="L372">    leader = null;</span>
 <span class="fc bfc" id="L373" title="All 2 branches covered.">    for (n = GD_nlist(clust); n!=null; n = ND_next(n)) {</span>
-<span class="pc bpc" id="L374" title="2 of 4 branches missed.">	if ((ND_rank(n) == 0) &amp;&amp; (ND_node_type(n) == NORMAL))</span>
+<span class="pc bpc" id="L374" title="1 of 4 branches missed.">	if ((ND_rank(n) == 0) &amp;&amp; (ND_node_type(n) == NORMAL))</span>
 <span class="fc" id="L375">	    leader = n;</span>
-<span class="pc bpc" id="L376" title="1 of 2 branches missed.">	if (maxrank &lt; ND_rank(n))</span>
-<span class="nc" id="L377">	    maxrank = ND_rank(n);</span>
+<span class="fc bfc" id="L376" title="All 2 branches covered.">	if (maxrank &lt; ND_rank(n))</span>
+<span class="fc" id="L377">	    maxrank = ND_rank(n);</span>
     }
 <span class="pc bpc" id="L379" title="1 of 2 branches missed.">    assert(leader != null);</span>
 <span class="fc" id="L380">    GD_leader(clust, leader);</span>
@@ -485,8 +485,8 @@ try {
     
 <span class="fc" id="L486">    GD_minrank(g, GD_minrank(g) + ND_rank(GD_leader(g)));</span>
 <span class="fc" id="L487">    GD_maxrank(g, GD_maxrank(g) + ND_rank(GD_leader(g)));</span>
-<span class="pc bpc" id="L488" title="1 of 2 branches missed.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
-<span class="nc" id="L489">	set_minmax(GD_clust(g).get_(c));</span>
+<span class="fc bfc" id="L488" title="All 2 branches covered.">    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="fc" id="L489">	set_minmax(GD_clust(g).get_(c));</span>
 } finally {
 <span class="fc" id="L491">LEAVING(&quot;12fw0esv4unfin6waf9mknc1o&quot;,&quot;set_minmax&quot;);</span>
 }

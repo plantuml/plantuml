@@ -136,8 +136,8 @@ public class Style {
 	}
 
 	public Style eventuallyOverride(PName param, HColor color) {
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (color == null)</span>
-<span class="nc" id="L140">			return this;</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		if (color == null)</span>
+<span class="fc" id="L140">			return this;</span>
 
 <span class="fc" id="L142">		final EnumMap&lt;PName, Value&gt; result = new EnumMap&lt;PName, Value&gt;(this.map);</span>
 <span class="fc" id="L143">		final Value old = result.get(param);</span>
@@ -146,13 +146,13 @@ public class Style {
 	}
 
 	public Style eventuallyOverride(PName param, double value) {
-<span class="nc" id="L149">		return eventuallyOverride(param, &quot;&quot; + value);</span>
+<span class="fc" id="L149">		return eventuallyOverride(param, &quot;&quot; + value);</span>
 	}
 
 	public Style eventuallyOverride(PName param, String value) {
-<span class="nc" id="L153">		final EnumMap&lt;PName, Value&gt; result = new EnumMap&lt;PName, Value&gt;(this.map);</span>
-<span class="nc" id="L154">		result.put(param, ValueImpl.regular(value, Integer.MAX_VALUE));</span>
-<span class="nc" id="L155">		return new Style(this.signature, result);</span>
+<span class="fc" id="L153">		final EnumMap&lt;PName, Value&gt; result = new EnumMap&lt;PName, Value&gt;(this.map);</span>
+<span class="fc" id="L154">		result.put(param, ValueImpl.regular(value, Integer.MAX_VALUE));</span>
+<span class="fc" id="L155">		return new Style(this.signature, result);</span>
 	}
 
 	public Style eventuallyOverride(Colors colors) {
@@ -175,14 +175,14 @@ public class Style {
 	}
 
 	public Style eventuallyOverride(Fashion symbolContext) {
-<span class="nc" id="L178">		Style result = this;</span>
-<span class="nc bnc" id="L179" title="All 2 branches missed.">		if (symbolContext != null) {</span>
-<span class="nc" id="L180">			final HColor back = symbolContext.getBackColor();</span>
-<span class="nc bnc" id="L181" title="All 2 branches missed.">			if (back != null)</span>
-<span class="nc" id="L182">				result = result.eventuallyOverride(PName.BackGroundColor, back);</span>
+<span class="fc" id="L178">		Style result = this;</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		if (symbolContext != null) {</span>
+<span class="fc" id="L180">			final HColor back = symbolContext.getBackColor();</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">			if (back != null)</span>
+<span class="fc" id="L182">				result = result.eventuallyOverride(PName.BackGroundColor, back);</span>
 
 		}
-<span class="nc" id="L185">		return result;</span>
+<span class="fc" id="L185">		return result;</span>
 	}
 
 	public StyleSignatureBasic getSignature() {
@@ -231,7 +231,7 @@ public class Style {
 
 	public Fashion getSymbolContext(HColorSet set, Colors colors) {
 <span class="fc bfc" id="L233" title="All 2 branches covered.">		HColor backColor = colors == null ? null : colors.getColor(ColorType.BACK);</span>
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">		if (backColor == null)</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">		if (backColor == null)</span>
 <span class="fc" id="L235">			backColor = value(PName.BackGroundColor).asColor(set);</span>
 <span class="fc bfc" id="L236" title="All 2 branches covered.">		HColor foreColor = colors == null ? null : colors.getColor(ColorType.LINE);</span>
 <span class="pc bpc" id="L237" title="1 of 2 branches missed.">		if (foreColor == null)</span>
@@ -248,14 +248,14 @@ public class Style {
 	}
 
 	public Style eventuallyOverride(UStroke stroke) {
-<span class="nc bnc" id="L251" title="All 2 branches missed.">		if (stroke == null)</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">		if (stroke == null)</span>
 <span class="nc" id="L252">			return this;</span>
 
-<span class="nc" id="L254">		Style result = this.eventuallyOverride(PName.LineThickness, stroke.getThickness());</span>
-<span class="nc" id="L255">		final double space = stroke.getDashSpace();</span>
-<span class="nc" id="L256">		final double visible = stroke.getDashVisible();</span>
-<span class="nc" id="L257">		result = result.eventuallyOverride(PName.LineStyle, &quot;&quot; + visible + &quot;-&quot; + space);</span>
-<span class="nc" id="L258">		return result;</span>
+<span class="fc" id="L254">		Style result = this.eventuallyOverride(PName.LineThickness, stroke.getThickness());</span>
+<span class="fc" id="L255">		final double space = stroke.getDashSpace();</span>
+<span class="fc" id="L256">		final double visible = stroke.getDashVisible();</span>
+<span class="fc" id="L257">		result = result.eventuallyOverride(PName.LineStyle, &quot;&quot; + visible + &quot;-&quot; + space);</span>
+<span class="fc" id="L258">		return result;</span>
 	}
 
 	public UStroke getStroke() {

@@ -48,14 +48,14 @@ public class MessageExo extends AbstractMessage {
 
 	public MessageExo(StyleBuilder styleBuilder, Participant p, MessageExoType type, Display label,
 			ArrowConfiguration arrowConfiguration, String messageNumber, boolean shortArrow, LineLocation location) {
-<span class="nc" id="L51">		super(styleBuilder, label, arrowConfiguration, messageNumber, location);</span>
-<span class="nc" id="L52">		this.participant = p;</span>
-<span class="nc" id="L53">		this.type = type;</span>
-<span class="nc" id="L54">		this.shortArrow = shortArrow;</span>
-<span class="nc" id="L55">	}</span>
+<span class="fc" id="L51">		super(styleBuilder, label, arrowConfiguration, messageNumber, location);</span>
+<span class="fc" id="L52">		this.participant = p;</span>
+<span class="fc" id="L53">		this.type = type;</span>
+<span class="fc" id="L54">		this.shortArrow = shortArrow;</span>
+<span class="fc" id="L55">	}</span>
 
 	public boolean isShortArrow() {
-<span class="nc" id="L58">		return shortArrow;</span>
+<span class="fc" id="L58">		return shortArrow;</span>
 	}
 
 	@Override
@@ -80,15 +80,15 @@ public class MessageExo extends AbstractMessage {
 	}
 
 	public Participant getParticipant() {
-<span class="nc" id="L83">		return participant;</span>
+<span class="fc" id="L83">		return participant;</span>
 	}
 
 	public final MessageExoType getType() {
-<span class="nc" id="L87">		return type;</span>
+<span class="fc" id="L87">		return type;</span>
 	}
 
 	public boolean dealWith(Participant someone) {
-<span class="nc bnc" id="L91" title="All 2 branches missed.">		return participant == someone;</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		return participant == someone;</span>
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class MessageExo extends AbstractMessage {
 	}
 
 	public boolean isSelfMessage() {
-<span class="nc" id="L100">		return false;</span>
+<span class="fc" id="L100">		return false;</span>
 	}
 
 }

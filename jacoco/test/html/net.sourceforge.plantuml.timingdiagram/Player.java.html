@@ -69,7 +69,7 @@ public abstract class Player {
 	private final HColor generalBackgroundColor;
 	private Panels cached;
 
-<span class="nc" id="L72">	private final List&lt;TimingNote&gt; notes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L72">	private final List&lt;TimingNote&gt; notes = new ArrayList&lt;&gt;();</span>
 	private final PlayerFrame playerFrame;
 	private final SName sname;
 
@@ -82,54 +82,54 @@ public abstract class Player {
 <span class="nc" id="L82">	}</span>
 
 	public Player(String title, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
-<span class="nc" id="L85">			HColor generalBackgroundColor, SName sname, int suggestedHeight) {</span>
-<span class="nc" id="L86">		this.generalBackgroundColor = generalBackgroundColor;</span>
-<span class="nc" id="L87">		this.sname = sname;</span>
-<span class="nc" id="L88">		this.stereotype = stereotype;</span>
-<span class="nc" id="L89">		this.skinParam = skinParam;</span>
-<span class="nc" id="L90">		this.compact = compact;</span>
-<span class="nc" id="L91">		this.ruler = ruler;</span>
-<span class="nc" id="L92">		this.suggestedHeight = suggestedHeight;</span>
-<span class="nc" id="L93">		this.title = Display.getWithNewlines(skinParam.getPragma(), title);</span>
-<span class="nc" id="L94">		this.playerFrame = new PlayerFrame(getTitle(), skinParam, compact);</span>
+<span class="fc" id="L85">			HColor generalBackgroundColor, SName sname, int suggestedHeight) {</span>
+<span class="fc" id="L86">		this.generalBackgroundColor = generalBackgroundColor;</span>
+<span class="fc" id="L87">		this.sname = sname;</span>
+<span class="fc" id="L88">		this.stereotype = stereotype;</span>
+<span class="fc" id="L89">		this.skinParam = skinParam;</span>
+<span class="fc" id="L90">		this.compact = compact;</span>
+<span class="fc" id="L91">		this.ruler = ruler;</span>
+<span class="fc" id="L92">		this.suggestedHeight = suggestedHeight;</span>
+<span class="fc" id="L93">		this.title = Display.getWithNewlines(skinParam.getPragma(), title);</span>
+<span class="fc" id="L94">		this.playerFrame = new PlayerFrame(getTitle(), skinParam, compact);</span>
 
-<span class="nc" id="L96">	}</span>
+<span class="fc" id="L96">	}</span>
 
 	final protected Style getStyle() {
-<span class="nc" id="L99">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, sname).withTOBECHANGED(stereotype)</span>
-<span class="nc" id="L100">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L99">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, sname).withTOBECHANGED(stereotype)</span>
+<span class="fc" id="L100">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
 	public final List&lt;TimingNote&gt; getNotes() {
-<span class="nc" id="L104">		return Collections.unmodifiableList(notes);</span>
+<span class="fc" id="L104">		return Collections.unmodifiableList(notes);</span>
 	}
 
 	public final ISkinParam getSkinParam() {
-<span class="nc" id="L108">		return skinParam;</span>
+<span class="fc" id="L108">		return skinParam;</span>
 	}
 
 	public final TimingRuler getRuler() {
-<span class="nc" id="L112">		return ruler;</span>
+<span class="fc" id="L112">		return ruler;</span>
 	}
 
 	public final int getSuggestedHeight() {
-<span class="nc" id="L116">		return suggestedHeight;</span>
+<span class="fc" id="L116">		return suggestedHeight;</span>
 	}
 
 	public final boolean isCompact() {
-<span class="nc" id="L120">		return compact;</span>
+<span class="fc" id="L120">		return compact;</span>
 	}
 
 	public final HColor getGeneralBackgroundColor() {
-<span class="nc" id="L124">		return generalBackgroundColor;</span>
+<span class="fc" id="L124">		return generalBackgroundColor;</span>
 	}
 
 	private TextBlock getTitle() {
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (title.isWhite())</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (title.isWhite())</span>
 <span class="nc" id="L129">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
-<span class="nc" id="L130">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, StyleSignatureBasic</span>
-<span class="nc" id="L131">				.of(SName.root, SName.element, SName.timingDiagram).getMergedStyle(skinParam.getCurrentStyleBuilder()));</span>
-<span class="nc" id="L132">		return title.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="fc" id="L130">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, StyleSignatureBasic</span>
+<span class="fc" id="L131">				.of(SName.root, SName.element, SName.timingDiagram).getMergedStyle(skinParam.getCurrentStyleBuilder()));</span>
+<span class="fc" id="L132">		return title.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);</span>
 	}
 
 	public abstract void defineState(String stateCode, String label);
@@ -139,11 +139,11 @@ public abstract class Player {
 	public abstract void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config);
 
 	public final void drawFrameTitle(UGraphic ug) {
-<span class="nc" id="L142">		playerFrame.drawFrameTitle(ug);</span>
-<span class="nc" id="L143">	}</span>
+<span class="fc" id="L142">		playerFrame.drawFrameTitle(ug);</span>
+<span class="fc" id="L143">	}</span>
 
 	public final double getFrameHeight(StringBounder stringBounder) {
-<span class="nc" id="L146">		return playerFrame.getHeight(stringBounder);</span>
+<span class="fc" id="L146">		return playerFrame.getHeight(stringBounder);</span>
 	}
 
 	public final void setHeight(int height) {
@@ -151,10 +151,10 @@ public abstract class Player {
 <span class="nc" id="L151">	}</span>
 
 	public final Panels panels() {
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (cached == null)</span>
-<span class="nc" id="L155">			cached = buildPlayerPanels();</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (cached == null)</span>
+<span class="fc" id="L155">			cached = buildPlayerPanels();</span>
 
-<span class="nc" id="L157">		return cached;</span>
+<span class="fc" id="L157">		return cached;</span>
 	}
 
 	protected abstract Panels buildPlayerPanels();

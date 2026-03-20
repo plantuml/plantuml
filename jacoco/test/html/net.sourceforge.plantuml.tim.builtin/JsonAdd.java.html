@@ -69,8 +69,8 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 <span class="fc" id="L70">		final JsonValue json = data.toJson().cloneMe();</span>
 
-<span class="pc bpc" id="L72" title="1 of 4 branches missed.">		if (!json.isArray() &amp;&amp; !json.isObject())</span>
-<span class="nc" id="L73">			return data;</span>
+<span class="fc bfc" id="L72" title="All 4 branches covered.">		if (!json.isArray() &amp;&amp; !json.isObject())</span>
+<span class="fc" id="L73">			return data;</span>
 <span class="fc bfc" id="L74" title="All 2 branches covered.">		if (json.isArray()) {</span>
 <span class="fc" id="L75">			final JsonValue value = values.get(1).toJsonValue();</span>
 <span class="fc" id="L76">			json.asArray().add(value);</span>

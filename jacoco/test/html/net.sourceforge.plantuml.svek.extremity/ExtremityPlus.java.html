@@ -52,13 +52,13 @@ class ExtremityPlus extends Extremity {
 	private final double angle;
 	private final HColor backgroundColor;
 
-<span class="nc" id="L55">	private ExtremityPlus(double x, double y, double angle, HColor backgroundColor) {</span>
-<span class="nc" id="L56">		this.angle = angle;</span>
-<span class="nc" id="L57">		this.circle = UEllipse.build(2 * radius, 2 * radius);</span>
-<span class="nc" id="L58">		this.px = x;</span>
-<span class="nc" id="L59">		this.py = y;</span>
-<span class="nc" id="L60">		this.backgroundColor = backgroundColor;</span>
-<span class="nc" id="L61">	}</span>
+<span class="fc" id="L55">	private ExtremityPlus(double x, double y, double angle, HColor backgroundColor) {</span>
+<span class="fc" id="L56">		this.angle = angle;</span>
+<span class="fc" id="L57">		this.circle = UEllipse.build(2 * radius, 2 * radius);</span>
+<span class="fc" id="L58">		this.px = x;</span>
+<span class="fc" id="L59">		this.py = y;</span>
+<span class="fc" id="L60">		this.backgroundColor = backgroundColor;</span>
+<span class="fc" id="L61">	}</span>
 
 	@Override
 	public XPoint2D somePoint() {
@@ -66,33 +66,33 @@ class ExtremityPlus extends Extremity {
 	}
 
 	public static UDrawable create(XPoint2D p1, double angle, HColor backgroundColor) {
-<span class="nc" id="L69">		final double x = p1.getX() - radius + radius * Math.sin(angle);</span>
-<span class="nc" id="L70">		final double y = p1.getY() - radius - radius * Math.cos(angle);</span>
-<span class="nc" id="L71">		return new ExtremityPlus(x, y, angle, backgroundColor);</span>
+<span class="fc" id="L69">		final double x = p1.getX() - radius + radius * Math.sin(angle);</span>
+<span class="fc" id="L70">		final double y = p1.getY() - radius - radius * Math.cos(angle);</span>
+<span class="fc" id="L71">		return new ExtremityPlus(x, y, angle, backgroundColor);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L75">		ug.apply(backgroundColor.bg()).apply(new UTranslate(px + 0, py + 0)).draw(circle);</span>
-<span class="nc" id="L76">		drawLine(ug, 0, 0, getPointOnCircle(angle - Math.PI / 2), getPointOnCircle(angle + Math.PI / 2));</span>
-<span class="nc" id="L77">		drawLine(ug, 0, 0, getPointOnCircle(angle), getPointOnCircle(angle + Math.PI));</span>
-<span class="nc" id="L78">	}</span>
+<span class="fc" id="L75">		ug.apply(backgroundColor.bg()).apply(new UTranslate(px + 0, py + 0)).draw(circle);</span>
+<span class="fc" id="L76">		drawLine(ug, 0, 0, getPointOnCircle(angle - Math.PI / 2), getPointOnCircle(angle + Math.PI / 2));</span>
+<span class="fc" id="L77">		drawLine(ug, 0, 0, getPointOnCircle(angle), getPointOnCircle(angle + Math.PI));</span>
+<span class="fc" id="L78">	}</span>
 
 	private XPoint2D getPointOnCircle(double angle) {
-<span class="nc" id="L81">		final double x = px + radius + radius * Math.cos(angle);</span>
-<span class="nc" id="L82">		final double y = py + radius + radius * Math.sin(angle);</span>
-<span class="nc" id="L83">		return new XPoint2D(x, y);</span>
+<span class="fc" id="L81">		final double x = px + radius + radius * Math.cos(angle);</span>
+<span class="fc" id="L82">		final double y = py + radius + radius * Math.sin(angle);</span>
+<span class="fc" id="L83">		return new XPoint2D(x, y);</span>
 	}
 
 	static private void drawLine(UGraphic ug, double x, double y, XPoint2D p1, XPoint2D p2) {
-<span class="nc" id="L87">		final double dx = p2.getX() - p1.getX();</span>
-<span class="nc" id="L88">		final double dy = p2.getY() - p1.getY();</span>
-<span class="nc" id="L89">		ug.apply(new UTranslate(x + p1.getX(), y + p1.getY())).draw(new ULine(dx, dy));</span>
+<span class="fc" id="L87">		final double dx = p2.getX() - p1.getX();</span>
+<span class="fc" id="L88">		final double dy = p2.getY() - p1.getY();</span>
+<span class="fc" id="L89">		ug.apply(new UTranslate(x + p1.getX(), y + p1.getY())).draw(new ULine(dx, dy));</span>
 
-<span class="nc" id="L91">	}</span>
+<span class="fc" id="L91">	}</span>
 	
 	@Override
 	public double getDecorationLength() {
-<span class="nc" id="L95">		return 16;</span>
+<span class="fc" id="L95">		return 16;</span>
 	}
 
 }

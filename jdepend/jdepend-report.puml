@@ -2324,7 +2324,7 @@ Total Classes: 1
 "net.sourceforge.plantuml.pdf" --> "net.sourceforge.plantuml.log"
 
 class "net.sourceforge.plantuml.picoweb" %lighten("red", 100) {
-Total Classes: 4
+Total Classes: 3
 }
 "net.sourceforge.plantuml.picoweb" --> "java.io"
 "net.sourceforge.plantuml.picoweb" --> "java.lang"

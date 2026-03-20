@@ -130,10 +130,10 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 <span class="pc bpc" id="L130" title="1 of 2 branches missed.">			if (cs instanceof Member == false)</span>
 <span class="nc" id="L131">				continue;</span>
 <span class="fc" id="L132">			final Member m = (Member) cs;</span>
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">			if (m.getVisibilityModifier() != null)</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">			if (m.getVisibilityModifier() != null)</span>
 <span class="fc" id="L134">				return true;</span>
 
-<span class="nc" id="L136">		}</span>
+<span class="fc" id="L136">		}</span>
 <span class="fc" id="L137">		return false;</span>
 	}
 
@@ -411,10 +411,10 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 <span class="nc" id="L411">				placementStrategy = new PlacementStrategyY1Y2Right(stringBounder);</span>
 
 <span class="fc" id="L413">			group = new ULayoutGroup(placementStrategy);</span>
-<span class="pc bpc" id="L414" title="1 of 2 branches missed.">			for (CharSequence cs : members) {</span>
-<span class="nc" id="L415">				final TextBlock bloc = createTextBlock(cs);</span>
-<span class="nc" id="L416">				group.add(bloc);</span>
-<span class="nc" id="L417">			}</span>
+<span class="fc bfc" id="L414" title="All 2 branches covered.">			for (CharSequence cs : members) {</span>
+<span class="fc" id="L415">				final TextBlock bloc = createTextBlock(cs);</span>
+<span class="fc" id="L416">				group.add(bloc);</span>
+<span class="fc" id="L417">			}</span>
 		}
 <span class="fc" id="L419">		return group;</span>
 	}

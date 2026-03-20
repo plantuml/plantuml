@@ -48,17 +48,17 @@ public class LifeDestroy extends GraphicalElement {
 	private final Component comp;
 
 	public LifeDestroy(double startingY, ParticipantBox participant, Component comp) {
-<span class="nc" id="L51">		super(startingY);</span>
-<span class="nc" id="L52">		this.participant = participant;</span>
-<span class="nc" id="L53">		this.comp = comp;</span>
-<span class="nc" id="L54">	}</span>
+<span class="fc" id="L51">		super(startingY);</span>
+<span class="fc" id="L52">		this.participant = participant;</span>
+<span class="fc" id="L53">		this.comp = comp;</span>
+<span class="fc" id="L54">	}</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
-<span class="nc" id="L58">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L59">		ug = ug.apply(new UTranslate(getStartingX(stringBounder), getStartingY()));</span>
-<span class="nc" id="L60">		comp.drawU(ug, null, context);</span>
-<span class="nc" id="L61">	}</span>
+<span class="fc" id="L58">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L59">		ug = ug.apply(new UTranslate(getStartingX(stringBounder), getStartingY()));</span>
+<span class="fc" id="L60">		comp.drawU(ug, null, context);</span>
+<span class="fc" id="L61">	}</span>
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
@@ -67,12 +67,12 @@ public class LifeDestroy extends GraphicalElement {
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L70">		return comp.getPreferredWidth(stringBounder);</span>
+<span class="fc" id="L70">		return comp.getPreferredWidth(stringBounder);</span>
 	}
 
 	@Override
 	public double getStartingX(StringBounder stringBounder) {
-<span class="nc" id="L75">		return participant.getCenterX(stringBounder) - getPreferredWidth(stringBounder) / 2.0;</span>
+<span class="fc" id="L75">		return participant.getCenterX(stringBounder) - getPreferredWidth(stringBounder) / 2.0;</span>
 	}
 
 }

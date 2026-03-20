@@ -71,12 +71,12 @@ public class StringWithArrow {
 <span class="pc bpc" id="L71" title="1 of 2 branches missed.">			} else if (&quot;&gt;&quot;.equals(completeLabel)) {</span>
 <span class="nc" id="L72">				this.linkArrow = LinkArrow.DIRECT_NORMAL;</span>
 <span class="nc" id="L73">				this.label = null;</span>
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">			} else if (completeLabel.startsWith(&quot;&lt; &quot;)) {</span>
-<span class="nc" id="L75">				this.linkArrow = LinkArrow.BACKWARD;</span>
-<span class="nc" id="L76">				this.label = StringUtils.trin(completeLabel.substring(2));</span>
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">			} else if (completeLabel.startsWith(&quot;&gt; &quot;)) {</span>
-<span class="nc" id="L78">				this.linkArrow = LinkArrow.DIRECT_NORMAL;</span>
-<span class="nc" id="L79">				this.label = StringUtils.trin(completeLabel.substring(2));</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">			} else if (completeLabel.startsWith(&quot;&lt; &quot;)) {</span>
+<span class="fc" id="L75">				this.linkArrow = LinkArrow.BACKWARD;</span>
+<span class="fc" id="L76">				this.label = StringUtils.trin(completeLabel.substring(2));</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">			} else if (completeLabel.startsWith(&quot;&gt; &quot;)) {</span>
+<span class="fc" id="L78">				this.linkArrow = LinkArrow.DIRECT_NORMAL;</span>
+<span class="fc" id="L79">				this.label = StringUtils.trin(completeLabel.substring(2));</span>
 <span class="pc bpc" id="L80" title="1 of 2 branches missed.">			} else if (completeLabel.endsWith(&quot; &gt;&quot;)) {</span>
 <span class="nc" id="L81">				this.linkArrow = LinkArrow.DIRECT_NORMAL;</span>
 <span class="nc" id="L82">				this.label = StringUtils.trin(completeLabel.substring(0, completeLabel.length() - 2));</span>

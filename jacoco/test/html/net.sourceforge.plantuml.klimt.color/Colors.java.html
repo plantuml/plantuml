@@ -99,19 +99,19 @@ public class Colors {
 <span class="fc bfc" id="L99" title="All 2 branches covered.">		for (final StringTokenizer st = new StringTokenizer(data, &quot;;&quot;); st.hasMoreTokens();) {</span>
 <span class="fc" id="L100">			final String s = st.nextToken();</span>
 <span class="fc" id="L101">			final int x = s.indexOf(':');</span>
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">			if (x == -1) {</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">			if (x == -1) {</span>
 <span class="pc bpc" id="L103" title="1 of 2 branches missed.">				if (s.contains(&quot;.&quot;) == false)</span>
 <span class="fc" id="L104">					map.put(mainType, set.getColor(s));</span>
 
 			} else {
-<span class="nc" id="L107">				final String name = s.substring(0, x);</span>
-<span class="nc" id="L108">				final String value = s.substring(x + 1);</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">				if (name.equalsIgnoreCase(&quot;shadowing&quot;)) {</span>
+<span class="fc" id="L107">				final String name = s.substring(0, x);</span>
+<span class="fc" id="L108">				final String value = s.substring(x + 1);</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">				if (name.equalsIgnoreCase(&quot;shadowing&quot;)) {</span>
 <span class="nc" id="L110">					this.shadowing = value.equalsIgnoreCase(&quot;true&quot;);</span>
 				} else {
-<span class="nc" id="L112">					final ColorType key = ColorType.getType(name);</span>
-<span class="nc" id="L113">					final HColor color = set.getColor(value);</span>
-<span class="nc" id="L114">					map.put(key, color);</span>
+<span class="fc" id="L112">					final ColorType key = ColorType.getType(name);</span>
+<span class="fc" id="L113">					final HColor color = set.getColor(value);</span>
+<span class="fc" id="L114">					map.put(key, color);</span>
 				}
 			}
 <span class="fc" id="L117">		}</span>
@@ -144,12 +144,12 @@ public class Colors {
 	}
 
 	public Colors add(ColorType type, HColor color) {
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (color == null)</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		if (color == null)</span>
 <span class="fc" id="L148">			return this;</span>
 
-<span class="nc" id="L150">		final Colors result = copy();</span>
-<span class="nc" id="L151">		result.map.put(type, color);</span>
-<span class="nc" id="L152">		return result;</span>
+<span class="fc" id="L150">		final Colors result = copy();</span>
+<span class="fc" id="L151">		result.map.put(type, color);</span>
+<span class="fc" id="L152">		return result;</span>
 	}
 
 	private Colors add(ColorType colorType, Colors other) {

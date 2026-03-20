@@ -97,20 +97,20 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc" id="L97">				shape = rect.withHeight(y2 - ct(y));</span>
 			}
 		}
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (shape instanceof CenteredText) {</span>
-<span class="nc" id="L101">			final CenteredText centeredText = (CenteredText) shape;</span>
-<span class="nc" id="L102">			final TextBlock text = centeredText.getText();</span>
-<span class="nc" id="L103">			final double totalWidth = centeredText.getTotalWidth();</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (shape instanceof CenteredText) {</span>
+<span class="fc" id="L101">			final CenteredText centeredText = (CenteredText) shape;</span>
+<span class="fc" id="L102">			final TextBlock text = centeredText.getText();</span>
+<span class="fc" id="L103">			final double totalWidth = centeredText.getTotalWidth();</span>
 			final double realSpaceWidth;
-<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (mode == CompressionMode.ON_X)</span>
-<span class="nc" id="L106">				realSpaceWidth = ct(x + totalWidth) - ct(x);</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">			if (mode == CompressionMode.ON_X)</span>
+<span class="fc" id="L106">				realSpaceWidth = ct(x + totalWidth) - ct(x);</span>
 			else
 <span class="nc" id="L108">				realSpaceWidth = totalWidth;</span>
 
-<span class="nc" id="L110">			final double textWidth = text.calculateDimension(getStringBounder()).getWidth();</span>
-<span class="nc" id="L111">			final double pos = (realSpaceWidth - textWidth) / 2;</span>
-<span class="nc" id="L112">			text.drawU(getUg().apply(getTranslate(x, y)).apply(UTranslate.dx(pos)));</span>
-<span class="nc" id="L113">			return;</span>
+<span class="fc" id="L110">			final double textWidth = text.calculateDimension(getStringBounder()).getWidth();</span>
+<span class="fc" id="L111">			final double pos = (realSpaceWidth - textWidth) / 2;</span>
+<span class="fc" id="L112">			text.drawU(getUg().apply(getTranslate(x, y)).apply(UTranslate.dx(pos)));</span>
+<span class="fc" id="L113">			return;</span>
 		}
 <span class="fc bfc" id="L115" title="All 2 branches covered.">		if (shape instanceof ULine)</span>
 <span class="fc" id="L116">			drawLine(x, y, (ULine) shape);</span>

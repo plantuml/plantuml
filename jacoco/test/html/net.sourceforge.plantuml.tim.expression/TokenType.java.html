@@ -102,8 +102,8 @@ import net.sourceforge.plantuml.tim.EaterException;
 
 <span class="fc" id="L103">			return new Token(&quot;&quot; + eater.eatOneChar() + eater.eatOneChar(), TokenType.OPERATOR, null);</span>
 
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		} else if (ch == '=')</span>
-<span class="nc" id="L106">			return new Token(eater.eatOneChar(), TokenType.AFFECTATION, null);</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		} else if (ch == '=')</span>
+<span class="fc" id="L106">			return new Token(eater.eatOneChar(), TokenType.AFFECTATION, null);</span>
 
 <span class="fc bfc" id="L108" title="All 2 branches covered.">		else if (ch == '(')</span>
 <span class="fc" id="L109">			return new Token(eater.eatOneChar(), TokenType.OPEN_PAREN_MATH, null);</span>

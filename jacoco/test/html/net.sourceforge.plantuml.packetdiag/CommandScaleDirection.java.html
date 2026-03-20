@@ -50,17 +50,17 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandScaleDirection extends SingleLineCommand2&lt;PacketDiagram&gt; {
 
 	public CommandScaleDirection() {
-<span class="nc" id="L53">		super(getRegexConcat());</span>
-<span class="nc" id="L54">	}</span>
+<span class="fc" id="L53">		super(getRegexConcat());</span>
+<span class="fc" id="L54">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L57">		return RegexConcat.build(CommandScaleDirection.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L57">		return RegexConcat.build(CommandScaleDirection.class.getName(), RegexLeaf.start(), //</span>
 						new RegexLeaf(&quot;scale_direction&quot;), //
-<span class="nc" id="L59">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L59">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;=&quot;), //
-<span class="nc" id="L61">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L61">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(1, &quot;DIR&quot;, &quot;(ltr|rtl);?&quot;), //
-<span class="nc" id="L63">						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
+<span class="fc" id="L63">						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
 	}
 
 	@Override

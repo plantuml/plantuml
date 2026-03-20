@@ -59,9 +59,9 @@ class WritingBuffer extends Writer {
 
 	@Override
 	public void write(char[] cbuf, int off, int len) throws IOException {
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (fill &gt; buffer.length - len) {</span>
-<span class="nc" id="L63">			flush();</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">			if (len &gt; buffer.length) {</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		if (fill &gt; buffer.length - len) {</span>
+<span class="fc" id="L63">			flush();</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">			if (len &gt; buffer.length) {</span>
 <span class="nc" id="L65">				writer.write(cbuf, off, len);</span>
 <span class="nc" id="L66">				return;</span>
 			}
@@ -74,9 +74,9 @@ class WritingBuffer extends Writer {
 	public void write(String str, int off, int len) throws IOException {
 <span class="fc bfc" id="L75" title="All 2 branches covered.">		if (fill &gt; buffer.length - len) {</span>
 <span class="fc" id="L76">			flush();</span>
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">			if (len &gt; buffer.length) {</span>
-<span class="nc" id="L78">				writer.write(str, off, len);</span>
-<span class="nc" id="L79">				return;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">			if (len &gt; buffer.length) {</span>
+<span class="fc" id="L78">				writer.write(str, off, len);</span>
+<span class="fc" id="L79">				return;</span>
 			}
 		}
 <span class="fc" id="L82">		str.getChars(off, off + len, buffer, fill);</span>

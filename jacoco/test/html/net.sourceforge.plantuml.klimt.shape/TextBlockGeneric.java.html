@@ -48,27 +48,27 @@ public class TextBlockGeneric implements TextBlock {
 	private final HColor background;
 	private final HColor border;
 
-<span class="nc" id="L51">	public TextBlockGeneric(TextBlock textBlock, HColor background, HColor border) {</span>
-<span class="nc" id="L52">		this.textBlock = textBlock;</span>
-<span class="nc" id="L53">		this.border = border;</span>
-<span class="nc" id="L54">		this.background = background;</span>
-<span class="nc" id="L55">	}</span>
+<span class="fc" id="L51">	public TextBlockGeneric(TextBlock textBlock, HColor background, HColor border) {</span>
+<span class="fc" id="L52">		this.textBlock = textBlock;</span>
+<span class="fc" id="L53">		this.border = border;</span>
+<span class="fc" id="L54">		this.background = background;</span>
+<span class="fc" id="L55">	}</span>
 
 	@Fast
 	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L60">		final XDimension2D dim = textBlock.calculateDimension(stringBounder);</span>
-<span class="nc" id="L61">		return dim;</span>
+<span class="fc" id="L60">		final XDimension2D dim = textBlock.calculateDimension(stringBounder);</span>
+<span class="fc" id="L61">		return dim;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L65">		ug = ug.apply(background.bg());</span>
-<span class="nc" id="L66">		ug = ug.apply(border);</span>
-<span class="nc" id="L67">		final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L68">		ug.apply(new UStroke(2, 2, 1)).draw(URectangle.build(dim.getWidth(), dim.getHeight()));</span>
+<span class="fc" id="L65">		ug = ug.apply(background.bg());</span>
+<span class="fc" id="L66">		ug = ug.apply(border);</span>
+<span class="fc" id="L67">		final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L68">		ug.apply(new UStroke(2, 2, 1)).draw(URectangle.build(dim.getWidth(), dim.getHeight()));</span>
 
-<span class="nc" id="L70">		textBlock.drawU(ug);</span>
-<span class="nc" id="L71">	}</span>
+<span class="fc" id="L70">		textBlock.drawU(ug);</span>
+<span class="fc" id="L71">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

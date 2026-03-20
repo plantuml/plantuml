@@ -88,11 +88,11 @@ import net.sourceforge.plantuml.utils.LineLocation;
 	private double getRightEndInternal(StringBounder stringBounder) {
 <span class="fc" id="L89">		final Segment segment = getParticipantAt(stringBounder, NotePosition.RIGHT)</span>
 <span class="fc" id="L90">				.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment();</span>
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (segment.getLength() == 0) {</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (segment.getLength() == 0) {</span>
 <span class="fc" id="L92">			return segment.getPos1();</span>
 		}
-<span class="nc" id="L94">		final double rectWidth = compAliveBox.getPreferredWidth(stringBounder);</span>
-<span class="nc" id="L95">		return segment.getPos2() - rectWidth;</span>
+<span class="fc" id="L94">		final double rectWidth = compAliveBox.getPreferredWidth(stringBounder);</span>
+<span class="fc" id="L95">		return segment.getPos2() - rectWidth;</span>
 	}
 
 	@Override

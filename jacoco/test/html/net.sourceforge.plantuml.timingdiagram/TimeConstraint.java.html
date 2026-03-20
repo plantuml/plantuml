@@ -69,15 +69,15 @@ public class TimeConstraint {
 	private final double marginx;
 
 	public TimeConstraint(double marginx, TimeTick tick1, TimeTick tick2, String label, ISkinParam skinParam,
-<span class="nc" id="L72">			ArrowConfiguration config) {</span>
-<span class="nc" id="L73">		this.marginx = marginx;</span>
-<span class="nc" id="L74">		this.tick1 = Objects.requireNonNull(tick1);</span>
-<span class="nc" id="L75">		this.tick2 = Objects.requireNonNull(tick2);</span>
-<span class="nc" id="L76">		this.label = Display.getWithNewlines(skinParam.getPragma(), label);</span>
-<span class="nc" id="L77">		this.skinParam = skinParam;</span>
-<span class="nc" id="L78">		this.styleBuilder = skinParam.getCurrentStyleBuilder();</span>
-<span class="nc" id="L79">		this.config = config;</span>
-<span class="nc" id="L80">	}</span>
+<span class="fc" id="L72">			ArrowConfiguration config) {</span>
+<span class="fc" id="L73">		this.marginx = marginx;</span>
+<span class="fc" id="L74">		this.tick1 = Objects.requireNonNull(tick1);</span>
+<span class="fc" id="L75">		this.tick2 = Objects.requireNonNull(tick2);</span>
+<span class="fc" id="L76">		this.label = Display.getWithNewlines(skinParam.getPragma(), label);</span>
+<span class="fc" id="L77">		this.skinParam = skinParam;</span>
+<span class="fc" id="L78">		this.styleBuilder = skinParam.getCurrentStyleBuilder();</span>
+<span class="fc" id="L79">		this.config = config;</span>
+<span class="fc" id="L80">	}</span>
 
 	public final boolean containsStrict(TimeTick other) {
 <span class="nc bnc" id="L83" title="All 4 branches missed.">		return tick1.compareTo(other) &lt; 0 &amp;&amp; tick2.compareTo(other) &gt; 0;</span>
@@ -96,88 +96,88 @@ public class TimeConstraint {
 	}
 
 	private TextBlock getTextBlock(Display display) {
-<span class="nc" id="L99">		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);</span>
+<span class="fc" id="L99">		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);</span>
 	}
 
 	private FontConfiguration getFontConfiguration() {
-<span class="nc" id="L103">		return getStyle().getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L103">		return getStyle().getFontConfiguration(skinParam.getIHtmlColorSet());</span>
 	}
 
 	public void drawU(UGraphic ug, TimingRuler ruler) {
-<span class="nc" id="L107">		final HColor arrowColor = getArrowColor();</span>
-<span class="nc" id="L108">		ug = ug.apply(arrowColor).apply(arrowColor.bg());</span>
-<span class="nc" id="L109">		final double x1 = ruler.getPosInPixel(tick1) + marginx;</span>
-<span class="nc" id="L110">		final double x2 = ruler.getPosInPixel(tick2) - marginx;</span>
+<span class="fc" id="L107">		final HColor arrowColor = getArrowColor();</span>
+<span class="fc" id="L108">		ug = ug.apply(arrowColor).apply(arrowColor.bg());</span>
+<span class="fc" id="L109">		final double x1 = ruler.getPosInPixel(tick1) + marginx;</span>
+<span class="fc" id="L110">		final double x2 = ruler.getPosInPixel(tick2) - marginx;</span>
 
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (x2 - x1 &gt; 20) {</span>
-<span class="nc" id="L113">			drawLine(ug, x1 + 3, x2 - 3);</span>
-<span class="nc" id="L114">			ug.apply(UStroke.simple()).draw(getPolygon(Direction.LEFT, new XPoint2D(x1, 0)));</span>
-<span class="nc" id="L115">			ug.apply(UStroke.simple()).draw(getPolygon(Direction.RIGHT, new XPoint2D(x2, 0)));</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (x2 - x1 &gt; 20) {</span>
+<span class="fc" id="L113">			drawLine(ug, x1 + 3, x2 - 3);</span>
+<span class="fc" id="L114">			ug.apply(UStroke.simple()).draw(getPolygon(Direction.LEFT, new XPoint2D(x1, 0)));</span>
+<span class="fc" id="L115">			ug.apply(UStroke.simple()).draw(getPolygon(Direction.RIGHT, new XPoint2D(x2, 0)));</span>
 		} else {
 <span class="nc" id="L117">			drawLine(ug, x1 - 1, x2 + 1);</span>
 <span class="nc" id="L118">			ug.apply(UStroke.simple()).draw(getPolygon(Direction.RIGHT, new XPoint2D(x1, 0)));</span>
 <span class="nc" id="L119">			ug.apply(UStroke.simple()).draw(getPolygon(Direction.LEFT, new XPoint2D(x2, 0)));</span>
 		}
 
-<span class="nc" id="L122">		final TextBlock text = getTextBlock(label);</span>
-<span class="nc" id="L123">		final XDimension2D dimText = text.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L124">		final double x = x1 + (x2 - x1 - dimText.getWidth()) / 2;</span>
-<span class="nc" id="L125">		text.drawU(ug.apply(new UTranslate(x, -getConstraintHeight(ug.getStringBounder()))));</span>
-<span class="nc" id="L126">	}</span>
+<span class="fc" id="L122">		final TextBlock text = getTextBlock(label);</span>
+<span class="fc" id="L123">		final XDimension2D dimText = text.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L124">		final double x = x1 + (x2 - x1 - dimText.getWidth()) / 2;</span>
+<span class="fc" id="L125">		text.drawU(ug.apply(new UTranslate(x, -getConstraintHeight(ug.getStringBounder()))));</span>
+<span class="fc" id="L126">	}</span>
 
 	private void drawLine(UGraphic ug, final double x1, final double x2) {
-<span class="nc" id="L129">		ug.apply(UTranslate.dx(x1)).apply(getUStroke()).draw(ULine.hline(x2 - x1));</span>
-<span class="nc" id="L130">	}</span>
+<span class="fc" id="L129">		ug.apply(UTranslate.dx(x1)).apply(getUStroke()).draw(ULine.hline(x2 - x1));</span>
+<span class="fc" id="L130">	}</span>
 
 	private HColor getArrowColor() {
-<span class="nc" id="L133">		final HColor configColor = config.getColor();</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (configColor != null)</span>
+<span class="fc" id="L133">		final HColor configColor = config.getColor();</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (configColor != null)</span>
 <span class="nc" id="L135">			return configColor;</span>
-<span class="nc" id="L136">		return getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L136">		return getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
 	}
 
 	private Style getStyle() {
-<span class="nc" id="L140">		return getStyleSignature().getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L140">		return getStyleSignature().getMergedStyle(styleBuilder);</span>
 	}
 
 	private UStroke getUStroke() {
-<span class="nc" id="L144">		return getStyle().getStroke();</span>
+<span class="fc" id="L144">		return getStyle().getStroke();</span>
 	}
 
 	private StyleSignatureBasic getStyleSignature() {
-<span class="nc" id="L148">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.constraintArrow);</span>
+<span class="fc" id="L148">		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.constraintArrow);</span>
 	}
 
 	public double getConstraintHeight(StringBounder stringBounder) {
-<span class="nc" id="L152">		final TextBlock text = getTextBlock(label);</span>
-<span class="nc" id="L153">		final XDimension2D dimText = text.calculateDimension(stringBounder);</span>
-<span class="nc" id="L154">		return dimText.getHeight() + getTopMargin();</span>
+<span class="fc" id="L152">		final TextBlock text = getTextBlock(label);</span>
+<span class="fc" id="L153">		final XDimension2D dimText = text.calculateDimension(stringBounder);</span>
+<span class="fc" id="L154">		return dimText.getHeight() + getTopMargin();</span>
 
 	}
 
 	public static double getTopMargin() {
-<span class="nc" id="L159">		return 5;</span>
+<span class="fc" id="L159">		return 5;</span>
 	}
 
 	private UPolygon getPolygon(Direction dir, XPoint2D end) {
-<span class="nc" id="L163">		final double dx = 8;</span>
-<span class="nc" id="L164">		final double dy = 4;</span>
+<span class="fc" id="L163">		final double dx = 8;</span>
+<span class="fc" id="L164">		final double dy = 4;</span>
 		final XPoint2D pt1;
 		final XPoint2D pt2;
-<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (dir == Direction.RIGHT) {</span>
-<span class="nc" id="L168">			pt1 = end.move(-dx, dy);</span>
-<span class="nc" id="L169">			pt2 = end.move(-dx, -dy);</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		if (dir == Direction.RIGHT) {</span>
+<span class="fc" id="L168">			pt1 = end.move(-dx, dy);</span>
+<span class="fc" id="L169">			pt2 = end.move(-dx, -dy);</span>
 		} else {
-<span class="nc" id="L171">			pt1 = end.move(dx, dy);</span>
-<span class="nc" id="L172">			pt2 = end.move(dx, -dy);</span>
+<span class="fc" id="L171">			pt1 = end.move(dx, dy);</span>
+<span class="fc" id="L172">			pt2 = end.move(dx, -dy);</span>
 		}
 
-<span class="nc" id="L175">		final UPolygon polygon = new UPolygon();</span>
-<span class="nc" id="L176">		polygon.addPoint(pt1);</span>
-<span class="nc" id="L177">		polygon.addPoint(pt2);</span>
-<span class="nc" id="L178">		polygon.addPoint(end);</span>
+<span class="fc" id="L175">		final UPolygon polygon = new UPolygon();</span>
+<span class="fc" id="L176">		polygon.addPoint(pt1);</span>
+<span class="fc" id="L177">		polygon.addPoint(pt2);</span>
+<span class="fc" id="L178">		polygon.addPoint(end);</span>
 
-<span class="nc" id="L180">		return polygon;</span>
+<span class="fc" id="L180">		return polygon;</span>
 	}
 
 }

@@ -81,7 +81,7 @@ public class PrettyPrint extends WriterConfig {
 
 	@Override
 	protected JsonWriter createWriter(Writer writer) {
-<span class="nc" id="L84">		return new PrettyPrintWriter(writer, indentChars);</span>
+<span class="fc" id="L84">		return new PrettyPrintWriter(writer, indentChars);</span>
 	}
 
 	private static class PrettyPrintWriter extends JsonWriter {
@@ -90,69 +90,69 @@ public class PrettyPrint extends WriterConfig {
 		private int indent;
 
 		private PrettyPrintWriter(Writer writer, char[] indentChars) {
-<span class="nc" id="L93">			super(writer);</span>
-<span class="nc" id="L94">			this.indentChars = indentChars;</span>
-<span class="nc" id="L95">		}</span>
+<span class="fc" id="L93">			super(writer);</span>
+<span class="fc" id="L94">			this.indentChars = indentChars;</span>
+<span class="fc" id="L95">		}</span>
 
 		@Override
 		protected void writeArrayOpen() throws IOException {
-<span class="nc" id="L99">			indent++;</span>
-<span class="nc" id="L100">			writer.write('[');</span>
-<span class="nc" id="L101">			writeNewLine();</span>
-<span class="nc" id="L102">		}</span>
+<span class="fc" id="L99">			indent++;</span>
+<span class="fc" id="L100">			writer.write('[');</span>
+<span class="fc" id="L101">			writeNewLine();</span>
+<span class="fc" id="L102">		}</span>
 
 		@Override
 		protected void writeArrayClose() throws IOException {
-<span class="nc" id="L106">			indent--;</span>
-<span class="nc" id="L107">			writeNewLine();</span>
-<span class="nc" id="L108">			writer.write(']');</span>
-<span class="nc" id="L109">		}</span>
+<span class="fc" id="L106">			indent--;</span>
+<span class="fc" id="L107">			writeNewLine();</span>
+<span class="fc" id="L108">			writer.write(']');</span>
+<span class="fc" id="L109">		}</span>
 
 		@Override
 		protected void writeArraySeparator() throws IOException {
-<span class="nc" id="L113">			writer.write(',');</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">			if (!writeNewLine()) {</span>
+<span class="fc" id="L113">			writer.write(',');</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">			if (!writeNewLine()) {</span>
 <span class="nc" id="L115">				writer.write(' ');</span>
 			}
-<span class="nc" id="L117">		}</span>
+<span class="fc" id="L117">		}</span>
 
 		@Override
 		protected void writeObjectOpen() throws IOException {
-<span class="nc" id="L121">			indent++;</span>
-<span class="nc" id="L122">			writer.write('{');</span>
-<span class="nc" id="L123">			writeNewLine();</span>
-<span class="nc" id="L124">		}</span>
+<span class="fc" id="L121">			indent++;</span>
+<span class="fc" id="L122">			writer.write('{');</span>
+<span class="fc" id="L123">			writeNewLine();</span>
+<span class="fc" id="L124">		}</span>
 
 		@Override
 		protected void writeObjectClose() throws IOException {
-<span class="nc" id="L128">			indent--;</span>
-<span class="nc" id="L129">			writeNewLine();</span>
-<span class="nc" id="L130">			writer.write('}');</span>
-<span class="nc" id="L131">		}</span>
+<span class="fc" id="L128">			indent--;</span>
+<span class="fc" id="L129">			writeNewLine();</span>
+<span class="fc" id="L130">			writer.write('}');</span>
+<span class="fc" id="L131">		}</span>
 
 		@Override
 		protected void writeMemberSeparator() throws IOException {
-<span class="nc" id="L135">			writer.write(':');</span>
-<span class="nc" id="L136">			writer.write(' ');</span>
-<span class="nc" id="L137">		}</span>
+<span class="fc" id="L135">			writer.write(':');</span>
+<span class="fc" id="L136">			writer.write(' ');</span>
+<span class="fc" id="L137">		}</span>
 
 		@Override
 		protected void writeObjectSeparator() throws IOException {
-<span class="nc" id="L141">			writer.write(',');</span>
-<span class="nc bnc" id="L142" title="All 2 branches missed.">			if (!writeNewLine()) {</span>
+<span class="fc" id="L141">			writer.write(',');</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">			if (!writeNewLine()) {</span>
 <span class="nc" id="L143">				writer.write(' ');</span>
 			}
-<span class="nc" id="L145">		}</span>
+<span class="fc" id="L145">		}</span>
 
 		private boolean writeNewLine() throws IOException {
-<span class="nc bnc" id="L148" title="All 2 branches missed.">			if (indentChars == null) {</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">			if (indentChars == null) {</span>
 <span class="nc" id="L149">				return false;</span>
 			}
-<span class="nc" id="L151">			writer.write('\n');</span>
-<span class="nc bnc" id="L152" title="All 2 branches missed.">			for (int i = 0; i &lt; indent; i++) {</span>
-<span class="nc" id="L153">				writer.write(indentChars);</span>
+<span class="fc" id="L151">			writer.write('\n');</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">			for (int i = 0; i &lt; indent; i++) {</span>
+<span class="fc" id="L153">				writer.write(indentChars);</span>
 			}
-<span class="nc" id="L155">			return true;</span>
+<span class="fc" id="L155">			return true;</span>
 		}
 
 	}

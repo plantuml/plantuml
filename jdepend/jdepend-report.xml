@@ -11808,8 +11808,8 @@
 
         <Package name="net.sourceforge.plantuml.picoweb">
             <Stats>
-                <TotalClasses>4</TotalClasses>
-                <ConcreteClasses>4</ConcreteClasses>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
                 <Ce>4</Ce>
@@ -11825,9 +11825,6 @@
             <ConcreteClasses>
                 <Class sourceFile="BadRequest400.java">
                     net.sourceforge.plantuml.picoweb.BadRequest400
-                </Class>
-                <Class sourceFile="PicoWebServer.java">
-                    net.sourceforge.plantuml.picoweb.PicoWebServer$1
                 </Class>
                 <Class sourceFile="ReceivedHTTPRequest.java">
                     net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest

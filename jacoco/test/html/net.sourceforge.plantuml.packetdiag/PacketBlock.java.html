@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class PacketBlock {
 
-<span class="nc" id="L62">	private static final UStroke openerStroke = new UStroke(5, 5, 1);</span>
+<span class="fc" id="L62">	private static final UStroke openerStroke = new UStroke(5, 5, 1);</span>
 
 	/**
 	 * Desired block width unit, this is not the final drawing dimension as margins,
@@ -79,16 +79,16 @@ public class PacketBlock {
 
 	private final ISkinParam skinParam;
 
-<span class="nc" id="L82">	private boolean leftOpen = false;</span>
+<span class="pc" id="L82">	private boolean leftOpen = false;</span>
 
-<span class="nc" id="L84">	private boolean rightOpen = false;</span>
+<span class="pc" id="L84">	private boolean rightOpen = false;</span>
 
-<span class="nc" id="L86">	public PacketBlock(int width, int height, String label, ISkinParam skinParam) {</span>
-<span class="nc" id="L87">		this.width = width;</span>
-<span class="nc" id="L88">		this.height = height;</span>
-<span class="nc" id="L89">		this.label = label;</span>
-<span class="nc" id="L90">		this.skinParam = skinParam;</span>
-<span class="nc" id="L91">	}</span>
+<span class="fc" id="L86">	public PacketBlock(int width, int height, String label, ISkinParam skinParam) {</span>
+<span class="fc" id="L87">		this.width = width;</span>
+<span class="fc" id="L88">		this.height = height;</span>
+<span class="fc" id="L89">		this.label = label;</span>
+<span class="fc" id="L90">		this.skinParam = skinParam;</span>
+<span class="fc" id="L91">	}</span>
 
 <span class="nc" id="L93">	public PacketBlock(int width, int height, String label, ISkinParam skinParam, boolean leftOpen, boolean rightOpen) {</span>
 <span class="nc" id="L94">		this.width = width;</span>
@@ -108,23 +108,23 @@ public class PacketBlock {
 <span class="nc" id="L108">	}</span>
 
 	public int getWidth() {
-<span class="nc" id="L111">		return width;</span>
+<span class="fc" id="L111">		return width;</span>
 	}
 
 	public int getHeight() {
-<span class="nc" id="L115">		return height;</span>
+<span class="fc" id="L115">		return height;</span>
 	}
 
 	public void setHeight(int height) {
-<span class="nc" id="L119">		this.height = height;</span>
-<span class="nc" id="L120">	}</span>
+<span class="fc" id="L119">		this.height = height;</span>
+<span class="fc" id="L120">	}</span>
 
 	public double getDrawWidth(double scale) {
-<span class="nc" id="L123">		return width * scale;</span>
+<span class="fc" id="L123">		return width * scale;</span>
 	}
 
 	public double getDrawHeight(double scale) {
-<span class="nc" id="L127">		return height * scale;</span>
+<span class="fc" id="L127">		return height * scale;</span>
 	}
 
 	public String getLabel() {
@@ -132,28 +132,28 @@ public class PacketBlock {
 	}
 
 	Style getStyle() {
-<span class="nc" id="L135">		return StyleSignatureBasic.of(SName.root, SName.element, SName.packetdiagDiagram, SName.rectangle)</span>
-<span class="nc" id="L136">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L135">		return StyleSignatureBasic.of(SName.root, SName.element, SName.packetdiagDiagram, SName.rectangle)</span>
+<span class="fc" id="L136">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 	}
 
 	Fashion getFashion() {
-<span class="nc" id="L140">		return getStyle().getSymbolContext(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L140">		return getStyle().getSymbolContext(skinParam.getIHtmlColorSet());</span>
 	}
 
 	private TextBlock getLabelTextBlock(String label) {
-<span class="nc" id="L144">		return Display.getWithNewlines(skinParam.getPragma(), label).create8(</span>
-<span class="nc" id="L145">				getStyle().getFontConfiguration(skinParam.getIHtmlColorSet()), HorizontalAlignment.CENTER, skinParam,</span>
+<span class="fc" id="L144">		return Display.getWithNewlines(skinParam.getPragma(), label).create8(</span>
+<span class="fc" id="L145">				getStyle().getFontConfiguration(skinParam.getIHtmlColorSet()), HorizontalAlignment.CENTER, skinParam,</span>
 				CreoleMode.SIMPLE_LINE, LineBreakStrategy.NONE);
 	}
 
 	private TextBlock getLabelTextBlockAbbr(StringBounder stringBounder, double bitWidth) {
-<span class="nc" id="L150">		UFont font = getStyle().getUFont();</span>
-<span class="nc" id="L151">		final String pad = &quot;...&quot;;</span>
-<span class="nc" id="L152">		XDimension2D padDim = stringBounder.calculateDimension(font, pad);</span>
-<span class="nc" id="L153">		XDimension2D labelDim = stringBounder.calculateDimension(font, label);</span>
-<span class="nc" id="L154">		double reqWidth = getDrawWidth(bitWidth);</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (labelDim.getWidth() &lt; reqWidth) {</span>
-<span class="nc" id="L156">			return getLabelTextBlock(label);</span>
+<span class="fc" id="L150">		UFont font = getStyle().getUFont();</span>
+<span class="fc" id="L151">		final String pad = &quot;...&quot;;</span>
+<span class="fc" id="L152">		XDimension2D padDim = stringBounder.calculateDimension(font, pad);</span>
+<span class="fc" id="L153">		XDimension2D labelDim = stringBounder.calculateDimension(font, label);</span>
+<span class="fc" id="L154">		double reqWidth = getDrawWidth(bitWidth);</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (labelDim.getWidth() &lt; reqWidth) {</span>
+<span class="fc" id="L156">			return getLabelTextBlock(label);</span>
 		}
 		// Shrink label char by char, this is technically wrong when there's multiple
 		// Unicode code points
@@ -170,41 +170,41 @@ public class PacketBlock {
 
 	TextBlock getShapeTextBlock(StringBounder stringBounder, double bitWidth, double bitHeight) {
 		// vertical(top and bottom) margin for displaying the label content
-<span class="nc" id="L173">		final double vMargin = 10D;</span>
-<span class="nc" id="L174">		final double reqWidth = getDrawWidth(bitWidth);</span>
-<span class="nc" id="L175">		final Fashion fashion = getFashion();</span>
-<span class="nc" id="L176">		final TextBlock label = getLabelTextBlockAbbr(stringBounder, bitWidth);</span>
+<span class="fc" id="L173">		final double vMargin = 10D;</span>
+<span class="fc" id="L174">		final double reqWidth = getDrawWidth(bitWidth);</span>
+<span class="fc" id="L175">		final Fashion fashion = getFashion();</span>
+<span class="fc" id="L176">		final TextBlock label = getLabelTextBlockAbbr(stringBounder, bitWidth);</span>
 		// mergeTB would add label height and margins to the shape so here this offset
 		// makes sure we actually get drawHeight
-<span class="nc" id="L179">		double heightPreOffset = Math.max(0D,</span>
-<span class="nc" id="L180">				getDrawHeight(bitHeight) - label.calculateDimension(stringBounder).getHeight() - vMargin - vMargin);</span>
-<span class="nc" id="L181">		final TextBlock stereo = TextBlockUtils.empty(reqWidth, heightPreOffset);</span>
+<span class="fc" id="L179">		double heightPreOffset = Math.max(0D,</span>
+<span class="fc" id="L180">				getDrawHeight(bitHeight) - label.calculateDimension(stringBounder).getHeight() - vMargin - vMargin);</span>
+<span class="fc" id="L181">		final TextBlock stereo = TextBlockUtils.empty(reqWidth, heightPreOffset);</span>
 
 		// Basically it's URectangle#asSmall, but without horizontal margin
-<span class="nc" id="L184">		return new TextBlock() {</span>
+<span class="fc" id="L184">		return new TextBlock() {</span>
 			@Override
 			@Fast
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L188">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
-<span class="nc" id="L189">				final XDimension2D dimStereo = stereo.calculateDimension(stringBounder);</span>
-<span class="nc" id="L190">				XDimension2D dim = dimStereo.mergeTB(dimLabel);</span>
-<span class="nc" id="L191">				return new XDimension2D(dim.getWidth(), dim.getHeight() + vMargin + vMargin);</span>
+<span class="fc" id="L188">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="fc" id="L189">				final XDimension2D dimStereo = stereo.calculateDimension(stringBounder);</span>
+<span class="fc" id="L190">				XDimension2D dim = dimStereo.mergeTB(dimLabel);</span>
+<span class="fc" id="L191">				return new XDimension2D(dim.getWidth(), dim.getHeight() + vMargin + vMargin);</span>
 			}
 
 			@Override
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L196">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L197">				ug = UGraphicStencil.create(ug, dim);</span>
-<span class="nc" id="L198">				ug = fashion.apply(ug);</span>
+<span class="fc" id="L196">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L197">				ug = UGraphicStencil.create(ug, dim);</span>
+<span class="fc" id="L198">				ug = fashion.apply(ug);</span>
 				// URectangle#drawRect
-<span class="nc" id="L200">				final URectangle rect = URectangle.build(dim.getWidth(), dim.getHeight());</span>
-<span class="nc" id="L201">				final Shadowable shape = rect.rounded(fashion.getRoundCorner());</span>
-<span class="nc" id="L202">				shape.setDeltaShadow(fashion.getDeltaShadow());</span>
-<span class="nc" id="L203">				ug.draw(shape);</span>
+<span class="fc" id="L200">				final URectangle rect = URectangle.build(dim.getWidth(), dim.getHeight());</span>
+<span class="fc" id="L201">				final Shadowable shape = rect.rounded(fashion.getRoundCorner());</span>
+<span class="fc" id="L202">				shape.setDeltaShadow(fashion.getDeltaShadow());</span>
+<span class="fc" id="L203">				ug.draw(shape);</span>
 
-<span class="nc" id="L205">				final TextBlock tb = TextBlockUtils.mergeTB(stereo, label, HorizontalAlignment.CENTER);</span>
-<span class="nc" id="L206">				tb.drawU(ug.apply(new UTranslate(0D, vMargin)));</span>
-<span class="nc" id="L207">			}</span>
+<span class="fc" id="L205">				final TextBlock tb = TextBlockUtils.mergeTB(stereo, label, HorizontalAlignment.CENTER);</span>
+<span class="fc" id="L206">				tb.drawU(ug.apply(new UTranslate(0D, vMargin)));</span>
+<span class="fc" id="L207">			}</span>
 		};
 	}
 }

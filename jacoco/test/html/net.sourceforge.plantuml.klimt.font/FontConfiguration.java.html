@@ -152,7 +152,7 @@ public class FontConfiguration {
 
 	// ::comment when __HAXE__
 	public String toStringDebug() {
-<span class="nc" id="L155">		return getFont().toString() + &quot; &quot; + styles.toString();</span>
+<span class="fc" id="L155">		return getFont().toString() + &quot; &quot; + styles.toString();</span>
 		// return getFont().toStringDebug() + &quot; &quot; + styles.toString();
 	}
 
@@ -207,13 +207,13 @@ public class FontConfiguration {
 	}
 
 	public static FontConfiguration create(ISkinParam skinParam, Style style) {
-<span class="nc" id="L210">		return create(skinParam, style, null);</span>
+<span class="fc" id="L210">		return create(skinParam, style, null);</span>
 	}
 
 	public static FontConfiguration create(ISkinParam skinParam, Style style, Colors colors) {
 <span class="fc" id="L214">		final HColor hyperlinkColor = style.value(PName.HyperLinkColor).asColor(skinParam.getIHtmlColorSet());</span>
 <span class="fc" id="L215">		final UStroke hyperlinkUnderlineStroke = skinParam.useUnderlineForHyperlink();</span>
-<span class="pc bpc" id="L216" title="1 of 2 branches missed.">		HColor color = colors == null ? null : colors.getColor(ColorType.TEXT);</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">		HColor color = colors == null ? null : colors.getColor(ColorType.TEXT);</span>
 <span class="pc bpc" id="L217" title="1 of 2 branches missed.">		if (color == null)</span>
 <span class="fc" id="L218">			color = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());</span>
 <span class="fc" id="L219">		return create(style.getUFont(), color, hyperlinkColor, hyperlinkUnderlineStroke, skinParam.getTabSize());</span>
@@ -325,7 +325,7 @@ public class FontConfiguration {
 	}
 
 	public FontConfiguration underline() {
-<span class="nc" id="L328">		return add(FontStyle.UNDERLINE);</span>
+<span class="fc" id="L328">		return add(FontStyle.UNDERLINE);</span>
 	}
 
 	public FontConfiguration wave(HColor color) {

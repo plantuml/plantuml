@@ -172,14 +172,14 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 <span class="pc bpc" id="L172" title="1 of 2 branches missed.">			if (option.getHover() != null)</span>
 <span class="nc" id="L173">				defs.appendChild(getPathHover(option.getHover()));</span>
 
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">			if (option.isInteractive()) {</span>
-<span class="nc" id="L176">				final Element styles = getStylesForInteractiveMode();</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">				if (styles != null)</span>
-<span class="nc" id="L178">					defs.appendChild(styles);</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">			if (option.isInteractive()) {</span>
+<span class="fc" id="L176">				final Element styles = getStylesForInteractiveMode();</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">				if (styles != null)</span>
+<span class="fc" id="L178">					defs.appendChild(styles);</span>
 
-<span class="nc" id="L180">				final Element script = getScriptForInteractiveMode();</span>
-<span class="nc bnc" id="L181" title="All 2 branches missed.">				if (script != null)</span>
-<span class="nc" id="L182">					defs.appendChild(script);</span>
+<span class="fc" id="L180">				final Element script = getScriptForInteractiveMode();</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">				if (script != null)</span>
+<span class="fc" id="L182">					defs.appendChild(script);</span>
 			}
 
 <span class="fc" id="L185">			final HColor backcolor = option.getBackcolor();</span>
@@ -226,15 +226,15 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 <span class="fc" id="L226">	}</span>
 
 	private Element getStylesForInteractiveMode() {
-<span class="nc" id="L229">		final Element style = simpleElement(&quot;style&quot;);</span>
-<span class="nc" id="L230">		final String text = getData(option.getInteractiveBaseFilename() + &quot;.css&quot;);</span>
-<span class="nc bnc" id="L231" title="All 2 branches missed.">		if (text == null)</span>
+<span class="fc" id="L229">		final Element style = simpleElement(&quot;style&quot;);</span>
+<span class="fc" id="L230">		final String text = getData(option.getInteractiveBaseFilename() + &quot;.css&quot;);</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">		if (text == null)</span>
 <span class="nc" id="L232">			return null;</span>
 
-<span class="nc" id="L234">		final CDATASection cdata = document.createCDATASection(text);</span>
-<span class="nc" id="L235">		style.setAttribute(&quot;type&quot;, &quot;text/css&quot;);</span>
-<span class="nc" id="L236">		style.appendChild(cdata);</span>
-<span class="nc" id="L237">		return style;</span>
+<span class="fc" id="L234">		final CDATASection cdata = document.createCDATASection(text);</span>
+<span class="fc" id="L235">		style.setAttribute(&quot;type&quot;, &quot;text/css&quot;);</span>
+<span class="fc" id="L236">		style.appendChild(cdata);</span>
+<span class="fc" id="L237">		return style;</span>
 	}
 
 //	private Element getStylesForDarkness() {
@@ -266,22 +266,22 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 //	}
 
 	private Element getScriptForInteractiveMode() {
-<span class="nc" id="L269">		final Element script = document.createElement(&quot;script&quot;);</span>
-<span class="nc" id="L270">		final String text = getData(option.getInteractiveBaseFilename() + &quot;.js&quot;);</span>
-<span class="nc bnc" id="L271" title="All 2 branches missed.">		if (text == null)</span>
+<span class="fc" id="L269">		final Element script = document.createElement(&quot;script&quot;);</span>
+<span class="fc" id="L270">		final String text = getData(option.getInteractiveBaseFilename() + &quot;.js&quot;);</span>
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">		if (text == null)</span>
 <span class="nc" id="L272">			return null;</span>
 
-<span class="nc" id="L274">		script.setTextContent(text);</span>
-<span class="nc" id="L275">		return script;</span>
+<span class="fc" id="L274">		script.setTextContent(text);</span>
+<span class="fc" id="L275">		return script;</span>
 	}
 
 	private static String getData(final String name) {
 		try {
-<span class="nc" id="L280">			final InputStream is = SvgGraphics.class.getResourceAsStream(&quot;/svg/&quot; + name);</span>
-<span class="nc bnc" id="L281" title="All 2 branches missed.">			if (is == null)</span>
+<span class="fc" id="L280">			final InputStream is = SvgGraphics.class.getResourceAsStream(&quot;/svg/&quot; + name);</span>
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">			if (is == null)</span>
 <span class="nc" id="L282">				Log.error(&quot;Cannot retrieve &quot; + name);</span>
 			else
-<span class="nc" id="L284">				return FileUtils.readText(is);</span>
+<span class="fc" id="L284">				return FileUtils.readText(is);</span>
 <span class="nc" id="L285">		} catch (IOException e) {</span>
 <span class="nc" id="L286">			Logme.error(e);</span>
 <span class="nc" id="L287">		}</span>
@@ -907,24 +907,24 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 <span class="fc" id="L907">	private StringBuilder currentPath = null;</span>
 
 	public void newpath() {
-<span class="nc" id="L910">		currentPath = new StringBuilder();</span>
+<span class="fc" id="L910">		currentPath = new StringBuilder();</span>
 
-<span class="nc" id="L912">	}</span>
+<span class="fc" id="L912">	}</span>
 
 	public void moveto(double x, double y) {
-<span class="nc" id="L915">		currentPath.append(&quot;M&quot; + format(x) + &quot;,&quot; + format(y) + &quot; &quot;);</span>
-<span class="nc" id="L916">		ensureVisible(x, y);</span>
-<span class="nc" id="L917">	}</span>
+<span class="fc" id="L915">		currentPath.append(&quot;M&quot; + format(x) + &quot;,&quot; + format(y) + &quot; &quot;);</span>
+<span class="fc" id="L916">		ensureVisible(x, y);</span>
+<span class="fc" id="L917">	}</span>
 
 	public void lineto(double x, double y) {
-<span class="nc" id="L920">		currentPath.append(&quot;L&quot; + format(x) + &quot;,&quot; + format(y) + &quot; &quot;);</span>
-<span class="nc" id="L921">		ensureVisible(x, y);</span>
-<span class="nc" id="L922">	}</span>
+<span class="fc" id="L920">		currentPath.append(&quot;L&quot; + format(x) + &quot;,&quot; + format(y) + &quot; &quot;);</span>
+<span class="fc" id="L921">		ensureVisible(x, y);</span>
+<span class="fc" id="L922">	}</span>
 
 	public void closepath() {
-<span class="nc" id="L925">		currentPath.append(&quot;Z &quot;);</span>
+<span class="fc" id="L925">		currentPath.append(&quot;Z &quot;);</span>
 
-<span class="nc" id="L927">	}</span>
+<span class="fc" id="L927">	}</span>
 
 	public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
 <span class="nc" id="L930">		currentPath.append(&quot;C&quot; + format(x1) + &quot;,&quot; + format(y1) + &quot; &quot; + format(x2) + &quot;,&quot; + format(y2) + &quot; &quot; + format(x3)</span>
@@ -936,10 +936,10 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 <span class="nc" id="L936">	}</span>
 
 	public void quadto(double x1, double y1, double x2, double y2) {
-<span class="nc" id="L939">		currentPath.append(&quot;Q&quot; + format(x1) + &quot;,&quot; + format(y1) + &quot; &quot; + format(x2) + &quot;,&quot; + format(y2) + &quot; &quot;);</span>
-<span class="nc" id="L940">		ensureVisible(x1, y1);</span>
-<span class="nc" id="L941">		ensureVisible(x2, y2);</span>
-<span class="nc" id="L942">	}</span>
+<span class="fc" id="L939">		currentPath.append(&quot;Q&quot; + format(x1) + &quot;,&quot; + format(y1) + &quot; &quot; + format(x2) + &quot;,&quot; + format(y2) + &quot; &quot;);</span>
+<span class="fc" id="L940">		ensureVisible(x1, y1);</span>
+<span class="fc" id="L941">		ensureVisible(x2, y2);</span>
+<span class="fc" id="L942">	}</span>
 
 	private String format(double xx) {
 <span class="fc" id="L945">		final double x = xx * option.getScale();</span>
@@ -967,41 +967,41 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 	}
 
 	public void fill(int windingRule) {
-<span class="nc bnc" id="L970" title="All 2 branches missed.">		if (hidden == false) {</span>
-<span class="nc" id="L971">			final Element elt = document.createElement(&quot;path&quot;);</span>
-<span class="nc" id="L972">			elt.setAttribute(&quot;d&quot;, currentPath.toString());</span>
-<span class="nc" id="L973">			fillMe(elt);</span>
-<span class="nc" id="L974">			getG().appendChild(elt);</span>
+<span class="pc bpc" id="L970" title="1 of 2 branches missed.">		if (hidden == false) {</span>
+<span class="fc" id="L971">			final Element elt = document.createElement(&quot;path&quot;);</span>
+<span class="fc" id="L972">			elt.setAttribute(&quot;d&quot;, currentPath.toString());</span>
+<span class="fc" id="L973">			fillMe(elt);</span>
+<span class="fc" id="L974">			getG().appendChild(elt);</span>
 		}
-<span class="nc" id="L976">		currentPath = null;</span>
+<span class="fc" id="L976">		currentPath = null;</span>
 
-<span class="nc" id="L978">	}</span>
+<span class="fc" id="L978">	}</span>
 
 	public void drawPathIterator(double x, double y, PathIterator path) {
 
-<span class="nc" id="L982">		this.newpath();</span>
-<span class="nc" id="L983">		final double coord[] = new double[6];</span>
-<span class="nc bnc" id="L984" title="All 2 branches missed.">		while (path.isDone() == false) {</span>
-<span class="nc" id="L985">			final int code = path.currentSegment(coord);</span>
-<span class="nc bnc" id="L986" title="All 2 branches missed.">			if (code == PathIterator.SEG_MOVETO)</span>
-<span class="nc" id="L987">				this.moveto(coord[0] + x, coord[1] + y);</span>
-<span class="nc bnc" id="L988" title="All 2 branches missed.">			else if (code == PathIterator.SEG_LINETO)</span>
-<span class="nc" id="L989">				this.lineto(coord[0] + x, coord[1] + y);</span>
-<span class="nc bnc" id="L990" title="All 2 branches missed.">			else if (code == PathIterator.SEG_CLOSE)</span>
-<span class="nc" id="L991">				this.closepath();</span>
-<span class="nc bnc" id="L992" title="All 2 branches missed.">			else if (code == PathIterator.SEG_CUBICTO)</span>
+<span class="fc" id="L982">		this.newpath();</span>
+<span class="fc" id="L983">		final double coord[] = new double[6];</span>
+<span class="fc bfc" id="L984" title="All 2 branches covered.">		while (path.isDone() == false) {</span>
+<span class="fc" id="L985">			final int code = path.currentSegment(coord);</span>
+<span class="fc bfc" id="L986" title="All 2 branches covered.">			if (code == PathIterator.SEG_MOVETO)</span>
+<span class="fc" id="L987">				this.moveto(coord[0] + x, coord[1] + y);</span>
+<span class="fc bfc" id="L988" title="All 2 branches covered.">			else if (code == PathIterator.SEG_LINETO)</span>
+<span class="fc" id="L989">				this.lineto(coord[0] + x, coord[1] + y);</span>
+<span class="fc bfc" id="L990" title="All 2 branches covered.">			else if (code == PathIterator.SEG_CLOSE)</span>
+<span class="fc" id="L991">				this.closepath();</span>
+<span class="pc bpc" id="L992" title="1 of 2 branches missed.">			else if (code == PathIterator.SEG_CUBICTO)</span>
 <span class="nc" id="L993">				this.curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);</span>
-<span class="nc bnc" id="L994" title="All 2 branches missed.">			else if (code == PathIterator.SEG_QUADTO)</span>
-<span class="nc" id="L995">				this.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);</span>
+<span class="pc bpc" id="L994" title="1 of 2 branches missed.">			else if (code == PathIterator.SEG_QUADTO)</span>
+<span class="fc" id="L995">				this.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);</span>
 			else
 <span class="nc" id="L997">				throw new UnsupportedOperationException(&quot;code=&quot; + code);</span>
 
-<span class="nc" id="L999">			path.next();</span>
-<span class="nc" id="L1000">		}</span>
+<span class="fc" id="L999">			path.next();</span>
+<span class="fc" id="L1000">		}</span>
 
-<span class="nc" id="L1002">		this.fill(path.getWindingRule());</span>
+<span class="fc" id="L1002">		this.fill(path.getWindingRule());</span>
 
-<span class="nc" id="L1004">	}</span>
+<span class="fc" id="L1004">	}</span>
 
 	public void svgImage(PortableImage image, double x, double y) throws IOException {
 <span class="pc bpc" id="L1007" title="1 of 2 branches missed.">		if (hidden == false) {</span>

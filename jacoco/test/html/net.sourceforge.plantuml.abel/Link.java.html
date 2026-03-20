@@ -143,16 +143,16 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 <span class="fc" id="L143">	}</span>
 
 	public Link getInv() {
-<span class="nc" id="L146">		final Link result = new Link(location, cucaDiagram, styleBuilder, cl2, cl1, getType().getInversed(), linkArg.getInv());</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">		result.inverted = !this.inverted;</span>
-<span class="nc" id="L148">		result.port1 = this.port2;</span>
-<span class="nc" id="L149">		result.port2 = this.port1;</span>
-<span class="nc" id="L150">		result.url = this.url;</span>
-<span class="nc" id="L151">		result.linkConstraint = this.linkConstraint;</span>
-<span class="nc" id="L152">		result.stereotype = stereotype;</span>
-<span class="nc" id="L153">		result.linkArg.setVisibilityModifier(this.linkArg.getVisibilityModifier());</span>
-<span class="nc" id="L154">		result.linkArrow = linkArrow;</span>
-<span class="nc" id="L155">		return result;</span>
+<span class="fc" id="L146">		final Link result = new Link(location, cucaDiagram, styleBuilder, cl2, cl1, getType().getInversed(), linkArg.getInv());</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		result.inverted = !this.inverted;</span>
+<span class="fc" id="L148">		result.port1 = this.port2;</span>
+<span class="fc" id="L149">		result.port2 = this.port1;</span>
+<span class="fc" id="L150">		result.url = this.url;</span>
+<span class="fc" id="L151">		result.linkConstraint = this.linkConstraint;</span>
+<span class="fc" id="L152">		result.stereotype = stereotype;</span>
+<span class="fc" id="L153">		result.linkArg.setVisibilityModifier(this.linkArg.getVisibilityModifier());</span>
+<span class="fc" id="L154">		result.linkArrow = linkArrow;</span>
+<span class="fc" id="L155">		return result;</span>
 	}
 
 	@Override
@@ -209,11 +209,11 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public String getPortName1() {
-<span class="nc" id="L212">		return port1;</span>
+<span class="fc" id="L212">		return port1;</span>
 	}
 
 	public String getPortName2() {
-<span class="nc" id="L216">		return port2;</span>
+<span class="fc" id="L216">		return port2;</span>
 	}
 
 	public EntityPort getEntityPort1(Bibliotekon bibliotekon) {
@@ -359,20 +359,20 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public boolean contains(Entity entity) {
-<span class="pc bpc" id="L362" title="1 of 2 branches missed.">		if (getEntity1() == entity)</span>
+<span class="fc bfc" id="L362" title="All 2 branches covered.">		if (getEntity1() == entity)</span>
 <span class="fc" id="L363">			return true;</span>
-<span class="nc bnc" id="L364" title="All 2 branches missed.">		if (getEntity2() == entity)</span>
-<span class="nc" id="L365">			return true;</span>
+<span class="fc bfc" id="L364" title="All 2 branches covered.">		if (getEntity2() == entity)</span>
+<span class="fc" id="L365">			return true;</span>
 
-<span class="nc" id="L367">		return false;</span>
+<span class="fc" id="L367">		return false;</span>
 	}
 
 	public Entity getOther(Entity entity) {
-<span class="pc bpc" id="L371" title="1 of 2 branches missed.">		if (getEntity1() == entity)</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">		if (getEntity1() == entity)</span>
 <span class="fc" id="L372">			return getEntity2();</span>
 
-<span class="nc bnc" id="L374" title="All 2 branches missed.">		if (getEntity2() == entity)</span>
-<span class="nc" id="L375">			return getEntity1();</span>
+<span class="pc bpc" id="L374" title="1 of 2 branches missed.">		if (getEntity2() == entity)</span>
+<span class="fc" id="L375">			return getEntity1();</span>
 
 <span class="nc" id="L377">		throw new IllegalArgumentException();</span>
 	}
@@ -421,8 +421,8 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public final LinkArrow getLinkArrow() {
-<span class="pc bpc" id="L424" title="1 of 2 branches missed.">		if (inverted)</span>
-<span class="nc" id="L425">			return linkArrow.reverse();</span>
+<span class="fc bfc" id="L424" title="All 2 branches covered.">		if (inverted)</span>
+<span class="fc" id="L425">			return linkArrow.reverse();</span>
 
 <span class="fc" id="L427">		return linkArrow;</span>
 	}
@@ -432,7 +432,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 <span class="fc" id="L432">	}</span>
 
 	public final boolean isInverted() {
-<span class="nc" id="L435">		return inverted;</span>
+<span class="fc" id="L435">		return inverted;</span>
 	}
 
 	public boolean hasEntryPoint() {
@@ -460,13 +460,13 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public boolean sameConnections(Link other) {
-<span class="pc bpc" id="L463" title="2 of 4 branches missed.">		if (this.cl1 == other.cl1 &amp;&amp; this.cl2 == other.cl2)</span>
+<span class="fc bfc" id="L463" title="All 4 branches covered.">		if (this.cl1 == other.cl1 &amp;&amp; this.cl2 == other.cl2)</span>
 <span class="fc" id="L464">			return true;</span>
 
-<span class="nc bnc" id="L466" title="All 4 branches missed.">		if (this.cl1 == other.cl2 &amp;&amp; this.cl2 == other.cl1)</span>
+<span class="pc bpc" id="L466" title="1 of 4 branches missed.">		if (this.cl1 == other.cl2 &amp;&amp; this.cl2 == other.cl1)</span>
 <span class="nc" id="L467">			return true;</span>
 
-<span class="nc" id="L469">		return false;</span>
+<span class="fc" id="L469">		return false;</span>
 	}
 
 	public boolean doesTouch(Link other) {

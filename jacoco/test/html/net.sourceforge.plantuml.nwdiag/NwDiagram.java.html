@@ -285,12 +285,12 @@ public class NwDiagram extends TitledDiagram {
 <span class="nc" id="L285">		return false;</span>
 	}
 
-<span class="nc" id="L288">	private static final Pattern p = Pattern.compile(&quot;\\s*(\\w+)\\s*=\\s*(\&quot;([^\&quot;]*)\&quot;|[^\\s,]+)&quot;);</span>
+<span class="fc" id="L288">	private static final Pattern p = Pattern.compile(&quot;\\s*(\\w+)\\s*=\\s*(\&quot;([^\&quot;]*)\&quot;|[^\\s,]+)&quot;);</span>
 
 	public static Map&lt;String, String&gt; toSet(String definition) {
-<span class="nc" id="L291">		final Map&lt;String, String&gt; result = new HashMap&lt;String, String&gt;();</span>
-<span class="nc bnc" id="L292" title="All 2 branches missed.">		if (definition == null)</span>
-<span class="nc" id="L293">			return result;</span>
+<span class="fc" id="L291">		final Map&lt;String, String&gt; result = new HashMap&lt;String, String&gt;();</span>
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">		if (definition == null)</span>
+<span class="fc" id="L293">			return result;</span>
 
 <span class="nc" id="L295">		final Matcher m = p.matcher(definition);</span>
 <span class="nc bnc" id="L296" title="All 2 branches missed.">		while (m.find()) {</span>

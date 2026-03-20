@@ -37,13 +37,13 @@ package net.sourceforge.plantuml.klimt.color;
 
 import net.sourceforge.plantuml.klimt.awt.XColor;
 
-<span class="nc" id="L40">public enum ColorOrder {</span>
+<span class="fc" id="L40">public enum ColorOrder {</span>
 	// ::remove file when __HAXE__
-<span class="nc" id="L42">	RGB, RBG, GRB, GBR, BRG, BGR;</span>
+<span class="fc" id="L42">	RGB, RBG, GRB, GBR, BRG, BGR;</span>
 
 	public XColor getColor(XColor color) {
-<span class="nc bnc" id="L45" title="All 2 branches missed.">		if (this == RGB)</span>
-<span class="nc" id="L46">			return new XColor(color.getRed(), color.getGreen(), color.getBlue());</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">		if (this == RGB)</span>
+<span class="fc" id="L46">			return new XColor(color.getRed(), color.getGreen(), color.getBlue());</span>
 
 <span class="nc bnc" id="L48" title="All 2 branches missed.">		if (this == RBG)</span>
 <span class="nc" id="L49">			return new XColor(color.getRed(), color.getBlue(), color.getGreen());</span>
@@ -64,8 +64,8 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
 	}
 
 	public XColor getReverse(XColor color) {
-<span class="nc" id="L67">		color = this.getColor(color);</span>
-<span class="nc" id="L68">		return new XColor(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue());</span>
+<span class="fc" id="L67">		color = this.getColor(color);</span>
+<span class="fc" id="L68">		return new XColor(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue());</span>
 	}
 
 	public static ColorOrder fromString(String order) {

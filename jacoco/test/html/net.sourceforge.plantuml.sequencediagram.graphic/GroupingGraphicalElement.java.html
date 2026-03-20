@@ -45,22 +45,22 @@ abstract class GroupingGraphicalElement extends GraphicalElement {
 	private final InGroupableList inGroupableList;
 
 	public GroupingGraphicalElement(double currentY, InGroupableList inGroupableList) {
-<span class="nc" id="L48">		super(currentY);</span>
-<span class="nc" id="L49">		this.inGroupableList = Objects.requireNonNull(inGroupableList);</span>
-<span class="nc" id="L50">	}</span>
+<span class="fc" id="L48">		super(currentY);</span>
+<span class="fc" id="L49">		this.inGroupableList = Objects.requireNonNull(inGroupableList);</span>
+<span class="fc" id="L50">	}</span>
 
 	final public double getActualWidth(StringBounder stringBounder) {
-<span class="nc" id="L53">		return Math.max(getPreferredWidth(stringBounder), inGroupableList.getMaxX(stringBounder)</span>
-<span class="nc" id="L54">				- inGroupableList.getMinX(stringBounder) + 2 * InGroupableList.MARGIN10);</span>
+<span class="fc" id="L53">		return Math.max(getPreferredWidth(stringBounder), inGroupableList.getMaxX(stringBounder)</span>
+<span class="fc" id="L54">				- inGroupableList.getMinX(stringBounder) + 2 * InGroupableList.MARGIN10);</span>
 	}
 
 	@Override
 	final public double getStartingX(StringBounder stringBounder) {
-<span class="nc" id="L59">		return inGroupableList.getMinX(stringBounder) - InGroupableList.MARGIN10;</span>
+<span class="fc" id="L59">		return inGroupableList.getMinX(stringBounder) - InGroupableList.MARGIN10;</span>
 	}
 
 	protected final InGroupableList getInGroupableList() {
-<span class="nc" id="L63">		return inGroupableList;</span>
+<span class="fc" id="L63">		return inGroupableList;</span>
 	}
 
 }

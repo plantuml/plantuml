@@ -59,15 +59,15 @@ abstract class AbstractGraphviz implements Graphviz {
 	}
 
 	private static String findExecutableOnPath(String name) {
-<span class="nc" id="L62">		final String path = System.getenv(&quot;PATH&quot;);</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (path != null)</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">			for (String dirname : path.split(SFile.pathSeparator)) {</span>
-<span class="nc" id="L65">				final File file = new File(dirname, name);</span>
-<span class="nc bnc" id="L66" title="All 4 branches missed.">				if (file.isFile() &amp;&amp; file.canExecute())</span>
+<span class="fc" id="L62">		final String path = System.getenv(&quot;PATH&quot;);</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (path != null)</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">			for (String dirname : path.split(SFile.pathSeparator)) {</span>
+<span class="fc" id="L65">				final File file = new File(dirname, name);</span>
+<span class="pc bpc" id="L66" title="3 of 4 branches missed.">				if (file.isFile() &amp;&amp; file.canExecute())</span>
 <span class="nc" id="L67">					return file.getAbsolutePath();</span>
 			}
 
-<span class="nc" id="L70">		return null;</span>
+<span class="fc" id="L70">		return null;</span>
 	}
 
 <span class="fc" id="L73">	AbstractGraphviz(ISkinParam skinParam, String dotString, String... type) {</span>
@@ -82,11 +82,11 @@ abstract class AbstractGraphviz implements Graphviz {
 
 	final protected File searchDotExe() {
 <span class="fc" id="L84">		String getenv = GraphvizRuntimeEnvironment.getInstance().getenvGraphvizDot();</span>
-<span class="pc bpc" id="L85" title="2 of 4 branches missed.">		if (findExecutableOnPath() &amp;&amp; getenv == null)</span>
-<span class="nc" id="L86">			getenv = findExecutableOnPath(getExeName());</span>
+<span class="pc bpc" id="L85" title="1 of 4 branches missed.">		if (findExecutableOnPath() &amp;&amp; getenv == null)</span>
+<span class="fc" id="L86">			getenv = findExecutableOnPath(getExeName());</span>
 
-<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (getenv == null)</span>
-<span class="nc" id="L89">			return specificDotExe();</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (getenv == null)</span>
+<span class="fc" id="L89">			return specificDotExe();</span>
 
 <span class="fc" id="L91">		return new File(getenv);</span>
 	}

@@ -199,7 +199,7 @@ public class TextBlockExporter12026 {
 
 	private double computeScaleFactor(XDimension2D dim) {
 <span class="fc bfc" id="L201" title="All 2 branches covered.">		final int dpi = skinParam == null ? 96 : skinParam.getDpi();</span>
-<span class="pc bpc" id="L202" title="1 of 2 branches missed.">		final double fromScale = scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight());</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">		final double fromScale = scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight());</span>
 <span class="fc" id="L203">		return fromScale * dpi / 96.0;</span>
 	}
 
@@ -234,7 +234,7 @@ public class TextBlockExporter12026 {
 		// ::comment when __TEAVM__
 <span class="fc" id="L235">		final ColorMapper colorMapper = fileFormatOption.getColorMapper();</span>
 <span class="fc bfc" id="L236" title="All 2 branches covered.">		final Pragma p = pragma != null ? pragma : Pragma.createEmpty();</span>
-<span class="pc bpc" id="L237" title="7 of 12 branches missed.">		switch (fileFormatOption.getFileFormat()) {</span>
+<span class="pc bpc" id="L237" title="6 of 12 branches missed.">		switch (fileFormatOption.getFileFormat()) {</span>
 		case PNG:
 		case PNG_EMPTY:
 		case RAW:
@@ -260,8 +260,8 @@ public class TextBlockExporter12026 {
 		case ATXT:
 <span class="fc" id="L261">			return new UGraphicTxt();</span>
 		case DEBUG:
-<span class="nc" id="L263">			return new UGraphicDebug(scaleFactor, dim, getSvgLinkTarget(), getHoverPathColorRGB(), seed,</span>
-<span class="nc" id="L264">					getPreserveAspectRatio());</span>
+<span class="fc" id="L263">			return new UGraphicDebug(scaleFactor, dim, getSvgLinkTarget(), getHoverPathColorRGB(), seed,</span>
+<span class="fc" id="L264">					getPreserveAspectRatio());</span>
 		default:
 			// ::done
 <span class="nc" id="L267">			throw new UnsupportedOperationException(fileFormatOption.getFileFormat().toString());</span>
@@ -287,11 +287,11 @@ public class TextBlockExporter12026 {
 <span class="fc" id="L287">			option = option.withRootAttribute(&quot;data-diagram-type&quot;, diagramType.name());</span>
 		}
 
-<span class="pc bpc" id="L290" title="1 of 2 branches missed.">		if (p.isTrue(PragmaKey.SVG_INTERACTIVE)) {</span>
-<span class="nc" id="L291">			String interactiveBaseFilename = &quot;default&quot;;</span>
-<span class="nc bnc" id="L292" title="All 2 branches missed.">			if (diagramType == DiagramType.SEQUENCE)</span>
-<span class="nc" id="L293">				interactiveBaseFilename = &quot;sequencediagram&quot;;</span>
-<span class="nc" id="L294">			option = option.withInteractive(interactiveBaseFilename);</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">		if (p.isTrue(PragmaKey.SVG_INTERACTIVE)) {</span>
+<span class="fc" id="L291">			String interactiveBaseFilename = &quot;default&quot;;</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">			if (diagramType == DiagramType.SEQUENCE)</span>
+<span class="fc" id="L293">				interactiveBaseFilename = &quot;sequencediagram&quot;;</span>
+<span class="fc" id="L294">			option = option.withInteractive(interactiveBaseFilename);</span>
 		}
 
 <span class="fc bfc" id="L297" title="All 2 branches covered.">		if (skinParam != null) {</span>

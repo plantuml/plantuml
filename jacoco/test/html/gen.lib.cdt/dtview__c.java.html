@@ -103,8 +103,8 @@ try {
 <span class="pc bpc" id="L103" title="1 of 6 branches missed.">	if(((type&amp;(DT_MATCH|DT_SEARCH))!=0) || /* order sets first/last done below */</span>
 	   (((type&amp;(DT_FIRST|DT_LAST))!=0) &amp;&amp; (dt.meth.type&amp;(DT_OBAG|DT_OSET)) == 0 ) )
 <span class="fc bfc" id="L105" title="All 2 branches covered.">	{	for(d = dt; d!=null; d = d.view)</span>
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">			if((o = (__ptr__) d.meth.searchf.exe(zz, d,obj,type))!=null )</span>
-<span class="nc" id="L107">				break;</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			if((o = (__ptr__) d.meth.searchf.exe(zz, d,obj,type))!=null )</span>
+<span class="fc" id="L107">				break;</span>
 <span class="fc" id="L108">		dt.walk = d;</span>
 <span class="fc" id="L109">		return o;</span>
 	}
@@ -126,9 +126,9 @@ try {
 <span class="fc" id="L126">			ok = _DTKEY(o, ky, sz);</span>
 			
 			
-<span class="pc bpc" id="L129" title="1 of 2 branches missed.">			if(n!=null) /* get the right one among all dictionaries */</span>
-<span class="nc" id="L130">			{	cmp = _DTCMP(zz, d, ok, nk, d.disc, cmpf, sz);</span>
-<span class="nc bnc" id="L131" title="All 8 branches missed.">				if(((type &amp; (DT_NEXT|DT_FIRST))!=0 &amp;&amp; cmp &lt; 0) ||</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">			if(n!=null) /* get the right one among all dictionaries */</span>
+<span class="fc" id="L130">			{	cmp = _DTCMP(zz, d, ok, nk, d.disc, cmpf, sz);</span>
+<span class="pc bpc" id="L131" title="5 of 8 branches missed.">				if(((type &amp; (DT_NEXT|DT_FIRST))!=0 &amp;&amp; cmp &lt; 0) ||</span>
 				   ((type &amp; (DT_PREV|DT_LAST))!=0 &amp;&amp; cmp &gt; 0) )
 <span class="nc" id="L133">UNSUPPORTED(&quot;5o3u9aaanyd9yh74sjfkkofmo&quot;); // 					goto a_dj;</span>
 			}

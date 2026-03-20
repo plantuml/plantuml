@@ -129,25 +129,25 @@ public final class UFontImpl implements UFont {
 	// end with &lt;DOT&gt;&lt;STYLE&gt;
 	// See https://github.com/plantuml/plantuml/issues/720
 	private String getPortableFontName() {
-<span class="nc" id="L132">		final Font font = getUnderlayingFont(null);</span>
-<span class="nc" id="L133">		final String name = font.getFontName();</span>
-<span class="nc bnc" id="L134" title="All 4 branches missed.">		if (font.isBold() &amp;&amp; font.isItalic())</span>
+<span class="fc" id="L132">		final Font font = getUnderlayingFont(null);</span>
+<span class="fc" id="L133">		final String name = font.getFontName();</span>
+<span class="pc bpc" id="L134" title="1 of 4 branches missed.">		if (font.isBold() &amp;&amp; font.isItalic())</span>
 <span class="nc bnc" id="L135" title="All 2 branches missed.">			return name.endsWith(&quot;.bolditalic&quot;) ? name : name + &quot;.bolditalic&quot;;</span>
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		else if (font.isBold())</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">			return name.endsWith(&quot;.bold&quot;) ? name : name + &quot;.bold&quot;;</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">		else if (font.isItalic())</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">			return name.endsWith(&quot;.italic&quot;) ? name : name + &quot;.italic&quot;;</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		else if (font.isBold())</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">			return name.endsWith(&quot;.bold&quot;) ? name : name + &quot;.bold&quot;;</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		else if (font.isItalic())</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">			return name.endsWith(&quot;.italic&quot;) ? name : name + &quot;.italic&quot;;</span>
 		else
-<span class="nc bnc" id="L141" title="All 2 branches missed.">			return name.endsWith(&quot;.plain&quot;) ? name : name + &quot;.plain&quot;;</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">			return name.endsWith(&quot;.plain&quot;) ? name : name + &quot;.plain&quot;;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L146">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L147">		sb.append(getPortableFontName());</span>
-<span class="nc" id="L148">		sb.append(&quot;/&quot;);</span>
-<span class="nc" id="L149">		sb.append(getSize());</span>
-<span class="nc" id="L150">		return sb.toString();</span>
+<span class="fc" id="L146">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L147">		sb.append(getPortableFontName());</span>
+<span class="fc" id="L148">		sb.append(&quot;/&quot;);</span>
+<span class="fc" id="L149">		sb.append(getSize());</span>
+<span class="fc" id="L150">		return sb.toString();</span>
 	}
 
 	@Override

@@ -68,17 +68,17 @@ class SegmentColored {
 <span class="fc" id="L68">	}</span>
 
 	public HColor getSpecificBackColor() {
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (colors == null) {</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (colors == null) {</span>
 <span class="nc" id="L72">			return null;</span>
 		}
-<span class="nc" id="L74">		return colors.getBackColor();</span>
+<span class="fc" id="L74">		return colors.getBackColor();</span>
 	}
 
 	public HColor getSpecificLineColor() {
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (colors == null) {</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (colors == null) {</span>
 <span class="nc" id="L79">			return null;</span>
 		}
-<span class="nc" id="L81">		return colors.getForeColor();</span>
+<span class="fc" id="L81">		return colors.getForeColor();</span>
 	}
 
 	@Override
@@ -98,20 +98,20 @@ class SegmentColored {
 	}
 
 	public void drawU(UGraphic ug, Component compAliveBox, int level) {
-<span class="nc" id="L101">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L102">		ug = ug.apply(</span>
-<span class="nc" id="L103">				new UTranslate((level - 1) * compAliveBox.getPreferredWidth(stringBounder) / 2, segment.getPos1()));</span>
-<span class="nc" id="L104">		final XDimension2D dim = new XDimension2D(compAliveBox.getPreferredWidth(stringBounder),</span>
-<span class="nc" id="L105">				segment.getPos2() - segment.getPos1());</span>
-<span class="nc" id="L106">		compAliveBox.drawU(ug, new Area(dim), new SimpleContext2D(false));</span>
-<span class="nc" id="L107">	}</span>
+<span class="fc" id="L101">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L102">		ug = ug.apply(</span>
+<span class="fc" id="L103">				new UTranslate((level - 1) * compAliveBox.getPreferredWidth(stringBounder) / 2, segment.getPos1()));</span>
+<span class="fc" id="L104">		final XDimension2D dim = new XDimension2D(compAliveBox.getPreferredWidth(stringBounder),</span>
+<span class="fc" id="L105">				segment.getPos2() - segment.getPos1());</span>
+<span class="fc" id="L106">		compAliveBox.drawU(ug, new Area(dim), new SimpleContext2D(false));</span>
+<span class="fc" id="L107">	}</span>
 
 	public Collection&lt;SegmentColored&gt; cutSegmentIfNeed(Collection&lt;Segment&gt; allDelays) {
-<span class="nc" id="L110">		return new Coll2(segment.cutSegmentIfNeed(allDelays), segment.getPos1());</span>
+<span class="fc" id="L110">		return new Coll2(segment.cutSegmentIfNeed(allDelays), segment.getPos1());</span>
 	}
 
 	public double getPos1Initial() {
-<span class="nc" id="L114">		return pos1Initial;</span>
+<span class="fc" id="L114">		return pos1Initial;</span>
 	}
 
 	public SegmentColored merge(SegmentColored this2) {
@@ -128,17 +128,17 @@ class SegmentColored {
 		private final Iterator&lt;Segment&gt; it;
 		private final double pos1Initial;
 
-<span class="nc" id="L131">		public Iterator2(Iterator&lt;Segment&gt; it, double pos1Initial) {</span>
-<span class="nc" id="L132">			this.it = it;</span>
-<span class="nc" id="L133">			this.pos1Initial = pos1Initial;</span>
-<span class="nc" id="L134">		}</span>
+<span class="fc" id="L131">		public Iterator2(Iterator&lt;Segment&gt; it, double pos1Initial) {</span>
+<span class="fc" id="L132">			this.it = it;</span>
+<span class="fc" id="L133">			this.pos1Initial = pos1Initial;</span>
+<span class="fc" id="L134">		}</span>
 
 		public boolean hasNext() {
-<span class="nc" id="L137">			return it.hasNext();</span>
+<span class="fc" id="L137">			return it.hasNext();</span>
 		}
 
 		public SegmentColored next() {
-<span class="nc" id="L141">			return new SegmentColored(it.next(), colors, shadowing, pos1Initial);</span>
+<span class="fc" id="L141">			return new SegmentColored(it.next(), colors, shadowing, pos1Initial);</span>
 		}
 
 		public void remove() {
@@ -151,14 +151,14 @@ class SegmentColored {
 		private final Collection&lt;Segment&gt; col;
 		private final double pos1Initial;
 
-<span class="nc" id="L154">		public Coll2(Collection&lt;Segment&gt; col, double pos1Initial) {</span>
-<span class="nc" id="L155">			this.col = col;</span>
-<span class="nc" id="L156">			this.pos1Initial = pos1Initial;</span>
-<span class="nc" id="L157">		}</span>
+<span class="fc" id="L154">		public Coll2(Collection&lt;Segment&gt; col, double pos1Initial) {</span>
+<span class="fc" id="L155">			this.col = col;</span>
+<span class="fc" id="L156">			this.pos1Initial = pos1Initial;</span>
+<span class="fc" id="L157">		}</span>
 
 		@Override
 		public Iterator&lt;SegmentColored&gt; iterator() {
-<span class="nc" id="L161">			return new Iterator2(col.iterator(), pos1Initial);</span>
+<span class="fc" id="L161">			return new Iterator2(col.iterator(), pos1Initial);</span>
 		}
 
 		@Override

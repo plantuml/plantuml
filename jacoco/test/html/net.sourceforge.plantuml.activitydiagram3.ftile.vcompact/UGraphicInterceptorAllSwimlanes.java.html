@@ -74,35 +74,35 @@ public class UGraphicInterceptorAllSwimlanes implements UGraphic {
 
 	public UGraphicInterceptorAllSwimlanes(Map&lt;Swimlane, UGraphic&gt; swimlaneToUg, List&lt;Swimlane&gt; orderedList,
 			StringBounder stringBounder) {
-<span class="nc" id="L77">		this(swimlaneToUg, orderedList, swimlaneToUg.keySet(), stringBounder);</span>
-<span class="nc" id="L78">	}</span>
+<span class="fc" id="L77">		this(swimlaneToUg, orderedList, swimlaneToUg.keySet(), stringBounder);</span>
+<span class="fc" id="L78">	}</span>
 
 	private UGraphicInterceptorAllSwimlanes(Map&lt;Swimlane, UGraphic&gt; swimlaneToUg, List&lt;Swimlane&gt; orderedList,
-<span class="nc" id="L81">			Set&lt;Swimlane&gt; activeSwimlanes, StringBounder stringBounder) {</span>
-<span class="nc" id="L82">		this.swimlaneToUg = swimlaneToUg;</span>
-<span class="nc" id="L83">		this.orderedList = orderedList;</span>
-<span class="nc" id="L84">		this.activeSwimlanes = activeSwimlanes;</span>
-<span class="nc" id="L85">		this.stringBounder = stringBounder;</span>
-<span class="nc" id="L86">	}</span>
+<span class="fc" id="L81">			Set&lt;Swimlane&gt; activeSwimlanes, StringBounder stringBounder) {</span>
+<span class="fc" id="L82">		this.swimlaneToUg = swimlaneToUg;</span>
+<span class="fc" id="L83">		this.orderedList = orderedList;</span>
+<span class="fc" id="L84">		this.activeSwimlanes = activeSwimlanes;</span>
+<span class="fc" id="L85">		this.stringBounder = stringBounder;</span>
+<span class="fc" id="L86">	}</span>
 
 	public void draw(UShape shape) {
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (shape instanceof Ftile) {</span>
-<span class="nc" id="L90">			final Ftile tile = (Ftile) shape;</span>
-<span class="nc" id="L91">			final Set&lt;Swimlane&gt; tileSwimlanes = tile.getSwimlanes();</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (shape instanceof Ftile) {</span>
+<span class="fc" id="L90">			final Ftile tile = (Ftile) shape;</span>
+<span class="fc" id="L91">			final Set&lt;Swimlane&gt; tileSwimlanes = tile.getSwimlanes();</span>
 			// Check if any active swimlane is in this tile
-<span class="nc" id="L93">			boolean hasMatch = false;</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">			for (Swimlane swimlane : activeSwimlanes)</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">				if (tileSwimlanes.contains(swimlane)) {</span>
-<span class="nc" id="L96">					hasMatch = true;</span>
-<span class="nc" id="L97">					break;</span>
+<span class="fc" id="L93">			boolean hasMatch = false;</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">			for (Swimlane swimlane : activeSwimlanes)</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">				if (tileSwimlanes.contains(swimlane)) {</span>
+<span class="fc" id="L96">					hasMatch = true;</span>
+<span class="fc" id="L97">					break;</span>
 				}
-<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (hasMatch) {</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">			if (hasMatch) {</span>
 				// Narrow the active swimlanes to the intersection with this tile's swimlanes
-<span class="nc" id="L101">				final UGraphicInterceptorAllSwimlanes narrowed = withActiveSwimlanes(tileSwimlanes);</span>
-<span class="nc" id="L102">				tile.drawU(narrowed);</span>
+<span class="fc" id="L101">				final UGraphicInterceptorAllSwimlanes narrowed = withActiveSwimlanes(tileSwimlanes);</span>
+<span class="fc" id="L102">				tile.drawU(narrowed);</span>
 			}
 
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		} else if (shape instanceof Gtile) {</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		} else if (shape instanceof Gtile) {</span>
 <span class="nc" id="L106">			final Gtile tile = (Gtile) shape;</span>
 <span class="nc" id="L107">			final Set&lt;Swimlane&gt; tileSwimlanes = tile.getSwimlanes();</span>
 <span class="nc" id="L108">			boolean hasMatch = false;</span>
@@ -116,7 +116,7 @@ public class UGraphicInterceptorAllSwimlanes implements UGraphic {
 <span class="nc" id="L116">				tile.drawU(narrowed);</span>
 			}
 
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		} else if (shape instanceof GConnection) {</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		} else if (shape instanceof GConnection) {</span>
 <span class="nc" id="L120">			final GConnection connection = (GConnection) shape;</span>
 <span class="nc" id="L121">			final List&lt;GPoint&gt; hooks = connection.getHooks();</span>
 <span class="nc" id="L122">			final GPoint point0 = hooks.get(0);</span>
@@ -126,31 +126,31 @@ public class UGraphicInterceptorAllSwimlanes implements UGraphic {
 <span class="nc" id="L126">					connection.drawU(swimlaneToUg.get(swimlane));</span>
 				}
 
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		} else if (shape instanceof Connection) {</span>
-<span class="nc" id="L130">			final Connection connection = (Connection) shape;</span>
-<span class="nc" id="L131">			final Ftile tile1 = connection.getFtile1();</span>
-<span class="nc" id="L132">			final Ftile tile2 = connection.getFtile2();</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">			for (Swimlane swimlane : activeSwimlanes) {</span>
-<span class="nc bnc" id="L134" title="All 4 branches missed.">				final boolean contained1 = tile1 == null || tile1.getSwimlaneOut() == null</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">						|| tile1.getSwimlaneOut() == swimlane;</span>
-<span class="nc bnc" id="L136" title="All 4 branches missed.">				final boolean contained2 = tile2 == null || tile2.getSwimlaneIn() == null</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">						|| tile2.getSwimlaneIn() == swimlane;</span>
-<span class="nc bnc" id="L138" title="All 4 branches missed.">				if (contained1 &amp;&amp; contained2) {</span>
-<span class="nc" id="L139">					final UGraphic ug = swimlaneToUg.get(swimlane);</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">					if (ug != null)</span>
-<span class="nc" id="L141">						connection.drawU(ug);</span>
+<span class="pc bfc" id="L129" title="All 2 branches covered.">		} else if (shape instanceof Connection) {</span>
+<span class="fc" id="L130">			final Connection connection = (Connection) shape;</span>
+<span class="fc" id="L131">			final Ftile tile1 = connection.getFtile1();</span>
+<span class="fc" id="L132">			final Ftile tile2 = connection.getFtile2();</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">			for (Swimlane swimlane : activeSwimlanes) {</span>
+<span class="pc bpc" id="L134" title="2 of 4 branches missed.">				final boolean contained1 = tile1 == null || tile1.getSwimlaneOut() == null</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">						|| tile1.getSwimlaneOut() == swimlane;</span>
+<span class="pc bpc" id="L136" title="2 of 4 branches missed.">				final boolean contained2 = tile2 == null || tile2.getSwimlaneIn() == null</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">						|| tile2.getSwimlaneIn() == swimlane;</span>
+<span class="fc bfc" id="L138" title="All 4 branches covered.">				if (contained1 &amp;&amp; contained2) {</span>
+<span class="fc" id="L139">					final UGraphic ug = swimlaneToUg.get(swimlane);</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">					if (ug != null)</span>
+<span class="fc" id="L141">						connection.drawU(ug);</span>
 				}
-<span class="nc" id="L143">			}</span>
+<span class="fc" id="L143">			}</span>
 
-<span class="nc" id="L145">		} else {</span>
+<span class="fc" id="L145">		} else {</span>
 			// Primitive shape: dispatch only to the currently active swimlanes
-<span class="nc bnc" id="L147" title="All 2 branches missed.">			for (Swimlane swimlane : activeSwimlanes) {</span>
-<span class="nc" id="L148">				final UGraphic ug = swimlaneToUg.get(swimlane);</span>
-<span class="nc bnc" id="L149" title="All 2 branches missed.">				if (ug != null)</span>
-<span class="nc" id="L150">					ug.draw(shape);</span>
-<span class="nc" id="L151">			}</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">			for (Swimlane swimlane : activeSwimlanes) {</span>
+<span class="fc" id="L148">				final UGraphic ug = swimlaneToUg.get(swimlane);</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">				if (ug != null)</span>
+<span class="fc" id="L150">					ug.draw(shape);</span>
+<span class="fc" id="L151">			}</span>
 		}
-<span class="nc" id="L153">	}</span>
+<span class="fc" id="L153">	}</span>
 
 	/**
 	 * Returns a new instance with the active swimlanes narrowed to the
@@ -158,31 +158,31 @@ public class UGraphicInterceptorAllSwimlanes implements UGraphic {
 	 * If the sets are identical, returns {@code this} to avoid allocation.
 	 */
 	private UGraphicInterceptorAllSwimlanes withActiveSwimlanes(Set&lt;Swimlane&gt; tileSwimlanes) {
-<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (tileSwimlanes.containsAll(activeSwimlanes))</span>
-<span class="nc" id="L162">			return this;</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (tileSwimlanes.containsAll(activeSwimlanes))</span>
+<span class="fc" id="L162">			return this;</span>
 
-<span class="nc" id="L164">		final Set&lt;Swimlane&gt; narrowed = new java.util.LinkedHashSet&lt;&gt;();</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		for (Swimlane s : activeSwimlanes)</span>
-<span class="nc bnc" id="L166" title="All 2 branches missed.">			if (tileSwimlanes.contains(s))</span>
-<span class="nc" id="L167">				narrowed.add(s);</span>
+<span class="fc" id="L164">		final Set&lt;Swimlane&gt; narrowed = new java.util.LinkedHashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		for (Swimlane s : activeSwimlanes)</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">			if (tileSwimlanes.contains(s))</span>
+<span class="fc" id="L167">				narrowed.add(s);</span>
 
-<span class="nc" id="L169">		return new UGraphicInterceptorAllSwimlanes(swimlaneToUg, orderedList, narrowed, stringBounder);</span>
+<span class="fc" id="L169">		return new UGraphicInterceptorAllSwimlanes(swimlaneToUg, orderedList, narrowed, stringBounder);</span>
 	}
 
 	public UGraphic apply(UChange change) {
-<span class="nc" id="L173">		final Map&lt;Swimlane, UGraphic&gt; newMap = new LinkedHashMap&lt;&gt;();</span>
-<span class="nc bnc" id="L174" title="All 2 branches missed.">		for (Map.Entry&lt;Swimlane, UGraphic&gt; entry : swimlaneToUg.entrySet())</span>
-<span class="nc" id="L175">			newMap.put(entry.getKey(), entry.getValue().apply(change));</span>
+<span class="fc" id="L173">		final Map&lt;Swimlane, UGraphic&gt; newMap = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">		for (Map.Entry&lt;Swimlane, UGraphic&gt; entry : swimlaneToUg.entrySet())</span>
+<span class="fc" id="L175">			newMap.put(entry.getKey(), entry.getValue().apply(change));</span>
 
-<span class="nc" id="L177">		return new UGraphicInterceptorAllSwimlanes(newMap, orderedList, activeSwimlanes, stringBounder);</span>
+<span class="fc" id="L177">		return new UGraphicInterceptorAllSwimlanes(newMap, orderedList, activeSwimlanes, stringBounder);</span>
 	}
 
 	public StringBounder getStringBounder() {
-<span class="nc" id="L181">		return stringBounder;</span>
+<span class="fc" id="L181">		return stringBounder;</span>
 	}
 
 	public UParam getParam() {
-<span class="nc" id="L185">		return swimlaneToUg.values().iterator().next().getParam();</span>
+<span class="fc" id="L185">		return swimlaneToUg.values().iterator().next().getParam();</span>
 	}
 
 	public ColorMapper getColorMapper() {
@@ -202,12 +202,12 @@ public class UGraphicInterceptorAllSwimlanes implements UGraphic {
 <span class="nc" id="L202">	}</span>
 
 	public void flushUg() {
-<span class="nc bnc" id="L205" title="All 2 branches missed.">		for (UGraphic ug : swimlaneToUg.values())</span>
-<span class="nc" id="L206">			ug.flushUg();</span>
-<span class="nc" id="L207">	}</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">		for (UGraphic ug : swimlaneToUg.values())</span>
+<span class="fc" id="L206">			ug.flushUg();</span>
+<span class="fc" id="L207">	}</span>
 
 	public boolean matchesProperty(String propertyName) {
-<span class="nc" id="L210">		return false;</span>
+<span class="fc" id="L210">		return false;</span>
 	}
 
 	public HColor getDefaultBackground() {
