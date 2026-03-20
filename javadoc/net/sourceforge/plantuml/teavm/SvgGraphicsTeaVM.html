@@ -106,9 +106,10 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int)" class="member-name-link">SvgGraphicsTeaVM</a><wbr>(int&nbsp;width,
- int&nbsp;height)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">SvgGraphicsTeaVM</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a new SVG graphics context for TeaVM rendering.</div>
+</div>
 </div>
 </section>
 </li>
@@ -296,6 +297,14 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toSvgString()" class="member-name-link">toSvgString</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateSvgSize(double,double,double)" class="member-name-link">updateSvgSize</a><wbr>(double&nbsp;width,
+ double&nbsp;height,
+ double&nbsp;scale)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Updates the SVG root element dimensions to match the actual diagram
+ content, applying a scale factor.</div>
+</div>
 </div>
 </div>
 </div>
@@ -314,10 +323,16 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(int,int)">
+<section class="detail" id="&lt;init&gt;()">
 <h3>SvgGraphicsTeaVM</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SvgGraphicsTeaVM</span><wbr><span class="parameters">(int&nbsp;width,
- int&nbsp;height)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SvgGraphicsTeaVM</span>()</div>
+<div class="block">Creates a new SVG graphics context for TeaVM rendering.
+
+ <p>
+ The SVG root element is created without explicit <code>width</code>,
+ <code>height</code>, or <code>viewBox</code> attributes. These are set later by
+ <a href="#updateSvgSize(double,double,double)"><code>updateSvgSize(double, double, double)</code></a> once the actual diagram
+ dimensions and scale factor are known.</div>
 </section>
 </li>
 </ul>
@@ -332,6 +347,28 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getSvgRoot()">
 <h3>getSvgRoot</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.teavm.jso.dom.xml.Element</span>&nbsp;<span class="element-name">getSvgRoot</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="updateSvgSize(double,double,double)">
+<h3>updateSvgSize</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateSvgSize</span><wbr><span class="parameters">(double&nbsp;width,
+ double&nbsp;height,
+ double&nbsp;scale)</span></div>
+<div class="block">Updates the SVG root element dimensions to match the actual diagram
+ content, applying a scale factor.
+
+ <p>
+ The <code>viewBox</code> is set to the logical (unscaled) dimensions, while
+ <code>width</code> and <code>height</code> are set to the scaled dimensions. This
+ lets the browser render the SVG at the desired display size while
+ preserving the internal coordinate system.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>width</code> - the logical width of the diagram content</dd>
+<dd><code>height</code> - the logical height of the diagram content</dd>
+<dd><code>scale</code> - the scale factor (1.0 = no scaling)</dd>
+</dl>
 </section>
 </li>
 <li>
