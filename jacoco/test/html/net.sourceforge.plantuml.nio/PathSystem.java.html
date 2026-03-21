@@ -35,23 +35,24 @@
  */
 package net.sourceforge.plantuml.nio;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
-import net.sourceforge.plantuml.teavm.TeaVM;
-import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
-
 
 //::comment when JAVA8
 import org.teavm.jso.JSObject;
+import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.teavm.browser.BrowserLog;
+import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
 //::done
-
-
 
 // Replacement for FileSystem
 //See ImportedFiles
@@ -61,126 +62,158 @@ import org.teavm.jso.JSObject;
 public class PathSystem {
 
 	public static PathSystem fetch() {
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
-<span class="nc" id="L65">			return new PathSystem(null);</span>
-<span class="fc" id="L66">		return new PathSystem(new NFolderRegular(Paths.get(&quot;&quot;)));</span>
+		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L67">			return new PathSystem(null);</span>
+		// ::done
+<span class="fc" id="L69">		return new PathSystem(new NFolderRegular(Paths.get(&quot;&quot;)));</span>
 	}
 
 	public InputStream getTeaVMInputStream(String path) {
 		// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
 		// return null;
-<span class="nc" id="L72">		final String full = path.substring(1, path.length() - 1).toLowerCase();</span>
-<span class="nc" id="L73">		final String libname = full.substring(0, full.indexOf('/'));</span>
-<span class="nc" id="L74">		final String filepath = full.substring(libname.length() + 1);</span>
-<span class="nc" id="L75">		TeaVmScriptLoader.loadOnceSync(libname + &quot;.min.js&quot;);</span>
-<span class="nc" id="L76">		JSObject data = TeaVmScriptLoader.getRaw(libname, filepath);</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (data == null)</span>
-<span class="nc" id="L78">			return null;</span>
-<span class="nc" id="L79">		String content = TeaVmScriptLoader.joinLines(data);</span>
-<span class="nc" id="L80">		return new java.io.ByteArrayInputStream(content.getBytes(java.nio.charset.StandardCharsets.UTF_8));</span>
+<span class="nc" id="L75">		final String full = path.substring(1, path.length() - 1).toLowerCase();</span>
+<span class="nc" id="L76">		String libname = full.substring(0, full.indexOf('/'));</span>
+<span class="nc" id="L77">		final String filepath = full.substring(libname.length() + 1);</span>
+<span class="nc" id="L78">		TeaVmScriptLoader.loadOnceSync(libname + &quot;.min.js&quot;);</span>
+
+<span class="nc" id="L80">		final Map&lt;String, String&gt; infos = getInfo(libname);</span>
+<span class="nc" id="L81">		final String link = infos.get(&quot;link&quot;);</span>
+
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (link != null) {</span>
+<span class="nc" id="L84">			libname = link;</span>
+<span class="nc" id="L85">			BrowserLog.consoleLog(getClass(), &quot;Following link to &quot; + libname);</span>
+<span class="nc" id="L86">			TeaVmScriptLoader.loadOnceSync(libname + &quot;.min.js&quot;);</span>
+		}
+
+<span class="nc" id="L89">		final JSObject data = TeaVmScriptLoader.getRaw_PLANTUML_STDLIB(libname, filepath);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (data == null)</span>
+<span class="nc" id="L91">			return null;</span>
+<span class="nc" id="L92">		final String content = TeaVmScriptLoader.joinLines(data);</span>
+<span class="nc" id="L93">		return new ByteArrayInputStream(content.getBytes(java.nio.charset.StandardCharsets.UTF_8));</span>
 		// ::done
 	}
 
+	// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+	private Map&lt;String, String&gt; getInfo(final String libname) {
+<span class="nc" id="L99">		final JSObject info = TeaVmScriptLoader.getRaw_PLANTUML_STDLIB_INFO(libname);</span>
+<span class="nc" id="L100">		final Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (info != null) {</span>
+<span class="nc" id="L102">			final String keys = TeaVmScriptLoader.getObjectKeys(info);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			for (String key : keys.split(&quot;,&quot;)) {</span>
+<span class="nc" id="L104">				final String value = TeaVmScriptLoader.getStringProperty(info, key);</span>
+<span class="nc" id="L105">				BrowserLog.consoleLog(getClass(), &quot;info[&quot; + libname + &quot;] &quot; + key + &quot; = &quot; + value);</span>
+<span class="nc" id="L106">				map.put(key, value);</span>
+			}
+<span class="nc" id="L108">		} else {</span>
+<span class="nc" id="L109">			BrowserLog.consoleLog(getClass(), &quot;No info found for &quot; + libname);</span>
+		}
+<span class="nc" id="L111">		return map;</span>
+	}
+	// ::done
+
 	private final NFolder currentFolder;
 
-<span class="fc" id="L86">	private PathSystem(NFolder currentFolder) {</span>
-<span class="fc" id="L87">		this.currentFolder = currentFolder;</span>
-<span class="fc" id="L88">	}</span>
-
-	public PathSystem changeCurrentDirectory(Path newCurrentDir) throws IOException {
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
-<span class="nc" id="L92">			return this;</span>
-		
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (newCurrentDir == null)</span>
-<span class="nc" id="L95">			return this;</span>
-<span class="fc" id="L96">		final NFolder folder = currentFolder.getSubfolder(newCurrentDir);</span>
-<span class="fc" id="L97">		return new PathSystem(folder);</span>
-	}
+<span class="fc" id="L117">	private PathSystem(NFolder currentFolder) {</span>
+<span class="fc" id="L118">		this.currentFolder = currentFolder;</span>
+<span class="fc" id="L119">	}</span>
 
 	public PathSystem changeCurrentDirectory(NFolder newCurrentDir) {
-<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
-<span class="nc" id="L102">			return this;</span>
-		
-<span class="fc" id="L104">		return new PathSystem(newCurrentDir);</span>
+		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L124">			return this;</span>
+		// ::done
+
+<span class="fc" id="L127">		return new PathSystem(newCurrentDir);</span>
 	}
 
 	public PathSystem changeCurrentDirectory(SFile newCurrentDir) throws IOException {
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
-<span class="nc" id="L109">			return this;</span>
-		
-<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (newCurrentDir == null)</span>
-<span class="fc" id="L112">			return this;</span>
-<span class="fc" id="L113">		return changeCurrentDirectory(newCurrentDir.toPath());</span>
+		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L133">			return this;</span>
+		// ::done
+
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (newCurrentDir == null)</span>
+<span class="fc" id="L137">			return this;</span>
+
+<span class="fc" id="L139">		final Path path = newCurrentDir.toPath();</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (path == null)</span>
+<span class="nc" id="L141">			return this;</span>
+
+<span class="fc" id="L143">		final NFolder folder = currentFolder.getSubfolder(path);</span>
+<span class="fc" id="L144">		return new PathSystem(folder);</span>
 	}
 
 	public PathSystem withCurrentDir(NFolder parentFile) {
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
-<span class="nc" id="L118">			return this;</span>
+		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L150">			return this;</span>
+		// ::done
 
-<span class="fc" id="L120">		return new PathSystem(parentFile);</span>
+<span class="fc" id="L153">		return new PathSystem(parentFile);</span>
 	}
 
 	public NFolder getCurrentDir() {
-<span class="nc" id="L124">		return currentFolder;</span>
+<span class="nc" id="L157">		return currentFolder;</span>
 	}
 
 	public InputFile getFile(String filename, String suffix) throws IOException {
-<span class="nc" id="L128">		return getInputFile(filename);</span>
+<span class="nc" id="L161">		return getInputFile(filename);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L133">		return currentFolder.toString();</span>
+<span class="nc" id="L166">		return currentFolder.toString();</span>
 	}
 
 	public InputFile getInputFile(String path) throws IOException {
-<span class="pc bpc" id="L137" title="1 of 4 branches missed.">		if (path.startsWith(&quot;http://&quot;) || path.startsWith(&quot;https://&quot;)) {</span>
-<span class="fc" id="L138">			final SURL url = SURL.create(path);</span>
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">			if (url == null)</span>
-<span class="nc" id="L140">				throw new IOException(&quot;Cannot open URL &quot; + path);</span>
-<span class="fc" id="L141">			return new InputFileUrl(url);</span>
+<span class="pc bpc" id="L170" title="1 of 4 branches missed.">		if (path.startsWith(&quot;http://&quot;) || path.startsWith(&quot;https://&quot;)) {</span>
+<span class="fc" id="L171">			final SURL url = SURL.create(path);</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			if (url == null)</span>
+<span class="nc" id="L173">				throw new IOException(&quot;Cannot open URL &quot; + path);</span>
+<span class="fc" id="L174">			return new InputFileUrl(url);</span>
 		}
 
-<span class="pc bpc" id="L144" title="1 of 4 branches missed.">		if (path.startsWith(&quot;&lt;&quot;) &amp;&amp; path.endsWith(&quot;&gt;&quot;)) {</span>
-<span class="fc" id="L145">			final String full = path.substring(1, path.length() - 1).toLowerCase();</span>
-<span class="fc" id="L146">			final String libname = full.substring(0, full.indexOf('/'));</span>
-<span class="fc" id="L147">			final String filepath = full.substring(libname.length() + 1);</span>
-<span class="fc" id="L148">			return new InputFileStdlib(Stdlib.retrieve(libname), Paths.get(filepath));</span>
+<span class="pc bpc" id="L177" title="1 of 4 branches missed.">		if (path.startsWith(&quot;&lt;&quot;) &amp;&amp; path.endsWith(&quot;&gt;&quot;)) {</span>
+<span class="fc" id="L178">			final String full = path.substring(1, path.length() - 1).toLowerCase();</span>
+<span class="fc" id="L179">			final String libname = full.substring(0, full.indexOf('/'));</span>
+<span class="fc" id="L180">			final String filepath = full.substring(libname.length() + 1);</span>
+<span class="fc" id="L181">			return new InputFileStdlib(Stdlib.retrieve(libname), Paths.get(filepath));</span>
 		}
 
-<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (path.startsWith(&quot;::&quot;)) {</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">		if (path.startsWith(&quot;::&quot;)) {</span>
 			// non-standard syntax: resolve from process launch directory
-<span class="fc" id="L153">			String rel = path.substring(2); // remove leading &quot;::&quot;</span>
+<span class="fc" id="L186">			String rel = path.substring(2); // remove leading &quot;::&quot;</span>
 			// allow both ::/foo.puml and ::./foo.puml
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">			if (rel.startsWith(&quot;/&quot;))</span>
-<span class="nc" id="L156">				rel = rel.substring(1);</span>
-<span class="fc" id="L157">			final Path target = Paths.get(&quot;&quot;).toAbsolutePath().resolve(rel).normalize();</span>
-<span class="fc" id="L158">			final SFile result = SFile.fromFile(target.toFile());</span>
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">			if (result.isFileOk())</span>
-<span class="fc" id="L160">				return result;</span>
-<span class="nc" id="L161">			return null;</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">			if (rel.startsWith(&quot;/&quot;))</span>
+<span class="nc" id="L189">				rel = rel.substring(1);</span>
+<span class="fc" id="L190">			final Path target = Paths.get(&quot;&quot;).toAbsolutePath().resolve(rel).normalize();</span>
+<span class="fc" id="L191">			final SFile result = SFile.fromFile(target.toFile());</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">			if (result.isFileOk())</span>
+<span class="fc" id="L193">				return result;</span>
+<span class="nc" id="L194">			return null;</span>
 		}
-<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (path.startsWith(&quot;~/&quot;)) {</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">		if (path.startsWith(&quot;~/&quot;)) {</span>
 			// Expand to the user's home directory
-<span class="fc" id="L165">			final String home = System.getProperty(&quot;user.home&quot;);</span>
-<span class="fc" id="L166">			final Path homePath = Paths.get(home).resolve(path.substring(2)).normalize();</span>
-<span class="fc" id="L167">			final SFile result = SFile.fromFile(homePath.toFile());</span>
-<span class="pc bpc" id="L168" title="1 of 2 branches missed.">			if (result.isFileOk())</span>
-<span class="fc" id="L169">				return result;</span>
-<span class="nc" id="L170">			return null;</span>
+<span class="fc" id="L198">			final String home = System.getProperty(&quot;user.home&quot;);</span>
+<span class="fc" id="L199">			final Path homePath = Paths.get(home).resolve(path.substring(2)).normalize();</span>
+<span class="fc" id="L200">			final SFile result = SFile.fromFile(homePath.toFile());</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">			if (result.isFileOk())</span>
+<span class="fc" id="L202">				return result;</span>
+<span class="nc" id="L203">			return null;</span>
 		}
 
-<span class="fc" id="L173">		return currentFolder.getInputFile(Paths.get(path));</span>
+<span class="fc" id="L206">		return currentFolder.getInputFile(Paths.get(path));</span>
 	}
 
 	public static void main(String[] args) {
-<span class="nc" id="L177">		System.out.println(PathSystem.fetch());</span>
-<span class="nc" id="L178">	}</span>
+<span class="nc" id="L210">		System.out.println(PathSystem.fetch());</span>
+<span class="nc" id="L211">	}</span>
 
 	public void addImportFile(SFile file) {
 		// Nothing right now
 
-<span class="nc" id="L183">	}</span>
+<span class="nc" id="L216">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

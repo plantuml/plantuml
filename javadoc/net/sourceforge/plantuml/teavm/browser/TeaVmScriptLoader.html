@@ -125,23 +125,41 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static org.teavm.jso.JSObject</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRaw(java.lang.String,java.lang.String)" class="member-name-link">getRaw</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;namespace,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getObjectKeys(org.teavm.jso.JSObject)" class="member-name-link">getObjectKeys</a><wbr>(org.teavm.jso.JSObject&nbsp;obj)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Returns the keys of a JS object as a comma-separated string.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static org.teavm.jso.JSObject</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRaw_PLANTUML_STDLIB(java.lang.String,java.lang.String)" class="member-name-link">getRaw_PLANTUML_STDLIB</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;namespace,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Retrieves the raw lines array for a .puml file from a loaded stdlib library.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static org.teavm.jso.JSObject</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRaw_PLANTUML_STDLIB_INFO(java.lang.String)" class="member-name-link">getRaw_PLANTUML_STDLIB_INFO</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;namespace)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Retrieves the JSON info object for a loaded stdlib library.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#joinLines(org.teavm.jso.JSObject)" class="member-name-link">joinLines</a><wbr>(org.teavm.jso.JSObject&nbsp;lines)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#loadOnce(java.lang.String,net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader.Ok,net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader.Err)" class="member-name-link">loadOnce</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;url,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getStringProperty(org.teavm.jso.JSObject,java.lang.String)" class="member-name-link">getStringProperty</a><wbr>(org.teavm.jso.JSObject&nbsp;obj,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Reads a single string property from a JS object by key.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#joinLines(org.teavm.jso.JSObject)" class="member-name-link">joinLines</a><wbr>(org.teavm.jso.JSObject&nbsp;lines)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#loadOnce(java.lang.String,net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader.Ok,net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader.Err)" class="member-name-link">loadOnce</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;url,
  <a href="TeaVmScriptLoader.Ok.html" title="interface in net.sourceforge.plantuml.teavm.browser">TeaVmScriptLoader.Ok</a>&nbsp;onOk,
  <a href="TeaVmScriptLoader.Err.html" title="interface in net.sourceforge.plantuml.teavm.browser">TeaVmScriptLoader.Err</a>&nbsp;onErr)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Loads a JS file once.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#loadOnceSync(java.lang.String)" class="member-name-link">loadOnceSync</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;url)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#loadOnceSync(java.lang.String)" class="member-name-link">loadOnceSync</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;url)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Loads a script synchronously.</div>
 </div>
 </div>
@@ -172,10 +190,66 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getRaw(java.lang.String,java.lang.String)">
-<h3>getRaw</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.teavm.jso.JSObject</span>&nbsp;<span class="element-name">getRaw</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;namespace,
+<section class="detail" id="getRaw_PLANTUML_STDLIB(java.lang.String,java.lang.String)">
+<h3>getRaw_PLANTUML_STDLIB</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.teavm.jso.JSObject</span>&nbsp;<span class="element-name">getRaw_PLANTUML_STDLIB</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;namespace,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</span></div>
+<div class="block">Retrieves the raw lines array for a .puml file from a loaded stdlib library.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>namespace</code> - the library name (e.g. "aws", "c4")</dd>
+<dd><code>path</code> - the relative path within the library (e.g. "compute/ec2")</dd>
+<dt>Returns:</dt>
+<dd>the JS array of lines, or null if not found</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRaw_PLANTUML_STDLIB_INFO(java.lang.String)">
+<h3>getRaw_PLANTUML_STDLIB_INFO</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.teavm.jso.JSObject</span>&nbsp;<span class="element-name">getRaw_PLANTUML_STDLIB_INFO</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;namespace)</span></div>
+<div class="block">Retrieves the JSON info object for a loaded stdlib library.
+ <p>
+ This reads from <code>window.PLANTUML_STDLIB_INFO[namespace]</code>, which is
+ populated by the generated JS files with metadata from each library's
+ README.md YAML header (name, version, etc.).</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>namespace</code> - the library name (e.g. "aws", "c4")</dd>
+<dt>Returns:</dt>
+<dd>the JS info object, or null if not found</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getObjectKeys(org.teavm.jso.JSObject)">
+<h3>getObjectKeys</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getObjectKeys</span><wbr><span class="parameters">(org.teavm.jso.JSObject&nbsp;obj)</span></div>
+<div class="block">Returns the keys of a JS object as a comma-separated string.
+ <p>
+ Useful for iterating over properties of a JSObject from Java side,
+ since TeaVM does not allow direct enumeration of JS object keys.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>obj</code> - a JS object</dd>
+<dt>Returns:</dt>
+<dd>comma-separated keys, or empty string if null/empty</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getStringProperty(org.teavm.jso.JSObject,java.lang.String)">
+<h3>getStringProperty</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getStringProperty</span><wbr><span class="parameters">(org.teavm.jso.JSObject&nbsp;obj,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
+<div class="block">Reads a single string property from a JS object by key.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>obj</code> - a JS object</dd>
+<dd><code>key</code> - the property name</dd>
+<dt>Returns:</dt>
+<dd>the property value as a string, or null</dd>
+</dl>
 </section>
 </li>
 <li>

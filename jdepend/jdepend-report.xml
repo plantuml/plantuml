@@ -5288,14 +5288,14 @@
 
         <Package name="net.sourceforge.plantuml.command">
             <Stats>
-                <TotalClasses>51</TotalClasses>
+                <TotalClasses>50</TotalClasses>
                 <ConcreteClasses>44</ConcreteClasses>
-                <AbstractClasses>7</AbstractClasses>
+                <AbstractClasses>6</AbstractClasses>
                 <Ca>57</Ca>
-                <Ce>35</Ce>
-                <A>0.14</A>
-                <I>0.38</I>
-                <D>0.48</D>
+                <Ce>34</Ce>
+                <A>0.12</A>
+                <I>0.37</I>
+                <D>0.51</D>
                 <V>1</V>
             </Stats>
 
@@ -5314,9 +5314,6 @@
                 </Class>
                 <Class sourceFile="PSystemBasicFactory.java">
                     net.sourceforge.plantuml.command.PSystemBasicFactory
-                </Class>
-                <Class sourceFile="PSystemCommandFactory.java">
-                    net.sourceforge.plantuml.command.PSystemCommandFactory
                 </Class>
                 <Class sourceFile="PSystemSingleLineFactory.java">
                     net.sourceforge.plantuml.command.PSystemSingleLineFactory
@@ -5488,7 +5485,6 @@
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.svg.parser</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
-                <Package>net.sourceforge.plantuml.teavm.browser</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
                 <Package>net.sourceforge.plantuml.utils</Package>
@@ -16749,11 +16745,11 @@
                 <TotalClasses>3</TotalClasses>
                 <ConcreteClasses>0</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>3</Ca>
+                <Ca>2</Ca>
                 <Ce>2</Ce>
                 <A>1</A>
-                <I>0.4</I>
-                <D>0.4</D>
+                <I>0.5</I>
+                <D>0.5</D>
                 <V>1</V>
             </Stats>
 
@@ -16778,7 +16774,6 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.tim</Package>
             </UsedBy>

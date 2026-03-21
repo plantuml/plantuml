@@ -46,10 +46,53 @@ public final class TeaVmScriptLoader {
 			&quot;document.head.appendChild(s);&quot;)
 	public static native void loadOnce(String url, Ok onOk, Err onErr);
 
+	/**
+	 * Retrieves the raw lines array for a .puml file from a loaded stdlib library.
+	 *
+	 * @param namespace the library name (e.g. &quot;aws&quot;, &quot;c4&quot;)
+	 * @param path      the relative path within the library (e.g. &quot;compute/ec2&quot;)
+	 * @return the JS array of lines, or null if not found
+	 */
 	@JSBody(params = { &quot;namespace&quot;,
 			&quot;path&quot; }, script = &quot;var ns = window.PLANTUML_STDLIB &amp;&amp; window.PLANTUML_STDLIB[namespace];&quot;
 					+ &quot;return (ns &amp;&amp; ns[path]) || null;&quot;)
-	public static native JSObject getRaw(String namespace, String path);
+	public static native JSObject getRaw_PLANTUML_STDLIB(String namespace, String path);
+
+	/**
+	 * Retrieves the JSON info object for a loaded stdlib library.
+	 * &lt;p&gt;
+	 * This reads from {@code window.PLANTUML_STDLIB_INFO[namespace]}, which is
+	 * populated by the generated JS files with metadata from each library's
+	 * README.md YAML header (name, version, etc.).
+	 *
+	 * @param namespace the library name (e.g. &quot;aws&quot;, &quot;c4&quot;)
+	 * @return the JS info object, or null if not found
+	 */
+	// Mirrors getRaw_PLANTUML_STDLIB but for the INFO metadata map
+	@JSBody(params = &quot;namespace&quot;, script = &quot;return (window.PLANTUML_STDLIB_INFO &amp;&amp; window.PLANTUML_STDLIB_INFO[namespace]) || null;&quot;)
+	public static native JSObject getRaw_PLANTUML_STDLIB_INFO(String namespace);
+
+	/**
+	 * Returns the keys of a JS object as a comma-separated string.
+	 * &lt;p&gt;
+	 * Useful for iterating over properties of a JSObject from Java side,
+	 * since TeaVM does not allow direct enumeration of JS object keys.
+	 *
+	 * @param obj a JS object
+	 * @return comma-separated keys, or empty string if null/empty
+	 */
+	@JSBody(params = &quot;obj&quot;, script = &quot;return obj ? Object.keys(obj).join(',') : '';&quot;)
+	public static native String getObjectKeys(JSObject obj);
+
+	/**
+	 * Reads a single string property from a JS object by key.
+	 *
+	 * @param obj a JS object
+	 * @param key the property name
+	 * @return the property value as a string, or null
+	 */
+	@JSBody(params = { &quot;obj&quot;, &quot;key&quot; }, script = &quot;return (obj &amp;&amp; obj[key] != null) ? String(obj[key]) : null;&quot;)
+	public static native String getStringProperty(JSObject obj, String key);
 
 	@JSBody(params = &quot;lines&quot;, script = &quot;return lines.join('\\n');&quot;)
 	public static native String joinLines(JSObject lines);
@@ -64,41 +107,41 @@ public final class TeaVmScriptLoader {
 	 */
 	public static void loadOnceSync(String url) {
 		// Fast path: already loaded
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (isLoaded(url))</span>
-<span class="nc" id="L68">			return;</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (isLoaded(url))</span>
+<span class="nc" id="L111">			return;</span>
 
-<span class="nc" id="L70">		synchronized (LOCK) {</span>
-<span class="nc" id="L71">			loadComplete = false;</span>
-<span class="nc" id="L72">			loadSuccess = false;</span>
-<span class="nc" id="L73">			loadError = null;</span>
+<span class="nc" id="L113">		synchronized (LOCK) {</span>
+<span class="nc" id="L114">			loadComplete = false;</span>
+<span class="nc" id="L115">			loadSuccess = false;</span>
+<span class="nc" id="L116">			loadError = null;</span>
 
-<span class="nc" id="L75">			loadOnce(url, () -&gt; {</span>
-<span class="nc" id="L76">				synchronized (LOCK) {</span>
-<span class="nc" id="L77">					loadSuccess = true;</span>
-<span class="nc" id="L78">					loadComplete = true;</span>
-<span class="nc" id="L79">					LOCK.notify();</span>
-<span class="nc" id="L80">				}</span>
-<span class="nc" id="L81">			}, (msg) -&gt; {</span>
-<span class="nc" id="L82">				synchronized (LOCK) {</span>
-<span class="nc" id="L83">					loadSuccess = false;</span>
-<span class="nc" id="L84">					loadError = msg;</span>
-<span class="nc" id="L85">					loadComplete = true;</span>
-<span class="nc" id="L86">					LOCK.notify();</span>
-<span class="nc" id="L87">				}</span>
-<span class="nc" id="L88">			});</span>
+<span class="nc" id="L118">			loadOnce(url, () -&gt; {</span>
+<span class="nc" id="L119">				synchronized (LOCK) {</span>
+<span class="nc" id="L120">					loadSuccess = true;</span>
+<span class="nc" id="L121">					loadComplete = true;</span>
+<span class="nc" id="L122">					LOCK.notify();</span>
+<span class="nc" id="L123">				}</span>
+<span class="nc" id="L124">			}, (msg) -&gt; {</span>
+<span class="nc" id="L125">				synchronized (LOCK) {</span>
+<span class="nc" id="L126">					loadSuccess = false;</span>
+<span class="nc" id="L127">					loadError = msg;</span>
+<span class="nc" id="L128">					loadComplete = true;</span>
+<span class="nc" id="L129">					LOCK.notify();</span>
+<span class="nc" id="L130">				}</span>
+<span class="nc" id="L131">			});</span>
 
-<span class="nc bnc" id="L90" title="All 2 branches missed.">			while (!loadComplete) {</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">			while (!loadComplete) {</span>
 				try {
-<span class="nc" id="L92">					LOCK.wait();</span>
-<span class="nc" id="L93">				} catch (InterruptedException e) {</span>
+<span class="nc" id="L135">					LOCK.wait();</span>
+<span class="nc" id="L136">				} catch (InterruptedException e) {</span>
 					// retry
-<span class="nc" id="L95">				}</span>
+<span class="nc" id="L138">				}</span>
 			}
 
-<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (!loadSuccess)</span>
-<span class="nc" id="L99">				throw new RuntimeException(loadError);</span>
-<span class="nc" id="L100">		}</span>
-<span class="nc" id="L101">	}</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">			if (!loadSuccess)</span>
+<span class="nc" id="L142">				throw new RuntimeException(loadError);</span>
+<span class="nc" id="L143">		}</span>
+<span class="nc" id="L144">	}</span>
 
 	private TeaVmScriptLoader() {
 	}

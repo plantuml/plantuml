@@ -959,8 +959,8 @@ Total Classes: 5
 "net.sourceforge.plantuml.code.deflate" --> "java.lang"
 "net.sourceforge.plantuml.code.deflate" --> "java.util"
 
-class "net.sourceforge.plantuml.command" %lighten("red", 52) {
-Total Classes: 51
+class "net.sourceforge.plantuml.command" %lighten("red", 49) {
+Total Classes: 50
 }
 "net.sourceforge.plantuml.command" --> "com.plantuml.ubrex"
 "net.sourceforge.plantuml.command" --> "com.plantuml.ubrex.builder"
@@ -991,7 +991,6 @@ Total Classes: 51
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.svg.parser"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.teavm"
-"net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.teavm.browser"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.utils"
@@ -3192,7 +3191,7 @@ Total Classes: 16
 "net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.teavm" --> "org.teavm.jso"
 
-class "net.sourceforge.plantuml.teavm.browser" %lighten("red", 60) {
+class "net.sourceforge.plantuml.teavm.browser" %lighten("red", 50) {
 Total Classes: 3
 }
 "net.sourceforge.plantuml.teavm.browser" --> "java.lang"

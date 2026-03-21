@@ -3374,16 +3374,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 51
+    Total Classes: 50
     Concrete Classes: 44
-    Abstract Classes: 7
+    Abstract Classes: 6
 
     Ca: 57
-    Ce: 35
+    Ce: 34
 
-    A: 0.14
-    I: 0.38
-    D: 0.48
+    A: 0.12
+    I: 0.37
+    D: 0.51
 
 Abstract Classes:
     net.sourceforge.plantuml.command.Command
@@ -3391,7 +3391,6 @@ Abstract Classes:
     net.sourceforge.plantuml.command.CommandMultilines3
     net.sourceforge.plantuml.command.PSystemAbstractFactory
     net.sourceforge.plantuml.command.PSystemBasicFactory
-    net.sourceforge.plantuml.command.PSystemCommandFactory
     net.sourceforge.plantuml.command.PSystemSingleLineFactory
 
 Concrete Classes:
@@ -3470,7 +3469,6 @@ Depends Upon:
     net.sourceforge.plantuml.style
     net.sourceforge.plantuml.svg.parser
     net.sourceforge.plantuml.teavm
-    net.sourceforge.plantuml.teavm.browser
     net.sourceforge.plantuml.text
     net.sourceforge.plantuml.url
     net.sourceforge.plantuml.utils
@@ -11383,12 +11381,12 @@ Stats:
     Concrete Classes: 0
     Abstract Classes: 3
 
-    Ca: 3
+    Ca: 2
     Ce: 2
 
     A: 1
-    I: 0.4
-    D: 0.4
+    I: 0.5
+    D: 0.5
 
 Abstract Classes:
     net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser$RenderCallback
@@ -11402,7 +11400,6 @@ Depends Upon:
     org.teavm.jso
 
 Used By:
-    net.sourceforge.plantuml.command
     net.sourceforge.plantuml.svek
     net.sourceforge.plantuml.tim
 
@@ -14728,7 +14725,7 @@ net.sourceforge.plantuml.classdiagram.command,12,0,5,17,0,0.77,0.23,1
 net.sourceforge.plantuml.cli,12,3,7,5,0.25,0.42,0.33,1
 net.sourceforge.plantuml.code,25,4,3,10,0.16,0.77,0.07,1
 net.sourceforge.plantuml.code.deflate,5,1,1,3,0.2,0.75,0.05,1
-net.sourceforge.plantuml.command,51,7,57,35,0.14,0.38,0.48,1
+net.sourceforge.plantuml.command,50,6,57,34,0.12,0.37,0.51,1
 net.sourceforge.plantuml.command.note,11,1,4,17,0.09,0.81,0.1,1
 net.sourceforge.plantuml.command.note.sequence,8,0,1,9,0,0.9,0.1,1
 net.sourceforge.plantuml.core,12,2,79,38,0.17,0.32,0.51,1
@@ -14864,7 +14861,7 @@ net.sourceforge.plantuml.svg.parser,12,1,1,15,0.08,0.94,0.02,1
 net.sourceforge.plantuml.swing,36,0,0,15,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
 net.sourceforge.plantuml.teavm,16,1,43,12,0.06,0.22,0.72,1
-net.sourceforge.plantuml.teavm.browser,3,3,3,2,1,0.4,0.4,1
+net.sourceforge.plantuml.teavm.browser,3,3,2,2,1,0.5,0.5,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.text,5,1,38,4,0.2,0.1,0.7,1
 net.sourceforge.plantuml.theme,1,0,1,6,0,0.86,0.14,1
