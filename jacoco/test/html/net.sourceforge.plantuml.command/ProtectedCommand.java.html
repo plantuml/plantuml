@@ -81,6 +81,12 @@ public class ProtectedCommand&lt;S extends Diagram&gt; implements Command&lt;S&g
 	public boolean isEligibleFor(ParserPass pass) {
 <span class="nc" id="L82">		return cmd.isEligibleFor(pass);</span>
 	}
+	
+	@Override
+	public final boolean isCommandForbidden(BlocLines lines) {
+<span class="nc" id="L87">		return cmd.isCommandForbidden(lines);</span>
+	}
+
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -56,7 +56,7 @@ public abstract class CommandMultilines&lt;S extends Diagram&gt; implements Comm
 <span class="nc" id="L56">	}</span>
 
 	final public CommandControl isValid(BlocLines lines) {
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (isCommandForbidden())</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (isCommandForbidden(lines))</span>
 <span class="nc" id="L60">			return CommandControl.NOT_OK;</span>
 
 <span class="fc" id="L62">		Matcher2 m1 = starting.matcher(lines.getFirst().getTrimmed().getString());</span>
@@ -73,25 +73,21 @@ public abstract class CommandMultilines&lt;S extends Diagram&gt; implements Comm
 <span class="fc" id="L73">		return finalVerification();</span>
 	}
 
-	protected boolean isCommandForbidden() {
-<span class="fc" id="L77">		return false;</span>
-	}
-
 	protected CommandControl finalVerification() {
-<span class="fc" id="L81">		return CommandControl.OK;</span>
+<span class="fc" id="L77">		return CommandControl.OK;</span>
 	}
 
 	protected final Pattern2 getStartingPattern() {
-<span class="nc" id="L85">		return starting;</span>
+<span class="nc" id="L81">		return starting;</span>
 	}
 
 	protected final Pattern2 getEndingPattern() {
-<span class="nc" id="L89">		return ending;</span>
+<span class="nc" id="L85">		return ending;</span>
 	}
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
 	}
 
 }

@@ -63,7 +63,7 @@ public class CommandDecoratorMultine&lt;D extends Diagram&gt; implements Command
 	}
 
 	public CommandControl isValid(BlocLines lines) {
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (cmd.isCommandForbidden())</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (cmd.isCommandForbidden(lines))</span>
 <span class="nc" id="L67">			return CommandControl.NOT_OK;</span>
 
 <span class="fc" id="L69">		lines = lines.toSingleLineWithHiddenNewLine();</span>
@@ -88,6 +88,12 @@ public class CommandDecoratorMultine&lt;D extends Diagram&gt; implements Command
 	public boolean isEligibleFor(ParserPass pass) {
 <span class="nc" id="L89">		return cmd.isEligibleFor(pass);</span>
 	}
+	
+	@Override
+	public final boolean isCommandForbidden(BlocLines lines) {
+<span class="nc" id="L94">		return cmd.isCommandForbidden(lines);</span>
+	}
+
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

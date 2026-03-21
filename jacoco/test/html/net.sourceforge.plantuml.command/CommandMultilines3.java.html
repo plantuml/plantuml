@@ -63,7 +63,7 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 	final public CommandControl isValid(BlocLines lines) {
 <span class="fc" id="L65">		lines = lines.cleanList(strategy);</span>
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (isCommandForbidden())</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (isCommandForbidden(lines))</span>
 <span class="nc" id="L67">			return CommandControl.NOT_OK;</span>
 
 <span class="fc" id="L69">		final StringLocated first = lines.getFirst();</span>
@@ -100,25 +100,21 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 	protected abstract CommandExecutionResult executeNow(S system, BlocLines lines) throws NoSuchColorException;
 
-	protected boolean isCommandForbidden() {
-<span class="fc" id="L104">		return false;</span>
-	}
-
 	protected CommandControl finalVerification() {
-<span class="fc" id="L108">		return CommandControl.OK;</span>
+<span class="fc" id="L104">		return CommandControl.OK;</span>
 	}
 
 	protected final IRegex getStartingPattern() {
-<span class="fc" id="L112">		return starting;</span>
+<span class="fc" id="L108">		return starting;</span>
 	}
 
 	protected final IRegex getEndingPattern() {
-<span class="fc" id="L116">		return patternEnd;</span>
+<span class="fc" id="L112">		return patternEnd;</span>
 	}
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
 	}
 
 }

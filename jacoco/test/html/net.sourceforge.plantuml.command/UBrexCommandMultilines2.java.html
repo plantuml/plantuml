@@ -75,7 +75,7 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 	final public CommandControl isValid(BlocLines lines) {
 <span class="nc" id="L77">		lines = lines.cleanList(strategy);</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (isCommandForbidden())</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (isCommandForbidden(lines))</span>
 <span class="nc" id="L79">			return CommandControl.NOT_OK;</span>
 
 <span class="nc bnc" id="L81" title="All 2 branches missed.">		if (syntaxWithFinalBracket()) {</span>
@@ -120,25 +120,21 @@ import net.sourceforge.plantuml.utils.BlocLines;
 	protected abstract CommandExecutionResult executeNow(S system, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException;
 
-	protected boolean isCommandForbidden() {
-<span class="nc" id="L124">		return false;</span>
-	}
-
 	protected CommandControl finalVerification(BlocLines lines) {
-<span class="nc" id="L128">		return CommandControl.OK;</span>
+<span class="nc" id="L124">		return CommandControl.OK;</span>
 	}
 
 	protected final UnicodeBracketedExpression getStartingPattern() {
-<span class="nc" id="L132">		return starting;</span>
+<span class="nc" id="L128">		return starting;</span>
 	}
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		return pass == ParserPass.ONE;</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		return pass == ParserPass.ONE;</span>
 	}
 
 	public UnicodeBracketedExpression getEndPattern() {
-<span class="nc" id="L141">		return end.get();</span>
+<span class="nc" id="L137">		return end.get();</span>
 	}
 
 }
