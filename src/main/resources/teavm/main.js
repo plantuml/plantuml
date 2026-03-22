@@ -8,7 +8,7 @@ function renderer() {
 	const loading = document.getElementById("loading");
 
 	try {
-		main();
+		plantumlLoad();
 
 		editor.addEventListener("input", render);
 		render();
@@ -21,7 +21,7 @@ function renderer() {
 
 	function render() {
 		const lines = editor.value.split(/\r\n|\r|\n/);
-		plantumlRender(lines, "out");
+		window.plantuml.render(lines, "out");
 	}
 }
 

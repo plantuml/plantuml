@@ -82,6 +82,7 @@ repositories {
 teavm {
 	js {
 		mainClass.set("net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser")
+		entryPointName.set("plantumlLoad")
 		obfuscated.set(true)
 		optimization.set(org.teavm.gradle.api.OptimizationLevel.BALANCED)
 		// obfuscated.set(false)
