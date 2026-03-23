@@ -5288,8 +5288,8 @@
 
         <Package name="net.sourceforge.plantuml.command">
             <Stats>
-                <TotalClasses>50</TotalClasses>
-                <ConcreteClasses>44</ConcreteClasses>
+                <TotalClasses>52</TotalClasses>
+                <ConcreteClasses>46</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
                 <Ca>57</Ca>
                 <Ce>34</Ce>
@@ -5341,6 +5341,12 @@
                 </Class>
                 <Class sourceFile="CommandFactorySprite.java">
                     net.sourceforge.plantuml.command.CommandFactorySprite$2
+                </Class>
+                <Class sourceFile="CommandFactorySpriteBase64.java">
+                    net.sourceforge.plantuml.command.CommandFactorySpriteBase64$1
+                </Class>
+                <Class sourceFile="CommandFactorySpriteBase64.java">
+                    net.sourceforge.plantuml.command.CommandFactorySpriteBase64$2
                 </Class>
                 <Class sourceFile="CommandFootboxIgnored.java">
                     net.sourceforge.plantuml.command.CommandFootboxIgnored

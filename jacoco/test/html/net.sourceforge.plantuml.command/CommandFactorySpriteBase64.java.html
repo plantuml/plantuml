@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandFactorySpriteBase64.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.command</a> &gt; <span class="el_source">CommandFactorySpriteBase64.java</span></div><h1>CommandFactorySpriteBase64.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.command;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import net.sourceforge.plantuml.Lazy;
+import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.WithSprite;
+import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
+import net.sourceforge.plantuml.klimt.sprite.Sprite;
+import net.sourceforge.plantuml.klimt.sprite.SpriteImage;
+import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.security.SImageIO;
+import net.sourceforge.plantuml.utils.Base64Coder;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+public final class CommandFactorySpriteBase64 implements SingleMultiFactoryCommand&lt;TitledDiagram&gt; {
+
+<span class="fc" id="L60">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L61">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?sprite|\\}$&quot;));</span>
+
+<span class="fc" id="L63">	public static final CommandFactorySpriteBase64 ME = new CommandFactorySpriteBase64();</span>
+
+<span class="fc" id="L65">	private CommandFactorySpriteBase64() {</span>
+
+<span class="fc" id="L67">	}</span>
+
+<span class="fc" id="L69">	private final RegexConcat multiline = RegexConcat.build(CommandFactorySpriteBase64.class.getName() + &quot;multi&quot;,</span>
+<span class="fc" id="L70">			RegexLeaf.start(), //</span>
+			new RegexLeaf(&quot;sprite&quot;), //
+<span class="fc" id="L72">			RegexLeaf.spaceOneOrMore(), //</span>
+			new RegexLeaf(&quot;\\$?&quot;), //
+			new RegexLeaf(1, &quot;NAME&quot;, &quot;([-.%pLN_]+)&quot;), //
+<span class="fc" id="L75">			RegexLeaf.spaceZeroOrMore(), //</span>
+			new RegexLeaf(&quot;\\[base64\\]&quot;), //
+<span class="fc" id="L77">			RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L78">			new RegexLeaf(&quot;\\{&quot;), RegexLeaf.end());</span>
+
+<span class="fc" id="L80">	private final RegexConcat singleLine = RegexConcat.build(CommandFactorySpriteBase64.class.getName() + &quot;single&quot;,</span>
+<span class="fc" id="L81">			RegexLeaf.start(), //</span>
+			new RegexLeaf(&quot;sprite&quot;), //
+<span class="fc" id="L83">			RegexLeaf.spaceOneOrMore(), //</span>
+			new RegexLeaf(&quot;\\$?&quot;), //
+			new RegexLeaf(1, &quot;NAME&quot;, &quot;([-.%pLN_]+)&quot;), //
+<span class="fc" id="L86">			RegexLeaf.spaceZeroOrMore(), //</span>
+			new RegexLeaf(&quot;\\[base64\\]&quot;), //
+<span class="fc" id="L88">			RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L89">			new RegexLeaf(1, &quot;DATA&quot;, &quot;([A-Za-z0-9+/=]+)&quot;), RegexLeaf.end());</span>
+
+<span class="fc" id="L91">	private final Command&lt;TitledDiagram&gt; commandMultiline = new CommandMultilines2&lt;TitledDiagram&gt;(multiline,</span>
+<span class="fc" id="L92">			MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END) {</span>
+
+		@Override
+		protected CommandExecutionResult executeNow(final TitledDiagram system, BlocLines lines, ParserPass currentPass) {
+<span class="nc" id="L96">			lines = lines.trim().removeEmptyLines();</span>
+<span class="nc" id="L97">			final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+
+<span class="nc" id="L99">			lines = lines.subExtract(1, 1);</span>
+<span class="nc" id="L100">			lines = lines.removeEmptyColumns();</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			if (lines.size() == 0)</span>
+<span class="nc" id="L102">				return CommandExecutionResult.error(&quot;No sprite defined.&quot;);</span>
+
+<span class="nc" id="L104">			return executeInternal(system, line0, lines.getLinesAsStringForSprite());</span>
+		}
+
+	};
+
+	public Command&lt;TitledDiagram&gt; createSingleLine() {
+<span class="fc" id="L110">		return new SingleLineCommand2&lt;TitledDiagram&gt;(singleLine) {</span>
+
+			@Override
+			protected CommandExecutionResult executeArg(final TitledDiagram system, LineLocation location, RegexResult arg,
+					ParserPass currentPass) {
+<span class="nc" id="L115">				return executeInternal(system, arg, Arrays.asList((String) arg.get(&quot;DATA&quot;, 0)));</span>
+			}
+
+		};
+	}
+
+	public Command&lt;TitledDiagram&gt; createMultiLine(boolean withBracketUnused) {
+<span class="fc" id="L122">		return commandMultiline;</span>
+	}
+
+	private CommandExecutionResult executeInternal(WithSprite system, RegexResult line0, final List&lt;String&gt; strings) {
+<span class="nc" id="L126">		final String base64 = concat(strings);</span>
+<span class="nc" id="L127">		final byte[] bytes = Base64Coder.decode(base64);</span>
+		try {
+<span class="nc" id="L129">			final Sprite sprite = new SpriteImage(SImageIO.read(bytes));</span>
+<span class="nc" id="L130">			system.addSprite(line0.get(&quot;NAME&quot;, 0), sprite);</span>
+<span class="nc" id="L131">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L132">		} catch (IOException e) {</span>
+<span class="nc" id="L133">			return CommandExecutionResult.error(&quot;Cannot decode Base64 PNG sprite.&quot;);</span>
+		}
+	}
+
+	private String concat(final List&lt;String&gt; strings) {
+<span class="nc" id="L138">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		for (String s : strings)</span>
+<span class="nc" id="L140">			sb.append(StringUtils.trin(s));</span>
+
+<span class="nc" id="L142">		return sb.toString();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

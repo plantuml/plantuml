@@ -47,50 +47,48 @@ public class SpriteUtils {
 	private SpriteUtils() {
 	}
 
-	// ::comment when __TEAVM__
 	public static String encodeColor(PortableImage img, String name) {
-<span class="nc" id="L52">		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() * 2);</span>
-<span class="nc" id="L53">		sb.append(&quot;sprite $&quot; + name + &quot; [&quot; + img.getWidth() + &quot;x&quot; + img.getHeight() + &quot;/color] {\n&quot;);</span>
-<span class="nc" id="L54">		final List&lt;String&gt; result = SpriteColorBuilder4096.encodeImage(img);</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">		for (String s : result) {</span>
-<span class="nc" id="L56">			sb.append(s);</span>
-<span class="nc" id="L57">			sb.append(BackSlash.NEWLINE);</span>
-<span class="nc" id="L58">		}</span>
-<span class="nc" id="L59">		sb.append(&quot;}\n&quot;);</span>
-<span class="nc" id="L60">		return sb.toString();</span>
+<span class="nc" id="L51">		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() * 2);</span>
+<span class="nc" id="L52">		sb.append(&quot;sprite $&quot; + name + &quot; [&quot; + img.getWidth() + &quot;x&quot; + img.getHeight() + &quot;/color] {\n&quot;);</span>
+<span class="nc" id="L53">		final List&lt;String&gt; result = SpriteColorBuilder4096.encodeImage(img);</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		for (String s : result) {</span>
+<span class="nc" id="L55">			sb.append(s);</span>
+<span class="nc" id="L56">			sb.append(BackSlash.NEWLINE);</span>
+<span class="nc" id="L57">		}</span>
+<span class="nc" id="L58">		sb.append(&quot;}\n&quot;);</span>
+<span class="nc" id="L59">		return sb.toString();</span>
 	}
 
 	public static String encode(PortableImage img, String name, SpriteGrayLevel level) {
-<span class="fc" id="L64">		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() / 2);</span>
-<span class="fc" id="L65">		sb.append(</span>
-<span class="fc" id="L66">				&quot;sprite $&quot; + name + &quot; [&quot; + img.getWidth() + &quot;x&quot; + img.getHeight() + &quot;/&quot; + level.getNbColor() + &quot;] {\n&quot;);</span>
-<span class="fc" id="L67">		final List&lt;String&gt; result = level.encode(img);</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">		for (String s : result) {</span>
-<span class="fc" id="L69">			sb.append(s);</span>
-<span class="fc" id="L70">			sb.append(BackSlash.NEWLINE);</span>
-<span class="fc" id="L71">		}</span>
-<span class="fc" id="L72">		sb.append(&quot;}\n&quot;);</span>
-<span class="fc" id="L73">		return sb.toString();</span>
+<span class="fc" id="L63">		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() / 2);</span>
+<span class="fc" id="L64">		sb.append(</span>
+<span class="fc" id="L65">				&quot;sprite $&quot; + name + &quot; [&quot; + img.getWidth() + &quot;x&quot; + img.getHeight() + &quot;/&quot; + level.getNbColor() + &quot;] {\n&quot;);</span>
+<span class="fc" id="L66">		final List&lt;String&gt; result = level.encode(img);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		for (String s : result) {</span>
+<span class="fc" id="L68">			sb.append(s);</span>
+<span class="fc" id="L69">			sb.append(BackSlash.NEWLINE);</span>
+<span class="fc" id="L70">		}</span>
+<span class="fc" id="L71">		sb.append(&quot;}\n&quot;);</span>
+<span class="fc" id="L72">		return sb.toString();</span>
 	}
 
 	public static String encodeCompressed(PortableImage img, String name, SpriteGrayLevel level) {
-<span class="nc" id="L77">		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() / 2);</span>
-<span class="nc" id="L78">		sb.append(&quot;sprite $&quot; + name + &quot; [&quot; + img.getWidth() + &quot;x&quot; + img.getHeight() + &quot;/&quot; + level.getNbColor() + &quot;z] &quot;);</span>
-<span class="nc" id="L79">		final List&lt;String&gt; list = level.encodeZ(img);</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (list.size() == 1) {</span>
-<span class="nc" id="L81">			sb.append(list.get(0));</span>
-<span class="nc" id="L82">			sb.append(BackSlash.NEWLINE);</span>
+<span class="nc" id="L76">		final StringBuilder sb = new StringBuilder(img.getWidth() * img.getHeight() / 2);</span>
+<span class="nc" id="L77">		sb.append(&quot;sprite $&quot; + name + &quot; [&quot; + img.getWidth() + &quot;x&quot; + img.getHeight() + &quot;/&quot; + level.getNbColor() + &quot;z] &quot;);</span>
+<span class="nc" id="L78">		final List&lt;String&gt; list = level.encodeZ(img);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (list.size() == 1) {</span>
+<span class="nc" id="L80">			sb.append(list.get(0));</span>
+<span class="nc" id="L81">			sb.append(BackSlash.NEWLINE);</span>
 		} else {
-<span class="nc" id="L84">			sb.append(&quot;{\n&quot;);</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">			for (String s : list) {</span>
-<span class="nc" id="L86">				sb.append(s);</span>
-<span class="nc" id="L87">				sb.append(BackSlash.NEWLINE);</span>
-<span class="nc" id="L88">			}</span>
-<span class="nc" id="L89">			sb.append(&quot;}\n&quot;);</span>
+<span class="nc" id="L83">			sb.append(&quot;{\n&quot;);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			for (String s : list) {</span>
+<span class="nc" id="L85">				sb.append(s);</span>
+<span class="nc" id="L86">				sb.append(BackSlash.NEWLINE);</span>
+<span class="nc" id="L87">			}</span>
+<span class="nc" id="L88">			sb.append(&quot;}\n&quot;);</span>
 		}
-<span class="nc" id="L91">		return sb.toString();</span>
+<span class="nc" id="L90">		return sb.toString();</span>
 	}
-	// ::done
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

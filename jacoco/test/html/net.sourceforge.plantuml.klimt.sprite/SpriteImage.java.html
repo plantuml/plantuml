@@ -55,68 +55,77 @@ import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.svg.parser.ISvgSpriteParser;
 import net.sourceforge.plantuml.svg.parser.SvgSpriteParserFactory;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.utils.Log;
 
 public class SpriteImage implements Sprite {
 
 	private final UImage img;
 
-<span class="nc" id="L64">	public SpriteImage(PortableImage img) {</span>
-<span class="nc" id="L65">		this.img = new UImage(new PixelImage(Objects.requireNonNull(img), AffineTransformType.TYPE_BILINEAR));</span>
-<span class="nc" id="L66">	}</span>
+<span class="nc" id="L65">	public SpriteImage(PortableImage img) {</span>
+<span class="nc" id="L66">		this.img = new UImage(new PixelImage(Objects.requireNonNull(img), AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L67">	}</span>
 
 	@Override
 	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale,
 			final HColor backColor) {
-<span class="nc" id="L71">		return new TextBlock() {</span>
+<span class="nc" id="L72">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L74">				final ColorMapper colorMapper = ug.getColorMapper();</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">				final HColor usedColor = forcedColor == null ? fontColor : forcedColor;</span>
+<span class="nc" id="L75">				final ColorMapper colorMapper = ug.getColorMapper();</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">				final HColor usedColor = forcedColor == null ? fontColor : forcedColor;</span>
 
-<span class="nc bnc" id="L77" title="All 2 branches missed.">				if (colorMapper == ColorMapper.MONOCHROME)</span>
-<span class="nc" id="L78">					ug.draw(img.monochrome().scale(scale));</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">				else if (usedColor == null)</span>
-<span class="nc" id="L80">					ug.draw(img.scale(scale));</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">				if (TeaVM.isTeaVM()) {</span>
+					// Under TeaVM, pixel data is not available for PNG-backed images,
+					// so muteColor/monochrome would produce a blank image.
+					// We draw the original image directly, like AtomImg does.
+<span class="nc" id="L82">					ug.draw(img.scale(scale));</span>
+<span class="nc" id="L83">					return;</span>
+				}
+
+<span class="nc bnc" id="L86" title="All 2 branches missed.">				if (colorMapper == ColorMapper.MONOCHROME)</span>
+<span class="nc" id="L87">					ug.draw(img.monochrome().scale(scale));</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">				else if (usedColor == null)</span>
+<span class="nc" id="L89">					ug.draw(img.scale(scale));</span>
 				else
-<span class="nc" id="L82">					ug.draw(img.muteColor(usedColor.toColor(colorMapper)).scale(scale));</span>
-<span class="nc" id="L83">			}</span>
+<span class="nc" id="L91">					ug.draw(img.muteColor(usedColor.toColor(colorMapper)).scale(scale));</span>
+<span class="nc" id="L92">			}</span>
 
 			@Fast
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L87">				return new XDimension2D(img.getWidth() * scale, img.getHeight() * scale);</span>
+<span class="nc" id="L96">				return new XDimension2D(img.getWidth() * scale, img.getHeight() * scale);</span>
 			}
 		};
 	}
 
 	public static Sprite fromInternal(String name) {
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (TeaVM.isTeaVM())</span>
-<span class="nc" id="L94">			return null;</span>
-<span class="nc bnc" id="L95" title="All 4 branches missed.">		if (name.endsWith(&quot;.png&quot;) || name.endsWith(&quot;.svg&quot;))</span>
-<span class="nc" id="L96">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L103">			return null;</span>
+<span class="nc bnc" id="L104" title="All 4 branches missed.">		if (name.endsWith(&quot;.png&quot;) || name.endsWith(&quot;.svg&quot;))</span>
+<span class="nc" id="L105">			throw new IllegalArgumentException();</span>
 
 		try {
-<span class="nc" id="L99">			InputStream is = getInternalSprite(name + &quot;.svg&quot;);</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (is != null) {</span>
-<span class="nc" id="L101">				final ISvgSpriteParser parser = SvgSpriteParserFactory.create(FileUtils.readAllBytes(is));</span>
-<span class="nc" id="L102">				return parser;</span>
+<span class="nc" id="L108">			InputStream is = getInternalSprite(name + &quot;.svg&quot;);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (is != null) {</span>
+<span class="nc" id="L110">				final ISvgSpriteParser parser = SvgSpriteParserFactory.create(FileUtils.readAllBytes(is));</span>
+<span class="nc" id="L111">				return parser;</span>
 			}
-<span class="nc" id="L104">			is = getInternalSprite(name + &quot;.png&quot;);</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (is != null)</span>
-<span class="nc" id="L106">				return new SpriteImage(SImageIO.read(is));</span>
-<span class="nc" id="L107">			return null;</span>
+<span class="nc" id="L113">			is = getInternalSprite(name + &quot;.png&quot;);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">			if (is != null)</span>
+<span class="nc" id="L115">				return new SpriteImage(SImageIO.read(is));</span>
+<span class="nc" id="L116">			return null;</span>
 
-<span class="nc" id="L109">		} catch (Throwable e) {</span>
-<span class="nc" id="L110">			Logme.error(e);</span>
-<span class="nc" id="L111">			return null;</span>
+<span class="nc" id="L118">		} catch (Throwable e) {</span>
+<span class="nc" id="L119">			Logme.error(e);</span>
+<span class="nc" id="L120">			return null;</span>
 		}
 	}
 
 	private static InputStream getInternalSprite(final String inner) {
-<span class="nc" id="L116">		final String path = &quot;/sprites/&quot; + inner;</span>
-<span class="nc" id="L117">		Log.info(() -&gt; &quot;Triying &quot; + path);</span>
-<span class="nc" id="L118">		final InputStream is = SpriteImage.class.getResourceAsStream(path);</span>
-<span class="nc" id="L119">		return is;</span>
+<span class="nc" id="L125">		final String path = &quot;/sprites/&quot; + inner;</span>
+<span class="nc" id="L126">		Log.info(() -&gt; &quot;Triying &quot; + path);</span>
+<span class="nc" id="L127">		final InputStream is = SpriteImage.class.getResourceAsStream(path);</span>
+<span class="nc" id="L128">		return is;</span>
 	}
 
 }

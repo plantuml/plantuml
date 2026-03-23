@@ -960,7 +960,7 @@ Total Classes: 5
 "net.sourceforge.plantuml.code.deflate" --> "java.util"
 
 class "net.sourceforge.plantuml.command" %lighten("red", 49) {
-Total Classes: 50
+Total Classes: 52
 }
 "net.sourceforge.plantuml.command" --> "com.plantuml.ubrex"
 "net.sourceforge.plantuml.command" --> "com.plantuml.ubrex.builder"
