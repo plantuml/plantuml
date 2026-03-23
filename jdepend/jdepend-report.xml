@@ -9648,10 +9648,10 @@
                 <ConcreteClasses>1</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>2</Ca>
-                <Ce>8</Ce>
+                <Ce>5</Ce>
                 <A>0</A>
-                <I>0.8</I>
-                <D>0.2</D>
+                <I>0.71</I>
+                <D>0.29</D>
                 <V>1</V>
             </Stats>
 
@@ -9665,14 +9665,11 @@
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>java.awt</Package>
-                <Package>java.awt.font</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.klimt.font</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -16620,7 +16617,7 @@
                 <TotalClasses>16</TotalClasses>
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>43</Ca>
+                <Ca>42</Ca>
                 <Ce>12</Ce>
                 <A>0.06</A>
                 <I>0.22</I>
@@ -16716,7 +16713,6 @@
                 <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.command</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.legacy</Package>
-                <Package>net.sourceforge.plantuml.klimt.drawing.debug</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.hand</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.svg</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>

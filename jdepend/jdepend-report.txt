@@ -6553,11 +6553,11 @@ Stats:
     Abstract Classes: 0
 
     Ca: 2
-    Ce: 8
+    Ce: 5
 
     A: 0
-    I: 0.8
-    D: 0.2
+    I: 0.71
+    D: 0.29
 
 Abstract Classes:
 
@@ -6565,14 +6565,11 @@ Concrete Classes:
     net.sourceforge.plantuml.klimt.drawing.debug.StringBounderDebug
 
 Depends Upon:
-    java.awt
-    java.awt.font
     java.lang
     java.util
     net.sourceforge.plantuml
     net.sourceforge.plantuml.klimt.font
     net.sourceforge.plantuml.klimt.geom
-    net.sourceforge.plantuml.teavm
 
 Used By:
     net.sourceforge.plantuml.core
@@ -11290,7 +11287,7 @@ Stats:
     Concrete Classes: 15
     Abstract Classes: 1
 
-    Ca: 43
+    Ca: 42
     Ce: 12
 
     A: 0.06
@@ -11350,7 +11347,6 @@ Used By:
     net.sourceforge.plantuml.klimt.creole.atom
     net.sourceforge.plantuml.klimt.creole.command
     net.sourceforge.plantuml.klimt.creole.legacy
-    net.sourceforge.plantuml.klimt.drawing.debug
     net.sourceforge.plantuml.klimt.drawing.hand
     net.sourceforge.plantuml.klimt.drawing.svg
     net.sourceforge.plantuml.klimt.geom
@@ -14636,10 +14632,10 @@ gen.lib.pack,1,0,1,5,0,0.83,0.17,1
 gen.lib.pathplan,3,0,1,4,0,0.8,0.2,1
 gen.plugin.dot_layout,2,0,0,1,0,1,0,1
 h,95,2,12,3,0.02,0.2,0.78,1
-java.awt,0,0,24,0,0,0,1,1
+java.awt,0,0,23,0,0,0,1,1
 java.awt.datatransfer,0,0,1,0,0,0,1,1
 java.awt.event,0,0,1,0,0,0,1,1
-java.awt.font,0,0,5,0,0,0,1,1
+java.awt.font,0,0,4,0,0,0,1,1
 java.awt.geom,0,0,9,0,0,0,1,1
 java.awt.image,0,0,13,0,0,0,1,1
 java.io,0,0,74,0,0,0,1,1
@@ -14772,7 +14768,7 @@ net.sourceforge.plantuml.klimt.creole.atom,14,2,3,17,0.14,0.85,0.01,1
 net.sourceforge.plantuml.klimt.creole.command,19,2,2,14,0.11,0.88,0.02,1
 net.sourceforge.plantuml.klimt.creole.legacy,16,2,7,27,0.12,0.79,0.08,1
 net.sourceforge.plantuml.klimt.drawing,14,5,78,14,0.36,0.15,0.49,1
-net.sourceforge.plantuml.klimt.drawing.debug,1,0,2,8,0,0.8,0.2,1
+net.sourceforge.plantuml.klimt.drawing.debug,1,0,2,5,0,0.71,0.29,1
 net.sourceforge.plantuml.klimt.drawing.eps,15,1,1,14,0.07,0.93,0,1
 net.sourceforge.plantuml.klimt.drawing.g2d,14,1,3,19,0.07,0.86,0.06,1
 net.sourceforge.plantuml.klimt.drawing.hand,8,0,1,8,0,0.89,0.11,1
@@ -14853,7 +14849,7 @@ net.sourceforge.plantuml.svek.image,37,2,12,23,0.05,0.66,0.29,1
 net.sourceforge.plantuml.svg.parser,12,1,1,15,0.08,0.94,0.02,1
 net.sourceforge.plantuml.swing,36,0,0,15,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
-net.sourceforge.plantuml.teavm,16,1,43,12,0.06,0.22,0.72,1
+net.sourceforge.plantuml.teavm,16,1,42,12,0.06,0.22,0.72,1
 net.sourceforge.plantuml.teavm.browser,5,5,2,2,1,0.5,0.5,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.text,5,1,38,4,0.2,0.1,0.7,1

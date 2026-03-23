@@ -1894,17 +1894,14 @@ Total Classes: 14
 "net.sourceforge.plantuml.klimt.drawing" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.klimt.drawing" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.klimt.drawing.debug" %lighten("red", 80) {
+class "net.sourceforge.plantuml.klimt.drawing.debug" %lighten("red", 71) {
 Total Classes: 1
 }
-"net.sourceforge.plantuml.klimt.drawing.debug" --> "java.awt"
-"net.sourceforge.plantuml.klimt.drawing.debug" --> "java.awt.font"
 "net.sourceforge.plantuml.klimt.drawing.debug" --> "java.lang"
 "net.sourceforge.plantuml.klimt.drawing.debug" --> "java.util"
 "net.sourceforge.plantuml.klimt.drawing.debug" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.klimt.drawing.debug" --> "net.sourceforge.plantuml.klimt.font"
 "net.sourceforge.plantuml.klimt.drawing.debug" --> "net.sourceforge.plantuml.klimt.geom"
-"net.sourceforge.plantuml.klimt.drawing.debug" --> "net.sourceforge.plantuml.teavm"
 
 class "net.sourceforge.plantuml.klimt.drawing.eps" %lighten("red", 100) {
 Total Classes: 15

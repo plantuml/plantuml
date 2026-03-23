@@ -36,39 +36,37 @@ package net.sourceforge.plantuml.klimt.drawing.debug;
 
 import java.util.Random;
 
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.font.StringBounderRaw;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class StringBounderDebug extends StringBounderRaw {
 
 	public StringBounderDebug() {
-<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		super(TeaVM.isTeaVM() ? null : FileFormat.gg.getFontRenderContext());</span>
-<span class="fc" id="L50">	}</span>
+<span class="fc" id="L47">		super(null);</span>
+<span class="fc" id="L48">	}</span>
 
 	@Override
 	protected XDimension2D calculateDimensionInternal(UFont font, String text) {
-<span class="fc" id="L54">		final Random rnd = new Random(StringUtils.seed(text));</span>
+<span class="fc" id="L52">		final Random rnd = new Random(StringUtils.seed(text));</span>
 		// We want a random factor between 80% et 130%
-<span class="fc" id="L56">		final double factor = 0.8 + 0.5 * rnd.nextDouble();</span>
-<span class="fc" id="L57">		final double size = font.getSize2D();</span>
-<span class="fc" id="L58">		final double height = size;</span>
-<span class="fc" id="L59">		final double width = size * text.length() * factor;</span>
-<span class="fc" id="L60">		return new XDimension2D(width, height);</span>
+<span class="fc" id="L54">		final double factor = 0.8 + 0.5 * rnd.nextDouble();</span>
+<span class="fc" id="L55">		final double size = font.getSize2D();</span>
+<span class="fc" id="L56">		final double height = size;</span>
+<span class="fc" id="L57">		final double width = size * text.length() * factor;</span>
+<span class="fc" id="L58">		return new XDimension2D(width, height);</span>
 	}
 
 	@Override
 	public double getDescent(UFont font, String text) {
-<span class="fc" id="L65">		final double descent = font.getSize2D() / 4.5;</span>
-<span class="fc" id="L66">		return descent;</span>
+<span class="fc" id="L63">		final double descent = font.getSize2D() / 4.5;</span>
+<span class="fc" id="L64">		return descent;</span>
 	}
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-<span class="fc" id="L71">		return false;</span>
+<span class="fc" id="L69">		return false;</span>
 	}
 
 }
