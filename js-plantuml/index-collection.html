@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>PlantUML JS Editors – Collection</title>
+	<link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+	<style>
+		:root {
+			color-scheme: light;
+			--bg: light-dark(#fff, #1e1e2e);
+			--fg: light-dark(#000, #cdd6f4);
+			--surface: light-dark(#faeff9, #30303e);
+			--accent: light-dark(#d3bae3, #89b4fa);
+			--muted: light-dark(#9ca0b0, #6c7086);
+			--green: light-dark(#4caf50, #79ae75);
+			--orange: light-dark(#e6893a, #e6893a);
+		}
+		* { box-sizing: border-box; }
+		body {
+			font-family: sans-serif;
+			background: var(--bg);
+			color: var(--fg);
+			margin: 0;
+			padding: 1.5rem 2rem;
+			min-height: 100vh;
+		}
+		a { color: var(--fg); }
+		a:hover { color: var(--accent); }
+
+		header {
+			display: flex;
+			align-items: center;
+			margin-bottom: 2rem;
+		}
+		.title {
+			padding: 0 1rem;
+			flex-grow: 1;
+			font-weight: bold;
+			font-size: 1.1rem;
+		}
+		.icon { width: 1.5rem; }
+
+		.intro {
+			max-width: 54rem;
+			margin: 0 auto 2.5rem;
+			line-height: 1.7;
+		}
+		.intro h1 {
+			font-size: 1.6rem;
+			margin: 0 0 0.75rem;
+		}
+		.intro p {
+			margin: 0 0 0.6rem;
+			color: var(--fg);
+		}
+		.intro .subtle { color: var(--muted); font-size: 0.92rem; }
+
+		/* ── Table ── */
+		.table-wrap {
+			max-width: 54rem;
+			margin: 0 auto 3rem;
+		}
+		table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+		thead th {
+			text-align: left;
+			padding: 0.75rem 1rem;
+			border-bottom: 2px solid var(--accent);
+			font-size: 0.85rem;
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			color: var(--muted);
+		}
+		tbody td {
+			padding: 1rem;
+			border-bottom: 1px solid color-mix(in srgb, var(--accent) 20%, var(--bg));
+			vertical-align: top;
+		}
+		tbody tr:hover {
+			background: color-mix(in srgb, var(--surface) 60%, var(--bg));
+		}
+
+		.editor-name {
+			font-weight: 600;
+			font-size: 1.05rem;
+			display: flex;
+			align-items: center;
+			gap: 0.4rem;
+		}
+		.editor-name a {
+			text-decoration: none;
+			border-bottom: 1px dashed var(--accent);
+		}
+		.editor-name a:hover {
+			border-bottom-style: solid;
+		}
+		.badge {
+			display: inline-block;
+			font-size: 0.65rem;
+			font-weight: 700;
+			text-transform: uppercase;
+			padding: 0.15em 0.5em;
+			border-radius: 0.8em;
+			letter-spacing: 0.03em;
+		}
+		.badge-full   { background: color-mix(in srgb, var(--accent) 30%, var(--bg)); color: var(--fg); }
+		.badge-minimal { background: color-mix(in srgb, var(--green) 25%, var(--bg)); color: var(--fg); }
+
+		.desc { font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
+
+		.pros-cons { font-size: 0.85rem; line-height: 1.6; }
+		.pro, .con { display: block; padding-left: 1.2em; text-indent: -1.2em; margin-bottom: 0.2em; }
+		.pro::before { content: "✓ "; color: var(--green); font-weight: bold; }
+		.con::before { content: "✗ "; color: var(--orange); font-weight: bold; }
+
+		/* ── Call to action ── */
+		.cta {
+			max-width: 54rem;
+			margin: 0 auto 2rem;
+			padding: 1.5rem 2rem;
+			background: var(--surface);
+			border-radius: 1.2em;
+			line-height: 1.7;
+		}
+		.cta h2 { margin: 0 0 0.5rem; font-size: 1.15rem; }
+		.cta p { margin: 0 0 0.5rem; }
+		.cta code {
+			background: color-mix(in srgb, var(--accent) 15%, var(--bg));
+			padding: 0.15em 0.4em;
+			border-radius: 0.3em;
+			font-size: 0.88em;
+		}
+
+		footer {
+			max-width: 54rem;
+			margin: 2rem auto 0;
+			text-align: center;
+			color: var(--muted);
+			font-size: 0.8rem;
+		}
+	</style>
+</head>
+<body>
+
+	<header>
+		<span class="title">PlantUML JS Editors</span>
+		<a href="https://github.com/plantuml/plantuml" target="_blank" class="icon" title="Visit PlantUML on GitHub">
+			<svg viewBox="0 0 24 24" fill="currentColor">
+				<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+			</svg>
+		</a>
+	</header>
+
+	<!-- ── Intro ── -->
+	<section class="intro">
+		<h1>Editor Collection</h1>
+		<p>
+			PlantUML can run <strong>entirely in the browser</strong> thanks to
+			<a href="https://github.com/konsoletyper/teavm" target="_blank">TeaVM</a> and
+			<a href="https://github.com/mdaines/viz-js" target="_blank">Viz.js</a>.
+			This page lists the available editor front-ends shipped with the project.
+			Each one is a self-contained HTML page that can serve as a <strong>starting point</strong>
+			for JavaScript developers who want to build their own PlantUML-powered tools.
+		</p>
+		<p class="subtle">
+			Pick the one that best fits your needs, open its source, and start hacking!
+		</p>
+	</section>
+
+	<!-- ── Comparison table ── -->
+	<div class="table-wrap">
+		<table>
+			<thead>
+				<tr>
+					<th>Editor</th>
+					<th>Description</th>
+					<th>Pros / Cons</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<div class="editor-name">
+							<a href="index.html">Playground</a>
+							<span class="badge badge-full">Full</span>
+						</div>
+					</td>
+					<td class="desc">
+						A polished, split-pane editor with live preview, resizable panels,
+						copy-to-clipboard and download buttons.
+						Uses an external CSS file and a dedicated <code>main.js</code> script.
+					</td>
+					<td class="pros-cons">
+						<span class="pro">Rich UI with smooth resize interaction</span>
+						<span class="pro">Clipboard &amp; save-to-file support</span>
+						<span class="pro">Clean design, ready for production use</span>
+						<span class="con">Larger codebase – more files to understand</span>
+						<span class="con">Relies on external CSS &amp; JS assets</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="editor-name">
+							<a href="index-basic.html">Basic</a>
+							<span class="badge badge-minimal">Minimal</span>
+						</div>
+					</td>
+					<td class="desc">
+						A bare-bones, single-file editor. Just a <code>&lt;textarea&gt;</code>
+						and a preview <code>&lt;div&gt;</code> wired together with a few lines
+						of inline JavaScript. No external dependencies beyond the PlantUML engine itself.
+					</td>
+					<td class="pros-cons">
+						<span class="pro">Extremely simple – easy to read and understand</span>
+						<span class="pro">Single self-contained HTML file</span>
+						<span class="pro">Perfect skeleton for quick experiments</span>
+						<span class="con">No styling – raw browser defaults</span>
+						<span class="con">No copy/save/export features</span>
+						<span class="con">Not suitable as-is for end users</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<!-- ── Call to action ── -->
+	<section class="cta">
+		<h2>The collection is growing!</h2>
+		<p>
+			We plan to add more editors over time – split views, dark-mode themes,
+			Monaco-based editors, collaborative pads, and more.
+			Each new entry will be another ready-made starting point for the community.
+		</p>
+		<p>
+			<strong>Contributions are welcome.</strong>
+			If you have built an interesting editor front-end, feel free to submit it.
+			Just drop a new <code>index-*.html</code> file in the
+			<code>src/main/resources/teavm/</code> directory and open a pull request.
+		</p>
+	</section>
+
+	<footer>
+		Powered by <a href="https://plantuml.com" target="_blank">PlantUML</a>,
+		<a href="https://github.com/konsoletyper/teavm" target="_blank">TeaVM</a> &amp;
+		<a href="https://github.com/mdaines/viz-js" target="_blank">Viz.js</a>
+	</footer>
+
+</body>
+</html>
