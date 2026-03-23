@@ -959,11 +959,12 @@ Total Classes: 5
 "net.sourceforge.plantuml.code.deflate" --> "java.lang"
 "net.sourceforge.plantuml.code.deflate" --> "java.util"
 
-class "net.sourceforge.plantuml.command" %lighten("red", 49) {
-Total Classes: 52
+class "net.sourceforge.plantuml.command" %lighten("red", 51) {
+Total Classes: 51
 }
 "net.sourceforge.plantuml.command" --> "com.plantuml.ubrex"
 "net.sourceforge.plantuml.command" --> "com.plantuml.ubrex.builder"
+"net.sourceforge.plantuml.command" --> "java.io"
 "net.sourceforge.plantuml.command" --> "java.lang"
 "net.sourceforge.plantuml.command" --> "java.util"
 "net.sourceforge.plantuml.command" --> "java.util.regex"
@@ -980,10 +981,12 @@ Total Classes: 52
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.klimt.creole"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.klimt.font"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.klimt.geom"
+"net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.klimt.sprite"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.plasma"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.regex"
+"net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.security"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.sequencediagram.command"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.statediagram.command"
@@ -2081,7 +2084,7 @@ Total Classes: 40
 "net.sourceforge.plantuml.klimt.shape" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.klimt.shape" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.klimt.sprite" %lighten("red", 76) {
+class "net.sourceforge.plantuml.klimt.sprite" %lighten("red", 74) {
 Total Classes: 22
 }
 "net.sourceforge.plantuml.klimt.sprite" --> "java.io"
@@ -2721,7 +2724,7 @@ Total Classes: 3
 "net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.svek"
 
-class "net.sourceforge.plantuml.security" %lighten("red", 51) {
+class "net.sourceforge.plantuml.security" %lighten("red", 50) {
 Total Classes: 7
 }
 "net.sourceforge.plantuml.security" --> "java.awt.image"
