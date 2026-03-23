@@ -3190,7 +3190,7 @@ Total Classes: 16
 "net.sourceforge.plantuml.teavm" --> "org.teavm.jso"
 
 class "net.sourceforge.plantuml.teavm.browser" %lighten("red", 50) {
-Total Classes: 3
+Total Classes: 5
 }
 "net.sourceforge.plantuml.teavm.browser" --> "java.lang"
 "net.sourceforge.plantuml.teavm.browser" --> "org.teavm.jso"
