@@ -17881,14 +17881,14 @@
 
         <Package name="net.sourceforge.plantuml.utils">
             <Stats>
-                <TotalClasses>17</TotalClasses>
-                <ConcreteClasses>12</ConcreteClasses>
+                <TotalClasses>16</TotalClasses>
+                <ConcreteClasses>11</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
                 <Ca>59</Ca>
                 <Ce>21</Ce>
-                <A>0.29</A>
+                <A>0.31</A>
                 <I>0.26</I>
-                <D>0.44</D>
+                <D>0.43</D>
                 <V>1</V>
             </Stats>
 
@@ -17916,9 +17916,6 @@
                 </Class>
                 <Class sourceFile="BlocLines.java">
                     net.sourceforge.plantuml.utils.BlocLines
-                </Class>
-                <Class sourceFile="BoyerMoore.java">
-                    net.sourceforge.plantuml.utils.BoyerMoore
                 </Class>
                 <Class sourceFile="Direction.java">
                     net.sourceforge.plantuml.utils.Direction

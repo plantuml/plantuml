@@ -3349,8 +3349,8 @@ Total Classes: 4
 "net.sourceforge.plantuml.url" --> "java.util"
 "net.sourceforge.plantuml.url" --> "net.sourceforge.plantuml.klimt.geom"
 
-class "net.sourceforge.plantuml.utils" %lighten("red", 56) {
-Total Classes: 17
+class "net.sourceforge.plantuml.utils" %lighten("red", 57) {
+Total Classes: 16
 }
 "net.sourceforge.plantuml.utils" --> "java.io"
 "net.sourceforge.plantuml.utils" --> "java.lang"

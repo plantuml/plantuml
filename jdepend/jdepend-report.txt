@@ -12073,16 +12073,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 17
-    Concrete Classes: 12
+    Total Classes: 16
+    Concrete Classes: 11
     Abstract Classes: 5
 
     Ca: 59
     Ce: 21
 
-    A: 0.29
+    A: 0.31
     I: 0.26
-    D: 0.44
+    D: 0.43
 
 Abstract Classes:
     net.sourceforge.plantuml.utils.CharInspector
@@ -12094,7 +12094,6 @@ Abstract Classes:
 Concrete Classes:
     net.sourceforge.plantuml.utils.Base64Coder
     net.sourceforge.plantuml.utils.BlocLines
-    net.sourceforge.plantuml.utils.BoyerMoore
     net.sourceforge.plantuml.utils.Direction
     net.sourceforge.plantuml.utils.I18n
     net.sourceforge.plantuml.utils.MTRandom
@@ -14863,7 +14862,7 @@ net.sourceforge.plantuml.timingdiagram,25,4,2,25,0.16,0.93,0.09,1
 net.sourceforge.plantuml.timingdiagram.command,13,1,1,10,0.08,0.91,0.01,1
 net.sourceforge.plantuml.timingdiagram.graphic,17,3,1,15,0.18,0.94,0.11,1
 net.sourceforge.plantuml.url,4,0,30,4,0,0.12,0.88,1
-net.sourceforge.plantuml.utils,17,5,59,21,0.29,0.26,0.44,1
+net.sourceforge.plantuml.utils,16,5,59,21,0.31,0.26,0.43,1
 net.sourceforge.plantuml.version,7,1,6,14,0.14,0.7,0.16,1
 net.sourceforge.plantuml.vizjs,7,0,0,6,0,1,0,1
 net.sourceforge.plantuml.warning,2,1,5,2,0.5,0.29,0.21,1

@@ -62,10 +62,10 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="nc" id="L65">		final String exp = values.get(0).toString();</span>
-<span class="nc" id="L66">		final StringEater eater = new StringEater(exp);</span>
-<span class="nc" id="L67">		final TValue value = eater.eatExpression(context, memory);</span>
-<span class="nc" id="L68">		return TValue.fromInt(value.toInt());</span>
+<span class="fc" id="L65">		final String exp = values.get(0).toString();</span>
+<span class="fc" id="L66">		final StringEater eater = new StringEater(exp);</span>
+<span class="fc" id="L67">		final TValue value = eater.eatExpression(context, memory);</span>
+<span class="fc" id="L68">		return TValue.fromInt(value.toInt());</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
