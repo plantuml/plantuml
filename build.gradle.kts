@@ -259,9 +259,30 @@ tasks.register<Test>("runIntermediateTest") {
     group = "dev"
     useJUnitPlatform()
     jvmArgs("-ea")
+	testClassesDirs = sourceSets.test.get().output.classesDirs
+    classpath = sourceSets.test.get().runtimeClasspath
     filter {
         includeTestsMatching("IntermediateTest*")
     }
+}
+
+tasks.register<Test>("runVegaTest") {
+    description = "Runs the 'VegaTest'"
+    group = "dev"
+    useJUnitPlatform()
+    jvmArgs("-ea")
+    testClassesDirs = sourceSets.test.get().output.classesDirs
+    classpath = sourceSets.test.get().runtimeClasspath
+    filter {
+        includeTestsMatching("VegaTest")
+    }
+	doLast {
+		val vegaSummary = file("src/test/resources/vega/vega-summary.txt")
+		if (vegaSummary.exists()) {
+			println("")
+			println(vegaSummary.readText().trim())
+		}
+	}
 }
 
 tasks.jacocoTestReport {

@@ -1,0 +1,6 @@
+---
+output: preproc
+---
+@startuml
+title %eval(1+2)
+@enduml
