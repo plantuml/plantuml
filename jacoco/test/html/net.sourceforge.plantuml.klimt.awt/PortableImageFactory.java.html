@@ -23,5 +23,17 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L23">			throw new UnsupportedOperationException(&quot;TEAVM92734&quot;);</span>
 	}
 
+	/**
+	 * Creates a PortableImage from raw PNG bytes (TeaVM only).
+	 * Dimensions are parsed from the PNG IHDR header; the base64 string
+	 * is stored for direct use in SVG output via {@code toPngDataUrl()}.
+	 */
+	public static PortableImage buildFromPngBytes(byte[] pngBytes, String base64) {
+		// ::revert when JAVA8
+<span class="nc" id="L33">		return new PortableImageTeaVM(pngBytes, base64);</span>
+		// throw new UnsupportedOperationException();
+		// ::done
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

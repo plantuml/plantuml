@@ -106,7 +106,7 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 	public TitledDiagram(UmlSource source, DiagramType type, Previous previous, PreprocessingArtifact preprocessing) {
 <span class="fc" id="L107">		super(source, preprocessing);</span>
 <span class="fc" id="L108">		this.type = type;</span>
-<span class="fc" id="L109">		this.skinParam = SkinParam.create(source.getPathSystem(), type, Pragma.createEmpty(),</span>
+<span class="fc" id="L109">		this.skinParam = SkinParam.create(getMd5map(), source.getPathSystem(), type, Pragma.createEmpty(),</span>
 <span class="fc" id="L110">				preprocessing.getOption());</span>
 <span class="fc bfc" id="L111" title="All 2 branches covered.">		if (previous != null)</span>
 <span class="fc" id="L112">			this.skinParam.copyAllFrom(previous);</span>

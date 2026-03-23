@@ -5699,10 +5699,10 @@
                 <ConcreteClasses>10</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>79</Ca>
-                <Ce>38</Ce>
+                <Ce>39</Ce>
                 <A>0.17</A>
-                <I>0.32</I>
-                <D>0.51</D>
+                <I>0.33</I>
+                <D>0.5</D>
                 <V>1</V>
             </Stats>
 
@@ -5763,6 +5763,7 @@
                 <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>
+                <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.debug</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.eps</Package>
@@ -8671,14 +8672,14 @@
 
         <Package name="net.sourceforge.plantuml.klimt.awt">
             <Stats>
-                <TotalClasses>3</TotalClasses>
-                <ConcreteClasses>2</ConcreteClasses>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>28</Ca>
-                <Ce>8</Ce>
-                <A>0.33</A>
-                <I>0.22</I>
-                <D>0.44</D>
+                <Ce>4</Ce>
+                <A>0.5</A>
+                <I>0.12</I>
+                <D>0.38</D>
                 <V>1</V>
             </Stats>
 
@@ -8692,20 +8693,13 @@
                 <Class sourceFile="PortableImageFactory.java">
                     net.sourceforge.plantuml.klimt.awt.PortableImageFactory
                 </Class>
-                <Class sourceFile="PortableImageTeaVM.java">
-                    net.sourceforge.plantuml.klimt.awt.PortableImageTeaVM
-                </Class>
             </ConcreteClasses>
 
             <DependsUpon>
                 <Package>java.awt</Package>
                 <Package>java.awt.image</Package>
                 <Package>java.lang</Package>
-                <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
-                <Package>org.teavm.jso.canvas</Package>
-                <Package>org.teavm.jso.dom.html</Package>
-                <Package>org.teavm.jso.typedarrays</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -9192,11 +9186,11 @@
                 <TotalClasses>14</TotalClasses>
                 <ConcreteClasses>12</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>2</Ca>
+                <Ca>3</Ca>
                 <Ce>17</Ce>
                 <A>0.14</A>
-                <I>0.89</I>
-                <D>0.04</D>
+                <I>0.85</I>
+                <D>0.01</D>
                 <V>1</V>
             </Stats>
 
@@ -9269,6 +9263,7 @@
             </DependsUpon>
 
             <UsedBy>
+                <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.legacy</Package>
             </UsedBy>
@@ -13840,10 +13835,10 @@
                 <ConcreteClasses>7</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>18</Ca>
-                <Ce>18</Ce>
+                <Ce>19</Ce>
                 <A>0</A>
-                <I>0.5</I>
-                <D>0.5</D>
+                <I>0.51</I>
+                <D>0.49</D>
                 <V>1</V>
             </Stats>
 
@@ -13893,6 +13888,7 @@
                 <Package>net.sourceforge.plantuml.nio</Package>
                 <Package>net.sourceforge.plantuml.security.authentication</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -17878,10 +17874,10 @@
                 <TotalClasses>17</TotalClasses>
                 <ConcreteClasses>12</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>58</Ca>
+                <Ca>59</Ca>
                 <Ce>21</Ce>
                 <A>0.29</A>
-                <I>0.27</I>
+                <I>0.26</I>
                 <D>0.44</D>
                 <V>1</V>
             </Stats>
@@ -18012,6 +18008,7 @@
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.salt.element</Package>
+                <Package>net.sourceforge.plantuml.security</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.command</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
@@ -19024,18 +19021,6 @@
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
 
-        <Package name="org.teavm.jso.canvas">
-            <error>No stats available: package referenced, but not analyzed.</error>
-        </Package>
-
-        <Package name="org.teavm.jso.dom.html">
-            <error>No stats available: package referenced, but not analyzed.</error>
-        </Package>
-
-        <Package name="org.teavm.jso.typedarrays">
-            <error>No stats available: package referenced, but not analyzed.</error>
-        </Package>
-
         <Package name="org.w3c.dom">
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
@@ -19598,7 +19583,7 @@
 
         <Package Name="net.sourceforge.plantuml.activitydiagram.command">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -19615,7 +19600,7 @@
 
         <Package Name="net.sourceforge.plantuml.activitydiagram3.command">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -19721,7 +19706,7 @@
 
         <Package Name="net.sourceforge.plantuml.bpm">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -19745,7 +19730,7 @@
 
         <Package Name="net.sourceforge.plantuml.chart.command">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -19754,7 +19739,7 @@
 
         <Package Name="net.sourceforge.plantuml.cheneer">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -19763,7 +19748,7 @@
 
         <Package Name="net.sourceforge.plantuml.cheneer.command">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -19772,7 +19757,7 @@
 
         <Package Name="net.sourceforge.plantuml.chronology">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -19789,7 +19774,7 @@
 
         <Package Name="net.sourceforge.plantuml.classdiagram.command">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -19804,7 +19789,7 @@
 
         <Package Name="net.sourceforge.plantuml.command">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -19813,7 +19798,7 @@
 
         <Package Name="net.sourceforge.plantuml.command.note">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -19822,7 +19807,7 @@
 
         <Package Name="net.sourceforge.plantuml.command.note.sequence">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -19830,7 +19815,7 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.core">
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -19877,7 +19862,7 @@
 
         <Package Name="net.sourceforge.plantuml.definition">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -19899,7 +19884,7 @@
 
         <Package Name="net.sourceforge.plantuml.directdot">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -19908,7 +19893,7 @@
 
         <Package Name="net.sourceforge.plantuml.ditaa">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20012,7 +19997,7 @@
 
         <Package Name="net.sourceforge.plantuml.error">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20021,7 +20006,7 @@
 
         <Package Name="net.sourceforge.plantuml.filesdiagram">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20043,7 +20028,7 @@
 
         <Package Name="net.sourceforge.plantuml.font">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20080,7 +20065,7 @@
 
         <Package Name="net.sourceforge.plantuml.hcl">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20089,7 +20074,7 @@
 
         <Package Name="net.sourceforge.plantuml.help">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20103,7 +20088,7 @@
 
         <Package Name="net.sourceforge.plantuml.jcckit">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20277,7 +20262,7 @@
 
         <Package Name="net.sourceforge.plantuml.math">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20292,7 +20277,7 @@
 
         <Package Name="net.sourceforge.plantuml.mindmap">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20301,7 +20286,7 @@
 
         <Package Name="net.sourceforge.plantuml.nwdiag">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20329,7 +20314,7 @@
 
         <Package Name="net.sourceforge.plantuml.openiconic">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20373,7 +20358,7 @@
 
         <Package Name="net.sourceforge.plantuml.preproc2">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20390,7 +20375,7 @@
 
         <Package Name="net.sourceforge.plantuml.project.command">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20429,7 +20414,7 @@
 
         <Package Name="net.sourceforge.plantuml.project.lang">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20482,7 +20467,7 @@
 
         <Package Name="net.sourceforge.plantuml.salt">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20499,7 +20484,7 @@
         <Package Name="net.sourceforge.plantuml.salt.factory">
             <Package>net.sourceforge.plantuml.salt</Package>
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20540,7 +20525,7 @@
 
         <Package Name="net.sourceforge.plantuml.sequencediagram.command">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20583,7 +20568,7 @@
 
         <Package Name="net.sourceforge.plantuml.statediagram">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20631,7 +20616,7 @@
 
         <Package Name="net.sourceforge.plantuml.sudoku">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20676,7 +20661,7 @@
 
         <Package Name="net.sourceforge.plantuml.syntax">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20735,7 +20720,7 @@
 
         <Package Name="net.sourceforge.plantuml.timingdiagram.command">
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
@@ -20809,7 +20794,7 @@
         <Package Name="net.sourceforge.plantuml.xmlsc">
             <Package>net.sourceforge.plantuml.statediagram</Package>
             <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.version</Package>
+            <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>

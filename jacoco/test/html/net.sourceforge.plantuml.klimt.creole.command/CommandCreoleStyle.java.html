@@ -45,12 +45,13 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontStyle;
+import net.sourceforge.plantuml.style.ISkinSimple;
 
 public class CommandCreoleStyle implements Command {
 
 	@Override
 	public String startingChars() {
-<span class="fc" id="L53">		return &quot;&lt;/*_~-&quot;;</span>
+<span class="fc" id="L54">		return &quot;&lt;/*_~-&quot;;</span>
 	}
 
 	private final FontStyle style;
@@ -58,61 +59,62 @@ public class CommandCreoleStyle implements Command {
 	private final UnicodeBracketedExpression ubrex;
 
 	public static Command createCreole(FontStyle style) {
-<span class="fc" id="L61">		final String ubrexString = style.getUbrexCreoleSyntax() + &quot;〶$V=〄+〴.-&gt;〘&quot; + style.getUbrexCreoleSyntax() + &quot;〙&quot;;</span>
-<span class="fc" id="L62">		return new CommandCreoleStyle(ubrexString, style, false);</span>
+<span class="fc" id="L62">		final String ubrexString = style.getUbrexCreoleSyntax() + &quot;〶$V=〄+〴.-&gt;〘&quot; + style.getUbrexCreoleSyntax() + &quot;〙&quot;;</span>
+<span class="fc" id="L63">		return new CommandCreoleStyle(ubrexString, style, false);</span>
 	}
 
 	public static Command createLegacy(FontStyle style) {
-<span class="fc" id="L66">		final String ubrexString = style.getUbrexActivationPattern() + &quot;〶$V=〄&gt;〘&quot; + style.getUbrexDeactivationPattern()</span>
+<span class="fc" id="L67">		final String ubrexString = style.getUbrexActivationPattern() + &quot;〶$V=〄&gt;〘&quot; + style.getUbrexDeactivationPattern()</span>
 				+ &quot;〙&quot;;
-<span class="fc" id="L68">		return new CommandCreoleStyle(ubrexString, style, style.canHaveExtendedColor());</span>
+<span class="fc" id="L69">		return new CommandCreoleStyle(ubrexString, style, style.canHaveExtendedColor());</span>
 	}
 
 	public static Command createLegacyEol(FontStyle style) {
-<span class="fc" id="L72">		final String ubrexString = style.getUbrexActivationPattern() + &quot;〶$V=〇+〴.&quot;;</span>
-<span class="fc" id="L73">		return new CommandCreoleStyle(ubrexString, style, style.canHaveExtendedColor());</span>
+<span class="fc" id="L73">		final String ubrexString = style.getUbrexActivationPattern() + &quot;〶$V=〇+〴.&quot;;</span>
+<span class="fc" id="L74">		return new CommandCreoleStyle(ubrexString, style, style.canHaveExtendedColor());</span>
 	}
 
-<span class="fc" id="L76">	private CommandCreoleStyle(String ubrexString, FontStyle style, boolean tryExtendedColor) {</span>
-<span class="fc" id="L77">		this.ubrex = UnicodeBracketedExpression.build(ubrexString);</span>
-<span class="fc" id="L78">		this.style = style;</span>
-<span class="fc" id="L79">		this.tryExtendedColor = tryExtendedColor;</span>
-<span class="fc" id="L80">	}</span>
+<span class="fc" id="L77">	private CommandCreoleStyle(String ubrexString, FontStyle style, boolean tryExtendedColor) {</span>
+<span class="fc" id="L78">		this.ubrex = UnicodeBracketedExpression.build(ubrexString);</span>
+<span class="fc" id="L79">		this.style = style;</span>
+<span class="fc" id="L80">		this.tryExtendedColor = tryExtendedColor;</span>
+<span class="fc" id="L81">	}</span>
 
 	private HColor getExtendedColor(UMatcher matcher) {
-<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (tryExtendedColor) {</span>
-<span class="fc" id="L84">			final List&lt;String&gt; extendedColor = matcher.getCapture(&quot;XC&quot;);</span>
-<span class="fc bfc" id="L85" title="All 2 branches covered.">			if (extendedColor.size() &gt; 0)</span>
-<span class="fc" id="L86">				return HColorSet.instance().getColorOrWhite(extendedColor.get(0));</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		if (tryExtendedColor) {</span>
+<span class="fc" id="L85">			final List&lt;String&gt; extendedColor = matcher.getCapture(&quot;XC&quot;);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">			if (extendedColor.size() &gt; 0)</span>
+<span class="fc" id="L87">				return HColorSet.instance().getColorOrWhite(extendedColor.get(0));</span>
 		}
 
-<span class="fc" id="L89">		return null;</span>
+<span class="fc" id="L90">		return null;</span>
 	}
 
-	public String executeAndGetRemaining(final String line, StripeSimple stripe) {
-<span class="fc" id="L93">		final UMatcher matcher = ubrex.match(line);</span>
+	@Override
+	public String executeAndGetRemaining(ISkinSimple skinSimple, final String line, StripeSimple stripe) {
+<span class="fc" id="L95">		final UMatcher matcher = ubrex.match(line);</span>
 
-<span class="fc" id="L95">		final List&lt;String&gt; value = matcher.getCapture(&quot;V&quot;);</span>
-<span class="fc" id="L96">		final String accepted = matcher.getAcceptedMatch();</span>
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (value.size() == 0)</span>
-<span class="nc" id="L98">			throw new IllegalStateException();</span>
+<span class="fc" id="L97">		final List&lt;String&gt; value = matcher.getCapture(&quot;V&quot;);</span>
+<span class="fc" id="L98">		final String accepted = matcher.getAcceptedMatch();</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (value.size() == 0)</span>
+<span class="nc" id="L100">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L100">		final FontConfiguration fc1 = stripe.getActualFontConfiguration();</span>
-<span class="fc" id="L101">		final FontConfiguration fc2 = new AddStyle(style, getExtendedColor(matcher)).apply(fc1);</span>
-<span class="fc" id="L102">		stripe.setActualFontConfiguration(fc2);</span>
+<span class="fc" id="L102">		final FontConfiguration fc1 = stripe.getActualFontConfiguration();</span>
+<span class="fc" id="L103">		final FontConfiguration fc2 = new AddStyle(style, getExtendedColor(matcher)).apply(fc1);</span>
+<span class="fc" id="L104">		stripe.setActualFontConfiguration(fc2);</span>
 
-<span class="fc" id="L104">		stripe.analyzeAndAdd(value.get(0));</span>
-<span class="fc" id="L105">		stripe.setActualFontConfiguration(fc1);</span>
-<span class="fc" id="L106">		return line.substring(accepted.length());</span>
+<span class="fc" id="L106">		stripe.analyzeAndAdd(value.get(0));</span>
+<span class="fc" id="L107">		stripe.setActualFontConfiguration(fc1);</span>
+<span class="fc" id="L108">		return line.substring(accepted.length());</span>
 	}
 
 	public int matchingSize(String line) {
-<span class="fc" id="L110">		final UMatcher matcher = ubrex.match(line);</span>
-<span class="fc" id="L111">		final List&lt;String&gt; value = matcher.getCapture(&quot;V&quot;);</span>
-<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (value.size() == 0)</span>
-<span class="fc" id="L113">			return 0;</span>
+<span class="fc" id="L112">		final UMatcher matcher = ubrex.match(line);</span>
+<span class="fc" id="L113">		final List&lt;String&gt; value = matcher.getCapture(&quot;V&quot;);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (value.size() == 0)</span>
+<span class="fc" id="L115">			return 0;</span>
 
-<span class="fc" id="L115">		return value.get(0).length();</span>
+<span class="fc" id="L117">		return value.get(0).length();</span>
 	}
 
 }

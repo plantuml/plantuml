@@ -181,7 +181,7 @@ public class BpmDiagram extends TitledDiagram {
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
 <span class="nc" id="L182">		final Grid grid = createGrid();</span>
 <span class="nc" id="L183">		cleanGrid(grid);</span>
-<span class="nc" id="L184">		return grid.toArray(SkinParam.create(PathSystem.fetch(), getDiagramType(), getPragma(),</span>
+<span class="nc" id="L184">		return grid.toArray(SkinParam.create(getMd5map(), PathSystem.fetch(), getDiagramType(), getPragma(),</span>
 <span class="nc" id="L185">				getPreprocessingArtifact().getOption()));</span>
 	}
 }

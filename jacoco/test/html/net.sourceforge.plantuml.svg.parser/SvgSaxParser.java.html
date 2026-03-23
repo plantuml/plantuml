@@ -672,8 +672,8 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 <span class="nc" id="L672">                return;</span>
 
 <span class="fc" id="L674">            final DataImage dataImage = decodeDataImage(href);</span>
-<span class="pc bpc" id="L675" title="1 of 2 branches missed.">            if (dataImage == null)</span>
-<span class="nc" id="L676">                return;</span>
+<span class="fc bfc" id="L675" title="All 2 branches covered.">            if (dataImage == null)</span>
+<span class="fc" id="L676">                return;</span>
 
 <span class="fc" id="L678">            final PortableImage image = dataImage.image;</span>
 <span class="pc bpc" id="L679" title="1 of 2 branches missed.">            if (image == null)</span>
@@ -747,9 +747,9 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
             }
 
 <span class="fc" id="L749">            final String prefix = getDataImagePrefix(lowerHref);</span>
-<span class="pc bpc" id="L750" title="1 of 2 branches missed.">            if (prefix == null) {</span>
-<span class="nc" id="L751">                LOG.fine(&quot;Skipping non-data image href&quot;);</span>
-<span class="nc" id="L752">                return null;</span>
+<span class="fc bfc" id="L750" title="All 2 branches covered.">            if (prefix == null) {</span>
+<span class="fc" id="L751">                LOG.fine(&quot;Skipping non-data image href&quot;);</span>
+<span class="fc" id="L752">                return null;</span>
             }
 
 <span class="fc" id="L755">            final String data = href.substring(prefix.length());</span>
@@ -774,16 +774,16 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
         }
 
         private String getDataImagePrefix(String lowerHref) {
-<span class="fc bfc" id="L777" title="All 2 branches covered.">            if (lowerHref.startsWith(&quot;data:image/png;base64,&quot;))</span>
-<span class="fc" id="L778">                return &quot;data:image/png;base64,&quot;;</span>
+<span class="pc bpc" id="L777" title="1 of 2 branches missed.">            if (lowerHref.startsWith(&quot;data:image/png;base64,&quot;))</span>
+<span class="nc" id="L778">                return &quot;data:image/png;base64,&quot;;</span>
 
-<span class="pc bpc" id="L780" title="1 of 2 branches missed.">            if (lowerHref.startsWith(&quot;data:image/jpeg;base64,&quot;))</span>
+<span class="fc bfc" id="L780" title="All 2 branches covered.">            if (lowerHref.startsWith(&quot;data:image/jpeg;base64,&quot;))</span>
 <span class="fc" id="L781">                return &quot;data:image/jpeg;base64,&quot;;</span>
 
-<span class="nc bnc" id="L783" title="All 2 branches missed.">            if (lowerHref.startsWith(&quot;data:image/jpg;base64,&quot;))</span>
+<span class="pc bpc" id="L783" title="1 of 2 branches missed.">            if (lowerHref.startsWith(&quot;data:image/jpg;base64,&quot;))</span>
 <span class="nc" id="L784">                return &quot;data:image/jpg;base64,&quot;;</span>
 
-<span class="nc" id="L786">            return null;</span>
+<span class="fc" id="L786">            return null;</span>
         }
 
         private String buildSvgImage(String href, double width, double height) {

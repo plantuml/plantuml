@@ -59,50 +59,53 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 
 	public static PortableImage read(byte[] bytes) throws IOException {
 <span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
-<span class="nc" id="L62">			return null;</span>
+<span class="nc" id="L62">			return readTeaVM(bytes);</span>
 <span class="fc" id="L63">		return PortableImageFactory.build(javax.imageio.ImageIO.read(new ByteArrayInputStream(bytes)));</span>
 	}
 
-	// ::comment when __TEAVM__
+	private static PortableImage readTeaVM(byte[] pngBytes) {
+<span class="nc" id="L67">		final String base64 = new String(net.sourceforge.plantuml.utils.Base64Coder.encode(pngBytes));</span>
+<span class="nc" id="L68">		return PortableImageFactory.buildFromPngBytes(pngBytes, base64);</span>
+	}
+
 	public static ImageOutputStream createImageOutputStream(OutputStream os) throws IOException {
-<span class="fc" id="L68">		return javax.imageio.ImageIO.createImageOutputStream(os);</span>
+<span class="fc" id="L72">		return javax.imageio.ImageIO.createImageOutputStream(os);</span>
 	}
 
 	public static void write(PortableImage image, String format, OutputStream os) throws IOException {
-<span class="fc" id="L72">		javax.imageio.ImageIO.write(image.getBufferedImage(), format, os);</span>
-<span class="fc" id="L73">	}</span>
+<span class="fc" id="L76">		javax.imageio.ImageIO.write(image.getBufferedImage(), format, os);</span>
+<span class="fc" id="L77">	}</span>
 
 	public static void write(PortableImage image, String format, SFile file) throws IOException {
-<span class="nc" id="L76">		javax.imageio.ImageIO.write(image.getBufferedImage(), format, file.conv());</span>
-<span class="nc" id="L77">	}</span>
+<span class="nc" id="L80">		javax.imageio.ImageIO.write(image.getBufferedImage(), format, file.conv());</span>
+<span class="nc" id="L81">	}</span>
 
 	public static PortableImage read(java.io.File file) throws IOException {
-<span class="nc" id="L80">		return PortableImageFactory.build(javax.imageio.ImageIO.read(file));</span>
+<span class="nc" id="L84">		return PortableImageFactory.build(javax.imageio.ImageIO.read(file));</span>
 	}
 
 	public static PortableImage read(SFile file) throws IOException {
-<span class="fc" id="L84">		return PortableImageFactory.build(javax.imageio.ImageIO.read(file.conv()));</span>
+<span class="fc" id="L88">		return PortableImageFactory.build(javax.imageio.ImageIO.read(file.conv()));</span>
 	}
 
 	public static ImageInputStream createImageInputStream(SFile file) throws IOException {
-<span class="nc" id="L88">		return javax.imageio.ImageIO.createImageInputStream(file.conv());</span>
+<span class="nc" id="L92">		return javax.imageio.ImageIO.createImageInputStream(file.conv());</span>
 	}
 
 	public static ImageInputStream createImageInputStream(Object obj) throws IOException {
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (obj instanceof SFile)</span>
-<span class="nc" id="L93">			obj = ((SFile) obj).conv();</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (obj instanceof SFile)</span>
+<span class="nc" id="L97">			obj = ((SFile) obj).conv();</span>
 
-<span class="fc" id="L95">		return javax.imageio.ImageIO.createImageInputStream(obj);</span>
+<span class="fc" id="L99">		return javax.imageio.ImageIO.createImageInputStream(obj);</span>
 	}
 
 	public static ImageInputStream createImageInputStream(InputStream is) throws IOException {
-<span class="nc" id="L99">		return javax.imageio.ImageIO.createImageInputStream(is);</span>
+<span class="nc" id="L103">		return javax.imageio.ImageIO.createImageInputStream(is);</span>
 	}
 
 	public static Iterator&lt;ImageReader&gt; getImageReaders(ImageInputStream iis) {
-<span class="fc" id="L103">		return javax.imageio.ImageIO.getImageReaders(iis);</span>
+<span class="fc" id="L107">		return javax.imageio.ImageIO.getImageReaders(iis);</span>
 	}
-	// ::done
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -45,12 +45,11 @@ public interface Command&lt;D extends Diagram&gt; {
 
 	CommandControl isValid(BlocLines lines);
 
-	boolean isEligibleFor(ParserPass pass);	
-	
+	boolean isEligibleFor(ParserPass pass);
+
 	default boolean isCommandForbidden(BlocLines lines) {
 <span class="fc" id="L51">		return false;</span>
 	}
-
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

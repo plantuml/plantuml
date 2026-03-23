@@ -1031,7 +1031,7 @@ Total Classes: 8
 "net.sourceforge.plantuml.command.note.sequence" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.command.note.sequence" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.core" %lighten("red", 49) {
+class "net.sourceforge.plantuml.core" %lighten("red", 50) {
 Total Classes: 12
 }
 "net.sourceforge.plantuml.core" --> "java.awt"
@@ -1048,6 +1048,7 @@ Total Classes: 12
 "net.sourceforge.plantuml.core" --> "net.sourceforge.plantuml.klimt.awt"
 "net.sourceforge.plantuml.core" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.core" --> "net.sourceforge.plantuml.klimt.creole"
+"net.sourceforge.plantuml.core" --> "net.sourceforge.plantuml.klimt.creole.atom"
 "net.sourceforge.plantuml.core" --> "net.sourceforge.plantuml.klimt.drawing"
 "net.sourceforge.plantuml.core" --> "net.sourceforge.plantuml.klimt.drawing.debug"
 "net.sourceforge.plantuml.core" --> "net.sourceforge.plantuml.klimt.drawing.eps"
@@ -1751,17 +1752,13 @@ Total Classes: 21
 "net.sourceforge.plantuml.klimt" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.klimt" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.klimt.awt" %lighten("red", 56) {
-Total Classes: 3
+class "net.sourceforge.plantuml.klimt.awt" %lighten("red", 62) {
+Total Classes: 2
 }
 "net.sourceforge.plantuml.klimt.awt" --> "java.awt"
 "net.sourceforge.plantuml.klimt.awt" --> "java.awt.image"
 "net.sourceforge.plantuml.klimt.awt" --> "java.lang"
-"net.sourceforge.plantuml.klimt.awt" --> "java.util"
 "net.sourceforge.plantuml.klimt.awt" --> "net.sourceforge.plantuml.teavm"
-"net.sourceforge.plantuml.klimt.awt" --> "org.teavm.jso.canvas"
-"net.sourceforge.plantuml.klimt.awt" --> "org.teavm.jso.dom.html"
-"net.sourceforge.plantuml.klimt.awt" --> "org.teavm.jso.typedarrays"
 
 class "net.sourceforge.plantuml.klimt.color" %lighten("red", 13) {
 Total Classes: 29
@@ -1806,7 +1803,7 @@ Total Classes: 19
 "net.sourceforge.plantuml.klimt.creole" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.klimt.creole" --> "net.sourceforge.plantuml.svek"
 
-class "net.sourceforge.plantuml.klimt.creole.atom" %lighten("red", 96) {
+class "net.sourceforge.plantuml.klimt.creole.atom" %lighten("red", 99) {
 Total Classes: 14
 }
 "net.sourceforge.plantuml.klimt.creole.atom" --> "java.lang"
@@ -2724,7 +2721,7 @@ Total Classes: 3
 "net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.svek"
 
-class "net.sourceforge.plantuml.security" %lighten("red", 50) {
+class "net.sourceforge.plantuml.security" %lighten("red", 51) {
 Total Classes: 7
 }
 "net.sourceforge.plantuml.security" --> "java.awt.image"
@@ -2745,6 +2742,7 @@ Total Classes: 7
 "net.sourceforge.plantuml.security" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.security" --> "net.sourceforge.plantuml.security.authentication"
 "net.sourceforge.plantuml.security" --> "net.sourceforge.plantuml.teavm"
+"net.sourceforge.plantuml.security" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.security.authentication" %lighten("red", 93) {
 Total Classes: 6
@@ -3600,18 +3598,6 @@ Total Classes: 9
 "org.stathissideris.ascii2image.text" --> "java.util.regex"
 
 class "org.teavm.jso"{
-
-}
-
-class "org.teavm.jso.canvas"{
-
-}
-
-class "org.teavm.jso.dom.html"{
-
-}
-
-class "org.teavm.jso.typedarrays"{
 
 }
 

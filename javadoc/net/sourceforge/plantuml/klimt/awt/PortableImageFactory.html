@@ -128,6 +128,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="PortableImage.html" title="interface in net.sourceforge.plantuml.klimt.awt">PortableImage</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#build(java.awt.image.BufferedImage)" class="member-name-link">build</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a>&nbsp;image)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="PortableImage.html" title="interface in net.sourceforge.plantuml.klimt.awt">PortableImage</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildFromPngBytes(byte%5B%5D,java.lang.String)" class="member-name-link">buildFromPngBytes</a><wbr>(byte[]&nbsp;pngBytes,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;base64)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a PortableImage from raw PNG bytes (TeaVM only).</div>
+</div>
 </div>
 </div>
 </div>
@@ -171,6 +177,16 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="build(java.awt.image.BufferedImage)">
 <h3>build</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="PortableImage.html" title="interface in net.sourceforge.plantuml.klimt.awt">PortableImage</a></span>&nbsp;<span class="element-name">build</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a>&nbsp;image)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="buildFromPngBytes(byte[],java.lang.String)">
+<h3>buildFromPngBytes</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="PortableImage.html" title="interface in net.sourceforge.plantuml.klimt.awt">PortableImage</a></span>&nbsp;<span class="element-name">buildFromPngBytes</span><wbr><span class="parameters">(byte[]&nbsp;pngBytes,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;base64)</span></div>
+<div class="block">Creates a PortableImage from raw PNG bytes (TeaVM only).
+ Dimensions are parsed from the PNG IHDR header; the base64 string
+ is stored for direct use in SVG output via <code>toPngDataUrl()</code>.</div>
 </section>
 </li>
 </ul>

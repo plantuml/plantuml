@@ -124,7 +124,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 			CreoleMode creoleMode, FontConfiguration stereo) {
 <span class="fc" id="L125">		return new CreoleParser(fontConfiguration, horizontalAlignment, this, creoleMode, stereo);</span>
 	}
-	
+
 	@Override
 	public Pragma getPragma() {
 <span class="nc" id="L130">		return Pragma.createEmpty();</span>
@@ -140,6 +140,10 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="nc" id="L140">		return PathSystem.fetch();</span>
 	}
 
+	@Override
+	public String getFromMd5(String md5) {
+<span class="nc" id="L145">		return null;</span>
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

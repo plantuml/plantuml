@@ -58,27 +58,27 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 import org.teavm.jso.JSBody;
 // ::done
 
-<span class="nc" id="L61">public class SignatureUtils {</span>
+<span class="pc" id="L61">public class SignatureUtils {</span>
 
 	public static String toHexString(byte data[]) {
-<span class="nc" id="L64">		final StringBuilder sb = new StringBuilder(data.length * 2);</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		for (byte b : data)</span>
-<span class="nc" id="L66">			sb.append(String.format(&quot;%02x&quot;, b));</span>
+<span class="fc" id="L64">		final StringBuilder sb = new StringBuilder(data.length * 2);</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		for (byte b : data)</span>
+<span class="fc" id="L66">			sb.append(String.format(&quot;%02x&quot;, b));</span>
 
-<span class="nc" id="L68">		return sb.toString();</span>
+<span class="fc" id="L68">		return sb.toString();</span>
 	}
 
 	public static String getMD5Hex(String s) {
-<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
 			// ::revert when JAVA8
 <span class="nc" id="L74">			return md5Native(s);</span>
 			// return null;
 			// ::done
 		} else
 			try {
-<span class="nc" id="L79">				final byte[] digest = getMD5raw(s);</span>
-<span class="nc bnc" id="L80" title="All 4 branches missed.">				if (TeaVM.a()) assert digest.length == 16;</span>
-<span class="nc" id="L81">				return toHexString(digest);</span>
+<span class="fc" id="L79">				final byte[] digest = getMD5raw(s);</span>
+<span class="pc bpc" id="L80" title="2 of 4 branches missed.">				if (TeaVM.a()) assert digest.length == 16;</span>
+<span class="fc" id="L81">				return toHexString(digest);</span>
 <span class="nc" id="L82">			} catch (NoSuchAlgorithmException e) {</span>
 <span class="nc" id="L83">				Logme.error(e);</span>
 <span class="nc" id="L84">				throw new UnsupportedOperationException(e);</span>
@@ -90,9 +90,9 @@ import org.teavm.jso.JSBody;
 
 	public static synchronized byte[] getMD5raw(String s)
 			throws NoSuchAlgorithmException, UnsupportedEncodingException {
-<span class="nc" id="L93">		final MessageDigest msgDigest = MessageDigest.getInstance(&quot;MD5&quot;);</span>
-<span class="nc" id="L94">		msgDigest.update(s.getBytes(UTF_8));</span>
-<span class="nc" id="L95">		return msgDigest.digest();</span>
+<span class="fc" id="L93">		final MessageDigest msgDigest = MessageDigest.getInstance(&quot;MD5&quot;);</span>
+<span class="fc" id="L94">		msgDigest.update(s.getBytes(UTF_8));</span>
+<span class="fc" id="L95">		return msgDigest.digest();</span>
 	}
 
 	public static synchronized byte[] salting(String pass, byte[] salt)
