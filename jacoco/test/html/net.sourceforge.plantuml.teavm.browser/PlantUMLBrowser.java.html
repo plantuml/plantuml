@@ -377,21 +377,23 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 <span class="nc" id="L377">			return;</span>
 
 		try {
-<span class="nc" id="L380">			removeAllChildren(out);</span>
-<span class="nc" id="L381">			appendSvgElement(out, buildSvg(lines).getSvgRoot());</span>
-<span class="nc" id="L382">		} catch (Exception e) {</span>
-<span class="nc" id="L383">			out.setTextContent(String.valueOf(e));</span>
-<span class="nc" id="L384">		}</span>
-<span class="nc" id="L385">		BrowserLog.jsStatusDuration();</span>
-<span class="nc" id="L386">	}</span>
+<span class="nc" id="L380">			BrowserLog.reset();</span>
+<span class="nc" id="L381">			final SvgGraphicsTeaVM svg = buildSvg(lines);</span>
+<span class="nc" id="L382">			removeAllChildren(out);</span>
+<span class="nc" id="L383">			appendSvgElement(out, svg.getSvgRoot());</span>
+<span class="nc" id="L384">		} catch (Exception e) {</span>
+<span class="nc" id="L385">			out.setTextContent(String.valueOf(e));</span>
+<span class="nc" id="L386">		}</span>
+<span class="nc" id="L387">		BrowserLog.jsStatusDuration();</span>
+<span class="nc" id="L388">	}</span>
 
 	private static void doRenderToString(String[] lines, StringCallback onSuccess, StringCallback onError) {
 		try {
-<span class="nc" id="L390">			onSuccess.call(serializeSvg(buildSvg(lines).getSvgRoot()));</span>
-<span class="nc" id="L391">		} catch (Exception e) {</span>
-<span class="nc" id="L392">			onError.call(String.valueOf(e));</span>
-<span class="nc" id="L393">		}</span>
-<span class="nc" id="L394">	}</span>
+<span class="nc" id="L392">			onSuccess.call(serializeSvg(buildSvg(lines).getSvgRoot()));</span>
+<span class="nc" id="L393">		} catch (Exception e) {</span>
+<span class="nc" id="L394">			onError.call(String.valueOf(e));</span>
+<span class="nc" id="L395">		}</span>
+<span class="nc" id="L396">	}</span>
 
 	// =========================================================================
 	// JavaScript interop utilities
