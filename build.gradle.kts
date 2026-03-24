@@ -741,6 +741,79 @@ val filterSourcesWithBuildInfo by tasks.registering {
 		println("Injected version into ${targetFile.name}: $projectVersion")
 		println("Injected git.commit.id into ${targetFile.name}: $commitId")
 		println("Injected compile timestamp into ${targetFile.name}: $compileTs")
+
+		// 5) Transform non-ASCII chars in string literals so TeaVM emits correct JS.
+		// TeaVM misreads CONSTANT_Utf8 class file entries for non-ASCII chars, treating
+		// each UTF-8 byte as a separate Latin-1 char. Replacing "〶" with
+		// "" + (char)0x3016 + "" avoids CONSTANT_Utf8 entirely -- the value is computed
+		// at runtime via char arithmetic. Char literals (e.g. '〶') use integer constants
+		// in bytecode and are NOT affected, so they are left as-is.
+		fun transformNonAsciiInStringLiterals(source: String): String {
+			val sb = StringBuilder(source.length)
+			var i = 0
+			var inString = false
+			var inChar = false
+			var inLineComment = false
+			var inBlockComment = false
+			while (i < source.length) {
+				val c = source[i]
+				when {
+					inLineComment -> {
+						sb.append(c)
+						if (c == '\n') inLineComment = false
+					}
+					inBlockComment -> {
+						sb.append(c)
+						if (c == '*' && i + 1 < source.length && source[i + 1] == '/') {
+							sb.append('/')
+							i++
+							inBlockComment = false
+						}
+					}
+					inChar -> {
+						sb.append(c)
+						if (c == '\\' && i + 1 < source.length) {
+							i++
+							sb.append(source[i])
+						} else if (c == '\'') {
+							inChar = false
+						}
+					}
+					inString -> when {
+						c == '\\' && i + 1 < source.length -> {
+							sb.append(c); i++; sb.append(source[i])
+						}
+						c == '"' -> { sb.append(c); inString = false }
+						c.code > 127 -> sb.append("\" + String.valueOf((char)0x${c.code.toString(16).uppercase()}) + \"")
+						else -> sb.append(c)
+					}
+					else -> when {
+						c == '"' -> { sb.append(c); inString = true }
+						c == '\'' -> { sb.append(c); inChar = true }
+						c == '/' && i + 1 < source.length && source[i + 1] == '/' -> {
+							sb.append(c); inLineComment = true
+						}
+						c == '/' && i + 1 < source.length && source[i + 1] == '*' -> {
+							sb.append(c); inBlockComment = true
+						}
+						else -> sb.append(c)
+					}
+				}
+				i++
+			}
+			return sb.toString()
+		}
+
+		var transformedCount = 0
+		outDir.walkTopDown().filter { it.isFile && it.name.endsWith(".java") }.forEach { file ->
+			val original = file.readText(Charsets.UTF_8)
+			val transformed = transformNonAsciiInStringLiterals(original)
+			if (transformed != original) {
+				file.writeText(transformed, Charsets.UTF_8)
+				transformedCount++
+			}
+		}
+		println("Transformed non-ASCII string literals in $transformedCount file(s)")
 	}
 }
 
