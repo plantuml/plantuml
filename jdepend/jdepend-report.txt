@@ -5884,16 +5884,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 28
-    Concrete Classes: 27
+    Total Classes: 29
+    Concrete Classes: 28
     Abstract Classes: 1
 
     Ca: 92
     Ce: 8
 
-    A: 0.04
+    A: 0.03
     I: 0.08
-    D: 0.88
+    D: 0.89
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.color.ColorMapper
@@ -5908,6 +5908,7 @@ Concrete Classes:
     net.sourceforge.plantuml.klimt.color.ColorMapper$5
     net.sourceforge.plantuml.klimt.color.ColorMapper$6
     net.sourceforge.plantuml.klimt.color.ColorMapper$7
+    net.sourceforge.plantuml.klimt.color.ColorMapper$8
     net.sourceforge.plantuml.klimt.color.ColorOrder
     net.sourceforge.plantuml.klimt.color.ColorTrieNode
     net.sourceforge.plantuml.klimt.color.ColorType
@@ -14735,7 +14736,7 @@ net.sourceforge.plantuml.json,18,2,11,3,0.11,0.21,0.67,1
 net.sourceforge.plantuml.jsondiagram,6,0,4,23,0,0.85,0.15,1
 net.sourceforge.plantuml.klimt,21,10,79,19,0.48,0.19,0.33,1
 net.sourceforge.plantuml.klimt.awt,2,1,28,4,0.5,0.12,0.38,1
-net.sourceforge.plantuml.klimt.color,28,1,92,8,0.04,0.08,0.88,1
+net.sourceforge.plantuml.klimt.color,29,1,92,8,0.03,0.08,0.89,1
 net.sourceforge.plantuml.klimt.compress,11,2,3,9,0.18,0.75,0.07,1
 net.sourceforge.plantuml.klimt.creole,19,4,66,12,0.21,0.15,0.64,1
 net.sourceforge.plantuml.klimt.creole.atom,14,2,3,17,0.14,0.85,0.01,1

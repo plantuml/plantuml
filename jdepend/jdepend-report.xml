@@ -8708,14 +8708,14 @@
 
         <Package name="net.sourceforge.plantuml.klimt.color">
             <Stats>
-                <TotalClasses>28</TotalClasses>
-                <ConcreteClasses>27</ConcreteClasses>
+                <TotalClasses>29</TotalClasses>
+                <ConcreteClasses>28</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>92</Ca>
                 <Ce>8</Ce>
-                <A>0.04</A>
+                <A>0.03</A>
                 <I>0.08</I>
-                <D>0.88</D>
+                <D>0.89</D>
                 <V>1</V>
             </Stats>
 
@@ -8752,6 +8752,9 @@
                 </Class>
                 <Class sourceFile="ColorMapper.java">
                     net.sourceforge.plantuml.klimt.color.ColorMapper$7
+                </Class>
+                <Class sourceFile="ColorMapper.java">
+                    net.sourceforge.plantuml.klimt.color.ColorMapper$8
                 </Class>
                 <Class sourceFile="ColorOrder.java">
                     net.sourceforge.plantuml.klimt.color.ColorOrder

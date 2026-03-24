@@ -1757,8 +1757,8 @@ Total Classes: 2
 "net.sourceforge.plantuml.klimt.awt" --> "java.lang"
 "net.sourceforge.plantuml.klimt.awt" --> "net.sourceforge.plantuml.teavm"
 
-class "net.sourceforge.plantuml.klimt.color" %lighten("red", 12) {
-Total Classes: 28
+class "net.sourceforge.plantuml.klimt.color" %lighten("red", 11) {
+Total Classes: 29
 }
 "net.sourceforge.plantuml.klimt.color" --> "java.awt"
 "net.sourceforge.plantuml.klimt.color" --> "java.lang"

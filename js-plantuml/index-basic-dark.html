@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>js-PlantUML</title>
+<style>
+body {
+	background-color: #1a1a2e;
+	color: #e0e0e0;
+}
+textarea {
+	width: 100%;
+	box-sizing: border-box;
+	background-color: #16213e;
+	color: #e0e0e0;
+	border: 1px solid #0f3460;
+}
+a {
+	color: #53a8b6;
+}
+#status {
+	color: #888 !important;
+}
+</style>
+</head>
+<body>
+	<p>
+		<strong>Beta</strong> – Powered by <a
+			href="https://github.com/plantuml/plantuml">PlantUML</a>, <a
+			href="https://github.com/konsoletyper/teavm">TeaVM</a> &amp; <a
+			href="https://github.com/mdaines/viz-js">Viz.js</a>
+	</p>
+	<div id="status"
+		style="margin-bottom: 6px; font-family: monospace; color: #555;">
+		Loading in progress...
+	</div>
+	<textarea id="src" rows="10">@startuml
+Alice->Bob : Hello
+return ok
+@enduml</textarea>
+	<div id="out"></div>
+
+	<script src="viz-global.js"></script>
+	<script src="plantuml.js"></script>
+	<script>
+		plantumlLoad();
+		const textarea = document.getElementById("src");
+		function renderNow() {
+			window.plantuml.render(textarea.value.split(/\r\n|\r|\n/), "out", {dark: true});
+		}
+		textarea.addEventListener("input", renderNow);
+		renderNow();
+	</script>
+</body>
+</html>
