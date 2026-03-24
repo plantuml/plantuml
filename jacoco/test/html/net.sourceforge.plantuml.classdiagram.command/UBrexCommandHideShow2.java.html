@@ -56,10 +56,10 @@ public class UBrexCommandHideShow2 extends UBrexSingleLineCommand2&lt;CucaDiagra
 	static UnicodeBracketedExpression getRegexConcat() {
 <span class="fc" id="L57">		return UBrexConcat.build( //</span>
 				new UBrexNamed(&quot;COMMAND&quot;, //
-						new UBrexLeaf(&quot;【hide-class┇hide┇show-class┇show】&quot;)), //
+<span class="fc" id="L59">						new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot;hide-class&quot; + String.valueOf((char)0x2507) + &quot;hide&quot; + String.valueOf((char)0x2507) + &quot;show-class&quot; + String.valueOf((char)0x2507) + &quot;show&quot; + String.valueOf((char)0x3011) + &quot;&quot;)), //</span>
 <span class="fc" id="L60">				UBrexLeaf.spaceOneOrMore(), //</span>
 				new UBrexNamed(&quot;WHAT&quot;, //
-						new UBrexLeaf(&quot;【 &lt;&lt; 〇*「〤&lt;&gt;」&gt;&gt; ┇ 〇+〴S 】 &quot;)), //
+<span class="fc" id="L62">						new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot; &lt;&lt; &quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;&lt;&gt;&quot; + String.valueOf((char)0x300D) + &quot;&gt;&gt; &quot; + String.valueOf((char)0x2507) + &quot; &quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;S &quot; + String.valueOf((char)0x3011) + &quot; &quot;)), //</span>
 <span class="fc" id="L63">				UBrexLeaf.end());</span>
 	}
 

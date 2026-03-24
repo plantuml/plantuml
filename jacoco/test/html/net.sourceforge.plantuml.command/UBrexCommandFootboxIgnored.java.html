@@ -52,7 +52,7 @@ public class UBrexCommandFootboxIgnored extends UBrexSingleLineCommand2&lt;Title
 	
 	static UnicodeBracketedExpression getRegexConcat() {
 <span class="fc" id="L54">		return UBrexConcat.build(</span>
-				new UBrexLeaf(&quot;【 hide┇show 】&quot;), //
+<span class="fc" id="L55">				new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot; hide&quot; + String.valueOf((char)0x2507) + &quot;show &quot; + String.valueOf((char)0x3011) + &quot;&quot;), //</span>
 <span class="fc" id="L56">				UBrexLeaf.spaceZeroOrMore(), //</span>
 				new UBrexLeaf(&quot;footbox&quot;), //
 <span class="fc" id="L58">				UBrexLeaf.end()); //</span>

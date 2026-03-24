@@ -72,60 +72,60 @@ package net.sourceforge.plantuml.klimt.font;
 <span class="nc" id="L72">			return &quot;\\&lt;[bB][aA][cC][kK](?::(#?\\w+(?:[-\\\\|/]#?\\w+)?))?\\&gt;&quot;;</span>
 
 <span class="nc bnc" id="L74" title="All 2 branches missed.">		if (this == STRIKE)</span>
-<span class="nc" id="L75">			return &quot;&lt;【strike┇STRIKE┇s┇S┇del┇DEL】〇?〘:〶$XC=【#〇{6}「0〜9a〜fA〜F」┇〇+〴w】〙&gt;&quot;;</span>
+<span class="nc" id="L75">			return &quot;&lt;&quot; + String.valueOf((char)0x3010) + &quot;strike&quot; + String.valueOf((char)0x2507) + &quot;STRIKE&quot; + String.valueOf((char)0x2507) + &quot;s&quot; + String.valueOf((char)0x2507) + &quot;S&quot; + String.valueOf((char)0x2507) + &quot;del&quot; + String.valueOf((char)0x2507) + &quot;DEL&quot; + String.valueOf((char)0x3011) + &quot;&quot; + String.valueOf((char)0x3007) + &quot;?&quot; + String.valueOf((char)0x3018) + &quot;:&quot; + String.valueOf((char)0x3036) + &quot;$XC=&quot; + String.valueOf((char)0x3010) + &quot;#&quot; + String.valueOf((char)0x3007) + &quot;{6}&quot; + String.valueOf((char)0x300C) + &quot;0&quot; + String.valueOf((char)0x301C) + &quot;9a&quot; + String.valueOf((char)0x301C) + &quot;fA&quot; + String.valueOf((char)0x301C) + &quot;F&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x2507) + &quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w&quot; + String.valueOf((char)0x3011) + &quot;&quot; + String.valueOf((char)0x3019) + &quot;&gt;&quot;;</span>
 
 <span class="nc" id="L77">		return null;</span>
 	}
 
 	public String getUbrexActivationPattern() {
 <span class="fc bfc" id="L81" title="All 2 branches covered.">		if (this == PLAIN)</span>
-<span class="fc" id="L82">			return &quot;&lt;「pP」「lL」「aA」「iI」「nN」&gt;&quot;;</span>
+<span class="fc" id="L82">			return &quot;&lt;&quot; + String.valueOf((char)0x300C) + &quot;pP&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;lL&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;aA&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;iI&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;nN&quot; + String.valueOf((char)0x300D) + &quot;&gt;&quot;;</span>
 
 <span class="fc bfc" id="L84" title="All 2 branches covered.">		if (this == ITALIC)</span>
-<span class="fc" id="L85">			return &quot;&lt;「iI」&gt;&quot;;</span>
+<span class="fc" id="L85">			return &quot;&lt;&quot; + String.valueOf((char)0x300C) + &quot;iI&quot; + String.valueOf((char)0x300D) + &quot;&gt;&quot;;</span>
 
 <span class="fc bfc" id="L87" title="All 2 branches covered.">		if (this == BOLD)</span>
-<span class="fc" id="L88">			return &quot;&lt;「bB」&gt;&quot;;</span>
+<span class="fc" id="L88">			return &quot;&lt;&quot; + String.valueOf((char)0x300C) + &quot;bB&quot; + String.valueOf((char)0x300D) + &quot;&gt;&quot;;</span>
 
 <span class="fc bfc" id="L90" title="All 2 branches covered.">		if (this == UNDERLINE)</span>
-<span class="fc" id="L91">			return &quot;&lt;「uU」〇?〘:〶$XC=【#〇{6}「0〜9a〜fA〜F」┇〇+〴w】〙&gt;&quot;;</span>
+<span class="fc" id="L91">			return &quot;&lt;&quot; + String.valueOf((char)0x300C) + &quot;uU&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x3007) + &quot;?&quot; + String.valueOf((char)0x3018) + &quot;:&quot; + String.valueOf((char)0x3036) + &quot;$XC=&quot; + String.valueOf((char)0x3010) + &quot;#&quot; + String.valueOf((char)0x3007) + &quot;{6}&quot; + String.valueOf((char)0x300C) + &quot;0&quot; + String.valueOf((char)0x301C) + &quot;9a&quot; + String.valueOf((char)0x301C) + &quot;fA&quot; + String.valueOf((char)0x301C) + &quot;F&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x2507) + &quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w&quot; + String.valueOf((char)0x3011) + &quot;&quot; + String.valueOf((char)0x3019) + &quot;&gt;&quot;;</span>
 
 <span class="fc bfc" id="L93" title="All 2 branches covered.">		if (this == WAVE)</span>
-<span class="fc" id="L94">			return &quot;&lt;「wW」〇?〘:〶$XC=【#〇{6}「0〜9a〜fA〜F」┇〇+〴w】〙&gt;&quot;;</span>
+<span class="fc" id="L94">			return &quot;&lt;&quot; + String.valueOf((char)0x300C) + &quot;wW&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x3007) + &quot;?&quot; + String.valueOf((char)0x3018) + &quot;:&quot; + String.valueOf((char)0x3036) + &quot;$XC=&quot; + String.valueOf((char)0x3010) + &quot;#&quot; + String.valueOf((char)0x3007) + &quot;{6}&quot; + String.valueOf((char)0x300C) + &quot;0&quot; + String.valueOf((char)0x301C) + &quot;9a&quot; + String.valueOf((char)0x301C) + &quot;fA&quot; + String.valueOf((char)0x301C) + &quot;F&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x2507) + &quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w&quot; + String.valueOf((char)0x3011) + &quot;&quot; + String.valueOf((char)0x3019) + &quot;&gt;&quot;;</span>
 
 <span class="fc bfc" id="L96" title="All 2 branches covered.">		if (this == BACKCOLOR)</span>
-<span class="fc" id="L97">			return &quot;&lt;「bB」「aA」「cC」「kK」〇?〘:〶$XC=〘&quot; + //</span>
-					&quot;【#〇{6}「0〜9a〜fA〜F」┇〇+〴w 】 &quot; + //
-					&quot;〇?〘「-\\|/」【〇{6}「0〜9a〜fA〜F」┇〇+〴w】 〙&quot; + //
-					&quot;〙 〙&gt;&quot;;
+<span class="fc" id="L97">			return &quot;&lt;&quot; + String.valueOf((char)0x300C) + &quot;bB&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;aA&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;cC&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;kK&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x3007) + &quot;?&quot; + String.valueOf((char)0x3018) + &quot;:&quot; + String.valueOf((char)0x3036) + &quot;$XC=&quot; + String.valueOf((char)0x3018) + &quot;&quot; + //</span>
+<span class="fc" id="L98">					&quot;&quot; + String.valueOf((char)0x3010) + &quot;#&quot; + String.valueOf((char)0x3007) + &quot;{6}&quot; + String.valueOf((char)0x300C) + &quot;0&quot; + String.valueOf((char)0x301C) + &quot;9a&quot; + String.valueOf((char)0x301C) + &quot;fA&quot; + String.valueOf((char)0x301C) + &quot;F&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x2507) + &quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w &quot; + String.valueOf((char)0x3011) + &quot; &quot; + //</span>
+<span class="fc" id="L99">					&quot;&quot; + String.valueOf((char)0x3007) + &quot;?&quot; + String.valueOf((char)0x3018) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;-\\|/&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x3010) + &quot;&quot; + String.valueOf((char)0x3007) + &quot;{6}&quot; + String.valueOf((char)0x300C) + &quot;0&quot; + String.valueOf((char)0x301C) + &quot;9a&quot; + String.valueOf((char)0x301C) + &quot;fA&quot; + String.valueOf((char)0x301C) + &quot;F&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x2507) + &quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w&quot; + String.valueOf((char)0x3011) + &quot; &quot; + String.valueOf((char)0x3019) + &quot;&quot; + //</span>
+<span class="fc" id="L100">					&quot;&quot; + String.valueOf((char)0x3019) + &quot; &quot; + String.valueOf((char)0x3019) + &quot;&gt;&quot;;</span>
 
 <span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (this == STRIKE)</span>
-<span class="fc" id="L103">			return &quot;&lt;【strike┇STRIKE┇s┇S┇del┇DEL】〇?〘:〶$XC=【#〇{6}「0〜9a〜fA〜F」┇〇+〴w】〙&gt;&quot;;</span>
+<span class="fc" id="L103">			return &quot;&lt;&quot; + String.valueOf((char)0x3010) + &quot;strike&quot; + String.valueOf((char)0x2507) + &quot;STRIKE&quot; + String.valueOf((char)0x2507) + &quot;s&quot; + String.valueOf((char)0x2507) + &quot;S&quot; + String.valueOf((char)0x2507) + &quot;del&quot; + String.valueOf((char)0x2507) + &quot;DEL&quot; + String.valueOf((char)0x3011) + &quot;&quot; + String.valueOf((char)0x3007) + &quot;?&quot; + String.valueOf((char)0x3018) + &quot;:&quot; + String.valueOf((char)0x3036) + &quot;$XC=&quot; + String.valueOf((char)0x3010) + &quot;#&quot; + String.valueOf((char)0x3007) + &quot;{6}&quot; + String.valueOf((char)0x300C) + &quot;0&quot; + String.valueOf((char)0x301C) + &quot;9a&quot; + String.valueOf((char)0x301C) + &quot;fA&quot; + String.valueOf((char)0x301C) + &quot;F&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x2507) + &quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w&quot; + String.valueOf((char)0x3011) + &quot;&quot; + String.valueOf((char)0x3019) + &quot;&gt;&quot;;</span>
 
 <span class="nc" id="L105">		return null;</span>
 	}
 
 	public String getUbrexDeactivationPattern() {
 <span class="fc bfc" id="L109" title="All 2 branches covered.">		if (this == PLAIN)</span>
-<span class="fc" id="L110">			return &quot;&lt;/「pP」「lL」「aA」「iI」「nN」&gt;&quot;;</span>
+<span class="fc" id="L110">			return &quot;&lt;/&quot; + String.valueOf((char)0x300C) + &quot;pP&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;lL&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;aA&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;iI&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;nN&quot; + String.valueOf((char)0x300D) + &quot;&gt;&quot;;</span>
 
 <span class="fc bfc" id="L112" title="All 2 branches covered.">		if (this == ITALIC)</span>
-<span class="fc" id="L113">			return &quot;&lt;/「iI」&gt;&quot;;</span>
+<span class="fc" id="L113">			return &quot;&lt;/&quot; + String.valueOf((char)0x300C) + &quot;iI&quot; + String.valueOf((char)0x300D) + &quot;&gt;&quot;;</span>
 
 <span class="fc bfc" id="L115" title="All 2 branches covered.">		if (this == BOLD)</span>
-<span class="fc" id="L116">			return &quot;&lt;/「bB」&gt;&quot;;</span>
+<span class="fc" id="L116">			return &quot;&lt;/&quot; + String.valueOf((char)0x300C) + &quot;bB&quot; + String.valueOf((char)0x300D) + &quot;&gt;&quot;;</span>
 
 <span class="fc bfc" id="L118" title="All 2 branches covered.">		if (this == UNDERLINE)</span>
-<span class="fc" id="L119">			return &quot;&lt;/「uU」&gt;&quot;;</span>
+<span class="fc" id="L119">			return &quot;&lt;/&quot; + String.valueOf((char)0x300C) + &quot;uU&quot; + String.valueOf((char)0x300D) + &quot;&gt;&quot;;</span>
 
 <span class="fc bfc" id="L121" title="All 2 branches covered.">		if (this == WAVE)</span>
-<span class="fc" id="L122">			return &quot;&lt;/「wW」&gt;&quot;;</span>
+<span class="fc" id="L122">			return &quot;&lt;/&quot; + String.valueOf((char)0x300C) + &quot;wW&quot; + String.valueOf((char)0x300D) + &quot;&gt;&quot;;</span>
 
 <span class="fc bfc" id="L124" title="All 2 branches covered.">		if (this == BACKCOLOR)</span>
-<span class="fc" id="L125">			return &quot;&lt;/「bB」「aA」「cC」「kK」&gt;&quot;;</span>
+<span class="fc" id="L125">			return &quot;&lt;/&quot; + String.valueOf((char)0x300C) + &quot;bB&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;aA&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;cC&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;kK&quot; + String.valueOf((char)0x300D) + &quot;&gt;&quot;;</span>
 
 <span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (this == STRIKE)</span>
-<span class="fc" id="L128">			return &quot;&lt;/【strike┇STRIKE┇s┇S┇del┇DEL】&gt;&quot;;</span>
+<span class="fc" id="L128">			return &quot;&lt;/&quot; + String.valueOf((char)0x3010) + &quot;strike&quot; + String.valueOf((char)0x2507) + &quot;STRIKE&quot; + String.valueOf((char)0x2507) + &quot;s&quot; + String.valueOf((char)0x2507) + &quot;S&quot; + String.valueOf((char)0x2507) + &quot;del&quot; + String.valueOf((char)0x2507) + &quot;DEL&quot; + String.valueOf((char)0x3011) + &quot;&gt;&quot;;</span>
 
 <span class="nc" id="L130">		return null;</span>
 	}

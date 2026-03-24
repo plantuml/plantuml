@@ -60,11 +60,11 @@ public class UBrexCommandComment extends UBrexSingleLineCommand2&lt;PSystemEbnf&
 				new UBrexLeaf(&quot;(*&quot;), //
 				new UBrexNamed(&quot;COMMENT&quot;, //
 						new UBrexUpto(//
-								new UBrexLeaf(&quot;〴.&quot;), //
+<span class="fc" id="L63">								new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3034) + &quot;.&quot;), //</span>
 <span class="fc" id="L64">								UBrexConcat.build( //</span>
 										new UBrexLeaf(&quot;*)&quot;), //
 <span class="fc" id="L66">										UBrexLeaf.spaceZeroOrMore(), //</span>
-										new UBrexLeaf(&quot;〒($)&quot;) //
+<span class="fc" id="L67">										new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3012) + &quot;($)&quot;) //</span>
 								))),
 //				new UBrexLeaf(&quot;〶$COMMENT=〄+〴.-&gt;〘*) 〇*〴s 〒($)〙&quot;), //
 <span class="fc" id="L70">				UBrexLeaf.end());</span>

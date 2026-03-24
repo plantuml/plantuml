@@ -48,7 +48,7 @@ import java.util.Set;
 <span class="fc" id="L48">			throw new IllegalArgumentException(&quot;Empty!&quot;);</span>
 
 <span class="fc bfc" id="L50" title="All 2 branches covered.">		if (pattern.charAt(pattern.length() - 1) == '〜')</span>
-<span class="fc" id="L51">			throw new IllegalArgumentException(&quot;Range operator '〜' must be followed by a character.&quot;);</span>
+<span class="fc" id="L51">			throw new IllegalArgumentException(&quot;Range operator '&quot; + String.valueOf((char)0x301C) + &quot;' must be followed by a character.&quot;);</span>
 
 <span class="fc" id="L53">		final ChallengeCharSet result = new ChallengeCharSet();</span>
 

@@ -54,7 +54,7 @@ public class UBrexCommandRankDir extends UBrexSingleLineCommand2&lt;TitledDiagra
 
 	static UnicodeBracketedExpression getRegexConcat() {
 <span class="fc" id="L56">		return UBrexConcat.build(</span>
-				new UBrexNamed(&quot;DIRECTION&quot;, new UBrexLeaf(&quot;【 left∙to∙right ┇ top∙to∙bottom 】&quot;)), //
+<span class="fc" id="L57">				new UBrexNamed(&quot;DIRECTION&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot; left&quot; + String.valueOf((char)0x2219) + &quot;to&quot; + String.valueOf((char)0x2219) + &quot;right &quot; + String.valueOf((char)0x2507) + &quot; top&quot; + String.valueOf((char)0x2219) + &quot;to&quot; + String.valueOf((char)0x2219) + &quot;bottom &quot; + String.valueOf((char)0x3011) + &quot;&quot;)), //</span>
 <span class="fc" id="L58">				UBrexLeaf.spaceOneOrMore(), //</span>
 				new UBrexLeaf(&quot;direction&quot;), //
 <span class="fc" id="L60">				UBrexLeaf.end()); //</span>
