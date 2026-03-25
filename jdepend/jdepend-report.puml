@@ -2640,8 +2640,8 @@ Total Classes: 6
 "net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.salt" %lighten("red", 98) {
-Total Classes: 9
+class "net.sourceforge.plantuml.salt" %lighten("red", 96) {
+Total Classes: 8
 }
 "net.sourceforge.plantuml.salt" --> "java.lang"
 "net.sourceforge.plantuml.salt" --> "java.util"

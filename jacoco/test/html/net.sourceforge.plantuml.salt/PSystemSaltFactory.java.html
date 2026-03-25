@@ -63,11 +63,7 @@ public class PSystemSaltFactory extends PSystemCommandFactory {
 	@Override
 	public PSystemSalt createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing) {
-<span class="nc" id="L66">		final PSystemSalt result = new PSystemSalt(source, preprocessing);</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (getDiagramType() == DiagramType.SALT) {</span>
-<span class="nc" id="L68">			result.setIamSalt(true);</span>
-		}
-<span class="nc" id="L70">		return result;</span>
+<span class="nc" id="L66">		return new PSystemSalt(source, preprocessing);</span>
 	}
 
 }

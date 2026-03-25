@@ -249,50 +249,57 @@ public class PSystemBuilder {
 
 <span class="nc" id="L250">					return PSystemErrorUtils.buildV2(umlSource, error, Collections.&lt;String&gt;emptyList(), source,</span>
 							preprocessing);
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">				} else if (secondLine.trim().equals(&quot;nwdiag {&quot;)) {</span>
+<span class="nc" id="L253">					final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,</span>
+							&quot;This looks like a network diagram. Please use @startnwdiag instead of @startuml.&quot;, 100,
+<span class="nc" id="L255">							source.get(1).getLocation(), DiagramType.SEQUENCE);</span>
+
+<span class="nc" id="L257">					return PSystemErrorUtils.buildV2(umlSource, error, Collections.&lt;String&gt;emptyList(), source,</span>
+							preprocessing);
 				}
 			}
-<span class="fc" id="L254">			final List&lt;PSystemError&gt; errors = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L255" title="All 2 branches covered.">			for (PSystemFactory systemFactory : factories) {</span>
-<span class="fc bfc" id="L256" title="All 2 branches covered.">				if (!diagramTypes.contains(systemFactory.getDiagramType()))</span>
-<span class="fc" id="L257">					continue;</span>
+<span class="fc" id="L261">			final List&lt;PSystemError&gt; errors = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">			for (PSystemFactory systemFactory : factories) {</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">				if (!diagramTypes.contains(systemFactory.getDiagramType()))</span>
+<span class="fc" id="L264">					continue;</span>
 
 				try {
 					// WasmLog.log(&quot;...trying &quot; + systemFactory.getClass().getName() + &quot; ...&quot;);
-<span class="fc" id="L261">					final Diagram sys = systemFactory.createSystem(pathSystem, umlSource, previous, preprocessing);</span>
-<span class="fc bfc" id="L262" title="All 2 branches covered.">					if (isOk(sys)) {</span>
-<span class="fc" id="L263">						result = sys;</span>
-<span class="fc" id="L264">						return sys;</span>
+<span class="fc" id="L268">					final Diagram sys = systemFactory.createSystem(pathSystem, umlSource, previous, preprocessing);</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">					if (isOk(sys)) {</span>
+<span class="fc" id="L270">						result = sys;</span>
+<span class="fc" id="L271">						return sys;</span>
 					}
-<span class="fc" id="L266">					errors.add((PSystemError) sys);</span>
-<span class="nc" id="L267">				} catch (Throwable t) {</span>
-<span class="nc" id="L268">					final StringLocated s = source.get(0);</span>
-<span class="nc" id="L269">					final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, &quot;Fatal crash error: &quot; + t, 0,</span>
-<span class="nc" id="L270">							s.getLocation(), null);</span>
-<span class="nc" id="L271">					errors.add(PSystemErrorUtils.buildV2(umlSource, err, Collections.&lt;String&gt;emptyList(), source,</span>
+<span class="fc" id="L273">					errors.add((PSystemError) sys);</span>
+<span class="nc" id="L274">				} catch (Throwable t) {</span>
+<span class="nc" id="L275">					final StringLocated s = source.get(0);</span>
+<span class="nc" id="L276">					final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, &quot;Fatal crash error: &quot; + t, 0,</span>
+<span class="nc" id="L277">							s.getLocation(), null);</span>
+<span class="nc" id="L278">					errors.add(PSystemErrorUtils.buildV2(umlSource, err, Collections.&lt;String&gt;emptyList(), source,</span>
 							preprocessing));
-<span class="nc" id="L273">					t.printStackTrace();</span>
-<span class="fc" id="L274">				}</span>
-<span class="fc" id="L275">			}</span>
-<span class="pc bpc" id="L276" title="1 of 2 branches missed.">			if (errors.size() == 0)</span>
-<span class="nc" id="L277">				return new PSystemUnsupported(umlSource, preprocessing);</span>
+<span class="nc" id="L280">					t.printStackTrace();</span>
+<span class="fc" id="L281">				}</span>
+<span class="fc" id="L282">			}</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">			if (errors.size() == 0)</span>
+<span class="nc" id="L284">				return new PSystemUnsupported(umlSource, preprocessing);</span>
 
-<span class="fc" id="L279">			result = PSystemErrorUtils.merge(errors);</span>
-<span class="fc" id="L280">			return result;</span>
+<span class="fc" id="L286">			result = PSystemErrorUtils.merge(errors);</span>
+<span class="fc" id="L287">			return result;</span>
 		} finally {
 
-<span class="fc bfc" id="L283" title="All 4 branches covered.">			if (result != null &amp;&amp; GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS)) {</span>
-<span class="fc" id="L284">				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());</span>
+<span class="fc bfc" id="L290" title="All 4 branches covered.">			if (result != null &amp;&amp; GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS)) {</span>
+<span class="fc" id="L291">				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());</span>
 			}
-<span class="fc" id="L286">			Log.info(() -&gt; &quot;Compilation duration &quot; + (System.currentTimeMillis() - now));</span>
-<span class="fc" id="L287">			RegexConcat.printCacheInfo();</span>
+<span class="fc" id="L293">			Log.info(() -&gt; &quot;Compilation duration &quot; + (System.currentTimeMillis() - now));</span>
+<span class="fc" id="L294">			RegexConcat.printCacheInfo();</span>
 		}
 	}
 
 	private boolean isOk(Diagram ps) {
-<span class="pc bpc" id="L292" title="1 of 6 branches missed.">		if (ps == null || ps instanceof PSystemError || ps instanceof PSystemUnsupported)</span>
-<span class="fc" id="L293">			return false;</span>
+<span class="pc bpc" id="L299" title="1 of 6 branches missed.">		if (ps == null || ps instanceof PSystemError || ps instanceof PSystemUnsupported)</span>
+<span class="fc" id="L300">			return false;</span>
 
-<span class="fc" id="L295">		return true;</span>
+<span class="fc" id="L302">		return true;</span>
 	}
 
 }

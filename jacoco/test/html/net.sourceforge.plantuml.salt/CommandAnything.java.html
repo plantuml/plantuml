@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.salt;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -48,26 +47,23 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandAnything extends SingleLineCommand2&lt;PSystemSalt&gt; {
 
 	public CommandAnything() {
-<span class="nc" id="L51">		super(false, getRegexConcat());</span>
-<span class="nc" id="L52">	}</span>
+<span class="nc" id="L50">		super(false, getRegexConcat());</span>
+<span class="nc" id="L51">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L55">		return RegexConcat.build(CommandAnything.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L54">		return RegexConcat.build(CommandAnything.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;ALL&quot;, &quot;(.*)&quot;), //
-<span class="nc" id="L57">				RegexLeaf.end());</span>
+<span class="nc" id="L56">				RegexLeaf.end());</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(PSystemSalt diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(PSystemSalt diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 <span class="nc" id="L62">		final String s = arg.get(&quot;ALL&quot;, 0);</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (diagram.isIamSalt() == false) {</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">			if (StringUtils.isEmpty(s)) {</span>
-<span class="nc" id="L65">				return CommandExecutionResult.ok();</span>
-			}
-<span class="nc" id="L67">			return CommandExecutionResult.error(&quot;Not ready&quot;);</span>
-		}
-<span class="nc" id="L69">		diagram.add(s);</span>
-<span class="nc" id="L70">		return CommandExecutionResult.ok();</span>
+<span class="nc bnc" id="L63" title="All 4 branches missed.">		if (diagram.size() == 0 &amp;&amp; s.trim().equals(&quot;salt&quot;))</span>
+<span class="nc" id="L64">			return CommandExecutionResult.error(&quot;This is not needed anymore.&quot;);</span>
+<span class="nc" id="L65">		diagram.add(s);</span>
+<span class="nc" id="L66">		return CommandExecutionResult.ok();</span>
 	}
 
 }
