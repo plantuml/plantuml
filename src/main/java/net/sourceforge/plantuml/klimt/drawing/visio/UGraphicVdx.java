@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.klimt.shape.UImageTikz;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
@@ -88,6 +89,7 @@ public class UGraphicVdx extends AbstractUGraphic<VisioGraphics> implements Clip
 		ignoreShape(UEllipse.class);
 		ignoreShape(UImage.class);
 		ignoreShape(UImageSvg.class);
+		ignoreShape(UImageTikz.class);
 		registerDriver(UPath.class, new DriverPathVdx());
 		registerDriver(DotPath.class, new DriverDotPathVdx());
 		ignoreShape(UCenteredCharacter.class);

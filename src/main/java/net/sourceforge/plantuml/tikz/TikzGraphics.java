@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.eps.EpsGraphics;
 import net.sourceforge.plantuml.klimt.geom.USegment;
 import net.sourceforge.plantuml.klimt.geom.USegmentType;
+import net.sourceforge.plantuml.klimt.shape.UImageTikz;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.teavm.TeaVM;
@@ -719,6 +720,28 @@ public class TikzGraphics {
 
 	public void closeLink() {
 		this.pendingUrl = null;
+	}
+
+	public void tikzImage(double x, double y, UImageTikz image) {
+		if (image.hasUrl())
+			this.hasUrl = true;
+
+		cmd.add("\\begin{scope}[shift={" + couple(x, y) + "}]");
+		final HColor backcolor = image.getBackgroundColor();
+		if (backcolor != null && backcolor.isTransparent() == false) {
+			final XColor color = backcolor.toColor(mapper);
+			if (colornames.containsKey(color) == false)
+				colornames.put(color, "plantucolor" + String.format("%04d", colornames.size()));
+
+			cmd.add("\\fill[" + colornames.get(color) + "] (0pt,0pt) rectangle ("
+					+ format(image.getWidth()) + "pt," + format(image.getHeight()) + "pt);");
+		}
+		cmd.add("\\node[inner sep=0pt,outer sep=0pt,anchor=north west] at (0pt,0pt) {%");
+		for (final String line : image.getTikzCode().split("\n"))
+			cmd.add(line);
+
+		cmd.add("};");
+		cmd.add("\\end{scope}");
 	}
 
 }

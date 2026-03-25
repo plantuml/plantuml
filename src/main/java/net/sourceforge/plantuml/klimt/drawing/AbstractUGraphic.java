@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.UEmpty;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.klimt.shape.UImageTikz;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.UPixel;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
@@ -170,6 +171,8 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 			drawImage(x, y, (UImage) shape);
 		} else if (shape instanceof UImageSvg) {
 			drawImageSvg(x, y, (UImageSvg) shape);
+		} else if (shape instanceof UImageTikz) {
+			drawImageTikz(x, y, (UImageTikz) shape);
 		} else if (shape instanceof UComment) {
 		} else if (shape instanceof UEmpty) {
 			drawEmpty(x, y, (UEmpty) shape);
@@ -240,6 +243,11 @@ public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
 	}
 
 	private void drawImageSvg(double x, double y, UImageSvg shape) {
+		addPoint(x, y);
+		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);
+	}
+
+	private void drawImageTikz(double x, double y, UImageTikz shape) {
 		addPoint(x, y);
 		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);
 	}

@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.klimt.shape.UComment;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.klimt.shape.UImageTikz;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.UPixel;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
@@ -117,6 +118,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		registerDriver(UEllipse.class, new DriverEllipseSvg(this));
 		registerDriver(UImage.class, new DriverImagePng(this));
 		registerDriver(UImageSvg.class, new DriverImageSvgSvg());
+		ignoreShape(UImageTikz.class);
 		registerDriver(UPath.class, new DriverPathSvg(this));
 		registerDriver(DotPath.class, new DriverDotPathSvg());
 		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterSvg());

@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.UGraphicDelegator;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.creole.legacy.AtomText;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.UImage;
@@ -82,8 +83,9 @@ public class UGraphicDispatchFtile extends UGraphicDelegator {
 				// System.err.println("positions=" + positions);
 				drawGoto((FtileGoto) ftile);
 			}
-		} else if (shape instanceof UDrawable && !(shape instanceof UImage)) {
+		} else if (shape instanceof UDrawable && !(shape instanceof UImage) && !(shape instanceof AtomText)) {
 			// UImage implements TextBlock/UDrawable but must be drawn by the low-level driver
+			// AtomText must also be drawn by the low-level driver to avoid infinite recursion with SPECIALTXT
 			final UDrawable drawable = (UDrawable) shape;
 			drawable.drawU(this);
 		} else {
