@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.version.Version;
 		else {
 <span class="fc" id="L65">			final Properties p = System.getProperties();</span>
 			final List&lt;String&gt; all;
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE) {</span>
 <span class="nc" id="L68">				all = Arrays.asList(&quot;java.runtime.name&quot;, &quot;Java Runtime&quot;, &quot;java.vm.name&quot;, &quot;JVM&quot;, &quot;java.runtime.version&quot;,</span>
 						&quot;Java Version&quot;, &quot;os.name&quot;, &quot;Operating System&quot;, &quot;os.version&quot;, &quot;OS Version&quot;, &quot;file.encoding&quot;,
 						&quot;Default Encoding&quot;, &quot;user.language&quot;, &quot;Language&quot;, &quot;user.country&quot;, &quot;Country&quot;);
@@ -85,7 +85,7 @@ import net.sourceforge.plantuml.version.Version;
 <span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
 <span class="fc" id="L86">			strings.add(&quot; &quot;);</span>
 <span class="fc" id="L87">			strings.add(&quot;PLANTUML_LIMIT_SIZE: &quot; + GraphvizUtils.getenvImageLimit());</span>
-<span class="pc bpc" id="L88" title="1 of 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE) {</span>
 <span class="nc" id="L89">				strings.add(&quot;Processors: &quot; + Runtime.getRuntime().availableProcessors());</span>
 <span class="nc" id="L90">				final long freeMemory = Runtime.getRuntime().freeMemory();</span>
 <span class="nc" id="L91">				final long maxMemory = Runtime.getRuntime().maxMemory();</span>

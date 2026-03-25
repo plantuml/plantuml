@@ -100,8 +100,8 @@ import net.sourceforge.plantuml.timingdiagram.TimingRuler;
 <span class="nc" id="L100">			return Collections.emptyList();</span>
 
 <span class="pc bpc" id="L102" title="1 of 2 branches missed.">		for (int i = 0; i &lt; changes.size(); i++) {</span>
-<span class="fc" id="L103">			final int comparaison = changes.get(i).getWhen().compareTo(tick);</span>
-<span class="fc bfc" id="L104" title="All 2 branches covered.">			if (comparaison == 0) {</span>
+<span class="fc" id="L103">			final int comparison = changes.get(i).getWhen().compareTo(tick);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">			if (comparison == 0) {</span>
 <span class="pc bpc" id="L105" title="3 of 4 branches missed.">				if (i == 0 &amp;&amp; initialState == null)</span>
 <span class="nc" id="L106">					return Arrays.asList(changes.get(i).getState());</span>
 
@@ -110,7 +110,7 @@ import net.sourceforge.plantuml.timingdiagram.TimingRuler;
 
 <span class="fc" id="L111">				return Arrays.asList(changes.get(i - 1).getState(), changes.get(i).getState());</span>
 			}
-<span class="fc bfc" id="L113" title="All 2 branches covered.">			if (comparaison &gt; 0) {</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">			if (comparison &gt; 0) {</span>
 				final int changeIndex;
 <span class="pc bpc" id="L115" title="1 of 2 branches missed.">				if (i == 0) {</span>
 					// if this time tick was not yet defined in any place, and is less then the

@@ -123,19 +123,19 @@ public class Splitter {
 <span class="nc" id="L123">		tagOrText = Pattern2.cmpile(htmlTag + &quot;|.+?(?=&quot; + htmlTag + &quot;)|.+$&quot;);</span>
 <span class="nc" id="L124">	}</span>
 
-<span class="nc" id="L126">	private final List&lt;String&gt; splitted = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L126">	private final List&lt;String&gt; split = new ArrayList&lt;&gt;();</span>
 
 <span class="nc" id="L128">	public Splitter(String s) {</span>
 <span class="nc" id="L129">		final Matcher2 matcher = tagOrText.matcher(s);</span>
 <span class="nc bnc" id="L130" title="All 2 branches missed.">		while (matcher.find()) {</span>
 <span class="nc" id="L131">			String part = matcher.group(0);</span>
 <span class="nc" id="L132">			part = StringUtils.showComparatorCharacters(part);</span>
-<span class="nc" id="L133">			splitted.add(part);</span>
+<span class="nc" id="L133">			split.add(part);</span>
 <span class="nc" id="L134">		}</span>
 <span class="nc" id="L135">	}</span>
 
 	List&lt;String&gt; getSplittedInternal() {
-<span class="nc" id="L138">		return splitted;</span>
+<span class="nc" id="L138">		return split;</span>
 	}
 
 	public static String purgeAllTag(String s) {

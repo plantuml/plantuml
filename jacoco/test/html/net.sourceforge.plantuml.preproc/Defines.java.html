@@ -115,7 +115,7 @@ public class Defines implements Truth {
 <span class="nc" id="L115">		final Defines result = createEmpty();</span>
 <span class="nc" id="L116">		result.overrideFilename(file.getName());</span>
 <span class="nc" id="L117">		result.environment.put(&quot;filedate&quot;, new Date(file.lastModified()).toString());</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE)</span>
 <span class="nc" id="L119">			result.environment.put(&quot;dirpath&quot;,</span>
 <span class="nc" id="L120">					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));</span>
 
@@ -127,7 +127,7 @@ public class Defines implements Truth {
 <span class="fc" id="L127">		final Defines result = createEmpty();</span>
 <span class="fc" id="L128">		result.overrideFilename(file.getName());</span>
 <span class="fc" id="L129">		result.environment.put(&quot;filedate&quot;, new Date(file.lastModified()).toString());</span>
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE)</span>
 <span class="nc" id="L131">			result.environment.put(&quot;dirpath&quot;,</span>
 <span class="nc" id="L132">					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));</span>
 

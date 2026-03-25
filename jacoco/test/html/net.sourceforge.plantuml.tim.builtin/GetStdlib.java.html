@@ -94,7 +94,7 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 <span class="nc" id="L94">				final String key = values.get(1).toString().toLowerCase();</span>
 <span class="nc" id="L95">				final Stdlib folder = Stdlib.retrieve(folderName);</span>
 <span class="nc" id="L96">				String value = folder.getMetadata().get(key);</span>
-				// Temporary, we check the upercase key if needed
+				// Temporary, we check the uppercase key if needed
 <span class="nc bnc" id="L98" title="All 2 branches missed.">				if (value == null)</span>
 <span class="nc" id="L99">					value = folder.getMetadata().get(key.toUpperCase());</span>
 <span class="nc bnc" id="L100" title="All 2 branches missed.">				if (value == null)</span>

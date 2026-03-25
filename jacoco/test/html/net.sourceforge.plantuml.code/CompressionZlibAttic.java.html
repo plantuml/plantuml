@@ -65,13 +65,13 @@ import java.util.zip.Inflater;
 
 	private byte[] tryCompress(byte[] in, final int len) {
 		// Compress the bytes
-<span class="nc" id="L68">		final Deflater compresser = new Deflater(COMPRESSION_LEVEL, true);</span>
-<span class="nc" id="L69">		compresser.setInput(in);</span>
-<span class="nc" id="L70">		compresser.finish();</span>
+<span class="nc" id="L68">		final Deflater compressor = new Deflater(COMPRESSION_LEVEL, true);</span>
+<span class="nc" id="L69">		compressor.setInput(in);</span>
+<span class="nc" id="L70">		compressor.finish();</span>
 
 <span class="nc" id="L72">		final byte[] output = new byte[len];</span>
-<span class="nc" id="L73">		final int compressedDataLength = compresser.deflate(output);</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (compresser.finished() == false)</span>
+<span class="nc" id="L73">		final int compressedDataLength = compressor.deflate(output);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (compressor.finished() == false)</span>
 <span class="nc" id="L75">			return null;</span>
 
 <span class="nc" id="L77">		return copyArray(output, compressedDataLength);</span>
@@ -102,14 +102,14 @@ import java.util.zip.Inflater;
 
 		// Decompress the bytes
 <span class="nc" id="L104">		final byte[] tmp = new byte[len];</span>
-<span class="nc" id="L105">		final Inflater decompresser = new Inflater(true);</span>
-<span class="nc" id="L106">		decompresser.setInput(in);</span>
+<span class="nc" id="L105">		final Inflater decompressor = new Inflater(true);</span>
+<span class="nc" id="L106">		decompressor.setInput(in);</span>
 		try {
-<span class="nc" id="L108">			final int resultLength = decompresser.inflate(tmp);</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (decompresser.finished() == false)</span>
+<span class="nc" id="L108">			final int resultLength = decompressor.inflate(tmp);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (decompressor.finished() == false)</span>
 <span class="nc" id="L110">				return null;</span>
 
-<span class="nc" id="L112">			decompresser.end();</span>
+<span class="nc" id="L112">			decompressor.end();</span>
 
 <span class="nc" id="L114">			final byte[] result = copyArray(tmp, resultLength);</span>
 <span class="nc" id="L115">			return result;</span>

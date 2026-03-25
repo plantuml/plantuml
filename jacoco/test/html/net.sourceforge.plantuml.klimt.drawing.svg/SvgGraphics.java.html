@@ -1035,7 +1035,7 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 <span class="nc" id="L1035">	}</span>
 
 	public void svgImage(UImageSvg image, double x, double y) {
-<span class="pc bpc" id="L1038" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+<span class="pc bpc" id="L1038" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE) {</span>
 <span class="nc" id="L1039">			svgImageUnsecure(image, x, y);</span>
 <span class="nc" id="L1040">			return;</span>
 		}

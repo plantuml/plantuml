@@ -62,13 +62,13 @@ import net.sourceforge.plantuml.code.deflate.Decompressor;
 <span class="fc" id="L62">			len = 1000;</span>
 
 		// Compress the bytes
-<span class="fc" id="L65">		final Deflater compresser = new Deflater(COMPRESSION_LEVEL, true);</span>
-<span class="fc" id="L66">		compresser.setInput(in);</span>
-<span class="fc" id="L67">		compresser.finish();</span>
+<span class="fc" id="L65">		final Deflater compressor = new Deflater(COMPRESSION_LEVEL, true);</span>
+<span class="fc" id="L66">		compressor.setInput(in);</span>
+<span class="fc" id="L67">		compressor.finish();</span>
 
 <span class="fc" id="L69">		final byte[] output = new byte[len];</span>
-<span class="fc" id="L70">		final int compressedDataLength = compresser.deflate(output);</span>
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (compresser.finished() == false)</span>
+<span class="fc" id="L70">		final int compressedDataLength = compressor.deflate(output);</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (compressor.finished() == false)</span>
 <span class="nc" id="L72">			return null;</span>
 
 <span class="fc" id="L74">		return copyArray(output, compressedDataLength);</span>

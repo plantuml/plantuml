@@ -215,9 +215,9 @@ public class SkinParam implements ISkinParam {
 <span class="fc bfc" id="L215" title="All 2 branches covered.">		for (String key2 : cleanForKey(key)) {</span>
 <span class="fc" id="L216">			params.put(key2, StringUtils.trin(value));</span>
 <span class="fc" id="L217">			applyPendingStyleMigration();</span>
-<span class="fc" id="L218">			final FromSkinparamToStyle convertor = new FromSkinparamToStyle(key2);</span>
-<span class="fc" id="L219">			convertor.convertNow(value, getCurrentStyleBuilder());</span>
-<span class="fc" id="L220">			muteStyle(convertor.getStyles());</span>
+<span class="fc" id="L218">			final FromSkinparamToStyle converter = new FromSkinparamToStyle(key2);</span>
+<span class="fc" id="L219">			converter.convertNow(value, getCurrentStyleBuilder());</span>
+<span class="fc" id="L220">			muteStyle(converter.getStyles());</span>
 <span class="fc" id="L221">		}</span>
 <span class="fc bfc" id="L222" title="All 4 branches covered.">		if (&quot;style&quot;.equalsIgnoreCase(key) &amp;&amp; &quot;strictuml&quot;.equalsIgnoreCase(value)) {</span>
 <span class="fc" id="L223">			final InputStream internalIs = StyleLoader.class.getResourceAsStream(&quot;/skin/strictuml.skin&quot;);</span>
@@ -236,9 +236,9 @@ public class SkinParam implements ISkinParam {
 
 	public void applyPendingStyleMigration() {
 <span class="pc bpc" id="L238" title="1 of 2 branches missed.">		for (Entry&lt;String, String&gt; ent : paramsPendingForStyleMigration.entrySet()) {</span>
-<span class="nc" id="L239">			final FromSkinparamToStyle convertor = new FromSkinparamToStyle(ent.getKey());</span>
-<span class="nc" id="L240">			convertor.convertNow(ent.getValue(), getCurrentStyleBuilder());</span>
-<span class="nc" id="L241">			muteStyle(convertor.getStyles());</span>
+<span class="nc" id="L239">			final FromSkinparamToStyle converter = new FromSkinparamToStyle(ent.getKey());</span>
+<span class="nc" id="L240">			converter.convertNow(ent.getValue(), getCurrentStyleBuilder());</span>
+<span class="nc" id="L241">			muteStyle(converter.getStyles());</span>
 <span class="nc" id="L242">		}</span>
 <span class="fc" id="L243">		paramsPendingForStyleMigration.clear();</span>
 <span class="fc" id="L244">	}</span>

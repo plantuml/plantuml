@@ -75,7 +75,7 @@ public class CommandNoteLong extends CommandMultilines2&lt;TimingDiagram&gt; {
 <span class="nc" id="L75">		final String code = line0.get(&quot;CODE&quot;, 0);</span>
 <span class="nc" id="L76">		final Player player = diagram.getPlayer(code);</span>
 <span class="nc bnc" id="L77" title="All 2 branches missed.">		if (player == null)</span>
-<span class="nc" id="L78">			return CommandExecutionResult.error(&quot;Unkown \&quot;&quot; + code + &quot;\&quot;&quot;);</span>
+<span class="nc" id="L78">			return CommandExecutionResult.error(&quot;Unknown \&quot;&quot; + code + &quot;\&quot;&quot;);</span>
 
 <span class="nc" id="L80">		final Display note = lines.toDisplay();</span>
 <span class="nc" id="L81">		final TimeTick now = diagram.getNow();</span>

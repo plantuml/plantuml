@@ -170,7 +170,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 			}
 <span class="nc" id="L171">			final SFile f = FileSystem.getInstance().getFile(src);</span>
 <span class="nc bnc" id="L172" title="All 2 branches missed.">			if (f.exists() == false) {</span>
-<span class="nc bnc" id="L173" title="All 2 branches missed.">				if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">				if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE)</span>
 <span class="nc" id="L174">					return AtomTextUtils.createLegacy(&quot;(File not found: &quot; + f.getPrintablePath() + &quot;)&quot;, fc);</span>
 
 <span class="nc" id="L176">				return AtomTextUtils.createLegacy(&quot;(Cannot decode)&quot;, fc);</span>
@@ -184,7 +184,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 			}
 <span class="nc" id="L185">			final PortableImage read = f.readRasterImageFromFile();</span>
 <span class="nc bnc" id="L186" title="All 2 branches missed.">			if (read == null) {</span>
-<span class="nc bnc" id="L187" title="All 2 branches missed.">				if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">				if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE)</span>
 <span class="nc" id="L188">					return AtomTextUtils.createLegacy(&quot;(Cannot decode: &quot; + f.getPrintablePath() + &quot;)&quot;, fc);</span>
 
 <span class="nc" id="L190">				return AtomTextUtils.createLegacy(&quot;(Cannot decode)&quot;, fc);</span>
@@ -192,7 +192,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 <span class="nc" id="L192">			return new AtomImg(f.readRasterImageFromFile(), scale, url, src);</span>
 <span class="nc" id="L193">		} catch (IOException e) {</span>
 <span class="nc" id="L194">			Logme.error(e);</span>
-<span class="nc bnc" id="L195" title="All 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE)</span>
 <span class="nc" id="L196">				return AtomTextUtils.createLegacy(&quot;ERROR &quot; + e.toString(), fc);</span>
 
 <span class="nc" id="L198">			return AtomTextUtils.createLegacy(&quot;ERROR&quot;, fc);</span>

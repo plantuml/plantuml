@@ -70,7 +70,7 @@ public class FromSkinparamToStyle {
 		}
 	}
 
-<span class="fc" id="L73">	private static final Map&lt;String, List&lt;Data&gt;&gt; knowlegde = new HashMap&lt;String, List&lt;Data&gt;&gt;();</span>
+<span class="fc" id="L73">	private static final Map&lt;String, List&lt;Data&gt;&gt; knowledge = new HashMap&lt;String, List&lt;Data&gt;&gt;();</span>
 
 	static {
 <span class="fc" id="L76">		addConvert(&quot;participantClickableBackgroundColor&quot;, PName.BackGroundColor, SName.participant, SName.clickable);</span>
@@ -321,7 +321,7 @@ public class FromSkinparamToStyle {
 <span class="fc bfc" id="L321" title="All 2 branches covered.">		if (value.equalsIgnoreCase(&quot;dashed&quot;))</span>
 <span class="fc" id="L322">			value = &quot;7;7&quot;;</span>
 
-<span class="fc" id="L324">		final List&lt;Data&gt; datas = knowlegde.get(key.toLowerCase());</span>
+<span class="fc" id="L324">		final List&lt;Data&gt; datas = knowledge.get(key.toLowerCase());</span>
 
 <span class="fc bfc" id="L326" title="All 2 branches covered.">		if (datas == null) {</span>
 <span class="fc bfc" id="L327" title="All 2 branches covered.">			if (key.equalsIgnoreCase(&quot;shadowing&quot;))</span>
@@ -409,10 +409,10 @@ public class FromSkinparamToStyle {
 
 	private static void addConvert(String skinparam, PName propertyName, SName... styleNames) {
 <span class="fc" id="L411">		skinparam = skinparam.toLowerCase();</span>
-<span class="fc" id="L412">		List&lt;Data&gt; datas = knowlegde.get(skinparam);</span>
+<span class="fc" id="L412">		List&lt;Data&gt; datas = knowledge.get(skinparam);</span>
 <span class="fc bfc" id="L413" title="All 2 branches covered.">		if (datas == null) {</span>
 <span class="fc" id="L414">			datas = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L415">			knowlegde.put(skinparam, datas);</span>
+<span class="fc" id="L415">			knowledge.put(skinparam, datas);</span>
 		}
 <span class="fc" id="L417">		datas.add(new Data(styleNames, propertyName));</span>
 <span class="fc" id="L418">	}</span>

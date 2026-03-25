@@ -214,8 +214,8 @@ public class SURL {
 <span class="fc" id="L214">				return true;</span>
 			}
 
-<span class="nc bnc" id="L217" title="All 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)</span>
-				// We are UNSECURE anyway
+<span class="nc bnc" id="L217" title="All 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE)</span>
+				// We are INSECURE anyway
 <span class="nc" id="L219">				return true;</span>
 
 <span class="nc bnc" id="L221" title="All 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET) {</span>
@@ -448,7 +448,7 @@ public class SURL {
 	 * This method disables user interactions for the connection and, if the
 	 * connection is an instance of {@link HttpURLConnection}, it also disables
 	 * automatic following of HTTP redirects, unless the security profile is set to
-	 * {@link SecurityProfile#UNSECURE}.
+	 * {@link SecurityProfile#INSECURE}.
 	 * &lt;/p&gt;
 	 *
 	 * @param connection the {@link URLConnection} to be configured
@@ -461,7 +461,7 @@ public class SURL {
 	protected static void configure(URLConnection connection) {
 <span class="fc" id="L462">		connection.setAllowUserInteraction(false);</span>
 
-<span class="pc bpc" id="L464" title="2 of 4 branches missed.">		if (SecurityUtils.getSecurityProfile() != SecurityProfile.UNSECURE &amp;&amp; connection instanceof HttpURLConnection)</span>
+<span class="pc bpc" id="L464" title="2 of 4 branches missed.">		if (SecurityUtils.getSecurityProfile() != SecurityProfile.INSECURE &amp;&amp; connection instanceof HttpURLConnection)</span>
 <span class="fc" id="L465">			((HttpURLConnection) connection).setInstanceFollowRedirects(false);</span>
 <span class="fc" id="L466">	}</span>
 

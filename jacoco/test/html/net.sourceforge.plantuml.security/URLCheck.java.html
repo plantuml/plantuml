@@ -84,8 +84,8 @@ import java.net.UnknownHostException;
 <span class="pc bpc" id="L84" title="3 of 6 branches missed.">		if (host == null || host.isEmpty() || !host.contains(&quot;.&quot;))</span>
 <span class="nc" id="L85">			return true;</span>
 
-		// When UNSECURE, we allow localhost
-<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() != SecurityProfile.UNSECURE) {</span>
+		// When INSECURE, we allow localhost
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() != SecurityProfile.INSECURE) {</span>
 			// Additional check for IP addresses or invalid host patterns
 <span class="pc bpc" id="L90" title="1 of 2 branches missed.">			if (host.matches(&quot;^[-#.0-9:\\[\\]+]+$&quot;))</span>
 <span class="nc" id="L91">				return true;</span>

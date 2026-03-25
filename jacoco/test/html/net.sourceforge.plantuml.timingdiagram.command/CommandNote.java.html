@@ -85,7 +85,7 @@ public class CommandNote extends SingleLineCommand2&lt;TimingDiagram&gt; {
 <span class="nc" id="L85">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
 <span class="nc" id="L86">		final Player player = diagram.getPlayer(code);</span>
 <span class="nc bnc" id="L87" title="All 2 branches missed.">		if (player == null)</span>
-<span class="nc" id="L88">			return CommandExecutionResult.error(&quot;Unkown \&quot;&quot; + code + &quot;\&quot;&quot;);</span>
+<span class="nc" id="L88">			return CommandExecutionResult.error(&quot;Unknown \&quot;&quot; + code + &quot;\&quot;&quot;);</span>
 
 <span class="nc" id="L90">		final Display note = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
 <span class="nc" id="L91">		final TimeTick now = diagram.getNow();</span>

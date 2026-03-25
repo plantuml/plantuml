@@ -45,8 +45,8 @@ public class SentenceProducer {
 <span class="nc" id="L45">	public SentenceProducer(String sentence1, String sentence2) {</span>
 <span class="nc" id="L46">		final byte[] key = EggUtils.fromSecretSentence(sentence1).toByteArray();</span>
 <span class="nc" id="L47">		final byte[] sen2 = sentence2.getBytes(UTF_8);</span>
-<span class="nc" id="L48">		final byte[] crypted = EggUtils.xor(sen2, key);</span>
-<span class="nc" id="L49">		this.secret = EggUtils.fromByteArrays(crypted);</span>
+<span class="nc" id="L48">		final byte[] encrypted = EggUtils.xor(sen2, key);</span>
+<span class="nc" id="L49">		this.secret = EggUtils.fromByteArrays(encrypted);</span>
 <span class="nc" id="L50">	}</span>
 
 	public String getSecret() {

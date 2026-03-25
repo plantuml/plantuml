@@ -44,9 +44,9 @@ public class SentenceDecoder {
 
 	private final String secret;
 
-<span class="fc" id="L47">	public SentenceDecoder(String sentence1, byte[] crypted) throws UnsupportedEncodingException {</span>
+<span class="fc" id="L47">	public SentenceDecoder(String sentence1, byte[] encrypted) throws UnsupportedEncodingException {</span>
 <span class="fc" id="L48">		final byte[] key = EggUtils.fromSecretSentence(sentence1).toByteArray();</span>
-<span class="fc" id="L49">		final byte[] sen2 = EggUtils.xor(crypted, key);</span>
+<span class="fc" id="L49">		final byte[] sen2 = EggUtils.xor(encrypted, key);</span>
 <span class="fc" id="L50">		this.secret = new String(sen2, UTF_8);</span>
 <span class="fc" id="L51">	}</span>
 

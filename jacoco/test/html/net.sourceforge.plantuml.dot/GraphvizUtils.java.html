@@ -108,7 +108,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 		}
 
 <span class="nc" id="L110">		final File dotExe = GraphvizRuntimeEnvironment.getInstance().getDotExe();</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE) {</span>
 <span class="nc" id="L112">			final String ent = GraphvizRuntimeEnvironment.getInstance().getenvGraphvizDot();</span>
 <span class="nc bnc" id="L113" title="All 2 branches missed.">			if (ent == null)</span>
 <span class="nc" id="L114">				result.add(&quot;The environment variable GRAPHVIZ_DOT has not been set&quot;);</span>

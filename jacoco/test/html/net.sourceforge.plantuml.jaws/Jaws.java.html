@@ -60,22 +60,22 @@ import net.sourceforge.plantuml.text.StringLocated;
 	public static List&lt;StringLocated&gt; expandsJawsForPreprocessor(List&lt;StringLocated&gt; input) {
 <span class="fc" id="L61">		final List&lt;StringLocated&gt; output = new ArrayList&lt;StringLocated&gt;();</span>
 <span class="fc bfc" id="L62" title="All 2 branches covered.">		for (int i = 0; i &lt; input.size(); i++) {</span>
-<span class="fc" id="L63">			List&lt;StringLocated&gt; splitted = input.get(i).expandsJawsForPreprocessor();</span>
-<span class="fc" id="L64">			StringLocated line = splitted.get(0);</span>
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">			if (splitted.size() == 2) {</span>
+<span class="fc" id="L63">			List&lt;StringLocated&gt; split = input.get(i).expandsJawsForPreprocessor();</span>
+<span class="fc" id="L64">			StringLocated line = split.get(0);</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">			if (split.size() == 2) {</span>
 <span class="nc" id="L66">				final int headerLength = line.length() + 3;</span>
 <span class="nc" id="L67">				line = line.append(BLOCK_E1_INVISIBLE_QUOTE);</span>
-<span class="nc" id="L68">				final MultilinesBloc bloc = new MultilinesBloc(headerLength, splitted.get(1).getString());</span>
+<span class="nc" id="L68">				final MultilinesBloc block = new MultilinesBloc(headerLength, split.get(1).getString());</span>
 				while (true) {
 <span class="nc" id="L70">					i++;</span>
-<span class="nc" id="L71">					splitted = input.get(i).expandsJawsForPreprocessor();</span>
-<span class="nc" id="L72">					bloc.add(splitted.get(0).getString());</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">					if (splitted.size() == 2)</span>
+<span class="nc" id="L71">					split = input.get(i).expandsJawsForPreprocessor();</span>
+<span class="nc" id="L72">					block.add(split.get(0).getString());</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">					if (split.size() == 2)</span>
 <span class="nc" id="L74">						break;</span>
 				}
-<span class="nc" id="L76">				line = line.append(bloc.getMerged());</span>
+<span class="nc" id="L76">				line = line.append(block.getMerged());</span>
 <span class="nc" id="L77">				line = line.append(BLOCK_E1_INVISIBLE_QUOTE);</span>
-<span class="nc" id="L78">				line = line.append(splitted.get(1).getString());</span>
+<span class="nc" id="L78">				line = line.append(split.get(1).getString());</span>
 			}
 <span class="fc" id="L80">			output.add(line);</span>
 		}

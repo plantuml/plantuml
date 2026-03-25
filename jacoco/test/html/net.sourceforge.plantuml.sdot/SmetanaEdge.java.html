@@ -255,7 +255,7 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		try {
 <span class="fc" id="L256">			final Extremity extremity2 = (Extremity) extremityFactory2.createUDrawable(p0, startAngle, null);</span>
 <span class="pc bpc" id="L257" title="1 of 2 branches missed.">			if (extremity2 != null) {</span>
-<span class="pc bpc" id="L258" title="1 of 2 branches missed.">				if (getLinkStrategy() == LinkStrategy.SIMPLIER) {</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">				if (getLinkStrategy() == LinkStrategy.SIMPLEST) {</span>
 <span class="fc" id="L259">					final double decorationLength = extremity2.getDecorationLength();</span>
 <span class="fc" id="L260">					dotPath.moveStartPoint(new UTranslate(decorationLength, 0).rotate(startAngle - Math.PI));</span>
 				}
@@ -280,7 +280,7 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		try {
 <span class="fc" id="L281">			final Extremity extremity1 = (Extremity) extremityFactory1.createUDrawable(p0, endAngle, null);</span>
 <span class="pc bpc" id="L282" title="1 of 2 branches missed.">			if (extremity1 != null) {</span>
-<span class="pc bpc" id="L283" title="1 of 2 branches missed.">				if (getLinkStrategy() == LinkStrategy.SIMPLIER) {</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">				if (getLinkStrategy() == LinkStrategy.SIMPLEST) {</span>
 <span class="fc" id="L284">					final double decorationLength = extremity1.getDecorationLength();</span>
 <span class="fc" id="L285">					dotPath.moveEndPoint(new UTranslate(decorationLength, 0).rotate(endAngle - Math.PI));</span>
 				}

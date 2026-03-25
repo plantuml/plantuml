@@ -178,7 +178,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 <span class="nc bnc" id="L178" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
 <span class="nc" id="L179">			strings.add(&quot;&lt;b&gt;License&lt;/b&gt; \&quot;\&quot;&quot; + License.getCurrent() + &quot;\&quot;\&quot;&quot;);</span>
 <span class="nc" id="L180">			strings.checkOldVersionWarning();</span>
-<span class="nc bnc" id="L181" title="All 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE) {</span>
 <span class="nc" id="L182">				strings.add(&quot;Loaded from &quot; + Version.getJarPath());</span>
 
 <span class="nc bnc" id="L184" title="All 2 branches missed.">				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD)) {</span>

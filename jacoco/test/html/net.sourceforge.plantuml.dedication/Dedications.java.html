@@ -74,8 +74,8 @@ public class Dedications {
 <span class="fc" id="L74">		}</span>
 <span class="fc" id="L75">	}</span>
 
-	private static DedicationCrypted secret(int tiny, String sig, BigInteger pq) throws IOException {
-<span class="fc" id="L78">		return new DedicationCrypted(load(sig), tiny, sig, pq);</span>
+	private static DedicationEncrypted secret(int tiny, String sig, BigInteger pq) throws IOException {
+<span class="fc" id="L78">		return new DedicationEncrypted(load(sig), tiny, sig, pq);</span>
 	}
 
 	private static byte[] load(String name) throws IOException {

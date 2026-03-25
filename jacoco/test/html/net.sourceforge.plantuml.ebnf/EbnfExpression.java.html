@@ -76,8 +76,8 @@ public class EbnfExpression implements TextBlockable {
 <span class="pc bpc" id="L76" title="1 of 2 branches missed.">			} else if (ch == '-') {</span>
 <span class="nc" id="L77">				tokens.add(new Token(Symbol.NOT, null));</span>
 <span class="fc bfc" id="L78" title="All 2 branches covered.">			} else if (isLetterOrDigit(ch)) {</span>
-<span class="fc" id="L79">				final String litteral = readLitteral(it);</span>
-<span class="fc" id="L80">				tokens.add(new Token(Symbol.LITTERAL, litteral));</span>
+<span class="fc" id="L79">				final String literal = readLitteral(it);</span>
+<span class="fc" id="L80">				tokens.add(new Token(Symbol.LITERAL, literal));</span>
 <span class="fc" id="L81">				continue;</span>
 <span class="fc bfc" id="L82" title="All 2 branches covered.">			} else if (ch == '*') {</span>
 <span class="fc" id="L83">				tokens.add(new Token(Symbol.REPETITION_SYMBOL, null));</span>
@@ -111,14 +111,14 @@ public class EbnfExpression implements TextBlockable {
 				// it.next();
 <span class="nc" id="L112">				break;</span>
 <span class="nc bnc" id="L113" title="All 2 branches missed.">			} else if (ch == '\&quot;') {</span>
-<span class="nc" id="L114">				final String litteral = readString(it);</span>
-<span class="nc" id="L115">				tokens.add(new Token(Symbol.TERMINAL_STRING1, protect(litteral)));</span>
+<span class="nc" id="L114">				final String literal = readString(it);</span>
+<span class="nc" id="L115">				tokens.add(new Token(Symbol.TERMINAL_STRING1, protect(literal)));</span>
 <span class="nc bnc" id="L116" title="All 2 branches missed.">			} else if (ch == '\'') {</span>
-<span class="nc" id="L117">				final String litteral = readString(it);</span>
-<span class="nc" id="L118">				tokens.add(new Token(Symbol.TERMINAL_STRING2, protect(litteral)));</span>
+<span class="nc" id="L117">				final String literal = readString(it);</span>
+<span class="nc" id="L118">				tokens.add(new Token(Symbol.TERMINAL_STRING2, protect(literal)));</span>
 <span class="nc bnc" id="L119" title="All 2 branches missed.">			} else if (ch == '?') {</span>
-<span class="nc" id="L120">				final String litteral = readString(it);</span>
-<span class="nc" id="L121">				tokens.add(new Token(Symbol.SPECIAL_SEQUENCE, protect(litteral)));</span>
+<span class="nc" id="L120">				final String literal = readString(it);</span>
+<span class="nc" id="L121">				tokens.add(new Token(Symbol.SPECIAL_SEQUENCE, protect(literal)));</span>
 <span class="nc" id="L122">			} else {</span>
 <span class="nc" id="L123">				tokens.clear();</span>
 <span class="nc" id="L124">				return;</span>
@@ -128,8 +128,8 @@ public class EbnfExpression implements TextBlockable {
 		}
 <span class="fc" id="L129">	}</span>
 
-	private static String protect(final String litteral) {
-<span class="nc bnc" id="L132" title="All 2 branches missed.">		return litteral.length() == 0 ? &quot; &quot; : litteral;</span>
+	private static String protect(final String literal) {
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		return literal.length() == 0 ? &quot; &quot; : literal;</span>
 	}
 
 	@Override
@@ -194,7 +194,7 @@ public class EbnfExpression implements TextBlockable {
 <span class="nc bnc" id="L194" title="All 2 branches missed.">		while (it.hasNext()) {</span>
 <span class="nc" id="L195">			final Token element = it.next();</span>
 <span class="nc bnc" id="L196" title="All 4 branches missed.">			if (element.getSymbol() == Symbol.TERMINAL_STRING1 || element.getSymbol() == Symbol.TERMINAL_STRING2</span>
-<span class="nc bnc" id="L197" title="All 4 branches missed.">					|| element.getSymbol() == Symbol.LITTERAL || element.getSymbol() == Symbol.SPECIAL_SEQUENCE)</span>
+<span class="nc bnc" id="L197" title="All 4 branches missed.">					|| element.getSymbol() == Symbol.LITERAL || element.getSymbol() == Symbol.SPECIAL_SEQUENCE)</span>
 <span class="nc" id="L198">				engine.push(element);</span>
 <span class="nc bnc" id="L199" title="All 2 branches missed.">			else if (element.getSymbol() == Symbol.COMMENT_ABOVE)</span>
 <span class="nc" id="L200">				engine.commentAbove(element.getData());</span>

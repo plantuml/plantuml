@@ -207,7 +207,7 @@ public class SFile implements Comparable&lt;SFile&gt;, InputFile {
 	}
 
 	public String getPrintablePath() {
-<span class="pc bpc" id="L210" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE) {</span>
 			try {
 <span class="nc" id="L212">				return internal.getCanonicalPath();</span>
 <span class="nc" id="L213">			} catch (IOException e) {</span>
@@ -273,8 +273,8 @@ public class SFile implements Comparable&lt;SFile&gt;, InputFile {
 <span class="pc bpc" id="L273" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.ALLOWLIST)</span>
 <span class="nc" id="L274">			return false;</span>
 
-<span class="pc bpc" id="L276" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() != SecurityProfile.UNSECURE) {</span>
-			// For UNSECURE, we did not do those checks
+<span class="pc bpc" id="L276" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() != SecurityProfile.INSECURE) {</span>
+			// For INSECURE, we did not do those checks
 <span class="fc" id="L278">			final String path = getCleanPathSecure();</span>
 <span class="pc bpc" id="L279" title="3 of 6 branches missed.">			if (path.startsWith(&quot;/etc/&quot;) || path.startsWith(&quot;/dev/&quot;) || path.startsWith(&quot;/boot/&quot;)</span>
 <span class="pc bpc" id="L280" title="2 of 4 branches missed.">					|| path.startsWith(&quot;/proc/&quot;) || path.startsWith(&quot;/sys/&quot;))</span>

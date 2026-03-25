@@ -137,22 +137,22 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="#ALLOWLIST" class="member-name-link">ALLOWLIST</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="#INTERNET" class="member-name-link">INTERNET</a></code></div>
+<div class="col-first odd-row-color"><code><a href="#INSECURE" class="member-name-link">INSECURE</a></code></div>
 <div class="col-last odd-row-color">
+<div class="block">Running in INSECURE mode means that PlantUML can access to any local file and
+ can connect to any URL.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="#INTERNET" class="member-name-link">INTERNET</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">This mode is designed for PlantUML running in a web server.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="#LEGACY" class="member-name-link">LEGACY</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">This mode reproduce old PlantUML version behaviour.</div>
-</div>
-<div class="col-first odd-row-color"><code><a href="#SANDBOX" class="member-name-link">SANDBOX</a></code></div>
+<div class="col-first odd-row-color"><code><a href="#LEGACY" class="member-name-link">LEGACY</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Running in SANDBOX mode is completely secure.</div>
+<div class="block">This mode reproduce old PlantUML version behavior.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="#UNSECURE" class="member-name-link">UNSECURE</a></code></div>
+<div class="col-first even-row-color"><code><a href="#SANDBOX" class="member-name-link">SANDBOX</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Running in UNSECURE mode means that PlantUML can access to any local file and
- can connect to any URL.</div>
+<div class="block">Running in SANDBOX mode is completely secure.</div>
 </div>
 </div>
 </section>
@@ -241,17 +241,17 @@ the order they are declared.</div>
 <section class="detail" id="LEGACY">
 <h3>LEGACY</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="SecurityProfile.html" title="enum class in net.sourceforge.plantuml.security">SecurityProfile</a></span>&nbsp;<span class="element-name">LEGACY</span></div>
-<div class="block">This mode reproduce old PlantUML version behaviour.
+<div class="block">This mode reproduce old PlantUML version behavior.
  <p>
  Right now, this is the default Security Profile but this will be removed from
  future version because it is now full secure, especially on Internet server.</div>
 </section>
 </li>
 <li>
-<section class="detail" id="UNSECURE">
-<h3>UNSECURE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="SecurityProfile.html" title="enum class in net.sourceforge.plantuml.security">SecurityProfile</a></span>&nbsp;<span class="element-name">UNSECURE</span></div>
-<div class="block">Running in UNSECURE mode means that PlantUML can access to any local file and
+<section class="detail" id="INSECURE">
+<h3>INSECURE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="SecurityProfile.html" title="enum class in net.sourceforge.plantuml.security">SecurityProfile</a></span>&nbsp;<span class="element-name">INSECURE</span></div>
+<div class="block">Running in INSECURE mode means that PlantUML can access to any local file and
  can connect to any URL.
  <p>
  Some technical information (file path, Java version) are also printed in some

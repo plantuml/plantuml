@@ -151,11 +151,11 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 <span class="nc" id="L151">				display = null;</span>
 <span class="nc" id="L152">				final List&lt;CharSequence&gt; allTree = buildTreeOrTable(s, it);</span>
 <span class="nc" id="L153">				final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L154">				TextBlock bloc = Display.create(allTree).create7(fontConfiguration, align, skinParam, CreoleMode.FULL);</span>
+<span class="nc" id="L154">				TextBlock block = Display.create(allTree).create7(fontConfiguration, align, skinParam, CreoleMode.FULL);</span>
 <span class="nc bnc" id="L155" title="All 2 branches missed.">				if (isTable)</span>
-<span class="nc" id="L156">					bloc = TextBlockUtils.withMargin(bloc, 10, 10, 0, 5);</span>
+<span class="nc" id="L156">					block = TextBlockUtils.withMargin(block, 10, 10, 0, 5);</span>
 
-<span class="nc" id="L158">				blocks.add(bloc);</span>
+<span class="nc" id="L158">				blocks.add(block);</span>
 <span class="nc" id="L159">			} else {</span>
 <span class="nc bnc" id="L160" title="All 2 branches missed.">				if (display == null)</span>
 <span class="nc" id="L161">					display = Display.empty();</span>

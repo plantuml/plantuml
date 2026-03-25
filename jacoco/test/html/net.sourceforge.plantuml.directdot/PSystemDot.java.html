@@ -75,7 +75,7 @@ public class PSystemDot extends DirectOsDiagram {
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
 
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() != SecurityProfile.UNSECURE</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() != SecurityProfile.INSECURE</span>
 <span class="nc bnc" id="L79" title="All 2 branches missed.">				&amp;&amp; fileFormat.getFileFormat() == FileFormat.SVG) {</span>
 <span class="nc" id="L80">			final String svg = &quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;\n&quot;</span>
 					+ &quot;&lt;svg xmlns=\&quot;http://www.w3.org/2000/svg\&quot; xmlns:xlink=\&quot;http://www.w3.org/1999/xlink\&quot;&gt;\n&quot;

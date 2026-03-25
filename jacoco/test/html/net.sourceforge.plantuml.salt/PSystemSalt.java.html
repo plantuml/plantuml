@@ -159,13 +159,13 @@ public class PSystemSalt extends TitledDiagram {
 <span class="nc" id="L159">				this.setScale(new ScaleSimple(scale));</span>
 				// System.err.println(&quot;skipping &quot; + s);
 <span class="nc bnc" id="L161" title="All 2 branches missed.">			} else if (s.startsWith(&quot;sprite $&quot;)) {</span>
-<span class="nc" id="L162">				BlocLines bloc = BlocLines.singleString(s);</span>
+<span class="nc" id="L162">				BlocLines block = BlocLines.singleString(s);</span>
 				do {
 <span class="nc" id="L164">					s = it.next();</span>
-<span class="nc" id="L165">					bloc = bloc.addString(s);</span>
+<span class="nc" id="L165">					block = block.addString(s);</span>
 <span class="nc bnc" id="L166" title="All 2 branches missed.">				} while (s.equals(&quot;}&quot;) == false);</span>
 				try {
-<span class="nc" id="L168">					final CommandExecutionResult cmdResult = cmd.execute(this, bloc, ParserPass.ONE);</span>
+<span class="nc" id="L168">					final CommandExecutionResult cmdResult = cmd.execute(this, block, ParserPass.ONE);</span>
 <span class="nc" id="L169">				} catch (NoSuchColorException e) {</span>
 <span class="nc" id="L170">				}</span>
 <span class="nc" id="L171">			} else {</span>

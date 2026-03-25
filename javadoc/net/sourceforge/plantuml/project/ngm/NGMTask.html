@@ -118,13 +118,13 @@ loadScripts(document, 'script');</script>
 
  <p>
  These three quantities must remain conceptually independent. Confusing them
- leads to incorrect scheduling behaviour. The goal of NGM is to provide a
+ leads to incorrect scheduling behavior. The goal of NGM is to provide a
  clean and unambiguous task model using <code>java.time</code> and explicit
  resource-allocation logic.
  </p>
 
 
- <h3 id="task-behaviour-heading">Task behaviour</h3>
+ <h3 id="task-behavior-heading">Task behavior</h3>
 
  <p>
  At the scheduling level, a task can behave in one of two ways:
@@ -170,7 +170,7 @@ loadScripts(document, 'script');</script>
  The static factory methods
  <a href="#withFixedDuration(net.sourceforge.plantuml.project.ngm.NGMAllocation,java.time.Duration)"><code>withFixedDuration(net.sourceforge.plantuml.project.ngm.NGMAllocation, java.time.Duration)</code></a> and
  <a href="#withFixedTotalEffort(net.sourceforge.plantuml.project.ngm.NGMAllocation,java.time.LocalDateTime,net.sourceforge.plantuml.project.ngm.NGMTotalEffort)"><code>withFixedTotalEffort(net.sourceforge.plantuml.project.ngm.NGMAllocation, java.time.LocalDateTime, net.sourceforge.plantuml.project.ngm.NGMTotalEffort)</code></a> create concrete
- implementations representing these two behaviours.
+ implementations representing these two behaviors.
  </p></div>
 </section>
 <section class="summary">
@@ -508,7 +508,7 @@ loadScripts(document, 'script');</script>
  <p>
  This method returns the constant allocation associated with the task
  instance. Task types that support variable or time-sliced allocations may
- override or complement this behaviour with more advanced APIs as the model
+ override or complement this behavior with more advanced APIs as the model
  evolves.
  </p></div>
 <dl class="notes">
@@ -585,7 +585,7 @@ loadScripts(document, 'script');</script>
 
  <p>
  This method will eventually return a concrete <code>NGMTask</code> implementation
- representing this behaviour. For now, it throws
+ representing this behavior. For now, it throws
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link"><code>UnsupportedOperationException</code></a> because the model is still under
  construction.
  </p></div>

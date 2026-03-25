@@ -54,8 +54,8 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 	@Override
 	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		try {
-<span class="fc bfc" id="L57" title="All 2 branches covered.">			for (byte[] crypted : all) {</span>
-<span class="fc" id="L58">				final SentenceDecoder decoder = new SentenceDecoder(line, crypted);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">			for (byte[] encrypted : all) {</span>
+<span class="fc" id="L58">				final SentenceDecoder decoder = new SentenceDecoder(line, encrypted);</span>
 <span class="pc bpc" id="L59" title="1 of 2 branches missed.">				if (decoder.isOk()) {</span>
 <span class="nc" id="L60">					return new PSystemEgg(source, decoder.getSecret(), preprocessing);</span>
 				}

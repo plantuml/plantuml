@@ -77,8 +77,8 @@ public class CommandLinkElement extends SingleLineCommand2&lt;DescriptionDiagram
 <span class="fc" id="L77">	public static final String UBREX_LINE_STYLE = &quot;&quot; + String.valueOf((char)0x3010) + &quot; #&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w &quot; + String.valueOf((char)0x2507) + &quot;&quot; + CommandLinkElement.UBREX_KEY1 + &quot;&quot; + String.valueOf((char)0x3011) + &quot; &quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3010) + &quot; ,#&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w &quot; + String.valueOf((char)0x2507) + &quot;&quot;</span>
 <span class="fc" id="L78">			+ CommandLinkElement.UBREX_KEY2 + &quot;&quot; + String.valueOf((char)0x3011) + &quot;&quot;;</span>
 
-	private static final String LINE_STYLE_MUTILPLES = LINE_STYLE + &quot;(?:(?:;&quot; + LINE_STYLE + &quot;)*)&quot;;
-	public static final String STYLE_COLORS_MULTIPLES = &quot;-\\[(&quot; + LINE_STYLE_MUTILPLES + &quot;*)\\]-&gt;&quot;;
+	private static final String LINE_STYLE_MULTIPLES = LINE_STYLE + &quot;(?:(?:;&quot; + LINE_STYLE + &quot;)*)&quot;;
+	public static final String STYLE_COLORS_MULTIPLES = &quot;-\\[(&quot; + LINE_STYLE_MULTIPLES + &quot;*)\\]-&gt;&quot;;
 
 	public CommandLinkElement() {
 <span class="fc" id="L84">		super(getRegexConcat());</span>
@@ -96,7 +96,7 @@ public class CommandLinkElement extends SingleLineCommand2&lt;DescriptionDiagram
 
 <span class="fc" id="L97">				new RegexLeaf(1, &quot;HEAD1&quot;, LinkDecor.getRegexDecors1()), //</span>
 				new RegexLeaf(1, &quot;BODY1&quot;, &quot;([-=.~]+)&quot;), //
-				new RegexLeaf(1, &quot;ARROW_STYLE1&quot;, &quot;(?:\\[(&quot; + LINE_STYLE_MUTILPLES + &quot;)\\])?&quot;), //
+				new RegexLeaf(1, &quot;ARROW_STYLE1&quot;, &quot;(?:\\[(&quot; + LINE_STYLE_MULTIPLES + &quot;)\\])?&quot;), //
 				new RegexOptional(
 						new RegexLeaf(1, &quot;DIRECTION&quot;, &quot;(left|right|up|down|le?|ri?|up?|do?)(?=[-=.~0()\\[])&quot;)), //
 				new RegexOptional(new RegexLeaf(1, &quot;INSIDE&quot;, &quot;(0|\\(0\\)|\\(0|0\\))(?=[-=.~])&quot;)), //

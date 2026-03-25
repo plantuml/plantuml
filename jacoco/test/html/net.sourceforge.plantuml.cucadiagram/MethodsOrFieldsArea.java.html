@@ -159,8 +159,8 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 <span class="fc" id="L159">		double x = 0;</span>
 <span class="fc" id="L160">		double y = 0;</span>
 <span class="fc bfc" id="L161" title="All 2 branches covered.">		for (CharSequence cs : members) {</span>
-<span class="fc" id="L162">			final TextBlock bloc = createTextBlock(cs);</span>
-<span class="fc" id="L163">			final XDimension2D dim = bloc.calculateDimension(stringBounder);</span>
+<span class="fc" id="L162">			final TextBlock block = createTextBlock(cs);</span>
+<span class="fc" id="L163">			final XDimension2D dim = block.calculateDimension(stringBounder);</span>
 <span class="fc" id="L164">			x = Math.max(dim.getWidth(), x);</span>
 <span class="fc" id="L165">			y += dim.getHeight();</span>
 <span class="pc bpc" id="L166" title="3 of 4 branches missed.">			if (stringBounder.matchesProperty(&quot;TIKZ&quot;) &amp;&amp; dim.getHeight() == 10) {</span>
@@ -199,8 +199,8 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 <span class="nc" id="L199">		final Collection&lt;String&gt; shortNames = sortBySize(leaf.getPortShortNames());</span>
 
 <span class="nc bnc" id="L201" title="All 2 branches missed.">		for (CharSequence cs : members) {</span>
-<span class="nc" id="L202">			final TextBlock bloc = createTextBlock(cs);</span>
-<span class="nc" id="L203">			final XDimension2D dim = bloc.calculateDimension(stringBounder);</span>
+<span class="nc" id="L202">			final TextBlock block = createTextBlock(cs);</span>
+<span class="nc" id="L203">			final XDimension2D dim = block.calculateDimension(stringBounder);</span>
 <span class="nc" id="L204">			final Elected elected = getElected(convert(cs), shortNames);</span>
 <span class="nc bnc" id="L205" title="All 2 branches missed.">			if (elected != null)</span>
 <span class="nc" id="L206">				ports.add(elected.getShortName(), elected.getScore(), y, dim.getHeight());</span>
@@ -252,10 +252,10 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 <span class="pc bpc" id="L252" title="1 of 2 branches missed.">			if (m.isStatic())</span>
 <span class="nc" id="L253">				config = config.underline();</span>
 
-<span class="fc" id="L255">			TextBlock bloc = Display.getWithNewlines(skinParam.getPragma(), s).create8(config, align, skinParam,</span>
+<span class="fc" id="L255">			TextBlock block = Display.getWithNewlines(skinParam.getPragma(), s).create8(config, align, skinParam,</span>
 <span class="fc" id="L256">					CreoleMode.SIMPLE_LINE, style.wrapWidth());</span>
-<span class="fc" id="L257">			bloc = fullInnerPosition(bloc, m);</span>
-<span class="fc" id="L258">			return new TextBlockTracer(m, bloc);</span>
+<span class="fc" id="L257">			block = fullInnerPosition(block, m);</span>
+<span class="fc" id="L258">			return new TextBlockTracer(m, block);</span>
 		}
 
 //		if (cs instanceof EmbeddedDiagram)
@@ -266,21 +266,21 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 
 	}
 
-	private static TextBlock fullInnerPosition(final TextBlock bloc, final Member display) {
+	private static TextBlock fullInnerPosition(final TextBlock block, final Member display) {
 <span class="fc" id="L270">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L273">				bloc.drawU(ug);</span>
+<span class="fc" id="L273">				block.drawU(ug);</span>
 <span class="fc" id="L274">			}</span>
 
 			@Fast
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L279">				return bloc.calculateDimension(stringBounder);</span>
+<span class="fc" id="L279">				return block.calculateDimension(stringBounder);</span>
 			}
 
 			public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L283">				return bloc.getMinMax(stringBounder);</span>
+<span class="nc" id="L283">				return block.getMinMax(stringBounder);</span>
 			}
 
 			@Override
@@ -294,11 +294,11 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 			}
 
 			public MagneticBorder getMagneticBorder() {
-<span class="nc" id="L297">				return bloc.getMagneticBorder();</span>
+<span class="nc" id="L297">				return block.getMagneticBorder();</span>
 			}
 
 			public HColor getBackcolor() {
-<span class="nc" id="L301">				return bloc.getBackcolor();</span>
+<span class="nc" id="L301">				return block.getBackcolor();</span>
 			}
 
 		};
@@ -306,11 +306,11 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 
 	static class TextBlockTracer implements TextBlock {
 
-		private final TextBlock bloc;
+		private final TextBlock block;
 		private final Url url;
 
-<span class="fc" id="L312">		public TextBlockTracer(Member m, TextBlock bloc) {</span>
-<span class="fc" id="L313">			this.bloc = bloc;</span>
+<span class="fc" id="L312">		public TextBlockTracer(Member m, TextBlock block) {</span>
+<span class="fc" id="L313">			this.block = block;</span>
 <span class="fc" id="L314">			this.url = m.getUrl();</span>
 <span class="fc" id="L315">		}</span>
 
@@ -318,7 +318,7 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 <span class="pc bpc" id="L318" title="1 of 2 branches missed.">			if (url != null)</span>
 <span class="nc" id="L319">				ug.startUrl(url);</span>
 
-<span class="fc" id="L321">			bloc.drawU(ug);</span>
+<span class="fc" id="L321">			block.drawU(ug);</span>
 <span class="pc bpc" id="L322" title="1 of 2 branches missed.">			if (url != null)</span>
 <span class="nc" id="L323">				ug.closeUrl();</span>
 
@@ -327,13 +327,13 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 		@Fast
 		@Override
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L330">			final XDimension2D dim = bloc.calculateDimension(stringBounder);</span>
+<span class="fc" id="L330">			final XDimension2D dim = block.calculateDimension(stringBounder);</span>
 <span class="fc" id="L331">			return dim;</span>
 		}
 
 		@Override
 		public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
-<span class="nc" id="L336">			return bloc.getInnerPosition(member, stringBounder);</span>
+<span class="nc" id="L336">			return block.getInnerPosition(member, stringBounder);</span>
 		}
 
 	}
@@ -391,7 +391,7 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 <span class="fc" id="L391">			group = new ULayoutGroup(</span>
 <span class="fc" id="L392">					new PlacementStrategyVisibility(stringBounder, skinParam.getCircledCharacterRadius() + 3));</span>
 <span class="fc bfc" id="L393" title="All 2 branches covered.">			for (CharSequence cs : members) {</span>
-<span class="fc" id="L394">				final TextBlock bloc = createTextBlock(cs);</span>
+<span class="fc" id="L394">				final TextBlock block = createTextBlock(cs);</span>
 //				if (cs instanceof EmbeddedDiagram) {
 //					group.add(getUBlock(null, null));
 //				} else {
@@ -399,7 +399,7 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 <span class="fc" id="L399">				final VisibilityModifier modifier = att.getVisibilityModifier();</span>
 <span class="fc" id="L400">				group.add(getUBlock(modifier, att.getUrl()));</span>
 //				}
-<span class="fc" id="L402">				group.add(bloc);</span>
+<span class="fc" id="L402">				group.add(block);</span>
 <span class="fc" id="L403">			}</span>
 		} else {
 			final PlacementStrategy placementStrategy;
@@ -412,8 +412,8 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 
 <span class="fc" id="L413">			group = new ULayoutGroup(placementStrategy);</span>
 <span class="fc bfc" id="L414" title="All 2 branches covered.">			for (CharSequence cs : members) {</span>
-<span class="fc" id="L415">				final TextBlock bloc = createTextBlock(cs);</span>
-<span class="fc" id="L416">				group.add(bloc);</span>
+<span class="fc" id="L415">				final TextBlock block = createTextBlock(cs);</span>
+<span class="fc" id="L416">				group.add(block);</span>
 <span class="fc" id="L417">			}</span>
 		}
 <span class="fc" id="L419">		return group;</span>

@@ -713,12 +713,12 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 
 	@JawsStrange
 	public static boolean hasSeveralGuideLines(String s) {
-		final List&lt;String&gt; splitted;
+		final List&lt;String&gt; split;
 <span class="pc bpc" id="L717" title="1 of 2 branches missed.">		if (Pragma.legacyReplaceBackslashNByNewline())</span>
-<span class="fc" id="L718">			splitted = Arrays.asList(s.split(&quot;\\\\n&quot;));</span>
+<span class="fc" id="L718">			split = Arrays.asList(s.split(&quot;\\\\n&quot;));</span>
 		else
-<span class="nc" id="L720">			splitted = Arrays.asList(s.split(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE));</span>
-<span class="fc" id="L721">		return hasSeveralGuideLines(splitted);</span>
+<span class="nc" id="L720">			split = Arrays.asList(s.split(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE));</span>
+<span class="fc" id="L721">		return hasSeveralGuideLines(split);</span>
 	}
 
 	private static boolean hasSeveralGuideLines(Collection&lt;? extends CharSequence&gt; all) {
