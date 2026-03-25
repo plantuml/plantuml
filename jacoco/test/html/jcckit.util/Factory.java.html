@@ -62,7 +62,7 @@ public class Factory {
    *  @param configParameters Configuration parameters.
    *  @return the newly created object.
    *  @throws IllegalArgumentException if key &lt;tt&gt;className&lt;/tt&gt; is missing.
-   *  @throws FactoryException wrapping any kind of exception or error occured.
+   *  @throws FactoryException wrapping any kind of exception or error occurred.
    */
   public static Object create(ConfigParameters configParameters) {
 <span class="nc" id="L68">    String className = configParameters.get(CLASS_NAME_KEY);</span>
@@ -78,7 +78,7 @@ public class Factory {
    *  @param configParameters Configuration parameters.
    *  @param defaultClassName Default class name.
    *  @return the newly created object.
-   *  @throws FactoryException wrapping any kind of exception or error occured.
+   *  @throws FactoryException wrapping any kind of exception or error occurred.
    */
   public static Object create(ConfigParameters configParameters,
                               String defaultClassName) {

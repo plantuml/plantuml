@@ -157,7 +157,7 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 <span class="nc" id="L157">		try (OutputStream os = outputFile.createBufferedOutputStream()) {</span>
 <span class="nc" id="L158">			final String flash = blockUml.getFlashData();</span>
 <span class="nc" id="L159">			final CrashReportHandler report = new CrashReportHandler(t, null, flash);</span>
-<span class="nc" id="L160">			report.anErrorHasOccured(t, flash);</span>
+<span class="nc" id="L160">			report.anErrorHasOccurred(t, flash);</span>
 <span class="nc" id="L161">			report.youShouldSendThisDiagram();</span>
 <span class="nc" id="L162">			report.addEmptyLine();</span>
 <span class="nc" id="L163">			report.exportDiagramError(fileFormatOption, (long) 42, os);</span>
