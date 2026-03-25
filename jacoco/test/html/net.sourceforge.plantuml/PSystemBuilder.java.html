@@ -42,6 +42,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3;
+import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.api.PSystemFactory;
 import net.sourceforge.plantuml.board.BoardDiagramFactory;
 import net.sourceforge.plantuml.bpm.BpmDiagramFactory;
@@ -103,7 +104,6 @@ import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagramFactory;
-import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.PSystemLicenseFactory;
 import net.sourceforge.plantuml.version.PSystemVersionFactory;
@@ -201,105 +201,106 @@ public class PSystemBuilder {
 <span class="fc" id="L201">		return singleton;</span>
 	}
 
+	@DuplicateCode(reference = &quot;PSystemBuilder2&quot;)
 	final public Diagram createPSystem(PathSystem pathSystem, List&lt;StringLocated&gt; source, List&lt;StringLocated&gt; rawSource,
 			Previous previous, PreprocessingArtifact preprocessing) {
 
-<span class="fc" id="L207">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L208">		final long now = System.currentTimeMillis();</span>
 
-<span class="fc" id="L209">		Diagram result = null;</span>
+<span class="fc" id="L210">		Diagram result = null;</span>
 		try {
-<span class="fc" id="L211">			final Collection&lt;DiagramType&gt; types = DiagramType.findStartTypes(source.get(0).getString());</span>
-<span class="fc" id="L212">			final UmlSource umlSource = UmlSource.createWithRaw(source, types.contains(DiagramType.SEQUENCE),</span>
+<span class="fc" id="L212">			final Collection&lt;DiagramType&gt; types = DiagramType.findStartTypes(source.get(0).getString());</span>
+<span class="fc" id="L213">			final UmlSource umlSource = UmlSource.createWithRaw(source, types.contains(DiagramType.SEQUENCE),</span>
 					rawSource);
 
-<span class="fc" id="L215">			umlSource.patchBase64();</span>
+<span class="fc" id="L216">			umlSource.patchBase64();</span>
 
-<span class="fc bfc" id="L217" title="All 2 branches covered.">			for (StringLocated s : source) {</span>
-<span class="pc bpc" id="L218" title="1 of 2 branches missed.">				if (s.getPreprocessorError() != null) {</span>
-					// Dead code : should not append
-<span class="nc" id="L220">					assert false;</span>
-<span class="nc" id="L221">					Log.error(&quot;Preprocessor Error: &quot; + s.getPreprocessorError());</span>
-<span class="nc" id="L222">					final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, s.getPreprocessorError(), 0,</span>
-<span class="nc" id="L223">							s.getLocation(), null);</span>
-<span class="nc" id="L224">					return PSystemErrorUtils.buildV2(umlSource, err, Collections.&lt;String&gt;emptyList(), source,</span>
-							preprocessing);
-				}
-<span class="fc" id="L227">			}</span>
+//			for (StringLocated s : source) {
+//				if (s.getPreprocessorError() != null) {
+//					// Dead code : should not append
+//					assert false;
+//					Log.error(&quot;Preprocessor Error: &quot; + s.getPreprocessorError());
+//					final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, s.getPreprocessorError(), 0,
+//							s.getLocation(), null);
+//					return PSystemErrorUtils.buildV2(umlSource, err, Collections.&lt;String&gt;emptyList(), source,
+//							preprocessing);
+//				}
+//			}
 
-<span class="fc" id="L229">			final Collection&lt;DiagramType&gt; diagramTypes = umlSource.getDiagramTypes();</span>
-<span class="fc bfc" id="L230" title="All 2 branches covered.">			if (diagramTypes.contains(DiagramType.UNKNOWN))</span>
-<span class="fc" id="L231">				return new PSystemUnsupported(umlSource, preprocessing);</span>
+<span class="fc" id="L230">			final Collection&lt;DiagramType&gt; diagramTypes = umlSource.getDiagramTypes();</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">			if (diagramTypes.contains(DiagramType.UNKNOWN))</span>
+<span class="fc" id="L232">				return new PSystemUnsupported(umlSource, preprocessing);</span>
 
 			// Detect misuse of @startuml for DOT or DITAA diagrams and
 			// return a helpful error
-<span class="pc bpc" id="L235" title="1 of 4 branches missed.">			if (diagramTypes.contains(DiagramType.SEQUENCE) &amp;&amp; source.size() &gt; 1) {</span>
-<span class="fc" id="L236">				final String secondLine = source.get(1).getString();</span>
-<span class="pc bpc" id="L237" title="1 of 2 branches missed.">				if (PSystemDotFactory.isGraphvizDotHeader(secondLine)) {</span>
-<span class="nc" id="L238">					final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,</span>
+<span class="pc bpc" id="L236" title="1 of 4 branches missed.">			if (diagramTypes.contains(DiagramType.SEQUENCE) &amp;&amp; source.size() &gt; 1) {</span>
+<span class="fc" id="L237">				final String secondLine = source.get(1).getString();</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">				if (PSystemDotFactory.isGraphvizDotHeader(secondLine)) {</span>
+<span class="nc" id="L239">					final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,</span>
 							&quot;This looks like a DOT diagram. Please use @startdot instead of @startuml.&quot;, 100,
-<span class="nc" id="L240">							source.get(1).getLocation(), DiagramType.SEQUENCE);</span>
+<span class="nc" id="L241">							source.get(1).getLocation(), DiagramType.SEQUENCE);</span>
 
-<span class="nc" id="L242">					return PSystemErrorUtils.buildV2(umlSource, error, Collections.&lt;String&gt;emptyList(), source,</span>
+<span class="nc" id="L243">					return PSystemErrorUtils.buildV2(umlSource, error, Collections.&lt;String&gt;emptyList(), source,</span>
 							preprocessing);
 
-<span class="pc bpc" id="L245" title="1 of 2 branches missed.">				} else if (secondLine.trim().equals(&quot;ditaa&quot;)) {</span>
-<span class="nc" id="L246">					final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">				} else if (secondLine.trim().equals(&quot;ditaa&quot;)) {</span>
+<span class="nc" id="L247">					final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,</span>
 							&quot;This looks like a DITAA diagram. Please use @startditaa instead of @startuml.&quot;, 100,
-<span class="nc" id="L248">							source.get(1).getLocation(), DiagramType.SEQUENCE);</span>
+<span class="nc" id="L249">							source.get(1).getLocation(), DiagramType.SEQUENCE);</span>
 
-<span class="nc" id="L250">					return PSystemErrorUtils.buildV2(umlSource, error, Collections.&lt;String&gt;emptyList(), source,</span>
+<span class="nc" id="L251">					return PSystemErrorUtils.buildV2(umlSource, error, Collections.&lt;String&gt;emptyList(), source,</span>
 							preprocessing);
-<span class="pc bpc" id="L252" title="1 of 2 branches missed.">				} else if (secondLine.trim().equals(&quot;nwdiag {&quot;)) {</span>
-<span class="nc" id="L253">					final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,</span>
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">				} else if (secondLine.trim().equals(&quot;nwdiag {&quot;)) {</span>
+<span class="nc" id="L254">					final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,</span>
 							&quot;This looks like a network diagram. Please use @startnwdiag instead of @startuml.&quot;, 100,
-<span class="nc" id="L255">							source.get(1).getLocation(), DiagramType.SEQUENCE);</span>
+<span class="nc" id="L256">							source.get(1).getLocation(), DiagramType.SEQUENCE);</span>
 
-<span class="nc" id="L257">					return PSystemErrorUtils.buildV2(umlSource, error, Collections.&lt;String&gt;emptyList(), source,</span>
+<span class="nc" id="L258">					return PSystemErrorUtils.buildV2(umlSource, error, Collections.&lt;String&gt;emptyList(), source,</span>
 							preprocessing);
 				}
 			}
-<span class="fc" id="L261">			final List&lt;PSystemError&gt; errors = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L262" title="All 2 branches covered.">			for (PSystemFactory systemFactory : factories) {</span>
-<span class="fc bfc" id="L263" title="All 2 branches covered.">				if (!diagramTypes.contains(systemFactory.getDiagramType()))</span>
-<span class="fc" id="L264">					continue;</span>
+<span class="fc" id="L262">			final List&lt;PSystemError&gt; errors = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">			for (PSystemFactory systemFactory : factories) {</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">				if (!diagramTypes.contains(systemFactory.getDiagramType()))</span>
+<span class="fc" id="L265">					continue;</span>
 
 				try {
 					// WasmLog.log(&quot;...trying &quot; + systemFactory.getClass().getName() + &quot; ...&quot;);
-<span class="fc" id="L268">					final Diagram sys = systemFactory.createSystem(pathSystem, umlSource, previous, preprocessing);</span>
-<span class="fc bfc" id="L269" title="All 2 branches covered.">					if (isOk(sys)) {</span>
-<span class="fc" id="L270">						result = sys;</span>
-<span class="fc" id="L271">						return sys;</span>
+<span class="fc" id="L269">					final Diagram sys = systemFactory.createSystem(pathSystem, umlSource, previous, preprocessing);</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">					if (isOk(sys)) {</span>
+<span class="fc" id="L271">						result = sys;</span>
+<span class="fc" id="L272">						return sys;</span>
 					}
-<span class="fc" id="L273">					errors.add((PSystemError) sys);</span>
-<span class="nc" id="L274">				} catch (Throwable t) {</span>
-<span class="nc" id="L275">					final StringLocated s = source.get(0);</span>
-<span class="nc" id="L276">					final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, &quot;Fatal crash error: &quot; + t, 0,</span>
-<span class="nc" id="L277">							s.getLocation(), null);</span>
-<span class="nc" id="L278">					errors.add(PSystemErrorUtils.buildV2(umlSource, err, Collections.&lt;String&gt;emptyList(), source,</span>
+<span class="fc" id="L274">					errors.add((PSystemError) sys);</span>
+<span class="nc" id="L275">				} catch (Throwable t) {</span>
+<span class="nc" id="L276">					final StringLocated s = source.get(0);</span>
+<span class="nc" id="L277">					final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, &quot;Fatal crash error: &quot; + t, 0,</span>
+<span class="nc" id="L278">							s.getLocation(), null);</span>
+<span class="nc" id="L279">					errors.add(PSystemErrorUtils.buildV2(umlSource, err, Collections.&lt;String&gt;emptyList(), source,</span>
 							preprocessing));
-<span class="nc" id="L280">					t.printStackTrace();</span>
-<span class="fc" id="L281">				}</span>
-<span class="fc" id="L282">			}</span>
-<span class="pc bpc" id="L283" title="1 of 2 branches missed.">			if (errors.size() == 0)</span>
-<span class="nc" id="L284">				return new PSystemUnsupported(umlSource, preprocessing);</span>
+<span class="nc" id="L281">					t.printStackTrace();</span>
+<span class="fc" id="L282">				}</span>
+<span class="fc" id="L283">			}</span>
+<span class="pc bpc" id="L284" title="1 of 2 branches missed.">			if (errors.size() == 0)</span>
+<span class="nc" id="L285">				return new PSystemUnsupported(umlSource, preprocessing);</span>
 
-<span class="fc" id="L286">			result = PSystemErrorUtils.merge(errors);</span>
-<span class="fc" id="L287">			return result;</span>
+<span class="fc" id="L287">			result = PSystemErrorUtils.merge(errors);</span>
+<span class="fc" id="L288">			return result;</span>
 		} finally {
 
-<span class="fc bfc" id="L290" title="All 4 branches covered.">			if (result != null &amp;&amp; GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS)) {</span>
-<span class="fc" id="L291">				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());</span>
+<span class="fc bfc" id="L291" title="All 4 branches covered.">			if (result != null &amp;&amp; GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS)) {</span>
+<span class="fc" id="L292">				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());</span>
 			}
-<span class="fc" id="L293">			Log.info(() -&gt; &quot;Compilation duration &quot; + (System.currentTimeMillis() - now));</span>
-<span class="fc" id="L294">			RegexConcat.printCacheInfo();</span>
+<span class="fc" id="L294">			Log.info(() -&gt; &quot;Compilation duration &quot; + (System.currentTimeMillis() - now));</span>
+<span class="fc" id="L295">			RegexConcat.printCacheInfo();</span>
 		}
 	}
 
 	private boolean isOk(Diagram ps) {
-<span class="pc bpc" id="L299" title="1 of 6 branches missed.">		if (ps == null || ps instanceof PSystemError || ps instanceof PSystemUnsupported)</span>
-<span class="fc" id="L300">			return false;</span>
+<span class="pc bpc" id="L300" title="1 of 6 branches missed.">		if (ps == null || ps instanceof PSystemError || ps instanceof PSystemUnsupported)</span>
+<span class="fc" id="L301">			return false;</span>
 
-<span class="fc" id="L302">		return true;</span>
+<span class="fc" id="L303">		return true;</span>
 	}
 
 }
