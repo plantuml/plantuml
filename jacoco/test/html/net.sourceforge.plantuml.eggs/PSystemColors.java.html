@@ -193,11 +193,11 @@ public class PSystemColors extends UgSimpleDiagram {
 <span class="nc bnc" id="L193" title="All 2 branches missed.">			if (Character.isLowerCase(colorName.charAt(i)))</span>
 <span class="nc" id="L194">				continue;</span>
 
-<span class="nc" id="L196">			final String candidat = colorName.substring(0, i) + BackSlash.BS_BS_N + colorName.substring(i);</span>
-<span class="nc" id="L197">			final TextBlock tt = getTextName(font, candidat, (HColorSimple) HColors.BLACK);</span>
+<span class="nc" id="L196">			final String candidate = colorName.substring(0, i) + BackSlash.BS_BS_N + colorName.substring(i);</span>
+<span class="nc" id="L197">			final TextBlock tt = getTextName(font, candidate, (HColorSimple) HColors.BLACK);</span>
 <span class="nc" id="L198">			final double width = tt.calculateDimension(stringBounder).getWidth();</span>
 <span class="nc bnc" id="L199" title="All 2 branches missed.">			if (width &lt; min) {</span>
-<span class="nc" id="L200">				result = candidat;</span>
+<span class="nc" id="L200">				result = candidate;</span>
 <span class="nc" id="L201">				min = width;</span>
 			}
 		}
@@ -225,9 +225,9 @@ public class PSystemColors extends UgSimpleDiagram {
 	private List&lt;String&gt; getColorsCloseTo(String other) {
 <span class="nc" id="L226">		final List&lt;String&gt; result = new ArrayList&lt;&gt;(colors.names());</span>
 <span class="nc bnc" id="L227" title="All 2 branches missed.">		for (Iterator&lt;String&gt; it = result.iterator(); it.hasNext();) {</span>
-<span class="nc" id="L228">			final String candidat = it.next();</span>
-<span class="nc" id="L229">			final String similar = candidat.replaceAll(&quot;Gray&quot;, &quot;Grey&quot;);</span>
-<span class="nc bnc" id="L230" title="All 2 branches missed.">			if (candidat.equals(similar))</span>
+<span class="nc" id="L228">			final String candidate = it.next();</span>
+<span class="nc" id="L229">			final String similar = candidate.replaceAll(&quot;Gray&quot;, &quot;Grey&quot;);</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">			if (candidate.equals(similar))</span>
 <span class="nc" id="L231">				continue;</span>
 
 <span class="nc bnc" id="L233" title="All 2 branches missed.">			if (result.contains(similar))</span>

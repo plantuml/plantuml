@@ -153,15 +153,15 @@ public class CommandLinkActivity extends SingleLineCommand2&lt;ActivityDiagram&g
 <span class="fc" id="L153">		final String arrowDirection = CommandLinkClass.notNull(arg.get(&quot;ARROW_DIRECTION&quot;, 0));</span>
 
 <span class="fc" id="L155">		final String arrow = StringUtils.manageArrowForCuca(arrowBody1 + arrowDirection + arrowBody2 + &quot;&gt;&quot;);</span>
-<span class="fc" id="L156">		int lenght = arrow.length() - 1;</span>
+<span class="fc" id="L156">		int length = arrow.length() - 1;</span>
 <span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (arrowDirection.contains(&quot;*&quot;))</span>
-<span class="nc" id="L158">			lenght = 2;</span>
+<span class="nc" id="L158">			length = 2;</span>
 
 <span class="fc" id="L160">		LinkType type = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);</span>
 <span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if ((arrowBody1 + arrowBody2).contains(&quot;.&quot;))</span>
 <span class="nc" id="L162">			type = type.goDotted();</span>
 
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		final LinkArg linkArg = LinkArg.build(linkLabel, lenght, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		final LinkArg linkArg = LinkArg.build(linkLabel, length, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
 <span class="fc" id="L165">		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1, entity2, type,</span>
 				linkArg);
 <span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if (arrowDirection.contains(&quot;*&quot;))</span>

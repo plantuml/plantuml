@@ -134,7 +134,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc" id="L134">							level++;</span>
 						}
 
-<span class="fc bfc" id="L137" title="All 4 branches covered.">						if (mode == EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE &amp;&amp; le.isDeactivateOrDestroy()</span>
+<span class="fc bfc" id="L137" title="All 4 branches covered.">						if (mode == EventsHistoryMode.CONSIDER_FUTURE_DEACTIVATE &amp;&amp; le.isDeactivateOrDestroy()</span>
 <span class="pc bpc" id="L138" title="1 of 4 branches missed.">								&amp;&amp; msg.dealWith(p) &amp;&amp; le.getParticipant() == p) {</span>
 <span class="fc" id="L139">							seenDeactivate = true;</span>
 <span class="fc bfc" id="L140" title="All 2 branches covered.">							if (seenActivate)</span>
@@ -262,7 +262,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 
 <span class="fc bfc" id="L263" title="All 2 branches covered.">			if (position != null) {</span>
 <span class="pc bpc" id="L264" title="2 of 4 branches missed.">				if (TeaVM.a()) assert position &lt;= totalHeight : &quot;position=&quot; + position + &quot; totalHeight=&quot; + totalHeight;</span>
-<span class="fc" id="L265">				indent = getLevelAt(event, EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE);</span>
+<span class="fc" id="L265">				indent = getLevelAt(event, EventsHistoryMode.CONSIDER_FUTURE_DEACTIVATE);</span>
 <span class="fc" id="L266">				final Fashion activateColor = getActivateColor(event);</span>
 <span class="fc" id="L267">				StyleBuilder styleBuilder = null;</span>
 <span class="fc bfc" id="L268" title="All 2 branches covered.">				if (event instanceof AbstractMessage)</span>

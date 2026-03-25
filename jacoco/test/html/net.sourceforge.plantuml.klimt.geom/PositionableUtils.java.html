@@ -104,16 +104,16 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc bnc" id="L104" title="All 2 branches missed.">		for (int i = 0; i &lt; 5; i++) {</span>
 <span class="nc bnc" id="L105" title="All 4 branches missed.">			if (TeaVM.a()) assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, min);</span>
 <span class="nc bnc" id="L106" title="All 4 branches missed.">			if (TeaVM.a()) assert doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, max) == false;</span>
-<span class="nc" id="L107">			final double candidat = (min + max) / 2.0;</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">			if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, candidat))</span>
-<span class="nc" id="L109">				min = candidat;</span>
+<span class="nc" id="L107">			final double candidate = (min + max) / 2.0;</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			if (doesIntersectWithThisCoef(fixe, toMove, deltaX, deltaY, candidate))</span>
+<span class="nc" id="L109">				min = candidate;</span>
 			else
-<span class="nc" id="L111">				max = candidat;</span>
+<span class="nc" id="L111">				max = candidate;</span>
 
 			// Log.println(&quot;min=&quot; + min + &quot; max=&quot; + max);
 		}
-<span class="nc" id="L115">		final double candidat = (min + max) / 2.0;</span>
-<span class="nc" id="L116">		return move(toMove, deltaX * candidat, deltaY * candidat);</span>
+<span class="nc" id="L115">		final double candidate = (min + max) / 2.0;</span>
+<span class="nc" id="L116">		return move(toMove, deltaX * candidate, deltaY * candidate);</span>
 
 	}
 

@@ -71,7 +71,7 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryTriangle;
 <span class="fc" id="L71">	NONE(null, null, 2, false, 0), //</span>
 <span class="fc" id="L72">	EXTENDS(decors1(&quot;&lt;|&quot;, &quot;^&quot;), decors2(&quot;|&gt;&quot;, &quot;^&quot;), 30, false, 2), //</span>
 <span class="fc" id="L73">	COMPOSITION(decors1(&quot;*&quot;), decors2(&quot;*&quot;), 15, true, 1.3), //</span>
-<span class="fc" id="L74">	AGREGATION(decors1(&quot;o&quot;), decors2(&quot;o&quot;), 15, false, 1.3), //</span>
+<span class="fc" id="L74">	AGGREGATION(decors1(&quot;o&quot;), decors2(&quot;o&quot;), 15, false, 1.3), //</span>
 <span class="fc" id="L75">	NOT_NAVIGABLE(decors1(&quot;x&quot;), decors2(&quot;x&quot;), 1, false, 0.5), //</span>
 
 <span class="fc" id="L77">	REDEFINES(decors1(&quot;&lt;||&quot;), decors2(&quot;||&gt;&quot;), 30, false, 2), //</span>
@@ -204,7 +204,7 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryTriangle;
 <span class="nc" id="L204">			return new ExtremityFactoryArrowAndCircle(backgroundColor);</span>
 		case NOT_NAVIGABLE:
 <span class="nc" id="L206">			return new ExtremityFactoryNotNavigable();</span>
-		case AGREGATION:
+		case AGGREGATION:
 <span class="fc" id="L208">			return new ExtremityFactoryDiamond(false);</span>
 		case COMPOSITION:
 <span class="fc" id="L210">			return new ExtremityFactoryDiamond(true);</span>

@@ -206,7 +206,7 @@ public class CommandLinkLongActivity extends CommandMultilines2&lt;ActivityDiagr
 
 <span class="nc" id="L207">		final String arrow = StringUtils.manageArrowForCuca(arrowBody1 + arrowDirection + arrowBody2 + &quot;&gt;&quot;);</span>
 
-<span class="nc" id="L209">		final int lenght = arrow.length() - 1;</span>
+<span class="nc" id="L209">		final int length = arrow.length() - 1;</span>
 
 <span class="nc" id="L211">		final Display linkLabel = Display.getWithNewlines(diagram.getPragma(), line0.get(&quot;BRACKET&quot;, 0));</span>
 
@@ -214,7 +214,7 @@ public class CommandLinkLongActivity extends CommandMultilines2&lt;ActivityDiagr
 <span class="nc bnc" id="L214" title="All 2 branches missed.">		if (arrow.contains(&quot;.&quot;))</span>
 <span class="nc" id="L215">			type = type.goDotted();</span>
 
-<span class="nc bnc" id="L217" title="All 2 branches missed.">		final LinkArg linkArg = LinkArg.build(linkLabel, lenght, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">		final LinkArg linkArg = LinkArg.build(linkLabel, length, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
 <span class="nc" id="L218">		Link link = new Link(lines.getLocation(), diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1,</span>
 				entity2, type, linkArg);
 <span class="nc" id="L220">		final Direction direction = StringUtils.getArrowDirection(arrowBody1 + arrowDirection + arrowBody2 + &quot;&gt;&quot;);</span>

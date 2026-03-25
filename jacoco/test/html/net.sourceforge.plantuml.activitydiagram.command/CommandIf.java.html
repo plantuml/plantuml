@@ -113,23 +113,23 @@ public class CommandIf extends SingleLineCommand2&lt;ActivityDiagram&gt; {
 		}
 <span class="nc" id="L114">		diagram.startIf(location, ifCode);</span>
 
-<span class="nc" id="L116">		int lenght = 2;</span>
+<span class="nc" id="L116">		int length = 2;</span>
 
 <span class="nc bnc" id="L118" title="All 2 branches missed.">		if (arg.get(&quot;ARROW_BODY1&quot;, 0) != null) {</span>
 //			final String arrow = StringUtils.manageArrowForCuca(arg.get(&quot;ARROW&quot;, 0));
-//			lenght = arrow.length() - 1;
+//			length = arrow.length() - 1;
 <span class="nc" id="L121">			final String arrowBody1 = CommandLinkClass.notNull(arg.get(&quot;ARROW_BODY1&quot;, 0));</span>
 <span class="nc" id="L122">			final String arrowBody2 = CommandLinkClass.notNull(arg.get(&quot;ARROW_BODY2&quot;, 0));</span>
 <span class="nc" id="L123">			final String arrowDirection = CommandLinkClass.notNull(arg.get(&quot;ARROW_DIRECTION&quot;, 0));</span>
 
 <span class="nc" id="L125">			final String arrow = StringUtils.manageArrowForCuca(arrowBody1 + arrowDirection + arrowBody2 + &quot;&gt;&quot;);</span>
-<span class="nc" id="L126">			lenght = arrow.length() - 1;</span>
+<span class="nc" id="L126">			length = arrow.length() - 1;</span>
 		}
 
 <span class="nc" id="L129">		final Entity branch = diagram.getCurrentContext().getBranch();</span>
 
 <span class="nc" id="L131">		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;BRACKET&quot;, 0)),</span>
-				lenght);
+				length);
 <span class="nc" id="L133">		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1, branch,</span>
 <span class="nc" id="L134">				new LinkType(LinkDecor.ARROW, LinkDecor.NONE), linkArg.withQuantifier(null, ifLabel)</span>
 <span class="nc" id="L135">						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));</span>

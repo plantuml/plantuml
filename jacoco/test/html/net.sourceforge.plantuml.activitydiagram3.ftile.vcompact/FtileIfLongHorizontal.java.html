@@ -654,12 +654,12 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L654">		return trCouple.compose(in);</span>
 	}
 
-	private UTranslate getTranslateCouple1(Ftile candidat, StringBounder stringBounder) {
+	private UTranslate getTranslateCouple1(Ftile candidate, StringBounder stringBounder) {
 <span class="nc" id="L658">		double x1 = 0;</span>
 
 <span class="nc bnc" id="L660" title="All 2 branches missed.">		for (Ftile couple : couples) {</span>
 <span class="nc" id="L661">			final FtileGeometry dim1 = couple.calculateDimension(stringBounder);</span>
-<span class="nc bnc" id="L662" title="All 2 branches missed.">			if (couple == candidat)</span>
+<span class="nc bnc" id="L662" title="All 2 branches missed.">			if (couple == candidate)</span>
 <span class="nc" id="L663">				return new UTranslate(x1, 25);</span>
 
 <span class="nc" id="L665">			x1 += dim1.getWidth() + xSeparation;</span>

@@ -81,7 +81,7 @@ public class Format implements TicLabelFormat {
    *  They can be grouped into
    *  &lt;ul&gt;&lt;li&gt;modifier&lt;br&gt;
    *          it is
-   *          &lt;ul&gt;&lt;li&gt;'-' if the formated result should be flushed left
+   *          &lt;ul&gt;&lt;li&gt;'-' if the formatted result should be flushed left
    *              &lt;li&gt;'+' if the sign should be always appear
    *              &lt;li&gt;'0' if the leading space should be filled with zeros
    *          &lt;/ul&gt;
@@ -149,8 +149,8 @@ public class Format implements TicLabelFormat {
    * If there are more than one format elements the
    * additional format elements will be ignored and only the static parts
    * are taken.
-   * @param number Number to be formated.
-   * @return Formated number.
+   * @param number Number to be formatted.
+   * @return formatted number.
    */
   public String form(long number) {
 <span class="nc" id="L156">    StringBuffer result = new StringBuffer();</span>
@@ -167,8 +167,8 @@ public class Format implements TicLabelFormat {
    * If there are more than one format elements the
    * additional format elements will be ignored and only the static parts
    * are taken.
-   * @param number Number to be formated.
-   * @return Formated number.
+   * @param number Number to be formatted.
+   * @return formatted number.
    */
   public String form(double number) {
 <span class="nc" id="L174">    StringBuffer result = new StringBuffer();</span>
@@ -192,8 +192,8 @@ public class Format implements TicLabelFormat {
    * will be ignored. If there are less numbers than format elements the
    * additional format elements will be ignored and only the static parts
    * are taken.
-   * @param numbers Numbers to be formated.
-   * @return Formated numbers.
+   * @param numbers Numbers to be formatted.
+   * @return formatted numbers.
    */
   public String form(double[] numbers) {
 <span class="nc" id="L199">    StringBuffer result = new StringBuffer();</span>

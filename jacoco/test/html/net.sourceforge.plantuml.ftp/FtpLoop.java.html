@@ -68,7 +68,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 	final private BufferedReader br;
 	final private PrintWriter pw;
 
-	private FtpConnexion connexion;
+	private FtpConnection connection;
 <span class="nc" id="L72">	private String ipClient = null;</span>
 <span class="nc" id="L73">	private int port = -1;</span>
 	private Mode mode;
@@ -111,7 +111,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 <span class="nc bnc" id="L111" title="All 2 branches missed.">		if (upper.startsWith(&quot;USER&quot;)) {</span>
 <span class="nc" id="L112">			myOut(&quot;331 Password required&quot;);</span>
 <span class="nc" id="L113">			final String user = cmd.substring(&quot;USER &quot;.length());</span>
-<span class="nc" id="L114">			connexion = ftpServer.getFtpConnexion(user);</span>
+<span class="nc" id="L114">			connection = ftpServer.getFtpConnexion(user);</span>
 <span class="nc bnc" id="L115" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;PASS&quot;)) {</span>
 <span class="nc" id="L116">			myOut(&quot;230 Logged in.&quot;);</span>
 <span class="nc bnc" id="L117" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;PWD&quot;)) {</span>
@@ -165,7 +165,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 			}
 <span class="nc bnc" id="L166" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;DELE&quot;)) {</span>
 <span class="nc" id="L167">			final String file = cmd.substring(&quot;DELE &quot;.length());</span>
-<span class="nc" id="L168">			connexion.delete(file);</span>
+<span class="nc" id="L168">			connection.delete(file);</span>
 <span class="nc" id="L169">			myOut(&quot;200 Command okay.&quot;);</span>
 <span class="nc bnc" id="L170" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;QUIT&quot;)) {</span>
 <span class="nc" id="L171">			myOut(&quot;221 Goodbye.&quot;);</span>
@@ -184,7 +184,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 	private void retr(final String fileName, Socket soc)
 			throws UnknownHostException, IOException, InterruptedException {
 <span class="nc" id="L186">		final OutputStream os = soc.getOutputStream();</span>
-<span class="nc" id="L187">		final byte[] data = connexion.getData(fileName);</span>
+<span class="nc" id="L187">		final byte[] data = connection.getData(fileName);</span>
 
 <span class="nc bnc" id="L189" title="All 2 branches missed.">		if (data != null) {</span>
 <span class="nc" id="L190">			os.write(data);</span>
@@ -198,7 +198,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 	private void retrPassif(final String s) throws UnknownHostException, IOException, InterruptedException {
 <span class="nc" id="L199">		String fileName = s.substring(&quot;STOR &quot;.length());</span>
 <span class="nc" id="L200">		fileName = removeStartingsSlash(fileName);</span>
-<span class="nc bnc" id="L201" title="All 2 branches missed.">		if (connexion.willExist(fileName) == false) {</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">		if (connection.willExist(fileName) == false) {</span>
 <span class="nc" id="L202">			myOut(&quot;550 No such file.&quot;);</span>
 <span class="nc" id="L203">			return;</span>
 		}
@@ -212,7 +212,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 
 	private void waitForMe(String fileName) throws InterruptedException {
 		do {
-<span class="nc bnc" id="L215" title="All 2 branches missed.">			if (connexion.doesExist(fileName)) {</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">			if (connection.doesExist(fileName)) {</span>
 <span class="nc" id="L216">				return;</span>
 			}
 <span class="nc" id="L218">			Thread.sleep(200L);</span>
@@ -222,7 +222,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 	private void retrActif(final String s) throws UnknownHostException, IOException, InterruptedException {
 <span class="nc" id="L223">		String fileName = s.substring(&quot;STOR &quot;.length());</span>
 <span class="nc" id="L224">		fileName = removeStartingsSlash(fileName);</span>
-<span class="nc bnc" id="L225" title="All 2 branches missed.">		if (connexion.willExist(fileName) == false) {</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">		if (connection.willExist(fileName) == false) {</span>
 <span class="nc" id="L226">			myOut(&quot;550 No such file.&quot;);</span>
 <span class="nc" id="L227">			return;</span>
 		}
@@ -263,20 +263,20 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 <span class="nc" id="L263">		myOut(&quot;226 Transfer complete.&quot;);</span>
 
 <span class="nc bnc" id="L265" title="All 2 branches missed.">		if (&quot;png&quot;.equalsIgnoreCase(fileName)) {</span>
-<span class="nc" id="L266">			connexion.setFileFormat(FileFormat.PNG);</span>
+<span class="nc" id="L266">			connection.setFileFormat(FileFormat.PNG);</span>
 <span class="nc bnc" id="L267" title="All 2 branches missed.">		} else if (&quot;svg&quot;.equalsIgnoreCase(fileName)) {</span>
-<span class="nc" id="L268">			connexion.setFileFormat(FileFormat.SVG);</span>
+<span class="nc" id="L268">			connection.setFileFormat(FileFormat.SVG);</span>
 <span class="nc bnc" id="L269" title="All 2 branches missed.">		} else if (&quot;eps&quot;.equalsIgnoreCase(fileName)) {</span>
-<span class="nc" id="L270">			connexion.setFileFormat(FileFormat.EPS);</span>
+<span class="nc" id="L270">			connection.setFileFormat(FileFormat.EPS);</span>
 		}
 
 <span class="nc bnc" id="L273" title="All 2 branches missed.">		if (fileName.length() &gt; 3) {</span>
 <span class="nc" id="L274">			final String data = new String(baos.toByteArray(), ftpServer.getCharset());</span>
-<span class="nc" id="L275">			final String pngFileName = connexion.getFutureFileName(fileName);</span>
-<span class="nc" id="L276">			connexion.futureOutgoing(pngFileName);</span>
-<span class="nc" id="L277">			connexion.addIncoming(fileName, data);</span>
+<span class="nc" id="L275">			final String pngFileName = connection.getFutureFileName(fileName);</span>
+<span class="nc" id="L276">			connection.futureOutgoing(pngFileName);</span>
+<span class="nc" id="L277">			connection.addIncoming(fileName, data);</span>
 
-<span class="nc" id="L279">			ftpServer.processImage(connexion, fileName);</span>
+<span class="nc" id="L279">			ftpServer.processImage(connection, fileName);</span>
 		}
 <span class="nc" id="L281">	}</span>
 
@@ -296,17 +296,17 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 
 	private void list(final Socket soc) throws IOException {
 <span class="nc" id="L298">		final PrintWriter listing = SecurityUtils.createPrintWriter(soc.getOutputStream(), true);</span>
-<span class="nc" id="L299">		final Collection&lt;String&gt; files = connexion.getFiles();</span>
+<span class="nc" id="L299">		final Collection&lt;String&gt; files = connection.getFiles();</span>
 <span class="nc bnc" id="L300" title="All 2 branches missed.">		if (files.size() &gt; 0) {</span>
 <span class="nc" id="L301">			int total = 0;</span>
 <span class="nc bnc" id="L302" title="All 2 branches missed.">			for (String n : files) {</span>
-<span class="nc" id="L303">				total += (connexion.getSize(n) + 511) / 512;</span>
+<span class="nc" id="L303">				total += (connection.getSize(n) + 511) / 512;</span>
 <span class="nc" id="L304">			}</span>
 <span class="nc" id="L305">			listing.println(&quot;total &quot; + total);</span>
 			// localLog(total);
 <span class="nc bnc" id="L307" title="All 2 branches missed.">			for (String n : files) {</span>
 <span class="nc" id="L308">				final String ls = String.format(&quot;%10s %4d %-8s %-8s %8d %3s %2s %5s %s&quot;, &quot;-rw-rw-r--&quot;, 1, &quot;plantuml&quot;,</span>
-<span class="nc" id="L309">						&quot;plantuml&quot;, connexion.getSize(n), &quot;Sep&quot;, 28, 2006, n);</span>
+<span class="nc" id="L309">						&quot;plantuml&quot;, connection.getSize(n), &quot;Sep&quot;, 28, 2006, n);</span>
 <span class="nc" id="L310">				listing.println(ls);</span>
 				// localLog(ls);
 <span class="nc" id="L312">			}</span>

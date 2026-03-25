@@ -252,11 +252,11 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 
 <span class="fc" id="L253">	}</span>
 
-	private UTranslate getUTranslateForPlayer(Player candidat, StringBounder stringBounder) {
+	private UTranslate getUTranslateForPlayer(Player candidate, StringBounder stringBounder) {
 <span class="fc" id="L256">		double y = 0;</span>
 <span class="fc bfc" id="L257" title="All 2 branches covered.">		for (Player player : players.values()) {</span>
 <span class="fc" id="L258">			y += player.getFrameHeight(stringBounder);</span>
-<span class="fc bfc" id="L259" title="All 2 branches covered.">			if (candidat == player)</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">			if (candidate == player)</span>
 <span class="fc" id="L260">				return UTranslate.dy(y);</span>
 
 //			if (y == 0) {
@@ -264,16 +264,16 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 //			}
 <span class="fc" id="L265">			y += player.panels().getFullHeight(stringBounder);</span>
 <span class="fc" id="L266">		}</span>
-<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (candidat == null)</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (candidate == null)</span>
 <span class="fc" id="L268">			return UTranslate.dy(y);</span>
 
 <span class="nc" id="L270">		throw new IllegalArgumentException();</span>
 	}
 
-	private UTranslate getUTranslateForPlayerFrame(Player candidat, StringBounder stringBounder) {
+	private UTranslate getUTranslateForPlayerFrame(Player candidate, StringBounder stringBounder) {
 <span class="fc" id="L274">		double y = 0;</span>
 <span class="pc bpc" id="L275" title="1 of 2 branches missed.">		for (Player player : players.values()) {</span>
-<span class="fc bfc" id="L276" title="All 2 branches covered.">			if (candidat == player)</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">			if (candidate == player)</span>
 <span class="fc" id="L277">				return UTranslate.dy(y);</span>
 
 //			if (y == 0) {
@@ -282,7 +282,7 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 <span class="fc" id="L282">			y += player.getFrameHeight(stringBounder);</span>
 <span class="fc" id="L283">			y += player.panels().getFullHeight(stringBounder);</span>
 <span class="fc" id="L284">		}</span>
-<span class="nc bnc" id="L285" title="All 2 branches missed.">		if (candidat == null)</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">		if (candidate == null)</span>
 <span class="nc" id="L286">			return UTranslate.dy(y);</span>
 
 <span class="nc" id="L288">		throw new IllegalArgumentException();</span>

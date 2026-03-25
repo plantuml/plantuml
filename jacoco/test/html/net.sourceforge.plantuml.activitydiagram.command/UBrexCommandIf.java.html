@@ -115,23 +115,23 @@ public class UBrexCommandIf extends UBrexSingleLineCommand2&lt;ActivityDiagram&g
 		}
 <span class="fc" id="L116">		diagram.startIf(location, ifCode);</span>
 
-<span class="fc" id="L118">		int lenght = 2;</span>
+<span class="fc" id="L118">		int length = 2;</span>
 
 <span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (arg.get(&quot;ARROW_BODY1&quot;, 0) != null) {</span>
 //			final String arrow = StringUtils.manageArrowForCuca(arg.get(&quot;ARROW&quot;, 0));
-//			lenght = arrow.length() - 1;
+//			length = arrow.length() - 1;
 <span class="nc" id="L123">			final String arrowBody1 = CommandLinkClass.notNull(arg.get(&quot;ARROW_BODY1&quot;, 0));</span>
 <span class="nc" id="L124">			final String arrowBody2 = CommandLinkClass.notNull(arg.get(&quot;ARROW_BODY2&quot;, 0));</span>
 <span class="nc" id="L125">			final String arrowDirection = CommandLinkClass.notNull(arg.get(&quot;ARROW_DIRECTION&quot;, 0));</span>
 
 <span class="nc" id="L127">			final String arrow = StringUtils.manageArrowForCuca(arrowBody1 + arrowDirection + arrowBody2 + &quot;&gt;&quot;);</span>
-<span class="nc" id="L128">			lenght = arrow.length() - 1;</span>
+<span class="nc" id="L128">			length = arrow.length() - 1;</span>
 		}
 
 <span class="fc" id="L131">		final Entity branch = diagram.getCurrentContext().getBranch();</span>
 
 <span class="fc" id="L133">		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;BRACKET&quot;, 0)),</span>
-				lenght);
+				length);
 <span class="fc" id="L135">		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1, branch,</span>
 <span class="fc" id="L136">				new LinkType(LinkDecor.ARROW, LinkDecor.NONE), linkArg.withQuantifier(null, ifLabel)</span>
 <span class="fc" id="L137">						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));</span>

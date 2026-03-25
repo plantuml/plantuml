@@ -121,7 +121,7 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 <span class="fc" id="L121">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
 <span class="fc" id="L122">		double x1 = getMinX().getCurrentValue();</span>
 <span class="fc" id="L123">		final int levelIgnore = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE);</span>
-<span class="fc" id="L124">		final int levelConsidere = livingSpace1.getLevelAt(this, EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE);</span>
+<span class="fc" id="L124">		final int levelConsidere = livingSpace1.getLevelAt(this, EventsHistoryMode.CONSIDER_FUTURE_DEACTIVATE);</span>
 <span class="pc" id="L125">		Log.info(() -&gt; &quot;CommunicationTileSelf::drawU levelIgnore=&quot; + levelIgnore + &quot; levelConsidere=&quot; + levelConsidere);</span>
 <span class="fc bfc" id="L126" title="All 2 branches covered.">		if (!isReverseDefine()) {</span>
 <span class="fc" id="L127">			x1 += CommunicationTile.LIVE_DELTA_SIZE * levelIgnore;</span>

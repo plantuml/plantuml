@@ -101,7 +101,7 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2&lt;StateDiagram
 <span class="pc bpc" id="L101" title="2 of 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.RIGHT)</span>
 <span class="nc" id="L102">			queue = &quot;-&quot;;</span>
 
-<span class="fc" id="L104">		final int lenght = queue.length();</span>
+<span class="fc" id="L104">		final int length = queue.length();</span>
 
 <span class="pc bpc" id="L106" title="1 of 2 branches missed.">		final boolean crossStart = arg.get(&quot;ARROW_CROSS_START&quot;, 0) != null;</span>
 <span class="pc bpc" id="L107" title="1 of 2 branches missed.">		final boolean circleEnd = arg.get(&quot;ARROW_CIRCLE_END&quot;, 0) != null;</span>
@@ -117,11 +117,11 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2&lt;StateDiagram
 		// transition node
 <span class="pc bpc" id="L118" title="7 of 8 branches missed.">		if (useNodeStyle &amp;&amp; label != null &amp;&amp; !Display.isNull(label) &amp;&amp; !label.toString().trim().isEmpty()) {</span>
 			// Create intermediate transition node for the label
-<span class="nc" id="L120">			return createTransitionWithIntermediateNode(diagram, location, cl1, cl2, label, linkType, lenght, dir, arg);</span>
+<span class="nc" id="L120">			return createTransitionWithIntermediateNode(diagram, location, cl1, cl2, label, linkType, length, dir, arg);</span>
 		} else {
 			// Original direct link behavior for unlabeled transitions or when node style is
 			// not requested
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">			final LinkArg linkArg = LinkArg.build(label, lenght, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">			final LinkArg linkArg = LinkArg.build(label, length, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
 <span class="fc" id="L125">			Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,</span>
 					linkArg);
 <span class="pc bpc" id="L127" title="2 of 4 branches missed.">			if (dir == Direction.LEFT || dir == Direction.UP)</span>

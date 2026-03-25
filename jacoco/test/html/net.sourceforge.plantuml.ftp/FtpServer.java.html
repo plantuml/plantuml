@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.log.Logme;
 
 public class FtpServer {
 
-<span class="nc" id="L57">	private final Map&lt;String, FtpConnexion&gt; datas = new TreeMap&lt;String, FtpConnexion&gt;();</span>
+<span class="nc" id="L57">	private final Map&lt;String, FtpConnection&gt; datas = new TreeMap&lt;String, FtpConnection&gt;();</span>
 <span class="nc" id="L58">	private final ExecutorService exeImage = Executors.newFixedThreadPool(2);</span>
 
 	private final int listenPort;
@@ -89,10 +89,10 @@ public class FtpServer {
 <span class="nc" id="L89">		return ip;</span>
 	}
 
-	public synchronized FtpConnexion getFtpConnexion(String user) {
-<span class="nc" id="L93">		FtpConnexion data = datas.get(Objects.requireNonNull(user));</span>
+	public synchronized FtpConnection getFtpConnexion(String user) {
+<span class="nc" id="L93">		FtpConnection data = datas.get(Objects.requireNonNull(user));</span>
 <span class="nc bnc" id="L94" title="All 2 branches missed.">		if (data == null) {</span>
-<span class="nc" id="L95">			data = new FtpConnexion(user, defaultfileFormat);</span>
+<span class="nc" id="L95">			data = new FtpConnection(user, defaultfileFormat);</span>
 <span class="nc" id="L96">			datas.put(user, data);</span>
 		}
 <span class="nc" id="L98">		return data;</span>
@@ -109,11 +109,11 @@ public class FtpServer {
 <span class="nc" id="L109">		new FtpServer(4242, FileFormat.PNG).go();</span>
 <span class="nc" id="L110">	}</span>
 
-	public void processImage(final FtpConnexion connexion, final String name) {
+	public void processImage(final FtpConnection connection, final String name) {
 <span class="nc" id="L113">		exeImage.submit(new Runnable() {</span>
 			public void run() {
 				try {
-<span class="nc" id="L116">					connexion.processImage(name);</span>
+<span class="nc" id="L116">					connection.processImage(name);</span>
 <span class="nc" id="L117">				} catch (IOException e) {</span>
 <span class="nc" id="L118">					Logme.error(e);</span>
 <span class="nc" id="L119">				}</span>

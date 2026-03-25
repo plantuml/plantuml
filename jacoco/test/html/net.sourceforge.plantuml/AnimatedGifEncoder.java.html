@@ -183,7 +183,7 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
 <span class="nc" id="L183">			getImagePixels(); // convert to correct format if necessary</span>
 <span class="nc" id="L184">			analyzePixels(); // build color table &amp; map pixels</span>
 <span class="nc bnc" id="L185" title="All 2 branches missed.">			if (firstFrame) {</span>
-<span class="nc" id="L186">				writeLSD(); // logical screen descriptior</span>
+<span class="nc" id="L186">				writeLSD(); // logical screen descriptor</span>
 <span class="nc" id="L187">				writePalette(); // global color table</span>
 <span class="nc bnc" id="L188" title="All 2 branches missed.">				if (repeat &gt;= 0) {</span>
 					// use NS app extension to indicate reps
@@ -528,7 +528,7 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
  * Copyright (c) 1994 Anthony Dekker
  * 
  * NEUQUANT Neural-Net quantization algorithm by Anthony Dekker, 1994. See
- * &quot;Kohonen neural networks for optimal colour quantization&quot; in &quot;Network:
+ * &quot;Kohonen neural networks for optimal color quantization&quot; in &quot;Network:
  * Computation in Neural Systems&quot; Vol. 5 (1994) pp 351-367. for a discussion of
  * the algorithm.
  * 
@@ -545,7 +545,7 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
 // Ported to Java 12/00 K Weiner
 class NeuQuant {
 
-	protected static final int netsize = 256; /* number of colours used */
+	protected static final int netsize = 256; /* number of colors used */
 
 	/* four primes near 500 - assume no image has a length so large */
 	/* that it is divisible by all four primes */
@@ -575,7 +575,7 @@ class NeuQuant {
 
 	protected static final int maxnetpos = (netsize - 1);
 
-	protected static final int netbiasshift = 4; /* bias for colour values */
+	protected static final int netbiasshift = 4; /* bias for color values */
 
 	protected static final int ncycles = 100; /* no. of learning cycles */
 
@@ -823,7 +823,7 @@ class NeuQuant {
 <span class="nc" id="L823">	}</span>
 
 	/*
-	 * Search for BGR values 0..255 (after net is unbiased) and return colour index
+	 * Search for BGR values 0..255 (after net is unbiased) and return color index
 	 * ----------------------------------------------------------------------------
 	 */
 	public int map(int b, int g, int r) {
@@ -913,7 +913,7 @@ class NeuQuant {
 <span class="nc" id="L913">			network[i][0] &gt;&gt;= netbiasshift;</span>
 <span class="nc" id="L914">			network[i][1] &gt;&gt;= netbiasshift;</span>
 <span class="nc" id="L915">			network[i][2] &gt;&gt;= netbiasshift;</span>
-<span class="nc" id="L916">			network[i][3] = i; /* record colour no */</span>
+<span class="nc" id="L916">			network[i][3] = i; /* record color no */</span>
 		}
 <span class="nc" id="L918">	}</span>
 
