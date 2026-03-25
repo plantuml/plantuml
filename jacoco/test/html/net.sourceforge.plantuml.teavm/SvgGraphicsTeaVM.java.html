@@ -34,10 +34,16 @@
  */
 package net.sourceforge.plantuml.teavm;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.teavm.jso.JSBody;
 import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.dom.xml.Document;
 import org.teavm.jso.dom.xml.Element;
+
+import net.sourceforge.plantuml.klimt.UGroupType;
 
 /**
  * SVG Graphics implementation for TeaVM. Uses browser's native DOM API instead
@@ -53,10 +59,12 @@ public class SvgGraphicsTeaVM {
 	private final Element mainGroup;
 	private final Document document;
 
-<span class="nc" id="L56">	private String fillColor = &quot;#000000&quot;;</span>
-<span class="nc" id="L57">	private String strokeColor = &quot;#000000&quot;;</span>
-<span class="nc" id="L58">	private double strokeWidth = 1.0;</span>
-<span class="nc" id="L59">	private double[] strokeDasharray = null;</span>
+<span class="nc" id="L62">	private final List&lt;Element&gt; groupStack = new ArrayList&lt;Element&gt;();</span>
+
+<span class="nc" id="L64">	private String fillColor = &quot;#000000&quot;;</span>
+<span class="nc" id="L65">	private String strokeColor = &quot;#000000&quot;;</span>
+<span class="nc" id="L66">	private double strokeWidth = 1.0;</span>
+<span class="nc" id="L67">	private double[] strokeDasharray = null;</span>
 
 	/**
 	 * Creates a new SVG graphics context for TeaVM rendering.
@@ -67,28 +75,54 @@ public class SvgGraphicsTeaVM {
 	 * {@link #updateSvgSize(double, double, double)} once the actual diagram
 	 * dimensions and scale factor are known.
 	 */
-<span class="nc" id="L70">	public SvgGraphicsTeaVM() {</span>
-<span class="nc" id="L71">		this.document = HTMLDocument.current();</span>
+<span class="nc" id="L78">	public SvgGraphicsTeaVM() {</span>
+<span class="nc" id="L79">		this.document = HTMLDocument.current();</span>
 
 		// Create SVG root element
-<span class="nc" id="L74">		this.svgRoot = createSvgElement(&quot;svg&quot;);</span>
-<span class="nc" id="L75">		svgRoot.setAttribute(&quot;xmlns&quot;, SVG_NS);</span>
-<span class="nc" id="L76">		svgRoot.setAttribute(&quot;version&quot;, &quot;1.1&quot;);</span>
+<span class="nc" id="L82">		this.svgRoot = createSvgElement(&quot;svg&quot;);</span>
+<span class="nc" id="L83">		svgRoot.setAttribute(&quot;xmlns&quot;, SVG_NS);</span>
+<span class="nc" id="L84">		svgRoot.setAttribute(&quot;version&quot;, &quot;1.1&quot;);</span>
 
 		// Create defs for gradients, filters, etc.
-<span class="nc" id="L79">		this.defs = createSvgElement(&quot;defs&quot;);</span>
-<span class="nc" id="L80">		svgRoot.appendChild(defs);</span>
+<span class="nc" id="L87">		this.defs = createSvgElement(&quot;defs&quot;);</span>
+<span class="nc" id="L88">		svgRoot.appendChild(defs);</span>
 
 		// Create main group for all drawings
-<span class="nc" id="L83">		this.mainGroup = createSvgElement(&quot;g&quot;);</span>
-<span class="nc" id="L84">		svgRoot.appendChild(mainGroup);</span>
-<span class="nc" id="L85">	}</span>
+<span class="nc" id="L91">		this.mainGroup = createSvgElement(&quot;g&quot;);</span>
+<span class="nc" id="L92">		svgRoot.appendChild(mainGroup);</span>
+<span class="nc" id="L93">		groupStack.add(mainGroup);</span>
+<span class="nc" id="L94">	}</span>
+
+	private Element currentGroup() {
+<span class="nc" id="L97">		return groupStack.get(groupStack.size() - 1);</span>
+	}
+
+	public void startGroup(Map&lt;UGroupType, String&gt; attrs) {
+<span class="nc" id="L101">		Element g = createSvgElement(&quot;g&quot;);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		for (Map.Entry&lt;UGroupType, String&gt; entry : attrs.entrySet()) {</span>
+<span class="nc" id="L103">			final UGroupType key = entry.getKey();</span>
+<span class="nc" id="L104">			final String value = entry.getValue();</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (key == UGroupType.DATA_UID)</span>
+<span class="nc" id="L106">				g.setAttribute(&quot;id&quot;, value);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">			else if (key == UGroupType.TITLE) {</span>
+				// skip — no DOM title element in TeaVM SVG
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			} else if (key != UGroupType.ID)</span>
+<span class="nc" id="L110">				g.setAttribute(key.getSvgKeyAttributeName(), value);</span>
+<span class="nc" id="L111">		}</span>
+<span class="nc" id="L112">		currentGroup().appendChild(g);</span>
+<span class="nc" id="L113">		groupStack.add(g);</span>
+<span class="nc" id="L114">	}</span>
+
+	public void closeGroup() {
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (groupStack.size() &gt; 1)</span>
+<span class="nc" id="L118">			groupStack.remove(groupStack.size() - 1);</span>
+<span class="nc" id="L119">	}</span>
 
 	@JSBody(params = { &quot;tagName&quot; }, script = &quot;return document.createElementNS('http://www.w3.org/2000/svg', tagName);&quot;)
 	private static native Element createSvgElement(String tagName);
 
 	public Element getSvgRoot() {
-<span class="nc" id="L91">		return svgRoot;</span>
+<span class="nc" id="L125">		return svgRoot;</span>
 	}
 
 	/**
@@ -106,141 +140,141 @@ public class SvgGraphicsTeaVM {
 	 * @param scale  the scale factor (1.0 = no scaling)
 	 */
 	public void updateSvgSize(double width, double height, double scale) {
-<span class="nc" id="L109">		final int w = (int) Math.ceil(width);</span>
-<span class="nc" id="L110">		final int h = (int) Math.ceil(height);</span>
-<span class="nc" id="L111">		svgRoot.setAttribute(&quot;viewBox&quot;, &quot;0 0 &quot; + w + &quot; &quot; + h);</span>
-<span class="nc" id="L112">		svgRoot.setAttribute(&quot;width&quot;, format(w * scale));</span>
-<span class="nc" id="L113">		svgRoot.setAttribute(&quot;height&quot;, format(h * scale));</span>
-<span class="nc" id="L114">	}</span>
+<span class="nc" id="L143">		final int w = (int) Math.ceil(width);</span>
+<span class="nc" id="L144">		final int h = (int) Math.ceil(height);</span>
+<span class="nc" id="L145">		svgRoot.setAttribute(&quot;viewBox&quot;, &quot;0 0 &quot; + w + &quot; &quot; + h);</span>
+<span class="nc" id="L146">		svgRoot.setAttribute(&quot;width&quot;, format(w * scale));</span>
+<span class="nc" id="L147">		svgRoot.setAttribute(&quot;height&quot;, format(h * scale));</span>
+<span class="nc" id="L148">	}</span>
 
 	public void setFillColor(String color) {
-<span class="nc bnc" id="L117" title="All 2 branches missed.">		this.fillColor = color != null ? color : &quot;none&quot;;</span>
-<span class="nc" id="L118">	}</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		this.fillColor = color != null ? color : &quot;none&quot;;</span>
+<span class="nc" id="L152">	}</span>
 
 	public void setStrokeColor(String color) {
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		this.strokeColor = color != null ? color : &quot;none&quot;;</span>
-<span class="nc" id="L122">	}</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		this.strokeColor = color != null ? color : &quot;none&quot;;</span>
+<span class="nc" id="L156">	}</span>
 
 	public void setStrokeWidth(double width) {
-<span class="nc" id="L125">		this.strokeWidth = width;</span>
-<span class="nc" id="L126">		this.strokeDasharray = null;</span>
-<span class="nc" id="L127">	}</span>
+<span class="nc" id="L159">		this.strokeWidth = width;</span>
+<span class="nc" id="L160">		this.strokeDasharray = null;</span>
+<span class="nc" id="L161">	}</span>
 
 	public void setStrokeWidth(double width, double[] dasharray) {
-<span class="nc" id="L130">		this.strokeWidth = width;</span>
-<span class="nc" id="L131">		this.strokeDasharray = dasharray;</span>
-<span class="nc" id="L132">	}</span>
+<span class="nc" id="L164">		this.strokeWidth = width;</span>
+<span class="nc" id="L165">		this.strokeDasharray = dasharray;</span>
+<span class="nc" id="L166">	}</span>
 
 	public void drawRectangle(double x, double y, double width, double height) {
-<span class="nc" id="L135">		drawRectangle(x, y, width, height, 0, 0);</span>
-<span class="nc" id="L136">	}</span>
+<span class="nc" id="L169">		drawRectangle(x, y, width, height, 0, 0);</span>
+<span class="nc" id="L170">	}</span>
 
 	public void drawRectangle(double x, double y, double width, double height, double rx, double ry) {
-<span class="nc" id="L139">		Element rect = createSvgElement(&quot;rect&quot;);</span>
-<span class="nc" id="L140">		rect.setAttribute(&quot;x&quot;, format(x));</span>
-<span class="nc" id="L141">		rect.setAttribute(&quot;y&quot;, format(y));</span>
-<span class="nc" id="L142">		rect.setAttribute(&quot;width&quot;, format(width));</span>
-<span class="nc" id="L143">		rect.setAttribute(&quot;height&quot;, format(height));</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (rx &gt; 0)</span>
-<span class="nc" id="L145">			rect.setAttribute(&quot;rx&quot;, format(rx));</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (ry &gt; 0)</span>
-<span class="nc" id="L147">			rect.setAttribute(&quot;ry&quot;, format(ry));</span>
-<span class="nc" id="L148">		applyStyles(rect);</span>
-<span class="nc" id="L149">		mainGroup.appendChild(rect);</span>
-<span class="nc" id="L150">	}</span>
+<span class="nc" id="L173">		Element rect = createSvgElement(&quot;rect&quot;);</span>
+<span class="nc" id="L174">		rect.setAttribute(&quot;x&quot;, format(x));</span>
+<span class="nc" id="L175">		rect.setAttribute(&quot;y&quot;, format(y));</span>
+<span class="nc" id="L176">		rect.setAttribute(&quot;width&quot;, format(width));</span>
+<span class="nc" id="L177">		rect.setAttribute(&quot;height&quot;, format(height));</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		if (rx &gt; 0)</span>
+<span class="nc" id="L179">			rect.setAttribute(&quot;rx&quot;, format(rx));</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">		if (ry &gt; 0)</span>
+<span class="nc" id="L181">			rect.setAttribute(&quot;ry&quot;, format(ry));</span>
+<span class="nc" id="L182">		applyStyles(rect);</span>
+<span class="nc" id="L183">		currentGroup().appendChild(rect);</span>
+<span class="nc" id="L184">	}</span>
 
 	public void drawCircle(double cx, double cy, double r) {
-<span class="nc" id="L153">		Element circle = createSvgElement(&quot;circle&quot;);</span>
-<span class="nc" id="L154">		circle.setAttribute(&quot;cx&quot;, format(cx));</span>
-<span class="nc" id="L155">		circle.setAttribute(&quot;cy&quot;, format(cy));</span>
-<span class="nc" id="L156">		circle.setAttribute(&quot;r&quot;, format(r));</span>
-<span class="nc" id="L157">		applyStyles(circle);</span>
-<span class="nc" id="L158">		mainGroup.appendChild(circle);</span>
-<span class="nc" id="L159">	}</span>
+<span class="nc" id="L187">		Element circle = createSvgElement(&quot;circle&quot;);</span>
+<span class="nc" id="L188">		circle.setAttribute(&quot;cx&quot;, format(cx));</span>
+<span class="nc" id="L189">		circle.setAttribute(&quot;cy&quot;, format(cy));</span>
+<span class="nc" id="L190">		circle.setAttribute(&quot;r&quot;, format(r));</span>
+<span class="nc" id="L191">		applyStyles(circle);</span>
+<span class="nc" id="L192">		currentGroup().appendChild(circle);</span>
+<span class="nc" id="L193">	}</span>
 
 	public void drawEllipse(double cx, double cy, double rx, double ry) {
-<span class="nc" id="L162">		Element ellipse = createSvgElement(&quot;ellipse&quot;);</span>
-<span class="nc" id="L163">		ellipse.setAttribute(&quot;cx&quot;, format(cx));</span>
-<span class="nc" id="L164">		ellipse.setAttribute(&quot;cy&quot;, format(cy));</span>
-<span class="nc" id="L165">		ellipse.setAttribute(&quot;rx&quot;, format(rx));</span>
-<span class="nc" id="L166">		ellipse.setAttribute(&quot;ry&quot;, format(ry));</span>
-<span class="nc" id="L167">		applyStyles(ellipse);</span>
-<span class="nc" id="L168">		mainGroup.appendChild(ellipse);</span>
-<span class="nc" id="L169">	}</span>
+<span class="nc" id="L196">		Element ellipse = createSvgElement(&quot;ellipse&quot;);</span>
+<span class="nc" id="L197">		ellipse.setAttribute(&quot;cx&quot;, format(cx));</span>
+<span class="nc" id="L198">		ellipse.setAttribute(&quot;cy&quot;, format(cy));</span>
+<span class="nc" id="L199">		ellipse.setAttribute(&quot;rx&quot;, format(rx));</span>
+<span class="nc" id="L200">		ellipse.setAttribute(&quot;ry&quot;, format(ry));</span>
+<span class="nc" id="L201">		applyStyles(ellipse);</span>
+<span class="nc" id="L202">		currentGroup().appendChild(ellipse);</span>
+<span class="nc" id="L203">	}</span>
 
 	public void drawLine(double x1, double y1, double x2, double y2) {
-<span class="nc" id="L172">		Element line = createSvgElement(&quot;line&quot;);</span>
-<span class="nc" id="L173">		line.setAttribute(&quot;x1&quot;, format(x1));</span>
-<span class="nc" id="L174">		line.setAttribute(&quot;y1&quot;, format(y1));</span>
-<span class="nc" id="L175">		line.setAttribute(&quot;x2&quot;, format(x2));</span>
-<span class="nc" id="L176">		line.setAttribute(&quot;y2&quot;, format(y2));</span>
-<span class="nc" id="L177">		applyStrokeStyle(line);</span>
-<span class="nc" id="L178">		mainGroup.appendChild(line);</span>
-<span class="nc" id="L179">	}</span>
+<span class="nc" id="L206">		Element line = createSvgElement(&quot;line&quot;);</span>
+<span class="nc" id="L207">		line.setAttribute(&quot;x1&quot;, format(x1));</span>
+<span class="nc" id="L208">		line.setAttribute(&quot;y1&quot;, format(y1));</span>
+<span class="nc" id="L209">		line.setAttribute(&quot;x2&quot;, format(x2));</span>
+<span class="nc" id="L210">		line.setAttribute(&quot;y2&quot;, format(y2));</span>
+<span class="nc" id="L211">		applyStrokeStyle(line);</span>
+<span class="nc" id="L212">		currentGroup().appendChild(line);</span>
+<span class="nc" id="L213">	}</span>
 
 	public void drawPolyline(double... points) {
-<span class="nc" id="L182">		Element polyline = createSvgElement(&quot;polyline&quot;);</span>
-<span class="nc" id="L183">		polyline.setAttribute(&quot;points&quot;, formatPoints(points));</span>
-<span class="nc" id="L184">		polyline.setAttribute(&quot;fill&quot;, &quot;none&quot;);</span>
-<span class="nc" id="L185">		applyStrokeStyle(polyline);</span>
-<span class="nc" id="L186">		mainGroup.appendChild(polyline);</span>
-<span class="nc" id="L187">	}</span>
+<span class="nc" id="L216">		Element polyline = createSvgElement(&quot;polyline&quot;);</span>
+<span class="nc" id="L217">		polyline.setAttribute(&quot;points&quot;, formatPoints(points));</span>
+<span class="nc" id="L218">		polyline.setAttribute(&quot;fill&quot;, &quot;none&quot;);</span>
+<span class="nc" id="L219">		applyStrokeStyle(polyline);</span>
+<span class="nc" id="L220">		currentGroup().appendChild(polyline);</span>
+<span class="nc" id="L221">	}</span>
 
 	public void drawPolygon(double... points) {
-<span class="nc" id="L190">		Element polygon = createSvgElement(&quot;polygon&quot;);</span>
-<span class="nc" id="L191">		polygon.setAttribute(&quot;points&quot;, formatPoints(points));</span>
-<span class="nc" id="L192">		applyStyles(polygon);</span>
-<span class="nc" id="L193">		mainGroup.appendChild(polygon);</span>
-<span class="nc" id="L194">	}</span>
+<span class="nc" id="L224">		Element polygon = createSvgElement(&quot;polygon&quot;);</span>
+<span class="nc" id="L225">		polygon.setAttribute(&quot;points&quot;, formatPoints(points));</span>
+<span class="nc" id="L226">		applyStyles(polygon);</span>
+<span class="nc" id="L227">		currentGroup().appendChild(polygon);</span>
+<span class="nc" id="L228">	}</span>
 
 	public void drawPath(String pathData) {
-<span class="nc" id="L197">		Element path = createSvgElement(&quot;path&quot;);</span>
-<span class="nc" id="L198">		path.setAttribute(&quot;d&quot;, pathData);</span>
-<span class="nc" id="L199">		applyStyles(path);</span>
-<span class="nc" id="L200">		mainGroup.appendChild(path);</span>
-<span class="nc" id="L201">	}</span>
+<span class="nc" id="L231">		Element path = createSvgElement(&quot;path&quot;);</span>
+<span class="nc" id="L232">		path.setAttribute(&quot;d&quot;, pathData);</span>
+<span class="nc" id="L233">		applyStyles(path);</span>
+<span class="nc" id="L234">		currentGroup().appendChild(path);</span>
+<span class="nc" id="L235">	}</span>
 
 	public void drawText(String text, double x, double y, String fontFamily, int fontSize) {
-<span class="nc" id="L204">		drawText(text, x, y, fontFamily, fontSize, null, null, null, null);</span>
-<span class="nc" id="L205">	}</span>
+<span class="nc" id="L238">		drawText(text, x, y, fontFamily, fontSize, null, null, null, null);</span>
+<span class="nc" id="L239">	}</span>
 
 	public void drawText(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
 			String fontStyle, String textDecoration, String backColor) {
 		// Draw background rectangle if backColor is specified
-<span class="nc bnc" id="L210" title="All 2 branches missed.">		if (backColor != null) {</span>
-<span class="nc" id="L211">			double[] metrics = measureTextCanvas(text, fontFamily, fontSize,</span>
-<span class="nc bnc" id="L212" title="All 2 branches missed.">					fontWeight != null ? fontWeight : &quot;normal&quot;);</span>
-<span class="nc" id="L213">			double width = metrics[0];</span>
-<span class="nc" id="L214">			double height = metrics[1];</span>
-<span class="nc" id="L215">			Element rect = createSvgElement(&quot;rect&quot;);</span>
-<span class="nc" id="L216">			rect.setAttribute(&quot;x&quot;, format(x));</span>
-<span class="nc" id="L217">			rect.setAttribute(&quot;y&quot;, format(y - height + 2));</span>
-<span class="nc" id="L218">			rect.setAttribute(&quot;width&quot;, format(width));</span>
-<span class="nc" id="L219">			rect.setAttribute(&quot;height&quot;, format(height));</span>
-<span class="nc" id="L220">			rect.setAttribute(&quot;fill&quot;, backColor);</span>
-<span class="nc" id="L221">			rect.setAttribute(&quot;stroke&quot;, &quot;none&quot;);</span>
-<span class="nc" id="L222">			mainGroup.appendChild(rect);</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">		if (backColor != null) {</span>
+<span class="nc" id="L245">			double[] metrics = measureTextCanvas(text, fontFamily, fontSize,</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">					fontWeight != null ? fontWeight : &quot;normal&quot;);</span>
+<span class="nc" id="L247">			double width = metrics[0];</span>
+<span class="nc" id="L248">			double height = metrics[1];</span>
+<span class="nc" id="L249">			Element rect = createSvgElement(&quot;rect&quot;);</span>
+<span class="nc" id="L250">			rect.setAttribute(&quot;x&quot;, format(x));</span>
+<span class="nc" id="L251">			rect.setAttribute(&quot;y&quot;, format(y - height + 2));</span>
+<span class="nc" id="L252">			rect.setAttribute(&quot;width&quot;, format(width));</span>
+<span class="nc" id="L253">			rect.setAttribute(&quot;height&quot;, format(height));</span>
+<span class="nc" id="L254">			rect.setAttribute(&quot;fill&quot;, backColor);</span>
+<span class="nc" id="L255">			rect.setAttribute(&quot;stroke&quot;, &quot;none&quot;);</span>
+<span class="nc" id="L256">			currentGroup().appendChild(rect);</span>
 		}
 
-<span class="nc" id="L225">		Element textElem = createSvgElement(&quot;text&quot;);</span>
-<span class="nc" id="L226">		textElem.setAttribute(&quot;x&quot;, format(x));</span>
-<span class="nc" id="L227">		textElem.setAttribute(&quot;y&quot;, format(y));</span>
-<span class="nc" id="L228">		textElem.setAttribute(&quot;font-size&quot;, String.valueOf(fontSize));</span>
-<span class="nc" id="L229">		textElem.setAttribute(&quot;fill&quot;, fillColor);</span>
+<span class="nc" id="L259">		Element textElem = createSvgElement(&quot;text&quot;);</span>
+<span class="nc" id="L260">		textElem.setAttribute(&quot;x&quot;, format(x));</span>
+<span class="nc" id="L261">		textElem.setAttribute(&quot;y&quot;, format(y));</span>
+<span class="nc" id="L262">		textElem.setAttribute(&quot;font-size&quot;, String.valueOf(fontSize));</span>
+<span class="nc" id="L263">		textElem.setAttribute(&quot;fill&quot;, fillColor);</span>
 		// Preserve whitespace (multiple spaces, tabs, etc.)
-<span class="nc" id="L231">		textElem.setAttribute(&quot;xml:space&quot;, &quot;preserve&quot;);</span>
-<span class="nc" id="L232">		textElem.setAttribute(&quot;style&quot;, &quot;white-space: pre&quot;);</span>
-<span class="nc bnc" id="L233" title="All 2 branches missed.">		if (fontWeight != null) {</span>
-<span class="nc" id="L234">			textElem.setAttribute(&quot;font-weight&quot;, fontWeight);</span>
+<span class="nc" id="L265">		textElem.setAttribute(&quot;xml:space&quot;, &quot;preserve&quot;);</span>
+<span class="nc" id="L266">		textElem.setAttribute(&quot;style&quot;, &quot;white-space: pre&quot;);</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">		if (fontWeight != null) {</span>
+<span class="nc" id="L268">			textElem.setAttribute(&quot;font-weight&quot;, fontWeight);</span>
 		}
-<span class="nc bnc" id="L236" title="All 2 branches missed.">		if (fontStyle != null) {</span>
-<span class="nc" id="L237">			textElem.setAttribute(&quot;font-style&quot;, fontStyle);</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">		if (fontStyle != null) {</span>
+<span class="nc" id="L271">			textElem.setAttribute(&quot;font-style&quot;, fontStyle);</span>
 		}
-<span class="nc bnc" id="L239" title="All 2 branches missed.">		if (textDecoration != null) {</span>
-<span class="nc" id="L240">			textElem.setAttribute(&quot;text-decoration&quot;, textDecoration);</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">		if (textDecoration != null) {</span>
+<span class="nc" id="L274">			textElem.setAttribute(&quot;text-decoration&quot;, textDecoration);</span>
 		}
-<span class="nc bnc" id="L242" title="All 2 branches missed.">		if (fontFamily != null) {</span>
-<span class="nc" id="L243">			textElem.setAttribute(&quot;font-family&quot;, fontFamily);</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">		if (fontFamily != null) {</span>
+<span class="nc" id="L277">			textElem.setAttribute(&quot;font-family&quot;, fontFamily);</span>
 
 			// For monospace fonts, replace spaces with non-breaking spaces
 			// to ensure consistent character width
@@ -248,71 +282,71 @@ public class SvgGraphicsTeaVM {
 			// fontFamily.equalsIgnoreCase(&quot;courier&quot;))
 			// text = text.replace(' ', (char) 160);
 		}
-<span class="nc" id="L251">		textElem.setTextContent(text);</span>
-<span class="nc" id="L252">		mainGroup.appendChild(textElem);</span>
-<span class="nc" id="L253">	}</span>
+<span class="nc" id="L285">		textElem.setTextContent(text);</span>
+<span class="nc" id="L286">		currentGroup().appendChild(textElem);</span>
+<span class="nc" id="L287">	}</span>
 
 	public Element createGroup() {
-<span class="nc" id="L256">		Element group = createSvgElement(&quot;g&quot;);</span>
-<span class="nc" id="L257">		mainGroup.appendChild(group);</span>
-<span class="nc" id="L258">		return group;</span>
+<span class="nc" id="L290">		Element group = createSvgElement(&quot;g&quot;);</span>
+<span class="nc" id="L291">		currentGroup().appendChild(group);</span>
+<span class="nc" id="L292">		return group;</span>
 	}
 
 	public String createLinearGradient(String id, String color1, String color2, boolean horizontal) {
-<span class="nc" id="L262">		Element gradient = createSvgElement(&quot;linearGradient&quot;);</span>
-<span class="nc" id="L263">		gradient.setAttribute(&quot;id&quot;, id);</span>
-<span class="nc bnc" id="L264" title="All 2 branches missed.">		if (horizontal) {</span>
-<span class="nc" id="L265">			gradient.setAttribute(&quot;x1&quot;, &quot;0%&quot;);</span>
-<span class="nc" id="L266">			gradient.setAttribute(&quot;y1&quot;, &quot;0%&quot;);</span>
-<span class="nc" id="L267">			gradient.setAttribute(&quot;x2&quot;, &quot;100%&quot;);</span>
-<span class="nc" id="L268">			gradient.setAttribute(&quot;y2&quot;, &quot;0%&quot;);</span>
+<span class="nc" id="L296">		Element gradient = createSvgElement(&quot;linearGradient&quot;);</span>
+<span class="nc" id="L297">		gradient.setAttribute(&quot;id&quot;, id);</span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">		if (horizontal) {</span>
+<span class="nc" id="L299">			gradient.setAttribute(&quot;x1&quot;, &quot;0%&quot;);</span>
+<span class="nc" id="L300">			gradient.setAttribute(&quot;y1&quot;, &quot;0%&quot;);</span>
+<span class="nc" id="L301">			gradient.setAttribute(&quot;x2&quot;, &quot;100%&quot;);</span>
+<span class="nc" id="L302">			gradient.setAttribute(&quot;y2&quot;, &quot;0%&quot;);</span>
 		} else {
-<span class="nc" id="L270">			gradient.setAttribute(&quot;x1&quot;, &quot;0%&quot;);</span>
-<span class="nc" id="L271">			gradient.setAttribute(&quot;y1&quot;, &quot;0%&quot;);</span>
-<span class="nc" id="L272">			gradient.setAttribute(&quot;x2&quot;, &quot;0%&quot;);</span>
-<span class="nc" id="L273">			gradient.setAttribute(&quot;y2&quot;, &quot;100%&quot;);</span>
+<span class="nc" id="L304">			gradient.setAttribute(&quot;x1&quot;, &quot;0%&quot;);</span>
+<span class="nc" id="L305">			gradient.setAttribute(&quot;y1&quot;, &quot;0%&quot;);</span>
+<span class="nc" id="L306">			gradient.setAttribute(&quot;x2&quot;, &quot;0%&quot;);</span>
+<span class="nc" id="L307">			gradient.setAttribute(&quot;y2&quot;, &quot;100%&quot;);</span>
 		}
 
-<span class="nc" id="L276">		Element stop1 = createSvgElement(&quot;stop&quot;);</span>
-<span class="nc" id="L277">		stop1.setAttribute(&quot;offset&quot;, &quot;0%&quot;);</span>
-<span class="nc" id="L278">		stop1.setAttribute(&quot;stop-color&quot;, color1);</span>
-<span class="nc" id="L279">		gradient.appendChild(stop1);</span>
+<span class="nc" id="L310">		Element stop1 = createSvgElement(&quot;stop&quot;);</span>
+<span class="nc" id="L311">		stop1.setAttribute(&quot;offset&quot;, &quot;0%&quot;);</span>
+<span class="nc" id="L312">		stop1.setAttribute(&quot;stop-color&quot;, color1);</span>
+<span class="nc" id="L313">		gradient.appendChild(stop1);</span>
 
-<span class="nc" id="L281">		Element stop2 = createSvgElement(&quot;stop&quot;);</span>
-<span class="nc" id="L282">		stop2.setAttribute(&quot;offset&quot;, &quot;100%&quot;);</span>
-<span class="nc" id="L283">		stop2.setAttribute(&quot;stop-color&quot;, color2);</span>
-<span class="nc" id="L284">		gradient.appendChild(stop2);</span>
+<span class="nc" id="L315">		Element stop2 = createSvgElement(&quot;stop&quot;);</span>
+<span class="nc" id="L316">		stop2.setAttribute(&quot;offset&quot;, &quot;100%&quot;);</span>
+<span class="nc" id="L317">		stop2.setAttribute(&quot;stop-color&quot;, color2);</span>
+<span class="nc" id="L318">		gradient.appendChild(stop2);</span>
 
-<span class="nc" id="L286">		defs.appendChild(gradient);</span>
-<span class="nc" id="L287">		return &quot;url(#&quot; + id + &quot;)&quot;;</span>
+<span class="nc" id="L320">		defs.appendChild(gradient);</span>
+<span class="nc" id="L321">		return &quot;url(#&quot; + id + &quot;)&quot;;</span>
 	}
 
 	private void applyStyles(Element element) {
-<span class="nc" id="L291">		element.setAttribute(&quot;fill&quot;, fillColor);</span>
-<span class="nc" id="L292">		applyStrokeStyle(element);</span>
-<span class="nc" id="L293">	}</span>
+<span class="nc" id="L325">		element.setAttribute(&quot;fill&quot;, fillColor);</span>
+<span class="nc" id="L326">		applyStrokeStyle(element);</span>
+<span class="nc" id="L327">	}</span>
 
 	private void applyStrokeStyle(Element element) {
-<span class="nc" id="L296">		element.setAttribute(&quot;stroke&quot;, strokeColor);</span>
-<span class="nc" id="L297">		element.setAttribute(&quot;stroke-width&quot;, format(strokeWidth));</span>
-<span class="nc bnc" id="L298" title="All 4 branches missed.">		if (strokeDasharray != null &amp;&amp; strokeDasharray.length &gt;= 2)</span>
-<span class="nc" id="L299">			element.setAttribute(&quot;stroke-dasharray&quot;, format(strokeDasharray[0]) + &quot;,&quot; + format(strokeDasharray[1]));</span>
-<span class="nc" id="L300">	}</span>
+<span class="nc" id="L330">		element.setAttribute(&quot;stroke&quot;, strokeColor);</span>
+<span class="nc" id="L331">		element.setAttribute(&quot;stroke-width&quot;, format(strokeWidth));</span>
+<span class="nc bnc" id="L332" title="All 4 branches missed.">		if (strokeDasharray != null &amp;&amp; strokeDasharray.length &gt;= 2)</span>
+<span class="nc" id="L333">			element.setAttribute(&quot;stroke-dasharray&quot;, format(strokeDasharray[0]) + &quot;,&quot; + format(strokeDasharray[1]));</span>
+<span class="nc" id="L334">	}</span>
 
 	private String format(double value) {
-<span class="nc bnc" id="L303" title="All 2 branches missed.">		if (value == (int) value)</span>
-<span class="nc" id="L304">			return String.valueOf((int) value);</span>
-<span class="nc" id="L305">		return String.format(&quot;%.2f&quot;, value).replace(',', '.');</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">		if (value == (int) value)</span>
+<span class="nc" id="L338">			return String.valueOf((int) value);</span>
+<span class="nc" id="L339">		return String.format(&quot;%.2f&quot;, value).replace(',', '.');</span>
 	}
 
 	private String formatPoints(double... points) {
-<span class="nc" id="L309">		StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L310" title="All 2 branches missed.">		for (int i = 0; i &lt; points.length; i += 2) {</span>
-<span class="nc bnc" id="L311" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
-<span class="nc" id="L312">				sb.append(&quot; &quot;);</span>
-<span class="nc" id="L313">			sb.append(format(points[i])).append(&quot;,&quot;).append(format(points[i + 1]));</span>
+<span class="nc" id="L343">		StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L344" title="All 2 branches missed.">		for (int i = 0; i &lt; points.length; i += 2) {</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
+<span class="nc" id="L346">				sb.append(&quot; &quot;);</span>
+<span class="nc" id="L347">			sb.append(format(points[i])).append(&quot;,&quot;).append(format(points[i + 1]));</span>
 		}
-<span class="nc" id="L315">		return sb.toString();</span>
+<span class="nc" id="L349">		return sb.toString();</span>
 	}
 
 	/**
@@ -322,7 +356,7 @@ public class SvgGraphicsTeaVM {
 	public static native String serializeToString(Element element);
 
 	public String toSvgString() {
-<span class="nc" id="L325">		return serializeToString(svgRoot);</span>
+<span class="nc" id="L359">		return serializeToString(svgRoot);</span>
 	}
 
 	// ========================================================================
@@ -373,21 +407,21 @@ public class SvgGraphicsTeaVM {
 	 * Measures text using Canvas with normal weight.
 	 */
 	public static double[] measureText(String text, String fontFamily, int fontSize) {
-<span class="nc" id="L376">		return measureTextCanvas(text, fontFamily, fontSize, &quot;normal&quot;);</span>
+<span class="nc" id="L410">		return measureTextCanvas(text, fontFamily, fontSize, &quot;normal&quot;);</span>
 	}
 
 	/**
 	 * Gets text width only.
 	 */
 	public static double getTextWidth(String text, String fontFamily, int fontSize) {
-<span class="nc" id="L383">		return measureText(text, fontFamily, fontSize)[0];</span>
+<span class="nc" id="L417">		return measureText(text, fontFamily, fontSize)[0];</span>
 	}
 
 	/**
 	 * Gets text height only.
 	 */
 	public static double getTextHeight(String text, String fontFamily, int fontSize) {
-<span class="nc" id="L390">		return measureText(text, fontFamily, fontSize)[1];</span>
+<span class="nc" id="L424">		return measureText(text, fontFamily, fontSize)[1];</span>
 	}
 
 	/**
@@ -442,19 +476,19 @@ public class SvgGraphicsTeaVM {
 	 * @param fontSize   Font size in pixels
 	 */
 	public void drawCenteredCharacter(char c, double x, double y, String fontFamily, int fontSize) {
-<span class="nc" id="L445">		Element textElem = createSvgElement(&quot;text&quot;);</span>
-<span class="nc" id="L446">		textElem.setAttribute(&quot;x&quot;, format(x));</span>
-<span class="nc" id="L447">		textElem.setAttribute(&quot;y&quot;, format(y));</span>
-<span class="nc" id="L448">		textElem.setAttribute(&quot;font-family&quot;, fontFamily);</span>
-<span class="nc" id="L449">		textElem.setAttribute(&quot;font-size&quot;, String.valueOf(fontSize));</span>
-<span class="nc" id="L450">		textElem.setAttribute(&quot;fill&quot;, fillColor);</span>
+<span class="nc" id="L479">		Element textElem = createSvgElement(&quot;text&quot;);</span>
+<span class="nc" id="L480">		textElem.setAttribute(&quot;x&quot;, format(x));</span>
+<span class="nc" id="L481">		textElem.setAttribute(&quot;y&quot;, format(y));</span>
+<span class="nc" id="L482">		textElem.setAttribute(&quot;font-family&quot;, fontFamily);</span>
+<span class="nc" id="L483">		textElem.setAttribute(&quot;font-size&quot;, String.valueOf(fontSize));</span>
+<span class="nc" id="L484">		textElem.setAttribute(&quot;fill&quot;, fillColor);</span>
 		// Center horizontally
-<span class="nc" id="L452">		textElem.setAttribute(&quot;text-anchor&quot;, &quot;middle&quot;);</span>
+<span class="nc" id="L486">		textElem.setAttribute(&quot;text-anchor&quot;, &quot;middle&quot;);</span>
 		// Center vertically (dominant-baseline: central centers on x-height)
-<span class="nc" id="L454">		textElem.setAttribute(&quot;dominant-baseline&quot;, &quot;central&quot;);</span>
-<span class="nc" id="L455">		textElem.setTextContent(String.valueOf(c));</span>
-<span class="nc" id="L456">		mainGroup.appendChild(textElem);</span>
-<span class="nc" id="L457">	}</span>
+<span class="nc" id="L488">		textElem.setAttribute(&quot;dominant-baseline&quot;, &quot;central&quot;);</span>
+<span class="nc" id="L489">		textElem.setTextContent(String.valueOf(c));</span>
+<span class="nc" id="L490">		currentGroup().appendChild(textElem);</span>
+<span class="nc" id="L491">	}</span>
 
 	// ========================================================================
 	// Image drawing
@@ -471,17 +505,17 @@ public class SvgGraphicsTeaVM {
 	 * @param height  Image height
 	 */
 	public void drawImage(String dataUrl, double x, double y, int width, int height) {
-<span class="nc" id="L474">		Element image = createSvgElement(&quot;image&quot;);</span>
-<span class="nc" id="L475">		image.setAttribute(&quot;x&quot;, format(x));</span>
-<span class="nc" id="L476">		image.setAttribute(&quot;y&quot;, format(y));</span>
-<span class="nc" id="L477">		image.setAttribute(&quot;width&quot;, String.valueOf(width));</span>
-<span class="nc" id="L478">		image.setAttribute(&quot;height&quot;, String.valueOf(height));</span>
+<span class="nc" id="L508">		Element image = createSvgElement(&quot;image&quot;);</span>
+<span class="nc" id="L509">		image.setAttribute(&quot;x&quot;, format(x));</span>
+<span class="nc" id="L510">		image.setAttribute(&quot;y&quot;, format(y));</span>
+<span class="nc" id="L511">		image.setAttribute(&quot;width&quot;, String.valueOf(width));</span>
+<span class="nc" id="L512">		image.setAttribute(&quot;height&quot;, String.valueOf(height));</span>
 		// Use href for SVG 2.0 compatibility (xlink:href is deprecated)
-<span class="nc" id="L480">		image.setAttribute(&quot;href&quot;, dataUrl);</span>
+<span class="nc" id="L514">		image.setAttribute(&quot;href&quot;, dataUrl);</span>
 		// Also set xlink:href for older browser compatibility
-<span class="nc" id="L482">		setXlinkHref(image, dataUrl);</span>
-<span class="nc" id="L483">		mainGroup.appendChild(image);</span>
-<span class="nc" id="L484">	}</span>
+<span class="nc" id="L516">		setXlinkHref(image, dataUrl);</span>
+<span class="nc" id="L517">		currentGroup().appendChild(image);</span>
+<span class="nc" id="L518">	}</span>
 
 	@JSBody(params = { &quot;element&quot;,
 			&quot;href&quot; }, script = &quot;element.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', href);&quot;)
@@ -500,36 +534,36 @@ public class SvgGraphicsTeaVM {
 	 * @param y     Y position
 	 */
 	public void drawSvgImage(net.sourceforge.plantuml.klimt.shape.UImageSvg image, double x, double y) {
-<span class="nc" id="L503">		final double svgScale = image.getScale();</span>
-<span class="nc" id="L504">		String svg = image.getSvg(false);</span>
+<span class="nc" id="L537">		final double svgScale = image.getScale();</span>
+<span class="nc" id="L538">		String svg = image.getSvg(false);</span>
 
 		// Handle scaling if needed
-<span class="nc bnc" id="L507" title="All 2 branches missed.">		if (svgScale != 1) {</span>
-<span class="nc" id="L508">			svg = wrapWithScaleTransform(svg, svgScale);</span>
+<span class="nc bnc" id="L541" title="All 2 branches missed.">		if (svgScale != 1) {</span>
+<span class="nc" id="L542">			svg = wrapWithScaleTransform(svg, svgScale);</span>
 		}
 
 		// Create a group to position the embedded SVG
-<span class="nc" id="L512">		Element wrapper = createSvgElement(&quot;g&quot;);</span>
-<span class="nc" id="L513">		wrapper.setAttribute(&quot;transform&quot;, &quot;translate(&quot; + format(x) + &quot;,&quot; + format(y) + &quot;)&quot;);</span>
+<span class="nc" id="L546">		Element wrapper = createSvgElement(&quot;g&quot;);</span>
+<span class="nc" id="L547">		wrapper.setAttribute(&quot;transform&quot;, &quot;translate(&quot; + format(x) + &quot;,&quot; + format(y) + &quot;)&quot;);</span>
 
 		// Parse and insert the SVG content
-<span class="nc" id="L516">		insertSvgContent(wrapper, svg);</span>
+<span class="nc" id="L550">		insertSvgContent(wrapper, svg);</span>
 
-<span class="nc" id="L518">		mainGroup.appendChild(wrapper);</span>
-<span class="nc" id="L519">	}</span>
+<span class="nc" id="L552">		currentGroup().appendChild(wrapper);</span>
+<span class="nc" id="L553">	}</span>
 
 	/**
 	 * Wraps SVG content with a scale transform.
 	 */
 	private String wrapWithScaleTransform(String svg, double scale) {
-<span class="nc" id="L525">		String svg2 = svg.replace('\n', ' ').replace('\r', ' ');</span>
-<span class="nc bnc" id="L526" title="All 4 branches missed.">		if (!svg2.contains(&quot;&lt;g &quot;) &amp;&amp; !svg2.contains(&quot;&lt;g&gt;&quot;)) {</span>
-<span class="nc" id="L527">			svg = svg.replaceFirst(&quot;\\&lt;svg\\&gt;&quot;, &quot;&lt;svg&gt;&lt;g&gt;&quot;);</span>
-<span class="nc" id="L528">			svg = svg.replaceFirst(&quot;\\&lt;/svg\\&gt;&quot;, &quot;&lt;/g&gt;&lt;/svg&gt;&quot;);</span>
+<span class="nc" id="L559">		String svg2 = svg.replace('\n', ' ').replace('\r', ' ');</span>
+<span class="nc bnc" id="L560" title="All 4 branches missed.">		if (!svg2.contains(&quot;&lt;g &quot;) &amp;&amp; !svg2.contains(&quot;&lt;g&gt;&quot;)) {</span>
+<span class="nc" id="L561">			svg = svg.replaceFirst(&quot;\\&lt;svg\\&gt;&quot;, &quot;&lt;svg&gt;&lt;g&gt;&quot;);</span>
+<span class="nc" id="L562">			svg = svg.replaceFirst(&quot;\\&lt;/svg\\&gt;&quot;, &quot;&lt;/g&gt;&lt;/svg&gt;&quot;);</span>
 		}
-<span class="nc" id="L530">		final String factor = format(scale);</span>
-<span class="nc" id="L531">		svg = svg.replaceFirst(&quot;\\&lt;g\\b&quot;, &quot;&lt;g transform=\&quot;scale(&quot; + factor + &quot;,&quot; + factor + &quot;)\&quot; &quot;);</span>
-<span class="nc" id="L532">		return svg;</span>
+<span class="nc" id="L564">		final String factor = format(scale);</span>
+<span class="nc" id="L565">		svg = svg.replaceFirst(&quot;\\&lt;g\\b&quot;, &quot;&lt;g transform=\&quot;scale(&quot; + factor + &quot;,&quot; + factor + &quot;)\&quot; &quot;);</span>
+<span class="nc" id="L566">		return svg;</span>
 	}
 
 	/**
