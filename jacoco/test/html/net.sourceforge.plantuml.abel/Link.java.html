@@ -209,11 +209,11 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public String getPortName1() {
-<span class="fc" id="L212">		return port1;</span>
+<span class="nc" id="L212">		return port1;</span>
 	}
 
 	public String getPortName2() {
-<span class="fc" id="L216">		return port2;</span>
+<span class="nc" id="L216">		return port2;</span>
 	}
 
 	public EntityPort getEntityPort1(Bibliotekon bibliotekon) {
@@ -359,20 +359,20 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public boolean contains(Entity entity) {
-<span class="fc bfc" id="L362" title="All 2 branches covered.">		if (getEntity1() == entity)</span>
+<span class="pc bpc" id="L362" title="1 of 2 branches missed.">		if (getEntity1() == entity)</span>
 <span class="fc" id="L363">			return true;</span>
-<span class="fc bfc" id="L364" title="All 2 branches covered.">		if (getEntity2() == entity)</span>
-<span class="fc" id="L365">			return true;</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">		if (getEntity2() == entity)</span>
+<span class="nc" id="L365">			return true;</span>
 
-<span class="fc" id="L367">		return false;</span>
+<span class="nc" id="L367">		return false;</span>
 	}
 
 	public Entity getOther(Entity entity) {
-<span class="fc bfc" id="L371" title="All 2 branches covered.">		if (getEntity1() == entity)</span>
+<span class="pc bpc" id="L371" title="1 of 2 branches missed.">		if (getEntity1() == entity)</span>
 <span class="fc" id="L372">			return getEntity2();</span>
 
-<span class="pc bpc" id="L374" title="1 of 2 branches missed.">		if (getEntity2() == entity)</span>
-<span class="fc" id="L375">			return getEntity1();</span>
+<span class="nc bnc" id="L374" title="All 2 branches missed.">		if (getEntity2() == entity)</span>
+<span class="nc" id="L375">			return getEntity1();</span>
 
 <span class="nc" id="L377">		throw new IllegalArgumentException();</span>
 	}
@@ -432,7 +432,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 <span class="fc" id="L432">	}</span>
 
 	public final boolean isInverted() {
-<span class="fc" id="L435">		return inverted;</span>
+<span class="nc" id="L435">		return inverted;</span>
 	}
 
 	public boolean hasEntryPoint() {

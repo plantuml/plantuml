@@ -60,25 +60,25 @@ public class XmiClassDiagramScript extends XmiClassDiagramAbstract implements Xm
 		public final String kind;
 
 		public MemberData(String name, String id, String kind) {
-<span class="fc" id="L63">			super();</span>
-<span class="fc" id="L64">			this.name = name;</span>
-<span class="fc" id="L65">			this.id = id;</span>
-<span class="fc" id="L66">			this.kind = kind;</span>
-<span class="fc" id="L67">		}</span>
+<span class="nc" id="L63">			super();</span>
+<span class="nc" id="L64">			this.name = name;</span>
+<span class="nc" id="L65">			this.id = id;</span>
+<span class="nc" id="L66">			this.kind = kind;</span>
+<span class="nc" id="L67">		}</span>
 
 	}
 
-<span class="fc" id="L71">	protected final Map&lt;String, List&lt;MemberData&gt;&gt; members = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L71">	protected final Map&lt;String, List&lt;MemberData&gt;&gt; members = new HashMap&lt;&gt;();</span>
 
 	public XmiClassDiagramScript(ClassDiagram classDiagram) throws ParserConfigurationException {
-<span class="fc" id="L74">		super(classDiagram);</span>
+<span class="nc" id="L74">		super(classDiagram);</span>
 
-<span class="fc" id="L76">		addPackage(ownedElementRoot, classDiagram.getRootGroup());</span>
+<span class="nc" id="L76">		addPackage(ownedElementRoot, classDiagram.getRootGroup());</span>
 
-<span class="fc bfc" id="L78" title="All 2 branches covered.">		for (final Link link : classDiagram.getLinks())</span>
-<span class="fc" id="L79">			addLink(link);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		for (final Link link : classDiagram.getLinks())</span>
+<span class="nc" id="L79">			addLink(link);</span>
 
-<span class="fc" id="L81">	}</span>
+<span class="nc" id="L81">	}</span>
 
 	final protected Element createElementPackage(Entity group) {
 <span class="nc" id="L84">		final Element umlPackage = document.createElement(&quot;UML:Package&quot;);</span>
@@ -96,109 +96,109 @@ public class XmiClassDiagramScript extends XmiClassDiagramAbstract implements Xm
 	}
 
 	private void addPackage(Element element, Entity group) {
-<span class="fc bfc" id="L99" title="All 2 branches covered.">		for (final Entity ent : group.leafs()) {</span>
-<span class="fc" id="L100">			final Element cla = createEntityNode(ent);</span>
-<span class="pc bpc" id="L101" title="1 of 2 branches missed.">			if (cla == null)</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (final Entity ent : group.leafs()) {</span>
+<span class="nc" id="L100">			final Element cla = createEntityNode(ent);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			if (cla == null)</span>
 <span class="nc" id="L102">				continue;</span>
 
-<span class="fc" id="L104">			element.appendChild(cla);</span>
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">			if (members.containsKey(ent.getUid()) == false)</span>
-<span class="fc" id="L106">				members.put(ent.getUid(), new ArrayList&lt;MemberData&gt;());</span>
+<span class="nc" id="L104">			element.appendChild(cla);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (members.containsKey(ent.getUid()) == false)</span>
+<span class="nc" id="L106">				members.put(ent.getUid(), new ArrayList&lt;MemberData&gt;());</span>
 
-<span class="fc" id="L108">			NodeList attrs = cla.getElementsByTagName(&quot;UML:Attribute&quot;);</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">			for (int i = 0; i &lt; attrs.getLength(); i++) {</span>
-<span class="fc" id="L110">				Element child = (Element) attrs.item(i);</span>
-<span class="fc" id="L111">				members.get(ent.getUid()).add(</span>
-<span class="fc" id="L112">						new MemberData(child.getAttribute(&quot;name&quot;), child.getAttribute(&quot;xmi.id&quot;), child.getTagName()));</span>
+<span class="nc" id="L108">			NodeList attrs = cla.getElementsByTagName(&quot;UML:Attribute&quot;);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			for (int i = 0; i &lt; attrs.getLength(); i++) {</span>
+<span class="nc" id="L110">				Element child = (Element) attrs.item(i);</span>
+<span class="nc" id="L111">				members.get(ent.getUid()).add(</span>
+<span class="nc" id="L112">						new MemberData(child.getAttribute(&quot;name&quot;), child.getAttribute(&quot;xmi.id&quot;), child.getTagName()));</span>
 			}
-<span class="fc" id="L114">			NodeList ops = cla.getElementsByTagName(&quot;UML:Operation&quot;);</span>
-<span class="fc bfc" id="L115" title="All 2 branches covered.">			for (int i = 0; i &lt; ops.getLength(); i++) {</span>
-<span class="fc" id="L116">				Element child = (Element) ops.item(i);</span>
-<span class="fc" id="L117">				members.get(ent.getUid()).add(</span>
-<span class="fc" id="L118">						new MemberData(child.getAttribute(&quot;name&quot;), child.getAttribute(&quot;xmi.id&quot;), child.getTagName()));</span>
+<span class="nc" id="L114">			NodeList ops = cla.getElementsByTagName(&quot;UML:Operation&quot;);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">			for (int i = 0; i &lt; ops.getLength(); i++) {</span>
+<span class="nc" id="L116">				Element child = (Element) ops.item(i);</span>
+<span class="nc" id="L117">				members.get(ent.getUid()).add(</span>
+<span class="nc" id="L118">						new MemberData(child.getAttribute(&quot;name&quot;), child.getAttribute(&quot;xmi.id&quot;), child.getTagName()));</span>
 			}
-<span class="fc" id="L120">			done.add(ent);</span>
-<span class="fc" id="L121">		}</span>
+<span class="nc" id="L120">			done.add(ent);</span>
+<span class="nc" id="L121">		}</span>
 
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		for (final Entity childGroup : group.groups()) {</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		for (final Entity childGroup : group.groups()) {</span>
 <span class="nc" id="L124">			final Element result = createElementPackage(childGroup);</span>
 <span class="nc" id="L125">			element.appendChild(result);</span>
 <span class="nc" id="L126">			done.add(childGroup);</span>
 <span class="nc" id="L127">		}</span>
 
-<span class="fc" id="L129">	}</span>
+<span class="nc" id="L129">	}</span>
 
 	private void addLink(Link link) {
-<span class="pc bpc" id="L132" title="1 of 4 branches missed.">		if (link.isHidden() || link.isInvis())</span>
-<span class="fc" id="L133">			return;</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (!link.getType().getStyle().isNormal()) {</span>
+<span class="nc bnc" id="L132" title="All 4 branches missed.">		if (link.isHidden() || link.isInvis())</span>
+<span class="nc" id="L133">			return;</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (!link.getType().getStyle().isNormal()) {</span>
 			// this is some kind of dashed line, which means it is a dependency
-<span class="fc" id="L136">			Element dependency = createDependency(link);</span>
-<span class="fc" id="L137">			ownedElementRoot.appendChild(dependency);</span>
-<span class="fc" id="L138">			return;</span>
+<span class="nc" id="L136">			Element dependency = createDependency(link);</span>
+<span class="nc" id="L137">			ownedElementRoot.appendChild(dependency);</span>
+<span class="nc" id="L138">			return;</span>
 		}
 
-<span class="fc" id="L141">		final String assId = classDiagram.getUniqueSequence(&quot;ass&quot;);</span>
-<span class="pc bpc" id="L142" title="2 of 4 branches missed.">		if (link.getType().getDecor1() == LinkDecor.EXTENDS || link.getType().getDecor2() == LinkDecor.EXTENDS) {</span>
+<span class="nc" id="L141">		final String assId = classDiagram.getUniqueSequence(&quot;ass&quot;);</span>
+<span class="nc bnc" id="L142" title="All 4 branches missed.">		if (link.getType().getDecor1() == LinkDecor.EXTENDS || link.getType().getDecor2() == LinkDecor.EXTENDS) {</span>
 <span class="nc" id="L143">			addExtension(link, assId);</span>
 <span class="nc" id="L144">			return;</span>
 		}
 
-<span class="fc" id="L147">		UMLAggregationKind aggregation = UMLAggregationKind.None;</span>
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (link.getType().getDecor1() == LinkDecor.COMPOSITION) {</span>
+<span class="nc" id="L147">		UMLAggregationKind aggregation = UMLAggregationKind.None;</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (link.getType().getDecor1() == LinkDecor.COMPOSITION) {</span>
 <span class="nc" id="L149">			aggregation = UMLAggregationKind.Composite;</span>
 		}
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (link.getType().getDecor2() == LinkDecor.COMPOSITION) {</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (link.getType().getDecor2() == LinkDecor.COMPOSITION) {</span>
 <span class="nc" id="L152">			aggregation = UMLAggregationKind.Composite;</span>
 		}
-<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if (link.getType().getDecor1() == LinkDecor.AGREGATION) {</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (link.getType().getDecor1() == LinkDecor.AGREGATION) {</span>
 <span class="nc" id="L155">			aggregation = UMLAggregationKind.Aggregation;</span>
 		}
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (link.getType().getDecor2() == LinkDecor.AGREGATION) {</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (link.getType().getDecor2() == LinkDecor.AGREGATION) {</span>
 <span class="nc" id="L158">			aggregation = UMLAggregationKind.Aggregation;</span>
 		}
 
-<span class="fc" id="L161">		final Element association = document.createElement(&quot;UML:Association&quot;);</span>
-<span class="fc" id="L162">		association.setAttribute(&quot;xmi.id&quot;, assId);</span>
+<span class="nc" id="L161">		final Element association = document.createElement(&quot;UML:Association&quot;);</span>
+<span class="nc" id="L162">		association.setAttribute(&quot;xmi.id&quot;, assId);</span>
 		// association.setAttribute(&quot;namespace&quot;,
 		// CucaDiagramXmiMaker.getModel(classDiagram));
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (Display.isNull(link.getLabel()) == false)</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (Display.isNull(link.getLabel()) == false)</span>
 <span class="nc" id="L166">			association.setAttribute(&quot;name&quot;, forXMI(link.getLabel()));</span>
 
-<span class="fc" id="L168">		final Element connection = document.createElement(&quot;UML:Association.connection&quot;);</span>
-<span class="fc" id="L169">		final Element end1 = createAssociationEnd(assId, link.getType().getDecor2(), link.getQuantifier1(),</span>
-<span class="fc" id="L170">				link.getEntity1(), aggregation);</span>
+<span class="nc" id="L168">		final Element connection = document.createElement(&quot;UML:Association.connection&quot;);</span>
+<span class="nc" id="L169">		final Element end1 = createAssociationEnd(assId, link.getType().getDecor2(), link.getQuantifier1(),</span>
+<span class="nc" id="L170">				link.getEntity1(), aggregation);</span>
 
-<span class="fc" id="L172">		connection.appendChild(end1);</span>
-<span class="fc" id="L173">		final Element end2 = createAssociationEnd(assId, link.getType().getDecor1(), link.getQuantifier2(),</span>
-<span class="fc" id="L174">				link.getEntity2(), aggregation);</span>
-<span class="fc" id="L175">		connection.appendChild(end2);</span>
+<span class="nc" id="L172">		connection.appendChild(end1);</span>
+<span class="nc" id="L173">		final Element end2 = createAssociationEnd(assId, link.getType().getDecor1(), link.getQuantifier2(),</span>
+<span class="nc" id="L174">				link.getEntity2(), aggregation);</span>
+<span class="nc" id="L175">		connection.appendChild(end2);</span>
 
-<span class="fc" id="L177">		association.appendChild(connection);</span>
+<span class="nc" id="L177">		association.appendChild(connection);</span>
 
-<span class="fc" id="L179">		ownedElementRoot.appendChild(association);</span>
-<span class="fc" id="L180">	}</span>
+<span class="nc" id="L179">		ownedElementRoot.appendChild(association);</span>
+<span class="nc" id="L180">	}</span>
 
 	private Element createAssociationEnd(final String assId, final LinkDecor decor, final String quantifier,
 			Entity entity, UMLAggregationKind aggregation) {
-<span class="fc" id="L184">		final Element end = document.createElement(&quot;UML:AssociationEnd&quot;);</span>
-<span class="fc" id="L185">		end.setAttribute(&quot;xmi.id&quot;, classDiagram.getUniqueSequence(&quot;end&quot;));</span>
-<span class="fc" id="L186">		end.setAttribute(&quot;association&quot;, assId);</span>
+<span class="nc" id="L184">		final Element end = document.createElement(&quot;UML:AssociationEnd&quot;);</span>
+<span class="nc" id="L185">		end.setAttribute(&quot;xmi.id&quot;, classDiagram.getUniqueSequence(&quot;end&quot;));</span>
+<span class="nc" id="L186">		end.setAttribute(&quot;association&quot;, assId);</span>
 
 //		end1.setAttribute(&quot;type&quot;, link.getEntity1().getUid());
-<span class="pc bpc" id="L189" title="1 of 2 branches missed.">		if (quantifier != null)</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">		if (quantifier != null)</span>
 <span class="nc" id="L190">			end.setAttribute(&quot;name&quot;, forXMI(quantifier));</span>
 		// TODO this is the multiplicity, handle that correctly
 
-<span class="fc" id="L193">		end.setAttribute(&quot;participant&quot;, entity.getUid());</span>
+<span class="nc" id="L193">		end.setAttribute(&quot;participant&quot;, entity.getUid());</span>
 
-<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		if (aggregation != UMLAggregationKind.None)</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">		if (aggregation != UMLAggregationKind.None)</span>
 <span class="nc" id="L196">			end.setAttribute(&quot;aggregation&quot;, aggregation.name);</span>
 
-<span class="pc bpc" id="L198" title="1 of 4 branches missed.">		boolean navigable = decor != LinkDecor.NOT_NAVIGABLE &amp;&amp; decor != LinkDecor.NONE;</span>
-<span class="fc" id="L199">		end.setAttribute(&quot;isNavigable&quot;, Boolean.toString(navigable));</span>
+<span class="nc bnc" id="L198" title="All 4 branches missed.">		boolean navigable = decor != LinkDecor.NOT_NAVIGABLE &amp;&amp; decor != LinkDecor.NONE;</span>
+<span class="nc" id="L199">		end.setAttribute(&quot;isNavigable&quot;, Boolean.toString(navigable));</span>
 
-<span class="fc" id="L201">		return end;</span>
+<span class="nc" id="L201">		return end;</span>
 	}
 
 	private void addExtension(Link link, String assId) {
@@ -219,21 +219,21 @@ public class XmiClassDiagramScript extends XmiClassDiagramAbstract implements Xm
 
 	private Element createDependency(Link link) {
 		// determine kind and direction
-<span class="pc bpc" id="L222" title="1 of 2 branches missed.">		if (link.isInverted()) {</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (link.isInverted()) {</span>
 <span class="nc" id="L223">			return createDependencyClientSupplier(link.getEntity2(), link.getPortName2(), link.getEntity1(),</span>
 <span class="nc" id="L224">					link.getPortName1());</span>
 		} else {
-<span class="fc" id="L226">			return createDependencyClientSupplier(link.getEntity1(), link.getPortName1(), link.getEntity2(),</span>
-<span class="fc" id="L227">					link.getPortName2());</span>
+<span class="nc" id="L226">			return createDependencyClientSupplier(link.getEntity1(), link.getPortName1(), link.getEntity2(),</span>
+<span class="nc" id="L227">					link.getPortName2());</span>
 		}
 	}
 
 	private Element createRef(Entity entity, String member) {
-<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		if (member == null) {</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">		if (member == null) {</span>
 			// directly to entity
-<span class="fc" id="L234">			Element ref = document.createElement(&quot;UML:Class&quot;);</span>
-<span class="fc" id="L235">			ref.setAttribute(&quot;xmi.idref&quot;, entity.getUid());</span>
-<span class="fc" id="L236">			return ref;</span>
+<span class="nc" id="L234">			Element ref = document.createElement(&quot;UML:Class&quot;);</span>
+<span class="nc" id="L235">			ref.setAttribute(&quot;xmi.idref&quot;, entity.getUid());</span>
+<span class="nc" id="L236">			return ref;</span>
 		}
 <span class="nc" id="L238">		List&lt;MemberData&gt; mbers = members.get(entity.getUid());</span>
 <span class="nc bnc" id="L239" title="All 2 branches missed.">		if (mbers == null) {</span>
@@ -254,20 +254,20 @@ public class XmiClassDiagramScript extends XmiClassDiagramAbstract implements Xm
 
 	private Element createDependencyClientSupplier(Entity clientEntity, String clientPort, Entity supplierEntity,
 			String supplierPort) {
-<span class="fc" id="L257">		String depID = classDiagram.getUniqueSequence(&quot;dep&quot;);</span>
-<span class="fc" id="L258">		Element dependency = document.createElement(&quot;UML:Dependency&quot;);</span>
-<span class="fc" id="L259">		dependency.setAttribute(&quot;xmi.id&quot;, depID);</span>
-<span class="fc" id="L260">		Element client = document.createElement(&quot;UML:Dependency.client&quot;);</span>
-<span class="fc" id="L261">		Element supplier = document.createElement(&quot;UML:Dependency.supplier&quot;);</span>
-<span class="fc" id="L262">		Element clientRef = createRef(clientEntity, clientPort);</span>
-<span class="pc bpc" id="L263" title="1 of 2 branches missed.">		if (clientRef != null)</span>
-<span class="fc" id="L264">			client.appendChild(clientRef);</span>
-<span class="fc" id="L265">		Element supplierRef = createRef(supplierEntity, supplierPort);</span>
-<span class="pc bpc" id="L266" title="1 of 2 branches missed.">		if (supplierRef != null)</span>
-<span class="fc" id="L267">			supplier.appendChild(supplierRef);</span>
-<span class="fc" id="L268">		dependency.appendChild(client);</span>
-<span class="fc" id="L269">		dependency.appendChild(supplier);</span>
-<span class="fc" id="L270">		return dependency;</span>
+<span class="nc" id="L257">		String depID = classDiagram.getUniqueSequence(&quot;dep&quot;);</span>
+<span class="nc" id="L258">		Element dependency = document.createElement(&quot;UML:Dependency&quot;);</span>
+<span class="nc" id="L259">		dependency.setAttribute(&quot;xmi.id&quot;, depID);</span>
+<span class="nc" id="L260">		Element client = document.createElement(&quot;UML:Dependency.client&quot;);</span>
+<span class="nc" id="L261">		Element supplier = document.createElement(&quot;UML:Dependency.supplier&quot;);</span>
+<span class="nc" id="L262">		Element clientRef = createRef(clientEntity, clientPort);</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">		if (clientRef != null)</span>
+<span class="nc" id="L264">			client.appendChild(clientRef);</span>
+<span class="nc" id="L265">		Element supplierRef = createRef(supplierEntity, supplierPort);</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">		if (supplierRef != null)</span>
+<span class="nc" id="L267">			supplier.appendChild(supplierRef);</span>
+<span class="nc" id="L268">		dependency.appendChild(client);</span>
+<span class="nc" id="L269">		dependency.appendChild(supplier);</span>
+<span class="nc" id="L270">		return dependency;</span>
 	}
 
 	private void generalizationChildParent(Element association, String uidChild, String uidParent) {

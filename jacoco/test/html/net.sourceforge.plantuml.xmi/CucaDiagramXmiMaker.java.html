@@ -103,8 +103,8 @@ public final class CucaDiagramXmiMaker {
 <span class="nc" id="L103">			return new XmiClassDiagramStandard((ClassDiagram) diagram);</span>
 <span class="fc bfc" id="L104" title="All 2 branches covered.">		else if (fileFormat == FileFormat.XMI_ARGO)</span>
 <span class="fc" id="L105">			return new XmiClassDiagramArgo((ClassDiagram) diagram);</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">		else if (fileFormat == FileFormat.XMI_SCRIPT)</span>
-<span class="fc" id="L107">			return new XmiClassDiagramScript((ClassDiagram) diagram);</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		else if (fileFormat == FileFormat.XMI_SCRIPT)</span>
+<span class="nc" id="L107">			return new XmiClassDiagramScript((ClassDiagram) diagram);</span>
 <span class="pc bpc" id="L108" title="1 of 2 branches missed.">		else if (fileFormat == FileFormat.XMI_STAR)</span>
 <span class="fc" id="L109">			return new XmiClassDiagramStar((ClassDiagram) diagram);</span>
 <span class="nc bnc" id="L110" title="All 2 branches missed.">		else if (fileFormat == FileFormat.XMI_CUSTOM)</span>
@@ -114,8 +114,8 @@ public final class CucaDiagramXmiMaker {
 	}
 
 	private XmlDiagramTransformer createDescriptionDiagram() throws ParserConfigurationException {
-<span class="fc bfc" id="L117" title="All 2 branches covered.">		if (fileFormat == FileFormat.XMI_SCRIPT) {</span>
-<span class="fc" id="L118">			return new XmiDescriptionDiagramScript((DescriptionDiagram) diagram);</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (fileFormat == FileFormat.XMI_SCRIPT) {</span>
+<span class="nc" id="L118">			return new XmiDescriptionDiagramScript((DescriptionDiagram) diagram);</span>
 <span class="pc bpc" id="L119" title="1 of 2 branches missed.">		} else if (fileFormat == FileFormat.XMI_CUSTOM) {</span>
 <span class="nc" id="L120">			return new XmiCucaDiagramCustom&lt;&gt;(XmiDescriptionDiagramCustom.class, diagram);</span>
 		} else {

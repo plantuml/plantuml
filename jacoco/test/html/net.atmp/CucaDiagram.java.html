@@ -832,8 +832,8 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 <span class="nc" id="L832">			return false;</span>
 
 <span class="fc" id="L834">		final Entity other = isNoteWithSingleLinkAttachedTo(leaf);</span>
-<span class="pc bpc" id="L835" title="1 of 4 branches missed.">		if (other != null &amp;&amp; other != leaf)</span>
-<span class="fc" id="L836">			return isHidden(other);</span>
+<span class="pc bpc" id="L835" title="3 of 4 branches missed.">		if (other != null &amp;&amp; other != leaf)</span>
+<span class="nc" id="L836">			return isHidden(other);</span>
 
 <span class="fc" id="L838">		boolean hidden = false;</span>
 <span class="pc bpc" id="L839" title="1 of 2 branches missed.">		for (HideOrShow hide : this.hides2)</span>
@@ -866,8 +866,8 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 <span class="fc bfc" id="L866" title="All 2 branches covered.">		for (Link link : this.getLinks()) {</span>
 <span class="pc bpc" id="L867" title="1 of 2 branches missed.">			if (link.getType().isInvisible())</span>
 <span class="nc" id="L868">				continue;</span>
-<span class="fc bfc" id="L869" title="All 2 branches covered.">			if (link.contains(note) == false)</span>
-<span class="fc" id="L870">				continue;</span>
+<span class="pc bpc" id="L869" title="1 of 2 branches missed.">			if (link.contains(note) == false)</span>
+<span class="nc" id="L870">				continue;</span>
 <span class="pc bpc" id="L871" title="1 of 2 branches missed.">			if (other != null)</span>
 <span class="nc" id="L872">				return null;</span>
 <span class="fc" id="L873">			other = link.getOther(note);</span>
