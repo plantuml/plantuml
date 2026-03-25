@@ -206,7 +206,7 @@ public class TikzGraphics {
 			out(os, definecolor(ent.getValue(), ent.getKey()));
 
 		if (scale != 1)
-			out(os, "\\scalebox{" + format(scale) + "}{");
+			out(os, "\\scalebox{" + format(scale) + "}{%");
 
 		out(os, "\\begin{tikzpicture}[yscale=-1");
 		purgeStyles();
@@ -217,9 +217,9 @@ public class TikzGraphics {
 		for (String s : cmd)
 			out(os, useStyle(s));
 
-		out(os, "\\end{tikzpicture}");
+		out(os, "\\end{tikzpicture}%");
 		if (scale != 1)
-			out(os, "}");
+			out(os, "}%");
 
 		if (withPreamble)
 			out(os, "\\end{document}");
@@ -255,7 +255,7 @@ public class TikzGraphics {
 		if (color.getAlpha() == 0)
 			color = XColor.WHITE;
 		return "\\definecolor{" + name + "}{RGB}{" + color.getRed() + "," + color.getGreen() + "," + color.getBlue()
-				+ "}";
+				+ "}%";
 	}
 
 	public void rectangle(double x, double y, double width, double height) {
