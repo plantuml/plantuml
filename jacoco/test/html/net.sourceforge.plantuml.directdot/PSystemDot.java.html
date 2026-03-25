@@ -55,57 +55,58 @@ import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.core.TextBlockExporter12026;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.security.SecurityProfile;
+import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class PSystemDot extends DirectOsDiagram {
-	
 
 	private final String data;
 
 	public PSystemDot(UmlSource source, String data, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L65">		super(source, preprocessing);</span>
-<span class="nc" id="L66">		this.data = data;</span>
-<span class="nc" id="L67">	}</span>
+<span class="nc" id="L66">		super(source, preprocessing);</span>
+<span class="nc" id="L67">		this.data = data;</span>
+<span class="nc" id="L68">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L70">		return new DiagramDescription(&quot;(Dot)&quot;);</span>
+<span class="nc" id="L71">		return new DiagramDescription(&quot;(Dot)&quot;);</span>
 	}
 
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
 
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.SVG) {</span>
-<span class="nc" id="L78">			final String svg = &quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;\n&quot;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() != SecurityProfile.UNSECURE</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">				&amp;&amp; fileFormat.getFileFormat() == FileFormat.SVG) {</span>
+<span class="nc" id="L80">			final String svg = &quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;\n&quot;</span>
 					+ &quot;&lt;svg xmlns=\&quot;http://www.w3.org/2000/svg\&quot; xmlns:xlink=\&quot;http://www.w3.org/1999/xlink\&quot;&gt;\n&quot;
 					+ &quot;&lt;a xlink:href=\&quot;https://github.com/plantuml/plantuml/issues/2495\&quot;&gt;\n&quot;
 					+ &quot;&lt;text x=\&quot;10\&quot; y=\&quot;30\&quot; font-family=\&quot;sans-serif\&quot; font-size=\&quot;14\&quot; fill=\&quot;blue\&quot; text-decoration=\&quot;underline\&quot;&gt;This feature has been suppressed&lt;/text&gt;\n&quot;
-					+ &quot;&lt;/a&gt;\n&quot;
-					+ &quot;&lt;/svg&gt;&quot;;
-<span class="nc" id="L84">			os.write(svg.getBytes(&quot;UTF-8&quot;));</span>
-<span class="nc" id="L85">			return ImageDataSimple.ok();</span>
+					+ &quot;&lt;/a&gt;\n&quot; + &quot;&lt;/svg&gt;&quot;;
+<span class="nc" id="L85">			os.write(svg.getBytes(&quot;UTF-8&quot;));</span>
+<span class="nc" id="L86">			return ImageDataSimple.ok();</span>
 		}
 
-<span class="nc" id="L88">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().createForSystemDot(null, data,</span>
-<span class="nc" id="L89">				StringUtils.goLowerCase(fileFormat.getFileFormat().name()));</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (graphviz.getExeState() != ExeState.OK) {</span>
-<span class="nc" id="L91">			final TextBlock result = GraphicStrings</span>
-<span class="nc" id="L92">					.createForError(Arrays.asList(&quot;There is an issue with your Dot/Graphviz installation&quot;), false);</span>
-<span class="nc" id="L93">			return TextBlockExporter12026.builder(result, fileFormat, false)</span>
-<span class="nc" id="L94">					.seed(seed()).status(FileImageData.CRASH).build().exportTo(os);</span>
+<span class="nc" id="L89">		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().createForSystemDot(null, data,</span>
+<span class="nc" id="L90">				StringUtils.goLowerCase(fileFormat.getFileFormat().name()));</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (graphviz.getExeState() != ExeState.OK) {</span>
+<span class="nc" id="L92">			final TextBlock result = GraphicStrings</span>
+<span class="nc" id="L93">					.createForError(Arrays.asList(&quot;There is an issue with your Dot/Graphviz installation&quot;), false);</span>
+<span class="nc" id="L94">			return TextBlockExporter12026.builder(result, fileFormat, false).seed(seed()).status(FileImageData.CRASH)</span>
+<span class="nc" id="L95">					.build().exportTo(os);</span>
 		}
 
-<span class="nc" id="L97">		final CounterOutputStream counter = new CounterOutputStream(os);</span>
-<span class="nc" id="L98">		final ProcessState state = graphviz.createFile3(counter);</span>
+<span class="nc" id="L98">		final CounterOutputStream counter = new CounterOutputStream(os);</span>
+<span class="nc" id="L99">		final ProcessState state = graphviz.createFile3(counter);</span>
 		// if (state.differs(ProcessState.TERMINATED_OK())) {
 		// throw new IllegalStateException(&quot;Timeout1 &quot; + state);
 		// }
-<span class="nc bnc" id="L102" title="All 4 branches missed.">		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {</span>
-<span class="nc" id="L103">			final TextBlock result = GraphicStrings.createForError(Arrays.asList(&quot;GraphViz has crashed&quot;), false);</span>
-<span class="nc" id="L104">			return TextBlockExporter12026.builder(result, fileFormat, false)</span>
-<span class="nc" id="L105">					.seed(seed()).status(FileImageData.CRASH).build().exportTo(os);</span>
+<span class="nc bnc" id="L103" title="All 4 branches missed.">		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {</span>
+<span class="nc" id="L104">			final TextBlock result = GraphicStrings.createForError(Arrays.asList(&quot;GraphViz has crashed&quot;), false);</span>
+<span class="nc" id="L105">			return TextBlockExporter12026.builder(result, fileFormat, false).seed(seed()).status(FileImageData.CRASH)</span>
+<span class="nc" id="L106">					.build().exportTo(os);</span>
 		}
 
-<span class="nc" id="L108">		return ImageDataSimple.ok();</span>
+<span class="nc" id="L109">		return ImageDataSimple.ok();</span>
 	}
 
 }

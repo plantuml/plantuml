@@ -1261,6 +1261,7 @@ Total Classes: 3
 "net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.dot"
 "net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.preproc"
+"net.sourceforge.plantuml.directdot" --> "net.sourceforge.plantuml.security"
 
 class "net.sourceforge.plantuml.ditaa" %lighten("red", 100) {
 Total Classes: 2
@@ -2713,7 +2714,7 @@ Total Classes: 3
 "net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.svek"
 
-class "net.sourceforge.plantuml.security" %lighten("red", 50) {
+class "net.sourceforge.plantuml.security" %lighten("red", 49) {
 Total Classes: 7
 }
 "net.sourceforge.plantuml.security" --> "java.awt.image"

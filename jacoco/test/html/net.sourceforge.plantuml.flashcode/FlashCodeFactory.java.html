@@ -40,11 +40,11 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L40">public class FlashCodeFactory {</span>
 
 	public static FlashCodeUtils getFlashCodeUtils() {
-<span class="pc bpc" id="L43" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="fc" id="L44">			final String name = &quot;net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing&quot;;</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L44">			final String name = &quot;net.sourceforge.plantuml.flashcode.FlashCodeUtilsZxing&quot;;</span>
 			try {
-<span class="fc" id="L46">				final Class cl = Class.forName(name);</span>
-<span class="fc" id="L47">				return (FlashCodeUtils) cl.newInstance();</span>
+<span class="nc" id="L46">				final Class cl = Class.forName(name);</span>
+<span class="nc" id="L47">				return (FlashCodeUtils) cl.newInstance();</span>
 <span class="nc" id="L48">			} catch (ClassNotFoundException e) {</span>
 <span class="nc" id="L49">				return new FlashCodeUtilsNone();</span>
 <span class="nc" id="L50">			} catch (InstantiationException e) {</span>
