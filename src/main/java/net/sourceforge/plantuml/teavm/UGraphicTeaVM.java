@@ -109,12 +109,12 @@ public class UGraphicTeaVM extends AbstractUGraphic<SvgGraphicsTeaVM> implements
 
 	@Override
 	public void startGroup(UGroup group) {
-		// TODO: implement group support
+		getSvgGraphics().startGroup(group.asMap());
 	}
 
 	@Override
 	public void closeGroup() {
-		// TODO: implement group support
+		getSvgGraphics().closeGroup();
 	}
 
 	@Override
