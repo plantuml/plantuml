@@ -215,7 +215,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	 * Bit interval for showing full length indicator
 	 */
 	int getFullIndicatorInterval() {
-<span class="pc bpc" id="L218" title="1 of 2 branches missed.">		return colWidth &gt;= 4 ? colWidth / 4 : colWidth;</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">		return colWidth &gt;= 4 ? colWidth / 4 : colWidth;</span>
 	}
 
 	void updateScaleInterval(int value) {
@@ -326,8 +326,8 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 				}
 			}
 <span class="fc" id="L328">		}</span>
-<span class="pc bpc" id="L329" title="1 of 2 branches missed.">		if (!currRow.isEmpty()) {</span>
-<span class="nc" id="L330">			grid.add(currRow);</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">		if (!currRow.isEmpty()) {</span>
+<span class="fc" id="L330">			grid.add(currRow);</span>
 		}
 		// Equalize packet height, this behavior is not in the original implementation,
 		// but I find it make sense to do so

@@ -112,11 +112,11 @@ public abstract class AbstractDiagram implements Diagram {
 	}
 
 	public final String getFlashData() {
-<span class="nc" id="L115">		final UmlSource source = getSource();</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (source == null)</span>
+<span class="fc" id="L115">		final UmlSource source = getSource();</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (source == null)</span>
 <span class="nc" id="L117">			return &quot;&quot;;</span>
 
-<span class="nc" id="L119">		return source.getPlainString(&quot;\n&quot;);</span>
+<span class="fc" id="L119">		return source.getPlainString(&quot;\n&quot;);</span>
 	}
 
 	final public long seed() {

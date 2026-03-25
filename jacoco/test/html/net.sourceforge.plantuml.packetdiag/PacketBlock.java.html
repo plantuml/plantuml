@@ -152,20 +152,20 @@ public class PacketBlock {
 <span class="fc" id="L152">		XDimension2D padDim = stringBounder.calculateDimension(font, pad);</span>
 <span class="fc" id="L153">		XDimension2D labelDim = stringBounder.calculateDimension(font, label);</span>
 <span class="fc" id="L154">		double reqWidth = getDrawWidth(bitWidth);</span>
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (labelDim.getWidth() &lt; reqWidth) {</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (labelDim.getWidth() &lt; reqWidth) {</span>
 <span class="fc" id="L156">			return getLabelTextBlock(label);</span>
 		}
 		// Shrink label char by char, this is technically wrong when there's multiple
 		// Unicode code points
-<span class="nc" id="L160">		String abbr = label;</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">		for (int i = label.length(); i &gt; 0; i--) {</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">			if (labelDim.getWidth() + padDim.getWidth() &lt; reqWidth) {</span>
+<span class="fc" id="L160">		String abbr = label;</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		for (int i = label.length(); i &gt; 0; i--) {</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">			if (labelDim.getWidth() + padDim.getWidth() &lt; reqWidth) {</span>
 <span class="nc" id="L163">				break;</span>
 			}
-<span class="nc" id="L165">			abbr = label.substring(0, i) + pad;</span>
-<span class="nc" id="L166">			labelDim = stringBounder.calculateDimension(font, abbr);</span>
+<span class="fc" id="L165">			abbr = label.substring(0, i) + pad;</span>
+<span class="fc" id="L166">			labelDim = stringBounder.calculateDimension(font, abbr);</span>
 		}
-<span class="nc" id="L168">		return getLabelTextBlock(abbr);</span>
+<span class="fc" id="L168">		return getLabelTextBlock(abbr);</span>
 	}
 
 	TextBlock getShapeTextBlock(StringBounder stringBounder, double bitWidth, double bitHeight) {

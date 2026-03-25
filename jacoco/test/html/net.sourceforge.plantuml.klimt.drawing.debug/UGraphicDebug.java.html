@@ -134,11 +134,11 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 <span class="fc" id="L134">			outComment((UComment) shape);</span>
 <span class="fc bfc" id="L135" title="All 2 branches covered.">		} else if (shape instanceof DotPath) {</span>
 <span class="fc" id="L136">			outPath(((DotPath) shape).toUPath());</span>
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		} else if (shape instanceof UCenteredCharacter) {</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		} else if (shape instanceof UCenteredCharacter) {</span>
 <span class="fc" id="L138">			outCenteredCharacter(((UCenteredCharacter) shape));</span>
 		} else {
-<span class="nc" id="L140">			System.err.println(&quot;UGraphicDebug &quot; + shape.getClass().getSimpleName());</span>
-<span class="nc" id="L141">			output.add(&quot;UGraphicDebug &quot; + shape.getClass().getSimpleName() + &quot; &quot; + new Date());</span>
+<span class="fc" id="L140">			System.err.println(&quot;UGraphicDebug &quot; + shape.getClass().getSimpleName());</span>
+<span class="fc" id="L141">			output.add(&quot;UGraphicDebug &quot; + shape.getClass().getSimpleName() + &quot; &quot; + new Date());</span>
 		}
 <span class="fc" id="L143">	}</span>
 

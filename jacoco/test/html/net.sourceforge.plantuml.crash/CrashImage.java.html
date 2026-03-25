@@ -56,56 +56,56 @@ import net.sourceforge.plantuml.utils.Log;
 
 import net.sourceforge.plantuml.annotation.Fast;
 
-<span class="nc" id="L59">public class CrashImage implements TextBlock {</span>
+<span class="fc" id="L59">public class CrashImage implements TextBlock {</span>
 
 	private final PortableImage flashcodeImage;
 	private final TextBlock graphicStrings;
 
-<span class="nc" id="L64">	public CrashImage(Throwable exception, String flash, ReportLog strings) {</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (exception != null)</span>
-<span class="nc" id="L66">			strings.addAll(CommandExecutionResult.getStackTrace(exception));</span>
+<span class="fc" id="L64">	public CrashImage(Throwable exception, String flash, ReportLog strings) {</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (exception != null)</span>
+<span class="fc" id="L66">			strings.addAll(CommandExecutionResult.getStackTrace(exception));</span>
 
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		this.flashcodeImage = flash == null ? null : generateFlashcodeImage(flash, strings);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		this.flashcodeImage = flash == null ? null : generateFlashcodeImage(flash, strings);</span>
 
-<span class="nc" id="L70">		this.graphicStrings = GraphicStrings.createBlackOnWhite(strings.asList(), IconLoader.getRandom(),</span>
+<span class="fc" id="L70">		this.graphicStrings = GraphicStrings.createBlackOnWhite(strings.asList(), IconLoader.getRandom(),</span>
 				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
 
-<span class="nc" id="L73">	}</span>
+<span class="fc" id="L73">	}</span>
 
 	@Fast
 	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L78">		XDimension2D dim = graphicStrings.calculateDimension(stringBounder);</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (flashcodeImage != null) {</span>
-<span class="nc" id="L80">			final double flashWidth = flashcodeImage.getWidth() * 3;</span>
-<span class="nc" id="L81">			final double flashHeight = flashcodeImage.getHeight() * 3;</span>
-<span class="nc" id="L82">			dim = new XDimension2D(Math.max(dim.getWidth(), flashWidth), dim.getHeight() + flashHeight);</span>
+<span class="fc" id="L78">		XDimension2D dim = graphicStrings.calculateDimension(stringBounder);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (flashcodeImage != null) {</span>
+<span class="fc" id="L80">			final double flashWidth = flashcodeImage.getWidth() * 3;</span>
+<span class="fc" id="L81">			final double flashHeight = flashcodeImage.getHeight() * 3;</span>
+<span class="fc" id="L82">			dim = new XDimension2D(Math.max(dim.getWidth(), flashWidth), dim.getHeight() + flashHeight);</span>
 		}
-<span class="nc" id="L84">		return dim;</span>
+<span class="fc" id="L84">		return dim;</span>
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L89">		graphicStrings.drawU(ug);</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (flashcodeImage == null)</span>
+<span class="fc" id="L89">		graphicStrings.drawU(ug);</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (flashcodeImage == null)</span>
 <span class="nc" id="L91">			return;</span>
 
-<span class="nc" id="L93">		final double height = graphicStrings.calculateDimension(ug.getStringBounder()).getHeight();</span>
-<span class="nc" id="L94">		ug = ug.apply(UTranslate.dy(height));</span>
-<span class="nc" id="L95">		ug.draw(new UImage(new PixelImage(flashcodeImage, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3));</span>
+<span class="fc" id="L93">		final double height = graphicStrings.calculateDimension(ug.getStringBounder()).getHeight();</span>
+<span class="fc" id="L94">		ug = ug.apply(UTranslate.dy(height));</span>
+<span class="fc" id="L95">		ug.draw(new UImage(new PixelImage(flashcodeImage, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3));</span>
 
-<span class="nc" id="L97">	}</span>
+<span class="fc" id="L97">	}</span>
 
 	private PortableImage generateFlashcodeImage(String flash, ReportLog strings) {
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (TeaVM.a())</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">			assert flash != null;</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L103">			final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">			assert flash != null;</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L103">			final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();</span>
 			try {
-<span class="nc" id="L105">				final PortableImage flashcodeImage = utils.exportFlashcode(flash, XColor.BLACK, XColor.WHITE);</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">				if (flashcodeImage != null)</span>
-<span class="nc" id="L107">					strings.addDecodeHint();</span>
-<span class="nc" id="L108">				return flashcodeImage;</span>
+<span class="fc" id="L105">				final PortableImage flashcodeImage = utils.exportFlashcode(flash, XColor.BLACK, XColor.WHITE);</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">				if (flashcodeImage != null)</span>
+<span class="fc" id="L107">					strings.addDecodeHint();</span>
+<span class="fc" id="L108">				return flashcodeImage;</span>
 <span class="nc" id="L109">			} catch (Throwable e) {</span>
 <span class="nc" id="L110">				Log.error(&quot;Issue in flashcode generation &quot; + e);</span>
 				// Logme.error(e);

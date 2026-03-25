@@ -36,19 +36,34 @@
 package net.sourceforge.plantuml.core;
 
 public class DiagramDescription {
-	private final String description;
 
-<span class="fc" id="L41">	public DiagramDescription(String description) {</span>
-<span class="fc" id="L42">		this.description = description;</span>
-<span class="fc" id="L43">	}</span>
+	private final String description;
+	private final ImageData imageData;
+
+<span class="fc" id="L43">	public DiagramDescription(String description, ImageData imageData) {</span>
+<span class="fc" id="L44">		this.description = description;</span>
+<span class="fc" id="L45">		this.imageData = imageData;</span>
+<span class="fc" id="L46">	}</span>
+
+	public DiagramDescription(String description) {
+<span class="fc" id="L49">		this(description, null);</span>
+<span class="fc" id="L50">	}</span>
 
 	public String getDescription() {
-<span class="fc" id="L46">		return description;</span>
+<span class="fc" id="L53">		return description;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="fc" id="L51">		return description;</span>
+<span class="fc" id="L58">		return description;</span>
+	}
+
+	public DiagramDescription withImageData(ImageData imageData) {
+<span class="fc" id="L62">		return new DiagramDescription(description, imageData);</span>
+	}
+
+	public ImageData getImageData() {
+<span class="fc" id="L66">		return imageData;</span>
 	}
 
 }

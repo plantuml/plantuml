@@ -51,24 +51,24 @@ public class CrashReportHandler extends ReportLog {
 	private final String metadata;
 	private final String flash;
 
-<span class="nc" id="L54">	public CrashReportHandler(Throwable exception, String metadata, String flash) {</span>
-<span class="nc" id="L55">		this.metadata = metadata;</span>
-<span class="nc" id="L56">		this.exception = exception;</span>
-<span class="nc" id="L57">		this.flash = flash;</span>
-<span class="nc" id="L58">	}</span>
+<span class="fc" id="L54">	public CrashReportHandler(Throwable exception, String metadata, String flash) {</span>
+<span class="fc" id="L55">		this.metadata = metadata;</span>
+<span class="fc" id="L56">		this.exception = exception;</span>
+<span class="fc" id="L57">		this.flash = flash;</span>
+<span class="fc" id="L58">	}</span>
 
 	public void exportDiagramError(FileFormatOption fileFormat, long seed, OutputStream os) throws IOException {
 
-<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (!TeaVM.isTeaVM())</span>
-<span class="nc bnc" id="L63" title="All 4 branches missed.">			if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM())</span>
+<span class="pc bpc" id="L63" title="2 of 4 branches missed.">			if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {</span>
 <span class="nc" id="L64">				exportDiagramErrorText(os, exception);</span>
 <span class="nc" id="L65">				return;</span>
 			}
 
-<span class="nc" id="L68">		final CrashImage image = new CrashImage(exception, flash, this);</span>
+<span class="fc" id="L68">		final CrashImage image = new CrashImage(exception, flash, this);</span>
 
-<span class="nc" id="L70">		TextBlockExporter12026.builder(image, fileFormat, false).metadata(metadata).seed(seed).build().exportTo(os);</span>
-<span class="nc" id="L71">	}</span>
+<span class="fc" id="L70">		TextBlockExporter12026.builder(image, fileFormat, false).metadata(metadata).seed(seed).build().exportTo(os);</span>
+<span class="fc" id="L71">	}</span>
 
 	private void exportDiagramErrorText(OutputStream os, Throwable exception) {
 <span class="nc" id="L74">		final PrintWriter pw = SecurityUtils.createPrintWriter(os);</span>

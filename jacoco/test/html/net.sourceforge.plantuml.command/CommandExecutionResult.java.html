@@ -89,12 +89,12 @@ public class CommandExecutionResult {
 	}
 
 	public static List&lt;String&gt; getStackTrace(Throwable exception) {
-<span class="nc" id="L92">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L93">		result.add(exception.toString());</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		for (StackTraceElement ste : exception.getStackTrace())</span>
-<span class="nc" id="L95">			result.add(&quot;  &quot; + ste.toString());</span>
+<span class="fc" id="L92">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L93">		result.add(exception.toString());</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		for (StackTraceElement ste : exception.getStackTrace())</span>
+<span class="fc" id="L95">			result.add(&quot;  &quot; + ste.toString());</span>
 
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (exception.getCause() != null) {</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (exception.getCause() != null) {</span>
 <span class="nc" id="L98">			final Throwable cause = exception.getCause();</span>
 <span class="nc" id="L99">			result.add(&quot;  &quot;);</span>
 <span class="nc" id="L100">			result.add(&quot;Caused by &quot; + cause.toString());</span>
@@ -102,7 +102,7 @@ public class CommandExecutionResult {
 <span class="nc" id="L102">				result.add(&quot;  &quot; + ste.toString());</span>
 
 		}
-<span class="nc" id="L105">		return result;</span>
+<span class="fc" id="L105">		return result;</span>
 	}
 
 	public boolean isOk() {
