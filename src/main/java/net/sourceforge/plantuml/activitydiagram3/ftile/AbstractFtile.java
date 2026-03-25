@@ -118,6 +118,10 @@ public abstract class AbstractFtile implements Ftile {
 		return cachedGeometry;
 	}
 
+	protected void invalidateGeometryCache() {
+		cachedGeometry = null;
+	}
+
 	abstract protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder);
 
 	@Override

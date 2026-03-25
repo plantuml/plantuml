@@ -1,0 +1,23 @@
+---
+output: svg
+expected-description: Work Breakdown Structure
+---
+@startwbs
+<style>
+wbsDiagram {
+  node {
+    AutoWidth true
+  }
+}
+</style>
+* Project
+** Planning
+*** Define scope
+*** Set milestones
+*** Allocate resources
+** Implementation
+*** Code
+*** Test
+*** Deploy to production environment
+** Review
+@endwbs

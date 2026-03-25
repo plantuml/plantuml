@@ -66,7 +66,8 @@ public enum PName {
 	MarkerShape, //
 	MarkerSize, //
 	MarkerColor, //
-	BarWidth;
+	BarWidth, //
+	AutoWidth;
 
 	public static PName getFromName(String name, StyleScheme scheme) {
 		for (PName prop : values())

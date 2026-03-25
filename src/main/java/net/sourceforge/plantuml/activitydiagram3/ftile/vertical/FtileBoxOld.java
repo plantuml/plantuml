@@ -81,6 +81,11 @@ public class FtileBoxOld extends AbstractFtile {
 	private final HorizontalAlignment horizontalAlignment;
 	private double minimumWidth = 0;
 
+	public void setMinimumWidth(double minimumWidth) {
+		this.minimumWidth = Math.max(this.minimumWidth, minimumWidth);
+		invalidateGeometryCache();
+	}
+
 	private final LinkRendering inRendering;
 	private final Swimlane swimlane;
 	private final BoxStyle boxStyle;
@@ -131,7 +136,7 @@ public class FtileBoxOld extends AbstractFtile {
 
 	}
 
-	public static TextBlock createWbs(Style style, ISkinParam skinParam, Display label) {
+	public static FtileBoxOld createWbs(Style style, ISkinParam skinParam, Display label) {
 		final Style styleArrow = style;
 		return new FtileBoxOld(skinParam, label, null, BoxStyle.PLAIN, style, styleArrow);
 	}

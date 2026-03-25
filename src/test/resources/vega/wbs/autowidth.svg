@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="286px" preserveAspectRatio="none" style="width:624px;height:286px;background:#FFFFFF;" version="1.1" viewBox="0 0 624 286" width="624px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="71.1" x2="71.1" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="102.2" x="20" y="92"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="46.9" x="30" y="111.3333">Planning</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="71.1" x2="81.1" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="118.9" x="81.1" y="139"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="70.2" x="91.1" y="158.3333">Define scope</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="71.1" x2="81.1" y1="202" y2="202"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="118.9" x="81.1" y="186"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="78.8" x="91.1" y="205.3333">Set milestones</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="71.1" x2="81.1" y1="249" y2="249"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="118.9" x="81.1" y="233"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="98.9" x="91.1" y="252.3333">Allocate resources</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="71.1" x2="71.1" y1="124" y2="249"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="271.1" x2="271.1" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="102.2" x="220" y="92"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="82.2" x="230" y="111.3333">Implementation</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="271.1" x2="281.1" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="199.8" x="281.1" y="139"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="28.8" x="291.1" y="158.3333">Code</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="271.1" x2="281.1" y1="202" y2="202"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="199.8" x="281.1" y="186"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="23.3" x="291.1" y="205.3333">Test</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="271.1" x2="281.1" y1="249" y2="249"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="199.8" x="281.1" y="233"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="179.8" x="291.1" y="252.3333">Deploy to production environment</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="271.1" x2="271.1" y1="124" y2="249"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="552" x2="552" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="102.2" x="500.9" y="92"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="39.5" x="510.9" y="111.3333">Review</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="71.1" x2="552" y1="72" y2="72"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="57.4" x="282.85" y="20"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="37.4" x="292.85" y="39.3333">Project</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="311.55" x2="311.55" y1="52" y2="72"/>
+  </g>
+</svg>

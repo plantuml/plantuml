@@ -49,4 +49,11 @@ interface ITF extends TextBlock {
 
 	public XPoint2D getF2(StringBounder stringBounder);
 
+	default double getMainBoxWidth(StringBounder stringBounder) {
+		return calculateDimension(stringBounder).getWidth();
+	}
+
+	default void setForcedMinWidth(double width) {
+	}
+
 }

@@ -54,7 +54,9 @@ import net.sourceforge.plantuml.style.Style;
 class ITFLeaf implements TextBlock, ITF {
 
 	private final TextBlock box;
+	private final FtileBoxOld fbox;
 	private final WElement idea;
+	private double forcedMinWidth;
 
 	public ITFLeaf(WElement idea, ISkinParam skinParam) {
 		final IdeaShape shape = idea.getShape();
@@ -62,8 +64,10 @@ class ITFLeaf implements TextBlock, ITF {
 		final Display label = idea.getLabel();
 		this.idea = idea;
 		if (shape == IdeaShape.BOX) {
-			this.box = FtileBoxOld.createWbs(style, skinParam, label);
+			this.fbox = FtileBoxOld.createWbs(style, skinParam, label);
+			this.box = this.fbox;
 		} else {
+			this.fbox = null;
 			final TextBlock text = label.create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),
 					style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);
 			this.box = TextBlockUtils.withMargin(text, 0, 3, 1, 1);
@@ -71,15 +75,33 @@ class ITFLeaf implements TextBlock, ITF {
 	}
 
 	@Override
+	public void setForcedMinWidth(double width) {
+		this.forcedMinWidth = width;
+		if (fbox != null)
+			fbox.setMinimumWidth(width);
+	}
+
+	@Override
 	@Fast
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		return box.calculateDimension(stringBounder);
+		final XDimension2D dim = box.calculateDimension(stringBounder);
+		if (fbox == null && forcedMinWidth > dim.getWidth())
+			return new XDimension2D(forcedMinWidth, dim.getHeight());
+		return dim;
 	}
 
 	public void drawU(UGraphic ug) {
 		if (ug instanceof AbstractCommonUGraphic) {
 			final UTranslate translate = ((AbstractCommonUGraphic) ug).getTranslate();
 			idea.setGeometry(translate, calculateDimension(ug.getStringBounder()));
+		}
+		if (fbox == null && forcedMinWidth > 0) {
+			final XDimension2D boxDim = box.calculateDimension(ug.getStringBounder());
+			if (forcedMinWidth > boxDim.getWidth()) {
+				final double dx = (forcedMinWidth - boxDim.getWidth()) / 2;
+				box.drawU(ug.apply(UTranslate.dx(dx)));
+				return;
+			}
 		}
 		box.drawU(ug);
 	}
