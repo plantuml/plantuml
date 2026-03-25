@@ -141,11 +141,12 @@ public class DriverTextTeaVM implements UDriver&lt;UText, SvgGraphicsTeaVM&gt; {
 			}
 		}
 
-<span class="nc" id="L144">		svg.drawText(shape.getText(), x, y, fontFamily, fontSize, fontWeight, fontStyle, textDecoration, backColor);</span>
+<span class="nc" id="L144">		svg.drawText(shape.getText(), x, y, fontFamily, fontSize, fontWeight, fontStyle, textDecoration, backColor,</span>
+<span class="nc" id="L145">				shape.getOrientation());</span>
 
 		// Draw extra lines for colored underline/strike
-<span class="nc" id="L147">		final double width = SvgGraphicsTeaVM.getTextWidth(shape.getText(), fontFamily, fontSize);</span>
-<span class="nc" id="L148">		extraLines.drawAll(x, y, width, font, mapper, svg);</span>
-<span class="nc" id="L149">	}</span>
+<span class="nc" id="L148">		final double width = SvgGraphicsTeaVM.getTextWidth(shape.getText(), fontFamily, fontSize);</span>
+<span class="nc" id="L149">		extraLines.drawAll(x, y, width, font, mapper, svg);</span>
+<span class="nc" id="L150">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
