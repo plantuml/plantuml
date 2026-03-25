@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="192px" preserveAspectRatio="none" style="width:353px;height:192px;background:#FFFFFF;" version="1.1" viewBox="0 0 353 192" width="353px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="30" y1="72" y2="92"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="40" y1="108" y2="108"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="58.8" x="40" y="92"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="38.8" x="50" y="111.3333">Child A</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="40" y1="140" y2="140"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="58.8" x="40" y="124"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="38.8" x="50" y="143.3333">Child B</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="30" y1="92" y2="140"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="128.8" x2="128.8" y1="72" y2="92"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="128.8" x2="138.8" y1="108" y2="108"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="59.5" x="138.8" y="92"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="39.5" x="148.8" y="111.3333">Child C</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="128.8" x2="138.8" y1="140" y2="140"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="59.5" x="138.8" y="124"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="39.5" x="148.8" y="143.3333">Child D</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="128.8" x2="128.8" y1="92" y2="140"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="263.75" x2="263.75" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="90.9" x="218.3" y="92"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="70.9" x="228.3" y="111.3333">Normal Node</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="263.75" x2="273.75" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="58.8" x="273.75" y="139"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="38.8" x="283.75" y="158.3333">Child E</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="263.75" x2="263.75" y1="124" y2="155"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="263.75" y1="72" y2="72"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="45.4" x="124.175" y="20"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="25.4" x="134.175" y="39.3333">Root</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="146.875" x2="146.875" y1="52" y2="72"/>
+  </g>
+</svg>

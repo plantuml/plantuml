@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.mindmap;
 
 public enum IdeaShape {
-	BOX, NONE;
+	BOX, NONE, PSEUDO;
 
 	public static IdeaShape fromDesc(String s) {
 		if ("_".equals(s)) {

@@ -76,8 +76,9 @@ public class CommandWBSItemOld extends SingleLineCommand2<WBSDiagram> {
 						new RegexConcat( //
 							new RegexLeaf(1, Constant.WBS_DIRECTION + "_2", "([<>])?")), //
 							new RegexLeaf(1, "SHAPE_2", "(_)?")), //
-					RegexLeaf.spaceOneOrMore(), //
-					new RegexLeaf(1, "LABEL", "([^%s].*)"), //
+					new RegexOptional(new RegexConcat( //
+						RegexLeaf.spaceOneOrMore(), //
+						new RegexLeaf(1, "LABEL", "([^%s].*)")))  , //
 					RegexLeaf.end());
 
 		return RegexConcat.build(CommandWBSItemOld.class.getName() + mode, RegexLeaf.start(), //
@@ -111,10 +112,14 @@ public class CommandWBSItemOld extends SingleLineCommand2<WBSDiagram> {
 			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
 
 		final Direction dir = Direction.getWBSDirection(arg);
+		IdeaShape shape = IdeaShape.fromDesc(arg.getLazzy("SHAPE", 0));
+		if (label == null && shape == IdeaShape.NONE)
+			shape = IdeaShape.PSEUDO;
+		else if (label == null)
+			return CommandExecutionResult.error("Missing label for WBS node.");
 
 		diagram.addWarning(new Warning("Please define Direction/Shape before Color/Id."));
-		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), label, dir,
-				IdeaShape.fromDesc(arg.getLazzy("SHAPE", 0)));
+		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), label == null ? "" : label, dir, shape);
 	}
 
 }

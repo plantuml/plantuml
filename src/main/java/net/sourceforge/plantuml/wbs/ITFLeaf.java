@@ -63,7 +63,10 @@ class ITFLeaf implements TextBlock, ITF {
 		final Style style = idea.getStyle();
 		final Display label = idea.getLabel();
 		this.idea = idea;
-		if (shape == IdeaShape.BOX) {
+		if (shape == IdeaShape.PSEUDO) {
+			this.fbox = null;
+			this.box = TextBlockUtils.EMPTY_TEXT_BLOCK;
+		} else if (shape == IdeaShape.BOX) {
 			this.fbox = FtileBoxOld.createWbs(style, skinParam, label);
 			this.box = this.fbox;
 		} else {

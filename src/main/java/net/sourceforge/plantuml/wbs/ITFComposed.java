@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -72,7 +73,7 @@ class ITFComposed extends WBSTextBlock implements ITF {
 		this.right = right;
 		this.main = buildMain(idea);
 		final Style style = idea.getStyle();
-		this.marginBottom = style.getMargin().getBottom();
+		this.marginBottom = idea.getShape() == IdeaShape.PSEUDO ? 0 : style.getMargin().getBottom();
 	}
 
 	@Override

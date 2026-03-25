@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="239px" preserveAspectRatio="none" style="width:340px;height:239px;background:#FFFFFF;" version="1.1" viewBox="0 0 340 239" width="340px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="30" y1="72" y2="92"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="40" y1="108" y2="108"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="57.3" x="40" y="92"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="37.3" x="50" y="111.3333">Task A</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="40" y1="140" y2="140"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="116.8" x="40" y="124"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="96.8" x="50" y="143.3333">Task B long name</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="40" y1="172" y2="172"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="58" x="40" y="156"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="38" x="50" y="175.3333">Task C</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="30" y1="92" y2="172"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="210.25" x2="210.25" y1="72" y2="92"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="66.9" x="176.8" y="92"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="46.9" x="186.8" y="111.3333">Planning</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="210.25" x2="220.25" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="90.2" x="220.25" y="139"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="70.2" x="230.25" y="158.3333">Define scope</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="210.25" x2="220.25" y1="202" y2="202"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="98.8" x="220.25" y="186"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="78.8" x="230.25" y="205.3333">Set milestones</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="210.25" x2="210.25" y1="124" y2="202"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="210.25" y1="72" y2="72"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="57.4" x="91.425" y="20"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="37.4" x="101.425" y="39.3333">Project</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="120.125" x2="120.125" y1="52" y2="72"/>
+  </g>
+</svg>

@@ -87,6 +87,9 @@ abstract class WBSTextBlock extends TextBlockMemoized {
 	final protected TextBlock buildMain(WElement idea) {
 		final Display label = idea.getLabel();
 		final Style style = idea.getStyle();
+		if (idea.getShape() == IdeaShape.PSEUDO)
+			return TextBlockUtils.EMPTY_TEXT_BLOCK;
+
 		if (idea.getShape() == IdeaShape.BOX)
 			return FtileBoxOld.createWbs(style, idea.withBackColor(skinParam), label);
 

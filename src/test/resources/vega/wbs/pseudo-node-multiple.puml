@@ -1,0 +1,15 @@
+---
+output: svg
+expected-description: Work Breakdown Structure
+---
+@startwbs
+* Root
+**_
+*** Child A
+*** Child B
+**_
+*** Child C
+*** Child D
+** Normal Node
+*** Child E
+@endwbs
