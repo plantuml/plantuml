@@ -206,7 +206,7 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L206">			out(os, definecolor(ent.getValue(), ent.getKey()));</span>
 
 <span class="nc bnc" id="L208" title="All 2 branches missed.">		if (scale != 1)</span>
-<span class="nc" id="L209">			out(os, &quot;\\scalebox{&quot; + format(scale) + &quot;}{&quot;);</span>
+<span class="nc" id="L209">			out(os, &quot;\\scalebox{&quot; + format(scale) + &quot;}{%&quot;);</span>
 
 <span class="nc" id="L211">		out(os, &quot;\\begin{tikzpicture}[yscale=-1&quot;);</span>
 <span class="nc" id="L212">		purgeStyles();</span>
@@ -217,9 +217,9 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc bnc" id="L217" title="All 2 branches missed.">		for (String s : cmd)</span>
 <span class="nc" id="L218">			out(os, useStyle(s));</span>
 
-<span class="nc" id="L220">		out(os, &quot;\\end{tikzpicture}&quot;);</span>
+<span class="nc" id="L220">		out(os, &quot;\\end{tikzpicture}%&quot;);</span>
 <span class="nc bnc" id="L221" title="All 2 branches missed.">		if (scale != 1)</span>
-<span class="nc" id="L222">			out(os, &quot;}&quot;);</span>
+<span class="nc" id="L222">			out(os, &quot;}%&quot;);</span>
 
 <span class="nc bnc" id="L224" title="All 2 branches missed.">		if (withPreamble)</span>
 <span class="nc" id="L225">			out(os, &quot;\\end{document}&quot;);</span>
@@ -255,7 +255,7 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc bnc" id="L255" title="All 2 branches missed.">		if (color.getAlpha() == 0)</span>
 <span class="nc" id="L256">			color = XColor.WHITE;</span>
 <span class="nc" id="L257">		return &quot;\\definecolor{&quot; + name + &quot;}{RGB}{&quot; + color.getRed() + &quot;,&quot; + color.getGreen() + &quot;,&quot; + color.getBlue()</span>
-				+ &quot;}&quot;;
+				+ &quot;}%&quot;;
 	}
 
 	public void rectangle(double x, double y, double width, double height) {
