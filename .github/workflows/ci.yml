@@ -160,7 +160,7 @@ jobs:
 
       # Use of `setup-gradle`, see https://github.com/gradle/actions/
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6
+        uses: gradle/actions/setup-gradle@v6.0.1
 
       - name: Diagnostic - list vega .puml files
         run: |
@@ -290,7 +290,7 @@ jobs:
           distribution: temurin
           cache: gradle
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6
+        uses: gradle/actions/setup-gradle@v6.0.1
 #      - name: Set version in gradle.properties
 #        if: env.POM_VERSION
 #        env:
@@ -376,7 +376,7 @@ jobs:
           distribution: temurin
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6
+        uses: gradle/actions/setup-gradle@v6.0.1
 
       - name: Download pre-built js-plantuml ZIP
         uses: actions/download-artifact@v8
@@ -419,7 +419,7 @@ jobs:
           cache: gradle
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6
+        uses: gradle/actions/setup-gradle@v6.0.1
 
       - name: Download Java 8 JAR (built by Ant)
         uses: actions/download-artifact@v8
