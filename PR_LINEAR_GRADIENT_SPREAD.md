@@ -6,7 +6,7 @@ This PR expands SVG sprite rendering to preserve multi-stop linear gradients and
 ## Key changes
 - SAX sprite parser now captures linearGradient multi-stop definitions and spreadMethod.
 - Gradient model extended to carry spread method for repeat/reflect behavior.
-- SVG output emits multi-stop <linearGradient> with optional spreadMethod.
+- SVG output emits multi-stop `<linearGradient>` with optional spreadMethod.
 - PNG (G2D) output maps spreadMethod to LinearGradientPaint cycle methods.
 - Added visual verification sprite fixtures for pad/reflect/repeat.
 - Added a regression test for standard (non-sprite) gradient vectors in SVG output.
