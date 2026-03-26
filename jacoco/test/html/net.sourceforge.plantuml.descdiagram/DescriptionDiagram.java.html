@@ -70,8 +70,8 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 <span class="fc bfc" id="L70" title="All 2 branches covered.">		for (Entity leaf : this.leafs()) {</span>
 <span class="fc" id="L71">			final LeafType type = leaf.getLeafType();</span>
 <span class="fc" id="L72">			final USymbol usymbol = leaf.getUSymbol();</span>
-<span class="pc bpc" id="L73" title="2 of 4 branches missed.">			if (type == LeafType.USECASE || usymbol == getSkinParam().actorStyle().toUSymbol())</span>
-<span class="nc" id="L74">				return true;</span>
+<span class="pc bpc" id="L73" title="1 of 4 branches missed.">			if (type == LeafType.USECASE || usymbol == getSkinParam().actorStyle().toUSymbol())</span>
+<span class="fc" id="L74">				return true;</span>
 
 <span class="fc" id="L76">		}</span>
 <span class="fc" id="L77">		return false;</span>
@@ -81,7 +81,7 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 	public void makeDiagramReady() {
 <span class="fc" id="L82">		super.makeDiagramReady();</span>
 <span class="fc" id="L83">		final LeafType defaultType = LeafType.DESCRIPTION;</span>
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		final USymbol defaultSymbol = isUsecase() ? getSkinParam().actorStyle().toUSymbol() : USymbols.INTERFACE;</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		final USymbol defaultSymbol = isUsecase() ? getSkinParam().actorStyle().toUSymbol() : USymbols.INTERFACE;</span>
 <span class="fc bfc" id="L85" title="All 2 branches covered.">		for (Entity leaf : this.leafs())</span>
 <span class="pc bpc" id="L86" title="1 of 2 branches missed.">			if (leaf.getLeafType() == LeafType.STILL_UNKNOWN)</span>
 <span class="nc" id="L87">				leaf.muteToType(defaultType, defaultSymbol);</span>

@@ -2687,10 +2687,10 @@
                 <ConcreteClasses>56</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
                 <Ca>10</Ca>
-                <Ce>25</Ce>
+                <Ce>26</Ce>
                 <A>0.1</A>
-                <I>0.71</I>
-                <D>0.19</D>
+                <I>0.72</I>
+                <D>0.18</D>
                 <V>1</V>
             </Stats>
 
@@ -2901,6 +2901,7 @@
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>
+                <Package>net.sourceforge.plantuml.klimt.creole.legacy</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
                 <Package>net.sourceforge.plantuml.klimt.font</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
@@ -9345,11 +9346,11 @@
                 <TotalClasses>16</TotalClasses>
                 <ConcreteClasses>14</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>7</Ca>
+                <Ca>8</Ca>
                 <Ce>27</Ce>
                 <A>0.12</A>
-                <I>0.79</I>
-                <D>0.08</D>
+                <I>0.77</I>
+                <D>0.1</D>
                 <V>1</V>
             </Stats>
 
@@ -9438,6 +9439,7 @@
             </DependsUpon>
 
             <UsedBy>
+                <Package>net.sourceforge.plantuml.activitydiagram3.ftile</Package>
                 <Package>net.sourceforge.plantuml.cucadiagram</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.command</Package>
@@ -10002,8 +10004,8 @@
 
         <Package name="net.sourceforge.plantuml.klimt.drawing.tikz">
             <Stats>
-                <TotalClasses>10</TotalClasses>
-                <ConcreteClasses>10</ConcreteClasses>
+                <TotalClasses>11</TotalClasses>
+                <ConcreteClasses>11</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>13</Ce>
@@ -10028,6 +10030,9 @@
                 </Class>
                 <Class sourceFile="DriverEllipseTikz.java">
                     net.sourceforge.plantuml.klimt.drawing.tikz.DriverEllipseTikz
+                </Class>
+                <Class sourceFile="DriverImageTikzTikz.java">
+                    net.sourceforge.plantuml.klimt.drawing.tikz.DriverImageTikzTikz
                 </Class>
                 <Class sourceFile="DriverLineTikz.java">
                     net.sourceforge.plantuml.klimt.drawing.tikz.DriverLineTikz
@@ -10555,14 +10560,14 @@
 
         <Package name="net.sourceforge.plantuml.klimt.shape">
             <Stats>
-                <TotalClasses>40</TotalClasses>
-                <ConcreteClasses>37</ConcreteClasses>
+                <TotalClasses>41</TotalClasses>
+                <ConcreteClasses>38</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>83</Ca>
                 <Ce>16</Ce>
-                <A>0.08</A>
+                <A>0.07</A>
                 <I>0.16</I>
-                <D>0.76</D>
+                <D>0.77</D>
                 <V>1</V>
             </Stats>
 
@@ -10686,6 +10691,9 @@
                 </Class>
                 <Class sourceFile="UImage.java">
                     net.sourceforge.plantuml.klimt.shape.UImage
+                </Class>
+                <Class sourceFile="UImageTikz.java">
+                    net.sourceforge.plantuml.klimt.shape.UImageTikz
                 </Class>
                 <Class sourceFile="UPixel.java">
                     net.sourceforge.plantuml.klimt.shape.UPixel

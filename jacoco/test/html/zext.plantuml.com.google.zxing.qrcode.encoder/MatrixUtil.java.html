@@ -199,25 +199,25 @@ public final class MatrixUtil {
   // Embed version information if need be. On success, modify the matrix and return true.
   // See 8.10 of JISX0510:2004 (p.47) for how to embed version information.
   public static void maybeEmbedVersionInfo(int version, ByteMatrix matrix) throws WriterException {
-<span class="pc bpc" id="L202" title="1 of 2 branches missed.">    if (version &lt; 7) {  // Version info is necessary if version &gt;= 7.</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">    if (version &lt; 7) {  // Version info is necessary if version &gt;= 7.</span>
 <span class="fc" id="L203">      return;  // Don't need version info.</span>
     }
-<span class="nc" id="L205">    BitArray versionInfoBits = new BitArray();</span>
-<span class="nc" id="L206">    makeVersionInfoBits(version, versionInfoBits);</span>
+<span class="fc" id="L205">    BitArray versionInfoBits = new BitArray();</span>
+<span class="fc" id="L206">    makeVersionInfoBits(version, versionInfoBits);</span>
 
-<span class="nc" id="L208">    int bitIndex = 6 * 3 - 1;  // It will decrease from 17 to 0.</span>
-<span class="nc bnc" id="L209" title="All 2 branches missed.">    for (int i = 0; i &lt; 6; ++i) {</span>
-<span class="nc bnc" id="L210" title="All 2 branches missed.">      for (int j = 0; j &lt; 3; ++j) {</span>
+<span class="fc" id="L208">    int bitIndex = 6 * 3 - 1;  // It will decrease from 17 to 0.</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">    for (int i = 0; i &lt; 6; ++i) {</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">      for (int j = 0; j &lt; 3; ++j) {</span>
         // Place bits in LSB (least significant bit) to MSB order.
-<span class="nc" id="L212">        boolean bit = versionInfoBits.get(bitIndex);</span>
-<span class="nc" id="L213">        bitIndex--;</span>
+<span class="fc" id="L212">        boolean bit = versionInfoBits.get(bitIndex);</span>
+<span class="fc" id="L213">        bitIndex--;</span>
         // Left bottom corner.
-<span class="nc" id="L215">        matrix.set(i, matrix.getHeight() - 11 + j, bit);</span>
+<span class="fc" id="L215">        matrix.set(i, matrix.getHeight() - 11 + j, bit);</span>
         // Right bottom corner.
-<span class="nc" id="L217">        matrix.set(matrix.getHeight() - 11 + j, i, bit);</span>
+<span class="fc" id="L217">        matrix.set(matrix.getHeight() - 11 + j, i, bit);</span>
       }
     }
-<span class="nc" id="L220">  }</span>
+<span class="fc" id="L220">  }</span>
 
   // Embed &quot;dataBits&quot; using &quot;getMaskPattern&quot;. On success, modify the matrix and return true.
   // For debugging purposes, it skips masking process if &quot;getMaskPattern&quot; is -1.
@@ -349,14 +349,14 @@ public final class MatrixUtil {
   // Make bit vector of version information. On success, store the result in &quot;bits&quot; and return true.
   // See 8.10 of JISX0510:2004 (p.45) for details.
   public static void makeVersionInfoBits(int version, BitArray bits) throws WriterException {
-<span class="nc" id="L352">    bits.appendBits(version, 6);</span>
-<span class="nc" id="L353">    int bchCode = calculateBCHCode(version, VERSION_INFO_POLY);</span>
-<span class="nc" id="L354">    bits.appendBits(bchCode, 12);</span>
+<span class="fc" id="L352">    bits.appendBits(version, 6);</span>
+<span class="fc" id="L353">    int bchCode = calculateBCHCode(version, VERSION_INFO_POLY);</span>
+<span class="fc" id="L354">    bits.appendBits(bchCode, 12);</span>
 
-<span class="nc bnc" id="L356" title="All 2 branches missed.">    if (bits.getSize() != 18) {  // Just in case.</span>
+<span class="pc bpc" id="L356" title="1 of 2 branches missed.">    if (bits.getSize() != 18) {  // Just in case.</span>
 <span class="nc" id="L357">      throw new WriterException(&quot;should not happen but we got: &quot; + bits.getSize());</span>
     }
-<span class="nc" id="L359">  }</span>
+<span class="fc" id="L359">  }</span>
 
   // Check if &quot;value&quot; is empty.
   private static boolean isEmpty(int value) {
@@ -365,7 +365,7 @@ public final class MatrixUtil {
 
   // Check if &quot;value&quot; is valid.
   private static boolean isValidValue(int value) {
-<span class="pc bpc" id="L368" title="5 of 6 branches missed.">    return (value == -1 ||  // Empty.</span>
+<span class="pc bpc" id="L368" title="1 of 6 branches missed.">    return (value == -1 ||  // Empty.</span>
         value == 0 ||  // Light (white).
         value == 1);  // Dark (black).
   }
@@ -379,14 +379,14 @@ public final class MatrixUtil {
 <span class="pc bpc" id="L379" title="1 of 2 branches missed.">      if (!isValidValue(matrix.get(i, 6))) {</span>
 <span class="nc" id="L380">        throw new WriterException();</span>
       }
-<span class="pc bpc" id="L382" title="1 of 2 branches missed.">      if (isEmpty(matrix.get(i, 6))) {</span>
+<span class="fc bfc" id="L382" title="All 2 branches covered.">      if (isEmpty(matrix.get(i, 6))) {</span>
 <span class="fc" id="L383">        matrix.set(i, 6, bit);</span>
       }
       // Vertical line.
 <span class="pc bpc" id="L386" title="1 of 2 branches missed.">      if (!isValidValue(matrix.get(6, i))) {</span>
 <span class="nc" id="L387">        throw new WriterException();</span>
       }
-<span class="pc bpc" id="L389" title="1 of 2 branches missed.">      if (isEmpty(matrix.get(6, i))) {</span>
+<span class="fc bfc" id="L389" title="All 2 branches covered.">      if (isEmpty(matrix.get(6, i))) {</span>
 <span class="fc" id="L390">        matrix.set(6, i, bit);</span>
       }
     }

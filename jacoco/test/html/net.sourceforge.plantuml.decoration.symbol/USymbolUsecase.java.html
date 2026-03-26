@@ -65,9 +65,9 @@ class USymbolUsecase extends USymbol {
 
 	@Override
 	public SName[] getSNames() {
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (isBusiness)</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (isBusiness)</span>
 <span class="nc" id="L69">			return new SName[] { SName.usecase, SName.business };</span>
-<span class="nc" id="L70">		return new SName[] { SName.usecase };</span>
+<span class="fc" id="L70">		return new SName[] { SName.usecase };</span>
 	}
 
 //	private Margin getMargin() {
@@ -94,29 +94,29 @@ class USymbolUsecase extends USymbol {
 	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
 			final Fashion symbolContext, final HorizontalAlignment stereoAlignment) {
-<span class="nc" id="L97">		return new TextBlock() {</span>
+<span class="fc" id="L97">		return new TextBlock() {</span>
 
-<span class="nc" id="L99">			final TextBlock tmp = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">			final TextBlock desc = isBusiness ? TextBlockUtils.withMargin(tmp, 7, 0) : tmp;</span>
+<span class="fc" id="L99">			final TextBlock tmp = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">			final TextBlock desc = isBusiness ? TextBlockUtils.withMargin(tmp, 7, 0) : tmp;</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L103">				final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L104">				ug = symbolContext.apply(ug);</span>
+<span class="fc" id="L103">				final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L104">				ug = symbolContext.apply(ug);</span>
 
-<span class="nc" id="L106">				final TextBlockInEllipse ellipse = new TextBlockInEllipse(desc, stringBounder);</span>
+<span class="fc" id="L106">				final TextBlockInEllipse ellipse = new TextBlockInEllipse(desc, stringBounder);</span>
 
-<span class="nc" id="L108">				final UGraphic ug2 = new MyUGraphicEllipse(ug, 0, 0, ellipse.getUEllipse());</span>
+<span class="fc" id="L108">				final UGraphic ug2 = new MyUGraphicEllipse(ug, 0, 0, ellipse.getUEllipse());</span>
 
-<span class="nc" id="L110">				ellipse.drawU(ug2);</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">				if (isBusiness)</span>
+<span class="fc" id="L110">				ellipse.drawU(ug2);</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">				if (isBusiness)</span>
 <span class="nc" id="L112">					specialBusiness(ug, ellipse.getUEllipse());</span>
 
-<span class="nc" id="L114">			}</span>
+<span class="fc" id="L114">			}</span>
 
 			@Fast
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L119">				return new TextBlockInEllipse(desc, stringBounder).calculateDimension(stringBounder);</span>
+<span class="fc" id="L119">				return new TextBlockInEllipse(desc, stringBounder).calculateDimension(stringBounder);</span>
 			}
 		};
 	}
@@ -136,15 +136,15 @@ class USymbolUsecase extends USymbol {
 
 		@Override
 		protected AbstractUGraphicHorizontalLine copy(UGraphic ug) {
-<span class="nc" id="L139">			return new MyUGraphicEllipse(ug, startingX, yTheoricalPosition, ellipse);</span>
+<span class="fc" id="L139">			return new MyUGraphicEllipse(ug, startingX, yTheoricalPosition, ellipse);</span>
 		}
 
 		MyUGraphicEllipse(UGraphic ug, double startingX, double yTheoricalPosition, UEllipse ellipse) {
-<span class="nc" id="L143">			super(ug);</span>
-<span class="nc" id="L144">			this.startingX = startingX;</span>
-<span class="nc" id="L145">			this.ellipse = ellipse;</span>
-<span class="nc" id="L146">			this.yTheoricalPosition = yTheoricalPosition;</span>
-<span class="nc" id="L147">		}</span>
+<span class="fc" id="L143">			super(ug);</span>
+<span class="fc" id="L144">			this.startingX = startingX;</span>
+<span class="fc" id="L145">			this.ellipse = ellipse;</span>
+<span class="fc" id="L146">			this.yTheoricalPosition = yTheoricalPosition;</span>
+<span class="fc" id="L147">		}</span>
 
 		private double getNormalized(double y) {
 <span class="nc bnc" id="L150" title="All 2 branches missed.">			if (y &lt; yTheoricalPosition)</span>

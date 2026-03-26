@@ -176,7 +176,7 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 		}
 		// ::done
 
-<span class="pc bpc" id="L179" title="2 of 4 branches missed.">		if (this == LATEX || this == LATEX_NO_PREAMBLE)</span>
+<span class="pc bpc" id="L179" title="1 of 4 branches missed.">		if (this == LATEX || this == LATEX_NO_PREAMBLE)</span>
 <span class="nc" id="L180">			return getTikzStringBounder(tikzFontDistortion);</span>
 
 <span class="pc bpc" id="L182" title="1 of 2 branches missed.">		if (this == BRAILLE_PNG)</span>
@@ -308,9 +308,9 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 	}
 
 	private StringBounder getTikzStringBounder(final TikzFontDistortion tikzFontDistortion) {
-<span class="nc" id="L311">		return new StringBounderRaw(FileFormat.gg.getFontRenderContext()) {</span>
+<span class="pc" id="L311">		return new StringBounderRaw(FileFormat.gg.getFontRenderContext()) {</span>
 
-<span class="nc" id="L313">			private final LatexManager latexManager = new LatexManager(tikzFontDistortion.getTexSystem(),</span>
+<span class="pc" id="L313">			private final LatexManager latexManager = new LatexManager(tikzFontDistortion.getTexSystem(),</span>
 <span class="nc" id="L314">					tikzFontDistortion.getTexPreamble());</span>
 
 			public String toString() {

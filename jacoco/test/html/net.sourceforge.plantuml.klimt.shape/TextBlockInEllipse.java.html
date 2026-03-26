@@ -68,16 +68,16 @@ public class TextBlockInEllipse extends TextBlockMemoized {
 
 	@Override
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L71">		final UEllipse sh = getUEllipse();</span>
-<span class="nc" id="L72">		final XPoint2D center = ellipse.getCenter();</span>
+<span class="fc" id="L71">		final UEllipse sh = getUEllipse();</span>
+<span class="fc" id="L72">		final XPoint2D center = ellipse.getCenter();</span>
 
-<span class="nc" id="L74">		final double dx = sh.getWidth() / 2 - center.getX();</span>
-<span class="nc" id="L75">		final double dy = sh.getHeight() / 2 - center.getY();</span>
+<span class="fc" id="L74">		final double dx = sh.getWidth() / 2 - center.getX();</span>
+<span class="fc" id="L75">		final double dy = sh.getHeight() / 2 - center.getY();</span>
 
-<span class="nc" id="L77">		ug.draw(sh);</span>
+<span class="fc" id="L77">		ug.draw(sh);</span>
 
-<span class="nc" id="L79">		text.drawU(ug.apply(new UTranslate(dx, (dy - 2))));</span>
-<span class="nc" id="L80">	}</span>
+<span class="fc" id="L79">		text.drawU(ug.apply(new UTranslate(dx, (dy - 2))));</span>
+<span class="fc" id="L80">	}</span>
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {

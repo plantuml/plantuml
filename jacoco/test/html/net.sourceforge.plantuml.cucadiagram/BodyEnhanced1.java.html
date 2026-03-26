@@ -100,9 +100,9 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 <span class="fc" id="L100">		this.lineFirst = false;</span>
 
 <span class="fc" id="L102">		final LeafType leafType = entity.getLeafType();</span>
-<span class="pc bpc" id="L103" title="2 of 4 branches missed.">		this.inEllipse = leafType == LeafType.USECASE || leafType == LeafType.USECASE_BUSINESS;</span>
+<span class="pc bpc" id="L103" title="1 of 4 branches missed.">		this.inEllipse = leafType == LeafType.USECASE || leafType == LeafType.USECASE_BUSINESS;</span>
 
-<span class="pc bpc" id="L105" title="5 of 6 branches missed.">		if (inEllipse &amp;&amp; display.size() &gt; 0 &amp;&amp; isBlockSeparator(display.get(0).toString()))</span>
+<span class="pc bpc" id="L105" title="2 of 6 branches missed.">		if (inEllipse &amp;&amp; display.size() &gt; 0 &amp;&amp; isBlockSeparator(display.get(0).toString()))</span>
 <span class="nc" id="L106">			display = display.add(&quot;&quot;);</span>
 
 <span class="fc" id="L108">		this.rawBody2 = display;</span>

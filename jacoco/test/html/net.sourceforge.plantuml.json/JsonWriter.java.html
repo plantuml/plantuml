@@ -120,8 +120,8 @@ class JsonWriter {
 			}
 <span class="nc bnc" id="L121" title="All 2 branches missed.">			return ch == '\u2028' ? UNICODE_2028_CHARS : UNICODE_2029_CHARS;</span>
 		}
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (ch == '\\') {</span>
-<span class="nc" id="L124">			return BS_CHARS;</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		if (ch == '\\') {</span>
+<span class="fc" id="L124">			return BS_CHARS;</span>
 		}
 <span class="fc bfc" id="L126" title="All 2 branches covered.">		if (ch &gt; '&quot;') {</span>
 			// This range contains '0' .. '9' and 'A' .. 'Z'. Need 3 checks to get here.
@@ -130,11 +130,11 @@ class JsonWriter {
 <span class="fc bfc" id="L130" title="All 2 branches covered.">		if (ch == '&quot;') {</span>
 <span class="fc" id="L131">			return QUOT_CHARS;</span>
 		}
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (ch &gt; CONTROL_CHARACTERS_END) {</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (ch &gt; CONTROL_CHARACTERS_END) {</span>
 <span class="fc" id="L134">			return null;</span>
 		}
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (ch == '\n') {</span>
-<span class="nc" id="L137">			return LF_CHARS;</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (ch == '\n') {</span>
+<span class="fc" id="L137">			return LF_CHARS;</span>
 		}
 <span class="nc bnc" id="L139" title="All 2 branches missed.">		if (ch == '\r') {</span>
 <span class="nc" id="L140">			return CR_CHARS;</span>

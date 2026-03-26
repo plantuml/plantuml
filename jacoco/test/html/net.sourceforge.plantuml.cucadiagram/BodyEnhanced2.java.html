@@ -123,12 +123,12 @@ public class BodyEnhanced2 extends BodyEnhancedAbstract {
 <span class="pc bpc" id="L123" title="1 of 2 branches missed.">		while (it.hasNext()) {</span>
 <span class="fc" id="L124">			final CharSequence s = it.next();</span>
 <span class="fc" id="L125">			display = display.add(s);</span>
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">			if (EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(s)) != null)</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">			if (EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(s)) != null)</span>
 				// if (s.getTrimmed().getString().startsWith(EmbeddedDiagram.EMBEDDED_START))
-<span class="nc" id="L128">				nested++;</span>
+<span class="fc" id="L128">				nested++;</span>
 <span class="fc bfc" id="L129" title="All 2 branches covered.">			else if (StringUtils.trinNoTrace(s).equals(EmbeddedDiagram.EMBEDDED_END)) {</span>
 <span class="fc" id="L130">				nested--;</span>
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">				if (nested == 0)</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">				if (nested == 0)</span>
 <span class="fc" id="L132">					return display;</span>
 			}
 <span class="fc" id="L134">		}</span>

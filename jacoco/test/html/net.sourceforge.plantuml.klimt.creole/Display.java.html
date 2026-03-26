@@ -185,8 +185,8 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 
 <span class="fc bfc" id="L186" title="All 2 branches covered.">		if (tmp.size() &gt; 2)</span>
 <span class="fc bfc" id="L187" title="All 2 branches covered.">			if (tmp.get(tmp.size() - 1).toString().isEmpty()</span>
-<span class="pc bpc" id="L188" title="1 of 2 branches missed.">					&amp;&amp; tmp.get(tmp.size() - 2).toString().equals(EmbeddedDiagram.EMBEDDED_END))</span>
-<span class="nc" id="L189">				tmp.remove(tmp.size() - 1);</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">					&amp;&amp; tmp.get(tmp.size() - 2).toString().equals(EmbeddedDiagram.EMBEDDED_END))</span>
+<span class="fc" id="L189">				tmp.remove(tmp.size() - 1);</span>
 
 <span class="fc" id="L191">		final Display result = create(tmp);</span>
 		// CreoleParser.checkColor(result);

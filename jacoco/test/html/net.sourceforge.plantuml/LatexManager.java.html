@@ -20,21 +20,21 @@ public class LatexManager implements AutoCloseable {
 	private static final String TEMPLATE_PREFIX = &quot;{\\sbox0{&quot;;
 	private static final String TEMPLATE_SUFFIX = &quot;}\\typeout{\\the\\wd0,\\the\\ht0,\\the\\dp0}}&quot;;
 <span class="fc" id="L22">	private static final Pattern PATTERN = Pattern.compile(&quot;\\*?[\\d.]+pt,[\\d.]+pt,[\\d.]+pt&quot;);</span>
-<span class="nc" id="L23">	private final LruCache lruCache = new LruCache(128);</span>
+<span class="fc" id="L23">	private final LruCache lruCache = new LruCache(128);</span>
 
-<span class="nc" id="L25">	public LatexManager(String system, String preamble) {</span>
-<span class="nc bnc" id="L26" title="All 4 branches missed.">		String command = (system != null &amp;&amp; !system.isEmpty()) ? system : &quot;xelatex&quot;;</span>
-<span class="nc bnc" id="L27" title="All 2 branches missed.">		if (!command.endsWith(&quot;latex&quot;)) {</span>
+<span class="fc" id="L25">	public LatexManager(String system, String preamble) {</span>
+<span class="pc bpc" id="L26" title="3 of 4 branches missed.">		String command = (system != null &amp;&amp; !system.isEmpty()) ? system : &quot;xelatex&quot;;</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">		if (!command.endsWith(&quot;latex&quot;)) {</span>
 <span class="nc" id="L28">			throw new IllegalArgumentException(&quot;command &quot; + command + &quot; is unsupported&quot;);</span>
 		}
 		try {
-<span class="nc" id="L31">			File tempDir = Files.createTempDirectory(&quot;plantuml-latex-&quot;).toFile();</span>
-<span class="nc" id="L32">			tempDir.deleteOnExit();</span>
-<span class="nc" id="L33">			this.process = new ProcessBuilder(command, &quot;-halt-on-error&quot;)</span>
-<span class="nc" id="L34">							.directory(tempDir)</span>
+<span class="fc" id="L31">			File tempDir = Files.createTempDirectory(&quot;plantuml-latex-&quot;).toFile();</span>
+<span class="fc" id="L32">			tempDir.deleteOnExit();</span>
+<span class="fc" id="L33">			this.process = new ProcessBuilder(command, &quot;-halt-on-error&quot;)</span>
+<span class="fc" id="L34">							.directory(tempDir)</span>
 <span class="nc" id="L35">							.start();</span>
-<span class="nc" id="L36">		} catch (IOException e) {</span>
-<span class="nc" id="L37">			throw new RuntimeException(e);</span>
+<span class="fc" id="L36">		} catch (IOException e) {</span>
+<span class="fc" id="L37">			throw new RuntimeException(e);</span>
 <span class="nc" id="L38">		}</span>
 <span class="nc" id="L39">		this.writer = new PrintWriter(new OutputStreamWriter(this.process.getOutputStream()), true);</span>
 <span class="nc" id="L40">		this.reader = new BufferedReader(new InputStreamReader(this.process.getInputStream()));</span>
@@ -131,9 +131,9 @@ public class LatexManager implements AutoCloseable {
 		private final int maxSize;
 
 		public LruCache(int maxSize) {
-<span class="nc" id="L134">			super(maxSize + 1, 1.0F, true);</span>
-<span class="nc" id="L135">			this.maxSize = maxSize;</span>
-<span class="nc" id="L136">		}</span>
+<span class="fc" id="L134">			super(maxSize + 1, 1.0F, true);</span>
+<span class="fc" id="L135">			this.maxSize = maxSize;</span>
+<span class="fc" id="L136">		}</span>
 
 		@Override
 		protected boolean removeEldestEntry(Map.Entry&lt;String, double[]&gt; eldest) {

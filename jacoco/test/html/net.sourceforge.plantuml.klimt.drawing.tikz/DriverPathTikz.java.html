@@ -45,17 +45,17 @@ import net.sourceforge.plantuml.tikz.TikzGraphics;
 <span class="fc" id="L45">public class DriverPathTikz implements UDriver&lt;UPath, TikzGraphics&gt; {</span>
 
 	public void draw(UPath path, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
-<span class="nc" id="L48">		final HColor back = param.getBackcolor();</span>
-<span class="nc bnc" id="L49" title="All 2 branches missed.">		if (back instanceof HColorGradient) {</span>
+<span class="fc" id="L48">		final HColor back = param.getBackcolor();</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if (back instanceof HColorGradient) {</span>
 <span class="nc" id="L50">			final HColorGradient gr = (HColorGradient) back;</span>
 <span class="nc" id="L51">			tikz.setGradientColor(gr.getColor1(), gr.getColor2(), gr.getPolicy());</span>
 <span class="nc" id="L52">		} else {</span>
-<span class="nc" id="L53">			tikz.setFillColor(back);</span>
+<span class="fc" id="L53">			tikz.setFillColor(back);</span>
 		}
-<span class="nc" id="L55">		tikz.setStrokeColor(param.getColor());</span>
-<span class="nc" id="L56">		tikz.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashTikz());</span>
-<span class="nc" id="L57">		tikz.upath(x, y, path);</span>
-<span class="nc" id="L58">	}</span>
+<span class="fc" id="L55">		tikz.setStrokeColor(param.getColor());</span>
+<span class="fc" id="L56">		tikz.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashTikz());</span>
+<span class="fc" id="L57">		tikz.upath(x, y, path);</span>
+<span class="fc" id="L58">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
