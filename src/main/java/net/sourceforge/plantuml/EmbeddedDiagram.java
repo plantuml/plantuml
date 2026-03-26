@@ -44,7 +44,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.atmp.PixelImage;
-import net.sourceforge.plantuml.core.AbstractDiagram;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
@@ -226,8 +225,7 @@ public class EmbeddedDiagram extends TextBlockMemoized implements Line, Atom {
 				new FileFormatOption(FileFormat.LATEX_NO_PREAMBLE));
 		os.close();
 		return new UImageTikz(new String(os.toByteArray(), StandardCharsets.UTF_8),
-				imageData.getWidth(), imageData.getHeight(),
-				((AbstractDiagram) diagram).calculateBackColor());
+				imageData.getWidth(), imageData.getHeight());
 	}
 
 	private PortableImage getImage() throws IOException, InterruptedException {
