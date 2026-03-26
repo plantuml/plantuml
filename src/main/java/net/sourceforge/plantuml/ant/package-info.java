@@ -1,6 +1,6 @@
 /**
  * Provides classes used to manage 
- * <a href="https://plantuml.com/ant-task)" target="_top">
+ * <a href="https://plantuml.com/ant-task" target="_top">
  * PlantUML Ant task</a>.
  *
  */

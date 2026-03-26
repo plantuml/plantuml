@@ -2,7 +2,7 @@
 
 ## Description
 
-This package provides classes used to manage [packetdiag](https://plantuml.com/packetdiag)
+This package provides classes used to manage [Packet Diagram (packetdiag)](https://plantuml.com/packetdiag)
 
 ## Link
 - [Packet Diagram (packetdiag)](https://plantuml.com/packetdiag)
