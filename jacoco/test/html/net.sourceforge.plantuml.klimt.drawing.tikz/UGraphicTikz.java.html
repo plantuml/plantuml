@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.klimt.drawing.tikz;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -61,60 +62,60 @@ import net.sourceforge.plantuml.url.Url;
 public class UGraphicTikz extends AbstractUGraphic&lt;TikzGraphics&gt; implements ClipContainer {
 
 	public UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, double scale,
-			boolean withPreamble, Pragma pragma) {
-<span class="nc" id="L65">		super(stringBounder);</span>
-<span class="nc" id="L66">		copy(defaultBackground, colorMapper, new TikzGraphics(scale, withPreamble, colorMapper, pragma));</span>
-<span class="nc" id="L67">		register();</span>
-<span class="nc" id="L68">	}</span>
+			FileFormat format, Pragma pragma) {
+<span class="fc" id="L66">		super(stringBounder);</span>
+<span class="fc" id="L67">		copy(defaultBackground, colorMapper, new TikzGraphics(scale, format, colorMapper, pragma));</span>
+<span class="fc" id="L68">		register();</span>
+<span class="fc" id="L69">	}</span>
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-<span class="nc" id="L72">		final UGraphicTikz result = new UGraphicTikz(this);</span>
-<span class="nc" id="L73">		return result;</span>
+<span class="fc" id="L73">		final UGraphicTikz result = new UGraphicTikz(this);</span>
+<span class="fc" id="L74">		return result;</span>
 	}
 
 	private UGraphicTikz(UGraphicTikz other) {
-<span class="nc" id="L77">		super(other.getStringBounder());</span>
-<span class="nc" id="L78">		copy(other);</span>
-<span class="nc" id="L79">		register();</span>
-<span class="nc" id="L80">	}</span>
+<span class="fc" id="L78">		super(other.getStringBounder());</span>
+<span class="fc" id="L79">		copy(other);</span>
+<span class="fc" id="L80">		register();</span>
+<span class="fc" id="L81">	}</span>
 
 	private void register() {
-<span class="nc" id="L83">		registerDriver(URectangle.class, new DriverRectangleTikz());</span>
-<span class="nc" id="L84">		registerDriver(UText.class, new DriverTextTikz());</span>
-<span class="nc" id="L85">		registerDriver(AtomText.class, new DriverAtomTextTikz());</span>
-<span class="nc" id="L86">		registerDriver(ULine.class, new DriverLineTikz());</span>
-<span class="nc" id="L87">		registerDriver(UPolygon.class, new DriverPolygonTikz());</span>
-<span class="nc" id="L88">		registerDriver(UEllipse.class, new DriverEllipseTikz());</span>
-<span class="nc" id="L89">		registerDriver(UImage.class, new DriverImageTikz());</span>
-<span class="nc" id="L90">		ignoreShape(UImageSvg.class);</span>
-<span class="nc" id="L91">		registerDriver(UPath.class, new DriverPathTikz());</span>
-<span class="nc" id="L92">		registerDriver(DotPath.class, new DriverDotPathTikz());</span>
+<span class="fc" id="L84">		registerDriver(URectangle.class, new DriverRectangleTikz());</span>
+<span class="fc" id="L85">		registerDriver(UText.class, new DriverTextTikz());</span>
+<span class="fc" id="L86">		registerDriver(AtomText.class, new DriverAtomTextTikz());</span>
+<span class="fc" id="L87">		registerDriver(ULine.class, new DriverLineTikz());</span>
+<span class="fc" id="L88">		registerDriver(UPolygon.class, new DriverPolygonTikz());</span>
+<span class="fc" id="L89">		registerDriver(UEllipse.class, new DriverEllipseTikz());</span>
+<span class="fc" id="L90">		registerDriver(UImage.class, new DriverImageTikz());</span>
+<span class="fc" id="L91">		ignoreShape(UImageSvg.class);</span>
+<span class="fc" id="L92">		registerDriver(UPath.class, new DriverPathTikz());</span>
+<span class="fc" id="L93">		registerDriver(DotPath.class, new DriverDotPathTikz());</span>
 		// registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTikz());
-<span class="nc" id="L94">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTikz2());</span>
-<span class="nc" id="L95">	}</span>
+<span class="fc" id="L95">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterTikz2());</span>
+<span class="fc" id="L96">	}</span>
 
 	@Override
 	public void startUrl(Url url) {
-<span class="nc" id="L99">		getGraphicObject().openLink(url.getUrl(), url.getTooltip());</span>
-<span class="nc" id="L100">	}</span>
+<span class="nc" id="L100">		getGraphicObject().openLink(url.getUrl(), url.getTooltip());</span>
+<span class="nc" id="L101">	}</span>
 
 	@Override
 	public void closeUrl() {
-<span class="nc" id="L104">		getGraphicObject().closeLink();</span>
-<span class="nc" id="L105">	}</span>
+<span class="nc" id="L105">		getGraphicObject().closeLink();</span>
+<span class="nc" id="L106">	}</span>
 
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
-<span class="nc" id="L109">		getGraphicObject().createData(os);</span>
-<span class="nc" id="L110">	}</span>
+<span class="fc" id="L110">		getGraphicObject().createData(os);</span>
+<span class="fc" id="L111">	}</span>
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (&quot;SPECIALTXT&quot;.equalsIgnoreCase(propertyName))</span>
-<span class="nc" id="L115">			return true;</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (&quot;SPECIALTXT&quot;.equalsIgnoreCase(propertyName))</span>
+<span class="fc" id="L116">			return true;</span>
 
-<span class="nc" id="L117">		return false;</span>
+<span class="nc" id="L118">		return false;</span>
 	}
 
 }

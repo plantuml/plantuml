@@ -1850,7 +1850,7 @@
                 <TotalClasses>38</TotalClasses>
                 <ConcreteClasses>25</ConcreteClasses>
                 <AbstractClasses>13</AbstractClasses>
-                <Ca>94</Ca>
+                <Ca>95</Ca>
                 <Ce>33</Ce>
                 <A>0.34</A>
                 <I>0.26</I>
@@ -2069,6 +2069,7 @@
                 <Package>net.sourceforge.plantuml.klimt.drawing.debug</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.eps</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.g2d</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing.tikz</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.visio</Package>
                 <Package>net.sourceforge.plantuml.klimt.font</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
@@ -10005,10 +10006,10 @@
                 <ConcreteClasses>10</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
-                <Ce>12</Ce>
+                <Ce>13</Ce>
                 <A>0</A>
-                <I>0.92</I>
-                <D>0.08</D>
+                <I>0.93</I>
+                <D>0.07</D>
                 <V>1</V>
             </Stats>
 
@@ -10051,6 +10052,7 @@
             <DependsUpon>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
+                <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.legacy</Package>

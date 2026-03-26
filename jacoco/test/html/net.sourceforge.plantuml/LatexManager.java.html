@@ -19,7 +19,7 @@ public class LatexManager implements AutoCloseable {
 
 	private static final String TEMPLATE_PREFIX = &quot;{\\sbox0{&quot;;
 	private static final String TEMPLATE_SUFFIX = &quot;}\\typeout{\\the\\wd0,\\the\\ht0,\\the\\dp0}}&quot;;
-<span class="nc" id="L22">	private static final Pattern PATTERN = Pattern.compile(&quot;\\*?[\\d.]+pt,[\\d.]+pt,[\\d.]+pt&quot;);</span>
+<span class="fc" id="L22">	private static final Pattern PATTERN = Pattern.compile(&quot;\\*?[\\d.]+pt,[\\d.]+pt,[\\d.]+pt&quot;);</span>
 <span class="nc" id="L23">	private final LruCache lruCache = new LruCache(128);</span>
 
 <span class="nc" id="L25">	public LatexManager(String system, String preamble) {</span>
@@ -103,22 +103,22 @@ public class LatexManager implements AutoCloseable {
 	}
 
 	public static String protectText(String text) {
-<span class="nc" id="L106">		final String tempBackslash = &quot;\uFFFF&quot;;</span>
-<span class="nc" id="L107">		return text.replace(&quot;\\&quot;, tempBackslash)</span>
-<span class="nc" id="L108">				.replace(&quot;#&quot;, &quot;\\#&quot;)</span>
-<span class="nc" id="L109">				.replace(&quot;$&quot;, &quot;\\$&quot;)</span>
-<span class="nc" id="L110">				.replace(&quot;%&quot;, &quot;\\%&quot;)</span>
-<span class="nc" id="L111">				.replace(&quot;&amp;&quot;, &quot;\\&amp;&quot;)</span>
-<span class="nc" id="L112">				.replace(&quot;_&quot;, &quot;\\_&quot;)</span>
-<span class="nc" id="L113">				.replace(&quot;{&quot;, &quot;\\{&quot;)</span>
-<span class="nc" id="L114">				.replace(&quot;}&quot;, &quot;\\}&quot;)</span>
-<span class="nc" id="L115">				.replace(&quot;^&quot;, &quot;\\^{}&quot;)</span>
-<span class="nc" id="L116">				.replace(&quot;~&quot;, &quot;\\~{}&quot;)</span>
-<span class="nc" id="L117">				.replace(&quot;\u00AB&quot;, &quot;\\guillemotleft{}&quot;)</span>
-<span class="nc" id="L118">				.replace(&quot;\u00BB&quot;, &quot;\\guillemotright{}&quot;)</span>
-<span class="nc" id="L119">				.replace(&quot;\t&quot;, &quot;~~~~~~~~&quot;) // #1016</span>
-<span class="nc" id="L120">				.replaceAll(&quot;^\\s+|\\s+$&quot;, &quot;~&quot;)</span>
-<span class="nc" id="L121">				.replace(tempBackslash, &quot;\\textbackslash{}&quot;);</span>
+<span class="fc" id="L106">		final String tempBackslash = &quot;\uFFFF&quot;;</span>
+<span class="fc" id="L107">		return text.replace(&quot;\\&quot;, tempBackslash)</span>
+<span class="fc" id="L108">				.replace(&quot;#&quot;, &quot;\\#&quot;)</span>
+<span class="fc" id="L109">				.replace(&quot;$&quot;, &quot;\\$&quot;)</span>
+<span class="fc" id="L110">				.replace(&quot;%&quot;, &quot;\\%&quot;)</span>
+<span class="fc" id="L111">				.replace(&quot;&amp;&quot;, &quot;\\&amp;&quot;)</span>
+<span class="fc" id="L112">				.replace(&quot;_&quot;, &quot;\\_&quot;)</span>
+<span class="fc" id="L113">				.replace(&quot;{&quot;, &quot;\\{&quot;)</span>
+<span class="fc" id="L114">				.replace(&quot;}&quot;, &quot;\\}&quot;)</span>
+<span class="fc" id="L115">				.replace(&quot;^&quot;, &quot;\\^{}&quot;)</span>
+<span class="fc" id="L116">				.replace(&quot;~&quot;, &quot;\\~{}&quot;)</span>
+<span class="fc" id="L117">				.replace(&quot;\u00AB&quot;, &quot;\\guillemotleft{}&quot;)</span>
+<span class="fc" id="L118">				.replace(&quot;\u00BB&quot;, &quot;\\guillemotright{}&quot;)</span>
+<span class="fc" id="L119">				.replace(&quot;\t&quot;, &quot;~~~~~~~~&quot;) // #1016</span>
+<span class="fc" id="L120">				.replaceAll(&quot;^\\s+|\\s+$&quot;, &quot;~&quot;)</span>
+<span class="fc" id="L121">				.replace(tempBackslash, &quot;\\textbackslash{}&quot;);</span>
 	}
 
 	@Override

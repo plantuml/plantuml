@@ -44,19 +44,19 @@ import net.sourceforge.plantuml.klimt.font.FontStyle;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 
-<span class="nc" id="L47">public class DriverAtomTextTikz implements UDriver&lt;AtomText, TikzGraphics&gt; {</span>
+<span class="fc" id="L47">public class DriverAtomTextTikz implements UDriver&lt;AtomText, TikzGraphics&gt; {</span>
 	
 
 	public void draw(AtomText text, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
-<span class="nc" id="L51">		final FontConfiguration fontConfiguration = text.getFontConfiguration();</span>
-<span class="nc" id="L52">		final UFont font = fontConfiguration.getFont();</span>
-<span class="nc" id="L53">		final HColor col = fontConfiguration.getColor();</span>
-<span class="nc" id="L54">		tikz.setStrokeColor(col);</span>
-<span class="nc" id="L55">		final boolean underline = fontConfiguration.containsStyle(FontStyle.UNDERLINE);</span>
-<span class="nc" id="L56">		final boolean italic = font.getFontFace().isItalic();</span>
-<span class="nc" id="L57">		final boolean bold = font.getFontFace().isBold();</span>
-<span class="nc" id="L58">		tikz.text(x, y, text.getText(), underline, italic, bold);</span>
-<span class="nc" id="L59">	}</span>
+<span class="fc" id="L51">		final FontConfiguration fontConfiguration = text.getFontConfiguration();</span>
+<span class="fc" id="L52">		final UFont font = fontConfiguration.getFont();</span>
+<span class="fc" id="L53">		final HColor col = fontConfiguration.getColor();</span>
+<span class="fc" id="L54">		tikz.setStrokeColor(col);</span>
+<span class="fc" id="L55">		final boolean underline = fontConfiguration.containsStyle(FontStyle.UNDERLINE);</span>
+<span class="fc" id="L56">		final boolean italic = font.getFontFace().isItalic();</span>
+<span class="fc" id="L57">		final boolean bold = font.getFontFace().isBold();</span>
+<span class="fc" id="L58">		tikz.text(x, y, text.getText(), underline, italic, bold);</span>
+<span class="fc" id="L59">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

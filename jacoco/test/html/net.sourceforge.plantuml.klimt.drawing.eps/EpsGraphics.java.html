@@ -599,15 +599,15 @@ import net.sourceforge.plantuml.version.Version;
 	}
 
 	public static String formatSimple4(double x) {
-<span class="nc bnc" id="L602" title="All 2 branches missed.">		if (x == 0)</span>
+<span class="pc bpc" id="L602" title="1 of 2 branches missed.">		if (x == 0)</span>
 <span class="nc" id="L603">			return &quot;0&quot;;</span>
 
-<span class="nc" id="L605">		String s = String.format(Locale.US, &quot;%1.4f&quot;, x);</span>
-<span class="nc" id="L606">		s = s.replaceAll(&quot;(\\.\\d*?)0+$&quot;, &quot;$1&quot;);</span>
-<span class="nc bnc" id="L607" title="All 2 branches missed.">		if (s.endsWith(&quot;.&quot;))</span>
-<span class="nc" id="L608">			s = s.substring(0, s.length() - 1);</span>
+<span class="fc" id="L605">		String s = String.format(Locale.US, &quot;%1.4f&quot;, x);</span>
+<span class="fc" id="L606">		s = s.replaceAll(&quot;(\\.\\d*?)0+$&quot;, &quot;$1&quot;);</span>
+<span class="fc bfc" id="L607" title="All 2 branches covered.">		if (s.endsWith(&quot;.&quot;))</span>
+<span class="fc" id="L608">			s = s.substring(0, s.length() - 1);</span>
 
-<span class="nc" id="L610">		return s;</span>
+<span class="fc" id="L610">		return s;</span>
 	}
 
 	private static String formatSimple2(double x) {

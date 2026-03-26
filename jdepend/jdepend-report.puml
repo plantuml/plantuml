@@ -1981,11 +1981,12 @@ Total Classes: 11
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "net.sourceforge.plantuml.url"
 
-class "net.sourceforge.plantuml.klimt.drawing.tikz" %lighten("red", 92) {
+class "net.sourceforge.plantuml.klimt.drawing.tikz" %lighten("red", 93) {
 Total Classes: 10
 }
 "net.sourceforge.plantuml.klimt.drawing.tikz" --> "java.io"
 "net.sourceforge.plantuml.klimt.drawing.tikz" --> "java.lang"
+"net.sourceforge.plantuml.klimt.drawing.tikz" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.klimt.drawing.tikz" --> "net.sourceforge.plantuml.klimt"
 "net.sourceforge.plantuml.klimt.drawing.tikz" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.klimt.drawing.tikz" --> "net.sourceforge.plantuml.klimt.creole.legacy"

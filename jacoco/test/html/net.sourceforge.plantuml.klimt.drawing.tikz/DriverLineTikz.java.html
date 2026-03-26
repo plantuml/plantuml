@@ -40,15 +40,15 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 
-<span class="nc" id="L43">public class DriverLineTikz implements UDriver&lt;ULine, TikzGraphics&gt; {</span>
+<span class="fc" id="L43">public class DriverLineTikz implements UDriver&lt;ULine, TikzGraphics&gt; {</span>
 
 	public void draw(ULine line, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
-<span class="nc" id="L46">		double x2 = x + line.getDX();</span>
-<span class="nc" id="L47">		double y2 = y + line.getDY();</span>
-<span class="nc" id="L48">		tikz.setStrokeColor(param.getColor());</span>
-<span class="nc" id="L49">		tikz.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashTikz());</span>
-<span class="nc" id="L50">		tikz.line(x, y, x2, y2);</span>
-<span class="nc" id="L51">	}</span>
+<span class="fc" id="L46">		double x2 = x + line.getDX();</span>
+<span class="fc" id="L47">		double y2 = y + line.getDY();</span>
+<span class="fc" id="L48">		tikz.setStrokeColor(param.getColor());</span>
+<span class="fc" id="L49">		tikz.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashTikz());</span>
+<span class="fc" id="L50">		tikz.line(x, y, x2, y2);</span>
+<span class="fc" id="L51">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
