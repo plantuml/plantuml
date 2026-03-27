@@ -36,11 +36,11 @@
 package net.sourceforge.plantuml.mindmap;
 
 <span class="fc" id="L38">public enum IdeaShape {</span>
-<span class="fc" id="L39">	BOX, NONE;</span>
+<span class="fc" id="L39">	BOX, NONE, PSEUDO;</span>
 
 	public static IdeaShape fromDesc(String s) {
-<span class="pc bpc" id="L42" title="1 of 2 branches missed.">		if (&quot;_&quot;.equals(s)) {</span>
-<span class="nc" id="L43">			return NONE;</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">		if (&quot;_&quot;.equals(s)) {</span>
+<span class="fc" id="L43">			return NONE;</span>
 		}
 <span class="fc" id="L45">		return BOX;</span>
 	}

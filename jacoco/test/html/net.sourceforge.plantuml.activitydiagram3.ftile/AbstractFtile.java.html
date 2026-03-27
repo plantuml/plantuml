@@ -118,11 +118,15 @@ public abstract class AbstractFtile implements Ftile {
 <span class="fc" id="L118">		return cachedGeometry;</span>
 	}
 
+	protected void invalidateGeometryCache() {
+<span class="fc" id="L122">		cachedGeometry = null;</span>
+<span class="fc" id="L123">	}</span>
+
 	abstract protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder);
 
 	@Override
 	final public MinMax getMinMax(StringBounder stringBounder) {
-<span class="nc" id="L125">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L129">		throw new UnsupportedOperationException();</span>
 		// return getMinMaxFtile(stringBounder);
 	}
 

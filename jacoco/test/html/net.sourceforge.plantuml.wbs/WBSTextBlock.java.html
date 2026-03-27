@@ -87,12 +87,15 @@ abstract class WBSTextBlock extends TextBlockMemoized {
 	final protected TextBlock buildMain(WElement idea) {
 <span class="fc" id="L88">		final Display label = idea.getLabel();</span>
 <span class="fc" id="L89">		final Style style = idea.getStyle();</span>
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (idea.getShape() == IdeaShape.BOX)</span>
-<span class="fc" id="L91">			return FtileBoxOld.createWbs(style, idea.withBackColor(skinParam), label);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (idea.getShape() == IdeaShape.PSEUDO)</span>
+<span class="fc" id="L91">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
 
-<span class="nc" id="L93">		final TextBlock text = label.create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),</span>
-<span class="nc" id="L94">				style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);</span>
-<span class="nc" id="L95">		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (idea.getShape() == IdeaShape.BOX)</span>
+<span class="fc" id="L94">			return FtileBoxOld.createWbs(style, idea.withBackColor(skinParam), label);</span>
+
+<span class="nc" id="L96">		final TextBlock text = label.create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),</span>
+<span class="nc" id="L97">				style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);</span>
+<span class="nc" id="L98">		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);</span>
 	}
 
 }
