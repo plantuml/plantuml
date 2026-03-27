@@ -14776,11 +14776,11 @@
                 <TotalClasses>34</TotalClasses>
                 <ConcreteClasses>29</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>42</Ca>
+                <Ca>41</Ca>
                 <Ce>26</Ce>
                 <A>0.15</A>
-                <I>0.38</I>
-                <D>0.47</D>
+                <I>0.39</I>
+                <D>0.46</D>
                 <V>1</V>
             </Stats>
 
@@ -14960,7 +14960,6 @@
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>
-                <Package>net.sourceforge.plantuml.svg.parser</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram</Package>
                 <Package>net.sourceforge.plantuml.wbs</Package>
                 <Package>net.sourceforge.plantuml.xmi</Package>
@@ -16318,13 +16317,13 @@
 
         <Package name="net.sourceforge.plantuml.svg.parser">
             <Stats>
-                <TotalClasses>12</TotalClasses>
-                <ConcreteClasses>11</ConcreteClasses>
+                <TotalClasses>11</TotalClasses>
+                <ConcreteClasses>10</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>1</Ca>
-                <Ce>15</Ce>
-                <A>0.08</A>
-                <I>0.94</I>
+                <Ce>13</Ce>
+                <A>0.09</A>
+                <I>0.93</I>
                 <D>0.02</D>
                 <V>1</V>
             </Stats>
@@ -16366,9 +16365,6 @@
                 <Class sourceFile="SvgSaxParser.java">
                     net.sourceforge.plantuml.svg.parser.SvgSaxParser$GroupState
                 </Class>
-                <Class sourceFile="SvgSpriteParserFactory.java">
-                    net.sourceforge.plantuml.svg.parser.SvgSpriteParserFactory
-                </Class>
             </ConcreteClasses>
 
             <DependsUpon>
@@ -16383,8 +16379,6 @@
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
-                <Package>net.sourceforge.plantuml.skin</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>org.xml.sax</Package>
                 <Package>org.xml.sax.helpers</Package>
             </DependsUpon>
@@ -16589,7 +16583,7 @@
                 <TotalClasses>16</TotalClasses>
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>42</Ca>
+                <Ca>41</Ca>
                 <Ce>13</Ce>
                 <A>0.06</A>
                 <I>0.24</I>
@@ -16705,7 +16699,6 @@
                 <Package>net.sourceforge.plantuml.sequencediagram.puma</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.teoz</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
-                <Package>net.sourceforge.plantuml.svg.parser</Package>
                 <Package>net.sourceforge.plantuml.tim.iterator</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.utils</Package>
@@ -20559,7 +20552,6 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.svg.parser">
-            <Package>net.sourceforge.plantuml.teavm</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>

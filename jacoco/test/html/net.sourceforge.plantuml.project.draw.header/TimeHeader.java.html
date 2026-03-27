@@ -135,7 +135,7 @@ public abstract class TimeHeader {
 
 	protected final void drawHline(UGraphic ug, double y) {
 <span class="fc" id="L137">		final double xmin = getTimeScale().getPosition(TimePoint.ofStartOfDay(timeBounds.getMinDay()));</span>
-<span class="fc" id="L138">		final double xmax = getTimeScale().getPosition(TimePoint.ofEndOfDayMinusOneSecond(timeBounds.getMaxDay()));</span>
+<span class="fc" id="L138">		final double xmax = getTimeScale().getPosition(TimePoint.ofStartOfDay(timeBounds.getMaxDay()).addDays(1));</span>
 <span class="fc" id="L139">		final ULine hline = ULine.hline(xmax - xmin);</span>
 <span class="fc" id="L140">		ug.apply(getLineColor()).apply(UTranslate.dy(y)).draw(hline);</span>
 <span class="fc" id="L141">	}</span>

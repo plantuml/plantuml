@@ -122,7 +122,7 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 
 	public double getBarsColumnWidth(TimeHeader timeHeader) {
 <span class="fc" id="L124">		final double xmin = timeHeader.getTimeScale().getPosition(TimePoint.ofStartOfDay(getMinDay()));</span>
-<span class="fc" id="L125">		final double xmax = timeHeader.getTimeScale().getPosition(TimePoint.ofEndOfDayMinusOneSecond(getMaxDay()));</span>
+<span class="fc" id="L125">		final double xmax = timeHeader.getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay()).addDays(1));</span>
 <span class="fc" id="L126">		return xmax - xmin;</span>
 	}
 

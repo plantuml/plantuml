@@ -95,8 +95,9 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">Factory for selecting an SVG sprite parser implementation.
 
- <p>Selection is based on the <code>svgparser</code> pragma when provided. The
- default remains Nano unless explicitly set to <code>sax</code>.</div>
+ <p>
+ Selection is based on the <code>svgparser</code> pragma when provided. The default
+ remains Nano unless explicitly set to <code>sax</code>.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -117,21 +118,12 @@ loadScripts(document, 'script');</script>
 <div class="block">Create a parser for a single SVG sprite using the default selection logic.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ISvgSpriteParser.html" title="interface in net.sourceforge.plantuml.svg.parser">ISvgSpriteParser</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(java.lang.String,net.sourceforge.plantuml.skin.Pragma)" class="member-name-link">create</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;svg,
- <a href="../../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(java.util.List,net.sourceforge.plantuml.skin.Pragma,java.util.Map)" class="member-name-link">create</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;svg,
+ <a href="../../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;md5map)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Create a parser for a single SVG sprite using pragma-based selection.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ISvgSpriteParser.html" title="interface in net.sourceforge.plantuml.svg.parser">ISvgSpriteParser</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(java.util.List)" class="member-name-link">create</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;svg)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Create a parser for multiple SVG sprite fragments using the default selection logic.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ISvgSpriteParser.html" title="interface in net.sourceforge.plantuml.svg.parser">ISvgSpriteParser</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(java.util.List,net.sourceforge.plantuml.skin.Pragma)" class="member-name-link">create</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;svg,
- <a href="../../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Create a parser for multiple SVG sprite fragments using pragma-based selection.</div>
+<div class="block">Create a parser for multiple SVG sprite fragments using pragma-based
+ selection.</div>
 </div>
 </div>
 </div>
@@ -164,39 +156,13 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="create(java.util.List)">
-<h3>create</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ISvgSpriteParser.html" title="interface in net.sourceforge.plantuml.svg.parser">ISvgSpriteParser</a></span>&nbsp;<span class="element-name">create</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;svg)</span></div>
-<div class="block">Create a parser for multiple SVG sprite fragments using the default selection logic.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>svg</code> - SVG fragments</dd>
-<dt>Returns:</dt>
-<dd>parser instance</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="create(java.lang.String,net.sourceforge.plantuml.skin.Pragma)">
-<h3>create</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ISvgSpriteParser.html" title="interface in net.sourceforge.plantuml.svg.parser">ISvgSpriteParser</a></span>&nbsp;<span class="element-name">create</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;svg,
- <a href="../../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</span></div>
-<div class="block">Create a parser for a single SVG sprite using pragma-based selection.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>svg</code> - SVG content</dd>
-<dd><code>pragma</code> - diagram pragma (may be null)</dd>
-<dt>Returns:</dt>
-<dd>parser instance</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="create(java.util.List,net.sourceforge.plantuml.skin.Pragma)">
+<section class="detail" id="create(java.util.List,net.sourceforge.plantuml.skin.Pragma,java.util.Map)">
 <h3>create</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ISvgSpriteParser.html" title="interface in net.sourceforge.plantuml.svg.parser">ISvgSpriteParser</a></span>&nbsp;<span class="element-name">create</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;svg,
- <a href="../../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</span></div>
-<div class="block">Create a parser for multiple SVG sprite fragments using pragma-based selection.</div>
+ <a href="../../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;md5map)</span></div>
+<div class="block">Create a parser for multiple SVG sprite fragments using pragma-based
+ selection.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>svg</code> - SVG fragments</dd>

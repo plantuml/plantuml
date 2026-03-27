@@ -2882,7 +2882,7 @@ Total Classes: 50
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml.teavm"
 
-class "net.sourceforge.plantuml.skin" %lighten("red", 53) {
+class "net.sourceforge.plantuml.skin" %lighten("red", 54) {
 Total Classes: 34
 }
 "net.sourceforge.plantuml.skin" --> "java.io"
@@ -3119,7 +3119,7 @@ Total Classes: 37
 "net.sourceforge.plantuml.svek.image" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.svg.parser" %lighten("red", 98) {
-Total Classes: 12
+Total Classes: 11
 }
 "net.sourceforge.plantuml.svg.parser" --> "java.lang"
 "net.sourceforge.plantuml.svg.parser" --> "java.util"
@@ -3132,8 +3132,6 @@ Total Classes: 12
 "net.sourceforge.plantuml.svg.parser" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.svg.parser" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.svg.parser" --> "net.sourceforge.plantuml.klimt.sprite"
-"net.sourceforge.plantuml.svg.parser" --> "net.sourceforge.plantuml.skin"
-"net.sourceforge.plantuml.svg.parser" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.svg.parser" --> "org.xml.sax"
 "net.sourceforge.plantuml.svg.parser" --> "org.xml.sax.helpers"
 

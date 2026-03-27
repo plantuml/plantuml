@@ -100,36 +100,45 @@ loadScripts(document, 'script');</script>
 implements <a href="ISvgSpriteParser.html" title="interface in net.sourceforge.plantuml.svg.parser">ISvgSpriteParser</a>, <a href="../../emoji/GrayLevelRange.html" title="interface in net.sourceforge.plantuml.emoji">GrayLevelRange</a></span></div>
 <div class="block">Zero-dependency SAX-based SVG parser using only Java SDK components.
  
- <p>This parser provides a zero-dependency alternative without requiring
- Apache Batik dependencies. Uses Java's built-in SAX parser (available since Java 1.4).
+ <p>
+ This parser provides a zero-dependency alternative without requiring Apache
+ Batik dependencies. Uses Java's built-in SAX parser (available since Java
+ 1.4).
  
- <p><b>Feature Set (SVG 1.1 Core Subset):</b>
+ <p>
+ <b>Feature Set (SVG 1.1 Core Subset):</b>
  <ul>
-   <li>Basic shapes: rect, circle, ellipse, line, polyline, polygon, path</li>
-   <li>Text elements with font styling (family, size, weight, style, decoration) and text-anchor alignment</li>
-   <li>Transforms: translate, rotate, scale, matrix</li>
-   <li>Gradients: linearGradient (core renderer does not support radial gradients)</li>
-   <li>Groups with style inheritance</li>
-   <li>Definitions: defs, symbol, use references</li>
+ <li>Basic shapes: rect, circle, ellipse, line, polyline, polygon, path</li>
+ <li>Text elements with font styling (family, size, weight, style, decoration)
+ and text-anchor alignment</li>
+ <li>Transforms: translate, rotate, scale, matrix</li>
+ <li>Gradients: linearGradient (core renderer does not support radial
+ gradients)</li>
+ <li>Groups with style inheritance</li>
+ <li>Definitions: defs, symbol, use references</li>
  </ul>
  
- <p><b>Limitations:</b>
+ <p>
+ <b>Limitations:</b>
  <ul>
-   <li>Feature-frozen at SVG 1.1 core subset</li>
-   <li>No SVG 2.0 extensions (use a full DOM-based parser for full support)</li>
-   <li>Radial gradients are not supported (not in core PlantUML renderer)</li>
-   <li>Linear gradients support multiple stops with stop-opacity</li>
-   <li>Embedded raster images via data URIs only (PNG/JPEG); no external URLs or embedded SVG</li>
-   <li>No clipPath, mask, filter, pattern</li>
-   <li>Text: no tspan, overline, or advanced layout</li>
-   <li>Numeric font-weight values are reduced to bold/normal only</li>
-   <li>CSS: No &lt;style&gt; blocks or class selectors (use inline attributes only)</li>
+ <li>Feature-frozen at SVG 1.1 core subset</li>
+ <li>No SVG 2.0 extensions (use a full DOM-based parser for full support)</li>
+ <li>Radial gradients are not supported (not in core PlantUML renderer)</li>
+ <li>Linear gradients support multiple stops with stop-opacity</li>
+ <li>Embedded raster images via data URIs only (PNG/JPEG); no external URLs or
+ embedded SVG</li>
+ <li>No clipPath, mask, filter, pattern</li>
+ <li>Text: no tspan, overline, or advanced layout</li>
+ <li>Numeric font-weight values are reduced to bold/normal only</li>
+ <li>CSS: No &lt;style&gt; blocks or class selectors (use inline attributes
+ only)</li>
  </ul>
  
- <p><b>Architecture:</b> Two-pass parsing
+ <p>
+ <b>Architecture:</b> Two-pass parsing
  <ol>
-   <li>Pass 1: Collect definitions (defs, symbols, gradients)</li>
-   <li>Pass 2: Render elements, resolve use references, apply transforms</li>
+ <li>Pass 1: Collect definitions (defs, symbols, gradients)</li>
+ <li>Pass 2: Render elements, resolve use references, apply transforms</li>
  </ol></div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -154,8 +163,6 @@ implements <a href="ISvgSpriteParser.html" title="interface in net.sourceforge.p
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">SvgSaxParser</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;svg)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.util.List)" class="member-name-link">SvgSaxParser</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;svg)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -211,12 +218,6 @@ implements <a href="ISvgSpriteParser.html" title="interface in net.sourceforge.p
 <section class="detail" id="&lt;init&gt;(java.lang.String)">
 <h3>SvgSaxParser</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SvgSaxParser</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;svg)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="&lt;init&gt;(java.util.List)">
-<h3>SvgSaxParser</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SvgSaxParser</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;svg)</span></div>
 </section>
 </li>
 </ul>

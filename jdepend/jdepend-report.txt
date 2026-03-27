@@ -10135,12 +10135,12 @@ Stats:
     Concrete Classes: 29
     Abstract Classes: 5
 
-    Ca: 42
+    Ca: 41
     Ce: 26
 
     A: 0.15
-    I: 0.38
-    D: 0.47
+    I: 0.39
+    D: 0.46
 
 Abstract Classes:
     net.sourceforge.plantuml.skin.AbstractComponent
@@ -10247,7 +10247,6 @@ Used By:
     net.sourceforge.plantuml.style
     net.sourceforge.plantuml.svek
     net.sourceforge.plantuml.svek.image
-    net.sourceforge.plantuml.svg.parser
     net.sourceforge.plantuml.timingdiagram
     net.sourceforge.plantuml.wbs
     net.sourceforge.plantuml.xmi
@@ -11105,15 +11104,15 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 12
-    Concrete Classes: 11
+    Total Classes: 11
+    Concrete Classes: 10
     Abstract Classes: 1
 
     Ca: 1
-    Ce: 15
+    Ce: 13
 
-    A: 0.08
-    I: 0.94
+    A: 0.09
+    I: 0.93
     D: 0.02
 
 Abstract Classes:
@@ -11130,7 +11129,6 @@ Concrete Classes:
     net.sourceforge.plantuml.svg.parser.SvgSaxParser$DefsCollector
     net.sourceforge.plantuml.svg.parser.SvgSaxParser$GradientStop
     net.sourceforge.plantuml.svg.parser.SvgSaxParser$GroupState
-    net.sourceforge.plantuml.svg.parser.SvgSpriteParserFactory
 
 Depends Upon:
     java.lang
@@ -11144,8 +11142,6 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.geom
     net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.klimt.sprite
-    net.sourceforge.plantuml.skin
-    net.sourceforge.plantuml.teavm
     org.xml.sax
     org.xml.sax.helpers
 
@@ -11273,7 +11269,7 @@ Stats:
     Concrete Classes: 15
     Abstract Classes: 1
 
-    Ca: 42
+    Ca: 41
     Ce: 13
 
     A: 0.06
@@ -11353,7 +11349,6 @@ Used By:
     net.sourceforge.plantuml.sequencediagram.puma
     net.sourceforge.plantuml.sequencediagram.teoz
     net.sourceforge.plantuml.svek
-    net.sourceforge.plantuml.svg.parser
     net.sourceforge.plantuml.tim.iterator
     net.sourceforge.plantuml.timingdiagram.graphic
     net.sourceforge.plantuml.utils
@@ -14316,7 +14311,6 @@ net.sourceforge.plantuml.svek.image
 
 net.sourceforge.plantuml.svg.parser
     |
-    |   net.sourceforge.plantuml.teavm
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
@@ -14743,7 +14737,7 @@ net.sourceforge.plantuml.sequencediagram.command,30,1,3,17,0.03,0.85,0.12,1
 net.sourceforge.plantuml.sequencediagram.graphic,50,8,3,28,0.16,0.9,0.06,1
 net.sourceforge.plantuml.sequencediagram.puma,6,0,0,3,0,1,0,1
 net.sourceforge.plantuml.sequencediagram.teoz,50,6,0,18,0.12,1,0.12,1
-net.sourceforge.plantuml.skin,34,5,42,26,0.15,0.38,0.47,1
+net.sourceforge.plantuml.skin,34,5,41,26,0.15,0.39,0.46,1
 net.sourceforge.plantuml.skin.rose,23,1,12,13,0.04,0.52,0.44,1
 net.sourceforge.plantuml.statediagram,1,0,3,11,0,0.79,0.21,1
 net.sourceforge.plantuml.statediagram.command,7,0,2,17,0,0.89,0.11,1
@@ -14756,10 +14750,10 @@ net.sourceforge.plantuml.sudoku,4,1,0,8,0.25,1,0.25,1
 net.sourceforge.plantuml.svek,65,9,21,35,0.14,0.62,0.24,1
 net.sourceforge.plantuml.svek.extremity,55,4,3,11,0.07,0.79,0.14,1
 net.sourceforge.plantuml.svek.image,37,2,12,23,0.05,0.66,0.29,1
-net.sourceforge.plantuml.svg.parser,12,1,1,15,0.08,0.94,0.02,1
+net.sourceforge.plantuml.svg.parser,11,1,1,13,0.09,0.93,0.02,1
 net.sourceforge.plantuml.swing,36,0,0,15,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
-net.sourceforge.plantuml.teavm,16,1,42,13,0.06,0.24,0.7,1
+net.sourceforge.plantuml.teavm,16,1,41,13,0.06,0.24,0.7,1
 net.sourceforge.plantuml.teavm.browser,5,5,2,2,1,0.5,0.5,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.text,5,1,38,4,0.2,0.1,0.7,1
