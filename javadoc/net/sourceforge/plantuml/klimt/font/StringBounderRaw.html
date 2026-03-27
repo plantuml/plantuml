@@ -96,7 +96,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="../drawing/debug/StringBounderDebug.html" title="class in net.sourceforge.plantuml.klimt.drawing.debug">StringBounderDebug</a></code>, <code><a href="../drawing/debug/StringBounderSvgFixed.html" title="class in net.sourceforge.plantuml.klimt.drawing.debug">StringBounderSvgFixed</a></code>, <code><a href="../../asciiart/TextStringBounder.html" title="class in net.sourceforge.plantuml.asciiart">TextStringBounder</a></code></dd>
+<dd><code><a href="../drawing/debug/StringBounderDebug.html" title="class in net.sourceforge.plantuml.klimt.drawing.debug">StringBounderDebug</a></code>, <code><a href="../drawing/debug/StringBounderFixed.html" title="class in net.sourceforge.plantuml.klimt.drawing.debug">StringBounderFixed</a></code>, <code><a href="../../asciiart/TextStringBounder.html" title="class in net.sourceforge.plantuml.asciiart">TextStringBounder</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">StringBounderRaw</span>
@@ -115,7 +115,8 @@ implements <a href="StringBounder.html" title="interface in net.sourceforge.plan
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>protected </code></div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.awt.font.FontRenderContext)" class="member-name-link">StringBounderRaw</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/font/FontRenderContext.html" title="class or interface in java.awt.font" class="external-link">FontRenderContext</a>&nbsp;frc)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.awt.font.FontRenderContext,net.sourceforge.plantuml.FileFormat)" class="member-name-link">StringBounderRaw</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/font/FontRenderContext.html" title="class or interface in java.awt.font" class="external-link">FontRenderContext</a>&nbsp;frc,
+ <a href="../../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a>&nbsp;fileFormat)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -143,6 +144,9 @@ implements <a href="StringBounder.html" title="interface in net.sourceforge.plan
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDescent(net.sourceforge.plantuml.klimt.font.UFont,java.lang.String)" class="member-name-link">getDescent</a><wbr>(<a href="UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a>&nbsp;font,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFileFormat()" class="member-name-link">getFileFormat</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -164,9 +168,10 @@ implements <a href="StringBounder.html" title="interface in net.sourceforge.plan
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.awt.font.FontRenderContext)">
+<section class="detail" id="&lt;init&gt;(java.awt.font.FontRenderContext,net.sourceforge.plantuml.FileFormat)">
 <h3>StringBounderRaw</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name">StringBounderRaw</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/font/FontRenderContext.html" title="class or interface in java.awt.font" class="external-link">FontRenderContext</a>&nbsp;frc)</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name">StringBounderRaw</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/font/FontRenderContext.html" title="class or interface in java.awt.font" class="external-link">FontRenderContext</a>&nbsp;frc,
+ <a href="../../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a>&nbsp;fileFormat)</span></div>
 </section>
 </li>
 </ul>
@@ -177,6 +182,16 @@ implements <a href="StringBounder.html" title="interface in net.sourceforge.plan
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="getFileFormat()">
+<h3>getFileFormat</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></span>&nbsp;<span class="element-name">getFileFormat</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="StringBounder.html#getFileFormat()">getFileFormat</a></code>&nbsp;in interface&nbsp;<code><a href="StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a></code></dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="calculateDimension(net.sourceforge.plantuml.klimt.font.UFont,java.lang.String)">
 <h3>calculateDimension</h3>

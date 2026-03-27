@@ -1850,10 +1850,10 @@
                 <TotalClasses>38</TotalClasses>
                 <ConcreteClasses>25</ConcreteClasses>
                 <AbstractClasses>13</AbstractClasses>
-                <Ca>95</Ca>
+                <Ca>97</Ca>
                 <Ce>33</Ce>
                 <A>0.34</A>
-                <I>0.26</I>
+                <I>0.25</I>
                 <D>0.4</D>
                 <V>1</V>
             </Stats>
@@ -2070,6 +2070,7 @@
                 <Package>net.sourceforge.plantuml.klimt.drawing.eps</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.g2d</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.tikz</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing.txt</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.visio</Package>
                 <Package>net.sourceforge.plantuml.klimt.font</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
@@ -2101,6 +2102,7 @@
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.swing</Package>
                 <Package>net.sourceforge.plantuml.syntax</Package>
+                <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
                 <Package>net.sourceforge.plantuml.tim</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram</Package>
@@ -10081,10 +10083,10 @@
                 <ConcreteClasses>1</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>4</Ca>
-                <Ce>12</Ce>
+                <Ce>13</Ce>
                 <A>0</A>
-                <I>0.75</I>
-                <D>0.25</D>
+                <I>0.76</I>
+                <D>0.24</D>
                 <V>1</V>
             </Stats>
 
@@ -10101,6 +10103,7 @@
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.nio.charset</Package>
+                <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.asciiart</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
@@ -16587,10 +16590,10 @@
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>42</Ca>
-                <Ce>12</Ce>
+                <Ce>13</Ce>
                 <A>0.06</A>
-                <I>0.22</I>
-                <D>0.72</D>
+                <I>0.24</I>
+                <D>0.7</D>
                 <V>1</V>
             </Stats>
 
@@ -16652,6 +16655,7 @@
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
@@ -20142,13 +20146,13 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.drawing.txt">
-            <Package>net.sourceforge.plantuml.asciiart</Package>
-            <Package>net.sourceforge.plantuml.style</Package>
-            <Package>net.sourceforge.plantuml.stereo</Package>
-            <Package>net.sourceforge.plantuml.regex</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-            <Package>net.sourceforge.plantuml.jaws</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.klimt.drawing.visio">

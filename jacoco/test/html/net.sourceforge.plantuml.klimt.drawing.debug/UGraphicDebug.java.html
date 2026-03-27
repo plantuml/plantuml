@@ -44,6 +44,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UPath;
@@ -81,94 +82,93 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-<span class="fc" id="L84">		final UGraphicDebug result = new UGraphicDebug(this, output, scaleFactor, dim, svgLinkTarget, hoverPathColorRGB,</span>
+<span class="fc" id="L85">		final UGraphicDebug result = new UGraphicDebug(this, output, scaleFactor, dim, svgLinkTarget, hoverPathColorRGB,</span>
 				seed, preserveAspectRatio);
-<span class="fc" id="L86">		return result;</span>
+<span class="fc" id="L87">		return result;</span>
 	}
 
 	private UGraphicDebug(UGraphicDebug other, List&lt;String&gt; output, double scaleFactor, XDimension2D dim,
 			String svgLinkTarget, String hoverPathColorRGB, long seed, String preserveAspectRatio) {
-<span class="fc" id="L91">		super(other.getStringBounder());</span>
-<span class="fc" id="L92">		basicCopy(other);</span>
-<span class="fc" id="L93">		this.output = output;</span>
-<span class="fc" id="L94">		this.scaleFactor = scaleFactor;</span>
-<span class="fc" id="L95">		this.dim = dim;</span>
-<span class="fc" id="L96">		this.svgLinkTarget = svgLinkTarget;</span>
-<span class="fc" id="L97">		this.hoverPathColorRGB = hoverPathColorRGB;</span>
-<span class="fc" id="L98">		this.seed = seed;</span>
-<span class="fc" id="L99">		this.preserveAspectRatio = preserveAspectRatio;</span>
-<span class="fc" id="L100">	}</span>
+<span class="fc" id="L92">		super(other.getStringBounder());</span>
+<span class="fc" id="L93">		basicCopy(other);</span>
+<span class="fc" id="L94">		this.output = output;</span>
+<span class="fc" id="L95">		this.scaleFactor = scaleFactor;</span>
+<span class="fc" id="L96">		this.dim = dim;</span>
+<span class="fc" id="L97">		this.svgLinkTarget = svgLinkTarget;</span>
+<span class="fc" id="L98">		this.hoverPathColorRGB = hoverPathColorRGB;</span>
+<span class="fc" id="L99">		this.seed = seed;</span>
+<span class="fc" id="L100">		this.preserveAspectRatio = preserveAspectRatio;</span>
+<span class="fc" id="L101">	}</span>
 
 	public UGraphicDebug(double scaleFactor, XDimension2D dim, String svgLinkTarget, String hoverPathColorRGB,
 			long seed, String preserveAspectRatio) {
-<span class="fc" id="L104">		super(new StringBounderDebug());</span>
-<span class="fc" id="L105">		basicCopy(HColors.WHITE, ColorMapper.IDENTITY);</span>
-<span class="fc" id="L106">		this.output = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L107">		this.scaleFactor = scaleFactor;</span>
-<span class="fc" id="L108">		this.dim = dim;</span>
-<span class="fc" id="L109">		this.svgLinkTarget = svgLinkTarget;</span>
-<span class="fc" id="L110">		this.hoverPathColorRGB = hoverPathColorRGB;</span>
-<span class="fc" id="L111">		this.seed = seed;</span>
-<span class="fc" id="L112">		this.preserveAspectRatio = preserveAspectRatio;</span>
-<span class="fc" id="L113">	}</span>
+<span class="fc" id="L105">		super(new StringBounderDebug(FileFormat.DEBUG));</span>
+<span class="fc" id="L106">		basicCopy(HColors.WHITE, ColorMapper.IDENTITY);</span>
+<span class="fc" id="L107">		this.output = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L108">		this.scaleFactor = scaleFactor;</span>
+<span class="fc" id="L109">		this.dim = dim;</span>
+<span class="fc" id="L110">		this.svgLinkTarget = svgLinkTarget;</span>
+<span class="fc" id="L111">		this.hoverPathColorRGB = hoverPathColorRGB;</span>
+<span class="fc" id="L112">		this.seed = seed;</span>
+<span class="fc" id="L113">		this.preserveAspectRatio = preserveAspectRatio;</span>
+<span class="fc" id="L114">	}</span>
 
 	public void draw(UShape shape) {
-<span class="fc bfc" id="L116" title="All 2 branches covered.">		if (isOutOfClip(shape))</span>
-<span class="fc" id="L117">			return;</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		if (isOutOfClip(shape))</span>
+<span class="fc" id="L118">			return;</span>
 
-<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (shape instanceof ULine) {</span>
-<span class="fc" id="L120">			outLine((ULine) shape);</span>
-<span class="fc bfc" id="L121" title="All 2 branches covered.">		} else if (shape instanceof URectangle) {</span>
-<span class="fc" id="L122">			outRectangle((URectangle) shape);</span>
-<span class="fc bfc" id="L123" title="All 2 branches covered.">		} else if (shape instanceof UText) {</span>
-<span class="fc" id="L124">			outText((UText) shape);</span>
-<span class="fc bfc" id="L125" title="All 2 branches covered.">		} else if (shape instanceof UPolygon) {</span>
-<span class="fc" id="L126">			outPolygon((UPolygon) shape);</span>
-<span class="fc bfc" id="L127" title="All 2 branches covered.">		} else if (shape instanceof UEllipse) {</span>
-<span class="fc" id="L128">			outEllipse((UEllipse) shape);</span>
-<span class="fc bfc" id="L129" title="All 2 branches covered.">		} else if (shape instanceof UEmpty) {</span>
-<span class="fc" id="L130">			outEmpty((UEmpty) shape);</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">		} else if (shape instanceof UPath) {</span>
-<span class="fc" id="L132">			outPath((UPath) shape);</span>
-<span class="fc bfc" id="L133" title="All 2 branches covered.">		} else if (shape instanceof UComment) {</span>
-<span class="fc" id="L134">			outComment((UComment) shape);</span>
-<span class="fc bfc" id="L135" title="All 2 branches covered.">		} else if (shape instanceof DotPath) {</span>
-<span class="fc" id="L136">			outPath(((DotPath) shape).toUPath());</span>
-<span class="fc bfc" id="L137" title="All 2 branches covered.">		} else if (shape instanceof UCenteredCharacter) {</span>
-<span class="fc" id="L138">			outCenteredCharacter(((UCenteredCharacter) shape));</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (shape instanceof ULine) {</span>
+<span class="fc" id="L121">			outLine((ULine) shape);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		} else if (shape instanceof URectangle) {</span>
+<span class="fc" id="L123">			outRectangle((URectangle) shape);</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		} else if (shape instanceof UText) {</span>
+<span class="fc" id="L125">			outText((UText) shape);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		} else if (shape instanceof UPolygon) {</span>
+<span class="fc" id="L127">			outPolygon((UPolygon) shape);</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		} else if (shape instanceof UEllipse) {</span>
+<span class="fc" id="L129">			outEllipse((UEllipse) shape);</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">		} else if (shape instanceof UEmpty) {</span>
+<span class="fc" id="L131">			outEmpty((UEmpty) shape);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		} else if (shape instanceof UPath) {</span>
+<span class="fc" id="L133">			outPath((UPath) shape);</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		} else if (shape instanceof UComment) {</span>
+<span class="fc" id="L135">			outComment((UComment) shape);</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		} else if (shape instanceof DotPath) {</span>
+<span class="fc" id="L137">			outPath(((DotPath) shape).toUPath());</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		} else if (shape instanceof UCenteredCharacter) {</span>
+<span class="fc" id="L139">			outCenteredCharacter(((UCenteredCharacter) shape));</span>
 		} else {
-<span class="fc" id="L140">			System.err.println(&quot;UGraphicDebug &quot; + shape.getClass().getSimpleName());</span>
-<span class="fc" id="L141">			output.add(&quot;UGraphicDebug &quot; + shape.getClass().getSimpleName() + &quot; &quot; + new Date());</span>
+<span class="fc" id="L141">			System.err.println(&quot;UGraphicDebug &quot; + shape.getClass().getSimpleName());</span>
+<span class="fc" id="L142">			output.add(&quot;UGraphicDebug &quot; + shape.getClass().getSimpleName() + &quot; &quot; + new Date());</span>
 		}
-<span class="fc" id="L143">	}</span>
+<span class="fc" id="L144">	}</span>
 
 	private boolean isOutOfClip(UShape shape) {
-<span class="fc" id="L146">		final UClip clip = getClip();</span>
-<span class="fc bfc" id="L147" title="All 2 branches covered.">		if (clip == null)</span>
-<span class="fc" id="L148">			return false;</span>
+<span class="fc" id="L147">		final UClip clip = getClip();</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		if (clip == null)</span>
+<span class="fc" id="L149">			return false;</span>
 
-<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (shape instanceof URectangle) {</span>
-<span class="fc" id="L151">			final URectangle rect = (URectangle) shape;</span>
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
-<span class="pc bnc" id="L153" title="All 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + rect.getWidth(), getTranslateY() + rect.getHeight()) == false;</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (shape instanceof URectangle) {</span>
+<span class="fc" id="L152">			final URectangle rect = (URectangle) shape;</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
+<span class="pc bnc" id="L154" title="All 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + rect.getWidth(), getTranslateY() + rect.getHeight()) == false;</span>
 		}
-<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (shape instanceof UEllipse) {</span>
-<span class="fc" id="L156">			final UEllipse ell = (UEllipse) shape;</span>
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
-<span class="pc bnc" id="L158" title="All 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + ell.getWidth(), getTranslateY() + ell.getHeight()) == false;</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (shape instanceof UEllipse) {</span>
+<span class="fc" id="L157">			final UEllipse ell = (UEllipse) shape;</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
+<span class="pc bnc" id="L159" title="All 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + ell.getWidth(), getTranslateY() + ell.getHeight()) == false;</span>
 		}
-<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (shape instanceof ULine) {</span>
-<span class="fc" id="L161">			final ULine line = (ULine) shape;</span>
-<span class="fc bfc" id="L162" title="All 2 branches covered.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
-<span class="pc bpc" id="L163" title="1 of 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + line.getDX(), getTranslateY() + line.getDY()) == false;</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (shape instanceof ULine) {</span>
+<span class="fc" id="L162">			final ULine line = (ULine) shape;</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + line.getDX(), getTranslateY() + line.getDY()) == false;</span>
 		}
-<span class="fc bfc" id="L165" title="All 2 branches covered.">		if (shape instanceof UText) {</span>
-<span class="fc" id="L166">			final UText text = (UText) shape;</span>
-<span class="fc" id="L167">			final XDimension2D textDim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),</span>
-<span class="fc" id="L168">					text.getText());</span>
-<span class="fc bfc" id="L169" title="All 2 branches covered.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
-<span class="fc bfc" id="L170" title="All 2 branches covered.">					&amp;&amp; clip.isInside(getTranslateX() + textDim.getWidth(),</span>
-<span class="fc" id="L171">							getTranslateY() - textDim.getHeight()) == false;</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		if (shape instanceof UText) {</span>
+<span class="fc" id="L167">			final UText text = (UText) shape;</span>
+<span class="fc" id="L168">			final XDimension2D textDim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),</span>
+<span class="fc" id="L169">					text.getText());</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">			return clip.isInside(getTranslateX(), getTranslateY()) == false &amp;&amp; clip</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">					.isInside(getTranslateX() + textDim.getWidth(), getTranslateY() - textDim.getHeight()) == false;</span>
 		}
 <span class="fc bfc" id="L173" title="All 2 branches covered.">		if (shape instanceof UPath) {</span>
 <span class="fc bfc" id="L174" title="All 2 branches covered.">			return clip.isInside(getTranslateX(), getTranslateY(), (UPath) shape) == false;</span>

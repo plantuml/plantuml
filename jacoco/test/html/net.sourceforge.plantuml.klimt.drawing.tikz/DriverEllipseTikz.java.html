@@ -43,18 +43,18 @@ import net.sourceforge.plantuml.tikz.TikzGraphics;
 <span class="fc" id="L43">public class DriverEllipseTikz implements UDriver&lt;UEllipse, TikzGraphics&gt; {</span>
 
 	public void draw(UEllipse shape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
-<span class="nc" id="L46">		final double width = shape.getWidth();</span>
-<span class="nc" id="L47">		final double height = shape.getHeight();</span>
+<span class="fc" id="L46">		final double width = shape.getWidth();</span>
+<span class="fc" id="L47">		final double height = shape.getHeight();</span>
 
-<span class="nc" id="L49">		double start = shape.getStart();</span>
-<span class="nc" id="L50">		final double extend = shape.getExtend();</span>
-<span class="nc" id="L51">		final double cx = x + width / 2;</span>
-<span class="nc" id="L52">		final double cy = y + height / 2;</span>
-<span class="nc" id="L53">		tikz.setFillColor(param.getBackcolor());</span>
-<span class="nc" id="L54">		tikz.setStrokeColor(param.getColor());</span>
-<span class="nc" id="L55">		tikz.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashTikz());</span>
-<span class="nc bnc" id="L56" title="All 4 branches missed.">		if (start == 0 &amp;&amp; extend == 0) {</span>
-<span class="nc" id="L57">			tikz.ellipse(cx, cy, width / 2, height / 2);</span>
+<span class="fc" id="L49">		double start = shape.getStart();</span>
+<span class="fc" id="L50">		final double extend = shape.getExtend();</span>
+<span class="fc" id="L51">		final double cx = x + width / 2;</span>
+<span class="fc" id="L52">		final double cy = y + height / 2;</span>
+<span class="fc" id="L53">		tikz.setFillColor(param.getBackcolor());</span>
+<span class="fc" id="L54">		tikz.setStrokeColor(param.getColor());</span>
+<span class="fc" id="L55">		tikz.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashTikz());</span>
+<span class="pc bpc" id="L56" title="2 of 4 branches missed.">		if (start == 0 &amp;&amp; extend == 0) {</span>
+<span class="fc" id="L57">			tikz.ellipse(cx, cy, width / 2, height / 2);</span>
 		} else {
 <span class="nc" id="L59">			start = start + 90;</span>
 <span class="nc" id="L60">			final double x1 = cx + Math.sin(start * Math.PI / 180.) * width / 2;</span>
@@ -74,6 +74,6 @@ import net.sourceforge.plantuml.tikz.TikzGraphics;
 			// // svg.svgEllipse(x2, y2, 1, 1, 0);
 			// svg.svgArcEllipse(width / 2, height / 2, x1, y1, x2, y2);
 		}
-<span class="nc" id="L77">	}</span>
+<span class="fc" id="L77">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

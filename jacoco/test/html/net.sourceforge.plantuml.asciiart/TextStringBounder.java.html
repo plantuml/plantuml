@@ -42,8 +42,8 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class TextStringBounder extends StringBounderRaw {
 
-	public TextStringBounder() {
-<span class="fc" id="L46">		super(FileFormat.gg.getFontRenderContext());</span>
+	public TextStringBounder(FileFormat fileFormat) {
+<span class="fc" id="L46">		super(FileFormat.gg.getFontRenderContext(), fileFormat);</span>
 <span class="fc" id="L47">	}</span>
 
 	protected XDimension2D calculateDimensionInternal(UFont font, String text) {

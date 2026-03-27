@@ -171,8 +171,8 @@ public abstract class AbstractUGraphic&lt;O&gt; extends AbstractCommonUGraphic {
 <span class="fc" id="L171">			drawImage(x, y, (UImage) shape);</span>
 <span class="fc bfc" id="L172" title="All 2 branches covered.">		} else if (shape instanceof UImageSvg) {</span>
 <span class="fc" id="L173">			drawImageSvg(x, y, (UImageSvg) shape);</span>
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		} else if (shape instanceof UImageTikz) {</span>
-<span class="nc" id="L175">			drawImageTikz(x, y, (UImageTikz) shape);</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">		} else if (shape instanceof UImageTikz) {</span>
+<span class="fc" id="L175">			drawImageTikz(x, y, (UImageTikz) shape);</span>
 <span class="pc bpc" id="L176" title="1 of 2 branches missed.">		} else if (shape instanceof UComment) {</span>
 <span class="pc bpc" id="L177" title="1 of 2 branches missed.">		} else if (shape instanceof UEmpty) {</span>
 <span class="nc" id="L178">			drawEmpty(x, y, (UEmpty) shape);</span>
@@ -248,9 +248,9 @@ public abstract class AbstractUGraphic&lt;O&gt; extends AbstractCommonUGraphic {
 <span class="fc" id="L248">	}</span>
 
 	private void drawImageTikz(double x, double y, UImageTikz shape) {
-<span class="nc" id="L251">		addPoint(x, y);</span>
-<span class="nc" id="L252">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
-<span class="nc" id="L253">	}</span>
+<span class="fc" id="L251">		addPoint(x, y);</span>
+<span class="fc" id="L252">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
+<span class="fc" id="L253">	}</span>
 
 	private void drawEllipse(double x, double y, UEllipse shape) {
 <span class="fc" id="L256">		addPoint(x, y);</span>

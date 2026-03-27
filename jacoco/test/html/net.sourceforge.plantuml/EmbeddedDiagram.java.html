@@ -128,36 +128,36 @@ public class EmbeddedDiagram extends TextBlockMemoized implements Line, Atom {
 		try {
 <span class="pc bpc" id="L129" title="1 of 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
 <span class="pc bpc" id="L130" title="1 of 2 branches missed.">				if (stringBounder.matchesProperty(&quot;SVG&quot;)) {</span>
-<span class="nc" id="L131">					final String imageSvg = getImageSvg();</span>
+<span class="nc" id="L131">					final String imageSvg = getImageSvg(stringBounder.getFileFormat());</span>
 <span class="nc" id="L132">					final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
 <span class="nc" id="L133">					return new XDimension2D(svg.getWidth(), svg.getHeight());</span>
 				}
 <span class="pc bpc" id="L135" title="1 of 2 branches missed.">				if (stringBounder.matchesProperty(&quot;TIKZ&quot;)) {</span>
-<span class="nc" id="L136">					final UImageTikz tikz = getImageTikz();</span>
+<span class="nc" id="L136">					final UImageTikz tikz = getImageTikz(stringBounder.getFileFormat());</span>
 <span class="nc" id="L137">					return new XDimension2D(tikz.getWidth(), tikz.getHeight());</span>
 				}
-<span class="fc" id="L139">				final PortableImage im = getImage();</span>
+<span class="fc" id="L139">				final PortableImage im = getImage(stringBounder.getFileFormat());</span>
 <span class="fc" id="L140">				return new XDimension2D(im.getWidth(), im.getHeight());</span>
 			} else {
 				// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
-<span class="nc" id="L143">				final TextBlock tb = getInternalTextBlock();</span>
+<span class="nc" id="L143">				final TextBlock tb = getInternalTextBlock(stringBounder.getFileFormat());</span>
 <span class="nc" id="L144">				final XDimension2D result = tb.calculateDimension(stringBounder);</span>
 <span class="nc" id="L145">				PSystemBuilder2.getInstance().reset();</span>
 <span class="nc" id="L146">				return result;</span>
 				// ::done
 			}
-<span class="nc" id="L149">		} catch (Exception e) {</span>
-<span class="nc" id="L150">			Logme.error(e);</span>
+<span class="fc" id="L149">		} catch (Exception e) {</span>
+<span class="fc" id="L150">			Logme.error(e);</span>
 		}
-<span class="nc" id="L152">		return new XDimension2D(42, 42);</span>
+<span class="fc" id="L152">		return new XDimension2D(42, 42);</span>
 	}
 
-	public TextBlock getInternalTextBlock() throws Exception {
+	public TextBlock getInternalTextBlock(FileFormat fileFormat) throws Exception {
 		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
 <span class="nc bnc" id="L157" title="All 2 branches missed.">		if (textBlock == null) {</span>
 <span class="nc" id="L158">			PSystemBuilder2.getInstance().reset();</span>
 <span class="nc" id="L159">			final UgDiagram ugDiagram = (UgDiagram) diagram;</span>
-<span class="nc" id="L160">			textBlock = ugDiagram.getTextBlock12026(0, new FileFormatOption(FileFormat.SVG));</span>
+<span class="nc" id="L160">			textBlock = ugDiagram.getTextBlock12026(0, new FileFormatOption(fileFormat));</span>
 		}
 		// ::done
 <span class="nc" id="L163">		return textBlock;</span>
@@ -165,81 +165,81 @@ public class EmbeddedDiagram extends TextBlockMemoized implements Line, Atom {
 
 	public void drawU(UGraphic ug) {
 		try {
-<span class="pc bpc" id="L168" title="1 of 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
-<span class="fc" id="L169">				final boolean isSvg = ug.matchesProperty(&quot;SVG&quot;);</span>
-<span class="fc bfc" id="L170" title="All 2 branches covered.">				if (isSvg) {</span>
-<span class="fc" id="L171">					final String imageSvg = getImageSvg();</span>
-<span class="fc" id="L172">					final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
-<span class="fc" id="L173">					ug.draw(svg);</span>
-<span class="fc" id="L174">					return;</span>
+<span class="fc" id="L168">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L170">				final boolean isSvg = ug.matchesProperty(&quot;SVG&quot;);</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">				if (isSvg) {</span>
+<span class="fc" id="L172">					final String imageSvg = getImageSvg(stringBounder.getFileFormat());</span>
+<span class="fc" id="L173">					final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
+<span class="fc" id="L174">					ug.draw(svg);</span>
+<span class="fc" id="L175">					return;</span>
 				}
-<span class="fc bfc" id="L176" title="All 2 branches covered.">				if (ug.matchesProperty(&quot;TIKZ&quot;)) {</span>
-<span class="nc" id="L177">					ug.draw(getImageTikz());</span>
-<span class="nc" id="L178">					return;</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">				if (ug.matchesProperty(&quot;TIKZ&quot;)) {</span>
+<span class="fc" id="L178">					ug.draw(getImageTikz(stringBounder.getFileFormat()));</span>
+<span class="fc" id="L179">					return;</span>
 				}
-<span class="fc" id="L180">				final PortableImage im = getImage();</span>
-<span class="fc" id="L181">				final UShape image = new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));</span>
-<span class="fc" id="L182">				ug.draw(image);</span>
-<span class="fc" id="L183">			} else {</span>
+<span class="fc" id="L181">				final PortableImage im = getImage(stringBounder.getFileFormat());</span>
+<span class="fc" id="L182">				final UShape image = new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));</span>
+<span class="fc" id="L183">				ug.draw(image);</span>
+<span class="fc" id="L184">			} else {</span>
 				// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
-<span class="nc" id="L185">				final TextBlock tb = getInternalTextBlock();</span>
-<span class="nc" id="L186">				ug = ug.apply(HColors.transparent().bg());</span>
-<span class="nc" id="L187">				tb.drawU(ug);</span>
-<span class="nc" id="L188">				PSystemBuilder2.getInstance().reset();</span>
+<span class="nc" id="L186">				final TextBlock tb = getInternalTextBlock(stringBounder.getFileFormat());</span>
+<span class="nc" id="L187">				ug = ug.apply(HColors.transparent().bg());</span>
+<span class="nc" id="L188">				tb.drawU(ug);</span>
+<span class="nc" id="L189">				PSystemBuilder2.getInstance().reset();</span>
 				// ::done
 			}
-<span class="fc" id="L191">		} catch (Exception e) {</span>
-<span class="fc" id="L192">			Logme.error(e);</span>
-<span class="fc" id="L193">		}</span>
+<span class="fc" id="L192">		} catch (Exception e) {</span>
+<span class="fc" id="L193">			Logme.error(e);</span>
+<span class="fc" id="L194">		}</span>
 
-<span class="fc" id="L195">	}</span>
+<span class="fc" id="L196">	}</span>
 
-	private String getImageSvg() throws IOException, InterruptedException {
-<span class="pc bpc" id="L198" title="1 of 2 branches missed.">		if (svg == null)</span>
-<span class="fc" id="L199">			svg = getImageSvgSlow().replaceAll(&quot;&lt;\\?plantuml.+?\\?&gt;&quot;, &quot;&quot;);</span>
+	private String getImageSvg(FileFormat fileFormat) throws IOException, InterruptedException {
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">		if (svg == null)</span>
+<span class="fc" id="L200">			svg = getImageSvgSlow(fileFormat).replaceAll(&quot;&lt;\\?plantuml.+?\\?&gt;&quot;, &quot;&quot;);</span>
 
-<span class="fc" id="L201">		return svg;</span>
+<span class="fc" id="L202">		return svg;</span>
 
 	}
 
-	private String getImageSvgSlow() throws IOException, InterruptedException {
-<span class="pc bpc" id="L206" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="fc" id="L207">			final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
-<span class="fc" id="L208">			diagram.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));</span>
-<span class="fc" id="L209">			os.close();</span>
-<span class="fc" id="L210">			return new String(os.toByteArray());</span>
+	private String getImageSvgSlow(FileFormat fileFormat) throws IOException, InterruptedException {
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L208">			final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
+<span class="fc" id="L209">			diagram.exportDiagram(os, 0, new FileFormatOption(fileFormat));</span>
+<span class="fc" id="L210">			os.close();</span>
+<span class="fc" id="L211">			return new String(os.toByteArray());</span>
 		}
-<span class="nc" id="L212">		throw new UnsupportedOperationException(&quot;TEAVM4586&quot;);</span>
+<span class="nc" id="L213">		throw new UnsupportedOperationException(&quot;TEAVM4586&quot;);</span>
 	}
 
-	private UImageTikz getImageTikz() throws IOException, InterruptedException {
-<span class="pc bpc" id="L216" title="1 of 2 branches missed.">		if (imageTikz == null)</span>
-<span class="nc" id="L217">			imageTikz = getImageTikzSlow();</span>
+	private UImageTikz getImageTikz(FileFormat fileFormat) throws IOException, InterruptedException {
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (imageTikz == null)</span>
+<span class="fc" id="L218">			imageTikz = getImageTikzSlow(fileFormat);</span>
 
-<span class="nc" id="L219">		return imageTikz;</span>
+<span class="fc" id="L220">		return imageTikz;</span>
 	}
 
-	private UImageTikz getImageTikzSlow() throws IOException, InterruptedException {
-<span class="fc" id="L223">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
-<span class="nc" id="L224">		final ImageData imageData = diagram.exportDiagram(os, 0,</span>
-				new FileFormatOption(FileFormat.LATEX_NO_PREAMBLE));
-<span class="nc" id="L226">		os.close();</span>
-<span class="nc" id="L227">		return new UImageTikz(new String(os.toByteArray(), StandardCharsets.UTF_8),</span>
-<span class="nc" id="L228">				imageData.getWidth(), imageData.getHeight());</span>
+	private UImageTikz getImageTikzSlow(FileFormat fileFormat) throws IOException, InterruptedException {
+<span class="fc" id="L224">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
+<span class="fc" id="L225">		final ImageData imageData = diagram.exportDiagram(os, 0, new FileFormatOption(fileFormat));</span>
+<span class="fc" id="L226">		os.close();</span>
+<span class="fc" id="L227">		return new UImageTikz(new String(os.toByteArray(), StandardCharsets.UTF_8), imageData.getWidth(),</span>
+<span class="fc" id="L228">				imageData.getHeight());</span>
 	}
 
-	private PortableImage getImage() throws IOException, InterruptedException {
+	private PortableImage getImage(FileFormat fileFormat) throws IOException, InterruptedException {
 <span class="fc" id="L232">		BrowserLog.consoleLog(getClass(), &quot;=======getImage&quot;);</span>
 <span class="fc bfc" id="L233" title="All 2 branches covered.">		if (image == null)</span>
-<span class="fc" id="L234">			image = getImageSlow();</span>
+<span class="fc" id="L234">			image = getImageSlow(fileFormat);</span>
 <span class="fc" id="L235">		return image;</span>
 	}
 
-	private PortableImage getImageSlow() throws IOException, InterruptedException {
+	private PortableImage getImageSlow(FileFormat fileFormat) throws IOException, InterruptedException {
 <span class="fc" id="L239">		BrowserLog.consoleLog(getClass(), &quot;=======getImageSlow&quot;);</span>
 <span class="pc bpc" id="L240" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
 <span class="fc" id="L241">			final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
-<span class="fc" id="L242">			diagram.exportDiagram(os, 0, new FileFormatOption(FileFormat.PNG));</span>
+<span class="fc" id="L242">			diagram.exportDiagram(os, 0, new FileFormatOption(fileFormat));</span>
 <span class="fc" id="L243">			os.close();</span>
 <span class="fc" id="L244">			return SImageIO.read(os.toByteArray());</span>
 		}

@@ -169,7 +169,7 @@ public class Base64Coder {
 <span class="fc" id="L169">		int op = 0;</span>
 <span class="fc bfc" id="L170" title="All 2 branches covered.">		while (ip &lt; iEnd) {</span>
 <span class="fc" id="L171">			int i0 = in[ip++] &amp; 0xff;</span>
-<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			int i1 = ip &lt; iEnd ? in[ip++] &amp; 0xff : 0;</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">			int i1 = ip &lt; iEnd ? in[ip++] &amp; 0xff : 0;</span>
 <span class="fc bfc" id="L173" title="All 2 branches covered.">			int i2 = ip &lt; iEnd ? in[ip++] &amp; 0xff : 0;</span>
 <span class="fc" id="L174">			int o0 = i0 &gt;&gt;&gt; 2;</span>
 <span class="fc" id="L175">			int o1 = ((i0 &amp; 3) &lt;&lt; 4) | (i1 &gt;&gt;&gt; 4);</span>
@@ -177,7 +177,7 @@ public class Base64Coder {
 <span class="fc" id="L177">			int o3 = i2 &amp; 0x3F;</span>
 <span class="fc" id="L178">			out[op++] = map1[o0];</span>
 <span class="fc" id="L179">			out[op++] = map1[o1];</span>
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">			out[op] = op &lt; oDataLen ? map1[o2] : '=';</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">			out[op] = op &lt; oDataLen ? map1[o2] : '=';</span>
 <span class="fc" id="L181">			op++;</span>
 <span class="fc bfc" id="L182" title="All 2 branches covered.">			out[op] = op &lt; oDataLen ? map1[o3] : '=';</span>
 <span class="fc" id="L183">			op++;</span>

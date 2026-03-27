@@ -124,16 +124,16 @@ public class UGraphicG2d extends AbstractUGraphic&lt;Graphics2D&gt; implements E
 <span class="fc" id="L124">		copy(defaultBackground, colorMapper, g2d);</span>
 <span class="fc" id="L125">		this.format = format;</span>
 <span class="fc" id="L126">		this.dpiFactor = dpiFactor;</span>
-<span class="fc bfc" id="L127" title="All 2 branches covered.">		if (dpiFactor != 1.0)</span>
-<span class="fc" id="L128">			g2d.scale(dpiFactor, dpiFactor);</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (dpiFactor != 1.0)</span>
+<span class="nc" id="L128">			g2d.scale(dpiFactor, dpiFactor);</span>
 
 <span class="fc" id="L130">		register(dpiFactor);</span>
 <span class="fc" id="L131">	}</span>
 
 	private void register(double dpiFactor) {
 <span class="fc" id="L134">		registerDriver(URectangle.class, new DriverRectangleG2d(dpiFactor, this));</span>
-<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (dpiFactor != 1.0)</span>
-<span class="fc" id="L136">			registerDriver(UText.class, new DriverTextAsPathG2d(this, getStringBounder()));</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (dpiFactor != 1.0)</span>
+<span class="nc" id="L136">			registerDriver(UText.class, new DriverTextAsPathG2d(this, getStringBounder()));</span>
 		else
 <span class="fc" id="L138">			registerDriver(UText.class, new DriverTextG2d(this, getStringBounder()));</span>
 

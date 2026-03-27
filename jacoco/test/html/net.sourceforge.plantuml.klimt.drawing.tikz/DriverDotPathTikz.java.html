@@ -43,11 +43,11 @@ import net.sourceforge.plantuml.tikz.TikzGraphics;
 <span class="fc" id="L43">public class DriverDotPathTikz implements UDriver&lt;DotPath, TikzGraphics&gt; {</span>
 
 	public void draw(DotPath path, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
-<span class="nc" id="L46">		tikz.setFillColor(null);</span>
-<span class="nc" id="L47">		tikz.setStrokeColor(param.getColor());</span>
-<span class="nc" id="L48">		tikz.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashTikz());</span>
-<span class="nc" id="L49">		tikz.upath(x, y, path.toUPath());</span>
-<span class="nc" id="L50">	}</span>
+<span class="fc" id="L46">		tikz.setFillColor(null);</span>
+<span class="fc" id="L47">		tikz.setStrokeColor(param.getColor());</span>
+<span class="fc" id="L48">		tikz.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDashTikz());</span>
+<span class="fc" id="L49">		tikz.upath(x, y, path.toUPath());</span>
+<span class="fc" id="L50">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

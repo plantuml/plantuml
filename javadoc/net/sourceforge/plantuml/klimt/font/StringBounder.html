@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="../drawing/debug/StringBounderDebug.html" title="class in net.sourceforge.plantuml.klimt.drawing.debug">StringBounderDebug</a></code>, <code><a href="StringBounderRaw.html" title="class in net.sourceforge.plantuml.klimt.font">StringBounderRaw</a></code>, <code><a href="../drawing/debug/StringBounderSvgFixed.html" title="class in net.sourceforge.plantuml.klimt.drawing.debug">StringBounderSvgFixed</a></code>, <code><a href="../../teavm/StringBounderTeaVM.html" title="class in net.sourceforge.plantuml.teavm">StringBounderTeaVM</a></code>, <code><a href="../../asciiart/TextStringBounder.html" title="class in net.sourceforge.plantuml.asciiart">TextStringBounder</a></code></dd>
+<dd><code><a href="../drawing/debug/StringBounderDebug.html" title="class in net.sourceforge.plantuml.klimt.drawing.debug">StringBounderDebug</a></code>, <code><a href="../drawing/debug/StringBounderFixed.html" title="class in net.sourceforge.plantuml.klimt.drawing.debug">StringBounderFixed</a></code>, <code><a href="StringBounderRaw.html" title="class in net.sourceforge.plantuml.klimt.font">StringBounderRaw</a></code>, <code><a href="../../teavm/StringBounderTeaVM.html" title="class in net.sourceforge.plantuml.teavm">StringBounderTeaVM</a></code>, <code><a href="../../asciiart/TextStringBounder.html" title="class in net.sourceforge.plantuml.asciiart">TextStringBounder</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">StringBounder</span></div>
@@ -115,9 +115,12 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDescent(net.sourceforge.plantuml.klimt.font.UFont,java.lang.String)" class="member-name-link">getDescent</a><wbr>(<a href="UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a>&nbsp;font,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#matchesProperty(java.lang.String)" class="member-name-link">matchesProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;propertyName)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFileFormat()" class="member-name-link">getFileFormat</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#matchesProperty(java.lang.String)" class="member-name-link">matchesProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;propertyName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -150,6 +153,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="matchesProperty(java.lang.String)">
 <h3>matchesProperty</h3>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">matchesProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;propertyName)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getFileFormat()">
+<h3>getFileFormat</h3>
+<div class="member-signature"><span class="return-type"><a href="../../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></span>&nbsp;<span class="element-name">getFileFormat</span>()</div>
 </section>
 </li>
 </ul>

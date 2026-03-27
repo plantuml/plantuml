@@ -129,8 +129,8 @@ import net.sourceforge.plantuml.version.Version;
 	}
 
 	private boolean mustApplyFillColor() {
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (fillcolor == null)</span>
-<span class="nc" id="L133">			return false;</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (fillcolor == null)</span>
+<span class="fc" id="L133">			return false;</span>
 
 <span class="fc bfc" id="L135" title="All 2 branches covered.">		if (fillcolor.isTransparent())</span>
 <span class="fc" id="L136">			return false;</span>
@@ -207,8 +207,8 @@ import net.sourceforge.plantuml.version.Version;
 <span class="fc bfc" id="L207" title="All 2 branches covered.">		for (Map.Entry&lt;XColor, String&gt; ent : colornames.entrySet())</span>
 <span class="fc" id="L208">			out(os, definecolor(ent.getValue(), ent.getKey()));</span>
 
-<span class="pc bpc" id="L210" title="1 of 2 branches missed.">		if (scale != 1)</span>
-<span class="nc" id="L211">			out(os, &quot;\\scalebox{&quot; + format(scale) + &quot;}{%&quot;);</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">		if (scale != 1)</span>
+<span class="fc" id="L211">			out(os, &quot;\\scalebox{&quot; + format(scale) + &quot;}{%&quot;);</span>
 
 <span class="fc" id="L213">		out(os, &quot;\\begin{tikzpicture}[yscale=-1&quot;);</span>
 <span class="fc" id="L214">		purgeStyles();</span>
@@ -220,8 +220,8 @@ import net.sourceforge.plantuml.version.Version;
 <span class="fc" id="L220">			out(os, useStyle(s));</span>
 
 <span class="fc" id="L222">		out(os, &quot;\\end{tikzpicture}%&quot;);</span>
-<span class="pc bpc" id="L223" title="1 of 2 branches missed.">		if (scale != 1)</span>
-<span class="nc" id="L224">			out(os, &quot;}%&quot;);</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">		if (scale != 1)</span>
+<span class="fc" id="L224">			out(os, &quot;}%&quot;);</span>
 
 <span class="pc bpc" id="L226" title="1 of 2 branches missed.">		if (withPreamble())</span>
 <span class="nc" id="L227">			out(os, &quot;\\end{document}&quot;);</span>
@@ -522,24 +522,24 @@ import net.sourceforge.plantuml.version.Version;
 <span class="fc" id="L522">				sb.append(couple(coord[0] + x, coord[1] + y));</span>
 <span class="fc" id="L523">				lastx = coord[0] + x;</span>
 <span class="fc" id="L524">				lasty = coord[1] + y;</span>
-<span class="pc bpc" id="L525" title="1 of 2 branches missed.">			} else if (type == USegmentType.SEG_LINETO) {</span>
+<span class="fc bfc" id="L525" title="All 2 branches covered.">			} else if (type == USegmentType.SEG_LINETO) {</span>
 <span class="fc" id="L526">				sb.append(&quot; -- &quot;);</span>
 <span class="fc" id="L527">				sb.append(couple(coord[0] + x, coord[1] + y));</span>
 <span class="fc" id="L528">				lastx = coord[0] + x;</span>
 <span class="fc" id="L529">				lasty = coord[1] + y;</span>
-<span class="nc bnc" id="L530" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_QUADTO) {</span>
+<span class="pc bpc" id="L530" title="1 of 2 branches missed.">			} else if (type == USegmentType.SEG_QUADTO) {</span>
 <span class="nc" id="L531">				throw new UnsupportedOperationException();</span>
-<span class="nc bnc" id="L532" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CUBICTO) {</span>
+<span class="pc bpc" id="L532" title="1 of 2 branches missed.">			} else if (type == USegmentType.SEG_CUBICTO) {</span>
 				// curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y,
 				// coord[4] + x, coord[5] + y);
-<span class="nc" id="L535">				sb.append(&quot; ..controls &quot;);</span>
-<span class="nc" id="L536">				sb.append(couple(coord[0] + x, coord[1] + y));</span>
-<span class="nc" id="L537">				sb.append(&quot; and &quot;);</span>
-<span class="nc" id="L538">				sb.append(couple(coord[2] + x, coord[3] + y));</span>
-<span class="nc" id="L539">				sb.append(&quot; .. &quot;);</span>
-<span class="nc" id="L540">				sb.append(couple(coord[4] + x, coord[5] + y));</span>
-<span class="nc" id="L541">				lastx = coord[4] + x;</span>
-<span class="nc" id="L542">				lasty = coord[5] + y;</span>
+<span class="fc" id="L535">				sb.append(&quot; ..controls &quot;);</span>
+<span class="fc" id="L536">				sb.append(couple(coord[0] + x, coord[1] + y));</span>
+<span class="fc" id="L537">				sb.append(&quot; and &quot;);</span>
+<span class="fc" id="L538">				sb.append(couple(coord[2] + x, coord[3] + y));</span>
+<span class="fc" id="L539">				sb.append(&quot; .. &quot;);</span>
+<span class="fc" id="L540">				sb.append(couple(coord[4] + x, coord[5] + y));</span>
+<span class="fc" id="L541">				lastx = coord[4] + x;</span>
+<span class="fc" id="L542">				lasty = coord[5] + y;</span>
 <span class="nc bnc" id="L543" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CLOSE) {</span>
 				// Nothing
 <span class="nc bnc" id="L545" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_ARCTO) {</span>
@@ -585,18 +585,18 @@ import net.sourceforge.plantuml.version.Version;
 <span class="fc" id="L585">	}</span>
 
 	public void ellipse(double x, double y, double width, double height) {
-<span class="nc" id="L588">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L589">		sb.append(&quot;\\draw[&quot;);</span>
-<span class="nc bnc" id="L590" title="All 2 branches missed.">		if (color != null)</span>
-<span class="nc" id="L591">			sb.append(&quot;color=&quot; + getColorName(color) + &quot;,&quot;);</span>
+<span class="fc" id="L588">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L589">		sb.append(&quot;\\draw[&quot;);</span>
+<span class="pc bpc" id="L590" title="1 of 2 branches missed.">		if (color != null)</span>
+<span class="fc" id="L591">			sb.append(&quot;color=&quot; + getColorName(color) + &quot;,&quot;);</span>
 
-<span class="nc bnc" id="L593" title="All 2 branches missed.">		if (mustApplyFillColor())</span>
-<span class="nc" id="L594">			sb.append(&quot;fill=&quot; + getColorName(fillcolor) + &quot;,&quot;);</span>
+<span class="pc bpc" id="L593" title="1 of 2 branches missed.">		if (mustApplyFillColor())</span>
+<span class="fc" id="L594">			sb.append(&quot;fill=&quot; + getColorName(fillcolor) + &quot;,&quot;);</span>
 
-<span class="nc" id="L596">		sb.append(&quot;line width=&quot; + thickness + &quot;pt] &quot; + couple(x, y) + &quot; ellipse (&quot; + format(width) + &quot;pt and &quot;</span>
-<span class="nc" id="L597">				+ format(height) + &quot;pt);&quot;);</span>
-<span class="nc" id="L598">		addCommand(sb);</span>
-<span class="nc" id="L599">	}</span>
+<span class="fc" id="L596">		sb.append(&quot;line width=&quot; + thickness + &quot;pt] &quot; + couple(x, y) + &quot; ellipse (&quot; + format(width) + &quot;pt and &quot;</span>
+<span class="fc" id="L597">				+ format(height) + &quot;pt);&quot;);</span>
+<span class="fc" id="L598">		addCommand(sb);</span>
+<span class="fc" id="L599">	}</span>
 
 	public void arc(double x, double y, int angleStart, int angleEnd, double radius) {
 <span class="nc" id="L602">		final StringBuilder sb = new StringBuilder();</span>
@@ -730,13 +730,13 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L730">	}</span>
 
 	public void tikzImage(UImageTikz image, double x, double y) {
-<span class="nc bnc" id="L733" title="All 2 branches missed.">		if (image.hasUrl())</span>
+<span class="pc bpc" id="L733" title="1 of 2 branches missed.">		if (image.hasUrl())</span>
 <span class="nc" id="L734">			this.hasUrl = true;</span>
 
-<span class="nc" id="L736">		cmd.add(&quot;\\node[inner sep=0pt,outer sep=0pt,anchor=north west] at &quot; + couple(x, y) + &quot; {%&quot;);</span>
-<span class="nc" id="L737">		cmd.add(image.getTikzCode());</span>
-<span class="nc" id="L738">		cmd.add(&quot;};&quot;);</span>
-<span class="nc" id="L739">	}</span>
+<span class="fc" id="L736">		cmd.add(&quot;\\node[inner sep=0pt,outer sep=0pt,anchor=north west] at &quot; + couple(x, y) + &quot; {%&quot;);</span>
+<span class="fc" id="L737">		cmd.add(image.getTikzCode());</span>
+<span class="fc" id="L738">		cmd.add(&quot;};&quot;);</span>
+<span class="fc" id="L739">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

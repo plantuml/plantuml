@@ -94,12 +94,12 @@ public class CommandExecutionResult {
 <span class="fc bfc" id="L94" title="All 2 branches covered.">		for (StackTraceElement ste : exception.getStackTrace())</span>
 <span class="fc" id="L95">			result.add(&quot;  &quot; + ste.toString());</span>
 
-<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (exception.getCause() != null) {</span>
-<span class="fc" id="L98">			final Throwable cause = exception.getCause();</span>
-<span class="fc" id="L99">			result.add(&quot;  &quot;);</span>
-<span class="fc" id="L100">			result.add(&quot;Caused by &quot; + cause.toString());</span>
-<span class="fc bfc" id="L101" title="All 2 branches covered.">			for (StackTraceElement ste : cause.getStackTrace())</span>
-<span class="fc" id="L102">				result.add(&quot;  &quot; + ste.toString());</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (exception.getCause() != null) {</span>
+<span class="nc" id="L98">			final Throwable cause = exception.getCause();</span>
+<span class="nc" id="L99">			result.add(&quot;  &quot;);</span>
+<span class="nc" id="L100">			result.add(&quot;Caused by &quot; + cause.toString());</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			for (StackTraceElement ste : cause.getStackTrace())</span>
+<span class="nc" id="L102">				result.add(&quot;  &quot; + ste.toString());</span>
 
 		}
 <span class="fc" id="L105">		return result;</span>

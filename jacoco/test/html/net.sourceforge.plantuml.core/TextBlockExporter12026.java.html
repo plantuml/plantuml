@@ -259,7 +259,7 @@ public class TextBlockExporter12026 {
 <span class="nc" id="L259">			return new UGraphicBraille(backcolor, colorMapper, stringBounder);</span>
 		case UTXT:
 		case ATXT:
-<span class="fc" id="L262">			return new UGraphicTxt();</span>
+<span class="fc" id="L262">			return new UGraphicTxt(fileFormatOption.getFileFormat());</span>
 		case DEBUG:
 <span class="fc" id="L264">			return new UGraphicDebug(scaleFactor, dim, getSvgLinkTarget(), getHoverPathColorRGB(), seed,</span>
 <span class="fc" id="L265">					getPreserveAspectRatio());</span>

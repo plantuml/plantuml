@@ -11,52 +11,52 @@ public class UImageTikz implements UShape {
 	private final double height;
 
 	private boolean hasUrl;
-<span class="nc" id="L14">	private double scaleFactor = 1;</span>
+<span class="fc" id="L14">	private double scaleFactor = 1;</span>
 
-<span class="nc" id="L16">	public UImageTikz(String tikzCode, double width, double height) {</span>
-<span class="nc" id="L17">		this.tikzCode = Objects.requireNonNull(tikzCode);</span>
-<span class="nc" id="L18">		this.width = width;</span>
-<span class="nc" id="L19">		this.height = height;</span>
-<span class="nc" id="L20">		scan(tikzCode);</span>
-<span class="nc" id="L21">	}</span>
+<span class="fc" id="L16">	public UImageTikz(String tikzCode, double width, double height) {</span>
+<span class="fc" id="L17">		this.tikzCode = Objects.requireNonNull(tikzCode);</span>
+<span class="fc" id="L18">		this.width = width;</span>
+<span class="fc" id="L19">		this.height = height;</span>
+<span class="fc" id="L20">		scan(tikzCode);</span>
+<span class="fc" id="L21">	}</span>
 
 	private void scan(String tikzCode) {
-<span class="nc" id="L24">		boolean beforeTikzPicture = true;</span>
-<span class="nc bnc" id="L25" title="All 2 branches missed.">		for (final String line : tikzCode.split(&quot;\n&quot;)) {</span>
-<span class="nc" id="L26">			final String trimmed = line.trim();</span>
-<span class="nc bnc" id="L27" title="All 4 branches missed.">			if (beforeTikzPicture &amp;&amp; trimmed.startsWith(&quot;\\scalebox{&quot;))</span>
-<span class="nc" id="L28">				scaleFactor = parseScaleFactor(trimmed);</span>
+<span class="fc" id="L24">		boolean beforeTikzPicture = true;</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">		for (final String line : tikzCode.split(&quot;\n&quot;)) {</span>
+<span class="fc" id="L26">			final String trimmed = line.trim();</span>
+<span class="fc bfc" id="L27" title="All 4 branches covered.">			if (beforeTikzPicture &amp;&amp; trimmed.startsWith(&quot;\\scalebox{&quot;))</span>
+<span class="fc" id="L28">				scaleFactor = parseScaleFactor(trimmed);</span>
 
-<span class="nc bnc" id="L30" title="All 2 branches missed.">			if (trimmed.startsWith(&quot;\\begin{tikzpicture}&quot;))</span>
-<span class="nc" id="L31">				beforeTikzPicture = false;</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">			if (trimmed.startsWith(&quot;\\begin{tikzpicture}&quot;))</span>
+<span class="fc" id="L31">				beforeTikzPicture = false;</span>
 
-<span class="nc bnc" id="L33" title="All 2 branches missed.">			if (containsUrl(trimmed))</span>
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">			if (containsUrl(trimmed))</span>
 <span class="nc" id="L34">				hasUrl = true;</span>
 		}
-<span class="nc" id="L36">	}</span>
+<span class="fc" id="L36">	}</span>
 
 	public String getTikzCode() {
-<span class="nc" id="L39">		return tikzCode;</span>
+<span class="fc" id="L39">		return tikzCode;</span>
 	}
 
 	public boolean hasUrl() {
-<span class="nc" id="L43">		return hasUrl;</span>
+<span class="fc" id="L43">		return hasUrl;</span>
 	}
 
 	public double getWidth() {
-<span class="nc" id="L47">		return width * scaleFactor;</span>
+<span class="fc" id="L47">		return width * scaleFactor;</span>
 	}
 
 	public double getHeight() {
-<span class="nc" id="L51">		return height * scaleFactor;</span>
+<span class="fc" id="L51">		return height * scaleFactor;</span>
 	}
 
 	private static double parseScaleFactor(String texLine) {
-<span class="nc" id="L55">		final int start = texLine.indexOf('{') + 1;</span>
-<span class="nc" id="L56">		final int end = texLine.indexOf('}', start);</span>
-<span class="nc bnc" id="L57" title="All 4 branches missed.">		if (start &gt; 0 &amp;&amp; end &gt; start) {</span>
+<span class="fc" id="L55">		final int start = texLine.indexOf('{') + 1;</span>
+<span class="fc" id="L56">		final int end = texLine.indexOf('}', start);</span>
+<span class="pc bpc" id="L57" title="2 of 4 branches missed.">		if (start &gt; 0 &amp;&amp; end &gt; start) {</span>
 			try {
-<span class="nc" id="L59">				return Double.parseDouble(texLine.substring(start, end));</span>
+<span class="fc" id="L59">				return Double.parseDouble(texLine.substring(start, end));</span>
 <span class="nc" id="L60">			} catch (NumberFormatException e) {</span>
 				// ignore
 			}
@@ -65,8 +65,8 @@ public class UImageTikz implements UShape {
 	}
 
 	private static boolean containsUrl(String texLine) {
-<span class="nc bnc" id="L68" title="All 4 branches missed.">		return texLine.contains(&quot;\\href{&quot;) || texLine.contains(&quot;\\hyperref[&quot;)</span>
-<span class="nc bnc" id="L69" title="All 4 branches missed.">				|| texLine.contains(&quot;href node&quot;) || texLine.contains(&quot;hyperref node&quot;);</span>
+<span class="pc bpc" id="L68" title="2 of 4 branches missed.">		return texLine.contains(&quot;\\href{&quot;) || texLine.contains(&quot;\\hyperref[&quot;)</span>
+<span class="pc bpc" id="L69" title="2 of 4 branches missed.">				|| texLine.contains(&quot;href node&quot;) || texLine.contains(&quot;hyperref node&quot;);</span>
 	}
 
 }

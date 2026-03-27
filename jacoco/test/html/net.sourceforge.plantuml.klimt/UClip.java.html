@@ -95,9 +95,9 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="pc bpc" id="L95" title="2 of 4 branches missed.">			if (TeaVM.a()) assert getClippedX(xp) != xp;</span>
 <span class="fc" id="L96">			return false;</span>
 		}
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (xp &gt; x + width) {</span>
-<span class="nc bnc" id="L99" title="All 4 branches missed.">			if (TeaVM.a()) assert getClippedX(xp) != xp;</span>
-<span class="nc" id="L100">			return false;</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (xp &gt; x + width) {</span>
+<span class="pc bpc" id="L99" title="2 of 4 branches missed.">			if (TeaVM.a()) assert getClippedX(xp) != xp;</span>
+<span class="fc" id="L100">			return false;</span>
 		}
 <span class="fc bfc" id="L102" title="All 2 branches covered.">		if (yp &lt; y) {</span>
 <span class="pc bpc" id="L103" title="2 of 4 branches missed.">			if (TeaVM.a()) assert getClippedY(yp) != yp;</span>
@@ -155,8 +155,8 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc bfc" id="L155" title="All 2 branches covered.">		if (xp &lt; x)</span>
 <span class="fc" id="L156">			return x;</span>
 
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (xp &gt; x + width)</span>
-<span class="nc" id="L159">			return x + width;</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		if (xp &gt; x + width)</span>
+<span class="fc" id="L159">			return x + width;</span>
 
 <span class="fc" id="L161">		return xp;</span>
 	}
