@@ -54,7 +54,7 @@ public class CommandChartGrid extends SingleLineCommand2<ChartDiagram> {
 		return RegexConcat.build(CommandChartGrid.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("grid"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf(1, "AXIS", "(h-axis|v-axis)"), //
+				new RegexLeaf(1, "AXIS", "([hx]-axis|[vy]-axis)"), //
 				RegexLeaf.end());
 	}
 
@@ -66,9 +66,9 @@ public class CommandChartGrid extends SingleLineCommand2<ChartDiagram> {
 		// Enable major gridlines for the specified axis
 		final ChartDiagram.GridMode gridMode = ChartDiagram.GridMode.MAJOR;
 
-		if (axis.equals("h-axis")) {
+		if (axis.equals("h-axis") || axis.equals("x-axis")) {
 			return diagram.setXGridMode(gridMode);
-		} else if (axis.equals("v-axis")) {
+		} else if (axis.equals("v-axis")  || axis.equals("y-axis")) {
 			return diagram.setYGridMode(gridMode);
 		} else {
 			return CommandExecutionResult.error("Invalid axis: " + axis);
