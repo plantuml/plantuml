@@ -167,11 +167,11 @@ public class EmbeddedDiagram extends TextBlockMemoized implements Line, Atom {
 		try {
 <span class="pc bpc" id="L168" title="1 of 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
 <span class="fc" id="L169">				final boolean isSvg = ug.matchesProperty(&quot;SVG&quot;);</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">				if (isSvg) {</span>
-<span class="nc" id="L171">					final String imageSvg = getImageSvg();</span>
-<span class="nc" id="L172">					final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
-<span class="nc" id="L173">					ug.draw(svg);</span>
-<span class="nc" id="L174">					return;</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">				if (isSvg) {</span>
+<span class="fc" id="L171">					final String imageSvg = getImageSvg();</span>
+<span class="fc" id="L172">					final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
+<span class="fc" id="L173">					ug.draw(svg);</span>
+<span class="fc" id="L174">					return;</span>
 				}
 <span class="fc bfc" id="L176" title="All 2 branches covered.">				if (ug.matchesProperty(&quot;TIKZ&quot;)) {</span>
 <span class="nc" id="L177">					ug.draw(getImageTikz());</span>
@@ -195,19 +195,19 @@ public class EmbeddedDiagram extends TextBlockMemoized implements Line, Atom {
 <span class="fc" id="L195">	}</span>
 
 	private String getImageSvg() throws IOException, InterruptedException {
-<span class="nc bnc" id="L198" title="All 2 branches missed.">		if (svg == null)</span>
-<span class="nc" id="L199">			svg = getImageSvgSlow().replaceAll(&quot;&lt;\\?plantuml.+?\\?&gt;&quot;, &quot;&quot;);</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">		if (svg == null)</span>
+<span class="fc" id="L199">			svg = getImageSvgSlow().replaceAll(&quot;&lt;\\?plantuml.+?\\?&gt;&quot;, &quot;&quot;);</span>
 
-<span class="nc" id="L201">		return svg;</span>
+<span class="fc" id="L201">		return svg;</span>
 
 	}
 
 	private String getImageSvgSlow() throws IOException, InterruptedException {
-<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L207">			final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
-<span class="nc" id="L208">			diagram.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));</span>
-<span class="nc" id="L209">			os.close();</span>
-<span class="nc" id="L210">			return new String(os.toByteArray());</span>
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L207">			final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
+<span class="fc" id="L208">			diagram.exportDiagram(os, 0, new FileFormatOption(FileFormat.SVG));</span>
+<span class="fc" id="L209">			os.close();</span>
+<span class="fc" id="L210">			return new String(os.toByteArray());</span>
 		}
 <span class="nc" id="L212">		throw new UnsupportedOperationException(&quot;TEAVM4586&quot;);</span>
 	}

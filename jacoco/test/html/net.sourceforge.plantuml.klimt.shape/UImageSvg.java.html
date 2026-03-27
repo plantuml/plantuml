@@ -76,12 +76,12 @@ public class UImageSvg implements UShape {
 <span class="fc" id="L76">			result = &quot;&lt;svg&gt;&quot; + result.substring(idx + 1);</span>
 		}
 <span class="fc" id="L78">		final String style = extractSvgStyle();</span>
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (style != null) {</span>
-<span class="nc" id="L80">			final String background = extractBackground(style);</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">			if (background != null) {</span>
-<span class="nc" id="L82">				final int width = getData(&quot;width&quot;);</span>
-<span class="nc" id="L83">				final int height = getData(&quot;height&quot;);</span>
-<span class="nc" id="L84">				result = result.replaceFirst(&quot;&lt;g&gt;&quot;, &quot;&lt;g&gt;&lt;rect fill=\&quot;&quot; + background + &quot;\&quot; style=\&quot;&quot; + style</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (style != null) {</span>
+<span class="fc" id="L80">			final String background = extractBackground(style);</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">			if (background != null) {</span>
+<span class="fc" id="L82">				final int width = getData(&quot;width&quot;);</span>
+<span class="fc" id="L83">				final int height = getData(&quot;height&quot;);</span>
+<span class="fc" id="L84">				result = result.replaceFirst(&quot;&lt;g&gt;&quot;, &quot;&lt;g&gt;&lt;rect fill=\&quot;&quot; + background + &quot;\&quot; style=\&quot;&quot; + style</span>
 						+ &quot;\&quot; width=\&quot;&quot; + width + &quot;\&quot; height=\&quot;&quot; + height + &quot;\&quot;/&gt; &quot;);
 			}
 
@@ -95,9 +95,9 @@ public class UImageSvg implements UShape {
 <span class="fc" id="L95">	private static final Pattern BACKGROUND = Pattern.compile(&quot;background:([^;]+)&quot;);</span>
 
 	private String extractBackground(String style) {
-<span class="nc" id="L98">		final Matcher m = BACKGROUND.matcher(style);</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (m.find())</span>
-<span class="nc" id="L100">			return m.group(1);</span>
+<span class="fc" id="L98">		final Matcher m = BACKGROUND.matcher(style);</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (m.find())</span>
+<span class="fc" id="L100">			return m.group(1);</span>
 
 <span class="nc" id="L102">		return null;</span>
 	}
@@ -106,8 +106,8 @@ public class UImageSvg implements UShape {
 
 	private String extractSvgStyle() {
 <span class="fc" id="L108">		final Matcher m = STYLE.matcher(svg);</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (m.find())</span>
-<span class="nc" id="L110">			return m.group(1);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (m.find())</span>
+<span class="fc" id="L110">			return m.group(1);</span>
 
 <span class="fc" id="L112">		return null;</span>
 	}
