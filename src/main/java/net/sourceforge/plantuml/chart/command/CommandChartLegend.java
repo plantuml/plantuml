@@ -52,6 +52,7 @@ public class CommandChartLegend extends SingleLineCommand2<ChartDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandChartLegend.class.getName(), RegexLeaf.start(), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("legend"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "POSITION", "(left|right|top|bottom)"), //

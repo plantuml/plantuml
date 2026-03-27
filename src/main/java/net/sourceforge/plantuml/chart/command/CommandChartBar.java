@@ -60,6 +60,7 @@ public class CommandChartBar extends SingleLineCommand2<ChartDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandChartBar.class.getName(), RegexLeaf.start(), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("bar"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "STEREO", "(\\<\\<.+?\\>\\>)")), //

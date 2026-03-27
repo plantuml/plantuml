@@ -59,6 +59,7 @@ public class CommandChartAnnotation extends SingleLineCommand2<ChartDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandChartAnnotation.class.getName(), RegexLeaf.start(), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("annotation"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "TEXT", "\"([^\"]+)\""), //

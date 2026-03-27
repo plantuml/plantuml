@@ -56,6 +56,7 @@ public class CommandChartHAxis extends SingleLineCommand2<ChartDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandChartHAxis.class.getName(), RegexLeaf.start(), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("[hx]-axis"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(1, "TITLE", "\"([^\"]+)\"")), //

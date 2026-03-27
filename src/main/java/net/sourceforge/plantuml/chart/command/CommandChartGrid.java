@@ -52,6 +52,7 @@ public class CommandChartGrid extends SingleLineCommand2<ChartDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandChartGrid.class.getName(), RegexLeaf.start(), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("grid"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "AXIS", "([hx]-axis|[vy]-axis)"), //

@@ -52,6 +52,7 @@ public class CommandChartStackMode extends SingleLineCommand2<ChartDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandChartStackMode.class.getName(), RegexLeaf.start(), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("stackMode"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "MODE", "(grouped|stacked)"), //

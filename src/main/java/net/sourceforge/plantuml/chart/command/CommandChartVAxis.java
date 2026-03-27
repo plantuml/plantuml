@@ -59,6 +59,7 @@ public class CommandChartVAxis extends SingleLineCommand2<ChartDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandChartVAxis.class.getName(), RegexLeaf.start(), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "AXIS", "[vy]2?-axis"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "TITLE", "\"([^\"]+)\"")), //

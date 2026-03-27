@@ -52,6 +52,7 @@ public class CommandChartOrientation extends SingleLineCommand2<ChartDiagram> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandChartOrientation.class.getName(), RegexLeaf.start(), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("orientation"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "ORIENTATION", "(vertical|horizontal)"), //
