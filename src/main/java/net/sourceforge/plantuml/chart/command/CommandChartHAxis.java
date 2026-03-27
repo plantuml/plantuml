@@ -73,6 +73,7 @@ public class CommandChartHAxis extends SingleLineCommand2<ChartDiagram> {
 				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(1, "LABELRIGHT", "(label-right)")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new net.sourceforge.plantuml.regex.RegexOptional(new RegexLeaf(1, "GRID", "(grid)")), //
+				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 

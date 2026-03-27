@@ -82,6 +82,7 @@ public class CommandChartScatter extends SingleLineCommand2<ChartDiagram> {
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf(1, "MARKER", "<<(circle|square|triangle)>>"))), //
+				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 

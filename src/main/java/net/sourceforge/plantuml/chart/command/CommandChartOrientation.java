@@ -56,6 +56,7 @@ public class CommandChartOrientation extends SingleLineCommand2<ChartDiagram> {
 				new RegexLeaf("orientation"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "ORIENTATION", "(vertical|horizontal)"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 

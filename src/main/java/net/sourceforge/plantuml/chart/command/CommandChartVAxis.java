@@ -81,6 +81,7 @@ public class CommandChartVAxis extends SingleLineCommand2<ChartDiagram> {
 				new RegexOptional(new RegexLeaf(1, "LABELTOP", "(label-top)")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "GRID", "(grid)")), //
+				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 

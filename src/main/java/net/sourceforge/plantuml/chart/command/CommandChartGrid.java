@@ -56,6 +56,7 @@ public class CommandChartGrid extends SingleLineCommand2<ChartDiagram> {
 				new RegexLeaf("grid"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "AXIS", "([hx]-axis|[vy]-axis)"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 

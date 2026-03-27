@@ -56,6 +56,7 @@ public class CommandChartStackMode extends SingleLineCommand2<ChartDiagram> {
 				new RegexLeaf("stackMode"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "MODE", "(grouped|stacked)"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 

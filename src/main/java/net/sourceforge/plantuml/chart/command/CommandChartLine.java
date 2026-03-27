@@ -78,6 +78,7 @@ public class CommandChartLine extends SingleLineCommand2<ChartDiagram> {
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf(1, "LABELS", "(labels)"))), //
+				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 

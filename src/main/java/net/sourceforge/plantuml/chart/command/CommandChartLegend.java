@@ -56,6 +56,7 @@ public class CommandChartLegend extends SingleLineCommand2<ChartDiagram> {
 				new RegexLeaf("legend"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "POSITION", "(left|right|top|bottom)"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 
