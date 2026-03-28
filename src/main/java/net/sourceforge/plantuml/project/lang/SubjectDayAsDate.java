@@ -41,6 +41,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
@@ -51,6 +52,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.ulang.GanttParseResult;
 import net.sourceforge.plantuml.project.ulang.UbrexSentence;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -70,27 +72,36 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 		final List<UbrexSentence<GanttDiagram>> result = new ArrayList<>();
 		result.add(new UbrexSentence<GanttDiagram>(this, Verbs.isOrAre, new ComplementOpen()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project) {
-				return CommandExecutionResult.error("WIPGANTT " + getClass());
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				project.openDayAsDate((LocalDate) subject, (String) complement);
+				return CommandExecutionResult.ok();
 			}
 		});
 
 		result.add(new UbrexSentence<GanttDiagram>(this, Verbs.isOrAre, new ComplementClose()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project) {
-				return CommandExecutionResult.error("WIPGANTT " + getClass());
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				project.closeDayAsDate((LocalDate) subject, (String) complement);
+				return CommandExecutionResult.ok();
 			}
 		});
 
 		result.add(new UbrexSentence<GanttDiagram>(this, Verbs.isOrAre, new ComplementInColors2()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project) {
-				return CommandExecutionResult.error("WIPGANTT " + getClass());
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final HColor color = ((CenterBorderColor) complement).getCenter();
+				project.colorDay((LocalDate) subject, color);
+				return CommandExecutionResult.ok();
 			}
 		});
 
 		return result;
 
+	}
+
+	@Override
+	public Failable<? extends Object> ugetMe(GanttDiagram diagram, UMatcher arg) {
+		return Failable.ok(resultB(arg));
 	}
 
 	public Failable<LocalDate> getMe(GanttDiagram project, RegexResult arg) {
@@ -102,6 +113,13 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 
 		throw new IllegalStateException();
 
+	}
+
+	private LocalDate resultB(UMatcher arg) {
+		final int day = Integer.parseInt(arg.getCapture("BDAY").get(0));
+		final int month = Integer.parseInt(arg.getCapture("BMONTH").get(0));
+		final int year = Integer.parseInt(arg.getCapture("BYEAR").get(0));
+		return LocalDate.of(year, month, day);
 	}
 
 	private LocalDate resultB(RegexResult arg) {

@@ -41,6 +41,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexNamed;
 import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -65,25 +67,34 @@ public class SubjectDayOfWeek implements Subject<GanttDiagram> {
 	}
 
 	@Override
+	public UBrexPart toUnicodeBracketedExpressionSubject() {
+		return new UBrexNamed("SUBJECT", DayOfWeekUtils.getUbrex());
+	}
+
+	@Override
 	public Collection<UbrexSentence<GanttDiagram>> getUSentences() {
 		final List<UbrexSentence<GanttDiagram>> result = new ArrayList<>();
 		result.add(new UbrexSentence<GanttDiagram>(this, Verbs.are, new ComplementClose()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project) {
-				return CommandExecutionResult.error("WIPGANTT " + getClass());
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final DayOfWeek day = (DayOfWeek) subject;
+				project.closeDayOfWeek(day, (String) complement);
+				return CommandExecutionResult.ok();
 			}
 		});
 		return result;
 
 	}
 
-	@Override
-	public UBrexPart toUnicodeBracketedExpressionSubject() {
-		return DayOfWeekUtils.getUbrex();
-	}
-
 	public Failable<? extends Object> getMe(GanttDiagram project, RegexResult arg) {
 		final String s = arg.get("SUBJECT", 0);
+		return Failable.ok(DayOfWeekUtils.fromString(s));
+	}
+
+	@Override
+	public Failable<? extends Object> ugetMe(GanttDiagram diagram, UMatcher arg) {
+		System.out.println("ugetMe " + arg);
+		final String s = arg.getCapture("SUBJECT").get(0);
 		return Failable.ok(DayOfWeekUtils.fromString(s));
 	}
 

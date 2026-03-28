@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.project.lang;
 import java.time.LocalDate;
 import java.time.Month;
 
+import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.builder.UBrexOr;
 import com.plantuml.ubrex.builder.UBrexPart;
 
@@ -94,6 +95,17 @@ public class DayPattern {
 		if (arg.get(dayKeyC, 0) != null)
 			return resultC(arg);
 		return null;
+	}
+
+	public LocalDate getDay(UMatcher arg) {
+		return resultA(arg);
+	}
+
+	private LocalDate resultA(UMatcher arg) {
+		final int day = Integer.parseInt(arg.getCapture(dayKeyA).get(0));
+		final Month month = MonthUtils.fromString(arg.getCapture(monthKeyA).get(0));
+		final int year = Integer.parseInt(arg.getCapture(yearKeyA).get(0));
+		return LocalDate.of(year, month, day);
 	}
 
 	private LocalDate resultA(RegexResult arg) {

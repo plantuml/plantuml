@@ -18,18 +18,20 @@ import net.sourceforge.plantuml.preproc.Defines;
 /*
  * 
 
-You can use this file to put a test you are working on.
-Here is a simple example:
+@startgantt
+Project starts the 5th of december 2018
+saturday are closed
+sunday are closed
+2018/12/29 is opened
+2018/12/29 is colored in orange
+[Prototype design] lasts 3 weeks
+@endgantt
 
-@startuml
-alice->bob: this is a test
-@enduml
 
-So you can edit this file, but please do not push any modification in the "main" branch.
-Put your own tests on your own branches.
+[Test prototype] starts at [Prototype design]'s end
+[Test prototype] lasts 2 weeks
 
-However, if your test are interesting, you can add them to the "pdiff" project.
-See https://github.com/plantuml/pdiff
+
 
  */
 public class Test_0 {
@@ -48,8 +50,8 @@ public class Test_0 {
 		final File outputDirectory = new File("outputdev").getAbsoluteFile();
 		outputDirectory.mkdirs();
 
-		final SourceFileReader reader = new SourceFileReader(false, Defines.createWithFileName(file), file, outputDirectory,
-				Collections.<String>emptyList(), "UTF-8", options);
+		final SourceFileReader reader = new SourceFileReader(false, Defines.createWithFileName(file), file,
+				outputDirectory, Collections.<String>emptyList(), "UTF-8", options);
 		final List<GeneratedImage> list = reader.getGeneratedImages();
 
 		assertEquals(1, list.size());

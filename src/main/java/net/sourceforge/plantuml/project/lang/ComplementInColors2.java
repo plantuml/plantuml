@@ -35,8 +35,12 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.util.List;
+
+import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
 import com.plantuml.ubrex.builder.UBrexOptional;
 import com.plantuml.ubrex.builder.UBrexPart;
 
@@ -59,8 +63,19 @@ public class ComplementInColors2 implements Something<GanttDiagram> {
 				new UBrexLeaf("colo〇?ured"), //
 				UBrexLeaf.spaceOneOrMore(), //
 				new UBrexOptional(new UBrexLeaf("in〇+〴s")), //
-				new UBrexLeaf("〇?#〇+〴w"), //
-				new UBrexOptional(new UBrexLeaf("/〇?#〇+〴w")));
+				new UBrexNamed("COMPLEMENT1", new UBrexLeaf("〇?#〇+〴w")), //
+				new UBrexOptional(UBrexConcat.build( //
+						new UBrexLeaf("/"), //
+						new UBrexNamed("COMPLEMENT2", new UBrexLeaf("〇?#〇+〴w")))));
+	}
+
+	@Override
+	public Failable<? extends Object> ugetMe(GanttDiagram diagram, UMatcher arg) {
+		final List<String> color1 = arg.getCapture("COMPLEMENT1");
+		final List<String> color2 = arg.getCapture("COMPLEMENT2");
+		final HColor col1 = color1.size() == 0 ? null : diagram.getIHtmlColorSet().getColorOrWhite(color1.get(0));
+		final HColor col2 = color2.size() == 0 ? null : diagram.getIHtmlColorSet().getColorOrWhite(color2.get(0));
+		return Failable.ok(new CenterBorderColor(col1, col2));
 	}
 
 	public Failable<CenterBorderColor> getMe(GanttDiagram diagram, RegexResult arg, String suffix) {

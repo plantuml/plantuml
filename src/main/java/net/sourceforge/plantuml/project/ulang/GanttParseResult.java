@@ -33,28 +33,37 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.lang;
+package net.sourceforge.plantuml.project.ulang;
 
 import com.plantuml.ubrex.UMatcher;
-import com.plantuml.ubrex.builder.UBrexPart;
 
-import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.project.Failable;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexResult;
+public class GanttParseResult {
 
-public interface Something<D extends Diagram> {
+	private final UMatcher matcherSubject;
+	private final UMatcher verbMatch;
+	private final UMatcher complementMatcher;
 
-	public IRegex toRegex(String suffix);
-
-	public Failable<? extends Object> getMe(D diagram, RegexResult arg, String suffix);
-
-	default public Failable<? extends Object> ugetMe(D diagram, UMatcher arg) {
-		throw new IllegalArgumentException("wip8542 " + getClass());
+	public GanttParseResult(UMatcher matcherSubject, UMatcher verbMatch, UMatcher complementMatcher) {
+		this.matcherSubject = matcherSubject;
+		this.verbMatch = verbMatch;
+		this.complementMatcher = complementMatcher;
 	}
 
-	default public UBrexPart toUnicodeBracketedExpressionComplement() {
-		throw new IllegalArgumentException("wip8541 " + getClass());
+	@Override
+	public String toString() {
+		return "\n {" + matcherSubject.toString() + "} /\n  {" + verbMatch + "} /\n   {" + complementMatcher + "}";
+	}
+
+	public UMatcher getMatcherSubject() {
+		return matcherSubject;
+	}
+
+	public UMatcher getVerbMatch() {
+		return verbMatch;
+	}
+
+	public UMatcher getComplementMatcher() {
+		return complementMatcher;
 	}
 
 }

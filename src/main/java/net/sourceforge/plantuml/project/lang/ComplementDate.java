@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.project.lang;
 
 import java.time.LocalDate;
 
+import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.project.Failable;
@@ -105,6 +106,13 @@ public class ComplementDate implements Something<GanttDiagram> {
 				new RegexLeaf("[dD]\\+"), //
 				new RegexLeaf(1, "ECOUNT" + suffix, "([\\d]+)") //
 		);
+	}
+	
+	@Override
+	public Failable<? extends Object> ugetMe(GanttDiagram diagram, UMatcher arg) {
+		final DayPattern dayPattern = new DayPattern("");
+		final LocalDate result = dayPattern.getDay(arg);
+		return Failable.ok(result);
 	}
 
 	public Failable<LocalDate> getMe(GanttDiagram system, RegexResult arg, String suffix) {

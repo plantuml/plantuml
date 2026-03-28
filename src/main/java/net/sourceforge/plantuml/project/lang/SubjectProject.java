@@ -41,6 +41,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexPart;
 
@@ -71,8 +72,11 @@ public class SubjectProject implements Subject<GanttDiagram> {
 		result.add(new UbrexSentence<GanttDiagram>(this, Verbs.starts,
 				Words.uzeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT), ComplementDate.onlyAbsolute()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project) {
-				return CommandExecutionResult.error("WIPGANTT " + getClass());
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final LocalDate start = (LocalDate) complement;
+				if (TeaVM.a())
+					assert project == subject;
+				return project.updateStartingPoint(start);
 			}
 		});
 		return result;
@@ -84,6 +88,11 @@ public class SubjectProject implements Subject<GanttDiagram> {
 	}
 
 	public Failable<GanttDiagram> getMe(GanttDiagram project, RegexResult arg) {
+		return Failable.ok(project);
+	}
+
+	@Override
+	public Failable<? extends Object> ugetMe(GanttDiagram project, UMatcher arg) {
 		return Failable.ok(project);
 	}
 

@@ -42,6 +42,7 @@ import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.lang.Something;
 import net.sourceforge.plantuml.project.lang.Subject;
 import net.sourceforge.plantuml.project.lang.Verbs;
@@ -71,12 +72,55 @@ public abstract class UbrexSentence<D extends Diagram> {
 		this.complement = complement;
 	}
 
-	public abstract CommandExecutionResult execute(D project);
+	public abstract CommandExecutionResult execute(D project, Object subject, Object complement);
+
+	public Failable<? extends Object> getComplement(D project, GanttParseResult result) {
+		return complement.ugetMe(project, result.getComplementMatcher());
+	}
+
+	public Failable<? extends Object> getSubject(D project, GanttParseResult result) {
+		return subject.ugetMe(project, result.getMatcherSubject());
+	}
+
+	public GanttParseResult parse(String line) {
+		final TextNavigator tn = TextNavigator.build(line);
+		System.out.println("UbrexSentence::parse " + tn);
+
+		final UMatcher matcherSubject = subject.toUnicodeBracketedExpressionSubject().match(tn);
+		final String v1 = matcherSubject.getAcceptedMatch();
+		if (v1.length() == 0)
+			throw new IllegalStateException(line);
+
+		tn.jump(v1.length());
+		skipSpaces(tn);
+
+		final UMatcher verbMatch = verb.toUnicodeBracketedExpression().match(tn);
+		final String v2 = verbMatch.getAcceptedMatch();
+		if (v2.length() == 0)
+			throw new IllegalStateException(line);
+
+		tn.jump(v2.length());
+		skipSpaces(tn);
+
+		if (ignored != null) {
+			tn.jump(ignored.match(tn).getAcceptedMatch().length());
+			skipSpaces(tn);
+		}
+
+		final UMatcher complementMatcher = complement.toUnicodeBracketedExpressionComplement().match(tn);
+		final String v3 = complementMatcher.getAcceptedMatch();
+		if (v3.length() == 0)
+			throw new IllegalStateException(line);
+
+		System.out.println("m1=" + matcherSubject);
+		System.out.println("m2=" + verbMatch);
+		System.out.println("m3=" + complementMatcher);
+
+		return new GanttParseResult(matcherSubject, verbMatch, complementMatcher);
+	}
 
 	public boolean check(TextNavigator tn) {
-
 		tn = tn.copy();
-
 		final UMatcher matcherSubject = subject.toUnicodeBracketedExpressionSubject().match(tn);
 		final String v1 = matcherSubject.getAcceptedMatch();
 		if (v1.length() == 0)
@@ -93,15 +137,10 @@ public abstract class UbrexSentence<D extends Diagram> {
 		tn.jump(v2.length());
 		skipSpaces(tn);
 
-		// System.out.println("tn3=" + tn);
-
 		if (ignored != null) {
-			final UMatcher ii = ignored.match(tn);
-			tn.jump(ii.getAcceptedMatch().length());
+			tn.jump(ignored.match(tn).getAcceptedMatch().length());
 			skipSpaces(tn);
 		}
-
-		// System.out.println("tn4=" + tn);
 
 		final UMatcher complementMatcher = complement.toUnicodeBracketedExpressionComplement().match(tn);
 		final String v3 = complementMatcher.getAcceptedMatch();

@@ -35,9 +35,12 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
 import com.plantuml.ubrex.builder.UBrexOptional;
+import com.plantuml.ubrex.builder.UBrexOr;
 import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.annotation.DuplicateCode;
@@ -84,14 +87,44 @@ public class ComplementBeforeOrAfterOrAtTaskStartOrEnd extends AbstractComplemen
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
-		return UBrexConcat.build( // not finished
-				new UBrexOptional(Words.uoneOf(Words.AT, Words.WITH, Words.AFTER)),
-				UBrexLeaf.spaceZeroOrMore(), //
-				//
-				new UBrexLeaf(SubjectTask.UBREX_TASK_CODE), //
-				new UBrexLeaf("〴.s"), //
+		final UBrexPart durationBeforeOrAfter = UBrexConcat.build( //
+				new UBrexNamed("COMPLEMENT_NB1", new UBrexLeaf("〇+〴d")), //
 				UBrexLeaf.spaceOneOrMore(), //
-				Words.uoneOf(Words.START, Words.END));
+				new UBrexNamed("COMPLEMENT_WORKING1",
+						new UBrexOptional(UBrexConcat.build(new UBrexLeaf("working"), UBrexLeaf.spaceOneOrMore()))), //
+				new UBrexNamed("COMPLEMENT_DAY_OR_WEEK1", new UBrexLeaf("【day┇week】")), //
+				new UBrexLeaf("〇?s"), //
+				new UBrexOptional(UBrexConcat.build( //
+						UBrexLeaf.spaceOneOrMore(), //
+						new UBrexLeaf("and"), //
+						UBrexLeaf.spaceOneOrMore(), //
+						new UBrexNamed("COMPLEMENT_NB2", new UBrexLeaf("〇+〴d")), //
+						UBrexLeaf.spaceOneOrMore(), //
+						new UBrexNamed("COMPLEMENT_WORKING2",
+								new UBrexOptional(
+										UBrexConcat.build(new UBrexLeaf("working"), UBrexLeaf.spaceOneOrMore()))), //
+						new UBrexNamed("COMPLEMENT_DAY_OR_WEEK2", new UBrexLeaf("【day┇week】")), //
+						new UBrexLeaf("〇?s"))), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexNamed("COMPLEMENT_BEFORE_OR_AFTER", Words.uoneOf(Words.BEFORE, Words.AFTER)));
+
+		return UBrexConcat.build( //
+				new UBrexOptional(new UBrexOr( //
+						new UBrexLeaf(Words.AT), //
+						new UBrexLeaf(Words.WITH), //
+						new UBrexLeaf(Words.AFTER), //
+						durationBeforeOrAfter)), //
+				UBrexLeaf.spaceOneOrMore(), //
+				UBrexConcat.build( //
+						new UBrexNamed("COMPLEMENT_CODE_OTHER", new UBrexLeaf(SubjectTask.UBREX_TASK_CODE)), //
+						new UBrexLeaf("〴.s")), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexNamed("COMPLEMENT_START_OR_END", Words.uoneOf(Words.START, Words.END)));
+	}
+
+	@Override
+	public Failable<? extends Object> ugetMe(GanttDiagram system, UMatcher arg) {
+		return getComplementTaskInstant(system, arg);
 	}
 
 	public Failable<TaskInstant> getMe(GanttDiagram system, RegexResult arg, String suffix) {
