@@ -9,11 +9,11 @@ Stats:
     Abstract Classes: 3
 
     Ca: 5
-    Ce: 2
+    Ce: 3
 
     A: 0.12
-    I: 0.29
-    D: 0.6
+    I: 0.38
+    D: 0.51
 
 Abstract Classes:
     com.plantuml.ubrex.Challenge
@@ -48,6 +48,7 @@ Concrete Classes:
 Depends Upon:
     java.lang
     java.util
+    java.util.concurrent.atomic
 
 Used By:
     com.plantuml.ubrex.builder
@@ -65,12 +66,12 @@ Stats:
     Concrete Classes: 6
     Abstract Classes: 1
 
-    Ca: 1
+    Ca: 2
     Ce: 2
 
     A: 0.14
-    I: 0.67
-    D: 0.19
+    I: 0.5
+    D: 0.36
 
 Abstract Classes:
     com.plantuml.ubrex.builder.UBrexPart
@@ -89,6 +90,7 @@ Depends Upon:
 
 Used By:
     net.sourceforge.plantuml.activitydiagram.command
+    net.sourceforge.plantuml.project.lang
 
 --------------------------------------------------
 - Package: gen.annotation
@@ -8855,8 +8857,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 64
-    Concrete Classes: 60
+    Total Classes: 62
+    Concrete Classes: 58
     Abstract Classes: 4
 
     Ca: 5
@@ -8898,7 +8900,6 @@ Concrete Classes:
     net.sourceforge.plantuml.project.lang.SentenceTaskStartsAbsolute
     net.sourceforge.plantuml.project.lang.SentenceTaskStartsOnlyRelative
     net.sourceforge.plantuml.project.lang.SentenceTaskStartsWithColor
-    net.sourceforge.plantuml.project.lang.SubjectDayAsDate
     net.sourceforge.plantuml.project.lang.SubjectDayAsDate$Close
     net.sourceforge.plantuml.project.lang.SubjectDayAsDate$InColor
     net.sourceforge.plantuml.project.lang.SubjectDayAsDate$Open
@@ -8926,7 +8927,6 @@ Concrete Classes:
     net.sourceforge.plantuml.project.lang.SubjectSeparator$Just
     net.sourceforge.plantuml.project.lang.SubjectSeparator$JustAfter
     net.sourceforge.plantuml.project.lang.SubjectSeparator$JustBefore
-    net.sourceforge.plantuml.project.lang.SubjectTask
     net.sourceforge.plantuml.project.lang.SubjectToday
     net.sourceforge.plantuml.project.lang.SubjectToday$InColor
     net.sourceforge.plantuml.project.lang.SubjectToday$IsDate
@@ -8935,6 +8935,7 @@ Concrete Classes:
     net.sourceforge.plantuml.project.lang.Words
 
 Depends Upon:
+    com.plantuml.ubrex.builder
     java.lang
     java.time
     java.util
@@ -8946,7 +8947,6 @@ Depends Upon:
     net.sourceforge.plantuml.project.core
     net.sourceforge.plantuml.project.time
     net.sourceforge.plantuml.regex
-    net.sourceforge.plantuml.stereo
     net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.url
 
@@ -10502,12 +10502,12 @@ Stats:
     Concrete Classes: 3
     Abstract Classes: 0
 
-    Ca: 36
+    Ca: 35
     Ce: 6
 
     A: 0
-    I: 0.14
-    D: 0.86
+    I: 0.15
+    D: 0.85
 
 Abstract Classes:
 
@@ -10545,7 +10545,6 @@ Used By:
     net.sourceforge.plantuml.project
     net.sourceforge.plantuml.project.core
     net.sourceforge.plantuml.project.draw
-    net.sourceforge.plantuml.project.lang
     net.sourceforge.plantuml.sequencediagram
     net.sourceforge.plantuml.sequencediagram.command
     net.sourceforge.plantuml.sequencediagram.graphic
@@ -14523,8 +14522,8 @@ zext.plantuml.com.google.zxing.qrcode.encoder
 
 Name, Class Count, Abstract Class Count, Ca, Ce, A, I, D, V:
 
-com.plantuml.ubrex,26,3,5,2,0.12,0.29,0.6,1
-com.plantuml.ubrex.builder,7,1,1,2,0.14,0.67,0.19,1
+com.plantuml.ubrex,26,3,5,3,0.12,0.38,0.51,1
+com.plantuml.ubrex.builder,7,1,2,2,0.14,0.5,0.36,1
 gen.annotation,9,9,0,2,1,1,1,1
 gen.lib.cdt,18,0,3,4,0,0.57,0.43,1
 gen.lib.cgraph,37,0,5,6,0,0.55,0.45,1
@@ -14557,7 +14556,7 @@ java.text,0,0,7,0,0,0,1,1
 java.time,0,0,12,0,0,0,1,1
 java.util,0,0,169,0,0,0,1,1
 java.util.concurrent,0,0,6,0,0,0,1,1
-java.util.concurrent.atomic,0,0,4,0,0,0,1,1
+java.util.concurrent.atomic,0,0,5,0,0,0,1,1
 java.util.function,0,0,1,0,0,0,1,1
 java.util.logging,0,0,2,0,0,0,1,1
 java.util.regex,0,0,16,0,0,0,1,1
@@ -14714,7 +14713,7 @@ net.sourceforge.plantuml.project.core,11,3,9,12,0.27,0.57,0.16,1
 net.sourceforge.plantuml.project.data,7,0,3,16,0,0.84,0.16,1
 net.sourceforge.plantuml.project.draw,9,2,5,25,0.22,0.83,0.06,1
 net.sourceforge.plantuml.project.draw.header,5,3,2,19,0.6,0.9,0.5,1
-net.sourceforge.plantuml.project.lang,64,4,5,14,0.06,0.74,0.2,1
+net.sourceforge.plantuml.project.lang,62,4,5,14,0.06,0.74,0.2,1
 net.sourceforge.plantuml.project.ngm,4,1,2,3,0.25,0.6,0.15,1
 net.sourceforge.plantuml.project.ngm.math,11,2,6,5,0.18,0.45,0.36,1
 net.sourceforge.plantuml.project.solver,2,0,1,7,0,0.88,0.12,1
@@ -14743,7 +14742,7 @@ net.sourceforge.plantuml.statediagram,1,0,3,11,0,0.79,0.21,1
 net.sourceforge.plantuml.statediagram.command,7,0,2,17,0,0.89,0.11,1
 net.sourceforge.plantuml.stats,14,1,1,11,0.07,0.92,0.01,1
 net.sourceforge.plantuml.stats.api,4,3,1,2,0.75,0.67,0.42,1
-net.sourceforge.plantuml.stereo,3,0,36,6,0,0.14,0.86,1
+net.sourceforge.plantuml.stereo,3,0,35,6,0,0.15,0.85,1
 net.sourceforge.plantuml.style,22,7,68,17,0.32,0.2,0.48,1
 net.sourceforge.plantuml.style.parser,4,0,3,4,0,0.57,0.43,1
 net.sourceforge.plantuml.sudoku,4,1,0,8,0.25,1,0.25,1

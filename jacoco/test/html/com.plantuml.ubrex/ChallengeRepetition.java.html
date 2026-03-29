@@ -54,7 +54,7 @@ public class ChallengeRepetition implements Challenge {
 <span class="fc" id="L54">			final ChallengeResult shallWePass = origin.runChallenge(string, currentPos);</span>
 
 <span class="fc bfc" id="L56" title="All 2 branches covered.">			if (shallWePass.getFullCaptureLength() &lt; 0)</span>
-<span class="pc bpc" id="L57" title="1 of 4 branches missed.">				if (currentPos &gt; position &amp;&amp; repetition.match(count))</span>
+<span class="fc bfc" id="L57" title="All 4 branches covered.">				if (currentPos &gt; position &amp;&amp; repetition.match(count))</span>
 <span class="fc" id="L58">					return new ChallengeResult(currentPos - position, capture);</span>
 				else
 <span class="fc" id="L60">					return new ChallengeResult(NO_MATCH);</span>

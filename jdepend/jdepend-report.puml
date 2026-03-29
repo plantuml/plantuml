@@ -8,13 +8,14 @@ end title
 set separator none
 hide empty members
 
-class "com.plantuml.ubrex" %lighten("red", 40) {
+class "com.plantuml.ubrex" %lighten("red", 49) {
 Total Classes: 26
 }
 "com.plantuml.ubrex" --> "java.lang"
 "com.plantuml.ubrex" --> "java.util"
+"com.plantuml.ubrex" --> "java.util.concurrent.atomic"
 
-class "com.plantuml.ubrex.builder" %lighten("red", 81) {
+class "com.plantuml.ubrex.builder" %lighten("red", 64) {
 Total Classes: 7
 }
 "com.plantuml.ubrex.builder" --> "com.plantuml.ubrex"
@@ -2545,8 +2546,9 @@ Total Classes: 5
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.style"
 
 class "net.sourceforge.plantuml.project.lang" %lighten("red", 80) {
-Total Classes: 64
+Total Classes: 62
 }
+"net.sourceforge.plantuml.project.lang" --> "com.plantuml.ubrex.builder"
 "net.sourceforge.plantuml.project.lang" --> "java.lang"
 "net.sourceforge.plantuml.project.lang" --> "java.time"
 "net.sourceforge.plantuml.project.lang" --> "java.util"
@@ -2558,7 +2560,6 @@ Total Classes: 64
 "net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.project.core"
 "net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.project.time"
 "net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.regex"
-"net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.stereo"
 "net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.url"
 
@@ -2986,7 +2987,7 @@ Total Classes: 4
 "net.sourceforge.plantuml.stats.api" --> "java.lang"
 "net.sourceforge.plantuml.stats.api" --> "java.util"
 
-class "net.sourceforge.plantuml.stereo" %lighten("red", 14) {
+class "net.sourceforge.plantuml.stereo" %lighten("red", 15) {
 Total Classes: 3
 }
 "net.sourceforge.plantuml.stereo" --> "java.lang"

@@ -77,7 +77,7 @@ import java.util.Set;
 <span class="fc" id="L77">	LETTER(&quot;le&quot;) {</span>
 		@Override
 		boolean internalMatches(char ch) {
-<span class="nc" id="L80">			return Character.isLetter(ch);</span>
+<span class="fc" id="L80">			return Character.isLetter(ch);</span>
 		}
 	};
 
@@ -95,7 +95,7 @@ import java.util.Set;
 
 	public static CharClassRaw fromDefinition(TextNavigator nav) {
 <span class="fc" id="L97">		char ch = nav.charAt(0);</span>
-<span class="pc bpc" id="L98" title="2 of 8 branches missed.">		switch (ch) {</span>
+<span class="pc bpc" id="L98" title="1 of 8 branches missed.">		switch (ch) {</span>
 		case 'S':
 		case 's':
 <span class="fc" id="L101">			return CharClassRaw.SPACE;</span>
@@ -115,7 +115,7 @@ import java.util.Set;
 		case 'L':
 		case 'l':
 			// Not finished because we don't test the &quot;e&quot;
-<span class="nc" id="L118">			return CharClassRaw.LETTER;</span>
+<span class="fc" id="L118">			return CharClassRaw.LETTER;</span>
 		case '.':
 <span class="fc" id="L120">			return CharClassRaw.ANY;</span>
 		default:
