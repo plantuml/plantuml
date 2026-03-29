@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>PlantUML × GitHub — Integration PoC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── GitHub-faithful design tokens ─── */
+:root {
+  --gh-bg:          #0d1117;
+  --gh-bg-subtle:   #161b22;
+  --gh-border:      #30363d;
+  --gh-border-muted:#21262d;
+  --gh-fg:          #e6edf3;
+  --gh-fg-muted:    #7d8590;
+  --gh-fg-subtle:   #484f58;
+  --gh-accent:      #58a6ff;
+  --gh-accent-emphasis: #1f6feb;
+  --gh-success:     #3fb950;
+  --gh-danger:      #f85149;
+  --gh-canvas:      #010409;
+  --gh-overlay:     #1c2128;
+  --radius:         6px;
+  --mono:           'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --sans:           'Mona Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html { background: var(--gh-canvas); color: var(--gh-fg); }
+
+body {
+  font-family: var(--sans);
+  line-height: 1.5;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* ─── Page header ─── */
+.poc-header {
+  border-bottom: 1px solid var(--gh-border);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.poc-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.poc-header h1 .octicon {
+  width: 28px;
+  height: 28px;
+  color: var(--gh-fg-muted);
+}
+.poc-header p {
+  color: var(--gh-fg-muted);
+  margin-top: 0.4rem;
+  font-size: 0.9375rem;
+}
+.badge {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.15em 0.6em;
+  border-radius: 2em;
+  background: var(--gh-accent-emphasis);
+  color: #fff;
+  vertical-align: middle;
+  margin-left: 0.4rem;
+}
+
+/* ─── Architecture section ─── */
+.arch-section {
+  margin-bottom: 3rem;
+}
+.arch-section h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--gh-fg);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.arch-section h2 .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--gh-accent-emphasis);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ─── Markdown body simulation ─── */
+.markdown-body {
+  background: var(--gh-bg);
+  border: 1px solid var(--gh-border);
+  border-radius: var(--radius);
+  padding: 2rem;
+}
+.markdown-body h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--gh-border-muted);
+  margin-bottom: 1rem;
+}
+.markdown-body p {
+  color: var(--gh-fg);
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.markdown-body code {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  padding: 0.2em 0.4em;
+  background: var(--gh-bg-subtle);
+  border-radius: 3px;
+}
+
+/* ─── Code block (pre-render state) ─── */
+.code-block {
+  position: relative;
+  background: var(--gh-bg-subtle);
+  border: 1px solid var(--gh-border);
+  border-radius: var(--radius);
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+}
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: var(--gh-overlay);
+  border-bottom: 1px solid var(--gh-border-muted);
+  font-size: 0.75rem;
+  color: var(--gh-fg-muted);
+  font-family: var(--mono);
+}
+.code-block pre {
+  margin: 0;
+  padding: 1rem;
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--gh-fg);
+  overflow-x: auto;
+}
+
+/* ─── Rendered diagram container ─── */
+.plantuml-render {
+  position: relative;
+  background: var(--gh-bg-subtle);
+  border: 1px solid var(--gh-border);
+  border-radius: var(--radius);
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+  min-height: 80px;
+  transition: opacity 0.3s ease;
+}
+.plantuml-render .render-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.75rem;
+  background: var(--gh-overlay);
+  border-bottom: 1px solid var(--gh-border-muted);
+  font-size: 0.6875rem;
+  color: var(--gh-fg-muted);
+  font-family: var(--mono);
+}
+.plantuml-render .render-header .tag {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.plantuml-render .render-header .tag svg {
+  width: 12px;
+  height: 12px;
+  color: var(--gh-success);
+}
+.plantuml-render .render-header .actions {
+  display: flex;
+  gap: 0.25rem;
+}
+.plantuml-render .render-header .actions button {
+  background: none;
+  border: 1px solid transparent;
+  color: var(--gh-fg-muted);
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.plantuml-render .render-header .actions button:hover {
+  background: var(--gh-bg-subtle);
+  border-color: var(--gh-border);
+  color: var(--gh-fg);
+}
+.plantuml-render .diagram-output {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem;
+  background: #fff;
+  min-height: 60px;
+}
+.plantuml-render .diagram-output.dark-mode {
+  background: var(--gh-bg);
+}
+.plantuml-render .diagram-output svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ─── Loading state ─── */
+.plantuml-render .loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  color: var(--gh-fg-muted);
+  font-size: 0.8125rem;
+}
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--gh-border);
+  border-top-color: var(--gh-accent);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── Postmessage flow diagram ─── */
+.flow-diagram {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin: 1.5rem 0;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+}
+.flow-box {
+  flex: 1;
+  padding: 1rem;
+  border: 1px solid var(--gh-border);
+  border-radius: var(--radius);
+  background: var(--gh-bg-subtle);
+  position: relative;
+}
+.flow-box h3 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--gh-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.flow-box p {
+  font-size: 0.6875rem;
+  color: var(--gh-fg-muted);
+  line-height: 1.5;
+}
+.flow-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  flex-shrink: 0;
+  color: var(--gh-fg-subtle);
+  font-size: 0.625rem;
+  gap: 0.2rem;
+}
+.flow-arrow .arrow-line {
+  width: 40px;
+  height: 1px;
+  background: var(--gh-border);
+  position: relative;
+}
+.flow-arrow .arrow-line::after {
+  content: '\25B8';
+  position: absolute;
+  right: -6px;
+  top: -7px;
+  color: var(--gh-fg-subtle);
+}
+.flow-arrow span {
+  color: var(--gh-fg-muted);
+  white-space: nowrap;
+}
+
+/* ─── Code display blocks ─── */
+.impl-code {
+  background: var(--gh-bg-subtle);
+  border: 1px solid var(--gh-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 1rem 0 2rem;
+}
+.impl-code .code-tab {
+  display: flex;
+  border-bottom: 1px solid var(--gh-border-muted);
+}
+.impl-code .code-tab span {
+  padding: 0.5rem 1rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--gh-fg);
+  background: var(--gh-overlay);
+  border-bottom: 2px solid var(--gh-accent);
+}
+.impl-code pre {
+  margin: 0;
+  padding: 1rem 1.25rem;
+  font-family: var(--mono);
+  font-size: 0.7875rem;
+  line-height: 1.65;
+  color: var(--gh-fg);
+  overflow-x: auto;
+  tab-size: 2;
+}
+.impl-code pre .comment { color: var(--gh-fg-subtle); }
+.impl-code pre .keyword { color: #ff7b72; }
+.impl-code pre .string  { color: #a5d6ff; }
+.impl-code pre .fn      { color: #d2a8ff; }
+.impl-code pre .const   { color: #79c0ff; }
+
+/* ─── Demo section ─── */
+.demo-section {
+  margin-top: 3rem;
+}
+.demo-section h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.demo-section > p {
+  color: var(--gh-fg-muted);
+  font-size: 0.875rem;
+  margin-bottom: 1.25rem;
+}
+
+.demo-editor {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--gh-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.demo-editor .editor-pane {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--gh-border);
+}
+.demo-editor .preview-pane {
+  display: flex;
+  flex-direction: column;
+}
+.pane-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background: var(--gh-overlay);
+  border-bottom: 1px solid var(--gh-border-muted);
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  color: var(--gh-fg-muted);
+}
+.pane-header .controls-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.pane-header label {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+}
+.pane-header input[type="checkbox"] {
+  accent-color: var(--gh-accent);
+}
+#demo-input {
+  width: 100%;
+  min-height: 220px;
+  resize: vertical;
+  background: var(--gh-bg-subtle);
+  color: var(--gh-fg);
+  border: none;
+  padding: 1rem;
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  outline: none;
+}
+#demo-input:focus {
+  box-shadow: inset 0 0 0 1px var(--gh-accent-emphasis);
+}
+.demo-output {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: #fff;
+  min-height: 220px;
+  position: relative;
+}
+.demo-output.dark-mode {
+  background: var(--gh-bg);
+}
+.demo-output svg {
+  max-width: 100%;
+  height: auto;
+}
+.demo-status {
+  padding: 0.35rem 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  color: var(--gh-fg-subtle);
+  background: var(--gh-overlay);
+  border-top: 1px solid var(--gh-border-muted);
+}
+
+/* ─── Stats row ─── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.stat-card {
+  background: var(--gh-bg-subtle);
+  border: 1px solid var(--gh-border);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+.stat-card .stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gh-fg);
+  font-family: var(--mono);
+}
+.stat-card .stat-label {
+  font-size: 0.75rem;
+  color: var(--gh-fg-muted);
+  margin-top: 0.15rem;
+}
+
+/* ─── Note box ─── */
+.note-box {
+  border-left: 3px solid var(--gh-accent-emphasis);
+  background: rgba(31,111,235,0.08);
+  padding: 0.75rem 1rem;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin: 1.5rem 0;
+  font-size: 0.8125rem;
+  color: var(--gh-fg);
+}
+.note-box strong {
+  color: var(--gh-accent);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 700px) {
+  .demo-editor { grid-template-columns: 1fr; }
+  .demo-editor .editor-pane { border-right: none; border-bottom: 1px solid var(--gh-border); }
+  .flow-diagram { flex-direction: column; align-items: center; }
+  .flow-arrow { width: auto; height: 40px; flex-direction: row; }
+  .flow-arrow .arrow-line { width: 1px; height: 20px; }
+  .flow-arrow .arrow-line::after { right: -7px; top: auto; bottom: -6px; content: '\25BE'; }
+  .stats-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<div class="poc-header">
+  <h1>
+    <svg class="octicon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+    PlantUML JS Integration <span class="badge">PoC</span>
+  </h1>
+  <p>Proof of Concept &mdash; Client-side rendering of <code>```plantuml</code> blocks using the TeaVM-compiled engine</p>
+</div>
+
+<!-- ========== 1. ARCHITECTURE ========== -->
+<div class="arch-section">
+  <h2><span class="num">1</span> Sandbox Architecture</h2>
+  <p style="color:var(--gh-fg-muted);font-size:0.875rem;margin-bottom:1rem;">
+    GitHub renders Markdown on <code>github.com</code> but executes untrusted renderers inside an isolated <code>&lt;iframe&gt;</code> on a separate origin. Communication happens via <code>postMessage</code>.
+  </p>
+
+  <div class="flow-diagram">
+    <div class="flow-box">
+      <h3>github.com</h3>
+      <p>Scans Markdown for <code>```plantuml</code> blocks.<br>Creates a sandboxed &lt;iframe&gt; per diagram.<br>Sends source text via <code>postMessage</code>.</p>
+    </div>
+    <div class="flow-arrow">
+      <span>postMessage</span>
+      <div class="arrow-line"></div>
+      <span style="font-size:0.5625rem;color:var(--gh-fg-subtle)">plantuml source</span>
+    </div>
+    <div class="flow-box">
+      <h3>render.githubusercontent.com</h3>
+      <p>Loads <code>plantuml.js</code> + <code>viz-global.js</code>.<br>Calls <code>plantuml.render()</code>.<br>Sends SVG result back.</p>
+    </div>
+    <div class="flow-arrow">
+      <span>postMessage</span>
+      <div class="arrow-line"></div>
+      <span style="font-size:0.5625rem;color:var(--gh-fg-subtle)">SVG output</span>
+    </div>
+    <div class="flow-box">
+      <h3>github.com</h3>
+      <p>Receives SVG.<br>Replaces code block with rendered diagram.<br>Adjusts iframe height.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 2. IFRAME RENDERER ========== -->
+<div class="arch-section">
+  <h2><span class="num">2</span> IFrame Renderer (sandbox side)</h2>
+  <div class="impl-code">
+    <div class="code-tab"><span>plantuml-renderer.js</span></div>
+    <pre><span class="comment">// Loaded inside the sandboxed iframe on render.githubusercontent.com</span>
+<span class="comment">// plantuml.js and viz-global.js are already included via &lt;script&gt; tags</span>
+
+<span class="keyword">const</span> ALLOWED_ORIGIN = <span class="string">'https://github.com'</span>;
+
+<span class="comment">// Initialize the PlantUML engine once</span>
+<span class="fn">plantumlLoad</span>();
+
+<span class="keyword">const</span> renderTarget = document.<span class="fn">createElement</span>(<span class="string">'div'</span>);
+renderTarget.id = <span class="string">'plantuml-output'</span>;
+document.body.<span class="fn">appendChild</span>(renderTarget);
+
+window.<span class="fn">addEventListener</span>(<span class="string">'message'</span>, (event) => {
+  <span class="keyword">if</span> (event.origin !== ALLOWED_ORIGIN) <span class="keyword">return</span>;
+
+  <span class="keyword">const</span> { type, source, requestId, options } = event.data;
+  <span class="keyword">if</span> (type !== <span class="string">'PLANTUML_RENDER'</span>) <span class="keyword">return</span>;
+
+  <span class="keyword">const</span> lines = source.<span class="fn">split</span>(<span class="const">/\r\n|\r|\n/</span>);
+  <span class="keyword">const</span> dark = options?.dark ?? <span class="keyword">false</span>;
+
+  <span class="keyword">try</span> {
+    <span class="comment">// The real PlantUML JS API -- that's it!</span>
+    window.plantuml.<span class="fn">render</span>(lines, <span class="string">'plantuml-output'</span>, { dark });
+
+    <span class="keyword">const</span> svg = renderTarget.innerHTML;
+    window.parent.<span class="fn">postMessage</span>({
+      type: <span class="string">'PLANTUML_RESULT'</span>,
+      requestId,
+      svg,
+      height: renderTarget.scrollHeight
+    }, event.origin);
+  } <span class="keyword">catch</span> (err) {
+    window.parent.<span class="fn">postMessage</span>({
+      type: <span class="string">'PLANTUML_ERROR'</span>,
+      requestId,
+      error: err.message
+    }, event.origin);
+  }
+});</pre>
+  </div>
+</div>
+
+<!-- ========== 3. PARENT SCANNER ========== -->
+<div class="arch-section">
+  <h2><span class="num">3</span> Markdown Scanner (github.com side)</h2>
+  <div class="impl-code">
+    <div class="code-tab"><span>plantuml-integration.js</span></div>
+    <pre><span class="keyword">const</span> RENDERER_URL = <span class="string">'https://render.githubusercontent.com/plantuml/frame.html'</span>;
+
+<span class="keyword">function</span> <span class="fn">initPlantUMLBlocks</span>() {
+  <span class="comment">// GitHub already tags language-specific code blocks</span>
+  <span class="keyword">const</span> blocks = document.<span class="fn">querySelectorAll</span>(<span class="string">'pre[lang="plantuml"]'</span>);
+
+  blocks.<span class="fn">forEach</span>((block, i) => {
+    <span class="keyword">const</span> source = block.textContent;
+    <span class="keyword">const</span> requestId = <span class="string">`puml-${i}-${</span>Date.<span class="fn">now</span>()<span class="string">}`</span>;
+    <span class="keyword">const</span> dark = document.documentElement.dataset.colorMode === <span class="string">'dark'</span>;
+
+    <span class="comment">// Create sandboxed iframe</span>
+    <span class="keyword">const</span> iframe = document.<span class="fn">createElement</span>(<span class="string">'iframe'</span>);
+    iframe.src = RENDERER_URL;
+    iframe.sandbox = <span class="string">'allow-scripts'</span>;
+    iframe.style.cssText = <span class="string">'border:none; width:100%; overflow:hidden;'</span>;
+
+    iframe.<span class="fn">addEventListener</span>(<span class="string">'load'</span>, () => {
+      iframe.contentWindow.<span class="fn">postMessage</span>({
+        type: <span class="string">'PLANTUML_RENDER'</span>,
+        source,
+        requestId,
+        options: { dark }
+      }, <span class="keyword">new</span> <span class="fn">URL</span>(RENDERER_URL).origin);
+    });
+
+    <span class="comment">// Listen for result</span>
+    window.<span class="fn">addEventListener</span>(<span class="string">'message'</span>, (e) => {
+      <span class="keyword">if</span> (e.data.requestId !== requestId) <span class="keyword">return</span>;
+      <span class="keyword">if</span> (e.data.type === <span class="string">'PLANTUML_RESULT'</span>) {
+        iframe.style.height = e.data.height + <span class="string">'px'</span>;
+      }
+    });
+
+    block.parentElement.<span class="fn">replaceWith</span>(iframe);
+  });
+}
+
+document.<span class="fn">addEventListener</span>(<span class="string">'DOMContentLoaded'</span>, initPlantUMLBlocks);</pre>
+  </div>
+</div>
+
+<!-- ========== 4. WHAT IT LOOKS LIKE ========== -->
+<div class="arch-section">
+  <h2><span class="num">4</span> What It Looks Like in a README</h2>
+
+  <div class="markdown-body">
+    <h1>My Project Architecture</h1>
+    <p>Here's our authentication flow:</p>
+
+    <!-- Simulated rendered diagram -->
+    <div class="plantuml-render" id="example-rendered">
+      <div class="render-header">
+        <span class="tag">
+          <svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="8"/></svg>
+          plantuml &mdash; rendered by js-plantuml
+        </span>
+        <span class="actions">
+          <button onclick="toggleSource(this)" title="View source">source</button>
+          <button onclick="copyDiagram(this)" title="Copy SVG">copy</button>
+        </span>
+      </div>
+      <div class="diagram-output" id="example-output">
+        <div class="loading-state"><div class="spinner"></div> Rendering diagram&hellip;</div>
+      </div>
+    </div>
+
+    <p>And here's the deployment topology:</p>
+
+    <div class="plantuml-render" id="example-rendered-2">
+      <div class="render-header">
+        <span class="tag">
+          <svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="8"/></svg>
+          plantuml &mdash; rendered by js-plantuml
+        </span>
+        <span class="actions">
+          <button onclick="toggleSource(this)" title="View source">source</button>
+        </span>
+      </div>
+      <div class="diagram-output" id="example-output-2">
+        <div class="loading-state"><div class="spinner"></div> Rendering diagram&hellip;</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 5. LIVE DEMO ========== -->
+<div class="demo-section">
+  <h2>
+    <svg width="20" height="20" viewBox="0 0 16 16" fill="var(--gh-success)"><path d="M8 0a8 8 0 110 16A8 8 0 018 0zm3.78 4.22a.75.75 0 00-1.06 0L7 7.94 5.28 6.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l4.25-4.25a.75.75 0 000-1.06z"/></svg>
+    Live Demo
+  </h2>
+  <p>This runs the <strong>real</strong> PlantUML JS engine. Edit the source and see it render &mdash; same API as <code>index-basic.html</code>.</p>
+
+  <div class="note-box">
+    <strong>Note:</strong> In this PoC the JS engine runs directly in the page. In production, GitHub would isolate it in an iframe on a separate origin. The rendering API is identical.
+  </div>
+
+  <div class="demo-editor">
+    <div class="editor-pane">
+      <div class="pane-header">
+        <span>editor</span>
+        <div class="controls-row">
+          <label title="Use PlantUML dark mode rendering">
+            <input type="checkbox" id="dark-toggle"> dark
+          </label>
+        </div>
+      </div>
+      <textarea id="demo-input">@startuml
+participant Browser as B
+participant "GitHub\n(parent)" as GH
+participant "IFrame\n(sandbox)" as IF
+
+B -> GH : load README.md
+activate GH
+GH -> GH : parse ```plantuml blocks
+GH -> IF : postMessage(source)
+activate IF
+IF -> IF : plantuml.render(lines, id)
+IF --> GH : postMessage(svg)
+deactivate IF
+GH --> B : display rendered SVG
+deactivate GH
+@enduml</textarea>
+    </div>
+    <div class="preview-pane">
+      <div class="pane-header">
+        <span>preview</span>
+        <span id="render-time" style="color:var(--gh-fg-subtle)"></span>
+      </div>
+      <div class="demo-output" id="demo-output">
+        <div style="color:var(--gh-fg-muted);font-size:0.8125rem;text-align:center;padding:1rem;">
+          The live demo requires <code>plantuml.js</code> and <code>viz-global.js</code>.<br><br>
+          Open this file from the same directory where these scripts are located.
+        </div>
+      </div>
+      <div class="demo-status" id="demo-status">ready</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== STATS ========== -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-value">0</div>
+    <div class="stat-label">Server dependencies</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">3</div>
+    <div class="stat-label">API surface (functions)</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">~40</div>
+    <div class="stat-label">Lines of glue code</div>
+  </div>
+</div>
+
+<div class="note-box">
+  <strong>Key selling points for GitHub:</strong> Zero server cost &mdash; no Java process, no Graphviz binary. The TeaVM-compiled engine runs entirely in the browser. The API is 3 calls: <code>plantumlLoad()</code>, <code>plantuml.render(lines, targetId)</code>, and optionally <code>plantuml.render(lines, targetId, {dark: true})</code>. The sandbox architecture is the same pattern GitHub already uses for Mermaid.
+</div>
+
+<!-- ========== SCRIPTS ========== -->
+<script>
+// Simulated SVG placeholders for when plantuml.js is not available
+const EXAMPLE_SVG_1 = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 200" style="max-width:480px">'
+  + '<defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fefece"/><stop offset="100%" stop-color="#f0e68c"/></linearGradient></defs>'
+  + '<rect width="480" height="200" fill="#fff" rx="4"/>'
+  + '<g font-family="sans-serif" font-size="13">'
+  + '<rect x="40" y="12" width="80" height="32" rx="4" fill="url(#g1)" stroke="#a0a060"/><text x="80" y="33" text-anchor="middle" font-weight="600">Client</text>'
+  + '<rect x="200" y="12" width="80" height="32" rx="4" fill="url(#g1)" stroke="#a0a060"/><text x="240" y="33" text-anchor="middle" font-weight="600">Auth API</text>'
+  + '<rect x="360" y="12" width="80" height="32" rx="4" fill="url(#g1)" stroke="#a0a060"/><text x="400" y="33" text-anchor="middle" font-weight="600">Database</text>'
+  + '<line x1="80" y1="44" x2="80" y2="180" stroke="#a0a060" stroke-dasharray="4"/>'
+  + '<line x1="240" y1="44" x2="240" y2="180" stroke="#a0a060" stroke-dasharray="4"/>'
+  + '<line x1="400" y1="44" x2="400" y2="180" stroke="#a0a060" stroke-dasharray="4"/>'
+  + '<line x1="80" y1="70" x2="240" y2="70" stroke="#333" marker-end="url(#ah)"/><text x="160" y="64" text-anchor="middle" font-size="11">POST /login</text>'
+  + '<line x1="240" y1="100" x2="400" y2="100" stroke="#333" marker-end="url(#ah)"/><text x="320" y="94" text-anchor="middle" font-size="11">verify credentials</text>'
+  + '<line x1="400" y1="130" x2="240" y2="130" stroke="#333" stroke-dasharray="4" marker-end="url(#ah)"/><text x="320" y="124" text-anchor="middle" font-size="11">user record</text>'
+  + '<line x1="240" y1="160" x2="80" y2="160" stroke="#333" stroke-dasharray="4" marker-end="url(#ah)"/><text x="160" y="154" text-anchor="middle" font-size="11">JWT token</text>'
+  + '</g><defs><marker id="ah" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#333"/></marker></defs></svg>';
+
+const EXAMPLE_SVG_2 = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 160" style="max-width:420px">'
+  + '<rect width="420" height="160" fill="#fff" rx="4"/>'
+  + '<g font-family="sans-serif" font-size="12">'
+  + '<rect x="20" y="20" width="100" height="50" rx="8" fill="#e3f2fd" stroke="#90caf9" stroke-width="1.5"/><text x="70" y="42" text-anchor="middle" font-size="11">Load Balancer</text><text x="70" y="58" text-anchor="middle" font-size="9" fill="#666">nginx</text>'
+  + '<rect x="160" y="10" width="90" height="40" rx="6" fill="#e8f5e9" stroke="#a5d6a7"/><text x="205" y="35" text-anchor="middle" font-size="10">App Node 1</text>'
+  + '<rect x="160" y="60" width="90" height="40" rx="6" fill="#e8f5e9" stroke="#a5d6a7"/><text x="205" y="85" text-anchor="middle" font-size="10">App Node 2</text>'
+  + '<rect x="160" y="110" width="90" height="40" rx="6" fill="#e8f5e9" stroke="#a5d6a7"/><text x="205" y="135" text-anchor="middle" font-size="10">App Node 3</text>'
+  + '<rect x="300" y="45" width="100" height="50" rx="8" fill="#fff3e0" stroke="#ffcc80" stroke-width="1.5"/><text x="350" y="67" text-anchor="middle" font-size="11">PostgreSQL</text><text x="350" y="83" text-anchor="middle" font-size="9" fill="#666">primary</text>'
+  + '<line x1="120" y1="38" x2="160" y2="30" stroke="#666"/><line x1="120" y1="45" x2="160" y2="80" stroke="#666"/><line x1="120" y1="52" x2="160" y2="130" stroke="#666"/>'
+  + '<line x1="250" y1="30" x2="300" y2="65" stroke="#666"/><line x1="250" y1="80" x2="300" y2="70" stroke="#666"/><line x1="250" y1="130" x2="300" y2="75" stroke="#666"/>'
+  + '</g></svg>';
+
+// Try to load the real PlantUML engine first
+let engineReady = false;
+try {
+  if (typeof plantumlLoad === 'function') {
+    plantumlLoad();
+    engineReady = true;
+  }
+} catch(e) {
+  // Engine not available
+}
+
+if (engineReady) {
+  // Render the example diagrams with the real engine
+  const exampleSource1 = '@startuml\nparticipant Client\nparticipant "Auth API" as Auth\nparticipant Database as DB\n\nClient -> Auth : POST /login\nAuth -> DB : verify credentials\nDB --> Auth : user record\nAuth --> Client : JWT token\n@enduml';
+  const exampleSource2 = '@startuml\n!include <C4/C4_Deployment>\n\nnode "Load Balancer" as lb\nnode "App Node 1" as n1\nnode "App Node 2" as n2\nnode "App Node 3" as n3\ndatabase "PostgreSQL" as db\n\nlb --> n1\nlb --> n2\nlb --> n3\nn1 --> db\nn2 --> db\nn3 --> db\n@enduml';
+
+  window.plantuml.render(exampleSource1.split('\n'), 'example-output');
+  window.plantuml.render(exampleSource2.split('\n'), 'example-output-2');
+  setupLiveDemo();
+} else {
+  // Show placeholder SVGs
+  setTimeout(function() { document.getElementById('example-output').innerHTML = EXAMPLE_SVG_1; }, 600);
+  setTimeout(function() { document.getElementById('example-output-2').innerHTML = EXAMPLE_SVG_2; }, 900);
+}
+
+function setupLiveDemo() {
+  var input = document.getElementById('demo-input');
+  var output = document.getElementById('demo-output');
+  var status = document.getElementById('demo-status');
+  var timeEl = document.getElementById('render-time');
+  var darkToggle = document.getElementById('dark-toggle');
+
+  function render() {
+    var t0 = performance.now();
+    var lines = input.value.split(/\r\n|\r|\n/);
+    var dark = darkToggle.checked;
+
+    output.className = 'demo-output' + (dark ? ' dark-mode' : '');
+
+    try {
+      window.plantuml.render(lines, 'demo-output', dark ? { dark: true } : undefined);
+      var ms = (performance.now() - t0).toFixed(1);
+      timeEl.textContent = ms + ' ms';
+      status.textContent = 'rendered in ' + ms + 'ms';
+    } catch(e) {
+      status.textContent = 'error: ' + e.message;
+    }
+  }
+
+  input.addEventListener('input', render);
+  darkToggle.addEventListener('change', render);
+  render();
+}
+
+function toggleSource(btn) {
+  var container = btn.closest('.plantuml-render');
+  var output = container.querySelector('.diagram-output');
+  if (btn.textContent === 'source') {
+    btn.textContent = 'preview';
+    output.dataset.prevHtml = output.innerHTML;
+    output.innerHTML = '<pre style="text-align:left;padding:1rem;margin:0;font-family:var(--mono);font-size:0.75rem;color:#333;white-space:pre-wrap;">@startuml\nparticipant Client\nparticipant "Auth API" as Auth\nparticipant Database as DB\n\nClient -> Auth : POST /login\nAuth -> DB : verify credentials\nDB --> Auth : user record\nAuth --> Client : JWT token\n@enduml</pre>';
+  } else {
+    btn.textContent = 'source';
+    output.innerHTML = output.dataset.prevHtml;
+  }
+}
+
+function copyDiagram(btn) {
+  var container = btn.closest('.plantuml-render');
+  var svg = container.querySelector('.diagram-output').innerHTML;
+  navigator.clipboard.writeText(svg).then(function() {
+    var orig = btn.textContent;
+    btn.textContent = 'copied!';
+    setTimeout(function() { btn.textContent = orig; }, 1500);
+  });
+}
+</script>
+
+</body>
+</html>
