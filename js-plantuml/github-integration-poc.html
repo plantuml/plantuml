@@ -830,18 +830,28 @@ if (engineReady) {
     '@enduml'
   ];
 
-  try {
-    window.plantuml.render(exampleSource1, 'example-output');
-  } catch(e) {
-    document.getElementById('example-output').innerHTML = EXAMPLE_SVG_1;
-    console.error('Example 1 render error:', e);
-  }
-  try {
-    window.plantuml.render(exampleSource2, 'example-output-2');
-  } catch(e) {
-    document.getElementById('example-output-2').innerHTML = EXAMPLE_SVG_2;
-    console.error('Example 2 render error:', e);
-  }
+  // Render examples after a short delay to ensure the engine is fully ready
+  setTimeout(function() {
+    console.log('[PoC] Rendering example 1...');
+    document.getElementById('example-output').innerHTML = '';
+    try {
+      window.plantuml.render(exampleSource1, 'example-output');
+      console.log('[PoC] Example 1 done, content:', document.getElementById('example-output').innerHTML.substring(0, 80));
+    } catch(e) {
+      document.getElementById('example-output').innerHTML = EXAMPLE_SVG_1;
+      console.error('[PoC] Example 1 render error:', e);
+    }
+
+    console.log('[PoC] Rendering example 2...');
+    document.getElementById('example-output-2').innerHTML = '';
+    try {
+      window.plantuml.render(exampleSource2, 'example-output-2');
+      console.log('[PoC] Example 2 done, content:', document.getElementById('example-output-2').innerHTML.substring(0, 80));
+    } catch(e) {
+      document.getElementById('example-output-2').innerHTML = EXAMPLE_SVG_2;
+      console.error('[PoC] Example 2 render error:', e);
+    }
+  }, 200);
   setupLiveDemo();
 } else {
   // Engine not available -- show placeholder SVGs
