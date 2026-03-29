@@ -801,14 +801,50 @@ try {
 
 if (engineReady) {
   // Render the example diagrams with the real engine
-  const exampleSource1 = '@startuml\nparticipant Client\nparticipant "Auth API" as Auth\nparticipant Database as DB\n\nClient -> Auth : POST /login\nAuth -> DB : verify credentials\nDB --> Auth : user record\nAuth --> Client : JWT token\n@enduml';
-  const exampleSource2 = '@startuml\n!include <C4/C4_Deployment>\n\nnode "Load Balancer" as lb\nnode "App Node 1" as n1\nnode "App Node 2" as n2\nnode "App Node 3" as n3\ndatabase "PostgreSQL" as db\n\nlb --> n1\nlb --> n2\nlb --> n3\nn1 --> db\nn2 --> db\nn3 --> db\n@enduml';
+  var exampleSource1 = [
+    '@startuml',
+    'participant Client',
+    'participant "Auth API" as Auth',
+    'participant Database as DB',
+    '',
+    'Client -> Auth : POST /login',
+    'Auth -> DB : verify credentials',
+    'DB --> Auth : user record',
+    'Auth --> Client : JWT token',
+    '@enduml'
+  ];
+  var exampleSource2 = [
+    '@startuml',
+    'node "Load Balancer" as lb',
+    'node "App Node 1" as n1',
+    'node "App Node 2" as n2',
+    'node "App Node 3" as n3',
+    'database "PostgreSQL" as db',
+    '',
+    'lb --> n1',
+    'lb --> n2',
+    'lb --> n3',
+    'n1 --> db',
+    'n2 --> db',
+    'n3 --> db',
+    '@enduml'
+  ];
 
-  window.plantuml.render(exampleSource1.split('\n'), 'example-output');
-  window.plantuml.render(exampleSource2.split('\n'), 'example-output-2');
+  try {
+    window.plantuml.render(exampleSource1, 'example-output');
+  } catch(e) {
+    document.getElementById('example-output').innerHTML = EXAMPLE_SVG_1;
+    console.error('Example 1 render error:', e);
+  }
+  try {
+    window.plantuml.render(exampleSource2, 'example-output-2');
+  } catch(e) {
+    document.getElementById('example-output-2').innerHTML = EXAMPLE_SVG_2;
+    console.error('Example 2 render error:', e);
+  }
   setupLiveDemo();
 } else {
-  // Show placeholder SVGs
+  // Engine not available -- show placeholder SVGs
   setTimeout(function() { document.getElementById('example-output').innerHTML = EXAMPLE_SVG_1; }, 600);
   setTimeout(function() { document.getElementById('example-output-2').innerHTML = EXAMPLE_SVG_2; }, 900);
 }
