@@ -274,17 +274,24 @@ window.<span class="fn">addEventListener</span>(<span class="string">'message'</
   <span class="keyword">const</span> lines = source.<span class="fn">split</span>(<span class="const">/\r\n|\r|\n/</span>);
   <span class="keyword">const</span> dark = options?.dark ?? <span class="keyword">false</span>;
 
+  <span class="comment">// Watch for the SVG to appear in the DOM</span>
+  <span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="fn">MutationObserver</span>(() => {
+    <span class="keyword">if</span> (renderTarget.<span class="fn">querySelector</span>(<span class="string">'svg'</span>)) {
+      observer.<span class="fn">disconnect</span>();
+      window.parent.<span class="fn">postMessage</span>({
+        type: <span class="string">'PLANTUML_RESULT'</span>,
+        requestId,
+        svg: renderTarget.innerHTML,
+        height: renderTarget.scrollHeight
+      }, event.origin);
+    }
+  });
+  observer.<span class="fn">observe</span>(renderTarget, { childList: <span class="keyword">true</span>, subtree: <span class="keyword">true</span> });
+
   <span class="keyword">try</span> {
     window.plantuml.<span class="fn">render</span>(lines, <span class="string">'plantuml-output'</span>, { dark });
-
-    <span class="keyword">const</span> svg = renderTarget.innerHTML;
-    window.parent.<span class="fn">postMessage</span>({
-      type: <span class="string">'PLANTUML_RESULT'</span>,
-      requestId,
-      svg,
-      height: renderTarget.scrollHeight
-    }, event.origin);
   } <span class="keyword">catch</span> (err) {
+    observer.<span class="fn">disconnect</span>();
     window.parent.<span class="fn">postMessage</span>({
       type: <span class="string">'PLANTUML_ERROR'</span>,
       requestId,
