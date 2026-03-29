@@ -178,7 +178,10 @@ body {
 .impl-code pre .const   { color: #79c0ff; }
 
 /* ─── Stats ─── */
-.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; }
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.5rem 0; }
+@media (max-width: 700px) {
+  .stats-row { grid-template-columns: 1fr 1fr; }
+}
 .stat-card {
   background: var(--gh-bg-subtle); border: 1px solid var(--gh-border);
   border-radius: var(--radius); padding: 1rem;
@@ -405,6 +408,10 @@ document.<span class="fn">addEventListener</span>(<span class="string">'DOMConte
     <div class="stat-value">~40</div>
     <div class="stat-label">Lines of glue code</div>
   </div>
+  <div class="stat-card">
+    <div class="stat-value" id="stat-total">...</div>
+    <div class="stat-label">Total render time</div>
+  </div>
 </div>
 
 <div class="note-box">
@@ -424,8 +431,11 @@ document.<span class="fn">addEventListener</span>(<span class="string">'DOMConte
 
 var renderQueue = [];
 var rendering = false;
+var renderStart = performance.now();
+var pendingRenders = 0;
 
 function enqueueRender(lines, targetId) {
+  pendingRenders++;
   renderQueue.push({ lines: lines, targetId: targetId });
   processQueue();
 }
@@ -443,6 +453,11 @@ function processQueue() {
     if (target.querySelector('svg')) {
       observer.disconnect();
       rendering = false;
+      pendingRenders--;
+      if (pendingRenders === 0) {
+        var total = (performance.now() - renderStart).toFixed(0);
+        document.getElementById('stat-total').textContent = total + ' ms';
+      }
       processQueue();
     }
   });

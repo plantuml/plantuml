@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>PlantUML × GitHub — Web Worker PoC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gh-bg:          #0d1117;
+  --gh-bg-subtle:   #161b22;
+  --gh-border:      #30363d;
+  --gh-border-muted:#21262d;
+  --gh-fg:          #e6edf3;
+  --gh-fg-muted:    #7d8590;
+  --gh-fg-subtle:   #484f58;
+  --gh-accent:      #58a6ff;
+  --gh-accent-emphasis: #1f6feb;
+  --gh-success:     #3fb950;
+  --gh-danger:      #f85149;
+  --gh-canvas:      #010409;
+  --gh-overlay:     #1c2128;
+  --radius:         6px;
+  --mono:           'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --sans:           'Mona Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; }
+html { background: var(--gh-canvas); color: var(--gh-fg); }
+body {
+  font-family: var(--sans);
+  line-height: 1.5;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.poc-header {
+  border-bottom: 1px solid var(--gh-border);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.poc-header h1 {
+  font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.poc-header h1 .octicon { width: 28px; height: 28px; color: var(--gh-fg-muted); }
+.poc-header p { color: var(--gh-fg-muted); margin-top: 0.4rem; font-size: 0.9375rem; }
+.badge {
+  display: inline-block; font-size: 0.6875rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 0.15em 0.6em; border-radius: 2em;
+  background: var(--gh-accent-emphasis); color: #fff;
+  vertical-align: middle; margin-left: 0.4rem;
+}
+.badge.worker { background: #238636; }
+
+.arch-section { margin-bottom: 3rem; }
+.arch-section h2 {
+  font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;
+  color: var(--gh-fg); display: flex; align-items: center; gap: 0.5rem;
+}
+.arch-section h2 .num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.6rem; height: 1.6rem; border-radius: 50%;
+  background: var(--gh-accent-emphasis); color: #fff;
+  font-size: 0.8rem; font-weight: 700; flex-shrink: 0;
+}
+
+.markdown-body {
+  background: var(--gh-bg);
+  border: 1px solid var(--gh-border);
+  border-radius: var(--radius);
+  padding: 2rem;
+}
+.markdown-body h1 {
+  font-size: 1.5rem; font-weight: 600;
+  padding-bottom: 0.3em; border-bottom: 1px solid var(--gh-border-muted);
+  margin-bottom: 1rem;
+}
+.markdown-body p { color: var(--gh-fg); margin-bottom: 1rem; font-size: 0.9375rem; }
+.markdown-body code {
+  font-family: var(--mono); font-size: 0.85em;
+  padding: 0.2em 0.4em; background: var(--gh-bg-subtle); border-radius: 3px;
+}
+
+.plantuml-render {
+  position: relative; background: var(--gh-bg-subtle);
+  border: 1px solid var(--gh-border); border-radius: var(--radius);
+  margin-bottom: 1.25rem; overflow: hidden; min-height: 80px;
+}
+.plantuml-render .render-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.4rem 0.75rem; background: var(--gh-overlay);
+  border-bottom: 1px solid var(--gh-border-muted);
+  font-size: 0.6875rem; color: var(--gh-fg-muted); font-family: var(--mono);
+}
+.plantuml-render .render-header .tag { display: flex; align-items: center; gap: 0.35rem; }
+.plantuml-render .render-header .tag svg { width: 12px; height: 12px; color: var(--gh-success); }
+.plantuml-render .render-header .actions { display: flex; gap: 0.25rem; }
+.plantuml-render .render-header .actions button {
+  background: none; border: 1px solid transparent; color: var(--gh-fg-muted);
+  font-family: var(--mono); font-size: 0.6875rem; padding: 0.15rem 0.5rem;
+  border-radius: 4px; cursor: pointer; transition: all 0.15s;
+}
+.plantuml-render .render-header .actions button:hover {
+  background: var(--gh-bg-subtle); border-color: var(--gh-border); color: var(--gh-fg);
+}
+.plantuml-render .diagram-output {
+  display: flex; justify-content: center; padding: 1.5rem;
+  background: #fff; min-height: 60px;
+}
+.plantuml-render .diagram-output svg { max-width: 100%; height: auto; }
+.loading-state {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.5rem; padding: 2rem; color: var(--gh-fg-muted); font-size: 0.8125rem;
+}
+.spinner {
+  width: 16px; height: 16px;
+  border: 2px solid var(--gh-border); border-top-color: var(--gh-accent);
+  border-radius: 50%; animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.flow-diagram {
+  display: flex; align-items: stretch; gap: 0;
+  margin: 1.5rem 0; font-family: var(--mono); font-size: 0.75rem;
+}
+.flow-box {
+  flex: 1; padding: 1rem; border: 1px solid var(--gh-border);
+  border-radius: var(--radius); background: var(--gh-bg-subtle);
+}
+.flow-box h3 {
+  font-size: 0.75rem; font-weight: 600; margin-bottom: 0.5rem;
+  color: var(--gh-accent); text-transform: uppercase; letter-spacing: 0.04em;
+}
+.flow-box p { font-size: 0.6875rem; color: var(--gh-fg-muted); line-height: 1.5; }
+.flow-box.highlight { border-color: var(--gh-success); background: rgba(63,185,80,0.06); }
+.flow-box.highlight h3 { color: var(--gh-success); }
+.flow-arrow {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 80px; flex-shrink: 0; color: var(--gh-fg-subtle); font-size: 0.625rem; gap: 0.2rem;
+}
+.flow-arrow .arrow-line {
+  width: 40px; height: 1px; background: var(--gh-border); position: relative;
+}
+.flow-arrow .arrow-line::after {
+  content: '\25B8'; position: absolute; right: -6px; top: -7px; color: var(--gh-fg-subtle);
+}
+.flow-arrow span { color: var(--gh-fg-muted); white-space: nowrap; }
+
+.impl-code {
+  background: var(--gh-bg-subtle); border: 1px solid var(--gh-border);
+  border-radius: var(--radius); overflow: hidden; margin: 1rem 0 2rem;
+}
+.impl-code .code-tab { display: flex; border-bottom: 1px solid var(--gh-border-muted); }
+.impl-code .code-tab span {
+  padding: 0.5rem 1rem; font-family: var(--mono); font-size: 0.75rem;
+  color: var(--gh-fg); background: var(--gh-overlay);
+  border-bottom: 2px solid var(--gh-accent);
+}
+.impl-code pre {
+  margin: 0; padding: 1rem 1.25rem; font-family: var(--mono);
+  font-size: 0.7875rem; line-height: 1.65; color: var(--gh-fg);
+  overflow-x: auto; tab-size: 2;
+}
+.impl-code pre .comment { color: var(--gh-fg-subtle); }
+.impl-code pre .keyword { color: #ff7b72; }
+.impl-code pre .string  { color: #a5d6ff; }
+.impl-code pre .fn      { color: #d2a8ff; }
+.impl-code pre .const   { color: #79c0ff; }
+
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.5rem 0; }
+.stat-card {
+  background: var(--gh-bg-subtle); border: 1px solid var(--gh-border);
+  border-radius: var(--radius); padding: 1rem;
+}
+.stat-card .stat-value { font-size: 1.5rem; font-weight: 700; color: var(--gh-fg); font-family: var(--mono); }
+.stat-card .stat-label { font-size: 0.75rem; color: var(--gh-fg-muted); margin-top: 0.15rem; }
+
+.note-box {
+  border-left: 3px solid var(--gh-accent-emphasis);
+  background: rgba(31,111,235,0.08);
+  padding: 0.75rem 1rem; border-radius: 0 var(--radius) var(--radius) 0;
+  margin: 1.5rem 0; font-size: 0.8125rem; color: var(--gh-fg);
+}
+.note-box strong { color: var(--gh-accent); }
+.note-box.green { border-left-color: var(--gh-success); background: rgba(63,185,80,0.08); }
+.note-box.green strong { color: var(--gh-success); }
+
+@media (max-width: 700px) {
+  .flow-diagram { flex-direction: column; align-items: center; }
+  .flow-arrow { width: auto; height: 40px; flex-direction: row; }
+  .flow-arrow .arrow-line { width: 1px; height: 20px; }
+  .flow-arrow .arrow-line::after { right: -7px; top: auto; bottom: -6px; content: '\25BE'; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<div class="poc-header">
+  <h1>
+    <svg class="octicon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+    PlantUML JS Integration <span class="badge">PoC</span> <span class="badge worker">Web Worker</span>
+  </h1>
+  <p>Proof of Concept &mdash; Non-blocking rendering using hidden iframes as isolated rendering workers</p>
+</div>
+
+<!-- ========== 1. ARCHITECTURE ========== -->
+<div class="arch-section">
+  <h2><span class="num">1</span> Worker Architecture</h2>
+
+  <div class="note-box green">
+    <strong>Why hidden iframes instead of Web Workers?</strong>
+    The PlantUML JS engine (compiled from Java via TeaVM) requires a DOM to render SVG &mdash; it uses <code>document.getElementById()</code> and writes directly into DOM elements.
+    Pure Web Workers have no DOM access.
+    Hidden iframes provide the best of both worlds: each iframe has its own DOM <em>and</em> its own JavaScript execution context, so rendering does not block the main thread.
+    This is the same isolation model that GitHub already uses for Mermaid diagrams.
+  </div>
+
+  <p style="color:var(--gh-fg-muted);font-size:0.875rem;margin-bottom:1rem;">
+    Each <code>```plantuml</code> block gets its own hidden <code>&lt;iframe&gt;</code> that acts as a dedicated rendering worker. All iframes render in parallel without blocking the main thread or each other.
+  </p>
+
+  <div class="flow-diagram">
+    <div class="flow-box">
+      <h3>Main thread</h3>
+      <p>Finds <code>```plantuml</code> blocks.<br>Creates one hidden iframe per diagram.<br>Sends source via <code>postMessage</code>.<br>Main thread stays free.</p>
+    </div>
+    <div class="flow-arrow">
+      <span>postMessage</span>
+      <div class="arrow-line"></div>
+      <span style="font-size:0.5625rem;color:var(--gh-fg-subtle)">plantuml source</span>
+    </div>
+    <div class="flow-box highlight">
+      <h3>Hidden iframe (worker)</h3>
+      <p>Loads engine once.<br>Has its own DOM context.<br>Renders SVG off-screen.<br>Sends SVG string back.</p>
+    </div>
+    <div class="flow-arrow">
+      <span>postMessage</span>
+      <div class="arrow-line"></div>
+      <span style="font-size:0.5625rem;color:var(--gh-fg-subtle)">SVG string</span>
+    </div>
+    <div class="flow-box">
+      <h3>Main thread</h3>
+      <p>Receives SVG string.<br>Inserts into visible DOM.<br>Destroys worker iframe.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 2. WORKER IFRAME ========== -->
+<div class="arch-section">
+  <h2><span class="num">2</span> Worker IFrame (rendering side)</h2>
+  <div class="impl-code">
+    <div class="code-tab"><span>plantuml-worker-frame.html</span></div>
+    <pre><span class="comment">// This HTML page is loaded into each hidden iframe.</span>
+<span class="comment">// It contains &lt;script&gt; tags for viz-global.js and plantuml.js,</span>
+<span class="comment">// plus this listener:</span>
+
+<span class="fn">plantumlLoad</span>();
+
+<span class="keyword">const</span> target = document.<span class="fn">createElement</span>(<span class="string">'div'</span>);
+target.id = <span class="string">'out'</span>;
+document.body.<span class="fn">appendChild</span>(target);
+
+window.<span class="fn">addEventListener</span>(<span class="string">'message'</span>, (event) => {
+  <span class="keyword">const</span> { lines, requestId, dark } = event.data;
+
+  <span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="fn">MutationObserver</span>(() => {
+    <span class="keyword">if</span> (target.<span class="fn">querySelector</span>(<span class="string">'svg'</span>)) {
+      observer.<span class="fn">disconnect</span>();
+      window.parent.<span class="fn">postMessage</span>({
+        requestId,
+        svg: target.innerHTML
+      }, <span class="string">'*'</span>);
+    }
+  });
+  observer.<span class="fn">observe</span>(target, { childList: <span class="keyword">true</span>, subtree: <span class="keyword">true</span> });
+
+  window.plantuml.<span class="fn">render</span>(lines, <span class="string">'out'</span>, dark ? { dark: <span class="keyword">true</span> } : <span class="keyword">undefined</span>);
+});</pre>
+  </div>
+</div>
+
+<!-- ========== 3. MAIN THREAD ========== -->
+<div class="arch-section">
+  <h2><span class="num">3</span> Main Thread (dispatcher)</h2>
+  <div class="impl-code">
+    <div class="code-tab"><span>plantuml-worker-dispatcher.js</span></div>
+    <pre><span class="keyword">function</span> <span class="fn">renderInWorker</span>(lines, targetId, dark) {
+  <span class="keyword">const</span> requestId = <span class="string">'puml-'</span> + targetId + <span class="string">'-'</span> + Date.<span class="fn">now</span>();
+
+  <span class="comment">// Create a hidden iframe as a rendering worker</span>
+  <span class="keyword">const</span> iframe = document.<span class="fn">createElement</span>(<span class="string">'iframe'</span>);
+  iframe.src = <span class="string">'plantuml-worker-frame.html'</span>;
+  iframe.style.cssText = <span class="string">'display:none'</span>;
+  document.body.<span class="fn">appendChild</span>(iframe);
+
+  <span class="comment">// Listen for the result</span>
+  <span class="keyword">function</span> <span class="fn">onMessage</span>(e) {
+    <span class="keyword">if</span> (e.data.requestId !== requestId) <span class="keyword">return</span>;
+    window.<span class="fn">removeEventListener</span>(<span class="string">'message'</span>, onMessage);
+
+    <span class="comment">// Insert SVG into the visible target</span>
+    document.<span class="fn">getElementById</span>(targetId).innerHTML = e.data.svg;
+
+    <span class="comment">// Destroy the worker iframe</span>
+    iframe.<span class="fn">remove</span>();
+  }
+  window.<span class="fn">addEventListener</span>(<span class="string">'message'</span>, onMessage);
+
+  <span class="comment">// Send the render request once the iframe is ready</span>
+  iframe.<span class="fn">addEventListener</span>(<span class="string">'load'</span>, () => {
+    iframe.contentWindow.<span class="fn">postMessage</span>(
+      { lines, requestId, dark }, <span class="string">'*'</span>
+    );
+  });
+}</pre>
+  </div>
+</div>
+
+<!-- ========== 4. WHAT IT LOOKS LIKE ========== -->
+<div class="arch-section">
+  <h2><span class="num">4</span> What It Looks Like in a README</h2>
+
+  <div class="note-box green">
+    <strong>Parallel rendering:</strong> Both diagrams below render simultaneously in separate hidden iframes. The main thread stays responsive throughout &mdash; no serialization needed, no render queue.
+  </div>
+
+  <div class="markdown-body">
+    <h1>My Project Architecture</h1>
+    <p>Here's our authentication flow:</p>
+
+    <div class="plantuml-render">
+      <div class="render-header">
+        <span class="tag">
+          <svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="8"/></svg>
+          plantuml &mdash; worker iframe
+        </span>
+        <span class="actions">
+          <button onclick="copyDiagram(this)" title="Copy SVG">copy</button>
+        </span>
+      </div>
+      <div class="diagram-output" id="diagram-1">
+        <div class="loading-state"><div class="spinner"></div> Rendering in worker&hellip;</div>
+      </div>
+    </div>
+
+    <p>And here's the deployment topology:</p>
+
+    <div class="plantuml-render">
+      <div class="render-header">
+        <span class="tag">
+          <svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="8"/></svg>
+          plantuml &mdash; worker iframe
+        </span>
+        <span class="actions">
+          <button onclick="copyDiagram(this)" title="Copy SVG">copy</button>
+        </span>
+      </div>
+      <div class="diagram-output" id="diagram-2">
+        <div class="loading-state"><div class="spinner"></div> Rendering in worker&hellip;</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== STATS ========== -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-value">0</div>
+    <div class="stat-label">Server dependencies</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" id="stat-blocking">0 ms</div>
+    <div class="stat-label">Main thread blocked</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">&infin;</div>
+    <div class="stat-label">Parallel renders</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" id="stat-total">...</div>
+    <div class="stat-label">Total render time</div>
+  </div>
+</div>
+
+<div class="note-box">
+  <strong>Comparison with the basic PoC:</strong> The <a href="github-integration-poc.html" style="color:var(--gh-accent)">basic version</a> runs the engine directly in the page and must serialize renders (one at a time) because the engine uses shared state. This worker version creates one hidden iframe per diagram, so all diagrams render in parallel without blocking the main thread. The trade-off is higher memory usage (one engine instance per iframe) and a slightly longer startup per diagram (iframe creation + engine loading).
+</div>
+
+<!-- ========== SCRIPTS ========== -->
+<script>
+// ─── Worker-based renderer ───
+// Each diagram gets its own hidden iframe that loads the PlantUML engine.
+// The iframe renders the SVG off-screen, sends it back via postMessage,
+// then gets destroyed.  All renders happen in parallel.
+
+var renderStart = performance.now();
+var pendingRenders = 0;
+
+function renderInWorker(lines, targetId, dark) {
+  pendingRenders++;
+  var requestId = 'puml-' + targetId + '-' + Date.now();
+
+  // Build the worker iframe HTML as a blob URL so we don't need
+  // a separate file — the iframe loads plantuml.js and viz-global.js
+  // from the same directory.
+  var workerHtml = '<!DOCTYPE html><html><head>'
+    + '<script src="viz-global.js"><\/script>'
+    + '<script src="plantuml.js"><\/script>'
+    + '<\/head><body>'
+    + '<div id="out"></div>'
+    + '<script>'
+    + 'plantumlLoad();'
+    + 'var target = document.getElementById("out");'
+    + 'window.addEventListener("message", function(e) {'
+    + '  var observer = new MutationObserver(function() {'
+    + '    if (target.querySelector("svg")) {'
+    + '      observer.disconnect();'
+    + '      window.parent.postMessage({ requestId: e.data.requestId, svg: target.innerHTML }, "*");'
+    + '    }'
+    + '  });'
+    + '  observer.observe(target, { childList: true, subtree: true });'
+    + '  window.plantuml.render(e.data.lines, "out", e.data.dark ? { dark: true } : undefined);'
+    + '});'
+    + '<\/script><\/body><\/html>';
+
+  var iframe = document.createElement('iframe');
+  iframe.style.cssText = 'position:absolute;width:0;height:0;border:none;visibility:hidden';
+  document.body.appendChild(iframe);
+
+  function onMessage(e) {
+    if (!e.data || e.data.requestId !== requestId) return;
+    window.removeEventListener('message', onMessage);
+
+    // Insert SVG into the visible target
+    document.getElementById(targetId).innerHTML = e.data.svg;
+
+    // Destroy the worker iframe
+    iframe.remove();
+
+    // Update stats
+    pendingRenders--;
+    if (pendingRenders === 0) {
+      var total = (performance.now() - renderStart).toFixed(0);
+      document.getElementById('stat-total').textContent = total + ' ms';
+    }
+  }
+  window.addEventListener('message', onMessage);
+
+  // We cannot use blob URLs for iframes that load relative scripts.
+  // Instead, use srcdoc which keeps the same origin as the parent,
+  // allowing relative script src to resolve correctly.
+  iframe.srcdoc = workerHtml;
+
+  // Once loaded, send the render request
+  iframe.addEventListener('load', function() {
+    iframe.contentWindow.postMessage({
+      lines: lines,
+      requestId: requestId,
+      dark: dark || false
+    }, '*');
+  });
+}
+
+// ─── Kick off parallel renders ───
+renderInWorker([
+  '@startuml',
+  'participant Client',
+  'participant "Auth API" as Auth',
+  'participant Database as DB',
+  '',
+  'Client -> Auth : POST /login',
+  'Auth -> DB : verify credentials',
+  'DB --> Auth : user record',
+  'Auth --> Client : JWT token',
+  '@enduml'
+], 'diagram-1');
+
+renderInWorker([
+  '@startuml',
+  'node "Load Balancer" as lb',
+  'node "App Node 1" as n1',
+  'node "App Node 2" as n2',
+  'node "App Node 3" as n3',
+  'database "PostgreSQL" as db',
+  '',
+  'lb --> n1',
+  'lb --> n2',
+  'lb --> n3',
+  'n1 --> db',
+  'n2 --> db',
+  'n3 --> db',
+  '@enduml'
+], 'diagram-2');
+
+function copyDiagram(btn) {
+  var container = btn.closest('.plantuml-render');
+  var svg = container.querySelector('.diagram-output').innerHTML;
+  navigator.clipboard.writeText(svg).then(function() {
+    var orig = btn.textContent;
+    btn.textContent = 'copied!';
+    setTimeout(function() { btn.textContent = orig; }, 1500);
+  });
+}
+</script>
+</body>
+</html>

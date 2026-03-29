@@ -108,6 +108,7 @@
 		}
 		.badge-full   { background: color-mix(in srgb, var(--accent) 30%, var(--bg)); color: var(--fg); }
 		.badge-minimal { background: color-mix(in srgb, var(--green) 25%, var(--bg)); color: var(--fg); }
+		.badge-poc { background: color-mix(in srgb, var(--orange) 25%, var(--bg)); color: var(--fg); }
 
 		.desc { font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
 
@@ -242,6 +243,55 @@
 						<span class="pro">Single self-contained HTML file</span>
 						<span class="con">No copy/save/export features</span>
 						<span class="con">Not suitable as-is for end users</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="editor-name">
+							<a href="github-integration-poc.html">GitHub PoC</a>
+							<span class="badge badge-poc">PoC</span>
+						</div>
+					</td>
+					<td class="desc">
+						Proof of concept showing how GitHub could render
+						<code>```plantuml</code> fenced code blocks in Markdown.
+						Documents the sandbox architecture (<code>postMessage</code>-based
+						iframe isolation), provides reference code for both the iframe renderer
+						and the parent-side Markdown scanner, and renders two live example
+						diagrams using a serialized render queue.
+						See <a href="GITHUB_INTEGRATION.md">GITHUB_INTEGRATION.md</a> for full documentation.
+					</td>
+					<td class="pros-cons">
+						<span class="pro">Self-contained – single HTML file, no extra assets</span>
+						<span class="pro">Live rendering with the real PlantUML JS engine</span>
+						<span class="pro">Low memory – single engine instance shared across diagrams</span>
+						<span class="pro">Includes full architecture documentation &amp; reference code</span>
+						<span class="con">Sequential rendering – diagrams render one at a time</span>
+						<span class="con">Blocks the main thread during rendering</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="editor-name">
+							<a href="github-integration-web-worker-poc.html">GitHub PoC Worker</a>
+							<span class="badge badge-poc">PoC</span>
+						</div>
+					</td>
+					<td class="desc">
+						Variant of the GitHub integration PoC that uses
+						<strong>hidden iframes as rendering workers</strong>.
+						Each <code>```plantuml</code> block gets its own off-screen iframe
+						with a dedicated engine instance, enabling fully parallel rendering.
+						The main thread stays responsive throughout.
+						Worker iframes are destroyed after rendering.
+					</td>
+					<td class="pros-cons">
+						<span class="pro">Parallel rendering – all diagrams render simultaneously</span>
+						<span class="pro">Non-blocking – main thread stays free during rendering</span>
+						<span class="pro">Worker iframes are auto-destroyed after rendering</span>
+						<span class="pro">Same postMessage architecture GitHub already uses for Mermaid</span>
+						<span class="con">Higher memory – one engine instance per diagram</span>
+						<span class="con">Slightly longer startup per diagram (iframe + engine load)</span>
 					</td>
 				</tr>
 			</tbody>
