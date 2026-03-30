@@ -306,6 +306,37 @@ public class VegaTestData {
 	}
 
 	// ----------------------------------------------------------
+	// Generic text output checking
+	// ----------------------------------------------------------
+
+	/**
+	 * Compares the actual output (from {@code baos}) against a reference file.
+	 * If the reference file does not exist yet, it is created and the test is
+	 * recorded as "generated".
+	 *
+	 * @param pumlPath       the {@code .puml} test file
+	 * @param baos           the rendered output
+	 * @param suffix         image-index suffix ({@code ""} or {@code "-1"}, …)
+	 * @param extension      the reference-file extension (e.g. {@code ".txt"})
+	 * @param label          a human-readable format label for assertion messages
+	 * @param generatedFiles collects newly created reference files
+	 */
+	private void checkTextOutput(Path pumlPath, ByteArrayOutputStream baos, String suffix, String extension,
+			String label, List<Path> generatedFiles) throws IOException {
+		final String actualOutput = normalizeLineEndings(new String(baos.toByteArray(), UTF_8));
+		final Path expectedFile = getExpectedFile(pumlPath, suffix, extension);
+
+		if (Files.exists(expectedFile) == false) {
+			Files.write(expectedFile, actualOutput.getBytes(UTF_8));
+			generatedFiles.add(expectedFile);
+			return;
+		}
+
+		final String expectedOutput = normalizeLineEndings(new String(Files.readAllBytes(expectedFile), UTF_8));
+		assertEquals(expectedOutput, actualOutput, label + " output mismatch for " + pumlPath);
+	}
+
+	// ----------------------------------------------------------
 	// Description checking
 	// ----------------------------------------------------------
 
@@ -377,18 +408,9 @@ public class VegaTestData {
 
 	private void checkDebugOutput(Path pumlPath, VegaTestData data, ByteArrayOutputStream baos, String suffix,
 			int nbImages, int imageIndex, List<Path> generatedFiles) throws IOException {
+		checkTextOutput(pumlPath, baos, suffix, ".txt", "DEBUG", generatedFiles);
+
 		final String actualOutput = normalizeLineEndings(new String(baos.toByteArray(), UTF_8));
-		final Path expectedFile = getExpectedFile(pumlPath, suffix, ".txt");
-
-		if (Files.exists(expectedFile) == false) {
-			Files.write(expectedFile, actualOutput.getBytes(UTF_8));
-			generatedFiles.add(expectedFile);
-			return;
-		}
-
-		final String expectedOutput = normalizeLineEndings(new String(Files.readAllBytes(expectedFile), UTF_8));
-		assertEquals(expectedOutput, actualOutput, "DEBUG output mismatch for " + pumlPath);
-
 		checkDebugContains(pumlPath, data, actualOutput, nbImages, imageIndex);
 	}
 
@@ -416,17 +438,7 @@ public class VegaTestData {
 
 	private void checkPreprocOutput(Path pumlPath, ByteArrayOutputStream baos, String suffix, List<Path> generatedFiles)
 			throws IOException {
-		final String actualOutput = normalizeLineEndings(new String(baos.toByteArray(), UTF_8));
-		final Path expectedFile = getExpectedFile(pumlPath, suffix, ".preproc");
-
-		if (Files.exists(expectedFile) == false) {
-			Files.write(expectedFile, actualOutput.getBytes(UTF_8));
-			generatedFiles.add(expectedFile);
-			return;
-		}
-
-		final String expectedOutput = normalizeLineEndings(new String(Files.readAllBytes(expectedFile), UTF_8));
-		assertEquals(expectedOutput, actualOutput, "PREPROC output mismatch for " + pumlPath);
+		checkTextOutput(pumlPath, baos, suffix, ".preproc", "PREPROC", generatedFiles);
 	}
 
 	// ----------------------------------------------------------
@@ -456,17 +468,7 @@ public class VegaTestData {
 
 	private void checkLatexOutput(Path pumlPath, ByteArrayOutputStream baos, String suffix, List<Path> generatedFiles)
 			throws IOException {
-		final String actualOutput = normalizeLineEndings(new String(baos.toByteArray(), UTF_8));
-		final Path expectedFile = getExpectedFile(pumlPath, suffix, ".tex");
-
-		if (Files.exists(expectedFile) == false) {
-			Files.write(expectedFile, actualOutput.getBytes(UTF_8));
-			generatedFiles.add(expectedFile);
-			return;
-		}
-
-		final String expectedOutput = normalizeLineEndings(new String(Files.readAllBytes(expectedFile), UTF_8));
-		assertEquals(expectedOutput, actualOutput, "LATEX output mismatch for " + pumlPath);
+		checkTextOutput(pumlPath, baos, suffix, ".tex", "LATEX", generatedFiles);
 	}
 
 	// ----------------------------------------------------------
@@ -475,17 +477,7 @@ public class VegaTestData {
 
 	private void checkGraphmlOutput(Path pumlPath, ByteArrayOutputStream baos, String suffix, List<Path> generatedFiles)
 			throws IOException {
-		final String actualOutput = normalizeLineEndings(new String(baos.toByteArray(), UTF_8));
-		final Path expectedFile = getExpectedFile(pumlPath, suffix, ".graphml");
-
-		if (Files.exists(expectedFile) == false) {
-			Files.write(expectedFile, actualOutput.getBytes(UTF_8));
-			generatedFiles.add(expectedFile);
-			return;
-		}
-
-		final String expectedOutput = normalizeLineEndings(new String(Files.readAllBytes(expectedFile), UTF_8));
-		assertEquals(expectedOutput, actualOutput, "GRAPHML output mismatch for " + pumlPath);
+		checkTextOutput(pumlPath, baos, suffix, ".graphml", "GRAPHML", generatedFiles);
 	}
 
 	// ----------------------------------------------------------
@@ -494,17 +486,7 @@ public class VegaTestData {
 
 	private void checkScxmlOutput(Path pumlPath, ByteArrayOutputStream baos, String suffix, List<Path> generatedFiles)
 			throws IOException {
-		final String actualOutput = normalizeLineEndings(new String(baos.toByteArray(), UTF_8));
-		final Path expectedFile = getExpectedFile(pumlPath, suffix, ".scxml");
-
-		if (Files.exists(expectedFile) == false) {
-			Files.write(expectedFile, actualOutput.getBytes(UTF_8));
-			generatedFiles.add(expectedFile);
-			return;
-		}
-
-		final String expectedOutput = normalizeLineEndings(new String(Files.readAllBytes(expectedFile), UTF_8));
-		assertEquals(expectedOutput, actualOutput, "SCXML output mismatch for " + pumlPath);
+		checkTextOutput(pumlPath, baos, suffix, ".scxml", "SCXML", generatedFiles);
 	}
 
 	// ----------------------------------------------------------
