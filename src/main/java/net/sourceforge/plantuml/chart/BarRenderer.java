@@ -142,7 +142,7 @@ public class BarRenderer {
 
 			// For negative values, bar extends from zero down to the value
 			// For positive values, bar extends from zero up to the value
-			final double zeroY = plotHeight - (0 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
+			final double zeroY = Math.max(0,Math.min(plotHeight,plotHeight - (0 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight));
 			final double valueY = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
 
 			final double y;
@@ -254,7 +254,7 @@ public class BarRenderer {
 				final double x = categoryIndex * categoryWidth + groupOffset + seriesIndex * barWidth;
 
 				// Calculate bar position and height relative to zero
-				final double zeroY = plotHeight - (0 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
+				final double zeroY = Math.max(0,Math.min(plotHeight,plotHeight - (0 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight));
 				final double valueY = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
 
 				final double y;
