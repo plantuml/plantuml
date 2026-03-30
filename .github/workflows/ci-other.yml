@@ -86,11 +86,8 @@ jobs:
           echo "=== Test classes on disk ==="
           find src/test/java -name '*Test.java' | sort
 
-      - name: Compile
-        run: ./gradlew -q compileJava --no-daemon
-
-      - name: Test
-        run: ./gradlew test --no-daemon -i
+      - name: Build (GPL only) & Test
+        run: ./gradlew test -Pfast --no-daemon -i
 
       - name: Test Summary
         if: always()

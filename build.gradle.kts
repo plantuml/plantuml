@@ -924,12 +924,11 @@ tasks.register<Zip>("teavmZip") {
 
 
 if (fastBuild) {
-    // 1) Skip tests
-    tasks.withType<Test>().configureEach {
-        enabled = false
-    }
+    // -Pfast: build only the GPL jar, skip everything else.
+    // Tests are NOT disabled here so that `./gradlew test -Pfast` still works
+    // (useful in CI to compile fast then run tests).
 
-    // 2) Skip javadoc (both generation and jar)
+    // 1) Skip javadoc (both generation and jar)
     tasks.withType<Javadoc>().configureEach {
         enabled = false
     }
@@ -940,17 +939,22 @@ if (fastBuild) {
         enabled = false
     }
 
-    // 3) Optional but consistent: skip jacoco in fast mode
+    // 2) Skip jacoco
     tasks.matching { it.name.startsWith("jacoco") }.configureEach {
         enabled = false
     }
 
-    // 4) Key point: build only produces the jar
+    // 3) Skip pdfJar
+    tasks.matching { it.name == "pdfJar" }.configureEach {
+        enabled = false
+    }
+
+    // 4) Key point: build only produces the GPL jar (no check, no pdfJar)
     tasks.named("build") {
         setDependsOn(listOf(tasks.named("jar")))
     }
 
-    // Optional: if someone runs "check" explicitly, skip it in fast mode
+    // 5) Skip check when invoked via build (tests can still be run explicitly)
     tasks.named("check") {
         enabled = false
     }

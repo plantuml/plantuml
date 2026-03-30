@@ -13,7 +13,11 @@ println("Version is " + version)
 val javaVersion = JavaVersion.current()
 println("Current Java version is " + javaVersion)
 
-if (isCiBuild && !isDevTest) {
+val fastBuild = settings.providers.gradleProperty("fast").isPresent
+
+if (fastBuild) {
+    println("-Pfast: only GPL will be built (skipping licence subprojects)")
+} else if (isCiBuild && !isDevTest) {
     include("plantuml-asl")
     include("plantuml-bsd")
     include("plantuml-epl")
