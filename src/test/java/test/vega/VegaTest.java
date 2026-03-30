@@ -160,6 +160,7 @@ class VegaTest {
 					diagramClass[0]);
 			throw e;
 		} catch (AssertionError | RuntimeException e) {
+			e.printStackTrace();
 			if (allowFailure) {
 				recordResult(relativePath, "skipped", System.currentTimeMillis() - startTime, e.getMessage(),
 						diagramClass[0]);
