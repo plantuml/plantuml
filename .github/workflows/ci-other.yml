@@ -70,10 +70,11 @@ jobs:
 
       - name: Diagnostic
         run: |
-          echo "Vega .puml files: $(find src/test/resources/vega -name '*.puml' | wc -l)"
-          echo "Vega subdirs:    $(find src/test/resources/vega -type d | wc -l)"
-          echo "VegaTest.java:   $(test -f src/test/java/test/vega/VegaTest.java && echo OK || echo NOT FOUND)"
-          echo "Test classes:     $(find src/test/java -name '*Test.java' | wc -l)"
+          cat <<EOF
+          Vega .puml files: $(find src/test/resources/vega -name '*.puml' | wc -l)
+          Vega subdirs:    $(find src/test/resources/vega -type d | wc -l)
+          Test classes:     $(find src/test/java -name '*Test.java' | wc -l)
+          EOF
 
       - name: Build (GPL only) & Test
         run: ./gradlew test -Pfast --no-daemon -i
