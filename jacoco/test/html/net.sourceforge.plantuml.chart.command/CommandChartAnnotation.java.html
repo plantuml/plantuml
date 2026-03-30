@@ -87,7 +87,7 @@ public class CommandChartAnnotation extends SingleLineCommand2&lt;ChartDiagram&g
 <span class="nc" id="L87">		final String text = arg.get(&quot;TEXT&quot;, 0);</span>
 <span class="nc" id="L88">		final String xPosStr = arg.get(&quot;XPOS&quot;, 0).trim();</span>
 <span class="nc" id="L89">		final String yPosStr = arg.get(&quot;YPOS&quot;, 0).trim();</span>
-<span class="nc" id="L90">		final String arrowStr = arg.getLazzy(&quot;ARROW&quot;, 0);</span>
+<span class="nc" id="L90">		final String arrowStr = arg.get(&quot;ARROW&quot;, 0);</span>
 
 		// Parse X position - can be either a string (categorical) or numeric
 		Object xPosition;

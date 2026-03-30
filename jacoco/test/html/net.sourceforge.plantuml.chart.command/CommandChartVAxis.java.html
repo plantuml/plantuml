@@ -89,14 +89,14 @@ public class CommandChartVAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 <span class="nc" id="L91">		final String axisType = arg.get(&quot;AXIS&quot;, 0);</span>
-<span class="nc" id="L92">		final String title = arg.getLazzy(&quot;TITLE&quot;, 0);</span>
-<span class="nc" id="L93">		final String minStr = arg.getLazzy(&quot;RANGE&quot;, 0);</span>
-<span class="nc" id="L94">		final String maxStr = arg.getLazzy(&quot;RANGE&quot;, 1);</span>
-<span class="nc" id="L95">		final String labelsStr = arg.getLazzy(&quot;LABELS&quot;, 0);</span>
-<span class="nc" id="L96">		final String ticksStr = arg.getLazzy(&quot;TICKS&quot;, 0);</span>
-<span class="nc" id="L97">		final String spacingStr = arg.getLazzy(&quot;SPACING&quot;, 0);</span>
-<span class="nc" id="L98">		final String labelTopStr = arg.getLazzy(&quot;LABELTOP&quot;, 0);</span>
-<span class="nc" id="L99">		final String gridStr = arg.getLazzy(&quot;GRID&quot;, 0);</span>
+<span class="nc" id="L92">		final String title = arg.get(&quot;TITLE&quot;, 0);</span>
+<span class="nc" id="L93">		final String minStr = arg.get(&quot;RANGE&quot;, 0);</span>
+<span class="nc" id="L94">		final String maxStr = arg.get(&quot;RANGE&quot;, 1);</span>
+<span class="nc" id="L95">		final String labelsStr = arg.get(&quot;LABELS&quot;, 0);</span>
+<span class="nc" id="L96">		final String ticksStr = arg.get(&quot;TICKS&quot;, 0);</span>
+<span class="nc" id="L97">		final String spacingStr = arg.get(&quot;SPACING&quot;, 0);</span>
+<span class="nc" id="L98">		final String labelTopStr = arg.get(&quot;LABELTOP&quot;, 0);</span>
+<span class="nc" id="L99">		final String gridStr = arg.get(&quot;GRID&quot;, 0);</span>
 
 		// If labels are provided, this is for horizontal bar chart mode
 <span class="nc bnc" id="L102" title="All 2 branches missed.">		if (labelsStr != null) {</span>

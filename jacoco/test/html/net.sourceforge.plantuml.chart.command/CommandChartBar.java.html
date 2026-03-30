@@ -81,10 +81,10 @@ public class CommandChartBar extends SingleLineCommand2&lt;ChartDiagram&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L84">		final String stereo = arg.getLazzy(&quot;STEREO&quot;, 0);</span>
-<span class="nc" id="L85">		final String name = arg.getLazzy(&quot;NAME&quot;, 0);</span>
+<span class="nc" id="L84">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L85">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
 <span class="nc" id="L86">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
-<span class="nc" id="L87">		final String colorStr = arg.getLazzy(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L87">		final String colorStr = arg.get(&quot;COLOR&quot;, 0);</span>
 
 <span class="nc" id="L89">		final List&lt;Double&gt; values = parseValues(data);</span>
 <span class="nc bnc" id="L90" title="All 2 branches missed.">		if (values == null)</span>
@@ -103,7 +103,7 @@ public class CommandChartBar extends SingleLineCommand2&lt;ChartDiagram&gt; {
 		}
 
 		// Check if LABELS keyword was present
-<span class="nc" id="L106">		final String labelsStr = arg.getLazzy(&quot;LABELS&quot;, 0);</span>
+<span class="nc" id="L106">		final String labelsStr = arg.get(&quot;LABELS&quot;, 0);</span>
 <span class="nc bnc" id="L107" title="All 2 branches missed.">		if (labelsStr != null) {</span>
 <span class="nc" id="L108">			series.setShowLabels(true);</span>
 		}

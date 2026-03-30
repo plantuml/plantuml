@@ -85,10 +85,10 @@ public class CommandChartLine extends SingleLineCommand2&lt;ChartDiagram&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L88">		final String stereo = arg.getLazzy(&quot;STEREO&quot;, 0);</span>
-<span class="nc" id="L89">		final String name = arg.getLazzy(&quot;NAME&quot;, 0);</span>
+<span class="nc" id="L88">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L89">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
 <span class="nc" id="L90">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
-<span class="nc" id="L91">		final String colorStr = arg.getLazzy(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L91">		final String colorStr = arg.get(&quot;COLOR&quot;, 0);</span>
 
 		// Check if data contains coordinate pairs (x,y) format
 		final ChartSeries series;
@@ -121,13 +121,13 @@ public class CommandChartLine extends SingleLineCommand2&lt;ChartDiagram&gt; {
 		}
 
 		// Check if this line should use the secondary v-axis
-<span class="nc" id="L124">		final String secondaryAxisStr = arg.getLazzy(&quot;V2&quot;, 0);</span>
+<span class="nc" id="L124">		final String secondaryAxisStr = arg.get(&quot;V2&quot;, 0);</span>
 <span class="nc bnc" id="L125" title="All 2 branches missed.">		if (secondaryAxisStr != null) {</span>
 <span class="nc" id="L126">			series.setUseSecondaryAxis(true);</span>
 		}
 
 		// Check if labels keyword was present
-<span class="nc" id="L130">		final String labelsStr = arg.getLazzy(&quot;LABELS&quot;, 0);</span>
+<span class="nc" id="L130">		final String labelsStr = arg.get(&quot;LABELS&quot;, 0);</span>
 <span class="nc bnc" id="L131" title="All 2 branches missed.">		if (labelsStr != null) {</span>
 <span class="nc" id="L132">			series.setShowLabels(true);</span>
 		}

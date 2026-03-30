@@ -81,13 +81,13 @@ public class CommandChartHAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L84">		final String title = arg.getLazzy(&quot;TITLE&quot;, 0);</span>
-<span class="nc" id="L85">		final String minStr = arg.getLazzy(&quot;RANGE&quot;, 0);</span>
-<span class="nc" id="L86">		final String maxStr = arg.getLazzy(&quot;RANGE&quot;, 1);</span>
-<span class="nc" id="L87">		final String data = arg.getLazzy(&quot;DATA&quot;, 0);</span>
-<span class="nc" id="L88">		final String spacingStr = arg.getLazzy(&quot;SPACING&quot;, 0);</span>
-<span class="nc" id="L89">		final String labelRightStr = arg.getLazzy(&quot;LABELRIGHT&quot;, 0);</span>
-<span class="nc" id="L90">		final String gridStr = arg.getLazzy(&quot;GRID&quot;, 0);</span>
+<span class="nc" id="L84">		final String title = arg.get(&quot;TITLE&quot;, 0);</span>
+<span class="nc" id="L85">		final String minStr = arg.get(&quot;RANGE&quot;, 0);</span>
+<span class="nc" id="L86">		final String maxStr = arg.get(&quot;RANGE&quot;, 1);</span>
+<span class="nc" id="L87">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
+<span class="nc" id="L88">		final String spacingStr = arg.get(&quot;SPACING&quot;, 0);</span>
+<span class="nc" id="L89">		final String labelRightStr = arg.get(&quot;LABELRIGHT&quot;, 0);</span>
+<span class="nc" id="L90">		final String gridStr = arg.get(&quot;GRID&quot;, 0);</span>
 
 		// Parse tick spacing if present (do this first, before any returns)
 <span class="nc bnc" id="L93" title="All 2 branches missed.">		if (spacingStr != null) {</span>
