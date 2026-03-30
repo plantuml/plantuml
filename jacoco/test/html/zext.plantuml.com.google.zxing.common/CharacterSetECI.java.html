@@ -101,7 +101,7 @@ public final class CharacterSetECI extends ECI {
    *   but unsupported
    */
   public static CharacterSetECI getCharacterSetECIByName(String name) {
-<span class="fc bfc" id="L104" title="All 2 branches covered.">    if (NAME_TO_ECI == null) {</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">    if (NAME_TO_ECI == null) {</span>
 <span class="fc" id="L105">      initialize();</span>
     }
 <span class="fc" id="L107">    return (CharacterSetECI) NAME_TO_ECI.get(name);</span>
