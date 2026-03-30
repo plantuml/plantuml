@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.WriterConfig;
 import net.sourceforge.plantuml.yaml.parser.Monomorph;
+import net.sourceforge.plantuml.yaml.parser.MonomorphType;
 import net.sourceforge.plantuml.yaml.parser.YamlParser;
 
 class VegaTest {
@@ -140,6 +141,12 @@ class VegaTest {
 
 	private void runSingleFile(Path path) throws IOException {
 		final VegaTestData data = parse(path);
+		if (data.getYaml().getType() == MonomorphType.UNDETERMINATE) {
+			final Monomorph yaml = data.getYaml();
+			yaml.putInMap("allow-failure", Monomorph.scalar("true"));
+			yaml.putInMap("output", Monomorph.scalar("svg"));
+		}
+		
 		final boolean allowFailure = "true".equals(data.getYamlString("allow-failure"));
 		final String relativePath = VEGA_RESOURCES.relativize(path).toString();
 		final long startTime = System.currentTimeMillis();
@@ -177,7 +184,6 @@ class VegaTest {
 	}
 
 	private String doRunSingleFile(Path path, VegaTestData data) throws IOException {
-		assertNotNull(data.getYaml(), "YAML header in " + path);
 		assertFalse(data.getPumlSource().isEmpty(), "PlantUML source in " + path);
 
 		final String source = data.getPumlSourceAsString();

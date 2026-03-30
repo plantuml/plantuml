@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="116px" preserveAspectRatio="none" style="width:109px;height:116px;background:#FFFFFF;" version="1.1" viewBox="0 0 109 116" width="109px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="1" id="part1-lifeline">
+      <g>
+        <title>Alice</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="23.225" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="27" x2="27" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="Bob" data-source-line="1" id="part2-lifeline">
+      <g>
+        <title>Bob</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="74.9333" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="78.45" x2="78.45" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="1" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="5" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="30.45" x="12" y="22.8889">Alice</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="1" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="5" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="30.45" x="12" y="97.8889">Alice</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="Bob" data-source-line="1" id="part2-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.9667" x="59.45" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="24.9667" x="66.45" y="22.8889">Bob</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="Bob" data-source-line="1" id="part2-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.9667" x="59.45" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="24.9667" x="66.45" y="97.8889">Bob</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="1" id="msg1">
+      <polygon fill="#181818" points="66.9333,59,76.9333,63,66.9333,67,70.9333,63" style="stroke:#181818;stroke-width:1;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="27.225" x2="72.9333" y1="63" y2="63"/>
+      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="27.625" x="34.225" y="58.1111">hello</text>
+    </g>
+  </g>
+</svg>
