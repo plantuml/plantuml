@@ -89,14 +89,14 @@ public class CommandChartVAxis extends SingleLineCommand2<ChartDiagram> {
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		final String axisType = arg.get("AXIS", 0);
-		final String title = arg.getLazzy("TITLE", 0);
-		final String minStr = arg.getLazzy("RANGE", 0);
-		final String maxStr = arg.getLazzy("RANGE", 1);
-		final String labelsStr = arg.getLazzy("LABELS", 0);
-		final String ticksStr = arg.getLazzy("TICKS", 0);
-		final String spacingStr = arg.getLazzy("SPACING", 0);
-		final String labelTopStr = arg.getLazzy("LABELTOP", 0);
-		final String gridStr = arg.getLazzy("GRID", 0);
+		final String title = arg.get("TITLE", 0);
+		final String minStr = arg.get("RANGE", 0);
+		final String maxStr = arg.get("RANGE", 1);
+		final String labelsStr = arg.get("LABELS", 0);
+		final String ticksStr = arg.get("TICKS", 0);
+		final String spacingStr = arg.get("SPACING", 0);
+		final String labelTopStr = arg.get("LABELTOP", 0);
+		final String gridStr = arg.get("GRID", 0);
 
 		// If labels are provided, this is for horizontal bar chart mode
 		if (labelsStr != null) {

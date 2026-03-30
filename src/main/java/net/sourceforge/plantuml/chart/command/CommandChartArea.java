@@ -85,10 +85,10 @@ public class CommandChartArea extends SingleLineCommand2<ChartDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-		final String stereo = arg.getLazzy("STEREO", 0);
-		final String name = arg.getLazzy("NAME", 0);
+		final String stereo = arg.get("STEREO", 0);
+		final String name = arg.get("NAME", 0);
 		final String data = arg.get("DATA", 0);
-		final String colorStr = arg.getLazzy("COLOR", 0);
+		final String colorStr = arg.get("COLOR", 0);
 
 		final List<Double> values = parseValues(data);
 		if (values == null)
@@ -107,13 +107,13 @@ public class CommandChartArea extends SingleLineCommand2<ChartDiagram> {
 		}
 
 		// Check if this area should use the secondary v-axis
-		final String secondaryAxisStr = arg.getLazzy("V2", 0);
+		final String secondaryAxisStr = arg.get("V2", 0);
 		if (secondaryAxisStr != null) {
 			series.setUseSecondaryAxis(true);
 		}
 
 		// Check if labels keyword was present
-		final String labelsStr = arg.getLazzy("LABELS", 0);
+		final String labelsStr = arg.get("LABELS", 0);
 		if (labelsStr != null) {
 			series.setShowLabels(true);
 		}

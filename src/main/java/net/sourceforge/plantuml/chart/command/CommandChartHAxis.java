@@ -81,13 +81,13 @@ public class CommandChartHAxis extends SingleLineCommand2<ChartDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-		final String title = arg.getLazzy("TITLE", 0);
-		final String minStr = arg.getLazzy("RANGE", 0);
-		final String maxStr = arg.getLazzy("RANGE", 1);
-		final String data = arg.getLazzy("DATA", 0);
-		final String spacingStr = arg.getLazzy("SPACING", 0);
-		final String labelRightStr = arg.getLazzy("LABELRIGHT", 0);
-		final String gridStr = arg.getLazzy("GRID", 0);
+		final String title = arg.get("TITLE", 0);
+		final String minStr = arg.get("RANGE", 0);
+		final String maxStr = arg.get("RANGE", 1);
+		final String data = arg.get("DATA", 0);
+		final String spacingStr = arg.get("SPACING", 0);
+		final String labelRightStr = arg.get("LABELRIGHT", 0);
+		final String gridStr = arg.get("GRID", 0);
 
 		// Parse tick spacing if present (do this first, before any returns)
 		if (spacingStr != null) {
