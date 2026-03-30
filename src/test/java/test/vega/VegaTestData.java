@@ -283,17 +283,17 @@ public class VegaTestData {
 					if (fileFormat == FileFormat.DEBUG)
 						checkDebugOutput(path, data, baos, suffix, nbImages, imageIndex, generatedFiles);
 					else if (fileFormat == FileFormat.LATEX_FIXED)
-						checkLatexOutput(path, baos, suffix, generatedFiles);
+						checkTextOutput(path, baos, suffix, ".tex", "LATEX", generatedFiles);
 					else if (fileFormat == FileFormat.SVG_FIXED)
 						checkSvgOutput(path, baos, suffix, generatedFiles);
 					else if (fileFormat == FileFormat.SCXML)
-						checkScxmlOutput(path, baos, suffix, generatedFiles);
+						checkTextOutput(path, baos, suffix, ".scxml", "SCXML", generatedFiles);
 					else if (fileFormat == FileFormat.GRAPHML)
-						checkGraphmlOutput(path, baos, suffix, generatedFiles);
+						checkTextOutput(path, baos, suffix, ".graphml", "GRAPHML", generatedFiles);
 					else if (fileFormat.name().startsWith("XMI"))
 						checkXmiOutput(path, baos, suffix, generatedFiles);
 					else if (fileFormat == FileFormat.PREPROC)
-						checkPreprocOutput(path, baos, suffix, generatedFiles);
+						checkTextOutput(path, baos, suffix, ".preproc", "PREPROC", generatedFiles);
 
 				}
 			}
@@ -432,14 +432,6 @@ public class VegaTestData {
 			assertFalse(actualOutput.contains(needle), "DEBUG output should not contain '" + needle + "' for " + label);
 	}
 
-	// ----------------------------------------------------------
-	// PREPROC output: compare with .preproc reference file
-	// ----------------------------------------------------------
-
-	private void checkPreprocOutput(Path pumlPath, ByteArrayOutputStream baos, String suffix, List<Path> generatedFiles)
-			throws IOException {
-		checkTextOutput(pumlPath, baos, suffix, ".preproc", "PREPROC", generatedFiles);
-	}
 
 	// ----------------------------------------------------------
 	// SVG output: compare cleaned SVG with .svg reference file
@@ -462,32 +454,6 @@ public class VegaTestData {
 				"SVG output mismatch for " + pumlPath);
 	}
 
-	// ----------------------------------------------------------
-	// LATEX output: compare with .tex reference file
-	// ----------------------------------------------------------
-
-	private void checkLatexOutput(Path pumlPath, ByteArrayOutputStream baos, String suffix, List<Path> generatedFiles)
-			throws IOException {
-		checkTextOutput(pumlPath, baos, suffix, ".tex", "LATEX", generatedFiles);
-	}
-
-	// ----------------------------------------------------------
-	// GRAPHML output: compare with .graphml reference file
-	// ----------------------------------------------------------
-
-	private void checkGraphmlOutput(Path pumlPath, ByteArrayOutputStream baos, String suffix, List<Path> generatedFiles)
-			throws IOException {
-		checkTextOutput(pumlPath, baos, suffix, ".graphml", "GRAPHML", generatedFiles);
-	}
-
-	// ----------------------------------------------------------
-	// SCXML output: compare with .scxml reference file
-	// ----------------------------------------------------------
-
-	private void checkScxmlOutput(Path pumlPath, ByteArrayOutputStream baos, String suffix, List<Path> generatedFiles)
-			throws IOException {
-		checkTextOutput(pumlPath, baos, suffix, ".scxml", "SCXML", generatedFiles);
-	}
 
 	// ----------------------------------------------------------
 	// XMI output: compare with .xmi reference file
