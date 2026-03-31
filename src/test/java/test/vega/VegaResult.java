@@ -2,17 +2,21 @@ package test.vega;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonObject;
 
-public record VegaResult(String path, VegaStatus status, long durationMs, Class<?> diagramClass, Throwable e,
+public record VegaResult(Path path, VegaStatus status, long durationMs, Class<?> diagramClass, Throwable e,
 		String tag) {
 
 	public JsonObject toJsonObject() {
-		final JsonObject entry = new JsonObject().add("file", path).add("status", status.name().toLowerCase())
+		final JsonObject entry = new JsonObject() //
+				.add("file", path.toString()) //
+				.add("folder", path.getParent().toString()) //
+				.add("status", status.name().toLowerCase()) //
 				.add("duration_ms", durationMs);
 
 		if (tag != null)

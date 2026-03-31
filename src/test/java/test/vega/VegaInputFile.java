@@ -263,7 +263,7 @@ public class VegaInputFile {
 	}
 
 	private void recordResult(VegaStatus status, long durationMs, Class<?> diagramClass, Throwable e) {
-		final String relativePath = VegaTest.VEGA_RESOURCES.relativize(path).toString();
+		final Path relativePath = VegaTest.VEGA_RESOURCES.relativize(path);
 		final String tag = getYamlString("tag");
 
 		final JsonObject json = new VegaResult(relativePath, status, durationMs, diagramClass, e, tag).toJsonObject();
