@@ -16,21 +16,25 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DynamicContainer;
 import org.junit.jupiter.api.DynamicNode;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.junit.jupiter.api.parallel.Isolated;
 
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.WriterConfig;
-import net.sourceforge.plantuml.yaml.parser.Monomorph;
-import net.sourceforge.plantuml.yaml.parser.YamlParser;
+import net.sourceforge.plantuml.log.Logme;
 
+@Execution(ExecutionMode.SAME_THREAD)
+@Isolated
 class VegaTest {
-
-	private static final String YAML_DELIMITER = "---";
 
 	public static final Path VEGA_RESOURCES = Paths.get("src", "test", "resources", "vega");
 
@@ -38,6 +42,16 @@ class VegaTest {
 
 	static {
 		TitledDiagram.FORCE_SMETANA = true;
+	}
+
+	@BeforeEach
+	void setUp() {
+		Logme.HIDE_EXCEPTION = true;
+	}
+
+	@AfterEach
+	void tearDown() {
+		Logme.HIDE_EXCEPTION = false;
 	}
 
 	@AfterAll
@@ -111,7 +125,7 @@ class VegaTest {
 			final String dirName = entry.getKey();
 			final List<DynamicTest> tests = entry.getValue().stream().map(path -> {
 				final String fileName = path.getFileName().toString();
-				return DynamicTest.dynamicTest(fileName, () -> parse(path).runSingleFile());
+				return DynamicTest.dynamicTest(fileName, () -> VegaInputFile.parse(path).runSingleFile());
 			}).collect(Collectors.toList());
 
 			if (dirName.isEmpty())
@@ -121,49 +135,6 @@ class VegaTest {
 
 		}
 		return containers;
-	}
-
-	// ----------------------------------------------------------
-	// Parsing: split .puml file into YAML header + PlantUML body
-	// ----------------------------------------------------------
-
-	static VegaTestData parse(Path path) throws IOException {
-		final List<String> allLines = Files.readAllLines(path);
-
-		final List<String> yamlLines = new ArrayList<>();
-		final List<String> pumlLines = new ArrayList<>();
-
-		boolean insideYaml = false;
-		boolean yamlDone = false;
-
-		for (final String line : allLines) {
-			if (yamlDone == false && line.trim().equals(YAML_DELIMITER)) {
-				if (insideYaml == false) {
-					insideYaml = true;
-					continue;
-				} else {
-					insideYaml = false;
-					yamlDone = true;
-					continue;
-				}
-			}
-
-			if (insideYaml)
-				yamlLines.add(line);
-			else if (yamlDone)
-				pumlLines.add(line);
-			else
-				pumlLines.add(line);
-
-		}
-
-		final Monomorph yaml;
-		if (yamlLines.isEmpty())
-			yaml = new Monomorph();
-		else
-			yaml = new YamlParser().parse(yamlLines);
-
-		return new VegaTestData(path, yaml, pumlLines);
 	}
 
 }

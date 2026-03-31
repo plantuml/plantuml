@@ -45,6 +45,8 @@ public class Logme {
 
 	private static final Logger logger;
 
+	public static boolean HIDE_EXCEPTION;
+
 	static {
 		if (!TeaVM.isTeaVM()) {
 			logger = Logger.getLogger("com.plantuml");
@@ -58,6 +60,9 @@ public class Logme {
 	}
 
 	public static void error(Throwable thrown) {
+		if (HIDE_EXCEPTION)
+			return;
+
 		if (!TeaVM.isTeaVM()) {
 			logger.log(Level.SEVERE, "", thrown);
 		}

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="120px" preserveAspectRatio="none" style="width:384px;height:120px;background:#000000;" version="1.1" viewBox="0 0 384 120" width="384px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <text fill="#33FF02" font-family="sans-serif" font-size="12" font-style="italic" font-weight="700" lengthAdjust="spacing" textLength="372" x="5" y="17">PlantUML version $version$ / $git.commit.id$ [Unknown compile time]</text>
+    <rect fill="#33FF02" height="19" style="stroke:#33FF02;stroke-width:1;" width="131.15" x="5" y="25"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="129.15" x="6" y="40">[From string (line 3) ]</text>
+    <text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="15.1667" x="5" y="58"> </text>
+    <text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="109.3167" x="5" y="72">@startpacketdiag</text>
+    <text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="76.4167" x="5" y="86">packetdiag {</text>
+    <text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" text-decoration="wavy underline" textLength="101.15" x="16.55" y="100">foo: Source Port</text>
+    <text fill="#FF0000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="291.2" x="8.85" y="114">Syntax Error? (Assumed diagram type: packet)</text>
+  </g>
+</svg>
