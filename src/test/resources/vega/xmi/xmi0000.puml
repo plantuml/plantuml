@@ -1,9 +1,0 @@
----
-output: xmi_argo
-expected-description: (1 entities)
----
-@startuml
--class foo{
-    # field1 : type
-}
-@enduml

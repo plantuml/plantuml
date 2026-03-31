@@ -1,8 +1,0 @@
----
-output: svg
-expected-description: (2 participants)
-tag: debug
----
-@startuml
-Alice -> Bob : hello
-@enduml

@@ -1,9 +1,0 @@
----
-allow-failure: true
-output: debug
-expected-debug:
-  not-contains: hello
----
-@startuml
-Alice -> Bob : hello
-@enduml

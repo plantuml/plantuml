@@ -19,11 +19,11 @@ import net.sourceforge.plantuml.preproc.Defines;
  * 
 
 @startpacketdiag
-4-2: error - IllegalArgumentException
+4-3: error - ArithmeticException: / by zero
 @endpacketdiag
 
  */
-public class Test_0 {
+public class Test_1 {
 
 	protected File getJavaFile() {
 		final String name = getClass().getName();

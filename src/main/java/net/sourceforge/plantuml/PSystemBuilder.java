@@ -273,6 +273,7 @@ public class PSystemBuilder {
 					}
 					errors.add((PSystemError) sys);
 				} catch (Throwable t) {
+					crash here
 					final StringLocated s = source.get(0);
 					final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, "Fatal crash error: " + t, 0,
 							s.getLocation(), null);

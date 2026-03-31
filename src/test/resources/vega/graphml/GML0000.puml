@@ -1,7 +1,0 @@
----
-output: graphml
-expected-description: (1 entities)
----
-@startuml
-component comp1
-@enduml

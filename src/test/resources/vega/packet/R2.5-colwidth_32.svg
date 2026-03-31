@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="PACKET" height="67px" preserveAspectRatio="none" style="width:1407px;height:67px;background:#FFFFFF;" version="1.1" viewBox="0 0 1407 67" width="1407px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.8167" x="6.0917" y="20.8889">0</text>
+    <path d="M10,24 L10,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M52,40 L52,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M94,40 L94,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M136,40 L136,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M178,40 L178,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M220,40 L220,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M262,40 L262,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M304,40 L304,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M346,24 L346,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M388,40 L388,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M430,40 L430,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M472,40 L472,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M514,40 L514,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M556,40 L556,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M598,40 L598,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M640,40 L640,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.6333" x="674.1833" y="20.8889">16</text>
+    <path d="M682,24 L682,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M724,40 L724,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M766,40 L766,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M808,40 L808,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M850,40 L850,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M892,40 L892,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M934,40 L934,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M976,40 L976,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M1018,24 L1018,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M1060,40 L1060,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M1102,40 L1102,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M1144,40 L1144,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M1186,40 L1186,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M1228,40 L1228,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M1270,40 L1270,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M1312,40 L1312,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.6333" x="1346.1833" y="20.8889">32</text>
+    <path d="M1354,24 L1354,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+  </g>
+</svg>

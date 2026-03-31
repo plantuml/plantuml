@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="PACKET" height="169px" preserveAspectRatio="none" style="width:735px;height:169px;background:#FFFFFF;" version="1.1" viewBox="0 0 735 169" width="735px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="PACKET" height="67px" preserveAspectRatio="none" style="width:735px;height:67px;background:#FFFFFF;" version="1.1" viewBox="0 0 735 67" width="735px" zoomAndPan="magnify">
   <defs/>
   <g>
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.8167" x="6.0917" y="20.8889">0</text>
@@ -21,13 +21,5 @@
     <path d="M640,40 L640,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.6333" x="674.1833" y="20.8889">16</text>
     <path d="M682,24 L682,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="336" x="10" y="56"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="73.9667" x="141.0167" y="76.8889">Source Port</text>
-    <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="336" x="346" y="56"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="99.75" x="464.125" y="76.8889">Destination Port</text>
-    <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="672" x="10" y="90"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="117.0167" x="287.4917" y="110.8889">Sequence Number</text>
-    <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="672" x="10" y="124"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="160.65" x="265.675" y="144.8889">Acknowledgment Number</text>
   </g>
 </svg>

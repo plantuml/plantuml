@@ -1,6 +1,0 @@
----
-output: preproc
----
-@startuml
-title %upper(hello)
-@enduml

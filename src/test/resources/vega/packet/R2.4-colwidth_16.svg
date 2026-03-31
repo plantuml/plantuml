@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="PACKET" height="67px" preserveAspectRatio="none" style="width:735px;height:67px;background:#FFFFFF;" version="1.1" viewBox="0 0 735 67" width="735px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.8167" x="6.0917" y="20.8889">0</text>
+    <path d="M10,24 L10,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M52,40 L52,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M94,40 L94,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M136,40 L136,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M178,24 L178,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M220,40 L220,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M262,40 L262,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M304,40 L304,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.8167" x="342.0917" y="20.8889">8</text>
+    <path d="M346,24 L346,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M388,40 L388,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M430,40 L430,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M472,40 L472,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M514,24 L514,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M556,40 L556,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M598,40 L598,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M640,40 L640,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.6333" x="674.1833" y="20.8889">16</text>
+    <path d="M682,24 L682,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+  </g>
+</svg>
