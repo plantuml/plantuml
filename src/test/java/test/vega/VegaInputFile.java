@@ -129,10 +129,6 @@ public class VegaInputFile {
 		return path;
 	}
 
-	public Monomorph getYaml() {
-		return yaml;
-	}
-
 	public List<String> getPumlSource() {
 		return pumlSource;
 	}
@@ -268,10 +264,9 @@ public class VegaInputFile {
 
 	private void recordResult(VegaStatus status, long durationMs, Class<?> diagramClass, Throwable e) {
 		final String relativePath = VegaTest.VEGA_RESOURCES.relativize(path).toString();
-		final String message = e == null ? null : e.getMessage();
+		final String tag = getYamlString("tag");
 
-		final JsonObject json = new VegaResult(relativePath, status, durationMs, message, diagramClass, e)
-				.toJsonObject();
+		final JsonObject json = new VegaResult(relativePath, status, durationMs, diagramClass, e, tag).toJsonObject();
 
 		synchronized (VegaTest.results) {
 			VegaTest.results.add(json);

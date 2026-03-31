@@ -8,21 +8,24 @@ import java.util.List;
 import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonObject;
 
-public record VegaResult(String path, VegaStatus status, long durationMs, String message, Class<?> diagramClass,
-		Throwable e) {
+public record VegaResult(String path, VegaStatus status, long durationMs, Class<?> diagramClass, Throwable e,
+		String tag) {
 
 	public JsonObject toJsonObject() {
 		final JsonObject entry = new JsonObject().add("file", path).add("status", status.name().toLowerCase())
 				.add("duration_ms", durationMs);
 
-		if (diagramClass != null) {
+		if (tag != null)
+			entry.add("tag", tag);
+
+		if (diagramClass != null)
 			entry.add("diagram_class", diagramClass.getSimpleName());
-		}
-		if (message != null) {
-			entry.add("message", message);
-		}
+
+		if (e != null && e.getMessage() != null)
+			entry.add("message", e.getMessage());
+
 		if (e != null) {
-			StringWriter sw = new StringWriter();
+			final StringWriter sw = new StringWriter();
 			try (PrintWriter pw = new PrintWriter(sw)) {
 				e.printStackTrace(pw);
 			}
