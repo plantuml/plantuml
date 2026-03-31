@@ -109,10 +109,11 @@ implements <a href="GeneratedImage.html" title="interface in net.sourceforge.pla
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.security.SFile,java.lang.String,net.sourceforge.plantuml.BlockUml,int)" class="member-name-link">GeneratedImageImpl</a><wbr>(<a href="security/SFile.html" title="class in net.sourceforge.plantuml.security">SFile</a>&nbsp;pngFile,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.security.SFile,java.lang.String,net.sourceforge.plantuml.BlockUml,int,java.lang.Throwable)" class="member-name-link">GeneratedImageImpl</a><wbr>(<a href="security/SFile.html" title="class in net.sourceforge.plantuml.security">SFile</a>&nbsp;pngFile,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description,
  <a href="BlockUml.html" title="class in net.sourceforge.plantuml">BlockUml</a>&nbsp;blockUml,
- int&nbsp;status)</code></div>
+ int&nbsp;status,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;rootCause)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -129,7 +130,7 @@ implements <a href="GeneratedImage.html" title="interface in net.sourceforge.pla
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#compareTo(net.sourceforge.plantuml.GeneratedImage)" class="member-name-link">compareTo</a><wbr>(<a href="GeneratedImage.html" title="interface in net.sourceforge.plantuml">GeneratedImage</a>&nbsp;this2)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#compareTo(net.sourceforge.plantuml.GeneratedImage)" class="member-name-link">compareTo</a><wbr>(<a href="GeneratedImage.html" title="interface in net.sourceforge.plantuml">GeneratedImage</a>&nbsp;other)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;obj)</code></div>
@@ -143,18 +144,21 @@ implements <a href="GeneratedImage.html" title="interface in net.sourceforge.pla
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPngFile()" class="member-name-link">getPngFile</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStatus()" class="member-name-link">getStatus</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRootCause()" class="member-name-link">getRootCause</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStatus()" class="member-name-link">getStatus</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#lineErrorRaw()" class="member-name-link">lineErrorRaw</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#lineErrorRaw()" class="member-name-link">lineErrorRaw</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -173,12 +177,13 @@ implements <a href="GeneratedImage.html" title="interface in net.sourceforge.pla
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.security.SFile,java.lang.String,net.sourceforge.plantuml.BlockUml,int)">
+<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.security.SFile,java.lang.String,net.sourceforge.plantuml.BlockUml,int,java.lang.Throwable)">
 <h3>GeneratedImageImpl</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">GeneratedImageImpl</span><wbr><span class="parameters">(<a href="security/SFile.html" title="class in net.sourceforge.plantuml.security">SFile</a>&nbsp;pngFile,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description,
  <a href="BlockUml.html" title="class in net.sourceforge.plantuml">BlockUml</a>&nbsp;blockUml,
- int&nbsp;status)</span></div>
+ int&nbsp;status,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;rootCause)</span></div>
 </section>
 </li>
 </ul>
@@ -189,6 +194,16 @@ implements <a href="GeneratedImage.html" title="interface in net.sourceforge.pla
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="getRootCause()">
+<h3>getRootCause</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a></span>&nbsp;<span class="element-name">getRootCause</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="GeneratedImage.html#getRootCause()">getRootCause</a></code>&nbsp;in interface&nbsp;<code><a href="GeneratedImage.html" title="interface in net.sourceforge.plantuml">GeneratedImage</a></code></dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="getStatus()">
 <h3>getStatus</h3>
@@ -242,7 +257,7 @@ implements <a href="GeneratedImage.html" title="interface in net.sourceforge.pla
 <li>
 <section class="detail" id="compareTo(net.sourceforge.plantuml.GeneratedImage)">
 <h3>compareTo</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">compareTo</span><wbr><span class="parameters">(<a href="GeneratedImage.html" title="interface in net.sourceforge.plantuml">GeneratedImage</a>&nbsp;this2)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">compareTo</span><wbr><span class="parameters">(<a href="GeneratedImage.html" title="interface in net.sourceforge.plantuml">GeneratedImage</a>&nbsp;other)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Comparable.html#compareTo(T)" title="class or interface in java.lang" class="external-link">compareTo</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;<a href="GeneratedImage.html" title="interface in net.sourceforge.plantuml">GeneratedImage</a>&gt;</code></dd>

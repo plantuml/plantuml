@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.security.SFile;
 
 public class FileImageData {
-	// ::remove file when __HAXE__
 
 	public static final int ERROR = 400;
 	public static final int CRASH = 503;
@@ -47,24 +46,30 @@ public class FileImageData {
 	private final SFile file;
 	private final ImageData imageData;
 
-<span class="fc" id="L50">	public FileImageData(SFile file, ImageData imageData) {</span>
-<span class="fc" id="L51">		this.file = file;</span>
-<span class="fc" id="L52">		this.imageData = imageData;</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L49">	public FileImageData(SFile file, ImageData imageData) {</span>
+<span class="fc" id="L50">		this.file = file;</span>
+<span class="fc" id="L51">		this.imageData = imageData;</span>
+<span class="fc" id="L52">	}</span>
 
 	public SFile getFile() {
-<span class="fc" id="L56">		return file;</span>
+<span class="fc" id="L55">		return file;</span>
 	}
 
 	public ImageData getImageData() {
-<span class="nc" id="L60">		return imageData;</span>
+<span class="nc" id="L59">		return imageData;</span>
 	}
 
 	public int getStatus() {
-<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (imageData == null) {</span>
-<span class="fc" id="L65">			return 0;</span>
-		}
-<span class="fc" id="L67">		return imageData.getStatus();</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		if (imageData == null)</span>
+<span class="fc" id="L64">			return 0;</span>
+
+<span class="fc" id="L66">		return imageData.getStatus();</span>
+	}
+
+	public Throwable getRootCause() {
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (imageData == null)</span>
+<span class="fc" id="L71">			return null;</span>
+<span class="fc" id="L72">		return imageData.getRootCause();</span>
 	}
 
 }
