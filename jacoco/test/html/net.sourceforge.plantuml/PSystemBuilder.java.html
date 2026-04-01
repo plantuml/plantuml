@@ -277,30 +277,29 @@ public class PSystemBuilder {
 <span class="nc" id="L277">					final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, &quot;Fatal crash error: &quot; + t, 0,</span>
 <span class="nc" id="L278">							s.getLocation(), null);</span>
 <span class="nc" id="L279">					errors.add(PSystemErrorUtils.buildV2(umlSource, err, Collections.&lt;String&gt;emptyList(), source,</span>
-							preprocessing));
-<span class="nc" id="L281">					t.printStackTrace();</span>
-<span class="fc" id="L282">				}</span>
-<span class="fc" id="L283">			}</span>
-<span class="pc bpc" id="L284" title="1 of 2 branches missed.">			if (errors.size() == 0)</span>
-<span class="nc" id="L285">				return new PSystemUnsupported(umlSource, preprocessing);</span>
+							preprocessing, t));
+<span class="fc" id="L281">				}</span>
+<span class="fc" id="L282">			}</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">			if (errors.size() == 0)</span>
+<span class="nc" id="L284">				return new PSystemUnsupported(umlSource, preprocessing);</span>
 
-<span class="fc" id="L287">			result = PSystemErrorUtils.merge(errors);</span>
-<span class="fc" id="L288">			return result;</span>
+<span class="fc" id="L286">			result = PSystemErrorUtils.merge(errors);</span>
+<span class="fc" id="L287">			return result;</span>
 		} finally {
 
-<span class="fc bfc" id="L291" title="All 4 branches covered.">			if (result != null &amp;&amp; GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS)) {</span>
-<span class="fc" id="L292">				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());</span>
-			}
-<span class="fc" id="L294">			Log.info(() -&gt; &quot;Compilation duration &quot; + (System.currentTimeMillis() - now));</span>
-<span class="fc" id="L295">			RegexConcat.printCacheInfo();</span>
+<span class="fc bfc" id="L290" title="All 4 branches covered.">			if (result != null &amp;&amp; GlobalConfig.getInstance().boolValue(GlobalConfigKey.ENABLE_STATS))</span>
+<span class="fc" id="L291">				StatsUtilsIncrement.onceMoreParse(System.currentTimeMillis() - now, result.getClass());</span>
+
+<span class="fc" id="L293">			Log.info(() -&gt; &quot;Compilation duration &quot; + (System.currentTimeMillis() - now));</span>
+<span class="fc" id="L294">			RegexConcat.printCacheInfo();</span>
 		}
 	}
 
 	private boolean isOk(Diagram ps) {
-<span class="pc bpc" id="L300" title="1 of 6 branches missed.">		if (ps == null || ps instanceof PSystemError || ps instanceof PSystemUnsupported)</span>
-<span class="fc" id="L301">			return false;</span>
+<span class="pc bpc" id="L299" title="1 of 6 branches missed.">		if (ps == null || ps instanceof PSystemError || ps instanceof PSystemUnsupported)</span>
+<span class="fc" id="L300">			return false;</span>
 
-<span class="fc" id="L303">		return true;</span>
+<span class="fc" id="L302">		return true;</span>
 	}
 
 }
