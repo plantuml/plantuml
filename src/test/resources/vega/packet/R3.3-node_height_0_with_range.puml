@@ -1,0 +1,5 @@
+@startpacketdiag
+node_height=0
+1: A
+2-30: B
+@endpacketdiag
