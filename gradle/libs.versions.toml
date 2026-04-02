@@ -4,7 +4,7 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
-ant                 = "1.10.15"
+ant                 = "1.10.16"
 assertj             = "3.27.7"
 batik               = "1.19"
 elk                 = "0.10.0"
