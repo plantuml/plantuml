@@ -70,7 +70,7 @@ public class SubjectSeparator implements Subject&lt;GanttDiagram&gt; {
 <span class="fc" id="L70">	class JustBefore extends SentenceSimple&lt;GanttDiagram&gt; {</span>
 
 <span class="fc" id="L72">		public JustBefore() {</span>
-<span class="fc" id="L73">			super(SubjectSeparator.this, Verbs.just, Words.exactly(Words.BEFORE), ComplementDate.any());</span>
+<span class="fc" id="L73">			super(SubjectSeparator.this, Verbs.just.getRegex(), Words.exactly(Words.BEFORE), ComplementDate.any());</span>
 <span class="fc" id="L74">		}</span>
 
 		@Override
@@ -86,7 +86,7 @@ public class SubjectSeparator implements Subject&lt;GanttDiagram&gt; {
 <span class="fc" id="L86">	class JustAfter extends SentenceSimple&lt;GanttDiagram&gt; {</span>
 
 <span class="fc" id="L88">		public JustAfter() {</span>
-<span class="fc" id="L89">			super(SubjectSeparator.this, Verbs.just, Words.exactly(Words.AFTER), ComplementDate.any());</span>
+<span class="fc" id="L89">			super(SubjectSeparator.this, Verbs.just.getRegex(), Words.exactly(Words.AFTER), ComplementDate.any());</span>
 <span class="fc" id="L90">		}</span>
 
 		@Override
@@ -102,7 +102,7 @@ public class SubjectSeparator implements Subject&lt;GanttDiagram&gt; {
 <span class="fc" id="L102">	class Just extends SentenceSimple&lt;GanttDiagram&gt; {</span>
 
 <span class="fc" id="L104">		public Just() {</span>
-<span class="fc" id="L105">			super(SubjectSeparator.this, Verbs.just, new ComplementBeforeOrAfterOrAtTaskStartOrEnd());</span>
+<span class="fc" id="L105">			super(SubjectSeparator.this, Verbs.just.getRegex(), new ComplementBeforeOrAfterOrAtTaskStartOrEnd());</span>
 <span class="fc" id="L106">		}</span>
 
 		@Override

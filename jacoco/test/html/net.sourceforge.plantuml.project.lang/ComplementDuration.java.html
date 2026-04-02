@@ -35,6 +35,11 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexOptional;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.Load;
@@ -43,54 +48,63 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-<span class="fc" id="L46">public class ComplementDuration implements Something&lt;GanttDiagram&gt; {</span>
+<span class="fc" id="L51">public class ComplementDuration implements Something&lt;GanttDiagram&gt; {</span>
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L49">		return new RegexConcat( //</span>
+<span class="fc" id="L54">		return new RegexConcat( //</span>
 				new RegexLeaf(4, &quot;COMPLEMENT&quot; + suffix, &quot;(\\d+)[%s]+(hour|day|week|month)s?&quot; + //
 						&quot;(?:[%s]+and[%s]+(\\d+)[%s]+(hour|day|week|month)s?)?&quot; //
 				)); //
 	}
+	
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+<span class="nc" id="L62">		return UBrexConcat.build( //</span>
+<span class="nc" id="L63">				new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d &quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;s &quot; + String.valueOf((char)0x3010) + &quot;hour&quot; + String.valueOf((char)0x2507) + &quot;day&quot; + String.valueOf((char)0x2507) + &quot;week&quot; + String.valueOf((char)0x2507) + &quot;month&quot; + String.valueOf((char)0x3011) + &quot;&quot; + String.valueOf((char)0x3007) + &quot;?s&quot;), //</span>
+<span class="nc" id="L64">				new UBrexOptional(new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;s and &quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;s &quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d &quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;s &quot; + String.valueOf((char)0x3010) + &quot;hour&quot; + String.valueOf((char)0x2507) + &quot;day&quot; + String.valueOf((char)0x2507) + &quot;week&quot; + String.valueOf((char)0x2507) + &quot;month&quot; + String.valueOf((char)0x3011) + &quot;&quot; + String.valueOf((char)0x3007) + &quot;?s&quot;)));</span>
+	}
+
+
 
 	@Override
 	public Failable&lt;Load&gt; getMe(GanttDiagram system, RegexResult arg, String suffix) {
 
-<span class="fc" id="L58">		final String prefix = &quot;COMPLEMENT&quot; + suffix;</span>
+<span class="fc" id="L72">		final String prefix = &quot;COMPLEMENT&quot; + suffix;</span>
 
-<span class="fc" id="L60">		final int firstValue = Integer.parseInt(arg.get(prefix, 0));</span>
-<span class="fc" id="L61">		final String firstUnit = arg.get(prefix, 1);</span>
-<span class="fc" id="L62">		final int[] firstDaysAndHours = toDaysAndHours(system, firstValue, firstUnit);</span>
+<span class="fc" id="L74">		final int firstValue = Integer.parseInt(arg.get(prefix, 0));</span>
+<span class="fc" id="L75">		final String firstUnit = arg.get(prefix, 1);</span>
+<span class="fc" id="L76">		final int[] firstDaysAndHours = toDaysAndHours(system, firstValue, firstUnit);</span>
 
-<span class="fc" id="L64">		int[] secondDaysAndHours = {0, 0};</span>
-<span class="fc" id="L65">		final String secondValue = arg.get(prefix, 2);</span>
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (secondValue != null) {</span>
-<span class="nc" id="L67">			final int value = Integer.parseInt(secondValue);</span>
-<span class="nc" id="L68">			final String unit = arg.get(prefix, 3);</span>
-<span class="nc" id="L69">			secondDaysAndHours = toDaysAndHours(system, value, unit);</span>
+<span class="fc" id="L78">		int[] secondDaysAndHours = {0, 0};</span>
+<span class="fc" id="L79">		final String secondValue = arg.get(prefix, 2);</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (secondValue != null) {</span>
+<span class="nc" id="L81">			final int value = Integer.parseInt(secondValue);</span>
+<span class="nc" id="L82">			final String unit = arg.get(prefix, 3);</span>
+<span class="nc" id="L83">			secondDaysAndHours = toDaysAndHours(system, value, unit);</span>
 		}
 
-<span class="fc" id="L72">		final int totalDays = firstDaysAndHours[0] + secondDaysAndHours[0];</span>
-<span class="fc" id="L73">		final int totalHours = firstDaysAndHours[1] + secondDaysAndHours[1];</span>
+<span class="fc" id="L86">		final int totalDays = firstDaysAndHours[0] + secondDaysAndHours[0];</span>
+<span class="fc" id="L87">		final int totalHours = firstDaysAndHours[1] + secondDaysAndHours[1];</span>
 
-<span class="fc" id="L75">		return Failable.ok(Load.ofDaysAndHours(totalDays, totalHours));</span>
+<span class="fc" id="L89">		return Failable.ok(Load.ofDaysAndHours(totalDays, totalHours));</span>
 	}
 
 	private int[] toDaysAndHours(GanttDiagram system, int value, String unit) {
-<span class="pc bpc" id="L79" title="4 of 5 branches missed.">		switch (unit.charAt(0)) {</span>
+<span class="pc bpc" id="L93" title="4 of 5 branches missed.">		switch (unit.charAt(0)) {</span>
 		case 'H':
 		case 'h':
-<span class="nc" id="L82">			return new int[] {0, value};</span>
+<span class="nc" id="L96">			return new int[] {0, value};</span>
 		case 'D':
 		case 'd':
-<span class="fc" id="L85">			return new int[] {value, 0};</span>
+<span class="fc" id="L99">			return new int[] {value, 0};</span>
 		case 'W':
 		case 'w':
-<span class="nc" id="L88">			return new int[] {value * system.daysInWeek(), 0};</span>
+<span class="nc" id="L102">			return new int[] {value * system.daysInWeek(), 0};</span>
 		case 'M':
 		case 'm':
-<span class="nc" id="L91">			return new int[] {value * system.daysInMonth(), 0};</span>
+<span class="nc" id="L105">			return new int[] {value * system.daysInMonth(), 0};</span>
 		default:
-<span class="nc" id="L93">			throw new IllegalArgumentException(&quot;unknown time unit: &quot; + unit);</span>
+<span class="nc" id="L107">			throw new IllegalArgumentException(&quot;unknown time unit: &quot; + unit);</span>
 		}
 	}
 }

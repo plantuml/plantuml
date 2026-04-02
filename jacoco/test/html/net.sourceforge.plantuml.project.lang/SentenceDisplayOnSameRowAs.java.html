@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.project.core.Task;
 public class SentenceDisplayOnSameRowAs extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	public SentenceDisplayOnSameRowAs() {
-<span class="fc" id="L45">		super(SubjectTask.ME, Verbs.displayOnSameRowAs, new ComplementNamed());</span>
+<span class="fc" id="L45">		super(SubjectTask.ME, Verbs.displayOnSameRowAs.getRegex(), new ComplementNamed());</span>
 <span class="fc" id="L46">	}</span>
 
 	@Override

@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.project.core.TaskInstant;
 public class SentenceTaskStarts extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	public SentenceTaskStarts() {
-<span class="fc" id="L49">		super(SubjectTask.ME, Verbs.starts, new ComplementBeforeOrAfterOrAtTaskStartOrEnd());</span>
+<span class="fc" id="L49">		super(SubjectTask.ME, Verbs.starts.getRegex(), new ComplementBeforeOrAfterOrAtTaskStartOrEnd());</span>
 <span class="fc" id="L50">	}</span>
 
 	@Override

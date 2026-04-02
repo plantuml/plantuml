@@ -57,16 +57,16 @@ public class Capture {
 	}
 
 	public List&lt;Map.Entry&lt;String, String&gt;&gt; getCaptures() {
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (list == null)</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (list == null)</span>
 <span class="nc" id="L61">			return Collections.emptyList();</span>
-<span class="nc" id="L62">		return Collections.unmodifiableList(list);</span>
+<span class="fc" id="L62">		return Collections.unmodifiableList(list);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (list == null)</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (list == null)</span>
 <span class="nc" id="L68">			return &quot;[]&quot;;</span>
-<span class="nc" id="L69">		return getCaptures().toString();</span>
+<span class="fc" id="L69">		return getCaptures().toString();</span>
 	}
 
 	public Capture withEntry(String key, String value) {
@@ -108,23 +108,31 @@ public class Capture {
 
 	private List&lt;Map.Entry&lt;String, String&gt;&gt; list;
 
-
 	public List&lt;String&gt; findValuesByKey(String key) {
-<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (this.list == null)</span>
-<span class="fc" id="L114">			return Collections.emptyList();</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (this.list == null)</span>
+<span class="fc" id="L113">			return Collections.emptyList();</span>
 
-<span class="fc" id="L116">		return this.list.stream() //</span>
-<span class="fc" id="L117">				.filter(e -&gt; e.getKey().equals(key)) //</span>
-<span class="fc" id="L118">				.map(Map.Entry::getValue) //</span>
-<span class="fc" id="L119">				.collect(Collectors.toList());</span>
+<span class="fc" id="L115">		return this.list.stream() //</span>
+<span class="fc" id="L116">				.filter(e -&gt; e.getKey().equals(key)) //</span>
+<span class="fc" id="L117">				.map(Map.Entry::getValue) //</span>
+<span class="fc" id="L118">				.collect(Collectors.toList());</span>
 
 	}
 
-	
 	public List&lt;String&gt; getKeysToBeRefactored() {
-<span class="fc" id="L125">		return this.list.stream() //</span>
-<span class="fc" id="L126">				.map(Map.Entry::getKey) //</span>
-<span class="fc" id="L127">				.collect(Collectors.toList());</span>
+<span class="fc" id="L123">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		for (Map.Entry&lt;String, String&gt; entry : this.list)</span>
+<span class="fc" id="L125">			result.add(entry.getKey());</span>
+<span class="fc" id="L126">		return result;</span>
 	}
+
+	public List&lt;String&gt; getRootKeys() {
+<span class="nc" id="L130">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		for (Map.Entry&lt;String, String&gt; entry : this.list)</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">			if (entry.getKey().indexOf('/') == -1)</span>
+<span class="nc" id="L133">				result.add(entry.getKey());</span>
+<span class="nc" id="L134">		return result;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

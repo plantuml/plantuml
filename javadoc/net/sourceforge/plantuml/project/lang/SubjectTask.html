@@ -116,6 +116,9 @@ implements <a href="Subject.html" title="interface in net.sourceforge.plantuml.p
 <div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#REGEX_TASK_CODE" class="member-name-link">REGEX_TASK_CODE</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#UBREX_TASK_CODE" class="member-name-link">UBREX_TASK_CODE</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -137,12 +140,15 @@ implements <a href="Subject.html" title="interface in net.sourceforge.plantuml.p
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a><wbr>&lt;? extends <a href="SentenceSimple.html" title="class in net.sourceforge.plantuml.project.lang">SentenceSimple</a>&lt;<a href="../GanttDiagram.html" title="class in net.sourceforge.plantuml.project">GanttDiagram</a>&gt;&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSentences()" class="member-name-link">getSentences</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../regex/IRegex.html" title="interface in net.sourceforge.plantuml.regex">IRegex</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toRegex()" class="member-name-link">toRegex</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a><wbr>&lt;<a href="../ulang/UbrexSentence.html" title="class in net.sourceforge.plantuml.project.ulang">UbrexSentence</a>&lt;<a href="../GanttDiagram.html" title="class in net.sourceforge.plantuml.project">GanttDiagram</a>&gt;&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUSentences()" class="member-name-link">getUSentences</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../../../com/plantuml/ubrex/builder/UBrexPart.html" title="class in com.plantuml.ubrex.builder">UBrexPart</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toUnicodeBracketedExpression()" class="member-name-link">toUnicodeBracketedExpression</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../regex/IRegex.html" title="interface in net.sourceforge.plantuml.regex">IRegex</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toRegex()" class="member-name-link">toRegex</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../../../com/plantuml/ubrex/builder/UBrexPart.html" title="class in com.plantuml.ubrex.builder">UBrexPart</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toUnicodeBracketedExpressionSubject()" class="member-name-link">toUnicodeBracketedExpressionSubject</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -180,6 +186,12 @@ implements <a href="Subject.html" title="interface in net.sourceforge.plantuml.p
 </dl>
 </section>
 </li>
+<li>
+<section class="detail" id="UBREX_TASK_CODE">
+<h3>UBREX_TASK_CODE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">UBREX_TASK_CODE</span></div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -189,12 +201,22 @@ implements <a href="Subject.html" title="interface in net.sourceforge.plantuml.p
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="toUnicodeBracketedExpression()">
-<h3>toUnicodeBracketedExpression</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../../../com/plantuml/ubrex/builder/UBrexPart.html" title="class in com.plantuml.ubrex.builder">UBrexPart</a></span>&nbsp;<span class="element-name">toUnicodeBracketedExpression</span>()</div>
+<section class="detail" id="getUSentences()">
+<h3>getUSentences</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../ulang/UbrexSentence.html" title="class in net.sourceforge.plantuml.project.ulang">UbrexSentence</a>&lt;<a href="../GanttDiagram.html" title="class in net.sourceforge.plantuml.project">GanttDiagram</a>&gt;&gt;</span>&nbsp;<span class="element-name">getUSentences</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Subject.html#toUnicodeBracketedExpression()">toUnicodeBracketedExpression</a></code>&nbsp;in interface&nbsp;<code><a href="Subject.html" title="interface in net.sourceforge.plantuml.project.lang">Subject</a>&lt;<a href="../GanttDiagram.html" title="class in net.sourceforge.plantuml.project">GanttDiagram</a>&gt;</code></dd>
+<dd><code><a href="Subject.html#getUSentences()">getUSentences</a></code>&nbsp;in interface&nbsp;<code><a href="Subject.html" title="interface in net.sourceforge.plantuml.project.lang">Subject</a>&lt;<a href="../GanttDiagram.html" title="class in net.sourceforge.plantuml.project">GanttDiagram</a>&gt;</code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="toUnicodeBracketedExpressionSubject()">
+<h3>toUnicodeBracketedExpressionSubject</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../../../com/plantuml/ubrex/builder/UBrexPart.html" title="class in com.plantuml.ubrex.builder">UBrexPart</a></span>&nbsp;<span class="element-name">toUnicodeBracketedExpressionSubject</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Subject.html#toUnicodeBracketedExpressionSubject()">toUnicodeBracketedExpressionSubject</a></code>&nbsp;in interface&nbsp;<code><a href="Subject.html" title="interface in net.sourceforge.plantuml.project.lang">Subject</a>&lt;<a href="../GanttDiagram.html" title="class in net.sourceforge.plantuml.project">GanttDiagram</a>&gt;</code></dd>
 </dl>
 </section>
 </li>

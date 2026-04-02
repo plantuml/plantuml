@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 public class SentenceHappensChronology extends SentenceSimple&lt;ChronologyDiagram&gt; {
 
 	public SentenceHappensChronology() {
-<span class="nc" id="L48">		super(SubjectTask.ME, Verbs.happens, Words.zeroOrMore(Words.THE, Words.ON, Words.AT), new ComplementHour());</span>
+<span class="nc" id="L48">		super(SubjectTask.ME, Verbs.happens.getRegex(), Words.zeroOrMore(Words.THE, Words.ON, Words.AT), new ComplementHour());</span>
 <span class="nc" id="L49">	}</span>
 
 	@Override

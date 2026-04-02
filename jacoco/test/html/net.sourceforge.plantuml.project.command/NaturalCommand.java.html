@@ -51,16 +51,21 @@ public class NaturalCommand&lt;D extends Diagram&gt; extends SingleLineCommand2&
 <span class="fc" id="L51">		super(sentence.toRegex());</span>
 <span class="fc" id="L52">		this.sentence = sentence;</span>
 <span class="fc" id="L53">	}</span>
+	
+	@Override
+	public String toString() {
+<span class="nc" id="L57">		return sentence.toString();</span>
+	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(D system, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		// System.err.println(&quot;sentence=&quot; + sentence.getClass());
-<span class="fc" id="L59">		return sentence.execute(system, arg);</span>
+<span class="fc" id="L64">		return sentence.execute(system, arg);</span>
 	}
 
 	public static &lt;D extends Diagram&gt; NaturalCommand&lt;D&gt; create(Sentence&lt;D&gt; sentence) {
-<span class="fc" id="L63">		return new NaturalCommand&lt;D&gt;(sentence);</span>
+<span class="fc" id="L68">		return new NaturalCommand&lt;D&gt;(sentence);</span>
 
 	}
 

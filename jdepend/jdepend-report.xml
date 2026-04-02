@@ -116,14 +116,14 @@
 
         <Package name="com.plantuml.ubrex.builder">
             <Stats>
-                <TotalClasses>7</TotalClasses>
-                <ConcreteClasses>6</ConcreteClasses>
+                <TotalClasses>8</TotalClasses>
+                <ConcreteClasses>7</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>2</Ca>
-                <Ce>2</Ce>
-                <A>0.14</A>
-                <I>0.5</I>
-                <D>0.36</D>
+                <Ce>3</Ce>
+                <A>0.12</A>
+                <I>0.6</I>
+                <D>0.27</D>
                 <V>1</V>
             </Stats>
 
@@ -152,11 +152,15 @@
                 <Class sourceFile="UBrexUpto.java">
                     com.plantuml.ubrex.builder.UBrexUpto
                 </Class>
+                <Class sourceFile="UBrexZeroOrMore.java">
+                    com.plantuml.ubrex.builder.UBrexZeroOrMore
+                </Class>
             </ConcreteClasses>
 
             <DependsUpon>
                 <Package>com.plantuml.ubrex</Package>
                 <Package>java.lang</Package>
+                <Package>java.util</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -12755,14 +12759,14 @@
 
         <Package name="net.sourceforge.plantuml.project.lang">
             <Stats>
-                <TotalClasses>62</TotalClasses>
-                <ConcreteClasses>58</ConcreteClasses>
-                <AbstractClasses>4</AbstractClasses>
+                <TotalClasses>59</TotalClasses>
+                <ConcreteClasses>57</ConcreteClasses>
+                <AbstractClasses>2</AbstractClasses>
                 <Ca>5</Ca>
                 <Ce>14</Ce>
-                <A>0.06</A>
+                <A>0.03</A>
                 <I>0.74</I>
-                <D>0.2</D>
+                <D>0.23</D>
                 <V>1</V>
             </Stats>
 
@@ -12770,14 +12774,8 @@
                 <Class sourceFile="Sentence.java">
                     net.sourceforge.plantuml.project.lang.Sentence
                 </Class>
-                <Class sourceFile="Something.java">
-                    net.sourceforge.plantuml.project.lang.Something
-                </Class>
                 <Class sourceFile="Subject.java">
                     net.sourceforge.plantuml.project.lang.Subject
-                </Class>
-                <Class sourceFile="Verb.java">
-                    net.sourceforge.plantuml.project.lang.Verb
                 </Class>
             </AbstractClasses>
 
@@ -12949,9 +12947,6 @@
                 </Class>
                 <Class sourceFile="TwoNames.java">
                     net.sourceforge.plantuml.project.lang.TwoNames
-                </Class>
-                <Class sourceFile="Verbs.java">
-                    net.sourceforge.plantuml.project.lang.Verbs
                 </Class>
                 <Class sourceFile="Words.java">
                     net.sourceforge.plantuml.project.lang.Words

@@ -36,11 +36,14 @@
 package net.sourceforge.plantuml.project.lang;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.ulang.UbrexSentence;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexResult;
 
@@ -51,9 +54,13 @@ public interface Subject&lt;D extends Diagram&gt; {
 	public IRegex toRegex();
 
 	public Failable&lt;? extends Object&gt; getMe(D project, RegexResult arg);
-	
-	default public UBrexPart toUnicodeBracketedExpression() {
-<span class="nc" id="L56">		return null;</span>
+
+	default public UBrexPart toUnicodeBracketedExpressionSubject() {
+<span class="nc" id="L59">		return null;</span>
+	}
+
+	default public Collection&lt;UbrexSentence&lt;GanttDiagram&gt;&gt; getUSentences() {
+<span class="nc" id="L63">		return Collections.emptyList();</span>
 	}
 
 }

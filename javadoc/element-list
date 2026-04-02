@@ -161,6 +161,7 @@ net.sourceforge.plantuml.project.ngm.math
 net.sourceforge.plantuml.project.solver
 net.sourceforge.plantuml.project.time
 net.sourceforge.plantuml.project.timescale
+net.sourceforge.plantuml.project.ulang
 net.sourceforge.plantuml.real
 net.sourceforge.plantuml.regex
 net.sourceforge.plantuml.regexdiagram

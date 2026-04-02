@@ -35,31 +35,61 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import net.sourceforge.plantuml.regex.IRegex;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.regex.RegexLeaf;
 
-<span class="nc" id="L41">public class Verbs {</span>
+public class Verbs {
 
-<span class="fc" id="L43">	public static IRegex are = new RegexLeaf(&quot;are&quot;);</span>
-<span class="fc" id="L44">	public static IRegex areColored = new RegexLeaf(&quot;are[%s]+colou?red&quot;);</span>
-<span class="fc" id="L45">	public static IRegex displayOnSameRowAs = new RegexLeaf(&quot;displays?[%s]+on[%s]+same[%s]+row[%s]+as&quot;);</span>
-<span class="fc" id="L46">	public static IRegex ends = new RegexLeaf(&quot;ends&quot;);</span>
-<span class="fc" id="L47">	public static IRegex happens = new RegexLeaf(&quot;happens&quot;);</span>
-<span class="fc" id="L48">	public static IRegex is = new RegexLeaf(&quot;is&quot;);</span>
-<span class="fc" id="L49">	public static IRegex isColored = new RegexLeaf(&quot;is[%s]+colou?red&quot;);</span>
-<span class="fc" id="L50">	public static IRegex isDeleted = new RegexLeaf(&quot;is[%s]+deleted&quot;);</span>
-<span class="fc" id="L51">	public static IRegex isDisplayedAs = new RegexLeaf(&quot;is[%s]+displayed[%s]+as&quot;);</span>
-<span class="fc" id="L52">	public static IRegex isOff = new RegexLeaf(&quot;is[%s]+off&quot;);</span>
-<span class="fc" id="L53">	public static IRegex isOn = new RegexLeaf(&quot;is[%s]+on&quot;);</span>
-<span class="fc" id="L54">	public static IRegex isOrAre = new RegexLeaf(1, &quot;(is|are)&quot;);</span>
-<span class="fc" id="L55">	public static IRegex isOrAreNamed = new RegexLeaf(1, &quot;(is|are)[%s]+named&quot;);</span>
-<span class="fc" id="L56">	public static IRegex just = new RegexLeaf(&quot;just&quot;);</span>
-<span class="fc" id="L57">	public static IRegex linksTo = new RegexLeaf(&quot;links[%s]+to&quot;);</span>
-<span class="fc" id="L58">	public static IRegex occurs = new RegexLeaf(&quot;occurs&quot;);</span>
-<span class="fc" id="L59">	public static IRegex pauses = new RegexLeaf(&quot;pauses&quot;);</span>
-<span class="fc" id="L60">	public static IRegex requires = new RegexLeaf(1, &quot;(lasts|requires)&quot;);</span>
-<span class="fc" id="L61">	public static IRegex starts = new RegexLeaf(&quot;starts&quot;);</span>
-<span class="fc" id="L62">	public static IRegex worksOn = new RegexLeaf(&quot;works[%s]+on&quot;);</span>
+	private final RegexLeaf regex;
+	private final UBrexPart ubrex;
+
+	public UBrexPart toUnicodeBracketedExpression() {
+<span class="nc" id="L50">		return ubrex;</span>
+	}
+
+	public RegexLeaf getRegex() {
+<span class="fc" id="L54">		return regex;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L59">		return regex.getPatternAsString();</span>
+	}
+
+<span class="fc" id="L62">	public Verbs(RegexLeaf regex) {</span>
+<span class="fc" id="L63">		this.regex = regex;</span>
+<span class="fc" id="L64">		this.ubrex = null;</span>
+<span class="fc" id="L65">	}</span>
+
+<span class="fc" id="L67">	public Verbs(RegexLeaf regex, String name, UBrexLeaf ubrex) {</span>
+<span class="fc" id="L68">		this.regex = regex;</span>
+<span class="fc" id="L69">		this.ubrex = new UBrexNamed(&quot;V_&quot; + name, ubrex);</span>
+<span class="fc" id="L70">	}</span>
+
+<span class="fc" id="L72">	public static Verbs are = new Verbs(new RegexLeaf(&quot;are&quot;), &quot;are&quot;, new UBrexLeaf(&quot;are&quot;));</span>
+<span class="fc" id="L73">	public static Verbs areColored = new Verbs(new RegexLeaf(&quot;are[%s]+colou?red&quot;));</span>
+<span class="fc" id="L74">	public static Verbs displayOnSameRowAs = new Verbs(new RegexLeaf(&quot;displays?[%s]+on[%s]+same[%s]+row[%s]+as&quot;));</span>
+<span class="fc" id="L75">	public static Verbs ends = new Verbs(new RegexLeaf(&quot;ends&quot;), &quot;ends&quot;, new UBrexLeaf(&quot;ends&quot;));</span>
+<span class="fc" id="L76">	public static Verbs happens = new Verbs(new RegexLeaf(&quot;happens&quot;), &quot;happens&quot;, new UBrexLeaf(&quot;happens&quot;));</span>
+<span class="fc" id="L77">	public static Verbs is = new Verbs(new RegexLeaf(&quot;is&quot;), &quot;is&quot;, new UBrexLeaf(&quot;is&quot;));</span>
+<span class="fc" id="L78">	public static Verbs isColored = new Verbs(new RegexLeaf(&quot;is[%s]+colou?red&quot;));</span>
+<span class="fc" id="L79">	public static Verbs isDeleted = new Verbs(new RegexLeaf(&quot;is[%s]+deleted&quot;));</span>
+<span class="fc" id="L80">	public static Verbs isDisplayedAs = new Verbs(new RegexLeaf(&quot;is[%s]+displayed[%s]+as&quot;));</span>
+<span class="fc" id="L81">	public static Verbs isOff = new Verbs(new RegexLeaf(&quot;is[%s]+off&quot;));</span>
+<span class="fc" id="L82">	public static Verbs isOn = new Verbs(new RegexLeaf(&quot;is[%s]+on&quot;));</span>
+<span class="fc" id="L83">	public static Verbs isOrAre = new Verbs(new RegexLeaf(1, &quot;(is|are)&quot;), &quot;isOrAre&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot;is&quot; + String.valueOf((char)0x2507) + &quot;are&quot; + String.valueOf((char)0x3011) + &quot;&quot;));</span>
+<span class="fc" id="L84">	public static Verbs isOrAreNamed = new Verbs(new RegexLeaf(1, &quot;(is|are)[%s]+named&quot;));</span>
+<span class="fc" id="L85">	public static Verbs just = new Verbs(new RegexLeaf(&quot;just&quot;), &quot;&quot;, new UBrexLeaf(&quot;just&quot;));</span>
+<span class="fc" id="L86">	public static Verbs linksTo = new Verbs(new RegexLeaf(&quot;links[%s]+to&quot;));</span>
+<span class="fc" id="L87">	public static Verbs occurs = new Verbs(new RegexLeaf(&quot;occurs&quot;), &quot;occurs&quot;, new UBrexLeaf(&quot;occurs&quot;));</span>
+<span class="fc" id="L88">	public static Verbs pauses = new Verbs(new RegexLeaf(&quot;pauses&quot;), &quot;pauses&quot;, new UBrexLeaf(&quot;pauses&quot;));</span>
+<span class="fc" id="L89">	public static Verbs requires = new Verbs(new RegexLeaf(1, &quot;(lasts|requires)&quot;), &quot;requires&quot;,</span>
+<span class="fc" id="L90">			new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot;lasts&quot; + String.valueOf((char)0x2507) + &quot;requires&quot; + String.valueOf((char)0x3011) + &quot;&quot;));</span>
+<span class="fc" id="L91">	public static Verbs starts = new Verbs(new RegexLeaf(&quot;starts&quot;), &quot;starts&quot;, new UBrexLeaf(&quot;starts&quot;));</span>
+<span class="fc" id="L92">	public static Verbs worksOn = new Verbs(new RegexLeaf(&quot;works[%s]+on&quot;));</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

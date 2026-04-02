@@ -35,13 +35,19 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexOr;
+import com.plantuml.ubrex.builder.UBrexPart;
+import com.plantuml.ubrex.builder.UBrexZeroOrMore;
+
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexRepeatedZeroOrMore;
 
-<span class="nc" id="L44">public class Words {</span>
+<span class="nc" id="L50">public class Words {</span>
 
 	public final static String AFTER = &quot;after&quot;;
 	public final static String AND = &quot;and&quot;;
@@ -62,40 +68,61 @@ import net.sourceforge.plantuml.regex.RegexRepeatedZeroOrMore;
 	public final static String WORKING = &quot;working&quot;;
 
 	public static IRegex zeroOrMore(String... words) {
-<span class="fc" id="L65">		final IRegex tmp[] = new IRegex[words.length];</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">		for (int i = 0; i &lt; words.length; i++)</span>
-<span class="fc" id="L67">			tmp[i] = new RegexLeaf(words[i]);</span>
+<span class="fc" id="L71">		final IRegex tmp[] = new IRegex[words.length];</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		for (int i = 0; i &lt; words.length; i++)</span>
+<span class="fc" id="L73">			tmp[i] = new RegexLeaf(words[i]);</span>
 
-<span class="fc" id="L69">		final RegexOr or = new RegexOr(tmp);</span>
-<span class="fc" id="L70">		return new RegexRepeatedZeroOrMore(new RegexConcat(RegexLeaf.spaceOneOrMore(), or));</span>
+<span class="fc" id="L75">		final RegexOr or = new RegexOr(tmp);</span>
+<span class="fc" id="L76">		return new RegexRepeatedZeroOrMore(new RegexConcat(RegexLeaf.spaceOneOrMore(), or));</span>
+	}
+
+	public static UBrexPart uzeroOrMore(String... words) {
+<span class="nc" id="L80">		final UBrexLeaf tmp[] = new UBrexLeaf[words.length];</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		for (int i = 0; i &lt; words.length; i++)</span>
+<span class="nc" id="L82">			tmp[i] = new UBrexLeaf(words[i]);</span>
+
+<span class="nc" id="L84">		final UBrexOr or = new UBrexOr(tmp);</span>
+<span class="nc" id="L85">		return new UBrexZeroOrMore(UBrexConcat.build(or, UBrexLeaf.spaceOneOrMore()));</span>
+	}
+
+	public static UBrexPart uoneOf(String... words) {
+<span class="nc" id="L89">		final UBrexLeaf tmp[] = new UBrexLeaf[words.length];</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		for (int i = 0; i &lt; words.length; i++)</span>
+<span class="nc" id="L91">			tmp[i] = new UBrexLeaf(words[i]);</span>
+
+<span class="nc" id="L93">		return new UBrexOr(tmp);</span>
 	}
 
 	public static IRegex exactly(String... words) {
-<span class="fc" id="L74">		final IRegex tmp[] = new IRegex[words.length];</span>
-<span class="fc bfc" id="L75" title="All 2 branches covered.">		for (int i = 0; i &lt; words.length; i++)</span>
-<span class="fc" id="L76">			tmp[i] = new RegexConcat(RegexLeaf.spaceOneOrMore(), new RegexLeaf(words[i]));</span>
+<span class="fc" id="L97">		final IRegex tmp[] = new IRegex[words.length];</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		for (int i = 0; i &lt; words.length; i++)</span>
+<span class="fc" id="L99">			tmp[i] = new RegexConcat(RegexLeaf.spaceOneOrMore(), new RegexLeaf(words[i]));</span>
 
-<span class="fc" id="L78">		return new RegexConcat(tmp);</span>
+<span class="fc" id="L101">		return new RegexConcat(tmp);</span>
+	}
+
+	public static UBrexPart usingle(String word) {
+<span class="nc" id="L105">		return new UBrexLeaf(word);</span>
 	}
 
 	public static IRegex single(String word) {
-<span class="fc" id="L82">		return new RegexLeaf(word);</span>
+<span class="fc" id="L109">		return new RegexLeaf(word);</span>
 	}
 
 	public static IRegex namedSingle(String name, String word) {
-<span class="nc" id="L86">		return new RegexLeaf(1, name, word);</span>
+<span class="nc" id="L113">		return new RegexLeaf(1, name, word);</span>
 	}
 
 	public static IRegex namedOneOf(String name, String... words) {
-<span class="fc" id="L90">		final IRegex tmp[] = new IRegex[words.length];</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">		for (int i = 0; i &lt; words.length; i++)</span>
-<span class="fc" id="L92">			tmp[i] = new RegexLeaf(words[i]);</span>
+<span class="fc" id="L117">		final IRegex tmp[] = new IRegex[words.length];</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		for (int i = 0; i &lt; words.length; i++)</span>
+<span class="fc" id="L119">			tmp[i] = new RegexLeaf(words[i]);</span>
 
-<span class="fc" id="L94">		return new RegexOr(name, tmp);</span>
+<span class="fc" id="L121">		return new RegexOr(name, tmp);</span>
 	}
 
 	public static IRegex concat(IRegex... expressions) {
-<span class="fc" id="L98">		return new RegexConcat(expressions);</span>
+<span class="fc" id="L125">		return new RegexConcat(expressions);</span>
 	}
 
 }

@@ -36,8 +36,10 @@
 package net.sourceforge.plantuml.project.lang;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import com.plantuml.ubrex.builder.UBrexPart;
 
@@ -46,76 +48,90 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.DayOfWeekUtils;
+import net.sourceforge.plantuml.project.ulang.UbrexSentence;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
 public class SubjectDayOfWeek implements Subject&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L55">	public static final Subject&lt;GanttDiagram&gt; ME = new SubjectDayOfWeek();</span>
+<span class="fc" id="L58">	public static final Subject&lt;GanttDiagram&gt; ME = new SubjectDayOfWeek();</span>
 
 	private SubjectDayOfWeek() {
 	}
 
 	public IRegex toRegex() {
-<span class="fc" id="L61">		return new RegexLeaf(1, &quot;SUBJECT&quot;, &quot;(&quot; + DayOfWeekUtils.getRegexString() + &quot;)&quot;);</span>
+<span class="fc" id="L64">		return new RegexLeaf(1, &quot;SUBJECT&quot;, &quot;(&quot; + DayOfWeekUtils.getRegexString() + &quot;)&quot;);</span>
 	}
 
 	@Override
-	public UBrexPart toUnicodeBracketedExpression() {
-<span class="nc" id="L66">		return DayOfWeekUtils.getUbrex();</span>
+	public Collection&lt;UbrexSentence&lt;GanttDiagram&gt;&gt; getUSentences() {
+<span class="nc" id="L69">		final List&lt;UbrexSentence&lt;GanttDiagram&gt;&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L70">		result.add(new UbrexSentence&lt;GanttDiagram&gt;(this, Verbs.are, new ComplementClose()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project) {
+<span class="nc" id="L73">				return CommandExecutionResult.error(&quot;WIPGANTT &quot; + getClass());</span>
+			}
+		});
+<span class="nc" id="L76">		return result;</span>
+
+	}
+
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionSubject() {
+<span class="nc" id="L82">		return DayOfWeekUtils.getUbrex();</span>
 	}
 
 	public Failable&lt;? extends Object&gt; getMe(GanttDiagram project, RegexResult arg) {
-<span class="fc" id="L70">		final String s = arg.get(&quot;SUBJECT&quot;, 0);</span>
-<span class="fc" id="L71">		return Failable.ok(DayOfWeekUtils.fromString(s));</span>
+<span class="fc" id="L86">		final String s = arg.get(&quot;SUBJECT&quot;, 0);</span>
+<span class="fc" id="L87">		return Failable.ok(DayOfWeekUtils.fromString(s));</span>
 	}
 
 	public Collection&lt;? extends SentenceSimple&lt;GanttDiagram&gt;&gt; getSentences() {
-<span class="fc" id="L75">		return Arrays.asList(new AreClose(), new AreOpen(), new InColor());</span>
+<span class="fc" id="L91">		return Arrays.asList(new AreClose(), new AreOpen(), new InColor());</span>
 	}
 
 	class AreOpen extends SentenceSimple&lt;GanttDiagram&gt; {
-<span class="fc" id="L79">		public AreOpen() {</span>
-<span class="fc" id="L80">			super(SubjectDayOfWeek.this, Verbs.are, new ComplementOpen());</span>
-<span class="fc" id="L81">		}</span>
+<span class="fc" id="L95">		public AreOpen() {</span>
+<span class="fc" id="L96">			super(SubjectDayOfWeek.this, Verbs.are.getRegex(), new ComplementOpen());</span>
+<span class="fc" id="L97">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L85">			final DayOfWeek day = (DayOfWeek) subject;</span>
-<span class="nc" id="L86">			project.openDayOfWeek(day, (String) complement);</span>
-<span class="nc" id="L87">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L101">			final DayOfWeek day = (DayOfWeek) subject;</span>
+<span class="nc" id="L102">			project.openDayOfWeek(day, (String) complement);</span>
+<span class="nc" id="L103">			return CommandExecutionResult.ok();</span>
 		}
 	}
 
 	class AreClose extends SentenceSimple&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L93">		public AreClose() {</span>
-<span class="fc" id="L94">			super(SubjectDayOfWeek.this, Verbs.are, new ComplementClose());</span>
-<span class="fc" id="L95">		}</span>
+<span class="fc" id="L109">		public AreClose() {</span>
+<span class="fc" id="L110">			super(SubjectDayOfWeek.this, Verbs.are.getRegex(), new ComplementClose());</span>
+<span class="fc" id="L111">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="fc" id="L99">			final DayOfWeek day = (DayOfWeek) subject;</span>
-<span class="fc" id="L100">			project.closeDayOfWeek(day, (String) complement);</span>
-<span class="fc" id="L101">			return CommandExecutionResult.ok();</span>
+<span class="fc" id="L115">			final DayOfWeek day = (DayOfWeek) subject;</span>
+<span class="fc" id="L116">			project.closeDayOfWeek(day, (String) complement);</span>
+<span class="fc" id="L117">			return CommandExecutionResult.ok();</span>
 		}
 
 	}
 
 	class InColor extends SentenceSimple&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L108">		public InColor() {</span>
-<span class="fc" id="L109">			super(SubjectDayOfWeek.this, Verbs.isOrAre, new ComplementInColors2());</span>
-<span class="fc" id="L110">		}</span>
+<span class="fc" id="L124">		public InColor() {</span>
+<span class="fc" id="L125">			super(SubjectDayOfWeek.this, Verbs.isOrAre.getRegex(), new ComplementInColors2());</span>
+<span class="fc" id="L126">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L114">			final HColor color = ((CenterBorderColor) complement).getCenter();</span>
-<span class="nc" id="L115">			final DayOfWeek day = (DayOfWeek) subject;</span>
-<span class="nc" id="L116">			project.colorDay(day, color);</span>
+<span class="nc" id="L130">			final HColor color = ((CenterBorderColor) complement).getCenter();</span>
+<span class="nc" id="L131">			final DayOfWeek day = (DayOfWeek) subject;</span>
+<span class="nc" id="L132">			project.colorDay(day, color);</span>
 
-<span class="nc" id="L118">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L134">			return CommandExecutionResult.ok();</span>
 		}
 
 	}

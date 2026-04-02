@@ -35,27 +35,41 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexOptional;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-<span class="fc" id="L44">public class ComplementOpen implements Something&lt;GanttDiagram&gt; {</span>
+<span class="fc" id="L49">public class ComplementOpen implements Something&lt;GanttDiagram&gt; {</span>
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L47">		return new RegexLeaf(2, &quot;OPEN&quot; + suffix, &quot;(opene?d?(?: for &quot; + SubjectTask.REGEX_TASK_CODE + &quot;)?)&quot;);</span>
+<span class="fc" id="L52">		return new RegexLeaf(2, &quot;OPEN&quot; + suffix, &quot;(opene?d?(?: for &quot; + SubjectTask.REGEX_TASK_CODE + &quot;)?)&quot;);</span>
+	}
+	
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+<span class="nc" id="L57">		return UBrexConcat.build( //</span>
+<span class="nc" id="L58">				new UBrexLeaf(&quot;open&quot; + String.valueOf((char)0x3007) + &quot;?e&quot; + String.valueOf((char)0x3007) + &quot;?d&quot;), //</span>
+				new UBrexOptional(new UBrexLeaf(&quot; for &quot; + SubjectTask.UBREX_TASK_CODE)));
 	}
 
+
+
 	public Failable&lt;String&gt; getMe(GanttDiagram project, RegexResult arg, String suffix) {
-<span class="nc" id="L51">		final String value = arg.get(&quot;OPEN&quot; + suffix, 0);</span>
-<span class="nc" id="L52">		final int x = value.indexOf('[');</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (x &gt; 0) {</span>
-<span class="nc" id="L54">			final int y = value.lastIndexOf(']');</span>
-<span class="nc" id="L55">			final String s = value.substring(x + 1, y);</span>
-<span class="nc" id="L56">			return Failable.ok(s);</span>
+<span class="nc" id="L65">		final String value = arg.get(&quot;OPEN&quot; + suffix, 0);</span>
+<span class="nc" id="L66">		final int x = value.indexOf('[');</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (x &gt; 0) {</span>
+<span class="nc" id="L68">			final int y = value.lastIndexOf(']');</span>
+<span class="nc" id="L69">			final String s = value.substring(x + 1, y);</span>
+<span class="nc" id="L70">			return Failable.ok(s);</span>
 		}
-<span class="nc" id="L58">		return Failable.ok(&quot;&quot;);</span>
+<span class="nc" id="L72">		return Failable.ok(&quot;&quot;);</span>
 	}
 
 }

@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.project.core.Task;
 public class SentencePausesAbsoluteIntervals extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	public SentencePausesAbsoluteIntervals() {
-<span class="fc" id="L48">		super(SubjectTask.ME, Verbs.pauses, Words.zeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
+<span class="fc" id="L48">		super(SubjectTask.ME, Verbs.pauses.getRegex(), Words.zeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
 				new ComplementIntervals());
 <span class="fc" id="L50">	}</span>
 

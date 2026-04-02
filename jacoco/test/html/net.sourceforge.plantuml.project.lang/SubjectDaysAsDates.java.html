@@ -144,7 +144,7 @@ public class SubjectDaysAsDates implements Subject&lt;GanttDiagram&gt; {
 	class Close extends SentenceSimple&lt;GanttDiagram&gt; {
 
 <span class="fc" id="L146">		public Close() {</span>
-<span class="fc" id="L147">			super(SubjectDaysAsDates.this, Verbs.isOrAre, new ComplementClose());</span>
+<span class="fc" id="L147">			super(SubjectDaysAsDates.this, Verbs.isOrAre.getRegex(), new ComplementClose());</span>
 <span class="fc" id="L148">		}</span>
 
 		@Override
@@ -160,7 +160,7 @@ public class SubjectDaysAsDates implements Subject&lt;GanttDiagram&gt; {
 	class Open extends SentenceSimple&lt;GanttDiagram&gt; {
 
 <span class="fc" id="L162">		public Open() {</span>
-<span class="fc" id="L163">			super(SubjectDaysAsDates.this, Verbs.isOrAre, new ComplementOpen());</span>
+<span class="fc" id="L163">			super(SubjectDaysAsDates.this, Verbs.isOrAre.getRegex(), new ComplementOpen());</span>
 <span class="fc" id="L164">		}</span>
 
 		@Override
@@ -177,7 +177,7 @@ public class SubjectDaysAsDates implements Subject&lt;GanttDiagram&gt; {
 	class InColor extends SentenceSimple&lt;GanttDiagram&gt; {
 
 <span class="fc" id="L179">		public InColor() {</span>
-<span class="fc" id="L180">			super(SubjectDaysAsDates.this, Verbs.isOrAre, new ComplementInColors2());</span>
+<span class="fc" id="L180">			super(SubjectDaysAsDates.this, Verbs.isOrAre.getRegex(), new ComplementInColors2());</span>
 <span class="fc" id="L181">		}</span>
 
 		@Override
@@ -195,7 +195,7 @@ public class SubjectDaysAsDates implements Subject&lt;GanttDiagram&gt; {
 	class Named extends SentenceSimple&lt;GanttDiagram&gt; {
 
 <span class="fc" id="L197">		public Named() {</span>
-<span class="fc" id="L198">			super(SubjectDaysAsDates.this, Verbs.isOrAreNamed, new ComplementNamed());</span>
+<span class="fc" id="L198">			super(SubjectDaysAsDates.this, Verbs.isOrAreNamed.getRegex(), new ComplementNamed());</span>
 <span class="fc" id="L199">		}</span>
 
 		@Override

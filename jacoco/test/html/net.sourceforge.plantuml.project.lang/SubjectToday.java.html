@@ -73,7 +73,7 @@ public class SubjectToday implements Subject&lt;GanttDiagram&gt; {
 	class InColor extends SentenceSimple&lt;GanttDiagram&gt; {
 
 <span class="fc" id="L75">		public InColor() {</span>
-<span class="fc" id="L76">			super(SubjectToday.this, Verbs.isColored, new ComplementInColors());</span>
+<span class="fc" id="L76">			super(SubjectToday.this, Verbs.isColored.getRegex(), new ComplementInColors());</span>
 <span class="fc" id="L77">		}</span>
 
 		@Override
@@ -90,7 +90,7 @@ public class SubjectToday implements Subject&lt;GanttDiagram&gt; {
 	class IsDate extends SentenceSimple&lt;GanttDiagram&gt; {
 
 <span class="fc" id="L92">		public IsDate() {</span>
-<span class="fc" id="L93">			super(SubjectToday.this, Verbs.is, ComplementDate.any());</span>
+<span class="fc" id="L93">			super(SubjectToday.this, Verbs.is.getRegex(), ComplementDate.any());</span>
 <span class="fc" id="L94">		}</span>
 
 		@Override

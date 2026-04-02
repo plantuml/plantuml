@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.project;
 
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.data.DisplayConfigData;
 import net.sourceforge.plantuml.project.data.GanttModelData;
@@ -56,54 +55,54 @@ public final class GanttLayout {
 
 	public GanttLayout(GanttModelData modelData, DisplayConfigData displayConfig, TimeBoundsData timeBounds,
 			TimelineStyleData timelineStyle, TaskDrawRegistryData drawRegistry, StringBounder stringBounder,
-<span class="fc" id="L59">			TimeHeader timeHeader) {</span>
+<span class="fc" id="L58">			TimeHeader timeHeader) {</span>
 
-<span class="fc" id="L61">		drawRegistry.buildTaskAndResourceDraws(stringBounder, timeHeader, modelData, displayConfig, timeBounds,</span>
+<span class="fc" id="L60">		drawRegistry.buildTaskAndResourceDraws(stringBounder, timeHeader, modelData, displayConfig, timeBounds,</span>
 				timelineStyle);
 
 		final double computedTitlesWidth;
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (displayConfig.getLabelStrategy().titleInside()) {</span>
-<span class="fc" id="L66">			computedTitlesWidth = 0;</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (displayConfig.getLabelStrategy().titleInside()) {</span>
+<span class="fc" id="L65">			computedTitlesWidth = 0;</span>
 		} else {
-<span class="nc" id="L68">			double w = 0;</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">			for (Task task : modelData.getTasks()) {</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">				if (timeBounds.isHidden(task))</span>
-<span class="nc" id="L71">					continue;</span>
+<span class="nc" id="L67">			double w = 0;</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">			for (Task task : modelData.getTasks()) {</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">				if (timeBounds.isHidden(task))</span>
+<span class="nc" id="L70">					continue;</span>
 
-<span class="nc" id="L73">				final TaskDraw draw = drawRegistry.getTaskDraw(task);</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">				if (draw == null)</span>
-<span class="nc" id="L75">					continue;</span>
+<span class="nc" id="L72">				final TaskDraw draw = drawRegistry.getTaskDraw(task);</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">				if (draw == null)</span>
+<span class="nc" id="L74">					continue;</span>
 
-<span class="nc" id="L77">				w = Math.max(w, draw.getTitleWidth(stringBounder));</span>
-<span class="nc" id="L78">			}</span>
-<span class="nc" id="L79">			computedTitlesWidth = w;</span>
+<span class="nc" id="L76">				w = Math.max(w, draw.getTitleWidth(stringBounder));</span>
+<span class="nc" id="L77">			}</span>
+<span class="nc" id="L78">			computedTitlesWidth = w;</span>
 		}
 
-<span class="fc" id="L82">		this.titlesWidth = computedTitlesWidth;</span>
-<span class="fc" id="L83">		this.barsWidth = timeBounds.getBarsColumnWidth(timeHeader);</span>
-<span class="fc" id="L84">		this.headerHeight = timeHeader.getTimeHeaderHeight(stringBounder);</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		this.footerHeight = displayConfig.isShowFootbox() ? timeHeader.getTimeFooterHeight(stringBounder) : 0;</span>
-<span class="fc" id="L86">		this.totalHeight = drawRegistry.getTotalHeightWithoutFooter() + this.footerHeight;</span>
-<span class="fc" id="L87">	}</span>
+<span class="fc" id="L81">		this.titlesWidth = computedTitlesWidth;</span>
+<span class="fc" id="L82">		this.barsWidth = timeBounds.getBarsColumnWidth(timeHeader);</span>
+<span class="fc" id="L83">		this.headerHeight = timeHeader.getTimeHeaderHeight(stringBounder);</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		this.footerHeight = displayConfig.isShowFootbox() ? timeHeader.getTimeFooterHeight(stringBounder) : 0;</span>
+<span class="fc" id="L85">		this.totalHeight = drawRegistry.getTotalHeightWithoutFooter() + this.footerHeight;</span>
+<span class="fc" id="L86">	}</span>
 
 	public double getTitlesWidth() {
-<span class="fc" id="L90">		return titlesWidth;</span>
+<span class="fc" id="L89">		return titlesWidth;</span>
 	}
 
 	public double getBarsWidth() {
-<span class="fc" id="L94">		return barsWidth;</span>
+<span class="fc" id="L93">		return barsWidth;</span>
 	}
 
 	public double getTotalHeight() {
-<span class="nc" id="L98">		return totalHeight;</span>
+<span class="nc" id="L97">		return totalHeight;</span>
 	}
 
 	public double getHeaderHeight() {
-<span class="nc" id="L102">		return headerHeight;</span>
+<span class="nc" id="L101">		return headerHeight;</span>
 	}
 
 	public double getFooterHeight() {
-<span class="nc" id="L106">		return footerHeight;</span>
+<span class="nc" id="L105">		return footerHeight;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

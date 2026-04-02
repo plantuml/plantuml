@@ -62,16 +62,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 7
-    Concrete Classes: 6
+    Total Classes: 8
+    Concrete Classes: 7
     Abstract Classes: 1
 
     Ca: 2
-    Ce: 2
+    Ce: 3
 
-    A: 0.14
-    I: 0.5
-    D: 0.36
+    A: 0.12
+    I: 0.6
+    D: 0.27
 
 Abstract Classes:
     com.plantuml.ubrex.builder.UBrexPart
@@ -83,10 +83,12 @@ Concrete Classes:
     com.plantuml.ubrex.builder.UBrexOptional
     com.plantuml.ubrex.builder.UBrexOr
     com.plantuml.ubrex.builder.UBrexUpto
+    com.plantuml.ubrex.builder.UBrexZeroOrMore
 
 Depends Upon:
     com.plantuml.ubrex
     java.lang
+    java.util
 
 Used By:
     net.sourceforge.plantuml.activitydiagram.command
@@ -8857,22 +8859,20 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 62
-    Concrete Classes: 58
-    Abstract Classes: 4
+    Total Classes: 59
+    Concrete Classes: 57
+    Abstract Classes: 2
 
     Ca: 5
     Ce: 14
 
-    A: 0.06
+    A: 0.03
     I: 0.74
-    D: 0.2
+    D: 0.23
 
 Abstract Classes:
     net.sourceforge.plantuml.project.lang.Sentence
-    net.sourceforge.plantuml.project.lang.Something
     net.sourceforge.plantuml.project.lang.Subject
-    net.sourceforge.plantuml.project.lang.Verb
 
 Concrete Classes:
     net.sourceforge.plantuml.project.lang.CenterBorderColor
@@ -8931,7 +8931,6 @@ Concrete Classes:
     net.sourceforge.plantuml.project.lang.SubjectToday$InColor
     net.sourceforge.plantuml.project.lang.SubjectToday$IsDate
     net.sourceforge.plantuml.project.lang.TwoNames
-    net.sourceforge.plantuml.project.lang.Verbs
     net.sourceforge.plantuml.project.lang.Words
 
 Depends Upon:
@@ -14523,7 +14522,7 @@ zext.plantuml.com.google.zxing.qrcode.encoder
 Name, Class Count, Abstract Class Count, Ca, Ce, A, I, D, V:
 
 com.plantuml.ubrex,26,3,5,3,0.12,0.38,0.51,1
-com.plantuml.ubrex.builder,7,1,2,2,0.14,0.5,0.36,1
+com.plantuml.ubrex.builder,8,1,2,3,0.12,0.6,0.27,1
 gen.annotation,9,9,0,2,1,1,1,1
 gen.lib.cdt,18,0,3,4,0,0.57,0.43,1
 gen.lib.cgraph,37,0,5,6,0,0.55,0.45,1
@@ -14554,7 +14553,7 @@ java.security,0,0,3,0,0,0,1,1
 java.security.spec,0,0,2,0,0,0,1,1
 java.text,0,0,7,0,0,0,1,1
 java.time,0,0,12,0,0,0,1,1
-java.util,0,0,169,0,0,0,1,1
+java.util,0,0,170,0,0,0,1,1
 java.util.concurrent,0,0,6,0,0,0,1,1
 java.util.concurrent.atomic,0,0,5,0,0,0,1,1
 java.util.function,0,0,1,0,0,0,1,1
@@ -14713,7 +14712,7 @@ net.sourceforge.plantuml.project.core,11,3,9,12,0.27,0.57,0.16,1
 net.sourceforge.plantuml.project.data,7,0,3,16,0,0.84,0.16,1
 net.sourceforge.plantuml.project.draw,9,2,5,25,0.22,0.83,0.06,1
 net.sourceforge.plantuml.project.draw.header,5,3,2,19,0.6,0.9,0.5,1
-net.sourceforge.plantuml.project.lang,62,4,5,14,0.06,0.74,0.2,1
+net.sourceforge.plantuml.project.lang,59,2,5,14,0.03,0.74,0.23,1
 net.sourceforge.plantuml.project.ngm,4,1,2,3,0.25,0.6,0.15,1
 net.sourceforge.plantuml.project.ngm.math,11,2,6,5,0.18,0.45,0.36,1
 net.sourceforge.plantuml.project.solver,2,0,1,7,0,0.88,0.12,1

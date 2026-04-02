@@ -15,11 +15,12 @@ Total Classes: 26
 "com.plantuml.ubrex" --> "java.util"
 "com.plantuml.ubrex" --> "java.util.concurrent.atomic"
 
-class "com.plantuml.ubrex.builder" %lighten("red", 64) {
-Total Classes: 7
+class "com.plantuml.ubrex.builder" %lighten("red", 73) {
+Total Classes: 8
 }
 "com.plantuml.ubrex.builder" --> "com.plantuml.ubrex"
 "com.plantuml.ubrex.builder" --> "java.lang"
+"com.plantuml.ubrex.builder" --> "java.util"
 
 class "gen.annotation" %lighten("red", 0) {
 Total Classes: 9
@@ -2545,8 +2546,8 @@ Total Classes: 5
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.style"
 
-class "net.sourceforge.plantuml.project.lang" %lighten("red", 80) {
-Total Classes: 62
+class "net.sourceforge.plantuml.project.lang" %lighten("red", 77) {
+Total Classes: 59
 }
 "net.sourceforge.plantuml.project.lang" --> "com.plantuml.ubrex.builder"
 "net.sourceforge.plantuml.project.lang" --> "java.lang"

@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.project.core.Task;
 public class SentenceIsColored extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	public SentenceIsColored() {
-<span class="fc" id="L45">		super(SubjectTask.ME, Verbs.isColored, new ComplementInColors());</span>
+<span class="fc" id="L45">		super(SubjectTask.ME, Verbs.isColored.getRegex(), new ComplementInColors());</span>
 <span class="fc" id="L46">	}</span>
 
 	@Override

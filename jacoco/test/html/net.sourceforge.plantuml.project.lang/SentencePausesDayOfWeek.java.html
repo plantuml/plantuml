@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.project.core.Task;
 public class SentencePausesDayOfWeek extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	public SentencePausesDayOfWeek() {
-<span class="fc" id="L47">		super(SubjectTask.ME, Verbs.pauses, Words.zeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
+<span class="fc" id="L47">		super(SubjectTask.ME, Verbs.pauses.getRegex(), Words.zeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
 				new ComplementDayOfWeek());
 <span class="fc" id="L49">	}</span>
 

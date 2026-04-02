@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 public class SentenceTaskEndsOnlyRelative extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	public SentenceTaskEndsOnlyRelative() {
-<span class="fc" id="L48">		super(SubjectTask.ME, Verbs.ends, Words.zeroOrMore(Words.THE, Words.ON, Words.AT),</span>
+<span class="fc" id="L48">		super(SubjectTask.ME, Verbs.ends.getRegex(), Words.zeroOrMore(Words.THE, Words.ON, Words.AT),</span>
 <span class="fc" id="L49">				ComplementDate.onlyRelative());</span>
 <span class="fc" id="L50">	}</span>
 

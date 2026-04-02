@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.url.Url;
 public class SentenceLinksTo extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	public SentenceLinksTo() {
-<span class="fc" id="L46">		super(SubjectTask.ME, Verbs.linksTo, new ComplementUrl());</span>
+<span class="fc" id="L46">		super(SubjectTask.ME, Verbs.linksTo.getRegex(), new ComplementUrl());</span>
 <span class="fc" id="L47">	}</span>
 
 	@Override

@@ -45,7 +45,7 @@ public class ChallengeResult {
 
 	@Override
 	public String toString() {
-<span class="nc" id="L48">		return &quot;fullCaptureLength=&quot; + fullCaptureLength + &quot; onlyNameLength=&quot; + onlyNameLength + &quot; &quot; + capture;</span>
+<span class="fc" id="L48">		return &quot;fullCaptureLength=&quot; + fullCaptureLength + &quot; onlyNameLength=&quot; + onlyNameLength + &quot; &quot; + capture;</span>
 	}
 
 	public ChallengeResult(int result) {
@@ -87,16 +87,21 @@ public class ChallengeResult {
 	}
 
 
+	public List&lt;String&gt; getRootKeys() {
+<span class="nc" id="L91">		return capture.getRootKeys();</span>
+	}
+
+
 	public Capture getCapture() {
-<span class="fc" id="L91">		return capture;</span>
+<span class="fc" id="L96">		return capture;</span>
 	}
 
 	public int getOnlyNameLength() {
-<span class="fc" id="L95">		return onlyNameLength;</span>
+<span class="fc" id="L100">		return onlyNameLength;</span>
 	}
 
 	public Capture getNonMergeableCapture() {
-<span class="fc" id="L99">		return nonMergeableCapture;</span>
+<span class="fc" id="L104">		return nonMergeableCapture;</span>
 	}
 
 }

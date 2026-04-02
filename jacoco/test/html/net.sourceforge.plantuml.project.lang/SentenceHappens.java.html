@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.project.core.TaskInstant;
 public class SentenceHappens extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	public SentenceHappens() {
-<span class="fc" id="L48">		super(SubjectTask.ME, Verbs.happens, Words.zeroOrMore(Words.THE, Words.ON, Words.AT),</span>
+<span class="fc" id="L48">		super(SubjectTask.ME, Verbs.happens.getRegex(), Words.zeroOrMore(Words.THE, Words.ON, Words.AT),</span>
 				new ComplementBeforeOrAfterOrAtTaskStartOrEnd());
 <span class="fc" id="L50">	}</span>
 
