@@ -243,13 +243,14 @@ public class SvgPath {
 
 	public void drawMe(UGraphic ug, XAffineTransform at) {
 <span class="fc" id="L245">		final UPath path = toUPath(at);</span>
-<span class="fc" id="L246">		ug.draw(path);</span>
-<span class="fc" id="L247">	}</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">		if (path.isInvisible() == false)</span>
+<span class="fc" id="L247">			ug.draw(path);</span>
+<span class="fc" id="L248">	}</span>
 
 	public void drawMe(UGraphic ug, double factor) {
-<span class="nc" id="L250">		final UPath path = toUPath(factor, factor);</span>
-<span class="nc" id="L251">		ug.draw(path);</span>
-<span class="nc" id="L252">	}</span>
+<span class="nc" id="L251">		final UPath path = toUPath(factor, factor);</span>
+<span class="nc" id="L252">		ug.draw(path);</span>
+<span class="nc" id="L253">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
