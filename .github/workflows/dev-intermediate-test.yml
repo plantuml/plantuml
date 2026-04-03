@@ -13,7 +13,7 @@ jobs:
       uses: actions/checkout@v6
 
     - name: Set environment variable
-      run: echo "DEV_TEST=true" >> $GITHUB_ENV
+      run: echo "GPL_ONLY=true" >> $GITHUB_ENV
 
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md

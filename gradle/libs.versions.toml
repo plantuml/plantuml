@@ -21,6 +21,7 @@ adarshr-test-logger = "4.0.0"
 xmlunit-core        = "2.11.0"
 junit-pioneer       = "2.3.0"
 teavm               = "0.13.1"
+sonarqube           = "7.2.3.7755"
 
 [libraries]
 # name                      = { module = "", version.ref = "" }
@@ -50,3 +51,4 @@ adarshr-test-logger = { id = "com.adarshr.test-logger", version.ref = "adarshr-t
 gorylenko-gradle-git-properties = { id = "com.gorylenko.gradle-git-properties", version.ref = "gorylenko-gradle-git-properties" }
 graalvm-native = { id = "org.graalvm.buildtools.native", version.ref = "graalvm-native" }
 teavm = { id = "org.teavm", version.ref = "teavm" }
+sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
