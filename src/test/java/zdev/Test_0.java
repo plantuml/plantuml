@@ -25,11 +25,11 @@ sunday are closed
 2018/12/29 is opened
 2018/12/29 is colored in orange
 [Prototype design] lasts 3 weeks
+[Test prototype] starts at [Prototype design]'s end
+[Test prototype] lasts 2 weeks
 @endgantt
 
 
-[Test prototype] starts at [Prototype design]'s end
-[Test prototype] lasts 2 weeks
 
 
 
