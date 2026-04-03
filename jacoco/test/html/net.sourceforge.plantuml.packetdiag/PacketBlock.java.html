@@ -79,9 +79,9 @@ public class PacketBlock {
 
 	private final ISkinParam skinParam;
 
-<span class="pc" id="L82">	private boolean leftOpen = false;</span>
+<span class="fc" id="L82">	private boolean leftOpen = false;</span>
 
-<span class="pc" id="L84">	private boolean rightOpen = false;</span>
+<span class="fc" id="L84">	private boolean rightOpen = false;</span>
 
 <span class="fc" id="L86">	public PacketBlock(int width, int height, String label, ISkinParam skinParam) {</span>
 <span class="fc" id="L87">		this.width = width;</span>
@@ -90,14 +90,14 @@ public class PacketBlock {
 <span class="fc" id="L90">		this.skinParam = skinParam;</span>
 <span class="fc" id="L91">	}</span>
 
-<span class="nc" id="L93">	public PacketBlock(int width, int height, String label, ISkinParam skinParam, boolean leftOpen, boolean rightOpen) {</span>
-<span class="nc" id="L94">		this.width = width;</span>
-<span class="nc" id="L95">		this.height = height;</span>
-<span class="nc" id="L96">		this.label = label;</span>
-<span class="nc" id="L97">		this.skinParam = skinParam;</span>
-<span class="nc" id="L98">		this.leftOpen = leftOpen;</span>
-<span class="nc" id="L99">		this.rightOpen = rightOpen;</span>
-<span class="nc" id="L100">	}</span>
+<span class="fc" id="L93">	public PacketBlock(int width, int height, String label, ISkinParam skinParam, boolean leftOpen, boolean rightOpen) {</span>
+<span class="fc" id="L94">		this.width = width;</span>
+<span class="fc" id="L95">		this.height = height;</span>
+<span class="fc" id="L96">		this.label = label;</span>
+<span class="fc" id="L97">		this.skinParam = skinParam;</span>
+<span class="fc" id="L98">		this.leftOpen = leftOpen;</span>
+<span class="fc" id="L99">		this.rightOpen = rightOpen;</span>
+<span class="fc" id="L100">	}</span>
 
 	public void openLeft(boolean leftOpen) {
 <span class="nc" id="L103">		this.leftOpen = leftOpen;</span>

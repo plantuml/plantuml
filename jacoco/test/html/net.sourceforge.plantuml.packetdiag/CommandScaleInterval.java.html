@@ -64,11 +64,11 @@ public class CommandScaleInterval extends SingleLineCommand2&lt;PacketDiagram&gt
 	@Override
 	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
 		try {
-<span class="nc" id="L67">			system.updateScaleInterval(Integer.parseInt(arg.get(&quot;INTERVAL&quot;, 0)));</span>
+<span class="fc" id="L67">			system.updateScaleInterval(Integer.parseInt(arg.get(&quot;INTERVAL&quot;, 0)));</span>
 <span class="nc" id="L68">		} catch (NumberFormatException e) {</span>
 <span class="nc" id="L69">			return CommandExecutionResult.error(&quot;Scale interval invalid&quot;, e);</span>
-<span class="nc" id="L70">		}</span>
-<span class="nc" id="L71">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L70">		}</span>
+<span class="fc" id="L71">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

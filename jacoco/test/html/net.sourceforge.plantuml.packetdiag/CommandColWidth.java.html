@@ -64,14 +64,14 @@ public class CommandColWidth extends SingleLineCommand2&lt;PacketDiagram&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
 		try {
-<span class="nc" id="L67">			String width = arg.get(&quot;WIDTH&quot;, 0);</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">			if (width != null) {</span>
-<span class="nc" id="L69">				system.setColWidth(Integer.parseInt(width));</span>
+<span class="fc" id="L67">			String width = arg.get(&quot;WIDTH&quot;, 0);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">			if (width != null) {</span>
+<span class="fc" id="L69">				system.setColWidth(Integer.parseInt(width));</span>
 			}
 <span class="nc" id="L71">		} catch (NumberFormatException e) {</span>
 <span class="nc" id="L72">			return CommandExecutionResult.error(&quot;Width must be an integer&quot;, e);</span>
-<span class="nc" id="L73">		}</span>
-<span class="nc" id="L74">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L73">		}</span>
+<span class="fc" id="L74">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

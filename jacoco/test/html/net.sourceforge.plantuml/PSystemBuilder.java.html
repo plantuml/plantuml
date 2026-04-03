@@ -272,11 +272,11 @@ public class PSystemBuilder {
 <span class="fc" id="L272">						return sys;</span>
 					}
 <span class="fc" id="L274">					errors.add((PSystemError) sys);</span>
-<span class="nc" id="L275">				} catch (Throwable t) {</span>
-<span class="nc" id="L276">					final StringLocated s = source.get(0);</span>
-<span class="nc" id="L277">					final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, &quot;Fatal crash error: &quot; + t, 0,</span>
-<span class="nc" id="L278">							s.getLocation(), null);</span>
-<span class="nc" id="L279">					errors.add(PSystemErrorUtils.buildV2(umlSource, err, Collections.&lt;String&gt;emptyList(), source,</span>
+<span class="fc" id="L275">				} catch (Throwable t) {</span>
+<span class="fc" id="L276">					final StringLocated s = source.get(0);</span>
+<span class="fc" id="L277">					final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, &quot;Fatal crash error: &quot; + t, 0,</span>
+<span class="fc" id="L278">							s.getLocation(), null);</span>
+<span class="fc" id="L279">					errors.add(PSystemErrorUtils.buildV2(umlSource, err, Collections.&lt;String&gt;emptyList(), source,</span>
 							preprocessing, t));
 <span class="fc" id="L281">				}</span>
 <span class="fc" id="L282">			}</span>

@@ -73,7 +73,7 @@ public class CommandNumRange extends SingleLineCommand2&lt;PacketDiagram&gt; {
 	private static Integer getIntAttribute(String name, Map&lt;String, String&gt; attr, Integer defaultValue) {
 <span class="fc" id="L74">		return Optional.ofNullable(attr.get(name)).map(v -&gt; {</span>
 			try {
-<span class="nc" id="L76">				return Integer.parseInt(v);</span>
+<span class="fc" id="L76">				return Integer.parseInt(v);</span>
 <span class="nc" id="L77">			} catch (NumberFormatException ignore) {</span>
 <span class="nc" id="L78">				return defaultValue;</span>
 			}
@@ -81,7 +81,7 @@ public class CommandNumRange extends SingleLineCommand2&lt;PacketDiagram&gt; {
 	}
 
 	private static int getLengthAttribute(Map&lt;String, String&gt; attr) {
-<span class="nc" id="L84">		return getIntAttribute(&quot;len&quot;, attr, 1);</span>
+<span class="fc" id="L84">		return getIntAttribute(&quot;len&quot;, attr, 1);</span>
 	}
 
 	private static int getRotationAttribute(Map&lt;String, String&gt; attr) {
@@ -100,14 +100,14 @@ public class CommandNumRange extends SingleLineCommand2&lt;PacketDiagram&gt; {
 <span class="fc" id="L100">		String desc = arg.get(&quot;DESC&quot;, 0);</span>
 <span class="fc" id="L101">		Map&lt;String, String&gt; attr = NwDiagram.toSet(arg.get(&quot;ATTRIBUTE&quot;, 0));</span>
 		int start, end;
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (r1 != null) {</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (r1 != null) {</span>
 			try {
-<span class="nc" id="L105">				start = Integer.parseInt(r1);</span>
-<span class="nc" id="L106">				end = start + getLengthAttribute(attr) - 1;</span>
+<span class="fc" id="L105">				start = Integer.parseInt(r1);</span>
+<span class="fc" id="L106">				end = start + getLengthAttribute(attr) - 1;</span>
 <span class="nc" id="L107">			} catch (NumberFormatException e) {</span>
 <span class="nc" id="L108">				return CommandExecutionResult.error(&quot;Invalid bit start &quot; + r1, e);</span>
-<span class="nc" id="L109">			}</span>
-<span class="pc bpc" id="L110" title="2 of 4 branches missed.">		} else if (r2 != null &amp;&amp; r3 != null) {</span>
+<span class="fc" id="L109">			}</span>
+<span class="pc bpc" id="L110" title="1 of 4 branches missed.">		} else if (r2 != null &amp;&amp; r3 != null) {</span>
 			try {
 <span class="fc" id="L112">				start = Integer.parseInt(r2);</span>
 <span class="fc" id="L113">				end = Integer.parseInt(r3);</span>
@@ -116,8 +116,8 @@ public class CommandNumRange extends SingleLineCommand2&lt;PacketDiagram&gt; {
 <span class="fc" id="L116">			}</span>
 		} else {
 			// auto length and start position, requires diagram context
-<span class="nc" id="L119">			start = system.getLastPacketEnd().map(v -&gt; v + 1).orElse(0);</span>
-<span class="nc" id="L120">			end = start + getLengthAttribute(attr) - 1;</span>
+<span class="fc" id="L119">			start = system.getLastPacketEnd().map(v -&gt; v + 1).orElse(0);</span>
+<span class="fc" id="L120">			end = start + getLengthAttribute(attr) - 1;</span>
 		}
 		// local height attribute for current packet block
 <span class="fc" id="L123">		int height = getHeightAttribute(attr);</span>

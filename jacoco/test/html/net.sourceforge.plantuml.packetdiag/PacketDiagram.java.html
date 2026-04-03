@@ -207,9 +207,9 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	public void setColWidth(int colWidth) {
-<span class="nc bnc" id="L210" title="All 2 branches missed.">		if (colWidth &gt; 0)</span>
-<span class="nc" id="L211">			this.colWidth = colWidth;</span>
-<span class="nc" id="L212">	}</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">		if (colWidth &gt; 0)</span>
+<span class="fc" id="L211">			this.colWidth = colWidth;</span>
+<span class="fc" id="L212">	}</span>
 
 	/**
 	 * Bit interval for showing full length indicator
@@ -219,19 +219,19 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	void updateScaleInterval(int value) {
-<span class="pc bpc" id="L222" title="1 of 2 branches missed.">		if (value &gt; 0) {</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">		if (value &gt; 0) {</span>
 <span class="fc" id="L223">			this.scaleInterval = Math.min(value, this.colWidth);</span>
 <span class="fc" id="L224">			this.useDefaultScaleInterval = false;</span>
 		}
 <span class="fc" id="L226">	}</span>
 
 	void updateNodeHeight(int nodeHeight) {
-<span class="nc" id="L229">		this.bitHeight = Math.max(nodeHeight, 0);</span>
-<span class="nc" id="L230">	}</span>
+<span class="fc" id="L229">		this.bitHeight = Math.max(nodeHeight, 0);</span>
+<span class="fc" id="L230">	}</span>
 
 	void setScaleDirection(ScaleDirection scaleDirection) {
-<span class="nc" id="L233">		this.scaleDirection = scaleDirection;</span>
-<span class="nc" id="L234">	}</span>
+<span class="fc" id="L233">		this.scaleDirection = scaleDirection;</span>
+<span class="fc" id="L234">	}</span>
 
 	void addPacketItem(PacketItem packetItem) {
 <span class="fc" id="L237">		packetItems.add(packetItem);</span>
@@ -252,11 +252,11 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	 * @return bit-position of the last packet item in system or empty
 	 */
 	Optional&lt;Integer&gt; getLastPacketEnd() {
-<span class="nc bnc" id="L255" title="All 2 branches missed.">		return packetItems.isEmpty() ? Optional.empty() : Optional.of(packetItems.get(packetItems.size() - 1).bitEnd);</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">		return packetItems.isEmpty() ? Optional.empty() : Optional.of(packetItems.get(packetItems.size() - 1).bitEnd);</span>
 	}
 
 	private void build() {
-<span class="pc bpc" id="L259" title="1 of 2 branches missed.">		if (isUseDefaultScaleInterval()) {</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">		if (isUseDefaultScaleInterval()) {</span>
 <span class="fc" id="L260">			updateScaleInterval(getColWidth() / 2);</span>
 		}
 <span class="fc" id="L262">		adjustLayout();</span>
@@ -269,7 +269,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	 * Keeps column width under control
 	 */
 	void adjustColWidth() {
-<span class="pc bpc" id="L272" title="1 of 2 branches missed.">		if (!this.packetGrid.isEmpty()) {</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">		if (!this.packetGrid.isEmpty()) {</span>
 <span class="fc" id="L273">			int maxWidth = this.packetGrid.get(0).stream().mapToInt(PacketBlock::getWidth).sum();</span>
 <span class="fc" id="L274">			this.colWidth = Math.min(maxWidth, this.colWidth);</span>
 		}
@@ -278,8 +278,8 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	void adjustIndicators() {
 <span class="fc" id="L279">		final int fullLengthInterval = getFullIndicatorInterval();</span>
 <span class="fc" id="L280">		IntStream idxStream = IntStream.iterate(0, i -&gt; i + 1).limit(colWidth + 1);</span>
-<span class="pc bpc" id="L281" title="1 of 2 branches missed.">		if (scaleDirection == ScaleDirection.RTL) {</span>
-<span class="nc" id="L282">			idxStream = IntStream.iterate(colWidth, i -&gt; i - 1).limit(colWidth + 1);</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">		if (scaleDirection == ScaleDirection.RTL) {</span>
+<span class="fc" id="L282">			idxStream = IntStream.iterate(colWidth, i -&gt; i - 1).limit(colWidth + 1);</span>
 		}
 <span class="fc" id="L284">		this.packetIndicators = idxStream.mapToObj(i -&gt; {</span>
 <span class="fc bfc" id="L285" title="All 2 branches covered.">			boolean full = i % fullLengthInterval == 0;</span>
@@ -298,26 +298,26 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc" id="L298">		int remainRowWidth = colWidth;</span>
 <span class="fc bfc" id="L299" title="All 2 branches covered.">		for (PacketItem packet : packetItems) {</span>
 <span class="fc" id="L300">			Optional&lt;PacketItem&gt; op = fitPacketInRow(packet, remainRowWidth, currRow);</span>
-<span class="pc bpc" id="L301" title="1 of 2 branches missed.">			if (op.isPresent()) {</span>
-<span class="nc" id="L302">				remainRowWidth = colWidth;</span>
-<span class="nc" id="L303">				grid.add(currRow);</span>
-<span class="nc" id="L304">				currRow = createPacketRow();</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">			if (op.isPresent()) {</span>
+<span class="fc" id="L302">				remainRowWidth = colWidth;</span>
+<span class="fc" id="L303">				grid.add(currRow);</span>
+<span class="fc" id="L304">				currRow = createPacketRow();</span>
 
-<span class="nc" id="L306">				PacketItem p = op.get();</span>
-<span class="nc" id="L307">				int rowCnt = p.width / remainRowWidth;</span>
-<span class="nc" id="L308">				int remain = p.width % remainRowWidth;</span>
-<span class="nc bnc" id="L309" title="All 2 branches missed.">				for (int i = 0; i &lt; rowCnt; i++) {</span>
+<span class="fc" id="L306">				PacketItem p = op.get();</span>
+<span class="fc" id="L307">				int rowCnt = p.width / remainRowWidth;</span>
+<span class="fc" id="L308">				int remain = p.width % remainRowWidth;</span>
+<span class="pc bpc" id="L309" title="1 of 2 branches missed.">				for (int i = 0; i &lt; rowCnt; i++) {</span>
 <span class="nc" id="L310">					PacketBlock pb = p.toPacketBlock(remainRowWidth, true, true, getSkinParam());</span>
 <span class="nc" id="L311">					grid.add(createPacketRow(pb));</span>
 				}
-<span class="nc bnc" id="L313" title="All 2 branches missed.">				if (remain &gt; 0) {</span>
-<span class="nc" id="L314">					PacketBlock pb = p.toPacketBlock(remainRowWidth, true, false, getSkinParam());</span>
-<span class="nc" id="L315">					currRow.add(pb);</span>
-<span class="nc" id="L316">					remainRowWidth -= remain;</span>
-<span class="nc" id="L317">				} else {</span>
+<span class="pc bpc" id="L313" title="1 of 2 branches missed.">				if (remain &gt; 0) {</span>
+<span class="fc" id="L314">					PacketBlock pb = p.toPacketBlock(remainRowWidth, true, false, getSkinParam());</span>
+<span class="fc" id="L315">					currRow.add(pb);</span>
+<span class="fc" id="L316">					remainRowWidth -= remain;</span>
+<span class="fc" id="L317">				} else {</span>
 <span class="nc" id="L318">					grid.get(grid.size() - 1).get(0).openRight(false);</span>
 				}
-<span class="nc" id="L320">			} else {</span>
+<span class="fc" id="L320">			} else {</span>
 <span class="fc" id="L321">				remainRowWidth -= packet.width;</span>
 <span class="fc bfc" id="L322" title="All 2 branches covered.">				if (remainRowWidth == 0) {</span>
 <span class="fc" id="L323">					remainRowWidth = colWidth;</span>
@@ -334,8 +334,8 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc" id="L334">		grid.forEach(blocks -&gt; {</span>
 <span class="fc" id="L335">			final int maxH = blocks.stream().map(PacketBlock::getHeight).max(Integer::compare).orElse(1);</span>
 <span class="fc" id="L336">			blocks.forEach(blk -&gt; blk.setHeight(maxH));</span>
-<span class="pc bpc" id="L337" title="1 of 2 branches missed.">			if (scaleDirection == ScaleDirection.RTL) {</span>
-<span class="nc" id="L338">				Collections.reverse(blocks);</span>
+<span class="fc bfc" id="L337" title="All 2 branches covered.">			if (scaleDirection == ScaleDirection.RTL) {</span>
+<span class="fc" id="L338">				Collections.reverse(blocks);</span>
 			}
 <span class="fc" id="L340">		});</span>
 
@@ -360,11 +360,11 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="pc bpc" id="L360" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
 <span class="pc bpc" id="L361" title="1 of 2 branches missed.">			assert remainRowWidth &gt; 0;</span>
 <span class="fc" id="L362">		int overflow = packet.width - remainRowWidth;</span>
-<span class="pc bpc" id="L363" title="1 of 2 branches missed.">		if (overflow &gt; 0) {</span>
-<span class="nc" id="L364">			int margin = packet.width - remainRowWidth;</span>
-<span class="nc" id="L365">			int bitEnd = packet.bitEnd - margin;</span>
-<span class="nc" id="L366">			row.add(packet.toPacketBlock(remainRowWidth, false, true, getSkinParam()));</span>
-<span class="nc" id="L367">			return Optional.of(new PacketItem(margin, packet.height, bitEnd, packet.bitEnd, packet.desc));</span>
+<span class="fc bfc" id="L363" title="All 2 branches covered.">		if (overflow &gt; 0) {</span>
+<span class="fc" id="L364">			int margin = packet.width - remainRowWidth;</span>
+<span class="fc" id="L365">			int bitEnd = packet.bitEnd - margin;</span>
+<span class="fc" id="L366">			row.add(packet.toPacketBlock(remainRowWidth, false, true, getSkinParam()));</span>
+<span class="fc" id="L367">			return Optional.of(new PacketItem(margin, packet.height, bitEnd, packet.bitEnd, packet.desc));</span>
 		} else {
 <span class="fc" id="L369">			row.add(packet.toPacketBlock(getSkinParam()));</span>
 <span class="fc" id="L370">			return Optional.empty();</span>
@@ -408,7 +408,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 		}
 
 		PacketBlock toPacketBlock(int newWidth, boolean openLeft, boolean openRight, ISkinParam skinParam) {
-<span class="nc" id="L411">			return new PacketBlock(Math.min(newWidth, width), height, desc, skinParam, openLeft, openRight);</span>
+<span class="fc" id="L411">			return new PacketBlock(Math.min(newWidth, width), height, desc, skinParam, openLeft, openRight);</span>
 		}
 	}
 }

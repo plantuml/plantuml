@@ -65,11 +65,11 @@ public class CommandNodeHeight extends SingleLineCommand2&lt;PacketDiagram&gt; {
 	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
 		try {
 			// The original python implementation takes int, but it really should be a float number
-<span class="nc" id="L68">			system.updateNodeHeight(Integer.parseInt(arg.get(&quot;HEIGHT&quot;, 0)));</span>
+<span class="fc" id="L68">			system.updateNodeHeight(Integer.parseInt(arg.get(&quot;HEIGHT&quot;, 0)));</span>
 <span class="nc" id="L69">		} catch (NumberFormatException e) {</span>
 <span class="nc" id="L70">			return CommandExecutionResult.error(&quot;Height must be an integer&quot;, e);</span>
-<span class="nc" id="L71">		}</span>
-<span class="nc" id="L72">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L71">		}</span>
+<span class="fc" id="L72">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

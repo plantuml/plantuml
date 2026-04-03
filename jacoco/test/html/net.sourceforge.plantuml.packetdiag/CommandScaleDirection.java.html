@@ -65,12 +65,12 @@ public class CommandScaleDirection extends SingleLineCommand2&lt;PacketDiagram&g
 
 	@Override
 	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L68">		PacketDiagram.ScaleDirection dir = Optional.ofNullable(arg.get(&quot;DIR&quot;, 0))</span>
-<span class="nc" id="L69">						.map(String::toUpperCase)</span>
-<span class="nc" id="L70">						.map(PacketDiagram.ScaleDirection::valueOf)</span>
-<span class="nc" id="L71">						.orElse(PacketDiagram.ScaleDirection.LTR);</span>
-<span class="nc" id="L72">		system.setScaleDirection(dir);</span>
-<span class="nc" id="L73">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L68">		PacketDiagram.ScaleDirection dir = Optional.ofNullable(arg.get(&quot;DIR&quot;, 0))</span>
+<span class="fc" id="L69">						.map(String::toUpperCase)</span>
+<span class="fc" id="L70">						.map(PacketDiagram.ScaleDirection::valueOf)</span>
+<span class="fc" id="L71">						.orElse(PacketDiagram.ScaleDirection.LTR);</span>
+<span class="fc" id="L72">		system.setScaleDirection(dir);</span>
+<span class="fc" id="L73">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
