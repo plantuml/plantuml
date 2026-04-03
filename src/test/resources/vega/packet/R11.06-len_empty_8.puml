@@ -1,0 +1,4 @@
+@startpacketdiag
+* A [len = ]
+* B [len = 8]
+@endpacketdiag

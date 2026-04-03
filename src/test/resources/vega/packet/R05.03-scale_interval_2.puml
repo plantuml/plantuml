@@ -1,0 +1,10 @@
+@startpacketdiag
+scale_interval=2
+
+0-3: Source Port
+4-7: Destination Port
+8-11: Sequence Number
+12-15: Acknowledgment Number
+16-19: Data Offset
+20-27: Reserved
+@endpacketdiag
