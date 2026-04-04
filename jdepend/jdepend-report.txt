@@ -1203,11 +1203,11 @@ Stats:
     Concrete Classes: 25
     Abstract Classes: 13
 
-    Ca: 97
+    Ca: 96
     Ce: 33
 
     A: 0.34
-    I: 0.25
+    I: 0.26
     D: 0.4
 
 Abstract Classes:
@@ -1375,7 +1375,6 @@ Used By:
     net.sourceforge.plantuml.svek
     net.sourceforge.plantuml.swing
     net.sourceforge.plantuml.syntax
-    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.text
     net.sourceforge.plantuml.tim
     net.sourceforge.plantuml.timingdiagram
@@ -11285,16 +11284,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 16
-    Concrete Classes: 15
+    Total Classes: 17
+    Concrete Classes: 16
     Abstract Classes: 1
 
     Ca: 42
-    Ce: 13
+    Ce: 12
 
     A: 0.06
-    I: 0.24
-    D: 0.7
+    I: 0.22
+    D: 0.72
 
 Abstract Classes:
     net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine$StringCallback
@@ -11312,7 +11311,8 @@ Concrete Classes:
     net.sourceforge.plantuml.teavm.DriverTextTeaVM
     net.sourceforge.plantuml.teavm.DriverTextTeaVM$ExtraLines
     net.sourceforge.plantuml.teavm.EmbeddedResources
-    net.sourceforge.plantuml.teavm.StringBounderTeaVM
+    net.sourceforge.plantuml.teavm.StringBounderTeaVM$1
+    net.sourceforge.plantuml.teavm.StringBounderTeaVM$CacheKey
     net.sourceforge.plantuml.teavm.TeaVM
     net.sourceforge.plantuml.teavm.UGraphicTeaVM
 
@@ -11320,7 +11320,6 @@ Depends Upon:
     java.io
     java.lang
     java.util
-    net.sourceforge.plantuml
     net.sourceforge.plantuml.klimt
     net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
@@ -14603,7 +14602,7 @@ jcckit.renderer,1,0,1,4,0,0.8,0.2,1
 jcckit.transformation,1,1,1,3,1,0.75,0.75,1
 jcckit.util,7,2,5,2,0.29,0.29,0.43,1
 net.atmp,3,0,19,10,0,0.34,0.66,1
-net.sourceforge.plantuml,38,13,97,33,0.34,0.25,0.4,1
+net.sourceforge.plantuml,38,13,96,33,0.34,0.26,0.4,1
 net.sourceforge.plantuml.abel,30,8,30,18,0.27,0.38,0.36,1
 net.sourceforge.plantuml.activitydiagram,2,0,2,12,0,0.86,0.14,1
 net.sourceforge.plantuml.activitydiagram.command,8,0,1,14,0,0.93,0.07,1
@@ -14776,7 +14775,7 @@ net.sourceforge.plantuml.svek.image,37,2,12,23,0.05,0.66,0.29,1
 net.sourceforge.plantuml.svg.parser,11,1,1,13,0.09,0.93,0.02,1
 net.sourceforge.plantuml.swing,36,0,0,15,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
-net.sourceforge.plantuml.teavm,16,1,42,13,0.06,0.24,0.7,1
+net.sourceforge.plantuml.teavm,17,1,42,12,0.06,0.22,0.72,1
 net.sourceforge.plantuml.teavm.browser,5,5,2,2,1,0.5,0.5,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.text,5,1,38,4,0.2,0.1,0.7,1

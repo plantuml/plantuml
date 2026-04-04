@@ -1861,10 +1861,10 @@
                 <TotalClasses>38</TotalClasses>
                 <ConcreteClasses>25</ConcreteClasses>
                 <AbstractClasses>13</AbstractClasses>
-                <Ca>97</Ca>
+                <Ca>96</Ca>
                 <Ce>33</Ce>
                 <A>0.34</A>
-                <I>0.25</I>
+                <I>0.26</I>
                 <D>0.4</D>
                 <V>1</V>
             </Stats>
@@ -2113,7 +2113,6 @@
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.swing</Package>
                 <Package>net.sourceforge.plantuml.syntax</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
                 <Package>net.sourceforge.plantuml.tim</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram</Package>
@@ -16602,14 +16601,14 @@
 
         <Package name="net.sourceforge.plantuml.teavm">
             <Stats>
-                <TotalClasses>16</TotalClasses>
-                <ConcreteClasses>15</ConcreteClasses>
+                <TotalClasses>17</TotalClasses>
+                <ConcreteClasses>16</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>42</Ca>
-                <Ce>13</Ce>
+                <Ce>12</Ce>
                 <A>0.06</A>
-                <I>0.24</I>
-                <D>0.7</D>
+                <I>0.22</I>
+                <D>0.72</D>
                 <V>1</V>
             </Stats>
 
@@ -16657,7 +16656,10 @@
                     net.sourceforge.plantuml.teavm.EmbeddedResources
                 </Class>
                 <Class sourceFile="StringBounderTeaVM.java">
-                    net.sourceforge.plantuml.teavm.StringBounderTeaVM
+                    net.sourceforge.plantuml.teavm.StringBounderTeaVM$1
+                </Class>
+                <Class sourceFile="StringBounderTeaVM.java">
+                    net.sourceforge.plantuml.teavm.StringBounderTeaVM$CacheKey
                 </Class>
                 <Class sourceFile="TeaVM.java">
                     net.sourceforge.plantuml.teavm.TeaVM
@@ -16671,7 +16673,6 @@
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
-                <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>

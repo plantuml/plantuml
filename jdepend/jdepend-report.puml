@@ -3182,13 +3182,12 @@ Total Classes: 2
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.teavm" %lighten("red", 30) {
-Total Classes: 16
+class "net.sourceforge.plantuml.teavm" %lighten("red", 28) {
+Total Classes: 17
 }
 "net.sourceforge.plantuml.teavm" --> "java.io"
 "net.sourceforge.plantuml.teavm" --> "java.lang"
 "net.sourceforge.plantuml.teavm" --> "java.util"
-"net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt"
 "net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.awt"
 "net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.color"

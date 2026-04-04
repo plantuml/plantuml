@@ -34,75 +34,125 @@
  */
 package net.sourceforge.plantuml.teavm;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
+
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 
-<span class="nc" id="L43">public class StringBounderTeaVM implements StringBounder {</span>
+<span class="nc" id="L47">public class StringBounderTeaVM implements StringBounder {</span>
 	// ::remove file when JAVA8
 
+	private static final int MAX_CACHE_SIZE = 8192;
+
+	private static final class CacheKey {
+		private final UFontImpl font;
+		private final String text;
+		private final int hash;
+
+<span class="nc" id="L57">		CacheKey(UFontImpl font, String text) {</span>
+<span class="nc" id="L58">			this.font = font;</span>
+<span class="nc" id="L59">			this.text = text;</span>
+<span class="nc" id="L60">			this.hash = Objects.hash(font, text);</span>
+<span class="nc" id="L61">		}</span>
+
+		@Override
+		public int hashCode() {
+<span class="nc" id="L65">			return hash;</span>
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+<span class="nc bnc" id="L70" title="All 2 branches missed.">			if (this == obj)</span>
+<span class="nc" id="L71">				return true;</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">			if (obj instanceof CacheKey == false)</span>
+<span class="nc" id="L73">				return false;</span>
+<span class="nc" id="L74">			final CacheKey other = (CacheKey) obj;</span>
+<span class="nc bnc" id="L75" title="All 4 branches missed.">			return font.equals(other.font) &amp;&amp; text.equals(other.text);</span>
+		}
+	}
+
+<span class="nc" id="L79">	private static final Map&lt;CacheKey, XDimension2D&gt; cache = new LinkedHashMap&lt;&gt;(16, 0.75f, true) {</span>
+		@Override
+		protected boolean removeEldestEntry(Map.Entry&lt;CacheKey, XDimension2D&gt; eldest) {
+<span class="nc bnc" id="L82" title="All 2 branches missed.">			return size() &gt; MAX_CACHE_SIZE;</span>
+		}
+	};
+
 	@Override
-	public XDimension2D calculateDimension(UFont font, String text) {
-<span class="nc bnc" id="L48" title="All 4 branches missed.">		if (text == null || text.isEmpty())</span>
-<span class="nc" id="L49">			return new XDimension2D(0, 0);</span>
+	public XDimension2D calculateDimension(UFont f, String text) {
+<span class="nc bnc" id="L88" title="All 4 branches missed.">		if (text == null || text.isEmpty())</span>
+<span class="nc" id="L89">			return new XDimension2D(0, 0);</span>
 
-<span class="nc" id="L51">		final String fontFamily = font.getFamily(null, null);</span>
-<span class="nc" id="L52">		final int fontSize = font.getSize();</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">		final String fontWeight = font.getFontFace().isBold() ? &quot;bold&quot; : &quot;normal&quot;;</span>
+<span class="nc" id="L91">		final UFontImpl font = (UFontImpl) f;</span>
+<span class="nc" id="L92">		final CacheKey key = new CacheKey(font, text);</span>
 
-<span class="nc" id="L55">		final double[] metrics = SvgGraphicsTeaVM.measureTextCanvas(text, fontFamily, fontSize, fontWeight);</span>
-<span class="nc" id="L56">		final double width = metrics[0];</span>
+<span class="nc" id="L94">		return cache.computeIfAbsent(key, k -&gt; calculateDimensionSlow(font, text));</span>
+	}
+
+	private XDimension2D calculateDimensionSlow(UFontImpl font, String text) {
+<span class="nc" id="L98">		final String fontFamily = font.getFamily(null, null);</span>
+<span class="nc" id="L99">		final int fontSize = font.getSize();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		final String fontWeight = font.getFontFace().isBold() ? &quot;bold&quot; : &quot;normal&quot;;</span>
+
+<span class="nc" id="L102">		final double[] metrics = SvgGraphicsTeaVM.measureTextCanvas(text, fontFamily, fontSize, fontWeight);</span>
+<span class="nc" id="L103">		final double width = metrics[0];</span>
 
 		// Use SVG getBBox for height as it's more accurate for layout
-<span class="nc" id="L59">		final double[] svgMetrics = SvgGraphicsTeaVM.measureTextSvgBBox(text, fontFamily, fontSize);</span>
-<span class="nc" id="L60">		double height = svgMetrics[1];</span>
+<span class="nc" id="L106">		final double[] svgMetrics = SvgGraphicsTeaVM.measureTextSvgBBox(text, fontFamily, fontSize);</span>
+<span class="nc" id="L107">		double height = svgMetrics[1];</span>
 
 		// getBBox returns height=0 for whitespace-only strings (no visible glyphs)
 		// In this case, use font metrics to get the proper line height
-<span class="nc bnc" id="L64" title="All 4 branches missed.">		if (height == 0 &amp;&amp; !text.isEmpty()) {</span>
-<span class="nc" id="L65">			final double[] detailedMetrics = SvgGraphicsTeaVM.getDetailedTextMetrics(text, fontFamily, fontSize,</span>
+<span class="nc bnc" id="L111" title="All 4 branches missed.">		if (height == 0 &amp;&amp; !text.isEmpty()) {</span>
+<span class="nc" id="L112">			final double[] detailedMetrics = SvgGraphicsTeaVM.getDetailedTextMetrics(text, fontFamily, fontSize,</span>
 					fontWeight);
-<span class="nc" id="L67">			height = detailedMetrics[3] + detailedMetrics[4]; // fontBoundingBoxAscent + fontBoundingBoxDescent</span>
+<span class="nc" id="L114">			height = detailedMetrics[3] + detailedMetrics[4]; // fontBoundingBoxAscent + fontBoundingBoxDescent</span>
 		}
 
-<span class="nc" id="L70">		return new XDimension2D(width, height);</span>
+<span class="nc" id="L117">		return new XDimension2D(width, height);</span>
 
 	}
 
 	@Override
 	public double getDescent(UFont font, String text) {
-<span class="nc bnc" id="L76" title="All 4 branches missed.">		if (text == null || text.isEmpty())</span>
-<span class="nc" id="L77">			return 0;</span>
+<span class="nc bnc" id="L123" title="All 4 branches missed.">		if (text == null || text.isEmpty())</span>
+<span class="nc" id="L124">			return 0;</span>
 
-<span class="nc" id="L79">		final String fontFamily = font.getFamily(null, null);</span>
-<span class="nc" id="L80">		final int fontSize = font.getSize();</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		final String fontWeight = font.getFontFace().isBold() ? &quot;bold&quot; : &quot;normal&quot;;</span>
+<span class="nc" id="L126">		final String fontFamily = font.getFamily(null, null);</span>
+<span class="nc" id="L127">		final int fontSize = font.getSize();</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		final String fontWeight = font.getFontFace().isBold() ? &quot;bold&quot; : &quot;normal&quot;;</span>
 
-<span class="nc" id="L83">		final double[] metrics = SvgGraphicsTeaVM.getDetailedTextMetrics(text, fontFamily, fontSize, fontWeight);</span>
+<span class="nc" id="L130">		final double[] metrics = SvgGraphicsTeaVM.getDetailedTextMetrics(text, fontFamily, fontSize, fontWeight);</span>
 		// metrics[0] = width
 		// metrics[1] = actualBoundingBoxAscent (glyph-specific ascent above baseline)
-		// metrics[2] = actualBoundingBoxDescent (glyph-specific descent below baseline, can be negative for characters above baseline like '&quot;')
-		// metrics[3] = fontBoundingBoxAscent (font-level ascent, constant for all glyphs)
-		// metrics[4] = fontBoundingBoxDescent (font-level descent, constant for all glyphs, like Java's LineMetrics.getDescent())
-<span class="nc" id="L89">		return metrics[4];</span>
+		// metrics[2] = actualBoundingBoxDescent (glyph-specific descent below baseline,
+		// can be negative for characters above baseline like '&quot;')
+		// metrics[3] = fontBoundingBoxAscent (font-level ascent, constant for all
+		// glyphs)
+		// metrics[4] = fontBoundingBoxDescent (font-level descent, constant for all
+		// glyphs, like Java's LineMetrics.getDescent())
+<span class="nc" id="L139">		return metrics[4];</span>
 	}
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (&quot;TEAVM&quot;.equalsIgnoreCase(propertyName))</span>
-<span class="nc" id="L95">			return true;</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (&quot;TEAVM&quot;.equalsIgnoreCase(propertyName))</span>
+<span class="nc" id="L145">			return true;</span>
 
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (&quot;SVG&quot;.equalsIgnoreCase(propertyName))</span>
-<span class="nc" id="L98">			return true;</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (&quot;SVG&quot;.equalsIgnoreCase(propertyName))</span>
+<span class="nc" id="L148">			return true;</span>
 
-<span class="nc" id="L100">		return false;</span>
+<span class="nc" id="L150">		return false;</span>
 	}
 
 	@Override
 	public FileFormat getFileFormat() {
-<span class="nc" id="L105">		return FileFormat.SVG;</span>
+<span class="nc" id="L155">		return FileFormat.SVG;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
