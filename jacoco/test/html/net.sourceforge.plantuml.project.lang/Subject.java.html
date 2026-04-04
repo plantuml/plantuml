@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.project.lang;
 import java.util.Collection;
 import java.util.Collections;
 
+import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.core.Diagram;
@@ -56,11 +57,16 @@ public interface Subject&lt;D extends Diagram&gt; {
 	public Failable&lt;? extends Object&gt; getMe(D project, RegexResult arg);
 
 	default public UBrexPart toUnicodeBracketedExpressionSubject() {
-<span class="nc" id="L59">		return null;</span>
+<span class="nc" id="L60">		return null;</span>
+	}
+	
+	default public Failable&lt;? extends Object&gt; ugetMe(D diagram, UMatcher arg) {
+<span class="nc" id="L64">		throw new IllegalArgumentException(&quot;wip8547 &quot; + getClass());</span>
 	}
 
+
 	default public Collection&lt;UbrexSentence&lt;GanttDiagram&gt;&gt; getUSentences() {
-<span class="nc" id="L63">		return Collections.emptyList();</span>
+<span class="nc" id="L69">		return Collections.emptyList();</span>
 	}
 
 }

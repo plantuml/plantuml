@@ -8,7 +8,7 @@ end title
 set separator none
 hide empty members
 
-class "com.plantuml.ubrex" %lighten("red", 49) {
+class "com.plantuml.ubrex" %lighten("red", 44.99999999999999) {
 Total Classes: 26
 }
 "com.plantuml.ubrex" --> "java.lang"
@@ -2405,7 +2405,7 @@ Total Classes: 10
 "net.sourceforge.plantuml.preproc2" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.preproc2" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.project" %lighten("red", 89) {
+class "net.sourceforge.plantuml.project" %lighten("red", 90) {
 Total Classes: 17
 }
 "net.sourceforge.plantuml.project" --> "java.lang"
@@ -2436,9 +2436,11 @@ Total Classes: 17
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.solver"
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.time"
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.timescale"
+"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.ulang"
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.real"
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.stereo"
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.style"
+"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.teavm"
 
 class "net.sourceforge.plantuml.project.command" %lighten("red", 88) {
 Total Classes: 14
@@ -2546,9 +2548,10 @@ Total Classes: 5
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.style"
 
-class "net.sourceforge.plantuml.project.lang" %lighten("red", 77) {
-Total Classes: 59
+class "net.sourceforge.plantuml.project.lang" %lighten("red", 78) {
+Total Classes: 65
 }
+"net.sourceforge.plantuml.project.lang" --> "com.plantuml.ubrex"
 "net.sourceforge.plantuml.project.lang" --> "com.plantuml.ubrex.builder"
 "net.sourceforge.plantuml.project.lang" --> "java.lang"
 "net.sourceforge.plantuml.project.lang" --> "java.time"
@@ -2560,6 +2563,7 @@ Total Classes: 59
 "net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.project"
 "net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.project.core"
 "net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.project.time"
+"net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.project.ulang"
 "net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.regex"
 "net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.url"
@@ -2606,6 +2610,10 @@ Total Classes: 5
 "net.sourceforge.plantuml.project.timescale" --> "net.sourceforge.plantuml.project"
 "net.sourceforge.plantuml.project.timescale" --> "net.sourceforge.plantuml.project.core"
 "net.sourceforge.plantuml.project.timescale" --> "net.sourceforge.plantuml.project.time"
+
+class "net.sourceforge.plantuml.project.ulang"{
+
+}
 
 class "net.sourceforge.plantuml.real" %lighten("red", 88) {
 Total Classes: 8

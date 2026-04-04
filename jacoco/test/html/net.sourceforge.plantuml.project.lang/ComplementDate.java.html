@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.project.lang;
 
 import java.time.LocalDate;
 
+import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.project.Failable;
@@ -51,86 +52,93 @@ public class ComplementDate implements Something&lt;GanttDiagram&gt; {
 
 	private final Type type;
 
-<span class="fc" id="L54">	static enum Type {</span>
-<span class="fc" id="L55">		ANY, ONLY_RELATIVE, ONLY_ABSOLUTE;</span>
+<span class="fc" id="L55">	static enum Type {</span>
+<span class="fc" id="L56">		ANY, ONLY_RELATIVE, ONLY_ABSOLUTE;</span>
 	}
 
-<span class="fc" id="L58">	private ComplementDate(Type type) {</span>
-<span class="fc" id="L59">		this.type = type;</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L59">	private ComplementDate(Type type) {</span>
+<span class="fc" id="L60">		this.type = type;</span>
+<span class="fc" id="L61">	}</span>
 
 	public static ComplementDate any() {
-<span class="fc" id="L63">		return new ComplementDate(Type.ANY);</span>
+<span class="fc" id="L64">		return new ComplementDate(Type.ANY);</span>
 	}
 
 	public static ComplementDate onlyRelative() {
-<span class="fc" id="L67">		return new ComplementDate(Type.ONLY_RELATIVE);</span>
+<span class="fc" id="L68">		return new ComplementDate(Type.ONLY_RELATIVE);</span>
 	}
 
 	public static ComplementDate onlyAbsolute() {
-<span class="fc" id="L71">		return new ComplementDate(Type.ONLY_ABSOLUTE);</span>
+<span class="fc" id="L72">		return new ComplementDate(Type.ONLY_ABSOLUTE);</span>
 	}
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
-<span class="nc" id="L76">		final DayPattern dayPattern = new DayPattern(&quot;&quot;);</span>
-<span class="nc" id="L77">		return dayPattern.toUbrex();</span>
+<span class="nc" id="L77">		final DayPattern dayPattern = new DayPattern(&quot;&quot;);</span>
+<span class="nc" id="L78">		return dayPattern.toUbrex();</span>
 	}
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L81">		final DayPattern dayPattern = new DayPattern(suffix);</span>
-<span class="fc bfc" id="L82" title="All 3 branches covered.">		switch (type) {</span>
+<span class="fc" id="L82">		final DayPattern dayPattern = new DayPattern(suffix);</span>
+<span class="fc bfc" id="L83" title="All 3 branches covered.">		switch (type) {</span>
 		case ONLY_ABSOLUTE:
-<span class="fc" id="L84">			return dayPattern.toRegex();</span>
+<span class="fc" id="L85">			return dayPattern.toRegex();</span>
 		case ONLY_RELATIVE:
-<span class="fc" id="L86">			return new RegexOr(toRegexD(suffix), toRegexE(suffix));</span>
+<span class="fc" id="L87">			return new RegexOr(toRegexD(suffix), toRegexE(suffix));</span>
 		}
-<span class="fc" id="L88">		return new RegexOr(dayPattern.toRegex(), toRegexD(suffix), toRegexE(suffix));</span>
+<span class="fc" id="L89">		return new RegexOr(dayPattern.toRegex(), toRegexD(suffix), toRegexE(suffix));</span>
 	}
 
 	private IRegex toRegexD(String suffix) {
-<span class="fc" id="L92">		return new RegexConcat( //</span>
+<span class="fc" id="L93">		return new RegexConcat( //</span>
 				new RegexLeaf(1, &quot;DCOUNT&quot; + suffix, &quot;([\\d]+)&quot;), //
-<span class="fc" id="L94">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L95">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;days?&quot;), //
-<span class="fc" id="L96">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L97">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;after&quot;), //
-<span class="fc" id="L98">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L99">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;start&quot;) //
 		);
 	}
 
 	private IRegex toRegexE(String suffix) {
-<span class="fc" id="L104">		return new RegexConcat( //</span>
+<span class="fc" id="L105">		return new RegexConcat( //</span>
 				new RegexLeaf(&quot;[dD]\\+&quot;), //
 				new RegexLeaf(1, &quot;ECOUNT&quot; + suffix, &quot;([\\d]+)&quot;) //
 		);
 	}
+	
+	@Override
+	public Failable&lt;? extends Object&gt; ugetMe(GanttDiagram diagram, UMatcher arg) {
+<span class="nc" id="L113">		final DayPattern dayPattern = new DayPattern(&quot;&quot;);</span>
+<span class="nc" id="L114">		final LocalDate result = dayPattern.getDay(arg);</span>
+<span class="nc" id="L115">		return Failable.ok(result);</span>
+	}
 
 	public Failable&lt;LocalDate&gt; getMe(GanttDiagram system, RegexResult arg, String suffix) {
-<span class="fc" id="L111">		final DayPattern dayPattern = new DayPattern(suffix);</span>
-<span class="fc" id="L112">		final LocalDate result = dayPattern.getDay(arg);</span>
+<span class="fc" id="L119">		final DayPattern dayPattern = new DayPattern(suffix);</span>
+<span class="fc" id="L120">		final LocalDate result = dayPattern.getDay(arg);</span>
 
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (result != null)</span>
-<span class="fc" id="L115">			return Failable.ok(result);</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (result != null)</span>
+<span class="fc" id="L123">			return Failable.ok(result);</span>
 
-<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (arg.get(&quot;DCOUNT&quot; + suffix, 0) != null)</span>
-<span class="nc" id="L118">			return Failable.ok(resultD(system, arg, suffix));</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (arg.get(&quot;DCOUNT&quot; + suffix, 0) != null)</span>
+<span class="nc" id="L126">			return Failable.ok(resultD(system, arg, suffix));</span>
 
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (arg.get(&quot;ECOUNT&quot; + suffix, 0) != null)</span>
-<span class="nc" id="L121">			return Failable.ok(resultE(system, arg, suffix));</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (arg.get(&quot;ECOUNT&quot; + suffix, 0) != null)</span>
+<span class="nc" id="L129">			return Failable.ok(resultE(system, arg, suffix));</span>
 
-<span class="nc" id="L123">		throw new IllegalStateException();</span>
+<span class="nc" id="L131">		throw new IllegalStateException();</span>
 	}
 
 	private LocalDate resultD(GanttDiagram system, RegexResult arg, String suffix) {
-<span class="nc" id="L127">		final int day = Integer.parseInt(arg.get(&quot;DCOUNT&quot; + suffix, 0));</span>
-<span class="nc" id="L128">		return system.getMinDay().plusDays(day);</span>
+<span class="nc" id="L135">		final int day = Integer.parseInt(arg.get(&quot;DCOUNT&quot; + suffix, 0));</span>
+<span class="nc" id="L136">		return system.getMinDay().plusDays(day);</span>
 	}
 
 	private LocalDate resultE(GanttDiagram system, RegexResult arg, String suffix) {
-<span class="nc" id="L132">		final int day = Integer.parseInt(arg.get(&quot;ECOUNT&quot; + suffix, 0));</span>
-<span class="nc" id="L133">		return system.getMinDay().plusDays(day);</span>
+<span class="nc" id="L140">		final int day = Integer.parseInt(arg.get(&quot;ECOUNT&quot; + suffix, 0));</span>
+<span class="nc" id="L141">		return system.getMinDay().plusDays(day);</span>
 	}
 
 }

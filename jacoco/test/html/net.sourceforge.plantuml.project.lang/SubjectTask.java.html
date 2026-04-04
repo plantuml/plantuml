@@ -41,16 +41,21 @@ import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
 import com.plantuml.ubrex.builder.UBrexPart;
-import com.plantuml.ubrex.builder.UBrexUpto;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.project.GanttConstraint;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskCode;
+import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.project.ulang.UbrexSentence;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -63,86 +68,130 @@ import net.sourceforge.plantuml.stereo.StereotypePattern;
 
 public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L66">	public static final Subject&lt;GanttDiagram&gt; ME = new SubjectTask();</span>
+<span class="fc" id="L71">	public static final Subject&lt;GanttDiagram&gt; ME = new SubjectTask();</span>
 	public static final String REGEX_TASK_CODE = &quot;\\[([^\\[\\]]+?)\\]&quot;;
-<span class="fc" id="L68">	public static final String UBREX_TASK_CODE = &quot;[&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;[]&quot; + String.valueOf((char)0x300D) + &quot;]&quot;;</span>
+<span class="fc" id="L73">	public static final String UBREX_TASK_CODE = &quot;[&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;[]&quot; + String.valueOf((char)0x300D) + &quot;]&quot;;</span>
 
 	private SubjectTask() {
 	}
 
 	@Override
 	public Collection&lt;UbrexSentence&lt;GanttDiagram&gt;&gt; getUSentences() {
-<span class="nc" id="L75">		final List&lt;UbrexSentence&lt;GanttDiagram&gt;&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L76">		result.add(new UbrexSentence&lt;GanttDiagram&gt;(this, Verbs.requires,</span>
-<span class="nc" id="L77">				Words.uzeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementDuration()) {</span>
+<span class="nc" id="L80">		final List&lt;UbrexSentence&lt;GanttDiagram&gt;&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L81">		result.add(new UbrexSentence&lt;GanttDiagram&gt;(this, Verbs.requires,</span>
+<span class="nc" id="L82">				Words.uzeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementDuration()) {</span>
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project) {
-<span class="nc" id="L80">				return CommandExecutionResult.error(&quot;WIPGANTT &quot; + getClass());</span>
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+<span class="nc" id="L85">				final Task task = (Task) subject;</span>
+<span class="nc" id="L86">				final Load duration = (Load) complement;</span>
+<span class="nc" id="L87">				task.setLoad(duration);</span>
+<span class="nc" id="L88">				return CommandExecutionResult.ok();</span>
 			}
 		});
-<span class="nc" id="L83">		result.add(</span>
-<span class="nc" id="L84">				new UbrexSentence&lt;GanttDiagram&gt;(this, Verbs.starts, new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {</span>
+<span class="nc" id="L91">		result.add(</span>
+<span class="nc" id="L92">				new UbrexSentence&lt;GanttDiagram&gt;(this, Verbs.starts, new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {</span>
 					@Override
-					public CommandExecutionResult execute(GanttDiagram project) {
-<span class="nc" id="L87">						return CommandExecutionResult.error(&quot;WIPGANTT &quot; + getClass());</span>
+					public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+<span class="nc" id="L95">						final Task task = (Task) subject;</span>
+						final TaskInstant when;
+<span class="nc" id="L97">						HColor color = null;</span>
+<span class="nc" id="L98">						when = (TaskInstant) complement;</span>
+<span class="nc" id="L99">						task.setStart(when.getInstantPrecise());</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">						if (when.isTask())</span>
+<span class="nc" id="L101">							project.addContraint(</span>
+<span class="nc" id="L102">									new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),</span>
+											when, new TaskInstant(task, TaskAttribute.START), color));
+
+<span class="nc" id="L105">						return CommandExecutionResult.ok();</span>
 					}
 				});
-<span class="nc" id="L90">		return result;</span>
+<span class="nc" id="L108">		return result;</span>
 
+	}
+
+	public IRegex toRegex() {
+<span class="fc" id="L113">		return new RegexOr( //</span>
+				new RegexLeaf(1, &quot;IT&quot;, &quot;(it)&quot;), //
+				new RegexConcat(new RegexLeaf(1, &quot;THEN&quot;, &quot;(then[%s]+)?&quot;), //
+						new RegexLeaf(1, &quot;SUBJECT&quot;, REGEX_TASK_CODE), //
+<span class="fc" id="L117">						StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+						new RegexOptional(new RegexConcat(//
+<span class="fc" id="L119">								Words.exactly(Words.AS), //</span>
+<span class="fc" id="L120">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(1, &quot;SHORTNAME&quot;, REGEX_TASK_CODE))), //
+						new RegexOptional(new RegexConcat( //
+<span class="fc" id="L123">								Words.exactly(Words.ON), //</span>
+<span class="fc" id="L124">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(1, &quot;RESOURCE&quot;, &quot;((?:\\{[^{}]+\\}[%s]*)+)&quot;) //
+						))));
 	}
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionSubject() {
-<span class="nc" id="L96">		return UBrexConcat.build( //</span>
-				new UBrexLeaf(&quot;[&quot;), //
-				new UBrexUpto(//
-<span class="nc" id="L99">						new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3034) + &quot;.&quot;), //</span>
-						new UBrexLeaf(&quot;]&quot;) //
-				));
+<span class="nc" id="L131">		return new UBrexNamed(&quot;SHORTNAME&quot;, new UBrexLeaf(UBREX_TASK_CODE));</span>
+	}
+
+	@Override
+	public Failable&lt;? extends Object&gt; ugetMe(GanttDiagram gantt, UMatcher arg) {
+<span class="nc" id="L136">		final String subject = null;</span>
+<span class="nc" id="L137">		final String shortName = arg.getCapture(&quot;SHORTNAME&quot;).get(0);</span>
+<span class="nc" id="L138">		final String then = null;</span>
+//		final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);
+
+<span class="nc" id="L141">		final TaskCode code = TaskCode.fromIdAndDisplay(shortName, subject);</span>
+		final Task result;
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		result = gantt.getOrCreateTask(code, then != null);</span>
+
+//		if (stereotype != null)
+//			result.setStereotype(Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0)));
+
+<span class="nc" id="L148">		gantt.setIt(result);</span>
+<span class="nc" id="L149">		return Failable.ok(result);</span>
+
 	}
 
 	public Failable&lt;Task&gt; getMe(GanttDiagram gantt, RegexResult arg) {
 		final Task result;
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (arg.get(&quot;IT&quot;, 0) != null) {</span>
-<span class="nc" id="L107">			result = gantt.getIt();</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">			if (result == null)</span>
-<span class="nc" id="L109">				return Failable.error(&quot;Not sure what are you refering to?&quot;);</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (arg.get(&quot;IT&quot;, 0) != null) {</span>
+<span class="nc" id="L156">			result = gantt.getIt();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			if (result == null)</span>
+<span class="nc" id="L158">				return Failable.error(&quot;Not sure what are you refering to?&quot;);</span>
 		} else {
-<span class="fc" id="L111">			final String subject = arg.get(&quot;SUBJECT&quot;, 0);</span>
-<span class="fc" id="L112">			final String shortName = arg.get(&quot;SHORTNAME&quot;, 0);</span>
-<span class="fc" id="L113">			final String then = arg.get(&quot;THEN&quot;, 0);</span>
-<span class="fc" id="L114">			final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="fc" id="L160">			final String subject = arg.get(&quot;SUBJECT&quot;, 0);</span>
+<span class="fc" id="L161">			final String shortName = arg.get(&quot;SHORTNAME&quot;, 0);</span>
+<span class="fc" id="L162">			final String then = arg.get(&quot;THEN&quot;, 0);</span>
+<span class="fc" id="L163">			final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
 
-<span class="fc" id="L116">			final TaskCode code = TaskCode.fromIdAndDisplay(shortName, subject);</span>
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">			result = gantt.getOrCreateTask(code, then != null);</span>
+<span class="fc" id="L165">			final TaskCode code = TaskCode.fromIdAndDisplay(shortName, subject);</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">			result = gantt.getOrCreateTask(code, then != null);</span>
 
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">			if (stereotype != null)</span>
-<span class="nc" id="L120">				result.setStereotype(Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0)));</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">			if (stereotype != null)</span>
+<span class="nc" id="L169">				result.setStereotype(Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0)));</span>
 
-<span class="fc" id="L122">			gantt.setIt(result);</span>
+<span class="fc" id="L171">			gantt.setIt(result);</span>
 		}
 
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L126">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L175">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L128">		final String resource = arg.get(&quot;RESOURCE&quot;, 0);</span>
-<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		if (resource != null) {</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">			for (final StringTokenizer st = new StringTokenizer(resource, &quot;{}&quot;); st.hasMoreTokens();) {</span>
-<span class="nc" id="L131">				final String part = st.nextToken().trim();</span>
-<span class="nc bnc" id="L132" title="All 2 branches missed.">				if (part.length() &gt; 0) {</span>
-<span class="nc" id="L133">					final boolean ok = gantt.affectResource(result, part);</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">					if (ok == false)</span>
-<span class="nc" id="L135">						return Failable.error(&quot;Bad argument for resource&quot;);</span>
+<span class="fc" id="L177">		final String resource = arg.get(&quot;RESOURCE&quot;, 0);</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (resource != null) {</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">			for (final StringTokenizer st = new StringTokenizer(resource, &quot;{}&quot;); st.hasMoreTokens();) {</span>
+<span class="nc" id="L180">				final String part = st.nextToken().trim();</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">				if (part.length() &gt; 0) {</span>
+<span class="nc" id="L182">					final boolean ok = gantt.affectResource(result, part);</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">					if (ok == false)</span>
+<span class="nc" id="L184">						return Failable.error(&quot;Bad argument for resource&quot;);</span>
 
 				}
-<span class="nc" id="L138">			}</span>
+<span class="nc" id="L187">			}</span>
 
 		}
-<span class="fc" id="L141">		return Failable.ok(result);</span>
+<span class="fc" id="L190">		return Failable.ok(result);</span>
 	}
 
 	public Collection&lt;? extends SentenceSimple&lt;GanttDiagram&gt;&gt; getSentences() {
-<span class="fc" id="L145">		return Arrays.asList(new SentenceRequire(), new SentenceTaskStarts(), new SentenceTaskStartsWithColor(),</span>
+<span class="fc" id="L194">		return Arrays.asList(new SentenceRequire(), new SentenceTaskStarts(), new SentenceTaskStartsWithColor(),</span>
 				new SentenceTaskStartsOnlyRelative(), new SentenceTaskStartsAbsolute(), new SentenceHappens(),
 				new SentenceHappensDate(), new SentenceEnds(), new SentenceTaskEndsOnlyRelative(),
 				new SentenceTaskEndsAbsolute(), new SentenceIsColored(), new SentenceIsColoredForCompletion(),
@@ -150,23 +199,6 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 				new SentenceDisplayOnSameRowAs(), new SentencePausesAbsoluteDate(),
 				new SentencePausesAbsoluteIntervals(), new SentencePausesAbsoluteIntervalsSmart(),
 				new SentencePausesDayOfWeek(), new SentenceIsDisplayedAs());
-	}
-
-	public IRegex toRegex() {
-<span class="fc" id="L156">		return new RegexOr( //</span>
-				new RegexLeaf(1, &quot;IT&quot;, &quot;(it)&quot;), //
-				new RegexConcat(new RegexLeaf(1, &quot;THEN&quot;, &quot;(then[%s]+)?&quot;), //
-						new RegexLeaf(1, &quot;SUBJECT&quot;, REGEX_TASK_CODE), //
-<span class="fc" id="L160">						StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
-						new RegexOptional(new RegexConcat(//
-<span class="fc" id="L162">								Words.exactly(Words.AS), //</span>
-<span class="fc" id="L163">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(1, &quot;SHORTNAME&quot;, REGEX_TASK_CODE))), //
-						new RegexOptional(new RegexConcat( //
-<span class="fc" id="L166">								Words.exactly(Words.ON), //</span>
-<span class="fc" id="L167">								RegexLeaf.spaceOneOrMore(), //</span>
-								new RegexLeaf(1, &quot;RESOURCE&quot;, &quot;((?:\\{[^{}]+\\}[%s]*)+)&quot;) //
-						))));
 	}
 
 }

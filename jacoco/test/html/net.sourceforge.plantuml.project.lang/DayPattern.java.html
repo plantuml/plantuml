@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.project.lang;
 import java.time.LocalDate;
 import java.time.Month;
 
+import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.builder.UBrexOr;
 import com.plantuml.ubrex.builder.UBrexPart;
 
@@ -59,62 +60,73 @@ public class DayPattern {
 	private final String dayKeyB;
 	private final String dayKeyC;
 
-<span class="fc" id="L62">	public DayPattern(String id) {</span>
-<span class="fc" id="L63">		this.id = id;</span>
-<span class="fc" id="L64">		this.yearKeyA = &quot;AYEAR&quot; + id;</span>
-<span class="fc" id="L65">		this.yearKeyB = &quot;BYEAR&quot; + id;</span>
-<span class="fc" id="L66">		this.yearKeyC = &quot;CYEAR&quot; + id;</span>
-<span class="fc" id="L67">		this.monthKeyA = &quot;AMONTH&quot; + id;</span>
-<span class="fc" id="L68">		this.monthKeyB = &quot;BMONTH&quot; + id;</span>
-<span class="fc" id="L69">		this.monthKeyC = &quot;CMONTH&quot; + id;</span>
-<span class="fc" id="L70">		this.dayKeyA = &quot;ADAY&quot; + id;</span>
-<span class="fc" id="L71">		this.dayKeyB = &quot;BDAY&quot; + id;</span>
-<span class="fc" id="L72">		this.dayKeyC = &quot;CDAY&quot; + id;</span>
-<span class="fc" id="L73">	}</span>
+<span class="fc" id="L63">	public DayPattern(String id) {</span>
+<span class="fc" id="L64">		this.id = id;</span>
+<span class="fc" id="L65">		this.yearKeyA = &quot;AYEAR&quot; + id;</span>
+<span class="fc" id="L66">		this.yearKeyB = &quot;BYEAR&quot; + id;</span>
+<span class="fc" id="L67">		this.yearKeyC = &quot;CYEAR&quot; + id;</span>
+<span class="fc" id="L68">		this.monthKeyA = &quot;AMONTH&quot; + id;</span>
+<span class="fc" id="L69">		this.monthKeyB = &quot;BMONTH&quot; + id;</span>
+<span class="fc" id="L70">		this.monthKeyC = &quot;CMONTH&quot; + id;</span>
+<span class="fc" id="L71">		this.dayKeyA = &quot;ADAY&quot; + id;</span>
+<span class="fc" id="L72">		this.dayKeyB = &quot;BDAY&quot; + id;</span>
+<span class="fc" id="L73">		this.dayKeyC = &quot;CDAY&quot; + id;</span>
+<span class="fc" id="L74">	}</span>
 
 	public IRegex toRegex() {
-<span class="fc" id="L76">		return new RegexOr(TimeResolution.toRegexA_DD_MONTH_YYYY(yearKeyA, monthKeyA, dayKeyA),</span>
-<span class="fc" id="L77">				TimeResolution.toRegexB_YYYY_MM_DD(yearKeyB, monthKeyB, dayKeyB),</span>
-<span class="fc" id="L78">				TimeResolution.toRegexC_MONTH_DD_YYYY(yearKeyC, monthKeyC, dayKeyC));</span>
+<span class="fc" id="L77">		return new RegexOr(TimeResolution.toRegexA_DD_MONTH_YYYY(yearKeyA, monthKeyA, dayKeyA),</span>
+<span class="fc" id="L78">				TimeResolution.toRegexB_YYYY_MM_DD(yearKeyB, monthKeyB, dayKeyB),</span>
+<span class="fc" id="L79">				TimeResolution.toRegexC_MONTH_DD_YYYY(yearKeyC, monthKeyC, dayKeyC));</span>
 	}
 
 	public UBrexPart toUbrex() {
-<span class="nc" id="L82">		return new UBrexOr(TimeResolution.toUbrexA_DD_MONTH_YYYY(yearKeyA, monthKeyA, dayKeyA),</span>
-<span class="nc" id="L83">				TimeResolution.toUbrexB_YYYY_MM_DD(yearKeyB, monthKeyB, dayKeyB),</span>
-<span class="nc" id="L84">				TimeResolution.toUbrexC_MONTH_DD_YYYY(yearKeyC, monthKeyC, dayKeyC));</span>
+<span class="nc" id="L83">		return new UBrexOr(TimeResolution.toUbrexA_DD_MONTH_YYYY(yearKeyA, monthKeyA, dayKeyA),</span>
+<span class="nc" id="L84">				TimeResolution.toUbrexB_YYYY_MM_DD(yearKeyB, monthKeyB, dayKeyB),</span>
+<span class="nc" id="L85">				TimeResolution.toUbrexC_MONTH_DD_YYYY(yearKeyC, monthKeyC, dayKeyC));</span>
 	}
 
 	public LocalDate getDay(RegexResult arg) {
-<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (arg.get(dayKeyA, 0) != null)</span>
-<span class="nc" id="L89">			return resultA(arg);</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (arg.get(dayKeyA, 0) != null)</span>
+<span class="nc" id="L90">			return resultA(arg);</span>
 
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (arg.get(dayKeyB, 0) != null)</span>
-<span class="fc" id="L92">			return resultB(arg);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (arg.get(dayKeyB, 0) != null)</span>
+<span class="fc" id="L93">			return resultB(arg);</span>
 
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (arg.get(dayKeyC, 0) != null)</span>
-<span class="nc" id="L95">			return resultC(arg);</span>
-<span class="nc" id="L96">		return null;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (arg.get(dayKeyC, 0) != null)</span>
+<span class="nc" id="L96">			return resultC(arg);</span>
+<span class="nc" id="L97">		return null;</span>
+	}
+
+	public LocalDate getDay(UMatcher arg) {
+<span class="nc" id="L101">		return resultA(arg);</span>
+	}
+
+	private LocalDate resultA(UMatcher arg) {
+<span class="nc" id="L105">		final int day = Integer.parseInt(arg.getCapture(dayKeyA).get(0));</span>
+<span class="nc" id="L106">		final Month month = MonthUtils.fromString(arg.getCapture(monthKeyA).get(0));</span>
+<span class="nc" id="L107">		final int year = Integer.parseInt(arg.getCapture(yearKeyA).get(0));</span>
+<span class="nc" id="L108">		return LocalDate.of(year, month, day);</span>
 	}
 
 	private LocalDate resultA(RegexResult arg) {
-<span class="nc" id="L100">		final int day = Integer.parseInt(arg.get(dayKeyA, 0));</span>
-<span class="nc" id="L101">		final Month month = MonthUtils.fromString(arg.get(monthKeyA, 0));</span>
-<span class="nc" id="L102">		final int year = Integer.parseInt(arg.get(yearKeyA, 0));</span>
-<span class="nc" id="L103">		return LocalDate.of(year, month, day);</span>
+<span class="nc" id="L112">		final int day = Integer.parseInt(arg.get(dayKeyA, 0));</span>
+<span class="nc" id="L113">		final Month month = MonthUtils.fromString(arg.get(monthKeyA, 0));</span>
+<span class="nc" id="L114">		final int year = Integer.parseInt(arg.get(yearKeyA, 0));</span>
+<span class="nc" id="L115">		return LocalDate.of(year, month, day);</span>
 	}
 
 	private LocalDate resultB(RegexResult arg) {
-<span class="fc" id="L107">		final int day = Integer.parseInt(arg.get(dayKeyB, 0));</span>
-<span class="fc" id="L108">		final int month = Integer.parseInt(arg.get(monthKeyB, 0));</span>
-<span class="fc" id="L109">		final int year = Integer.parseInt(arg.get(yearKeyB, 0));</span>
-<span class="fc" id="L110">		return LocalDate.of(year, month, day);</span>
+<span class="fc" id="L119">		final int day = Integer.parseInt(arg.get(dayKeyB, 0));</span>
+<span class="fc" id="L120">		final int month = Integer.parseInt(arg.get(monthKeyB, 0));</span>
+<span class="fc" id="L121">		final int year = Integer.parseInt(arg.get(yearKeyB, 0));</span>
+<span class="fc" id="L122">		return LocalDate.of(year, month, day);</span>
 	}
 
 	private LocalDate resultC(RegexResult arg) {
-<span class="nc" id="L114">		final int day = Integer.parseInt(arg.get(dayKeyC, 0));</span>
-<span class="nc" id="L115">		final Month month = MonthUtils.fromString(arg.get(monthKeyC, 0));</span>
-<span class="nc" id="L116">		final int year = Integer.parseInt(arg.get(yearKeyC, 0));</span>
-<span class="nc" id="L117">		return LocalDate.of(year, month, day);</span>
+<span class="nc" id="L126">		final int day = Integer.parseInt(arg.get(dayKeyC, 0));</span>
+<span class="nc" id="L127">		final Month month = MonthUtils.fromString(arg.get(monthKeyC, 0));</span>
+<span class="nc" id="L128">		final int year = Integer.parseInt(arg.get(yearKeyC, 0));</span>
+<span class="nc" id="L129">		return LocalDate.of(year, month, day);</span>
 	}
 
 }

@@ -41,6 +41,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexPart;
 
@@ -55,55 +56,63 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class SubjectProject implements Subject&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L58">	public static final Subject&lt;GanttDiagram&gt; ME = new SubjectProject();</span>
+<span class="fc" id="L59">	public static final Subject&lt;GanttDiagram&gt; ME = new SubjectProject();</span>
 
 	private SubjectProject() {
 	}
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionSubject() {
-<span class="nc" id="L65">		return new UBrexLeaf(&quot;project&quot;);</span>
+<span class="nc" id="L66">		return new UBrexLeaf(&quot;project&quot;);</span>
 	}
 
 	@Override
 	public Collection&lt;UbrexSentence&lt;GanttDiagram&gt;&gt; getUSentences() {
-<span class="nc" id="L70">		final List&lt;UbrexSentence&lt;GanttDiagram&gt;&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L71">		result.add(new UbrexSentence&lt;GanttDiagram&gt;(this, Verbs.starts,</span>
-<span class="nc" id="L72">				Words.uzeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT), ComplementDate.onlyAbsolute()) {</span>
+<span class="nc" id="L71">		final List&lt;UbrexSentence&lt;GanttDiagram&gt;&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L72">		result.add(new UbrexSentence&lt;GanttDiagram&gt;(this, Verbs.starts,</span>
+<span class="nc" id="L73">				Words.uzeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT), ComplementDate.onlyAbsolute()) {</span>
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project) {
-<span class="nc" id="L75">				return CommandExecutionResult.error(&quot;WIPGANTT &quot; + getClass());</span>
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+<span class="nc" id="L76">				final LocalDate start = (LocalDate) complement;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">				if (TeaVM.a())</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">					assert project == subject;</span>
+<span class="nc" id="L79">				return project.updateStartingPoint(start);</span>
 			}
 		});
-<span class="nc" id="L78">		return result;</span>
+<span class="nc" id="L82">		return result;</span>
 
 	}
 
 	public IRegex toRegex() {
-<span class="fc" id="L83">		return new RegexLeaf(0, &quot;SUBJECT&quot;, &quot;project&quot;);</span>
+<span class="fc" id="L87">		return new RegexLeaf(0, &quot;SUBJECT&quot;, &quot;project&quot;);</span>
 	}
 
 	public Failable&lt;GanttDiagram&gt; getMe(GanttDiagram project, RegexResult arg) {
-<span class="fc" id="L87">		return Failable.ok(project);</span>
+<span class="fc" id="L91">		return Failable.ok(project);</span>
+	}
+
+	@Override
+	public Failable&lt;? extends Object&gt; ugetMe(GanttDiagram project, UMatcher arg) {
+<span class="nc" id="L96">		return Failable.ok(project);</span>
 	}
 
 	public Collection&lt;? extends SentenceSimple&lt;GanttDiagram&gt;&gt; getSentences() {
-<span class="fc" id="L91">		return Arrays.asList(new Starts());</span>
+<span class="fc" id="L100">		return Arrays.asList(new Starts());</span>
 	}
 
-<span class="fc" id="L94">	class Starts extends SentenceSimple&lt;GanttDiagram&gt; {</span>
+<span class="fc" id="L103">	class Starts extends SentenceSimple&lt;GanttDiagram&gt; {</span>
 
-<span class="fc" id="L96">		public Starts() {</span>
-<span class="fc" id="L97">			super(SubjectProject.this, Verbs.starts.getRegex(),</span>
-<span class="fc" id="L98">					Words.zeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT), ComplementDate.onlyAbsolute());</span>
-<span class="fc" id="L99">		}</span>
+<span class="fc" id="L105">		public Starts() {</span>
+<span class="fc" id="L106">			super(SubjectProject.this, Verbs.starts.getRegex(),</span>
+<span class="fc" id="L107">					Words.zeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT), ComplementDate.onlyAbsolute());</span>
+<span class="fc" id="L108">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="fc" id="L103">			final LocalDate start = (LocalDate) complement;</span>
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">			if (TeaVM.a())</span>
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">				assert project == subject;</span>
-<span class="fc" id="L106">			return project.updateStartingPoint(start);</span>
+<span class="fc" id="L112">			final LocalDate start = (LocalDate) complement;</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">			if (TeaVM.a())</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">				assert project == subject;</span>
+<span class="fc" id="L115">			return project.updateStartingPoint(start);</span>
 		}
 
 	}

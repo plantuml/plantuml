@@ -7,11 +7,11 @@
                 <TotalClasses>26</TotalClasses>
                 <ConcreteClasses>23</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>5</Ca>
+                <Ca>6</Ca>
                 <Ce>3</Ce>
                 <A>0.12</A>
-                <I>0.38</I>
-                <D>0.51</D>
+                <I>0.33</I>
+                <D>0.55</D>
                 <V>1</V>
             </Stats>
 
@@ -109,6 +109,7 @@
                 <Package>com.plantuml.ubrex.builder</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram.command</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
+                <Package>net.sourceforge.plantuml.project.lang</Package>
                 <Package>net.sourceforge.plantuml.regex</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
             </UsedBy>
@@ -12271,10 +12272,10 @@
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>9</Ca>
-                <Ce>31</Ce>
+                <Ce>33</Ce>
                 <A>0.12</A>
-                <I>0.77</I>
-                <D>0.11</D>
+                <I>0.79</I>
+                <D>0.1</D>
                 <V>1</V>
             </Stats>
 
@@ -12364,9 +12365,11 @@
                 <Package>net.sourceforge.plantuml.project.solver</Package>
                 <Package>net.sourceforge.plantuml.project.time</Package>
                 <Package>net.sourceforge.plantuml.project.timescale</Package>
+                <Package>net.sourceforge.plantuml.project.ulang</Package>
                 <Package>net.sourceforge.plantuml.real</Package>
                 <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
+                <Package>net.sourceforge.plantuml.teavm</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -12759,23 +12762,20 @@
 
         <Package name="net.sourceforge.plantuml.project.lang">
             <Stats>
-                <TotalClasses>59</TotalClasses>
-                <ConcreteClasses>57</ConcreteClasses>
-                <AbstractClasses>2</AbstractClasses>
+                <TotalClasses>65</TotalClasses>
+                <ConcreteClasses>64</ConcreteClasses>
+                <AbstractClasses>1</AbstractClasses>
                 <Ca>5</Ca>
-                <Ce>14</Ce>
-                <A>0.03</A>
-                <I>0.74</I>
-                <D>0.23</D>
+                <Ce>16</Ce>
+                <A>0.02</A>
+                <I>0.76</I>
+                <D>0.22</D>
                 <V>1</V>
             </Stats>
 
             <AbstractClasses>
                 <Class sourceFile="Sentence.java">
                     net.sourceforge.plantuml.project.lang.Sentence
-                </Class>
-                <Class sourceFile="Subject.java">
-                    net.sourceforge.plantuml.project.lang.Subject
                 </Class>
             </AbstractClasses>
 
@@ -12856,6 +12856,15 @@
                     net.sourceforge.plantuml.project.lang.SentenceTaskStartsWithColor
                 </Class>
                 <Class sourceFile="SubjectDayAsDate.java">
+                    net.sourceforge.plantuml.project.lang.SubjectDayAsDate$1
+                </Class>
+                <Class sourceFile="SubjectDayAsDate.java">
+                    net.sourceforge.plantuml.project.lang.SubjectDayAsDate$2
+                </Class>
+                <Class sourceFile="SubjectDayAsDate.java">
+                    net.sourceforge.plantuml.project.lang.SubjectDayAsDate$3
+                </Class>
+                <Class sourceFile="SubjectDayAsDate.java">
                     net.sourceforge.plantuml.project.lang.SubjectDayAsDate$Close
                 </Class>
                 <Class sourceFile="SubjectDayAsDate.java">
@@ -12863,6 +12872,9 @@
                 </Class>
                 <Class sourceFile="SubjectDayAsDate.java">
                     net.sourceforge.plantuml.project.lang.SubjectDayAsDate$Open
+                </Class>
+                <Class sourceFile="SubjectDayOfWeek.java">
+                    net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$1
                 </Class>
                 <Class sourceFile="SubjectDayOfWeek.java">
                     net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$AreClose
@@ -12893,6 +12905,9 @@
                 </Class>
                 <Class sourceFile="SubjectProject.java">
                     net.sourceforge.plantuml.project.lang.SubjectProject
+                </Class>
+                <Class sourceFile="SubjectProject.java">
+                    net.sourceforge.plantuml.project.lang.SubjectProject$1
                 </Class>
                 <Class sourceFile="SubjectProject.java">
                     net.sourceforge.plantuml.project.lang.SubjectProject$Starts
@@ -12936,6 +12951,12 @@
                 <Class sourceFile="SubjectSeparator.java">
                     net.sourceforge.plantuml.project.lang.SubjectSeparator$JustBefore
                 </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$1
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$2
+                </Class>
                 <Class sourceFile="SubjectToday.java">
                     net.sourceforge.plantuml.project.lang.SubjectToday
                 </Class>
@@ -12954,6 +12975,7 @@
             </ConcreteClasses>
 
             <DependsUpon>
+                <Package>com.plantuml.ubrex</Package>
                 <Package>com.plantuml.ubrex.builder</Package>
                 <Package>java.lang</Package>
                 <Package>java.time</Package>
@@ -12965,6 +12987,7 @@
                 <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.project.core</Package>
                 <Package>net.sourceforge.plantuml.project.time</Package>
+                <Package>net.sourceforge.plantuml.project.ulang</Package>
                 <Package>net.sourceforge.plantuml.regex</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
@@ -13222,6 +13245,10 @@
                 <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.project.draw.header</Package>
             </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.project.ulang">
+            <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
 
         <Package name="net.sourceforge.plantuml.real">
@@ -16573,7 +16600,7 @@
                 <TotalClasses>16</TotalClasses>
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>41</Ca>
+                <Ca>42</Ca>
                 <Ce>13</Ce>
                 <A>0.06</A>
                 <I>0.24</I>
@@ -16678,6 +16705,7 @@
                 <Package>net.sourceforge.plantuml.mindmap</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
+                <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.project.lang</Package>
                 <Package>net.sourceforge.plantuml.project.solver</Package>
