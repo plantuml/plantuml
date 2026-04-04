@@ -91,6 +91,12 @@ public class PacketDiagram extends TitledDiagram {
 	private boolean useDefaultScaleInterval = true;
 
 	/**
+	 * When true, all blocks in a row are forced to the same height (the row
+	 * maximum). Defaults to false to match the original blockdiag behavior.
+	 */
+	private boolean sameHeight = false;
+
+	/**
 	 * Packet grow direction
 	 */
 	private ScaleDirection scaleDirection = ScaleDirection.LTR;
@@ -233,6 +239,10 @@ public class PacketDiagram extends TitledDiagram {
 		this.scaleDirection = scaleDirection;
 	}
 
+	void setSameHeight(boolean sameHeight) {
+		this.sameHeight = sameHeight;
+	}
+
 	void addPacketItem(PacketItem packetItem) {
 		packetItems.add(packetItem);
 	}
@@ -329,14 +339,13 @@ public class PacketDiagram extends TitledDiagram {
 		if (!currRow.isEmpty()) {
 			grid.add(currRow);
 		}
-		// Equalize packet height, this behavior is not in the original implementation,
-		// but I find it make sense to do so
 		grid.forEach(blocks -> {
-			final int maxH = blocks.stream().map(PacketBlock::getHeight).max(Integer::compare).orElse(1);
-			blocks.forEach(blk -> blk.setHeight(maxH));
-			if (scaleDirection == ScaleDirection.RTL) {
-				Collections.reverse(blocks);
+			if (sameHeight) {
+				final int maxH = blocks.stream().map(PacketBlock::getHeight).max(Integer::compare).orElse(1);
+				blocks.forEach(blk -> blk.setHeight(maxH));
 			}
+			if (scaleDirection == ScaleDirection.RTL)
+				Collections.reverse(blocks);
 		});
 
 		this.packetGrid = grid;

@@ -169,26 +169,24 @@ public class PacketBlock {
 	}
 
 	TextBlock getShapeTextBlock(StringBounder stringBounder, double bitWidth, double bitHeight) {
-		// vertical(top and bottom) margin for displaying the label content
 		final double vMargin = 10D;
 		final double reqWidth = getDrawWidth(bitWidth);
 		final Fashion fashion = getFashion();
 		final TextBlock label = getLabelTextBlockAbbr(stringBounder, bitWidth);
-		// mergeTB would add label height and margins to the shape so here this offset
-		// makes sure we actually get drawHeight
-		double heightPreOffset = Math.max(0D,
-				getDrawHeight(bitHeight) - label.calculateDimension(stringBounder).getHeight() - vMargin - vMargin);
-		final TextBlock stereo = TextBlockUtils.empty(reqWidth, heightPreOffset);
+		final double labelHeight = label.calculateDimension(stringBounder).getHeight();
+		final double totalSpare = Math.max(0D, getDrawHeight(bitHeight) - labelHeight - vMargin - vMargin);
+		final double topSpare = totalSpare / 2.0;
+		final double bottomSpare = totalSpare - topSpare;
+		final TextBlock topSpacer = TextBlockUtils.empty(reqWidth, topSpare);
+		final TextBlock bottomSpacer = TextBlockUtils.empty(reqWidth, bottomSpare);
 
-		// Basically it's URectangle#asSmall, but without horizontal margin
 		return new TextBlock() {
 			@Override
 			@Fast
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				final XDimension2D dimLabel = label.calculateDimension(stringBounder);
-				final XDimension2D dimStereo = stereo.calculateDimension(stringBounder);
-				XDimension2D dim = dimStereo.mergeTB(dimLabel);
-				return new XDimension2D(dim.getWidth(), dim.getHeight() + vMargin + vMargin);
+				final double w = reqWidth;
+				final double h = topSpare + labelHeight + bottomSpare + vMargin + vMargin;
+				return new XDimension2D(w, h);
 			}
 
 			@Override
@@ -196,14 +194,14 @@ public class PacketBlock {
 				final XDimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = UGraphicStencil.create(ug, dim);
 				ug = fashion.apply(ug);
-				// URectangle#drawRect
 				final URectangle rect = URectangle.build(dim.getWidth(), dim.getHeight());
 				final Shadowable shape = rect.rounded(fashion.getRoundCorner());
 				shape.setDeltaShadow(fashion.getDeltaShadow());
 				ug.draw(shape);
 
-				final TextBlock tb = TextBlockUtils.mergeTB(stereo, label, HorizontalAlignment.CENTER);
-				tb.drawU(ug.apply(new UTranslate(0D, vMargin)));
+				final TextBlock tb = TextBlockUtils.mergeTB(topSpacer, label, HorizontalAlignment.CENTER);
+				final TextBlock full = TextBlockUtils.mergeTB(tb, bottomSpacer, HorizontalAlignment.CENTER);
+				full.drawU(ug.apply(new UTranslate(0D, vMargin)));
 			}
 		};
 	}

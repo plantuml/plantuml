@@ -59,6 +59,7 @@ public class PacketDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandNodeHeight());
 		cmds.add(new CommandScaleDirection());
 		cmds.add(new CommandScaleInterval());
+		cmds.add(new CommandSameHeight());
 		cmds.add(new CommandNumRange());
 		cmds.add(new CommandPacketDiagEnd());
 	}
