@@ -11679,8 +11679,8 @@
 
         <Package name="net.sourceforge.plantuml.packetdiag">
             <Stats>
-                <TotalClasses>11</TotalClasses>
-                <ConcreteClasses>11</ConcreteClasses>
+                <TotalClasses>12</TotalClasses>
+                <ConcreteClasses>12</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
                 <Ce>17</Ce>
@@ -11705,6 +11705,9 @@
                 </Class>
                 <Class sourceFile="CommandPacketDiagStart.java">
                     net.sourceforge.plantuml.packetdiag.CommandPacketDiagStart
+                </Class>
+                <Class sourceFile="CommandSameHeight.java">
+                    net.sourceforge.plantuml.packetdiag.CommandSameHeight
                 </Class>
                 <Class sourceFile="CommandScaleInterval.java">
                     net.sourceforge.plantuml.packetdiag.CommandScaleInterval

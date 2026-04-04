@@ -59,14 +59,15 @@ public class PacketDiagramFactory extends PSystemCommandFactory {
 <span class="fc" id="L59">		cmds.add(new CommandNodeHeight());</span>
 <span class="fc" id="L60">		cmds.add(new CommandScaleDirection());</span>
 <span class="fc" id="L61">		cmds.add(new CommandScaleInterval());</span>
-<span class="fc" id="L62">		cmds.add(new CommandNumRange());</span>
-<span class="fc" id="L63">		cmds.add(new CommandPacketDiagEnd());</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L62">		cmds.add(new CommandSameHeight());</span>
+<span class="fc" id="L63">		cmds.add(new CommandNumRange());</span>
+<span class="fc" id="L64">		cmds.add(new CommandPacketDiagEnd());</span>
+<span class="fc" id="L65">	}</span>
 
 	@Override
 	public PacketDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing) {
-<span class="fc" id="L69">		return new PacketDiagram(source, preprocessing);</span>
+<span class="fc" id="L70">		return new PacketDiagram(source, preprocessing);</span>
 	}
 
 }

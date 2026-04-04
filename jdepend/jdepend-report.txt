@@ -8054,8 +8054,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 11
-    Concrete Classes: 11
+    Total Classes: 12
+    Concrete Classes: 12
     Abstract Classes: 0
 
     Ca: 0
@@ -8072,6 +8072,7 @@ Concrete Classes:
     net.sourceforge.plantuml.packetdiag.CommandNodeHeight
     net.sourceforge.plantuml.packetdiag.CommandPacketDiagEnd
     net.sourceforge.plantuml.packetdiag.CommandPacketDiagStart
+    net.sourceforge.plantuml.packetdiag.CommandSameHeight
     net.sourceforge.plantuml.packetdiag.CommandScaleInterval
     net.sourceforge.plantuml.packetdiag.PacketBlock$1
     net.sourceforge.plantuml.packetdiag.PacketDiagram$1
@@ -14719,7 +14720,7 @@ net.sourceforge.plantuml.objectdiagram,2,1,0,14,0.5,1,0.5,1
 net.sourceforge.plantuml.objectdiagram.command,0,0,3,0,0,0,1,1
 net.sourceforge.plantuml.openiconic,7,1,1,14,0.14,0.93,0.08,1
 net.sourceforge.plantuml.openiconic.data,1,0,0,1,0,1,0,1
-net.sourceforge.plantuml.packetdiag,11,0,0,17,0,1,0,1
+net.sourceforge.plantuml.packetdiag,12,0,0,17,0,1,0,1
 net.sourceforge.plantuml.pdf,1,0,0,4,0,1,0,1
 net.sourceforge.plantuml.picoweb,3,0,0,4,0,1,0,1
 net.sourceforge.plantuml.plasma,2,0,8,2,0,0.2,0.8,1

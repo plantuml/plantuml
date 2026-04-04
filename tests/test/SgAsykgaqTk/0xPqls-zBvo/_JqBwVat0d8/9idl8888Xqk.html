@@ -20,19 +20,16 @@
 <div class="tab-container">
 <ul class="tabLinks">
 <li>
-<a class="successGroup" href="#">Gradle Test Run :test</a>
+<a class="skippedGroup" href="#">Gradle Test Run :test</a>
 </li>
 </ul>
 <div class="tab">
 <h2>Gradle Test Run :test</h2>
-<h1>error-with-exception.puml</h1>
+<h1>R22.01-same_height_default.puml</h1>
 <div class="tab-container">
 <ul class="tabLinks">
 <li>
 <a class="" href="#">summary</a>
-</li>
-<li>
-<a class="" href="#">error output</a>
 </li>
 </ul>
 <div class="tab">
@@ -59,13 +56,13 @@
 </td>
 <td>
 <div class="infoBox">
-<div class="counter">0</div>
+<div class="counter">1</div>
 <p>skipped</p>
 </div>
 </td>
 <td>
 <div class="infoBox duration">
-<div class="counter">0.024s</div>
+<div class="counter">0.006s</div>
 <p>duration</p>
 </div>
 </td>
@@ -74,7 +71,7 @@
 </div>
 </td>
 <td>
-<div class="infoBox success successRate">
+<div class="infoBox skipped successRate">
 <div class="percent">100%</div>
 <p>successful</p>
 </div>
@@ -82,16 +79,83 @@
 </tr>
 </table>
 </div>
-</div>
-</div>
-<div class="tab">
-<h2>error output</h2>
+<div class="result-details">
+<h3>Skip details</h3>
 <span class="code">
-<pre id="root-0-test-stderr-testAllPumlFiles()[3][43]">UGraphicDebug UImage
-UGraphicDebug UImage
+<pre id="root-0-test-failure-testAllPumlFiles()[3][43]">org.opentest4j.TestAbortedException: Assumption failed: Known failure (allow-failure: true): src/test/resources/vega/packet/R22.01-same_height_default.puml - SVG output mismatch for src/test/resources/vega/packet/R22.01-same_height_default.puml ==&gt; expected: &lt;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; contentStyleType=&quot;text/css&quot; data-diagram-type=&quot;PACKET&quot; height=&quot;155px&quot; preserveAspectRatio=&quot;none&quot; style=&quot;width:735px;height:155px;background:#FFFFFF;&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 735 155&quot; width=&quot;735px&quot; zoomAndPan=&quot;magnify&quot;&gt;
+  &lt;?plantuml 1.2026.3beta6?&gt;
+  &lt;defs/&gt;
+  &lt;g&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;14&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;8.8525&quot; x=&quot;5.5737&quot; y=&quot;23.5352&quot;&gt;0&lt;/text&gt;
+    &lt;path d=&quot;M10,26.4883 L10,58.4883&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M52,42.4883 L52,58.4883&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M94,42.4883 L94,58.4883&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M136,42.4883 L136,58.4883&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M178,26.4883 L178,58.4883&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M220,42.4883 L220,58.4883&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M262,42.4883 L262,58.4883&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M304,42.4883 L304,58.4883&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;14&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;8.8525&quot; x=&quot;341.5737&quot; y=&quot;23.5352&quot;&gt;8&lt;/text&gt;
+    &lt;path d=&quot;M346,26.4883 L346,58.4883&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M388,42.4883 L388,58.4883&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M430,42.4883 L430,58.4883&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M472,42.4883 L472,58.4883&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M514,26.4883 L514,58.4883&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M556,42.4883 L556,58.4883&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M598,42.4883 L598,58.4883&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M640,42.4883 L640,58.4883&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;14&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;17.7051&quot; x=&quot;673.1475&quot; y=&quot;23.5352&quot;&gt;16&lt;/text&gt;
+    &lt;path d=&quot;M682,26.4883 L682,58.4883&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;rect fill=&quot;#F1F1F1&quot; height=&quot;96&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot; width=&quot;168&quot; x=&quot;10&quot; y=&quot;58.4883&quot;/&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;14&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;9.6592&quot; x=&quot;89.1704&quot; y=&quot;111.7793&quot;&gt;A&lt;/text&gt;
+    &lt;rect fill=&quot;#F1F1F1&quot; height=&quot;36.4883&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot; width=&quot;168&quot; x=&quot;178&quot; y=&quot;58.4883&quot;/&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;14&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;8.0527&quot; x=&quot;257.9736&quot; y=&quot;82.0234&quot;&gt;B&lt;/text&gt;
+    &lt;rect fill=&quot;#F1F1F1&quot; height=&quot;36.4883&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot; width=&quot;336&quot; x=&quot;346&quot; y=&quot;58.4883&quot;/&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;14&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;9.6865&quot; x=&quot;509.1567&quot; y=&quot;82.0234&quot;&gt;C&lt;/text&gt;
+    &lt;?plantuml-src SoWkIImgAKXCpaujISbCJEUgvb9GICxFASzCASbGi5KmD0Fo3NIDhHGS5Q8pKZFJCqg0eiQnG54JNNCh1ISWmqBNqDHAmPchbiiXDIy5oImkGpqZ0oCpFUEar994Cm00?&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;
+&gt; but was: &lt;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; contentStyleType=&quot;text/css&quot; data-diagram-type=&quot;PACKET&quot; height=&quot;153px&quot; preserveAspectRatio=&quot;none&quot; style=&quot;width:735px;height:153px;background:#FFFFFF;&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 735 153&quot; width=&quot;735px&quot; zoomAndPan=&quot;magnify&quot;&gt;
+  &lt;defs/&gt;
+  &lt;g&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;14&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;7.8167&quot; x=&quot;6.0917&quot; y=&quot;20.8889&quot;&gt;0&lt;/text&gt;
+    &lt;path d=&quot;M10,24 L10,56&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M52,40 L52,56&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M94,40 L94,56&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M136,40 L136,56&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M178,24 L178,56&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M220,40 L220,56&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M262,40 L262,56&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M304,40 L304,56&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;14&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;7.8167&quot; x=&quot;342.0917&quot; y=&quot;20.8889&quot;&gt;8&lt;/text&gt;
+    &lt;path d=&quot;M346,24 L346,56&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M388,40 L388,56&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M430,40 L430,56&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M472,40 L472,56&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M514,24 L514,56&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M556,40 L556,56&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M598,40 L598,56&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;path d=&quot;M640,40 L640,56&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;14&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;15.6333&quot; x=&quot;674.1833&quot; y=&quot;20.8889&quot;&gt;16&lt;/text&gt;
+    &lt;path d=&quot;M682,24 L682,56&quot; fill=&quot;none&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot;/&gt;
+    &lt;rect fill=&quot;#F1F1F1&quot; height=&quot;96&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot; width=&quot;168&quot; x=&quot;10&quot; y=&quot;56&quot;/&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;14&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;9.3333&quot; x=&quot;89.3333&quot; y=&quot;107.8889&quot;&gt;A&lt;/text&gt;
+    &lt;rect fill=&quot;#F1F1F1&quot; height=&quot;34&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot; width=&quot;168&quot; x=&quot;178&quot; y=&quot;56&quot;/&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;14&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;9.3333&quot; x=&quot;257.3333&quot; y=&quot;76.8889&quot;&gt;B&lt;/text&gt;
+    &lt;rect fill=&quot;#F1F1F1&quot; height=&quot;34&quot; style=&quot;stroke:#181818;stroke-width:0.5;&quot; width=&quot;336&quot; x=&quot;346&quot; y=&quot;56&quot;/&gt;
+    &lt;text fill=&quot;#000000&quot; font-family=&quot;sans-serif&quot; font-size=&quot;14&quot; lengthAdjust=&quot;spacing&quot; textLength=&quot;10.15&quot; x=&quot;508.925&quot; y=&quot;76.8889&quot;&gt;C&lt;/text&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;
+&gt;
+	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:340)
+	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:127)
+	at test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:258)
+	at test.vega.VegaTest.lambda$testAllPumlFiles$6(VegaTest.java:129)
 </pre>
-<button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="root-0-test-stderr-testAllPumlFiles()[3][43]">Copy</button>
+<button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="root-0-test-failure-testAllPumlFiles()[3][43]">Copy</button>
 </span>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -103,7 +167,7 @@ UGraphicDebug UImage
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 9.4.1</a> at Apr 4, 2026, 11:23:31 AM</p>
+<a href="https://www.gradle.org">Gradle 9.4.1</a> at Apr 4, 2026, 10:13:04 PM</p>
 </div>
 </div>
 </body>

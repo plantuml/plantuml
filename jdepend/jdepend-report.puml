@@ -2293,7 +2293,7 @@ Total Classes: 1
 "net.sourceforge.plantuml.openiconic.data" --> "java.lang"
 
 class "net.sourceforge.plantuml.packetdiag" %lighten("red", 100) {
-Total Classes: 11
+Total Classes: 12
 }
 "net.sourceforge.plantuml.packetdiag" --> "java.lang"
 "net.sourceforge.plantuml.packetdiag" --> "java.util"

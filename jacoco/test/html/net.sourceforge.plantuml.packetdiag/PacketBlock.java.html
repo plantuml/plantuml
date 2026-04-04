@@ -169,42 +169,40 @@ public class PacketBlock {
 	}
 
 	TextBlock getShapeTextBlock(StringBounder stringBounder, double bitWidth, double bitHeight) {
-		// vertical(top and bottom) margin for displaying the label content
-<span class="fc" id="L173">		final double vMargin = 10D;</span>
-<span class="fc" id="L174">		final double reqWidth = getDrawWidth(bitWidth);</span>
-<span class="fc" id="L175">		final Fashion fashion = getFashion();</span>
-<span class="fc" id="L176">		final TextBlock label = getLabelTextBlockAbbr(stringBounder, bitWidth);</span>
-		// mergeTB would add label height and margins to the shape so here this offset
-		// makes sure we actually get drawHeight
-<span class="fc" id="L179">		double heightPreOffset = Math.max(0D,</span>
-<span class="fc" id="L180">				getDrawHeight(bitHeight) - label.calculateDimension(stringBounder).getHeight() - vMargin - vMargin);</span>
-<span class="fc" id="L181">		final TextBlock stereo = TextBlockUtils.empty(reqWidth, heightPreOffset);</span>
+<span class="fc" id="L172">		final double vMargin = 10D;</span>
+<span class="fc" id="L173">		final double reqWidth = getDrawWidth(bitWidth);</span>
+<span class="fc" id="L174">		final Fashion fashion = getFashion();</span>
+<span class="fc" id="L175">		final TextBlock label = getLabelTextBlockAbbr(stringBounder, bitWidth);</span>
+<span class="fc" id="L176">		final double labelHeight = label.calculateDimension(stringBounder).getHeight();</span>
+<span class="fc" id="L177">		final double totalSpare = Math.max(0D, getDrawHeight(bitHeight) - labelHeight - vMargin - vMargin);</span>
+<span class="fc" id="L178">		final double topSpare = totalSpare / 2.0;</span>
+<span class="fc" id="L179">		final double bottomSpare = totalSpare - topSpare;</span>
+<span class="fc" id="L180">		final TextBlock topSpacer = TextBlockUtils.empty(reqWidth, topSpare);</span>
+<span class="fc" id="L181">		final TextBlock bottomSpacer = TextBlockUtils.empty(reqWidth, bottomSpare);</span>
 
-		// Basically it's URectangle#asSmall, but without horizontal margin
-<span class="fc" id="L184">		return new TextBlock() {</span>
+<span class="fc" id="L183">		return new TextBlock() {</span>
 			@Override
 			@Fast
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L188">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
-<span class="fc" id="L189">				final XDimension2D dimStereo = stereo.calculateDimension(stringBounder);</span>
-<span class="fc" id="L190">				XDimension2D dim = dimStereo.mergeTB(dimLabel);</span>
-<span class="fc" id="L191">				return new XDimension2D(dim.getWidth(), dim.getHeight() + vMargin + vMargin);</span>
+<span class="fc" id="L187">				final double w = reqWidth;</span>
+<span class="fc" id="L188">				final double h = topSpare + labelHeight + bottomSpare + vMargin + vMargin;</span>
+<span class="fc" id="L189">				return new XDimension2D(w, h);</span>
 			}
 
 			@Override
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L196">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L197">				ug = UGraphicStencil.create(ug, dim);</span>
-<span class="fc" id="L198">				ug = fashion.apply(ug);</span>
-				// URectangle#drawRect
-<span class="fc" id="L200">				final URectangle rect = URectangle.build(dim.getWidth(), dim.getHeight());</span>
-<span class="fc" id="L201">				final Shadowable shape = rect.rounded(fashion.getRoundCorner());</span>
-<span class="fc" id="L202">				shape.setDeltaShadow(fashion.getDeltaShadow());</span>
-<span class="fc" id="L203">				ug.draw(shape);</span>
+<span class="fc" id="L194">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L195">				ug = UGraphicStencil.create(ug, dim);</span>
+<span class="fc" id="L196">				ug = fashion.apply(ug);</span>
+<span class="fc" id="L197">				final URectangle rect = URectangle.build(dim.getWidth(), dim.getHeight());</span>
+<span class="fc" id="L198">				final Shadowable shape = rect.rounded(fashion.getRoundCorner());</span>
+<span class="fc" id="L199">				shape.setDeltaShadow(fashion.getDeltaShadow());</span>
+<span class="fc" id="L200">				ug.draw(shape);</span>
 
-<span class="fc" id="L205">				final TextBlock tb = TextBlockUtils.mergeTB(stereo, label, HorizontalAlignment.CENTER);</span>
-<span class="fc" id="L206">				tb.drawU(ug.apply(new UTranslate(0D, vMargin)));</span>
-<span class="fc" id="L207">			}</span>
+<span class="fc" id="L202">				final TextBlock tb = TextBlockUtils.mergeTB(topSpacer, label, HorizontalAlignment.CENTER);</span>
+<span class="fc" id="L203">				final TextBlock full = TextBlockUtils.mergeTB(tb, bottomSpacer, HorizontalAlignment.CENTER);</span>
+<span class="fc" id="L204">				full.drawU(ug.apply(new UTranslate(0D, vMargin)));</span>
+<span class="fc" id="L205">			}</span>
 		};
 	}
 }
