@@ -1301,6 +1301,10 @@
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
 
+        <Package name="java.time.temporal">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
         <Package name="java.util">
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
@@ -12555,10 +12559,10 @@
                 <ConcreteClasses>7</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>3</Ca>
-                <Ce>16</Ce>
+                <Ce>17</Ce>
                 <A>0</A>
-                <I>0.84</I>
-                <D>0.16</D>
+                <I>0.85</I>
+                <D>0.15</D>
                 <V>1</V>
             </Stats>
 
@@ -12592,6 +12596,7 @@
             <DependsUpon>
                 <Package>java.lang</Package>
                 <Package>java.time</Package>
+                <Package>java.time.temporal</Package>
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>

@@ -193,6 +193,10 @@ class "java.time"{
 
 }
 
+class "java.time.temporal"{
+
+}
+
 class "java.util"{
 
 }
@@ -2476,11 +2480,12 @@ Total Classes: 11
 "net.sourceforge.plantuml.project.core" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.project.core" --> "net.sourceforge.plantuml.url"
 
-class "net.sourceforge.plantuml.project.data" %lighten("red", 84) {
+class "net.sourceforge.plantuml.project.data" %lighten("red", 85) {
 Total Classes: 7
 }
 "net.sourceforge.plantuml.project.data" --> "java.lang"
 "net.sourceforge.plantuml.project.data" --> "java.time"
+"net.sourceforge.plantuml.project.data" --> "java.time.temporal"
 "net.sourceforge.plantuml.project.data" --> "java.util"
 "net.sourceforge.plantuml.project.data" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.project.data" --> "net.sourceforge.plantuml.klimt.drawing"
