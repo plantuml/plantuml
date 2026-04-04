@@ -60,12 +60,16 @@ import org.xml.sax.helpers.XMLReaderFactory;
 <span class="nc" id="L60">		XMLReader parser =</span>
 			XMLReaderFactory.createXMLReader
 <span class="nc" id="L62">            	(&quot;org.apache.crimson.parser.XMLReaderImpl&quot;);</span>
-<span class="nc" id="L63">		parser.setContentHandler(new HowToHandler( ));</span>
-<span class="nc" id="L64">		parser.parse(&quot;howto.xml&quot;);</span>
-<span class="nc" id="L65">	}</span>
+		// Disable external entities to prevent XXE attacks
+<span class="nc" id="L64">		parser.setFeature(&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;, true);</span>
+<span class="nc" id="L65">		parser.setFeature(&quot;http://xml.org/sax/features/external-general-entities&quot;, false);</span>
+<span class="nc" id="L66">		parser.setFeature(&quot;http://xml.org/sax/features/external-parameter-entities&quot;, false);</span>
+<span class="nc" id="L67">		parser.setContentHandler(new HowToHandler( ));</span>
+<span class="nc" id="L68">		parser.parse(&quot;howto.xml&quot;);</span>
+<span class="nc" id="L69">	}</span>
 
 	public static void main(String[] args) throws Exception {
-<span class="nc" id="L68">		new DocBookConverter().list( );</span>
-<span class="nc" id="L69">	}</span>
+<span class="nc" id="L72">		new DocBookConverter().list( );</span>
+<span class="nc" id="L73">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
