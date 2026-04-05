@@ -1,0 +1,13 @@
+@startuml
+package p1 {
+    component a1
+    component b1
+}
+
+package p2 {
+    component a2
+    component b2
+}
+
+p1 --> p2
+@enduml

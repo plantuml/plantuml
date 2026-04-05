@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="321px" preserveAspectRatio="none" style="width:395px;height:321px;background:#FFFFFF;" version="1.1" viewBox="0 0 395 321" width="395px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <!--cluster FLINK-->
+    <g class="cluster" data-qualified-name="FLINK" data-source-line="3" id="ent0003">
+      <rect fill="none" height="67" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="332" x="47" y="137"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="63.1167" x="181.4417" y="149.8889">Flink Jobs</text>
+    </g>
+    <!--entity KAFKA-->
+    <g class="entity" data-qualified-name="KAFKA" data-source-line="1" id="ent0002">
+      <path d="M15.3657,21.3947 C18.6212,15.8305 24.7758,15.9509 28.2234,21.1656 C31.4743,16.5092 35.8567,16.9993 38.8607,21.4538 C41.884,13.5201 48.0232,14.5094 52.618,19.8218 C56.2235,14.6277 60.2807,16.1177 63.1807,20.5925 C66.7035,14.7231 73.0064,14.078 76.7423,20.3547 C80.1768,14.4304 85.0245,14.1316 88.6303,20.1847 C92.4054,15.2138 97.0153,13.4674 100.8894,20.08 C104.3841,14.5295 109.3122,14.4536 112.2731,20.5995 C123.6632,20.6216 125.7659,26.4234 121.7025,35.9427 C124.9767,44.6236 120.92,47.96 112.71,48.2499 C109.8803,55.1195 105.7891,56.782 100.2464,50.9022 C97.153,57.1901 92.9316,58.3079 88.1627,52.5882 C86.428,58.4765 81.0502,59.06 76.983,55.2873 C74.4175,62.5861 67.7704,62.4349 63.4253,57.2145 C58.5327,62.6539 53.9629,60.2896 51.837,54.3875 C47.4202,61.0655 42.1886,59.6156 38.637,53.4952 C33.3585,58.1076 30.3098,56.2628 27.8664,50.5405 C23.4966,55.9901 18.6961,56.1271 14.6677,50.1463 C6.6324,47.0206 7.1238,39.4546 12.9998,34.8154 C7.9581,29.4299 7.7764,24.5535 15.3657,21.3947" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84.1167" x="21" y="37.8889">Kafka Cluster</text>
+    </g>
+    <!--entity OUT-->
+    <g class="entity" data-qualified-name="OUT" data-source-line="7" id="ent0006">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62" x="32" y="287"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42" x="42" y="307.8889">Output</text>
+    </g>
+    <!--entity Session Windowing-->
+    <g class="entity" data-qualified-name="FLINK.Session Windowing" data-source-line="4" id="ent0004">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="142.5" x="227.5" y="162"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="122.5" x="237.5" y="182.8889">Session Windowing</text>
+    </g>
+    <!--entity Fraud Detection-->
+    <g class="entity" data-qualified-name="FLINK.Fraud Detection" data-source-line="5" id="ent0005">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="119.75" x="89" y="162"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="99.75" x="99" y="182.8889">Fraud Detection</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="63,136.7592,67,127.7592,63,131.7592,59,127.7592,63,136.7592" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M63,56.1001 C63,71.483 63,93.1985 63,114.0481 C63,119.2605 63,124.4189 63,129.4106 C63,131.9064 63,128.3607 63,130.7592" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="38.35" x="65" y="105.1111">events</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0006" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="63,286.6665,67,277.6665,63,281.6665,59,277.6665,63,286.6665" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M63,204.0236 C63,204.2515 63,204.4805 63,204.7106 C63,205.1708 63,205.6353 63,206.1039 C63,207.9786 63,209.9198 63,211.9156 C63,219.8987 63,228.7548 63,237.7184 C63,255.6457 63,268.0032 63,280.6665" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="38.35" x="65" y="245.1111">results</text>
+    </g>
+  </g>
+</svg>

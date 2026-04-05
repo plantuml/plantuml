@@ -1,0 +1,12 @@
+@startuml
+cloud "Kafka Cluster" as KAFKA
+'skinparam linetype ortho
+rectangle "Flink Jobs" as FLINK {
+  rectangle "Session Windowing"
+  rectangle "Fraud Detection"
+}
+rectangle "Output" as OUT
+
+KAFKA ---> FLINK : events
+FLINK ---> OUT : results
+@enduml
