@@ -1790,7 +1790,7 @@ Total Classes: 11
 "net.sourceforge.plantuml.klimt.compress" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.klimt.compress" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.klimt.creole" %lighten("red", 36) {
+class "net.sourceforge.plantuml.klimt.creole" %lighten("red", 37) {
 Total Classes: 19
 }
 "net.sourceforge.plantuml.klimt.creole" --> "java.lang"
@@ -2083,7 +2083,7 @@ Total Classes: 41
 "net.sourceforge.plantuml.klimt.shape" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.klimt.shape" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.klimt.sprite" %lighten("red", 74) {
+class "net.sourceforge.plantuml.klimt.sprite" %lighten("red", 76) {
 Total Classes: 22
 }
 "net.sourceforge.plantuml.klimt.sprite" --> "java.io"
@@ -2530,7 +2530,7 @@ Total Classes: 9
 "net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.url"
 
-class "net.sourceforge.plantuml.project.draw.header" %lighten("red", 50) {
+class "net.sourceforge.plantuml.project.draw.header" %lighten("red", 72) {
 Total Classes: 5
 }
 "net.sourceforge.plantuml.project.draw.header" --> "java.lang"
@@ -2538,19 +2538,15 @@ Total Classes: 5
 "net.sourceforge.plantuml.project.draw.header" --> "java.util"
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.klimt"
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.klimt.color"
-"net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.klimt.creole"
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.klimt.drawing"
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.klimt.font"
-"net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.klimt.shape"
-"net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.klimt.sprite"
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.project"
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.project.core"
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.project.data"
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.project.ngm.math"
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.project.time"
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.project.timescale"
-"net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.style"
 
 class "net.sourceforge.plantuml.project.lang" %lighten("red", 78) {

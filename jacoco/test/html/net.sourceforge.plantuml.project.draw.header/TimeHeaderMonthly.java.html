@@ -40,6 +40,7 @@ import java.time.YearMonth;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.project.data.DayCalendarData;
@@ -56,132 +57,135 @@ class TimeHeaderMonthly extends TimeHeaderCalendar {
 
 	public TimeHeaderMonthly(TimeScale timeScale, WeekConfigData weekConfigData, DayCalendarData dayCalendar,
 			TimeBoundsData timeBounds, TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle) {
-<span class="nc" id="L59">		super(weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle, timeScale);</span>
-<span class="nc" id="L60">	}</span>
+<span class="nc" id="L60">		super(weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle, timeScale);</span>
+<span class="nc" id="L61">	}</span>
 
 	private double getH1(StringBounder stringBounder) {
-<span class="nc" id="L63">		final double h = timelineStyle.getFontSizeYear() + 2;</span>
-<span class="nc" id="L64">		return h;</span>
+<span class="nc" id="L64">		final double h = timelineStyle.getFontSizeYear() + 2;</span>
+<span class="nc" id="L65">		return h;</span>
 	}
 
 	private double getH2(StringBounder stringBounder) {
-<span class="nc" id="L68">		final double h = timelineStyle.getFontSizeMonth() + 2;</span>
-<span class="nc" id="L69">		return getH1(stringBounder) + h;</span>
+<span class="nc" id="L69">		final double h = timelineStyle.getFontSizeMonth() + 2;</span>
+<span class="nc" id="L70">		return getH1(stringBounder) + h;</span>
 	}
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-<span class="nc" id="L74">		return getH2(stringBounder);</span>
+<span class="nc" id="L75">		return getH2(stringBounder);</span>
 	}
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-<span class="nc" id="L79">		final double h1 = timelineStyle.getFontSizeYear();</span>
-<span class="nc" id="L80">		final double h2 = timelineStyle.getFontSizeMonth();</span>
-<span class="nc" id="L81">		return h1 + h2 + 5;</span>
+<span class="nc" id="L80">		final double h1 = timelineStyle.getFontSizeYear();</span>
+<span class="nc" id="L81">		final double h2 = timelineStyle.getFontSizeMonth();</span>
+<span class="nc" id="L82">		return h1 + h2 + 5;</span>
 	}
 
 	@Override
 	public double getFullHeaderHeight(StringBounder stringBounder) {
-<span class="nc" id="L86">		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();</span>
+<span class="nc" id="L87">		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();</span>
 	}
 
 	@Override
 	public void drawTimeHeaderInternal(final UGraphic ug, double totalHeightWithoutFooter) {
-<span class="nc" id="L91">		drawYears(ug);</span>
-<span class="nc" id="L92">		final double h1 = getH1(ug.getStringBounder());</span>
-<span class="nc" id="L93">		final double h2 = getH2(ug.getStringBounder());</span>
-<span class="nc" id="L94">		drawMonths(ug.apply(UTranslate.dy(h1)));</span>
-<span class="nc" id="L95">		printVerticalSeparators(ug, totalHeightWithoutFooter);</span>
+<span class="nc" id="L92">		drawYears(ug);</span>
+<span class="nc" id="L93">		final double h1 = getH1(ug.getStringBounder());</span>
+<span class="nc" id="L94">		final double h2 = getH2(ug.getStringBounder());</span>
+<span class="nc" id="L95">		drawMonths(ug.apply(UTranslate.dy(h1)));</span>
+<span class="nc" id="L96">		printVerticalSeparators(ug, totalHeightWithoutFooter);</span>
 
-<span class="nc" id="L97">		printNamedDays(ug);</span>
+<span class="nc" id="L98">		printNamedDays(ug);</span>
 
-<span class="nc" id="L99">		drawHline(ug, 0);</span>
-<span class="nc" id="L100">		drawHline(ug, h1);</span>
-<span class="nc" id="L101">		drawHline(ug, h2);</span>
-<span class="nc" id="L102">	}</span>
+<span class="nc" id="L100">		drawHline(ug, 0);</span>
+<span class="nc" id="L101">		drawHline(ug, h1);</span>
+<span class="nc" id="L102">		drawHline(ug, h2);</span>
+<span class="nc" id="L103">	}</span>
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-<span class="nc" id="L106">		final double h1 = timelineStyle.getFontSizeYear();</span>
-<span class="nc" id="L107">		final double h2 = timelineStyle.getFontSizeMonth();</span>
+<span class="nc" id="L107">		final double h1 = timelineStyle.getFontSizeYear();</span>
+<span class="nc" id="L108">		final double h2 = timelineStyle.getFontSizeMonth();</span>
 		// ug = ug.apply(UTranslate.dy(3));
-<span class="nc" id="L109">		drawMonths(ug);</span>
-<span class="nc" id="L110">		drawYears(ug.apply(UTranslate.dy(h2 + 2)));</span>
-<span class="nc" id="L111">		drawHline(ug, 0);</span>
-<span class="nc" id="L112">		drawHline(ug, h2 + 2);</span>
-<span class="nc" id="L113">		drawHline(ug, h1 + 2 + h2 + 2);</span>
+<span class="nc" id="L110">		drawMonths(ug);</span>
+<span class="nc" id="L111">		drawYears(ug.apply(UTranslate.dy(h2 + 2)));</span>
+<span class="nc" id="L112">		drawHline(ug, 0);</span>
+<span class="nc" id="L113">		drawHline(ug, h2 + 2);</span>
+<span class="nc" id="L114">		drawHline(ug, h1 + 2 + h2 + 2);</span>
 //		drawHline(ug, getTimeFooterHeight(ug.getStringBounder()));
-<span class="nc" id="L115">	}</span>
+<span class="nc" id="L116">	}</span>
 
 	private void drawYears(final UGraphic ug) {
-<span class="nc" id="L118">		final double h1 = timelineStyle.getFontSizeYear();</span>
-<span class="nc" id="L119">		YearMonth last = null;</span>
-<span class="nc" id="L120">		double lastChange = -1;</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt; 0; day = day.plusDays(1)) {</span>
-<span class="nc" id="L122">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
-<span class="nc" id="L123">			final double x1 = getTimeScale().getPosition(wink);</span>
-<span class="nc bnc" id="L124" title="All 4 branches missed.">			if (last == null || wink.monthYear().getYear() != last.getYear()) {</span>
-<span class="nc" id="L125">				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">				if (last != null)</span>
-<span class="nc" id="L127">					printYear(ug, last, lastChange, x1);</span>
 
-<span class="nc" id="L129">				lastChange = x1;</span>
-<span class="nc" id="L130">				last = wink.monthYear();</span>
+<span class="nc" id="L120">		final FontConfiguration fc = getFontConfigurationSLOW(SName.month, true, openFontColor());</span>
+
+<span class="nc" id="L122">		final double h1 = timelineStyle.getFontSizeYear();</span>
+<span class="nc" id="L123">		YearMonth last = null;</span>
+<span class="nc" id="L124">		double lastChange = -1;</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt; 0; day = day.plusDays(1)) {</span>
+<span class="nc" id="L126">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="nc" id="L127">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="nc bnc" id="L128" title="All 4 branches missed.">			if (last == null || wink.monthYear().getYear() != last.getYear()) {</span>
+<span class="nc" id="L129">				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">				if (last != null)</span>
+<span class="nc" id="L131">					printYear(ug, last, lastChange, x1, fc);</span>
+
+<span class="nc" id="L133">				lastChange = x1;</span>
+<span class="nc" id="L134">				last = wink.monthYear();</span>
 			}
 		}
-<span class="nc" id="L133">		final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (x1 &gt; lastChange)</span>
-<span class="nc" id="L135">			printYear(ug, last, lastChange, x1);</span>
+<span class="nc" id="L137">		final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (x1 &gt; lastChange)</span>
+<span class="nc" id="L139">			printYear(ug, last, lastChange, x1, fc);</span>
 
-<span class="nc" id="L137">		final double end = x1;</span>
-<span class="nc" id="L138">		drawVline(ug.apply(getLineColor()), end, 0, h1 + 2);</span>
-<span class="nc" id="L139">	}</span>
+<span class="nc" id="L141">		final double end = x1;</span>
+<span class="nc" id="L142">		drawVline(ug.apply(getLineColor()), end, 0, h1 + 2);</span>
+<span class="nc" id="L143">	}</span>
 
 	private void drawMonths(UGraphic ug) {
-<span class="nc" id="L142">		final double h2 = timelineStyle.getFontSizeMonth();</span>
-<span class="nc" id="L143">		YearMonth last = null;</span>
-<span class="nc" id="L144">		double lastChange = -1;</span>
-<span class="nc bnc" id="L145" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt; 0; day = day.plusDays(1)) {</span>
-<span class="nc" id="L146">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
-<span class="nc" id="L147">			final double x1 = getTimeScale().getPosition(wink);</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">			if (wink.monthYear().equals(last) == false) {</span>
-<span class="nc" id="L149">				drawVline(ug.apply(getLineColor()), x1, 0, h2 + 2);</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">				if (last != null)</span>
-<span class="nc" id="L151">					printMonth(ug, last, lastChange, x1);</span>
+<span class="nc" id="L146">		final FontConfiguration fc = getFontConfigurationSLOW(SName.day, false, openFontColor());</span>
 
-<span class="nc" id="L153">				lastChange = x1;</span>
-<span class="nc" id="L154">				last = wink.monthYear();</span>
+<span class="nc" id="L148">		final double h2 = timelineStyle.getFontSizeMonth();</span>
+<span class="nc" id="L149">		YearMonth last = null;</span>
+<span class="nc" id="L150">		double lastChange = -1;</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt; 0; day = day.plusDays(1)) {</span>
+<span class="nc" id="L152">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="nc" id="L153">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">			if (wink.monthYear().equals(last) == false) {</span>
+<span class="nc" id="L155">				drawVline(ug.apply(getLineColor()), x1, 0, h2 + 2);</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">				if (last != null)</span>
+<span class="nc" id="L157">					printMonth(ug, last, lastChange, x1, fc);</span>
+
+<span class="nc" id="L159">				lastChange = x1;</span>
+<span class="nc" id="L160">				last = wink.monthYear();</span>
 			}
 		}
-<span class="nc" id="L157">		final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (x1 &gt; lastChange)</span>
-<span class="nc" id="L159">			printMonth(ug, last, lastChange, x1);</span>
+<span class="nc" id="L163">		final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">		if (x1 &gt; lastChange)</span>
+<span class="nc" id="L165">			printMonth(ug, last, lastChange, x1, fc);</span>
 
-<span class="nc" id="L161">		final double end = x1;</span>
-<span class="nc" id="L162">		drawVline(ug.apply(getLineColor()), end, 0, h2 + 2);</span>
-<span class="nc" id="L163">	}</span>
+<span class="nc" id="L167">		final double end = x1;</span>
+<span class="nc" id="L168">		drawVline(ug.apply(getLineColor()), end, 0, h2 + 2);</span>
+<span class="nc" id="L169">	}</span>
 
-	private void printYear(UGraphic ug, YearMonth monthYear, double start, double end) {
-<span class="nc" id="L166">		final TextBlock small = getTextBlock(SName.month, &quot;&quot; + monthYear.getYear(), true, openFontColor());</span>
-<span class="nc" id="L167">		printCentered(ug, false, start, end, small);</span>
-<span class="nc" id="L168">	}</span>
+	private void printYear(UGraphic ug, YearMonth monthYear, double start, double end, FontConfiguration fc) {
+<span class="nc" id="L172">		final TextBlock small = getTextBlockSLOW(&quot;&quot; + monthYear.getYear(), fc);</span>
+<span class="nc" id="L173">		printCentered(ug, false, start, end, small);</span>
+<span class="nc" id="L174">	}</span>
 
-	private void printMonth(UGraphic ug, YearMonth monthYear, double start, double end) {
-<span class="nc" id="L171">		final TextBlock small = getTextBlock(SName.day, YearMonthUtils.shortName(monthYear, locale()), false,</span>
-<span class="nc" id="L172">				openFontColor());</span>
-<span class="nc" id="L173">		final TextBlock big = getTextBlock(SName.day, YearMonthUtils.longName(monthYear, locale()), false,</span>
-<span class="nc" id="L174">				openFontColor());</span>
-<span class="nc" id="L175">		printCentered(ug, false, start, end, small, big);</span>
-<span class="nc" id="L176">	}</span>
+	private void printMonth(UGraphic ug, YearMonth monthYear, double start, double end, FontConfiguration fc) {
+<span class="nc" id="L177">		final TextBlock small = getTextBlockSLOW(YearMonthUtils.shortName(monthYear, locale()), fc);</span>
+<span class="nc" id="L178">		final TextBlock big = getTextBlockSLOW(YearMonthUtils.longName(monthYear, locale()), fc);</span>
+<span class="nc" id="L179">		printCentered(ug, false, start, end, small, big);</span>
+<span class="nc" id="L180">	}</span>
 
 	private double getHeaderNameDayHeight() {
-<span class="nc bnc" id="L179" title="All 2 branches missed.">		if (dayCalendar.getNameDays().size() &gt; 0) {</span>
-<span class="nc" id="L180">			final double h = timelineStyle.getFontSizeDay() + 6;</span>
-<span class="nc" id="L181">			return h;</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		if (dayCalendar.getNameDays().size() &gt; 0) {</span>
+<span class="nc" id="L184">			final double h = timelineStyle.getFontSizeDay() + 6;</span>
+<span class="nc" id="L185">			return h;</span>
 		}
 
-<span class="nc" id="L184">		return 0;</span>
+<span class="nc" id="L188">		return 0;</span>
 	}
 
 }
