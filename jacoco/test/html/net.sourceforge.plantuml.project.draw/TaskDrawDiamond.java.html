@@ -148,107 +148,133 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 	}
 
 	@Override
+	public double getLabelOverflow(StringBounder stringBounder, double barsWidth) {
+<span class="nc" id="L152">		final TextBlock title = getTitle();</span>
+<span class="nc" id="L153">		final XDimension2D titleDim = title.calculateDimension(stringBounder);</span>
+
+<span class="nc" id="L155">		final Style style = getStyle();</span>
+<span class="nc" id="L156">		final ClockwiseTopRightBottomLeft padding = style.getPadding();</span>
+
+<span class="nc" id="L158">		final double x2 = timeScale.getPosition(start) + timeScale.getWidth(start);</span>
+<span class="nc" id="L159">		final double width = getDiamondHeight();</span>
+<span class="nc" id="L160">		final double delta = x2 - timeScale.getPosition(start) - width;</span>
+<span class="nc" id="L161">		final double labelStart = x2 - delta / 2 + padding.getLeft();</span>
+<span class="nc" id="L162">		final double labelEnd = labelStart + titleDim.getWidth();</span>
+<span class="nc" id="L163">		double overflow = 0;</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">		if (labelEnd &gt; barsWidth)</span>
+<span class="nc" id="L165">			overflow = labelEnd - barsWidth;</span>
+
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (note != null) {</span>
+<span class="nc" id="L168">			final double noteEnd = timeScale.getPosition(start) + getOpaleNote().calculateDimension(stringBounder).getWidth();</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">			if (noteEnd - barsWidth &gt; overflow)</span>
+<span class="nc" id="L170">				overflow = noteEnd - barsWidth;</span>
+		}
+
+<span class="nc" id="L173">		return overflow;</span>
+	}
+
+	@Override
 	public void drawU(UGraphic ug) {
 
-<span class="nc" id="L153">		final double x1 = timeScale.getPosition(start);</span>
-<span class="nc" id="L154">		drawNote(ug.apply(new UTranslate(x1, getYNotePosition(ug.getStringBounder()))));</span>
+<span class="nc" id="L179">		final double x1 = timeScale.getPosition(start);</span>
+<span class="nc" id="L180">		drawNote(ug.apply(new UTranslate(x1, getYNotePosition(ug.getStringBounder()))));</span>
 
-<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L157">			ug.startUrl(url);</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L183">			ug.startUrl(url);</span>
 
-<span class="nc" id="L159">		final String displayString = getTask().getDisplayString();</span>
+<span class="nc" id="L185">		final String displayString = getTask().getDisplayString();</span>
 
-<span class="nc" id="L161">		final Style style = getStyle();</span>
-<span class="nc" id="L162">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
-<span class="nc" id="L163">		ug = ug.apply(UTranslate.dy(margin.getTop()));</span>
+<span class="nc" id="L187">		final Style style = getStyle();</span>
+<span class="nc" id="L188">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="nc" id="L189">		ug = ug.apply(UTranslate.dy(margin.getTop()));</span>
 
-<span class="nc" id="L165">		ug = ug.apply(UTranslate.dx(x1));</span>
+<span class="nc" id="L191">		ug = ug.apply(UTranslate.dx(x1));</span>
 
-<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (displayString == null) {</span>
-<span class="nc" id="L168">			final double x2 = timeScale.getPosition(start) + timeScale.getWidth(start);</span>
-<span class="nc" id="L169">			final double width = getDiamondHeight();</span>
-<span class="nc" id="L170">			final double delta = x2 - x1 - width;</span>
-<span class="nc" id="L171">			ug = ug.apply(UTranslate.dx(delta / 2));</span>
-<span class="nc" id="L172">			drawShape(applyColors(ug));</span>
-<span class="nc" id="L173">		} else {</span>
-<span class="nc" id="L174">			final TextBlock draw = Display.getWithNewlines(getPragma(), displayString).create(getFontConfiguration(),</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		if (displayString == null) {</span>
+<span class="nc" id="L194">			final double x2 = timeScale.getPosition(start) + timeScale.getWidth(start);</span>
+<span class="nc" id="L195">			final double width = getDiamondHeight();</span>
+<span class="nc" id="L196">			final double delta = x2 - x1 - width;</span>
+<span class="nc" id="L197">			ug = ug.apply(UTranslate.dx(delta / 2));</span>
+<span class="nc" id="L198">			drawShape(applyColors(ug));</span>
+<span class="nc" id="L199">		} else {</span>
+<span class="nc" id="L200">			final TextBlock draw = Display.getWithNewlines(getPragma(), displayString).create(getFontConfiguration(),</span>
 					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-<span class="nc" id="L176">			draw.drawU(ug);</span>
+<span class="nc" id="L202">			draw.drawU(ug);</span>
 		}
-<span class="nc bnc" id="L178" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L179">			ug.closeUrl();</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L205">			ug.closeUrl();</span>
 
-<span class="nc" id="L181">	}</span>
+<span class="nc" id="L207">	}</span>
 
 	private UGraphic applyColors(UGraphic ug) {
-<span class="nc" id="L184">		final CenterBorderColor col = this.getColors();</span>
-<span class="nc bnc" id="L185" title="All 4 branches missed.">		if (col != null &amp;&amp; col.isOk())</span>
-<span class="nc" id="L186">			return col.apply(ug);</span>
+<span class="nc" id="L210">		final CenterBorderColor col = this.getColors();</span>
+<span class="nc bnc" id="L211" title="All 4 branches missed.">		if (col != null &amp;&amp; col.isOk())</span>
+<span class="nc" id="L212">			return col.apply(ug);</span>
 
-<span class="nc" id="L188">		return ug.apply(getLineColor()).apply(getBackgroundColor().bg());</span>
+<span class="nc" id="L214">		return ug.apply(getLineColor()).apply(getBackgroundColor().bg());</span>
 	}
 
 	private void drawShape(UGraphic ug) {
-<span class="nc" id="L192">		ug.draw(getDiamond());</span>
-<span class="nc" id="L193">	}</span>
+<span class="nc" id="L218">		ug.draw(getDiamond());</span>
+<span class="nc" id="L219">	}</span>
 
 	@Override
 	public FingerPrint getFingerPrintNote(StringBounder stringBounder) {
-<span class="nc" id="L197">		return null;</span>
+<span class="nc" id="L223">		return null;</span>
 	}
 
 	@Override
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
-<span class="nc" id="L202">		final double h = getFullHeightTask(stringBounder);</span>
-<span class="nc" id="L203">		final double startPos = timeScale.getPosition(start);</span>
-<span class="nc" id="L204">		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue(), startPos + h,</span>
-<span class="nc" id="L205">				getY(stringBounder).getCurrentValue() + h);</span>
+<span class="nc" id="L228">		final double h = getFullHeightTask(stringBounder);</span>
+<span class="nc" id="L229">		final double startPos = timeScale.getPosition(start);</span>
+<span class="nc" id="L230">		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue(), startPos + h,</span>
+<span class="nc" id="L231">				getY(stringBounder).getCurrentValue() + h);</span>
 	}
 
 	private UShape getDiamond() {
-<span class="nc" id="L209">		final double h = getDiamondHeight();</span>
-<span class="nc" id="L210">		final UPolygon result = new UPolygon();</span>
-<span class="nc" id="L211">		result.addPoint(h / 2, 0);</span>
-<span class="nc" id="L212">		result.addPoint(h, h / 2);</span>
-<span class="nc" id="L213">		result.addPoint(h / 2, h);</span>
-<span class="nc" id="L214">		result.addPoint(0, h / 2);</span>
-<span class="nc" id="L215">		return result;</span>
+<span class="nc" id="L235">		final double h = getDiamondHeight();</span>
+<span class="nc" id="L236">		final UPolygon result = new UPolygon();</span>
+<span class="nc" id="L237">		result.addPoint(h / 2, 0);</span>
+<span class="nc" id="L238">		result.addPoint(h, h / 2);</span>
+<span class="nc" id="L239">		result.addPoint(h / 2, h);</span>
+<span class="nc" id="L240">		result.addPoint(0, h / 2);</span>
+<span class="nc" id="L241">		return result;</span>
 	}
 
 	@Override
 	public double getX(StringBounder stringBounder, GSide side, GArrowType arrowType) {
 		double x;
-<span class="nc bnc" id="L221" title="All 2 branches missed.">		if (side == GSide.LEFT)</span>
-<span class="nc" id="L222">			x = timeScale.getPosition(start);</span>
-<span class="nc bnc" id="L223" title="All 2 branches missed.">		else if (side == GSide.RIGHT)</span>
-<span class="nc" id="L224">			x = timeScale.getPosition(start) + timeScale.getWidth(start);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">		if (side == GSide.LEFT)</span>
+<span class="nc" id="L248">			x = timeScale.getPosition(start);</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">		else if (side == GSide.RIGHT)</span>
+<span class="nc" id="L250">			x = timeScale.getPosition(start) + timeScale.getWidth(start);</span>
 		else
-<span class="nc" id="L226">			x = (timeScale.getPosition(start) + timeScale.getPosition(start) + timeScale.getWidth(start)) / 2;</span>
+<span class="nc" id="L252">			x = (timeScale.getPosition(start) + timeScale.getPosition(start) + timeScale.getWidth(start)) / 2;</span>
 
-<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (arrowType == GArrowType.OUTGOING) {</span>
-<span class="nc" id="L229">			final double width = getDiamondHeight();</span>
-<span class="nc bnc" id="L230" title="All 2 branches missed.">			if (side == GSide.LEFT)</span>
-<span class="nc" id="L231">				x += width / 2;</span>
-<span class="nc bnc" id="L232" title="All 2 branches missed.">			else if (side == GSide.RIGHT)</span>
-<span class="nc" id="L233">				x -= width / 2;</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">		if (arrowType == GArrowType.OUTGOING) {</span>
+<span class="nc" id="L255">			final double width = getDiamondHeight();</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">			if (side == GSide.LEFT)</span>
+<span class="nc" id="L257">				x += width / 2;</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">			else if (side == GSide.RIGHT)</span>
+<span class="nc" id="L259">				x -= width / 2;</span>
 		}
-<span class="nc" id="L235">		return x;</span>
+<span class="nc" id="L261">		return x;</span>
 	}
 
 	@Override
 	public double getY(StringBounder stringBounder, GSide side) {
-<span class="nc" id="L240">		final Style style = getStyle();</span>
-<span class="nc" id="L241">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="nc" id="L266">		final Style style = getStyle();</span>
+<span class="nc" id="L267">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
 
-<span class="nc" id="L243">		final double y1 = margin.getTop() + getY(stringBounder).getCurrentValue();</span>
-<span class="nc" id="L244">		final double y2 = y1 + getShapeHeight(stringBounder);</span>
+<span class="nc" id="L269">		final double y1 = margin.getTop() + getY(stringBounder).getCurrentValue();</span>
+<span class="nc" id="L270">		final double y2 = y1 + getShapeHeight(stringBounder);</span>
 
-<span class="nc" id="L246">		final String displayString = getTask().getDisplayString();</span>
+<span class="nc" id="L272">		final String displayString = getTask().getDisplayString();</span>
 
-<span class="nc bnc" id="L248" title="All 2 branches missed.">		if (displayString == null)</span>
-<span class="nc" id="L249">			return y1 + getDiamondHeight() / 2;</span>
+<span class="nc bnc" id="L274" title="All 2 branches missed.">		if (displayString == null)</span>
+<span class="nc" id="L275">			return y1 + getDiamondHeight() / 2;</span>
 
-<span class="nc" id="L251">		return (y1 + y2) / 2;</span>
+<span class="nc" id="L277">		return (y1 + y2) / 2;</span>
 
 	}
 

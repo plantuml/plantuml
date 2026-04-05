@@ -159,126 +159,150 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	}
 
 	@Override
+	public double getLabelOverflow(StringBounder stringBounder, double barsWidth) {
+<span class="fc" id="L163">		double overflow = 0;</span>
+
+<span class="fc" id="L165">		final TextBlock title = getTitle();</span>
+<span class="fc" id="L166">		final XDimension2D dim = title.calculateDimension(stringBounder);</span>
+
+<span class="fc" id="L168">		final double pos1 = timeScale.getPosition(start) + 6;</span>
+<span class="fc" id="L169">		final double pos2 = timeScale.getPosition(end) - 6;</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (pos2 - pos1 &lt;= dim.getWidth()) {</span>
+<span class="fc" id="L171">			final double labelEnd = getOutPosition(pos2) + dim.getWidth();</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			if (labelEnd &gt; barsWidth)</span>
+<span class="fc" id="L173">				overflow = labelEnd - barsWidth;</span>
+		}
+
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		if (note != null) {</span>
+<span class="nc" id="L177">			final double noteEnd = timeScale.getPosition(start) + getOpaleNote().calculateDimension(stringBounder).getWidth();</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">			if (noteEnd - barsWidth &gt; overflow)</span>
+<span class="nc" id="L179">				overflow = noteEnd - barsWidth;</span>
+		}
+
+<span class="fc" id="L182">		return overflow;</span>
+	}
+
+	@Override
 	StyleSignature getStyleSignature() {
-<span class="fc" id="L163">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task)</span>
-<span class="fc" id="L164">				.withTOBECHANGED(getTask().getStereotype());</span>
+<span class="fc" id="L187">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task)</span>
+<span class="fc" id="L188">				.withTOBECHANGED(getTask().getStereotype());</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L168">		final double startPos = timeScale.getPosition(start);</span>
-<span class="fc" id="L169">		drawNote(ug.apply((new UTranslate(startPos, getYNotePosition(ug.getStringBounder())))));</span>
+<span class="fc" id="L192">		final double startPos = timeScale.getPosition(start);</span>
+<span class="fc" id="L193">		drawNote(ug.apply((new UTranslate(startPos, getYNotePosition(ug.getStringBounder())))));</span>
 
-<span class="fc" id="L171">		drawShape(ug);</span>
-<span class="fc" id="L172">	}</span>
+<span class="fc" id="L195">		drawShape(ug);</span>
+<span class="fc" id="L196">	}</span>
 
 	private double getYNotePosition(StringBounder stringBounder) {
-<span class="fc" id="L175">		final Style style = getStyle();</span>
-<span class="fc" id="L176">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
-<span class="fc" id="L177">		return margin.getTop() + getShapeHeight(stringBounder) + margin.getBottom();</span>
+<span class="fc" id="L199">		final Style style = getStyle();</span>
+<span class="fc" id="L200">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="fc" id="L201">		return margin.getTop() + getShapeHeight(stringBounder) + margin.getBottom();</span>
 	}
 
 	@Override
 	public double getHeightMax(StringBounder stringBounder) {
-<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		if (note == null)</span>
-<span class="fc" id="L183">			return getFullHeightTask(stringBounder);</span>
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">		if (note == null)</span>
+<span class="fc" id="L207">			return getFullHeightTask(stringBounder);</span>
 
-<span class="nc" id="L185">		return getYNotePosition(stringBounder) + getOpaleNote().calculateDimension(stringBounder).getHeight();</span>
+<span class="nc" id="L209">		return getYNotePosition(stringBounder) + getOpaleNote().calculateDimension(stringBounder).getHeight();</span>
 	}
 
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
-<span class="fc" id="L189">		final double h = getFullHeightTask(stringBounder);</span>
-<span class="fc" id="L190">		final double startPos = timeScale.getPosition(start);</span>
-<span class="fc" id="L191">		final double endPos = timeScale.getPosition(end);</span>
-<span class="fc" id="L192">		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue(), endPos - startPos, h);</span>
+<span class="fc" id="L213">		final double h = getFullHeightTask(stringBounder);</span>
+<span class="fc" id="L214">		final double startPos = timeScale.getPosition(start);</span>
+<span class="fc" id="L215">		final double endPos = timeScale.getPosition(end);</span>
+<span class="fc" id="L216">		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue(), endPos - startPos, h);</span>
 	}
 
 	public FingerPrint getFingerPrintNote(StringBounder stringBounder) {
-<span class="pc bpc" id="L196" title="1 of 2 branches missed.">		if (note == null)</span>
-<span class="fc" id="L197">			return null;</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (note == null)</span>
+<span class="fc" id="L221">			return null;</span>
 
-<span class="nc" id="L199">		final XDimension2D dim = getOpaleNote().calculateDimension(stringBounder);</span>
-<span class="nc" id="L200">		final double startPos = timeScale.getPosition(start);</span>
+<span class="nc" id="L223">		final XDimension2D dim = getOpaleNote().calculateDimension(stringBounder);</span>
+<span class="nc" id="L224">		final double startPos = timeScale.getPosition(start);</span>
 		// final double endPos = timeScale.getEndingPosition(end);
-<span class="nc" id="L202">		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue() + getYNotePosition(stringBounder),</span>
-<span class="nc" id="L203">				dim.getWidth(), dim.getHeight());</span>
+<span class="nc" id="L226">		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue() + getYNotePosition(stringBounder),</span>
+<span class="nc" id="L227">				dim.getWidth(), dim.getHeight());</span>
 	}
 
 	private UGraphic applyColors(UGraphic ug) {
-<span class="fc" id="L207">		final CenterBorderColor col = this.getColors();</span>
-<span class="pc bpc" id="L208" title="1 of 4 branches missed.">		if (col != null &amp;&amp; col.isOk())</span>
-<span class="fc" id="L209">			return col.apply(ug);</span>
+<span class="fc" id="L231">		final CenterBorderColor col = this.getColors();</span>
+<span class="pc bpc" id="L232" title="1 of 4 branches missed.">		if (col != null &amp;&amp; col.isOk())</span>
+<span class="fc" id="L233">			return col.apply(ug);</span>
 
-<span class="fc" id="L211">		return ug.apply(getLineColor()).apply(getBackgroundColor().bg());</span>
+<span class="fc" id="L235">		return ug.apply(getLineColor()).apply(getBackgroundColor().bg());</span>
 	}
 
 	@Override
 	public double getX(StringBounder stringBounder, GSide side, GArrowType arrowType) {
 		double x;
-<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (side == GSide.LEFT)</span>
-<span class="fc" id="L218">			x = timeScale.getPosition(start);</span>
-<span class="pc bpc" id="L219" title="1 of 2 branches missed.">		else if (side == GSide.RIGHT)</span>
-<span class="nc" id="L220">			x = timeScale.getPosition(end);</span>
-<span class="pc bpc" id="L221" title="2 of 4 branches missed.">		else if (side == GSide.TOP_LEFT || side == GSide.BOTTOM_LEFT) {</span>
-<span class="nc" id="L222">			x = timeScale.getPosition(start) + 8;</span>
-<span class="nc bnc" id="L223" title="All 2 branches missed.">			if (x &gt; timeScale.getPosition(end))</span>
-<span class="nc" id="L224">				x = (timeScale.getPosition(start) + timeScale.getPosition(start) + timeScale.getWidth(start)) / 2;</span>
-<span class="pc bpc" id="L225" title="2 of 4 branches missed.">		} else if (side == GSide.TOP_RIGHT || side == GSide.BOTTOM_RIGHT) {</span>
-<span class="fc" id="L226">			x = timeScale.getPosition(end) - 8;</span>
-<span class="pc bpc" id="L227" title="1 of 2 branches missed.">			if (x &lt; timeScale.getPosition(start) + timeScale.getWidth(start))</span>
-<span class="nc" id="L228">				x = timeScale.getPosition(end) - 8;</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">		if (side == GSide.LEFT)</span>
+<span class="fc" id="L242">			x = timeScale.getPosition(start);</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">		else if (side == GSide.RIGHT)</span>
+<span class="nc" id="L244">			x = timeScale.getPosition(end);</span>
+<span class="pc bpc" id="L245" title="2 of 4 branches missed.">		else if (side == GSide.TOP_LEFT || side == GSide.BOTTOM_LEFT) {</span>
+<span class="nc" id="L246">			x = timeScale.getPosition(start) + 8;</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">			if (x &gt; timeScale.getPosition(end))</span>
+<span class="nc" id="L248">				x = (timeScale.getPosition(start) + timeScale.getPosition(start) + timeScale.getWidth(start)) / 2;</span>
+<span class="pc bpc" id="L249" title="2 of 4 branches missed.">		} else if (side == GSide.TOP_RIGHT || side == GSide.BOTTOM_RIGHT) {</span>
+<span class="fc" id="L250">			x = timeScale.getPosition(end) - 8;</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">			if (x &lt; timeScale.getPosition(start) + timeScale.getWidth(start))</span>
+<span class="nc" id="L252">				x = timeScale.getPosition(end) - 8;</span>
 			// x = (timeScale.getPosition(end) + timeScale.getPosition(end) +
 			// timeScale.getWidth(end)) / 2;
 		} else
-<span class="nc" id="L232">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L256">			throw new IllegalArgumentException();</span>
 
-<span class="fc bfc" id="L234" title="All 2 branches covered.">		if (arrowType == GArrowType.OUTGOING) {</span>
-<span class="fc" id="L235">			final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());</span>
-<span class="fc" id="L236">			final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
-<span class="pc bpc" id="L237" title="1 of 2 branches missed.">			if (side == GSide.LEFT)</span>
-<span class="nc" id="L238">				x += margin.getLeft();</span>
-<span class="pc bpc" id="L239" title="1 of 2 branches missed.">			else if (side == GSide.RIGHT)</span>
-<span class="nc" id="L240">				x -= margin.getLeft();</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">		if (arrowType == GArrowType.OUTGOING) {</span>
+<span class="fc" id="L259">			final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());</span>
+<span class="fc" id="L260">			final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">			if (side == GSide.LEFT)</span>
+<span class="nc" id="L262">				x += margin.getLeft();</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">			else if (side == GSide.RIGHT)</span>
+<span class="nc" id="L264">				x -= margin.getLeft();</span>
 		}
 
-<span class="fc" id="L243">		return x;</span>
+<span class="fc" id="L267">		return x;</span>
 	}
 
 	public void drawShape(UGraphic ug) {
-<span class="fc" id="L247">		ug = applyColors(ug);</span>
-<span class="fc" id="L248">		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());</span>
-<span class="fc" id="L249">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="fc" id="L271">		ug = applyColors(ug);</span>
+<span class="fc" id="L272">		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());</span>
+<span class="fc" id="L273">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
 
-<span class="fc" id="L251">		final double startPos = timeScale.getPosition(start) + margin.getLeft();</span>
-<span class="fc" id="L252">		final double endPos = timeScale.getPosition(end) - margin.getRight();</span>
-
-<span class="pc bpc" id="L254" title="1 of 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L255">			ug.startUrl(url);</span>
-
-<span class="fc" id="L257">		ug = ug.apply(UTranslate.dy(margin.getTop()));</span>
-
-<span class="fc" id="L259">		final StringBounder stringBounder = ug.getStringBounder();</span>
-
-<span class="fc" id="L261">		final double round = style.value(PName.RoundCorner).asDouble();</span>
-
-<span class="fc" id="L263">		final Collection&lt;Segment&gt; off = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L264" title="All 2 branches covered.">		for (LocalDate day : paused) {</span>
-<span class="fc" id="L265">			final TimePoint pause = TimePoint.ofStartOfDay(day);</span>
-<span class="fc" id="L266">			final double x1 = timeScale.getPosition(pause);</span>
-<span class="fc" id="L267">			final double x2 = timeScale.getPosition(pause) + timeScale.getWidth(pause);</span>
-<span class="fc" id="L268">			off.add(new Segment(x1, x2));</span>
-<span class="fc" id="L269">		}</span>
-
-<span class="fc" id="L271">		final HColor backUndone = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.undone)</span>
-<span class="fc" id="L272">				.getMergedStyle(getStyleBuilder()).value(PName.BackGroundColor).asColor(getColorSet());</span>
-
-<span class="fc" id="L274">		final RectangleTask rectangleTask = new RectangleTask(startPos, endPos, round, getCompletion(), off);</span>
-
-<span class="fc" id="L276">		rectangleTask.draw(ug, getShapeHeight(stringBounder), backUndone, oddStart, oddEnd);</span>
+<span class="fc" id="L275">		final double startPos = timeScale.getPosition(start) + margin.getLeft();</span>
+<span class="fc" id="L276">		final double endPos = timeScale.getPosition(end) - margin.getRight();</span>
 
 <span class="pc bpc" id="L278" title="1 of 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L279">			ug.closeUrl();</span>
+<span class="nc" id="L279">			ug.startUrl(url);</span>
 
-<span class="fc" id="L281">	}</span>
+<span class="fc" id="L281">		ug = ug.apply(UTranslate.dy(margin.getTop()));</span>
+
+<span class="fc" id="L283">		final StringBounder stringBounder = ug.getStringBounder();</span>
+
+<span class="fc" id="L285">		final double round = style.value(PName.RoundCorner).asDouble();</span>
+
+<span class="fc" id="L287">		final Collection&lt;Segment&gt; off = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L288" title="All 2 branches covered.">		for (LocalDate day : paused) {</span>
+<span class="fc" id="L289">			final TimePoint pause = TimePoint.ofStartOfDay(day);</span>
+<span class="fc" id="L290">			final double x1 = timeScale.getPosition(pause);</span>
+<span class="fc" id="L291">			final double x2 = timeScale.getPosition(pause) + timeScale.getWidth(pause);</span>
+<span class="fc" id="L292">			off.add(new Segment(x1, x2));</span>
+<span class="fc" id="L293">		}</span>
+
+<span class="fc" id="L295">		final HColor backUndone = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.undone)</span>
+<span class="fc" id="L296">				.getMergedStyle(getStyleBuilder()).value(PName.BackGroundColor).asColor(getColorSet());</span>
+
+<span class="fc" id="L298">		final RectangleTask rectangleTask = new RectangleTask(startPos, endPos, round, getCompletion(), off);</span>
+
+<span class="fc" id="L300">		rectangleTask.draw(ug, getShapeHeight(stringBounder), backUndone, oddStart, oddEnd);</span>
+
+<span class="pc bpc" id="L302" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L303">			ug.closeUrl();</span>
+
+<span class="fc" id="L305">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
