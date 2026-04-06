@@ -149,10 +149,8 @@ public final class DotStringFactory implements Moveable {
 		SvekUtils.println(sb);
 		sb.append("searchsize=500;");
 		SvekUtils.println(sb);
-		// if (OptionFlags.USE_COMPOUND) {
-		// sb.append("compound=true;");
-		// SvekUtils.println(sb);
-		// }
+		sb.append("compound=true;");
+		SvekUtils.println(sb);
 
 		final DotSplines dotSplines = skinParam.getDotSplines();
 		if (dotSplines == DotSplines.POLYLINE) {

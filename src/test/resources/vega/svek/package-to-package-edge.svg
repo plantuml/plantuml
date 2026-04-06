@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="174px" preserveAspectRatio="none" style="width:202px;height:174px;background:#FFFFFF;" version="1.1" viewBox="0 0 202 174" width="202px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <!--cluster p1-->
+    <g class="cluster" data-qualified-name="p1" data-source-line="1" id="ent0002">
+      <path d="M16.5,4 L33.1333,4 A3.75,3.75 0 0 1 35.6333,6.5 L42.6333,24 L191.5,24 A2.5,2.5 0 0 1 194,26.5 L194,78.5 A2.5,2.5 0 0 1 191.5,81 L16.5,81 A2.5,2.5 0 0 1 14,78.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000000;stroke-width:1.5;"/>
+      <line style="stroke:#000000;stroke-width:1.5;" x1="14" x2="42.6333" y1="24" y2="24"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="15.6333" x="18" y="16.8889">p1</text>
+    </g>
+    <!--cluster p2-->
+    <g class="cluster" data-qualified-name="p2" data-source-line="6" id="ent0005">
+      <path d="M16.5,89 L33.1333,89 A3.75,3.75 0 0 1 35.6333,91.5 L42.6333,109 L191.5,109 A2.5,2.5 0 0 1 194,111.5 L194,163.5 A2.5,2.5 0 0 1 191.5,166 L16.5,166 A2.5,2.5 0 0 1 14,163.5 L14,91.5 A2.5,2.5 0 0 1 16.5,89" fill="none" style="stroke:#000000;stroke-width:1.5;"/>
+      <line style="stroke:#000000;stroke-width:1.5;" x1="14" x2="42.6333" y1="109" y2="109"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="15.6333" x="18" y="101.8889">p2</text>
+    </g>
+    <!--entity a1-->
+    <g class="entity" data-qualified-name="p1.a1" data-source-line="2" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.6333" x="130" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="165.6333" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="163.6333" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="163.6333" y="40"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.6333" x="145" y="59.8889">a1</text>
+    </g>
+    <!--entity b1-->
+    <g class="entity" data-qualified-name="p1.b1" data-source-line="3" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.6333" x="56" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="91.6333" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="89.6333" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="89.6333" y="40"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.6333" x="71" y="59.8889">b1</text>
+    </g>
+    <!--entity a2-->
+    <g class="entity" data-qualified-name="p2.a2" data-source-line="7" id="ent0006">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.6333" x="130" y="114"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="165.6333" y="119"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="163.6333" y="121"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="163.6333" y="125"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.6333" x="145" y="144.8889">a2</text>
+    </g>
+    <!--entity b2-->
+    <g class="entity" data-qualified-name="p2.b2" data-source-line="8" id="ent0007">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.6333" x="56" y="114"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="91.6333" y="119"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="89.6333" y="121"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="89.6333" y="125"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.6333" x="71" y="144.8889">b2</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="30,88.9954,34,79.9954,30,83.9954,26,79.9954,30,88.9954" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M30,81.1628 C30,82.5096 30,83.8755 30,85.254 C30,85.9432 30,86.6356 30,87.3304 C30,87.6778 30,88.0258 30,88.3742 C30,88.5485 30,88.7228 30,88.8973 C30,88.9191 30,88.9409 30,88.9627 C30,88.9736 30,82.9845 30,82.9954" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>
