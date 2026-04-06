@@ -21,9 +21,9 @@ import net.sourceforge.plantuml.preproc.Defines;
 You can use this file to put a test you are working on.
 Here is a simple example:
 
-@startuml
+@startcrash
 alice->bob: this is a test
-@enduml
+@endcrash
 
 So you can edit this file, but please do not push any modification in the "main" branch.
 Put your own tests on your own branches.

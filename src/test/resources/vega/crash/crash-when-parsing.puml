@@ -1,0 +1,9 @@
+---
+allow-failure: true
+output: debug, svg
+expected-description: ?
+expected-exception: IllegalArgumentException
+---
+@startcrash
+crash when parsing
+@endcrash

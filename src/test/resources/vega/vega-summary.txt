@@ -1,14 +1,24 @@
 ===========================================
  VEGA TEST SUMMARY
 ===========================================
- Total:    76
- Passed:   68
+ Total:    80
+ Passed:   62
  Failed:   0
- Skipped:  8
+ Skipped:  18
 ===========================================
  Skipped tests:
+   - crash/crash-when-parsing.puml
    - mvp/hello-debug-skipped.puml
+   - packet/R03.02-node_height_80.puml
+   - packet/R03.04-node_height_80_with_range.puml
+   - packet/R03.06-node_height_80_at_end_with_range.puml
    - packet/R07.01-Range_Error1.puml
+   - packet/R07.02-Range_Error2.puml
+   - packet/R11.01-len_0.puml
+   - packet/R11.07-len_0_8.puml
+   - packet/R22.01-same_height_default.puml
+   - packet/R22.02-same_height_true.puml
+   - packet/R22.03-same_height_false.puml
    - th/th1.puml
    - tikz/tikz-1926-svg.puml
    - tikz/tikz-1926.puml

@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.crash.CrashDiagramFactory;
 import net.sourceforge.plantuml.dedication.PSystemDedicationFactory;
 import net.sourceforge.plantuml.definition.PSystemDefinitionFactory;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
@@ -194,6 +195,7 @@ public class PSystemBuilder {
 		factories.add(new PSystemRegexFactory());
 
 		factories.add(new ChenEerDiagramFactory());
+		factories.add(new CrashDiagramFactory());
 
 	}
 

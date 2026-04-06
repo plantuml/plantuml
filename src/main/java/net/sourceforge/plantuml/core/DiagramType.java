@@ -44,7 +44,7 @@ public enum DiagramType {
 
 	SEQUENCE, STATE, CLASS, OBJECT, ACTIVITY, DESCRIPTION, COMPOSITE, TIMING, HELP, BPM, DITAA, DOT, JCCKIT, SALT, FLOW,
 	CREOLE, MATH, LATEX, DEFINITION, GANTT, CHRONOLOGY, NWDIAG, MINDMAP, WBS, WIRE, JSON, GIT, BOARD, YAML, HCL, EBNF,
-	REGEX, FILES, CHEN_EER, CHART, PACKET, SPRITES, UNKNOWN;
+	REGEX, FILES, CHEN_EER, CHART, PACKET, SPRITES, CRASH, UNKNOWN;
 
 	private static final EnumSet<DiagramType> EMPTY = EnumSet.noneOf(DiagramType.class);
 
@@ -110,6 +110,8 @@ public enum DiagramType {
 				return EnumSet.of(CHRONOLOGY);
 			if (check("chen", text, p))
 				return EnumSet.of(CHEN_EER);
+			if (check("crash", text, p))
+				return EnumSet.of(CRASH);
 			return EnumSet.of(UNKNOWN);
 
 		case 'd':
