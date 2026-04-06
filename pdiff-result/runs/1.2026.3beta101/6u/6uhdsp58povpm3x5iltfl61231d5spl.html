@@ -1,0 +1,130 @@
+<html><head><title>6uhds - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../6u/6u9uieg4kz3avotzvkx4ze0oz9cdhbn.html'>Previous</a>
+<a href='../6u/6um717jkig7vfueql3bkhkzrm3rcent.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>6uhds</h2>
+<hr>
+<img src='6uhdsp58povpm3x5iltfl61231d5spl.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+!pragma svgparser sax
+' Test for embedded PNG and JPEG images in SVG sprites
+' 
+' LIMITATION: Embedded raster images (PNG/JPEG) work correctly in PNG output
+' but may not render in SVG output. This is because PlantUML's SVG renderer
+' may not support inline UImage (raster) objects within sprites.
+' For SVG output compatibility, use vector-based SVG elements instead.
+'
+' Example 1: embedded PNG using data URI (Loveheart PNG base64-encoded Emoji)
+sprite imgPNG &lt;svg viewBox=&quot;0 0 100 40&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+  &lt;image href=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAAKYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAANCSURBVEiJtZZPbBtFFMZ/M7ubXdtdb1xSFyeilBapySVU8h8OoFaooFSqiihIVIpQBKci6KEg9Q6H9kovIHoCIVQJJCKE1ENFjnAgcaSGC6rEnxBwA04Tx43t2FnvDAfjkNibxgHxnWb2e/u992bee7tCa00YFsffekFY+nUzFtjW0LrvjRXrCDIAaPLlW0nHL0SsZtVoaF98mLrx3pdhOqLtYPHChahZcYYO7KvPFxvRl5XPp1sN3adWiD1ZAqD6XYK1b/dvE5IWryTt2udLFedwc1+9kLp+vbbpoDh+6TklxBeAi9TL0taeWpdmZzQDry0AcO+jQ12RyohqqoYoo8RDwJrU+qXkjWtfi8Xxt58BdQuwQs9qC/afLwCw8tnQbqYAPsgxE1S6F3EAIXux2oQFKm0ihMsOF71dHYx+f3NND68ghCu1YIoePPQN1pGRABkJ6Bus96CutRZMydTl+TvuiRW1m3n0eDl0vRPcEysqdXn+jsQPsrHMquGeXEaY4Yk4wxWcY5V/9scqOMOVUFthatyTy8QyqwZ+kDURKoMWxNKr2EeqVKcTNOajqKoBgOE28U4tdQl5p5bwCw7BWquaZSzAPlwjlithJtp3pTImSqQRrb2Z8PHGigD4RZuNX6JYj6wj7O4TFLbCO/Mn/m8R+h6rYSUb3ekokRY6f/YukArN979jcW+V/S8g0eT/N3VN3kTqWbQ428m9/8k0P/1aIhF36PccEl6EhOcAUCrXKZXXWS3XKd2vc/TRBG9O5ELC17MmWubD2nKhUKZa26Ba2+D3P+4/MNCFwg59oWVeYhkzgN/JDR8deKBoD7Y+ljEjGZ0sosXVTvbc6RHirr2reNy1OXd6pJsQ+gqjk8VWFYmHrwBzW/n+uMPFiRwHB2I7ih8ciHFxIkd/3Omk5tCDV1t+2nNu5sxxpDFNx+huNhVT3/zMDz8usXC3ddaHBj1GHj/As08fwTS7Kt1HBTmyN29vdwAw+/wbwLVOJ3uAD1wi/dUH7Qei66PfyuRj4Ik9is+hglfbkbfR3cnZm7chlUWLdwmprtCohX4HUtlOcQjLYCu+fzGJH2QRKvP3UNz8bWk1qMxjGTOMThZ3kvgLI5AzFfo379UAAAAASUVORK5CYII=&quot; x=&quot;0&quot; y=&quot;0&quot; width=&quot;100&quot; height=&quot;40&quot; /&gt;
+&lt;/svg&gt;
+
+' Example 2: embedded JPEG using data URI (small red square)
+sprite imgJPEG &lt;svg viewBox=&quot;0 0 100 40&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+  &lt;image href=&quot;data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAAoACgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlbaWmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9/KKKK/AzwR//2Q==&quot; x=&quot;0&quot; y=&quot;0&quot; width=&quot;100&quot; height=&quot;40&quot; /&gt;
+&lt;/svg&gt;
+
+Alice -&gt; Bob : hello &lt;$imgPNG&gt; and &lt;$imgJPEG&gt; there
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

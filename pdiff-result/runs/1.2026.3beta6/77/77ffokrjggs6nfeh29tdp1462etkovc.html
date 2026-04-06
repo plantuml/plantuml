@@ -1,0 +1,115 @@
+<html><head><title>77ffo - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../77/77a20q9a387o4ndquekjj1lpoxbwv43.html'>Previous</a>
+<a href='../77/77m7vunempnkg8fllk5jr6z46ishi21.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>77ffo</h2>
+<hr>
+<img src='77ffokrjggs6nfeh29tdp1462etkovc.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+
+sprite $mySprite data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAAKYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAANCSURBVEiJtZZPbBtFFMZ/M7ubXdtdb1xSFyeilBapySVU8h8OoFaooFSqiihIVIpQBKci6KEg9Q6H9kovIHoCIVQJJCKE1ENFjnAgcaSGC6rEnxBwA04Tx43t2FnvDAfjkNibxgHxnWb2e/u992bee7tCa00YFsffekFY+nUzFtjW0LrvjRXrCDIAaPLlW0nHL0SsZtVoaF98mLrx3pdhOqLtYPHChahZcYYO7KvPFxvRl5XPp1sN3adWiD1ZAqD6XYK1b/dvE5IWryTt2udLFedwc1+9kLp+vbbpoDh+6TklxBeAi9TL0taeWpdmZzQDry0AcO+jQ12RyohqqoYoo8RDwJrU+qXkjWtfi8Xxt58BdQuwQs9qC/afLwCw8tnQbqYAPsgxE1S6F3EAIXux2oQFKm0ihMsOF71dHYx+f3NND68ghCu1YIoePPQN1pGRABkJ6Bus96CutRZMydTl+TvuiRW1m3n0eDl0vRPcEysqdXn+jsQPsrHMquGeXEaY4Yk4wxWcY5V/9scqOMOVUFthatyTy8QyqwZ+kDURKoMWxNKr2EeqVKcTNOajqKoBgOE28U4tdQl5p5bwCw7BWquaZSzAPlwjlithJtp3pTImSqQRrb2Z8PHGigD4RZuNX6JYj6wj7O4TFLbCO/Mn/m8R+h6rYSUb3ekokRY6f/YukArN979jcW+V/S8g0eT/N3VN3kTqWbQ428m9/8k0P/1aIhF36PccEl6EhOcAUCrXKZXXWS3XKd2vc/TRBG9O5ELC17MmWubD2nKhUKZa26Ba2+D3P+4/MNCFwg59oWVeYhkzgN/JDR8deKBoD7Y+ljEjGZ0sosXVTvbc6RHirr2reNy1OXd6pJsQ+gqjk8VWFYmHrwBzW/n+uMPFiRwHB2I7ih8ciHFxIkd/3Omk5tCDV1t+2nNu5sxxpDFNx+huNhVT3/zMDz8usXC3ddaHBj1GHj/As08fwTS7Kt1HBTmyN29vdwAw+/wbwLVOJ3uAD1wi/dUH7Qei66PfyuRj4Ik9is+hglfbkbfR3cnZm7chlUWLdwmprtCohX4HUtlOcQjLYCu+fzGJH2QRKvP3UNz8bWk1qMxjGTOMThZ3kvgLI5AzFfo379UAAAAASUVORK5CYII=
+
+alice-&gt;bob: this is a &lt;$mySprite&gt; test
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

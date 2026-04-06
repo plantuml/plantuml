@@ -1,0 +1,11 @@
+{
+  "duration": 34,
+  "description": "(Creole)",
+  "implementation": "PSystemCreole",
+  "png": {
+    "width": 182,
+    "height": 1112,
+    "crc": 4093383975,
+    "sizeInBytes": 7177
+  }
+}

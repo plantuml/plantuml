@@ -1,0 +1,191 @@
+<html><head><title>p7tyd - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../p7/p7l1tq44cabnk5i79nsjwdu92n53q8a.html'>Previous</a>
+<a href='../p8/p8dgqz3pedwxa4mqpzt8xneguja02y4.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>p7tyd</h2>
+<a href='https://github.com/plantuml/plantuml/pull/1767'>https://github.com/plantuml/plantuml/pull/1767</a>
+<hr>
+<img src='p7tydcweokachuag5hfldzgr7wqzrke.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startcreole math-Page-4
+= Test math - Page 4 - p-z
+&lt;math&gt;partial&lt;/math&gt;
+&lt;math&gt;phi&lt;/math&gt;
+&lt;math&gt;pi&lt;/math&gt;
+&lt;math&gt;pm&lt;/math&gt;
+&lt;math&gt;prec&lt;/math&gt;
+&lt;math&gt;preceq&lt;/math&gt;
+&lt;math&gt;prod&lt;/math&gt;
+&lt;math&gt;prop&lt;/math&gt;
+&lt;math&gt;propto&lt;/math&gt;
+&lt;math&gt;psi&lt;/math&gt;
+&lt;math&gt;qquad&lt;/math&gt;
+&lt;math&gt;quad&lt;/math&gt;
+&lt;math&gt;rArr&lt;/math&gt;
+&lt;math&gt;rangle&lt;/math&gt;
+&lt;math&gt;rarr&lt;/math&gt;
+&lt;math&gt;rceiling&lt;/math&gt;
+&lt;math&gt;rfloor&lt;/math&gt;
+&lt;math&gt;rho&lt;/math&gt;
+&lt;math&gt;rightarrow&lt;/math&gt;
+&lt;math&gt;rightarrowtail&lt;/math&gt;
+&lt;math&gt;root&lt;/math&gt;
+&lt;math&gt;rtimes&lt;/math&gt;
+&lt;math&gt;sec&lt;/math&gt;
+&lt;math&gt;sech&lt;/math&gt;
+&lt;math&gt;setminus&lt;/math&gt;
+&lt;math&gt;sigma&lt;/math&gt;
+&lt;math&gt;sin&lt;/math&gt;
+&lt;math&gt;sinh&lt;/math&gt;
+&lt;math&gt;sqrt&lt;/math&gt;
+&lt;math&gt;square&lt;/math&gt;
+&lt;math&gt;stackrel&lt;/math&gt;
+&lt;math&gt;star&lt;/math&gt;
+&lt;math&gt;sub&lt;/math&gt;
+&lt;math&gt;sube&lt;/math&gt;
+&lt;math&gt;subset&lt;/math&gt;
+&lt;math&gt;subseteq&lt;/math&gt;
+&lt;math&gt;succ&lt;/math&gt;
+&lt;math&gt;succeq&lt;/math&gt;
+&lt;math&gt;sum&lt;/math&gt;
+&lt;math&gt;sup&lt;/math&gt;
+&lt;math&gt;supe&lt;/math&gt;
+&lt;math&gt;supset&lt;/math&gt;
+&lt;math&gt;supseteq&lt;/math&gt;
+&lt;math&gt;tan&lt;/math&gt;
+&lt;math&gt;tanh&lt;/math&gt;
+&lt;math&gt;tau&lt;/math&gt;
+&lt;math&gt;therefore&lt;/math&gt;
+&lt;math&gt;theta&lt;/math&gt;
+&lt;math&gt;tilde&lt;/math&gt;
+&lt;math&gt;times&lt;/math&gt;
+&lt;math&gt;to&lt;/math&gt;
+&lt;math&gt;top&lt;/math&gt;
+&lt;math&gt;triangle&lt;/math&gt;
+&lt;math&gt;twoheadrightarrow&lt;/math&gt;
+&lt;math&gt;twoheadrightarrowtail&lt;/math&gt;
+&lt;math&gt;uarr&lt;/math&gt;
+&lt;math&gt;ubrace&lt;/math&gt;
+&lt;math&gt;ul&lt;/math&gt;
+&lt;math&gt;underbrace&lt;/math&gt;
+&lt;math&gt;underline&lt;/math&gt;
+&lt;math&gt;underset&lt;/math&gt;
+&lt;math&gt;uparrow&lt;/math&gt;
+&lt;math&gt;upsilon&lt;/math&gt;
+&lt;math&gt;uu&lt;/math&gt;
+&lt;math&gt;uuu&lt;/math&gt;
+&lt;math&gt;varepsilon&lt;/math&gt;
+&lt;math&gt;varphi&lt;/math&gt;
+&lt;math&gt;vartheta&lt;/math&gt;
+&lt;math&gt;vdash&lt;/math&gt;
+&lt;math&gt;vdots&lt;/math&gt;
+&lt;math&gt;vec&lt;/math&gt;
+&lt;math&gt;vee&lt;/math&gt;
+&lt;math&gt;vv&lt;/math&gt;
+&lt;math&gt;vvv&lt;/math&gt;
+&lt;math&gt;wedge&lt;/math&gt;
+&lt;math&gt;xi&lt;/math&gt;
+&lt;math&gt;xx&lt;/math&gt;
+&lt;math&gt;zeta&lt;/math&gt;
+@endcreole
+</code></pre>
+</div>
+</body>
+</html>

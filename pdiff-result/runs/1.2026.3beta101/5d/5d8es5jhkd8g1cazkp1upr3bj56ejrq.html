@@ -1,0 +1,144 @@
+<html><head><title>5d8es - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../5d/5d6t4rerqm2krt3cvqzyhd3jxrb9g4i.html'>Previous</a>
+<a href='../5d/5dgkbkjx426fvsj8s0ivibw3w4wlnwb.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>5d8es</h2>
+<a href='https://forum.plantuml.net/13408/could-you-allow-maximumwidth-on-style-for-note-test-activity?show=13478#c13478'>https://forum.plantuml.net/13408/could-you-allow-maximumwidth-on-style-for-note-test-activity?show=13478#c13478</a>
+<hr>
+<img src='5d8es5jhkd8g1cazkp1upr3bj56ejrq.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+&lt;style&gt;
+activityDiagram {
+  note {
+    MaximumWidth 100
+  }
+}
+&lt;/style&gt;
+|Actor 1|
+start
+:foo1;
+note right
+  A Long Long Long Long Long Long Long Long Long Long Long Long Long Long note
+  This note is on several
+  //lines// and can
+  contain &lt;b&gt;HTML&lt;/b&gt;
+  ====
+  * Calling the method &quot;&quot;foo()&quot;&quot; is &lt;back:red&gt;prohibited overlap
+end note
+floating note left: This is a note
+|Actor 2|
+:foo2;
+note right
+  &lt;back:red&gt; KO for this note
+  A Long Long Long Long Long Long Long Long Long Long Long Long Long Long note
+  This note is on several
+  //lines// and can
+  contain &lt;b&gt;HTML&lt;/b&gt;
+  ====
+  * Calling the method &quot;&quot;foo()&quot;&quot; is prohibited
+end note
+stop
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

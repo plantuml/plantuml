@@ -1,0 +1,147 @@
+<html><head><title>32y30 - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../32/32aw3624larp7pwjk5003u87ldcizgm.html'>Previous</a>
+<a href='../32/32zut8ghg62vpyl668f2zfqodyrpqr5.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>32y30</h2>
+<a href='https://forum.plantuml.net/9845/adding-dashed-style-fails-diagram-generation'>https://forum.plantuml.net/9845/adding-dashed-style-fails-diagram-generation</a>
+<hr>
+<img src='32y30taqsavsu8vuz8szjttvh000fie.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+skinparam shadowing false
+    (*) --&gt; &quot;Entering ValidateConnection state&quot;
+    If &quot;if1&quot; then
+      --&gt; [YES1] Wait timeout on SSL error
+      --&gt; &quot;Validate Authentication&quot;
+    else
+      -[dashed]-&gt; [NO1] &quot;Validate Authentication&quot;
+      --&gt; if &quot;if2&quot; then
+        --&gt; [YES2] if &quot;Has detector PRODUCT_SECURITY capability?&quot; then
+        --&gt; [YES3] if &quot;Flux Has credentials for detector&quot; then
+      --&gt; [YES] Authenticate on detector
+      --&gt; if &quot;if3&quot;
+        --&gt; [YES4] &quot;Move to Connected&quot;
+        else
+        -[dashed]-&gt; [NO2] &quot;Move to ConnectionFailed&quot;
+        endif
+        else
+        if &quot;if4&quot; then
+          --&gt; [YES5] &quot;Move to ConnectionFailed&quot;
+        else
+          -[dashed]-&gt; [NO4] &quot;Move to Connected&quot;
+        endif
+        endif
+      else
+        -[dashed]-&gt; [NO5] &quot;Move to connected state&quot;
+      endif
+      else
+        -[dashed]-&gt; [NO6] Check authentication on detector
+          if &quot;if5&quot; then
+            --&gt; [YES6] &quot;Move to ConnectionFailed&quot;
+          else
+            -[dashed]-&gt; [NO7] &quot;Move to Connected&quot;
+          endif
+      endif
+      endif
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

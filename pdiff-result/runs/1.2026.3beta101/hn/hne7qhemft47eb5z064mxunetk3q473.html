@@ -1,0 +1,141 @@
+<html><head><title>hne7q - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../hn/hn06i09lqg23fv3lh6tmyef0qkygl5l.html'>Previous</a>
+<a href='../hn/hnez1hs62mm7mp8frlc7bvmq6dbbb9y.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>hne7q</h2>
+<a href='http://forum.plantuml.net/8317/do-digraphs-not-work-with-entities'>http://forum.plantuml.net/8317/do-digraphs-not-work-with-entities</a>
+<hr>
+<img src='hne7qhemft47eb5z064mxunetk3q473.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+skinparam backgroundColor LightYellow
+skinparam state {
+  StartColor MediumBlue
+  EndColor Red
+  BackgroundColor Peru
+  BackgroundColor&lt;&lt;Warning&gt;&gt; Olive
+  BackgroundColor&lt;&lt;choice&gt;&gt; palegreen
+  BorderColor Grey
+  FontName Impact
+}
+skinparam activityBackgroundColor palegreen
+
+state &quot;Req(Id)&quot; as ReqId &lt;&lt;sdlreceive&gt;&gt;
+state &quot;Minor(Id)&quot; as MinorId &lt;&lt;sdlsend&gt;&gt;
+state &quot;MinorReq := Id;&quot; as MinorReq &lt;&lt;rect&gt;&gt;
+state &quot;Major(Id)&quot; as MajorId &lt;&lt;sdlsend&gt;&gt;
+state &quot;MajorReq := Id;&quot; as MajorReq &lt;&lt;rect&gt;&gt;
+ 
+state c &lt;&lt;choice&gt;&gt;
+ 
+Idle --&gt; ReqId
+ReqId --&gt; c
+c --&gt; MinorId : [Id &lt;= 10]
+MinorId --&gt; MinorReq
+c --&gt; MajorId : [Id &gt; 10]
+MajorId --&gt; MajorReq
+MinorReq --&gt; j
+MajorReq --&gt; j
+j --&gt; Busy
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

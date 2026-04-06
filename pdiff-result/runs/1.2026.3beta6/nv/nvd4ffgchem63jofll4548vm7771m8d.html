@@ -1,0 +1,117 @@
+<html><head><title>nvd4f - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../nv/nv3sfspegyhiah0dh90r60xplspgdc6.html'>Previous</a>
+<a href='../nv/nvelfr71npzzctz7a388wxmccl4c1y4.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>nvd4f</h2>
+<hr>
+<img src='nvd4ffgchem63jofll4548vm7771m8d.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+start
+:foo;
+note left
+You can use images &lt;img:data:image/png;base64,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&gt;
+end note
+stop
+@enduml 
+</code></pre>
+</div>
+</body>
+</html>

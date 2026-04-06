@@ -1,0 +1,239 @@
+<html><head><title>r268k - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../r2/r25mhe4rhoo2qyadpo8ttmr4k2m3s3o.html'>Previous</a>
+<a href='../r2/r27v33meodz798sw7jjk08hy1ard6yp.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>r268k</h2>
+<hr>
+<img src='r268kroj9bnfcf96c67xabe0qd856nz.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+   skinparam activityStartColor Red
+   skinparam activityEndColor  Green
+
+   (*) -r-&gt; &quot;DEV check-in code&quot;  #aliceblue
+
+   ' partition build {
+      -r-&gt; &quot;compile DEV branch&quot; #aliceblue
+
+      -r-&gt; if &quot;&quot; then
+             -d-&gt;[fail] &quot;feedback&quot; #wheat
+           else
+             -r-&gt;[pass] &quot;unit testing&quot; #aliceblue
+           endif
+
+      -r-&gt; if &quot;&quot; then
+              -d-&gt; [fail] &quot;feedback&quot;
+           else
+             -r-&gt; [pass] &quot;store in artefact repository&quot; #aliceblue
+           endif
+   ' }
+
+      -r-&gt; if &quot;&quot; then
+             -d-&gt; [fail] &quot;feedback&quot;
+           else
+             -r-&gt; [pass] &quot;deploy D1&quot; #aliceblue
+           endif
+
+      -r-&gt; if &quot;&quot; then
+             -d-&gt;[fail] &quot;feedback&quot;
+           else
+             -r-&gt;[pass] &quot;regression testing&quot; #aliceblue
+           endif
+
+      -r-&gt; if &quot;&quot; then
+             -d-&gt; [fail] &quot;feedback&quot;
+           else
+            -r-&gt; [pass] &quot;code analysis&quot; #aliceblue
+           endif
+
+
+   ' &quot;feedback&quot; --&gt; &quot;DEV check-in code&quot;
+
+   &quot;code analysis&quot; -d-&gt; &quot;merge code from DEV to INT&quot; #lavenderblush
+   &quot;merge code from DEV to INT&quot; -d-&gt; &quot;compile INT branch&quot; #lavenderblush
+
+   -down-&gt; if &quot;&quot; then
+             -l-&gt; [fail] &quot;feedback&quot;
+           else
+             -down-&gt; [pass] &quot;unit testing&quot; #lavenderblush
+           endif
+
+   -down-&gt; if &quot;&quot; then
+             -l-&gt; [fail] &quot;feedback&quot;
+           else
+             -down-&gt; [pass] &quot;integration repository&quot; #lavenderblush
+           endif
+
+   -down-&gt; if &quot;&quot; then
+             -l-&gt; [fail] &quot;feedback&quot;
+           else
+             -down-&gt; [pass] &quot;deploy to F1&quot; #lavenderblush
+           endif
+
+   -down-&gt; if &quot;&quot; then
+             -l-&gt; [fail] &quot;feedback&quot;
+           else
+             -down-&gt; [pass] &quot;deploy validation test&quot; #lavenderblush
+           endif
+
+   -down-&gt; if &quot;&quot; then
+             -l-&gt; [fail] &quot;feedback&quot;
+           else
+             -d-&gt; [pass] &quot;acceptance test&quot; #lavenderblush
+           endif
+
+   -down-&gt; if &quot;&quot; then
+             -l-&gt; [fail] &quot;feedback&quot;
+           else
+             -d-&gt; [pass] &quot;deploy to L1&quot; #lavenderblush
+           endif
+
+   -down-&gt; if &quot;&quot; then
+             -l-&gt; [fail] &quot;feedback&quot;
+           else
+             -down-&gt; [pass] &quot;deploy validation test&quot; #lavenderblush
+           endif
+
+   -down-&gt; if &quot;&quot; then
+             -l-&gt; [fail] &quot;feedback&quot;
+           else
+             -d-&gt; [pass] &quot;move artefact to integration_tested repo&quot; #lavenderblush
+           endif
+
+
+   ' &quot;feedback&quot; --&gt; &quot;INT merge code from DEV&quot;
+
+
+   ' &quot;move artefact to integration_tested repo&quot;  -d-&gt; &quot;merge into release&quot; #lightsalmon
+   -l-&gt; &quot;build REL branch&quot; #lightsalmon
+
+   -l-&gt; if &quot;&quot; then
+      -u-&gt; [fail] &quot;feedback&quot;
+   else
+      -l-&gt; [pass] &quot;user acceptance testing&quot; #lightsalmon
+
+      -l-&gt; if &quot;&quot; then
+        -u-&gt; [fail] &quot;feedback&quot;
+      else
+        -l-&gt; [pass] &quot;performance tests&quot; #lightsalmon
+
+        -l-&gt; if &quot;&quot; then
+          -u-&gt; [fail] &quot;feedback&quot;
+        else
+          -l-&gt; [pass] &quot;F2 deploy validation test&quot; #lightsalmon
+
+          -l-&gt; if &quot;&quot; then
+            -u-&gt; [fail] &quot;feedback&quot;
+          else
+            -l-&gt; [pass] &quot;deploy F2/Stage&quot; #lightsalmon
+          endif
+        endif
+      endif
+   endif
+
+   &quot;deploy F2/Stage&quot; -l-&gt; (*)
+
+
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

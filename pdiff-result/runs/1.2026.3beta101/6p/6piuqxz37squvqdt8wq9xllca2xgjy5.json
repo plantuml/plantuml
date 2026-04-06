@@ -1,0 +1,11 @@
+{
+  "duration": 3519,
+  "description": "(Git)",
+  "implementation": "GitDiagram",
+  "png": {
+    "width": 805,
+    "height": 4096,
+    "crc": 3075984590,
+    "sizeInBytes": 159568
+  }
+}

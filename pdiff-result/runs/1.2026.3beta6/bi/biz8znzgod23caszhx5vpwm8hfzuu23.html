@@ -1,0 +1,234 @@
+<html><head><title>biz8z - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../bi/bime5j8m41euqhlbo6b9vmy6nw7kw7y.html'>Previous</a>
+<a href='../bj/bj02yweo88yepgjuym2ws2dkljxodls.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>biz8z</h2>
+<hr>
+<img src='biz8znzgod23caszhx5vpwm8hfzuu23.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+set separator .
+!pragma layout smetana
+component aaa.bbb1.ccc01
+component aaa.bbb2.ccc02
+component aaa.bbb1.ccc03
+component aaa.bbb1.ccc04
+component aaa.bbb1.ccc05
+component aaa.bbb2.ccc06
+component aaa.bbb2.ccc07
+component aaa.bbb3.ccc08
+component aaa.bbb1.ccc09
+component aaa.bbb2.ccc10
+component aaa.bbb2.ccc11
+component aaa.bbb2.ccc12
+component aaa.bbb3.ccc13
+component aaa.bbb1.ccc14
+component aaa.bbb4.ccc15
+component aaa.bbb4.ccc16
+component aaa.bbb4.ccc17
+component aaa.bbb4.ccc18
+component aaa.bbb4.ccc19
+component aaa.bbb4.ccc20
+component aaa.bbb4.ccc21
+component aaa.bbb4.ccc22
+component aaa.bbb4.ccc04
+component aaa.bbb2.ccc23
+component aaa.bbb2.ccc24
+component aaa.bbb2.ccc25
+component aaa.bbb2.ccc02
+component aaa.bbb2.ccc26
+component aaa.bbb4.ccc27
+component aaa.bbb4.ccc28
+component aaa.bbb4.ccc29
+component aaa.bbb4.ccc30
+component aaa.bbb4.ccc25
+aaa.bbb1.ccc03 -- aaa.bbb1.ccc05
+aaa.bbb1.ccc05 -- aaa.bbb3.ccc08
+aaa.bbb2.ccc06 -- aaa.bbb2.ccc02
+aaa.bbb2.ccc24 -- aaa.bbb2.ccc02
+aaa.bbb2.ccc11 -- aaa.bbb2.ccc02
+aaa.bbb2.ccc02 -- aaa.bbb2.ccc12
+aaa.bbb4.ccc04 -- aaa.bbb4.ccc19
+aaa.bbb4.ccc04 -- aaa.bbb4.ccc21
+aaa.bbb3.ccc13 -- aaa.bbb3.ccc08
+aaa.bbb2.ccc02 &lt;.. aaa.bbb1.ccc01 : uses
+aaa.bbb1.ccc04 &lt;.. aaa.bbb1.ccc03
+aaa.bbb2.ccc06 &lt;.. aaa.bbb1.ccc03
+aaa.bbb2.ccc07 &lt;.. aaa.bbb1.ccc03
+aaa.bbb3.ccc08 &lt;.. aaa.bbb1.ccc03
+aaa.bbb1.ccc04 &lt;.. aaa.bbb1.ccc09
+aaa.bbb1.ccc04 &lt;.. aaa.bbb1.ccc05
+aaa.bbb2.ccc10 &lt;.. aaa.bbb1.ccc04
+aaa.bbb2.ccc06 &lt;.. aaa.bbb1.ccc04
+aaa.bbb2.ccc11 &lt;.. aaa.bbb1.ccc04
+aaa.bbb2.ccc02 &lt;.. aaa.bbb1.ccc04
+aaa.bbb2.ccc12 &lt;.. aaa.bbb1.ccc04
+aaa.bbb2.ccc07 &lt;.. aaa.bbb1.ccc04
+aaa.bbb3.ccc13 &lt;.. aaa.bbb1.ccc04
+aaa.bbb3.ccc08 &lt;.. aaa.bbb1.ccc04
+aaa.bbb1.ccc05 &lt;.. aaa.bbb1.ccc09
+aaa.bbb2.ccc02 &lt;.. aaa.bbb1.ccc09
+aaa.bbb2.ccc07 &lt;.. aaa.bbb1.ccc09
+aaa.bbb3.ccc08 &lt;.. aaa.bbb1.ccc09
+aaa.bbb4.ccc15 &lt;.. aaa.bbb1.ccc14
+aaa.bbb4.ccc16 &lt;.. aaa.bbb1.ccc14
+aaa.bbb4.ccc17 &lt;.. aaa.bbb1.ccc14
+aaa.bbb4.ccc18 &lt;.. aaa.bbb1.ccc14
+aaa.bbb4.ccc19 &lt;.. aaa.bbb1.ccc14
+aaa.bbb4.ccc20 &lt;.. aaa.bbb1.ccc14
+aaa.bbb4.ccc21 &lt;.. aaa.bbb1.ccc14
+aaa.bbb3.ccc08 &lt;.. aaa.bbb1.ccc14
+aaa.bbb2.ccc10 &lt;.. aaa.bbb1.ccc05
+aaa.bbb2.ccc06 &lt;.. aaa.bbb1.ccc05
+aaa.bbb2.ccc11 &lt;.. aaa.bbb1.ccc05
+aaa.bbb2.ccc02 &lt;.. aaa.bbb1.ccc05
+aaa.bbb2.ccc12 &lt;.. aaa.bbb1.ccc05
+aaa.bbb2.ccc07 &lt;.. aaa.bbb1.ccc05
+aaa.bbb4.ccc22 &lt;.. aaa.bbb1.ccc05
+aaa.bbb4.ccc04 &lt;.. aaa.bbb1.ccc05
+aaa.bbb4.ccc21 &lt;.. aaa.bbb1.ccc05
+aaa.bbb2.ccc06 &lt;.. aaa.bbb2.ccc10
+aaa.bbb2.ccc23 &lt;.. aaa.bbb2.ccc10
+aaa.bbb2.ccc10 &lt;.. aaa.bbb2.ccc24
+aaa.bbb2.ccc11 &lt;.. aaa.bbb2.ccc10
+aaa.bbb2.ccc10 &lt;.. aaa.bbb2.ccc02
+aaa.bbb2.ccc10 &lt;.. aaa.bbb2.ccc12
+aaa.bbb2.ccc10 &lt;.. aaa.bbb2.ccc25
+aaa.bbb2.ccc10 &lt;.. aaa.bbb3.ccc13
+aaa.bbb2.ccc10 &lt;.. aaa.bbb3.ccc08
+aaa.bbb2.ccc23 &lt;.. aaa.bbb2.ccc06
+aaa.bbb2.ccc06 &lt;.. aaa.bbb2.ccc24
+aaa.bbb2.ccc06 &lt;.. aaa.bbb2.ccc11
+aaa.bbb2.ccc06 &lt;.. aaa.bbb2.ccc12
+aaa.bbb2.ccc06 &lt;.. aaa.bbb2.ccc25
+aaa.bbb2.ccc06 &lt;.. aaa.bbb3.ccc13
+aaa.bbb2.ccc06 &lt;.. aaa.bbb3.ccc08
+aaa.bbb2.ccc11 &lt;.. aaa.bbb2.ccc12
+aaa.bbb2.ccc02 &lt;.. aaa.bbb3.ccc08
+aaa.bbb2.ccc25 &lt;.. aaa.bbb3.ccc13
+aaa.bbb2.ccc25 &lt;.. aaa.bbb3.ccc08
+aaa.bbb4.ccc21 &lt;.. aaa.bbb4.ccc27
+aaa.bbb4.ccc15 &lt;.. aaa.bbb4.ccc04
+aaa.bbb3.ccc13 &lt;.. aaa.bbb4.ccc15
+aaa.bbb4.ccc22 &lt;.. aaa.bbb4.ccc04
+aaa.bbb4.ccc22 &lt;.. aaa.bbb4.ccc16
+aaa.bbb4.ccc22 &lt;.. aaa.bbb4.ccc18
+aaa.bbb4.ccc22 &lt;.. aaa.bbb4.ccc19
+aaa.bbb4.ccc22 &lt;.. aaa.bbb4.ccc21
+aaa.bbb4.ccc16 &lt;.. aaa.bbb4.ccc04
+aaa.bbb4.ccc17 &lt;.. aaa.bbb4.ccc04
+aaa.bbb4.ccc18 &lt;.. aaa.bbb4.ccc04
+aaa.bbb4.ccc20 &lt;.. aaa.bbb4.ccc04
+aaa.bbb4.ccc21 &lt;.. aaa.bbb4.ccc28
+aaa.bbb3.ccc13 &lt;.. aaa.bbb4.ccc16
+aaa.bbb3.ccc08 &lt;.. aaa.bbb4.ccc16
+aaa.bbb3.ccc13 &lt;.. aaa.bbb4.ccc17
+aaa.bbb3.ccc08 &lt;.. aaa.bbb4.ccc17
+aaa.bbb3.ccc13 &lt;.. aaa.bbb4.ccc18
+aaa.bbb3.ccc08 &lt;.. aaa.bbb4.ccc18
+aaa.bbb3.ccc13 &lt;.. aaa.bbb4.ccc19
+aaa.bbb3.ccc08 &lt;.. aaa.bbb4.ccc19
+aaa.bbb3.ccc13 &lt;.. aaa.bbb4.ccc20
+aaa.bbb4.ccc21 &lt;.. aaa.bbb3.ccc13
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

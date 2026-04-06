@@ -1,0 +1,273 @@
+<html><head><title>902x4 - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../8z/8zw1sshohp8nhsiykg45kynw0gigezh.html'>Previous</a>
+<a href='../90/906dqx0en22haucblm2jiqwaimp6swx.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>902x4</h2>
+<hr>
+<img src='902x4chyfmcawv3vnqrx1vnb9ncohuy.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+  Title: &lt;color red&gt; On va creer un Groupchat en faisant un FT vers plusieurs participants 
+   hide footbox  
+   autonumber 
+   Actor ClientA as A #orange
+  'participant &quot;Reverse\nProxySSL&quot; as PS
+  'participant &quot;Http Content\n Server&quot; as CS
+
+  participant &quot;C-BGF&quot; as CBGF #deepskyblue
+  participant &quot;Switch\nMSRP&quot; as SW #deepskyblue
+  participant &quot;P-CSCF&quot; as P
+  participant &quot;I-CSCF&quot; as I
+ 'participant HSS as H #green 
+  participant &quot;LB-AS&quot; as LB #gray
+  |||
+  box &quot;Zone Originating&quot; #silver
+  participant &quot;S-CSCF\nOrig&quot; as SO
+  participant &quot;AS-Orig&quot; as ASO
+  end box
+  |||
+  box &quot;Zone terminating&quot; #aliceblue
+  participant &quot;AS-term&quot; as AST
+  participant &quot;S-CSCF\Term&quot; as ST
+  end box 
+  Actor ClientB as B #tomato
+  Actor ClientC as C #green
+  |||
+  participant &quot;i-SBC&quot; as isbc 
+  box &quot;Interco&quot; #red 
+  entity SFR 
+   |||
+ |||
+ note over A,C #skyblue : &lt;b&gt;le Scenario&lt;/b&gt;:\n- Un groupchat est deja etablie entre les participants &lt;color:white&gt;: Blackbirds&lt;/color&gt;et&lt;color:green&gt;C Albatros&lt;/color&gt;\n- A envoi un fichier &agrave; B ,C en FToHTTP donc:\n- A upload le fichier\n- A envoie l'url de telechargement a B, C.\n- B telecharge le fichier upload&eacute;\n- C est redirig&eacute; sur un lien internet vers le fichier.\n &lt;color:red&gt; Rappel: l'Albatros ne peut pas effectuer de FT dans un groupchat &lt;/color&gt;
+
+ |||
+ |||
+ note over A, C#tomato: A upload le fichier telque decrit sur le lien ci-dessus : Upload_successfull\nA recupere les infos &agrave; envoyer a B, C
+ |||
+ |||
+ |||
+ ============= Envoi des infos aux autres participants =============
+ loop &lt;color red&gt; le Chat n'existait pas. on le cree &agrave; travers un FT &lt;/color&gt;
+ note over A #tomato: A commence par \n Uploader le fichier\n tel que decrit sur\n le lien ci haut.
+ note over A #green: This process may take\na while... then after,
+ A  -[#black]&gt; P: INVITE\n&lt;b&gt;Contact include:&lt;/b&gt;\n&lt;color blue&gt;&lt;+g.3gpp.iari-ref=\&quot;urn%3Aurn-7%3A3gpp-application.ims.iari.rcse.ftottp&quot;&lt;/color&gt;\n&lt;color blue&gt;SDP &lt;participants list&gt;\n&lt;b&gt;SDP contains:&lt;/b&gt;&lt;color blue&gt;a=accept-types:message/cpim&lt;/color&gt;\n&lt;color blue&gt;a=accept-wrapped-types:text/plain message/imdn+xml&lt;/color&gt;\n&lt;color blue&gt;application/vnd.gsma.rcs-ft-http+xml&lt;/color&gt;
+ P -[#black]&gt; I: INVITE
+ I -[#black]&gt; SO: INVITE
+ SO -[#black]&gt; ASO: INVITE
+ |||
+ loop Reponse vers l'Originating
+ note over ASO #tomato: creation de la conf\n sur la CF d'ASIM\n l'AS renvoit l'INVITE\nvers les autres participants 
+ |||
+ ASO -[#black]-&gt; SO: 200 OK
+note over ASO #white: SDP contains:&lt;/b&gt;&lt;color blue&gt;a=accept-types:message/cpim&lt;/color&gt;\n&lt;color blue&gt;a=accept-wrapped-types:text/plain message/imdn+xml&lt;/color&gt;\n&lt;color blue&gt;application/vnd.gsma.rcs-ft-http+xml&lt;/color&gt;
+ SO -[#black]-&gt; I: 200 OK 
+ I -[#black]-&gt;P: 200 OK
+ P -[#black]-&gt; A: 200 OK 
+ A --&gt; P: ACK
+ P --&gt; I: ACK
+ I --&gt; SO: ACK
+ SO --&gt; ASO: ACK
+ note over A , ASO #skyblue: une session MSRP de chat va etre etablit entre A, et L'AS.
+ end 
+ |||
+ 
+ loop INVITE &lt;isfocus&gt; vers un participant SFR
+ SO -[#red]&gt; I: &lt;b&gt;INVITE&lt;/b&gt; 
+ I -[#red]&gt; isbc: &lt;b&gt;INVITE&lt;/b&gt; 
+ isbc -[#red]&gt; SFR: &lt;b&gt;INVITE&lt;/b&gt; 
+ isbc &lt;-[#red]-SFR: 200 OK
+ I &lt;-[#red]- isbc: 200 OK
+ I -[#red]-&gt; SO: 200 OK
+ I &lt;-[#red]- SO: ACK
+ I -[#red]-&gt; isbc: ACK
+ isbc -[#red]-&gt; SFR: ACK
+ end 
+  
+ loop #lightcyan INVITE vers le participant Blackbird en Terminating
+ ASO -[#black]&gt; SO: &lt;b&gt;INVITE&lt;/b&gt;\nTo: tel-uri_B\n Contact:...,&lt;isfocus&gt;
+note over SO #green: Une optimisation NSN \npermet de router directement\n l'INVITE vers les SCSCF_Term\n pour les Clients OF
+ SO -[#black]&gt; I: &lt;b&gt;INVITE&lt;/b&gt;\nTo: tel-uri_B\n Contact:...,&lt;isfocus&gt;
+loop #white INVITE &lt;isfocus&gt; vers un participant SFR
+ I -[#red]&gt; isbc: &lt;b&gt;INVITE&lt;/b&gt; 
+ isbc -[#red]&gt; SFR: &lt;b&gt;INVITE&lt;/b&gt; 
+ isbc &lt;-[#red]-SFR: 200 OK
+ I &lt;-[#red]- isbc: 200 OK
+ I -[#red]-&gt; isbc: ACK
+ isbc -[#red]-&gt; SFR: ACK
+ end 
+
+ I -[#black]&gt; ST: &lt;b&gt;INVITE&lt;/b&gt;\nTo: tel-uri_B\n Contact: ...,&lt;isfocus&gt;
+ ST -[#black]&gt; AST: &lt;b&gt;INVITE&lt;/b&gt;\nTo: tel-uri_B\n Contact:...,&lt;isfocus&gt;
+ AST -[#black]&gt; ST: &lt;b&gt;INVITE&lt;/b&gt;\nTo: tel-uri_B\n Contact:...,&lt;isfocus&gt;
+ ST -[#black]&gt; P: &lt;b&gt;INVITE&lt;/b&gt;\nTo: tel-uri_B\n Contact:...,&lt;isfocus&gt;
+ P -[#black]&gt; B: &lt;b&gt;INVITE&lt;/b&gt;\nTo: tel-uri_B\n Contact:...,&lt;isfocus&gt;
+ activate B
+ P &lt;-- B: 200 OK
+ ST &lt;-- P: 200 OK
+ AST &lt;-- ST: 200 OK 
+ AST --&gt; ST: 200 OK
+ ST --&gt; I: 200 OK
+ I --&gt; SO: 200 OK
+ SO --&gt; ASO: 200 OK 
+ ASO --&gt; SO: ACK
+ SO --&gt; I: ACK
+ I --&gt; ST: ACK 
+ ST --&gt; AST: ACK
+ AST --&gt; ST: ACK
+ ST --&gt; P: ACK
+ P --&gt; B: ACK
+ deactivate B
+ note over B , ASO #skyblue: Un session MSRP de chat va etre etablit entre B et l'AS.
+ note over B #coral: Si B a &lt;accept&eacute;&gt;, il\n telecharge le fichier.\nSa progressbar s'incremente.
+ |||
+ ... Renvoi des notifications dans la session msrp ...
+ B -[#blue]&gt; CBGF : MSRP SEND (imdn/delivery)
+ SW &lt;[#blue]- CBGF: MSRP SEND (imdn/delivery)
+ activate SW
+ CBGF &lt;-[#blue]- SW: 200 OK
+ B &lt;-[#blue]- CBGF:200 OK
+ deactivate SW
+ |||
+ SW -[#blue]&gt; CBGF: MSRP SEND (imdn/delivery)
+ A &lt;[#blue]- CBGF: MSRP SEND (imdn/delivery)
+ activate SW
+ CBGF &lt;-[#blue]- A: 200 OK
+ CBGF -[#blue]-&gt; SW: 200 OK
+ deactivate SW
+
+ end 
+ |||
+ loop #lightblue INVITE vers le participant Albatros en Terminating
+ ASO -[#black]&gt; SO: &lt;b&gt;INVITE&lt;/b&gt;\nTo: tel-uri_C\n Contact:...,&lt;isfocus&gt;
+
+ SO -[#black]&gt; I: &lt;b&gt;INVITE&lt;/b&gt;\nTo: tel-uri_C\n Contact:...,&lt;isfocus&gt;
+ I -[#black]&gt; ST: &lt;b&gt;INVITE&lt;/b&gt;\nTo: tel-uri_C\n Contact: ...,&lt;isfocus&gt;
+ ST -[#black]&gt; AST: &lt;b&gt;INVITE&lt;/b&gt;\nTo: tel-uri_C\n Contact:...,&lt;isfocus&gt;
+ AST -[#black]&gt; ST: &lt;b&gt;INVITE&lt;/b&gt;\nTo: tel-uri_C\n Contact:...,&lt;isfocus&gt;
+ ST -[#black]&gt; P: &lt;b&gt;INVITE&lt;/b&gt;\nTo: tel-uri_C\n Contact:...,&lt;isfocus&gt;
+ P -[#black]&gt; C: &lt;b&gt;INVITE&lt;/b&gt;\nTo: tel-uri_C\n Contact:...,&lt;isfocus&gt;
+ activate C
+ P &lt;-- C: 200 OK
+ ST &lt;-- P: 200 OK
+ AST &lt;-- ST: 200 OK 
+ AST --&gt; ST: 200 OK
+ ST --&gt; I: 200 OK
+ I --&gt; SO: 200 OK
+ SO --&gt; ASO: 200 OK
+ ASO --&gt; SO: ACK
+ SO --&gt; I: ACK
+ I --&gt; ST: ACK 
+ ST --&gt; AST: ACK
+ AST --&gt; ST: ACK
+ ST --&gt; P: ACK
+ P --&gt; B: ACK
+ deactivate C
+ note over C , ASO #skyblue: Un session MSRP de chat va etre etablit entre C et l'AS.
+ note over C #coral: C a re&ccedil;u un lien qu'il\n peut cliquer et aller sur\nInternet
+ end 
+ |||
+ |||
+ note over A, C #skyblue: La session MSRP est etablit entre les participants du GC.\n les prochains messages et notifications y seront envoy&eacute;s\n les blackbirds feront du FToHTTP\n les Hot fixes ne feront jamais de FT dans le GC.
+ end 
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

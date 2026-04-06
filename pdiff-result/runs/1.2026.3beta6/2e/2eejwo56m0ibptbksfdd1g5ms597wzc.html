@@ -1,0 +1,119 @@
+<html><head><title>2eejw - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../2e/2eejt5fpdwlqef47a7694t2k6iaxeg2.html'>Previous</a>
+<a href='../2e/2egbjy7k1tvonn28b26wmwh7agxdckx.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>2eejw</h2>
+<hr>
+<img src='2eejwo56m0ibptbksfdd1g5ms597wzc.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+!pragma svgparser sax
+sprite textBold &lt;svg viewBox=&quot;0 0 200 90&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+  &lt;text x=&quot;10&quot; y=&quot;20&quot; font-family=&quot;Arial&quot; font-size=&quot;16&quot; font-weight=&quot;normal&quot; fill=&quot;#000000&quot;&gt;Normal Text&lt;/text&gt;
+  &lt;text x=&quot;10&quot; y=&quot;45&quot; font-family=&quot;Arial&quot; font-size=&quot;16&quot; font-weight=&quot;bold&quot; fill=&quot;#000000&quot;&gt;Bold (700)&lt;/text&gt;
+  &lt;text x=&quot;10&quot; y=&quot;70&quot; font-family=&quot;Arial&quot; font-size=&quot;16&quot; font-weight=&quot;900&quot; fill=&quot;#000000&quot;&gt;Bold 900&lt;/text&gt;
+&lt;/svg&gt;
+
+Alice -&gt; Bob : &lt;$textBold&gt; font weights
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

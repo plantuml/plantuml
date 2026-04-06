@@ -1,0 +1,238 @@
+<html><head><title>p8ruz - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../p8/p8orukak63oht7wagqym77xecaqotao.html'>Previous</a>
+<a href='../p8/p8u7cnss9xu2xf7i7i8f97x5ex64r7x.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>p8ruz</h2>
+<a href='https://github.com/plantuml/plantuml/issues/2418'>https://github.com/plantuml/plantuml/issues/2418</a>
+<hr>
+<img src='p8ruzr9kai518ouige50new36s79y3c.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+scale 1800 width
+[*] --&gt; Device_0_Function_2
+Device_0_Function_2: 0x10h MemoryBar
+Device_0_Function_2 --&gt; SharedMemory
+state PowerBase {
+state Telemetry_Data_PowerBase {
+Status_A: STATUS_&lt;IP&gt; [31:0]
+Status_B: STATUS_&lt;IP&gt;[31:0]
+}
+}
+state SharedMemory {
+HEADER: 0x00h FW_VERSION_0
+HEADER: 0x04h FW_VERSION_1
+HEADER: 0x08h FW_VERSION_2
+HEADER: 0x0Ch FW_VERSION_3
+HEADER: 0x10h
+HEADER: 0x14h PowerBase
+HEADER: 0x18h PowerBase_HIGH
+HEADER: 0x1Ch 0x200h (Config Pointer)
+HEADER: ...
+HEADER: 0x70h 0xABCDh(System Memory DEVID)
+HEADER: ...
+HEADER: 0x200h Config1
+HEADER: 0x220h Config2
+state Virtual_Config {
+Config1: CAP ID = 0x30
+Config1: CAP VER = 1
+Config1: NEXT CAP OFFSET = 0x220h
+Config1: Vendor_ID = 0x1234
+Config1: Config_VER = 1
+Config2: Config_LEN = 0x10
+Config2: Config_ID = 0x2
+Config2: NumEntries = 0x2
+Config2: EntrySize = 0x4
+Config2: BAR_INDEX = 0
+Config1: OFFSET = 0x4000h
+Config1 --&gt; Config2
+Config2: CAP ID = 0x30
+Config2: CAP VER = 1
+Config2: NEXT CAP OFFSET = 0x000h
+Config2: Vendor_ID = 0x1234
+Config2: Config_VER = 1
+Config2: Config_LEN = 0x10
+Config2: Config_ID = 0x2
+Config2: NumEntries = 0x8
+Config2: EntrySize = 0x4
+Config2: tBIR = 0
+Config2: OFFSET = 0x4100h
+}
+state Data_Space {
+state Data_Discovery_Table_Memory{
+Entry0: ACCESS_TYPE = 0x2
+Entry0: Entry_TYPE = 0x0
+Entry0: SIZE (in Dwords) = 0x20h
+Entry0: UNIQUE_ID = 0x11111111h
+Entry0: BAR_INDEX = 0
+Entry0: BASE_OFFSET = 0x00h
+Entry0: Entry_Definition = RESERVED
+Entry1: ACCESS_TYPE = 0x2
+Entry1: Entry_TYPE = 0x0
+Entry1: SIZE (in Dwords) = 0x60h
+Entry1: UNIQUE_ID = 0x22222222h
+Entry1: BAR_INDEX = 0
+Entry1: BASE_OFFSET = 0x1000h
+Entry1: Entry_Definition = RESERVED
+}
+state Data_Discovery_Table_PowerBase{
+Entry10: ACCESS_TYPE = 0x2
+Entry10: Entry_TYPE = 0x0
+Entry10: SIZE (in Dwords) = 0x30h
+Entry10: UNIQUE_ID = 0xBBBBBBBBh
+Entry10: BAR_INDEX = 1
+Entry10: BASE_OFFSET = 0x4000h
+Entry10: Entry_Definition = RESERVED
+Entry11: ACCESS_TYPE = 0x2
+Entry11: Entry_TYPE = 0x0
+Entry11: SIZE (in Dwords) = 0x10h
+Entry11: UNIQUE_ID = 0xCCCCCCCCh
+Entry11: BAR_INDEX = 1
+Entry11: BASE_OFFSET = 0x5000h
+Entry11: Entry_Definition = RESERVED
+}
+state LPM_Data_Region {
+Power_Mgmt_A: BLK/BRK_TO_BDF MAPPING TABLE
+Power_Mgmt_A: BLK/BRK_POWER_REQ MAPPING TABLE
+}
+state FW_Version_Region {
+FW_VERSION: FW_VERSION_0
+FW_VERSION: FW_VERSION_1
+FW_VERSION: FW_VERSION_2
+FW_VERSION: FW_VERSION_3
+FW_VERSION: RSVD
+FW_VERSION: PowerBase
+FW_VERSION: PowerBase_HIGH
+FW_VERSION: LPM_Data_OFFSET
+FW_VERSION: OEM_SOC_DATA_PACKAGE_VERSION_0
+FW_VERSION: OEM_SOC_DATA_PACKAGE_VERSION_1
+FW_VERSION: OEM_SOC_DATA_PACKAGE_VERSION_2
+FW_VERSION: OEM_CHIPSETINIT_VERSION_0
+FW_VERSION: OEM_CHIPSETINIT_VERSION_1
+FW_VERSION: OEM_CHIPSETINIT_VERSION_2
+FW_VERSION: VENDOR_SOC_DATA_PACKAGE_VERSION_0
+FW_VERSION: VENDOR_SOC_DATA_PACKAGE_VERSION_1
+FW_VERSION: VENDOR_SOC_DATA_PACKAGE_VERSION_2
+FW_VERSION: VENDOR_CHIPSETINIT_VERSION_0
+FW_VERSION: VENDOR_CHIPSETINIT_VERSION_1
+FW_VERSION: VENDOR_CHIPSETINIT_VERSION_2
+FW_VERSION: RSVD
+FW_VERSION: RSVD
+FW_VERSION: RSVD
+FW_VERSION: RSVD
+FW_VERSION: System_SharedMemory_Bar
+FW_VERSION: System_SharedMemory_Bar_HIGH
+FW_VERSION: RSVD
+FW_VERSION: RSVD
+FW_VERSION: RSVD
+FW_VERSION: System_SharedMemory_DeviceID
+}
+}
+}
+Entry0 --&gt; FW_VERSION: BASE_OFFSET
+Entry1 --&gt; Power_Mgmt_A: BASE_OFFSET
+Entry10 --&gt; Status_A: BASE_OFFSET
+Entry11 --&gt; Status_B: BASE_OFFSET
+Config1 --&gt; Data_Discovery_Table_Memory: OFFSET = 0x4000h
+Config2 --&gt; Data_Discovery_Table_PowerBase: OFFSET = 0x4100h
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

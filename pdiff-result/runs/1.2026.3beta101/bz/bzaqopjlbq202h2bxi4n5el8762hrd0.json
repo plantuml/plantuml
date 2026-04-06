@@ -1,0 +1,11 @@
+{
+  "duration": 55,
+  "description": "(Sudoku)",
+  "implementation": "PSystemSudoku",
+  "png": {
+    "width": 283,
+    "height": 351,
+    "crc": 126472570,
+    "sizeInBytes": 4659
+  }
+}

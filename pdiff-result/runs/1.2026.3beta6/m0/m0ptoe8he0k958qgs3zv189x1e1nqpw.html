@@ -1,0 +1,148 @@
+<html><head><title>m0pto - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../m0/m0hkzpo50co5jspuz16206vhjiygd23.html'>Previous</a>
+<a href='../m1/m144toqejyprflp7nrc7cs1wwu23ovy.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>m0pto</h2>
+<a href='http://plantuml.sourceforge.net/qa/?qa=5084/preprocessing-problem-with-overloaded-macors&show=5085#a5085'>http://plantuml.sourceforge.net/qa/?qa=5084/preprocessing-problem-with-overloaded-macors&show=5085#a5085</a>
+<hr>
+<img src='m0ptoe8he0k958qgs3zv189x1e1nqpw.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+skinparam class {
+    BackgroundColor&lt;&lt;alias&gt;&gt;                #PowderBlue
+}
+
+!define ARROR_TYPEDEF_COLOR         #MediumTurquoise
+!define ARROR_ALIAS_COLOR           #0000ff
+
+!define L_GUILLEMET                 U+00AB
+!define R_GUILLEMET                 U+00BB
+
+!define assocStereotype(x)                  &lt;L_GUILLEMET&gt;x&lt;R_GUILLEMET&gt;
+
+!define genArrowTypedef(x,y)                &quot;x&quot; o-up-&gt; &quot;x::y&quot; ARROR_TYPEDEF_COLOR : assocStereotype(typedef)
+!define genArrowAlias(x,y)                  &quot;x&quot; &lt;|-- &quot;y&quot;      ARROR_ALIAS_COLOR   : assocStereotype(alias)
+
+!define genArrowTypedef(x,y,arr)            &quot;x&quot; arr &quot;x::y&quot;    ARROR_TYPEDEF_COLOR : assocStereotype(typedef)
+!define genArrowAlias(x,y,arr)              &quot;x&quot; arr &quot;y&quot;       ARROR_ALIAS_COLOR   : assocStereotype(alias)
+
+!definelong genClassTypedef(cls,org,new)
+    class &quot;org&quot;
+    class &quot;cls::new&quot; &lt;&lt;(A,PaleTurquoise)alias&gt;&gt;
+    genArrowTypedef(&quot;cls&quot;, &quot;new&quot;)
+    genArrowAlias(&quot;org&quot;, &quot;cls::new&quot;)
+!enddefinelong
+
+!definelong genClassTypedef(cls,org,new,arrClsToNew,arrOrgToNew)
+    class &quot;org&quot;
+    class &quot;cls::new&quot; &lt;&lt;(A,PaleTurquoise)alias&gt;&gt;
+    genArrowTypedef(&quot;cls&quot;, &quot;new&quot;, arrClsToNew)
+    genArrowAlias(&quot;org&quot;, &quot;cls::new&quot;, arrOrgToNew)
+!enddefinelong
+
+class Action
+genClassTypedef(Action, &quot;boost::function&lt;ResultE(NodeCore*, const Action*)&gt;&quot;, Functor1)
+genClassTypedef(Action, &quot;boost::function&lt;ResultE(NodeCore*, const Action*)&gt;&quot;, Functor2, o-up-&gt;, &lt;|--)
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

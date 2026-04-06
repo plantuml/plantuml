@@ -1,0 +1,149 @@
+<html><head><title>gj7e9 - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../gj/gj5c40preoe407l7nf2dk19i5hcrsog.html'>Previous</a>
+<a href='../gj/gjd9b0xae79j423lo880d38sas52le5.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>gj7e9</h2>
+<a href='https://forum.plantuml.net/13888/preprocessing-expose-builtin-functions-reverse-function'>https://forum.plantuml.net/13888/preprocessing-expose-builtin-functions-reverse-function</a>
+<hr>
+<img src='gj7e985d4y554pk8yhprdjrmwl8oai3.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+!procedure $line($value)
+|&lt;#$value&gt;&lt;color:%reverse_hsluv_color($value)&gt;$value | &lt;%reverse_hsluv_color($value)&gt;&lt;color:#$value&gt;%reverse_hsluv_color($value) | &lt;%reverse_color($value)&gt;&lt;color:#$value&gt;%reverse_color($value) |
+!end procedure
+
+title
+|=original color |=reverse_hsluv_color |=reverse_color |
+$line(&quot;blue&quot;)
+$line(&quot;red&quot;)
+$line(&quot;green&quot;)
+$line(&quot;00FF00&quot;)
+$line(&quot;yellow&quot;)
+$line(&quot;757500&quot;)
+$line(&quot;000&quot;)
+$line(&quot;111&quot;)
+$line(&quot;222&quot;)
+$line(&quot;333&quot;)
+$line(&quot;444&quot;)
+$line(&quot;555&quot;)
+$line(&quot;666&quot;)
+$line(&quot;777&quot;)
+$line(&quot;888&quot;)
+$line(&quot;999&quot;)
+$line(&quot;AAA&quot;)
+$line(&quot;BBB&quot;)
+$line(&quot;CCC&quot;)
+$line(&quot;DDD&quot;)
+$line(&quot;EEE&quot;)
+$line(&quot;FFF&quot;)
+$line(&quot;c35353&quot;)
+$line(&quot;54695f&quot;)
+$line(&quot;85aef1&quot;)
+$line(&quot;38e4a7&quot;)
+$line(&quot;bcae23&quot;)
+$line(&quot;9a2ff4&quot;)
+$line(&quot;012345&quot;)
+$line(&quot;ab5c12&quot;)
+end title
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

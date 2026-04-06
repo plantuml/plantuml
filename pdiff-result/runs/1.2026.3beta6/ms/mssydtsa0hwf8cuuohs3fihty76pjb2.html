@@ -1,0 +1,737 @@
+<html><head><title>mssyd - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../ms/msrelwh48cdecs2kkt9rd81pzndxmoe.html'>Previous</a>
+<a href='../ms/mssyrmmqtahrtsulb65c3zra4fh028n.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>mssyd</h2>
+<hr>
+<img src='mssydtsa0hwf8cuuohs3fihty76pjb2.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+scale 0.5
+hide footbox
+skinparam shadowing false
+autonumber
+activate 1
+participant &quot;Function Group\nS_ABAP_TRACE_DATA&quot; as 1
+create &quot;Static Methods of Class\nLCL_COM_CTRL&quot; as 2
+1 -&gt; 2: Call method INIT
+activate 2
+2 --&gt; 1
+deactivate 2
+create &quot;PROG\nYY_COM&quot; as 3
+1 -&gt; 3: Perform %_SEL_SCREEN_O
+activate 3
+create &quot;Static Methods of Class\nLCL_COM_PERIOD&quot; as 4
+create &quot;Static Methods of Class\nLCL_TIMEPOINT&quot; as 5
+4 -&gt; 5: Call method SELSCREEN_OUTPUT
+activate 5
+5 --&gt; 3
+deactivate 5
+create &quot;Static Methods of Class\nLCL_COM_CD&quot; as 6
+1 -&gt; 6: Call method MAIN
+activate 6
+create &quot;Static Methods of Class\nLCL_CD_FACTORY&quot; as 7
+create &quot;Instance 14:1 of Class\nLCL_COM_CTRL&quot; as 8
+7 -&gt; 8: Call method CONSTRUCTOR
+activate 8
+create &quot;Instance 15:1 of Class\nLCL_COM&quot; as 9
+8 -&gt; 9: Call method CONSTRUCTOR
+activate 9
+create &quot;Static Methods of Class\nLCL_COM_COMPARE&quot; as 10
+9 -&gt; 10: Call method CLASS_CONSTRUCTOR
+activate 10
+create &quot;Static Methods of Class\nLCL_COM_QUERY&quot; as 11
+create &quot;Static Methods of Class\nLCL_MAIL&quot; as 12
+11 -&gt; 12: Call method FACTORY
+activate 12
+12 --&gt; 10
+deactivate 12
+10 --&gt; 9
+deactivate 10
+create &quot;Static Methods of Class\nLCL_PO&quot; as 13
+9 -&gt; 13: Call method FACTORY
+activate 13
+create &quot;Instance 17:1 of Class\nLCL_COM_PERIOD&quot; as 14
+2 -&gt; 14: Call method PERIOD_FROM_SELECTION
+activate 14
+loop 2 times
+14 -&gt; 2: Call method FACTORY
+activate 2
+end
+2 --&gt; 14
+deactivate 2
+create &quot;Instance 16:1 of Class\nLCL_TIMEPOINT&quot; as 15
+14 -&gt; 15: Call method IS_BEFORE
+activate 15
+15 --&gt; 13
+deactivate 15
+2 -&gt; 14: Call method GET_SELECTION
+activate 14
+14 -&gt; 14: Call method VALID_RELEASE_CODES
+activate 14
+deactivate 14
+14 --&gt; 8
+deactivate 14
+2 -&gt; 2: Call method LCL_CD_FACTORY -&gt; CREATE
+activate 2
+create &quot;Instance 20:1 of Class\nLCL_CD_FACTORY&quot; as 16
+2 -&gt; 16: Call method CONSTRUCTOR
+activate 16
+16 --&gt; 2
+deactivate 16
+2 -&gt; 16: Call method BUILD
+activate 16
+16 -&gt; 14: Call method HAS_CD
+activate 14
+14 --&gt; 16
+deactivate 14
+16 -&gt; 14: Call method GET_CD_CACHE
+activate 14
+14 --&gt; 6
+deactivate 14
+16 -&gt; 16: Call method ADD_DB_READER
+activate 16
+16 -&gt; 14: Call method CLONE_PARAM
+activate 14
+14 -&gt; 14: Call method CLONE
+activate 14
+create &quot;Instance 21:2 of Class\nLCL_COM_PERIOD&quot; as 17
+14 -&gt; 17: Call method COPY_FROM
+activate 17
+17 --&gt; 14
+deactivate 17
+deactivate 14
+14 --&gt; 16
+deactivate 14
+create &quot;Instance 22:1 of Class\nLCL_CD_READER&quot; as 18
+16 -&gt; 18: Call method CONSTRUCTOR
+activate 18
+deactivate 18
+16 -&gt; 18: Call method REGISTER
+activate 18
+deactivate 18
+create &quot;Instance 23:2 of Class\nLCL_CD_READER&quot; as 19
+16 -&gt; 19: Call method CONSTRUCTOR
+activate 19
+deactivate 19
+16 -&gt; 19: Call method REGISTER
+activate 19
+deactivate 19
+9 -&gt; 2: Call method FACTORY
+activate 2
+create &quot;Instance 24:1 of Class\nLCL_COM_COMPARE&quot; as 20
+2 -&gt; 20: Call method INIT_FIELDS
+activate 20
+loop 9 times
+20 -&gt; 20: Call method ADD_FIELD
+activate 20
+end
+deactivate 20
+20 --&gt; 2
+deactivate 20
+create &quot;Instance 25:1 of Class\nLCL_COM_ALV&quot; as 21
+8 -&gt; 21: Call method CONSTRUCTOR
+activate 21
+deactivate 21
+2 -&gt; 8: Call method SELECT
+activate 8
+8 -&gt; 9: Call method SELECT_CHANGES
+activate 9
+9 -&gt; 2: Call method FACTORY
+activate 2
+create &quot;Instance 26:3 of Class\nLCL_COM_PERIOD&quot; as 22
+2 -&gt; 22: Call method PERIOD_FROM_SELECTION
+activate 22
+loop 2 times
+22 -&gt; 2: Call method FACTORY
+activate 2
+end
+2 --&gt; 22
+deactivate 2
+22 -&gt; 15: Call method IS_BEFORE
+activate 15
+15 --&gt; 2
+deactivate 15
+2 -&gt; 22: Call method GET_SELECTION
+activate 22
+22 -&gt; 22: Call method VALID_RELEASE_CODES
+activate 22
+deactivate 22
+22 --&gt; 9
+deactivate 22
+2 -&gt; 2: Call method LCL_CD_FACTORY -&gt; CREATE
+activate 2
+create &quot;Instance 29:2 of Class\nLCL_CD_FACTORY&quot; as 23
+2 -&gt; 23: Call method CONSTRUCTOR
+activate 23
+23 --&gt; 2
+deactivate 23
+2 -&gt; 23: Call method BUILD
+activate 23
+23 -&gt; 22: Call method HAS_CD
+activate 22
+22 --&gt; 23
+deactivate 22
+23 -&gt; 22: Call method GET_CD_CACHE
+activate 22
+22 --&gt; 8
+deactivate 22
+23 -&gt; 23: Call method ADD_DB_READER
+activate 23
+23 -&gt; 22: Call method CLONE_PARAM
+activate 22
+22 -&gt; 22: Call method CLONE
+activate 22
+create &quot;Instance 30:4 of Class\nLCL_COM_PERIOD&quot; as 24
+22 -&gt; 24: Call method COPY_FROM
+activate 24
+24 --&gt; 22
+deactivate 24
+deactivate 22
+22 --&gt; 23
+deactivate 22
+create &quot;Instance 31:3 of Class\nLCL_CD_READER&quot; as 25
+23 -&gt; 25: Call method CONSTRUCTOR
+activate 25
+deactivate 25
+23 -&gt; 25: Call method REGISTER
+activate 25
+deactivate 25
+create &quot;Instance 32:4 of Class\nLCL_CD_READER&quot; as 26
+23 -&gt; 26: Call method CONSTRUCTOR
+activate 26
+deactivate 26
+23 -&gt; 26: Call method REGISTER
+activate 26
+deactivate 26
+9 -&gt; 22: Call method GET_DATA
+activate 22
+22 -&gt; 1:  
+activate 1
+1 --&gt; 22
+deactivate 1
+1 -&gt; 22: &lt;b&gt;Skipping over SAP code until calling GET_DATA&lt;/b&gt;
+activate 22
+note over 1,22
+Standard SAP code has called some custom code
+end note
+22 -&gt; 25: Call method QUERY
+activate 25
+25 --&gt; 22
+deactivate 25
+1 -&gt; 25: &lt;b&gt;Skipping over SAP code until calling QUERY&lt;/b&gt;
+activate 25
+note over 1,25
+Standard SAP code has called some custom code
+end note
+25 -&gt; 25: Call method HISTORY
+activate 25
+deactivate 25
+1 -&gt; 25: &lt;b&gt;Skipping over SAP code until calling HISTORY&lt;/b&gt;
+activate 25
+note over 1,25
+Standard SAP code has called some custom code
+end note
+25 -&gt; 25: Call method LCL_CD_REQS -&gt; QUERY_CD
+activate 25
+deactivate 25
+1 -&gt; 25: &lt;b&gt;Skipping over SAP code until calling HISTORY&lt;/b&gt;
+activate 25
+note over 1,25
+Standard SAP code has called some custom code
+end note
+25 -&gt; 25: Call method LCL_CD_REQS -&gt; FILTER_CHANGES
+activate 25
+deactivate 25
+1 -&gt; 25: &lt;b&gt;Skipping over SAP code until calling FILTER_CHANGES&lt;/b&gt;
+activate 25
+note over 1,25
+Standard SAP code has called some custom code
+end note
+25 -&gt; 25: Call method CONDENSE_HIST
+activate 25
+deactivate 25
+1 -&gt; 25: &lt;b&gt;Skipping over SAP code until calling HISTORY&lt;/b&gt;
+activate 25
+note over 1,25
+Standard SAP code has called some custom code
+end note
+25 -&gt; 25: Call method LCL_CD_REQS -&gt; QUERY_REQUISITIONS
+activate 25
+deactivate 25
+1 -&gt; 25: &lt;b&gt;Skipping over SAP code until calling QUERY_REQUISITIONS&lt;/b&gt;
+activate 25
+note over 1,25
+Standard SAP code has called some custom code
+end note
+25 -&gt; 24: Call method BUILD_EBAN_KEY_LIST
+activate 24
+24 --&gt; 25
+deactivate 24
+1 -&gt; 25: &lt;b&gt;Skipping over SAP code until calling HISTORY&lt;/b&gt;
+activate 25
+note over 1,25
+Standard SAP code has called some custom code
+end note
+25 -&gt; 25: Call method LCL_CD_REQS -&gt; ADD_HISTORY
+activate 25
+deactivate 25
+1 -&gt; 25: &lt;b&gt;Skipping over SAP code until calling ADD_HISTORY&lt;/b&gt;
+activate 25
+note over 1,25
+Standard SAP code has called some custom code
+end note
+25 -&gt; 24: Call method ADD_HISTORY
+activate 24
+24 --&gt; 25
+deactivate 24
+1 -&gt; 25: &lt;b&gt;Skipping over SAP code until calling QUERY&lt;/b&gt;
+activate 25
+note over 1,25
+Standard SAP code has called some custom code
+end note
+25 -&gt; 24: Call method FILTER_REQUISITIONS
+activate 24
+24 --&gt; 25
+deactivate 24
+1 -&gt; 22: &lt;b&gt;Skipping over SAP code until calling GET_DATA&lt;/b&gt;
+activate 22
+note over 1,22
+Standard SAP code has called some custom code
+end note
+22 -&gt; 26: Call method QUERY
+activate 26
+26 --&gt; 22
+deactivate 26
+1 -&gt; 26: &lt;b&gt;Skipping over SAP code until calling QUERY&lt;/b&gt;
+activate 26
+note over 1,26
+Standard SAP code has called some custom code
+end note
+26 -&gt; 26: Call method HISTORY
+activate 26
+deactivate 26
+1 -&gt; 26: &lt;b&gt;Skipping over SAP code until calling HISTORY&lt;/b&gt;
+activate 26
+note over 1,26
+Standard SAP code has called some custom code
+end note
+26 -&gt; 26: Call method LCL_CD_SERVICE -&gt; QUERY_CD
+activate 26
+deactivate 26
+1 -&gt; 26: &lt;b&gt;Skipping over SAP code until calling HISTORY&lt;/b&gt;
+activate 26
+note over 1,26
+Standard SAP code has called some custom code
+end note
+26 -&gt; 26: Call method LCL_CD_SERVICE -&gt; FILTER_CHANGES
+activate 26
+deactivate 26
+1 -&gt; 26: &lt;b&gt;Skipping over SAP code until calling HISTORY&lt;/b&gt;
+activate 26
+note over 1,26
+Standard SAP code has called some custom code
+end note
+26 -&gt; 26: Call method LCL_CD_SERVICE -&gt; QUERY_REQUISITIONS
+activate 26
+deactivate 26
+1 -&gt; 26: &lt;b&gt;Skipping over SAP code until calling HISTORY&lt;/b&gt;
+activate 26
+note over 1,26
+Standard SAP code has called some custom code
+end note
+26 -&gt; 26: Call method LCL_CD_SERVICE -&gt; ADD_HISTORY
+activate 26
+deactivate 26
+1 -&gt; 26: &lt;b&gt;Skipping over SAP code until calling ADD_HISTORY&lt;/b&gt;
+activate 26
+note over 1,26
+Standard SAP code has called some custom code
+end note
+26 -&gt; 24: Call method ADD_HISTORY
+activate 24
+24 --&gt; 26
+deactivate 24
+1 -&gt; 26: &lt;b&gt;Skipping over SAP code until calling QUERY&lt;/b&gt;
+activate 26
+note over 1,26
+Standard SAP code has called some custom code
+end note
+26 -&gt; 24: Call method FILTER_REQUISITIONS
+activate 24
+24 --&gt; 26
+deactivate 24
+22 -&gt; 1:  
+activate 1
+deactivate 1
+1 -&gt; 22: &lt;b&gt;Skipping over SAP code until calling GET_DATA&lt;/b&gt;
+activate 22
+note over 1,22
+Standard SAP code has called some custom code
+end note
+22 -&gt; 24: Call method SAVE
+activate 24
+24 --&gt; 22
+deactivate 24
+1 -&gt; 24: &lt;b&gt;Skipping over SAP code until calling SAVE&lt;/b&gt;
+activate 24
+note over 1,24
+Standard SAP code has called some custom code
+end note
+24 -&gt; 24: Call method SORT
+activate 24
+deactivate 24
+1 -&gt; 24: &lt;b&gt;Skipping over SAP code until calling SAVE&lt;/b&gt;
+activate 24
+note over 1,24
+Standard SAP code has called some custom code
+end note
+24 -&gt; 24: Call method MERGE
+activate 24
+deactivate 24
+1 -&gt; 24: &lt;b&gt;Skipping over SAP code until calling SAVE&lt;/b&gt;
+activate 24
+note over 1,24
+Standard SAP code has called some custom code
+end note
+24 -&gt; 24: Call method UPDATE_CD
+activate 24
+deactivate 24
+1 -&gt; 24: &lt;b&gt;Skipping over SAP code until calling UPDATE_CD&lt;/b&gt;
+activate 24
+note over 1,24
+Standard SAP code has called some custom code
+end note
+24 -&gt; 24: Call method GET_CD_HEAD
+activate 24
+deactivate 24
+1 -&gt; 24: &lt;b&gt;Skipping over SAP code until calling GET_CD_HEAD&lt;/b&gt;
+activate 24
+note over 1,24
+Standard SAP code has called some custom code
+end note
+24 -&gt; 24: Call method GET_PROXY_RUN
+activate 24
+deactivate 24
+1 -&gt; 24: &lt;b&gt;Skipping over SAP code until calling UPDATE_CD&lt;/b&gt;
+activate 24
+note over 1,24
+Standard SAP code has called some custom code
+end note
+24 -&gt; 24: Call method GET_PROXY_RUN
+activate 24
+deactivate 24
+1 -&gt; 24: &lt;b&gt;Skipping over SAP code until calling UPDATE_CD&lt;/b&gt;
+activate 24
+note over 1,24
+Standard SAP code has called some custom code
+end note
+24 -&gt; 24: Call method GET_CD
+activate 24
+deactivate 24
+loop 6 times
+1 -&gt; 24: &lt;b&gt;Skipping over SAP code until calling UPDATE_CD&lt;/b&gt;
+activate 24
+note over 1,24
+Standard SAP code has called some custom code
+end note
+24 -&gt; 3:  SYSTEM-EXIT
+activate 3
+end
+3 --&gt; 24
+deactivate 3
+22 -&gt; 22: Call method LCL_COM_PERIOD -&gt; SORT
+activate 22
+deactivate 22
+loop 8 times
+22 -&gt; 22: Call method IS_CHANGE_RELEVANT
+activate 22
+deactivate 22
+22 -&gt; 2: Call method GET_DATA
+activate 2
+2 -&gt; 2: Call method READ_EBKN
+activate 2
+2 -&gt; 2: Call method GET_ORDER_STATUS
+activate 2
+deactivate 2
+deactivate 2
+2 -&gt; 2: Call method READ_EKKO
+activate 2
+deactivate 2
+2 -&gt; 2: Call method READ_EKPO
+activate 2
+deactivate 2
+2 -&gt; 2: Call method READ_EKET
+activate 2
+deactivate 2
+2 -&gt; 2: Call method READ_EKKN
+activate 2
+deactivate 2
+2 -&gt; 2: Call method READ_SERVICE_PACKAGE
+activate 2
+deactivate 2
+2 -&gt; 2: Call method CONVERT_CURRENCY
+activate 2
+deactivate 2
+2 -&gt; 2: Call method CONVERT_CURRENCY
+activate 2
+end
+deactivate 2
+loop 2 times
+22 -&gt; 22: Call method IS_CHANGE_RELEVANT
+activate 22
+end
+deactivate 22
+22 -&gt; 2: Call method GET_DATA
+activate 2
+2 -&gt; 2: Call method READ_EBKN
+activate 2
+2 -&gt; 2: Call method GET_ORDER_STATUS
+activate 2
+deactivate 2
+deactivate 2
+2 -&gt; 2: Call method READ_EKKO
+activate 2
+deactivate 2
+2 -&gt; 2: Call method READ_EKPO
+activate 2
+deactivate 2
+2 -&gt; 2: Call method READ_EKET
+activate 2
+deactivate 2
+2 -&gt; 2: Call method READ_EKKN
+activate 2
+deactivate 2
+2 -&gt; 2: Call method READ_SERVICE_PACKAGE
+activate 2
+deactivate 2
+loop 2 times
+2 -&gt; 2: Call method CONVERT_CURRENCY
+activate 2
+end
+deactivate 2
+9 -&gt; 9: Call method PREPARE_MAIL
+activate 9
+9 -&gt; 2: Call method FACTORY
+activate 2
+2 --&gt; 9
+deactivate 2
+create &quot;Instance 13:1 of Class\nLCL_MAIL&quot; as 27
+9 -&gt; 27: Call method MESSAGE_DETERMINATION
+activate 27
+27 -&gt; 27: Call method FILTER_CROSS_COMPANY
+activate 27
+27 -&gt; 9: Call method FILTER_CROSS_COMPANY
+activate 9
+9 -&gt; 9: Call method FILTER_ENTRIES
+activate 9
+deactivate 9
+9 --&gt; 27
+deactivate 9
+deactivate 27
+27 -&gt; 27: Call method UPDATE_TABLE
+activate 27
+deactivate 27
+9 -&gt; 9: Call method PREPARE_OUTPUT
+activate 9
+9 -&gt; 2: Call method FACTORY
+activate 2
+create &quot;Instance 12:2 of Class\nLCL_COM_COMPARE&quot; as 28
+2 -&gt; 28: Call method INIT_FIELDS
+activate 28
+loop 9 times
+28 -&gt; 28: Call method ADD_FIELD
+activate 28
+end
+deactivate 28
+28 --&gt; 2
+deactivate 28
+2 --&gt; 9
+deactivate 2
+9 -&gt; 9: Call method FILTER_ENTRIES
+activate 9
+9 -&gt; 9: Call method CHECK_AUTHORITY
+activate 9
+deactivate 9
+loop 9 times
+9 -&gt; 28: Call method GET_STATUS
+activate 28
+deactivate 28
+9 -&gt; 9: Call method GET_FLAGS
+activate 9
+end
+deactivate 9
+2 -&gt; 8: Call method PROCESS
+activate 8
+8 -&gt; 21: Call method PROCESS
+activate 21
+21 -&gt; 21: Call method DISPLAY
+activate 21
+21 -&gt; 21: Call method PREPARE
+activate 21
+21 -&gt; 9: Call method CREATE_ALV
+activate 9
+9 --&gt; 21
+deactivate 9
+loop 38 times
+21 -&gt; 21: Call method SET_TECHNICAL
+activate 21
+end
+deactivate 21
+21 -&gt; 1: Call method ON_USER_COMMAND
+activate 1
+1 -&gt; 21: Call method ADJUST_PURCHASE_ORDERS
+activate 21
+21 -&gt; 22: Call method SELECTION_POPUP
+activate 22
+22 -&gt; 3:  
+activate 3
+3 -&gt; 3:  
+activate 3
+3 -&gt; 3: Perform %_SEL_SCREEN_O
+activate 3
+3 -&gt; 2: Call method SELSCREEN_OUTPUT
+activate 2
+2 --&gt; 3
+deactivate 2
+deactivate 3
+deactivate 3
+3 --&gt; 22
+deactivate 3
+22 --&gt; 21
+deactivate 22
+21 -&gt; 21: Call method PO_UPDATE
+activate 21
+21 -&gt; 9: Call method FILTER_SELECTION
+activate 9
+9 --&gt; 21
+deactivate 9
+21 -&gt; 2: Call method BAPI_UPDATE
+activate 2
+2 --&gt; 1
+deactivate 2
+21 -&gt; 21: Call method DISPLAY_MESSAGES
+activate 21
+21 -&gt; 1:  
+activate 1
+1 --&gt; 21
+deactivate 1
+deactivate 21
+21 -&gt; 1:  
+activate 1
+1 --&gt; 8
+deactivate 1
+1 -&gt; 3:  SYSTEM-EXIT
+activate 3
+deactivate 3
+1 -&gt; 2: Call method INIT
+activate 2
+deactivate 2
+1 -&gt; 3: Perform %_SEL_SCREEN_O
+activate 3
+3 -&gt; 2: Call method SELSCREEN_OUTPUT
+activate 2
+2 --&gt; 3
+deactivate 2
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<html><head><title>gzuok - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../gz/gzt0lsrtldo8eqhl49p6xhakarbr400.html'>Previous</a>
+<a href='../h0/h00g3era2g0m2y8c7fb7rxfeh0myzy2.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>gzuok</h2>
+<a href='https://github.com/dcasati/kubernetes-PlantUML'>https://github.com/dcasati/kubernetes-PlantUML</a>
+<hr>
+<img src='gzuok2g6qovme3g18q22l79rwa4hnj1.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+'create equivalent of icons shown here https://github.com/awslabs/aws-icons-for-plantuml
+
+
+sprite $Batch [64x64/16z] {
+xLQ7bjim30CdzFzVtEV1iErPkJpT7iYm5aWDKERujFZ5Bp8YkSvM011VfMzSDy2Mw1JidbCGAtmllmbPuIkoImjyGUsyBV4LV95_Xny50bpW4uTRAjOKu81b
+Xa0vbX3OKFG5C0IMNLyxXA_3PvW5hqHSOFBP_Ovk4036hYi0pJdTCgqD6A0g4FQ0hOwygxSikGOanw11AuvtomxXjNiRDECmn21xxTkJP0N4tdy1Gmu5T2GW
+6ygFL_sqbx3NvA_FVtt_ri_F1CZNra-10TpNhvVr2KGcyVCOdoBySlpv-jC1ZSVveO36_Fwb0UASqGqG0QpfJgP2Eo60u59-fLVozhhdNk2WTeDpq2O6AAL_
+uV7KGPNO2lya17gz1pMiD1VmFNH9IBLNe3xA3q07eNsMy_WdXESwU4jRmddEk-FUuPFjjthiqAEGVUz8rlqmsK1nhtYlklvp7vWRfka0jUNITUdTzgxFyzLx
+-Ikh_YdmYr_y0G
+}
+
+
+rectangle &quot;&lt;color:red&gt;&lt;$Batch&gt;&lt;/color&gt;\n0&quot;  as rectangle
+
+
+!procedure $ffoo1()
+rectangle &quot;&lt;$Batch&gt;\n1&quot;
+!endprocedure
+
+$ffoo1()
+
+
+!procedure $ffoo2()
+rectangle &quot;&lt;color:red&gt;&lt;$Batch&gt;&lt;/color&gt;\n2&quot; as 2
+!endprocedure
+
+$ffoo2()
+
+
+'https://github.com/awslabs/aws-icons-for-plantuml/blob/master/dist/General/Disk.puml
+'rectangle &quot;==e_label\n&lt;color:e_color&gt;&lt;$e_sprite&gt;&lt;/color&gt;\n//&lt;size:TECHN_FONT_SIZE&gt;[e_techn]&lt;/size&gt;//&quot; &lt;&lt;e_stereo&gt;&gt; as e_alias
+'!define DiskParticipant(p_alias, p_label, p_techn, p_descr) AWSParticipant(p_alias, p_label, p_techn, p_descr, #232F3E, Disk, Disk)
+'https://github.com/awslabs/aws-icons-for-plantuml/blob/master/source/AWSCommon.puml
+'common.puml: rectangle &quot;==e_label\n&lt;color:e_color&gt;&lt;$e_sprite&gt;&lt;/color&gt;\n//&lt;size:TECHN_FONT_SIZE&gt;[e_techn]&lt;/size&gt;//\n\n e_descr&quot; &lt;&lt;e_stereo&gt;&gt; as e_alias
+
+
+
+!procedure $ffoo3()
+rectangle &quot;==label\n&lt;color:red&gt;&lt;$Batch&gt;&lt;/color&gt;\n[technology]\n\n Description 3&quot; as 3
+!endprocedure
+
+$ffoo3()
+
+
+!procedure $ffoo4()
+rectangle &quot;&lt;&lt;something&gt;&gt;\n==label\n&lt;color:red&gt;&lt;$Batch&gt;&lt;/color&gt;\n//&lt;size:12&gt;[technology]&lt;/size&gt;//\n\n  Description 4&quot; as 4
+!endprocedure
+
+$ffoo4()
+
+
+!procedure $ffoo5($alias, $description=&quot;&quot;, $label=&quot;&quot;, $technology=&quot;&quot;, $scale=1, $colour=red)
+'OBSERVATION 1: the next line does not work - sprite is white - not red
+rectangle &quot;&lt;&lt;$alias&gt;&gt;\n==$label\n&lt;color:$colour&gt;&lt;$Batch*$scale&gt;&lt;/color&gt;\n//&lt;size:12&gt;[$technology]&lt;/size&gt;//\n\n  $description 5&quot; as 5
+'the next line works i.e. sprite is red
+'rectangle &quot;&lt;&lt;//$alias//&gt;&gt;\n==$label\n&lt;color:red&gt;&lt;$Batch*$scale&gt;&lt;/color&gt;\n//&lt;size:12&gt;[$technology]&lt;/size&gt;//\n\n  $description 5&quot; as $alias
+!endprocedure
+
+$ffoo5(&quot;myalias&quot;, &quot;mydescription&quot;, &quot;mylabel&quot;, &quot;mytechnology&quot;, 2, &quot;blue&quot;)
+
+!procedure $ffoo6($alias=&quot;default&quot;, $description=&quot;&quot;, $label=&quot;&quot;, $technology=&quot;&quot;, $scale=1, $colour=red)
+rectangle &quot;&lt;&lt;//$alias//&gt;&gt;\n==$label\n&lt;color:red&gt;&lt;$Batch*$scale&gt;&lt;/color&gt;\n//&lt;size:12&gt;[$technology]&lt;/size&gt;//\n\n  $description 6 &quot; as $alias
+!endprocedure
+
+$ffoo6(&quot;myaliasbatch2&quot;, &quot;mydescription&quot;, &quot;mylabel&quot;, &quot;mytechnology&quot;, 2, blue)
+
+
+
+'OBSERVATION 2: can't do something like this - but could use global vars to do this - but that's not at preprocessor time.
+$ffoo6($scale=2)
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<html><head><title>i4z2j - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../i4/i4ydk8z7nvslp8hjqqt2t7piqf8qbrg.html'>Previous</a>
+<a href='../i5/i564yd58yckvx6moneu59ul7j11624j.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>i4z2j</h2>
+<hr>
+<img src='i4z2jj6edjemg48p1d133ih6xkxxoix.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+'skinparam svek true
+title Tissue Tracking Lifecycle State Diagram
+
+[*] --&gt; npathdata
+
+state &quot;NPATH Data Entered&quot; as npathdata {
+}
+
+state &quot;Initial Fixation&quot; as Initial {
+   state &quot;Initial Fixative&quot; as InitialFixative{
+   }
+   InitialFixative: Left/Right Hemi, Spinal Cord,\nBrainstem/Cerebellum
+
+   state &quot;10/2 Cryo&quot; as TenTwo{
+   }
+   state &quot;20/2 Cryo&quot; as TwentyTwo{
+   }
+   state &quot;Initial Fixative&quot; as InitialFixativeNerves{
+   }
+   InitialFixativeNerves: Nerves(left&amp;right)
+  
+   state &quot;Cacodylate Buffer&quot; as Cacodylate{
+   }
+   
+   InitialFixative  --&gt; TenTwo : Ev:10/2
+   TenTwo --&gt; TwentyTwo : Ev:20/2
+   TwentyTwo -down-&gt; Complete : Ev:BagClose
+   TenTwo -up-&gt; TenTwo : Ev:AdditionalFixation  
+
+
+   InitialFixativeNerves  --&gt; Cacodylate: Ev:CacodylateBuffer
+   Cacodylate -down-&gt; Complete
+    
+}
+Initial: TissueTrackingLifeCycle INCOMPLETE
+
+
+state &quot;Tissue Distribution or Block Review&quot; as TissueDistribution {
+  
+  state &quot;Mold 10/2 Cryo&quot; as TenTwoMold{
+   }
+  state &quot;Mold Fixative&quot; as MoldFixative{
+   }
+   state &quot;10/2 Cryo&quot; as TenTwoNonInitial{
+   }
+  state &quot;20/2 Cryo&quot; as TwentyTwoNonInitial{
+   }  
+   
+   Complete --&gt; TenTwoMold : Ev:BagOpen\n(Mold) 
+   TenTwoMold --&gt; MoldFixative : Ev:Mold Fixative
+    MoldFixative --&gt; TenTwoNonInitial : Ev:10/2
+    TenTwoNonInitial --&gt;   TwentyTwoNonInitial : Ev:20/2
+   
+}  
+TissueDistribution : TissueTrackingLifeCycle INCOMPLETE
+
+state Complete{
+}
+Complete: TissueTrackingLifeCycle COMPLETE
+
+state &quot;Combined with Hemi&quot; as CombinedHemi{
+   state &quot;Combine Hemi&quot; as FindHemi{
+   }
+   FindHemi: Find open tracking for Left \nor Right hemi and indicate\n it's combined with Brainstem/Cerebellum
+   state &quot;Complete&quot; as CompleteBCcycle{
+   }
+   CompleteBCcycle: Complete tracking for Brainstem/Cerebellum
+
+   FindHemi --&gt; CompleteBCcycle
+}
+CombinedHemi: ONLY for Brainstem/Cerebellum
+CombinedHemi: Available at any point in the cycle
+
+npathdata -right-&gt; Initial : Add new TissueTracking
+Complete --&gt; TissueDistribution : Ev:BagOpen\n(No Mold)
+TissueDistribution --&gt; Complete: Ev:BagClose
+CombinedHemi --&gt; Complete
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

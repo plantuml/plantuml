@@ -1,0 +1,144 @@
+<html><head><title>hpwse - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../hp/hpwid1dhcu1qkxzf3lxbewolqu5t3h4.html'>Previous</a>
+<a href='../hp/hpy77pe1hso5far74f2a4dvxzyf6kux.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>hpwse</h2>
+<hr>
+<img src='hpwse1q562d2bs4p37v8jrn6ofq3lqd.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+  actor Customer
+  actor/ Hacker
+  cloud {
+      node Cloudflare
+  }
+  note top of Cloudflare
+    Analyze every request and send to Server if secure
+  end note
+  
+  node Linode {
+      component &quot;Nanode (139.123.123.123)&quot; &lt;&lt;Ubuntu Virtual Machine&gt;&gt; {
+          component nginx &lt;&lt;Web Server&gt;&gt;
+          component &quot;AppServer&quot; &lt;&lt;Application Server&gt;&gt;
+          folder &quot;/root&quot; &lt;&lt;folder&gt;&gt; as root_folder {
+              file ssl_certificate.pem
+              file ssl_certificate.key
+          }
+          note &quot;Cloudflare Origin Certificates&quot; as N1
+          N1 .. root_folder
+      }
+      component &quot;Linode Firewall&quot;
+      note bottom: Allow **ONLY** Cloudflare IPs and port 443
+  }
+  
+  Customer &lt;--&gt; Cloudflare: &quot;https://example.com&quot;
+  note on link: Free SSL Certificate Managed Automatically
+  Cloudflare &lt;--&gt; &quot;Linode Firewall&quot;: &quot;https://example.com (139.123.123.123)&quot;
+  note on link: Encrypted connection via Origin Certificates
+  &quot;Linode Firewall&quot; --&gt; nginx
+  nginx --&gt; &quot;AppServer&quot;
+  nginx --&gt; root_folder
+  Hacker --+ &quot;Linode Firewall&quot;: &quot;https://139.123.123.123&quot;
+  note on link #gray: Bypass not allowed, all requests must go through Cloudflare security
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

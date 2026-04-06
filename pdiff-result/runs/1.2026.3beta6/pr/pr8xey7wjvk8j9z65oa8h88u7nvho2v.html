@@ -1,0 +1,113 @@
+<html><head><title>pr8xe - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../pr/pr59pm424bad2fldnnmgufvrfnuc48d.html'>Previous</a>
+<a href='../pr/prel241flhypsp69hou2i1eabdfgrat.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>pr8xe</h2>
+<a href='https://forum.plantuml.net/12612/image-with-data-uri-containing-svg-does-not-render'>https://forum.plantuml.net/12612/image-with-data-uri-containing-svg-does-not-render</a>
+<hr>
+<img src='pr8xey7wjvk8j9z65oa8h88u7nvho2v.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+rectangle &quot;&lt;img:data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9InNoYXBlcyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHdpZHRoPSIzMDkuMjg2cHgiIGhlaWdodD0iMjk1cHgiIHZpZXdCb3g9IjAgMCAzMDkuMjg2IDI5NSIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMzA5LjI4NiAyOTUiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KDQo8ZGVmcz4NCiAgPHN0eWxlIHR5cGU9InRleHQvY3NzIj4NCiAgDQogICBAbWVkaWEgc2NyZWVuIGFuZCAobWluLXdpZHRoOjUwMHB4KSB7DQoJCSNzdGFyIHsNCgkJCXN0cm9rZS13aWR0aDogMTBweDsNCgkJCXN0cm9rZTogI2U1ZmYxZjsNCgkJCWZpbGw6ICMwMDA7DQoJCQlmaWxsLW9wYWNpdHk6IC45Ow0KCQkJdHJhbnNpdGlvbjogYWxsIDUwMG1zIGVhc2Utb3V0Ow0KCQl9DQoJfQ0KDQoJQG1lZGlhIHNjcmVlbiBhbmQgKG1heC13aWR0aDogNDUwcHgpew0KCQkjc3RhciB7DQoJCQlzdHJva2Utd2lkdGg6IDMwcHg7DQoJCQlzdHJva2U6ICM2OWY7DQoJCQlmaWxsOiAjZTVmZjFmOw0KCQkJZmlsbC1vcGFjaXR5OiAxOw0KCQkJdHJhbnNpdGlvbjogYWxsIDUwMG1zIGVhc2Utb3V0Ow0KCQl9CQkNCgl9DQoJDQoJQG1lZGlhIHNjcmVlbiBhbmQgKG1heC13aWR0aDogNDAwcHgpew0KCQkjc3RhciB7DQoJCQlzdHJva2Utd2lkdGg6IDM5cHg7DQoJCQlzdHJva2U6ICNlNWZmMWY7DQoJCQlmaWxsOiAjZjNmOw0KCQkJdHJhbnNpdGlvbjogYWxsIDUwMG1zIGVhc2Utb3V0Ow0KCQl9CQkNCgl9DQoJDQoJQG1lZGlhIHNjcmVlbiBhbmQgKG1heC13aWR0aDogMzUwcHgpew0KCQkjc3RhciB7DQoJCQlzdHJva2Utd2lkdGg6IDMzcHg7DQoJCQlzdHJva2U6ICNlNWZmMWY7DQoJCQl0cmFuc2l0aW9uOiBhbGwgNTAwbXMgZWFzZS1vdXQ7DQoJCX0JCQ0KCX0NCgkNCgkNCglAbWVkaWEgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiAzMDBweCkgew0KCQkjc3RhciB7DQoJCQlzdHJva2Utd2lkdGg6IDI1cHg7DQoJCQlzdHJva2U6ICNlNWZmMWY7DQoJCQlmaWxsOiAjMDAwOw0KCQkJdHJhbnNpdGlvbjogYWxsIDUwMG1zIGVhc2Utb3V0Ow0KCQl9CQkNCgl9DQoJDQoJDQoJQG1lZGlhIHNjcmVlbiBhbmQgKG1heC13aWR0aDogMjUwcHgpew0KCQkjc3RhciB7DQoJCQlzdHJva2Utd2lkdGg6IDE4cHg7DQoJCQlzdHJva2U6ICNlNWZmMWY7DQoJCQlmaWxsOiAjZmYwOw0KCQkJZmlsbC1vcGFjaXR5OiAuODU7DQoJCQl0cmFuc2l0aW9uOiBhbGwgNTAwbXMgZWFzZS1vdXQ7DQoJCX0JCQ0KCX0NCgkNCgkNCglAbWVkaWEgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiAyMDBweCl7DQoJCSNzdGFyIHsNCgkJCXN0cm9rZS13aWR0aDogMTBweDsNCgkJCXN0cm9rZTogI2U1ZmYxZjsNCgkJCWZpbGw6ICMwMGM7DQoJCQlmaWxsLW9wYWNpdHk6IC44NTsNCgkJCXRyYW5zaXRpb246IGFsbCA1MDBtcyBlYXNlLW91dDsNCgkJfQkJDQoJfQ0KCQ0KCUBtZWRpYSBzY3JlZW4gYW5kIChtYXgtd2lkdGg6IDE1MHB4KXsNCgkJI3N0YXIgew0KCQkJc3Ryb2tlLXdpZHRoOiA1cHg7DQoJCQlzdHJva2U6ICNlNWZmMWY7DQoJCQlmaWxsOiAjOTBmOw0KCQkJZmlsbC1vcGFjaXR5OiAuODU7DQoJCQl0cmFuc2l0aW9uOiBhbGwgNTAwbXMgZWFzZS1vdXQ7DQoJCX0JCQ0KCX0NCg0KCUBtZWRpYSBzY3JlZW4gYW5kIChtYXgtd2lkdGg6IDEwMHB4KXsNCgkJI3N0YXIgew0KCQkJc3Ryb2tlLXdpZHRoOiAwcHg7DQoJCQlzdHJva2U6ICNlNWZmMWY7DQoJCQlmaWxsOiAjMDAwOw0KCQkJZmlsbC1vcGFjaXR5OiAuMjsNCgkJCXRyYW5zaXRpb246IGFsbCA1MDBtcyBlYXNlLW91dDsNCgkJfQ0KCX0NCgkNCgkNCiAgPC9zdHlsZT4NCjwvZGVmcz4NCg0KPHBvbHlnb24gaWQ9InN0YXIiIHBvaW50cz0iMjQzLjEwOSwyODUuMDA3IDE1Mi4zNCwyMzcuMjQyIDYxLjUzNCwyODQuOTM4IDc4LjkxMiwxODMuODUgNS40OTEsMTEyLjIyNyAxMDcsOTcuNTE3IA0KCTE1Mi40MjksNS41NTYgMTk3Ljc4OCw5Ny41NTIgMjk5LjI4NiwxMTIuMzQgMjI1LjgxLDE4My45MDcgIi8+DQo8L3N2Zz4NCg==&gt;&quot;
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

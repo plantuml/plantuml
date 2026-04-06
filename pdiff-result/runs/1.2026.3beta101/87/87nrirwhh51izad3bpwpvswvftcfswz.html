@@ -1,0 +1,154 @@
+<html><head><title>87nri - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../87/87keyvxa2rj6o22lt3y1fmx5iefh7wn.html'>Previous</a>
+<a href='../88/881go63om6gmx5w8vm13r1o6jaz436e.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>87nri</h2>
+<hr>
+<img src='87nrirwhh51izad3bpwpvswvftcfswz.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+
+skinparam class {
+	BackgroundColor AliceBlue 
+	ArrowColor SeaGreen
+	BorderColor SpringGreen
+	BackgroundColor&lt;&lt;Foo&gt;&gt; Wheat
+	BorderColor&lt;&lt;Foo&gt;&gt; Tomato
+}
+
+sprite $bug16 [15x15/16z] PKzR2i0m2BFMi15p__FEjQEqB1z27aeqCqixa8S4OT7C53cKpsHpaYPDJY_12MHM-BLRyywPhrrlw3qumqNThmXgd1TOterAZmOW8sgiJafogofWRwtV3nCF
+sprite $bug8 [15x15/8z] POzH3i0W348B6zp_oCFg5iqQVtX5nAegrJ4w4CrFIhBKP2rL22nx6H00aM4v7FU6daiBHO0hBHAuudK3Cvetu-u6oM07lPtojBQg9lVM_lrXpWC0
+sprite $bug4 [15x15/4z] POz94W0X20Ep_F_FHf0fhK4Fq1A8020yeGVH_4f9begSHnM4FT8Ias6vR9swFzeeC1Ix1DDR2RmvbNE6P5CD6azPhSkgoTkrVt_eM000
+sprite $printer8 [15x15/8z] NOtH3W0W208HxFz_kMAhj7lHWpa1XC716sz0Pq4MVPEWfBHIuxP3L6kbTcizR8tAhzaqFvXwvFfPEqm0
+sprite $printer4 [15x15/4z] ROvR4W0m10CJzpzqbP5YkZ_iP3o0BzmTEGCf7GlrgjHu1rgQgjdGuct7FAPjGsqHnmf_WJt30G00
+
+sprite $point {
+  FF
+  FF
+}
+
+title I am &lt;$bug16&gt; and &lt;$printer8&gt; and &lt;$printer4&gt;
+
+class Toto {
+&lt;$bug16&gt;
+--
+&lt;$bug16&gt; and you
+--
+I am &lt;$bug8&gt;
+--
+I am &lt;$bug4&gt;
+--
+A point &lt;$point&gt; and all
+--
+&lt;$point&gt;
+--
+&lt;color:magenta&gt;&lt;$bug16&gt;&lt;/color&gt;
+}
+
+note left : &lt;$printer4&gt;
+
+class &quot;&lt;$bug16&gt;&quot; as foo1
+class zz &lt;&lt;($bug16,red)&gt;&gt;
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

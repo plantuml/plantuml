@@ -1,0 +1,11 @@
+{
+  "duration": 6,
+  "description": "(EBNF)",
+  "implementation": "PSystemEbnf",
+  "png": {
+    "width": 432,
+    "height": 199,
+    "crc": 3370099688,
+    "sizeInBytes": 4134
+  }
+}

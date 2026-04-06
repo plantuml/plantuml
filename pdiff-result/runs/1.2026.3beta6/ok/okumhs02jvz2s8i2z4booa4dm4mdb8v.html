@@ -1,0 +1,139 @@
+<html><head><title>okumh - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../oj/ojtes2fy4r7r6zgwtxdq5tzpuyaw8wn.html'>Previous</a>
+<a href='../ol/olhid2r75bual22fuf8wo7on3lclt6a.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>okumh</h2>
+<hr>
+<img src='okumhs02jvz2s8i2z4booa4dm4mdb8v.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+!pragma svgparser sax 
+sprite complexsprite &lt;svg width=&quot;256px&quot; height=&quot;242px&quot; viewBox=&quot;0 0 256 242&quot; version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; preserveAspectRatio=&quot;xMidYMid&quot;&gt;
+    &lt;defs&gt;
+        &lt;linearGradient x1=&quot;58.9717389%&quot; y1=&quot;7.4114724%&quot; x2=&quot;37.1905196%&quot; y2=&quot;103.76182%&quot; id=&quot;Azure-linearGradient-1&quot;&gt;
+            &lt;stop stop-color=&quot;#114A8B&quot; offset=&quot;0%&quot;&gt;&lt;/stop&gt;
+            &lt;stop stop-color=&quot;#0669BC&quot; offset=&quot;100%&quot;&gt;&lt;/stop&gt;
+        &lt;/linearGradient&gt;
+        &lt;linearGradient x1=&quot;59.7188447%&quot; y1=&quot;52.3127289%&quot; x2=&quot;52.6914332%&quot; y2=&quot;54.8636556%&quot; id=&quot;Azure-linearGradient-2&quot;&gt;
+            &lt;stop stop-color=&quot;#000000&quot; stop-opacity=&quot;0.3&quot; offset=&quot;0%&quot;&gt;&lt;/stop&gt;
+            &lt;stop stop-color=&quot;#000000&quot; stop-opacity=&quot;0.2&quot; offset=&quot;7.1%&quot;&gt;&lt;/stop&gt;
+            &lt;stop stop-color=&quot;#000000&quot; stop-opacity=&quot;0.1&quot; offset=&quot;32.1%&quot;&gt;&lt;/stop&gt;
+            &lt;stop stop-color=&quot;#000000&quot; stop-opacity=&quot;0.05&quot; offset=&quot;62.3%&quot;&gt;&lt;/stop&gt;
+            &lt;stop stop-color=&quot;#000000&quot; stop-opacity=&quot;0&quot; offset=&quot;100%&quot;&gt;&lt;/stop&gt;
+        &lt;/linearGradient&gt;
+        &lt;linearGradient x1=&quot;37.2789399%&quot; y1=&quot;4.60005789%&quot; x2=&quot;62.4733904%&quot; y2=&quot;99.9794963%&quot; id=&quot;Azure-linearGradient-3&quot;&gt;
+            &lt;stop stop-color=&quot;#3CCBF4&quot; offset=&quot;0%&quot;&gt;&lt;/stop&gt;
+            &lt;stop stop-color=&quot;#2892DF&quot; offset=&quot;100%&quot;&gt;&lt;/stop&gt;
+        &lt;/linearGradient&gt;
+    &lt;/defs&gt;
+    &lt;g&gt;
+				&lt;path d=&quot;M85.3432536,0.00290931225 L161.095926,0.00290931225 L82.4572158,233.000999 C80.7999506,237.910266 76.1963409,241.216897 71.0148908,241.216897 L12.0605874,241.216897 C8.17631708,241.216897 4.52963465,239.346777 2.26398956,236.191716 C-0.00165554136,233.036655 -0.608845705,228.983428 0.632808896,225.302959 L73.8980192,8.2188071 C75.5546242,3.30737742 80.1599649,0 85.3432536,0 L85.3432536,0.00290931225 Z&quot; fill=&quot;url(#Azure-linearGradient-1)&quot;&gt;&lt;/path&gt;
+				&lt;path d=&quot;M195.422901,156.282432 L75.2973984,156.282432 C73.0119231,156.279908 70.9577304,157.676287 70.1192383,159.802395 C69.2807461,161.928503 69.8287946,164.351151 71.5007459,165.909349 L148.690618,237.955558 C150.937998,240.051977 153.897138,241.216897 156.970521,241.216897 L224.990241,241.216897 L195.422901,156.282432 Z&quot; fill=&quot;#0078D4&quot;&gt;&lt;/path&gt;
+				&lt;path d=&quot;M85.3432536,0.00282026831 C80.0982223,-0.017218565 75.4499031,3.37677358 73.8718354,8.37881927 L0.722997576,225.105126 C-0.602635687,228.800183 -0.0443562611,232.909431 2.21904685,236.116884 C4.48244996,239.324337 8.16695154,241.227505 12.0925898,241.216941 L72.5684635,241.216941 C77.154039,240.397586 80.9441027,237.174364 82.4892183,232.779891 L97.0765099,189.788984 L149.182292,238.389046 C151.365814,240.195147 154.104928,241.193803 156.938519,241.216941 L224.705129,241.216941 L194.983595,156.282435 L108.341367,156.3028 L161.369401,0.00282026831 L85.3432536,0.00282026831 Z&quot; fill=&quot;url(#Azure-linearGradient-2)&quot;&gt;&lt;/path&gt;
+				&lt;path d=&quot;M182.098251,8.20716985 C180.443985,3.30365177 175.845517,0.00290931225 170.670472,0.00290931225 L86.2451404,0.00290931225 C91.4198966,0.00290931225 96.0178956,3.30421162 97.6729189,8.20716985 L170.941039,225.30005 C172.18363,228.981191 171.576996,233.035501 169.311351,236.191716 C167.045705,239.34793 163.398467,241.219806 159.51326,241.219806 L243.941501,241.219806 C247.826196,241.219806 251.472566,239.346605 253.737531,236.190534 C256.002496,233.034464 256.608798,228.980705 255.366371,225.30005 L182.098251,8.20716985 Z&quot; fill=&quot;url(#Azure-linearGradient-3)&quot;&gt;&lt;/path&gt;
+		&lt;/g&gt;
+&lt;/svg&gt;
+
+Alice -&gt; Bob : hello &lt;$complexsprite&gt; there
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

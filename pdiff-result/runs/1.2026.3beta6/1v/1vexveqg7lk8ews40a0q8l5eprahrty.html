@@ -1,0 +1,142 @@
+<html><head><title>1vexv - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../1v/1v57qqcgdixsqb0dmufv2dxt58f9s4p.html'>Previous</a>
+<a href='../1v/1vgclfdcbfkef2lpl6fl53pcia7o2on.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>1vexv</h2>
+<a href='https://github.com/plantuml/plantuml/pull/438'>https://github.com/plantuml/plantuml/pull/438</a>
+<hr>
+<img src='1vexveqg7lk8ews40a0q8l5eprahrty.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startgantt
+!$PRIMARY_LIGHT = &quot;#33b2e2&quot;
+!$PRIMARY = &quot;#009fdb&quot;
+!$DARK = &quot;#5a5a5a&quot;
+!$SECONDARY_DARK = &quot;#c2c2c2&quot;
+
+&lt;style&gt;
+ganttDiagram {
+	task {
+		FontName &quot;Cascadia Code PL&quot;
+		FontSize 11
+		FontStyle bold
+		FontColor $DARK
+		BackGroundColor $PRIMARY_LIGHT-$PRIMARY
+		LineColor $SECONDARY_DARK
+	}
+
+	arrow {
+		LineColor #000000
+	}
+}
+&lt;/style&gt;
+printscale weekly
+
+Project starts the 1st of january 2021
+2021-01-04 to 2021-01-10 are colored in #d2d2d2
+
+[Automatic branch tag on release] as [s1] starts 2021-01-15 and lasts 1 week
+then [Setup Automatic Alerts] as [s2] lasts 1 week
+
+[End] happens 150 days after start
+@endgantt
+</code></pre>
+</div>
+</body>
+</html>

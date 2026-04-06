@@ -1,0 +1,139 @@
+<html><head><title>j6i2s - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../j6/j6ad8oqryjb902s9s7mn9jm7g984zt0.html'>Previous</a>
+<a href='../j6/j6p0avvi4635g7xtpl608dtntuxgppi.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>j6i2s</h2>
+<a href='https://forum.plantuml.net/12302/extra-direction-nesting-structural-relationships-archimate'>https://forum.plantuml.net/12302/extra-direction-nesting-structural-relationships-archimate</a>
+<hr>
+<img src='j6i2scxqh14js2qdna1a9c6y74q882l.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+skinparam &lt;&lt;verb&gt;&gt; {
+roundCorner 25
+}
+
+sprite $bFunction jar:archimate/business-function
+sprite $aComponent jar:archimate/application-component
+
+rectangle &quot;Finance&quot; as F &lt;&lt;$aComponent&gt;&gt; #Application 
+rectangle &quot;Transaction Processing&quot; as TP &lt;&lt;$bFunction&gt;&gt;&lt;&lt;verb&gt;&gt; #Application
+
+F 0-left-&gt; TP
+
+rectangle &quot;Finance&quot; as F1 &lt;&lt;$aComponent&gt;&gt; #Application {
+rectangle &quot;Transaction Processing&quot; as TP1 &lt;&lt;$bFunction&gt;&gt;&lt;&lt;verb&gt;&gt; #Application
+}
+note left of F1
+&lt;-- this can be understood as
+the same as this --&gt;
+targets of structural 
+relationships can appear
+ nested in the source element
+[[https://pubs.opengroup.org/architecture/archimate3-doc/chap05.html#_Toc10045311 ArchiMate 3.1 on Nesting]]
+end note
+' might we be able to state something like... F 0-nest-&gt; TP to mean the same as F 0-left-&gt; TP but have it place TP inside F?
+' then, if I want to choose to switch from &quot;F *-left-&gt; TP&quot; to &quot;F 0-nest-&gt; TP&quot; is would be much easier.
+' similarly there would be a &quot;xx *-nest- xx&quot;, &quot;xx o-nest- xx&quot;, &quot;xx ..left..|&gt; xx&quot;, for the other structural relationships..
+' that would all nest the target in the source element.
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

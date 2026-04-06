@@ -1,0 +1,149 @@
+<html><head><title>rdmpv - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../rd/rdemo1ev2999v0sw6y8nnwepkm43j2p.html'>Previous</a>
+<a href='../rd/rdo7yg3g737z52ot0tnzntfyteesamy.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>rdmpv</h2>
+<hr>
+<img src='rdmpvtehnzii4mgxvb7f7594w642ezu.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+skinparam classAttributeIconSize 0
+class classe1
+classe1 : -field1
+classe1 : ~field2
+classe1 : field3
+classe1 : #field4
+classe1 : +field5
+
+classe1 : -method1()
+classe1 : ~method2()
+classe1 : method3()
+classe1 : #method4()
+classe1 : +method5()
+
+class classe2
+classe2 : -field1 that is very long long
+classe2 : ~field2
+classe2 : field3
+classe2 : #field4
+classe2 : +field5
+
+classe2 : -method1()
+classe2 : ~method2()
+classe2 : method3()
+classe2 : #method4()
+classe2 : +method5()
+
+class classe3whichisverylong
+classe3whichisverylong : -field1
+classe3whichisverylong : ~field2
+classe3whichisverylong : field3
+classe3whichisverylong : #field4
+classe3whichisverylong : +field5
+classe3whichisverylong : -method1()
+classe3whichisverylong : ~method2()
+classe3whichisverylong : method3()
+classe3whichisverylong : #method4()
+classe3whichisverylong : +method5()
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "duration": 6,
+  "description": "Work Breakdown Structure",
+  "implementation": "WBSDiagram",
+  "png": {
+    "width": 175,
+    "height": 265,
+    "crc": 1228101231,
+    "sizeInBytes": 2374
+  }
+}

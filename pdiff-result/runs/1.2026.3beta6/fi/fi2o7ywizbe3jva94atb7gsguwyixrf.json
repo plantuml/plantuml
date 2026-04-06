@@ -1,0 +1,11 @@
+{
+  "duration": 64,
+  "description": "(Colors)",
+  "implementation": "PSystemColors",
+  "png": {
+    "width": 1400,
+    "height": 588,
+    "crc": 323930330,
+    "sizeInBytes": 151816
+  }
+}

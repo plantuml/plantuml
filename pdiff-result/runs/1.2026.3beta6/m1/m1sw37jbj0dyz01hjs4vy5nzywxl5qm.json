@@ -1,0 +1,11 @@
+{
+  "duration": 3,
+  "description": "(Latex)",
+  "implementation": "PSystemLatex",
+  "png": {
+    "width": 109,
+    "height": 71,
+    "crc": 1304082180,
+    "sizeInBytes": 2192
+  }
+}

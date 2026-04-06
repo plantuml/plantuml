@@ -1,0 +1,11 @@
+{
+  "duration": 101,
+  "description": "(Sprites)",
+  "implementation": "PSystemListArchimateSprites",
+  "png": {
+    "width": 840,
+    "height": 645,
+    "crc": 599189420,
+    "sizeInBytes": 57429
+  }
+}

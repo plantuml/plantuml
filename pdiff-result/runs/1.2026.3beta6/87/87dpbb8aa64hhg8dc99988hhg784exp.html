@@ -1,0 +1,152 @@
+<html><head><title>87dpb - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../87/87df5rlh4fjiilyvw5va5pcoine64co.html'>Previous</a>
+<a href='../87/87en67k7qjzq17jdx80tphqi60yprrp.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>87dpb</h2>
+<hr>
+<img src='87dpbb8aa64hhg8dc99988hhg784exp.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+database &quot;DB 1 &lt;&amp;file&gt;&quot; as Db1
+database &quot;DB 2&quot; &lt;&lt;&amp;file&gt;&gt; as Db2
+database &quot;DB 3&quot; &lt;&lt; &lt;&amp;file&gt; &gt;&gt; as Db3
+database &quot;DB 4 &lt;&amp;file&gt;&quot; as Db4_valid
+database &quot;&lt;&amp;file&gt;\nDB 4&quot; as Db4
+database &quot;DB 5&quot; &lt;&lt;$SpriteUsb&gt;&gt; as Db5
+
+sprite $SpriteUsb [32x32/16] {
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000010000000000000
+000000000000000007DB200000000000
+00000000000006989DDD700000000000
+000000000001B9555CDD600000000000
+00021000000A80000396000000000000
+03CDD700009900000000000000000000
+0CDDDD403BA100000000000000088200
+1DDDDDDCDDDCCCCCCCCCCCCCCCCDDD80
+0CDDDD6222224BC4222222222229B500
+05DDDA000000008A0000000000010000
+00264000000000098000045540000000
+0000000000000001B7000CDDD0000000
+00000000000000002BCBBDDDD0000000
+000000000000000000222CDDD0000000
+00000000000000000000066660000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+00000000000000000000000000000000
+}
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

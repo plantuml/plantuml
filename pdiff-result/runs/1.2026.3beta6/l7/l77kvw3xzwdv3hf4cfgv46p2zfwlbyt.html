@@ -1,0 +1,317 @@
+<html><head><title>l77kv - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../l6/l6kwnypokovle5ms4pge46nf71vbxlo.html'>Previous</a>
+<a href='../l7/l7bnxzej2w5v2vt5o3czgds2b02iy5j.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>l77kv</h2>
+<hr>
+<img src='l77kvw3xzwdv3hf4cfgv46p2zfwlbyt.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+
+
+
+sprite $demo [128x128/color] {
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;_&gt;W&amp;_!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~~%&amp;_!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&amp;~!!!!&gt;W!!!!:~:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&amp;~!!&gt;m&gt;n!!&amp;~NI&amp;~!!:W&gt;n!!&amp;~&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:W_n!!&amp;~&gt;m&amp;~&gt;me+&gt;m&amp;~&gt;m&amp;~!!~%&gt;m!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:W:V&amp;~VpRYa*iKZpRIVp:~:V:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~RZRIiKiKiKiKiKiKiKRIRZ&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!RYiKiKiKeKeKeKiKiKiKRY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!_mNI_m&gt;W:V:V:W&gt;W_mNI_m!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:V&amp;~!!!!!!!!!!JJJJ&amp;~:G&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&amp;~&amp;~:W:W:W~%NI~%:G!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&amp;~&amp;~:W:W_m&gt;m:WNHZpiKRY:V&gt;m:W:V&amp;~&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&gt;mNINIRYa+VZJ%e+iKiKa*RYa+~%:W&amp;_!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&gt;We+iKe+NI~%&gt;WeKiKiKiKiKiKZpVp_m:W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&gt;WVpZpeKJ$JIaM~%iKiKiKiKiKiKe+_m:W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~_m_nRIVY&gt;mJ&amp;VqRYa*iKiKiKiKiKiKiKeKVp_n&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~RZe+RYRYRYJ%&gt;WRYZpe+iKiKiKiKiKiKiKiKiKeKJ%&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&amp;~&amp;~:~:V:W&gt;W&gt;W:~!!!!!!!!:VeKiKiKiKiKe+NHRYiKiKiKiKiKiKiKiKiKiKiKiKJ%:W!!!!!!!!!!!!!!:~:W&gt;W:W:V:~&amp;~&amp;~&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:~&gt;mJ%RIVpa*e+i+iKeKRZ~%&amp;~!!!!!!:~ZqRYJ%~$~%RIe+e+a*iKiKiKiKiKiKiKiKiKiKiKZp&amp;~!!!!!!!!!!!!:~J%VZeKiKeKe+a*VYRIJ%&gt;m:~&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:V~%RYa*iKiKiKiKiKiKiKe+_m&amp;~!!!!!!!!!!&amp;~:W:W&amp;~&amp;~&amp;~:W&gt;miKe*eKiKiKiKiKiKiKiKiKiKiKe+:W!!!!!!!!!!!!!!!!&amp;~_me+iKiKiKiKiKiKiKa*RY_n:V&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:~&gt;mRIe+iKiKiKiKiKiKiKiKiKiK_m&amp;~!!!!!!!!!!!!!!&amp;~!!!!!!!!:WRYe+VYiKiKiKiKe+iKiKiKiKiKiKe*:W!!!!!!!!!!!!!!!!!!&amp;~ImiKiKiKiKiKiKiKiKiKiKa+NI&gt;m:V&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:W_mVZiKiKiKiKiKiKiKiKiKiKiKiKVp:W!!!!!!!!!!!!!!!!!!!!!!!!:VJ%eKN%e+iKiKiKiKVYiKiKiKiKiKiKiK_n!!!!!!!!!!!!!!!!!!!!:WZpiKiKiKiKiKiKiKiKiKiKiKeKVY_m:W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;V&gt;mVYiKiKiKiKiKiKiKiKiKiKiKiKiKiKRI:W!!!!!!!!!!!!!!!!!!!!&amp;~&gt;WNIa+J%J%iKiKiKiKiKRIiKiKiKiKiKiKiK&gt;m!!!!!!!!!!!!!!!!!!!!:WRIiKiKiKiKiKiKiKiKiKiKiKiKiKiKRY&gt;W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:WNIe+iKiKiKiKiKiKiKiKiKiKiKiKiKiKiKJH&amp;~!!!!!!!!!!!!!!!!!!!!&amp;~:W&gt;W:W:WVYiKe*iKiKiKJ$eLZoiKiKiKe*eK&gt;W!!!!!!!!!!!!!!!!!!!!:WNIiKiKiKiKiKiKiKiKiKiKiKiKiKiKiKe+N%:W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&gt;WVpiKiKiKiKiKiKiKiKZpiKiKiKiKiKiKiKiKNH:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!:Va+iKVYiKiKiK~%NIe+iKZpiKVYa*:~!!!!!!!!!!!!!!!!!!!!:WNIiKiKiKiKiKiKiKiKZpiKiKiKiKiKiKiKiKVp&gt;W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:G_me+iKiKiKiKiKiKiKiKiKRYiKiKiKiKiKiKiKiKRI&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!J%VoiKRIiKiKeK&gt;WRYiKeKVYa*RIVp:~!!!!!!!!!!!!!!!!!!!!:WRYiKiKiKiKiKiKiKeKVYiKiKiKiKiKiKiKiKiKa+_m:~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:VJ%e+iKiKiKiKiKiKiKiKiKZoVpeKiKiKiKiKiKiKiKVp:W!!!!!!!!!!!!!!!!!!!!!!!!!!:VRZRYZpNIZpiKZpVYiKe*a*RYVYNIVp&amp;~!!!!!!!!!!!!!!!!!!!!:WVpiKiKiKiKiKiKiKeKVpZpiKiKiKiKiKiKiKiKiKe+~$:V!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:WJ%eKiKiKiKiKiKiKiKiKiKiKZpe+iKiKiKiKiKiKiKiKa+:W!!!!!!!!!!!!!!!!!!!!!!!!:VRYJ%a+_nNIVYiKiKiKiKZpVpRYi+InRZ&gt;W!!!!!!!!!!!!!!!!!!!!:We+iKiKiKiKiKiKiKiKe+a*iKiKiKiKiKiKiKiKiKiKe+_m&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~_meKiKiKiKiKiKiKiKiKiKiKe*Vpe+e+e*iKiKiKiKiKiKiK&gt;W!!!!!!!!!!!!!!!!!!&amp;~:VJ%VpJ%_nJ%:WNIiKiKiKiKiKe+J%NIiJe+RYRY&amp;~!!!!!!!!!!!!!!!!!!&gt;miKiKiKiKiKiKiKa*e+e+Vpe*iKiKiKiKiKiKiKiKiKiKe+_m&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&gt;me+iKiKiKiKiKiKiKiKiKiKiKZpiKiKe+ZpiKiKiKiKiKiKiK~%!!!!!!!!!!!!!!!!!!_neLiKZpVYe+Voa*iKiKiKiKe*iKiKZpJ%e+RIe+iK_n!!!!!!!!!!!!!!!!!!~%iKiKiKiKiKiKiKVpe+iKe+ZpiKiKiKiKiKiKiKiKiKiKiKe+&gt;W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:WVpiKiKiKiKiKiKiKiKiKiKiKe*VYiKZoNHZpiKiKiKiKiKiKiKNI!!!!!!!!!!!!!!!!!!&amp;~_nVpe+a*iKiKe+iKiKiKZpZpiKeKe+a*e+~%~%&gt;W&gt;W&amp;~!!!!!!!!!!!!!!!!NIiKiKiKiKiKiKiKVpNIZpe+VYe*iKiKiKiKiKiKiKiKiKiKiKVp:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~NHiKiKiKiKiKiKiKiKiKiKiKe+ZpiKiKZpiKe+iKiKiKiKiKiKiKRY&amp;_!!!!!!!!!!!!!!!!!!:WJ%~%VZiKe+RYe+ZpeKJ%eKVYiKVYZpiKNHeKRI:W!!!!!!!!!!!!!!!!&amp;~RYiKiKiKiKiKiKiKe*iKZpiKiKZpe+iKiKiKiKiKiKiKiKiKiKiKJ%&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&gt;We+iKiKiKiKiKiKiKiKiKiKiKZpZpiKe+VZiKiKiKiKiKiKiKiKiKVp&amp;~!!!!!!!!!!!!!!!!:WNIa+N%iKa*NIZpZpVYRYJ%RYRZiKRYNIe+ZpVYiKVp:W!!!!!!!!!!!!!!&amp;~VpiKiKiKiKiKiKiKiKiKVZe*iKZpZpiKiKiKiKiKiKiKiKiKiKiKe+&gt;W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:~RYiKiKiKiKiKiKiKiKiKiKe*VYe*iKe*e+RHZp_n_n_m_n_n_m_m_m&gt;W:W:W:W:W:W:W:W:W:W:W_n&gt;W&gt;m_m:W&gt;m_m&gt;mNI_m&gt;n&gt;W&gt;W_m&gt;W_n&gt;W_m&gt;W_m_m&gt;m:W:W:W:W:W:W:W:W&gt;m&gt;m_m_m_m_m_n_n_na+RIa*i+iKa*VYe*iKiKiKiKiKiKiKiKiKiKRY&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&gt;miKiKiKiKiKiKiKiKiKiKZpVoeKiKiKe+ZpeK_mJJNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNbNaNaNaNaNaNaNaNaNa_n&gt;n~&amp;NKNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNaNa~&amp;_meKZpeKiKiKeKVpZpiKiKiKiKiKiKiKiKiKeK&gt;W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~RYiKiKiKiKiKe+a*eKZpVYeKa*iKiKe*VYVoRY:WW:&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n:W:W&gt;X&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n~&amp;Rr:WRYVYVpe+iKiKZpe+VYZpe+a*e+iKiKiKiKiKNI&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!:We+iKiKiKiKiKZpVoVYa+ZpiKiKiKeKZpiKe+&gt;W:WW::W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W&gt;XW::W&gt;We+iKZpeKiKiKiKZpZpVYVYZpiKiKiKiKiKe+:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~J%iKiKiKiKiKiKe+e+e+iKiKiKiKe*ZpVYiKRI:W:WW::W:W:W:W:W:W:W:W:W:W:W:W_nNZRaNJ_n:W:W:W:W:W:W:W:W&gt;W~%NZNZJ%&gt;V:W:W:W:W:W:W:W:W&gt;W~%JIJ%&gt;W:W:W:W:W:W:W:W:W:W:W:W:WW::W:WRYiKVYZpe*iKiKiKiKe+e+e+iKiKiKiKiKiK~%!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~VZiKiKiKiKe+iKe+iKiKiKi+e+a*VoiKe+eK&gt;W:W:WW::W:W:W:W:W:W:W:W:W:W~%edvhzyzyzyvhed_n:W:W:W:W:WNZn=vizyzyvin=RZ&gt;W:W:W:W:W&gt;WVqr&gt;zizyzirQa-_m:W:W:W:W:W:W:W:W:W:WW::W:W&gt;meKe+iKVoa*e+i+iKiKiKe+iKe*iKiKiKiKRY&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!:Ve+iKiKiKiKZpe+ZpiKZpe+ZpVYeKVYiKiKVY:W:W:WW::W:W:W:W:W:W:W:W:WJ&amp;rQzzzzzzzzzzzzzzrQJ&amp;:W:W:WW-vizzzzzzzzzzzzviaM&gt;W:W:W&gt;miezyzzzzzzzzzzzyn=_n:W:W:W:W:W:W:W:W:WW::W:W:WVoiKiKVpeKVoZpe+ZpiKZpe+ZpiKiKiKiKe*:V!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!_niKiKiKiKiKe+NHe*RYe+RHiKVYiKiKiKe+JH:W:W:WW::W:W:W:W:W:W:W:W&gt;mr=zzzzrQa-RZa-rQzzzzn=&gt;m:WRZvizzzymvW-W-muzizzziVq:W:WeNzyzzvhida-eMvRzzzzmu&gt;W:W:W:W:W:W:W:W:WW::W:W:WNHe+iKiKiKVYeKNHe*RYe*NIe+iKiKiKiKiK_n!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!JHiKiKiKiKiKiKe*iKVYiKZpiKiKiKiKe+e*NI:W:W:WW::W:W:W:W:W:W:W:WVrzyzzmu_m:W:W:W_nmuzzzyW+&gt;Wr=zzziW+:W:W:W:VRqvhieJ&amp;:WJIvizzrQJ%:W:W:V_nn=rQVq&gt;W:W:W:W:W:W:W:W:WW::W:W:WRIe*e+iKiKiKiKZpiKVYiKe*iKiKiKiKiKiKJ%!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!&amp;~RYiKiKe*iKi+iKiKiKiKiKiKiKiKiKZpRYeKRY:W:W:WW::W:W:W:W:W:W:W:Wn=zzvhJ%:W:W:W:W:WJ%vizzn=NIzyzzid:W:W:W:W:W:W~%:W:W:WeMzzzyRZ:W:W:W:W:W_n&gt;m:W:W:W:W:W:W:W:W:W:WW::W:W:WVYeKVYZpiKiKiKiKiKiKiKiKiKe+iKe+iKiKRY&amp;~!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!&amp;~VpiKiKZpeKZpiKe*iKiKiKiKiKa*a+e+RYiKZp:W:W:WW::W:W:W:W:W:W:W&gt;mvRzzmv:W:W:W:W:W:W:Wn=zzvRa-zzzyRZ:W:W:W&gt;W:W:W&gt;W&gt;W:W&gt;WmuzzvR&gt;m:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:WW::W:W:Wa*iKRYe+a*e*iKiKiKiKiKa*iKZpeKe*iKiKVp&amp;~!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!:~e+iKiKVpRIVpVZa*iKZoiKZpe+a*NHiKeKiKeK&gt;W:W:WW::W:W:W:W:W:W:W&gt;mvhzzmu:W:W:W:W:W:W:Wn=zzvheLzzzyNZ:W:W&gt;mn=r=r&gt;r=r=n=Vqn=zzrQ&gt;W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:WW::W:W&gt;WiKiKeKiKRHa*e*ZpeKZpiKZpVpVpNHZpiKiKa*&amp;~!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!:~eKiKiKiKiKZpRYZpVZZpVZe+RIiKZpiKiKiKiKJ%:W:WW::W:W:W:W:W:W:W&gt;WrQzzrQ_m:W:W:W:W:W_mvRzzrQVpzyzza::W:W&gt;mvQvivizyzzzzNZidzzviJ&amp;:W:W:W:W:W&gt;W&gt;W:W:W:W:W:W:W:W:W:W:WW::W:WNIiKiKiKiKZpiKNHe+VYZpVpZpNIZpiKiKiKiKe+:~!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!:ViKiKiKiKiKe+iKe*RYe+RIiKZpiKiKiKiKiKiKZp:W:WW::W:W:W:W:W:W:W:WeMzzzyaM:W:W:W:W&gt;WeMzyzzeM_mvhzzvRJ%:W&gt;WJ%J%RYvQzzvh~%Razyzziu&gt;m:W:W:W:WeMmuNJ:W:W:W:W:W:W:W:W:WW::W:Va+iKiKiKiKiKiKZpiKRIeKRIe*e+e+iKiKiKiKeK:V!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!&gt;WiKiKiKiKiKiKiKiKeKiKe*iKiKiKiKiKiKe*iKiKJ%:WW::W:W:W:W:W:W:W:W~%vhzzziedJI_nJIedzyzzvhJ%:WeMzyzzrQRq~%_nRZrQzzzzed:W&gt;Wn=zzzyn=RZJ%NJidzyzzrQ_n:W:W:W:W:W:W:W&gt;WW::WJ%iKiKeKiKiKiKiKiKiKe*iKe+iKiKiKiKiKiKiKiK&gt;W!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!&gt;WiKiKiKiKiKiKiKiKiKiKiKiKiKiKiKiKiKZpe+iJa*:WW::W:W:W:W:W:W:W:W:WRqvizzzzzivhzizzzzviRq:W:W&gt;mmvzyzzzyvivizyzzzzn=_m:W:WJ&amp;rQzzzzzyzizyzzzzvhNZ:V:W:W:W:W:W:W:W&gt;nVr&gt;We+iKZpZpiKiKiKiKiKiKiKiKiKiKiKiKiKiKiKiKiK&gt;W!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!&gt;WiKiKiKiKiKiKiKiKiKiKiKiKiKiKiKiKiKe+J%iKiKRYW::W:W:W:W:W:W:W:W:W:WNZrQzyzzzzzzzyrQRZ:W:W:W:W_nedvizzzzzzzzziiu~%:W:W:W:WJ%iuvizzzzzzzyn=NI:W:W:W:W:W:W:W:W:W&gt;nRrVZiKiK~$e+iKiKiKiKiKiKiKiKiKiKiKiKiKiKiKiKiK&gt;W!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!&gt;WiKiKiKiKiKiKiKiKiKiKiKiKiKiKRIiKiKiK&gt;WNIiKiKRY:W:W:W:W:W:W:W:W:W:W:W&gt;mRaeMideMRZ&gt;m:W:W:W:W:W:W:WJIaLitiuaMNI&gt;W:W:W:W:W:W:W:WJIVqaMa-NI&gt;W:W:W:W:W:W:W:W:W:W:W&gt;nVpiKiKJ%&gt;miKiKiKRIiKiKiKiKiKiKiKiKiKiKiKiKiKiK&gt;W!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!:WiKiKiKiKiKiKiKiKiKiKiKiKiKiKNHiKiKiK~%:WJ%e+iKRY:W:W:W:W:W:W:W_nJ%~%_n:W:W:W:W&gt;W~&amp;~%:W:WJ%~%_n:W:W:W:W:V&gt;mJ&amp;JI~%&gt;W:W:W:W&gt;WJ&amp;J%J%J%J%J%J%J%_n:W:W:W:W:W:W:W:WRYiKe*J%:WJ%iKiKiKNHiKiKiKiKiKiKiKiKiKiKiKiKiKiK:V!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!:VeKiKiKiKiKiKiKiKiKe+VYiKiKiKRIa*iKiKRI:W:W&gt;WNIRY_n:W:W:W:W:W:Wa-zivirQ_n:W:W:WNJvhvR&gt;n&gt;mvQviid:W:W:W&gt;maMrRzizivhn=NZ:W:W~%vhziziziziziziziaM:W:W:W:W:W:W:W~%RYJ%&gt;W:W:WRYiKiKZpRYiKiKiKVYeKiKiKiKiKiKiKiKiKe+:~!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!:~e+iKiKiKiKiKiKiKiKiKNIiKiKiKa*NIiKiKZp:W:W:WRr&gt;n:W:W:W:W:W:W:WaMzzzzzyid&gt;V:W:VNIzyvh_n&gt;mvhzzid:W:W_nn=zzzzzzzzzzzzzia-:W~%vizzviviviviviviaM:W:W:W:W:W:W:W:WRr&gt;n:W:W:Wa*iKiKNHa+iKiKiKNHiKiKiKiKiKiKiKiKiKe*&amp;~!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!&amp;~ZpiKiKiKiKVoZpiKiKiKNHe+iKiKiK_niKiKiK&gt;m:W:WNa~&amp;:W:W:W:W:W:W:WaMzzzyzzzyVq:W:WNIzzvh&gt;m&gt;mvhzzid:W:Wiuzzzyn=VqRZaLvhzzvhNZ~%vizza-~%_n_n_n_n&gt;n:W:W:W:W:W:W:W:WRr:W:W:W_miKiKe+~$iKiKiKe+NIiKiKiKZpVpiKiKiKiKZp&amp;~!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!&amp;~VZiKiKiKiKe+RYiKiKiKVpVYiKiKiKRIRYiKiKNI:W:WJJJJ:W:W:W:W:W:W:WaMzzmvvhzzvhJ%:WNIzzvh_n_mvhzzid:WNJzizzid&gt;W:W:W:WJIn=Vq&gt;m~%vizyW+:W:W:W:W:W:W:W:W:W:W:W:W:W:WW::W:W:WNIiKiKRIRYiKiKiKRYZpiKiKiKRYe+iKiKiKiKRZ&amp;~!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!NIiKiKiKiKiKNHiKiKiKe+J%iKiKiKe*&gt;me+iKa+:W:W_oRr:W:W:W:W:W:W:WaMzzeMa-zyzzn=&gt;mNIzzvh_n_mvhzzid:WeMzzvh~%:W:W:W:W:W&gt;W:W:W~%vizzeMNZNZNZNZNI:W:W:W:W:W:W:W:W:WW::W:W:We+iKe+&gt;me+iKiKiKJ%iKiKiKiKNHiKiKiKiKiKNI!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!J%iKiKiKiKiKNHe+iKiKiKJ%e+iKiKiKJ%NIiKiKJ%:W&gt;WRr:W:W:W:W:W:W:WaLzzeM&gt;WiuzzzyaMNIzzvh_n_mvhzzid:Wmuzzn=&gt;W:W:W:W:W:W:W:W:WJ%vizzzyzzzzzzzzr&gt;&gt;W:W:W:W:W:W:W:W:Wa::W:WJ%iKiKJ%N%iKiKiKe+J%iKiKiKe+NIiKiKiKiKiK~%!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!&gt;WiKiKiKiKiKVZVpiKiKiKVpRYiKiKiKZp:WZpiKZp:W:WW::W:W:W:W:W:W:WaLzzeM:W~%vRzzvieLzyvh_n_mvhzzid:WiuzzrQ&gt;W:W:W:W:W:W:W:W:WJ%vizzvivivhvhvhn=:W:W:W:W:W:W:W:W:WW::W:WZpiKVp&gt;We*iKiKiKRIVpiKiKiKVYVpiKiKiKiKeK:V!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~a*iKiKiKiKeKJ%iKiKiKeK_miKiKiKiKN%&gt;We+iK_n:WW::W:W:W:W:W:W:WaLzzeM:W:WRZzizzvhzzvh_n_mvhzzid:Wa-zzziNZ:W:W:W:W&gt;WRq_m:WJ%vizza-_n_n_n_n_n:W:W:W:W:W:W:W:W&gt;nRr:WJ%iKe+&gt;WNHiKiKiKeK_miKiKiKiKJ%iKiKiKiKiKZp&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~RYiKiKiKiKiKJ%e+iKiKiKNHVpiKiKiKe+&gt;mJ%iKZp:WW::W:W:W:W:W:W:WaMzzeM:W:W:WeMzzzzzzvh_n&gt;mvhzzid:W~%vhzzrQNJ&gt;W:W&gt;maMzirQRZ~%vizzW+:W:W:W:W:W:W:W:W:W:W:W:W:WJ&amp;JJ:WZpiK_n&gt;neJiKiKiKVYNIiKiKiKe+NHiKiKiKiKiKRI&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!J%iKiKiKiKiKVpRYiKiKiKa*_niKiKiKiKVp:WNIiKN%S:&gt;n:W:W:W:W:W:WaMzzeM:W:W:W&gt;mn=zzzzvh_n&gt;mvhzzid:W:WW-zyzzvin=murQzyzzrQ~%~%vizziua-a-a-a-a-W-_n:W:W:W:W:W:WRr&gt;nNHiKJ&amp;:WZpiKiKiKeK_ma+iKiKiKRIZpiKiKiKiKiKJ%!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!:We+iKiKiKiKiK_miKiKiKiKJ%VpiKiKiKiKNI:WRIe+NZJJ:W:W:W:W:W:WaMzzeM:W:W:W:WJIvhzzvh_n&gt;mvhzzid:W:W:WW-vhzyzzzzzzzyn=J&amp;:W~%zizzzzzzzzzzzzzzvhJ%:W:W:W:W:W:WW:&gt;me+NI:WNIiKiKiKiKVZJ%iKiKiKeK_miKiKiKiKiKe+:V!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~VZiKiKiKiKiKRIVpiKiKiKVp_meKiKiKiKeK&gt;m:WRYVp~&amp;:W:W:W:W:W:WVqn=a-:W:W:W:W:WVqn=mu&gt;m&gt;mmun=e::W:W:W:WJ%aMn&lt;r=iuRq&gt;m:W:W~%mun=n=n=mvn=n=n=mu~%:W:W:W:W:W:WRrVpRY:W_miKiKiKiKeK_mZpiKiKiKRYRYiKiKiKiKiKVY&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~J%iKiKiKiKiKe+_niKiKiKiKJ%NIiKiKiKiKZp:W:WRYJ%:W:W:W:W:W:W:W&gt;W:W:W:W:W:W:W:W&gt;W:W:W:W:W&gt;W:W:W:W:W:W:W:W:W&gt;W:W:W:W:W:W:W&gt;W:W&gt;W:W:W:W:W:W:W:W:W:W:W:W:W:WNINI:W:WZpiKiKiKiKNIJ%iKiKiKiK_me+iKiKiKiKiK~%&amp;_!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:Ve+iKiKiKiKiKN%VpiKiKiKZp&gt;WZpiKiKiKiKNH:W:W&gt;n:W:W:V:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:W:V:V:W:V:W:W:V:W:W:W:W:W:W:W:W:W:W:V:W:W:W&gt;m:W:WNIiKiKiKiKZp:Wa*iKiKiKVpNHiKiKiKiKiKa+:V!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~RYiKiKiKiKiKa*_niKiKiKiKJ%&gt;ne*iKiKiKe+&gt;W:WVrUXIWgXcWgWgWQW:W:W:W:W:W:W:WMWgWgXgWgWgWgWcX&gt;W:W:W:W:W:W:W&gt;GcXgWgWgWgWgWgWcX&gt;V:W:W:W:W:W:W&gt;WcXgWgWcXMVVJ~&amp;:W&gt;me+iKiKiKe+&gt;WNHiKiKiKeK_ne*iKiKiKiKiKNI&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&gt;miKiKiKiKiKiKJ%VZiKiKiKe+&gt;n_me+iKiKiKRY:WNal*kWoWoWoWoWUW:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkWoWoWkWkWq:&gt;X:WVZiKiKiKe+_m_ne+iKiKiKRZJ%iKiKiKiKiKiK&gt;W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:VVYiKiKiKiKiKa+_miKiKiKiKRYNK_me+iKiKeK&gt;m&gt;nproWoWoWoWoWUW:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkWoWoWoWoWi::W&gt;miKiKiKe+_mNaVpiKiKiKe+&gt;ma*iKiKiKiKiKRY:G!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~_miKiKiKiKiKiKJ%NIiKiKiKiKRqRr_me+iKiKNI:Wm;oWoWoWoWoWUW:W:W:W:W:W:W:WQWoWoWoWoWoWoWkX&gt;W:W:W:W:W:W:W&gt;WkWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkWoWoWoWknW::WNYiKiKe+_nRrRqiKiKiKiKNINIiKiKiKiKiKiK_m&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:WVoiKiKiKiKiKe+&gt;Wa*iKiKiKa*eNNaJ%iKiKa+:Wa:oXoWoWoWoWUW:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkWoXoWoWpJNa:Wa*iKeK_nNaaMa+iKiKiKa*&gt;We+iKiKiKiKiKRY:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~_miKiKiKiKiKiKNH~%iKiKiKiKVZn&gt;JINIiKiK&gt;mRap*oWoWoWoWUW:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkWoWoWoWps&gt;n_miKiKNHJJn&gt;VZiKiKiKiK_mRIiKiKiKiKiKeK_m&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:WRYiKiKiKiKiKe+&gt;mRYiKiKiKiKRZrR_nVZiKNH&gt;nproWoWoWoWUW:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkWoWoWkWi;:WNIiKRZ~&amp;rRRZiKiKiKiKRI_miKiKiKiKiKiKRY:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&gt;We+iKiKiKiKiKVZ&gt;WZpiKiKiKe+a:ee&gt;We*Vp:Wi:oWoWoWoWUW:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkWoWoWonW::WZpa*&gt;Wn&gt;W-e+iKiKiKZp:WVpiKiKiKiKiKe+&gt;W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:VNHiKiKiKiKiKiKJ%&gt;me+iKiKiKVped&gt;X~$e+:WW:knoWoWoWUW:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkWoXoWpa~&amp;&gt;We+_m~&amp;eeZpiKiKiKe+&gt;mJ%iKiKiKiKiKiKJ%:G!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:WZpiKiKiKiKiKe+&gt;nJ%iKiKiKiKRZ~&amp;:WRZ&gt;mJ&amp;paoWoWoWUW:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkWoWkWm;:W_nRY:WNaRZiKiKiKiKJ%_ne+iKiKiKiKiKVp:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~_meKiKiKiKiKiKVZ&gt;nRIiKiKiKi+_m:W&gt;W_n:Wi:oWoWoWUW:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkWoWkXa::W~%&gt;W:WJ%iKiKiKiKNI&gt;nVZiKiKiKiKiKe+&gt;m&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:WNIiKiKiKiKiKiKNI&gt;nVpiKiKiKa*:W:W:W:Wa:knoWoWUW:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkWoWpaJJ:W:W:W&gt;We+iKiKiKVp_nNIiKiKiKiKiKiKJH:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:WVpiKiKiKiKiKe+Na&gt;na+iKiKiKNI:W:W:W~&amp;pboWoWUW:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkWoWmN:W:W:W:WRIiKiKiKZp&gt;nNae+iKiKiKiKiKVZ:W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&gt;We+iKiKiKiKiKVpRr_me+iKiKeK&gt;m:W:W:WiNoXoWUW:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkWkoVs:W:W:W&gt;miKiKiKe+&gt;mRqVpiKiKiKiKiKa+&gt;W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:W_neKiKiKiKiKiKRYRa_neKiKiKRY:W:W:WRroooWUW:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkWpr~&amp;:W:W:WVYiKiKe+_mNqRZiKiKiKiKiKe+_m:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:WJ%iKiKiKiKiKeK_m:WN%iKiKeK&gt;W:W:W&gt;nq:oWUW:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXe::W:W:W&gt;meKiKiKJ%:W_meKiKiKiKiKiKJ%:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:WRYiKiKiKiKiKZp:~:WRYiKiKNH:W:W:Wa:knUW:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WlKNZ:W:W:WNIiKiKNI:V:~ZpiKiKiKiKiKRI:W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:WZpiKiKiKiKiKJ%&amp;~:WVpiKVp:W:W:W~&amp;prUW:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WiN:W:W:W:WVpiKVZ:W&amp;~NHiKiKiKiKiKVp:W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:G&gt;We+iKiKiKiKe*:~&amp;~&gt;Wa*e+:W:W:W:WeMUX:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W~&amp;Rb:W:W:W&gt;We+a*&gt;W&amp;~:Ve+iKiKiKiKe*&gt;W:~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:W_neKiKiKiKiKJ%!!&amp;~_meK&gt;m:W:W:WJJVa:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:WW:&gt;W:W:W:W_neK_m&amp;~!!NHiKiKiKiKiK_m:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:WNIiKiKiKiKZp&amp;~!!&amp;~NI~%:W:W:W:WaN:W:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:W~&amp;Rr:W:W:W&gt;XJ&amp;JH&amp;~!!&amp;~ZpiKiKiKiKNH:W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:WVpiKiKiKiK&gt;m!!!!:W&gt;n:W:W:W:WJ*Na:W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:W:Wa;:W:W:W:W:W&gt;n:V!!!!_miKiKiKiKVZ:W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:W&gt;We+iKiKiKNI!!!!!!:W&amp;~:W:W:W:Wa:&gt;W:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:WJJNa:W:W:W:W&amp;~:W!!!!!!NIiKiKiKe*&gt;W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:W~%iKiKiKVp&amp;~!!!!!!!!:W:W:W:W_oVr:W:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:W:WaN:W:W:W:W&amp;~!!!!!!!!&amp;~ZpiKiKeK_n:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:WRYiKiKe+:~!!!!!!!!&amp;~:W:W:W:WVr~&amp;:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W:WRrJ&amp;:W:W:W:W!!!!!!!!!!:VeKiKiKRY:V&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&gt;Va+iKiK&gt;W!!!!!!!!!!:~:W:W:W:WaN:W:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:W_nW::W:W:W:W&amp;~!!!!!!!!!!&gt;miKiKa+:W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:WJ%iKiKJ%!!!!!!!!!!&amp;~:W:W:W:WJJRr:W:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:W:WaN&gt;W:W:W:W&gt;W&amp;~!!!!!!!!!!J%iKiK_n:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#:WVpiKJ%!!!!!!!!!!!!&gt;n:W:W:W:WVr~&amp;:W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W:WRrJJ:W:W:W&gt;WRY&amp;~!!!!!!!!!!N%iKVY:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&gt;meKNH&amp;~!!!!!!!!!!NIJ%:W:W:W:WaN&gt;W:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW&gt;W~*Rr:W:W:W:W~%Vp:V!!!!!!!!&amp;~NHe+&gt;m&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:WRYNH&amp;~!!!!!!!!&amp;~RZJ%_m:W:W:W&gt;na;:WQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWkW_naN:W:W:W:WNHa*&gt;m:~!!!!!!!!&amp;~NHRI:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&gt;mJ%&amp;~!!!!!!!!&amp;~:WVpa*&gt;W:W:W:WJJRrQWoWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWoWknaN&gt;n:W:W:W_meKiKZpJI:W!!!!!!&amp;~JI&gt;W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:W&gt;W&amp;~!!!!!!&amp;~J%ZpiKiKVo:W:W:W:WNahboWoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoWkXm;&gt;n:W:W:W&gt;Wa*iKiKRY:W!!!!!!!!&amp;~&gt;W:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:W!!!!!!!!!!&amp;~J%iKiKiKNI:W:W:W:WRqpaoWoWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWoWoXm:~&amp;:W:W:W:WVpiKiKiKeK_m!!!!!!!!&amp;~:W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:W!!!!!!!!!!&gt;me+iKiKiKiKJ%:W:W:W:WRrpakWoWoWoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoWoWkXm:~&amp;:W:W:W:VRYiKiKiKiKiKe+:V!!!!!!!!:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~!!!!!!!!&amp;~VpiKiKiKiKiKeKIm:W:W:W:WRapqoWoWoXkW&gt;W:W:W:W:W:W:W&gt;WkWoWoWoXm:~&amp;:W:W:W:WNIiKeKe*iKiKiKiJNI!!!!!!!!&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!_miKiKiKiKe*iKiKe+&gt;n:W:W:W:WNam:oXoWkW&gt;W:W:W:W:W:W:W&gt;WkXoWoniN_n:W:W:W:W&gt;neKiKa*ZpiKiKiKRYJ&amp;&amp;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:W:W&amp;~!!!!!!!!&amp;~&amp;~:W:W:W:W:W&amp;~!!!!!!!!!!!!!!&gt;nNHe+iKiKVoa*e+iKNI~&amp;:W:W:W:WJ&amp;mNonkX&gt;W:W:W:W:W:W:W&gt;WkXp*eN&gt;n:W:W:W:WRaRaeKNHZpRYiKiKiKNI&amp;~!!!!!!!!!!!!&amp;~&amp;~:W:W:W:W:W&amp;~!!!!!!!!!!&amp;~:W:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&gt;nee~&amp;:W:W:W:WJJa;een&gt;rRrRivRr:W&amp;~!!!!!!!!!!&amp;~_miKiKiKVpRYNHe+NIrRJ&amp;:W:W:W:W&gt;neNlK&gt;W:W:W:W:W:W:W&gt;WlrW-:W:W:W:W:WRrrR~%NI_na*VpiKi+Voe+JI:W&amp;~!!!!!!:W~&amp;aNn&gt;rRrRiveORr&gt;n:W:W:W&gt;nNaW::W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:WaNrRrRiviviveeRr&gt;n~&amp;&gt;n_nW:eer&gt;&gt;n&amp;~!!!!&amp;~:WJ&amp;a+Vpa*iKa*VZNHNJ_neeviJJ:W:W:W:W:WRrVr:W:W:W:W:W_naNJJ:W:W:W:W:WVszzrRivviJ&amp;RZNZVpa*RY&gt;W&gt;W&amp;~!!!!!!&amp;~Rrr&gt;aNRa&gt;W&gt;nJJ&gt;naNeeivifn&gt;vin&gt;JJ&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~NaeeaNaNeen&gt;viaN~&amp;eeivW:~&amp;aNW:Rr&amp;~!!!!!!&amp;~:~:VNIVoVYNYVr_nvRrRn&gt;zzviRr:W:W:W:W:W~&amp;aNNJ:W:WRrW::W:W:W:W:W:WaNzzzzzzzzzzn&gt;a:W:NJJ%Zq:V!!!!!!!!!!:WeeRrRr~&amp;eeivW::WvivRivaNaNaNiv&gt;n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&gt;nvizzzzzzzzzzW:&gt;nJJeeaNeeNa_n&gt;n&amp;~!!!!!!!!!!&amp;~VpJ%JINJivn&gt;zzzzzzzzzzzzaN:W:W:W:W:W:WNaaNaN~&amp;:W:W:W:W:W&gt;nivzzzzzzzzzzzzzzzzaNrRNIZpRI&amp;~!!!!!!!!:W~&amp;~&amp;W:eeaNaN&gt;n&gt;nrRzzzzzzzzzzee:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:WeezzzzzzzzzzRredW:~&amp;n&gt;eeaNivRa&amp;~!!!!!!!!!!J%e+RYn&gt;aNvizzzzzzzzzzzzzzzziv&gt;n:W:W:W:W:WNa~&amp;:W:W:W:W:W~&amp;rRzzzzzzzzzzviVrRaierReeRYiKiKJ%&amp;~!!!!!!:WiuieaNn&gt;aN~&amp;n&gt;JJrRzzzzzzzzzzJJ&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:WRrvizzzzzzzzzzNaRrzziv~&amp;Rrr?rRRr&amp;~!!!!!!&amp;~_me+iKe+Rqn&gt;eeRaNJn&gt;zzzzzzzzzzzzviNa:W:W:W:WNa~&amp;:W:W:W:WRrvizzzzzzzzzzzzRaVpe+RY&gt;WRYiKiKiKiKRY&gt;W&amp;~&amp;~:Wa;aNee~&amp;NavhrR&gt;nn&gt;zzzzzzzzzzn&gt;~&amp;:W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&amp;~:W&gt;nRrn&gt;zzzzzzzzzzzzzzJJeeaNviviaN&gt;WRaNJ:W&amp;~&amp;~&gt;WNIeKiKiKiKa+&gt;WRYe+e+J&amp;vizzzzzzzzzzzzzzee&gt;n:W:WNa~&amp;:W:W_nivzzzzzzzzzzzzzzviJIRYe*iKZpiKiKiKiKiKiKeKVpRYRYRYRYRZJ&amp;virQaNRaivzzzzzzzzzzzzvieeJJ:W:W&amp;~&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:WNaivvizzzzzzzzzzzzzzzzzzJ*iurRW:rRRrRYVpVoVYVYZpeKiKiKiKiKiKiKVpe+iKRIRZeezzzzzzzzzzzzzzzzrRNa:WNa~&amp;:WRrvizzzzzzzzzzzzzzzzrRJJNaJHRYRINIRYiKVoRYe+iKVYNIVpe+J%a-RZRreer=W:eezzzzzzzzzzzzzzzzzzrRee&gt;n:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:WaNvizzzzzzzzzzzzzzzzzz~&amp;n&lt;muzyeeJIW-NJZpVpNINIiKiKRYNHiKRY~%JHRIJH~&amp;aMeOzzzzzzzzzzzzzzzzzzzzivNaNan&gt;zzzzzzzzzzzzzzzzzzzzzzW:viW:RrVreeNaRIa*NJ_ne+i+RYJIVreeivNHeerQmua:WNzzzzzzzzzzzzzzzzzzrRNa:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:W_oaNn&gt;vizzzzzzzzzzvi_nmtr=rQviNIRrRrRaNZVYe+eKNIJ*VpVp:W&gt;X&gt;X&gt;nJJivaNr?zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzviivn&gt;eeaNRrJJ&gt;n_me+e+NI_nVpiKVpNJaNee~&amp;rQr=mteNRrzzzzzzzzzzzzviivRr:W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&amp;~:W&gt;n~&amp;JJNaNaNaNa~%n&lt;muvizzRreeviRrNIiKZp~%NIe+iKJ%n&gt;mveeW:NaJ&amp;~&amp;&gt;n~&amp;JJJJNaRrRrVsW:W:W:W:W:W:W:W:W:W:RrRrNaNaJJ~&amp;~&amp;&gt;n~&amp;JJRraNeen&gt;viaNVZiKNHNIJJNIiKNIn&gt;aNn&gt;zzr&lt;mued&gt;nNaNaNaNJJJ~&amp;:W:W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&amp;~&amp;~&amp;~&amp;~&amp;~JJmur=vhzzviaNrRNIiKRYW:JINIe*e+NZvizzzzzzzzzzzzvivirRn&gt;mwiveeeeaNaNaNaNaNaNaNaNaNeOeeivivn&gt;n&gt;rRvizzzzzzzzzzzzvirRivJ%VpZpJIn&gt;W:VpRYRrzizzvivQmtmv:W&amp;~&amp;~&amp;~&amp;~&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~NamtrQvhzzzzzyaNJ%e+NZzzJIZqVZNIeeeeaNaNeeeeeeivn&gt;rRvizzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzvirRrRiveeeeeeaNaNaNeerRn&gt;RrZpJ%viivRYiKNIedzzvir=n&lt;r&gt;:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~Vrr&lt;n&lt;zyzzzzivNIiKa*W-zzNaVpVrivzzzzzzzzzzzzvirRn&gt;iveeaNaNeNeOeOeOeOeeeeeeeeeNeeeeeeeeeNaNaNeeeeivn&gt;vizzzzzzzzzzzzzzzzzzNZRrzzivRYe*iKJIzzzyrQr&lt;r=&gt;n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;GeNmtvgvizzzzW-a*e*VpW:zzivJ&amp;r&gt;zzzzvivizzzzzzzzzzzzzzzzzzzzzzzzzzzzzzaNvizzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzvizzzzzzeeJJvizzrR&gt;nNIZpadzzzzvhmtvQJJ&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~a-mur=vizyzzrRNIVp&gt;WivzzzzW:RavizzRr&gt;W&gt;nRrvivieeivrRzzvivizzzzzzzzzzrReezzzzzzzzzzzzzzzzzzzzzzzzzzmwn&gt;zzzzzzee~&amp;zzzzn&gt;eevizzzzzzRr_nRYnRzzzzrQr=r=~&amp;&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~_omurPzzzzzzzzNJNINKvzzzzzzzn&gt;ivzjJJaNrRJJRrn&gt;:WJJJ*rR_n&gt;WeeeeJJNKivivaNzzzzzzaNNaivzzrRJJ&gt;nRrzzNa~&amp;~&amp;RrzzzzJJ:Wvizzzzzzzzzzzzzzzza:Razzzzzzvhmuee:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~J&amp;r&gt;zyzzzzzzeNNZvizzzzzzzzzzzzzz&gt;nivzziv&gt;nee~&amp;vizzaNNan&gt;W:W:JJa:&gt;nW:NazzzzzzrRJJaNzzRrRrrR&gt;niv:WrRn&gt;&gt;Xzzn&gt;Na~&amp;n&gt;zzzzzzzzzzzzzzeNJJrRzzzzzzvhee:W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&gt;naNvizzzzzzW-NarRzzzzzzzzzzvi:WvSzzee~&amp;aN:W&gt;nRriv&gt;nRbrRW:NaaN&gt;nW:NazzzzzzzzNaaNzzNaVsvi~&amp;iv&gt;Wn&gt;vi:WvSNaivNaaNzzzzzzzzzzzziveevizzzzzzrRNa:W!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:W~&amp;aNvizzzzn&gt;ivzzzzzzzzzzn&gt;:Wivmw~&amp;W:W:RrvirRvRn&gt;JJNaRr&gt;nJJiva:NazzzzzzzzRaaNzzn&gt;&gt;n&gt;n_ovi_nivvi:Wn&gt;&gt;n~&amp;:W~&amp;vizzzzzzzzzzzzzzzzzzn&gt;Rr:W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:~&gt;nRbivvizzzzzzzzzzzzrRRrJJ~&amp;W:viRr~&amp;W:n&gt;JJaNW:NaRrW:zzzzW:RrzzzzzzzzRra;zzzzvi~&amp;eezzNaJJW:&gt;XviivrRivaNzzzzzzzzzzzzzzrRaNJJ:W&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~:W&gt;nJJaNivvizzzzzzzzzzzzzzzzn&gt;aNW:mvn&gt;~&amp;J&amp;r&gt;RraNzzzzW:RrzzzzzzzzRrW:zzzzeeNazzzzviW:Rrn&gt;zzzzzzzzzzzzzzvirReeRr~&amp;:W&amp;~&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&amp;~:W:W&gt;nJJW:eeivrRvizzzzzzzzzzzzzzzzzzzzzzzzzzvivizzzzzzzzvivizzzzzzzzzzzzzzzzzzzzzzvin&gt;ivaNRrJ&amp;&gt;n:W:G&amp;~&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;~&amp;~&amp;~:G:W&gt;W~&amp;JJNaW:aNeeivn&gt;n&gt;rRvivivivivivivyvivivivivirRn&gt;iveeaNW:RrNa~&amp;&gt;n:W:W:G&amp;~&amp;~&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&amp;#&amp;~&amp;~&amp;~&amp;~&amp;~:~:W:W:W:W:W&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n&gt;n:W:W:W:W:W&amp;~&amp;~&amp;~&amp;~&amp;~&amp;~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+}
+
+
+sprite $demo16 [128x128/16z] {
+n9L7siCw30Dt0C7c-v_s5Jc9wRztJxAAh6yec5Isxr7RjSI5xkvr_kvhx5lcrjvRvHKbL6vRRedgshQeAz9l4s5kVSaRQ3bsfDukGBYZxGhIixghqlEo-ViV
+z-xBRe2k2i--o9rPJgYg_Zo2T1Sj253y-_alW1w5XLds7-lD4874Wbb_wkzCLuQ9kF6t0OYIecGuYFxrVg_QOsuiN1WyMd0zrZyh3hSLjTOfcueC9uW3koax
+LYeqZvyeepjrr_3-agkxk-haPntTyTYW_5u9NHgExDEQO1ZKQ4yye5T_sPudWTLfCH3xpzZ9EPqOAFkBPyS9hxdeZDtlsAdXTvpG5p8e1yvudwgh4WWWLWAS
+_XvxlpQTVKJ8wPyqbpcT88mz_SysswSYw2Jkw3L_sCg-18Xkqw-nUGpFH-d00xDJ_qs9w0G5KZhvo-RkEzbVqCF6X9_rmNJj4Y5Lmq_S8F7f0ZfnG2FuVC8x
+B3BAiGW7fE773a7xV075wGVuVC9p5MQyFM49dyiniZlVaH_HszmXc1CxlZr80x4mBabarNR7xtutwDcVnDkqJxtD1fW9HmWKYO0WmkVrf1cVVUuUA9pz5ExO
+k9mOe9kPGeASfZ4VXz888mQrlKrhXa-0RdcZ3h9oVJspAjTdhkSDEd7kGVM7Zq_R4qpNgsJ5MwkvfpyBg0yTdp3jlMzgvgjKLRvAMCkC0A57ltf_OFRCHEuJ
+n6fM_yjvcI1P2kD0bC-YFJttl-rOHbz3hqnqHa2RhYezAoKRK_eEMlZrVmPwo03V3Z1hdHRvhtodfrY4R4n-AME6gGM-13TpDC-_3qWbVoXL9hqHnBlzpmR8
+C0Eb4TTdsxRF5OjYnpPrw3qpsUV3pj4J0C_1e_pl7JXuSIUOaoxvsm0N7F14f7PFUxSIJNwSzN14ySVWELexY6H0ONuhG5IFiBBHyc9nslmZ4rJUam9D67Do
+PU1AMpZjEL7fhyQnbNE5V2k0T_TJTOiz-Jo3PtOnvy7OyvQ-VouVbfuWVxGBEdyCM7KqzGhmF_CrsTHY9Mt-Il_ZQn7uPpjiPJg5oGLjcuvK04__eLIDtz8_
+br-IppK7PbBY9tzIaVWr4rv4bEP_e5Vei_vCoglm7Lh-sdvY8fncyLql_8yVdxksDtzcRCllgKEERI_qZtpS_SJBVn6JlpNWe9IeJB7TBU1e_gpu7gDciiii
+_ngbTBQVtzQaGxZ5rNv2nYkaK6gyRVwiLFISROPPLD2zrB06ySbkWBlksoUqkW5q6Xxhdubg1cGvVkMNk4S-ckypsSl3hYtHD5jU8YP-kv1Byr2tSqkFck-F
+W2syybl2n2Z-bAJRot5Pg_2nvVJMzD5l_I5WuWR_2v-TIBdvq9koQpx6bUFQ4uQVzroizzyG9Of_vzkyO6iFBlvawdMIHhtfZCwJh7u4P-9wMEb3Y1mPwD_v
+Ffn9Yn_kDzaTkCT0r5iFNeeRFw34FlnN_ilwMzAyE7CVC8rQptTp3PiDFzl_oYdHFaj-A79Fl4LLhj2SbnAnLi1NFl-GEzkyC8PyCw8jM_t9xnvaU8sQZ_Lt
+J6JyWmVyylgL_lN8Qmprva_9Wu_PSuSepQr09vzZAVafIHCg35j_3Sf__YWXAhiaRwRpcZXh_h4sdURRxSUmGv3yVW4yNx-wx9UkWVwPR-qz-RmOUOsGvbyy
+4yQNZsiEYZScdtJAK7mmqdx6DnnL-BVtV_F9RLw0B43oAHsduf_puUYb-Qt_ZaV-JkGhamS_tax_8jy2C8Ga4sd-Uk5GyszQypzJ1_3DFzCNS9AbQZ25b_DV
+vHvhniWEVFA7JapnHvq1Lgjt_tth7m8dXdKmVp-0Q_FlAHCyC-Zwqq2UzAh-kUPt0uAsNPF__2w06vXYaTMw1gIlv__oFjOGHYveVft-AlyqO3lEFGz_at_o
+Kjny3IE7hFIh1Yb___mhksJPC9JLdtpOf_SVyBth7Px-btpn1mTP7N-heE_VFqEelPUWL435nn8Vd7p8SKQS1-M3qt6SQL0SfRFUJYAAe4vVzVq3k0fGthlT
+5O1wxofvQotCgD5u_7SAPW2lR2hzT_jh1PJtN7y-4D-ODOaM-lQB40EL0EVTtkrFlZuDMCOHXZXyAggrms-XI5vQPjHpcWOYwXN8hv_VtO5jGAsUeMAfA7_3
+Rg4gOgKSzpFXpgLY-AzdZtS3rDO_2Fez7t_Z3wmuAYi4ltPVQH6x-IGV3TUJZ_yhVrvhBsJXxVtRyx-rcuUwsoeCW9dQulqVztuICTsravwhBZSk_6WWcqZz
+VWkUuCCq72vycqyS4nX3JlDS_ME0RNhgAZ4DlSi7jr2xKwhDZzK_4G2UVt8pZhMypnTWQtnKUQh-sGAqFO3JaTQxVCP5w1ttH9TB3-BHLx2wFJ3Tq97VuwCw
+cCu4cxvPXBdMkmUoEflYU_pfnelvPB5JltYd0i0xRYmICBof_p9VkfrFRvKVZWVEMFJbwptzKPQldVTDtY-17GzmsaxMMehlyFEjd7V-UzFwAUjy4PiBYDb0
+H9_oyyXiYQShze_wxuK0M_oUpLRFzGTxgM_CDyw_Au9PNdYeyuplmO-dSlhSFkvEyBro2aKo0l2n_Id-kUIeLzvFvtzMWjK8Hie8rBKUwP_nGb5jahlYwtqC
+ueggG4mDZ_XhASNcYtIxy3RsxcDGuv5eOL5wniTGt-9X9xUnTr-33pCkqJI0F-4hxNV2zL9V_FFc3tgziwLUI_cMVtdVm-PsKtDy60AIIrcxe7BB5yx-cr1Q
+FdV-oG97Wz39oDSDVpjfZw0Rvpzz6TfJvCws6_tNFgljiMVd_wC7V5-cTZTyGpzyEzR_Hm_e5OuPt7_ZE-G7vopv1MrfJXVV8hUHhZ_pj_MTBpxxLpJRWUoh
+amJ-oDzRtsXhBU3hQngDNt-gPMBxe_wMrfVBwV95VSccrmC9WwZq9pxin0ie2Vwghj1NF2a1SF0OVt_-pAgiuzbqlhwKdxb8iWo2l-FFZ3qwvwolwyhtxshp
+6uA_ycT4vtLwzpFiA-Haqn0x2pZ-FzelUHMQ94TyYllpiHXp0RwSuGS-lohohw8zwyt4DutLvo9CUl7bLHiGpKGu-HkVm0FF34AyrVzrYfCNxyJIbQumUsk3
+V7qp0B6WD0sg0GK_GnuJJzN4TikG97Cfn0oJqcUC3nsoeBOnOfYwuMosepzRmKZ4His2HAQ3N4YwtgcqKPMPaDqJJmtOJGpc6BqsUPpm9i3i1NHsDC3h-Iz4
+GbPRBoK8GPQzYfKL-906AFfIr2UHpe5Uwm20uOyJNab1amcJxNg8aOgCVbekqgQmbSzAq1PeWhBvfZW1p6lUcEifVyqSG1ErJ-YyhiTPXt99jpG-1_vKNoln
+Q2CMbVmne8FrrqrzwdwdlM2cCfHQetLwxlfawLUTrrVoFLo_9NtFLykh0qpbscoFw0yMa77KonQPMN1dYKzbvpK6E8N6wPxwdzQNAeodtuquH4i3lkxdlhe9
+lL7B9JegDc8YvZCfWF0ivPY0rUcCQCBAB0p4k_bFaMbsF0DAcpTlH0xbYFLUfg0GYMGDXLL556Ovqfbx-IPOaMYoe5WCeDbbjW7mZS_h_dMdNVpHMfLGdm54
+YTpTPUJztqeTVG296Q0O0GbCpVnptMPVJ-BFL8IPhOzQQ1OI81K4xNqYgvcgC1FXaLYZn0qX6Ar2FXq4f4CllKzZPdcx7tzfRxLKQ0AC8eXIBprRwsFE2I-P
+aTzQFRU74ab7Oig_ZGyVn3nQJ0cAN0H9vWpK3DHlhP-B0e3HEf6MmI2pbDRRP_n5lMT31I0MfhCjDsR-A10v_gmhSqTd14c-VSQ7t8lXNYmZajXbuIDGo-zb
+PerEQ8Rzctx6nzuogL0aT-HIo8rgdV7n1hVv0pNjDRIKFkC-PMzEQptvxuibluX8JZwAG1FkBjhCvnGP0y88F4eLfy9cL8hwCGfohB_FzUdHB_d0tn9IwHRw
+0NT4GKz04oX4pOQtvgMpzkE4jD_qVpXwRJMsHjLhcGfkr9qRCcn-OIXCDVZLAm_EGPSJ6lk_7VvgcZwa--YAI57a5oQJSVZTt8gDujtZwaWZN_zw-E1n9XF5
+GefT09cm5CpCIf0FgyA2NaSRS2K4aAyvWBf0Fq7L9_QksWWE7qkPN4f5waVnGPhmhv5i_CNSUJTIsm3I_-K_HEwgiZ32p7HV3pDJBo2nsldwvN-JjSM_bxK-
+nVu7
+}
+
+
+sprite $demo4 [128x128/4z] {
+xPg7igkmiWMdU_t_Dx-0RAQaCcLWKzStzObinEhH80jEoBysvfVyT_xyiWe5DJ-p3_GtVjxusxLdVeh_qNx1tuWL1V0N5G2Qdtq05IKCVhBez5SxWAX6uISL
+iA7ye_mgz49ZdlpituVw-3wV6IRIFDWKuKWl7lX3urDs_AoNmQdhxjl1LN_I3pvW1p-F4B_vmVlwummGY01ouk8BiEDHXEv-qOz-sRavUR_v1VJ8Vwi0QGu3
+b2Y0IYO_7ybP-EvNO-nPwj7TQoxhvumqW9rj4DR-WIpSs7ImDSSh33ybg0YDr_N8Hx-2W8WW7aHSBO0pVX5yWQBumU_Yv_hQr_j__4K0hpHWrKCy9j5ZFXLm
+TleAW1h-_ewe9nlG2tT3o6r_IC0byj8ZLrpzQdPSZrQ_I7FHBv3PJ_q_PCFQCEaZPdy0ppy9QJ4YEFcjDxvgsPrzDFi5KRgCxtuH4LR_9fDXSJk2KGtx0RD_
+2OHJgn-1rSyxVBEyLHPknJXEEVkNGF2Rlt7slnt3riiW2UtDubUQgtuMV_-kZTEfrGzosW-eWW32wYUhlpOyzWE22Ah0b-MdQY_0e_bRHVkF-j_BJr7uxWTs
+Ex2il_vDRKgrgk9-YcdzBO6d_3Estwh2oAOUFuylZZweL5NQBnEN_GA7-q_jhATU6FxeHv3iE3dexI-HLH-5tFSBn0_lTlR1UhIEDO3t_Ku5QF-gorFF5xFU
+UtvtVzhqNbnM9TDZn_G2OAfs3xhknp7OfFtC_fP-yByYvPA_XmTOvr-sVtn5nyzjNlm14D0p-tyFLN3rb-r_EotJ_lNnttcSzSyDQ3zKLVlfpMRpgzh-QVft
+_0gsdw7ao3zOjd_jk7FlFzqm8YQa_QagJll1TEH9V_SU0xD_UDhla2UVrfyGEuolVjlV3PZzeVtscwYkVb_50zf-J_ZjcYCw-TF-KGjLB_-Wfu-neqxu0_Fu
+Bg3zjZ_KmBW-00d6PJwGd6o00I1nySUYYw4ACss50pNXslJZXmP4SuDTtzF_xW-ibvZR260w4P8B3UWxaFd9EfWFv-EUVfRfNsb008nwrIzvYIzDVrq1UKNS
+yWF4QzFl1dG1tlFR-fx-jGQ00dVy1bZ3SWQWbsqfnCj-4j0Iw39E8VH5LiHmtIzcwEtfNsu0aBl-503szC_XT0T8kEp7416WyvehTy0OkUXFZ3UwFzy1zxPT
+zoTUx7xZLC1r_vZif3Ut2dXVAfVyUyOzVU-2cHfmoJ_qtVtx1PZaGlzx-lVrlMhS6t3D3zWh-Mu19eARtxD-apZh_rR023phPrnjHznZltLiYMVzupVG2NUP
+_mhOatxsd_sRFWAug_dgxpArwx-FK_rwnazs_gfV4pZXrwNwF-7aZz_zp1VdZmXSyMjs0FDNW3HyyvC6UFe_6EgntqKlv074D7hitylh2vy0q-gGOxzcykSH
+dFpXsC-arJo3ytFT8p_pgZUFegzW-UoVzSyZKm6h7wSzxtcW2vZygnxoE7EqJFvLZtaUc0gO_UnZ13JFunGkBNdh5HNmYGr7g2ew2r2nx54RlFGLWo1cmoq1
+Bsv7L04O4wXiY80QQWx4bxueTRV7miG0L9MNLbeLKeIEKqrLHs5NGMs0aW4ga2e0SfhQ83BixQS6h0z7wWLbLmpGSQVeCC62wiTPKJlJ7cyDb68l2YXIreOv
+HQTfeTriiD1wOVjRZ_tI742hKfSAQ05KyLO04C5wmTjFjHyPEAYYRvhVvTIE5EM0WQ3qY6Yi7GSeg8XIK3la2zHEgWfH5HGte1gjQYWKnO1AIG6rOxx2xcUV
+4gYzAnr1WIPWHC4giFj_3ZTIL4afTfQ90tRwzK_OcuR5fdtdNSJ-FFFoDonCvrGBTOpCFUILXYNQgYFs0SFFA-6klpO4IcqD1ophKl0lVdZ9fB0-G1s0LHLb
+6-HDVsre68acpb8Er4p_9cZkyVRtGYojQ2MWm2Pak4PvPYwbYjp4FQKtf60L5aZ6gLTPP1kXp-Zx5c3xaSIATU0NcMwE-HDqKeLzJQkHtLz9AbIgxziJzlcH
+f59A2KfL-qjAIL5GBp3F8DL0bTRinyrNEsYUHQWpCAaVHm4-M47Dlnh_2m
+}
+
+
+title Test on &lt;$demo&gt; &lt;$demo4&gt;&lt;$demo16&gt;
+
+class Foo {
+Test &lt;$demo&gt;
+Test &lt;$demo4&gt;
+Test &lt;$demo16&gt;
+}
+
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<html><head><title>tpefi - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../tp/tp8rs2l5u463lm2j681jh4xvcz6tkya.html'>Previous</a>
+<a href='../tp/tppcarz0qn55lmkdyznxlt5b2yrqu8i.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>tpefi</h2>
+<a href='http://plantuml.sourceforge.net/qa/?qa=5112/skinparam-boundary-control-database-entity-sequence-diagram'>http://plantuml.sourceforge.net/qa/?qa=5112/skinparam-boundary-control-database-entity-sequence-diagram</a>
+<hr>
+<img src='tpefiq3ugr2dnwp879bb0xeu6ocwuu3.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+skinparam {
+    ActorBackgroundColor #cc6666
+    ActorBorderColor #c62021
+    BoundaryBackgroundColor #fbaf60
+    BoundaryBorderColor #e08510
+    ControlBackgroundColor #b5bd68
+    ControlBorderColor #718c00
+    DatabaseBackgroundColor #8abeb7
+    DatabaseBorderColor #39959b
+    EntityBackgroundColor #81a2be
+    EntityBorderColor #4271ae
+    ParticipantBackgroundColor #b294bb
+    ParticipantBorderColor #8959a8
+}
+
+skinparam sequence {
+    LifeLineBorderColor #404040
+    ArrowColor #101010
+}
+
+actor A1
+boundary B2
+control C3
+database D4
+entity E5
+participant P6
+
+activate A1 #cc6666
+A1 --&gt; B2 : To boundary
+activate B2 #fbaf60
+
+B2 --&gt; C3 : To control
+activate C3 #b5bd68
+
+C3 -&gt; D4 : To database
+activate D4 #8abeb7
+
+D4 -&gt; C3 : Resp data to C3
+deactivate D4
+
+C3 --&gt; E5 : To entity
+activate E5 #81a2be
+
+E5 -&gt; P6 : To log
+activate P6 #b294bb
+
+P6 -&gt; E5 : OK
+deactivate P6
+
+E5 --&gt; C3 : Resp to C3
+destroy E5
+
+C3 --&gt; B2 : Resp to B2
+deactivate C3
+
+B2 --&gt; A1 : Resp to A1
+deactivate B2
+deactivate A1
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

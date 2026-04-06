@@ -1,0 +1,203 @@
+<html><head><title>oaaae - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../oa/oa3cg7acs3rgpn531hek3efd5t75u1q.html'>Previous</a>
+<a href='../oa/oaosxckijtfo2alucqfigmvfo46l3wy.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>oaaae</h2>
+<hr>
+<img src='oaaaev6gdvcq51icna6y1hn3yt5uwft.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+state Radio_Root {
+ Radio_Root : entry /
+ Radio_Root : llist_append(&amp;wld-&gt;llRadio, &amp;wld_radio-&gt;wld_radio_it);
+ Radio_Root : wld_radio-&gt;radio.status = RST_DOWN;
+ Radio_Root : set_PCB_ParameterHelper(Radio.Status)
+ Radio_Root : Radio_Root_hookwritehandlers(wld_radio);
+ Radio_Root : hsm_fcall_connect(Radio.startScan, me);
+ Radio_Root : hsm_fcall_connect(Radio.stopScan, me);
+ Radio_Root : hsm_t *commit = calloc(1,Vendor_Radio_Commit_datasize);	
+ Radio_Root : retval = hsm_init(commit, Vendor_Radio_Commit_stacksize, me);
+ Radio_Root : retval = hsm_add_branch(commit, me, NULL);
+Radio_Root : hsm_start(commitstate, Radio_Commit_Root);
+[*] --&gt; Vendor_Radio_Root : [set]
+Radio_Root : 
+Radio_Root : is_fcall_of(startScan) /
+Radio_Root : reply_addError(reply,pcb_error_wrong_state, Radio must be active to start a scan);
+Radio_Root : 
+Radio_Root : is_fcall_of(stopScan) /
+Radio_Root : reply_addError(reply,pcb_error_wrong_state, There is no scan running);
+Radio_Root : 
+Radio_Root : is_fcall_of(addEndPointIntf) /
+Radio_Root : endpoint_hsm = calloc(1,Vendor_Radio_size);	
+Radio_Root : retval = hsm_init(endpoint_hsm, Vendor_EndPoint_stacksize, me);
+Radio_Root : retval = hsm_add_branch(endpoint_hsm, me, NULL);
+Radio_Root : hsm_start(endpoint_hsm, EndPoint_Root, endpointname);
+Radio_Root : 
+ Radio_Root : is_parameterwrite_of(&quot;Enable&quot;) [data.enable != enabled] /
+ Radio_Root : data.enable = enabled;
+ Radio_Root : hsm_event_defer(wld_radio-&gt;hsm,RadioCommitRequest);
+'  Radio_Root --&gt; Vendor_Radio_Configuring : RadioCommitRequest
+ Radio_Root : 
+ Radio_Root :  is_exit_event /
+ Radio_Root : llist_iterator_take(&amp;wld_radio-&gt;wld_radio_it);
+state Vendor_Radio_Root {
+state Radio_Disabled {
+ Radio_Disabled : entry /
+ Radio_Disabled : Radio-&gt;status = RST_DOWN;
+ Radio_Disabled : set_PCB_ParameterHelper(Radio.Status)
+ Radio_Disabled : hsm_event_defer(me, RadioDisabled);
+[*] --&gt; Vendor_Radio_Disabled : [set]
+}
+state Radio_Enabled {
+ Radio_Enabled : entry /
+ Radio_Enabled : wld_radio-&gt;radio.status = RST_UP;
+ Radio_Enabled : set_PCB_ParameterHelper(Radio.Status)
+ Radio_Enabled : hsm_event_defer(wld_radio-&gt;hsm, RadioEnabled);
+[*] --&gt; Vendor_Radio_Enabled : [set]
+Radio_Enabled : 
+Radio_Enabled : is_fcall_of(startScan) /
+Radio_Enabled : hsm_fcall_return(e, function_exec_done);
+ Radio_Enabled --&gt; Vendor_Radio_Scanning : is_fcall_of(startScan)
+state Vendor_Radio_Enabled {
+state Radio_Scanning {
+ Radio_Scanning : entry /
+ Radio_Scanning : set_PCB_ParameterHelper(Radio.Status, &quot;Scanning&quot;)
+Radio_Scanning : 
+Radio_Scanning : is_fcall_of(stopScan) /
+Radio_Scanning : hsm_fcall_return(e, function_exec_done);
+ Radio_Scanning --&gt; Vendor_Radio_Enabled : is_fcall_of(stopScan)
+ Radio_Scanning :
+ Radio_Scanning : exit /
+ Radio_Scanning : set_PCB_ParameterHelper(Radio.Status, &quot;Up&quot;)
+[*] --&gt; Vendor_Radio_Scanning : [set]
+state Vendor_Radio_Scanning {
+}
+}
+state Radio_Configuring {
+ Radio_Configuring : entry /
+ Radio_Configuring : set_PCB_ParameterHelper(Radio.Status, &quot;Configuring&quot;)
+ Radio_Configuring : hsm_event_defer(wld_radio-&gt;hsm,RadioConfigStart)
+[*] --&gt; Vendor_Radio_Configuring : [set]
+ Radio_Configuring --&gt; Vendor_Radio_Enabled : RadioConfigStart [Radio-&gt;enable]
+ Radio_Configuring --&gt; Vendor_Radio_Disabled : RadioConfigStart [!Radio-&gt;enable]
+ Radio_Configuring : 
+ Radio_Configuring : exit /
+ Radio_Configuring : hsm_event_defer(wld_radio-&gt;hsm,RadioCommitComplete)
+state Vendor_Radio_Configuring {
+}
+}
+}
+}
+state Radio_Error {
+ Radio_Error : entry /
+ Radio_Error : wld_radio-&gt;radio.status = RST_ERROR;
+ Radio_Error : set_PCB_ParameterHelper(Radio.Status)
+[*] --&gt; Vendor_Radio_Error : [set]
+}
+}
+--
+state Radio_Commit_Root {
+}
+}
+@enduml 
+</code></pre>
+</div>
+</body>
+</html>

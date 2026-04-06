@@ -1,0 +1,11 @@
+{
+  "duration": 6,
+  "description": "activity3",
+  "implementation": "ActivityDiagram3",
+  "png": {
+    "width": 204,
+    "height": 247,
+    "crc": 1381563043,
+    "sizeInBytes": 3594
+  }
+}

@@ -1,0 +1,214 @@
+<html><head><title>nsdxf - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../ns/nscf6e3m8wt0o3xqiet56n3pykrrvix.html'>Previous</a>
+<a href='../ns/nsu0m5z8p3mj5ngywdqs04fxv7r7s7s.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>nsdxf</h2>
+<a href='http://www.yamllint.com/'>http://www.yamllint.com/</a>
+<hr>
+<img src='nsdxffbfy2q965exzzu0jje1ga94pje.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startyaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: &quot;2020-12-25T00:26:06Z&quot;
+  generateName: blazorindocker-7966669766-
+  labels:
+    app: blazor
+    pod-template-hash: &quot;7966669766&quot;
+  name: blazorindocker-7966669766-9j2bk
+  namespace: default
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: blazorindocker-7966669766
+    uid: dfb3148b-cff3-42d5-8ac4-e55e3d5450d7
+  resourceVersion: &quot;941757&quot;
+  selfLink: /api/v1/namespaces/default/pods/blazorindocker-7966669766-9j2bk
+  uid: 7cb40e09-eb3f-4a34-b12e-b6ec84441fdb
+spec:
+  containers:
+  - image: piotrzan/blazorindocker
+    imagePullPolicy: Always
+    name: nginx
+    ports:
+    - containerPort: 80
+      protocol: TCP
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: default-token-826vh
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: docker-desktop
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: default-token-826vh
+    secret:
+      defaultMode: 420
+      secretName: default-token-826vh
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: &quot;2020-12-25T00:26:06Z&quot;
+    status: &quot;True&quot;
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: &quot;2021-01-02T12:26:24Z&quot;
+    status: &quot;True&quot;
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: &quot;2021-01-02T12:26:24Z&quot;
+    status: &quot;True&quot;
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: &quot;2020-12-25T00:26:06Z&quot;
+    status: &quot;True&quot;
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://7a968933232bc39d4d10d5106976ee720e57971df50da9b71ab9403f196261fc
+    image: piotrzan/blazorindocker:latest
+    imageID: docker-pullable://piotrzan/blazorindocker@sha256:d1f1174d0fddd9d490ff1615a699bb47f38cf05f4ef1d217a5c31f1711772e9c
+    lastState:
+      terminated:
+        containerID: docker://4c8e0a7ccd42ba13b695b3412b9399a91d61fdfbf4659bf3909ea6192c15f0b7
+        exitCode: 255
+        finishedAt: &quot;2021-01-02T12:26:12Z&quot;
+        reason: Error
+        startedAt: &quot;2021-01-02T00:19:04Z&quot;
+    name: nginx
+    ready: true
+    restartCount: 11
+    started: true
+    state:
+      running:
+        startedAt: &quot;2021-01-02T12:26:23Z&quot;
+  phase: Running
+  podIP: 10.1.1.215
+  podIPs:
+  - ip: 10.1.1.215
+  qosClass: BestEffort
+  startTime: &quot;2020-12-25T00:26:06Z&quot;
+@endyaml
+</code></pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<html><head><title>s8a3s - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../s8/s878mymcbxq3yhnphy6ei2f8p7rzhqy.html'>Previous</a>
+<a href='../s8/s8pr7gowi650v1gs6j0snfqrkifojbe.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>s8a3s</h2>
+<a href='https://github.com/plantuml/plantuml/issues/1085#issuecomment-1383135590'>https://github.com/plantuml/plantuml/issues/1085#issuecomment-1383135590</a>
+<hr>
+<img src='s8a3skfwzgrnkngj1lf7zoey7j8kc43.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+title **Hessian 字节码映射**
+
+label l [
+{{json
+{
+  &quot;&lt;color:D4312C&gt;0x00&quot;: &quot;&lt;color:D4312C&gt;string：+0个字符    　D瓜哥 &middot; https://www.diguage.com &middot; 出品&quot;,
+  &quot;&lt;color:D4312C&gt;0x01&quot;: &quot;&lt;color:D4312C&gt;string：+1个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x02&quot;: &quot;&lt;color:D4312C&gt;string：+2个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x03&quot;: &quot;&lt;color:D4312C&gt;string：+3个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x04&quot;: &quot;&lt;color:D4312C&gt;string：+4个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x05&quot;: &quot;&lt;color:D4312C&gt;string：+5个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x06&quot;: &quot;&lt;color:D4312C&gt;string：+6个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x07&quot;: &quot;&lt;color:D4312C&gt;string：+7个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x08&quot;: &quot;&lt;color:D4312C&gt;string：+8个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x09&quot;: &quot;&lt;color:D4312C&gt;string：+9个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x0A&quot;: &quot;&lt;color:D4312C&gt;string：+10个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x0B&quot;: &quot;&lt;color:D4312C&gt;string：+11个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x0C&quot;: &quot;&lt;color:D4312C&gt;string：+12个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x0D&quot;: &quot;&lt;color:D4312C&gt;string：+13个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x0E&quot;: &quot;&lt;color:D4312C&gt;string：+14个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x0F&quot;: &quot;&lt;color:D4312C&gt;string：+15个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x10&quot;: &quot;&lt;color:D4312C&gt;string：+16个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x11&quot;: &quot;&lt;color:D4312C&gt;string：+17个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x12&quot;: &quot;&lt;color:D4312C&gt;string：+18个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x13&quot;: &quot;&lt;color:D4312C&gt;string：+19个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x14&quot;: &quot;&lt;color:D4312C&gt;string：+20个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x15&quot;: &quot;&lt;color:D4312C&gt;string：+21个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x16&quot;: &quot;&lt;color:D4312C&gt;string：+22个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x17&quot;: &quot;&lt;color:D4312C&gt;string：+23个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x18&quot;: &quot;&lt;color:D4312C&gt;string：+24个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x19&quot;: &quot;&lt;color:D4312C&gt;string：+25个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x1A&quot;: &quot;&lt;color:D4312C&gt;string：+26个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x1B&quot;: &quot;&lt;color:D4312C&gt;string：+27个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x1C&quot;: &quot;&lt;color:D4312C&gt;string：+28个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x1D&quot;: &quot;&lt;color:D4312C&gt;string：+29个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x1E&quot;: &quot;&lt;color:D4312C&gt;string：+30个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x1F&quot;: &quot;&lt;color:D4312C&gt;string：+31个字符&quot;,
+  &quot;&lt;color:7B14A1&gt;0x20&quot;: &quot;&lt;color:7B14A1&gt;binary：无数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x21&quot;: &quot;&lt;color:7B14A1&gt;binary：+1个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x22&quot;: &quot;&lt;color:7B14A1&gt;binary：+2个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x23&quot;: &quot;&lt;color:7B14A1&gt;binary：+3个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x24&quot;: &quot;&lt;color:7B14A1&gt;binary：+4个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x25&quot;: &quot;&lt;color:7B14A1&gt;binary：+5个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x26&quot;: &quot;&lt;color:7B14A1&gt;binary：+6个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x27&quot;: &quot;&lt;color:7B14A1&gt;binary：+7个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x28&quot;: &quot;&lt;color:7B14A1&gt;binary：+8个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x29&quot;: &quot;&lt;color:7B14A1&gt;binary：+9个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x2A&quot;: &quot;&lt;color:7B14A1&gt;binary：+10个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x2B&quot;: &quot;&lt;color:7B14A1&gt;binary：+11个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x2C&quot;: &quot;&lt;color:7B14A1&gt;binary：+12个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x2D&quot;: &quot;&lt;color:7B14A1&gt;binary：+13个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x2E&quot;: &quot;&lt;color:7B14A1&gt;binary：+14个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x2F&quot;: &quot;&lt;color:7B14A1&gt;binary：+15个字节数据&quot;,
+  &quot;&lt;color:D4312C&gt;0x30&quot;: &quot;&lt;color:D4312C&gt;string：+1个字节长度，+[32, 255]个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x31&quot;: &quot;&lt;color:D4312C&gt;string：+1个字节长度，+[256, 511]个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x32&quot;: &quot;&lt;color:D4312C&gt;string：+1个字节长度，+[512, 767]个字符&quot;,
+  &quot;&lt;color:D4312C&gt;0x33&quot;: &quot;&lt;color:D4312C&gt;string：+1个字节长度，+[768, 1023]个字符&quot;,
+  &quot;&lt;color:7B14A1&gt;0x34&quot;: &quot;&lt;color:7B14A1&gt;binary：1个字节长度，[16, 255]个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x35&quot;: &quot;&lt;color:7B14A1&gt;binary：1个字节长度，[256, 511]个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x36&quot;: &quot;&lt;color:7B14A1&gt;binary：1个字节长度，[512, 767]个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x37&quot;: &quot;&lt;color:7B14A1&gt;binary：1个字节长度，[768, 1023]个字节数据&quot;,
+  &quot;&lt;color:F87E25&gt;0x38&quot;: &quot;&lt;color:F87E25&gt;long：[-262144, -196609]，+2个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0x39&quot;: &quot;&lt;color:F87E25&gt;long：[-196608, -131073]，+2个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0x3A&quot;: &quot;&lt;color:F87E25&gt;long：[-131072, -65537]，+2个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0x3B&quot;: &quot;&lt;color:F87E25&gt;long：[-65536, -2049]，+2个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0x3C&quot;: &quot;&lt;color:F87E25&gt;long：[2048, 65535]，+2个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0x3D&quot;: &quot;&lt;color:F87E25&gt;long：[65536, 131071]，+2个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0x3E&quot;: &quot;&lt;color:F87E25&gt;long：[131072, 196607]，+2个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0x3F&quot;: &quot;&lt;color:F87E25&gt;long：[196608, 262143]，+2个字节&quot;,
+  &quot;0x40&quot;: &quot;（保留）&quot;,
+  &quot;&lt;color:7B14A1&gt;0x41&quot;: &quot;&lt;color:7B14A1&gt;binary：2个字节长度，+8189个字节数据&quot;,
+  &quot;&lt;color:7B14A1&gt;0x42&quot;: &quot;&lt;color:7B14A1&gt;binary：2个字节长度，[1024, 8189]个字节数据&quot;,
+  &quot;&lt;color:red&gt;0x43&quot;: &quot;&lt;color:red&gt;实例对象&quot;,
+  &quot;&lt;color:0B9EF5&gt;0x44&quot;: &quot;&lt;color:0B9EF5&gt;double：其余浮点数，+8个字节&quot;,
+  &quot;0x45&quot;: &quot;（保留）&quot;,
+  &quot;&lt;color:25AF28&gt;0x46&quot;: &quot;&lt;color:25AF28&gt;Boolean： False&quot;,
+  &quot;0x47&quot;: &quot;（保留）&quot;,
+  &quot;&lt;color:FE942A&gt;0x48&quot;: &quot;&lt;color:FE942A&gt;Map：（HashMap）&quot;,
+  &quot;&lt;color:21D5C3&gt;0x49&quot;: &quot;&lt;color:21D5C3&gt;int：[-2&sup3;&sup1;, -262145] 和 [262144, 2&sup3;&sup1;-1]，+4个字节&quot;,
+  &quot;&lt;color:0EA79B&gt;0x4A&quot;: &quot;&lt;color:0EA79B&gt;8字节正常日期&quot;,
+  &quot;&lt;color:0EA79B&gt;0x4B&quot;: &quot;&lt;color:0EA79B&gt;4字节压缩日期&quot;,
+  &quot;&lt;color:F87E25&gt;0x4C&quot;: &quot;&lt;color:F87E25&gt;long：[-2⁶&sup3;, -2&sup3;&sup1;-1] 和 [2&sup3;&sup1;, 2⁶&sup3;-1]，+8个字节&quot;,
+  &quot;&lt;color:F9BA32&gt;0x4D&quot;: &quot;&lt;color:F9BA32&gt;Map：（除HashMap外，其他 Map 实现类）&quot;,
+  &quot;0x4E&quot;: &quot;null&quot;,
+  &quot;&lt;color:0007C9&gt;0x4F&quot;: &quot;&lt;color:0007C9&gt;类型引用：表示对应第 [16, ] 个类型，+一个int编码表示类型序号&quot;,
+  &quot;0x50&quot;: &quot;（保留）&quot;,
+  &quot;&lt;color:6F1618&gt;0x51&quot;: &quot;&lt;color:6F1618&gt;相同实例对象应用，+int编号&quot;,
+  &quot;&lt;color:D4312C&gt;0x52&quot;: &quot;&lt;color:D4312C&gt;string：+2个字节长度，+[32767, 32768]个字符(视末尾字符而定)&quot;,
+  &quot;&lt;color:D4312C&gt;0x53&quot;: &quot;&lt;color:D4312C&gt;string：+2个字节长度，+[1024, 32768]个字符&quot;,
+  &quot;&lt;color:25AF28&gt;0x54&quot;: &quot;&lt;color:25AF28&gt;Boolean： True&quot;,
+  &quot;&lt;color:ED60A5&gt;0x55&quot;: &quot;&lt;color:ED60A5&gt;集合：(未找到使用示例)&quot;,
+  &quot;&lt;color:FE8DC5&gt;0x56&quot;: &quot;&lt;color:FE8DC5&gt;集合：[8, ]个元素（非 ArrayList，数组或者其他 Collection 实现类）&quot;,
+  &quot;&lt;color:991B5D&gt;0x57&quot;: &quot;&lt;color:991B5D&gt;集合：迭代器（Iterator 或 Enumeration）&quot;,
+  &quot;&lt;color:CA2B79&gt;0x58&quot;: &quot;&lt;color:CA2B79&gt;集合：[8, ]个元素（ArrayList）&quot;,
+  &quot;&lt;color:F87E25&gt;0x59&quot;: &quot;&lt;color:F87E25&gt;long： [-2&sup3;&sup1;, -262145] 和 [262144, 2&sup3;&sup1;-1]，+4个字节&quot;,
+  &quot;0x5A&quot;: &quot;结束标志符&quot;,
+  &quot;&lt;color:0B9EF5&gt;0x5B&quot;: &quot;&lt;color:0B9EF5&gt;double：0.0&quot;,
+  &quot;&lt;color:0B9EF5&gt;0x5C&quot;: &quot;&lt;color:0B9EF5&gt;double：1.0&quot;,
+  &quot;&lt;color:0B9EF5&gt;0x5D&quot;: &quot;&lt;color:0B9EF5&gt;double：[-128.0, 127.0] 浮点数，+1个字节&quot;,
+  &quot;&lt;color:0B9EF5&gt;0x5E&quot;: &quot;&lt;color:0B9EF5&gt;double：[-32768.0, 32767.0] 浮点数，+1个字节&quot;,
+  &quot;&lt;color:0B9EF5&gt;0x5F&quot;: &quot;&lt;color:0B9EF5&gt;double：Integer/1000 浮点数，+4个字节&quot;,
+
+  &quot;&lt;color:0007C9&gt;0x60&quot;: &quot;&lt;color:0007C9&gt;类型引用：表示对应第 0 个类型&quot;,
+  &quot;&lt;color:0007C9&gt;0x61&quot;: &quot;&lt;color:0007C9&gt;类型引用：表示对应第 1 个类型&quot;,
+  &quot;&lt;color:0007C9&gt;0x62&quot;: &quot;&lt;color:0007C9&gt;类型引用：表示对应第 2 个类型&quot;,
+  &quot;&lt;color:0007C9&gt;0x63&quot;: &quot;&lt;color:0007C9&gt;类型引用：表示对应第 3 个类型&quot;,
+  &quot;&lt;color:0007C9&gt;0x64&quot;: &quot;&lt;color:0007C9&gt;类型引用：表示对应第 4 个类型&quot;,
+  &quot;&lt;color:0007C9&gt;0x65&quot;: &quot;&lt;color:0007C9&gt;类型引用：表示对应第 5 个类型&quot;,
+  &quot;&lt;color:0007C9&gt;0x66&quot;: &quot;&lt;color:0007C9&gt;类型引用：表示对应第 6 个类型&quot;,
+  &quot;&lt;color:0007C9&gt;0x67&quot;: &quot;&lt;color:0007C9&gt;类型引用：表示对应第 7 个类型&quot;,
+  &quot;&lt;color:0007C9&gt;0x68&quot;: &quot;&lt;color:0007C9&gt;类型引用：表示对应第 8 个类型&quot;,
+  &quot;&lt;color:0007C9&gt;0x69&quot;: &quot;&lt;color:0007C9&gt;类型引用：表示对应第 9 个类型&quot;,
+  &quot;&lt;color:0007C9&gt;0x6A&quot;: &quot;&lt;color:0007C9&gt;类型引用：表示对应第 10 个类型&quot;,
+  &quot;&lt;color:0007C9&gt;0x6B&quot;: &quot;&lt;color:0007C9&gt;类型引用：表示对应第 11 个类型&quot;,
+  &quot;&lt;color:0007C9&gt;0x6C&quot;: &quot;&lt;color:0007C9&gt;类型引用：表示对应第 12 个类型&quot;,
+  &quot;&lt;color:0007C9&gt;0x6D&quot;: &quot;&lt;color:0007C9&gt;类型引用：表示对应第 13 个类型&quot;,
+  &quot;&lt;color:0007C9&gt;0x6E&quot;: &quot;&lt;color:0007C9&gt;类型引用：表示对应第 14 个类型&quot;,
+  &quot;&lt;color:0007C9&gt;0x6F&quot;: &quot;&lt;color:0007C9&gt;类型引用：表示对应第 15 个类型&quot;,
+
+  &quot;&lt;color:FE8DC5&gt;0x70&quot;: &quot;&lt;color:FE8DC5&gt;集合：0个元素（非 ArrayList，数组或者其他 Collection 实现类）&quot;,
+  &quot;&lt;color:FE8DC5&gt;0x71&quot;: &quot;&lt;color:FE8DC5&gt;集合：1个元素（非 ArrayList，数组或者其他 Collection 实现类）&quot;,
+  &quot;&lt;color:FE8DC5&gt;0x72&quot;: &quot;&lt;color:FE8DC5&gt;集合：2个元素（非 ArrayList，数组或者其他 Collection 实现类）&quot;,
+  &quot;&lt;color:FE8DC5&gt;0x73&quot;: &quot;&lt;color:FE8DC5&gt;集合：3个元素（非 ArrayList，数组或者其他 Collection 实现类）&quot;,
+  &quot;&lt;color:FE8DC5&gt;0x74&quot;: &quot;&lt;color:FE8DC5&gt;集合：4个元素（非 ArrayList，数组或者其他 Collection 实现类）&quot;,
+  &quot;&lt;color:FE8DC5&gt;0x75&quot;: &quot;&lt;color:FE8DC5&gt;集合：5个元素（非 ArrayList，数组或者其他 Collection 实现类）&quot;,
+  &quot;&lt;color:FE8DC5&gt;0x76&quot;: &quot;&lt;color:FE8DC5&gt;集合：6个元素（非 ArrayList，数组或者其他 Collection 实现类）&quot;,
+  &quot;&lt;color:FE8DC5&gt;0x77&quot;: &quot;&lt;color:FE8DC5&gt;集合：7个元素（非 ArrayList，数组或者其他 Collection 实现类）&quot;,
+  &quot;&lt;color:CA2B79&gt;0x78&quot;: &quot;&lt;color:CA2B79&gt;集合：0个元素（ArrayList）&quot;,
+  &quot;&lt;color:CA2B79&gt;0x79&quot;: &quot;&lt;color:CA2B79&gt;集合：1个元素（ArrayList）&quot;,
+  &quot;&lt;color:CA2B79&gt;0x7A&quot;: &quot;&lt;color:CA2B79&gt;集合：2个元素（ArrayList）&quot;,
+  &quot;&lt;color:CA2B79&gt;0x7B&quot;: &quot;&lt;color:CA2B79&gt;集合：3个元素（ArrayList）&quot;,
+  &quot;&lt;color:CA2B79&gt;0x7C&quot;: &quot;&lt;color:CA2B79&gt;集合：4个元素（ArrayList）&quot;,
+  &quot;&lt;color:CA2B79&gt;0x7D&quot;: &quot;&lt;color:CA2B79&gt;集合：5个元素（ArrayList）&quot;,
+  &quot;&lt;color:CA2B79&gt;0x7E&quot;: &quot;&lt;color:CA2B79&gt;集合：6个元素（ArrayList）&quot;,
+  &quot;&lt;color:CA2B79&gt;0x7F&quot;: &quot;&lt;color:CA2B79&gt;集合：7个元素（ArrayList）&quot;,
+  &quot;&lt;color:21D5C3&gt;0x80&quot;: &quot;&lt;color:21D5C3&gt;int: -16&quot;,
+  &quot;&lt;color:21D5C3&gt;0x81&quot;: &quot;&lt;color:21D5C3&gt;int: -15&quot;,
+  &quot;&lt;color:21D5C3&gt;0x82&quot;: &quot;&lt;color:21D5C3&gt;int: -14&quot;,
+  &quot;&lt;color:21D5C3&gt;0x83&quot;: &quot;&lt;color:21D5C3&gt;int: -13&quot;,
+  &quot;&lt;color:21D5C3&gt;0x84&quot;: &quot;&lt;color:21D5C3&gt;int: -12&quot;,
+  &quot;&lt;color:21D5C3&gt;0x85&quot;: &quot;&lt;color:21D5C3&gt;int: -11&quot;,
+  &quot;&lt;color:21D5C3&gt;0x86&quot;: &quot;&lt;color:21D5C3&gt;int: -10&quot;,
+  &quot;&lt;color:21D5C3&gt;0x87&quot;: &quot;&lt;color:21D5C3&gt;int: -9&quot;,
+  &quot;&lt;color:21D5C3&gt;0x88&quot;: &quot;&lt;color:21D5C3&gt;int: -8&quot;,
+  &quot;&lt;color:21D5C3&gt;0x89&quot;: &quot;&lt;color:21D5C3&gt;int: -7&quot;,
+  &quot;&lt;color:21D5C3&gt;0x8A&quot;: &quot;&lt;color:21D5C3&gt;int: -6&quot;,
+  &quot;&lt;color:21D5C3&gt;0x8B&quot;: &quot;&lt;color:21D5C3&gt;int: -5&quot;,
+  &quot;&lt;color:21D5C3&gt;0x8C&quot;: &quot;&lt;color:21D5C3&gt;int: -4&quot;,
+  &quot;&lt;color:21D5C3&gt;0x8D&quot;: &quot;&lt;color:21D5C3&gt;int: -3&quot;,
+  &quot;&lt;color:21D5C3&gt;0x8E&quot;: &quot;&lt;color:21D5C3&gt;int: -2&quot;,
+  &quot;&lt;color:21D5C3&gt;0x8F&quot;: &quot;&lt;color:21D5C3&gt;int: -1&quot;,
+  &quot;&lt;color:21D5C3&gt;0x90&quot;: &quot;&lt;color:21D5C3&gt;int: 0   　　　　D瓜哥 &middot; https://www.diguage.com &middot; 出品&quot;,
+  &quot;&lt;color:21D5C3&gt;0x91&quot;: &quot;&lt;color:21D5C3&gt;int: 1&quot;,
+  &quot;&lt;color:21D5C3&gt;0x92&quot;: &quot;&lt;color:21D5C3&gt;int: 2&quot;,
+  &quot;&lt;color:21D5C3&gt;0x93&quot;: &quot;&lt;color:21D5C3&gt;int: 3&quot;,
+  &quot;&lt;color:21D5C3&gt;0x94&quot;: &quot;&lt;color:21D5C3&gt;int: 4&quot;,
+  &quot;&lt;color:21D5C3&gt;0x95&quot;: &quot;&lt;color:21D5C3&gt;int: 5&quot;,
+  &quot;&lt;color:21D5C3&gt;0x96&quot;: &quot;&lt;color:21D5C3&gt;int: 6&quot;,
+  &quot;&lt;color:21D5C3&gt;0x97&quot;: &quot;&lt;color:21D5C3&gt;int: 7&quot;,
+  &quot;&lt;color:21D5C3&gt;0x98&quot;: &quot;&lt;color:21D5C3&gt;int: 8&quot;,
+  &quot;&lt;color:21D5C3&gt;0x99&quot;: &quot;&lt;color:21D5C3&gt;int: 9&quot;,
+  &quot;&lt;color:21D5C3&gt;0x9A&quot;: &quot;&lt;color:21D5C3&gt;int: 10&quot;,
+  &quot;&lt;color:21D5C3&gt;0x9B&quot;: &quot;&lt;color:21D5C3&gt;int: 11&quot;,
+  &quot;&lt;color:21D5C3&gt;0x9C&quot;: &quot;&lt;color:21D5C3&gt;int: 12&quot;,
+  &quot;&lt;color:21D5C3&gt;0x9D&quot;: &quot;&lt;color:21D5C3&gt;int: 13&quot;,
+  &quot;&lt;color:21D5C3&gt;0x9E&quot;: &quot;&lt;color:21D5C3&gt;int: 14&quot;,
+  &quot;&lt;color:21D5C3&gt;0x9F&quot;: &quot;&lt;color:21D5C3&gt;int: 15&quot;,
+  &quot;&lt;color:21D5C3&gt;0xA0&quot;: &quot;&lt;color:21D5C3&gt;int: 16&quot;,
+  &quot;&lt;color:21D5C3&gt;0xA1&quot;: &quot;&lt;color:21D5C3&gt;int: 17&quot;,
+  &quot;&lt;color:21D5C3&gt;0xA2&quot;: &quot;&lt;color:21D5C3&gt;int: 18&quot;,
+  &quot;&lt;color:21D5C3&gt;0xA3&quot;: &quot;&lt;color:21D5C3&gt;int: 19&quot;,
+  &quot;&lt;color:21D5C3&gt;0xA4&quot;: &quot;&lt;color:21D5C3&gt;int: 20&quot;,
+  &quot;&lt;color:21D5C3&gt;0xA5&quot;: &quot;&lt;color:21D5C3&gt;int: 21&quot;,
+  &quot;&lt;color:21D5C3&gt;0xA6&quot;: &quot;&lt;color:21D5C3&gt;int: 22&quot;,
+  &quot;&lt;color:21D5C3&gt;0xA7&quot;: &quot;&lt;color:21D5C3&gt;int: 23&quot;,
+  &quot;&lt;color:21D5C3&gt;0xA8&quot;: &quot;&lt;color:21D5C3&gt;int: 24&quot;,
+  &quot;&lt;color:21D5C3&gt;0xA9&quot;: &quot;&lt;color:21D5C3&gt;int: 25&quot;,
+  &quot;&lt;color:21D5C3&gt;0xAA&quot;: &quot;&lt;color:21D5C3&gt;int: 26&quot;,
+  &quot;&lt;color:21D5C3&gt;0xAB&quot;: &quot;&lt;color:21D5C3&gt;int: 27&quot;,
+  &quot;&lt;color:21D5C3&gt;0xAC&quot;: &quot;&lt;color:21D5C3&gt;int: 28&quot;,
+  &quot;&lt;color:21D5C3&gt;0xAD&quot;: &quot;&lt;color:21D5C3&gt;int: 29&quot;,
+  &quot;&lt;color:21D5C3&gt;0xAE&quot;: &quot;&lt;color:21D5C3&gt;int: 30&quot;,
+  &quot;&lt;color:21D5C3&gt;0xAF&quot;: &quot;&lt;color:21D5C3&gt;int: 31&quot;,
+  &quot;&lt;color:21D5C3&gt;0xB0&quot;: &quot;&lt;color:21D5C3&gt;int: 32&quot;,
+  &quot;&lt;color:21D5C3&gt;0xB1&quot;: &quot;&lt;color:21D5C3&gt;int: 33&quot;,
+  &quot;&lt;color:21D5C3&gt;0xB2&quot;: &quot;&lt;color:21D5C3&gt;int: 34&quot;,
+  &quot;&lt;color:21D5C3&gt;0xB3&quot;: &quot;&lt;color:21D5C3&gt;int: 35&quot;,
+  &quot;&lt;color:21D5C3&gt;0xB4&quot;: &quot;&lt;color:21D5C3&gt;int: 36&quot;,
+  &quot;&lt;color:21D5C3&gt;0xB5&quot;: &quot;&lt;color:21D5C3&gt;int: 37&quot;,
+  &quot;&lt;color:21D5C3&gt;0xB6&quot;: &quot;&lt;color:21D5C3&gt;int: 38&quot;,
+  &quot;&lt;color:21D5C3&gt;0xB7&quot;: &quot;&lt;color:21D5C3&gt;int: 39&quot;,
+  &quot;&lt;color:21D5C3&gt;0xB8&quot;: &quot;&lt;color:21D5C3&gt;int: 40&quot;,
+  &quot;&lt;color:21D5C3&gt;0xB9&quot;: &quot;&lt;color:21D5C3&gt;int: 41&quot;,
+  &quot;&lt;color:21D5C3&gt;0xBA&quot;: &quot;&lt;color:21D5C3&gt;int: 42&quot;,
+  &quot;&lt;color:21D5C3&gt;0xBB&quot;: &quot;&lt;color:21D5C3&gt;int: 43&quot;,
+  &quot;&lt;color:21D5C3&gt;0xBC&quot;: &quot;&lt;color:21D5C3&gt;int: 44&quot;,
+  &quot;&lt;color:21D5C3&gt;0xBD&quot;: &quot;&lt;color:21D5C3&gt;int: 45&quot;,
+  &quot;&lt;color:21D5C3&gt;0xBE&quot;: &quot;&lt;color:21D5C3&gt;int: 46&quot;,
+  &quot;&lt;color:21D5C3&gt;0xBF&quot;: &quot;&lt;color:21D5C3&gt;int: 47&quot;,
+  &quot;&lt;color:21D5C3&gt;0xC0&quot;: &quot;&lt;color:21D5C3&gt;int: [-2048, -1793]，+1个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xC1&quot;: &quot;&lt;color:21D5C3&gt;int: [-1792, -1537]，+1个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xC2&quot;: &quot;&lt;color:21D5C3&gt;int: [-1536, -1281]，+1个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xC3&quot;: &quot;&lt;color:21D5C3&gt;int: [-1280, -1025]，+1个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xC4&quot;: &quot;&lt;color:21D5C3&gt;int: [-1024, -769]，+1个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xC5&quot;: &quot;&lt;color:21D5C3&gt;int: [-768, -513]，+1个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xC6&quot;: &quot;&lt;color:21D5C3&gt;int: [-512, -257]，+1个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xC7&quot;: &quot;&lt;color:21D5C3&gt;int: [-256, -17]，+1个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xC8&quot;: &quot;&lt;color:21D5C3&gt;int: [48, 255]，+1个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xC9&quot;: &quot;&lt;color:21D5C3&gt;int: [256, 511]，+1个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xCA&quot;: &quot;&lt;color:21D5C3&gt;int: [512, 767]，+1个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xCB&quot;: &quot;&lt;color:21D5C3&gt;int: [768, 1023]，+1个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xCC&quot;: &quot;&lt;color:21D5C3&gt;int: [1024, 1279]，+1个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xCD&quot;: &quot;&lt;color:21D5C3&gt;int: [1280, 1535]，+1个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xCE&quot;: &quot;&lt;color:21D5C3&gt;int: [1536, 1791]，+1个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xCF&quot;: &quot;&lt;color:21D5C3&gt;int: [1792, 2047]，+1个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xD0&quot;: &quot;&lt;color:21D5C3&gt;int: [-262144, -196609]，+2个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xD1&quot;: &quot;&lt;color:21D5C3&gt;int: [-196608, -131073]，+2个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xD2&quot;: &quot;&lt;color:21D5C3&gt;int: [-131072, -65537]，+2个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xD3&quot;: &quot;&lt;color:21D5C3&gt;int: [-65536, -2049]，+2个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xD4&quot;: &quot;&lt;color:21D5C3&gt;int: [2048, 65535]，+2个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xD5&quot;: &quot;&lt;color:21D5C3&gt;int: [65536, 131071]，+2个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xD6&quot;: &quot;&lt;color:21D5C3&gt;int: [131072, 196607]，+2个字节&quot;,
+  &quot;&lt;color:21D5C3&gt;0xD7&quot;: &quot;&lt;color:21D5C3&gt;int: [196608, 262143]，+2个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0xD8&quot;: &quot;&lt;color:F87E25&gt;long: -8&quot;,
+  &quot;&lt;color:F87E25&gt;0xD9&quot;: &quot;&lt;color:F87E25&gt;long: -7&quot;,
+  &quot;&lt;color:F87E25&gt;0xDA&quot;: &quot;&lt;color:F87E25&gt;long: -6&quot;,
+  &quot;&lt;color:F87E25&gt;0xDB&quot;: &quot;&lt;color:F87E25&gt;long: -5&quot;,
+  &quot;&lt;color:F87E25&gt;0xDC&quot;: &quot;&lt;color:F87E25&gt;long: -4&quot;,
+  &quot;&lt;color:F87E25&gt;0xDD&quot;: &quot;&lt;color:F87E25&gt;long: -3&quot;,
+  &quot;&lt;color:F87E25&gt;0xDE&quot;: &quot;&lt;color:F87E25&gt;long: -2&quot;,
+  &quot;&lt;color:F87E25&gt;0xDF&quot;: &quot;&lt;color:F87E25&gt;long: -1&quot;,
+  &quot;&lt;color:F87E25&gt;0xE0&quot;: &quot;&lt;color:F87E25&gt;long: 0   　　　D瓜哥 &middot; https://www.diguage.com &middot; 出品&quot;,
+  &quot;&lt;color:F87E25&gt;0xE1&quot;: &quot;&lt;color:F87E25&gt;long: 1&quot;,
+  &quot;&lt;color:F87E25&gt;0xE2&quot;: &quot;&lt;color:F87E25&gt;long: 2&quot;,
+  &quot;&lt;color:F87E25&gt;0xE3&quot;: &quot;&lt;color:F87E25&gt;long: 3&quot;,
+  &quot;&lt;color:F87E25&gt;0xE4&quot;: &quot;&lt;color:F87E25&gt;long: 4&quot;,
+  &quot;&lt;color:F87E25&gt;0xE5&quot;: &quot;&lt;color:F87E25&gt;long: 5&quot;,
+  &quot;&lt;color:F87E25&gt;0xE6&quot;: &quot;&lt;color:F87E25&gt;long: 6&quot;,
+  &quot;&lt;color:F87E25&gt;0xE7&quot;: &quot;&lt;color:F87E25&gt;long: 7&quot;,
+  &quot;&lt;color:F87E25&gt;0xE8&quot;: &quot;&lt;color:F87E25&gt;long: 8&quot;,
+  &quot;&lt;color:F87E25&gt;0xE9&quot;: &quot;&lt;color:F87E25&gt;long: 9&quot;,
+  &quot;&lt;color:F87E25&gt;0xEA&quot;: &quot;&lt;color:F87E25&gt;long: 10&quot;,
+  &quot;&lt;color:F87E25&gt;0xEB&quot;: &quot;&lt;color:F87E25&gt;long: 11&quot;,
+  &quot;&lt;color:F87E25&gt;0xEC&quot;: &quot;&lt;color:F87E25&gt;long: 12&quot;,
+  &quot;&lt;color:F87E25&gt;0xED&quot;: &quot;&lt;color:F87E25&gt;long: 13&quot;,
+  &quot;&lt;color:F87E25&gt;0xEE&quot;: &quot;&lt;color:F87E25&gt;long: 14&quot;,
+  &quot;&lt;color:F87E25&gt;0xEF&quot;: &quot;&lt;color:F87E25&gt;long: 15&quot;,
+  &quot;&lt;color:F87E25&gt;0xF0&quot;: &quot;&lt;color:F87E25&gt;long：[-2048, -1793]，+1个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0xF1&quot;: &quot;&lt;color:F87E25&gt;long：[-1792, -1537]，+1个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0xF2&quot;: &quot;&lt;color:F87E25&gt;long：[-1536, -1281]，+1个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0xF3&quot;: &quot;&lt;color:F87E25&gt;long：[-1280, -1025]，+1个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0xF4&quot;: &quot;&lt;color:F87E25&gt;long：[-1024, -769]，+1个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0xF5&quot;: &quot;&lt;color:F87E25&gt;long：[-768, -513]，+1个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0xF6&quot;: &quot;&lt;color:F87E25&gt;long：[-512, -257]，+1个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0xF7&quot;: &quot;&lt;color:F87E25&gt;long：[-256, -9]，+1个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0xF8&quot;: &quot;&lt;color:F87E25&gt;long：[16, 255]，+1个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0xF9&quot;: &quot;&lt;color:F87E25&gt;long：[256, 511]，+1个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0xFA&quot;: &quot;&lt;color:F87E25&gt;long：[512, 767]，+1个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0xFB&quot;: &quot;&lt;color:F87E25&gt;long：[768, 1023]，+1个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0xFC&quot;: &quot;&lt;color:F87E25&gt;long：[1024, 1279]，+1个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0xFD&quot;: &quot;&lt;color:F87E25&gt;long：[1280, 1791]，+1个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0xFE&quot;: &quot;&lt;color:F87E25&gt;long：[1536, 2047]，+1个字节&quot;,
+  &quot;&lt;color:F87E25&gt;0xFF&quot;: &quot;&lt;color:F87E25&gt;long：[1792, 2047]，+1个字节&quot;
+}
+}}
+]
+
+footer &lt;color:red&gt;THE FOOTER
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

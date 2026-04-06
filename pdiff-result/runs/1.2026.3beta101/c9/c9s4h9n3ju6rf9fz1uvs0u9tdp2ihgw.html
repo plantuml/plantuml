@@ -1,0 +1,203 @@
+<html><head><title>c9s4h - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../c9/c9e4forok1soulseglmgt7uvk2lr1g1.html'>Previous</a>
+<a href='../c9/c9z50s6pf3pdmlzgbe5hmk62b35q748.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>c9s4h</h2>
+<hr>
+<img src='c9s4h9n3ju6rf9fz1uvs0u9tdp2ihgw.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+
+autonumber
+title PP one doornumber is existent
+footer Page %page% of %lastpage%
+actor Partner_SalesRepresentativ as ps
+participant PartnerPortal as pp
+participant PartnerPortal_UI as ppu
+participant GAS as gas
+participant LMG as lmg
+participant NLM as nlm
+participant Magenta_A1_Microservice as ms
+participant Address_Validation as av
+participant TAS as tas
+participant a1API as a1
+participant TSF as tsf
+... after order is submitted the doornumber is created...
+group create wohn_oid
+pp -&gt; gas: create doornumber
+gas -&gt; pp: wohn_oid
+end
+... USER IS FORCED TO USE DOORNUMBER BECAUSE OF HFC FTTH FOOTPRINT - DOORNUMBER ALWAYS TO BE USED IF EXISTENT AS PROPOSED BY GAS...
+... situation: only one doornumber existing; from previous service order known to Magenta ...
+ps -&gt; ppu: search for address
+ppu -&gt; pp: search for address
+pp -&gt; gas: BFF - autofill &quot;get address info&quot;
+gas -&gt; pp: provide ONE doornumber on that address
+pp -&gt; ppu: provide ONE doornumber &quot;not that customer is asking for&quot;
+group 1st rule: first address sarch always GAS data must be used
+end
+... user is not able to add other doornumber then proposed by PP/GAS...
+... no option to search by housenumber only ...
+pp -&gt; tsf: get feasy for address
+tsf -&gt; lmg: get feasy for address
+group NLM record for A1
+lmg -&gt; nlm: get feasy for address
+nlm -&gt; lmg: A1 found -  no profile information
+alt multiple PNO
+nlm -&gt; lmg: no other PNO
+else
+nlm -&gt; lmg: other PNO
+end
+end
+lmg -&gt; tsf: multiple results
+tsf -&gt; pp: multiple results
+pp -&gt; ppu: FTTH feasy by PNO and FTTH feasy by A1 including STATUS but no profile info
+group 2nd rule with second attempt allow always sarch by Housenumber
+end
+group for 2nd attempt allow Housenumber search (if PNO not sufficient)
+... PNO status not sufficient - A1 status more advanced ...
+ppu -&gt; ps: provide Housenumber search possibility
+ps -&gt; ppu: search only on Housenumber
+ppu -&gt; pp: get feasy for Housenumber only
+pp -&gt; tsf: get feasy for Housenumber only
+tsf -&gt; lmg: get feasy for Housenumber only
+lmg -&gt; nlm: get feasy for Housenumber only
+group NLM response for Housenumber
+nlm -&gt; lmg: PNO -&gt; feasy on housenumber level
+nlm -&gt; lmg: A1 -&gt; no feasy on housenumber
+end
+lmg -&gt; lmg: as no feasy for housenumber for A1 call MS
+... in case of A1, NLM setup: no status on housenumber level if one doornumber has coverage...
+lmg -&gt; ms: get feasy on housenumber
+ms -&gt; a1: get feasy on housenumber
+a1 -&gt; ms: code 300 multiple entries
+ms -&gt; av: check address on CAM only
+av -&gt; ms: ok
+ms -&gt; lmg: code 300 - provide all address records
+lmg -&gt; tsf: provide PNO status on housenumber AND A1 code 300 doornumber records
+tsf -&gt; pp: provide PNO status on housenumber AND A1 code 300 doornumber records
+pp -&gt; ppu: provide PNO status on housenumber AND A1 code 300 doornumber records
+group 3rd rule allow to pick doornumber suggestion by A1 (not in CAM)
+end
+ps -&gt; ppu: pick doornumber as proposed for A1
+ppu -&gt; pp: get feasy for CAM + doornumber
+pp -&gt; tsf: get feasy for CAM + doornumber
+tsf -&gt; lmg: get feasy for CAM + doornumber
+lmg -&gt; nlm: get feasy for CAM + doornumber
+nlm -&gt; lmg: provide PNO entry status for housenumber as specific doornumber not know to Magenta
+lmg -&gt; ms:  get feasy for CAM + doornumber
+ms -&gt; a1:  get feasy for CAM + doornumber
+a1 -&gt; ms: provide feasy
+ms -&gt; av: check address no wohn_oid -&gt; only cam
+av -&gt; ms: ok
+ms -&gt; lmg: provide feasy for CAM + doornumber
+lmg -&gt; tsf: provide status for PNO on housenumber level and A1 feasy for given doornumber confirmed by A1
+tsf -&gt; pp: provide status for PNO on housenumber level and A1 feasy for given doornumber confirmed by A1
+group 4th rule: doornumber data will be taken over in case of ordering; also for FTTH (PNO) and HFC - if feasy for this footprint exists; this enables PPortal to use also A1 doornumber inventory data
+end
+group PartnerPortal UI
+pp -&gt; ppu: provide status for PNO on housenumber level and A1 feasy for given doornumber confirmed by A1
+ppu -&gt; ppu: Status for A1 is indicating the doornumber searched for PNO and HFC (in case of) Status is shown for Housenumber level in all cases doornumber suggested by A1 will be taken over to next screen &quot;address data&quot;
+end
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

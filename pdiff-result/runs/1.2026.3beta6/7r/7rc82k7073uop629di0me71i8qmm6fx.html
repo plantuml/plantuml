@@ -1,0 +1,201 @@
+<html><head><title>7rc82 - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../7q/7qv89x98a87u8u8qnyu0k42nruebttn.html'>Previous</a>
+<a href='../7r/7rf8q9gbumn59hrce1dvb9hl9vg5m84.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>7rc82</h2>
+<hr>
+<img src='7rc82k7073uop629di0me71i8qmm6fx.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+ title &lt;b&gt;m2uml_apply_test.youemel_poi_1_test&lt;/b&gt;
+         class youemel_poi &lt;&lt; (H,#E6FFE6)  &gt;&gt; {
+             +youemel_poi()
+         }
+         class UmlClass &lt;&lt; (H,#E6FFE6)  &gt;&gt; {
+             +class_file
+             +class_name
+             +dot_string
+             +meta_class
+             +relations
+             +UmlClass()
+             +add_break()
+             +add_footer()
+             +add_header()
+             +add_method()
+             +add_methods()
+             +add_properties()
+             +add_property()
+             +add_text()
+             +add_title()
+             +apply_appearance()
+             +create_dot_string()
+             +find_line_num()
+             +get_access()
+             +get_appearance()
+             +get_footer()
+             +get_header()
+             +get_inputs()
+             +get_method()
+             +get_property()
+             +get_url()
+             +print()
+             +strip_access()
+         }
+         class UmlDiagram &lt;&lt; (H,#E6FFE6)  &gt;&gt; {
+             +classes
+             +dot_str
+             +dpi
+             +draw_order
+             +font
+             +font_size
+             +footer
+             +header
+             +name
+             +paths
+             +relations
+             +shape
+             +splines
+             -digraph_opts
+             -edge_opts
+             -graph_opts
+             -node_opts
+             +UmlDiagram()
+             +add_defaults()
+             +add_digraph_option()
+             +add_edge_option()
+             +add_graph_option()
+             +add_node_option()
+             +is_class()
+             +load_classes()
+             +load_relations()
+             +print()
+         }
+         class UmlGeneralization &lt;&lt; (H,#E6FFE6)  &gt;&gt; {
+             +general
+             +specific
+             +UmlGeneralization()
+         }
+         class UmlDirectedRelationship &lt;&lt; (H,#E6FFE6)  &gt;&gt; {
+             +source
+             +target
+             +UmlDirectedRelationship()
+         }
+         class UmlRelationship &lt;&lt; (A,#E6FFE6)  &gt;&gt; {
+             +dot_modifier
+             +dot_str
+             +relatedElement
+             +source_arrow
+             +target_arrow
+         }
+     UmlDirectedRelationship  -up-|&gt; UmlRelationship  
+     UmlGeneralization        -up-|&gt; UmlDirectedRelationship  
+      together {
+        class UmlRelationship
+        class UmlDirectedRelationship
+        class UmlGeneralization
+        }
+     youemel_poi        --&gt;          UmlDiagram
+     UmlDiagram     &quot;1&quot; -right-&gt; &quot;*&quot; UmlClass
+     UmlDiagram     &quot;1&quot; --&gt;      &quot;*&quot; UmlGeneralization
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

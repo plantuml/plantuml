@@ -1,0 +1,164 @@
+<html><head><title>6x7f3 - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../6x/6x6c30ywuwki7bev8jk67g1ta2n3mz1.html'>Previous</a>
+<a href='../6x/6xbvkj7o10bc2gwjwqdh6yb3fvr651y.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>6x7f3</h2>
+<a href='https://forum.plantuml.net/14779/sprite-w-database-causes-an-issue'>https://forum.plantuml.net/14779/sprite-w-database-causes-an-issue</a>
+<hr>
+<img src='6x7f3siii0wd331821muv0j2gf2jmld.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+sprite $cloudsql [48x48/16] {
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000001110000000000000000000000
+000000000000000000000124432000000000000000000000
+000000000000000000012345664211000000000000000000
+000000000000000001234556777653100000000000000000
+000000000000000113456667788775321000000000000000
+000000000000012345566667788877654310000000000000
+000000000001124566666655677888876532100000000000
+000000000023455666666533346788887765421000000000
+000000000134566666554311124567788887542100000000
+000000001234566665431100001234678887654200000000
+000000002334555543210000000012457777764200000000
+000000002233444321000000000000135666664200000000
+000000001233333210000000000001124566664200000000
+000000001233333322110000000023455666664200000000
+000000001223333333221000011235666666543200000000
+000000000012233333332211234556666665321000000000
+000000000001122333333322345666665543210000000000
+000000000000001223333333566666654311100000000000
+000000000011000112233334566655432111121000000000
+000000000122110001123334566543210123442100000000
+000000000133221000012223555421101234653100000000
+000000000123332211000112332101124556653100000000
+000000000123333321100011221112345666653100000000
+000000000123333332221000011244556666642100000000
+000000000012233333332110123456666655431000000000
+000000000001123333333222345566666543210000000000
+000000000000012223333333566666654321100000000000
+000000000011000112333334566666432101121100000000
+000000000111100001223334566554321012332100000000
+000000000122221000011234565421111234543100000000
+000000000133332110001123443210113456653100000000
+000000000133333222100001111012345566653100000000
+000000000123333332210000001124566666642100000000
+000000000012333333322110123455666666431000000000
+000000000011223333333211235666666554320000000000
+000000000000012233333323456666665421100000000000
+000000000000001122333334566666543210000000000000
+000000000000000011223334566654321000000000000000
+000000000000000000122234565442100000000000000000
+000000000000000000001123443210000000000000000000
+000000000000000000000012331000000000000000000000
+000000000000000000000000100000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+}
+
+actor &quot;&lt;$cloudsql&gt;\nSQL&quot; as cloudsql
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

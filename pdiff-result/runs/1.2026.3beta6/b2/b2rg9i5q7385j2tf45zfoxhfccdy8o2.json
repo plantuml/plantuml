@@ -1,0 +1,11 @@
+{
+  "duration": 32,
+  "description": "(Ditaa)",
+  "implementation": "PSystemDitaa",
+  "png": {
+    "width": 60,
+    "height": 70,
+    "crc": 4266747453,
+    "sizeInBytes": 180
+  }
+}

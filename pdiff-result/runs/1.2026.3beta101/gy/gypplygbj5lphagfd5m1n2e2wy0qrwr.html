@@ -1,0 +1,179 @@
+<html><head><title>gyppl - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../gy/gykduws9iyf932anbfjv1eq82jlmh1t.html'>Previous</a>
+<a href='../gy/gyv0cje2nvba9u9p8i1ho60ar43uneq.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>gyppl</h2>
+<a href='https://github.com/plantuml/plantuml/issues/286'>https://github.com/plantuml/plantuml/issues/286</a>
+<hr>
+<img src='gypplygbj5lphagfd5m1n2e2wy0qrwr.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startgantt
+
+project starts the 2020/02/01
+
+saturday are closed
+sunday are closed
+
+2020/02/05 is closed
+2020/02/06 is closed
+2020/03/02 is closed
+2020/03/03 is closed
+2020/03/04 is closed
+2020/03/20 is closed
+
+[Employee login] on {MBL:50%} lasts 1 days
+[Employee nav] on {MBL:50%} lasts 2 days
+[Basic entities] on {MBL:50%} lasts 3 days
+[Create job] on {MBL:50%} lasts 2 days
+[Add client] on {MBL:50%} lasts 2 days
+[Applicant search job] on {MBL:50%} lasts 2 days
+[Applicant apply] on {MBL:50%} lasts 2 days
+[Applicantion page] on {MBL:50%} lasts 7 days
+[Build surveys] on {MBL:50%} lasts 5 days
+[Complete survey] on {MBL:50%} lasts 3 days
+[View survey] on {MBL:50%} lasts 2 days
+[Edit survey] on {MBL:50%} lasts 1 days
+[See timeline] on {MBL:50%} lasts 6 days
+[File handling] on {MBL:50%} lasts 1 days
+[Build task lists] on {MBL:50%} lasts 2 days
+[Use task lists] on {MBL:50%} lasts 2 days
+[Create templates] on {MBL:50%} lasts 3 days
+[Hiring process] on {MBL:50%} lasts 7 days
+[Emails] on {MBL:50%} lasts 8 days
+[Interview] on {MBL:50%} lasts 3 days
+[Match] on {MBL:50%} lasts 8 days
+[Board] on {MBL:50%} lasts 2 days
+[Notifications] on {MBL:50%} lasts 2 days
+[Applicant signup] on {MBL:50%} lasts 2 days
+[AWS] on {MBL:50%} lasts 3 days
+
+[Beta] happens on 2020/08/31
+
+[AWS] ends on 2020/08/31
+[Applicant signup] ends at [AWS]'s start
+[Notifications] ends at [Applicant signup]'s start
+[Board] ends at [Notifications]'s start
+[Match] ends at [Board]'s start
+[Interview] ends at [Match]'s start
+[Emails] ends at [Interview]'s start
+[Hiring process] ends at [Emails]'s start
+[Create templates] ends at [Hiring process]'s start
+[Use task lists] ends at [Create templates]'s start
+[Build task lists] ends at [Use task lists]'s start
+[File handling] ends at [Build task lists]'s start
+[See timeline] ends at [File handling]'s start
+[Edit survey] ends at [See timeline]'s start
+[View survey] ends at [Edit survey]'s start
+[Complete survey] ends at [View survey]'s start
+[Build surveys] ends at [Complete survey]'s start
+[Applicantion page] ends at [Build surveys]'s start
+[Applicant apply] ends at [Applicantion page]'s start
+[Applicant search job] ends at [Applicant apply]'s start
+[Add client] ends at [Applicant search job]'s start
+[Create job] ends at [Add client]'s start
+[Basic entities] ends at [Create job]'s start
+[Employee nav] ends at [Basic entities]'s start
+[Employee login] ends at [Employee nav]'s start
+
+@endgantt
+</code></pre>
+</div>
+</body>
+</html>

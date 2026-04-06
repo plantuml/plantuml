@@ -1,0 +1,11 @@
+{
+  "duration": 6,
+  "description": "(Je Suis Charlie)",
+  "implementation": "PSystemCharlie",
+  "png": {
+    "width": 249,
+    "height": 65,
+    "crc": 3658494982,
+    "sizeInBytes": 4704
+  }
+}

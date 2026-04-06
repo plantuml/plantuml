@@ -1,0 +1,189 @@
+<html><head><title>2v6qu - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../2u/2uwl1aj6xc8xl986kr3dn1929cuo5he.html'>Previous</a>
+<a href='../2v/2v8k5nj2clc6ai7zoroxg2uop72sczn.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>2v6qu</h2>
+<a href='https://forum.plantuml.net/17926/sprite-transparent-only-jar-defined-sprites-are-working'>https://forum.plantuml.net/17926/sprite-transparent-only-jar-defined-sprites-are-working</a>
+<hr>
+<img src='2v6qu625s53k26gubowq2m4tb2hgptz.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+sprite $ma_close_circle [48x48/16] {
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+00000000000000000037ADEFFEDA73000000000000000000
+00000000000000018EFFFFFFFFFFFFE81000000000000000
+000000000000019FFFFFFFFFFFFFFFFFF910000000000000
+0000000000005EFFFFFFFFFFFFFFFFFFFFE5000000000000
+000000000009FFFFFFFFFFFFFFFFFFFFFFFF900000000000
+0000000000BFFFFFFFFFFFFFFFFFFFFFFFFFFB0000000000
+000000000BFFFFFFFFFFFFFFFFFFFFFFFFFFFFB000000000
+000000009FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF900000000
+00000005FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF50000000
+0000001EFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE1000000
+0000009FFFFFFFFF5AFFFFFFFFFFFFA5FFFFFFFFF9000000
+000001FFFFFFFFF500AFFFFFFFFFFA005FFFFFFFFF100000
+000008FFFFFFFF50000AFFFFFFFFA00005FFFFFFFF800000
+00000EFFFFFFFFA00000AFFFFFFA00000AFFFFFFFFE00000
+00003FFFFFFFFFFA00000AFFFFA00000AFFFFFFFFFF30000
+00007FFFFFFFFFFFA00000AFFA00000AFFFFFFFFFFF70000
+0000AFFFFFFFFFFFFA00000AA00000AFFFFFFFFFFFFA0000
+0000DFFFFFFFFFFFFFA0000000000AFFFFFFFFFFFFFD0000
+0000EFFFFFFFFFFFFFFA00000000AFFFFFFFFFFFFFFE0000
+0000FFFFFFFFFFFFFFFFA000000AFFFFFFFFFFFFFFFF0000
+0000FFFFFFFFFFFFFFFFA000000AFFFFFFFFFFFFFFFF0000
+0000EFFFFFFFFFFFFFFA00000000AFFFFFFFFFFFFFFE0000
+0000DFFFFFFFFFFFFFA0000000000AFFFFFFFFFFFFFD0000
+0000AFFFFFFFFFFFFA00000AA00000AFFFFFFFFFFFFA0000
+00007FFFFFFFFFFFA00000AFFA00000AFFFFFFFFFFF70000
+00003FFFFFFFFFFA00000AFFFFA00000AFFFFFFFFFF30000
+00000EFFFFFFFFA00000AFFFFFFA00000AFFFFFFFFE00000
+000008FFFFFFFF50000AFFFFFFFFA00005FFFFFFFF800000
+000001FFFFFFFFF500AFFFFFFFFFFA005FFFFFFFFF100000
+0000009FFFFFFFFF5AFFFFFFFFFFFFA5FFFFFFFFF9000000
+0000001EFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE1000000
+00000005FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF50000000
+000000009FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF900000000
+000000000BFFFFFFFFFFFFFFFFFFFFFFFFFFFFB000000000
+0000000000BFFFFFFFFFFFFFFFFFFFFFFFFFFB0000000000
+000000000009FFFFFFFFFFFFFFFFFFFFFFFF900000000000
+0000000000005EFFFFFFFFFFFFFFFFFFFFE5000000000000
+000000000000019FFFFFFFFFFFFFFFFFF910000000000000
+00000000000000018EFFFFFFFFFFFFE81000000000000000
+00000000000000000037ADEFFEDA73000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+}
+
+skinparam backgroundColor green
+
+skinparam rectangle&lt;&lt;system&gt;&gt; {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+
+skinparam rectangle&lt;&lt;component&gt;&gt; {
+    StereotypeFontColor #000000
+    FontColor #000000
+    BackgroundColor #85BBF0
+    BorderColor #78A8D8
+}
+
+skinparam arrow&lt;&lt;withClose&gt;&gt; {
+    Color black;text:darkblue
+}
+
+rectangle &quot;== all&quot; &lt;&lt;system&gt;&gt; as all {
+rectangle &quot;== test&quot; &lt;&lt;component&gt;&gt; as test 
+rectangle &quot;&lt;$ma_close_circle&gt;\n== test1&quot; &lt;&lt;component&gt;&gt; as test1 
+}
+test --&gt;&gt; test1 &lt;&lt;withClose&gt;&gt; : &lt;$ma_close_circle&gt; **sfef**
+test --&gt;&gt; test1 : &lt;$ma_close_circle&gt; **sfef**
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

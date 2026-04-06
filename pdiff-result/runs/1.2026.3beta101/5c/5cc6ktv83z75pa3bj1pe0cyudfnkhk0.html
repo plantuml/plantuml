@@ -1,0 +1,139 @@
+<html><head><title>5cc6k - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../5c/5c2ofm1ka1lguqpv52zuzjlkda6qqo1.html'>Previous</a>
+<a href='../5c/5ckv25di380otwemja9pvqwkwxs8xdf.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>5cc6k</h2>
+<hr>
+<img src='5cc6ktv83z75pa3bj1pe0cyudfnkhk0.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+!pragma svgparser sax
+' Alternative to svg2GroupsWithStyle.puml using inline attributes
+' This approach works with both SvgSaxParser (zero-dependency) and SvgDomParser (Batik)
+sprite inlineStyleSprite &lt;svg viewBox=&quot;0 0 140 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+  
+  &lt;!-- Group 1: shapes with inline fill attributes --&gt;
+  &lt;g transform=&quot;translate(8,8)&quot;&gt;
+    &lt;!-- Instead of CSS: g.grp1 { fill: #FF6666; } --&gt;
+    &lt;circle cx=&quot;16&quot; cy=&quot;16&quot; r=&quot;12&quot; fill=&quot;#FF6666&quot;/&gt;
+    
+    &lt;!-- Instead of CSS: text { font-family: Verdana; font-size: 12px; fill: #222; } --&gt;
+    &lt;text x=&quot;40&quot; y=&quot;20&quot; font-family=&quot;Verdana&quot; font-size=&quot;12&quot; fill=&quot;#222&quot;&gt;G1&lt;/text&gt;
+  &lt;/g&gt;
+
+  &lt;!-- Group 2: shapes with inline stroke attributes --&gt;
+  &lt;g transform=&quot;translate(8,36)&quot;&gt;
+    &lt;!-- Instead of CSS: g.grp2 .shape { stroke: #0066CC; stroke-width: 4; fill: none; } --&gt;
+    &lt;path d=&quot;M0 10 L48 10&quot; stroke=&quot;#0066CC&quot; stroke-width=&quot;4&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/&gt;
+    &lt;ellipse cx=&quot;88&quot; cy=&quot;6&quot; rx=&quot;20&quot; ry=&quot;8&quot; stroke=&quot;#0066CC&quot; stroke-width=&quot;4&quot; fill=&quot;none&quot;/&gt;
+    
+    &lt;text x=&quot;64&quot; y=&quot;28&quot; font-family=&quot;Verdana&quot; font-size=&quot;12&quot; fill=&quot;#222&quot;&gt;G2&lt;/text&gt;
+  &lt;/g&gt;
+
+  &lt;!-- Element with inline fill (instead of CSS: #accent { fill: #FFD700; }) --&gt;
+  &lt;circle cx=&quot;120&quot; cy=&quot;30&quot; r=&quot;6&quot; fill=&quot;#FFD700&quot;/&gt;
+&lt;/svg&gt;
+
+Alice -&gt; Bob : hello &lt;$inlineStyleSprite&gt; there
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

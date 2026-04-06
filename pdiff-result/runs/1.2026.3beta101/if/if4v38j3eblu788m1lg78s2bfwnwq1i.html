@@ -1,0 +1,175 @@
+<html><head><title>if4v3 - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../ie/iexsb5v36k578e44vhp90vmchds586x.html'>Previous</a>
+<a href='../if/if656ejk2tgmieldia8por6ob95z5bl.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>if4v3</h2>
+<hr>
+<img src='if4v38j3eblu788m1lg78s2bfwnwq1i.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+concise &quot;L1 cache reference&quot; as L1
+concise &quot;Branch mispredict&quot; as BM
+concise &quot;L2 cache reference&quot; as L2
+concise &quot;Mutex lock/unlock&quot; as MUX
+concise &quot;Main memory reference&quot; as MEMREF
+concise &quot;Compress 1K bytes with Zippy&quot; as ZIP1K
+concise &quot;Send 2K bytes over 1 Gbps network&quot; as SEND2K
+concise &quot;SSD random read&quot; as SEEKSSD
+concise &quot;Read 1 MB sequentially from memory&quot; as RAM
+concise &quot;Round trip within same datacenter&quot; as DC
+concise &quot;Read 1 MB sequentially from SSD&quot; as SSD
+concise &quot;Disk seek&quot; as SEEKDISK
+concise &quot;Read 1 MB sequentially from disk&quot; as DISK
+concise &quot;Send packet CA-&gt;Netherlands-&gt;CA&quot; as NET
+@0
+L1 is done
+BM is 5ns
+L2 is 7ns
+MUX is 25ns
+MEMREF is 100ns
+ZIP1K is 3000ns
+SEND2K is 20000ns
+SEEKSSD is 150000ns
+RAM is 250000ns
+DC is 500000ns
+SSD is 1000000ns
+SEEKDISK is 10000000ns
+DISK is 20000000ns
+NET is 150000000ns
+@5
+BM is &quot;&quot;
+@7
+L2 is &quot;&quot;
+
+@25
+MUX is &quot;&quot;
+
+@100
+MEMREF is &quot;&quot;
+
+@3000
+ZIP1K is &quot;&quot;
+
+@20000
+SEND2K is &quot;&quot;
+
+@150000
+SEEKSSD is &quot;&quot;
+
+@250000
+RAM is &quot;&quot;
+
+@500000
+DC is &quot;&quot;
+
+@1000000
+SSD is &quot;&quot;
+
+@10000000
+DISK is &quot;&quot;
+
+@150000000
+NET is &quot;&quot;
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<html><head><title>a1ru1 - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../a1/a1gqv094fjceqc1hjf8kr99cpj25in7.html'>Previous</a>
+<a href='../a1/a1u6yjsljqd8ca61drm8q6e7ibwqbnm.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>a1ru1</h2>
+<a href='https://forum.plantuml.net/16883'>https://forum.plantuml.net/16883</a>
+<hr>
+<img src='a1ru1kd3yldsqlj7bep2sdz8duquyiz.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+sprite SVG_NO_BEZIER &lt;svg viewBox=&quot;0 0 1200 600&quot;&gt;
+  &lt;path d=&quot;M200,300 L400,50 L600,300
+           L800,550 L1000,300&quot;
+        fill=&quot;none&quot; stroke=&quot;#888888&quot; stroke-width=&quot;2&quot; /&gt;
+&lt;/svg&gt;
+
+sprite SVG_WITH_BEZIER &lt;svg viewBox=&quot;0 0 1200 600&quot;&gt;
+  &lt;path d=&quot;M200,300 Q400,50 600,300 T1000,300&quot;
+        fill=&quot;none&quot; stroke=&quot;red&quot; stroke-width=&quot;5&quot;  /&gt;
+&lt;/svg&gt;
+
+' Simple path
+card &quot;&lt;$SVG_NO_BEZIER&gt;&quot;
+
+' Quadratic B&eacute;zier curve commands in path
+card &quot;&lt;$SVG_WITH_BEZIER&gt;&quot;
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

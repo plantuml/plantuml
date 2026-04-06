@@ -1,0 +1,11 @@
+{
+  "duration": 50,
+  "description": "(2 entities)",
+  "implementation": "StateDiagram",
+  "png": {
+    "width": 204,
+    "height": 72,
+    "crc": 2319649206,
+    "sizeInBytes": 1883
+  }
+}

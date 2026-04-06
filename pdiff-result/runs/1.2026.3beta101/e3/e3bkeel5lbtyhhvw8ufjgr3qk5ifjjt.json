@@ -1,0 +1,11 @@
+{
+  "duration": 7,
+  "description": "(Sprites)",
+  "implementation": "ListSpriteDiagram",
+  "png": {
+    "width": 514,
+    "height": 85,
+    "crc": 681245167,
+    "sizeInBytes": 4475
+  }
+}

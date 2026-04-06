@@ -1,0 +1,11 @@
+{
+  "duration": 528,
+  "description": "(Dot)",
+  "implementation": "PSystemDot",
+  "png": {
+    "width": 100,
+    "height": 59,
+    "crc": 3420216214,
+    "sizeInBytes": 2944
+  }
+}

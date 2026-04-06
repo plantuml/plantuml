@@ -1,0 +1,163 @@
+<html><head><title>f9zid - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../f9/f9rj4gnet84wvu2mbdomf8op3vjf09j.html'>Previous</a>
+<a href='../fa/fa8uge52cmslnne6ur1mds28u64dz8q.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>f9zid</h2>
+<hr>
+<img src='f9zidq2r3oh76b7wxgotvslzzmbmuu0.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+title Observation
+skinparam nodesep 10
+skinparam ranksep 10
+skinparam classBackgroundColor Aliceblue
+
+skinparam classBorderColor Gray
+
+skinparam classArrowColor Navy
+
+class Observation &lt;&lt; (R, #FF7700) &gt;&gt; {
++ name : CodeableConcept 1..1 [[[http://www/Observation/name {Definition}]]]
++ value[x] : Quantity|CodeableConcept|Attachment|Ratio|Choice|Period|string 0..1 [[[http://www/Observation/value%5Bx%5D {Definition}]]]
++ interpretation : CodeableConcept 0..1 [[[http://www/Observation/interpretation {Definition}]]]
++ comments : string 0..1 [[[http://www/Observation/comments {Definition}]]]
++ obtained[x] : Period|dateTime 0..1 [[[http://www/Observation/obtained%5Bx%5D {Definition}]]]
++ issued : instant 0..1 [[[http://www/Observation/issued {Definition}]]]
++ status : code 1..1 [[[http://www/Observation/status {Definition}]]]
++ reliability : code 1..1 [[[http://www/Observation/reliability {Definition}]]]
++ bodySite : CodeableConcept 0..1 [[[http://www/Observation/bodySite {Definition}]]]
++ method : CodeableConcept 0..1 [[[http://www/Observation/method {Definition}]]]
++ identifier : Identifier 0..1 [[[http://www/Observation/identifier {Definition}]]]
++ subject : Resource(Patient|Group|Device|Animal) 0..1 [[[http://www/Observation/subject {Definition}]]]
++ performer : Resource(Provider|Device|Organization) 0..1 [[[http://www/Observation/performer {Definition}]]]
++ normalValue[x] : Range|string 0..1 [[[http://www/Observation/normalValue%5Bx%5D {Definition}]]]
++ extension : Extension 0..* [[[http://www/Observation/extension {Definition}]]]
++ text : Narrative 1..1 [[[http://www/Observation/text {Definition}]]]
+--
+}
+url of Observation is [[http://www/Observation {Observation definition}]]
+
+class ReferenceRange &lt;&lt; (E, Aliceblue ) &gt;&gt; {
++ meaning : CodeableConcept 0..1 [[[http://www/referenceRange/meaning {Definition}]]]
++ range[x] : Quantity|Range|string 1..1 [[[http://www/referenceRange/range%5Bx%5D {Definition}]]]
+--
+}
+url of ReferenceRange is [[http://www/ReferenceRange{ReferenceRange definition}]]
+
+class Component &lt;&lt; (E, Aliceblue ) &gt;&gt; {
++ name : CodeableConcept 1..1 [[[http://www/component/name {Definition}]]]
++ value[x] : Quantity|CodeableConcept|Attachment|Ratio|Choice|Period|string 1..1 [[[http://www/component/value%5Bx%5D {Definition}]]]
+--
+}
+url of Component is [[http://www/Component {Component definition}]]
+
+Observation *-- &quot;0..*&quot; ReferenceRange : referenceRange
+Observation *-- &quot;0..*&quot; Component  : component
+
+
+
+hide methods
+hide ReferenceRange circle
+hide Component circle
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<html><head><title>ckhmn - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../ck/ckfok4pngfi176x1xdnpx3e18jdwl0k.html'>Previous</a>
+<a href='../ck/ckp5u9fcl0cr6h9fvfbjupr3n656lsw.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>ckhmn</h2>
+<hr>
+<img src='ckhmnwjo8fux2gc59zzkgeilt92oyin.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+[-&gt; SbcMXdCtrl: startThread
+
+SbcMXdCtrl-&gt;SbcMXdCtrl: struct timespec initialTimeout={1,0}
+loop while(true)
+alt if mEnabled==false
+SbcMXdCtrl-&gt;SbcModCtrlFsm: mFsm.processDisable()
+SbcMXdCtrl-&gt;SbcModCtrlMsgReader: mMsgReader.disableConnection()
+[&lt;-- SbcMXdCtrl: break
+end
+
+SbcMXdCtrl-&gt;SbcModCtrlMsgReader: receive(const struct timespec&amp; initialTimeout, struct timespec&amp; remainingTimeout)
+activate SbcModCtrlMsgReader
+note over SbcMXdCtrl
+The receive calls
+gets blocked until
+we receive an apparently
+valid SbcModCtrlMsg, or
+the timeout expires
+end note
+
+SbcModCtrlMsgReader --&gt; SbcMXdCtrl: return
+deactivate SbcModCtrlMsgReader
+
+alt if timeout
+SbcMXdCtrl-&gt;SbcModCtrlFsm: mFsm.processTimeout()
+SbcMXdCtrl-&gt;SbcMXdCtrl: initialTimeout={1,0}
+SbcMXdCtrl-&gt;SbcMXdCtrl: continue
+else Message received
+end
+SbcMXdCtrl-&gt;SbcModCtrlMsgReader: sbcModCtrlMsg=getReceivedMessage()
+activate SbcModCtrlMsgReader
+SbcModCtrlMsgReader --&gt;SbcMXdCtrl : return sbcModCtrlMsg
+deactivate SbcModCtrlMsgReader
+
+SbcMXdCtrl-&gt;SbcMXdCtrl: validateMessage()
+alt if Message 
+
+
+end
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

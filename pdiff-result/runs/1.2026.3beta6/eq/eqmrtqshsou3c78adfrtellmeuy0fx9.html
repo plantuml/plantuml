@@ -1,0 +1,276 @@
+<html><head><title>eqmrt - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../eq/eqkyf3qoqi5qrev71uw6mgtlzlo3bqx.html'>Previous</a>
+<a href='../eq/eqr5pz7tvv3l2c8uhahftnirwddpi0z.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>eqmrt</h2>
+<hr>
+<img src='eqmrtqshsou3c78adfrtellmeuy0fx9.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+
+title Domain Decomposition Assignment
+skinparam componentStyle uml2
+'!theme crt-amber
+!pragma layout smetana
+
+
+
+'CLASSES
+'Base Stucture
+class Credits
+note right
+    &lt;b&gt;THE LEGENDARY NOTE&lt;/b&gt;
+    * Domain Decomposition Assignment
+    * Sjors Kaagman
+    * Wessel Roelofse
+end note
+
+Enum CoinType {
+  Normal,
+  Invisible,
+  Region,
+  CollectedRegion
+}
+
+class Cappy {
+  .. Fields ..
+- FlightSpeed: float
+- HasBounce: bool
+~ Direction: Vector3
+~ Force: Vector3
+  .. Methods ..
+-Throw(): public void { Vector3 direction, Vector3 force }
+~Awake(): void {}
+~Update(): void {}
+}
+
+class Mario {
+  .. Fields ..
+- JumpForce: float
+- WalkSpeed: float
+  .. Methods ..
+-Jump(): public void { }
+~Awake(): void {}
+~Update(): void { }
+}
+
+abstract class InteractionInitiator {
+  .. Methods ..
+~OnCollisionEnter(): void { Collider other }
+}
+
+abstract class Capturable {
+  .. Fields ..
+- InCapture: bool { get; private set; }
+  .. Methods ..
+#OnCaptureStart(): virtual void {}
++CaptureUpdate(): abstract void {}
+#OnCaptureEnd(): virtual void {}
+}
+
+class Interactable {
+  .. Fields ..
+- HasCooldown: bool
+- OnCooldown: bool { get; private set; }
+- CooldownTime: float { get; private set; }
+  .. Methods ..
+-OnInteract(): public void { InterationInitiator intiator }
+#CapInteract(): virtual void { Cappy intiator }
+#MarioInteract(): virtual void { Mario intiator }
+
+}
+
+note right
+    &lt;b&gt;The Interactable class splits the interaction back up.&lt;/b&gt;
+    This way the collision code has to be written only once and
+    after adding a new Initiatior the Interactable can use a .GetType() 
+    to call a virtual function without having to modify any of the other 
+    classes.
+end note
+
+'Example Implementations
+class Frog {
+  .. Fields ..
+- JumpForce: float
+  .. Methods ..
+~Awake(): void {}
+~Update(): void {}
+}
+
+class Button {
+  .. Fields ..
+- OnClick: event
+  .. Methods ..
+-OnActivate(): public void {}
+-OnDeActivate(): public void {}
+}
+
+class Pipe {
+  .. Fields ..
+- Target: Pipe
+  .. Methods ..
+-OnEnter(): public void {}
+-OnExit(): public void {}
+}
+
+class Chest {
+  .. Fields ..
+- Contains: GameObject
+- IsOpened: bool { get; private set; }
+  .. Methods ..
+-OnOpened(): public void {}
+-Reset(): public void {}
+}
+
+class Coin {
+  .. Fields ..
+- Type: CoinType
+  .. Methods ..
+-OnPickup(): public void {}
+}
+
+class TRex {
+  .. Fields ..
+- AttackCooldown: float { get; private set; }
+- DashPower: float
+- DashDuration: float
+  .. Methods ..
+-Dash(): public void {}
+-Attack(): public void {}
+~Awake(): void {}
+~Update(): void {}
+}
+
+class Glydon {
+  .. Fields ..
+- GlideGravity: float
+- IsGliding { get; private set; }
+  .. Methods ..
+-StartGlide(): public void {}
+-EndGlide(): public void {}
+~Awake(): void {}
+~Update(): void {}
+}
+
+'RELATIONS
+'Base Structure
+InteractionInitiator &lt;|-up- Cappy: Extends
+InteractionInitiator &lt;|-up- Mario: Extends
+Cappy &lt;-left- Mario: Calls Throw function on user request
+Interactable &lt;-left- InteractionInitiator: OnCollision With Calls OnInteract(this);
+Interactable &lt;|-up- Capturable: Extends
+
+'Example implementations
+Capturable &lt;|-up- Frog: Extends
+Capturable &lt;|-up- TRex: Extends
+Capturable &lt;|-up- Glydon: Extends
+Interactable &lt;|-up- Button: Extends
+Interactable &lt;|-up- Pipe: Extends
+Interactable &lt;|-right- Chest: Extends
+Interactable &lt;|-up- Coin: Extends
+
+'For formatting (This line prevents an error in the compiler)
+'Mario &lt;-up- Credits: Start Here
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

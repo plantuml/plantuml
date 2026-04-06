@@ -1,0 +1,130 @@
+<html><head><title>4vhqn - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../4v/4vgcgcqv3fojdn98j5ioo00az1cp7tt.html'>Previous</a>
+<a href='../4v/4vo1fvnhvza4pl1d2c1d158djwpbq3.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>4vhqn</h2>
+<hr>
+<img src='4vhqnbfhoogwliutke8nyrz3dws04tk.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+archimate #Motivation &quot;Secure Data Transfer&quot; as dataTrans &lt;&lt;requirement-filled&gt;&gt;
+frame &quot;VPN Solution&quot; as vpnSolution {
+	archimate #Technology &quot;VPN Server&quot; as vpnServerA &lt;&lt;technology-device&gt;&gt;
+	archimate #Technology &quot;Client Server&quot; as vpnServerB &lt;&lt;technology-device&gt;&gt;
+	archimate #Technology &quot;VPN Gateway&quot; as softwareA &lt;&lt;technology-system-software&gt;&gt;
+	archimate #Technology &quot;VPN Client&quot; as softwareB &lt;&lt;technology-system-software&gt;&gt;
+	archimate #Technology &quot;Network Path&quot; as coms &lt;&lt;technology-communication-path&gt;&gt;
+	archimate #Technology &quot;Internet / Cloud&quot; as network &lt;&lt;technology-network&gt;&gt;
+	archimate #Technology &quot;VPN Service&quot; as vpnService &lt;&lt;service&gt;&gt;
+}
+vpnSolution .up.|&gt; dataTrans
+vpnService &lt;|.down. coms
+coms -left- softwareA
+coms -right- softwareB
+vpnServerA *-up-&gt; softwareA
+vpnServerB *-up-&gt; softwareB
+network -left- vpnServerA
+network -right- vpnServerB
+network .up.|&gt; coms
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

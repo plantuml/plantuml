@@ -1,0 +1,11 @@
+{
+  "duration": 6,
+  "description": "(Timing Diagram)",
+  "implementation": "TimingDiagram",
+  "png": {
+    "width": 495,
+    "height": 111,
+    "crc": 3056928543,
+    "sizeInBytes": 3202
+  }
+}

@@ -1,0 +1,1322 @@
+<html><head><title>ttt8m - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../tt/ttrcaslixvwms4wsi5m1vlld3647nl2.html'>Previous</a>
+<a href='../tt/ttw5692ve3ryfgveld088ei2qhv6cdf.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>ttt8m</h2>
+<hr>
+<img src='ttt8mzmo1j8nr3spamlaaqggl6y8ehd.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+skinparam groupInheritance 3
+
+!define SHOW_INHERITANCE
+
+  package &quot;UML&quot; as UML {
+    class &quot;Abstraction&quot; as Abstraction
+    class &quot;Dependency&quot; as Dependency
+    abstract class &quot;PackageableElement&quot; as PackageableElement
+    abstract class &quot;ParameterableElement&quot; as ParameterableElement
+    abstract class &quot;Element&quot; as Element {
+      stereotypes : String
+    }
+    class &quot;Comment&quot; as Comment {
+      body : String
+    }
+    class &quot;Stereotype&quot; as Stereotype
+    class &quot;Class&quot; as Class_ {
+      isActive : Boolean
+    }
+    abstract class &quot;EncapsulatedClassifier&quot; as EncapsulatedClassifier
+    abstract class &quot;StructuredClassifier&quot; as StructuredClassifier
+    abstract class &quot;Classifier&quot; as Classifier {
+      isAbstract : Boolean
+      isFinalSpecialization : Boolean
+    }
+    abstract class &quot;Namespace&quot; as Namespace
+    abstract class &quot;NamedElement&quot; as NamedElement {
+      name : String
+      qualifiedName : String
+      visibility : VisibilityKind
+    }
+    class &quot;StringExpression&quot; as StringExpression
+    class &quot;Expression&quot; as Expression {
+      symbol : String
+    }
+    abstract class &quot;ValueSpecification&quot; as ValueSpecification
+    abstract class &quot;TypedElement&quot; as TypedElement
+    abstract class &quot;Type&quot; as Type
+    class &quot;Package&quot; as Package_ {
+      URI : String
+    }
+    abstract class &quot;TemplateableElement&quot; as TemplateableElement
+    class &quot;TemplateSignature&quot; as TemplateSignature
+    class &quot;TemplateParameter&quot; as TemplateParameter
+    class &quot;TemplateBinding&quot; as TemplateBinding
+    abstract class &quot;DirectedRelationship&quot; as DirectedRelationship
+    abstract class &quot;Relationship&quot; as Relationship
+    class &quot;TemplateParameterSubstitution&quot; as TemplateParameterSubstitution
+    class &quot;PackageMerge&quot; as PackageMerge
+    class &quot;ProfileApplication&quot; as ProfileApplication {
+      isStrict : Boolean
+    }
+    class &quot;Profile&quot; as Profile
+    class &quot;ElementImport&quot; as ElementImport {
+      alias : String
+      visibility : VisibilityKind
+    }
+    enum &quot;VisibilityKind&quot; as VisibilityKind {
+      public
+      private
+      protected
+      &quot;package&quot;
+    }
+    class &quot;PackageImport&quot; as PackageImport {
+      visibility : VisibilityKind
+    }
+    class &quot;Extension&quot; as Extension {
+      isRequired : Boolean
+    }
+    class &quot;Association&quot; as Association {
+      isDerived : Boolean
+    }
+    class &quot;Property&quot; as Property {
+      aggregation : AggregationKind
+      default : String
+      isComposite : Boolean
+      isDerived : Boolean
+      isDerivedUnion : Boolean
+      isID : Boolean
+    }
+    abstract class &quot;StructuralFeature&quot; as StructuralFeature {
+      isReadOnly : Boolean
+    }
+    abstract class &quot;MultiplicityElement&quot; as MultiplicityElement {
+      isOrdered : Boolean
+      isUnique : Boolean
+      lower : Integer
+      upper : UnlimitedNatural
+    }
+    abstract class &quot;Feature&quot; as Feature {
+      isStatic : Boolean
+    }
+    abstract class &quot;RedefinableElement&quot; as RedefinableElement {
+      isLeaf : Boolean
+    }
+    abstract class &quot;ConnectableElement&quot; as ConnectableElement
+    class &quot;ConnectorEnd&quot; as ConnectorEnd
+    class &quot;ConnectableElementTemplateParameter&quot; as ConnectableElementTemplateParameter
+    abstract class &quot;DeploymentTarget&quot; as DeploymentTarget
+    class &quot;Deployment&quot; as Deployment
+    class &quot;DeploymentSpecification&quot; as DeploymentSpecification {
+      deploymentLocation : String
+      executionLocation : String
+    }
+    class &quot;Artifact&quot; as Artifact {
+      fileName : String
+    }
+    abstract class &quot;DeployedArtifact&quot; as DeployedArtifact
+    class &quot;Manifestation&quot; as Manifestation
+    class &quot;Operation&quot; as Operation {
+      isOrdered : Boolean
+      isQuery : Boolean
+      isUnique : Boolean
+      lower : Integer
+      upper : UnlimitedNatural
+    }
+    abstract class &quot;BehavioralFeature&quot; as BehavioralFeature {
+      concurrency : CallConcurrencyKind
+      isAbstract : Boolean
+    }
+    enum &quot;CallConcurrencyKind&quot; as CallConcurrencyKind {
+      sequential
+      guarded
+      concurrent
+    }
+    abstract class &quot;Behavior&quot; as Behavior {
+      isReentrant : Boolean
+    }
+    abstract class &quot;BehavioredClassifier&quot; as BehavioredClassifier
+    class &quot;InterfaceRealization&quot; as InterfaceRealization
+    class &quot;Realization&quot; as Realization
+    class &quot;Interface&quot; as Interface_
+    class &quot;Reception&quot; as Reception
+    class &quot;Signal&quot; as Signal
+    class &quot;ProtocolStateMachine&quot; as ProtocolStateMachine
+    class &quot;StateMachine&quot; as StateMachine
+    class &quot;Pseudostate&quot; as Pseudostate {
+      kind : PseudostateKind
+    }
+    abstract class &quot;Vertex&quot; as Vertex
+    class &quot;Region&quot; as Region
+    class &quot;State&quot; as State {
+      isComposite : Boolean
+      isOrthogonal : Boolean
+      isSimple : Boolean
+      isSubmachineState : Boolean
+    }
+    class &quot;ConnectionPointReference&quot; as ConnectionPointReference
+    class &quot;Trigger&quot; as Trigger
+    abstract class &quot;Event&quot; as Event
+    class &quot;Port&quot; as Port {
+      isBehavior : Boolean
+      isConjugated : Boolean
+      isService : Boolean
+    }
+    class &quot;Constraint&quot; as Constraint
+    class &quot;Transition&quot; as Transition {
+      kind : TransitionKind
+    }
+    enum &quot;TransitionKind&quot; as TransitionKind {
+      internal
+      local
+      external
+    }
+    enum &quot;PseudostateKind&quot; as PseudostateKind {
+      initial
+      deepHistory
+      shallowHistory
+      join
+      fork
+      junction
+      choice
+      entryPoint
+      exitPoint
+      terminate
+    }
+    class &quot;ProtocolConformance&quot; as ProtocolConformance
+    class &quot;Parameter&quot; as Parameter {
+      default : String
+      direction : ParameterDirectionKind
+      effect : ParameterEffectKind
+      isException : Boolean
+      isStream : Boolean
+    }
+    enum &quot;ParameterDirectionKind&quot; as ParameterDirectionKind {
+      in
+      inout
+      out
+      return
+    }
+    enum &quot;ParameterEffectKind&quot; as ParameterEffectKind {
+      create
+      read
+      update
+      delete
+    }
+    class &quot;ParameterSet&quot; as ParameterSet
+    class &quot;DataType&quot; as DataType
+    class &quot;OperationTemplateParameter&quot; as OperationTemplateParameter
+    enum &quot;AggregationKind&quot; as AggregationKind {
+      none
+      shared
+      composite
+    }
+    class &quot;ExtensionEnd&quot; as ExtensionEnd
+    class &quot;Model&quot; as Model {
+      viewpoint : String
+    }
+    class &quot;Enumeration&quot; as Enumeration
+    class &quot;EnumerationLiteral&quot; as EnumerationLiteral
+    class &quot;InstanceSpecification&quot; as InstanceSpecification
+    class &quot;Slot&quot; as Slot
+    class &quot;PrimitiveType&quot; as PrimitiveType
+    class &quot;Usage&quot; as Usage
+    class &quot;CollaborationUse&quot; as CollaborationUse
+    class &quot;Collaboration&quot; as Collaboration
+    class &quot;Generalization&quot; as Generalization {
+      isSubstitutable : Boolean
+    }
+    class &quot;GeneralizationSet&quot; as GeneralizationSet {
+      isCovering : Boolean
+      isDisjoint : Boolean
+    }
+    class &quot;RedefinableTemplateSignature&quot; as RedefinableTemplateSignature
+    class &quot;UseCase&quot; as UseCase
+    class &quot;Extend&quot; as Extend
+    class &quot;ExtensionPoint&quot; as ExtensionPoint
+    class &quot;Include&quot; as Include
+    class &quot;Substitution&quot; as Substitution
+    class &quot;ClassifierTemplateParameter&quot; as ClassifierTemplateParameter {
+      allowSubstitutable : Boolean
+    }
+    class &quot;Connector&quot; as Connector {
+      kind : ConnectorKind
+    }
+    enum &quot;ConnectorKind&quot; as ConnectorKind {
+      assembly
+      delegation
+    }
+    class &quot;Image&quot; as Image {
+      content : String
+      format : String
+      location : String
+    }
+    class &quot;OpaqueExpression&quot; as OpaqueExpression {
+      body : String
+      language : String
+    }
+    class &quot;AcceptCallAction&quot; as AcceptCallAction
+    class &quot;AcceptEventAction&quot; as AcceptEventAction {
+      isUnmarshall : Boolean
+    }
+    abstract class &quot;Action&quot; as Action {
+      isLocallyReentrant : Boolean
+    }
+    abstract class &quot;ExecutableNode&quot; as ExecutableNode
+    abstract class &quot;ActivityNode&quot; as ActivityNode
+    class &quot;Activity&quot; as Activity {
+      isReadOnly : Boolean
+      isSingleExecution : Boolean
+    }
+    abstract class &quot;ActivityGroup&quot; as ActivityGroup
+    abstract class &quot;ActivityEdge&quot; as ActivityEdge
+    class &quot;ActivityPartition&quot; as ActivityPartition {
+      isDimension : Boolean
+      isExternal : Boolean
+    }
+    class &quot;StructuredActivityNode&quot; as StructuredActivityNode {
+      mustIsolate : Boolean
+    }
+    class &quot;InputPin&quot; as InputPin
+    abstract class &quot;Pin&quot; as Pin {
+      isControl : Boolean
+    }
+    abstract class &quot;ObjectNode&quot; as ObjectNode {
+      isControlType : Boolean
+      ordering : ObjectNodeOrderingKind
+    }
+    enum &quot;ObjectNodeOrderingKind&quot; as ObjectNodeOrderingKind {
+      unordered
+      ordered
+      LIFO
+      FIFO
+    }
+    class &quot;OutputPin&quot; as OutputPin
+    class &quot;Variable&quot; as Variable
+    class &quot;InterruptibleActivityRegion&quot; as InterruptibleActivityRegion
+    class &quot;ExceptionHandler&quot; as ExceptionHandler
+    class &quot;ActionExecutionSpecification&quot; as ActionExecutionSpecification
+    abstract class &quot;ExecutionSpecification&quot; as ExecutionSpecification
+    abstract class &quot;InteractionFragment&quot; as InteractionFragment
+    class &quot;Lifeline&quot; as Lifeline
+    class &quot;PartDecomposition&quot; as PartDecomposition
+    class &quot;InteractionUse&quot; as InteractionUse
+    class &quot;Gate&quot; as Gate
+    abstract class &quot;MessageEnd&quot; as MessageEnd
+    class &quot;Message&quot; as Message {
+      messageKind : MessageKind
+      messageSort : MessageSort
+    }
+    class &quot;Interaction&quot; as Interaction
+    enum &quot;MessageKind&quot; as MessageKind {
+      complete
+      lost
+      found
+      unknown
+    }
+    enum &quot;MessageSort&quot; as MessageSort {
+      synchCall
+      asynchCall
+      asynchSignal
+      createMessage
+      deleteMessage
+      reply
+    }
+    class &quot;InteractionOperand&quot; as InteractionOperand
+    class &quot;InteractionConstraint&quot; as InteractionConstraint
+    class &quot;GeneralOrdering&quot; as GeneralOrdering
+    class &quot;OccurrenceSpecification&quot; as OccurrenceSpecification
+    class &quot;ActionInputPin&quot; as ActionInputPin
+    class &quot;ActivityFinalNode&quot; as ActivityFinalNode
+    abstract class &quot;FinalNode&quot; as FinalNode
+    abstract class &quot;ControlNode&quot; as ControlNode
+    class &quot;ActivityParameterNode&quot; as ActivityParameterNode
+    class &quot;Actor&quot; as Actor
+    class &quot;AddStructuralFeatureValueAction&quot; as AddStructuralFeatureValueAction {
+      isReplaceAll : Boolean
+    }
+    abstract class &quot;WriteStructuralFeatureAction&quot; as WriteStructuralFeatureAction
+    abstract class &quot;StructuralFeatureAction&quot; as StructuralFeatureAction
+    class &quot;AddVariableValueAction&quot; as AddVariableValueAction {
+      isReplaceAll : Boolean
+    }
+    abstract class &quot;WriteVariableAction&quot; as WriteVariableAction
+    abstract class &quot;VariableAction&quot; as VariableAction
+    class &quot;AnyReceiveEvent&quot; as AnyReceiveEvent
+    abstract class &quot;MessageEvent&quot; as MessageEvent
+    class &quot;AssociationClass&quot; as AssociationClass
+    class &quot;BehaviorExecutionSpecification&quot; as BehaviorExecutionSpecification
+    class &quot;BroadcastSignalAction&quot; as BroadcastSignalAction
+    abstract class &quot;InvocationAction&quot; as InvocationAction
+    abstract class &quot;CallAction&quot; as CallAction {
+      isSynchronous : Boolean
+    }
+    class &quot;CallBehaviorAction&quot; as CallBehaviorAction
+    class &quot;CallEvent&quot; as CallEvent
+    class &quot;CallOperationAction&quot; as CallOperationAction
+    class &quot;CentralBufferNode&quot; as CentralBufferNode
+    class &quot;ChangeEvent&quot; as ChangeEvent
+    class &quot;Clause&quot; as Clause
+    class &quot;ClearAssociationAction&quot; as ClearAssociationAction
+    class &quot;ClearStructuralFeatureAction&quot; as ClearStructuralFeatureAction
+    class &quot;ClearVariableAction&quot; as ClearVariableAction
+    class &quot;CombinedFragment&quot; as CombinedFragment {
+      interactionOperator : InteractionOperatorKind
+    }
+    enum &quot;InteractionOperatorKind&quot; as InteractionOperatorKind {
+      seq
+      alt
+      opt
+      break
+      par
+      strict
+      loop
+      critical
+      neg
+      assert
+      ignore
+      consider
+    }
+    class &quot;CommunicationPath&quot; as CommunicationPath
+    class &quot;Component&quot; as Component {
+      isIndirectlyInstantiated : Boolean
+    }
+    class &quot;ComponentRealization&quot; as ComponentRealization
+    class &quot;ConditionalNode&quot; as ConditionalNode {
+      isAssured : Boolean
+      isDeterminate : Boolean
+    }
+    class &quot;ConsiderIgnoreFragment&quot; as ConsiderIgnoreFragment
+    class &quot;Continuation&quot; as Continuation {
+      setting : Boolean
+    }
+    class &quot;ControlFlow&quot; as ControlFlow
+    class &quot;CreateLinkAction&quot; as CreateLinkAction
+    abstract class &quot;WriteLinkAction&quot; as WriteLinkAction
+    abstract class &quot;LinkAction&quot; as LinkAction
+    class &quot;LinkEndData&quot; as LinkEndData
+    class &quot;QualifierValue&quot; as QualifierValue
+    class &quot;LinkEndCreationData&quot; as LinkEndCreationData {
+      isReplaceAll : Boolean
+    }
+    class &quot;CreateLinkObjectAction&quot; as CreateLinkObjectAction
+    class &quot;CreateObjectAction&quot; as CreateObjectAction
+    class &quot;DataStoreNode&quot; as DataStoreNode
+    class &quot;DecisionNode&quot; as DecisionNode
+    class &quot;ObjectFlow&quot; as ObjectFlow {
+      isMulticast : Boolean
+      isMultireceive : Boolean
+    }
+    class &quot;DestroyLinkAction&quot; as DestroyLinkAction
+    class &quot;LinkEndDestructionData&quot; as LinkEndDestructionData {
+      isDestroyDuplicates : Boolean
+    }
+    class &quot;DestroyObjectAction&quot; as DestroyObjectAction {
+      isDestroyLinks : Boolean
+      isDestroyOwnedObjects : Boolean
+    }
+    class &quot;DestructionOccurrenceSpecification&quot; as DestructionOccurrenceSpecification
+    class &quot;MessageOccurrenceSpecification&quot; as MessageOccurrenceSpecification
+    class &quot;Device&quot; as Device
+    class &quot;Node&quot; as Node
+    class &quot;Duration&quot; as Duration
+    abstract class &quot;Observation&quot; as Observation
+    class &quot;DurationConstraint&quot; as DurationConstraint {
+      firstEvent : Boolean
+    }
+    class &quot;IntervalConstraint&quot; as IntervalConstraint
+    class &quot;Interval&quot; as Interval
+    class &quot;DurationInterval&quot; as DurationInterval
+    class &quot;DurationObservation&quot; as DurationObservation {
+      firstEvent : Boolean
+    }
+    class &quot;ExecutionEnvironment&quot; as ExecutionEnvironment
+    class &quot;ExecutionOccurrenceSpecification&quot; as ExecutionOccurrenceSpecification
+    class &quot;ExpansionNode&quot; as ExpansionNode
+    class &quot;ExpansionRegion&quot; as ExpansionRegion {
+      mode : ExpansionKind
+    }
+    enum &quot;ExpansionKind&quot; as ExpansionKind {
+      parallel
+      iterative
+      stream
+    }
+    class &quot;FinalState&quot; as FinalState
+    class &quot;FlowFinalNode&quot; as FlowFinalNode
+    class &quot;ForkNode&quot; as ForkNode
+    class &quot;FunctionBehavior&quot; as FunctionBehavior
+    class &quot;OpaqueBehavior&quot; as OpaqueBehavior {
+      body : String
+      language : String
+    }
+    class &quot;InformationFlow&quot; as InformationFlow
+    class &quot;InformationItem&quot; as InformationItem
+    class &quot;InitialNode&quot; as InitialNode
+    class &quot;InstanceValue&quot; as InstanceValue
+    class &quot;JoinNode&quot; as JoinNode {
+      isCombineDuplicate : Boolean
+    }
+    class &quot;LiteralBoolean&quot; as LiteralBoolean {
+      value : Boolean
+    }
+    abstract class &quot;LiteralSpecification&quot; as LiteralSpecification
+    class &quot;LiteralInteger&quot; as LiteralInteger {
+      value : Integer
+    }
+    class &quot;LiteralNull&quot; as LiteralNull
+    class &quot;LiteralReal&quot; as LiteralReal {
+      value : Real
+    }
+    class &quot;LiteralString&quot; as LiteralString {
+      value : String
+    }
+    class &quot;LiteralUnlimitedNatural&quot; as LiteralUnlimitedNatural {
+      value : UnlimitedNatural
+    }
+    class &quot;LoopNode&quot; as LoopNode {
+      isTestedFirst : Boolean
+    }
+    class &quot;MergeNode&quot; as MergeNode
+    class &quot;OpaqueAction&quot; as OpaqueAction {
+      body : String
+      language : String
+    }
+    class &quot;ProtocolTransition&quot; as ProtocolTransition
+    class &quot;RaiseExceptionAction&quot; as RaiseExceptionAction
+    class &quot;ReadExtentAction&quot; as ReadExtentAction
+    class &quot;ReadIsClassifiedObjectAction&quot; as ReadIsClassifiedObjectAction {
+      isDirect : Boolean
+    }
+    class &quot;ReadLinkAction&quot; as ReadLinkAction
+    class &quot;ReadLinkObjectEndAction&quot; as ReadLinkObjectEndAction
+    class &quot;ReadLinkObjectEndQualifierAction&quot; as ReadLinkObjectEndQualifierAction
+    class &quot;ReadSelfAction&quot; as ReadSelfAction
+    class &quot;ReadStructuralFeatureAction&quot; as ReadStructuralFeatureAction
+    class &quot;ReadVariableAction&quot; as ReadVariableAction
+    class &quot;ReclassifyObjectAction&quot; as ReclassifyObjectAction {
+      isReplaceAll : Boolean
+    }
+    class &quot;ReduceAction&quot; as ReduceAction {
+      isOrdered : Boolean
+    }
+    class &quot;RemoveStructuralFeatureValueAction&quot; as RemoveStructuralFeatureValueAction {
+      isRemoveDuplicates : Boolean
+    }
+    class &quot;RemoveVariableValueAction&quot; as RemoveVariableValueAction {
+      isRemoveDuplicates : Boolean
+    }
+    class &quot;ReplyAction&quot; as ReplyAction
+    class &quot;SendObjectAction&quot; as SendObjectAction
+    class &quot;SendSignalAction&quot; as SendSignalAction
+    class &quot;SequenceNode&quot; as SequenceNode
+    class &quot;SignalEvent&quot; as SignalEvent
+    class &quot;StartClassifierBehaviorAction&quot; as StartClassifierBehaviorAction
+    class &quot;StartObjectBehaviorAction&quot; as StartObjectBehaviorAction
+    class &quot;StateInvariant&quot; as StateInvariant
+    class &quot;TestIdentityAction&quot; as TestIdentityAction
+    class &quot;TimeConstraint&quot; as TimeConstraint {
+      firstEvent : Boolean
+    }
+    class &quot;TimeInterval&quot; as TimeInterval
+    class &quot;TimeExpression&quot; as TimeExpression
+    class &quot;TimeEvent&quot; as TimeEvent {
+      isRelative : Boolean
+    }
+    class &quot;TimeObservation&quot; as TimeObservation {
+      firstEvent : Boolean
+    }
+    class &quot;UnmarshallAction&quot; as UnmarshallAction
+    class &quot;ValuePin&quot; as ValuePin
+    class &quot;ValueSpecificationAction&quot; as ValueSpecificationAction
+  }
+!ifdef SHOW_ASSOCIATIONS
+  Abstraction *--&gt; OpaqueExpression : &quot;mapping[0-1]&quot;
+  Dependency --&gt; NamedElement : &quot;supplier[1-*]&quot;
+  Element *--&gt; Comment : &quot;ownedComment[*]&quot;
+  Comment --&gt; Element : &quot;annotatedElement[*]&quot;
+  Stereotype *--&gt; Image : &quot;icon[*]&quot;
+  Stereotype --&gt; Profile : profile
+  Class_ *--&gt; Classifier : &quot;nestedClassifier[*]&quot;
+  Class_ *--&gt; Reception : &quot;ownedReception[*]&quot;
+  Class_ --&gt; Class_ : &quot;superClass[*]&quot;
+  EncapsulatedClassifier --&gt; Port : &quot;ownedPort[*]&quot;
+  StructuredClassifier *--&gt; Property : &quot;ownedAttribute[*]&quot;
+  StructuredClassifier *--&gt; Connector : &quot;ownedConnector[*]&quot;
+  StructuredClassifier --&gt; Property : &quot;part[*]&quot;
+  StructuredClassifier --&gt; ConnectableElement : &quot;role[*]&quot;
+  Classifier --&gt; Property : &quot;attribute[*]&quot;
+  Classifier *--&gt; CollaborationUse : &quot;collaborationUse[*]&quot;
+  Classifier --&gt; Classifier : &quot;general[*]&quot;
+  Classifier --&gt; NamedElement : &quot;inheritedMember[*]&quot;
+  Classifier *--&gt; UseCase : &quot;ownedUseCase[*]&quot;
+  Classifier --&gt; Classifier : &quot;redefinedClassifier[*]&quot;
+  Classifier --&gt; CollaborationUse : &quot;representation[0-1]&quot;
+  Namespace --&gt; PackageableElement : &quot;importedMember[*]&quot;
+  Namespace --&gt; NamedElement : &quot;member[*]&quot;
+  NamedElement *--&gt; StringExpression : &quot;nameExpression[0-1]&quot;
+  Expression *--&gt; ValueSpecification : &quot;operand[*]&quot;
+  TypedElement --&gt; Type : &quot;type[0-1]&quot;
+  Package_ --&gt; Stereotype : &quot;ownedStereotype[*]&quot;
+  Package_ *--&gt; PackageableElement : &quot;packagedElement[*]&quot;
+  TemplateSignature --&gt; TemplateParameter : &quot;parameter[1-*]&quot;
+  TemplateParameter --&gt; ParameterableElement : &quot;default[0-1]&quot;
+  TemplateParameter *--&gt; ParameterableElement : &quot;ownedDefault[0-1]&quot;
+  TemplateBinding --&gt; TemplateSignature : signature
+  DirectedRelationship --&gt; Element : &quot;source[1-*]&quot;
+  DirectedRelationship --&gt; Element : &quot;target[1-*]&quot;
+  Relationship --&gt; Element : &quot;relatedElement[1-*]&quot;
+  TemplateParameterSubstitution --&gt; ParameterableElement : actual
+  TemplateParameterSubstitution --&gt; TemplateParameter : formal
+  TemplateParameterSubstitution *--&gt; ParameterableElement : &quot;ownedActual[0-1]&quot;
+  PackageMerge --&gt; Package_ : mergedPackage
+  ProfileApplication --&gt; Profile : appliedProfile
+  Profile --&gt; ElementImport : &quot;metaclassReference[*]&quot;
+  Profile --&gt; PackageImport : &quot;metamodelReference[*]&quot;
+  ElementImport --&gt; PackageableElement : importedElement
+  PackageImport --&gt; Package_ : importedPackage
+  Association --&gt; Type : &quot;endType[1-*]&quot;
+  Association --&gt; Property : &quot;navigableOwnedEnd[*]&quot;
+  Property --&gt; Class_ : &quot;class[0-1]&quot;
+  Property *--&gt; ValueSpecification : &quot;defaultValue[0-1]&quot;
+  Property --&gt; Property : &quot;opposite[0-1]&quot;
+  Property --&gt; Property : &quot;redefinedProperty[*]&quot;
+  Property --&gt; Property : &quot;subsettedProperty[*]&quot;
+  MultiplicityElement *--&gt; ValueSpecification : &quot;lowerValue[0-1]&quot;
+  MultiplicityElement *--&gt; ValueSpecification : &quot;upperValue[0-1]&quot;
+  RedefinableElement --&gt; RedefinableElement : &quot;redefinedElement[*]&quot;
+  RedefinableElement --&gt; Classifier : &quot;redefinitionContext[*]&quot;
+  ConnectableElement --&gt; ConnectorEnd : &quot;end[*]&quot;
+  ConnectorEnd --&gt; Property : &quot;definingEnd[0-1]&quot;
+  ConnectorEnd --&gt; Property : &quot;partWithPort[0-1]&quot;
+  ConnectorEnd --&gt; ConnectableElement : role
+  DeploymentTarget --&gt; PackageableElement : &quot;deployedElement[*]&quot;
+  Deployment --&gt; DeployedArtifact : &quot;deployedArtifact[*]&quot;
+  Artifact *--&gt; Manifestation : &quot;manifestation[*]&quot;
+  Artifact *--&gt; Artifact : &quot;nestedArtifact[*]&quot;
+  Artifact *--&gt; Property : &quot;ownedAttribute[*]&quot;
+  Artifact *--&gt; Operation : &quot;ownedOperation[*]&quot;
+  Manifestation --&gt; PackageableElement : utilizedElement
+  Operation --&gt; Constraint : &quot;bodyCondition[0-1]&quot;
+  Operation --&gt; Constraint : &quot;postcondition[*]&quot;
+  Operation --&gt; Constraint : &quot;precondition[*]&quot;
+  Operation --&gt; Operation : &quot;redefinedOperation[*]&quot;
+  Operation --&gt; Type : &quot;type[0-1]&quot;
+  BehavioralFeature *--&gt; Parameter : &quot;ownedParameter[*]&quot;
+  BehavioralFeature *--&gt; ParameterSet : &quot;ownedParameterSet[*]&quot;
+  BehavioralFeature --&gt; Type : &quot;raisedException[*]&quot;
+  Behavior --&gt; BehavioredClassifier : &quot;context[0-1]&quot;
+  Behavior *--&gt; Parameter : &quot;ownedParameter[*]&quot;
+  Behavior *--&gt; ParameterSet : &quot;ownedParameterSet[*]&quot;
+  Behavior --&gt; Constraint : &quot;postcondition[*]&quot;
+  Behavior --&gt; Constraint : &quot;precondition[*]&quot;
+  Behavior --&gt; Behavior : &quot;redefinedBehavior[*]&quot;
+  BehavioredClassifier --&gt; Behavior : &quot;classifierBehavior[0-1]&quot;
+  BehavioredClassifier *--&gt; Behavior : &quot;ownedBehavior[*]&quot;
+  InterfaceRealization --&gt; Interface_ : contract
+  Interface_ *--&gt; Classifier : &quot;nestedClassifier[*]&quot;
+  Interface_ *--&gt; Reception : &quot;ownedReception[*]&quot;
+  Interface_ *--&gt; ProtocolStateMachine : &quot;protocol[0-1]&quot;
+  Interface_ --&gt; Interface_ : &quot;redefinedInterface[*]&quot;
+  Reception --&gt; Signal : signal
+  Signal *--&gt; Property : &quot;ownedAttribute[*]&quot;
+  StateMachine --&gt; StateMachine : &quot;extendedStateMachine[*]&quot;
+  Vertex --&gt; Transition : &quot;incoming[*]&quot;
+  Vertex --&gt; Transition : &quot;outgoing[*]&quot;
+  Region --&gt; Region : &quot;extendedRegion[0-1]&quot;
+  State *--&gt; Trigger : &quot;deferrableTrigger[*]&quot;
+  State *--&gt; Behavior : &quot;doActivity[0-1]&quot;
+  State *--&gt; Behavior : &quot;entry[0-1]&quot;
+  State *--&gt; Behavior : &quot;exit[0-1]&quot;
+  State --&gt; State : &quot;redefinedState[0-1]&quot;
+  State --&gt; Constraint : &quot;stateInvariant[0-1]&quot;
+  ConnectionPointReference --&gt; Pseudostate : &quot;entry[*]&quot;
+  ConnectionPointReference --&gt; Pseudostate : &quot;exit[*]&quot;
+  Trigger --&gt; Event : event
+  Trigger --&gt; Port : &quot;port[*]&quot;
+  Port --&gt; ProtocolStateMachine : &quot;protocol[0-1]&quot;
+  Port --&gt; Interface_ : &quot;provided[*]&quot;
+  Port --&gt; Port : &quot;redefinedPort[*]&quot;
+  Port --&gt; Interface_ : &quot;required[*]&quot;
+  Constraint --&gt; Element : &quot;constrainedElement[*]&quot;
+  Constraint *--&gt; ValueSpecification : specification
+  Transition *--&gt; Behavior : &quot;effect[0-1]&quot;
+  Transition --&gt; Constraint : &quot;guard[0-1]&quot;
+  Transition --&gt; Transition : &quot;redefinedTransition[0-1]&quot;
+  Transition --&gt; Vertex : source
+  Transition --&gt; Vertex : target
+  Transition *--&gt; Trigger : &quot;trigger[*]&quot;
+  ProtocolConformance --&gt; ProtocolStateMachine : generalMachine
+  Parameter *--&gt; ValueSpecification : &quot;defaultValue[0-1]&quot;
+  Parameter --&gt; Operation : &quot;operation[0-1]&quot;
+  ParameterSet *--&gt; Constraint : &quot;condition[*]&quot;
+  InstanceSpecification --&gt; Classifier : &quot;classifier[*]&quot;
+  InstanceSpecification *--&gt; ValueSpecification : &quot;specification[0-1]&quot;
+  Slot --&gt; StructuralFeature : definingFeature
+  Slot *--&gt; ValueSpecification : &quot;value[*]&quot;
+  CollaborationUse *--&gt; Dependency : &quot;roleBinding[*]&quot;
+  CollaborationUse --&gt; Collaboration : type
+  Collaboration --&gt; ConnectableElement : &quot;collaborationRole[*]&quot;
+  Generalization --&gt; Classifier : general
+  RedefinableTemplateSignature --&gt; RedefinableTemplateSignature : &quot;extendedSignature[*]&quot;
+  RedefinableTemplateSignature --&gt; TemplateParameter : &quot;inheritedParameter[*]&quot;
+  RedefinableTemplateSignature --&gt; Classifier : classifier
+  Extend *--&gt; Constraint : &quot;condition[0-1]&quot;
+  Extend --&gt; UseCase : extendedCase
+  Extend --&gt; ExtensionPoint : &quot;extensionLocation[1-*]&quot;
+  Include --&gt; UseCase : addition
+  Substitution --&gt; Classifier : contract
+  ClassifierTemplateParameter --&gt; Classifier : &quot;constrainingClassifier[*]&quot;
+  Connector --&gt; Behavior : &quot;contract[*]&quot;
+  Connector *--&gt; ConnectorEnd : &quot;end[2-*]&quot;
+  Connector --&gt; Connector : &quot;redefinedConnector[*]&quot;
+  Connector --&gt; Association : &quot;type[0-1]&quot;
+  OpaqueExpression --&gt; Behavior : &quot;behavior[0-1]&quot;
+  OpaqueExpression --&gt; Parameter : &quot;result[0-1]&quot;
+  AcceptCallAction *--&gt; OutputPin : returnInformation
+  AcceptEventAction *--&gt; OutputPin : &quot;result[*]&quot;
+  AcceptEventAction *--&gt; Trigger : &quot;trigger[1-*]&quot;
+  Action --&gt; Classifier : &quot;context[0-1]&quot;
+  Action --&gt; InputPin : &quot;input[*]&quot;
+  Action *--&gt; Constraint : &quot;localPostcondition[*]&quot;
+  Action *--&gt; Constraint : &quot;localPrecondition[*]&quot;
+  Action --&gt; OutputPin : &quot;output[*]&quot;
+  ActivityNode --&gt; ActivityNode : &quot;redefinedNode[*]&quot;
+  Activity *--&gt; ActivityGroup : &quot;ownedGroup[*]&quot;
+  Activity *--&gt; ActivityNode : &quot;ownedNode[*]&quot;
+  Activity --&gt; ActivityPartition : &quot;partition[*]&quot;
+  Activity *--&gt; StructuredActivityNode : &quot;structuredNode[*]&quot;
+  ActivityEdge *--&gt; ValueSpecification : guard
+  ActivityEdge --&gt; ActivityEdge : &quot;redefinedEdge[*]&quot;
+  ActivityEdge *--&gt; ValueSpecification : weight
+  ActivityPartition --&gt; Element : &quot;represents[0-1]&quot;
+  StructuredActivityNode *--&gt; InputPin : &quot;structuredNodeInput[*]&quot;
+  StructuredActivityNode *--&gt; OutputPin : &quot;structuredNodeOutput[*]&quot;
+  ObjectNode --&gt; State : &quot;inState[*]&quot;
+  ObjectNode --&gt; Behavior : &quot;selection[0-1]&quot;
+  ObjectNode *--&gt; ValueSpecification : upperBound
+  ExceptionHandler --&gt; ObjectNode : exceptionInput
+  ExceptionHandler --&gt; Classifier : &quot;exceptionType[1-*]&quot;
+  ExceptionHandler --&gt; ExecutableNode : handlerBody
+  ActionExecutionSpecification --&gt; Action : action
+  ExecutionSpecification --&gt; OccurrenceSpecification : finish
+  ExecutionSpecification --&gt; OccurrenceSpecification : start
+  InteractionFragment *--&gt; GeneralOrdering : &quot;generalOrdering[*]&quot;
+  Lifeline --&gt; PartDecomposition : &quot;decomposedAs[0-1]&quot;
+  Lifeline --&gt; ConnectableElement : &quot;represents[0-1]&quot;
+  Lifeline *--&gt; ValueSpecification : &quot;selector[0-1]&quot;
+  InteractionUse *--&gt; Gate : &quot;actualGate[*]&quot;
+  InteractionUse *--&gt; ValueSpecification : &quot;argument[*]&quot;
+  InteractionUse --&gt; Interaction : refersTo
+  InteractionUse *--&gt; ValueSpecification : &quot;returnValue[0-1]&quot;
+  InteractionUse --&gt; Property : &quot;returnValueRecipient[0-1]&quot;
+  MessageEnd --&gt; Message : &quot;message[0-1]&quot;
+  Message *--&gt; ValueSpecification : &quot;argument[*]&quot;
+  Message --&gt; Connector : &quot;connector[0-1]&quot;
+  Message --&gt; MessageEnd : &quot;receiveEvent[0-1]&quot;
+  Message --&gt; MessageEnd : &quot;sendEvent[0-1]&quot;
+  Message --&gt; NamedElement : &quot;signature[0-1]&quot;
+  Interaction *--&gt; Action : &quot;action[*]&quot;
+  Interaction *--&gt; Gate : &quot;formalGate[*]&quot;
+  InteractionOperand *--&gt; InteractionConstraint : &quot;guard[0-1]&quot;
+  InteractionConstraint *--&gt; ValueSpecification : &quot;maxint[0-1]&quot;
+  InteractionConstraint *--&gt; ValueSpecification : &quot;minint[0-1]&quot;
+  ActionInputPin *--&gt; Action : fromAction
+  ActivityParameterNode --&gt; Parameter : parameter
+  AddStructuralFeatureValueAction *--&gt; InputPin : &quot;insertAt[0-1]&quot;
+  WriteStructuralFeatureAction *--&gt; OutputPin : &quot;result[0-1]&quot;
+  WriteStructuralFeatureAction *--&gt; InputPin : &quot;value[0-1]&quot;
+  StructuralFeatureAction *--&gt; InputPin : &quot;object&quot;
+  StructuralFeatureAction --&gt; StructuralFeature : structuralFeature
+  AddVariableValueAction *--&gt; InputPin : &quot;insertAt[0-1]&quot;
+  WriteVariableAction *--&gt; InputPin : &quot;value[0-1]&quot;
+  VariableAction --&gt; Variable : variable
+  BehaviorExecutionSpecification --&gt; Behavior : &quot;behavior[0-1]&quot;
+  BroadcastSignalAction --&gt; Signal : signal
+  InvocationAction *--&gt; InputPin : &quot;argument[*]&quot;
+  InvocationAction --&gt; Port : &quot;onPort[0-1]&quot;
+  CallAction *--&gt; OutputPin : &quot;result[*]&quot;
+  CallBehaviorAction --&gt; Behavior : behavior
+  CallEvent --&gt; Operation : operation
+  CallOperationAction --&gt; Operation : operation
+  CallOperationAction *--&gt; InputPin : target
+  ChangeEvent *--&gt; ValueSpecification : changeExpression
+  Clause --&gt; ExecutableNode : &quot;body[*]&quot;
+  Clause --&gt; OutputPin : &quot;bodyOutput[*]&quot;
+  Clause --&gt; OutputPin : decider
+  Clause --&gt; ExecutableNode : &quot;test[1-*]&quot;
+  ClearAssociationAction --&gt; Association : association
+  ClearAssociationAction *--&gt; InputPin : &quot;object&quot;
+  ClearStructuralFeatureAction *--&gt; OutputPin : &quot;result[0-1]&quot;
+  CombinedFragment *--&gt; Gate : &quot;cfragmentGate[*]&quot;
+  CombinedFragment *--&gt; InteractionOperand : &quot;operand[1-*]&quot;
+  Component *--&gt; PackageableElement : &quot;packagedElement[*]&quot;
+  Component --&gt; Interface_ : &quot;provided[*]&quot;
+  Component --&gt; Interface_ : &quot;required[*]&quot;
+  ComponentRealization --&gt; Classifier : &quot;realizingClassifier[1-*]&quot;
+  ConditionalNode *--&gt; Clause : &quot;clause[1-*]&quot;
+  ConditionalNode *--&gt; OutputPin : &quot;result[*]&quot;
+  ConsiderIgnoreFragment --&gt; NamedElement : &quot;message[*]&quot;
+  LinkAction *--&gt; LinkEndData : &quot;endData[2-*]&quot;
+  LinkAction *--&gt; InputPin : &quot;inputValue[1-*]&quot;
+  LinkEndData --&gt; Property : end
+  LinkEndData *--&gt; QualifierValue : &quot;qualifier[*]&quot;
+  LinkEndData --&gt; InputPin : &quot;value[0-1]&quot;
+  QualifierValue --&gt; Property : qualifier
+  QualifierValue --&gt; InputPin : value
+  LinkEndCreationData --&gt; InputPin : &quot;insertAt[0-1]&quot;
+  CreateLinkObjectAction *--&gt; OutputPin : result
+  CreateObjectAction --&gt; Classifier : classifier
+  CreateObjectAction *--&gt; OutputPin : result
+  DecisionNode --&gt; Behavior : &quot;decisionInput[0-1]&quot;
+  DecisionNode --&gt; ObjectFlow : &quot;decisionInputFlow[0-1]&quot;
+  ObjectFlow --&gt; Behavior : &quot;selection[0-1]&quot;
+  ObjectFlow --&gt; Behavior : &quot;transformation[0-1]&quot;
+  LinkEndDestructionData --&gt; InputPin : &quot;destroyAt[0-1]&quot;
+  DestroyObjectAction *--&gt; InputPin : target
+  Node *--&gt; Node : &quot;nestedNode[*]&quot;
+  Duration *--&gt; ValueSpecification : &quot;expr[0-1]&quot;
+  Duration --&gt; Observation : &quot;observation[*]&quot;
+  Interval --&gt; ValueSpecification : max
+  Interval --&gt; ValueSpecification : min
+  DurationObservation --&gt; NamedElement : &quot;event[1-2]&quot;
+  ExecutionOccurrenceSpecification --&gt; ExecutionSpecification : execution
+  InformationFlow --&gt; Classifier : &quot;conveyed[1-*]&quot;
+  InformationFlow --&gt; NamedElement : &quot;informationSource[1-*]&quot;
+  InformationFlow --&gt; NamedElement : &quot;informationTarget[1-*]&quot;
+  InformationFlow --&gt; Relationship : &quot;realization[*]&quot;
+  InformationFlow --&gt; ActivityEdge : &quot;realizingActivityEdge[*]&quot;
+  InformationFlow --&gt; Connector : &quot;realizingConnector[*]&quot;
+  InformationFlow --&gt; Message : &quot;realizingMessage[*]&quot;
+  InformationItem --&gt; Classifier : &quot;represented[*]&quot;
+  InstanceValue --&gt; InstanceSpecification : instance
+  JoinNode *--&gt; ValueSpecification : joinSpec
+  LoopNode --&gt; OutputPin : &quot;bodyOutput[*]&quot;
+  LoopNode --&gt; ExecutableNode : &quot;bodyPart[*]&quot;
+  LoopNode --&gt; OutputPin : decider
+  LoopNode --&gt; OutputPin : &quot;loopVariable[*]&quot;
+  LoopNode *--&gt; InputPin : &quot;loopVariableInput[*]&quot;
+  LoopNode *--&gt; OutputPin : &quot;result[*]&quot;
+  LoopNode --&gt; ExecutableNode : &quot;setupPart[*]&quot;
+  LoopNode --&gt; ExecutableNode : &quot;test[1-*]&quot;
+  OpaqueAction *--&gt; InputPin : &quot;inputValue[*]&quot;
+  OpaqueAction *--&gt; OutputPin : &quot;outputValue[*]&quot;
+  ProtocolTransition --&gt; Constraint : &quot;postCondition[0-1]&quot;
+  ProtocolTransition --&gt; Constraint : &quot;preCondition[0-1]&quot;
+  ProtocolTransition --&gt; Operation : &quot;referred[*]&quot;
+  RaiseExceptionAction *--&gt; InputPin : exception
+  ReadExtentAction --&gt; Classifier : classifier
+  ReadExtentAction *--&gt; OutputPin : result
+  ReadIsClassifiedObjectAction --&gt; Classifier : classifier
+  ReadIsClassifiedObjectAction *--&gt; InputPin : &quot;object&quot;
+  ReadIsClassifiedObjectAction *--&gt; OutputPin : result
+  ReadLinkAction *--&gt; OutputPin : result
+  ReadLinkObjectEndAction --&gt; Property : end
+  ReadLinkObjectEndAction *--&gt; InputPin : &quot;object&quot;
+  ReadLinkObjectEndAction *--&gt; OutputPin : result
+  ReadLinkObjectEndQualifierAction *--&gt; InputPin : &quot;object&quot;
+  ReadLinkObjectEndQualifierAction --&gt; Property : qualifier
+  ReadLinkObjectEndQualifierAction *--&gt; OutputPin : result
+  ReadSelfAction *--&gt; OutputPin : result
+  ReadStructuralFeatureAction *--&gt; OutputPin : result
+  ReadVariableAction *--&gt; OutputPin : result
+  ReclassifyObjectAction --&gt; Classifier : &quot;newClassifier[*]&quot;
+  ReclassifyObjectAction *--&gt; InputPin : &quot;object&quot;
+  ReclassifyObjectAction --&gt; Classifier : &quot;oldClassifier[*]&quot;
+  ReduceAction *--&gt; InputPin : collection
+  ReduceAction --&gt; Behavior : reducer
+  ReduceAction *--&gt; OutputPin : result
+  RemoveStructuralFeatureValueAction *--&gt; InputPin : &quot;removeAt[0-1]&quot;
+  RemoveVariableValueAction *--&gt; InputPin : &quot;removeAt[0-1]&quot;
+  ReplyAction --&gt; Trigger : replyToCall
+  ReplyAction *--&gt; InputPin : &quot;replyValue[*]&quot;
+  ReplyAction *--&gt; InputPin : returnInformation
+  SendObjectAction *--&gt; InputPin : request
+  SendObjectAction *--&gt; InputPin : target
+  SendSignalAction --&gt; Signal : signal
+  SendSignalAction *--&gt; InputPin : target
+  SequenceNode *--&gt; ExecutableNode : &quot;executableNode[*]&quot;
+  SignalEvent --&gt; Signal : signal
+  StartClassifierBehaviorAction *--&gt; InputPin : &quot;object&quot;
+  StartObjectBehaviorAction *--&gt; InputPin : &quot;object&quot;
+  StateInvariant *--&gt; Constraint : invariant
+  TestIdentityAction *--&gt; InputPin : first
+  TestIdentityAction *--&gt; OutputPin : result
+  TestIdentityAction *--&gt; InputPin : second
+  TimeExpression *--&gt; ValueSpecification : &quot;expr[0-1]&quot;
+  TimeExpression --&gt; Observation : &quot;observation[*]&quot;
+  TimeEvent *--&gt; TimeExpression : when
+  TimeObservation --&gt; NamedElement : event
+  UnmarshallAction *--&gt; InputPin : &quot;object&quot;
+  UnmarshallAction *--&gt; OutputPin : &quot;result[1-*]&quot;
+  UnmarshallAction --&gt; Classifier : unmarshallType
+  ValuePin *--&gt; ValueSpecification : value
+  ValueSpecificationAction *--&gt; OutputPin : result
+  ValueSpecificationAction *--&gt; ValueSpecification : value
+  Element &quot;owner[0-1]&quot; -- &quot;ownedElement[*]&quot; Element
+  Dependency &quot;clientDependency[*]&quot; -- &quot;client[1-*]&quot; NamedElement
+  Namespace &quot;namespace[0-1]&quot; -- &quot;ownedMember[*]&quot; NamedElement
+  StringExpression &quot;owningExpression[0-1]&quot; *-- &quot;subExpression[*]&quot; StringExpression
+  Package_ &quot;nestingPackage[0-1]&quot; -- &quot;nestedPackage[*]&quot; Package_
+  Type &quot;ownedType[*]&quot; -- &quot;package[0-1]&quot; Package_
+  TemplateableElement &quot;template&quot; *-- &quot;ownedTemplateSignature[0-1]&quot; TemplateSignature
+  TemplateParameter &quot;owningTemplateParameter[0-1]&quot; *-- &quot;ownedParameteredElement[0-1]&quot; ParameterableElement
+  ParameterableElement &quot;parameteredElement&quot; -- &quot;templateParameter[0-1]&quot; TemplateParameter
+  TemplateSignature &quot;signature&quot; *-- &quot;ownedParameter[*]&quot; TemplateParameter
+  TemplateableElement &quot;boundElement&quot; *-- &quot;templateBinding[*]&quot; TemplateBinding
+  TemplateBinding &quot;templateBinding&quot; *-- &quot;parameterSubstitution[*]&quot; TemplateParameterSubstitution
+  Package_ &quot;receivingPackage&quot; *-- &quot;packageMerge[*]&quot; PackageMerge
+  Package_ &quot;applyingPackage&quot; *-- &quot;profileApplication[*]&quot; ProfileApplication
+  Namespace &quot;importingNamespace&quot; *-- &quot;elementImport[*]&quot; ElementImport
+  Namespace &quot;importingNamespace&quot; *-- &quot;packageImport[*]&quot; PackageImport
+  Class_ &quot;metaclass&quot; -- &quot;extension[*]&quot; Extension
+  Property &quot;associationEnd[0-1]&quot; *-- &quot;qualifier[*]&quot; Property
+  Association &quot;owningAssociation[0-1]&quot; *-- &quot;ownedEnd[*]&quot; Property
+  Association &quot;association[0-1]&quot; -- &quot;memberEnd[2-*]&quot; Property
+  Classifier &quot;featuringClassifier[*]&quot; -- &quot;feature[*]&quot; Feature
+  DeploymentTarget &quot;location&quot; *-- &quot;deployment[*]&quot; Deployment
+  Deployment &quot;deployment[0-1]&quot; *-- &quot;configuration[*]&quot; DeploymentSpecification
+  Class_ &quot;class[0-1]&quot; *-- &quot;ownedOperation[*]&quot; Operation
+  BehavioralFeature &quot;specification[0-1]&quot; -- &quot;method[*]&quot; Behavior
+  BehavioredClassifier &quot;implementingClassifier&quot; *-- &quot;interfaceRealization[*]&quot; InterfaceRealization
+  Interface_ &quot;interface[0-1]&quot; *-- &quot;ownedAttribute[*]&quot; Property
+  Interface_ &quot;interface[0-1]&quot; *-- &quot;ownedOperation[*]&quot; Operation
+  StateMachine &quot;stateMachine[0-1]&quot; *-- &quot;connectionPoint[*]&quot; Pseudostate
+  StateMachine &quot;stateMachine[0-1]&quot; *-- &quot;region[1-*]&quot; Region
+  Region &quot;container[0-1]&quot; *-- &quot;subvertex[*]&quot; Vertex
+  State &quot;state[0-1]&quot; *-- &quot;connectionPoint[*]&quot; Pseudostate
+  StateMachine &quot;submachine[0-1]&quot; -- &quot;submachineState[*]&quot; State
+  State &quot;state[0-1]&quot; *-- &quot;region[*]&quot; Region
+  State &quot;state[0-1]&quot; *-- &quot;connection[*]&quot; ConnectionPointReference
+  Namespace &quot;context[0-1]&quot; *-- &quot;ownedRule[*]&quot; Constraint
+  Region &quot;container&quot; *-- &quot;transition[*]&quot; Transition
+  ProtocolStateMachine &quot;specificMachine&quot; *-- &quot;conformance[*]&quot; ProtocolConformance
+  Parameter &quot;parameter[1-*]&quot; -- &quot;parameterSet[*]&quot; ParameterSet
+  DataType &quot;datatype[0-1]&quot; *-- &quot;ownedAttribute[*]&quot; Property
+  DataType &quot;datatype[0-1]&quot; *-- &quot;ownedOperation[*]&quot; Operation
+  Enumeration &quot;enumeration[0-1]&quot; *-- &quot;ownedLiteral[*]&quot; EnumerationLiteral
+  InstanceSpecification &quot;owningInstance&quot; *-- &quot;slot[*]&quot; Slot
+  Classifier &quot;specific&quot; *-- &quot;generalization[*]&quot; Generalization
+  Classifier &quot;powertype[0-1]&quot; -- &quot;powertypeExtent[*]&quot; GeneralizationSet
+  Generalization &quot;generalization[*]&quot; -- &quot;generalizationSet[*]&quot; GeneralizationSet
+  Classifier &quot;subject[*]&quot; -- &quot;useCase[*]&quot; UseCase
+  UseCase &quot;extension&quot; *-- &quot;extend[*]&quot; Extend
+  UseCase &quot;useCase&quot; *-- &quot;extensionPoint[*]&quot; ExtensionPoint
+  UseCase &quot;includingCase&quot; *-- &quot;include[*]&quot; Include
+  Classifier &quot;substitutingClassifier&quot; *-- &quot;substitution[*]&quot; Substitution
+  Activity &quot;activity[0-1]&quot; *-- &quot;node[*]&quot; ActivityNode
+  ActivityNode &quot;containedNode[*]&quot; -- &quot;inGroup[*]&quot; ActivityGroup
+  Activity &quot;inActivity[0-1]&quot; -- &quot;group[*]&quot; ActivityGroup
+  ActivityGroup &quot;superGroup[0-1]&quot; -- &quot;subgroup[*]&quot; ActivityGroup
+  Activity &quot;activity[0-1]&quot; *-- &quot;edge[*]&quot; ActivityEdge
+  ActivityNode &quot;source&quot; -- &quot;outgoing[*]&quot; ActivityEdge
+  ActivityNode &quot;target&quot; -- &quot;incoming[*]&quot; ActivityEdge
+  ActivityGroup &quot;inGroup[*]&quot; -- &quot;containedEdge[*]&quot; ActivityEdge
+  ActivityNode &quot;node[*]&quot; -- &quot;inPartition[*]&quot; ActivityPartition
+  ActivityPartition &quot;superPartition[0-1]&quot; *-- &quot;subpartition[*]&quot; ActivityPartition
+  ActivityEdge &quot;edge[*]&quot; -- &quot;inPartition[*]&quot; ActivityPartition
+  StructuredActivityNode &quot;inStructuredNode[0-1]&quot; *-- &quot;node[*]&quot; ActivityNode
+  StructuredActivityNode &quot;inStructuredNode[0-1]&quot; *-- &quot;edge[*]&quot; ActivityEdge
+  Activity &quot;activityScope[0-1]&quot; *-- &quot;variable[*]&quot; Variable
+  StructuredActivityNode &quot;scope[0-1]&quot; *-- &quot;variable[*]&quot; Variable
+  ActivityNode &quot;node[*]&quot; -- &quot;inInterruptibleRegion[*]&quot; InterruptibleActivityRegion
+  ActivityEdge &quot;interruptingEdge[*]&quot; -- &quot;interrupts[0-1]&quot; InterruptibleActivityRegion
+  ExecutableNode &quot;protectedNode&quot; *-- &quot;handler[*]&quot; ExceptionHandler
+  InteractionFragment &quot;coveredBy[*]&quot; -- &quot;covered[*]&quot; Lifeline
+  Interaction &quot;enclosingInteraction[0-1]&quot; *-- &quot;fragment[*]&quot; InteractionFragment
+  Interaction &quot;interaction&quot; *-- &quot;lifeline[*]&quot; Lifeline
+  Interaction &quot;interaction&quot; *-- &quot;message[*]&quot; Message
+  InteractionOperand &quot;enclosingOperand[0-1]&quot; *-- &quot;fragment[*]&quot; InteractionFragment
+  GeneralOrdering &quot;toAfter[*]&quot; -- &quot;before&quot; OccurrenceSpecification
+  GeneralOrdering &quot;toBefore[*]&quot; -- &quot;after&quot; OccurrenceSpecification
+  Clause &quot;successorClause[*]&quot; -- &quot;predecessorClause[*]&quot; Clause
+  Component &quot;abstraction[0-1]&quot; *-- &quot;realization[*]&quot; ComponentRealization
+  ExpansionNode &quot;outputElement[*]&quot; -- &quot;regionAsOutput[0-1]&quot; ExpansionRegion
+  ExpansionNode &quot;inputElement[1-*]&quot; -- &quot;regionAsInput[0-1]&quot; ExpansionRegion
+!endif
+!ifdef SHOW_INHERITANCE
+  Dependency &lt;|-- Abstraction
+  PackageableElement &lt;|-- Dependency
+  DirectedRelationship &lt;|-- Dependency
+  ParameterableElement &lt;|-- PackageableElement
+  NamedElement &lt;|-- PackageableElement
+  Element &lt;|-- ParameterableElement
+  Element &lt;|-- Comment
+  Class_ &lt;|-- Stereotype
+  EncapsulatedClassifier &lt;|-- Class_
+  BehavioredClassifier &lt;|-- Class_
+  StructuredClassifier &lt;|-- EncapsulatedClassifier
+  Classifier &lt;|-- StructuredClassifier
+  Namespace &lt;|-- Classifier
+  Type &lt;|-- Classifier
+  TemplateableElement &lt;|-- Classifier
+  RedefinableElement &lt;|-- Classifier
+  NamedElement &lt;|-- Namespace
+  Element &lt;|-- NamedElement
+  Expression &lt;|-- StringExpression
+  TemplateableElement &lt;|-- StringExpression
+  ValueSpecification &lt;|-- Expression
+  PackageableElement &lt;|-- ValueSpecification
+  TypedElement &lt;|-- ValueSpecification
+  NamedElement &lt;|-- TypedElement
+  PackageableElement &lt;|-- Type
+  PackageableElement &lt;|-- Package_
+  Namespace &lt;|-- Package_
+  TemplateableElement &lt;|-- Package_
+  Element &lt;|-- TemplateableElement
+  Element &lt;|-- TemplateSignature
+  Element &lt;|-- TemplateParameter
+  DirectedRelationship &lt;|-- TemplateBinding
+  Relationship &lt;|-- DirectedRelationship
+  Element &lt;|-- Relationship
+  Element &lt;|-- TemplateParameterSubstitution
+  DirectedRelationship &lt;|-- PackageMerge
+  DirectedRelationship &lt;|-- ProfileApplication
+  Package_ &lt;|-- Profile
+  DirectedRelationship &lt;|-- ElementImport
+  DirectedRelationship &lt;|-- PackageImport
+  Association &lt;|-- Extension
+  Classifier &lt;|-- Association
+  Relationship &lt;|-- Association
+  StructuralFeature &lt;|-- Property
+  ConnectableElement &lt;|-- Property
+  DeploymentTarget &lt;|-- Property
+  TypedElement &lt;|-- StructuralFeature
+  MultiplicityElement &lt;|-- StructuralFeature
+  Feature &lt;|-- StructuralFeature
+  Element &lt;|-- MultiplicityElement
+  RedefinableElement &lt;|-- Feature
+  NamedElement &lt;|-- RedefinableElement
+  ParameterableElement &lt;|-- ConnectableElement
+  TypedElement &lt;|-- ConnectableElement
+  MultiplicityElement &lt;|-- ConnectorEnd
+  TemplateParameter &lt;|-- ConnectableElementTemplateParameter
+  NamedElement &lt;|-- DeploymentTarget
+  Dependency &lt;|-- Deployment
+  Artifact &lt;|-- DeploymentSpecification
+  Classifier &lt;|-- Artifact
+  DeployedArtifact &lt;|-- Artifact
+  NamedElement &lt;|-- DeployedArtifact
+  Abstraction &lt;|-- Manifestation
+  ParameterableElement &lt;|-- Operation
+  TemplateableElement &lt;|-- Operation
+  BehavioralFeature &lt;|-- Operation
+  Namespace &lt;|-- BehavioralFeature
+  Feature &lt;|-- BehavioralFeature
+  Class_ &lt;|-- Behavior
+  Classifier &lt;|-- BehavioredClassifier
+  Realization &lt;|-- InterfaceRealization
+  Abstraction &lt;|-- Realization
+  Classifier &lt;|-- Interface_
+  BehavioralFeature &lt;|-- Reception
+  Classifier &lt;|-- Signal
+  StateMachine &lt;|-- ProtocolStateMachine
+  Behavior &lt;|-- StateMachine
+  Vertex &lt;|-- Pseudostate
+  NamedElement &lt;|-- Vertex
+  Namespace &lt;|-- Region
+  RedefinableElement &lt;|-- Region
+  Namespace &lt;|-- State
+  RedefinableElement &lt;|-- State
+  Vertex &lt;|-- State
+  Vertex &lt;|-- ConnectionPointReference
+  NamedElement &lt;|-- Trigger
+  PackageableElement &lt;|-- Event
+  Property &lt;|-- Port
+  PackageableElement &lt;|-- Constraint
+  Namespace &lt;|-- Transition
+  RedefinableElement &lt;|-- Transition
+  DirectedRelationship &lt;|-- ProtocolConformance
+  MultiplicityElement &lt;|-- Parameter
+  ConnectableElement &lt;|-- Parameter
+  NamedElement &lt;|-- ParameterSet
+  Classifier &lt;|-- DataType
+  TemplateParameter &lt;|-- OperationTemplateParameter
+  Property &lt;|-- ExtensionEnd
+  Package_ &lt;|-- Model
+  DataType &lt;|-- Enumeration
+  InstanceSpecification &lt;|-- EnumerationLiteral
+  PackageableElement &lt;|-- InstanceSpecification
+  DeploymentTarget &lt;|-- InstanceSpecification
+  DeployedArtifact &lt;|-- InstanceSpecification
+  Element &lt;|-- Slot
+  DataType &lt;|-- PrimitiveType
+  Dependency &lt;|-- Usage
+  NamedElement &lt;|-- CollaborationUse
+  StructuredClassifier &lt;|-- Collaboration
+  BehavioredClassifier &lt;|-- Collaboration
+  DirectedRelationship &lt;|-- Generalization
+  PackageableElement &lt;|-- GeneralizationSet
+  TemplateSignature &lt;|-- RedefinableTemplateSignature
+  RedefinableElement &lt;|-- RedefinableTemplateSignature
+  BehavioredClassifier &lt;|-- UseCase
+  NamedElement &lt;|-- Extend
+  DirectedRelationship &lt;|-- Extend
+  RedefinableElement &lt;|-- ExtensionPoint
+  NamedElement &lt;|-- Include
+  DirectedRelationship &lt;|-- Include
+  Realization &lt;|-- Substitution
+  TemplateParameter &lt;|-- ClassifierTemplateParameter
+  Feature &lt;|-- Connector
+  Element &lt;|-- Image
+  ValueSpecification &lt;|-- OpaqueExpression
+  AcceptEventAction &lt;|-- AcceptCallAction
+  Action &lt;|-- AcceptEventAction
+  ExecutableNode &lt;|-- Action
+  ActivityNode &lt;|-- ExecutableNode
+  RedefinableElement &lt;|-- ActivityNode
+  Behavior &lt;|-- Activity
+  NamedElement &lt;|-- ActivityGroup
+  RedefinableElement &lt;|-- ActivityEdge
+  ActivityGroup &lt;|-- ActivityPartition
+  Namespace &lt;|-- StructuredActivityNode
+  Action &lt;|-- StructuredActivityNode
+  ActivityGroup &lt;|-- StructuredActivityNode
+  Pin &lt;|-- InputPin
+  MultiplicityElement &lt;|-- Pin
+  ObjectNode &lt;|-- Pin
+  TypedElement &lt;|-- ObjectNode
+  ActivityNode &lt;|-- ObjectNode
+  Pin &lt;|-- OutputPin
+  MultiplicityElement &lt;|-- Variable
+  ConnectableElement &lt;|-- Variable
+  ActivityGroup &lt;|-- InterruptibleActivityRegion
+  Element &lt;|-- ExceptionHandler
+  ExecutionSpecification &lt;|-- ActionExecutionSpecification
+  InteractionFragment &lt;|-- ExecutionSpecification
+  NamedElement &lt;|-- InteractionFragment
+  NamedElement &lt;|-- Lifeline
+  InteractionUse &lt;|-- PartDecomposition
+  InteractionFragment &lt;|-- InteractionUse
+  MessageEnd &lt;|-- Gate
+  NamedElement &lt;|-- MessageEnd
+  NamedElement &lt;|-- Message
+  Behavior &lt;|-- Interaction
+  InteractionFragment &lt;|-- Interaction
+  Namespace &lt;|-- InteractionOperand
+  InteractionFragment &lt;|-- InteractionOperand
+  Constraint &lt;|-- InteractionConstraint
+  NamedElement &lt;|-- GeneralOrdering
+  InteractionFragment &lt;|-- OccurrenceSpecification
+  InputPin &lt;|-- ActionInputPin
+  FinalNode &lt;|-- ActivityFinalNode
+  ControlNode &lt;|-- FinalNode
+  ActivityNode &lt;|-- ControlNode
+  ObjectNode &lt;|-- ActivityParameterNode
+  BehavioredClassifier &lt;|-- Actor
+  WriteStructuralFeatureAction &lt;|-- AddStructuralFeatureValueAction
+  StructuralFeatureAction &lt;|-- WriteStructuralFeatureAction
+  Action &lt;|-- StructuralFeatureAction
+  WriteVariableAction &lt;|-- AddVariableValueAction
+  VariableAction &lt;|-- WriteVariableAction
+  Action &lt;|-- VariableAction
+  MessageEvent &lt;|-- AnyReceiveEvent
+  Event &lt;|-- MessageEvent
+  Class_ &lt;|-- AssociationClass
+  Association &lt;|-- AssociationClass
+  ExecutionSpecification &lt;|-- BehaviorExecutionSpecification
+  InvocationAction &lt;|-- BroadcastSignalAction
+  Action &lt;|-- InvocationAction
+  InvocationAction &lt;|-- CallAction
+  CallAction &lt;|-- CallBehaviorAction
+  MessageEvent &lt;|-- CallEvent
+  CallAction &lt;|-- CallOperationAction
+  ObjectNode &lt;|-- CentralBufferNode
+  Event &lt;|-- ChangeEvent
+  Element &lt;|-- Clause
+  Action &lt;|-- ClearAssociationAction
+  StructuralFeatureAction &lt;|-- ClearStructuralFeatureAction
+  VariableAction &lt;|-- ClearVariableAction
+  InteractionFragment &lt;|-- CombinedFragment
+  Association &lt;|-- CommunicationPath
+  Class_ &lt;|-- Component
+  Realization &lt;|-- ComponentRealization
+  StructuredActivityNode &lt;|-- ConditionalNode
+  CombinedFragment &lt;|-- ConsiderIgnoreFragment
+  InteractionFragment &lt;|-- Continuation
+  ActivityEdge &lt;|-- ControlFlow
+  WriteLinkAction &lt;|-- CreateLinkAction
+  LinkAction &lt;|-- WriteLinkAction
+  Action &lt;|-- LinkAction
+  Element &lt;|-- LinkEndData
+  Element &lt;|-- QualifierValue
+  LinkEndData &lt;|-- LinkEndCreationData
+  CreateLinkAction &lt;|-- CreateLinkObjectAction
+  Action &lt;|-- CreateObjectAction
+  CentralBufferNode &lt;|-- DataStoreNode
+  ControlNode &lt;|-- DecisionNode
+  ActivityEdge &lt;|-- ObjectFlow
+  WriteLinkAction &lt;|-- DestroyLinkAction
+  LinkEndData &lt;|-- LinkEndDestructionData
+  Action &lt;|-- DestroyObjectAction
+  MessageOccurrenceSpecification &lt;|-- DestructionOccurrenceSpecification
+  MessageEnd &lt;|-- MessageOccurrenceSpecification
+  OccurrenceSpecification &lt;|-- MessageOccurrenceSpecification
+  Node &lt;|-- Device
+  Class_ &lt;|-- Node
+  DeploymentTarget &lt;|-- Node
+  ValueSpecification &lt;|-- Duration
+  PackageableElement &lt;|-- Observation
+  IntervalConstraint &lt;|-- DurationConstraint
+  Constraint &lt;|-- IntervalConstraint
+  ValueSpecification &lt;|-- Interval
+  Interval &lt;|-- DurationInterval
+  Observation &lt;|-- DurationObservation
+  Node &lt;|-- ExecutionEnvironment
+  OccurrenceSpecification &lt;|-- ExecutionOccurrenceSpecification
+  ObjectNode &lt;|-- ExpansionNode
+  StructuredActivityNode &lt;|-- ExpansionRegion
+  State &lt;|-- FinalState
+  FinalNode &lt;|-- FlowFinalNode
+  ControlNode &lt;|-- ForkNode
+  OpaqueBehavior &lt;|-- FunctionBehavior
+  Behavior &lt;|-- OpaqueBehavior
+  PackageableElement &lt;|-- InformationFlow
+  DirectedRelationship &lt;|-- InformationFlow
+  Classifier &lt;|-- InformationItem
+  ControlNode &lt;|-- InitialNode
+  ValueSpecification &lt;|-- InstanceValue
+  ControlNode &lt;|-- JoinNode
+  LiteralSpecification &lt;|-- LiteralBoolean
+  ValueSpecification &lt;|-- LiteralSpecification
+  LiteralSpecification &lt;|-- LiteralInteger
+  LiteralSpecification &lt;|-- LiteralNull
+  LiteralSpecification &lt;|-- LiteralReal
+  LiteralSpecification &lt;|-- LiteralString
+  LiteralSpecification &lt;|-- LiteralUnlimitedNatural
+  StructuredActivityNode &lt;|-- LoopNode
+  ControlNode &lt;|-- MergeNode
+  Action &lt;|-- OpaqueAction
+  Transition &lt;|-- ProtocolTransition
+  Action &lt;|-- RaiseExceptionAction
+  Action &lt;|-- ReadExtentAction
+  Action &lt;|-- ReadIsClassifiedObjectAction
+  LinkAction &lt;|-- ReadLinkAction
+  Action &lt;|-- ReadLinkObjectEndAction
+  Action &lt;|-- ReadLinkObjectEndQualifierAction
+  Action &lt;|-- ReadSelfAction
+  StructuralFeatureAction &lt;|-- ReadStructuralFeatureAction
+  VariableAction &lt;|-- ReadVariableAction
+  Action &lt;|-- ReclassifyObjectAction
+  Action &lt;|-- ReduceAction
+  WriteStructuralFeatureAction &lt;|-- RemoveStructuralFeatureValueAction
+  WriteVariableAction &lt;|-- RemoveVariableValueAction
+  Action &lt;|-- ReplyAction
+  InvocationAction &lt;|-- SendObjectAction
+  InvocationAction &lt;|-- SendSignalAction
+  StructuredActivityNode &lt;|-- SequenceNode
+  MessageEvent &lt;|-- SignalEvent
+  Action &lt;|-- StartClassifierBehaviorAction
+  CallAction &lt;|-- StartObjectBehaviorAction
+  InteractionFragment &lt;|-- StateInvariant
+  Action &lt;|-- TestIdentityAction
+  IntervalConstraint &lt;|-- TimeConstraint
+  Interval &lt;|-- TimeInterval
+  ValueSpecification &lt;|-- TimeExpression
+  Event &lt;|-- TimeEvent
+  Observation &lt;|-- TimeObservation
+  Action &lt;|-- UnmarshallAction
+  InputPin &lt;|-- ValuePin
+  Action &lt;|-- ValueSpecificationAction
+!endif
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

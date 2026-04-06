@@ -1,0 +1,128 @@
+<html><head><title>33847 - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../33/332ynk0up2ucmwu5hd7s1qyq93lvg4k.html'>Previous</a>
+<a href='../33/33brys7kczekkjy8og6q4teimkxezmx.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>33847</h2>
+<a href='http://forum.plantuml.net/8350/why-dont-sprites-scale-properly'>http://forum.plantuml.net/8350/why-dont-sprites-scale-properly</a>
+<hr>
+<img src='33847mkqq2k3ttmrmjwhusobj5w9kya.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+scale 0.5
+
+sprite $Kubernetes [48x48/16z] {
+bPE7WkqW24G7r9ZO-F-lVGKrOTdSLyxMQsLc4E_4WFyW3v6HyM_GEKGP9_tBQZ7yRGTVuhWO7-4YBnJ6Ay6k7iFk22-hgrY8n5BTZjZaAu0RQ14FLJpCugdO
+dFAD4EGR9nPTF0COukcOa3SmaGudRoz1IVF8UCs023UqXkAyBDdo6t29ZA3cnjsXSMZTpGfeeXH2hWJW75A0CZkKwm6keZGeiadxHBdqCkbwno4Rw0BhYlgo
+rczBv4Opox8fgh5efQggk3JpruyCn7b_rcCIT23OY4qm3JZaq5V0yzSQQBPWjhSra_gokjcAsQeFeALrevh957G0nSGTjwtS6k_W8yWwqcKp5xHJFL1jkStj
+fkL8pFguMWtdra6fH9i09TaCmiDnu866RD8fofNNoU2K2GgTHy2w9QzrPxk3YmGSVRbmzqtF04VQfhQbuoYQHjZl8WGiQK4JBKSNPSX3ckuMNKhtXoGF8xi7
+saMY1dNfRPrqw2QRlDH3QXtWbNtlfDxQlEnsLHfMvbN_HN85W8VR0Eex3rSykmTsTninq-euGyGalmr-FofZOpKJzvfZ236N7iXftJHpI9MRQgvkCF0m3MiW
+TAFL4Fs9zZOloshk8fRXjJhD7g_LQ_PuhUuLlJC8RmJvGC0xILv9-0J55mYMdm
+}
+
+node Kubernetes &lt;&lt;$Kubernetes&gt;&gt; [
+  = Kubernetes
+  Description of k8s
+]
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<html><head><title>ob27z - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../oa/oaxkkd8wrxglohujal9m3kt0arb3g3r.html'>Previous</a>
+<a href='../ob/ob3k67v960bup37r0b49dqa4eij7mkg.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>ob27z</h2>
+<a href='https://forum.plantuml.net/15544/stereotype-priorities-changed-compared-implementations'>https://forum.plantuml.net/15544/stereotype-priorities-changed-compared-implementations</a>
+<hr>
+<img src='ob27zj83ilkwxwg87m05wb5746vf00f.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+    skinparam rectangle&lt;&lt;RedContainer&gt;&gt; {
+        StereotypeFontColor red
+        FontColor red
+        BackgroundColor lightred
+        BorderColor darkred
+        RoundCorner 0
+        DiagonalCorner 18
+    }
+
+    skinparam rectangle&lt;&lt;Default&gt;&gt; {
+        StereotypeFontColor blue
+        FontColor blue
+    }
+
+    skinparam rectangle&lt;&lt;GreenContainer&gt;&gt; {
+        StereotypeFontColor green
+        FontColor green
+        BackgroundColor lightgreen
+        BorderColor darkgreen
+        RoundCorner 15
+        DiagonalCorner 0
+    }
+
+    rectangle &quot;==red container&quot; &lt;&lt;RedContainer&gt;&gt;&lt;&lt;Default&gt;&gt; as rC
+    rectangle &quot;==default container&quot; &lt;&lt;container&gt;&gt;&lt;&lt;Default&gt;&gt; as r
+    rectangle &quot;==green container&quot; &lt;&lt;GreenContainer&gt;&gt;&lt;&lt;RedContainer&gt;&gt; as gC
+    rectangle &quot;==red again container&quot; &lt;&lt;RedContainer&gt;&gt;&lt;&lt;GreenContainer&gt;&gt; as rC2
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

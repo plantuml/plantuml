@@ -1,0 +1,225 @@
+<html><head><title>qn6ds - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../qn/qn5cz5nr2y4t8dc8czf2q6jqhav1b86.html'>Previous</a>
+<a href='../qn/qn8onir6kehm4z1ucdj7nxkapcw5oog.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>qn6ds</h2>
+<hr>
+<img src='qn6ds49t67sgdt7i8obx81zfhiit5b7.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+
+skinparam backgroundcolor #AAAAAA
+
+participant &quot;vodpull-nordiskfilm app&quot; as vodpull
+
+participant &quot;/local/iptv/vodpush/\nnordiskfilm/&quot; as vodpush 
+
+participant &quot;/local/iptv/vodpull-nordiskfilm/\ndata/generate/2057/&quot; as generate
+
+participant &quot;/local/iptv/vodpull-nordiskfilm/\ndata/download/2057/&quot; as download
+
+vodpull-&gt;vodpush: list movie files: found EG_2057_8500.H264
+
+vodpull-&gt;vodpull: extract movieID from filename: 2057
+
+
+
+note over vodpull: If the XML file already exists then do nothing
+
+vodpull-&gt;vodpush: look for xml file: EG_2057_8500.xml
+
+alt if xml file exists
+  vodpull-&gt;vodpull: Skip this movie file
+else else
+  vodpull-&gt;vodpull: Continue
+end
+
+
+
+note over vodpull: Check movie file lastModified date
+
+vodpull-&gt;vodpull: Get movie file lastModified date
+
+alt if lastModified date older than file.graceperiod
+  vodpull-&gt;vodpull: Continue
+else else
+  vodpull-&gt;vodpull: Skip this movie file
+end
+
+
+
+note over vodpull: Processed this movie file succesfully before ?
+
+vodpull-&gt;generate: look for delivered flag file: 2057.deliver.success 
+
+alt if delivered flag file exists
+
+  vodpull-&gt;vodpull: get flag file lastModified date
+
+  alt lastModified date older than delivered.graceperiod ?
+
+    vodpull-&gt;vodpull: Continue
+    
+  else else
+
+    vodpull-&gt;vodpull: Skip this movie file
+
+  end
+
+else 
+    vodpull-&gt;vodpull: Continue
+end
+
+
+note over vodpull: Downloaded from NordiskFilm before but problems with data quality ?
+
+vodpull-&gt;download: look for download rejected flag file: 2057.download.rejected 
+
+alt if download rejected flag file exists
+
+  note over vodpull: The last time we downloaded XML/Cover files\nfrom NordiskFilm they contained errors\nTip: the flag file contains the error message
+
+  vodpull-&gt;vodpull: get flag file lastModified date
+
+  alt lastModified date older than rejected.graceperiod ?
+
+    vodpull-&gt;vodpull: Continue
+    
+  else else
+
+    vodpull-&gt;vodpull: Skip this movie file
+
+  end
+
+else else
+    vodpull-&gt;vodpull: Continue
+end
+
+
+note over vodpull: Failed to crate a valid SmartVision XML file before ?
+
+vodpull-&gt;generate: look for generate rejected flag file: 2057.generate.rejected 
+
+alt if generate rejected flag file exists
+
+  note over vodpull: The last time we processed this movie file\nwe could not create a valid SmartVision XML file\nTip: the flag file contains the error message
+
+  vodpull-&gt;vodpull: get flag file lastModified date
+
+  alt lastModified date older than rejected.graceperiod ?
+
+    vodpull-&gt;vodpull: Continue
+    
+  else else
+
+    vodpull-&gt;vodpull: Skip this movie file
+
+  end
+
+else 
+    vodpull-&gt;vodpull: Continue
+end
+
+note over vodpull: Download XML metadata and Cover file from NordiskFilm
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

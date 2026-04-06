@@ -1,0 +1,199 @@
+<html><head><title>9pjzf - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../9p/9pdag5j0wlkemq73e8zvkjetoukboot.html'>Previous</a>
+<a href='../9p/9pk1maewtafizwwr3pv7l5qsf4hfccl.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>9pjzf</h2>
+<hr>
+<img src='9pjzfxz1szm3g6lk6fs1lp6huapzmoi.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+
+if (user charges to personal account) then
+  :Charge to personal account;
+  :continue;
+  detach
+elseif (user charges to single shared account)
+  :Charge to shared account;
+  :continue;
+  detach
+elseif (user selects with CODE only) then
+  repeat
+    if (User can charge to personal account) then
+      :prompt user with CODE entry AND Personal Account;
+    else
+      :prompt user with CODE entry;
+    endif
+    if (timeout or logout) then
+      stop
+    endif
+    if (Personal Account Selected) then
+      :Charge to personal account;
+      :continue;
+      detach
+    endif
+  repeat while (Valid account selected) is (No)
+  :Charge to shared account;
+  :continue;
+  detach
+else
+  :Build initial account list;
+  note right
+    cache for re-use
+    NB Format for long account names
+    handle smoth scrolling of account list
+    May require fetching more accounts during
+    scroll
+    disable invalid accounts (but still present list)
+  endnote
+  if (User has default shared account) then
+    :Add Default to top of account list;
+  endif
+  if (User can charge to personal account) then
+    :Add Personal account to top of account list;
+  endif
+  repeat
+    if (Prompt user with account list) then (timeout\nor logout)
+      stop
+    elseif (User selects specific account) then
+      :Note charging to specific account;
+      :continue;
+      detach
+    elseif (user selects account CODE entry) then
+      repeat
+        :prompt user with CODE entry;
+        if (timeout or logout) then
+          stop
+        endif
+      repeat while (user enters valid account CODE) is (Invalid)
+      :Note charging to specific shared account;
+      :continue;
+      detach
+    elseif (user selects account Search entry) then
+      repeat
+        if (prompt user with Search entry) then (timeout or logout)
+          stop
+        endif
+      repeat while (Match search string against account list) is (empty)
+      if (Count Search resuslt) then  (Only one matching\naccound found)
+        :Note charging to specific shared account;
+        :continue;
+        detach
+      endif
+      :Build list from search results;
+      :Prompt user with account list;
+      if (timeout or logout) then
+        stop
+      endif
+      :Note charging to specific account;
+      :continue;
+      detach
+    else
+      stop
+    endif
+  repeat while (Account selectionc) is (No)
+  :Continue;
+  detach
+endif
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

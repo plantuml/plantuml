@@ -1,0 +1,157 @@
+<html><head><title>7x6g5 - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../7x/7x3gvrqfafdf002pofapmgv11zd7tus.html'>Previous</a>
+<a href='../7x/7x9dujrcne1bw6q0zbg2nnqmtjj6d2l.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>7x6g5</h2>
+<a href='https://support.oneskyapp.com/hc/en-us/articles/208047697-JSON-sample-files'>https://support.oneskyapp.com/hc/en-us/articles/208047697-JSON-sample-files</a>
+<hr>
+<img src='7x6g537aw5s462i5obb3jubtbjipwd8.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startjson
+  {
+    &quot;_id&quot;: &quot;5fbfe54275b46ee547661b06&quot;,
+    &quot;index&quot;: 0,
+    &quot;guid&quot;: &quot;c3ae6566-a1e5-48fe-b8ad-7d7dc5fdfe06&quot;,
+    &quot;isActive&quot;: true,
+    &quot;balance&quot;: &quot;$2,530.22&quot;,
+    &quot;picture&quot;: &quot;http://placehold.it/32x32&quot;,
+    &quot;age&quot;: 28,
+    &quot;eyeColor&quot;: &quot;blue&quot;,
+    &quot;name&quot;: &quot;Nichole Williams&quot;,
+    &quot;gender&quot;: &quot;female&quot;,
+    &quot;company&quot;: &quot;LUXURIA&quot;,
+    &quot;email&quot;: &quot;nicholewilliams@luxuria.com&quot;,
+    &quot;phone&quot;: &quot;+1 (932) 429-3748&quot;,
+    &quot;address&quot;: &quot;911 Withers Street, Tyhee, Maryland, 4805&quot;,
+    &quot;about&quot;: &quot;In dolor cupidatat occaecat occaecat consectetur occaecat aute amet incididunt quis. Cupidatat aliquip dolore deserunt deserunt. Amet fugiat ad cillum quis aliqua incididunt.\r\n&quot;,
+    &quot;registered&quot;: &quot;2016-02-02T01:01:33 -01:00&quot;,
+    &quot;latitude&quot;: 87.31196,
+    &quot;longitude&quot;: -87.126263,
+    &quot;tags&quot;: [
+      &quot;sit&quot;,
+      &quot;duis&quot;,
+      &quot;amet&quot;,
+      &quot;qui&quot;,
+      &quot;Lorem&quot;,
+      &quot;Lorem&quot;,
+      &quot;excepteur&quot;
+    ],
+    &quot;friends&quot;: [
+      {
+        &quot;id&quot;: 0,
+        &quot;name&quot;: &quot;Edwards Robinson&quot;
+      },
+      {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Horton Patterson&quot;
+      },
+      {
+        &quot;id&quot;: 2,
+        &quot;name&quot;: &quot;Haynes Kemp&quot;
+      }
+    ],
+    &quot;greeting&quot;: &quot;Hello, Nichole Williams! You have 9 unread messages.&quot;,
+    &quot;favoriteFruit&quot;: &quot;apple&quot;
+  }
+@endjson
+</code></pre>
+</div>
+</body>
+</html>

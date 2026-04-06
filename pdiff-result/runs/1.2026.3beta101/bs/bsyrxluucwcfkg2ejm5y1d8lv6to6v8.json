@@ -1,0 +1,11 @@
+{
+  "duration": 10,
+  "description": "(2 participants)",
+  "implementation": "SequenceDiagram",
+  "png": {
+    "width": 113,
+    "height": 369,
+    "crc": 3729127733,
+    "sizeInBytes": 3736
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "duration": 12,
+  "description": "(Gantt)",
+  "implementation": "GanttDiagram",
+  "png": {
+    "width": 368,
+    "height": 114,
+    "crc": 1469485897,
+    "sizeInBytes": 4049
+  }
+}

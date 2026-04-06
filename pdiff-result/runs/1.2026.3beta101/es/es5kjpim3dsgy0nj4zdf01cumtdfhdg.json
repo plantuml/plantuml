@@ -1,0 +1,11 @@
+{
+  "duration": 6,
+  "description": "(Error)",
+  "implementation": "PSystemErrorV2",
+  "png": {
+    "width": 423,
+    "height": 161,
+    "crc": 2265884143,
+    "sizeInBytes": 7012
+  }
+}

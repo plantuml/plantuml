@@ -1,0 +1,114 @@
+<html><head><title>djn29 - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../dj/djh8gnrytjvju0hyhq1qqvjjls2pyon.html'>Previous</a>
+<a href='../dj/djutlzhv0jr5t1rcxtbcsl9oceydt4k.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>djn29</h2>
+<hr>
+<img src='djn29ystyyrunywbd986jb4d3txkhg7.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+ 
+User.597d818b-&gt;Locus++ [[{{\n &quot;id&quot; : &quot;lid.17d98ccc-372c-11e6-b4ed-e62258b45be7&quot;,\n &quot;time&quot; : &quot;2016-06-20T21:15:19.962Z&quot;,\n &quot;msgType&quot; : &quot;http.req&quot;,\n &quot;msg&quot; : {\n &quot;ua&quot; : &quot;com.xyz.wx2.integration.l2sip.tests.SquaredToSquaredUC.SquaredToSquaredUCCloudUriMatrixIT.testFusedCallerHuronCalleeCloudUri&quot;,\n &quot;uid&quot; : &quot;597d818b-e1d1-4251-8a10-a39af5891b26&quot;,\n &quot;tid&quot; : &quot;L2Sip-ITCLIENT_l2sip-cfatestFusedCallerHuronCalleeCloudUri88d38418-680b-4a41-9585-d1202b89eeea_imi:false&quot;,\n &quot;path&quot; : &quot;/loci/call&quot;,\n &quot;method&quot; : &quot;POST&quot;\n },\n &quot;srcType&quot; : &quot;Test&quot;,\n &quot;src&quot; : {\n &quot;ip&quot; : &quot;166.78.8.15&quot;,\n &quot;port&quot; : 42538\n },\n &quot;dstType&quot; : &quot;Locus&quot;,\n &quot;dst&quot; : {\n &quot;ip&quot; : &quot;10.254.2.114&quot;,\n &quot;port&quot; : 61346,\n &quot;thread&quot; : &quot;nioconnector93&quot;\n }\n}}]] : [POST] /loci/call [2016-06-20T21:15:19.962Z]
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

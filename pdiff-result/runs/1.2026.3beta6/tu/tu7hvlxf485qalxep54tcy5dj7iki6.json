@@ -1,0 +1,11 @@
+{
+  "duration": 13,
+  "description": "(Unsupported)",
+  "implementation": "PSystemUnsupported",
+  "png": {
+    "width": 565,
+    "height": 236,
+    "crc": 3867524067,
+    "sizeInBytes": 13600
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "duration": 156,
+  "description": "(List Emoji)",
+  "implementation": "PSystemListEmoji",
+  "png": {
+    "width": 1500,
+    "height": 916,
+    "crc": 3663078885,
+    "sizeInBytes": 141841
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "duration": 2,
+  "description": "(Definition)",
+  "implementation": "PSystemDefinition",
+  "png": {
+    "width": 128,
+    "height": 17,
+    "crc": 1048010154,
+    "sizeInBytes": 1075
+  }
+}

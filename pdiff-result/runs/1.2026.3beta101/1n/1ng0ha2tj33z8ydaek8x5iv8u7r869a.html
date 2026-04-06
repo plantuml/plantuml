@@ -1,0 +1,208 @@
+<html><head><title>1ng0h - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../1n/1n0j2ypcx27kty5sqay6m1pyi607wf.html'>Previous</a>
+<a href='../1n/1npyqqhqaa72cs9qdknaknw1ib7re1o.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>1ng0h</h2>
+<a href='https://forum.plantuml.net/4037/association-node-breaks-link-direction?show=10175#c10175'>https://forum.plantuml.net/4037/association-node-breaks-link-direction?show=10175#c10175</a>
+<hr>
+<img src='1ng0ha2tj33z8ydaek8x5iv8u7r869a.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+hide empty methods
+hide empty attributes
+hide circle
+skinparam classAttributeIconSize 0
+class ia_1000042_ia125_has_father_123 as &quot;ia:1000042-ia125_has_father-123&quot;
+ia_1000042_ia125_has_father_123 : a rdf:Statement
+ia_1000042_ia125_has_father_123 : rdfs:comment &quot;was his favorite son&quot;
+class cona_700000166_recCreation as &quot;cona:700000166-recCreation&quot;
+cona_700000166_recCreation : a crm:E65_Creation
+cona_700000166_recCreation : crm:P14_carried_out_by cona_contrib:10000000 # VP
+class ia_1000042 as &quot;ia:1000042&quot;
+ia_1000042 : a skos:Concept, crm:E28_Conceptual_Object
+class ia_124 as &quot;ia:124&quot;
+ia_1000042 -up-&gt; ia_124 : gvp:ia126_has_mother
+class _http___www_iconclass_org_94L_ as &quot;&lt;http://www.iconclass.org/94L&gt;&quot;
+ia_1000042 -right- _http___www_iconclass_org_94L_ : owl:sameAs
+class ia_term_123_la as &quot;ia_term:123-la&quot;
+ia_1000042 --&gt; ia_term_123_la : xl:prefLabel\ncrm:P1_is_identified_by
+class ia_126 as &quot;ia:126&quot;
+ia_1000042 --&gt; ia_126 : gvp:ia128_event
+class cona_source_123 as &quot;cona_source:123&quot;
+ia_1000042 --&gt; cona_source_123 : crm:P67i_is_referred_to_by\ndct:source
+class cona_source_124_subject_1000042 as &quot;cona_source:124-subject-1000042&quot;
+ia_1000042 --&gt; cona_source_124_subject_1000042 : crm:P67i_is_referred_to_by\ndct:source
+class tgn_7010720 as &quot;tgn:7010720&quot;
+ia_1000042 -left-&gt; tgn_7010720 : gvp:ia123_place_birth
+class ia_129 as &quot;ia:129&quot;
+ia_1000042 -up-&gt; ia_129 : gvp:broaderPreferred
+class ia_1000042_record as &quot;ia:1000042-record&quot;
+ia_1000042 --&gt; ia_1000042_record : crm:P70i_is_documented_in
+class ia_123 as &quot;ia:123&quot;
+ia_1000042 -up-&gt; ia_123 : gvp:ia125_has_father
+class ia_125 as &quot;ia:125&quot;
+ia_1000042 --&gt; ia_125 : gvp:ia128_event
+class tgn_7029383 as &quot;tgn:7029383&quot;
+ia_1000042 -left-&gt; tgn_7029383 : gvp:ia124_place
+class cona_700000166_creation as &quot;cona:700000166-creation&quot;
+ia_1000042 --&gt; cona_700000166_creation : crm:P94i_was_created_by
+ia_1000042 : crm:P3_has_note &quot;Probably based on an actual historical figure,\n  a king of ancient Argos.\n  The legendary figure was the son of Zeus and Alcmene ...&quot;
+ia_1000042 : dc:description &quot;Probably based on an actual historical figure,\n  a king of ancient Argos.\n  The legendary figure was the son of Zeus and Alcmene ...&quot;
+ia_1000042 : rdfs:comment &quot;Story developed in Argos,\n  but was taken over at early date by Thebes&quot;
+ia_1000042 : gvp:estStart &quot;-1000&quot;^^xsd:gYear
+ia_1000042 : gvp:parentString &quot;Classical Mythology&gt; Greek heroic legends&gt; Story of Hercules&quot;
+ia_1000042 : gvp:ia127_role aat:123 # Greek hero
+ia_1000042 : dct:type ia:type/Religion_Mythology
+ia_1000042 : gvp:ia127_role aat:124 # king
+ia_126 : a crm:E28_Conceptual_Object
+ia_126 :  &quot;clean the stables of King Augeas&quot;
+ia_126 : dct:type ia:type/Event
+cona_source_123 : a crm:E31_Document, bibo:Document
+cona_source_123 : dct:title &quot;Encyclopedia Britannica Online [2002-]&quot;
+ia_129 :  &quot;Story of Hercules&quot;
+class ia_130 as &quot;ia:130&quot;
+ia_130 : a crm:E28_Conceptual_Object
+ia_130 -up-&gt; ia_126 : gvp:ia128_event
+ia_130 :  &quot;Augeas [Greek king]&quot;
+ia_130 : dct:type ia:type/Religion_Mythology
+ia_125 : a crm:E28_Conceptual_Object
+ia_125 --&gt; ia_126 : gvp:ia130_has_subevent
+ia_125 :  &quot;Labors of Hercules&quot;
+ia_125 : dct:type ia:type/Event
+ia_124 : a crm:E28_Conceptual_Object
+ia_124 :  &quot;Alcmena [Greek heroine]&quot;
+ia_124 : dct:type ia:type/Religion_Mythology
+ia_term_123_la : a xl:Label, crm:E75_Conceptual_Object_Appellation
+ia_term_123_la --&gt; cona_source_123 : dct:source\ncrm:P67i_is_referred_to_by
+ia_term_123_la : xl:literalForm &quot;Hercules&quot;@la
+ia_term_123_la : crm:P3_has_note &quot;Hercules&quot;@la
+ia_term_123_la : crm:P72_has_language gvp_lang:la
+ia_term_123_la : dct:language gvp_lang:la
+ia_term_123_la : crmx:preferred &lt;preferred/Preferred&gt;
+cona_source_124_subject_1000042 : a crm:E31_Document, bibo:Document
+class cona_source_124 as &quot;cona_source:124&quot;
+cona_source_124_subject_1000042 --&gt; cona_source_124 : dct:isPartOf\ncrm:P106i_forms_part_of
+cona_source_124_subject_1000042 : crm:P3_has_note &quot;94L&quot;
+cona_source_124_subject_1000042 : bibo:locator &quot;94L&quot;
+tgn_7010720 :  &quot;Argos&quot;
+ia_123 : a crm:E28_Conceptual_Object
+ia_123 -right- ia_124 : gvp:ia129_has_spouse
+ia_123 :  &quot;Zeus [Greek god]&quot;
+ia_123 : dct:type ia:type/Religion_Mythology
+ia_1000042_record : a crm:E31_Document
+ia_1000042_record --&gt; cona_700000166_recCreation : crm:P94i_was_created_by
+cona_700000166_creation : a crm:E65_Creation
+class cona_700000166_creation_date as &quot;cona:700000166-creation-date&quot;
+cona_700000166_creation --&gt; cona_700000166_creation_date : crm:P4_has_time-span
+cona_700000166_creation : crm:P3_has_note &quot;Story developed in Argos,\n  but was taken over at early date by Thebes&quot;
+tgn_7029383 :  &quot;Thebes&quot;
+cona_700000166_creation_date : a crm:E52_Time-Span
+cona_700000166_creation_date : crm:P82a_begin_of_the_begin &quot;-1000&quot;^^xsd:gYear
+cona_source_124 : a bibo:Document, crm:E31_Document
+cona_source_124 : dct:title &quot;Iconclass 2100 Browser [2009-]&quot;
+ia_1000042_ia125_has_father_123 : &darr; rdf:subject ia:1000042
+ia_1000042_ia125_has_father_123 : .. rdf:predicate gvp:ia125_has_father
+ia_1000042_ia125_has_father_123 : &uarr; rdf:object ia:123
+(ia_123, ia_1000042) . ia_1000042_ia125_has_father_123
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

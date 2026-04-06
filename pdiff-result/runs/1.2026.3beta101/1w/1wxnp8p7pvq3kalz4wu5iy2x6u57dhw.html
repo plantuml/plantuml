@@ -1,0 +1,201 @@
+<html><head><title>1wxnp - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../1w/1wtvlri42747d2h5ld3wuurmgo7sy6n.html'>Previous</a>
+<a href='../1x/1x2hr2h0e2csq1lyuxkez3t2aijnm43.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>1wxnp</h2>
+<a href='https://forum.plantuml.net/16119/sample-values-in-timing-diagrams?show=16159#c16159'>https://forum.plantuml.net/16119/sample-values-in-timing-diagrams?show=16159#c16159</a>
+<hr>
+<img src='1wxnp8p7pvq3kalz4wu5iy2x6u57dhw.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+robust &quot;microloan simulation example&quot; as T1
+binary &quot;InitialPayments&quot; as T2
+binary &quot;PayInstallment&quot; as T3
+samples &quot;Debt&quot; as T4
+binary &quot;Done&quot; as T5
+scale 10 as 166 pixels
+@0.0002178
+T1 is idle
+@0.2673008
+T1 is Setup
+@0.2690767
+T2 is high
+@1.0334542
+T2 is low
+@1.0387143
+T1@1.0387143 &lt;-&gt; @11.0387143 : PT10S
+@11.0787686
+T3 is high
+@11.1086172
+T4 is 52.5
+@11.4016389
+T4 is 42.5
+@11.4155199
+T3 is low
+@11.5049542
+T1 is Paying
+@11.5059009
+T1@11.5059009 &lt;-&gt; @21.5059009 : PT10S
+@21.5059009
+T1@21.5059009 &lt;-&gt; @31.5059009 : PT10S
+@21.5114983
+T3 is high
+@21.5121452
+T4 is 44.62
+@21.7184437
+T4 is 34.62
+@21.7296589
+T3 is low
+@31.5059009
+T1@31.5059009 &lt;-&gt; @41.5059009 : PT10S
+@31.5167131
+T3 is high
+@31.5177087
+T4 is 36.35
+@31.7542972
+T4 is 26.35
+@31.7645250
+T3 is low
+@41.5059009
+T1@41.5059009 &lt;-&gt; @51.5059009 : PT10S
+@41.5181614
+T3 is high
+@41.5190926
+T4 is 27.67
+@41.7354661
+T4 is 17.67
+@41.7460515
+T3 is low
+@51.5059009
+T1@51.5059009 &lt;-&gt; @61.5059009 : PT10S
+@51.5218355
+T3 is high
+@51.5228925
+T4 is 18.55
+@51.7140272
+T4 is 8.55
+@51.7268924
+T3 is low
+@61.5059009
+T1@61.5059009 &lt;-&gt; @71.5059009 : PT10S
+@61.5176236
+T3 is high
+@61.5186820
+T4 is 8.98
+@61.7070365
+T4 is 0
+@61.7165037
+T3 is low
+@61.7200128
+T1 is Paid
+@61.7200177
+T5 is high
+@61.7300095
+T1 is {hidden}
+@61.7344256
+T1 is {hidden}
+@61.7345512
+T5 is low
+T1@0 &lt;-&gt; @62 : 61,734 s
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<html><head><title>pgxfi - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../pg/pgv4oiqbobnjrqghdnpncm7hwvxn7b8.html'>Previous</a>
+<a href='../ph/phclyrvdaii4njogw97t4h79kltuhly.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>pgxfi</h2>
+<a href='https://github.com/plantuml/plantuml/pull/1767'>https://github.com/plantuml/plantuml/pull/1767</a>
+<hr>
+<img src='pgxfir37d3wfngmscp31tkadk9h5udb.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startcreole math-Page-10
+= Test math - Page 10
+&lt;math&gt;lim_(x rarr 2^-) f(x)&lt;/math&gt;
+&lt;math&gt;1/2*(:A:|*1/2 text(bra)&lt;/math&gt;
+&lt;math&gt;1/2*|:B:)*1/2 text(ket)&lt;/math&gt;
+&lt;math&gt;1/2*(:A:|:B:)*1/2 text(bra-ket)&lt;/math&gt;
+&lt;math&gt;1/2*(:A:|:B:|:C:)*1/2 text(sandwich)&lt;/math&gt;
+&lt;math&gt;1/(2/3)*(:1/2*D:|:E:)*4/(5/6) text(stretch)&lt;/math&gt;
+&lt;math&gt;vec(x)&lt;/math&gt;
+&lt;math&gt;vecx&lt;/math&gt;
+&lt;math&gt;vecxyz&lt;/math&gt;
+&lt;math&gt;vec(xyx)&lt;/math&gt;
+&lt;math&gt;vec(x+y)&lt;/math&gt;
+&lt;math&gt;vec(sqrt(x))&lt;/math&gt;
+&lt;math&gt;vecsqrtx&lt;/math&gt;
+&lt;math&gt;vecsqrt3&lt;/math&gt;
+&lt;math&gt;vec&quot;F&quot;&lt;/math&gt;
+&lt;math&gt;hat(x)&lt;/math&gt;
+&lt;math&gt;hatx&lt;/math&gt;
+&lt;math&gt;hatxyz&lt;/math&gt;
+&lt;math&gt;hat(xyx)&lt;/math&gt;
+&lt;math&gt;ul(x)&lt;/math&gt;
+&lt;math&gt;ulx&lt;/math&gt;
+&lt;math&gt;ulxyz&lt;/math&gt;
+&lt;math&gt;ul(xyx)&lt;/math&gt;
+&lt;math&gt;vec()&lt;/math&gt;
+@endcreole
+</code></pre>
+</div>
+</body>
+</html>

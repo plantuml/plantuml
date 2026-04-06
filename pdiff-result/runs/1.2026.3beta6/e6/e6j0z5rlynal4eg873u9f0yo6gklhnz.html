@@ -1,0 +1,115 @@
+<html><head><title>e6j0z - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../e6/e6i6rr3ybnpc2pb296wqzrso5m7y8v0.html'>Previous</a>
+<a href='../e6/e6jb39c47lllwxdapirms073sz4110.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>e6j0z</h2>
+<a href='https://huntr.dev/bounties/27db9509-6cd3-4148-8d70-5942f3837604/?token=5c7d2751d2b44cd1d11aee1044994b917b6a6c7b7125e028f55490416421e5db2a1afed16efff737167c216ba35d70603ab3cf7b9cfec62934cdfe6e5c26e443a3e76ee17746db5ddc42cccb931cf35bd8a39bb98ce56b2cf8317534578c117b07dd7b8db418f78c785123d9202ce8e59dfc706f985a8822e07ea6'>https://huntr.dev/bounties/27db9509-6cd3-4148-8d70-5942f3837604/?token=5c7d2751d2b44cd1d11aee1044994b917b6a6c7b7125e028f55490416421e5db2a1afed16efff737167c216ba35d70603ab3cf7b9cfec62934cdfe6e5c26e443a3e76ee17746db5ddc42cccb931cf35bd8a39bb98ce56b2cf8317534578c117b07dd7b8db418f78c785123d9202ce8e59dfc706f985a8822e07ea6</a>
+<hr>
+<img src='e6j0z5rlynal4eg873u9f0yo6gklhnz.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+start
+: aasdf &lt;img src=&quot;data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgICA8Zm9yZWlnbk9iamVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj4KICAgICAgICA8c2NyaXB0PmFsZXJ0KGRvY3VtZW50LmRvbWFpbik7PC9zY3JpcHQ+CiAgICA8L2ZvcmVpZ25PYmplY3Q+Cjwvc3ZnPg==&quot;&gt; ;
+stop
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

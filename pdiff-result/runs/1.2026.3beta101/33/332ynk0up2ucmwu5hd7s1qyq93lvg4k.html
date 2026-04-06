@@ -1,0 +1,149 @@
+<html><head><title>332yn - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../33/330phtnebi4n64oboxkalxpbzmt6w5z.html'>Previous</a>
+<a href='../33/33847mkqq2k3ttmrmjwhusobj5w9kya.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>332yn</h2>
+<hr>
+<img src='332ynk0up2ucmwu5hd7s1qyq93lvg4k.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+state STARTING {
+state &quot;STARTING\nGAS&quot; as sg
+state &quot;STARTING\nTRAVEL&quot; as st
+state &quot;STARTING\nRAMP_UP&quot; as sr
+}
+
+state STOPPING {
+state &quot;STOPPING\nGAS&quot; as xg
+state &quot;STOPPING\nRAMP_DOWN&quot; as xr
+state &quot;STOPPING\nDONE&quot; as xd
+[*] -&gt; xr
+}
+
+[*] -&gt; IDLE
+
+IDLE -down[#green]-&gt; sg : Start()
+
+st -down[#green]-&gt;sr
+sg -left[#green]-&gt;st
+IDLE -down[#blue]-&gt; st : Start()
+
+sg -down[#blue]-&gt;sr
+st -right[#blue]-&gt;sg
+sr -down-&gt; RUNNING
+RUNNING -down-&gt; STOPPING
+RUNNING -&gt; RUNNING : next\nsector
+
+xd -up--&gt; IDLE
+xr -down-&gt; xg
+xg -up-&gt; IDLE
+
+STARTING -down[#orange]-&gt; STOPPING: Stop()
+RUNNING -down[#orange]-&gt; STOPPING: Stop()
+STARTING -down[#red]-&gt; xd: EStop()
+RUNNING -[#red]-&gt; xd: EStop()
+IDLE -[#red]-&gt; xd: EStop()
+STOPPING -[#red]-&gt; xd: EStop()
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

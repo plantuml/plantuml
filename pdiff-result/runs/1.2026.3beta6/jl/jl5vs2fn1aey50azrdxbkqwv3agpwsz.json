@@ -1,0 +1,11 @@
+{
+  "duration": 204,
+  "description": "(List fonts)",
+  "implementation": "PSystemListFonts",
+  "png": {
+    "width": 265,
+    "height": 4096,
+    "crc": 68633264,
+    "sizeInBytes": 81823
+  }
+}

@@ -1,0 +1,206 @@
+<html><head><title>rthfu - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../rt/rtd9x280xve635eb8qyzmplpy7y4gtd.html'>Previous</a>
+<a href='../rt/rtzj1af820saaylc8u76ghfc52ld3rn.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>rthfu</h2>
+<a href='https://github.com/plantuml/plantuml/issues/1166'>https://github.com/plantuml/plantuml/issues/1166</a>
+<hr>
+<img src='rthfu1gdbum0qps4izmd8eyzv1qtdvu.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+hide time-axis
+scale 100 as 100 pixels
+analog  &quot;bemf&quot;  as out
+
+robust &quot;Signal1&quot; as S1
+robust &quot;Signal2&quot; as S2
+S1 has 0,1,2,hello
+S2 has 0,1,2
+@0
+S1 is 0
+S2 is 0
+@100
+S1 is {0,1} #SlateGrey
+S2 is {0,1}
+@200
+S1 is 1
+S2 is 0
+@300
+S1 is hello
+S2 is {0,2}
+
+@0
+@+0.0
+out is 0.0
+@+4.0
+out is 18.0
+@+6.0
+out is 21.0
+@+1.0
+out is 40.0
+@+3.0
+out is 59.0
+@+6.0
+out is 69.0
+@+10.0
+out is 71.0
+@+5.0
+out is 68.0
+@+5.0
+out is 62.0
+@+12.0
+out is 54.0
+@+11.0
+out is 52.0
+@+7.0
+out is 61.0
+@+9.0
+out is 100.0
+@+4.0
+out is 84.0
+@+3.0
+out is 83.0
+@+5.0
+out is 49.0
+@+9.0
+out is 1.0
+
+
+
+@+0.0
+out is 0.0
+@+4.0
+out is -18.0
+@+6.0
+out is -21.0
+@+1.0
+out is -40.0
+@+3.0
+out is -59.0
+@+6.0
+out is -69.0
+@+10.0
+out is -71.0
+@+5.0
+out is -68.0
+@+5.0
+out is -62.0
+@+12.0
+out is -54.0
+@+11.0
+out is -52.0
+@+7.0
+out is -61.0
+@+9.0
+out is -100.0
+@+4.0
+out is -84.0
+@+3.0
+out is -83.0
+@+5.0
+out is -49.0
+@+9.0
+out is -1.0
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

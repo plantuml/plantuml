@@ -1,0 +1,219 @@
+<html><head><title>e84uu - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../e8/e81pb37c2cyizj9g4kpzcdl0ob4yle6.html'>Previous</a>
+<a href='../e8/e8i096tx52u7i903g77gru33bvu8g4.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>e84uu</h2>
+<a href='https://twitter.com/ogomr/status/1468194993504649225'>https://twitter.com/ogomr/status/1468194993504649225</a>
+<hr>
+<img src='e84uu9v49krrg5g4fhuogpzmvyr7xm.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+&lt;style&gt;
+sequenceDiagram {
+  shadowing 0
+  roundCorner 15
+  arrow {
+    lineColor #dimgray
+  }
+  lifeLine {
+	lineThickness 1.5
+	lineStyle 0
+  }
+  separator {
+	BorderColor #gray
+	FontStyle normal
+  }
+  note {
+    lineColor #grey
+    backgroundColor #gainsboro
+  }
+  .hotpink {
+	lineColor hotpink
+	backgroundColor hotpink
+	fontColor hotpink
+  }
+  .gold {
+	lineColor gold
+	backgroundColor gold
+	fontColor gold
+  }
+  .limegreen {
+	lineColor limegreen
+	backgroundColor limegreen
+	fontColor limegreen
+  }
+  .lightskyblue {
+	lineColor lightskyblue
+	backgroundColor lightskyblue
+	fontColor lightskyblue
+  }
+  .orangered {
+	lineColor orangered
+	backgroundColor orangered
+	fontColor orangered
+  }
+  .deepskyblue {
+	lineColor deepskyblue
+	backgroundColor deepskyblue
+	fontColor deepskyblue
+  }
+  .skyblue {
+	lineColor skyblue
+	backgroundColor skyblue
+	fontColor skyblue
+  }
+}
+&lt;/style&gt;
+
+entity &quot;feature/#5&quot; as feature_5 &lt;&lt;hotpink&gt;&gt;
+entity &quot;epic/#2&quot; as epic_2 &lt;&lt;gold&gt;&gt;
+entity &quot;feature/#4&quot; as feature_4 &lt;&lt;hotpink&gt;&gt;
+entity &quot;feature/#3&quot; as feature_3 &lt;&lt;hotpink&gt;&gt;
+entity &quot;epic/#1&quot; as epic_1 &lt;&lt;gold&gt;&gt;
+entity integration &lt;&lt;limegreen&gt;&gt;
+entity main  &lt;&lt;lightskyblue&gt;&gt;
+entity &quot;hotfix/#6&quot; as hotfix_6 &lt;&lt;orangered&gt;&gt;
+entity &quot;pre production&quot; as pre_production &lt;&lt;deepskyblue&gt;&gt;
+entity production &lt;&lt;skyblue&gt;&gt;
+
+== Development ==
+
+?-&gt;o main
+epic_1 &lt;- main : create branch
+note right : next release
+epic_2 &lt;- main : create branch
+note right : future release
+feature_3 &lt;- epic_1 : create branch
+feature_4 &lt;- epic_1 : create branch
+feature_3 -&gt;o feature_3: commit
+feature_3 -&gt;o epic_1 : pull request
+feature_4 -&gt;o feature_4: commit
+feature_4 -&gt;o epic_1 : pull request
+feature_5 &lt;- epic_2 : create branch
+feature_5 -&gt;o feature_5: commit
+feature_5 -&gt;o epic_2 : pull request
+
+== Production Release ==
+
+epic_1 &lt;-o main : rebase
+epic_1 -&gt;o integration : pull request
+integration -&gt;o main : pull request
+main -&gt;o pre_production : pull request
+pre_production -&gt;o production : pull request
+
+== Production Bugfix ==
+
+hotfix_6 &lt;- production : create branch
+hotfix_6 -&gt;o hotfix_6: commit
+hotfix_6 -&gt;o pre_production : pull request
+hotfix_6 -&gt;o production : pull request
+hotfix_6 -&gt;o main : pull request
+
+== Development continues ==
+
+epic_2 &lt;-o main : rebase
+epic_2 -&gt;o integration : pull request
+integration -&gt;o main : pull request
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

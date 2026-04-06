@@ -1,0 +1,261 @@
+<html><head><title>8gm3l - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../8g/8gdxr9ylvtqn821sshvhakvwbk76pvf.html'>Previous</a>
+<a href='../8g/8gsncqosnc0zcr7as4gm5mf7agizbpz.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>8gm3l</h2>
+<a href='https://forum.plantuml.net/17600/note-and-position-not-rendering-correctly-on-cheerpj'>https://forum.plantuml.net/17600/note-and-position-not-rendering-correctly-on-cheerpj</a>
+<hr>
+<img src='8gm3l69dy8qoooh1t4osiwimjngwxw1.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+skinparam defaultTextAlignment center
+left to right direction
+
+skinparam rectangle {
+  BackgroundColor&lt;&lt; white &gt;&gt; #FFFFFF
+  BackgroundColor&lt;&lt; blue &gt;&gt;  #E4EAF0
+  BackgroundColor&lt;&lt; orange &gt;&gt; #D8BA7A
+  BackgroundColor&lt;&lt; green &gt;&gt; #A3B172
+}
+
+hide stereotype
+
+rectangle &quot;ICP Brasil\nAC-Raiz&quot; as ACRaiz
+note left: Emite certificados ICP Brasil\n&agrave;s autoridades certificadoras de\nprimeiro n&iacute;vel.
+
+rectangle &quot; &quot; as SRFRet #EBE5D5;line:black;line.bold;text:blue {
+  rectangle &quot;Sec. Rec.\nFederal&quot; as SRF &lt;&lt; white &gt;&gt;
+  rectangle &quot;Autoridades\nCertificadoras\nSRF&quot; as SRFCA &lt;&lt; blue &gt;&gt;
+  rectangle &quot;Autoridades\nde Registro\n(AR)&quot; as SRFAR &lt;&lt; orange &gt;&gt;
+  rectangle &quot;e-CPF&quot; as SRFeCPF &lt;&lt; green &gt;&gt;
+  rectangle &quot;e-CNPJ&quot; as SRFeCNPJ &lt;&lt; green &gt;&gt;
+}
+note left of SRFRet
+Somente as ACs
+ligadas
+&agrave; Secretaria da
+Receita Federal
+podem emitir o
+e-CPF e o e-CNPJ,
+certificados desti-
+nados a pessoas e
+empresas.
+end note
+
+rectangle &quot;  &quot; as ACRet #CCD4C9;line:black;line.bold;text:blue  {
+  together {
+    rectangle &quot;Serasa&quot; as Serasa &lt;&lt; white &gt;&gt;
+    rectangle &quot;Autoridades\nCertificadoras\nSerasa&quot; as SerasaCA &lt;&lt; blue &gt;&gt;
+    rectangle &quot;Autoridades\nde Registro\n(AR)&quot; as SerasaAR &lt;&lt; orange &gt;&gt;
+    rectangle &quot;Certificado\nDigital&quot; as SerasaCert &lt;&lt; green &gt;&gt;
+  }
+
+  together {
+    rectangle &quot;AC-Jus&quot; as Jus &lt;&lt; white &gt;&gt;
+    rectangle &quot;Autoridades\nCertificadoras\nAC-Jus&quot; as JusCA &lt;&lt; blue &gt;&gt;
+    rectangle &quot;Autoridades\nde Registro\n(AR)&quot; as JusAR &lt;&lt; orange &gt;&gt;
+    rectangle &quot;Certificado\nDigital&quot; as JusCert &lt;&lt; green &gt;&gt;
+  }
+
+  together {
+    rectangle &quot;Serpro&quot; as Serpro &lt;&lt; white &gt;&gt;
+    rectangle &quot;Autoridades\nCertificadoras\nAC-Serpro&quot; as SerproCA &lt;&lt; blue &gt;&gt;
+    rectangle &quot;Autoridades\nde Registro\n(AR)&quot; as SerproAR &lt;&lt; orange &gt;&gt;
+    rectangle &quot;Certificado\nDigital&quot; as SerproCert &lt;&lt; green &gt;&gt;
+  }
+
+  together {
+    rectangle &quot;CEF&quot; as CEF &lt;&lt; white &gt;&gt;
+    rectangle &quot;Autoridades\nCertificadoras\nCEF&quot; as CEFCA &lt;&lt; blue &gt;&gt;
+    rectangle &quot;Autoridades\nde Registro\n(AR)&quot; as CEFAR &lt;&lt; orange &gt;&gt;
+    rectangle &quot;Certificado\nDigital&quot; as CEFCert &lt;&lt; green &gt;&gt;
+  }
+
+  together {
+    rectangle &quot;Certisign&quot; as Certisign &lt;&lt; white &gt;&gt;
+    rectangle &quot;Autoridades\nCertificadoras\nCertisign&quot; as CertisignCA &lt;&lt; blue &gt;&gt;
+    rectangle &quot;Autoridades\nde Registro\n(AR)&quot; as CertisignAR &lt;&lt; orange &gt;&gt;
+    rectangle &quot;Certificado\nDigital&quot; as CertisignCert &lt;&lt; green &gt;&gt;
+  }
+}
+note left of ACRet
+Cada AC acima
+emite certificados
+para o p&uacute;blico
+espec&iacute;fico de sua
+cadeia de certifi-
+ca&ccedil;&atilde;o. A AC-Jus,
+por exemplo,
+emite certificados
+para magistra-
+dos, advogados e
+desembarga-
+dores, enquanto
+a CEF o faz para
+clientes e
+fornecedores da
+Caixa.
+end note
+
+rectangle &quot;   &quot; as PRRet #DBCE99;line:black;line.bold;text:blue {
+  together {
+    rectangle &quot;Presid&ecirc;ncia\nda\nRep&uacute;blica&quot; as PR &lt;&lt; white &gt;&gt;
+    rectangle &quot;Autoridades\nde Registro\n(AR)&quot; as PRAR &lt;&lt; orange &gt;&gt;
+    rectangle &quot;Certificado\nDigital&quot; as PRCert &lt;&lt; green &gt;&gt;
+  }
+
+  together {
+    rectangle &quot;Imesp&quot; as IMESP &lt;&lt; white &gt;&gt;
+    rectangle &quot;Autoridades\nde Registro\n(AR)&quot; as IMESPAR &lt;&lt; orange &gt;&gt;
+    rectangle &quot;Certificado\nDigital&quot; as IMESPCert &lt;&lt; green &gt;&gt;
+  }
+}
+note left of PRRet
+A AC-PR e a AC-Imesp s&atilde;o as
+&uacute;nicas que emitem certificados
+diretamente para uma pessoa ou
+para um &oacute;rg&atilde;o a elas ligado. A
+AC-PR, por exemplo, emite certifi-
+cados para ministros.
+end note
+
+ACRaiz -down-&gt; SRF
+SRF -down-&gt; SRFCA
+SRFCA -down-&gt; SRFAR
+SRFAR -down-&gt; SRFeCPF
+SRFAR -down-&gt; SRFeCNPJ
+
+ACRaiz -down-&gt; Serasa
+Serasa -down-&gt; SerasaCA
+SerasaCA -down-&gt; SerasaAR
+SerasaAR -down-&gt; SerasaCert
+
+ACRaiz -down-&gt; Jus
+Jus -down-&gt; JusCA
+JusCA -down-&gt; JusAR
+JusAR -down-&gt; JusCert
+
+ACRaiz -down-&gt; Serpro
+Serpro -down-&gt; SerproCA
+SerproCA -down-&gt; SerproAR
+SerproAR -down-&gt; SerproCert
+
+ACRaiz -down-&gt; CEF
+CEF -down-&gt; CEFCA
+CEFCA -down-&gt; CEFAR
+CEFAR -down-&gt; CEFCert
+
+ACRaiz -down-&gt; Certisign
+Certisign -down-&gt; CertisignCA
+CertisignCA -down-&gt; CertisignAR
+CertisignAR -down-&gt; CertisignCert
+
+ACRaiz -down-&gt; PR
+PR -down-&gt; PRAR
+PRAR -down-&gt; PRCert
+
+ACRaiz -down-&gt; IMESP
+IMESP -down-&gt; IMESPAR
+IMESPAR -down-&gt; IMESPCert
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

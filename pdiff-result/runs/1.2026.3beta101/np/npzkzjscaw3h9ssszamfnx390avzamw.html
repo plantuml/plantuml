@@ -1,0 +1,148 @@
+<html><head><title>npzkz - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../np/npxrsc0c0rp7np8h3hxybsvml9fdywt.html'>Previous</a>
+<a href='../nq/nq9thm4v8ihlcragqz8k8lm7o5y3ou8.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>npzkz</h2>
+<a href='https://github.com/plantuml/plantuml/issues/1023'>https://github.com/plantuml/plantuml/issues/1023</a>
+<hr>
+<img src='npzkzjscaw3h9ssszamfnx390avzamw.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+' Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+' SPDX-License-Identifier: CC-BY-ND-2.0 (For details, see https://github.com/awslabs/aws-icons-for-plantuml/blob/main/LICENSE)
+
+'''AWSEntityColoring usually defined in AWSCommon.puml
+!define AWS_BG_COLOR #FFFFFF
+!define AWS_BORDER_COLOR #FF9900
+
+!definelong AWSEntityColoring(stereo)
+skinparam participant&lt;&lt;stereo&gt;&gt; {
+    BackgroundColor AWS_BG_COLOR
+    BorderColor AWS_BORDER_COLOR
+}
+!enddefinelong
+'''
+
+'The bug happens because of the AWSEntityColoring(APIGateway) from APIGateway.puml
+'A workaround is to redefine to do nothing - uncomment line below to test
+!define AWSEntityColoring(stereo)
+
+'''$APIGateway and AWSEntityColoring(APIGateway) defined in ApplicationIntegration/APIGateway.puml
+sprite $APIGateway [64x64/16z] {
+xTC5biCm30JGiIfRqjp_lcMkqWqjUzuBvvlDjTFJ4uqlQJ5QA-1yYWCQOtNkan9IBTOotqoI4X9DvfvCIaZqi4zAIFImVrT2E-lt_bn2oxnpdAV_V2zIgG_7
+D5-ASlDm_CZ-_tplDji7IIgSCSjRSP95wCLcUCF16ngzm2Rx4-S6mMC1Ktqv3G4s9r2c-We9ii98Xg1EzJmMKCgPSx9dXJagIKFb34-ddjuvPta6PDdwTP_d
+-_ut3yRzOTCye9I7OvhNQcptXtxa-_n1ROmtHURP1ESYXlmPGnhJH1MWg0rvqm98ZOG-5Y6PbmHdyIf8_04xnyMpyNMkdPwU7G
+}
+
+AWSEntityColoring(APIGateway)
+'''
+
+actor User as user
+participant OnlyLabel as p1 &lt;&lt; APIGateway &gt;&gt;
+participant NoLabel as p2 &lt;&lt; ($APIGateway, #CC2264) &gt;&gt;
+participant Both as p3 &lt;&lt; ($APIGateway, #CC2264) APIGateway &gt;&gt;
+participant BothZWSP as p4 &lt;&lt; ($APIGateway, #CC2264) %chr(8203)APIGateway &gt;&gt;
+
+user -&gt; p4: renders as expected
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<html><head><title>78uep - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../78/78qak1e0q6w80o9t8z0ns0dhiwbjirk.html'>Previous</a>
+<a href='../79/7962qgoas9a17aoxfjdezlx3i2eoqqc.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>78uep</h2>
+<a href='https://forum.plantuml.net/16984/arrow-position-and-size-in-timing-diagram'>https://forum.plantuml.net/16984/arrow-position-and-size-in-timing-diagram</a>
+<hr>
+<img src='78uepkxd4m7z1on2p0exk7c6akgfizx.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+scale 15 as 80 pixels
+robust &quot;Pre On Signal&quot; as PreOnIn
+robust &quot;Switch On Button&quot; as SwitchOn
+concise &quot;General State&quot; as GeneralState
+concise &quot;PreOn LED status&quot; as PreOnStatus
+concise &quot;LED status&quot; as LedStatus
+
+PreOnIn is Off
+SwitchOn has On,Off
+SwitchOn is Off
+GeneralState is &quot;Off&quot;
+PreOnStatus is Off
+PreOnStatus is &quot;Off&quot;
+LedStatus is &quot;Off&quot;
+@0 as :On_Start
+@1 as :On
+@20 as :On_Start2
+@21 as :On2
+@50 as :On_Done
+@60 as :Restart_Start
+@104 as :Off_Start
+@:Off_Start+1 as :Off
+@:Off-20 as :HardOff_Start1
+@:Off+35 as :HardOff_Start
+@:Off+60 as :Off_Done
+
+@:On_Start
+PreOnIn is On
+SwitchOn is Off
+@:On
+PreOnIn is Off
+PreOnIn@:On_Start &lt;-&gt; @:On : Min 1000 ms
+PreOnStatus is &quot;Blinking slow&quot;
+GeneralState is &quot;Global switching On&quot;
+LedStatus is &quot;Off&quot;
+
+@:On_Start2
+PreOnIn is On
+@:On2
+PreOnIn is Off
+
+@:On_Done
+PreOnStatus is &quot;On&quot;
+GeneralState is &quot;On&quot;
+
+@:Off
+PreOnStatus is &quot;Blinking fast&quot;
+GeneralState is &quot;Global switching Off&quot;
+'DeviceStatus is &quot;Shutting Down&quot;
+
+@:HardOff_Start
+'DeviceStatus is &quot;Off&quot;
+
+@:Off_Done
+GeneralState is &quot;Off&quot;
+GeneralState@:On &lt;-&gt; @:HardOff_Start1 : tPreOnBeforeAutomaticOff
+PreOnIn@:On2 &lt;-&gt; @:Off : tPreOnBeforeAutomaticOff
+PreOnStatus is &quot;Off&quot;
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

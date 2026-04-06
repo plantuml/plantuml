@@ -1,0 +1,11 @@
+{
+  "duration": 31,
+  "description": "(Json)",
+  "implementation": "JsonDiagram",
+  "png": {
+    "width": 894,
+    "height": 476,
+    "crc": 2870210962,
+    "sizeInBytes": 20385
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "duration": 22,
+  "description": "Flow Diagram",
+  "implementation": "FlowDiagram",
+  "png": {
+    "width": 600,
+    "height": 420,
+    "crc": 709633017,
+    "sizeInBytes": 10679
+  }
+}

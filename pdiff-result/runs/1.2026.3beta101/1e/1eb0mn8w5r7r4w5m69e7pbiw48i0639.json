@@ -1,0 +1,11 @@
+{
+  "duration": 42,
+  "description": "(HCL)",
+  "implementation": "JsonDiagram",
+  "png": {
+    "width": 522,
+    "height": 75,
+    "crc": 562596921,
+    "sizeInBytes": 3708
+  }
+}

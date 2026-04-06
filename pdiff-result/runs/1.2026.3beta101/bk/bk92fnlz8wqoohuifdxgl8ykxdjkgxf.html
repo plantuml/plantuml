@@ -1,0 +1,150 @@
+<html><head><title>bk92f - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../bk/bk3lbh6d7p3nj4i4g27fhngf0dapexb.html'>Previous</a>
+<a href='../bk/bkfjpp8u9z40bpie2oqsek1vr4re6lq.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>bk92f</h2>
+<hr>
+<img src='bk92fnlz8wqoohuifdxgl8ykxdjkgxf.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+title A
+concise &quot;P&quot; as p
+concise &quot;PO&quot; as po
+concise &quot;S&quot; as s
+concise &quot;SO&quot; as so
+concise &quot;AO&quot; as ao
+concise &quot;RM&quot; as rm
+ 
+p is P
+s is P
+po is D
+so is D
+ao is D
+ 
+@0
+p is P2R
+p -&gt; s@+1 : M(P2R)
+ 
+@+1
+s is P2R
+ 
+@+0.5
+rm -&gt; s : SW
+rm -&gt; p : SW
+p is DQ
+ 
+@+0.5
+s@2.5 &lt;-&gt; @+1.5 : R
+ 
+@+1.5
+s -&gt; so@+1 : EO
+ 
+@+1
+so is E
+so -&gt; ao
+ao is E
+s is R
+ 
+@+1
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

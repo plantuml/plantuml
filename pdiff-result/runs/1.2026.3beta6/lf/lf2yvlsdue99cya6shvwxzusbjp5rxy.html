@@ -1,0 +1,155 @@
+<html><head><title>lf2yv - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../le/leymdlu04oh5u8tiq5hqvvenpdq7m7u.html'>Previous</a>
+<a href='../lf/lfawaypxiabgel9crw8kriovrfevqf7.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>lf2yv</h2>
+<a href='https://forum.plantuml.net/16247/gantt-chart-vertical-separators'>https://forum.plantuml.net/16247/gantt-chart-vertical-separators</a>
+<hr>
+<img src='lf2yvlsdue99cya6shvwxzusbjp5rxy.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startgantt
+'https://plantuml.com/gantt-diagram
+printscale daily zoom 1
+' Sprint n-1
+    [Sprint n-1] lasts 14 days and is colored in Orange
+' Sprint n
+[Sprint n] lasts 14 days and is colored in Orange and starts after [Sprint n-1]`s end
+' Sprint n+1
+[Sprint n+1] lasts 14 days and is colored in Orange and starts after [Sprint n]`s end
+[Sprint n] displays on same row as [Sprint n-1]
+[Sprint n+1] displays on same row as [Sprint n]
+' weekends
+[Weekend 1] lasts 2 days and is colored in pink and starts 3 days after start
+[Weekend 2] lasts 2 days and is colored in pink and starts 10 days after start
+[Weekend 3] lasts 2 days and is colored in pink and starts 17 days after start
+[Weekend 4] lasts 2 days and is colored in pink and starts 24 days after start
+[Weekend 5] lasts 2 days and is colored in pink and starts 31 days after start
+[Weekend 6] lasts 2 days and is colored in pink and starts 38 days after start
+[Weekend 2] displays on same row as [Weekend 1]
+[Weekend 3] displays on same row as [Weekend 2]
+[Weekend 4] displays on same row as [Weekend 3]
+[Weekend 5] displays on same row as [Weekend 4]
+[Weekend 6] displays on same row as [Weekend 5]
+
+--
+[Epic 1 &gt; Story 1] lasts 42 days and is colored in lightgreen
+' Story 1 on CI (DEV)
+[Epic 1 &gt; Story 1] lasts 42 days and is colored in green
+[Dev Code Story 1] lasts 3 days and is colored in DeepSkyBlue and starts after [Sprint n-1]'s start
+
+' Story 1 on SIT (QA)
+[SIT(QA) deployment of containing story 1 code] lasts 1 days and is colored in Crimson and starts after [Weekend 2]'s end with transparent link
+
+' Story 2 on CI (DEV)
+
+' Story 2 on SIT (QA)
+[SIT(QA) deployment of containing story 2 code] lasts 1 days and is colored in Fuchsia and starts after [Weekend 4]'s end with transparent link
+--
+' Story 3 on CI (DEV)
+[Epic B &gt; Story 3] lasts 42 days and is colored in green
+--
+' Story 3 on SIT (QA)
+[SIT(QA) deployment containing story 3 code] lasts 1 days and is colored in midnightBlue and starts after [Weekend 6]'s end with transparent link
+--
+@endgantt
+</code></pre>
+</div>
+</body>
+</html>

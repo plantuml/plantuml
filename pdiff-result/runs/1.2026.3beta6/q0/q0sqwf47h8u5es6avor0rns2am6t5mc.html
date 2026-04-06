@@ -1,0 +1,133 @@
+<html><head><title>q0sqw - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../q0/q0qziwftyrvw51iz416hr68a24zdert.html'>Previous</a>
+<a href='../q0/q0zbnkwqqhn212cq3jh2azvf2n35stj.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>q0sqw</h2>
+<a href='https://github.com/plantuml/plantuml/issues/1022'>https://github.com/plantuml/plantuml/issues/1022</a>
+<hr>
+<img src='q0sqwf47h8u5es6avor0rns2am6t5mc.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+
+!function $LambdaPNG($scale=1)
+!return &quot;&lt;img data:image/png;base64,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{scale=&quot;+$scale+&quot;}&gt;&quot;
+!endfunction
+
+!function $LambdaSVG($scale=1)
+!return &quot;&lt;img data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNjRweCIgaGVpZ2h0PSI2NHB4IiB2aWV3Qm94PSIwIDAgNjQgNjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDY0ICg5MzUzNykgLSBodHRwczovL3NrZXRjaC5jb20gLS0+CiAgICA8dGl0bGU+SWNvbi1BcmNoaXRlY3R1cmUvNDgvQXJjaF9BV1MtTGFtYmRhXzQ4PC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPgogICAgPGRlZnM+CiAgICAgICAgPGxpbmVhckdyYWRpZW50IHgxPSIwJSIgeTE9IjEwMCUiIHgyPSIxMDAlIiB5Mj0iMCUiIGlkPSJsaW5lYXJHcmFkaWVudC0xIj4KICAgICAgICAgICAgPHN0b3Agc3RvcC1jb2xvcj0iI0M4NTExQiIgb2Zmc2V0PSIwJSI+PC9zdG9wPgogICAgICAgICAgICA8c3RvcCBzdG9wLWNvbG9yPSIjRkY5OTAwIiBvZmZzZXQ9IjEwMCUiPjwvc3RvcD4KICAgICAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPC9kZWZzPgogICAgPGcgaWQ9Ikljb24tQXJjaGl0ZWN0dXJlLzQ4L0FyY2hfQVdTLUxhbWJkYV80OCIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGcgaWQ9Ikljb24tQXJjaGl0ZWN0dXJlLUJHLzQ4L0NvbXB1dGUiIGZpbGw9InVybCgjbGluZWFyR3JhZGllbnQtMSkiPgogICAgICAgICAgICA8cmVjdCBpZD0iUmVjdGFuZ2xlIiB4PSIwIiB5PSIwIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiPjwvcmVjdD4KICAgICAgICA8L2c+CiAgICAgICAgPHBhdGggZD0iTTIyLjY3OTQwOTQsNTIgTDEzLjU3NDA3MDEsNTIgTDIzLjgzNzYxODksMzAuNDEgTDI4LjM5OTc0OTQsMzkuODYxIEwyMi42Nzk0MDk0LDUyIFogTTI0LjcyNjk0MDYsMjcuNjY3IEMyNC41NjA2Mjg1LDI3LjMyMSAyNC4yMTIwNzAyLDI3LjEwMyAyMy44MzA2NDc4LDI3LjEwMyBMMjMuODI3NjYwMSwyNy4xMDMgQzIzLjQ0NTI0MTgsMjcuMTA0IDIzLjA5NjY4MzUsMjcuMzI1IDIyLjkzMjM2MzIsMjcuNjcyIEwxMS4wOTczMTQzLDUyLjU2OSBDMTAuOTQ5OTIzOSw1Mi44NzkgMTAuOTcwODM3NCw1My4yNDMgMTEuMTU0MDc5NSw1My41MzQgQzExLjMzNTMyOTgsNTMuODI0IDExLjY1NDAxMTcsNTQgMTEuOTk1NTk4OSw1NCBMMjMuMzA5ODAyLDU0IEMyMy42OTUyMDgsNTQgMjQuMDQ0NzYyMiw1My43NzcgMjQuMjEwMDc4NCw1My40MjggTDMwLjQwNDQ1NzcsNDAuMjg0IEMzMC41MzI5MjY0LDQwLjAxIDMwLjUzMTkzMDUsMzkuNjkyIDMwLjM5OTQ3ODMsMzkuNDIgTDI0LjcyNjk0MDYsMjcuNjY3IFogTTUxLjAwODIzODIsNTIgTDQxLjk4NTU1Nyw1MiBMMjYuOTU0NzI2MiwxOS41NzggQzI2Ljc5MTQwMTcsMTkuMjI2IDI2LjQzODg1OTksMTkgMjYuMDUyNDU4MSwxOSBMMjAuMTI3OTYyNSwxOSBMMjAuMTM0OTMzNywxMiBMMzEuODE0NjI1MSwxMiBMNDYuNzc0NzQ4Myw0NC40MiBDNDYuOTM4MDcyOCw0NC43NzQgNDcuMjkwNjE0Nyw0NSA0Ny42NzkwMDgyLDQ1IEw1MS4wMDgyMzgyLDQ1IEw1MS4wMDgyMzgyLDUyIFogTTUyLjAwNDExOTEsNDMgTDQ4LjMxNDM4MDMsNDMgTDMzLjM1NDI1NywxMC41OCBDMzMuMTkwOTMyNiwxMC4yMjYgMzIuODM4MzkwNywxMCAzMi40NTA5OTMsMTAgTDE5LjE0MDA0ODYsMTAgQzE4LjU5MTMxODIsMTAgMTguMTQ1MTYzNiwxMC40NDcgMTguMTQ0MTY3NywxMC45OTkgTDE4LjEzNjIwMDYsMTkuOTk5IEMxOC4xMzYyMDA2LDIwLjI2NSAxOC4yNDA3NjgxLDIwLjUxOSAxOC40MjY5OTc5LDIwLjcwNyBDMTguNjE0MjIzNSwyMC44OTUgMTguODY3MTc3MiwyMSAxOS4xMzEwODU3LDIxIEwyNS40MTcwODYxLDIxIEw0MC40NDc5MTY4LDUzLjQyMiBDNDAuNjExMjQxMyw1My43NzQgNDAuOTYyNzg3Myw1NCA0MS4zNTAxODUsNTQgTDUyLjAwNDExOTEsNTQgQzUyLjU1NDg0MTIsNTQgNTMsNTMuNTUyIDUzLDUzIEw1Myw0NCBDNTMsNDMuNDQ4IDUyLjU1NDg0MTIsNDMgNTIuMDA0MTE5MSw0MyBMNTIuMDA0MTE5MSw0MyBaIiBpZD0iQVdTLUxhbWJkYV9JY29uXzQ4X1NxdWlkIiBmaWxsPSIjRkZGRkZGIj48L3BhdGg+CiAgICA8L2c+Cjwvc3ZnPg=={scale=&quot;+$scale+&quot;}&gt;&quot;
+!endfunction
+
+hide footbox
+
+actor Developer as user
+participant &quot;$LambdaPNG()\nLambda&quot; as lambdaPNG
+participant &quot;$LambdaSVG()\nLambda&quot; as lambdaSVG
+participant &quot;$LambdaPNG(2)\nLambda&quot; as lambdaPNG2
+participant &quot;$LambdaSVG(2)\nLambda&quot; as lambdaSVG2
+
+user -&gt; lambdaPNG: PNG
+user -&gt; lambdaSVG: SVG
+user -&gt; lambdaPNG2: PNG {scale=2}
+user -&gt; lambdaSVG2: SVG {scale=2}
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "duration": 4,
+  "description": "(Regular Expression)",
+  "implementation": "PSystemRegex",
+  "png": {
+    "width": 136,
+    "height": 57,
+    "crc": 817016749,
+    "sizeInBytes": 977
+  }
+}

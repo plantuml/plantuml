@@ -1,0 +1,123 @@
+<html><head><title>tnrjn - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../tn/tnqc80o6mnttbndx6f1hbwqo08yb2fg.html'>Previous</a>
+<a href='../tn/tnsbqbrwyrpdkzjm6nc6kjt253ptgwc.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>tnrjn</h2>
+<a href='https://github.com/plantuml/plantuml/issues/1022'>https://github.com/plantuml/plantuml/issues/1022</a>
+<hr>
+<img src='tnrjnr3smx3qnlod7fr8aspli4ty463.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+
+!function $LambdaSVG($scale=1)
+!return &quot;&lt;img data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNjRweCIgaGVpZ2h0PSI2NHB4IiB2aWV3Qm94PSIwIDAgNjQgNjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDY0ICg5MzUzNykgLSBodHRwczovL3NrZXRjaC5jb20gLS0+CiAgICA8dGl0bGU+SWNvbi1BcmNoaXRlY3R1cmUvNDgvQXJjaF9BV1MtTGFtYmRhXzQ4PC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPgogICAgPGRlZnM+CiAgICAgICAgPGxpbmVhckdyYWRpZW50IHgxPSIwJSIgeTE9IjEwMCUiIHgyPSIxMDAlIiB5Mj0iMCUiIGlkPSJsaW5lYXJHcmFkaWVudC0xIj4KICAgICAgICAgICAgPHN0b3Agc3RvcC1jb2xvcj0iI0M4NTExQiIgb2Zmc2V0PSIwJSI+PC9zdG9wPgogICAgICAgICAgICA8c3RvcCBzdG9wLWNvbG9yPSIjRkY5OTAwIiBvZmZzZXQ9IjEwMCUiPjwvc3RvcD4KICAgICAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPC9kZWZzPgogICAgPGcgaWQ9Ikljb24tQXJjaGl0ZWN0dXJlLzQ4L0FyY2hfQVdTLUxhbWJkYV80OCIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGcgaWQ9Ikljb24tQXJjaGl0ZWN0dXJlLUJHLzQ4L0NvbXB1dGUiIGZpbGw9InVybCgjbGluZWFyR3JhZGllbnQtMSkiPgogICAgICAgICAgICA8cmVjdCBpZD0iUmVjdGFuZ2xlIiB4PSIwIiB5PSIwIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiPjwvcmVjdD4KICAgICAgICA8L2c+CiAgICAgICAgPHBhdGggZD0iTTIyLjY3OTQwOTQsNTIgTDEzLjU3NDA3MDEsNTIgTDIzLjgzNzYxODksMzAuNDEgTDI4LjM5OTc0OTQsMzkuODYxIEwyMi42Nzk0MDk0LDUyIFogTTI0LjcyNjk0MDYsMjcuNjY3IEMyNC41NjA2Mjg1LDI3LjMyMSAyNC4yMTIwNzAyLDI3LjEwMyAyMy44MzA2NDc4LDI3LjEwMyBMMjMuODI3NjYwMSwyNy4xMDMgQzIzLjQ0NTI0MTgsMjcuMTA0IDIzLjA5NjY4MzUsMjcuMzI1IDIyLjkzMjM2MzIsMjcuNjcyIEwxMS4wOTczMTQzLDUyLjU2OSBDMTAuOTQ5OTIzOSw1Mi44NzkgMTAuOTcwODM3NCw1My4yNDMgMTEuMTU0MDc5NSw1My41MzQgQzExLjMzNTMyOTgsNTMuODI0IDExLjY1NDAxMTcsNTQgMTEuOTk1NTk4OSw1NCBMMjMuMzA5ODAyLDU0IEMyMy42OTUyMDgsNTQgMjQuMDQ0NzYyMiw1My43NzcgMjQuMjEwMDc4NCw1My40MjggTDMwLjQwNDQ1NzcsNDAuMjg0IEMzMC41MzI5MjY0LDQwLjAxIDMwLjUzMTkzMDUsMzkuNjkyIDMwLjM5OTQ3ODMsMzkuNDIgTDI0LjcyNjk0MDYsMjcuNjY3IFogTTUxLjAwODIzODIsNTIgTDQxLjk4NTU1Nyw1MiBMMjYuOTU0NzI2MiwxOS41NzggQzI2Ljc5MTQwMTcsMTkuMjI2IDI2LjQzODg1OTksMTkgMjYuMDUyNDU4MSwxOSBMMjAuMTI3OTYyNSwxOSBMMjAuMTM0OTMzNywxMiBMMzEuODE0NjI1MSwxMiBMNDYuNzc0NzQ4Myw0NC40MiBDNDYuOTM4MDcyOCw0NC43NzQgNDcuMjkwNjE0Nyw0NSA0Ny42NzkwMDgyLDQ1IEw1MS4wMDgyMzgyLDQ1IEw1MS4wMDgyMzgyLDUyIFogTTUyLjAwNDExOTEsNDMgTDQ4LjMxNDM4MDMsNDMgTDMzLjM1NDI1NywxMC41OCBDMzMuMTkwOTMyNiwxMC4yMjYgMzIuODM4MzkwNywxMCAzMi40NTA5OTMsMTAgTDE5LjE0MDA0ODYsMTAgQzE4LjU5MTMxODIsMTAgMTguMTQ1MTYzNiwxMC40NDcgMTguMTQ0MTY3NywxMC45OTkgTDE4LjEzNjIwMDYsMTkuOTk5IEMxOC4xMzYyMDA2LDIwLjI2NSAxOC4yNDA3NjgxLDIwLjUxOSAxOC40MjY5OTc5LDIwLjcwNyBDMTguNjE0MjIzNSwyMC44OTUgMTguODY3MTc3MiwyMSAxOS4xMzEwODU3LDIxIEwyNS40MTcwODYxLDIxIEw0MC40NDc5MTY4LDUzLjQyMiBDNDAuNjExMjQxMyw1My43NzQgNDAuOTYyNzg3Myw1NCA0MS4zNTAxODUsNTQgTDUyLjAwNDExOTEsNTQgQzUyLjU1NDg0MTIsNTQgNTMsNTMuNTUyIDUzLDUzIEw1Myw0NCBDNTMsNDMuNDQ4IDUyLjU1NDg0MTIsNDMgNTIuMDA0MTE5MSw0MyBMNTIuMDA0MTE5MSw0MyBaIiBpZD0iQVdTLUxhbWJkYV9JY29uXzQ4X1NxdWlkIiBmaWxsPSIjRkZGRkZGIj48L3BhdGg+CiAgICA8L2c+Cjwvc3ZnPg=={scale=&quot;+$scale+&quot;}&gt;&quot;
+!endfunction
+
+hide footbox
+
+actor Developer as user
+participant &quot;$LambdaSVG(2)\nLambda&quot; as lambdaSVG2
+
+user -&gt; lambdaSVG2: SVG {scale=2}
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

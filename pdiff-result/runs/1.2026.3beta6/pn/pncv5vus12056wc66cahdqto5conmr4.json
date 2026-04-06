@@ -1,0 +1,11 @@
+{
+  "duration": 60,
+  "description": "(2 entities)",
+  "implementation": "DescriptionDiagram",
+  "png": {
+    "width": 256,
+    "height": 265,
+    "crc": 1830928707,
+    "sizeInBytes": 6620
+  }
+}

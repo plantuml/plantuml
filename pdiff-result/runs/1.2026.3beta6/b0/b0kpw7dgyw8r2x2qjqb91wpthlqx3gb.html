@@ -1,0 +1,179 @@
+<html><head><title>b0kpw - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../b0/b06avwjdwkb6kyu242co0vbvbwc7tvp.html'>Previous</a>
+<a href='../b1/b1g5jid3jvhyff2qbind9g21oex8vn9.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>b0kpw</h2>
+<hr>
+<img src='b0kpw7dgyw8r2x2qjqb91wpthlqx3gb.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+
+sprite $bug16 [15x15/16] {
+0000B0000000000
+0000B000B000000
+0005C500B000000
+BBBCAA5C5000000
+005A12AAA0CC000
+000A2A122A55BB0
+BB05A11123A5000
+00BCA215334A000
+000CA222744ACB0
+000C5A33485A50B
+000B5AA445AA000
+00B000CBAAB0000
+000000C55000000
+000000C00000000
+00000B000000000
+}
+
+sprite $bug8 [15x15/8] {
+0000j0005000000
+555MrL26g000000
+00Gj1Deff5oo550
+ee5Mj10299gL000
+000sgD99QKIjoe5
+005eGekLLLje000
+000000sGG000000
+00000e000000000
+}
+
+sprite $bug4 [15x15/4] {
+0001h100A000000
+WWawWYOuO2DD220
+WW8Vg00411bQ320
+002uKeB6McQeG0W
+000002yGG000000
+}
+
+sprite $printer8 [15x15/8] {
+00098888A110000
+000I000088GI000
+235I0GOOOW0I532
+R00I0GOOOW0I00R
+R11HHHHHHHHH11R
+S9999999999999S
+YaZZZZZZZZZZZaY
+0GWWWWWWWWWWWG0
+}
+
+sprite $printer4 [15x15/4] {
+000100004011000
+112L0444480L211
+L00L1HHHHX1L00L
+M0000000000000M
+afcccccccccccfa
+}
+
+title I am &lt;$bug16&gt; and &lt;$printer8&gt; and &lt;$printer4&gt;
+
+class Toto {
+  I am &lt;$bug16&gt;
+  --
+  I am &lt;$bug8&gt;
+  --
+  I am &lt;$bug4&gt;
+}
+
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "duration": 14,
+  "description": "(Yaml)",
+  "implementation": "JsonDiagram",
+  "png": {
+    "width": 261,
+    "height": 95,
+    "crc": 2596914308,
+    "sizeInBytes": 2503
+  }
+}

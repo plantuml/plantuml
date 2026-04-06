@@ -1,0 +1,11 @@
+{
+  "duration": 8,
+  "description": "(Salt)",
+  "implementation": "PSystemSalt",
+  "png": {
+    "width": 397,
+    "height": 181,
+    "crc": 965098238,
+    "sizeInBytes": 4427
+  }
+}

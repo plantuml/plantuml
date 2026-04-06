@@ -1,0 +1,157 @@
+<html><head><title>gre6s - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../gr/grcsfxkfom09p4732elz0svu0alfu60.html'>Previous</a>
+<a href='../gr/grgcu57twgkfunkcc4qq07vi954rnet.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>gre6s</h2>
+<hr>
+<img src='gre6s6ksjri40a5oma4t63nc2x2ngf0.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+skinparam activity {
+/'BackgroundColor Yellow'/
+BorderColor black
+ArrowColor black
+}
+skinparam shadowing false
+/'skinparam backgroundColor white/PaleGreen '/
+title adjustNormalRegimeToSpecialRegime
+start
+:sort consolidatedYears ASC;
+while (ITERATE consolidatedYears) is (\n[next &lt;b&gt;consolidatedYear&lt;/b&gt;])
+  floating note right: iteration over sorted\nconsolidated years
+  :revision code in year?;
+  if () then ([no])
+    :determine 'highestQuality' of\nall periods in consolidatedYear\n(also track 'general regime' working days);
+    :collect periods in consolidated year having quality\nIN (EMPLOYEE, LABOURER,  PENSION_INSURANCE)\nas generalRegimePeriods;
+    :sort generalRegimePeriods by periodStart ASC;
+    -&gt; &lt;U+0028&gt;highestQuality in current year not 'general regime'\nAND no 'general regime' working days in current year&lt;U+0029&gt;\n    OR\n&lt;U+0028&gt;highestQuality in prior year not 'general regime'\nAND no 'general regime' working days in prior year&lt;U+0029&gt; ??;
+    if () then (yes)
+    while (ITERATE generalRegimePeriods) is (\n[next &lt;b&gt;generalPeriod&lt;/b&gt;])
+      floating note right: iteration over\ngeneralRegimePeriods
+      while (ITERATE consolidatedYear periods) is (\n[next &lt;b&gt;period&lt;/b&gt;])
+        floating note right: iteration over\nconsolidatedYear
+        :check if period/generalPeriod match on\n   &lt;U+0028&gt;periodStart, periodEnd, typeRegularisation&lt;U+0029&gt;\nAND period.qualityCode == highestQuality\nAND NOT period.militaryService;
+        if () then (yes)
+          :copy &lt;U+0028&gt;nettoAssimilatedDays,\n   daysRightsPreservationNoBenefits,\n   daysRightsPreservationWithBenefits,\n   daysForAnticipation&lt;U+0029&gt;\nfrom generalPeriod to period\nthen zero on generalPeriod;
+          -&gt; highestQuality IN &lt;U+0028&gt;SURFACE_MINER, DEEP_MINER&lt;U+0029&gt;\nOR &lt;U+0028&gt;highestQuality IN &lt;U+0028&gt;PILOT, FLIGHT_ATTENDANT&lt;U+0029&gt;\n       AND &lt;U+0028&gt;careerYear.year &lt; 2012\n               OR birthYear &lt; 1957&lt;U+0029&gt;&lt;U+0029&gt; ??;
+          if () then ([false])
+            :;
+          else ([true])
+          endif
+        else ([no])
+        endif
+      endwhile ([iteration done])
+      -&gt; match found in loop?;
+      if () then ([no])
+        :;
+      else ([yes])
+      endif
+    endwhile ([iteration done])
+    else ([no])
+    endif
+  else ([yes])
+  endif
+endwhile ([iteration done])
+end
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,464 @@
+<html><head><title>s3q9w - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../s3/s37f3fw4o3p9blkomqqyfrvjn21fdxd.html'>Previous</a>
+<a href='../s3/s3rkzn7m7920gn6nn39hc11il8iw26l.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>s3q9w</h2>
+<hr>
+<img src='s3q9w8ec3e5hywga2plxoqe14fmipuu.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+
+package bk2k_opengraph {
+
+}
+
+package cacheinfo {
+
+}
+
+package econda {
+
+}
+
+package fed {
+
+}
+
+fed --|&gt;  flux
+package flux {
+
+}
+
+package gridelements {
+
+}
+
+package health_calculator {
+
+}
+
+health_calculator --|&gt; &quot;V 1.2.0&quot; wfp2_real_helpers
+package moc_varnish {
+
+}
+
+moc_varnish --|&gt;  realurl
+package pagepath {
+
+}
+
+package pageteaser {
+
+}
+
+package payback_api {
+
+}
+
+package phpunit {
+
+}
+
+package pt_extbase {
+
+}
+
+package purge {
+
+}
+
+package realmc_teaser {
+
+}
+
+package realurl {
+
+}
+
+package scriptmerger {
+
+}
+
+package sw_bgimages {
+
+}
+
+package tq_seo {
+
+}
+
+package universal_soldier {
+
+}
+
+package wfp2_crypt {
+
+}
+
+package wfp2_faq {
+
+}
+
+package wfp2_headerfooter {
+
+}
+
+package wfp2_real_administration {
+
+}
+
+package wfp2_real_advance_order {
+
+}
+
+package wfp2_real_articles {
+
+}
+
+wfp2_real_articles --|&gt; &quot;V 1.1.1&quot; wfp2_real_helpers
+wfp2_real_articles --|&gt; &quot;V 0.1&quot; wfp2_real_products
+package wfp2_real_babycontest {
+
+}
+
+wfp2_real_babycontest --|&gt;  pt_extbase
+wfp2_real_babycontest --|&gt;  wfp2_real_forms
+wfp2_real_babycontest --|&gt;  wfp2_real_helpers
+package wfp2_real_bk {
+
+}
+
+package wfp2_real_brands_tester {
+
+}
+
+wfp2_real_brands_tester --|&gt;  wfp2_real_forms
+package wfp2_real_caching {
+
+}
+
+package wfp2_real_captcha {
+
+}
+
+wfp2_real_captcha --|&gt;  formhandler
+package wfp2_real_childrens_song {
+
+}
+
+package wfp2_real_customeradvice {
+
+}
+
+package wfp2_real_digitale_treue {
+
+}
+
+wfp2_real_digitale_treue --|&gt; &quot;V 1.1.1&quot; wfp2_real_helpers
+wfp2_real_digitale_treue --|&gt; &quot;V 0.0.1&quot; wfp2_real_webservice_framework
+package wfp2_real_donate {
+
+}
+
+package wfp2_real_elaine {
+
+}
+
+package wfp2_real_factfinder {
+
+}
+
+wfp2_real_factfinder --|&gt; &quot;V 4.7.1&quot; scheduler
+wfp2_real_factfinder --|&gt; &quot;V 1.1.0&quot; wfp2_real_helpers
+wfp2_real_factfinder --|&gt;  wfp2_real_products
+package wfp2_real_foreign_customer {
+
+}
+
+package wfp2_real_forms {
+
+}
+
+wfp2_real_forms --|&gt;  wfp2_real_storesearch
+wfp2_real_forms --|&gt;  wfp2_real_stores
+package wfp2_real_giftcard {
+
+}
+
+wfp2_real_giftcard --|&gt;  wfp2_real_helpers
+package wfp2_real_helpers {
+
+}
+
+package wfp2_real_hooverbagfinder {
+
+}
+
+package wfp2_real_jobs {
+
+}
+
+package wfp2_real_juniorcup {
+
+}
+
+package wfp2_real_lego {
+
+}
+
+package wfp2_real_lottery {
+
+}
+
+wfp2_real_lottery --|&gt; &quot;V 1.1.0-0.0.0&quot; wfp2_real_helpers
+wfp2_real_lottery --|&gt;  wfp2_real_forms
+wfp2_real_lottery --|&gt;  wfp2_real_sso
+wfp2_real_lottery --|&gt;  wfp2_real_captcha
+package wfp2_real_minis {
+
+}
+
+package wfp2_real_name_search {
+
+}
+
+wfp2_real_name_search --|&gt; &quot;V 0.1.4&quot; pt_extbase
+package wfp2_real_newsletter {
+
+}
+
+wfp2_real_newsletter --|&gt;  wfp2_real_forms
+wfp2_real_newsletter --|&gt;  wfp2_real_storesearch
+wfp2_real_newsletter --|&gt;  wfp2_real_stores
+package wfp2_real_newsletter_composer {
+
+}
+
+wfp2_real_newsletter_composer --|&gt; &quot;V 1.1.0-0.0.0&quot; wfp2_real_helpers
+wfp2_real_newsletter_composer --|&gt;  wfp2_real_products
+wfp2_real_newsletter_composer --|&gt;  wfp2_real_regionalization
+wfp2_real_newsletter_composer --|&gt;  fed
+package wfp2_real_offers_os {
+
+}
+
+package wfp2_real_payback {
+
+}
+
+package wfp2_real_payback_keycard {
+
+}
+
+wfp2_real_payback_keycard --|&gt;  payback_api
+wfp2_real_payback_keycard --|&gt;  wfp2_real_payback_validator
+wfp2_real_payback_keycard --|&gt;  wfp2_real_forms
+package wfp2_real_payback_themecard {
+
+}
+
+wfp2_real_payback_themecard --|&gt;  payback_api
+wfp2_real_payback_themecard --|&gt;  wfp2_real_payback_validator
+package wfp2_real_payback_validator {
+
+}
+
+package wfp2_real_products {
+
+}
+
+wfp2_real_products --|&gt; &quot;V 4.7&quot; fed
+package wfp2_real_quiz {
+
+}
+
+package wfp2_real_quiz_poll {
+
+}
+
+wfp2_real_quiz_poll --|&gt; &quot;V 1.1.1&quot; wfp2_real_helpers
+package wfp2_real_recipes {
+
+}
+
+wfp2_real_recipes --|&gt; &quot;V 1.1.1&quot; wfp2_real_helpers
+wfp2_real_recipes --|&gt; &quot;V 0.0.1&quot; wfp2_tags
+package wfp2_real_recommendations {
+
+}
+
+wfp2_real_recommendations --|&gt;  wfp2_real_tracking
+package wfp2_real_regionalization {
+
+}
+
+package wfp2_real_reservation_service {
+
+}
+
+package wfp2_real_seo {
+
+}
+
+package wfp2_real_service_forms {
+
+}
+
+package wfp2_real_shopping_list {
+
+}
+
+package wfp2_real_socialwidget {
+
+}
+
+wfp2_real_socialwidget --|&gt;  bk2k_opengraph
+wfp2_real_socialwidget --|&gt;  pt_extbase
+package wfp2_real_sso {
+
+}
+
+wfp2_real_sso --|&gt;  wfp2_realfm_coupons
+wfp2_real_sso --|&gt;  wfp2_real_helpers
+wfp2_real_sso --|&gt;  wfp2_real_shoppinglist
+wfp2_real_sso --|&gt;  wfp2_real_payback
+package wfp2_real_store_suppliers {
+
+}
+
+package wfp2_real_stores {
+
+}
+
+wfp2_real_stores --|&gt;  wfp2_real_regionalization
+package wfp2_real_storesearch {
+
+}
+
+package wfp2_real_tracking {
+
+}
+
+wfp2_real_tracking --|&gt; &quot;V 0.0.17&quot; econda
+package wfp2_real_webservice {
+
+}
+
+package wfp2_real_webservice_framework {
+
+}
+
+package wfp2_realfm_coupons {
+
+}
+
+package wfp2_responsive {
+
+}
+
+package wfp2_tags {
+
+}
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

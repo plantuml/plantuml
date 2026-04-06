@@ -1,0 +1,209 @@
+<html><head><title>2hm2a - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../2h/2hki1a5kw6jb4g2pzd0ix1zvudh19yw.html'>Previous</a>
+<a href='../2h/2hqy0ivhqek841arva575x85eomd2wz.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>2hm2a</h2>
+<hr>
+<img src='2hm2adhm2hixobvmo31zz1norlcn67k.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+sprite $disk16 {
+1144444556667788111
+1143600000000999111
+1143600000000ACA111
+1153700000001A7A111
+1153700000012B8A111
+1153800000123B8A111
+1163800001233C9A111
+11634999AABBC99B111
+11744566778899AB111
+117456AAAAA99AAB111
+118566AFC228AABB111
+118567AC8118BBBB111
+11867BD4433BBBBB111
+1139AAAAABBBBBBC111
+}
+sprite $disk8 {
+0044444446666688000
+0042600000000888000
+0042600000000ACA000
+0042600000000A6A000
+0042600000002A8A000
+0042800000022A8A000
+0062800000222C8A000
+00624888AAAAC88A000
+00644466668888AA000
+006446AAAAA88AAA000
+008466AEC228AAAA000
+008466AC8008AAAA000
+00866AC4422AAAAA000
+0028AAAAAAAAAAAC000
+}
+sprite $disk4 {
+0044444444444488000
+0040400000000888000
+00404000000008C8000
+0040400000000848000
+0040400000000888000
+0040800000000888000
+0040800000000C88000
+004048888888C888000
+0044444444888888000
+0044448888888888000
+0084448CC0088888000
+0084448C80088888000
+008448C440088888000
+000888888888888C000
+}
+sprite $disk2 {
+0044444444444488000
+0000000000000000000
+0000000000000088000
+0000000000000888000
+0000000000000888000
+0000000000000808000
+0000000000000888000
+0000800000000888000
+0000800000000888000
+0000088888888888000
+0000000000888888000
+0000008888888888000
+0080008880088888000
+0080008880088888000
+0080088000088888000
+0008888888888888000
+0000000000000000000
+}
+sprite $bug {
+00000A00000000000
+00000A000A0000000
+00004C400A0000000
+0AAACAA4C40000000
+0004A02AAA0CC0000
+0000A2A022A44AA00
+0AA04A00022A40000
+000ACA204224A0000
+0000CA222644ACA00
+0000C4A22484A40A0
+0000A4AA444AA0000
+000A000CAAAA00000
+0000000C440000000
+0000000C000000000
+000000A0000000000
+}
+
+title This is &lt;$bug&gt;
+class Foo &lt;&lt;($disk16,red)&gt;&gt; {
+  I have &lt;$disk16&gt; (disk16)
+  --
+  I have &lt;$disk8&gt; (disk8)
+  --
+  I have &lt;$disk4&gt; (disk4)
+  --
+  I have &lt;$disk2&gt; (disk2)
+  --
+}
+
+class Foo2 &lt;&lt;($bug,red)&gt;&gt;
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "duration": 31,
+  "description": "(Error)",
+  "implementation": "PSystemErrorPreprocessor",
+  "png": {
+    "width": 532,
+    "height": 683,
+    "crc": 2153081016,
+    "sizeInBytes": 37886
+  }
+}

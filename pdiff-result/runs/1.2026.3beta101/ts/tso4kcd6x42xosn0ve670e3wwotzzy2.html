@@ -1,0 +1,148 @@
+<html><head><title>tso4k - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../ts/tsj44bkslg6ih7ihbjsbmnqkuj6ku2u.html'>Previous</a>
+<a href='../tt/tt0kw92fqzjhcp6bfq39re89pl0xw4u.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>tso4k</h2>
+<hr>
+<img src='tso4kcd6x42xosn0ve670e3wwotzzy2.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+skinparam maxAsciiMessageLength 8
+
+title RUE Automatic Configuration
+box &quot;RUE Side&quot; #5fddd6
+actor &quot;RUE User&quot; as RUEUSER
+participant &quot;RUE&quot; as RUE
+end box
+box &quot;Domain Name Service&quot; #bb7068
+participant DNS
+end box
+box &quot;Configuration Service&quot; #5c7068
+participant &quot;HTTPS Server&quot; as CONFIGSERVER
+participant &quot;Provider Global Settings&quot; AS PROVIDERSETTINGS
+end box
+box &quot;Customer Relationship Management&quot; #6fc65f
+participant &quot;CRM&quot;
+end box
+autonumber &quot;&lt;b&gt;[0]&quot;
+RUEUSER -&gt; RUE: Select a VRS Provider name
+RUE -&gt; DNS: Look up SRV DNS for _rueconfig._tcp.providerdomain.com
+DNS -&gt; RUE: SRV DNS response with server.providerdomain.com:443
+RUE -&gt; DNS: If SRV record found, look up DNS for server.providerdomain.com
+RUE --&gt;&gt; DNS: If SRV record does not exist, look up DNS for config.providerdomain.com
+DNS -&gt; RUE: IP Address of Config Server
+RUE -&gt; CONFIGSERVER: TCP connection to 443: TLS: ClientHello (RFC-5246)
+CONFIGSERVER -&gt; RUE: TLS: ServerHello
+CONFIGSERVER -&gt; RUE: TLS: ServerCertificate
+CONFIGSERVER --&gt;&gt; RUE: TLS: ServerKeyExchange if required for premaster secret handshake
+CONFIGSERVER -&gt; RUE: TLS: ServerHelloDone
+RUE -&gt; CONFIGSERVER: HTTP: GET https://config.providerdomain.com/v1
+CONFIGSERVER -&gt; RUE: HTTP: 401 Unauthorized WWW-Authenticate Digest\nusername=&quot;X&quot; realm=&quot;Y&quot; qop=&quot;auth,auth-int&quot; nonce=...
+RUE -&gt; CONFIGSERVER: HTTP: https://config.providerdomain.com/v1 Authorization Digest\nusername=&quot;X&quot; realm=&quot;Y&quot; qop=&quot;auth&quot; nonce=...
+CONFIGSERVER -&gt; CRM: Find subscriber information\nfor username=&quot;X&quot;
+CRM -&gt; CONFIGSERVER: Subscriber specific\nconfiguration information
+CONFIGSERVER -&gt; PROVIDERSETTINGS: Retrieve provider specific settings
+PROVIDERSETTINGS -&gt; CONFIGSERVER: Provider specific configuration information
+CONFIGSERVER -&gt; RUE: 200 OK + JSON key/value hash merge of subscriber specific and\nprovider specific configurations
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

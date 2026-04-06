@@ -1,0 +1,163 @@
+<html><head><title>zn7mr - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../zj/zjxap9vxcik3j5e7bux78f211wb37w.html'>Previous</a>
+<a href='../zz/zzlw3xyilm6el4yd0agf6wzua025d8.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>zn7mr</h2>
+<hr>
+<img src='zn7mr5c1qofwqndotosqtys4o0ide4.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+'all sprites in a category would be included in an all.puml file for that category
+'==================================================================================================
+
+'create equivalent of icons shown here https://github.com/awslabs/aws-icons-for-plantuml
+sprite $Batch [64x64/16z] {
+xLQ7bjim30CdzFzVtEV1iErPkJpT7iYm5aWDKERujFZ5Bp8YkSvM011VfMzSDy2Mw1JidbCGAtmllmbPuIkoImjyGUsyBV4LV95_Xny50bpW4uTRAjOKu81b
+Xa0vbX3OKFG5C0IMNLyxXA_3PvW5hqHSOFBP_Ovk4036hYi0pJdTCgqD6A0g4FQ0hOwygxSikGOanw11AuvtomxXjNiRDECmn21xxTkJP0N4tdy1Gmu5T2GW
+6ygFL_sqbx3NvA_FVtt_ri_F1CZNra-10TpNhvVr2KGcyVCOdoBySlpv-jC1ZSVveO36_Fwb0UASqGqG0QpfJgP2Eo60u59-fLVozhhdNk2WTeDpq2O6AAL_
+uV7KGPNO2lya17gz1pMiD1VmFNH9IBLNe3xA3q07eNsMy_WdXESwU4jRmddEk-FUuPFjjthiqAEGVUz8rlqmsK1nhtYlklvp7vWRfka0jUNITUdTzgxFyzLx
+-Ikh_YdmYr_y0G
+}
+
+
+' We define 1 or more sprite decorators in stdlib
+'---------------------------------------------------
+!unquoted procedure $SpriteDecorator($MySprite, $alias, $description=&quot;&quot;, $label=&quot;&quot;, $technology=&quot;&quot;, $scale=1, $colour=&quot;red&quot;)
+
+rectangle $alias as &quot;
+&lt;&lt;$alias&gt;&gt;
+$label
+&lt;color:$colour&gt;&lt;$MySprite*$scale&gt;&lt;/color&gt;
+//&lt;size:12&gt;[$technology]&lt;/size&gt;//
+
+  $description&quot;
+!endprocedure
+
+'stdlib macros pass the sprite to the decorator - and the other parameters
+'all this would happen in an all.puml file per sprite category
+'==================================================================================================
+!unquoted procedure $BATCH($alias, $description=&quot;&quot;, $label=&quot;&quot;, $technology=&quot;&quot;, $scale=1, $colour=&quot;red&quot;)
+$SpriteDecorator($Batch, $alias, $description, $label, $technology, $scale, $colour)
+!endprocedure
+
+
+' First call: we call directly &quot;$SpriteDecorator&quot;
+$SpriteDecorator(&quot;$Batch&quot;, &quot;somealias1&quot;)
+
+' Second call: we dynamically call &quot;$SpriteDecorator&quot;
+'I dynamically create the name of the procedure to be called:
+
+!$dyn = &quot;$Sprite&quot;+ &quot;Decorator&quot;
+
+' The first argument of %invoke_procedure if the name of the real procedure to be called.
+' Other arguments are passed to the called procedure - $SpriteDecorator in that case.
+%invoke_procedure($dyn, &quot;$Batch&quot;, &quot;somealias2&quot;)
+
+' Right now it does NOT work with &quot;named arguments&quot; with last official release.
+' But I just fixed this in last beta http://beta.plantuml.net/plantuml.jar
+%invoke_procedure($dyn, &quot;$Batch&quot;, &quot;somealias3&quot;, $scale=3)
+
+
+'if this works, then can add named arguments
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

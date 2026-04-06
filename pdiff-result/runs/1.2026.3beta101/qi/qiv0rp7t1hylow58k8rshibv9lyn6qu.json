@@ -1,0 +1,11 @@
+{
+  "duration": 17,
+  "description": "(Math)",
+  "implementation": "PSystemMath",
+  "png": {
+    "width": 1371,
+    "height": 212,
+    "crc": 482319277,
+    "sizeInBytes": 23606
+  }
+}

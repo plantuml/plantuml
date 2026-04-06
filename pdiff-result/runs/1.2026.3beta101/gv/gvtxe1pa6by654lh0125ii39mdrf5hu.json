@@ -1,0 +1,11 @@
+{
+  "duration": 31,
+  "description": "Board",
+  "implementation": "BoardDiagram",
+  "png": {
+    "width": 881,
+    "height": 372,
+    "crc": 2679782672,
+    "sizeInBytes": 8640
+  }
+}

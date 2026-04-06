@@ -1,0 +1,231 @@
+<html><head><title>eufu6 - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../eu/eub4aqfxnilxuzwvi87ow2yjq6zt0ws.html'>Previous</a>
+<a href='../eu/eundyi2uzqjffk9o1ml4i0t8uhmpt1s.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>eufu6</h2>
+<hr>
+<img src='eufu6l98vvyl7mzezs74ovq2l77mjzg.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+'this is a full analog and digital example
+'robust is a &quot;simple signal&quot;
+'concise is a &quot;state&quot;
+'binary is &quot;binary&quot;
+robust &quot;VDD&quot; as VDD
+
+scale 5 as 150 pixels
+
+clock clk with period 1
+binary &quot;enable&quot; as en
+binary &quot;R/W&quot; as rw
+binary &quot;data Valid&quot; as dv
+concise &quot;IC_FSM&quot; as fsm
+concise &quot;IC_FSM&quot; as fsm
+concise &quot;dataBus&quot; as db
+concise &quot;address bus&quot; as addr
+
+@0
+VDD is 0
+@0.1
+VDD is 0.1
+@0.2
+VDD is 0.2
+@0.3
+VDD is 0.3
+@0.3
+VDD is 0.3
+@0.4
+VDD is 0.4
+@0.5
+VDD is 0.5
+@0.6
+VDD is 0.6
+@0.7
+VDD is 0.6
+@0.7
+VDD is 0.7
+@0.8
+VDD is 0.8
+@0.9
+VDD is 0.9
+@1
+VDD is 1.0
+@1.1
+VDD is 1.1
+@1.2
+VDD is 1.2
+@1.3
+VDD is 1.3
+@1.4
+VDD is 1.4
+@1.5
+VDD is 1.5
+@1.6
+VDD is 1.6
+@1.7
+VDD is 1.7
+@1.8
+VDD is 1.8
+
+
+
+@6 as :write_beg
+@10 as :write_end
+
+@15 as :read_beg
+@19 as :read_end
+
+
+@0
+fsm is &quot;UNDEF&quot;
+en is low
+db is &quot;0x0&quot;
+addr is &quot;0x03f&quot;
+rw is low
+dv is 0
+
+@1.1
+fsm is &quot;RESET&quot;
+VDD@1.1 -&gt; fsm@1.1 : power up
+
+en@3 -&gt; fsm@4 : n_reset
+
+@:write_beg-3
+ en is high
+@:write_beg-1
+ fsm is &quot;ACTIVE&quot;
+@:write_beg-2
+ db is &quot;0xDEADBEEF&quot;
+@:write_beg-1
+dv is 1
+@:write_beg
+rw is high
+
+
+@:write_end
+rw is low
+dv is low
+@:write_end+1
+rw is low
+db is &quot;0x0&quot;
+addr is &quot;0x23&quot;
+
+@12
+dv is high
+@13 
+db is &quot;0xFFFF&quot;
+
+@20
+en is low
+dv is low
+@21 
+db is &quot;0x0&quot;
+fsm is &quot;RESET&quot;
+
+highlight :write_beg to :write_end #Gold:Write
+highlight :read_beg to :read_end #lightBlue:Read
+
+db@:write_beg-1 &lt;-&gt; @:write_end : setup time
+db@:write_beg-1 -&gt; addr@:write_end+1 : hold
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

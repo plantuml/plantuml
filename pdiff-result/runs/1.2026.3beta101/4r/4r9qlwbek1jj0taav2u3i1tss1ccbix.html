@@ -1,0 +1,217 @@
+<html><head><title>4r9ql - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../4r/4r3bt3d59qbg83ic61yhu8gasehmys6.html'>Previous</a>
+<a href='../4r/4rdrqqq5eobdvu5z7dkhnj8a3zs71u1.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>4r9ql</h2>
+<hr>
+<img src='4r9qlwbek1jj0taav2u3i1tss1ccbix.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startwire
+goto(0,360)
+*DDR3L [70x70]
+*SLC_NAND [70x70]
+*TestPoints [70x30]
+*PF3000 [70x130]
+*EEPROM [70x30]
+
+--
+move(60,0)
+*i_MX7_SoC
+	*2x_ARM [70x70]
+	*ARM [70x70]
+	*PXP [70x70]
+	*Crypto [70x30]
+	*DDR3 [70x70]
+	move(0,90)
+	*JTAG [70x30]
+	--
+	*signals
+		*24_bit_display [85x20]
+		*24_bit_camera [85x20]
+		*2x_DS_DSIO [85x20]
+		*124x_GPIO [85x20]
+		*4x_12C [85x20]
+		*3x_12S [85x20]
+		*7x_UART [85x20]
+		*2x_QuadSPI [85x20]
+		*4x_eCSPI [85x20]
+		*2x_CAN [85x20]
+		*4x_Timer [85x20]
+		*Local_bus [85x20]
+		*GPMI [85x20]
+		*2x_Gbit_MAC [85x20]
+		*6x6_keypard [85x20]
+		*4x_PWM [85x20]
+		*2x_SmartCard [85x20]
+		*4x_Watchdog [85x20]
+		*MQS [85x20]
+
+	move(35,10)
+	*ADC1 [70x30]
+	*ADC2 [70x30]
+	*MIPI_DSI [70x30]
+	*PCIe [70x30]
+	*USB2_0   [70x30]
+	*USB2_0_  [70x30]
+	*USB2_0__ [70x30]
+	*MIPI_CSI [70x30]
+
+--
+move(40, 480)
+*WLAN_BT    [100x30]
+*1Gbit_PHY [100x30]
+*1Gbit_PHY_ [100x30]
+move(0, 120)
+*WM_8731L [100x30]
+
+move(-40, 10)
+*SPI_FLASH [80x30]
+move(110, -50)
+*Resistive [80x30]
+
+move(-90, 80)
+*DSI_to_LVDS [100x30]
+move(0,60)
+*USB2_0 [100x30]
+
+--
+
+*240pin [50x1220]
+
+
+DDR3L(100%,50%-10) =&gt; i_MX7_SoC.DDR3
+SLC_NAND -&gt; i_MX7_SoC.signals
+SLC_NAND(100%, 50) -&gt; i_MX7_SoC.signals
+
+TestPoints -&gt; i_MX7_SoC.JTAG
+
+
+PF3000 =&gt; i_MX7_SoC
+PF3000 =&gt; i_MX7_SoC
+PF3000 =&gt; i_MX7_SoC
+
+
+i_MX7_SoC.signals(100%,25) =&gt; 240pin
+i_MX7_SoC.signals(100%,65) =&gt; 240pin
+
+i_MX7_SoC.signals -&gt; 240pin
+i_MX7_SoC.signals -&gt; 240pin
+i_MX7_SoC.signals -&gt; 240pin
+i_MX7_SoC.signals -&gt; 240pin
+i_MX7_SoC.signals -&gt; 240pin
+i_MX7_SoC.signals -&gt; 240pin
+i_MX7_SoC.signals -&gt; 240pin
+i_MX7_SoC.signals -&gt; 240pin
+i_MX7_SoC.signals -&gt; 240pin
+i_MX7_SoC.signals -&gt; 240pin
+i_MX7_SoC.signals -&gt; 240pin
+i_MX7_SoC.signals -&gt; 240pin
+i_MX7_SoC.signals -&gt; 240pin
+i_MX7_SoC.signals -&gt; 240pin
+i_MX7_SoC.signals -&gt; 240pin
+i_MX7_SoC.signals -&gt; 240pin
+
+i_MX7_SoC.signals.Local_bus -&gt; WLAN_BT
+
+@endwire
+</code></pre>
+</div>
+</body>
+</html>

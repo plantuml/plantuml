@@ -1,0 +1,153 @@
+<html><head><title>tu7hv - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../tu/tu64vf9e8xwokyny3dtxr6lxj8ily7s.html'>Previous</a>
+<a href='../tu/tul6wgpzjn34s8doognhtxhsnh4jpzy.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>tu7hv</h2>
+<hr>
+<img src='tu7hvlxf485qalxep54tcy5dj7iki6.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startjcckit(400,300)
+data/curves = curve2 errors2 curve1 errors1
+data/curve1/title = curve 1
+data/curve1/x = 0.02 0.11  0.18  0.3   0.42  0.49 0.61
+data/curve1/y = 0.68 0.61  0.52  0.41  0.27  0.21 0.11
+data/errors1/x = 0.021 0.01  0.017 0.024 0.023 0.025 0.027
+data/errors1/y = 0.034 0.028 0.031 0.039 0.03  0.032 0.041
+data/curve2/title = curve 2
+data/curve2/x = 0.4   0.5  0.6   0.7   0.8   0.9
+data/curve2/y = 0.17  0.29 0.45  0.61  0.64  0.66
+data/errors2/x = 0 0 0 0 0 0
+data/errors2/y = 0.05 0.036 0.059 0.07 0.061 0.053
+
+background = 0xDDDDDD
+
+defaultCoordinateSystem/ticLabelAttributes/fontSize = 0.03
+defaultCoordinateSystem/axisLabelAttributes/fontSize = 0.04
+defaultCoordinateSystem/axisLabelAttributes/fontStyle = bold
+plot/coordinateSystem/xAxis/ = defaultCoordinateSystem/
+plot/coordinateSystem/xAxis/minimum = 	0.1
+plot/coordinateSystem/yAxis/ = defaultCoordinateSystem/
+
+plot/initialHintForNextCurve/className = jcckit.plot.PositionHint
+plot/initialHintForNextCurve/origin = 0.06 0.1
+#plot/initialHintForNextCurve/position = 0 0
+plot/curveFactory/definitions = cdef1 edef1 cdef2 edef2
+plot/curveFactory/cdef1/symbolFactory/className = jcckit.plot.ErrorBarFactory
+plot/curveFactory/edef1/symbolFactory/className = jcckit.plot.ErrorBarFactory
+plot/curveFactory/edef1/symbolFactory/attributes/className = jcckit.graphic.ShapeAttributes
+plot/curveFactory/edef1/symbolFactory/attributes/fillColor = 0xcafe
+plot/curveFactory/edef1/symbolFactory/attributes/lineColor = 0
+plot/curveFactory/edef1/symbolFactory/size = 0.01
+plot/curveFactory/edef1/withLine = false
+plot/curveFactory/edef1/softClipping = false
+plot/curveFactory/cdef2/symbolFactory/className = jcckit.plot.ErrorBarFactory
+plot/curveFactory/cdef2/symbolFactory/symbolFactory/className = jcckit.plot.SquareSymbolFactory
+plot/curveFactory/cdef2/symbolFactory/symbolFactory/attributes/className = jcckit.graphic.ShapeAttributes
+plot/curveFactory/cdef2/symbolFactory/symbolFactory/attributes/fillColor = 0x40c0
+plot/curveFactory/cdef2/symbolFactory/symbolFactory/attributes/lineColor = 
+plot/curveFactory/edef2/ = plot/curveFactory/edef1/
+plot/curveFactory/edef2/symbolFactory/attributes/fillColor = 
+plot/curveFactory/edef2/symbolFactory/attributes/lineColor = 0
+plot/curveFactory/edef2/symbolFactory/size = 0
+@endjcckit
+</code></pre>
+</div>
+</body>
+</html>

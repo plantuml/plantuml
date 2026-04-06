@@ -1,0 +1,11 @@
+{
+  "duration": 10,
+  "description": "(Bpm Diagram)",
+  "implementation": "BpmDiagram",
+  "png": {
+    "width": 752,
+    "height": 215,
+    "crc": 2990349098,
+    "sizeInBytes": 4730
+  }
+}

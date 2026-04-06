@@ -1,0 +1,137 @@
+<html><head><title>1dord - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../1d/1dkdc2pq9bbt9jnw8bxe79c5so23aj3.html'>Previous</a>
+<a href='../1d/1dqfuxa0v11uw60c3sv9shlrmlwmpw2.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>1dord</h2>
+<a href='https://forum.plantuml.net/15458/default-line-colors-are-not-supported-anymore'>https://forum.plantuml.net/15458/default-line-colors-are-not-supported-anymore</a>
+<hr>
+<img src='1dordjglf2b1apkaiaqldrj11tj7e6v.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+skinparam arrow {
+    Color green
+    FontColor green
+}
+
+skinparam arrow&lt;&lt;orangeText&gt;&gt; {
+    Color ;text:orange;line.dotted
+}
+
+skinparam arrow&lt;&lt;orangeLine&gt;&gt; {
+    Color orange;line.dashed
+}
+
+skinparam arrow&lt;&lt;origGreen&gt;&gt; {
+    Color ;line.dashed
+}
+
+
+rectangle &quot;==A&quot; &lt;&lt;person&gt;&gt; as a
+rectangle &quot;==S&quot; &lt;&lt;system&gt;&gt; as s
+rectangle &quot;==E&quot; &lt;&lt;external_system&gt;&gt; as e
+
+a --&gt;&gt; s &lt;&lt;orangeText&gt;&gt; : **orange text**
+s --&gt;&gt; e &lt;&lt;orangeLine&gt;&gt; : **orange line**
+a --&gt;&gt; e &lt;&lt;origGreen&gt;&gt; : **origGreen**
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

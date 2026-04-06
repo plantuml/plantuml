@@ -1,0 +1,135 @@
+<html><head><title>6konu - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../6k/6ko7fuifyr1npwxax3uo1ra00wim34a.html'>Previous</a>
+<a href='../6k/6kt7tb0qwnmr786pt5y5roqdtsqzbyc.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>6konu</h2>
+<hr>
+<img src='6konuub2cc6nx7v0zeeiygzjio70j0r.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+digraph unix {
+nodesep=0.486111;
+ranksep=0.833333;
+remincross=true;
+searchsize=500;
+compound=true;
+sh0009-&gt;sh0010[arrowtail=none,arrowhead=none,color=&quot;#00000C&quot;];
+sh0006-&gt;sh0007[arrowtail=none,arrowhead=none,minlen=0,color=&quot;#000018&quot;,style=invis];
+sh0009 [shape=rect,label=&quot;&quot;,width=0.694444,height=0.494575,color=&quot;#000009&quot;];
+sh0010 [shape=rect,label=&quot;&quot;,width=1.791667,height=0.820204,color=&quot;#00000A&quot;];
+sh0011 [shape=rect,label=&quot;&quot;,width=0.402778,height=0.494575,color=&quot;#00000B&quot;];
+{rank=same; sh0009; sh0010}
+subgraph cluster4 {style=solid;color=&quot;#000004&quot;;label=&lt;&lt;TABLE BGCOLOR=&quot;#000005&quot; FIXEDSIZE=&quot;TRUE&quot; WIDTH=&quot;59&quot; HEIGHT=&quot;27&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&gt;;
+zacl0001 [shape=point,width=.01,label=&quot;&quot;];
+sh0006 [shape=rect,label=&quot;&quot;,width=1.430556,height=0.522352,color=&quot;#000006&quot;];
+sh0007 [shape=rect,label=&quot;&quot;,width=1.222222,height=0.522352,color=&quot;#000007&quot;];
+sh0008 [shape=rect,label=&quot;&quot;,width=1.444444,height=0.522352,color=&quot;#000008&quot;];
+{rank=same; sh0006; sh0007}
+}
+sh0011-&gt;zacl0001[arrowtail=none,arrowhead=empty,arrowsize=0.5,minlen=1,color=&quot;#000010&quot;,lhead=cluster4];
+sh0011-&gt;sh0009[arrowtail=none,arrowhead=empty,arrowsize=0.5,minlen=1,color=&quot;#000014&quot;];
+sh0006-&gt;sh0008[arrowtail=none,arrowhead=none,minlen=1,color=&quot;#00001C&quot;,style=invis];
+
+}
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

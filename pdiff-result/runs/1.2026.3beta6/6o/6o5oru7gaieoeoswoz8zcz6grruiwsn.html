@@ -1,0 +1,513 @@
+<html><head><title>6o5or - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../6o/6o0o3mh9eiobpwur50zhh6hwol79bbc.html'>Previous</a>
+<a href='../6o/6ogpku4pdle6eutp87x79hryb0f412y.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>6o5or</h2>
+<hr>
+<img src='6o5oru7gaieoeoswoz8zcz6grruiwsn.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+!pragma layout smetana
+    skinparam class {
+        BackgroundColor WhiteSmoke
+        ArrowColor Black
+        BorderColor Black
+    }
+INTERFACE Work {
+.. attributes ..
+-ns: string 
+-version: long 
+-id: string 
+.. relationships ..
+#attributes: WorkAttributes 
+#counterClaims: CounterClaim 
+#activityTriggers: ActivityTrigger 
+#admin: Admin 
+#partyNames: WorkPartyName 
+#gemaShareArrangements: GemaShareArrangement 
+#permissions: Permissions 
+#otherRelations: WorkRelation 
+#claims: WorkClaim 
+#societies: WorkSociety 
+#relations: WorkRelation 
+#repertoires: WorkRepertoire 
+#recordings: WorkRecording 
+#contributions: WorkContribution 
+#conflicts: ConflictWork 
+}
+CLASS WorkScore {
+.. attributes ..
+-score: number 
+-ns: string 
+-scoreType: string 
+-id: string 
+.. relationships ..
+}
+
+CLASS WorkRecording {
+.. attributes ..
+-ns: string 
+-version: long 
+-tags: {map:{array:string}} 
+-recordingId: string 
+-workId: string 
+.. relationships ..
+#recording: Recording 
+}
+
+CLASS WorkClaim {
+.. attributes ..
+-claimantPartyNameId: string 
+-ns: string 
+-version: long 
+-tags: {map:{array:string}} 
+-claimShares: {array:WorkShare} 
+-workId: string 
+-parentId: string 
+-claimId: string 
+-role: WorkClaimRole 
+-claimantId: string 
+-claimantPartyId: string 
+-type: WorkClaimType 
+-ownershipShares: {array:WorkShare} 
+-agreementId: string 
+-extensions: {map:{array:string}} 
+.. relationships ..
+#WorkShare: WorkShare 
+#claimant: PartyNameParty 
+#agreement: Agreement 
+}
+
+CLASS WorkRelation {
+.. attributes ..
+-otherId: string 
+-ns: string 
+-partWeighing: number 
+-version: long 
+-tags: {map:{array:string}} 
+-relation: WorkRelationType 
+-workId: string 
+-partDuration: long 
+-partTitle: string 
+-sequenceNumber: long 
+.. relationships ..
+#owner: Work 
+#other: Work 
+}
+
+CLASS Instrumentation {
+.. attributes ..
+-numberOfInstruments: long 
+-instrumentCode: string 
+-numberOfPlayers: long 
+-numberOfParts: long 
+.. relationships ..
+}
+
+CLASS WorkAttributes {
+.. attributes ..
+-ns: string 
+-purpose: string 
+-origin: string 
+-prohibited: boolean 
+-isRef: boolean 
+-musicVersion: string 
+-shareDivisionOwner: string 
+-language: string 
+-lyricAdaption: string 
+-source: string 
+-textMusicRelationship: string 
+-societyMarkers: {array:string} 
+-musicArrangement: string 
+-publicationDate: string 
+-musicExcerpt: string 
+-genre: string 
+-duration: long 
+-id: string 
+-musicCopyrightNumber: string 
+-musicRecordedIndicator: string 
+-standardInstrumentation: {array:Instrumentation} 
+-titles: {map:{array:WorkTitle}} 
+-version: long 
+-tags: {map:{array:string}} 
+-owner: string 
+-musicCopyrightDate: string 
+-copyrightOverrides: {array:CopyrightOverride} 
+-firstReferral: boolean 
+-musicComposite: string 
+-instruments: {array:Instrument} 
+-category: string 
+-status: string 
+-extensions: {map:{array:string}} 
+.. relationships ..
+#Instrument: Instrument 
+#CopyrightOverride: CopyrightOverride 
+#Instrumentation: Instrumentation 
+#mapWorkTitle: mapWorkTitle 
+}
+
+CLASS WorkAgreement {
+.. attributes ..
+-ns: string 
+-contributorId: string 
+-include: boolean 
+-version: long 
+-tags: {map:{array:string}} 
+-role: string 
+-workId: string 
+-agreementId: string 
+-shares: {array:AgreementShare} 
+.. relationships ..
+#AgreementShare: AgreementShare 
+#agreement: Agreement 
+}
+
+CLASS WorkContribution {
+.. attributes ..
+-contributorPartyId: string 
+-role: WorkContributionRole 
+-ns: string 
+-contributorId: string 
+-contributorPartyNameId: string 
+-version: long 
+-tags: {map:{array:string}} 
+-manuscriptShares: {array:WorkShare} 
+-copyrightOverrides: {array:CopyrightOverride} 
+-workId: string 
+-territories: {array:string} 
+-extensions: {map:{array:string}} 
+.. relationships ..
+#CopyrightOverride: CopyrightOverride 
+#WorkShare: WorkShare 
+#agreements: WorkAgreement 
+#countries: Integer 
+#contributor: PartyNameParty 
+}
+
+CLASS WorkSociety {
+.. attributes ..
+-ns: string 
+-version: long 
+-tags: {map:{array:string}} 
+-attributes: {map:{array:string}} 
+-grading: {array:Grading} 
+-workId: string 
+-societyId: string 
+-extensions: {map:{array:string}} 
+.. relationships ..
+#Grading: Grading 
+#society: Society 
+}
+
+CLASS WorkShare {
+.. attributes ..
+-endDate: string 
+-rightTypes: {array:string} 
+-share: long 
+-unauthorized: boolean 
+-startDate: string 
+-territories: {array:string} 
+-priorRoyaltiesDate: string 
+-postTermCollectionDate: string 
+.. relationships ..
+#countries: Integer 
+#permissions: Permissions 
+}
+
+CLASS WorkPartyName {
+.. attributes ..
+-ns: string 
+-partyNameId: string 
+-version: long 
+-tags: {map:{array:string}} 
+-workId: string 
+-role: WorkPartyNameRole 
+-extensions: {map:{array:string}} 
+.. relationships ..
+#partyName: PartyName 
+}
+
+CLASS WorkTitle {
+.. attributes ..
+-titleValue: string 
+-duration: long 
+-sequenceNumber: long 
+.. relationships ..
+}
+
+CLASS WorkRepertoire {
+.. attributes ..
+-repertoireId: string 
+-version: long 
+-relation: WorkRepertoireRelationType 
+-workId: string 
+.. relationships ..
+#owner: Repertoire 
+#work: Work 
+}
+
+CLASS WorkMatch {
+.. attributes ..
+-stage: string 
+-targetWorkIdVersion: string 
+-tags: {map:{array:string}} 
+-result: string 
+-refs: {map:{array:string}} 
+-kmodId: string 
+-kmodIdTargetWorkIdVersion: string 
+-sourceWorkIdVersion: string 
+-sourceWorkIdVersionStage: string 
+.. relationships ..
+}
+
+CLASS Instrument {
+.. attributes ..
+-numberOfInstruments: long 
+-instrumentCode: string 
+-numberOfPlayers: long 
+.. relationships ..
+}
+
+CLASS CopyrightOverride {
+.. attributes ..
+-countries: {array:string} 
+-protectionDate: string 
+-societyIds: {array:string} 
+.. relationships ..
+}
+
+CLASS Grading {
+.. attributes ..
+-gradingStatus: string 
+-gradingDecider: string 
+-gradingDate: string 
+-gradingValue: string 
+.. relationships ..
+}
+ENUM WorkClaimRole {
+E
+SE
+ES
+AM
+AQ
+C
+CA
+AR
+A
+SA
+TR
+AD
+SR
+UNKNOWN
+}
+
+ENUM WorkContributionRole {
+C
+CA
+AR
+A
+SA
+TR
+AD
+SR
+UNKNOWN
+}
+
+ENUM WorkClaimType {
+CREATOR
+ORIGINAL_PUBLISHER
+SUB_PUBLISHER
+}
+
+ENUM WorkRelationType {
+REVI
+MERG
+MOD
+NOMT
+SMPL
+EXCP
+DISP
+XREF
+MTCH
+POSS
+COMP
+ARRG
+MCFL
+}
+
+ENUM WorkTitleType {
+OT
+OV
+AT
+TE
+FT
+IT
+TT
+PT
+RT
+ET
+OL
+AL
+DT
+LT
+NT
+}
+
+ENUM WorkRepertoireRelationType {
+INCLUDE
+}
+
+ENUM WorkPartyNameRole {
+PA
+PG
+PU
+PX
+RS
+}
+ WorkRecording --&gt; &quot;*&quot; Recording
+ WorkPartyName --&gt; &quot;*&quot; WorkPartyNameRole
+ WorkPartyName --&gt; &quot;*&quot; PartyName
+ WorkRepertoire --&gt; &quot;*&quot; WorkRepertoireRelationType
+ WorkRepertoire --&gt; &quot;*&quot; Repertoire
+ WorkRepertoire --&gt; &quot;*&quot; Work
+ Work --&gt; &quot;*&quot; WorkAttributes
+ Work --&gt; &quot;*&quot; CounterClaim
+ Work --&gt; &quot;*&quot; ActivityTrigger
+ Work --&gt; &quot;*&quot; Admin
+ Work --&gt; &quot;*&quot; WorkPartyName
+ Work --&gt; &quot;*&quot; GemaShareArrangement
+ Work --&gt; &quot;*&quot; Permissions
+ Work --&gt; &quot;*&quot; WorkRelation
+ Work --&gt; &quot;*&quot; WorkClaim
+ Work --&gt; &quot;*&quot; WorkSociety
+ Work --&gt; &quot;*&quot; WorkRelation
+ Work --&gt; &quot;*&quot; WorkRepertoire
+ Work --&gt; &quot;*&quot; WorkRecording
+ Work --&gt; &quot;*&quot; WorkContribution
+ Work --&gt; &quot;*&quot; ConflictWork
+ WorkRelation --&gt; &quot;*&quot; WorkRelationType
+ WorkRelation --&gt; &quot;*&quot; Work
+ WorkRelation --&gt; &quot;*&quot; Work
+ WorkClaim --&gt; &quot;*&quot; WorkClaimRole
+ WorkClaim --&gt; &quot;*&quot; WorkShare
+ WorkClaim --&gt; &quot;*&quot; WorkClaimType
+ WorkClaim --&gt; &quot;*&quot; PartyNameParty
+ WorkClaim --&gt; &quot;*&quot; Agreement
+ WorkAttributes --&gt; &quot;*&quot; Instrument
+ WorkAttributes --&gt; &quot;*&quot; CopyrightOverride
+ WorkAttributes --&gt; &quot;*&quot; Instrumentation
+ WorkAttributes --&gt; &quot;*&quot; mapWorkTitle
+ WorkContribution --&gt; &quot;*&quot; CopyrightOverride
+ WorkContribution --&gt; &quot;*&quot; WorkContributionRole
+ WorkContribution --&gt; &quot;*&quot; WorkShare
+ WorkContribution --&gt; &quot;*&quot; WorkAgreement
+ WorkContribution --&gt; &quot;*&quot; Integer
+ WorkContribution --&gt; &quot;*&quot; PartyNameParty
+ WorkAgreement --&gt; &quot;*&quot; AgreementShare
+ WorkAgreement --&gt; &quot;*&quot; Agreement
+ WorkSociety --&gt; &quot;*&quot; Grading
+ WorkSociety --&gt; &quot;*&quot; Society
+ WorkShare --&gt; &quot;*&quot; Integer
+ WorkShare --&gt; &quot;*&quot; Permissions
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<html><head><title>nuq4k - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../nu/nu5mfinm8onzgayuiq5hch5vaajgak1.html'>Previous</a>
+<a href='../nu/nus1lvoexm9kgwnph5dwqvci37q445m.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>nuq4k</h2>
+<hr>
+<img src='nuq4kzq79b2wjyyxy47phpy3gixw5x9.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+
+!include &lt;C4/C4_Container&gt;
+
+!include &lt;azure/AzureCommon&gt;
+!include &lt;azure/Databases/AzureRedisCache&gt;
+!include &lt;azure/Databases/AzureCosmosDb&gt;
+!include &lt;azure/Databases/AzureSqlDatabase&gt;
+!include &lt;azure/Web/AzureWebApp&gt;
+!include &lt;azure/Web/AzureCDN&gt;
+!include &lt;azure/Web/AzureSearch&gt;
+!include &lt;azure/Storage/AzureBlobStorage&gt;
+!include &lt;azure/Storage/AzureQueueStorage&gt;
+
+LAYOUT_WITH_LEGEND()
+
+Person(user, &quot;User&quot;)
+
+Container(spa, &quot;Single-Page App&quot;, &quot;Angular, JS&quot;)
+AzureWebApp(webApp, &quot;Web &amp; API App&quot;, &quot;ASP.NET Core MVC 2.1, C#&quot;, &quot;Delivers the SPA and provides RESTful web APIs which are consumed from the SPA&quot;)
+AzureCDN(cdn, &quot;CDN&quot;, &quot;Akamai S2&quot;, &quot;caches publicly available content for lower latency and faster delivery of content&quot;)
+
+AzureBlobStorage(staticBlobStorage, &quot;Static Content&quot;, &quot;General Purpose v2, Hot, LRS&quot;)
+
+AzureQueueStorage(queue, &quot;Queue&quot;, &quot;General Purpose v2, LRS&quot;)
+AzureSearch(search, &quot;Search Index&quot;, &quot;Standard S1&quot;, &quot;provides search suggestions, fuzzy search, and language-specific search, consolidates a single search index from multiple data stores&quot;)
+AzureRedisCache(redisCache, &quot;Cache&quot;, &quot;Standard C2&quot;)
+
+AzureCosmosDb(cosmosDb, &quot;Document DB&quot;, &quot;SQL API, 400 RUs&quot;)
+AzureSqlDatabase(sqlDb, &quot;SQL DB&quot;, &quot;Standard S3&quot;)
+
+AzureWebApp(webJob, &quot;Web Job&quot;, &quot;WebJobs SDK v3, C#&quot;, &quot;runs long-running tasks in the background&quot;)
+
+Rel(user, spa, &quot;Uses&quot;, &quot;HTTPS&quot;)
+Rel(user, webApp, &quot;Uses&quot;, &quot;HTTPS&quot;)
+Rel(user, cdn, &quot;Uses&quot;, &quot;HTTPS&quot;)
+
+Rel_Neighbor(spa, webApp, &quot;Uses&quot;, &quot;JSON, HTTPS&quot;)
+Rel_Back_Neighbor(spa, webApp, &quot;Delivers&quot;)
+
+Rel_Neighbor(cdn, staticBlobStorage, &quot;Reads from&quot;)
+
+Rel(webApp, queue, &quot;Puts background jobs into&quot;)
+Rel(webApp, sqlDb, &quot;Reads from and writes to&quot;, &quot;ADO.NET&quot;)
+Rel(webApp, cosmosDb, &quot;Reads from and writes to&quot;, &quot;SQL API&quot;)
+Rel(webApp, redisCache, &quot;Reads from and writes to&quot;)
+Rel(webApp, search, &quot;Reads from&quot;)
+
+Rel_U(webJob, queue, &quot;Gets next job from&quot;)
+Rel_U(webJob, sqlDb, &quot;Reads from and writes to&quot;, &quot;ADO.NET&quot;)
+Rel_U(webJob, cosmosDb, &quot;Reads from and writes to&quot;, &quot;SQL API&quot;)
+Rel_U(webJob, redisCache, &quot;Reads from and writes to&quot;)
+
+Rel_Back_Neighbor(cosmosDb, search, &quot;Builds index from&quot;)
+Rel_Neighbor(search, sqlDb, &quot;Builds index from&quot;)
+
+Lay_D(search, webJob)
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

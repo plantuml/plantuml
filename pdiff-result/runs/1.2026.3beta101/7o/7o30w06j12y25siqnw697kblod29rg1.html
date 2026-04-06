@@ -1,0 +1,342 @@
+<html><head><title>7o30w - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../7n/7nqji01jyfvo71h2s6z14f3mrkm0jlq.html'>Previous</a>
+<a href='../7o/7oklr6ym0sstthm4i377edpkog58zjv.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>7o30w</h2>
+<a href='https://support.oneskyapp.com/hc/en-us/articles/208047697-JSON-sample-files'>https://support.oneskyapp.com/hc/en-us/articles/208047697-JSON-sample-files</a>
+<hr>
+<img src='7o30w06j12y25siqnw697kblod29rg1.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startjson
+{ &quot;data&quot;:
+[
+  {
+    &quot;_id&quot;: &quot;5fbfe54275b46ee547661b06&quot;,
+    &quot;index&quot;: 0,
+    &quot;guid&quot;: &quot;c3ae6566-a1e5-48fe-b8ad-7d7dc5fdfe06&quot;,
+    &quot;isActive&quot;: true,
+    &quot;balance&quot;: &quot;$2,530.22&quot;,
+    &quot;picture&quot;: &quot;http://placehold.it/32x32&quot;,
+    &quot;age&quot;: 28,
+    &quot;eyeColor&quot;: &quot;blue&quot;,
+    &quot;name&quot;: &quot;Nichole Williams&quot;,
+    &quot;gender&quot;: &quot;female&quot;,
+    &quot;company&quot;: &quot;LUXURIA&quot;,
+    &quot;email&quot;: &quot;nicholewilliams@luxuria.com&quot;,
+    &quot;phone&quot;: &quot;+1 (932) 429-3748&quot;,
+    &quot;address&quot;: &quot;911 Withers Street, Tyhee, Maryland, 4805&quot;,
+    &quot;about&quot;: &quot;In dolor cupidatat occaecat occaecat consectetur occaecat aute amet incididunt quis. Cupidatat aliquip dolore deserunt deserunt. Amet fugiat ad cillum quis aliqua incididunt.\r\n&quot;,
+    &quot;registered&quot;: &quot;2016-02-02T01:01:33 -01:00&quot;,
+    &quot;latitude&quot;: 87.31196,
+    &quot;longitude&quot;: -87.126263,
+    &quot;tags&quot;: [
+      &quot;sit&quot;,
+      &quot;duis&quot;,
+      &quot;amet&quot;,
+      &quot;qui&quot;,
+      &quot;Lorem&quot;,
+      &quot;Lorem&quot;,
+      &quot;excepteur&quot;
+    ],
+    &quot;friends&quot;: [
+      {
+        &quot;id&quot;: 0,
+        &quot;name&quot;: &quot;Edwards Robinson&quot;
+      },
+      {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Horton Patterson&quot;
+      },
+      {
+        &quot;id&quot;: 2,
+        &quot;name&quot;: &quot;Haynes Kemp&quot;
+      }
+    ],
+    &quot;greeting&quot;: &quot;Hello, Nichole Williams! You have 9 unread messages.&quot;,
+    &quot;favoriteFruit&quot;: &quot;apple&quot;
+  },
+  {
+    &quot;_id&quot;: &quot;5fbfe54212e46836fa9c4c95&quot;,
+    &quot;index&quot;: 1,
+    &quot;guid&quot;: &quot;8a665ac2-3807-4536-87a2-383f227251db&quot;,
+    &quot;isActive&quot;: false,
+    &quot;balance&quot;: &quot;$3,184.95&quot;,
+    &quot;picture&quot;: &quot;http://placehold.it/32x32&quot;,
+    &quot;age&quot;: 21,
+    &quot;eyeColor&quot;: &quot;brown&quot;,
+    &quot;name&quot;: &quot;Helen Miller&quot;,
+    &quot;gender&quot;: &quot;female&quot;,
+    &quot;company&quot;: &quot;PLASTO&quot;,
+    &quot;email&quot;: &quot;helenmiller@plasto.com&quot;,
+    &quot;phone&quot;: &quot;+1 (951) 504-2723&quot;,
+    &quot;address&quot;: &quot;262 Ebony Court, Nelson, Ohio, 2779&quot;,
+    &quot;about&quot;: &quot;Proident esse excepteur mollit ipsum commodo sint do enim dolor consequat in ipsum amet ut. Incididunt nostrud eiusmod id irure nisi magna dolor fugiat nostrud cillum minim. Do sint excepteur aliquip anim excepteur ad nostrud in nulla veniam eiusmod. Sunt veniam eu officia consequat enim in exercitation exercitation eiusmod officia Lorem ut.\r\n&quot;,
+    &quot;registered&quot;: &quot;2015-03-23T12:44:06 -01:00&quot;,
+    &quot;latitude&quot;: -25.395466,
+    &quot;longitude&quot;: -110.030426,
+    &quot;tags&quot;: [
+      &quot;tempor&quot;,
+      &quot;officia&quot;,
+      &quot;voluptate&quot;,
+      &quot;pariatur&quot;,
+      &quot;quis&quot;,
+      &quot;do&quot;,
+      &quot;elit&quot;
+    ],
+    &quot;friends&quot;: [
+      {
+        &quot;id&quot;: 0,
+        &quot;name&quot;: &quot;Stevenson Mathis&quot;
+      },
+      {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Stephenson Kinney&quot;
+      },
+      {
+        &quot;id&quot;: 2,
+        &quot;name&quot;: &quot;Mann Gross&quot;
+      }
+    ],
+    &quot;greeting&quot;: &quot;Hello, Helen Miller! You have 4 unread messages.&quot;,
+    &quot;favoriteFruit&quot;: &quot;strawberry&quot;
+  },
+  {
+    &quot;_id&quot;: &quot;5fbfe54251713cb08a0f6504&quot;,
+    &quot;index&quot;: 2,
+    &quot;guid&quot;: &quot;73436df3-68d0-4238-a97f-3f082e367b81&quot;,
+    &quot;isActive&quot;: true,
+    &quot;balance&quot;: &quot;$1,440.19&quot;,
+    &quot;picture&quot;: &quot;http://placehold.it/32x32&quot;,
+    &quot;age&quot;: 22,
+    &quot;eyeColor&quot;: &quot;green&quot;,
+    &quot;name&quot;: &quot;Cole Cote&quot;,
+    &quot;gender&quot;: &quot;male&quot;,
+    &quot;company&quot;: &quot;COMTENT&quot;,
+    &quot;email&quot;: &quot;colecote@comtent.com&quot;,
+    &quot;phone&quot;: &quot;+1 (858) 523-3311&quot;,
+    &quot;address&quot;: &quot;836 Nixon Court, Moquino, West Virginia, 8877&quot;,
+    &quot;about&quot;: &quot;Pariatur eu anim nostrud magna eiusmod commodo quis sint eiusmod irure amet. Esse proident amet velit occaecat ex nulla qui eu cillum mollit elit dolor consectetur. Veniam incididunt sit occaecat do exercitation. Irure cillum eu ut officia aliquip.\r\n&quot;,
+    &quot;registered&quot;: &quot;2016-04-17T03:56:16 -02:00&quot;,
+    &quot;latitude&quot;: -81.750021,
+    &quot;longitude&quot;: 125.437469,
+    &quot;tags&quot;: [
+      &quot;pariatur&quot;,
+      &quot;reprehenderit&quot;,
+      &quot;ea&quot;,
+      &quot;cillum&quot;,
+      &quot;ea&quot;,
+      &quot;id&quot;,
+      &quot;esse&quot;
+    ],
+    &quot;friends&quot;: [
+      {
+        &quot;id&quot;: 0,
+        &quot;name&quot;: &quot;Nelda Mcbride&quot;
+      },
+      {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Jessica Garrison&quot;
+      },
+      {
+        &quot;id&quot;: 2,
+        &quot;name&quot;: &quot;Lindsay Landry&quot;
+      }
+    ],
+    &quot;greeting&quot;: &quot;Hello, Cole Cote! You have 6 unread messages.&quot;,
+    &quot;favoriteFruit&quot;: &quot;apple&quot;
+  },
+  {
+    &quot;_id&quot;: &quot;5fbfe5421dc324c8ac071f47&quot;,
+    &quot;index&quot;: 3,
+    &quot;guid&quot;: &quot;a067dd26-da02-475c-9981-76fb89c05c4c&quot;,
+    &quot;isActive&quot;: false,
+    &quot;balance&quot;: &quot;$1,799.31&quot;,
+    &quot;picture&quot;: &quot;http://placehold.it/32x32&quot;,
+    &quot;age&quot;: 37,
+    &quot;eyeColor&quot;: &quot;brown&quot;,
+    &quot;name&quot;: &quot;Vonda Snow&quot;,
+    &quot;gender&quot;: &quot;female&quot;,
+    &quot;company&quot;: &quot;TRANSLINK&quot;,
+    &quot;email&quot;: &quot;vondasnow@translink.com&quot;,
+    &quot;phone&quot;: &quot;+1 (889) 458-2067&quot;,
+    &quot;address&quot;: &quot;407 Seaview Court, Derwood, Colorado, 3986&quot;,
+    &quot;about&quot;: &quot;Ut ullamco laboris qui reprehenderit est laboris ipsum labore nisi. Incididunt pariatur sint reprehenderit commodo consectetur et consequat. Est reprehenderit ea laboris anim cillum est non anim.\r\n&quot;,
+    &quot;registered&quot;: &quot;2020-04-29T08:30:10 -02:00&quot;,
+    &quot;latitude&quot;: -27.788402,
+    &quot;longitude&quot;: 99.421826,
+    &quot;tags&quot;: [
+      &quot;ex&quot;,
+      &quot;eu&quot;,
+      &quot;commodo&quot;,
+      &quot;veniam&quot;,
+      &quot;ipsum&quot;,
+      &quot;consequat&quot;,
+      &quot;sunt&quot;
+    ],
+    &quot;friends&quot;: [
+      {
+        &quot;id&quot;: 0,
+        &quot;name&quot;: &quot;Fuller Odom&quot;
+      },
+      {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Samantha Riddle&quot;
+      },
+      {
+        &quot;id&quot;: 2,
+        &quot;name&quot;: &quot;Lula Hebert&quot;
+      }
+    ],
+    &quot;greeting&quot;: &quot;Hello, Vonda Snow! You have 5 unread messages.&quot;,
+    &quot;favoriteFruit&quot;: &quot;banana&quot;
+  },
+  {
+    &quot;_id&quot;: &quot;5fbfe5421c4d9e036f059e8c&quot;,
+    &quot;index&quot;: 4,
+    &quot;guid&quot;: &quot;b425dd65-c6f8-405d-93a4-09e8ce983304&quot;,
+    &quot;isActive&quot;: false,
+    &quot;balance&quot;: &quot;$1,032.25&quot;,
+    &quot;picture&quot;: &quot;http://placehold.it/32x32&quot;,
+    &quot;age&quot;: 24,
+    &quot;eyeColor&quot;: &quot;green&quot;,
+    &quot;name&quot;: &quot;Wise Gallegos&quot;,
+    &quot;gender&quot;: &quot;male&quot;,
+    &quot;company&quot;: &quot;PEARLESSA&quot;,
+    &quot;email&quot;: &quot;wisegallegos@pearlessa.com&quot;,
+    &quot;phone&quot;: &quot;+1 (898) 492-3300&quot;,
+    &quot;address&quot;: &quot;403 Durland Place, Topaz, Vermont, 7575&quot;,
+    &quot;about&quot;: &quot;Ex officia tempor nostrud elit esse exercitation deserunt aute veniam deserunt id dolore. Voluptate cupidatat irure tempor nulla consequat esse ut aliquip nisi mollit magna. Id et in ut commodo enim duis labore aliquip cillum.\r\n&quot;,
+    &quot;registered&quot;: &quot;2014-04-10T03:56:50 -02:00&quot;,
+    &quot;latitude&quot;: -60.865734,
+    &quot;longitude&quot;: 154.771005,
+    &quot;tags&quot;: [
+      &quot;consequat&quot;,
+      &quot;aliqua&quot;,
+      &quot;sit&quot;,
+      &quot;Lorem&quot;,
+      &quot;cillum&quot;,
+      &quot;ipsum&quot;,
+      &quot;dolore&quot;
+    ],
+    &quot;friends&quot;: [
+      {
+        &quot;id&quot;: 0,
+        &quot;name&quot;: &quot;Collins Boyer&quot;
+      },
+      {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;Pratt Mccall&quot;
+      },
+      {
+        &quot;id&quot;: 2,
+        &quot;name&quot;: &quot;Clark Colon&quot;
+      }
+    ],
+    &quot;greeting&quot;: &quot;Hello, Wise Gallegos! You have 1 unread messages.&quot;,
+    &quot;favoriteFruit&quot;: &quot;banana&quot;
+  }
+]
+}
+
+@endjson
+</code></pre>
+</div>
+</body>
+</html>

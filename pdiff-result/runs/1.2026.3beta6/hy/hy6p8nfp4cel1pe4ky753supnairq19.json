@@ -1,0 +1,11 @@
+{
+  "duration": 5,
+  "description": "(Files)",
+  "implementation": "FilesDiagram",
+  "png": {
+    "width": 184,
+    "height": 237,
+    "crc": 244753958,
+    "sizeInBytes": 5118
+  }
+}

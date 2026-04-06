@@ -1,0 +1,11 @@
+{
+  "duration": 5,
+  "description": "(Nwdiag)",
+  "implementation": "NwDiagram",
+  "png": {
+    "width": 336,
+    "height": 142,
+    "crc": 2386174590,
+    "sizeInBytes": 2364
+  }
+}

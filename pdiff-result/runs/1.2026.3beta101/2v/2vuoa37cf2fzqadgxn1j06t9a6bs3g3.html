@@ -1,0 +1,144 @@
+<html><head><title>2vuoa - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../2v/2vt865c0ewsy9utqmx5tg7l589t84wd.html'>Previous</a>
+<a href='../2v/2vwirefget0lmjd3qcoy16kgdzhht8v.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>2vuoa</h2>
+<hr>
+<img src='2vuoa37cf2fzqadgxn1j06t9a6bs3g3.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+hide stereotype
+skinparam backgroundColor transparent
+skinparam shadowing false
+skinparam arrowColor black
+skinparam rectangleBackgroundColor #FFFFFF00
+skinparam rectangleBorderColor #FFFFFF00
+skinparam rectangleRoundCorner 5
+skinparam rectangleBorderThickness 1.5
+skinparam rectangleFontSize 10
+skinparam arrowFontSize 10
+skinparam noteFontSize 10
+skinparam defaultTextAlignment center
+skinparam noteTextAlignment left
+skinparam svgDimensionStyle false
+skinparam rectangleRoundCorner&lt;&lt;circle&gt;&gt; 75
+skinparam rectangleBorderThickness&lt;&lt;circle&gt;&gt; 0.5
+skinparam rectangleRoundCorner&lt;&lt;rounded&gt;&gt; 50
+skinparam rectangleDiagonalCorner&lt;&lt;octagon&gt;&gt; 13
+together {
+rectangle &quot;&lt;b&gt;&lt;size:13&gt;AE 2\nJurisdiction B\n\n&lt;color:green&gt;&lt;img:images/text-icons/cash_12.svg&gt; $200&quot;as 1670869349606#FFECC3;line:black
+rectangle &quot;&lt;b&gt;&lt;size:13&gt;Ind\nJurisdiction B\n&quot;as 1670869796774#FFECC3;line:black
+}
+together {
+rectangle &quot;&lt;b&gt;&lt;size:13&gt;AE 1\nJurisdiction A\n\n&lt;color:green&gt;&lt;img:images/text-icons/cash_12.svg&gt; $110&quot;as 1670869341141#E0FFFF;line:black
+rectangle &quot;&lt;b&gt;&lt;size:13&gt;AL\nJurisdiction A\n&quot;as 1670869555171#E0FFFF;line:black
+}
+rectangle &quot;&lt;b&gt;&lt;size:13&gt;New Company\n\n&quot;as 1670973383559#FFFFFF;line:black
+1670869341141-[#green,dashed]-&gt;1670869349606 : &lt;color:green&gt;Purchase Price\n&lt;color:green&gt;Payment of $100
+1670869555171-[#green,dashed]-&gt;1670869341141 : &lt;color:green&gt;Purchase Price\n&lt;color:green&gt;Payment of $110
+1670869796774-[#green,dashed,norank]-&gt;1670869349606 : &lt;color:green&gt;Purchase Price\n&lt;color:green&gt;Payment of $100
+1670869349606-[#blue,dashed,norank]-&gt;1670869341141 : &lt;color:blue&gt;Sale of Widget 1
+1670869341141-[#blue,dashed,norank]-&gt;1670869555171 : &lt;color:blue&gt;Sale of Widget 1
+1670869349606-[#blue,dashed,norank]-&gt;1670869796774 : &lt;color:blue&gt;Sale of Widget 2
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

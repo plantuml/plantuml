@@ -1,0 +1,11 @@
+{
+  "duration": 13,
+  "description": "MindMap",
+  "implementation": "MindMapDiagram",
+  "png": {
+    "width": 267,
+    "height": 268,
+    "crc": 2686079989,
+    "sizeInBytes": 6953
+  }
+}

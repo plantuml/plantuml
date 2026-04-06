@@ -1,0 +1,11 @@
+{
+  "duration": 16,
+  "description": "Chart Diagram",
+  "implementation": "ChartDiagram",
+  "png": {
+    "width": 587,
+    "height": 430,
+    "crc": 1503366656,
+    "sizeInBytes": 7404
+  }
+}

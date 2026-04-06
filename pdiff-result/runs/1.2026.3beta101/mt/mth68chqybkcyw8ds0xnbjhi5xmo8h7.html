@@ -1,0 +1,495 @@
+<html><head><title>mth68 - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../mt/mt4ll492drk1hh4riy7z59ony5m6dz2.html'>Previous</a>
+<a href='../mt/mtk6d27v14w8rbzxz2p77wba1fg8co3.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>mth68</h2>
+<hr>
+<img src='mth68chqybkcyw8ds0xnbjhi5xmo8h7.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+!pragma layout smetana
+
+title EME Component Model
+skinparam componentStyle uml2
+skinparam linetype polyline
+top to bottom direction
+
+' Set the screen size for this large diagram
+skinparam dpi 60
+
+skinparam component {
+  BackgroundColor&lt;&lt;V3&gt;&gt; #8ff
+  BackgroundColor&lt;&lt;external&gt;&gt; #ff0
+  BackgroundColor #fff
+  Shadowing&lt;&lt;package&gt;&gt; true
+}
+skinparam &lt;&lt;Public&gt;&gt; {
+  ArrowColor #0a0
+  ArrowFontColor #0a0
+  ComponentBorderColor #0a0
+  ComponentFontColor #0a0
+  InterfaceBackgroundColor #0a0
+  InterfaceBorderColor #0a0
+  InterfaceFontColor #0a0
+}
+skinparam &lt;&lt;Protected&gt;&gt; {
+  ArrowColor #a00
+  ArrowFontColor #a00
+  ComponentBorderColor #a00
+  ComponentFontColor #a00
+  InterfaceBackgroundColor #a00
+  InterfaceBorderColor #a00
+  InterfaceFontColor #a00
+}
+
+hide stereotype
+
+'/ Legend
+legend top
+    |Color| Type |
+    |&lt;#8ff&gt;| v3 EME Component|
+    |&lt;#fc0&gt;| v2 EME Component|
+    |&lt;#8f8&gt;| EPC Component|
+    |&lt;#ff0&gt;| External Component|
+endlegend
+
+'/ Toggle this to hide/show details:
+'hide &lt;&lt;api&gt;&gt;
+'hide &lt;&lt;fn&gt;&gt;
+'hide &lt;&lt;db&gt;&gt;
+'hide &lt;&lt;S3&gt;&gt;
+'hide &lt;&lt;SQS&gt;&gt;
+'hide &lt;&lt;SNS&gt;&gt;
+
+'/ Top Level components
+
+component ExistingConsumerWebsite &lt;&lt;external&gt;&gt;
+component V3ConsumerWebsite &lt;&lt;V3&gt;&gt; &lt;&lt;external&gt;&gt;
+component PortalWebsite &lt;&lt;external&gt;&gt;
+component &quot;EME Event Bus&quot; as BUS &lt;&lt;fn&gt;&gt; &lt;&lt;V3&gt;&gt;
+
+component &quot;Protected API Gateway\n(Portal/Authenticated Users)&quot; &lt;&lt;AWS&gt;&gt;&lt;&lt;Protected&gt;&gt; as APIG
+() HTTPS as APIGHTTP &lt;&lt;Protected&gt;&gt;
+APIG -u- APIGHTTP &lt;&lt;Protected&gt;&gt;
+
+component &quot;Public API Gateway&quot; &lt;&lt;AWS&gt;&gt;&lt;&lt;Public&gt;&gt; as PAPIG
+() HTTPS as PAPIGHTTP &lt;&lt;Public&gt;&gt;
+PAPIG -u- PAPIGHTTP &lt;&lt;Public&gt;&gt;
+
+component &quot;Audit Service&quot; &lt;&lt;package&gt;&gt; {
+  port Lambda as ASH
+  component &quot;AuditService&quot; as AS &lt;&lt;fn&gt;&gt;
+  database AuditLog as ADB &lt;&lt;db&gt;&gt;
+
+  AS - ASH
+  AS .&gt; ADB : use
+}
+
+component &quot;Bill Parser Service - Not Used&quot; &lt;&lt;package&gt;&gt; #f00 {
+  port HTTPS as BSH
+  component BillParser as BP &lt;&lt;fn&gt;&gt;
+
+  BP - BSH
+}
+
+component &quot;CMS Service&quot; &lt;&lt;package&gt;&gt; &lt;&lt;V3&gt;&gt; {
+  port HTTPS as CMSH
+  component &quot;CMSService&quot; as CCS &lt;&lt;fn&gt;&gt;
+  component &quot;TranslationService&quot; as TLS &lt;&lt;fn&gt;&gt;
+  component &quot;Microsoft\nTranslation\nService&quot; &lt;&lt;external&gt;&gt;&lt;&lt;api&gt;&gt; as MSTS
+  component &quot;Prismic CMS&quot; &lt;&lt;external&gt;&gt;&lt;&lt;api&gt;&gt; as CMS
+  database &quot;Translation\nCache&quot; as TLDB &lt;&lt;db&gt;&gt;
+
+  CCS - CMSH
+  TLS - CMSH
+  CCS ..&gt; TLDB : reads
+  TLS ..&gt; TLDB : writes
+  TLS ..&gt; MSTS : uses
+  CCS ..&gt; CMS : uses
+}
+
+component &quot;Consumer Plan Service - Work In Progress&quot; &lt;&lt;package&gt;&gt; &lt;&lt;V3&gt;&gt; {
+  port HTTPS as CPSH
+  component ConsumerPlanService as CPS &lt;&lt;fn&gt;&gt;
+  component PostcodePlanService as PPS &lt;&lt;fn&gt;&gt;
+  database &quot;Postcode\nPlans&quot; as PPDB &lt;&lt;db&gt;&gt;
+
+  CPS - CPSH
+  CPS -down-&gt; PPDB : reads
+  PPS -up-&gt; PPDB : writes
+}
+
+component &quot;Contact Form Service - Work in Progress&quot; &lt;&lt;package&gt;&gt; {
+  port HTTP as CFH
+  component &quot;ContactFormService&quot; as CFS &lt;&lt;fn&gt;&gt;
+  CFH - CFS
+}
+
+component &quot;EPC&quot; &lt;&lt;package&gt;&gt;&lt;&lt;external&gt;&gt; #88ff88 {
+  port &quot;Login API&quot; as EPC_COGAPI
+  component Cognito &lt;&lt;AWS&gt;&gt; as EPC_COG
+  EPC_COG -u- EPC_COGAPI
+
+  port &quot;PM API\n(Protected)&quot; as EPC_PMH
+  component &quot;Plan Management Service&quot; as EPC_PM
+
+  EPC_PM -u- EPC_PMH
+}
+
+component &quot;EPC-EME Integration Service&quot; &lt;&lt;package&gt;&gt; #ffcc00 {
+  port HTTPS as EEI_BULKH
+  component BulkPublishService as EEI_BULK &lt;&lt;fn&gt;&gt;
+  component PlanStreamPublisher as EEI_PS &lt;&lt;fn&gt;&gt;
+
+  EEI_BULK - EEI_BULKH
+  EEI_BULK -[hidden]-- EEI_PS
+}
+
+component &quot;Location Service&quot; &lt;&lt;package&gt;&gt; &lt;&lt;V3&gt;&gt; {
+  port HTTPS as LH
+  component &quot;LocationService&quot; as LS &lt;&lt;fn&gt;&gt;
+  component &quot;AusPost API&quot; as APA &lt;&lt;external&gt;&gt;
+
+  LS -up- LH
+  LS -down-&gt; APA
+}
+
+component &quot;Meter Data Service&quot; &lt;&lt;package&gt;&gt; &lt;&lt;V3&gt;&gt; {
+  port HTTPS as MDH
+  component &quot;MeterDataService&quot; as MDS &lt;&lt;fn&gt;&gt;
+  component &quot;AEMO API&quot; as AEMO &lt;&lt;external&gt;&gt;
+
+  MDS - MDH
+  MDS -down-&gt; AEMO
+}
+
+component &quot;Notification Service&quot; &lt;&lt;package&gt;&gt; {
+  port Lambda as NSL
+  component &quot;NotificationService&quot; as NS &lt;&lt;fn&gt;&gt;
+  component &quot;Simple Email Service\n(AWS)&quot; as SES &lt;&lt;AWS&gt;&gt;
+
+  NS - NSL
+  NS -down-&gt; SES
+}
+
+component &quot;Organisation Service&quot; &lt;&lt;package&gt;&gt; {
+  port HTTPS as OSH
+  component &quot;OrgService&quot; as OS &lt;&lt;fn&gt;&gt;
+  database Organisations as ODB &lt;&lt;db&gt;&gt;
+  () Stream as ODBS &lt;&lt;db&gt;&gt;
+
+  OS - OSH
+  OS .&gt; ODB
+  ODB - ODBS
+
+  ' The stream triggers the service
+  ODBS ---&gt; OS : triggers
+}
+
+component &quot;PDF Service&quot; {
+  port Lambda as PDFL
+  component &quot;PDF Generation Service&quot; as PDFS
+  PDFL - PDFS
+}
+
+component &quot;Plan Service (Retailer) - Work In Progress&quot; &lt;&lt;package&gt;&gt; {
+  port HTTPS as PSH
+  component PlanService as PS &lt;&lt;fn&gt;&gt;
+  database Plans as PDB &lt;&lt;db&gt;&gt;
+  () Stream as PSS &lt;&lt;db&gt;&gt;
+  PDB -d- PSS
+
+  Port &quot;PDF Generation\nSNS Topic&quot; &lt;&lt;SNS&gt;&gt; as PGT
+  component PDFExporter &lt;&lt;fn&gt;&gt; as PDFEXP
+  PDFEXP - PGT
+
+  PS - PSH
+  PS ..&gt; PDB : use
+  PS ..&gt; PGT : publish
+  PDFEXP ..&gt; PDB : update
+
+  note top of PSS
+    TODO: The Plan (Retailer) Service avoids directly
+    writing to the Plan-Postcode table by having the
+    PostcodePlanService listen to the Plan DB Stream.
+  end note
+}
+
+component &quot;Portal Storage Service&quot; &lt;&lt;package&gt;&gt; {
+  Port HTTPS as POSH
+  component PortalStorage &lt;&lt;fn&gt;&gt; as POSS
+  database &quot;S3 Storage&quot; &lt;&lt;S3&gt;&gt; as PSS3
+  POSS - POSH
+  POSS -&gt; PSS3
+}
+
+component &quot;Pricing Engine (AKA Comparator)&quot; &lt;&lt;package&gt;&gt; {
+  port Lambda as PEL
+  component &quot;Plan Pricing Service&quot; as PCS &lt;&lt;fn&gt;&gt;
+  component &quot;Get Calculation&quot; as D61 &lt;&lt;fn&gt;&gt;
+  port Lambda as D61Int &lt;&lt;fn&gt;&gt;
+
+  PCS - PEL
+  PCS -&gt; D61Int
+  PCS -&gt; D61Int
+  PCS -&gt; D61Int : invoke\nmultiple\ninstances
+  D61Int -down- D61
+}
+
+component &quot;Reference Data Service&quot; &lt;&lt;package&gt;&gt; {
+  port HTTPS as RDSH
+  component &quot;RefDataService&quot; as RDS &lt;&lt;fn&gt;&gt;
+
+  database AemoDistributors &lt;&lt;db&gt;&gt;
+  database AemoRetailers &lt;&lt;db&gt;&gt;
+  database Benchmarks &lt;&lt;db&gt;&gt;
+  database ClimateZones &lt;&lt;db&gt;&gt;
+  database Distributors &lt;&lt;db&gt;&gt;
+  database FuelType &lt;&lt;db&gt;&gt;
+  database Notifications &lt;&lt;db&gt;&gt;
+  database Organisations &lt;&lt;db&gt;&gt; #fff
+  database PMEC &lt;&lt;db&gt;&gt; #ffaa00
+  database ParentOrganisations &lt;&lt;db&gt;&gt;
+  database PaymentOptionType &lt;&lt;db&gt;&gt; #f00
+  database PostcodeExceptions &lt;&lt;db&gt;&gt;
+  database RoleAction &lt;&lt;db&gt;&gt; #f00
+  database States &lt;&lt;db&gt;&gt;
+  database SupplyAreas &lt;&lt;db&gt;&gt;
+  database ThirdParties &lt;&lt;db&gt;&gt;
+
+  RDS - RDSH
+  RDS ..&gt; AemoDistributors
+  RDS ..&gt; AemoRetailers
+  RDS ..&gt; Benchmarks
+  RDS .up.&gt; ClimateZones
+  RDS .up.&gt; Distributors
+  RDS .up.&gt; FuelType
+  RDS ..&gt; Notifications
+  RDS ..&gt; Organisations
+  RDS .up.&gt; ParentOrganisations
+  RDS ..&gt; PaymentOptionType
+  RDS ..&gt; PMEC
+  RDS .up.&gt; PostcodeExceptions
+  RDS ..&gt; States
+  RDS ..&gt; SupplyAreas
+  RDS ..&gt; ThirdParties
+
+  note top of RoleAction
+    In v1, the intent was to allow Admins to edit the
+    permissions that roles had. This was never implemented
+    and is core-logic that should not be user-editable.
+    The actual role-permission matrix remains in the code.
+  end note
+
+  note top of Organisations
+    This is a copy of the organisation table in
+    the Organisation Service. There is a
+    DynamoDB stream on the source table,
+    connected to a Lambda which creates a
+    record in RefData whenever the source
+    data is changed. This allows access to
+    this commonly-used data via this service.
+  end note
+}
+
+component &quot;SiteOps Service\n(formerly Deployment Service)&quot; &lt;&lt;package&gt;&gt; &lt;&lt;V3&gt;&gt; {
+  port Lambda as SIH
+  component &quot;SiteOps&quot; as SI &lt;&lt;fn&gt;&gt;
+
+  SI -up- SIH
+}
+
+component &quot;User Service&quot; &lt;&lt;package&gt;&gt; {
+  port HTTPS as USH
+  port Lambda as CAL
+
+  component &quot;Auth Service&quot; {
+    component Cognito &lt;&lt;AWS&gt;&gt;&lt;&lt;fn&gt;&gt; as COG
+    component &quot;CognitoAuthoriser&quot; as CUSTA &lt;&lt;fn&gt;&gt; #ffffff
+    port &quot;AWS Amplify&quot; as COGHTTP
+    port API as COGAPI
+    COG - COGHTTP
+    COG - COGAPI
+  }
+
+  component &quot;UserService&quot; as US &lt;&lt;fn&gt;&gt;
+
+  database &quot;Cognito UserPool&quot; as COGDB &lt;&lt;db&gt;&gt;
+
+  CUSTA - CAL
+  US - USH
+  CUSTA ..&gt; COGDB
+  US ..&gt; COGDB
+}
+
+ExistingConsumerWebsite ..&gt; PAPIGHTTP &lt;&lt;Public&gt;&gt; : use
+V3ConsumerWebsite ..&gt; PAPIGHTTP &lt;&lt;Public&gt;&gt; : use
+PortalWebsite .&gt; APIGHTTP &lt;&lt;Protected&gt;&gt; : use
+PortalWebsite ..&gt; COGHTTP &lt;&lt;Protected&gt;&gt; : use
+
+
+'/ All other connections
+
+PAPIG .&gt; BSH &lt;&lt;Public&gt;&gt;
+PAPIG .&gt; CFH &lt;&lt;Public&gt;&gt;
+PAPIG ..&gt; CMSH &lt;&lt;Public&gt;&gt;
+PAPIG .&gt; CPSH &lt;&lt;Public&gt;&gt;
+PAPIG ..&gt; LH &lt;&lt;Public&gt;&gt;
+PAPIG .&gt; MDH &lt;&lt;Public&gt;&gt;
+PAPIG ........&gt; RDSH &lt;&lt;Public&gt;&gt;
+
+APIG ..&gt; OSH &lt;&lt;Protected&gt;&gt;
+APIG .&gt; PSH &lt;&lt;Protected&gt;&gt;
+APIG ........&gt; RDSH &lt;&lt;Protected&gt;&gt;
+APIG -&gt; CAL &lt;&lt;Protected&gt;&gt; : use
+APIG .&gt; USH &lt;&lt;Protected&gt;&gt;
+APIG .&gt; EEI_BULKH &lt;&lt;Protected&gt;&gt;
+APIG ..&gt; MDH &lt;&lt;Protected&gt;&gt;
+'APIG ..&gt; ASHT #a00 ' This is not yet implemented - nothing is reading the audit data
+
+
+
+CPS ---d--&gt; PEL
+PS -&gt; PEL : benchmark calculation
+
+COGAPI &lt;. CUSTA
+
+PPS ---&gt; PSS : Subscribes
+PSS &lt;---- EEI_PS #000000: Plan DB Stream subscription
+EEI_BULK --&gt; RDS: use
+EEI_PS -u-&gt; RDS: use
+
+EEI_BULK -d-&gt; EPC_COGAPI &lt;&lt;Public&gt;&gt;: login
+EEI_PS -d-&gt; EPC_COGAPI &lt;&lt;Public&gt;&gt;: login
+
+EEI_BULK -d-&gt; EPC_PMH &lt;&lt;protected&gt;&gt;: published plans
+EEI_PS -d-&gt; EPC_PMH &lt;&lt;protected&gt;&gt;: published plan changes
+
+' Org Service updates the RefData Organisations table
+OS .&gt; Organisations
+
+' Event Bus events trigger SiteOps
+BUS ..&gt; SIH
+
+' Audit Service Events. Currently these point directly to the Audit Lambda,
+' but we want them to point to the Event Bus
+OS ...&gt; BUS #aaa
+PS ..&gt; BUS #aaa
+RDS ..&gt; BUS #aaa
+CUSTA ..&gt; BUS #aaa
+US ..&gt; BUS #aaa
+
+BUS ..&gt; ASH : Audit event
+
+' Plan / Portal Storage / PDF Gen
+PDFEXP .d...&gt; POSH : store PDFs
+PS .&gt; RDS : use
+PDFEXP -d---&gt; PDFL : use
+
+' Notification
+CFS ...&gt; NSL
+EEI_BULK ....&gt; NSL
+PDFEXP .....&gt; NSL
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

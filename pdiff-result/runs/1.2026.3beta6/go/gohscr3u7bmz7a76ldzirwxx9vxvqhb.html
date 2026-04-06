@@ -1,0 +1,165 @@
+<html><head><title>gohsc - 1.2026.3beta6</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta6'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta6.html'>Home</a>
+<a href='../go/gof9c45yet2q6frbycxuj7n8h96ir6w.html'>Previous</a>
+<a href='../go/goo3nmfqzqog4egz054btrn8eocxjxq.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>gohsc</h2>
+<hr>
+<img src='gohscr3u7bmz7a76ldzirwxx9vxvqhb.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+set separator none
+state &quot;NASREQ auth session&quot; as nasreq_auth {
+    nasreq_auth: exit / free_session()
+
+    nasreq_auth --&gt; [*]: Rcv-STR / remove_session(),\nsnd_sta()
+
+    [*] --&gt; AA: / set_request_types(both)
+    State AA &lt;&lt;O-O&gt;&gt;
+    state AA {
+            AA: entry / set_timeout()
+            state &quot;ok_ex&quot; as aa_ok_ex &lt;&lt;exitpoint&gt;&gt;
+    }
+    AA --&gt; Closing: SubCompletion
+    aa_ok_ex --&gt; Idle
+    state Idle {
+            Idle: entry / set_timeout(closest)
+    }
+    Idle --&gt; AA: Rcv-AAR {stay} /\nset_request_types(by_aar)
+    Idle --&gt; Reanimate: Timeout [may_continue()]
+    Idle -left-&gt; Closing: Timeout [default]
+    state Reanimate {
+            Reanimate: entry / set_timeout(grace_period)
+            Reanimate: entry / set_request_types(by_reanimate)
+
+            [*] --&gt; wait_raa: / snd_rar()
+            state wait_raa {
+                    wait_raa: entry / set_timeout(wait_raa_timeout)
+                    wait_raa: Rcv-Any / defer
+            }
+            wait_raa --&gt; reanimate_idle: Rcv-RAA, Timeout
+    }
+    Reanimate -left-&gt; AA: Rcv-AAR {stay}
+    Reanimate --&gt; Closing: Timeout
+    state Closing {
+            Closing: entry / reset_next_try_timeout()
+            Closing: Rcv-AAR / snd_error_aaa()
+
+            [*] --&gt; wait_asa
+            state wait_asa {
+                    wait_asa: entry / snd_asr()
+                    wait_asa: entry / set_timeout(wait_asa_timeout)
+                    wait_asa: Rcv-AAR / snd_error_aaa()
+                    wait_asa: Rcv-Any / defer
+            }
+            wait_asa --&gt; next_try: Rcv-ASA [UNABLE_TO_COMPLY], \nTimeout
+            wait_asa --&gt; [*]: Rcv-ASA [default]
+            state next_try {
+                    next_try: entry / set_timeout()
+            }
+            next_try --&gt; wait_asa: Timeout
+    }
+    Closing --&gt; [*]: Completion
+}
+
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

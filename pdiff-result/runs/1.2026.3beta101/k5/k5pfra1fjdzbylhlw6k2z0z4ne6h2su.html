@@ -1,0 +1,202 @@
+<html><head><title>k5pfr - 1.2026.3beta101</title>
+		    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+<style>
+       .input-field {
+           width: 400px;
+           padding: 1px;
+		font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown {
+           display: none;
+           position: absolute;
+           background-color: white;
+           border: 1px solid #ccc;
+		min-width: 400px;
+           margin-top: 0px;
+           padding: 0;
+           list-style: none;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .dropdown-item {
+           padding: 3px;
+           cursor: pointer;
+           font-family: "Courier New", Courier, monospace;
+       }
+       .dropdown-item:hover {
+           background-color: #eee;
+       }
+</style>
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+    .code-container {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0px 10px;
+    }
+</style>
+
+</head>
+<body onload='brython()'>
+<script type="text/python">
+from browser import document, html, window
+full = dict()
+desc = dict()
+
+runcode='1.2026.3beta101'
+def create_dropdown():
+    dropdown.clear()
+    if input_field.value:
+        dropdown.style.display = 'block'
+        count = 0
+        for name in full.keys():
+            if count<15 and name.startswith(input_field.value):
+                item = html.LI(name + " - " + desc[name], Class='dropdown-item')
+                item.bind('click', on_item_click)
+                dropdown <= item
+                count = count + 1
+    else:
+        dropdown.style.display = 'none'
+
+def on_item_click(event):
+	dropdown.style.display = 'none'
+	text_parts = event.target.text.split()
+	selected_text = text_parts[0] if text_parts else ''
+	long_text = full[selected_text]
+	destination_url = f"{runcode}/{long_text[0:2]}/{long_text}.html"
+	current_location = window.location.href
+	base_url = current_location[:current_location.rfind('/runs/')]
+	full_url = f"{base_url}/runs/{destination_url}"
+	print(full_url)
+	window.location.href = full_url
+
+
+def on_input(event):
+    create_dropdown()
+
+input_field = document['input-field']
+input_field.bind('input', on_input)
+
+dropdown = document['dropdown']
+result = document['result']
+    </script>
+<a href='../../../1.2026.3beta101.html'>Home</a>
+<a href='../k5/k5hntnzs8i0htt7nrrq7usvexts8pdj.html'>Previous</a>
+<a href='../k5/k5pg3tvbzo061ldvlx18hczdvixp8jr.html'>Next</a>
+<hr>
+   <input type="text" id="input-field" class="input-field" placeholder="Type an id here...">
+   <ul id="dropdown" class="dropdown"></ul>
+   <div id="result"></div>
+<hr>
+
+<h2>k5pfr</h2>
+<a href='https://github.com/plantuml/plantuml/issues/1896'>https://github.com/plantuml/plantuml/issues/1896</a>
+<hr>
+<img src='k5pfra1fjdzbylhlw6k2z0z4ne6h2su.png'>
+<hr>
+<div class='code-container'>
+<pre><code>@startuml
+&lt;style&gt;
+map {
+    BackGroundColor lightblue
+    LineColor blue
+    FontName Helvetica
+    FontColor blue
+    FontSize 12
+    FontStyle bold
+    RoundCorner 20
+    LineThickness 2
+    LineStyle 10-5
+    header {
+      BackGroundColor palegreen
+      LineColor red
+      FontName Helvetica
+      FontColor red
+      FontSize 18
+      FontStyle bold
+      RoundCorner 20
+      LineThickness 3
+      LineStyle 30-5
+    }
+}
+
+object {
+    BackGroundColor lightblue
+    LineColor blue
+    FontName Helvetica
+    FontColor blue
+    FontSize 12
+    FontStyle italic
+    RoundCorner 20
+    LineThickness 2
+    LineStyle 10-5
+    header {
+      BackGroundColor palegreen
+      LineColor red
+      FontName Helvetica
+      FontColor red
+      FontSize 18
+      FontStyle bold
+      RoundCorner 20
+      LineThickness 3
+      LineStyle 30-5
+    }
+}
+
+
+
+json {
+    BackGroundColor lightblue
+    LineColor blue
+    FontName Helvetica
+    FontColor blue
+    FontSize 12
+    FontStyle italic
+    RoundCorner 20
+    LineThickness 2
+    LineStyle 10-5
+    header {
+      BackGroundColor palegreen
+      LineColor red
+      FontName Helvetica
+      FontColor red
+      FontSize 18
+      FontStyle bold
+      RoundCorner 20
+      LineThickness 3
+      LineStyle 30-5
+    }
+}
+&lt;/style&gt;
+
+object Object_user {
+  name = &quot;Dummy&quot;
+  id = 123
+}
+
+object London
+
+map Map_CapitalCity {
+ UK *-&gt; London
+ USA =&gt; Washington
+ Germany =&gt; Berlin
+}
+
+json &quot;JSON_data&quot; as j {
+  &quot;name&quot; : &quot;Dummy&quot;,
+  &quot;id&quot; : 123
+}
+@enduml
+</code></pre>
+</div>
+</body>
+</html>

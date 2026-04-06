@@ -1,0 +1,11 @@
+{
+  "duration": 11,
+  "description": "Wire Diagram",
+  "implementation": "WireDiagram",
+  "png": {
+    "width": 180,
+    "height": 850,
+    "crc": 1294514004,
+    "sizeInBytes": 3216
+  }
+}
