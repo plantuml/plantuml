@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.DayOfWeekUtils;
-import net.sourceforge.plantuml.project.ulang.UbrexSentence;
+import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -72,9 +72,9 @@ public class SubjectDayOfWeek implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Collection<UbrexSentence<GanttDiagram>> getUSentences() {
-		final List<UbrexSentence<GanttDiagram>> result = new ArrayList<>();
-		result.add(new UbrexSentence<GanttDiagram>(this, Verbs.are, new ComplementClose()) {
+	public Collection<VerbPhraseAction> getVerbPhrases() {
+		final List<VerbPhraseAction> result = new ArrayList<>();
+		result.add(new VerbPhraseAction(Verbs.are, new ComplementClose()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 				final DayOfWeek day = (DayOfWeek) subject;

@@ -101,6 +101,14 @@ public class Words {
 		return new RegexConcat(tmp);
 	}
 
+	public static UBrexPart uexactly(String... words) {
+		final UBrexPart tmp[] = new UBrexPart[words.length];
+		for (int i = 0; i < words.length; i++)
+			tmp[i] = UBrexConcat.build(UBrexLeaf.spaceOneOrMore(), new UBrexLeaf(words[i]));
+
+		return UBrexConcat.build(tmp);
+	}
+
 	public static UBrexPart usingle(String word) {
 		return new UBrexLeaf(word);
 	}

@@ -52,8 +52,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.ulang.GanttParseResult;
-import net.sourceforge.plantuml.project.ulang.UbrexSentence;
+import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -68,9 +67,9 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Collection<UbrexSentence<GanttDiagram>> getUSentences() {
-		final List<UbrexSentence<GanttDiagram>> result = new ArrayList<>();
-		result.add(new UbrexSentence<GanttDiagram>(this, Verbs.isOrAre, new ComplementOpen()) {
+	public Collection<VerbPhraseAction> getVerbPhrases() {
+		final List<VerbPhraseAction> result = new ArrayList<>();
+		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementOpen()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 				project.openDayAsDate((LocalDate) subject, (String) complement);
@@ -78,7 +77,7 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 			}
 		});
 
-		result.add(new UbrexSentence<GanttDiagram>(this, Verbs.isOrAre, new ComplementClose()) {
+		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementClose()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 				project.closeDayAsDate((LocalDate) subject, (String) complement);
@@ -86,7 +85,7 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 			}
 		});
 
-		result.add(new UbrexSentence<GanttDiagram>(this, Verbs.isOrAre, new ComplementInColors2()) {
+		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 				final HColor color = ((CenterBorderColor) complement).getCenter();

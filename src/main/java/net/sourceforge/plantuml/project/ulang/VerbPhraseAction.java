@@ -41,63 +41,71 @@ import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.lang.Something;
-import net.sourceforge.plantuml.project.lang.Subject;
 import net.sourceforge.plantuml.project.lang.Verbs;
 
-public abstract class UbrexSentence<D extends Diagram> {
+public abstract class VerbPhraseAction {
 
 	private static final UBrexPart SPACES = new UBrexLeaf("〇+〴s");
 
-	private final Subject<D> subject;
 	private final Verbs verb;
 	private final UBrexPart ignored;
-	private final Something<D> complement;
+	private final Something<GanttDiagram> complement;
 
-	public UbrexSentence(Subject<D> subject, Verbs verb, Something<D> complement) {
-		this(subject, verb, null, complement);
+	public VerbPhraseAction(Verbs verb, Something<GanttDiagram> complement) {
+		this(verb, null, complement);
 	}
 
 	@Override
 	public String toString() {
-		return subject.getClass().getSimpleName() + " " + verb + " " + complement.getClass().getSimpleName();
+		return verb + " " + complement.getClass().getSimpleName();
 	}
 
-	public UbrexSentence(Subject<D> subject, Verbs verb, UBrexPart ignored, Something<D> complement) {
-		this.subject = subject;
+	public VerbPhraseAction(Verbs verb, UBrexPart ignored, Something<GanttDiagram> complement) {
 		this.verb = verb;
 		this.ignored = ignored;
 		this.complement = complement;
 	}
 
-	public abstract CommandExecutionResult execute(D project, Object subject, Object complement);
+	public abstract CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement);
 
-	public Failable<? extends Object> getComplement(D project, GanttParseResult result) {
+	public Failable<? extends Object> getComplement(GanttDiagram project, VerbPhraseMatcher result) {
 		return complement.ugetMe(project, result.getComplementMatcher());
 	}
 
-	public Failable<? extends Object> getSubject(D project, GanttParseResult result) {
-		return subject.ugetMe(project, result.getMatcherSubject());
+//	public Failable<? extends Object> getSubject(D project, ParsedSentence result) {
+//		return subject.ugetMe(project, result.getMatcherSubject());
+//	}
+
+	public VerbPhraseMatcher parse(TextNavigator tn) {
+
+		System.out.println("DEBUT " + tn);
+		return parseVerbPhrase(tn);
+
+//		while (true) {
+//			final UMatcher andMatcher = AND.match(tn);
+//			final String andMatch = andMatcher.getAcceptedMatch();
+//			if (andMatch.length() == 0)
+//				break;
+//
+//			tn.jump(andMatch.length());
+//			verbPhrases.add(parseVerbPhrase(tn));
+//		}
+//
+//		for (VerbPhraseMatcher vp : verbPhrases)
+//			System.out.println("vp=" + vp);
+
 	}
 
-	public GanttParseResult parse(String line) {
-		final TextNavigator tn = TextNavigator.build(line);
-		System.out.println("UbrexSentence::parse " + tn);
-
-		final UMatcher matcherSubject = subject.toUnicodeBracketedExpressionSubject().match(tn);
-		final String v1 = matcherSubject.getAcceptedMatch();
-		if (v1.length() == 0)
-			throw new IllegalStateException(line);
-
-		tn.jump(v1.length());
+	private VerbPhraseMatcher parseVerbPhrase(TextNavigator tn) {
 		skipSpaces(tn);
 
 		final UMatcher verbMatch = verb.toUnicodeBracketedExpression().match(tn);
 		final String v2 = verbMatch.getAcceptedMatch();
 		if (v2.length() == 0)
-			throw new IllegalStateException(line);
+			throw new IllegalStateException();
 
 		tn.jump(v2.length());
 		skipSpaces(tn);
@@ -110,44 +118,46 @@ public abstract class UbrexSentence<D extends Diagram> {
 		final UMatcher complementMatcher = complement.toUnicodeBracketedExpressionComplement().match(tn);
 		final String v3 = complementMatcher.getAcceptedMatch();
 		if (v3.length() == 0)
-			throw new IllegalStateException(line);
+			throw new IllegalStateException();
 
-		System.out.println("m1=" + matcherSubject);
-		System.out.println("m2=" + verbMatch);
-		System.out.println("m3=" + complementMatcher);
+		tn.jump(v3.length());
 
-		return new GanttParseResult(matcherSubject, verbMatch, complementMatcher);
+		return new VerbPhraseMatcher(verbMatch, complementMatcher);
 	}
 
 	public boolean check(TextNavigator tn) {
 		tn = tn.copy();
-		final UMatcher matcherSubject = subject.toUnicodeBracketedExpressionSubject().match(tn);
-		final String v1 = matcherSubject.getAcceptedMatch();
-		if (v1.length() == 0)
-			return false;
-
-		tn.jump(v1.length());
-		skipSpaces(tn);
+//		final UMatcher matcherSubject = subject.toUnicodeBracketedExpressionSubject().match(tn);
+//		final String v1 = matcherSubject.getAcceptedMatch();
+//		if (v1.length() == 0)
+//			return false;
+//
+//		tn.jump(v1.length());
+//		skipSpaces(tn);
 
 		final UMatcher verbMatch = verb.toUnicodeBracketedExpression().match(tn);
 		final String v2 = verbMatch.getAcceptedMatch();
 		if (v2.length() == 0)
 			return false;
+		System.out.println("-->v2=" + v2);
 
 		tn.jump(v2.length());
 		skipSpaces(tn);
+		System.out.println("-->tn=" + tn);
 
 		if (ignored != null) {
 			tn.jump(ignored.match(tn).getAcceptedMatch().length());
 			skipSpaces(tn);
+			System.out.println("-->tn=" + tn);
 		}
 
 		final UMatcher complementMatcher = complement.toUnicodeBracketedExpressionComplement().match(tn);
 		final String v3 = complementMatcher.getAcceptedMatch();
+		System.out.println("-->v3=" + v3);
 		if (v3.length() == 0)
 			return false;
 
-		System.out.println("<" + v1 + ">");
+		// System.out.println("<" + v1 + ">");
 		System.out.println("[" + v2 + "] " + verbMatch);
 		System.out.println("{" + v3 + "} " + complementMatcher);
 

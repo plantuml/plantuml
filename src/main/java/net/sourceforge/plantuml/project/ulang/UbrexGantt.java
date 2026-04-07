@@ -38,9 +38,7 @@ package net.sourceforge.plantuml.project.ulang;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.plantuml.ubrex.TextNavigator;
-
-import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.command.NaturalGanttCommand;
 import net.sourceforge.plantuml.project.lang.SubjectDayAsDate;
 import net.sourceforge.plantuml.project.lang.SubjectDayOfWeek;
 import net.sourceforge.plantuml.project.lang.SubjectProject;
@@ -48,30 +46,13 @@ import net.sourceforge.plantuml.project.lang.SubjectTask;
 
 public class UbrexGantt {
 
-	public static void sentence(String sentenceString, String debug) {
-		System.out.println("------------------------------");
-		System.out.println("BL=" + sentenceString + " " + debug);
-
-		final TextNavigator tn = TextNavigator.build(sentenceString);
-
-		for (UbrexSentence<GanttDiagram> sentence : getSentences()) {
-			final boolean match = sentence.check(tn);
-			if (match) {
-				System.out.println("[+] OK FOR " + sentence);
-				break;
-			}
-
-		}
-
-	}
-
-	public static List<UbrexSentence<GanttDiagram>> getSentences() {
-		final List<UbrexSentence<GanttDiagram>> subjectsList = new ArrayList<>();
-		subjectsList.addAll(SubjectTask.ME.getUSentences());
-		subjectsList.addAll(SubjectProject.ME.getUSentences());
-		subjectsList.addAll(SubjectDayOfWeek.ME.getUSentences());
-		subjectsList.addAll(SubjectDayAsDate.ME.getUSentences());
-		return subjectsList;
+	public static List<NaturalGanttCommand> getCommands() {
+		final List<NaturalGanttCommand> result = new ArrayList<>();
+		result.add(new NaturalGanttCommand(SubjectTask.ME));
+		result.add(new NaturalGanttCommand(SubjectProject.ME));
+		result.add(new NaturalGanttCommand(SubjectDayOfWeek.ME));
+		result.add(new NaturalGanttCommand(SubjectDayAsDate.ME));
+		return result;
 	}
 
 }

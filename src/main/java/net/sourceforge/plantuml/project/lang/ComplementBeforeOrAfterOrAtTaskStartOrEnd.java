@@ -114,9 +114,9 @@ public class ComplementBeforeOrAfterOrAtTaskStartOrEnd extends AbstractComplemen
 						new UBrexLeaf(Words.WITH), //
 						new UBrexLeaf(Words.AFTER), //
 						durationBeforeOrAfter)), //
-				UBrexLeaf.spaceOneOrMore(), //
+				UBrexLeaf.spaceZeroOrMore(), //
 				UBrexConcat.build( //
-						new UBrexNamed("COMPLEMENT_CODE_OTHER", new UBrexLeaf(SubjectTask.UBREX_TASK_CODE)), //
+						SubjectTask.taskCode("COMPLEMENT_CODE_OTHER"), //
 						new UBrexLeaf("〴.s")), //
 				UBrexLeaf.spaceOneOrMore(), //
 				new UBrexNamed("COMPLEMENT_START_OR_END", Words.uoneOf(Words.START, Words.END)));

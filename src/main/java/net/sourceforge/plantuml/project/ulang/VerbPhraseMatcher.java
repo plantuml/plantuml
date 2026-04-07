@@ -37,25 +37,19 @@ package net.sourceforge.plantuml.project.ulang;
 
 import com.plantuml.ubrex.UMatcher;
 
-public class GanttParseResult {
+public class VerbPhraseMatcher {
 
-	private final UMatcher matcherSubject;
 	private final UMatcher verbMatch;
 	private final UMatcher complementMatcher;
 
-	public GanttParseResult(UMatcher matcherSubject, UMatcher verbMatch, UMatcher complementMatcher) {
-		this.matcherSubject = matcherSubject;
+	public VerbPhraseMatcher(UMatcher verbMatch, UMatcher complementMatcher) {
 		this.verbMatch = verbMatch;
 		this.complementMatcher = complementMatcher;
 	}
 
 	@Override
 	public String toString() {
-		return "\n {" + matcherSubject.toString() + "} /\n  {" + verbMatch + "} /\n   {" + complementMatcher + "}";
-	}
-
-	public UMatcher getMatcherSubject() {
-		return matcherSubject;
+		return "- " + verbMatch + "    +    " + complementMatcher + "";
 	}
 
 	public UMatcher getVerbMatch() {

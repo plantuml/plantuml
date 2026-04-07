@@ -65,7 +65,6 @@ import net.sourceforge.plantuml.project.command.CommandSeparator;
 import net.sourceforge.plantuml.project.command.CommandTaskCompleteDefault;
 import net.sourceforge.plantuml.project.command.CommandWeekNumberStrategy;
 import net.sourceforge.plantuml.project.command.NaturalCommand;
-import net.sourceforge.plantuml.project.command.NaturalCommandUbrex;
 import net.sourceforge.plantuml.project.lang.SentenceAnd;
 import net.sourceforge.plantuml.project.lang.SentenceAndAnd;
 import net.sourceforge.plantuml.project.lang.SentenceSimple;
@@ -79,14 +78,13 @@ import net.sourceforge.plantuml.project.lang.SubjectSeparator;
 import net.sourceforge.plantuml.project.lang.SubjectTask;
 import net.sourceforge.plantuml.project.lang.SubjectToday;
 import net.sourceforge.plantuml.project.ulang.UbrexGantt;
-import net.sourceforge.plantuml.project.ulang.UbrexSentence;
 import net.sourceforge.plantuml.style.CommandStyleImport;
 import net.sourceforge.plantuml.style.CommandStyleMultilinesCSS;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class GanttDiagramFactory extends PSystemCommandFactory {
 	
-	private final static boolean FORCE_UBREX = false;
+	private final static boolean FORCE_UBREX = true;
 
 	static private final List<Subject<GanttDiagram>> subjects() {
 		return Arrays.asList(SubjectTask.ME, SubjectProject.ME, SubjectDayOfWeek.ME, SubjectDayAsDate.ME,
@@ -133,9 +131,7 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 	private void addLanguageCommands(List<Command> cmd) {
 
 		if (FORCE_UBREX || TeaVM.isTeaVM()) {
-			for (UbrexSentence<GanttDiagram> sentence : UbrexGantt.getSentences()) {
-				cmd.add(NaturalCommandUbrex.create(sentence));
-			}
+			cmd.addAll(UbrexGantt.getCommands());
 		} else {
 			for (Subject<GanttDiagram> subject : subjects())
 				for (SentenceSimple<GanttDiagram> sentenceA : subject.getSentences()) {

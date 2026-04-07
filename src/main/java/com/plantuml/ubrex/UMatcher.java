@@ -36,9 +36,8 @@ package com.plantuml.ubrex;
 
 import java.util.List;
 
-	
 public interface UMatcher {
-	
+
 	public boolean startMatch();
 
 	public boolean exactMatch();
@@ -46,10 +45,16 @@ public interface UMatcher {
 	public String getAcceptedMatch();
 
 	public List<String> getCapture(String path);
-	
+
 	public List<String> getKeysToBeRefactored();
-	
+
 	public List<String> getRootKeys();
-	
+
+	public default String get(String key, int num) {
+		final List<String> tmp = getCapture(key);
+		if (num >= tmp.size())
+			return null;
+		return tmp.get(num);
+	}
 
 }

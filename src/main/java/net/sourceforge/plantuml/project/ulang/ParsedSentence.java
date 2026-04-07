@@ -33,40 +33,43 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.lang;
+package net.sourceforge.plantuml.project.ulang;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import com.plantuml.ubrex.UMatcher;
-import com.plantuml.ubrex.builder.UBrexPart;
 
-import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.project.Failable;
-import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.command.NaturalGanttCommand;
-import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexResult;
+public class ParsedSentence {
 
-public interface Subject<D extends Diagram> {
+	private final UMatcher matcherSubject;
+	private final List<VerbPhraseMatcher> verbPhrases;
 
-	public Collection<? extends SentenceSimple<D>> getSentences();
-
-	public IRegex toRegex();
-
-	public Failable<? extends Object> getMe(D project, RegexResult arg);
-
-	default public UBrexPart toUnicodeBracketedExpressionSubject() {
-		return null;
+	public ParsedSentence(UMatcher matcherSubject, List<VerbPhraseMatcher> verbPhrases) {
+		this.matcherSubject = matcherSubject;
+		this.verbPhrases = Collections.unmodifiableList(new ArrayList<>(verbPhrases));
 	}
 
-	default public Failable<? extends Object> ugetMe(D diagram, UMatcher arg) {
-		throw new IllegalArgumentException("wip8547 " + getClass());
+	@Override
+	public String toString() {
+		return "\n {" + matcherSubject.toString() + "} /\n       " + verbPhrases;
 	}
 
-	default public Collection<VerbPhraseAction> getVerbPhrases() {
-		return Collections.emptyList();
+	public UMatcher getMatcherSubject() {
+		return matcherSubject;
+	}
+
+	public List<VerbPhraseMatcher> getVerbPhrases() {
+		return verbPhrases;
+	}
+
+	public UMatcher getVerbMatch() {
+		return verbPhrases.get(0).getVerbMatch();
+	}
+
+	public UMatcher getComplementMatcher() {
+		return verbPhrases.get(0).getComplementMatcher();
 	}
 
 }
