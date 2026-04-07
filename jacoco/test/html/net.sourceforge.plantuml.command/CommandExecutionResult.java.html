@@ -46,86 +46,92 @@ public class CommandExecutionResult {
 	private final AbstractDiagram newDiagram;
 	private final List&lt;String&gt; debugLines;
 	private final int score;
+	private final Throwable rootCause;
 
-<span class="fc" id="L50">	private CommandExecutionResult(AbstractDiagram newDiagram, String error, int score, List&lt;String&gt; debugLines) {</span>
-<span class="fc" id="L51">		this.error = error;</span>
-<span class="fc" id="L52">		this.newDiagram = newDiagram;</span>
-<span class="fc" id="L53">		this.debugLines = debugLines;</span>
-<span class="fc" id="L54">		this.score = score;</span>
+<span class="fc" id="L51">	private CommandExecutionResult(AbstractDiagram newDiagram, String error, int score, Throwable rootCause) {</span>
+<span class="fc" id="L52">		this.error = error;</span>
+<span class="fc" id="L53">		this.rootCause = rootCause;</span>
+<span class="fc" id="L54">		this.newDiagram = newDiagram;</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		this.debugLines = rootCause == null ? null : getStackTrace(rootCause);</span>
+<span class="fc" id="L56">		this.score = score;</span>
 
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L58">	}</span>
 
 	public CommandExecutionResult withDiagram(AbstractDiagram newDiagram) {
-<span class="nc" id="L59">		return new CommandExecutionResult(newDiagram, error, 0, null);</span>
+<span class="nc" id="L61">		return new CommandExecutionResult(newDiagram, error, 0, null);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L64">		return super.toString() + &quot; &quot; + error;</span>
+<span class="nc" id="L66">		return super.toString() + &quot; &quot; + error;</span>
 	}
 
 	public static CommandExecutionResult newDiagram(AbstractDiagram result) {
-<span class="nc" id="L68">		return new CommandExecutionResult(result, null, 0, null);</span>
+<span class="nc" id="L70">		return new CommandExecutionResult(result, null, 0, null);</span>
 	}
 
 	public static CommandExecutionResult ok() {
-<span class="fc" id="L72">		return new CommandExecutionResult(null, null, 0, null);</span>
+<span class="fc" id="L74">		return new CommandExecutionResult(null, null, 0, null);</span>
 	}
 
 	public static CommandExecutionResult badColor() {
-<span class="fc" id="L76">		return new CommandExecutionResult(null, &quot;No such color&quot;, 10, null);</span>
+<span class="fc" id="L78">		return new CommandExecutionResult(null, &quot;No such color&quot;, 10, null);</span>
 	}
 
 	public static CommandExecutionResult error(String error) {
-<span class="fc" id="L80">		return new CommandExecutionResult(null, error, 0, null);</span>
+<span class="fc" id="L82">		return new CommandExecutionResult(null, error, 0, null);</span>
 	}
 
 	public static CommandExecutionResult error(String error, int score) {
-<span class="nc" id="L84">		return new CommandExecutionResult(null, error, score, null);</span>
+<span class="nc" id="L86">		return new CommandExecutionResult(null, error, score, null);</span>
 	}
 
 	public static CommandExecutionResult error(String error, Throwable t) {
-<span class="nc" id="L88">		return new CommandExecutionResult(null, error, 0, getStackTrace(t));</span>
+<span class="fc" id="L90">		return new CommandExecutionResult(null, error, 0, t);</span>
 	}
 
 	public static List&lt;String&gt; getStackTrace(Throwable exception) {
-<span class="fc" id="L92">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L93">		result.add(exception.toString());</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">		for (StackTraceElement ste : exception.getStackTrace())</span>
-<span class="fc" id="L95">			result.add(&quot;  &quot; + ste.toString());</span>
+<span class="fc" id="L94">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L95">		result.add(exception.toString());</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		for (StackTraceElement ste : exception.getStackTrace())</span>
+<span class="fc" id="L97">			result.add(&quot;  &quot; + ste.toString());</span>
 
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (exception.getCause() != null) {</span>
-<span class="nc" id="L98">			final Throwable cause = exception.getCause();</span>
-<span class="nc" id="L99">			result.add(&quot;  &quot;);</span>
-<span class="nc" id="L100">			result.add(&quot;Caused by &quot; + cause.toString());</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">			for (StackTraceElement ste : cause.getStackTrace())</span>
-<span class="nc" id="L102">				result.add(&quot;  &quot; + ste.toString());</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (exception.getCause() != null) {</span>
+<span class="nc" id="L100">			final Throwable cause = exception.getCause();</span>
+<span class="nc" id="L101">			result.add(&quot;  &quot;);</span>
+<span class="nc" id="L102">			result.add(&quot;Caused by &quot; + cause.toString());</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			for (StackTraceElement ste : cause.getStackTrace())</span>
+<span class="nc" id="L104">				result.add(&quot;  &quot; + ste.toString());</span>
 
 		}
-<span class="fc" id="L105">		return result;</span>
+<span class="fc" id="L107">		return result;</span>
 	}
 
 	public boolean isOk() {
-<span class="fc bfc" id="L109" title="All 2 branches covered.">		return error == null;</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		return error == null;</span>
 	}
 
 	public String getError() {
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (isOk())</span>
-<span class="nc" id="L114">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (isOk())</span>
+<span class="nc" id="L116">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L116">		return error;</span>
+<span class="fc" id="L118">		return error;</span>
 	}
 
 	public int getScore() {
-<span class="fc" id="L120">		return score;</span>
+<span class="fc" id="L122">		return score;</span>
 	}
 
 	public AbstractDiagram getNewDiagram() {
-<span class="fc" id="L124">		return newDiagram;</span>
+<span class="fc" id="L126">		return newDiagram;</span>
 	}
 
 	public List&lt;String&gt; getDebugLines() {
-<span class="fc" id="L128">		return debugLines;</span>
+<span class="fc" id="L130">		return debugLines;</span>
+	}
+
+	public Throwable getRootCause() {
+<span class="fc" id="L134">		return rootCause;</span>
 	}
 
 }

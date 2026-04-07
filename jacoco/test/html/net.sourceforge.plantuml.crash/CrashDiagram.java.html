@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CrashDiagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.crash</a> &gt; <span class="el_source">CrashDiagram.java</span></div><h1>CrashDiagram.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.crash;
+
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+
+public class CrashDiagram extends TitledDiagram {
+
+	private CrashType type;
+
+	public DiagramDescription getDescription() {
+<span class="fc" id="L54">		return new DiagramDescription(&quot;Crash Diagram&quot;);</span>
+	}
+
+	public CrashDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
+<span class="fc" id="L58">		super(source, DiagramType.BPM, null, preprocessing);</span>
+<span class="fc" id="L59">	}</span>
+
+	@Override
+	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception {
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		if (type == CrashType.DRAWING)</span>
+<span class="fc" id="L64">			throw new IllegalStateException(&quot;This is a normal crash when DRAWING&quot;);</span>
+
+<span class="fc" id="L66">		final Display display = Display.create(&quot;&lt;b&gt;Crash Diagram&lt;/b&gt;&quot;, //</span>
+				&quot;&quot;, //
+				&quot;This diagram is only used to test crash handling.&quot;, //
+				&quot;&quot;, //
+				&quot;There are three types of crash:&quot;, //
+				&quot;  \u2022 During &lt;b&gt;parsing&lt;/b&gt;&quot;, //
+				&quot;  \u2022 During &lt;b&gt;finalizing&lt;/b&gt;&quot;, //
+				&quot;  \u2022 During &lt;b&gt;drawing&lt;/b&gt;&quot;, //
+				&quot;&quot;, //
+				&quot;The purpose is to verify that PlantUML error recovery&quot;, //
+				&quot;mechanisms work correctly, using a diagram whose&quot;, //
+				&quot;behavior is predictable &lt;i&gt;(it crashes)&lt;/i&gt;.&quot;, &quot;&quot;, //
+				&quot;To do so, you should the following directive:&quot;, //
+				&quot;  \u2022 \&quot;\&quot;crash when parsing\&quot;\&quot;&quot;, //
+				&quot;  \u2022 \&quot;\&quot;crash when finalizing\&quot;\&quot;&quot;, //
+				&quot;  \u2022 \&quot;\&quot;crash when drawing\&quot;\&quot;&quot;, //
+				&quot;&quot;);
+
+<span class="fc" id="L84">		return display.create(FontConfiguration.blackBlueTrue(UFontFactory.sansSerif(14)), HorizontalAlignment.LEFT,</span>
+<span class="fc" id="L85">				getSkinParam());</span>
+	}
+
+	public void setCrashType(CrashType type) {
+<span class="fc" id="L89">		this.type = type;</span>
+
+<span class="fc" id="L91">	}</span>
+
+	public CrashType getCrashType() {
+<span class="nc" id="L94">		return type;</span>
+	}
+
+	@Override
+	public String checkFinalError() {
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (type == CrashType.FINALIZING)</span>
+<span class="fc" id="L100">			throw new IllegalStateException(&quot;This is a normal crash when FINALIZING&quot;);</span>
+
+<span class="fc" id="L102">		return super.checkFinalError();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

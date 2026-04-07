@@ -141,8 +141,8 @@ public final class UFontImpl implements UFont {
 	private String getPortableFontName() {
 <span class="fc" id="L142">		final Font font = getUnderlayingFont(null);</span>
 <span class="fc" id="L143">		final String name = font.getFontName();</span>
-<span class="pc bpc" id="L144" title="1 of 4 branches missed.">		if (font.isBold() &amp;&amp; font.isItalic())</span>
-<span class="nc bnc" id="L145" title="All 2 branches missed.">			return name.endsWith(&quot;.bolditalic&quot;) ? name : name + &quot;.bolditalic&quot;;</span>
+<span class="fc bfc" id="L144" title="All 4 branches covered.">		if (font.isBold() &amp;&amp; font.isItalic())</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">			return name.endsWith(&quot;.bolditalic&quot;) ? name : name + &quot;.bolditalic&quot;;</span>
 <span class="fc bfc" id="L146" title="All 2 branches covered.">		else if (font.isBold())</span>
 <span class="pc bpc" id="L147" title="1 of 2 branches missed.">			return name.endsWith(&quot;.bold&quot;) ? name : name + &quot;.bold&quot;;</span>
 <span class="fc bfc" id="L148" title="All 2 branches covered.">		else if (font.isItalic())</span>

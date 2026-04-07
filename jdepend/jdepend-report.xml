@@ -7,11 +7,11 @@
                 <TotalClasses>26</TotalClasses>
                 <ConcreteClasses>23</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>6</Ca>
+                <Ca>7</Ca>
                 <Ce>3</Ce>
                 <A>0.12</A>
-                <I>0.33</I>
-                <D>0.55</D>
+                <I>0.3</I>
+                <D>0.58</D>
                 <V>1</V>
             </Stats>
 
@@ -108,6 +108,7 @@
             <UsedBy>
                 <Package>com.plantuml.ubrex.builder</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram.command</Package>
+                <Package>net.sourceforge.plantuml.crash</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
                 <Package>net.sourceforge.plantuml.project.lang</Package>
                 <Package>net.sourceforge.plantuml.regex</Package>
@@ -120,11 +121,11 @@
                 <TotalClasses>8</TotalClasses>
                 <ConcreteClasses>7</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>2</Ca>
+                <Ca>3</Ca>
                 <Ce>3</Ce>
                 <A>0.12</A>
-                <I>0.6</I>
-                <D>0.27</D>
+                <I>0.5</I>
+                <D>0.38</D>
                 <V>1</V>
             </Stats>
 
@@ -166,6 +167,7 @@
 
             <UsedBy>
                 <Package>net.sourceforge.plantuml.activitydiagram.command</Package>
+                <Package>net.sourceforge.plantuml.crash</Package>
                 <Package>net.sourceforge.plantuml.project.lang</Package>
             </UsedBy>
         </Package>
@@ -5284,7 +5286,7 @@
                 <TotalClasses>49</TotalClasses>
                 <ConcreteClasses>43</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
-                <Ca>57</Ca>
+                <Ca>58</Ca>
                 <Ce>35</Ce>
                 <A>0.12</A>
                 <I>0.38</I>
@@ -5500,6 +5502,7 @@
                 <Package>net.sourceforge.plantuml.classdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.command.note</Package>
                 <Package>net.sourceforge.plantuml.command.note.sequence</Package>
+                <Package>net.sourceforge.plantuml.crash</Package>
                 <Package>net.sourceforge.plantuml.dedication</Package>
                 <Package>net.sourceforge.plantuml.definition</Package>
                 <Package>net.sourceforge.plantuml.descdiagram</Package>
@@ -5866,14 +5869,14 @@
 
         <Package name="net.sourceforge.plantuml.crash">
             <Stats>
-                <TotalClasses>1</TotalClasses>
-                <ConcreteClasses>1</ConcreteClasses>
+                <TotalClasses>5</TotalClasses>
+                <ConcreteClasses>5</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>4</Ca>
-                <Ce>7</Ce>
+                <Ce>19</Ce>
                 <A>0</A>
-                <I>0.64</I>
-                <D>0.36</D>
+                <I>0.83</I>
+                <D>0.17</D>
                 <V>1</V>
             </Stats>
 
@@ -5881,19 +5884,43 @@
             </AbstractClasses>
 
             <ConcreteClasses>
+                <Class sourceFile="CommandSelectCrash.java">
+                    net.sourceforge.plantuml.crash.CommandSelectCrash
+                </Class>
+                <Class sourceFile="CrashDiagram.java">
+                    net.sourceforge.plantuml.crash.CrashDiagram
+                </Class>
+                <Class sourceFile="CrashDiagramFactory.java">
+                    net.sourceforge.plantuml.crash.CrashDiagramFactory
+                </Class>
                 <Class sourceFile="CrashReportHandler.java">
                     net.sourceforge.plantuml.crash.CrashReportHandler
+                </Class>
+                <Class sourceFile="CrashType.java">
+                    net.sourceforge.plantuml.crash.CrashType
                 </Class>
             </ConcreteClasses>
 
             <DependsUpon>
+                <Package>com.plantuml.ubrex</Package>
+                <Package>com.plantuml.ubrex.builder</Package>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml</Package>
+                <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.klimt.color</Package>
+                <Package>net.sourceforge.plantuml.klimt.creole</Package>
+                <Package>net.sourceforge.plantuml.klimt.font</Package>
+                <Package>net.sourceforge.plantuml.klimt.geom</Package>
+                <Package>net.sourceforge.plantuml.klimt.shape</Package>
+                <Package>net.sourceforge.plantuml.nio</Package>
+                <Package>net.sourceforge.plantuml.preproc</Package>
+                <Package>net.sourceforge.plantuml.regex</Package>
                 <Package>net.sourceforge.plantuml.security</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -8726,7 +8753,7 @@
                 <TotalClasses>29</TotalClasses>
                 <ConcreteClasses>28</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>92</Ca>
+                <Ca>93</Ca>
                 <Ce>8</Ce>
                 <A>0.03</A>
                 <I>0.08</I>
@@ -8863,6 +8890,7 @@
                 <Package>net.sourceforge.plantuml.command.note</Package>
                 <Package>net.sourceforge.plantuml.command.note.sequence</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.crash</Package>
                 <Package>net.sourceforge.plantuml.cucadiagram</Package>
                 <Package>net.sourceforge.plantuml.decoration</Package>
                 <Package>net.sourceforge.plantuml.decoration.symbol</Package>
@@ -9010,11 +9038,11 @@
                 <TotalClasses>19</TotalClasses>
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
-                <Ca>65</Ca>
+                <Ca>66</Ca>
                 <Ce>12</Ce>
                 <A>0.21</A>
-                <I>0.16</I>
-                <D>0.63</D>
+                <I>0.15</I>
+                <D>0.64</D>
                 <V>1</V>
             </Stats>
 
@@ -9116,6 +9144,7 @@
                 <Package>net.sourceforge.plantuml.command.note</Package>
                 <Package>net.sourceforge.plantuml.command.note.sequence</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.crash</Package>
                 <Package>net.sourceforge.plantuml.cucadiagram</Package>
                 <Package>net.sourceforge.plantuml.decoration.symbol</Package>
                 <Package>net.sourceforge.plantuml.definition</Package>
@@ -10198,11 +10227,11 @@
                 <TotalClasses>10</TotalClasses>
                 <ConcreteClasses>6</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
-                <Ca>85</Ca>
+                <Ca>86</Ca>
                 <Ce>10</Ce>
                 <A>0.4</A>
-                <I>0.11</I>
-                <D>0.49</D>
+                <I>0.1</I>
+                <D>0.5</D>
                 <V>1</V>
             </Stats>
 
@@ -10273,6 +10302,7 @@
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.crash</Package>
                 <Package>net.sourceforge.plantuml.cucadiagram</Package>
                 <Package>net.sourceforge.plantuml.decoration.symbol</Package>
                 <Package>net.sourceforge.plantuml.dedication</Package>
@@ -10349,7 +10379,7 @@
                 <TotalClasses>34</TotalClasses>
                 <ConcreteClasses>28</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
-                <Ca>88</Ca>
+                <Ca>89</Ca>
                 <Ce>9</Ce>
                 <A>0.18</A>
                 <I>0.09</I>
@@ -10497,6 +10527,7 @@
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.crash</Package>
                 <Package>net.sourceforge.plantuml.cruise</Package>
                 <Package>net.sourceforge.plantuml.cucadiagram</Package>
                 <Package>net.sourceforge.plantuml.decoration.symbol</Package>
@@ -10574,7 +10605,7 @@
                 <TotalClasses>41</TotalClasses>
                 <ConcreteClasses>38</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>83</Ca>
+                <Ca>84</Ca>
                 <Ce>16</Ce>
                 <A>0.07</A>
                 <I>0.16</I>
@@ -10747,6 +10778,7 @@
                 <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.crash</Package>
                 <Package>net.sourceforge.plantuml.cucadiagram</Package>
                 <Package>net.sourceforge.plantuml.decoration.symbol</Package>
                 <Package>net.sourceforge.plantuml.dedication</Package>
@@ -11276,7 +11308,7 @@
                 <TotalClasses>3</TotalClasses>
                 <ConcreteClasses>1</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>40</Ca>
+                <Ca>41</Ca>
                 <Ce>5</Ce>
                 <A>0.67</A>
                 <I>0.11</I>
@@ -11320,6 +11352,7 @@
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.crash</Package>
                 <Package>net.sourceforge.plantuml.descdiagram</Package>
                 <Package>net.sourceforge.plantuml.ebnf</Package>
                 <Package>net.sourceforge.plantuml.eggs</Package>
@@ -12055,11 +12088,11 @@
                 <TotalClasses>17</TotalClasses>
                 <ConcreteClasses>14</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>60</Ca>
+                <Ca>61</Ca>
                 <Ce>15</Ce>
                 <A>0.18</A>
                 <I>0.2</I>
-                <D>0.62</D>
+                <D>0.63</D>
                 <V>1</V>
             </Stats>
 
@@ -12152,6 +12185,7 @@
                 <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
+                <Package>net.sourceforge.plantuml.crash</Package>
                 <Package>net.sourceforge.plantuml.dedication</Package>
                 <Package>net.sourceforge.plantuml.definition</Package>
                 <Package>net.sourceforge.plantuml.descdiagram</Package>
@@ -13314,11 +13348,11 @@
                 <TotalClasses>9</TotalClasses>
                 <ConcreteClasses>7</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>39</Ca>
+                <Ca>40</Ca>
                 <Ce>6</Ce>
                 <A>0.22</A>
                 <I>0.13</I>
-                <D>0.64</D>
+                <D>0.65</D>
                 <V>1</V>
             </Stats>
 
@@ -13377,6 +13411,7 @@
                 <Package>net.sourceforge.plantuml.command.note</Package>
                 <Package>net.sourceforge.plantuml.command.note.sequence</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.crash</Package>
                 <Package>net.sourceforge.plantuml.descdiagram</Package>
                 <Package>net.sourceforge.plantuml.descdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.ebnf</Package>
@@ -17869,7 +17904,7 @@
                 <TotalClasses>16</TotalClasses>
                 <ConcreteClasses>11</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>59</Ca>
+                <Ca>60</Ca>
                 <Ce>21</Ce>
                 <A>0.31</A>
                 <I>0.26</I>
@@ -17975,6 +18010,7 @@
                 <Package>net.sourceforge.plantuml.command.note</Package>
                 <Package>net.sourceforge.plantuml.command.note.sequence</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.crash</Package>
                 <Package>net.sourceforge.plantuml.dedication</Package>
                 <Package>net.sourceforge.plantuml.descdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.ditaa</Package>
@@ -19772,10 +19808,9 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.crash">
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.cruise">
