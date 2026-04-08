@@ -143,7 +143,7 @@ class VegaTest {
 			for (final String file : skippedFiles)
 				md.append("- ").append(file).append("\n");
 		}
-		md..append("\n");
+		md.append("\n");
 		return md.toString();
 	}
 
