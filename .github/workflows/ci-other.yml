@@ -93,3 +93,6 @@ jobs:
           path: src/test/resources/vega/vega.json
           if-no-files-found: warn
           retention-days: 30
+
+      - name: Add Gradle title to Summary
+        run: echo "## Gradle" >> $GITHUB_STEP_SUMMARY

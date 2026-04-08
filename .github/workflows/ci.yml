@@ -155,6 +155,8 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
+      - name: Add Gradle title to Summary
+        run: echo "## Gradle" >> $GITHUB_STEP_SUMMARY
 
   build_artifacts:
     needs: [ workflow_config ]
