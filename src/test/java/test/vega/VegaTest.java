@@ -97,7 +97,7 @@ class VegaTest {
 		sb.append("===========================================\n");
 		sb.append(" VEGA TEST SUMMARY\n");
 		sb.append("===========================================\n");
-		sb.append(String.format(" Total:    %d%n", total);
+		sb.append(String.format(" Total:    %d%n", total));
 		sb.append(String.format(" Passed:   %d%n", passed));
 		sb.append(String.format(" Failed:   %d%n", failed));
 		sb.append(String.format(" Skipped:  %d%n", skipped));
@@ -111,7 +111,7 @@ class VegaTest {
 		if (skipped > 0) {
 			sb.append("\n Skipped tests:");
 			for (final String file : skippedFiles)
-				sb.append("\n   - " + file;
+				sb.append("\n   - " + file);
 			sb.append("\n===========================================");
 		}
 		sb.append("\n");
