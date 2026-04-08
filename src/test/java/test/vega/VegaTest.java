@@ -64,10 +64,11 @@ class VegaTest {
 			tests.add(result);
 		report.add("tests", tests);
 
+		final int total = results.size();
 		final int passed = (int) results.stream().filter(r -> "pass".equals(r.getString("status", ""))).count();
 		final int failed = (int) results.stream().filter(r -> "fail".equals(r.getString("status", ""))).count();
 		final int skipped = (int) results.stream().filter(r -> "skipped".equals(r.getString("status", ""))).count();
-		report.add("summary", new JsonObject().add("total", results.size()).add("passed", passed).add("failed", failed)
+		report.add("summary", new JsonObject().add("total", total).add("passed", passed).add("failed", failed)
 				.add("skipped", skipped));
 
 		final Path jsonFile = VEGA_RESOURCES.resolve("vega.json");
@@ -75,33 +76,46 @@ class VegaTest {
 			report.writeTo(writer, WriterConfig.PRETTY_PRINT);
 		}
 
+		final List<String> failedFiles = results.stream()
+																				.filter(r -> "fail".equals(r.getString("status", "")))
+																				.map(r -> r.getString("file", ""))
+																				.collect(Collectors.toList());
+
+		final List<String> skippedFiles = results.stream()
+																				.filter(r -> "skipped".equals(r.getString("status", "")))
+																				.map(r -> r.getString("file", ""))
+																				.collect(Collectors.toList());
+	
 		// Write a plain-text summary for Gradle console output
 		final Path summaryFile = VEGA_RESOURCES.resolve("vega-summary.txt");
+		Files.write(summaryFile, textSummary(total, passed, failed, skipped, failedFiles, skippedFiles).getBytes(UTF_8));
+
+	}
+
+	private static String textSummary(int total, int passed, int failed, int skipped, List<String> failedFiles, List<String> skippedFiles) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("===========================================\n");
 		sb.append(" VEGA TEST SUMMARY\n");
 		sb.append("===========================================\n");
-		sb.append(String.format(" Total:    %d%n", results.size()));
+		sb.append(String.format(" Total:    %d%n", total);
 		sb.append(String.format(" Passed:   %d%n", passed));
 		sb.append(String.format(" Failed:   %d%n", failed));
 		sb.append(String.format(" Skipped:  %d%n", skipped));
 		sb.append("===========================================");
 		if (failed > 0) {
 			sb.append("\n Failed tests:");
-			for (final JsonObject r : results)
-				if ("fail".equals(r.getString("status", "")))
-					sb.append("\n   - " + r.getString("file", ""));
+			for (final String file : skippedFiles)
+				sb.append("\n   - " + file);
 			sb.append("\n===========================================");
 		}
 		if (skipped > 0) {
 			sb.append("\n Skipped tests:");
-			for (final JsonObject r : results)
-				if ("skipped".equals(r.getString("status", "")))
-					sb.append("\n   - " + r.getString("file", ""));
+			for (final String file : skippedFiles)
+				sb.append("\n   - " + file;
 			sb.append("\n===========================================");
 		}
 		sb.append("\n");
-		Files.write(summaryFile, sb.toString().getBytes(UTF_8));
+		return sb.toString();
 	}
 
 	@TestFactory
