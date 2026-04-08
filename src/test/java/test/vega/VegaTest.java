@@ -90,6 +90,10 @@ class VegaTest {
 		final Path summaryFile = VEGA_RESOURCES.resolve("vega-summary.txt");
 		Files.write(summaryFile, textSummary(total, passed, failed, skipped, failedFiles, skippedFiles).getBytes(UTF_8));
 
+		// Write a Markdown summary (useful for CI artifacts / GitHub display)
+		final Path mdSummaryFile = VEGA_RESOURCES.resolve("vega-summary.md");
+		Files.write(mdSummaryFile, mdSummary(total, passed, failed, skipped, failedFiles, skippedFiles).getBytes(UTF_8));
+
 	}
 
 	private static String textSummary(int total, int passed, int failed, int skipped, List<String> failedFiles, List<String> skippedFiles) {
@@ -116,6 +120,31 @@ class VegaTest {
 		}
 		sb.append("\n");
 		return sb.toString();
+	}
+
+	private static String mdSummary(int total, int passed, int failed, int skipped, List<String> failedFiles,
+			List<String> skippedFiles) {
+		final StringBuilder md = new StringBuilder();
+		md.append("## Vega test summary\n\n");
+		md.append("| Metric | Icon | Count |\n");
+		md.append("|---|:----:|---:|\n");
+		md.append(String.format("| Total   | = | %d |%n", total));
+		md.append(String.format("| Passed  | :white_check_mark: | %d |%n", passed));
+		md.append(String.format("| Failed  | :x: | %d |%n", failed));
+		md.append(String.format("| Skipped | :fast_forward: | %d |%n", skipped));
+
+		if (failed > 0) {
+			md.append("\n### Failed tests\n\n");
+			for (final String file : failedFiles)
+				md.append("- ").append(file).append("\n");
+		}
+		if (skipped > 0) {
+			md.append("\n### Skipped tests\n\n");
+			for (final String file : skippedFiles)
+				md.append("- ").append(file).append("\n");
+		}
+		md..append("\n");
+		return md.toString();
 	}
 
 	@TestFactory
