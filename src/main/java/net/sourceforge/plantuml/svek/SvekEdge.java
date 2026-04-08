@@ -394,12 +394,12 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		final boolean bothClusters = ltail != null && lhead != null;
 		final boolean endInsideTail = ltail != null && isNodeInsideCluster(endUid.getFullString(), ltail);
 		final boolean startInsideHead = lhead != null && isNodeInsideCluster(startUid.getFullString(), lhead);
-		if (bothClusters == false && endInsideTail == false && ltail != null) {
+		if (bothClusters == false && endInsideTail == false && ltail != null && dotSplines != DotSplines.ORTHO) {
 			final List<SvekNode> childNodes = ltail.getNodes();
 			if (childNodes.isEmpty() == false)
 				dotStartId = childNodes.get(childNodes.size() / 2).getUid();
 		}
-		if (bothClusters == false && startInsideHead == false && lhead != null) {
+		if (bothClusters == false && startInsideHead == false && lhead != null && dotSplines != DotSplines.ORTHO) {
 			final List<SvekNode> childNodes = lhead.getNodes();
 			if (childNodes.isEmpty() == false)
 				dotEndId = childNodes.get(childNodes.size() / 2).getUid();
@@ -487,16 +487,16 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		if (link.getSametail() != null)
 			sb.append(",sametail=" + link.getSametail());
 
-		if (lhead != null)
+		if (lhead != null && dotSplines != DotSplines.ORTHO)
 			sb.append(",lhead=" + lhead.getClusterId());
 
-		if (ltail != null)
+		if (ltail != null && dotSplines != DotSplines.ORTHO)
 			sb.append(",ltail=" + ltail.getClusterId());
 
 		sb.append("];");
 		SvekUtils.println(sb);
 
-		if (bothClusters == false && startInsideHead == false && lhead != null) {
+		if (bothClusters == false && startInsideHead == false && lhead != null && dotSplines != DotSplines.ORTHO) {
 			final List<SvekNode> childNodes = lhead.getNodes();
 			if (childNodes.size() >= 2 && childNodes.size() <= 3) {
 				final int mainIdx = childNodes.size() / 2;
@@ -509,7 +509,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 				}
 			}
 		}
-		if (bothClusters == false && endInsideTail == false && ltail != null) {
+		if (bothClusters == false && endInsideTail == false && ltail != null && dotSplines != DotSplines.ORTHO) {
 			final List<SvekNode> childNodes = ltail.getNodes();
 			if (childNodes.size() >= 2 && childNodes.size() <= 3) {
 				final int mainIdx = childNodes.size() / 2;
@@ -528,6 +528,9 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		for (SvekNode child : cluster.getNodes())
 			if (child.getUid().equals(nodeUid))
 				return true;
+		for (Cluster sub : cluster.getChildren())
+			if (isNodeInsideCluster(nodeUid, sub))
+				return true;
 		return false;
 	}
 
@@ -537,50 +540,10 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		for (SvekNode child : cluster.getNodes())
 			if (child == node)
 				return true;
+		for (Cluster sub : cluster.getChildren())
+			if (isNodeInCluster(node, sub))
+				return true;
 		return false;
-	}
-
-	private static Side getDirectionalSide(RectangleArea clusterRect, XPoint2D otherPoint) {
-		final double clusterCx = (clusterRect.getMinX() + clusterRect.getMaxX()) / 2;
-		final double clusterCy = (clusterRect.getMinY() + clusterRect.getMaxY()) / 2;
-		final double dx = otherPoint.getX() - clusterCx;
-		final double dy = otherPoint.getY() - clusterCy;
-		if (Math.abs(dy) * 2 >= Math.abs(dx))
-			return dy < 0 ? Side.NORTH : Side.SOUTH;
-		else
-			return dx < 0 ? Side.WEST : Side.EAST;
-	}
-
-	private static void centerNonClusterEndpoint(DotPath dotPath, SvekNode node, boolean isStart) {
-		if (node == null)
-			return;
-		final RectangleArea nodeRect = node.getRectangleArea();
-		final XPoint2D pt = isStart ? dotPath.getStartPoint() : dotPath.getEndPoint();
-		final Side side = nodeRect.getClosestSide(pt);
-		if (side == Side.NORTH || side == Side.SOUTH) {
-			final double dx = (nodeRect.getMinX() + nodeRect.getMaxX()) / 2 - pt.getX();
-			if (isStart)
-				dotPath.moveStartPoint(dx, 0);
-			else
-				dotPath.moveEndPoint(dx, 0);
-		} else if (side == Side.EAST || side == Side.WEST) {
-			final double dy = (nodeRect.getMinY() + nodeRect.getMaxY()) / 2 - pt.getY();
-			if (isStart)
-				dotPath.moveStartPoint(0, dy);
-			else
-				dotPath.moveEndPoint(0, dy);
-		}
-	}
-
-	private static DotPath rebuildStraightPath(DotPath original) {
-		final XPoint2D start = original.getStartPoint();
-		final XPoint2D end = original.getEndPoint();
-		final XPoint2D ctrl1 = new XPoint2D(start.getX() + (end.getX() - start.getX()) / 3,
-				start.getY() + (end.getY() - start.getY()) / 3);
-		final XPoint2D ctrl2 = new XPoint2D(start.getX() + 2 * (end.getX() - start.getX()) / 3,
-				start.getY() + 2 * (end.getY() - start.getY()) / 3);
-		final DotPath result = new DotPath();
-		return result.addCurve(start, ctrl1, ctrl2, end);
 	}
 
 	private XDimension2D eventuallyDivideByTwo(XDimension2D dim) {
@@ -771,68 +734,6 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		}
 		dotPath = dotPath.simulateCompound(lhead == null ? null : lhead.getRectangleArea(),
 				ltail == null ? null : ltail.getRectangleArea());
-
-		final boolean bothClusters = lhead != null && ltail != null;
-		final boolean startInHead = lhead != null && isNodeInCluster(svekNode1, lhead);
-		final boolean endInTail = ltail != null && isNodeInCluster(svekNode2, ltail);
-		if (bothClusters == false && startInHead == false && lhead != null) {
-			final RectangleArea headRect = lhead.getRectangleArea();
-			final XPoint2D endPt = dotPath.getEndPoint();
-			final Side headSide = getDirectionalSide(headRect, dotPath.getStartPoint());
-			final double centerX = (headRect.getMinX() + headRect.getMaxX()) / 2;
-			final double centerY = (headRect.getMinY() + headRect.getMaxY()) / 2;
-			if (headSide == Side.NORTH || headSide == Side.SOUTH) {
-				dotPath.moveEndPoint(centerX - endPt.getX(), headSide == Side.NORTH ? headRect.getMinY() - endPt.getY() : headRect.getMaxY() - endPt.getY());
-				centerNonClusterEndpoint(dotPath, svekNode1, true);
-				dotPath = rebuildStraightPath(dotPath);
-			} else if (headSide == Side.EAST || headSide == Side.WEST) {
-				dotPath.moveEndPoint(headSide == Side.WEST ? headRect.getMinX() - endPt.getX() : headRect.getMaxX() - endPt.getX(), centerY - endPt.getY());
-				centerNonClusterEndpoint(dotPath, svekNode1, true);
-				dotPath = rebuildStraightPath(dotPath);
-			}
-		}
-		if (bothClusters == false && endInTail == false && ltail != null) {
-			final RectangleArea tailRect = ltail.getRectangleArea();
-			final XPoint2D startPt = dotPath.getStartPoint();
-			final Side tailSide = getDirectionalSide(tailRect, dotPath.getEndPoint());
-			final double centerX = (tailRect.getMinX() + tailRect.getMaxX()) / 2;
-			final double centerY = (tailRect.getMinY() + tailRect.getMaxY()) / 2;
-			if (tailSide == Side.NORTH || tailSide == Side.SOUTH) {
-				dotPath.moveStartPoint(centerX - startPt.getX(), tailSide == Side.NORTH ? tailRect.getMinY() - startPt.getY() : tailRect.getMaxY() - startPt.getY());
-				centerNonClusterEndpoint(dotPath, svekNode2, false);
-				dotPath = rebuildStraightPath(dotPath);
-			} else if (tailSide == Side.EAST || tailSide == Side.WEST) {
-				dotPath.moveStartPoint(tailSide == Side.WEST ? tailRect.getMinX() - startPt.getX() : tailRect.getMaxX() - startPt.getX(), centerY - startPt.getY());
-				centerNonClusterEndpoint(dotPath, svekNode2, false);
-				dotPath = rebuildStraightPath(dotPath);
-			}
-		}
-		if (bothClusters) {
-			if (lhead != null) {
-				final RectangleArea headRect = lhead.getRectangleArea();
-				final XPoint2D endPt = dotPath.getEndPoint();
-				final Side headSide = headRect.getClosestSide(endPt);
-				final double cx = (headRect.getMinX() + headRect.getMaxX()) / 2;
-				final double cy = (headRect.getMinY() + headRect.getMaxY()) / 2;
-				if (headSide == Side.NORTH || headSide == Side.SOUTH)
-					dotPath.moveEndPoint(cx - endPt.getX(), 0);
-				else
-					dotPath.moveEndPoint(0, cy - endPt.getY());
-			}
-			if (ltail != null) {
-				final RectangleArea tailRect = ltail.getRectangleArea();
-				final XPoint2D startPt = dotPath.getStartPoint();
-				final Side tailSide = tailRect.getClosestSide(startPt);
-				final double cx = (tailRect.getMinX() + tailRect.getMaxX()) / 2;
-				final double cy = (tailRect.getMinY() + tailRect.getMaxY()) / 2;
-				if (tailSide == Side.NORTH || tailSide == Side.SOUTH)
-					dotPath.moveStartPoint(cx - startPt.getX(), 0);
-				else
-					dotPath.moveStartPoint(0, cy - startPt.getY());
-			}
-			if (hasNoteLabelText() == false)
-				dotPath = rebuildStraightPath(dotPath);
-		}
 
 		final SvgResult lineSvg = fullSvg.substring(end);
 		PointListIterator pointListIterator = null;
