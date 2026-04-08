@@ -136,12 +136,12 @@ class VegaTest {
 		if (failed > 0) {
 			md.append("\n### Failed tests\n\n");
 			for (final String file : failedFiles)
-				md.append("- ").append(file).append("\n");
+				md.append("- `").append(file).append("`\n");
 		}
 		if (skipped > 0) {
 			md.append("\n### Skipped tests\n\n");
 			for (final String file : skippedFiles)
-				md.append("- ").append(file).append("\n");
+				md.append("- `").append(file).append("`\n");
 		}
 		md.append("\n");
 		return md.toString();
