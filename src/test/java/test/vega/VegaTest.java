@@ -77,14 +77,14 @@ class VegaTest {
 		}
 
 		final List<String> failedFiles = results.stream()
-																				.filter(r -> "fail".equals(r.getString("status", "")))
-																				.map(r -> r.getString("file", ""))
-																				.collect(Collectors.toList());
+											.filter(r -> "fail".equals(r.getString("status", "")))
+											.map(r -> r.getString("file", ""))
+											.collect(Collectors.toList());
 
 		final List<String> skippedFiles = results.stream()
-																				.filter(r -> "skipped".equals(r.getString("status", "")))
-																				.map(r -> r.getString("file", ""))
-																				.collect(Collectors.toList());
+											.filter(r -> "skipped".equals(r.getString("status", "")))
+											.map(r -> r.getString("file", ""))
+											.collect(Collectors.toList());
 	
 		// Write a plain-text summary for Gradle console output
 		final Path summaryFile = VEGA_RESOURCES.resolve("vega-summary.txt");
@@ -125,9 +125,9 @@ class VegaTest {
 	private static String mdSummary(int total, int passed, int failed, int skipped, List<String> failedFiles,
 			List<String> skippedFiles) {
 		final StringBuilder md = new StringBuilder();
-		md.append("## Vega test summary\n\n");
+		md.append("## Vega Test Summary\n\n");
 		md.append("| Metric | Icon | Count |\n");
-		md.append("|---|:----:|---:|\n");
+		md.append("|---|:---:|---:|\n");
 		md.append(String.format("| Total   | = | %d |%n", total));
 		md.append(String.format("| Passed  | :white_check_mark: | %d |%n", passed));
 		md.append(String.format("| Failed  | :x: | %d |%n", failed));
