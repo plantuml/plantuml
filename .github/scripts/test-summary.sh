@@ -87,15 +87,16 @@ if [ -f "$VEGA_SUMMARY" ]; then
   echo "::group::Vega Test Results"
   cat "$VEGA_SUMMARY"
   echo "::endgroup::"
-  if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
-    {
-      echo ""
-      echo "## Vega Test Results"
-      echo '```'
-      cat "$VEGA_SUMMARY"
-      echo '```'
-    } >> "$GITHUB_STEP_SUMMARY"
-  fi
 else
   echo "::warning::vega-summary.txt not found — Vega tests may not have run"
+fi
+
+# ── Vega markdown summary on GitHub Job Summary ────────────────────
+VEGA_SUMMARY_MD="src/test/resources/vega/vega-summary.md"
+if [ -f "$VEGA_SUMMARY_MD" ]; then
+  if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
+      cat "$VEGA_SUMMARY_MD" >> "$GITHUB_STEP_SUMMARY"
+  fi
+else
+  echo "::warning::vega-summary.md not found — skipping markdown Vega summary"
 fi
