@@ -134,14 +134,16 @@ class VegaTest {
 		md.append(String.format("| Skipped | :fast_forward: | %d |%n", skipped));
 
 		if (failed > 0) {
-			md.append("\n### Failed tests\n\n");
+			md.append("\n<details>\n<summary><h3>Failed tests</h3></summary>\n\n");
 			for (final String file : failedFiles)
 				md.append("- `").append(file).append("`\n");
+			md.append("\n</details>");
 		}
 		if (skipped > 0) {
-			md.append("\n### Skipped tests\n\n");
+			md.append("\n<details>\n<summary><h3>Skipped tests</h3></summary>\n\n");
 			for (final String file : skippedFiles)
 				md.append("- `").append(file).append("`\n");
+			md.append("\n</details>");
 		}
 		md.append("\n");
 		return md.toString();
