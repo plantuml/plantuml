@@ -37,6 +37,11 @@ package net.sourceforge.plantuml.project.lang;
 
 import java.time.LocalDate;
 
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
@@ -75,6 +80,17 @@ public class ComplementIntervals implements Something<GanttDiagram> {
 				new RegexLeaf("[dD]\\+"), //
 				new RegexLeaf(1, "ECOUNT2" + suffix, "([\\d]+)") //
 		);
+	}
+
+	private UBrexPart toRegexE() {
+		return UBrexConcat.build( //
+				new UBrexLeaf("「dD」+"), //
+				new UBrexNamed("ECOUNT1", new UBrexLeaf("〇+〴d")), //
+				Words.uexactly(Words.TO), //
+				Words.uzeroOrMore(Words.THE), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexLeaf("「dD」+"), //
+				new UBrexNamed("ECOUNT2", new UBrexLeaf("〇+〴d")));
 	}
 
 	public Failable<DaysAsDates> getMe(GanttDiagram project, RegexResult arg, String suffix) {

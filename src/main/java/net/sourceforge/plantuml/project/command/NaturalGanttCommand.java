@@ -84,6 +84,8 @@ public class NaturalGanttCommand implements Command<GanttDiagram> {
 
 		final Deque<VerbPhraseAction> candidates = new ArrayDeque<VerbPhraseAction>(getVerbPhrases());
 
+		final Failable<? extends Object> subjectResult = subject.ugetMe(diagram, matcherSubject);
+
 		while (!candidates.isEmpty()) {
 			final VerbPhraseAction verbPhrase = candidates.removeFirst();
 			if (verbPhrase.check(tn) == false)
@@ -91,7 +93,6 @@ public class NaturalGanttCommand implements Command<GanttDiagram> {
 
 			final VerbPhraseMatcher args = verbPhrase.parse(tn);
 
-			final Failable<? extends Object> subjectResult = subject.ugetMe(diagram, matcherSubject);
 			final Failable<? extends Object> complement = verbPhrase.getComplement(diagram, args);
 
 			result = verbPhrase.execute(diagram, subjectResult.get(), complement.get());

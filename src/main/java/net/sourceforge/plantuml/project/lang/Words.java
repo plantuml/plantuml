@@ -66,6 +66,9 @@ public class Words {
 	public final static String WEEK = "week";
 	public final static String WITH = "with";
 	public final static String WORKING = "working";
+	
+	public final static String THEN = "then";
+	public final static String IT = "it";
 
 	public static IRegex zeroOrMore(String... words) {
 		final IRegex tmp[] = new IRegex[words.length];

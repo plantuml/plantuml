@@ -46,11 +46,14 @@ import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOneOrMore;
 import com.plantuml.ubrex.builder.UBrexOptional;
+import com.plantuml.ubrex.builder.UBrexOr;
 import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.project.Completion;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttConstraint;
 import net.sourceforge.plantuml.project.GanttDiagram;
@@ -111,6 +114,32 @@ public class SubjectTask implements Subject<GanttDiagram> {
 					project.addContraint(new GanttConstraint(project.getIHtmlColorSet(),
 							project.getCurrentStyleBuilder(), when, new TaskInstant(task, TaskAttribute.START), color));
 
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.starts, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),
+				ComplementDate.onlyRelative()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final Task task = (Task) subject;
+				final LocalDate start = (LocalDate) complement;
+
+				task.setStart(TimePoint.ofStartOfDay(start));
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.starts, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),
+				ComplementDate.any()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final Task task = (Task) subject;
+				final LocalDate start = (LocalDate) complement;
+				if (project.getMinDay().equals(TimePoint.epoch()))
+					return CommandExecutionResult.error("No starting date for the project");
+
+				task.setStart(TimePoint.ofStartOfDay(start));
 				return CommandExecutionResult.ok();
 			}
 		});
@@ -192,6 +221,43 @@ public class SubjectTask implements Subject<GanttDiagram> {
 			}
 		});
 
+		result.add(new VerbPhraseAction(Verbs.ends, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),
+				ComplementDate.any()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final Task task = (Task) subject;
+				final LocalDate end = (LocalDate) complement;
+				if (project.getMinDay().equals(TimePoint.epoch()))
+					return CommandExecutionResult.error("No starting date for the project");
+				task.setEnd(TimePoint.ofStartOfDay(end).increment());
+
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.displayOnSameRowAs, new ComplementNamed()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final Task task1 = (Task) subject;
+				final Task task2 = project.getExistingTask((String) complement);
+				if (task2 == null)
+					return CommandExecutionResult.error("No such task " + task2);
+
+				task1.putInSameRowAs(task2);
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.is, new ComplementCompleted()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final Task task = (Task) subject;
+				final Completion completed = (Completion) complement;
+				task.setCompletion(completed.getCompletion());
+				return CommandExecutionResult.ok();
+			}
+		});
+
 		return result;
 
 	}
@@ -215,31 +281,68 @@ public class SubjectTask implements Subject<GanttDiagram> {
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionSubject() {
-		return UBrexConcat.build( //
-				SubjectTask.taskCode("SUBJECT"), //
-				StereotypePattern.uoptional("STEREOTYPE"), //
-				new UBrexOptional(UBrexConcat.build( //
-						Words.uexactly(Words.AS), //
-						UBrexLeaf.spaceOneOrMore(), //
-						SubjectTask.taskCode("SHORTNAME"))//
-				) //
-		);
+		return new UBrexOr( //
+				new UBrexNamed("IT", Words.usingle(Words.IT)), //
+				UBrexConcat.build( //
+						new UBrexOptional(UBrexConcat.build( //
+								new UBrexNamed("THEN", Words.usingle(Words.THEN)), //
+								UBrexLeaf.spaceOneOrMore())), //
+						SubjectTask.taskCode("SUBJECT"), //
+						StereotypePattern.uoptional("STEREOTYPE"), //
+						new UBrexOptional(UBrexConcat.build( //
+								Words.uexactly(Words.AS), //
+								UBrexLeaf.spaceOneOrMore(), //
+								SubjectTask.taskCode("SHORTNAME"))), //
+						new UBrexOptional(UBrexConcat.build( //
+								Words.uexactly(Words.ON), //
+								UBrexLeaf.spaceOneOrMore(), //
+								new UBrexNamed("RESOURCE", new UBrexOneOrMore( //
+										UBrexConcat.build( //
+												new UBrexLeaf("{〇+「〤{}」}"), //
+												UBrexLeaf.spaceZeroOrMore() //
+										)))) //
+						) //
+				));
 	}
 
 	@Override
-	public Failable<? extends Object> ugetMe(GanttDiagram gantt, UMatcher arg) {
-		final String subject = arg.get("SUBJECT", 0);
-		final String shortName = arg.get("SHORTNAME", 0);
-		final String then = null;
-		final String stereotype = arg.get("STEREOTYPE", 0);
-		final TaskCode code = TaskCode.fromIdAndDisplay(shortName, subject);
+	public Failable<Task> ugetMe(GanttDiagram gantt, UMatcher arg) {
 		final Task result;
-		result = gantt.getOrCreateTask(code, then != null);
+		if (arg.get("IT", 0) != null) {
+			result = gantt.getIt();
+			if (result == null)
+				return Failable.error("Not sure what are you refering to?");
+		} else {
+			final String subject = arg.get("SUBJECT", 0);
+			final String shortName = arg.get("SHORTNAME", 0);
+			final String then = arg.get("THEN", 0);
+			final String stereotype = arg.get("STEREOTYPE", 0);
 
-		if (stereotype != null)
-			result.setStereotype(Stereotype.build(arg.get("STEREOTYPE", 0)));
+			final TaskCode code = TaskCode.fromIdAndDisplay(shortName, subject);
+			result = gantt.getOrCreateTask(code, then != null);
 
-		gantt.setIt(result);
+			if (stereotype != null)
+				result.setStereotype(Stereotype.build(arg.get("STEREOTYPE", 0)));
+
+			gantt.setIt(result);
+		}
+
+		if (result == null)
+			throw new IllegalStateException();
+
+		final String resource = arg.get("RESOURCE", 0);
+		if (resource != null) {
+			for (final StringTokenizer st = new StringTokenizer(resource, "{}"); st.hasMoreTokens();) {
+				final String part = st.nextToken().trim();
+				if (part.length() > 0) {
+					final boolean ok = gantt.affectResource(result, part);
+					if (ok == false)
+						return Failable.error("Bad argument for resource");
+
+				}
+			}
+
+		}
 		return Failable.ok(result);
 
 	}

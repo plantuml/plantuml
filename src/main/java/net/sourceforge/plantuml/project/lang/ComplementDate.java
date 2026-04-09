@@ -137,12 +137,18 @@ public class ComplementDate implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<? extends Object> ugetMe(GanttDiagram diagram, UMatcher arg) {
+	public Failable<? extends Object> ugetMe(GanttDiagram system, UMatcher arg) {
 		final DayPattern dayPattern = new DayPattern("");
 		final LocalDate result = dayPattern.getDay(arg);
 		if (result != null)
 			return Failable.ok(result);
-		throw new IllegalStateException("wip42");
+		if (arg.get("DCOUNT", 0) != null)
+			return Failable.ok(resultD(system, arg));
+
+		if (arg.get("ECOUNT", 0) != null)
+			return Failable.ok(resultE(system, arg));
+
+		throw new IllegalStateException();
 	}
 
 	public Failable<LocalDate> getMe(GanttDiagram system, RegexResult arg, String suffix) {
@@ -159,6 +165,16 @@ public class ComplementDate implements Something<GanttDiagram> {
 			return Failable.ok(resultE(system, arg, suffix));
 
 		throw new IllegalStateException();
+	}
+
+	private LocalDate resultD(GanttDiagram system, UMatcher arg) {
+		final int day = Integer.parseInt(arg.get("DCOUNT", 0));
+		return system.getMinDay().plusDays(day);
+	}
+
+	private LocalDate resultE(GanttDiagram system, UMatcher arg) {
+		final int day = Integer.parseInt(arg.get("ECOUNT", 0));
+		return system.getMinDay().plusDays(day);
 	}
 
 	private LocalDate resultD(GanttDiagram system, RegexResult arg, String suffix) {

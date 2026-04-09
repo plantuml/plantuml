@@ -71,10 +71,10 @@ public class ComplementInColors2 implements Something<GanttDiagram> {
 
 	@Override
 	public Failable<? extends Object> ugetMe(GanttDiagram diagram, UMatcher arg) {
-		final List<String> color1 = arg.getCapture("COMPLEMENT1");
-		final List<String> color2 = arg.getCapture("COMPLEMENT2");
-		final HColor col1 = color1.size() == 0 ? null : diagram.getIHtmlColorSet().getColorOrWhite(color1.get(0));
-		final HColor col2 = color2.size() == 0 ? null : diagram.getIHtmlColorSet().getColorOrWhite(color2.get(0));
+		final String color1 = arg.get("COMPLEMENT1", 0);
+		final String color2 = arg.get("COMPLEMENT2", 0);
+		final HColor col1 = color1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color1);
+		final HColor col2 = color2 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color2);
 		return Failable.ok(new CenterBorderColor(col1, col2));
 	}
 

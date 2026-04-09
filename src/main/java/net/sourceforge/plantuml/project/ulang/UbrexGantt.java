@@ -41,15 +41,21 @@ import java.util.List;
 import net.sourceforge.plantuml.project.command.NaturalGanttCommand;
 import net.sourceforge.plantuml.project.lang.SubjectDayAsDate;
 import net.sourceforge.plantuml.project.lang.SubjectDayOfWeek;
+import net.sourceforge.plantuml.project.lang.SubjectDaysAsDates;
 import net.sourceforge.plantuml.project.lang.SubjectProject;
+import net.sourceforge.plantuml.project.lang.SubjectResource;
 import net.sourceforge.plantuml.project.lang.SubjectTask;
+import net.sourceforge.plantuml.project.lang.SubjectToday;
 
 public class UbrexGantt {
 
 	public static List<NaturalGanttCommand> getCommands() {
 		final List<NaturalGanttCommand> result = new ArrayList<>();
-		result.add(new NaturalGanttCommand(SubjectTask.ME));
 		result.add(new NaturalGanttCommand(SubjectProject.ME));
+		result.add(new NaturalGanttCommand(SubjectToday.ME));
+		result.add(new NaturalGanttCommand(SubjectTask.ME));
+		result.add(new NaturalGanttCommand(SubjectResource.ME));
+		result.add(new NaturalGanttCommand(SubjectDaysAsDates.ME));
 		result.add(new NaturalGanttCommand(SubjectDayOfWeek.ME));
 		result.add(new NaturalGanttCommand(SubjectDayAsDate.ME));
 		return result;

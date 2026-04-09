@@ -1,0 +1,37 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+!$PRIMARY_LIGHT = "#33b2e2"
+!$PRIMARY = "#009fdb"
+!$DARK = "#5a5a5a"
+!$SECONDARY_DARK = "#c2c2c2"
+
+<style>
+ganttDiagram {
+	task {
+		FontName "Cascadia Code PL"
+		FontSize 11
+		FontStyle bold
+		FontColor $DARK
+		BackGroundColor $PRIMARY_LIGHT-$PRIMARY
+		LineColor $SECONDARY_DARK
+	}
+
+	arrow {
+		LineColor #000000
+	}
+}
+</style>
+printscale weekly
+
+Project starts the 1st of january 2021
+2021-01-04 to 2021-01-10 are colored in #d2d2d2
+
+[Automatic branch tag on release] as [s1] starts 2021-01-15 and lasts 1 week
+then [Setup Automatic Alerts] as [s2] lasts 1 week
+
+[End] happens 150 days after start
+@endgantt

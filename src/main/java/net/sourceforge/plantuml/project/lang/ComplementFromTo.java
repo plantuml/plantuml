@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.project.lang;
 import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
-import com.plantuml.ubrex.builder.UBrexNamed;
 import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.project.Failable;

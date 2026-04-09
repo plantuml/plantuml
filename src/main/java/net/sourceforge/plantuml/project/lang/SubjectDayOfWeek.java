@@ -74,6 +74,15 @@ public class SubjectDayOfWeek implements Subject<GanttDiagram> {
 	@Override
 	public Collection<VerbPhraseAction> getVerbPhrases() {
 		final List<VerbPhraseAction> result = new ArrayList<>();
+		result.add(new VerbPhraseAction(Verbs.are, new ComplementOpen()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final DayOfWeek day = (DayOfWeek) subject;
+				project.openDayOfWeek(day, (String) complement);
+				return CommandExecutionResult.ok();
+			}
+		});
+
 		result.add(new VerbPhraseAction(Verbs.are, new ComplementClose()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
@@ -82,6 +91,7 @@ public class SubjectDayOfWeek implements Subject<GanttDiagram> {
 				return CommandExecutionResult.ok();
 			}
 		});
+
 		return result;
 
 	}
@@ -93,8 +103,7 @@ public class SubjectDayOfWeek implements Subject<GanttDiagram> {
 
 	@Override
 	public Failable<? extends Object> ugetMe(GanttDiagram diagram, UMatcher arg) {
-		System.out.println("ugetMe " + arg);
-		final String s = arg.getCapture("SUBJECT").get(0);
+		final String s = arg.get("SUBJECT", 0);
 		return Failable.ok(DayOfWeekUtils.fromString(s));
 	}
 

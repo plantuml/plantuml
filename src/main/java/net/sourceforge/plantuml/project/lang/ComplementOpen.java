@@ -65,7 +65,7 @@ public class ComplementOpen implements Something<GanttDiagram> {
 
 	@Override
 	public Failable<? extends Object> ugetMe(GanttDiagram diagram, UMatcher arg) {
-		final String value = arg.getCapture("OPEN").get(0);
+		final String value = arg.get("OPEN", 0);
 		final int x = value.indexOf('[');
 		if (x > 0) {
 			final int y = value.lastIndexOf(']');

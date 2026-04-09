@@ -37,15 +37,32 @@ package net.sourceforge.plantuml.project.lang;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOr;
+import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.project.Completion;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.project.GanttConstraint;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.core.Resource;
 import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.core.TaskAttribute;
+import net.sourceforge.plantuml.project.core.TaskInstant;
+import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -71,6 +88,39 @@ public class SubjectResource implements Subject<GanttDiagram> {
 		return Failable.ok(result);
 	}
 
+	@Override
+	public Failable<Resource> ugetMe(GanttDiagram gantt, UMatcher arg) {
+		if (arg.get("THEY", 0) != null) {
+			final Resource they = gantt.getThey();
+			if (they == null)
+				return Failable.error("Not sure who are you refering to?");
+			return Failable.ok(they);
+		}
+		final String resource = arg.get("RESOURCE", 0);
+		final Resource result = gantt.getResource(resource);
+		gantt.setThey(result);
+		return Failable.ok(result);
+	}
+
+	@Override
+	public Collection<VerbPhraseAction> getVerbPhrases() {
+		final List<VerbPhraseAction> result = new ArrayList<>();
+		result.add(new VerbPhraseAction(Verbs.isOff,
+				Words.uzeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementIntervals()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final Resource resource = (Resource) subject;
+				for (LocalDate when : (DaysAsDates) complement)
+					resource.addCloseDay(when);
+
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		return result;
+
+	}
+
 	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
 		return Arrays.asList(new IsOffDate(), new IsOffDates(), new IsOffDayOfWeek(), new IsOnDate(), new IsOnDates(),
 				new IsOffBeforeDate(), new IsOffAfterDate(), new WorksOn());
@@ -81,6 +131,16 @@ public class SubjectResource implements Subject<GanttDiagram> {
 				new RegexLeaf(1, "THEY", "(she|he|they)"), //
 				new RegexLeaf(1, "RESOURCE", "\\{([^{}]+)\\}") //
 		);
+	}
+
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionSubject() {
+		return new UBrexOr( //
+				new UBrexNamed("THEY", new UBrexLeaf("【she┇he┇they】")), //
+				UBrexConcat.build( //
+						new UBrexLeaf("{"), //
+						new UBrexNamed("RESOURCE", new UBrexLeaf("〇+「〤{}」")), //
+						new UBrexLeaf("}")));
 	}
 
 	public class WorksOn extends SentenceSimple<GanttDiagram> {

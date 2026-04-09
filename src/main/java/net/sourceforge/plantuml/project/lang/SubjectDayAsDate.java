@@ -99,8 +99,14 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<? extends Object> ugetMe(GanttDiagram diagram, UMatcher arg) {
-		return Failable.ok(resultB(arg));
+	public Failable<? extends Object> ugetMe(GanttDiagram project, UMatcher arg) {
+		if (arg.get("BDAY", 0) != null)
+			return Failable.ok(resultB(arg));
+
+		if (arg.get("ECOUNT", 0) != null)
+			return Failable.ok(resultE(project, arg));
+
+		throw new IllegalStateException();
 	}
 
 	public Failable<LocalDate> getMe(GanttDiagram project, RegexResult arg) {
@@ -115,9 +121,9 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 	}
 
 	private LocalDate resultB(UMatcher arg) {
-		final int day = Integer.parseInt(arg.getCapture("BDAY").get(0));
-		final int month = Integer.parseInt(arg.getCapture("BMONTH").get(0));
-		final int year = Integer.parseInt(arg.getCapture("BYEAR").get(0));
+		final int day = Integer.parseInt(arg.get("BDAY", 0));
+		final int month = Integer.parseInt(arg.get("BMONTH", 0));
+		final int year = Integer.parseInt(arg.get("BYEAR", 0));
 		return LocalDate.of(year, month, day);
 	}
 
@@ -129,6 +135,21 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 	}
 
 	private LocalDate resultE(GanttDiagram system, RegexResult arg) {
+		final String type = arg.get("ETYPE", 0).toUpperCase();
+		final String operation = arg.get("EOPERATION", 0);
+		int day = Integer.parseInt(arg.get("ECOUNT", 0));
+		if ("-".equals(operation))
+			day = -day;
+		if ("D".equals(type))
+			return system.getMinDay().plusDays(day);
+		if ("T".equals(type))
+			return system.getToday().plusDays(day);
+		if ("E".equals(type))
+			return system.getMaxDay().plusDays(day);
+		throw new IllegalStateException();
+	}
+
+	private LocalDate resultE(GanttDiagram system, UMatcher arg) {
 		final String type = arg.get("ETYPE", 0).toUpperCase();
 		final String operation = arg.get("EOPERATION", 0);
 		int day = Integer.parseInt(arg.get("ECOUNT", 0));
