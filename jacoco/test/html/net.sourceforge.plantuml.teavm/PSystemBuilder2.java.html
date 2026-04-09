@@ -185,46 +185,47 @@ public class PSystemBuilder2 {
 <span class="nc" id="L185">			final Diagram sys = lastFactory.createSystem(null, umlSource, null, preprocessing);</span>
 <span class="nc bnc" id="L186" title="All 2 branches missed.">			if (isOk(sys))</span>
 <span class="nc" id="L187">				return sys;</span>
+<span class="nc" id="L188">			errors.add((PSystemError) sys);</span>
 		}
 
-<span class="nc bnc" id="L190" title="All 2 branches missed.">		for (PSystemFactory f : factories) {</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">			if (!diagramTypes.contains(f.getDiagramType()))</span>
-<span class="nc" id="L192">				continue;</span>
-<span class="nc bnc" id="L193" title="All 2 branches missed.">			if (f == lastFactory)</span>
-<span class="nc" id="L194">				continue;</span>
-<span class="nc" id="L195">			BrowserLog.consoleLog(PSystemBuilder2.class, &quot;trying &quot; + f.getClass());</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">		for (PSystemFactory f : factories) {</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">			if (!diagramTypes.contains(f.getDiagramType()))</span>
+<span class="nc" id="L193">				continue;</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">			if (f == lastFactory)</span>
+<span class="nc" id="L195">				continue;</span>
+<span class="nc" id="L196">			BrowserLog.consoleLog(PSystemBuilder2.class, &quot;trying &quot; + f.getClass());</span>
 
-<span class="nc" id="L197">			final Diagram sys = f.createSystem(null, umlSource, null, preprocessing);</span>
-<span class="nc bnc" id="L198" title="All 2 branches missed.">			if (isOk(sys)) {</span>
-<span class="nc" id="L199">				BrowserLog.consoleLog(PSystemBuilder2.class, &quot;ok!&quot;);</span>
-<span class="nc" id="L200">				this.lastFactory = f;</span>
-<span class="nc" id="L201">				return sys;</span>
+<span class="nc" id="L198">			final Diagram sys = f.createSystem(null, umlSource, null, preprocessing);</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">			if (isOk(sys)) {</span>
+<span class="nc" id="L200">				BrowserLog.consoleLog(PSystemBuilder2.class, &quot;ok!&quot;);</span>
+<span class="nc" id="L201">				this.lastFactory = f;</span>
+<span class="nc" id="L202">				return sys;</span>
 			}
-<span class="nc" id="L203">			errors.add((PSystemError) sys);</span>
-<span class="nc" id="L204">		}</span>
+<span class="nc" id="L204">			errors.add((PSystemError) sys);</span>
+<span class="nc" id="L205">		}</span>
 
-<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (errors.size() == 0)</span>
-<span class="nc" id="L207">			return new PSystemUnsupported(umlSource, preprocessing);</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">		if (errors.size() == 0)</span>
+<span class="nc" id="L208">			return new PSystemUnsupported(umlSource, preprocessing);</span>
 
-<span class="nc" id="L209">		return PSystemErrorUtils.merge(errors);</span>
+<span class="nc" id="L210">		return PSystemErrorUtils.merge(errors);</span>
 	}
 
 	private boolean isOk(Diagram ps) {
-<span class="nc bnc" id="L213" title="All 6 branches missed.">		if (ps == null || ps instanceof PSystemError || ps instanceof PSystemUnsupported)</span>
-<span class="nc" id="L214">			return false;</span>
+<span class="nc bnc" id="L214" title="All 6 branches missed.">		if (ps == null || ps instanceof PSystemError || ps instanceof PSystemUnsupported)</span>
+<span class="nc" id="L215">			return false;</span>
 
-<span class="nc" id="L216">		return true;</span>
+<span class="nc" id="L217">		return true;</span>
 	}
 
 	private List&lt;String&gt; clean(String[] tab) {
-<span class="nc" id="L220">		final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L221" title="All 2 branches missed.">		for (String s : tab)</span>
-<span class="nc" id="L222">			lines.add(s);</span>
+<span class="nc" id="L221">		final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">		for (String s : tab)</span>
+<span class="nc" id="L223">			lines.add(s);</span>
 
-<span class="nc bnc" id="L224" title="All 4 branches missed.">		while (lines.size() &gt; 2 &amp;&amp; lines.get(lines.size() - 1).trim().isEmpty())</span>
-<span class="nc" id="L225">			lines.remove(lines.size() - 1);</span>
+<span class="nc bnc" id="L225" title="All 4 branches missed.">		while (lines.size() &gt; 2 &amp;&amp; lines.get(lines.size() - 1).trim().isEmpty())</span>
+<span class="nc" id="L226">			lines.remove(lines.size() - 1);</span>
 
-<span class="nc" id="L227">		return lines;</span>
+<span class="nc" id="L228">		return lines;</span>
 	}
 
 }
