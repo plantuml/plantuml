@@ -149,10 +149,14 @@ public final class DotStringFactory implements Moveable {
 		SvekUtils.println(sb);
 		sb.append("searchsize=500;");
 		SvekUtils.println(sb);
-		sb.append("compound=true;");
-		SvekUtils.println(sb);
-
 		final DotSplines dotSplines = skinParam.getDotSplines();
+		final boolean isLTR = skinParam.getRankdir() == Rankdir.LEFT_TO_RIGHT;
+
+		if (isLTR == false || dotSplines != DotSplines.ORTHO) {
+			sb.append("compound=true;");
+			SvekUtils.println(sb);
+		}
+
 		if (dotSplines == DotSplines.POLYLINE) {
 			sb.append("splines=polyline;");
 			SvekUtils.println(sb);
@@ -162,7 +166,7 @@ public final class DotStringFactory implements Moveable {
 			SvekUtils.println(sb);
 		}
 
-		if (skinParam.getRankdir() == Rankdir.LEFT_TO_RIGHT) {
+		if (isLTR) {
 			sb.append("rankdir=LR;");
 			SvekUtils.println(sb);
 		}
