@@ -59,7 +59,7 @@ public class ChallengeOneOrMore implements Challenge {
 <span class="fc bfc" id="L59" title="All 2 branches covered.">				if (currentPos &gt; position)</span>
 <span class="fc" id="L60">					return new ChallengeResult(currentPos - position, capture);</span>
 				else
-<span class="fc" id="L62">					return new ChallengeResult(NO_MATCH);</span>
+<span class="fc" id="L62">					return ChallengeResult.NO_MATCH;</span>
 <span class="pc bpc" id="L63" title="1 of 2 branches missed.">			if (shallWePass.getFullCaptureLength() == 0)</span>
 <span class="nc" id="L64">				throw new IllegalStateException(&quot;infinite loop&quot;);</span>
 <span class="fc" id="L65">			capture = capture.merge(shallWePass.getCapture());</span>

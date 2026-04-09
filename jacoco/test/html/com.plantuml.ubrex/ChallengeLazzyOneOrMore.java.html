@@ -52,7 +52,7 @@ public class ChallengeLazzyOneOrMore implements Challenge {
 		while (true) {
 <span class="fc" id="L53">			final ChallengeResult match1 = origin.runChallenge(string, currentPos);</span>
 <span class="pc bpc" id="L54" title="1 of 2 branches missed.">			if (match1.getFullCaptureLength() &lt; 0)</span>
-<span class="nc" id="L55">				return new ChallengeResult(NO_MATCH);</span>
+<span class="nc" id="L55">				return ChallengeResult.NO_MATCH;</span>
 <span class="pc bpc" id="L56" title="1 of 2 branches missed.">			if (match1.getFullCaptureLength() == 0)</span>
 <span class="nc" id="L57">				throw new IllegalStateException(&quot;infinite loop&quot;);</span>
 <span class="fc" id="L58">			capture = capture.merge(match1.getCapture());</span>

@@ -39,8 +39,8 @@ package com.plantuml.ubrex;
 	@Override
 	public ChallengeResult runChallenge(TextNavigator string, int position) {
 <span class="fc bfc" id="L41" title="All 2 branches covered.">		if (position &gt;= string.length())</span>
-<span class="fc" id="L42">			return new ChallengeResult(0);</span>
-<span class="fc" id="L43">		return new ChallengeResult(NO_MATCH);</span>
+<span class="fc" id="L42">			return ChallengeResult.ZERO;</span>
+<span class="fc" id="L43">		return ChallengeResult.NO_MATCH;</span>
 	}
 
 }

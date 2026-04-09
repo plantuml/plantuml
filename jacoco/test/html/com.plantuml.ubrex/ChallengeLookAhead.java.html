@@ -55,13 +55,13 @@ public class ChallengeLookAhead implements Challenge {
 <span class="pc bpc" id="L55" title="1 of 3 branches missed.">		switch (ahead) {</span>
 		case LOOK_AHEAD_POSITIVE:
 <span class="fc bfc" id="L57" title="All 2 branches covered.">			if (tmp &lt; 0)</span>
-<span class="fc" id="L58">				return new ChallengeResult(NO_MATCH);</span>
-<span class="fc" id="L59">			return new ChallengeResult(0);</span>
+<span class="fc" id="L58">				return ChallengeResult.NO_MATCH;</span>
+<span class="fc" id="L59">			return ChallengeResult.ZERO;</span>
 
 		case LOOK_AHEAD_NEGATIVE:
 <span class="fc bfc" id="L62" title="All 2 branches covered.">			if (tmp &lt; 0)</span>
-<span class="fc" id="L63">				return new ChallengeResult(0);</span>
-<span class="fc" id="L64">			return new ChallengeResult(NO_MATCH);</span>
+<span class="fc" id="L63">				return ChallengeResult.ZERO;</span>
+<span class="fc" id="L64">			return ChallengeResult.NO_MATCH;</span>
 		}
 <span class="nc" id="L66">		throw new IllegalStateException();</span>
 	}

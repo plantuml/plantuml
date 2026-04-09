@@ -41,7 +41,7 @@ public class ChallengeCharClass implements Challenge {
 <span class="fc" id="L41">	public ChallengeCharClass(CharClass charClass) {</span>
 <span class="fc" id="L42">		this.charClass = charClass;</span>
 <span class="fc" id="L43">	}</span>
-	
+
 	@Override
 	public String toString() {
 <span class="nc" id="L47">		return charClass.name();</span>
@@ -50,11 +50,11 @@ public class ChallengeCharClass implements Challenge {
 	@Override
 	public ChallengeResult runChallenge(TextNavigator string, int position) {
 <span class="fc bfc" id="L52" title="All 2 branches covered.">		if (string.length() == position)</span>
-<span class="fc" id="L53">			return new ChallengeResult(NO_MATCH);</span>
+<span class="fc" id="L53">			return ChallengeResult.NO_MATCH;</span>
 <span class="fc" id="L54">		final char ch = string.charAt(position);</span>
 <span class="fc bfc" id="L55" title="All 2 branches covered.">		if (charClass.matches(ch))</span>
-<span class="fc" id="L56">			return new ChallengeResult(1);</span>
-<span class="fc" id="L57">		return new ChallengeResult(NO_MATCH);</span>
+<span class="fc" id="L56">			return ChallengeResult.ONE;</span>
+<span class="fc" id="L57">		return ChallengeResult.NO_MATCH;</span>
 	}
 
 }

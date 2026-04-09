@@ -51,7 +51,7 @@ public class ChallengeUpTo implements Challenge {
 <span class="fc" id="L51">				return new ChallengeResult(currentPos - position);</span>
 <span class="fc" id="L52">			currentPos += 1;</span>
 <span class="fc bfc" id="L53" title="All 2 branches covered.">			if (currentPos &gt; string.length())</span>
-<span class="fc" id="L54">				return new ChallengeResult(NO_MATCH);</span>
+<span class="fc" id="L54">				return ChallengeResult.NO_MATCH;</span>
 <span class="fc" id="L55">		}</span>
 	}
 

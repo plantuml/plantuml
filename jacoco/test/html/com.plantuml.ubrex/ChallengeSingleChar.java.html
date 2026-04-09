@@ -73,14 +73,14 @@ public class ChallengeSingleChar implements Challenge {
 	@Override
 	public ChallengeResult runChallenge(TextNavigator string, int position) {
 <span class="fc bfc" id="L75" title="All 2 branches covered.">		if (string.length() == position)</span>
-<span class="fc" id="L76">			return new ChallengeResult(NO_MATCH);</span>
+<span class="fc" id="L76">			return ChallengeResult.NO_MATCH;</span>
 <span class="fc" id="L77">		char extract = string.charAt(position);</span>
 <span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (mode == CaseMode.CASE_INSENSITIVE)</span>
 <span class="fc" id="L79">			extract = CaseMode.ensureLowercase(extract);</span>
 
 <span class="fc bfc" id="L81" title="All 2 branches covered.">		if (extract == ch)</span>
-<span class="fc" id="L82">			return new ChallengeResult(1);</span>
-<span class="fc" id="L83">		return new ChallengeResult(NO_MATCH);</span>
+<span class="fc" id="L82">			return ChallengeResult.ONE;</span>
+<span class="fc" id="L83">		return ChallengeResult.NO_MATCH;</span>
 	}
 
 }

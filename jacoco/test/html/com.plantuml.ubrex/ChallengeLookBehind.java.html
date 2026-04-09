@@ -51,13 +51,13 @@ public class ChallengeLookBehind implements Challenge {
 <span class="pc bpc" id="L51" title="1 of 3 branches missed.">		switch (ahead) {</span>
 		case LOOK_BEHIND_POSITIVE:
 <span class="fc bfc" id="L53" title="All 2 branches covered.">			if (tmp &lt; 0)</span>
-<span class="fc" id="L54">				return new ChallengeResult(NO_MATCH);</span>
-<span class="fc" id="L55">			return new ChallengeResult(0);</span>
+<span class="fc" id="L54">				return ChallengeResult.NO_MATCH;</span>
+<span class="fc" id="L55">			return ChallengeResult.ZERO;</span>
 
 		case LOOK_BEHIND_NEGATIVE:
 <span class="fc bfc" id="L58" title="All 2 branches covered.">			if (tmp &lt; 0)</span>
-<span class="fc" id="L59">				return new ChallengeResult(0);</span>
-<span class="fc" id="L60">			return new ChallengeResult(NO_MATCH);</span>
+<span class="fc" id="L59">				return ChallengeResult.ZERO;</span>
+<span class="fc" id="L60">			return ChallengeResult.NO_MATCH;</span>
 		}
 <span class="nc" id="L62">		throw new IllegalStateException();</span>
 	}

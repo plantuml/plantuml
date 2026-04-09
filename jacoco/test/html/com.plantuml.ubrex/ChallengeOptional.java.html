@@ -52,7 +52,7 @@ public class ChallengeOptional implements Challenge {
 	public ChallengeResult runChallenge(TextNavigator string, int position) {
 <span class="fc" id="L53">		final ChallengeResult tmp = origin.runChallenge(string, position);</span>
 <span class="fc bfc" id="L54" title="All 2 branches covered.">		if (tmp.getFullCaptureLength() &lt; 0)</span>
-<span class="fc" id="L55">			return new ChallengeResult(0);</span>
+<span class="fc" id="L55">			return ChallengeResult.ZERO;</span>
 <span class="fc" id="L56">		return tmp;</span>
 	}
 

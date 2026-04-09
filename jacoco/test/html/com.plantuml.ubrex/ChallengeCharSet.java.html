@@ -92,13 +92,13 @@ import java.util.Set;
 	@Override
 	public ChallengeResult runChallenge(TextNavigator string, int position) {
 <span class="fc bfc" id="L94" title="All 2 branches covered.">		if (string.length() == position)</span>
-<span class="fc" id="L95">			return new ChallengeResult(NO_MATCH);</span>
+<span class="fc" id="L95">			return ChallengeResult.NO_MATCH;</span>
 
 <span class="fc" id="L97">		final char ch = string.charAt(position);</span>
 <span class="fc bfc" id="L98" title="All 6 branches covered.">		if ((charSet.contains(ch) || CharClassRaw.internalMatchesAny(charClasses, ch)) != reversed)</span>
-<span class="fc" id="L99">			return new ChallengeResult(1);</span>
+<span class="fc" id="L99">			return ChallengeResult.ONE;</span>
 
-<span class="fc" id="L101">		return new ChallengeResult(NO_MATCH);</span>
+<span class="fc" id="L101">		return ChallengeResult.NO_MATCH;</span>
 	}
 
 }
