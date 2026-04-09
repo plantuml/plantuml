@@ -145,8 +145,23 @@ public class ClusterDotString {
 			SvekUtils.println(sb);
 		}
 
-		if (thereALinkFromOrToGroup2)
-			sb.append(Cluster.getSpecialPointId(cluster.getGroup()) + " [shape=point,width=.01,label=\"\"];");
+		final String zaDecl = thereALinkFromOrToGroup2
+				? Cluster.getSpecialPointId(cluster.getGroup()) + " [shape=point,width=.01,label=\"\"];"
+				: null;
+
+		// Defer za to printCluster2 (between children) for centered edge
+		// routing, but only when safe:
+		// - No internal edges (state machines need za before children)
+		// - No sibling edges (edges to nodes in same parent cluster
+		//   would arc over children when za is repositioned)
+		final String centerPointDecl;
+		if (zaDecl != null && hasNoInternalEdges(lines) && hasNoEdgeToSibling(lines)) {
+			centerPointDecl = zaDecl;
+		} else {
+			centerPointDecl = null;
+			if (zaDecl != null)
+				sb.append(zaDecl);
+		}
 
 		if (thereALinkFromOrToGroup1)
 			subgraphClusterNoLabel(sb, "i");
@@ -173,7 +188,7 @@ public class ClusterDotString {
 		// -----------
 		cluster.printCluster1(sb, lines, stringBounder);
 
-		final SvekNode added = cluster.printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type);
+		final SvekNode added = cluster.printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type, centerPointDecl);
 		if (entityPositionsExceptNormal.size() > 0)
 			if (hasPort()) {
 				sb.append(empty() + " [shape=rect,width=.01,height=.01,label=");
@@ -320,6 +335,22 @@ public class ClusterDotString {
 				return true;
 
 		return false;
+	}
+
+	private boolean hasNoInternalEdges(Collection<SvekEdge> lines) {
+		for (SvekEdge line : lines)
+			if (line.isInternalToCluster(cluster))
+				return false;
+
+		return true;
+	}
+
+	private boolean hasNoEdgeToSibling(Collection<SvekEdge> lines) {
+		for (SvekEdge line : lines)
+			if (line.isEdgeToSibling(cluster.getGroup()))
+				return false;
+
+		return true;
 	}
 
 }

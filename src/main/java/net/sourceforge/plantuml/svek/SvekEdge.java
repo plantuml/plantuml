@@ -1434,6 +1434,36 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		return link.getEntity1() == group || link.getEntity2() == group;
 	}
 
+	public boolean isInternalToCluster(Cluster cluster) {
+		if (link.isInvis())
+			return false;
+
+		final java.util.Set<String> childUids = new java.util.HashSet<>();
+		for (SvekNode child : cluster.getNodes())
+			childUids.add(child.getUid());
+
+		final SvekNode n1 = bibliotekon.getNode(link.getEntity1());
+		final SvekNode n2 = bibliotekon.getNode(link.getEntity2());
+		return n1 != null && n2 != null && childUids.contains(n1.getUid()) && childUids.contains(n2.getUid());
+	}
+
+	public boolean isEdgeToSibling(Entity group) {
+		final Entity other;
+		if (link.getEntity1() == group)
+			other = link.getEntity2();
+		else if (link.getEntity2() == group)
+			other = link.getEntity1();
+		else
+			return false;
+
+		final Entity groupParent = group.getParentContainer();
+		if (groupParent == null || groupParent.isRoot())
+			return false;
+
+		final Entity otherParent = other.getParentContainer();
+		return groupParent == otherParent;
+	}
+
 	public boolean hasEntryPoint() {
 		return link.hasEntryPoint();
 	}

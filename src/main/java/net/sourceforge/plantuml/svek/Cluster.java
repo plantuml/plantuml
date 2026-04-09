@@ -537,11 +537,23 @@ public class Cluster implements Moveable {
 
 	public SvekNode printCluster2(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder,
 			DotMode dotMode, GraphvizVersion graphvizVersion, DiagramType type) {
+		return printCluster2(sb, lines, stringBounder, dotMode, graphvizVersion, type, null);
+	}
+
+	public SvekNode printCluster2(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder,
+			DotMode dotMode, GraphvizVersion graphvizVersion, DiagramType type, String centerPointDecl) {
 
 		SvekNode added = null;
 		final Collection<Together> togethers = new LinkedHashSet<>();
 		final List<SvekNode> nodesOrderedWithoutTop = getNodesOrderedWithoutTop(lines);
+		final int midpoint = nodesOrderedWithoutTop.size() / 2;
+		int idx = 0;
 		for (SvekNode node : nodesOrderedWithoutTop) {
+			// Emit the za center point between children for centered edge routing
+			if (centerPointDecl != null && idx == midpoint) {
+				sb.append(centerPointDecl);
+				SvekUtils.println(sb);
+			}
 			final Together together = node.getTogether();
 			if (together == null)
 				node.appendShape(sb, stringBounder);
@@ -549,6 +561,12 @@ public class Cluster implements Moveable {
 				addTogetherWithParents(togethers, together);
 
 			added = node;
+			idx++;
+		}
+		// If no children yet, emit at end
+		if (centerPointDecl != null && idx <= midpoint) {
+			sb.append(centerPointDecl);
+			SvekUtils.println(sb);
 		}
 		for (Cluster child : children)
 			if (child.group.getTogether() != null)
