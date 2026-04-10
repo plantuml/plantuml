@@ -37,11 +37,11 @@ package com.plantuml.ubrex;
 public class ChallengeLazzyOneOrMore implements Challenge {
 
 	private final Challenge origin;
-	private final Challenge end;
+	private final Challenge stopCondition;
 
-<span class="fc" id="L42">	public ChallengeLazzyOneOrMore(Challenge origin, Challenge end) {</span>
+<span class="fc" id="L42">	public ChallengeLazzyOneOrMore(Challenge origin, Challenge stopCondition) {</span>
 <span class="fc" id="L43">		this.origin = origin;</span>
-<span class="fc" id="L44">		this.end = end;</span>
+<span class="fc" id="L44">		this.stopCondition = stopCondition;</span>
 <span class="fc" id="L45">	}</span>
 
 	@Override
@@ -58,15 +58,14 @@ public class ChallengeLazzyOneOrMore implements Challenge {
 <span class="fc" id="L58">			capture = capture.merge(match1.getCapture());</span>
 <span class="fc" id="L59">			currentPos += match1.getFullCaptureLength();</span>
 
-<span class="fc" id="L61">			final ChallengeResult match2 = end.runChallenge(string, currentPos);</span>
-<span class="fc bfc" id="L62" title="All 2 branches covered.">			if (match2.getFullCaptureLength() &gt;= 0) {</span>
-<span class="fc" id="L63">				final int result = currentPos + match2.getFullCaptureLength() - position;</span>
-<span class="fc" id="L64">				final int nameLength = currentPos - position;</span>
-				// capture = capture.merge(match2.getCapture());
-<span class="fc" id="L66">				return new ChallengeResult(result, capture).withNameLength(nameLength, match2.getCapture());</span>
-			}
+			// Only peek at the stop condition, don't consume it.
+			// The stop condition challenges will be matched as siblings
+			// by the parent CompositeList/CompositeNamed.
+<span class="fc" id="L64">			final ChallengeResult match2 = stopCondition.runChallenge(string, currentPos);</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">			if (match2.getFullCaptureLength() &gt;= 0)</span>
+<span class="fc" id="L66">				return new ChallengeResult(currentPos - position, capture);</span>
 
-<span class="fc" id="L69">		}</span>
+<span class="fc" id="L68">		}</span>
 	}
 
 }
