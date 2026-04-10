@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,6 +55,7 @@ import com.plantuml.ubrex.builder.UBrexPart;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Completion;
+import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttConstraint;
 import net.sourceforge.plantuml.project.GanttDiagram;
@@ -266,6 +268,53 @@ public class SubjectTask implements Subject<GanttDiagram> {
 				final Task task = (Task) subject;
 				final Completion completed = (Completion) complement;
 				task.setCompletion(completed.getCompletion());
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),
+				ComplementDate.any()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final Task task = (Task) subject;
+				final LocalDate pause = (LocalDate) complement;
+				task.addPause(pause);
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),
+				new ComplementIntervals()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final Task task = (Task) subject;
+				final DaysAsDates pauses = (DaysAsDates) complement;
+				for (LocalDate day : pauses)
+					task.addPause(day);
+
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),
+				new ComplementIntervalsSmart()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final Task task = (Task) subject;
+				final DaysAsDates pauses = (DaysAsDates) complement;
+				for (LocalDate day : pauses)
+					task.addPause(day);
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),
+				new ComplementDayOfWeek()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final Task task = (Task) subject;
+				final DayOfWeek pause = (DayOfWeek) complement;
+				task.addPause(pause);
 				return CommandExecutionResult.ok();
 			}
 		});
