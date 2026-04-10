@@ -92,6 +92,17 @@ public class SubjectDayOfWeek implements Subject<GanttDiagram> {
 			}
 		});
 
+		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final HColor color = ((CenterBorderColor) complement).getCenter();
+				final DayOfWeek day = (DayOfWeek) subject;
+				project.colorDay(day, color);
+
+				return CommandExecutionResult.ok();
+			}
+		});
+
 		return result;
 
 	}
