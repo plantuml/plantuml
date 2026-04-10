@@ -232,6 +232,26 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 	@Override
 	public Collection<VerbPhraseAction> getVerbPhrases() {
 		final List<VerbPhraseAction> result = new ArrayList<>();
+		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementClose()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				for (LocalDate d : (DaysAsDates) subject)
+					project.closeDayAsDate(d, (String) complement);
+
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementOpen()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				for (LocalDate d : (DaysAsDates) subject)
+					project.openDayAsDate(d, (String) complement);
+
+				return CommandExecutionResult.ok();
+			}
+		});
+
 		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {

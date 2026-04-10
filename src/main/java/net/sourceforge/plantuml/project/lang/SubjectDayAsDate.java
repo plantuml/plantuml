@@ -99,7 +99,7 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<? extends Object> ugetMe(GanttDiagram project, UMatcher arg) {
+	public Failable<LocalDate> ugetMe(GanttDiagram project, UMatcher arg) {
 		if (arg.get("BDAY", 0) != null)
 			return Failable.ok(resultB(arg));
 

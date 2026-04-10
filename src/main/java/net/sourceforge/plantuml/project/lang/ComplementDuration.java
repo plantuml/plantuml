@@ -78,7 +78,7 @@ public class ComplementDuration implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<? extends Object> ugetMe(GanttDiagram system, UMatcher arg) {
+	public Failable<Load> ugetMe(GanttDiagram system, UMatcher arg) {
 
 		final int firstValue = Integer.parseInt(arg.get("CNUM1", 0));
 		final String firstUnit = arg.get("CUNIT1", 0);

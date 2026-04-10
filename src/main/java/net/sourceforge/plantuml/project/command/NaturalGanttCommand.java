@@ -133,7 +133,7 @@ public class NaturalGanttCommand implements Command<GanttDiagram> {
 		for (VerbPhraseAction verbPhrase : getVerbPhrases()) {
 			System.out.println("3 VP = " + verbPhrase);
 			if (verbPhrase.check(tn)) {
-				System.out.println("4 OK!");
+				System.out.println("4 OK! " + subject.getClass() + " " + verbPhrase.getClass());
 				return CommandControl.OK;
 			}
 		}

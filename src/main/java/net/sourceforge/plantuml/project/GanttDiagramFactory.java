@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.project.command.CommandSeparator;
 import net.sourceforge.plantuml.project.command.CommandTaskCompleteDefault;
 import net.sourceforge.plantuml.project.command.CommandWeekNumberStrategy;
 import net.sourceforge.plantuml.project.command.NaturalCommand;
+import net.sourceforge.plantuml.project.command.NaturalGanttCommand;
 import net.sourceforge.plantuml.project.lang.SentenceAnd;
 import net.sourceforge.plantuml.project.lang.SentenceAndAnd;
 import net.sourceforge.plantuml.project.lang.SentenceSimple;
@@ -77,13 +78,12 @@ import net.sourceforge.plantuml.project.lang.SubjectResource;
 import net.sourceforge.plantuml.project.lang.SubjectSeparator;
 import net.sourceforge.plantuml.project.lang.SubjectTask;
 import net.sourceforge.plantuml.project.lang.SubjectToday;
-import net.sourceforge.plantuml.project.ulang.UbrexGantt;
 import net.sourceforge.plantuml.style.CommandStyleImport;
 import net.sourceforge.plantuml.style.CommandStyleMultilinesCSS;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class GanttDiagramFactory extends PSystemCommandFactory {
-	
+
 	private final static boolean FORCE_UBREX = true;
 
 	static private final List<Subject<GanttDiagram>> subjects() {
@@ -131,7 +131,14 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 	private void addLanguageCommands(List<Command> cmd) {
 
 		if (FORCE_UBREX || TeaVM.isTeaVM()) {
-			cmd.addAll(UbrexGantt.getCommands());
+			cmd.add(new NaturalGanttCommand(SubjectProject.ME));
+			cmd.add(new NaturalGanttCommand(SubjectToday.ME));
+			cmd.add(new NaturalGanttCommand(SubjectTask.ME));
+			cmd.add(new NaturalGanttCommand(SubjectResource.ME));
+			cmd.add(new NaturalGanttCommand(SubjectDaysAsDates.ME));
+			cmd.add(new NaturalGanttCommand(SubjectDayOfWeek.ME));
+			cmd.add(new NaturalGanttCommand(SubjectDayAsDate.ME));
+			cmd.add(new NaturalGanttCommand(SubjectSeparator.ME));
 		} else {
 			for (Subject<GanttDiagram> subject : subjects())
 				for (SentenceSimple<GanttDiagram> sentenceA : subject.getSentences()) {

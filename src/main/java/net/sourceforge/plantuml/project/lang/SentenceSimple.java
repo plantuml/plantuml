@@ -87,6 +87,7 @@ public abstract class SentenceSimple<D extends Diagram> implements Sentence<D> {
 	}
 
 	public final CommandExecutionResult execute(D project, RegexResult arg) {
+		System.out.println("RUNNING " + this);
 		final Failable<? extends Object> currentSubject = subject.getMe(project, arg);
 		if (currentSubject.isFail())
 			return CommandExecutionResult.error(currentSubject.getError());

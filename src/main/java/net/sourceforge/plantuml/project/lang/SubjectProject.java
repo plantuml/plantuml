@@ -92,7 +92,7 @@ public class SubjectProject implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<? extends Object> ugetMe(GanttDiagram project, UMatcher arg) {
+	public Failable<GanttDiagram> ugetMe(GanttDiagram project, UMatcher arg) {
 		return Failable.ok(project);
 	}
 

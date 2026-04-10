@@ -37,6 +37,10 @@ package net.sourceforge.plantuml.project.lang;
 
 import java.time.DayOfWeek;
 
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.DayOfWeekUtils;
@@ -50,6 +54,17 @@ public class ComplementDayOfWeek implements Something<GanttDiagram> {
 	public IRegex toRegex(String suffix) {
 		return new RegexConcat( //
 				new RegexLeaf(1, "COMPLEMENT" + suffix, "(" + DayOfWeekUtils.getRegexString() + ")")); //
+	}
+
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+		return new UBrexNamed("COMPLEMENT", DayOfWeekUtils.getUbrex());
+	}
+
+	@Override
+	public Failable<DayOfWeek> ugetMe(GanttDiagram diagram, UMatcher arg) {
+		final String s = arg.get("COMPLEMENT", 0);
+		return Failable.ok(DayOfWeekUtils.fromString(s));
 	}
 
 	public Failable<DayOfWeek> getMe(GanttDiagram project, RegexResult arg, String suffix) {

@@ -90,8 +90,8 @@ public class ComplementBeforeOrAfterOrAtTaskStartOrEnd extends AbstractComplemen
 		final UBrexPart durationBeforeOrAfter = UBrexConcat.build( //
 				new UBrexNamed("COMPLEMENT_NB1", new UBrexLeaf("〇+〴d")), //
 				UBrexLeaf.spaceOneOrMore(), //
-				new UBrexNamed("COMPLEMENT_WORKING1",
-						new UBrexOptional(UBrexConcat.build(new UBrexLeaf("working"), UBrexLeaf.spaceOneOrMore()))), //
+				new UBrexOptional(UBrexConcat.build(new UBrexNamed("COMPLEMENT_WORKING1", new UBrexLeaf("working")),
+						UBrexLeaf.spaceOneOrMore())), //
 				new UBrexNamed("COMPLEMENT_DAY_OR_WEEK1", new UBrexLeaf("【day┇week】")), //
 				new UBrexLeaf("〇?s"), //
 				new UBrexOptional(UBrexConcat.build( //
@@ -100,9 +100,10 @@ public class ComplementBeforeOrAfterOrAtTaskStartOrEnd extends AbstractComplemen
 						UBrexLeaf.spaceOneOrMore(), //
 						new UBrexNamed("COMPLEMENT_NB2", new UBrexLeaf("〇+〴d")), //
 						UBrexLeaf.spaceOneOrMore(), //
-						new UBrexNamed("COMPLEMENT_WORKING2",
-								new UBrexOptional(
-										UBrexConcat.build(new UBrexLeaf("working"), UBrexLeaf.spaceOneOrMore()))), //
+
+						new UBrexOptional(
+								UBrexConcat.build(new UBrexNamed("COMPLEMENT_WORKING2", new UBrexLeaf("working")),
+										UBrexLeaf.spaceOneOrMore())), //
 						new UBrexNamed("COMPLEMENT_DAY_OR_WEEK2", new UBrexLeaf("【day┇week】")), //
 						new UBrexLeaf("〇?s"))), //
 				UBrexLeaf.spaceOneOrMore(), //
@@ -123,7 +124,7 @@ public class ComplementBeforeOrAfterOrAtTaskStartOrEnd extends AbstractComplemen
 	}
 
 	@Override
-	public Failable<? extends Object> ugetMe(GanttDiagram system, UMatcher arg) {
+	public Failable<TaskInstant> ugetMe(GanttDiagram system, UMatcher arg) {
 		return getComplementTaskInstant(system, arg);
 	}
 

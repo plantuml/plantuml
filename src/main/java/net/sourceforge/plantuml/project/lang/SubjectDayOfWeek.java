@@ -96,13 +96,13 @@ public class SubjectDayOfWeek implements Subject<GanttDiagram> {
 
 	}
 
-	public Failable<? extends Object> getMe(GanttDiagram project, RegexResult arg) {
+	public Failable<DayOfWeek> getMe(GanttDiagram project, RegexResult arg) {
 		final String s = arg.get("SUBJECT", 0);
 		return Failable.ok(DayOfWeekUtils.fromString(s));
 	}
 
 	@Override
-	public Failable<? extends Object> ugetMe(GanttDiagram diagram, UMatcher arg) {
+	public Failable<DayOfWeek> ugetMe(GanttDiagram diagram, UMatcher arg) {
 		final String s = arg.get("SUBJECT", 0);
 		return Failable.ok(DayOfWeekUtils.fromString(s));
 	}

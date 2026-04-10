@@ -136,4 +136,8 @@ public class Words {
 		return new RegexConcat(expressions);
 	}
 
+	public static UBrexPart uconcat(UBrexPart... expressions) {
+		return UBrexConcat.build(expressions);
+	}
+
 }

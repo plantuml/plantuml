@@ -78,7 +78,7 @@ public class SubjectToday implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<? extends Object> ugetMe(GanttDiagram project, UMatcher arg) {
+	public Failable<Today> ugetMe(GanttDiagram project, UMatcher arg) {
 		return Failable.ok(new Today());
 	}
 

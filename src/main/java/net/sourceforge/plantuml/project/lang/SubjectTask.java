@@ -144,18 +144,6 @@ public class SubjectTask implements Subject<GanttDiagram> {
 			}
 		});
 
-		result.add(new VerbPhraseAction(Verbs.ends, new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {
-			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-				final Task task = (Task) subject;
-				final TaskInstant when = (TaskInstant) complement;
-				task.setEnd(when.getInstantPrecise());
-				project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),
-						when, new TaskInstant(task, TaskAttribute.END)));
-				return CommandExecutionResult.ok();
-			}
-		});
-
 		result.add(new VerbPhraseAction(Verbs.isColored, new ComplementInColors()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
@@ -217,6 +205,30 @@ public class SubjectTask implements Subject<GanttDiagram> {
 						new TaskInstant(from, TaskAttribute.START), new TaskInstant(task, TaskAttribute.START)));
 				project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),
 						new TaskInstant(to, TaskAttribute.END), new TaskInstant(task, TaskAttribute.END)));
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.ends, new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final Task task = (Task) subject;
+				final TaskInstant when = (TaskInstant) complement;
+				task.setEnd(when.getInstantPrecise());
+				project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),
+						when, new TaskInstant(task, TaskAttribute.END)));
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.ends, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),
+				ComplementDate.onlyRelative()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final Task task = (Task) subject;
+				final LocalDate end = (LocalDate) complement;
+
+				task.setEnd(TimePoint.ofEndOfDayMinusOneSecond(end).increment());
 				return CommandExecutionResult.ok();
 			}
 		});
