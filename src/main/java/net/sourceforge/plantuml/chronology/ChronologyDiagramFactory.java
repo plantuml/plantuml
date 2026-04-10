@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.project.lang.Subject;
 public class ChronologyDiagramFactory extends PSystemCommandFactory {
 
 	static private final List<Subject<ChronologyDiagram>> subjects() {
-		return Arrays.asList(SubjectTask.ME);
+		return Arrays.asList(SubjectChronologyTask.ME);
 	}
 
 	public ChronologyDiagramFactory() {

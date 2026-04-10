@@ -53,11 +53,11 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
 
-public class SubjectTask implements Subject<ChronologyDiagram> {
+public class SubjectChronologyTask implements Subject<ChronologyDiagram> {
 
-	public static final Subject<ChronologyDiagram> ME = new SubjectTask();
+	public static final Subject<ChronologyDiagram> ME = new SubjectChronologyTask();
 
-	private SubjectTask() {
+	private SubjectChronologyTask() {
 	}
 
 	public Failable<Task> getMe(ChronologyDiagram chronology, RegexResult arg) {
