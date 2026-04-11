@@ -130,9 +130,9 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 
 <span class="fc" id="L131">		final double sumWidth = getFullSegmentsLength();</span>
 <span class="pc bpc" id="L132" title="1 of 2 branches missed.">		final double lim = completion == 100 ? sumWidth : sumWidth * completion / 100;</span>
-<span class="pc bpc" id="L133" title="5 of 6 branches missed.">		if (segments.size() == 1 &amp;&amp; !oddStart &amp;&amp; !oddEnd) {</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">			drawFull(completion == 100 ? -1 : lim, ug, segments.get(0), height, documentBackground);</span>
-<span class="nc" id="L135">			return;</span>
+<span class="pc bpc" id="L133" title="2 of 6 branches missed.">		if (segments.size() == 1 &amp;&amp; !oddStart &amp;&amp; !oddEnd) {</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">			drawFull(completion == 100 ? -1 : lim, ug, segments.get(0), height, documentBackground);</span>
+<span class="fc" id="L135">			return;</span>
 		}
 <span class="fc" id="L137">		double current = 0;</span>
 
@@ -169,7 +169,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc bfc" id="L169" title="All 2 branches covered.">		for (int i = 0; i &lt; segments.size() - 1; i++) {</span>
 <span class="fc" id="L170">			final double v1 = segments.get(i).getPos2() + 3;</span>
 <span class="fc" id="L171">			final double v2 = segments.get(i + 1).getPos1() - 3;</span>
-<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			if (v2 &gt; v1)</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">			if (v2 &gt; v1)</span>
 <span class="fc" id="L173">				draw2hlines(ug.apply(UTranslate.dx(v1)), height, ULine.hline(v2 - v1));</span>
 
 		}
@@ -177,12 +177,12 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 
 	private void drawFull(double widthCompletion, UGraphic ug, final Segment segment, double height,
 			HColor documentBackground) {
-<span class="nc" id="L180">		double width = segment.getLength();</span>
-<span class="nc" id="L181">		ug = ug.apply(UTranslate.dx(segment.getPos1()));</span>
-<span class="nc" id="L182">		drawBackgroundRect(widthCompletion, ug.apply(HColors.none()), documentBackground, width, height);</span>
-<span class="nc" id="L183">		final URectangle rect = URectangle.build(width, height);</span>
-<span class="nc" id="L184">		ug.apply(HColors.none().bg()).draw(rect);</span>
-<span class="nc" id="L185">	}</span>
+<span class="fc" id="L180">		double width = segment.getLength();</span>
+<span class="fc" id="L181">		ug = ug.apply(UTranslate.dx(segment.getPos1()));</span>
+<span class="fc" id="L182">		drawBackgroundRect(widthCompletion, ug.apply(HColors.none()), documentBackground, width, height);</span>
+<span class="fc" id="L183">		final URectangle rect = URectangle.build(width, height);</span>
+<span class="fc" id="L184">		ug.apply(HColors.none().bg()).draw(rect);</span>
+<span class="fc" id="L185">	}</span>
 
 	private void drawPartly(double widthCompletion, UGraphic ug, final Segment segment, double height,
 			HColor documentBackground, int i, boolean withStartVline, boolean withEndVline) {

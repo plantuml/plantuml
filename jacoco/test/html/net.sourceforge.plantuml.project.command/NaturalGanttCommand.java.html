@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NaturalGanttCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.command</a> &gt; <span class="el_source">NaturalGanttCommand.java</span></div><h1>NaturalGanttCommand.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.command;
+
+import java.util.ArrayDeque;
+import java.util.Collection;
+import java.util.Deque;
+
+import com.plantuml.ubrex.TextNavigator;
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexPart;
+
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommandControl;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.lang.Subject;
+import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
+import net.sourceforge.plantuml.project.ulang.VerbPhraseMatcher;
+import net.sourceforge.plantuml.utils.BlocLines;
+
+public class NaturalGanttCommand implements Command&lt;GanttDiagram&gt; {
+
+<span class="nc" id="L61">	private static final UBrexPart AND = new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;s and &quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;s&quot;);</span>
+
+	private final Subject&lt;GanttDiagram&gt; subject;
+
+<span class="nc" id="L65">	public NaturalGanttCommand(Subject&lt;GanttDiagram&gt; subject) {</span>
+<span class="nc" id="L66">		this.subject = subject;</span>
+<span class="nc" id="L67">	}</span>
+
+	private Collection&lt;VerbPhraseAction&gt; getVerbPhrases() {
+<span class="nc" id="L70">		return subject.getVerbPhrases();</span>
+	}
+
+	@Override
+	public CommandExecutionResult execute(GanttDiagram diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
+
+<span class="nc" id="L77">		final TextNavigator tn = TextNavigator.build(lines.getFirst().getString());</span>
+<span class="nc" id="L78">		VerbPhraseAction.skipSpaces(tn);</span>
+
+<span class="nc" id="L80">		final UMatcher matcherSubject = subject.toUnicodeBracketedExpressionSubject().match(tn);</span>
+<span class="nc" id="L81">		tn.jump(matcherSubject.getAcceptedMatch().length());</span>
+<span class="nc" id="L82">		VerbPhraseAction.skipSpaces(tn);</span>
+
+<span class="nc" id="L84">		CommandExecutionResult result = null;</span>
+
+<span class="nc" id="L86">		final Deque&lt;VerbPhraseAction&gt; candidates = new ArrayDeque&lt;VerbPhraseAction&gt;(getVerbPhrases());</span>
+
+<span class="nc" id="L88">		final Failable&lt;? extends Object&gt; subjectResult = subject.ugetMe(diagram, matcherSubject);</span>
+
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		while (!candidates.isEmpty()) {</span>
+<span class="nc" id="L91">			final VerbPhraseAction verbPhrase = candidates.removeFirst();</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">			if (verbPhrase.check(tn) == false)</span>
+<span class="nc" id="L93">				continue;</span>
+
+<span class="nc" id="L95">			final VerbPhraseMatcher args = verbPhrase.parse(tn);</span>
+
+<span class="nc" id="L97">			final Failable&lt;? extends Object&gt; complement = verbPhrase.getComplement(diagram, args);</span>
+
+<span class="nc" id="L99">			result = verbPhrase.execute(diagram, subjectResult.get(), complement.get());</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (result.isOk() == false)</span>
+<span class="nc" id="L101">				return result;</span>
+
+<span class="nc" id="L103">			final UMatcher andMatcher = AND.match(tn);</span>
+<span class="nc" id="L104">			final String andMatch = andMatcher.getAcceptedMatch();</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (andMatch.length() == 0)</span>
+<span class="nc" id="L106">				return result;</span>
+
+<span class="nc" id="L108">			result = null;</span>
+<span class="nc" id="L109">			tn.jump(andMatch.length());</span>
+
+<span class="nc" id="L111">			candidates.clear();</span>
+<span class="nc" id="L112">			candidates.addAll(getVerbPhrases());</span>
+
+<span class="nc" id="L114">		}</span>
+
+<span class="nc" id="L116">		return CommandExecutionResult.error(&quot;No matching verb phrase&quot;);</span>
+
+	}
+
+	@Override
+	public CommandControl isValid(BlocLines lines) {
+<span class="nc" id="L122">		final TextNavigator tn = TextNavigator.build(lines.getFirst().getString());</span>
+<span class="nc" id="L123">		VerbPhraseAction.skipSpaces(tn);</span>
+<span class="nc" id="L124">		System.out.println(&quot;1 TN = &quot; + tn);</span>
+
+<span class="nc" id="L126">		final UMatcher matcherSubject = subject.toUnicodeBracketedExpressionSubject().match(tn);</span>
+<span class="nc" id="L127">		final String v1 = matcherSubject.getAcceptedMatch();</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (v1.length() == 0)</span>
+<span class="nc" id="L129">			return CommandControl.NOT_OK;</span>
+
+<span class="nc" id="L131">		tn.jump(v1.length());</span>
+<span class="nc" id="L132">		VerbPhraseAction.skipSpaces(tn);</span>
+<span class="nc" id="L133">		System.out.println(&quot;2 TN = &quot; + tn);</span>
+
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		for (VerbPhraseAction verbPhrase : getVerbPhrases()) {</span>
+<span class="nc" id="L136">			System.out.println(&quot;3 VP = &quot; + verbPhrase);</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">			if (verbPhrase.check(tn)) {</span>
+<span class="nc" id="L138">				System.out.println(&quot;4 OK! &quot; + subject.getClass() + &quot; &quot; + verbPhrase.getClass());</span>
+<span class="nc" id="L139">				return CommandControl.OK;</span>
+			}
+<span class="nc" id="L141">		}</span>
+
+		// TODO: manage &quot;AND&quot;
+
+<span class="nc" id="L145">		System.out.println(&quot;4 NOT_OK!&quot;);</span>
+<span class="nc" id="L146">		return CommandControl.NOT_OK;</span>
+	}
+
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		return pass == ParserPass.ONE;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

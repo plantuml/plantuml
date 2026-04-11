@@ -56,32 +56,34 @@ import net.sourceforge.plantuml.regex.RegexResult;
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
-<span class="nc" id="L59">		return new UBrexNamed(&quot;OPEN&quot;, UBrexConcat.build( //</span>
-<span class="nc" id="L60">				new UBrexLeaf(&quot;open&quot; + String.valueOf((char)0x3007) + &quot;?e&quot; + String.valueOf((char)0x3007) + &quot;?d&quot;), //</span>
-				new UBrexOptional(new UBrexLeaf(&quot; for &quot; + SubjectTask.UBREX_TASK_CODE))));
+<span class="nc" id="L59">		return new UBrexNamed(&quot;OPEN&quot;, //</span>
+<span class="nc" id="L60">				UBrexConcat.build( //</span>
+<span class="nc" id="L61">						new UBrexLeaf(&quot;open&quot; + String.valueOf((char)0x3007) + &quot;?e&quot; + String.valueOf((char)0x3007) + &quot;?d&quot;), //</span>
+						new UBrexOptional(
+<span class="nc" id="L63">								UBrexConcat.build(new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x2219) + &quot;for&quot; + String.valueOf((char)0x2219) + &quot;&quot;), SubjectTask.taskCode(&quot;FOO&quot;)))));</span>
 	}
 
 	@Override
-	public Failable&lt;? extends Object&gt; ugetMe(GanttDiagram diagram, UMatcher arg) {
-<span class="nc" id="L66">		final String value = arg.getCapture(&quot;OPEN&quot;).get(0);</span>
-<span class="nc" id="L67">		final int x = value.indexOf('[');</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (x &gt; 0) {</span>
-<span class="nc" id="L69">			final int y = value.lastIndexOf(']');</span>
-<span class="nc" id="L70">			final String s = value.substring(x + 1, y);</span>
-<span class="nc" id="L71">			return Failable.ok(s);</span>
+	public Failable&lt;String&gt; ugetMe(GanttDiagram diagram, UMatcher arg) {
+<span class="nc" id="L68">		final String value = arg.get(&quot;OPEN&quot;, 0);</span>
+<span class="nc" id="L69">		final int x = value.indexOf('[');</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (x &gt; 0) {</span>
+<span class="nc" id="L71">			final int y = value.lastIndexOf(']');</span>
+<span class="nc" id="L72">			final String s = value.substring(x + 1, y);</span>
+<span class="nc" id="L73">			return Failable.ok(s);</span>
 		}
-<span class="nc" id="L73">		return Failable.ok(&quot;&quot;);</span>
+<span class="nc" id="L75">		return Failable.ok(&quot;&quot;);</span>
 	}
 
 	public Failable&lt;String&gt; getMe(GanttDiagram project, RegexResult arg, String suffix) {
-<span class="nc" id="L77">		final String value = arg.get(&quot;OPEN&quot; + suffix, 0);</span>
-<span class="nc" id="L78">		final int x = value.indexOf('[');</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (x &gt; 0) {</span>
-<span class="nc" id="L80">			final int y = value.lastIndexOf(']');</span>
-<span class="nc" id="L81">			final String s = value.substring(x + 1, y);</span>
-<span class="nc" id="L82">			return Failable.ok(s);</span>
+<span class="fc" id="L79">		final String value = arg.get(&quot;OPEN&quot; + suffix, 0);</span>
+<span class="fc" id="L80">		final int x = value.indexOf('[');</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (x &gt; 0) {</span>
+<span class="fc" id="L82">			final int y = value.lastIndexOf(']');</span>
+<span class="fc" id="L83">			final String s = value.substring(x + 1, y);</span>
+<span class="fc" id="L84">			return Failable.ok(s);</span>
 		}
-<span class="nc" id="L84">		return Failable.ok(&quot;&quot;);</span>
+<span class="fc" id="L86">		return Failable.ok(&quot;&quot;);</span>
 	}
 
 }

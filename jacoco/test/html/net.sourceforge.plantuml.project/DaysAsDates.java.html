@@ -53,17 +53,17 @@ public class DaysAsDates implements Iterable&lt;LocalDate&gt; {
 <span class="nc" id="L53">		return &quot;{ &quot; + date1 + &quot; , &quot; + date2 + &quot; }&quot;;</span>
 	}
 
-<span class="nc" id="L56">	public DaysAsDates(GanttDiagram gantt, LocalDate date1, int count) {</span>
-<span class="nc" id="L57">		this.date1 = date1;</span>
-<span class="nc" id="L58">		LocalDate tmp = date1;</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		while (count &gt; 0) {</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">			if (gantt.isOpen(tmp)) {</span>
-<span class="nc" id="L61">				count--;</span>
+<span class="fc" id="L56">	public DaysAsDates(GanttDiagram gantt, LocalDate date1, int count) {</span>
+<span class="fc" id="L57">		this.date1 = date1;</span>
+<span class="fc" id="L58">		LocalDate tmp = date1;</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		while (count &gt; 0) {</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">			if (gantt.isOpen(tmp)) {</span>
+<span class="fc" id="L61">				count--;</span>
 			}
-<span class="nc" id="L63">			tmp = tmp.plusDays(1);</span>
+<span class="fc" id="L63">			tmp = tmp.plusDays(1);</span>
 		}
-<span class="nc" id="L65">		this.date2 = tmp;</span>
-<span class="nc" id="L66">	}</span>
+<span class="fc" id="L65">		this.date2 = tmp;</span>
+<span class="fc" id="L66">	}</span>
 
 	class MyIterator implements Iterator&lt;LocalDate&gt; {
 

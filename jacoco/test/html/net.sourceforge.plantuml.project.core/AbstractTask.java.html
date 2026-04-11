@@ -54,9 +54,9 @@ public abstract class AbstractTask implements Task {
 
 	@Override
 	final public void putInSameRowAs(Task row) {
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (this != row)</span>
-<span class="nc" id="L58">			this.row = row;</span>
-<span class="nc" id="L59">	}</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		if (this != row)</span>
+<span class="fc" id="L58">			this.row = row;</span>
+<span class="fc" id="L59">	}</span>
 
 	@Override
 	public final Task getRow() {
@@ -80,7 +80,7 @@ public abstract class AbstractTask implements Task {
 
 	@Override
 	public String getDisplayString() {
-<span class="nc" id="L83">		return this.displayString;</span>
+<span class="fc" id="L83">		return this.displayString;</span>
 	}
 	
 	@Override

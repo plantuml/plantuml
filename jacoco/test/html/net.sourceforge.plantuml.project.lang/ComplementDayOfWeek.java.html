@@ -37,6 +37,10 @@ package net.sourceforge.plantuml.project.lang;
 
 import java.time.DayOfWeek;
 
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.DayOfWeekUtils;
@@ -45,16 +49,27 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-<span class="fc" id="L48">public class ComplementDayOfWeek implements Something&lt;GanttDiagram&gt; {</span>
+<span class="fc" id="L52">public class ComplementDayOfWeek implements Something&lt;GanttDiagram&gt; {</span>
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L51">		return new RegexConcat( //</span>
-<span class="fc" id="L52">				new RegexLeaf(1, &quot;COMPLEMENT&quot; + suffix, &quot;(&quot; + DayOfWeekUtils.getRegexString() + &quot;)&quot;)); //</span>
+<span class="fc" id="L55">		return new RegexConcat( //</span>
+<span class="fc" id="L56">				new RegexLeaf(1, &quot;COMPLEMENT&quot; + suffix, &quot;(&quot; + DayOfWeekUtils.getRegexString() + &quot;)&quot;)); //</span>
+	}
+
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+<span class="nc" id="L61">		return new UBrexNamed(&quot;COMPLEMENT&quot;, DayOfWeekUtils.getUbrex());</span>
+	}
+
+	@Override
+	public Failable&lt;DayOfWeek&gt; ugetMe(GanttDiagram diagram, UMatcher arg) {
+<span class="nc" id="L66">		final String s = arg.get(&quot;COMPLEMENT&quot;, 0);</span>
+<span class="nc" id="L67">		return Failable.ok(DayOfWeekUtils.fromString(s));</span>
 	}
 
 	public Failable&lt;DayOfWeek&gt; getMe(GanttDiagram project, RegexResult arg, String suffix) {
-<span class="nc" id="L56">		final String s = arg.get(&quot;COMPLEMENT&quot; + suffix, 0);</span>
-<span class="nc" id="L57">		return Failable.ok(DayOfWeekUtils.fromString(s));</span>
+<span class="nc" id="L71">		final String s = arg.get(&quot;COMPLEMENT&quot; + suffix, 0);</span>
+<span class="nc" id="L72">		return Failable.ok(DayOfWeekUtils.fromString(s));</span>
 	}
 
 }

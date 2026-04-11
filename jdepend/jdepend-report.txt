@@ -3079,7 +3079,7 @@ Concrete Classes:
     net.sourceforge.plantuml.chronology.ChronologyDiagramFactory
     net.sourceforge.plantuml.chronology.ComplementHour
     net.sourceforge.plantuml.chronology.SentenceHappensChronology
-    net.sourceforge.plantuml.chronology.SubjectTask
+    net.sourceforge.plantuml.chronology.SubjectChronologyTask
     net.sourceforge.plantuml.chronology.TaskChronology
     net.sourceforge.plantuml.chronology.TimeHeaderChronology
     net.sourceforge.plantuml.chronology.TimeHeaderChronology$Pending
@@ -8539,10 +8539,10 @@ Stats:
     Abstract Classes: 2
 
     Ca: 9
-    Ce: 33
+    Ce: 32
 
     A: 0.12
-    I: 0.79
+    I: 0.78
     D: 0.1
 
 Abstract Classes:
@@ -8595,7 +8595,6 @@ Depends Upon:
     net.sourceforge.plantuml.project.solver
     net.sourceforge.plantuml.project.time
     net.sourceforge.plantuml.project.timescale
-    net.sourceforge.plantuml.project.ulang
     net.sourceforge.plantuml.real
     net.sourceforge.plantuml.stereo
     net.sourceforge.plantuml.style
@@ -8887,16 +8886,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 65
-    Concrete Classes: 64
+    Total Classes: 101
+    Concrete Classes: 100
     Abstract Classes: 1
 
     Ca: 5
     Ce: 16
 
-    A: 0.02
+    A: 0.01
     I: 0.76
-    D: 0.22
+    D: 0.23
 
 Abstract Classes:
     net.sourceforge.plantuml.project.lang.Sentence
@@ -8904,6 +8903,7 @@ Abstract Classes:
 Concrete Classes:
     net.sourceforge.plantuml.project.lang.CenterBorderColor
     net.sourceforge.plantuml.project.lang.ComplementDate$Type
+    net.sourceforge.plantuml.project.lang.ComplementDeleted
     net.sourceforge.plantuml.project.lang.ComplementEmpty
     net.sourceforge.plantuml.project.lang.SentenceAnd
     net.sourceforge.plantuml.project.lang.SentenceAndAnd
@@ -8934,9 +8934,15 @@ Concrete Classes:
     net.sourceforge.plantuml.project.lang.SubjectDayAsDate$InColor
     net.sourceforge.plantuml.project.lang.SubjectDayAsDate$Open
     net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$1
+    net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$2
+    net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$3
     net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$AreClose
     net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$AreOpen
     net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$InColor
+    net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$1
+    net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$2
+    net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$3
+    net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$4
     net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$Close
     net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$InColor
     net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$Named
@@ -8946,7 +8952,14 @@ Concrete Classes:
     net.sourceforge.plantuml.project.lang.SubjectProject
     net.sourceforge.plantuml.project.lang.SubjectProject$1
     net.sourceforge.plantuml.project.lang.SubjectProject$Starts
-    net.sourceforge.plantuml.project.lang.SubjectResource
+    net.sourceforge.plantuml.project.lang.SubjectResource$1
+    net.sourceforge.plantuml.project.lang.SubjectResource$2
+    net.sourceforge.plantuml.project.lang.SubjectResource$3
+    net.sourceforge.plantuml.project.lang.SubjectResource$4
+    net.sourceforge.plantuml.project.lang.SubjectResource$5
+    net.sourceforge.plantuml.project.lang.SubjectResource$6
+    net.sourceforge.plantuml.project.lang.SubjectResource$7
+    net.sourceforge.plantuml.project.lang.SubjectResource$8
     net.sourceforge.plantuml.project.lang.SubjectResource$IsOffAfterDate
     net.sourceforge.plantuml.project.lang.SubjectResource$IsOffBeforeDate
     net.sourceforge.plantuml.project.lang.SubjectResource$IsOffDate
@@ -8956,12 +8969,34 @@ Concrete Classes:
     net.sourceforge.plantuml.project.lang.SubjectResource$IsOnDates
     net.sourceforge.plantuml.project.lang.SubjectResource$WorksOn
     net.sourceforge.plantuml.project.lang.SubjectSeparator
+    net.sourceforge.plantuml.project.lang.SubjectSeparator$1
+    net.sourceforge.plantuml.project.lang.SubjectSeparator$2
+    net.sourceforge.plantuml.project.lang.SubjectSeparator$3
     net.sourceforge.plantuml.project.lang.SubjectSeparator$Just
     net.sourceforge.plantuml.project.lang.SubjectSeparator$JustAfter
     net.sourceforge.plantuml.project.lang.SubjectSeparator$JustBefore
     net.sourceforge.plantuml.project.lang.SubjectTask$1
+    net.sourceforge.plantuml.project.lang.SubjectTask$10
+    net.sourceforge.plantuml.project.lang.SubjectTask$11
+    net.sourceforge.plantuml.project.lang.SubjectTask$12
+    net.sourceforge.plantuml.project.lang.SubjectTask$14
+    net.sourceforge.plantuml.project.lang.SubjectTask$15
+    net.sourceforge.plantuml.project.lang.SubjectTask$16
+    net.sourceforge.plantuml.project.lang.SubjectTask$17
+    net.sourceforge.plantuml.project.lang.SubjectTask$18
+    net.sourceforge.plantuml.project.lang.SubjectTask$19
     net.sourceforge.plantuml.project.lang.SubjectTask$2
+    net.sourceforge.plantuml.project.lang.SubjectTask$20
+    net.sourceforge.plantuml.project.lang.SubjectTask$21
+    net.sourceforge.plantuml.project.lang.SubjectTask$3
+    net.sourceforge.plantuml.project.lang.SubjectTask$4
+    net.sourceforge.plantuml.project.lang.SubjectTask$5
+    net.sourceforge.plantuml.project.lang.SubjectTask$6
+    net.sourceforge.plantuml.project.lang.SubjectTask$7
+    net.sourceforge.plantuml.project.lang.SubjectTask$8
     net.sourceforge.plantuml.project.lang.SubjectToday
+    net.sourceforge.plantuml.project.lang.SubjectToday$1
+    net.sourceforge.plantuml.project.lang.SubjectToday$2
     net.sourceforge.plantuml.project.lang.SubjectToday$InColor
     net.sourceforge.plantuml.project.lang.SubjectToday$IsDate
     net.sourceforge.plantuml.project.lang.TwoNames
@@ -10538,8 +10573,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 3
-    Concrete Classes: 3
+    Total Classes: 2
+    Concrete Classes: 2
     Abstract Classes: 0
 
     Ca: 35
@@ -10554,7 +10589,6 @@ Abstract Classes:
 Concrete Classes:
     net.sourceforge.plantuml.stereo.Stereogroup
     net.sourceforge.plantuml.stereo.Stereostyles
-    net.sourceforge.plantuml.stereo.StereotypePattern
 
 Depends Upon:
     java.lang
@@ -13515,8 +13549,7 @@ net.sourceforge.plantuml.cheneer.command
 
 net.sourceforge.plantuml.chronology
     |
-    |   net.sourceforge.plantuml.url
-    |   net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.shape
     |-> net.sourceforge.plantuml.klimt.font
@@ -14165,7 +14198,7 @@ net.sourceforge.plantuml.project.draw.header
 
 net.sourceforge.plantuml.project.lang
     |
-    |   net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.teavm
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.shape
     |-> net.sourceforge.plantuml.klimt.font
@@ -14330,9 +14363,12 @@ net.sourceforge.plantuml.stats
 
 net.sourceforge.plantuml.stereo
     |
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.teavm
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.shape
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.style
     |
@@ -14776,19 +14812,19 @@ net.sourceforge.plantuml.png.quantx,7,0,0,4,0,1,0,1
 net.sourceforge.plantuml.posimo,5,2,1,10,0.4,0.91,0.31,1
 net.sourceforge.plantuml.preproc,17,3,61,15,0.18,0.2,0.63,1
 net.sourceforge.plantuml.preproc2,10,1,3,8,0.1,0.73,0.17,1
-net.sourceforge.plantuml.project,17,2,9,33,0.12,0.79,0.1,1
+net.sourceforge.plantuml.project,17,2,9,32,0.12,0.78,0.1,1
 net.sourceforge.plantuml.project.command,14,0,2,14,0,0.88,0.12,1
 net.sourceforge.plantuml.project.core,11,3,9,12,0.27,0.57,0.16,1
 net.sourceforge.plantuml.project.data,7,0,3,17,0,0.85,0.15,1
 net.sourceforge.plantuml.project.draw,9,2,5,25,0.22,0.83,0.06,1
 net.sourceforge.plantuml.project.draw.header,5,2,2,15,0.4,0.88,0.28,1
-net.sourceforge.plantuml.project.lang,65,1,5,16,0.02,0.76,0.22,1
+net.sourceforge.plantuml.project.lang,101,1,5,16,0.01,0.76,0.23,1
 net.sourceforge.plantuml.project.ngm,4,1,2,3,0.25,0.6,0.15,1
 net.sourceforge.plantuml.project.ngm.math,11,2,6,5,0.18,0.45,0.36,1
 net.sourceforge.plantuml.project.solver,2,0,1,7,0,0.88,0.12,1
 net.sourceforge.plantuml.project.time,1,0,9,2,0,0.18,0.82,1
 net.sourceforge.plantuml.project.timescale,5,1,5,6,0.2,0.55,0.25,1
-net.sourceforge.plantuml.project.ulang,0,0,2,0,0,0,1,1
+net.sourceforge.plantuml.project.ulang,0,0,1,0,0,0,1,1
 net.sourceforge.plantuml.real,8,4,5,3,0.5,0.38,0.12,1
 net.sourceforge.plantuml.regex,9,2,40,6,0.22,0.13,0.65,1
 net.sourceforge.plantuml.regexdiagram,6,0,0,17,0,1,0,1
@@ -14812,7 +14848,7 @@ net.sourceforge.plantuml.statediagram,1,0,3,11,0,0.79,0.21,1
 net.sourceforge.plantuml.statediagram.command,7,0,2,17,0,0.89,0.11,1
 net.sourceforge.plantuml.stats,14,1,1,11,0.07,0.92,0.01,1
 net.sourceforge.plantuml.stats.api,4,3,1,2,0.75,0.67,0.42,1
-net.sourceforge.plantuml.stereo,3,0,35,6,0,0.15,0.85,1
+net.sourceforge.plantuml.stereo,2,0,35,6,0,0.15,0.85,1
 net.sourceforge.plantuml.style,22,7,68,17,0.32,0.2,0.48,1
 net.sourceforge.plantuml.style.parser,4,0,3,4,0,0.57,0.43,1
 net.sourceforge.plantuml.sudoku,4,1,0,8,0.25,1,0.25,1

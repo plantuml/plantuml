@@ -65,8 +65,8 @@ public class Combiner extends AbstractPiecewiseConstant {
 <span class="fc" id="L65">	}</span>
 
 	public static PiecewiseConstant sum(PiecewiseConstant... elements) {
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (elements.length == 1)</span>
-<span class="nc" id="L69">			return elements[0];</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (elements.length == 1)</span>
+<span class="fc" id="L69">			return elements[0];</span>
 <span class="nc" id="L70">		return new Combiner(Fraction.SUM, elements);</span>
 	}
 
@@ -77,9 +77,9 @@ public class Combiner extends AbstractPiecewiseConstant {
 	}
 
 	public static PiecewiseConstant max(PiecewiseConstant... elements) {
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (elements.length == 1)</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (elements.length == 1)</span>
 <span class="nc" id="L81">			return elements[0];</span>
-<span class="nc" id="L82">		return new Combiner(Fraction.MAX, elements);</span>
+<span class="fc" id="L82">		return new Combiner(Fraction.MAX, elements);</span>
 	}
 
 	public static PiecewiseConstant product(PiecewiseConstant... elements) {

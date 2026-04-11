@@ -130,8 +130,8 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 <span class="fc" id="L130">		final double pos1 = timeScale.getPosition(start) + 6;</span>
 <span class="fc" id="L131">		final double pos2 = timeScale.getPosition(end) - 6;</span>
 		final double pos;
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (pos2 - pos1 &gt; dim.getWidth())</span>
-<span class="nc" id="L134">			pos = pos1;</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (pos2 - pos1 &gt; dim.getWidth())</span>
+<span class="fc" id="L134">			pos = pos1;</span>
 		else
 <span class="fc" id="L136">			pos = getOutPosition(pos2);</span>
 <span class="fc" id="L137">		title.drawU(ug.apply(UTranslate.dx(pos)));</span>
@@ -167,16 +167,16 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 
 <span class="fc" id="L168">		final double pos1 = timeScale.getPosition(start) + 6;</span>
 <span class="fc" id="L169">		final double pos2 = timeScale.getPosition(end) - 6;</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (pos2 - pos1 &lt;= dim.getWidth()) {</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (pos2 - pos1 &lt;= dim.getWidth()) {</span>
 <span class="fc" id="L171">			final double labelEnd = getOutPosition(pos2) + dim.getWidth();</span>
-<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			if (labelEnd &gt; barsWidth)</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">			if (labelEnd &gt; barsWidth)</span>
 <span class="fc" id="L173">				overflow = labelEnd - barsWidth;</span>
 		}
 
-<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		if (note != null) {</span>
-<span class="nc" id="L177">			final double noteEnd = timeScale.getPosition(start) + getOpaleNote().calculateDimension(stringBounder).getWidth();</span>
-<span class="nc bnc" id="L178" title="All 2 branches missed.">			if (noteEnd - barsWidth &gt; overflow)</span>
-<span class="nc" id="L179">				overflow = noteEnd - barsWidth;</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">		if (note != null) {</span>
+<span class="fc" id="L177">			final double noteEnd = timeScale.getPosition(start) + getOpaleNote().calculateDimension(stringBounder).getWidth();</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">			if (noteEnd - barsWidth &gt; overflow)</span>
+<span class="fc" id="L179">				overflow = noteEnd - barsWidth;</span>
 		}
 
 <span class="fc" id="L182">		return overflow;</span>
@@ -203,10 +203,10 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 
 	@Override
 	public double getHeightMax(StringBounder stringBounder) {
-<span class="pc bpc" id="L206" title="1 of 2 branches missed.">		if (note == null)</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		if (note == null)</span>
 <span class="fc" id="L207">			return getFullHeightTask(stringBounder);</span>
 
-<span class="nc" id="L209">		return getYNotePosition(stringBounder) + getOpaleNote().calculateDimension(stringBounder).getHeight();</span>
+<span class="fc" id="L209">		return getYNotePosition(stringBounder) + getOpaleNote().calculateDimension(stringBounder).getHeight();</span>
 	}
 
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
@@ -217,14 +217,14 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	}
 
 	public FingerPrint getFingerPrintNote(StringBounder stringBounder) {
-<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (note == null)</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">		if (note == null)</span>
 <span class="fc" id="L221">			return null;</span>
 
-<span class="nc" id="L223">		final XDimension2D dim = getOpaleNote().calculateDimension(stringBounder);</span>
-<span class="nc" id="L224">		final double startPos = timeScale.getPosition(start);</span>
+<span class="fc" id="L223">		final XDimension2D dim = getOpaleNote().calculateDimension(stringBounder);</span>
+<span class="fc" id="L224">		final double startPos = timeScale.getPosition(start);</span>
 		// final double endPos = timeScale.getEndingPosition(end);
-<span class="nc" id="L226">		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue() + getYNotePosition(stringBounder),</span>
-<span class="nc" id="L227">				dim.getWidth(), dim.getHeight());</span>
+<span class="fc" id="L226">		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue() + getYNotePosition(stringBounder),</span>
+<span class="fc" id="L227">				dim.getWidth(), dim.getHeight());</span>
 	}
 
 	private UGraphic applyColors(UGraphic ug) {
@@ -240,8 +240,8 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		double x;
 <span class="fc bfc" id="L241" title="All 2 branches covered.">		if (side == GSide.LEFT)</span>
 <span class="fc" id="L242">			x = timeScale.getPosition(start);</span>
-<span class="pc bpc" id="L243" title="1 of 2 branches missed.">		else if (side == GSide.RIGHT)</span>
-<span class="nc" id="L244">			x = timeScale.getPosition(end);</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">		else if (side == GSide.RIGHT)</span>
+<span class="fc" id="L244">			x = timeScale.getPosition(end);</span>
 <span class="pc bpc" id="L245" title="2 of 4 branches missed.">		else if (side == GSide.TOP_LEFT || side == GSide.BOTTOM_LEFT) {</span>
 <span class="nc" id="L246">			x = timeScale.getPosition(start) + 8;</span>
 <span class="nc bnc" id="L247" title="All 2 branches missed.">			if (x &gt; timeScale.getPosition(end))</span>

@@ -87,29 +87,29 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 	}
 
 	public void putResource(String name, Resource resource) {
-<span class="nc" id="L90">		resources.put(name, resource);</span>
-<span class="nc" id="L91">	}</span>
+<span class="fc" id="L90">		resources.put(name, resource);</span>
+<span class="fc" id="L91">	}</span>
 
 	public Resource getResource(String name) {
-<span class="nc" id="L94">		return resources.get(name);</span>
+<span class="fc" id="L94">		return resources.get(name);</span>
 	}
 
 	public int getLoadForResource(Resource res, TimePoint i) {
-<span class="nc" id="L98">		int result = 0;</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (Task task : getTasks()) {</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (task instanceof TaskSeparator)</span>
+<span class="fc" id="L98">		int result = 0;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		for (Task task : getTasks()) {</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">			if (task instanceof TaskSeparator)</span>
 <span class="nc" id="L101">				continue;</span>
 
-<span class="nc" id="L103">			final TaskImpl task2 = (TaskImpl) task;</span>
-<span class="nc" id="L104">			result += task2.loadForResource(res, i);</span>
-<span class="nc" id="L105">		}</span>
-<span class="nc" id="L106">		return result;</span>
+<span class="fc" id="L103">			final TaskImpl task2 = (TaskImpl) task;</span>
+<span class="fc" id="L104">			result += task2.loadForResource(res, i);</span>
+<span class="fc" id="L105">		}</span>
+<span class="fc" id="L106">		return result;</span>
 	}
 
 	public Collection&lt;GanttConstraint&gt; getConstraintsForTask(Task task) {
 <span class="fc" id="L110">		final List&lt;GanttConstraint&gt; result = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L111" title="All 2 branches covered.">		for (GanttConstraint constraint : getConstraints())</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">			if (constraint.isOn(task))</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">			if (constraint.isOn(task))</span>
 <span class="fc" id="L113">				result.add(constraint);</span>
 
 <span class="fc" id="L115">		return Collections.unmodifiableCollection(result);</span>

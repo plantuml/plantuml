@@ -87,34 +87,35 @@ public abstract class SentenceSimple&lt;D extends Diagram&gt; implements Sentenc
 	}
 
 	public final CommandExecutionResult execute(D project, RegexResult arg) {
-<span class="fc" id="L90">		final Failable&lt;? extends Object&gt; currentSubject = subject.getMe(project, arg);</span>
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (currentSubject.isFail())</span>
-<span class="nc" id="L92">			return CommandExecutionResult.error(currentSubject.getError());</span>
+<span class="fc" id="L90">		System.out.println(&quot;RUNNING &quot; + this);</span>
+<span class="fc" id="L91">		final Failable&lt;? extends Object&gt; currentSubject = subject.getMe(project, arg);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (currentSubject.isFail())</span>
+<span class="nc" id="L93">			return CommandExecutionResult.error(currentSubject.getError());</span>
 
-<span class="fc" id="L94">		final Failable&lt;? extends Object&gt; currentComplement = complement.getMe(project, arg, &quot;0&quot;);</span>
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (currentComplement.isFail())</span>
-<span class="nc" id="L96">			return CommandExecutionResult.error(currentComplement.getError());</span>
+<span class="fc" id="L95">		final Failable&lt;? extends Object&gt; currentComplement = complement.getMe(project, arg, &quot;0&quot;);</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (currentComplement.isFail())</span>
+<span class="nc" id="L97">			return CommandExecutionResult.error(currentComplement.getError());</span>
 
-<span class="fc" id="L98">		return execute(project, currentSubject.get(), currentComplement.get());</span>
+<span class="fc" id="L99">		return execute(project, currentSubject.get(), currentComplement.get());</span>
 
 	}
 
 	public abstract CommandExecutionResult execute(D project, Object subject, Object complement);
 
 	public IRegex getVerbRegex() {
-<span class="fc" id="L105">		return verb;</span>
+<span class="fc" id="L106">		return verb;</span>
 	}
 
 	protected final IRegex getAdverbialOrPropositon() {
-<span class="fc" id="L109">		return adverbialOrPropositon;</span>
+<span class="fc" id="L110">		return adverbialOrPropositon;</span>
 	}
 
 	protected final Subject&lt;D&gt; getSubject() {
-<span class="fc" id="L113">		return subject;</span>
+<span class="fc" id="L114">		return subject;</span>
 	}
 
 	protected final Something&lt;D&gt; getComplement() {
-<span class="fc" id="L117">		return complement;</span>
+<span class="fc" id="L118">		return complement;</span>
 	}
 
 }

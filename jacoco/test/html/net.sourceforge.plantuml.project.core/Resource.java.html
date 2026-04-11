@@ -47,15 +47,15 @@ public class Resource {
 	private final String name;
 	private ResourceDraw draw;
 
-<span class="nc" id="L50">	private final OpenClose openClose = new OpenClose();</span>
+<span class="fc" id="L50">	private final OpenClose openClose = new OpenClose();</span>
 
-<span class="nc" id="L52">	public Resource(String name) {</span>
-<span class="nc" id="L53">		this.name = name;</span>
-<span class="nc" id="L54">	}</span>
+<span class="fc" id="L52">	public Resource(String name) {</span>
+<span class="fc" id="L53">		this.name = name;</span>
+<span class="fc" id="L54">	}</span>
 
 	@Override
 	public int hashCode() {
-<span class="nc" id="L58">		return name.hashCode();</span>
+<span class="fc" id="L58">		return name.hashCode();</span>
 	}
 
 	@Override
@@ -70,19 +70,19 @@ public class Resource {
 	}
 
 	public String getName() {
-<span class="nc" id="L73">		return name;</span>
+<span class="fc" id="L73">		return name;</span>
 	}
 
 	public ResourceDraw getResourceDraw() {
-<span class="nc" id="L77">		return draw;</span>
+<span class="fc" id="L77">		return draw;</span>
 	}
 
 	public void setTaskDraw(ResourceDraw draw) {
-<span class="nc" id="L81">		this.draw = draw;</span>
-<span class="nc" id="L82">	}</span>
+<span class="fc" id="L81">		this.draw = draw;</span>
+<span class="fc" id="L82">	}</span>
 
 	public boolean isClosedAt(LocalDate day) {
-<span class="nc" id="L85">		return openClose.isClosed(day);</span>
+<span class="fc" id="L85">		return openClose.isClosed(day);</span>
 	}
 
 	public void addCloseDay(LocalDate day) {
@@ -110,7 +110,7 @@ public class Resource {
 	}
 
 	public PiecewiseConstant asPiecewiseConstant() {
-<span class="nc" id="L113">		return openClose.asPiecewiseConstant();</span>
+<span class="fc" id="L113">		return openClose.asPiecewiseConstant();</span>
 	}
 
 }

@@ -184,11 +184,11 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 <span class="fc" id="L184">	}</span>
 
 	private void drawResources(UGraphic ug) {
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		for (Resource res : modelData.getResources()) {</span>
-<span class="nc" id="L188">			final ResourceDraw draw = res.getResourceDraw();</span>
-<span class="nc" id="L189">			final UTranslate move = UTranslate.dy(draw.getY());</span>
-<span class="nc" id="L190">			draw.drawU(ug.apply(move));</span>
-<span class="nc" id="L191">		}</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">		for (Resource res : modelData.getResources()) {</span>
+<span class="fc" id="L188">			final ResourceDraw draw = res.getResourceDraw();</span>
+<span class="fc" id="L189">			final UTranslate move = UTranslate.dy(draw.getY());</span>
+<span class="fc" id="L190">			draw.drawU(ug.apply(move));</span>
+<span class="fc" id="L191">		}</span>
 <span class="fc" id="L192">	}</span>
 
 }

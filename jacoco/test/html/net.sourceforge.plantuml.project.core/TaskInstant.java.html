@@ -65,19 +65,19 @@ public class TaskInstant {
 <span class="fc" id="L65">	}</span>
 
 	public TaskInstant withDelta(int newDelta, GanttConstraintMode mode, PiecewiseConstant calendar) {
-<span class="nc" id="L68">		return new TaskInstant(task, attribute, newDelta, mode, calendar);</span>
+<span class="fc" id="L68">		return new TaskInstant(task, attribute, newDelta, mode, calendar);</span>
 	}
 
 	private TimePoint manageDelta(TimePoint value) {
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (delta &gt; 0)</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">			for (int i = 0; i &lt; delta; i++) {</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">				if (mode == GanttConstraintMode.DO_NOT_COUNT_CLOSE_DAY) {</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (delta &gt; 0)</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">			for (int i = 0; i &lt; delta; i++) {</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">				if (mode == GanttConstraintMode.DO_NOT_COUNT_CLOSE_DAY) {</span>
 <span class="nc" id="L75">					int tmp = 0;</span>
 <span class="nc bnc" id="L76" title="All 4 branches missed.">					while (PiecewiseConstantUtils.isZeroOnDay(calendar, value.toDay()) &amp;&amp; tmp++ &lt; 1000)</span>
 <span class="nc" id="L77">						value = value.increment();</span>
 				}
 
-<span class="nc" id="L80">				value = value.increment();</span>
+<span class="fc" id="L80">				value = value.increment();</span>
 			}
 
 <span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (delta &lt; 0)</span>
@@ -88,8 +88,8 @@ public class TaskInstant {
 	}
 
 	public TimePoint getInstantPrecise() {
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (attribute == TaskAttribute.START)</span>
-<span class="nc" id="L92">			return manageDelta(task.getStart());</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (attribute == TaskAttribute.START)</span>
+<span class="fc" id="L92">			return manageDelta(task.getStart());</span>
 
 <span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (attribute == TaskAttribute.END)</span>
 <span class="fc" id="L95">			return manageDelta(task.getEnd());</span>

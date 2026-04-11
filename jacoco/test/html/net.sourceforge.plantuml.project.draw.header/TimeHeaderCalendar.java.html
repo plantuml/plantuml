@@ -114,26 +114,26 @@ abstract class TimeHeaderCalendar extends TimeHeader {
 			}
 		}
 
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (pending != null)</span>
-<span class="nc" id="L118">			pending.draw(ug, height);</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		if (pending != null)</span>
+<span class="fc" id="L118">			pending.draw(ug, height);</span>
 
 <span class="fc" id="L120">	}</span>
 
 	protected final void printNamedDays(final UGraphic ug) {
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (dayCalendar.getNameDays().size() &gt; 0) {</span>
-<span class="nc" id="L124">			String last = null;</span>
-<span class="nc" id="L125">			final FontConfiguration fc = getFontConfigurationSLOW(SName.month, false, openFontColor());</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">			for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
-<span class="nc" id="L127">				final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
-<span class="nc" id="L128">				final String name = dayCalendar.getDayName(wink);</span>
-<span class="nc bnc" id="L129" title="All 4 branches missed.">				if (name != null &amp;&amp; name.equals(last) == false) {</span>
-<span class="nc" id="L130">					final double x1 = getTimeScale().getPosition(wink);</span>
-<span class="nc" id="L131">					final TextBlock label = getTextBlockSLOW(name, fc);</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		if (dayCalendar.getNameDays().size() &gt; 0) {</span>
+<span class="fc" id="L124">			String last = null;</span>
+<span class="fc" id="L125">			final FontConfiguration fc = getFontConfigurationSLOW(SName.month, false, openFontColor());</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">			for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
+<span class="fc" id="L127">				final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="fc" id="L128">				final String name = dayCalendar.getDayName(wink);</span>
+<span class="pc bpc" id="L129" title="1 of 4 branches missed.">				if (name != null &amp;&amp; name.equals(last) == false) {</span>
+<span class="fc" id="L130">					final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="fc" id="L131">					final TextBlock label = getTextBlockSLOW(name, fc);</span>
 
-<span class="nc" id="L133">					final double position = getTimeHeaderHeight(ug.getStringBounder());</span>
-<span class="nc" id="L134">					label.drawU(ug.apply(new UTranslate(x1, position)));</span>
+<span class="fc" id="L133">					final double position = getTimeHeaderHeight(ug.getStringBounder());</span>
+<span class="fc" id="L134">					label.drawU(ug.apply(new UTranslate(x1, position)));</span>
 				}
-<span class="nc" id="L136">				last = name;</span>
+<span class="fc" id="L136">				last = name;</span>
 			}
 		}
 <span class="fc" id="L139">	}</span>

@@ -75,7 +75,7 @@ public class TimePoint implements Comparable&lt;TimePoint&gt;, PValue {
 	}
 
 	public static TimePoint ofEndOfDayMinusOneSecond(LocalDate day) {
-<span class="nc" id="L78">		return ofStartOfDay(day.plusDays(1)).minusOneSecond();</span>
+<span class="fc" id="L78">		return ofStartOfDay(day.plusDays(1)).minusOneSecond();</span>
 	}
 
 	public TimePoint ofEndOfDay() {
@@ -117,7 +117,7 @@ public class TimePoint implements Comparable&lt;TimePoint&gt;, PValue {
 	}
 
 	public TimePoint decrement() {
-<span class="nc" id="L120">		return addDays(-1);</span>
+<span class="fc" id="L120">		return addDays(-1);</span>
 	}
 
 	public TimePoint addDays(int nday) {
@@ -125,7 +125,7 @@ public class TimePoint implements Comparable&lt;TimePoint&gt;, PValue {
 	}
 
 	public final int getAbsoluteDayNum() {
-<span class="nc" id="L128">		return (int) Math.floorDiv(getMillis(), MILLISECONDS_PER_DAY);</span>
+<span class="fc" id="L128">		return (int) Math.floorDiv(getMillis(), MILLISECONDS_PER_DAY);</span>
 	}
 
 	public final long getMillis() {
@@ -163,7 +163,7 @@ public class TimePoint implements Comparable&lt;TimePoint&gt;, PValue {
 	}
 
 	public final int getDayOfMonth() {
-<span class="nc" id="L166">		return utcDateTime.getDayOfMonth();</span>
+<span class="fc" id="L166">		return utcDateTime.getDayOfMonth();</span>
 	}
 
 	public Month month() {
@@ -191,9 +191,9 @@ public class TimePoint implements Comparable&lt;TimePoint&gt;, PValue {
 	}
 
 	public TimePoint increment(PrintScale printScale) {
-<span class="nc bnc" id="L194" title="All 2 branches missed.">		if (printScale == PrintScale.WEEKLY)</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		if (printScale == PrintScale.WEEKLY)</span>
 <span class="nc" id="L195">			return this.addDays(7);</span>
-<span class="nc" id="L196">		return increment();</span>
+<span class="fc" id="L196">		return increment();</span>
 	}
 
 	public TimePoint roundDayDown() {

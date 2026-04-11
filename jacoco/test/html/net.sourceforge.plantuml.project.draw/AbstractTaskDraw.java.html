@@ -164,10 +164,10 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 
 	@Override
 	final public Real getY(StringBounder stringBounder) {
-<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if (task.getRow() == null)</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		if (task.getRow() == null)</span>
 <span class="fc" id="L168">			return y;</span>
 
-<span class="nc" id="L170">		return getTrueRow().getY(stringBounder);</span>
+<span class="fc" id="L170">		return getTrueRow().getY(stringBounder);</span>
 	}
 
 	public final Task getTask() {
@@ -213,29 +213,29 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	}
 
 	protected Opale getOpaleNote() {
-<span class="nc" id="L216">		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.note)</span>
-<span class="nc" id="L217">				.withTOBECHANGED(noteStereotype).getMergedStyle(getStyleBuilder());</span>
+<span class="fc" id="L216">		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.note)</span>
+<span class="fc" id="L217">				.withTOBECHANGED(noteStereotype).getMergedStyle(getStyleBuilder());</span>
 
-<span class="nc" id="L219">		final FontConfiguration fc = style.getFontConfiguration(getColorSet());</span>
+<span class="fc" id="L219">		final FontConfiguration fc = style.getFontConfiguration(getColorSet());</span>
 
-<span class="nc" id="L221">		final HorizontalAlignment horizontalAlignment = style.value(PName.HorizontalAlignment).asHorizontalAlignment();</span>
-<span class="nc" id="L222">		final Sheet sheet = skinParam.sheet(fc, horizontalAlignment, CreoleMode.FULL).createSheet(note);</span>
-<span class="nc" id="L223">		final double padding = style.value(PName.Padding).asDouble();</span>
-<span class="nc" id="L224">		final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, padding);</span>
+<span class="fc" id="L221">		final HorizontalAlignment horizontalAlignment = style.value(PName.HorizontalAlignment).asHorizontalAlignment();</span>
+<span class="fc" id="L222">		final Sheet sheet = skinParam.sheet(fc, horizontalAlignment, CreoleMode.FULL).createSheet(note);</span>
+<span class="fc" id="L223">		final double padding = style.value(PName.Padding).asDouble();</span>
+<span class="fc" id="L224">		final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, padding);</span>
 
-<span class="nc" id="L226">		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getColorSet());</span>
-<span class="nc" id="L227">		final HColor borderColor = style.value(PName.LineColor).asColor(getColorSet());</span>
-<span class="nc" id="L228">		final double shadowing = style.getShadowing();</span>
+<span class="fc" id="L226">		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getColorSet());</span>
+<span class="fc" id="L227">		final HColor borderColor = style.value(PName.LineColor).asColor(getColorSet());</span>
+<span class="fc" id="L228">		final double shadowing = style.getShadowing();</span>
 
-<span class="nc" id="L230">		return new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false, style.getStroke());</span>
+<span class="fc" id="L230">		return new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false, style.getStroke());</span>
 	}
 
 	protected void drawNote(UGraphic ug) {
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">		if (note == null)</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">		if (note == null)</span>
 <span class="fc" id="L235">			return;</span>
 
-<span class="nc" id="L237">		getOpaleNote().drawU(ug);</span>
+<span class="fc" id="L237">		getOpaleNote().drawU(ug);</span>
 
-<span class="nc" id="L239">	}</span>
+<span class="fc" id="L239">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

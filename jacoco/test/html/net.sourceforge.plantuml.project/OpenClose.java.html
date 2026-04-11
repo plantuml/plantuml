@@ -73,11 +73,11 @@ import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday;
 	}
 
 	public int daysInWeek() {
-<span class="nc" id="L76">		int result = 7;</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		for (DayStatus status : weekdayStatus.values())</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (status == DayStatus.CLOSE)</span>
-<span class="nc" id="L79">				result--;</span>
-<span class="nc" id="L80">		return result;</span>
+<span class="fc" id="L76">		int result = 7;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		for (DayStatus status : weekdayStatus.values())</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">			if (status == DayStatus.CLOSE)</span>
+<span class="fc" id="L79">				result--;</span>
+<span class="fc" id="L80">		return result;</span>
 	}
 
 	private boolean isThereSomeChangeAfter(LocalDate day) {
@@ -103,29 +103,29 @@ import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday;
 	}
 
 	public boolean isClosed(LocalDate day) {
-<span class="nc" id="L106">		final DayStatus status = getLocalStatus(day);</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (status != null)</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">			return status == DayStatus.CLOSE;</span>
+<span class="fc" id="L106">		final DayStatus status = getLocalStatus(day);</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (status != null)</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">			return status == DayStatus.CLOSE;</span>
 
-<span class="nc" id="L110">		return false;</span>
+<span class="fc" id="L110">		return false;</span>
 	}
 
 	private DayStatus getLocalStatus(LocalDate day) {
-<span class="nc bnc" id="L114" title="All 4 branches missed.">		if (offBefore != null &amp;&amp; day.compareTo(offBefore) &lt; 0)</span>
+<span class="pc bpc" id="L114" title="3 of 4 branches missed.">		if (offBefore != null &amp;&amp; day.compareTo(offBefore) &lt; 0)</span>
 <span class="nc" id="L115">			return DayStatus.CLOSE;</span>
-<span class="nc bnc" id="L116" title="All 4 branches missed.">		if (offAfter != null &amp;&amp; day.compareTo(offAfter) &gt; 0)</span>
+<span class="pc bpc" id="L116" title="3 of 4 branches missed.">		if (offAfter != null &amp;&amp; day.compareTo(offAfter) &gt; 0)</span>
 <span class="nc" id="L117">			return DayStatus.CLOSE;</span>
 
-<span class="nc" id="L119">		final DayStatus status1 = dayStatus.get(day);</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (status1 != null)</span>
+<span class="fc" id="L119">		final DayStatus status1 = dayStatus.get(day);</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (status1 != null)</span>
 <span class="nc" id="L121">			return status1;</span>
 
-<span class="nc" id="L123">		final DayOfWeek dayOfWeek = day.getDayOfWeek();</span>
-<span class="nc" id="L124">		final DayStatus status2 = weekdayStatus.get(dayOfWeek);</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (status2 != null)</span>
-<span class="nc" id="L126">			return status2;</span>
+<span class="fc" id="L123">		final DayOfWeek dayOfWeek = day.getDayOfWeek();</span>
+<span class="fc" id="L124">		final DayStatus status2 = weekdayStatus.get(dayOfWeek);</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (status2 != null)</span>
+<span class="fc" id="L126">			return status2;</span>
 
-<span class="nc" id="L128">		return null;</span>
+<span class="fc" id="L128">		return null;</span>
 	}
 
 	public void close(DayOfWeek day) {
@@ -134,9 +134,9 @@ import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday;
 <span class="fc" id="L134">	}</span>
 
 	public void open(DayOfWeek day) {
-<span class="nc" id="L137">		weekdayStatus.put(day, DayStatus.OPEN);</span>
-<span class="nc" id="L138">		cachedPiecewiseConstant = null;</span>
-<span class="nc" id="L139">	}</span>
+<span class="fc" id="L137">		weekdayStatus.put(day, DayStatus.OPEN);</span>
+<span class="fc" id="L138">		cachedPiecewiseConstant = null;</span>
+<span class="fc" id="L139">	}</span>
 
 	public void close(LocalDate day) {
 <span class="nc" id="L142">		dayStatus.put(day, DayStatus.CLOSE);</span>
@@ -144,12 +144,12 @@ import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday;
 <span class="nc" id="L144">	}</span>
 
 	public void open(LocalDate day) {
-<span class="nc" id="L147">		dayStatus.put(day, DayStatus.OPEN);</span>
-<span class="nc" id="L148">		cachedPiecewiseConstant = null;</span>
-<span class="nc" id="L149">	}</span>
+<span class="fc" id="L147">		dayStatus.put(day, DayStatus.OPEN);</span>
+<span class="fc" id="L148">		cachedPiecewiseConstant = null;</span>
+<span class="fc" id="L149">	}</span>
 
 	public int getLoadAtDUMMY(LocalDate day) {
-<span class="nc" id="L152">		return getLoatAtInternal(day);</span>
+<span class="fc" id="L152">		return getLoatAtInternal(day);</span>
 	}
 
 	public void setOffBeforeDate(LocalDate day) {
@@ -163,10 +163,10 @@ import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday;
 <span class="nc" id="L163">	}</span>
 
 	private int getLoatAtInternal(LocalDate day) {
-<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (isClosed(day))</span>
-<span class="nc" id="L167">			return 0;</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		if (isClosed(day))</span>
+<span class="fc" id="L167">			return 0;</span>
 
-<span class="nc" id="L169">		return 100;</span>
+<span class="fc" id="L169">		return 100;</span>
 	}
 
 	public LocalDate getLastDayIfAny() {
@@ -180,28 +180,28 @@ import net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday;
 <span class="fc" id="L180">		PiecewiseConstantWeekday weekPattern = PiecewiseConstantWeekday.of(Fraction.ONE);</span>
 
 <span class="fc bfc" id="L182" title="All 2 branches covered.">		for (DayOfWeek day : weekdayStatus.keySet())</span>
-<span class="pc bpc" id="L183" title="1 of 2 branches missed.">			if (weekdayStatus.get(day) == DayStatus.CLOSE)</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">			if (weekdayStatus.get(day) == DayStatus.CLOSE)</span>
 <span class="fc" id="L184">				weekPattern = weekPattern.with(day, Fraction.ZERO);</span>
 
 <span class="fc" id="L186">		PiecewiseConstant result = weekPattern;</span>
 
-<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		if (dayStatus.isEmpty() == false) {</span>
-<span class="nc" id="L189">			final Map&lt;LocalDate, Fraction&gt; closedDays = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L190">			final Map&lt;LocalDate, Fraction&gt; openDays = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">		if (dayStatus.isEmpty() == false) {</span>
+<span class="fc" id="L189">			final Map&lt;LocalDate, Fraction&gt; closedDays = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L190">			final Map&lt;LocalDate, Fraction&gt; openDays = new HashMap&lt;&gt;();</span>
 
-<span class="nc bnc" id="L192" title="All 2 branches missed.">			for (Map.Entry&lt;LocalDate, DayStatus&gt; entry : dayStatus.entrySet()) {</span>
-<span class="nc" id="L193">				final LocalDate date = entry.getKey();</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">			for (Map.Entry&lt;LocalDate, DayStatus&gt; entry : dayStatus.entrySet()) {</span>
+<span class="fc" id="L193">				final LocalDate date = entry.getKey();</span>
 
-<span class="nc bnc" id="L195" title="All 2 branches missed.">				if (entry.getValue() == DayStatus.CLOSE)</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">				if (entry.getValue() == DayStatus.CLOSE)</span>
 <span class="nc" id="L196">					closedDays.put(date, Fraction.ZERO);</span>
 				else
-<span class="nc" id="L198">					openDays.put(date, Fraction.ONE);</span>
-<span class="nc" id="L199">			}</span>
+<span class="fc" id="L198">					openDays.put(date, Fraction.ONE);</span>
+<span class="fc" id="L199">			}</span>
 
-<span class="nc" id="L201">			final PiecewiseConstantSpecificDays specificDaysClosed = PiecewiseConstantSpecificDays.of(Fraction.ONE, closedDays);</span>
-<span class="nc" id="L202">			final PiecewiseConstantSpecificDays specificDaysOpen = PiecewiseConstantSpecificDays.of(Fraction.ZERO, openDays);</span>
+<span class="fc" id="L201">			final PiecewiseConstantSpecificDays specificDaysClosed = PiecewiseConstantSpecificDays.of(Fraction.ONE, closedDays);</span>
+<span class="fc" id="L202">			final PiecewiseConstantSpecificDays specificDaysOpen = PiecewiseConstantSpecificDays.of(Fraction.ZERO, openDays);</span>
 
-<span class="nc" id="L204">			result = Combiner.max(specificDaysOpen, Combiner.product(weekPattern, specificDaysClosed));</span>
+<span class="fc" id="L204">			result = Combiner.max(specificDaysOpen, Combiner.product(weekPattern, specificDaysClosed));</span>
 		}
 
 <span class="pc bpc" id="L207" title="2 of 4 branches missed.">		if (offBefore == null &amp;&amp; offAfter == null) {</span>

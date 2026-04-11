@@ -57,7 +57,7 @@ public final class Fraction implements Comparable&lt;Fraction&gt; {
 <span class="fc" id="L57">	public static final BiFunction&lt;Fraction, Fraction, Fraction&gt; PRODUCT = Fraction::multiply;</span>
 <span class="fc" id="L58">	public static final BiFunction&lt;Fraction, Fraction, Fraction&gt; SUM = Fraction::add;</span>
 <span class="pc bnc" id="L59" title="All 2 branches missed.">	public static final BiFunction&lt;Fraction, Fraction, Fraction&gt; MIN = (a, b) -&gt; a.compareTo(b) &lt;= 0 ? a : b;</span>
-<span class="pc bnc" id="L60" title="All 2 branches missed.">	public static final BiFunction&lt;Fraction, Fraction, Fraction&gt; MAX = (a, b) -&gt; a.compareTo(b) &gt;= 0 ? a : b;</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">	public static final BiFunction&lt;Fraction, Fraction, Fraction&gt; MAX = (a, b) -&gt; a.compareTo(b) &gt;= 0 ? a : b;</span>
 
 	/** Common constants for workload and general arithmetic. */
 <span class="fc" id="L63">	public static final Fraction ZERO = new Fraction(0, 1);</span>

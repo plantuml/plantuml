@@ -89,8 +89,8 @@ import net.sourceforge.plantuml.StringUtils;
 	}
 
 	public static String shortName(DayOfWeek dayOfWeek, Locale locale) {
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (locale == Locale.ENGLISH)</span>
-<span class="nc" id="L93">			return StringUtils.capitalize(dayOfWeek.name().substring(0, 2));</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (locale == Locale.ENGLISH)</span>
+<span class="fc" id="L93">			return StringUtils.capitalize(dayOfWeek.name().substring(0, 2));</span>
 <span class="nc" id="L94">		final String s = StringUtils.capitalize(dayOfWeek.getDisplayName(TextStyle.SHORT_STANDALONE, locale));</span>
 <span class="nc bnc" id="L95" title="All 2 branches missed.">		if (s.length() &gt; 2)</span>
 <span class="nc" id="L96">			return s.substring(0, 2);</span>

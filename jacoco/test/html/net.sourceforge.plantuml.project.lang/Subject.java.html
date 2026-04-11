@@ -43,8 +43,7 @@ import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.project.Failable;
-import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.ulang.UbrexSentence;
+import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexResult;
 
@@ -57,16 +56,15 @@ public interface Subject&lt;D extends Diagram&gt; {
 	public Failable&lt;? extends Object&gt; getMe(D project, RegexResult arg);
 
 	default public UBrexPart toUnicodeBracketedExpressionSubject() {
-<span class="nc" id="L60">		return null;</span>
+<span class="nc" id="L59">		return null;</span>
 	}
-	
+
 	default public Failable&lt;? extends Object&gt; ugetMe(D diagram, UMatcher arg) {
-<span class="nc" id="L64">		throw new IllegalArgumentException(&quot;wip8547 &quot; + getClass());</span>
+<span class="nc" id="L63">		throw new IllegalArgumentException(&quot;wip8547 &quot; + getClass());</span>
 	}
 
-
-	default public Collection&lt;UbrexSentence&lt;GanttDiagram&gt;&gt; getUSentences() {
-<span class="nc" id="L69">		return Collections.emptyList();</span>
+	default public Collection&lt;VerbPhraseAction&gt; getVerbPhrases() {
+<span class="nc" id="L67">		return Collections.emptyList();</span>
 	}
 
 }

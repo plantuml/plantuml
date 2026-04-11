@@ -50,13 +50,13 @@ public class SentenceTaskEndsAbsolute extends SentenceSimple&lt;GanttDiagram&gt;
 
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L53">		final Task task = (Task) subject;</span>
-<span class="nc" id="L54">		final LocalDate end = (LocalDate) complement;</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (project.getMinDay().equals(TimePoint.epoch()))</span>
+<span class="fc" id="L53">		final Task task = (Task) subject;</span>
+<span class="fc" id="L54">		final LocalDate end = (LocalDate) complement;</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">		if (project.getMinDay().equals(TimePoint.epoch()))</span>
 <span class="nc" id="L56">			return CommandExecutionResult.error(&quot;No starting date for the project&quot;);</span>
-<span class="nc" id="L57">		task.setEnd(TimePoint.ofStartOfDay(end).increment());</span>
+<span class="fc" id="L57">		task.setEnd(TimePoint.ofStartOfDay(end).increment());</span>
 
-<span class="nc" id="L59">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L59">		return CommandExecutionResult.ok();</span>
 	}
 
 }

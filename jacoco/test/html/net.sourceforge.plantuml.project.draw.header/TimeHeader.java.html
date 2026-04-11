@@ -111,7 +111,7 @@ public abstract class TimeHeader {
 	}
 
 	protected final HColor closedFontColor() {
-<span class="nc" id="L114">		return timelineStyle.getClosedFontColor();</span>
+<span class="fc" id="L114">		return timelineStyle.getClosedFontColor();</span>
 	}
 
 	protected final HColor openFontColor() {
@@ -196,25 +196,25 @@ public abstract class TimeHeader {
 	}
 
 	protected final void printCentered(UGraphic ug, TextBlock text, double start, double end) {
-<span class="nc" id="L199">		final double width = text.calculateDimension(ug.getStringBounder()).getWidth();</span>
-<span class="nc" id="L200">		final double available = end - start;</span>
-<span class="nc" id="L201">		final double diff = Math.max(0, available - width);</span>
-<span class="nc" id="L202">		text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));</span>
-<span class="nc" id="L203">	}</span>
+<span class="fc" id="L199">		final double width = text.calculateDimension(ug.getStringBounder()).getWidth();</span>
+<span class="fc" id="L200">		final double available = end - start;</span>
+<span class="fc" id="L201">		final double diff = Math.max(0, available - width);</span>
+<span class="fc" id="L202">		text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));</span>
+<span class="fc" id="L203">	}</span>
 
 	protected final void printCentered(UGraphic ug, boolean hideIfTooBig, double start, double end,
 			TextBlock... texts) {
 <span class="fc" id="L207">		final double available = end - start;</span>
-<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		for (int i = texts.length - 1; i &gt;= 0; i--) {</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		for (int i = texts.length - 1; i &gt;= 0; i--) {</span>
 <span class="fc" id="L209">			final TextBlock text = texts[i];</span>
 <span class="fc" id="L210">			final double width = text.calculateDimension(ug.getStringBounder()).getWidth();</span>
-<span class="pc bpc" id="L211" title="1 of 6 branches missed.">			if ((i == 0 &amp;&amp; hideIfTooBig == false) || width &lt;= available) {</span>
+<span class="fc bfc" id="L211" title="All 6 branches covered.">			if ((i == 0 &amp;&amp; hideIfTooBig == false) || width &lt;= available) {</span>
 <span class="fc" id="L212">				final double diff = Math.max(0, available - width);</span>
 <span class="fc" id="L213">				text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));</span>
 <span class="fc" id="L214">				return;</span>
 			}
 		}
-<span class="nc" id="L217">	}</span>
+<span class="fc" id="L217">	}</span>
 
 	protected final void drawRectangle(UGraphic ug, double height, double x1, double x2) {
 <span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (height == 0)</span>

@@ -2452,7 +2452,6 @@ Total Classes: 17
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.solver"
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.time"
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.timescale"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.ulang"
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.real"
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.stereo"
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.style"
@@ -2561,8 +2560,8 @@ Total Classes: 5
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.project.timescale"
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.style"
 
-class "net.sourceforge.plantuml.project.lang" %lighten("red", 78) {
-Total Classes: 65
+class "net.sourceforge.plantuml.project.lang" %lighten("red", 77) {
+Total Classes: 101
 }
 "net.sourceforge.plantuml.project.lang" --> "com.plantuml.ubrex"
 "net.sourceforge.plantuml.project.lang" --> "com.plantuml.ubrex.builder"
@@ -3010,7 +3009,7 @@ Total Classes: 4
 "net.sourceforge.plantuml.stats.api" --> "java.util"
 
 class "net.sourceforge.plantuml.stereo" %lighten("red", 15) {
-Total Classes: 3
+Total Classes: 2
 }
 "net.sourceforge.plantuml.stereo" --> "java.lang"
 "net.sourceforge.plantuml.stereo" --> "java.util"

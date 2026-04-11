@@ -137,17 +137,17 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 <span class="nc" id="L137">					continue;</span>
 
 <span class="fc" id="L139">				final TimePoint tmp = task.getEnd().minusOneSecond();</span>
-<span class="pc bpc" id="L140" title="1 of 4 branches missed.">				if (this.getMaxDay() == null || this.getMaxDay().compareTo(tmp.toDay()) &lt; 0)</span>
+<span class="fc bfc" id="L140" title="All 4 branches covered.">				if (this.getMaxDay() == null || this.getMaxDay().compareTo(tmp.toDay()) &lt; 0)</span>
 <span class="fc" id="L141">					this.setMaxDay(tmp.toDay());</span>
 <span class="fc" id="L142">			}</span>
 		}
 
 <span class="fc bfc" id="L145" title="All 2 branches covered.">		for (TimePoint d : dayCalendar.getColorDays())</span>
-<span class="pc bpc" id="L146" title="1 of 2 branches missed.">			if (d.toDay().compareTo(this.getMaxDay()) &gt; 0)</span>
-<span class="nc" id="L147">				this.setMaxDay(d.toDay());</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">			if (d.toDay().compareTo(this.getMaxDay()) &gt; 0)</span>
+<span class="fc" id="L147">				this.setMaxDay(d.toDay());</span>
 
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		for (TimePoint d : dayCalendar.getNameDays().keySet())</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">			if (d.toDay().compareTo(this.getMaxDay()) &gt; 0)</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		for (TimePoint d : dayCalendar.getNameDays().keySet())</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">			if (d.toDay().compareTo(this.getMaxDay()) &gt; 0)</span>
 <span class="nc" id="L151">				this.setMaxDay(d.toDay());</span>
 <span class="fc" id="L152">	}</span>
 

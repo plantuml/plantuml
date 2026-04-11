@@ -90,8 +90,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 <span class="nc" id="L90">		final UBrexPart durationBeforeOrAfter = UBrexConcat.build( //</span>
 <span class="nc" id="L91">				new UBrexNamed(&quot;COMPLEMENT_NB1&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d&quot;)), //</span>
 <span class="nc" id="L92">				UBrexLeaf.spaceOneOrMore(), //</span>
-				new UBrexNamed(&quot;COMPLEMENT_WORKING1&quot;,
-<span class="nc" id="L94">						new UBrexOptional(UBrexConcat.build(new UBrexLeaf(&quot;working&quot;), UBrexLeaf.spaceOneOrMore()))), //</span>
+<span class="nc" id="L93">				new UBrexOptional(UBrexConcat.build(new UBrexNamed(&quot;COMPLEMENT_WORKING1&quot;, new UBrexLeaf(&quot;working&quot;)),</span>
+<span class="nc" id="L94">						UBrexLeaf.spaceOneOrMore())), //</span>
 <span class="nc" id="L95">				new UBrexNamed(&quot;COMPLEMENT_DAY_OR_WEEK1&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot;day&quot; + String.valueOf((char)0x2507) + &quot;week&quot; + String.valueOf((char)0x3011) + &quot;&quot;)), //</span>
 <span class="nc" id="L96">				new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;?s&quot;), //</span>
 <span class="nc" id="L97">				new UBrexOptional(UBrexConcat.build( //</span>
@@ -100,35 +100,36 @@ import net.sourceforge.plantuml.regex.RegexResult;
 <span class="nc" id="L100">						UBrexLeaf.spaceOneOrMore(), //</span>
 <span class="nc" id="L101">						new UBrexNamed(&quot;COMPLEMENT_NB2&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d&quot;)), //</span>
 <span class="nc" id="L102">						UBrexLeaf.spaceOneOrMore(), //</span>
-						new UBrexNamed(&quot;COMPLEMENT_WORKING2&quot;,
-								new UBrexOptional(
-<span class="nc" id="L105">										UBrexConcat.build(new UBrexLeaf(&quot;working&quot;), UBrexLeaf.spaceOneOrMore()))), //</span>
-<span class="nc" id="L106">						new UBrexNamed(&quot;COMPLEMENT_DAY_OR_WEEK2&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot;day&quot; + String.valueOf((char)0x2507) + &quot;week&quot; + String.valueOf((char)0x3011) + &quot;&quot;)), //</span>
-<span class="nc" id="L107">						new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;?s&quot;))), //</span>
-<span class="nc" id="L108">				UBrexLeaf.spaceOneOrMore(), //</span>
-<span class="nc" id="L109">				new UBrexNamed(&quot;COMPLEMENT_BEFORE_OR_AFTER&quot;, Words.uoneOf(Words.BEFORE, Words.AFTER)));</span>
 
-<span class="nc" id="L111">		return UBrexConcat.build( //</span>
+						new UBrexOptional(
+<span class="nc" id="L105">								UBrexConcat.build(new UBrexNamed(&quot;COMPLEMENT_WORKING2&quot;, new UBrexLeaf(&quot;working&quot;)),</span>
+<span class="nc" id="L106">										UBrexLeaf.spaceOneOrMore())), //</span>
+<span class="nc" id="L107">						new UBrexNamed(&quot;COMPLEMENT_DAY_OR_WEEK2&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot;day&quot; + String.valueOf((char)0x2507) + &quot;week&quot; + String.valueOf((char)0x3011) + &quot;&quot;)), //</span>
+<span class="nc" id="L108">						new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;?s&quot;))), //</span>
+<span class="nc" id="L109">				UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L110">				new UBrexNamed(&quot;COMPLEMENT_BEFORE_OR_AFTER&quot;, Words.uoneOf(Words.BEFORE, Words.AFTER)));</span>
+
+<span class="nc" id="L112">		return UBrexConcat.build( //</span>
 				new UBrexOptional(new UBrexOr( //
 						new UBrexLeaf(Words.AT), //
 						new UBrexLeaf(Words.WITH), //
 						new UBrexLeaf(Words.AFTER), //
 						durationBeforeOrAfter)), //
-<span class="nc" id="L117">				UBrexLeaf.spaceOneOrMore(), //</span>
-<span class="nc" id="L118">				UBrexConcat.build( //</span>
-						new UBrexNamed(&quot;COMPLEMENT_CODE_OTHER&quot;, new UBrexLeaf(SubjectTask.UBREX_TASK_CODE)), //
-<span class="nc" id="L120">						new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3034) + &quot;.s&quot;)), //</span>
-<span class="nc" id="L121">				UBrexLeaf.spaceOneOrMore(), //</span>
-<span class="nc" id="L122">				new UBrexNamed(&quot;COMPLEMENT_START_OR_END&quot;, Words.uoneOf(Words.START, Words.END)));</span>
+<span class="nc" id="L118">				UBrexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L119">				UBrexConcat.build( //</span>
+<span class="nc" id="L120">						SubjectTask.taskCode(&quot;COMPLEMENT_CODE_OTHER&quot;), //</span>
+<span class="nc" id="L121">						new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3034) + &quot;.s&quot;)), //</span>
+<span class="nc" id="L122">				UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L123">				new UBrexNamed(&quot;COMPLEMENT_START_OR_END&quot;, Words.uoneOf(Words.START, Words.END)));</span>
 	}
 
 	@Override
-	public Failable&lt;? extends Object&gt; ugetMe(GanttDiagram system, UMatcher arg) {
-<span class="nc" id="L127">		return getComplementTaskInstant(system, arg);</span>
+	public Failable&lt;TaskInstant&gt; ugetMe(GanttDiagram system, UMatcher arg) {
+<span class="nc" id="L128">		return getComplementTaskInstant(system, arg);</span>
 	}
 
 	public Failable&lt;TaskInstant&gt; getMe(GanttDiagram system, RegexResult arg, String suffix) {
-<span class="nc" id="L131">		return getComplementTaskInstant(system, arg, suffix);</span>
+<span class="fc" id="L132">		return getComplementTaskInstant(system, arg, suffix);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

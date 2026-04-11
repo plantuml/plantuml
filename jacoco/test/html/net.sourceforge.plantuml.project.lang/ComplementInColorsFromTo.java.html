@@ -35,6 +35,13 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOptional;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
@@ -42,25 +49,58 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-<span class="fc" id="L45">public class ComplementInColorsFromTo implements Something&lt;GanttDiagram&gt; {</span>
+<span class="fc" id="L52">public class ComplementInColorsFromTo implements Something&lt;GanttDiagram&gt; {</span>
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L48">		return new RegexLeaf(4,</span>
+<span class="fc" id="L55">		return new RegexLeaf(4,</span>
 				&quot;COMPLEMENT&quot; + suffix, &quot;from[%s]+(#?\\w+)(?:/(#?\\w+))?[%s]+to[%s]+(#?\\w+)(?:/(#?\\w+))?&quot;);
+	}
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+<span class="nc" id="L60">		return UBrexConcat.build( //</span>
+				new UBrexLeaf(&quot;from&quot;), //
+<span class="nc" id="L62">				UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L63">				new UBrexNamed(&quot;FROM1&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;?# &quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w&quot;)), //</span>
+<span class="nc" id="L64">				new UBrexOptional(UBrexConcat.build( //</span>
+						new UBrexLeaf(&quot;/&quot;), //
+<span class="nc" id="L66">						new UBrexNamed(&quot;FROM2&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;?# &quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w&quot;)))), //</span>
+<span class="nc" id="L67">				UBrexLeaf.spaceOneOrMore(), //</span>
+				new UBrexLeaf(&quot;to&quot;), //
+<span class="nc" id="L69">				UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L70">				new UBrexNamed(&quot;TO1&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;?# &quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w&quot;)), //</span>
+<span class="nc" id="L71">				new UBrexOptional(UBrexConcat.build( //</span>
+						new UBrexLeaf(&quot;/&quot;), //
+<span class="nc" id="L73">						new UBrexNamed(&quot;TO2&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;?# &quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w&quot;)))) //</span>
+		);
+	}
+
+	@Override
+	public Failable&lt;CenterBorderColor[]&gt; ugetMe(GanttDiagram diagram, UMatcher arg) {
+<span class="nc" id="L79">		final String arg0 = arg.get(&quot;FROM1&quot;, 0);</span>
+<span class="nc" id="L80">		final String arg1 = arg.get(&quot;FROM2&quot;, 0);</span>
+<span class="nc" id="L81">		final String arg2 = arg.get(&quot;TO1&quot;, 0);</span>
+<span class="nc" id="L82">		final String arg3 = arg.get(&quot;TO2&quot;, 0);</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		final HColor from0 = arg0 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg0);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		final HColor from1 = arg1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg1);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		final HColor to0 = arg2 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg2);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		final HColor to1 = arg3 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg3);</span>
+<span class="nc" id="L87">		final CenterBorderColor result[] = new CenterBorderColor[] { new CenterBorderColor(from0, from1),</span>
+				new CenterBorderColor(to0, to1) };
+<span class="nc" id="L89">		return Failable.ok(result);</span>
 	}
 
 	public Failable&lt;CenterBorderColor[]&gt; getMe(GanttDiagram diagram, RegexResult arg, String suffix) {
-<span class="nc" id="L53">		final String arg0 = arg.get(&quot;COMPLEMENT&quot; + suffix, 0);</span>
-<span class="nc" id="L54">		final String arg1 = arg.get(&quot;COMPLEMENT&quot; + suffix, 1);</span>
-<span class="nc" id="L55">		final String arg2 = arg.get(&quot;COMPLEMENT&quot; + suffix, 2);</span>
-<span class="nc" id="L56">		final String arg3 = arg.get(&quot;COMPLEMENT&quot; + suffix, 3);</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		final HColor from0 = arg0 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg0);</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		final HColor from1 = arg1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg1);</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		final HColor to0 = arg2 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg2);</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		final HColor to1 = arg3 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg3);</span>
-<span class="nc" id="L61">		final CenterBorderColor result[] = new CenterBorderColor[] { new CenterBorderColor(from0, from1),</span>
+<span class="nc" id="L93">		final String arg0 = arg.get(&quot;COMPLEMENT&quot; + suffix, 0);</span>
+<span class="nc" id="L94">		final String arg1 = arg.get(&quot;COMPLEMENT&quot; + suffix, 1);</span>
+<span class="nc" id="L95">		final String arg2 = arg.get(&quot;COMPLEMENT&quot; + suffix, 2);</span>
+<span class="nc" id="L96">		final String arg3 = arg.get(&quot;COMPLEMENT&quot; + suffix, 3);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		final HColor from0 = arg0 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg0);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		final HColor from1 = arg1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg1);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		final HColor to0 = arg2 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg2);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		final HColor to1 = arg3 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg3);</span>
+<span class="nc" id="L101">		final CenterBorderColor result[] = new CenterBorderColor[] { new CenterBorderColor(from0, from1),</span>
 				new CenterBorderColor(to0, to1) };
-<span class="nc" id="L63">		return Failable.ok(result);</span>
+<span class="nc" id="L103">		return Failable.ok(result);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

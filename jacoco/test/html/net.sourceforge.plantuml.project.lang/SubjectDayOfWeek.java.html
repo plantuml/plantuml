@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.DayOfWeekUtils;
-import net.sourceforge.plantuml.project.ulang.UbrexSentence;
+import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -72,77 +72,97 @@ public class SubjectDayOfWeek implements Subject&lt;GanttDiagram&gt; {
 	}
 
 	@Override
-	public Collection&lt;UbrexSentence&lt;GanttDiagram&gt;&gt; getUSentences() {
-<span class="nc" id="L76">		final List&lt;UbrexSentence&lt;GanttDiagram&gt;&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L77">		result.add(new UbrexSentence&lt;GanttDiagram&gt;(this, Verbs.are, new ComplementClose()) {</span>
+	public Collection&lt;VerbPhraseAction&gt; getVerbPhrases() {
+<span class="nc" id="L76">		final List&lt;VerbPhraseAction&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L77">		result.add(new VerbPhraseAction(Verbs.are, new ComplementOpen()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L80">				final DayOfWeek day = (DayOfWeek) subject;</span>
-<span class="nc" id="L81">				project.closeDayOfWeek(day, (String) complement);</span>
+<span class="nc" id="L81">				project.openDayOfWeek(day, (String) complement);</span>
 <span class="nc" id="L82">				return CommandExecutionResult.ok();</span>
 			}
 		});
-<span class="nc" id="L85">		return result;</span>
+
+<span class="nc" id="L86">		result.add(new VerbPhraseAction(Verbs.are, new ComplementClose()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+<span class="nc" id="L89">				final DayOfWeek day = (DayOfWeek) subject;</span>
+<span class="nc" id="L90">				project.closeDayOfWeek(day, (String) complement);</span>
+<span class="nc" id="L91">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="nc" id="L95">		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+<span class="nc" id="L98">				final HColor color = ((CenterBorderColor) complement).getCenter();</span>
+<span class="nc" id="L99">				final DayOfWeek day = (DayOfWeek) subject;</span>
+<span class="nc" id="L100">				project.colorDay(day, color);</span>
+
+<span class="nc" id="L102">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="nc" id="L106">		return result;</span>
 
 	}
 
-	public Failable&lt;? extends Object&gt; getMe(GanttDiagram project, RegexResult arg) {
-<span class="fc" id="L90">		final String s = arg.get(&quot;SUBJECT&quot;, 0);</span>
-<span class="fc" id="L91">		return Failable.ok(DayOfWeekUtils.fromString(s));</span>
+	public Failable&lt;DayOfWeek&gt; getMe(GanttDiagram project, RegexResult arg) {
+<span class="fc" id="L111">		final String s = arg.get(&quot;SUBJECT&quot;, 0);</span>
+<span class="fc" id="L112">		return Failable.ok(DayOfWeekUtils.fromString(s));</span>
 	}
 
 	@Override
-	public Failable&lt;? extends Object&gt; ugetMe(GanttDiagram diagram, UMatcher arg) {
-<span class="nc" id="L96">		System.out.println(&quot;ugetMe &quot; + arg);</span>
-<span class="nc" id="L97">		final String s = arg.getCapture(&quot;SUBJECT&quot;).get(0);</span>
-<span class="nc" id="L98">		return Failable.ok(DayOfWeekUtils.fromString(s));</span>
+	public Failable&lt;DayOfWeek&gt; ugetMe(GanttDiagram diagram, UMatcher arg) {
+<span class="nc" id="L117">		final String s = arg.get(&quot;SUBJECT&quot;, 0);</span>
+<span class="nc" id="L118">		return Failable.ok(DayOfWeekUtils.fromString(s));</span>
 	}
 
 	public Collection&lt;? extends SentenceSimple&lt;GanttDiagram&gt;&gt; getSentences() {
-<span class="fc" id="L102">		return Arrays.asList(new AreClose(), new AreOpen(), new InColor());</span>
+<span class="fc" id="L122">		return Arrays.asList(new AreClose(), new AreOpen(), new InColor());</span>
 	}
 
 	class AreOpen extends SentenceSimple&lt;GanttDiagram&gt; {
-<span class="fc" id="L106">		public AreOpen() {</span>
-<span class="fc" id="L107">			super(SubjectDayOfWeek.this, Verbs.are.getRegex(), new ComplementOpen());</span>
-<span class="fc" id="L108">		}</span>
+<span class="fc" id="L126">		public AreOpen() {</span>
+<span class="fc" id="L127">			super(SubjectDayOfWeek.this, Verbs.are.getRegex(), new ComplementOpen());</span>
+<span class="fc" id="L128">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L112">			final DayOfWeek day = (DayOfWeek) subject;</span>
-<span class="nc" id="L113">			project.openDayOfWeek(day, (String) complement);</span>
-<span class="nc" id="L114">			return CommandExecutionResult.ok();</span>
+<span class="fc" id="L132">			final DayOfWeek day = (DayOfWeek) subject;</span>
+<span class="fc" id="L133">			project.openDayOfWeek(day, (String) complement);</span>
+<span class="fc" id="L134">			return CommandExecutionResult.ok();</span>
 		}
 	}
 
 	class AreClose extends SentenceSimple&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L120">		public AreClose() {</span>
-<span class="fc" id="L121">			super(SubjectDayOfWeek.this, Verbs.are.getRegex(), new ComplementClose());</span>
-<span class="fc" id="L122">		}</span>
+<span class="fc" id="L140">		public AreClose() {</span>
+<span class="fc" id="L141">			super(SubjectDayOfWeek.this, Verbs.are.getRegex(), new ComplementClose());</span>
+<span class="fc" id="L142">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="fc" id="L126">			final DayOfWeek day = (DayOfWeek) subject;</span>
-<span class="fc" id="L127">			project.closeDayOfWeek(day, (String) complement);</span>
-<span class="fc" id="L128">			return CommandExecutionResult.ok();</span>
+<span class="fc" id="L146">			final DayOfWeek day = (DayOfWeek) subject;</span>
+<span class="fc" id="L147">			project.closeDayOfWeek(day, (String) complement);</span>
+<span class="fc" id="L148">			return CommandExecutionResult.ok();</span>
 		}
 
 	}
 
 	class InColor extends SentenceSimple&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L135">		public InColor() {</span>
-<span class="fc" id="L136">			super(SubjectDayOfWeek.this, Verbs.isOrAre.getRegex(), new ComplementInColors2());</span>
-<span class="fc" id="L137">		}</span>
+<span class="fc" id="L155">		public InColor() {</span>
+<span class="fc" id="L156">			super(SubjectDayOfWeek.this, Verbs.isOrAre.getRegex(), new ComplementInColors2());</span>
+<span class="fc" id="L157">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L141">			final HColor color = ((CenterBorderColor) complement).getCenter();</span>
-<span class="nc" id="L142">			final DayOfWeek day = (DayOfWeek) subject;</span>
-<span class="nc" id="L143">			project.colorDay(day, color);</span>
+<span class="nc" id="L161">			final HColor color = ((CenterBorderColor) complement).getCenter();</span>
+<span class="nc" id="L162">			final DayOfWeek day = (DayOfWeek) subject;</span>
+<span class="nc" id="L163">			project.colorDay(day, color);</span>
 
-<span class="nc" id="L145">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L165">			return CommandExecutionResult.ok();</span>
 		}
 
 	}

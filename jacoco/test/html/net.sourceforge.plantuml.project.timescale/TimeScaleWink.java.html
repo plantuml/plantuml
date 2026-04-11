@@ -61,11 +61,11 @@ public class TimeScaleWink implements TimeScale {
 
 	@Override
 	public boolean isBreaking(TimePoint instant) {
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (printScale == PrintScale.WEEKLY) {</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (printScale == PrintScale.WEEKLY) {</span>
 <span class="nc" id="L65">			final long num = instant.getMillis() / TimePoint.MILLISECONDS_PER_DAY;</span>
 <span class="nc bnc" id="L66" title="All 2 branches missed.">			return num % 7 == 6;</span>
 		}
-<span class="nc" id="L68">		return true;</span>
+<span class="fc" id="L68">		return true;</span>
 	}
 
 }

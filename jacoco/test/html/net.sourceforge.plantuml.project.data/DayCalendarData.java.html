@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 <span class="fc" id="L64">	private final Map&lt;String, OpenClose&gt; openCloseForTask = new HashMap&lt;&gt;();</span>
 
 	public boolean isOpen(LocalDate day) {
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		return openClose.getLoadAtDUMMY(day) &gt; 0;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		return openClose.getLoadAtDUMMY(day) &gt; 0;</span>
 	}
 
 	public boolean isOpen(TimePoint instant) {
@@ -73,7 +73,7 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 
 	public HColor getDayColor(TimePoint day) {
 <span class="fc" id="L75">		HColor color = colorDaysToday.get(day);</span>
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (color == null)</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (color == null)</span>
 <span class="fc" id="L77">			color = colorDaysInternal.get(day);</span>
 
 <span class="fc" id="L79">		return color;</span>
@@ -84,7 +84,7 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 	}
 
 	public String getDayName(TimePoint day) {
-<span class="nc" id="L87">		return nameDays.get(day);</span>
+<span class="fc" id="L87">		return nameDays.get(day);</span>
 	}
 
 	public OpenClose getOpenClose() {
@@ -110,12 +110,12 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 <span class="nc" id="L110">	}</span>
 
 	public void putNameDay(TimePoint day, String name) {
-<span class="nc" id="L113">		nameDays.put(day, name);</span>
-<span class="nc" id="L114">	}</span>
+<span class="fc" id="L113">		nameDays.put(day, name);</span>
+<span class="fc" id="L114">	}</span>
 
 	public void putColorDayToday(TimePoint day, HColor color) {
-<span class="nc" id="L117">		colorDaysToday.put(day, color);</span>
-<span class="nc" id="L118">	}</span>
+<span class="fc" id="L117">		colorDaysToday.put(day, color);</span>
+<span class="fc" id="L118">	}</span>
 
 	public void putColorDay(TimePoint day, HColor color) {
 <span class="fc" id="L121">		colorDaysInternal.put(day, color);</span>
@@ -130,7 +130,7 @@ import net.sourceforge.plantuml.project.time.TimePoint;
 	}
 
 	public PiecewiseConstant getDefaultPlan() {
-<span class="nc" id="L133">		return openClose.asPiecewiseConstant();</span>
+<span class="fc" id="L133">		return openClose.asPiecewiseConstant();</span>
 	}
 
 }

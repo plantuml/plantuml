@@ -105,7 +105,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="fc" id="L105">			final FingerPrint taskPrint = td.getFingerPrint(stringBounder);</span>
 <span class="fc" id="L106">			final FingerPrint fingerPrintNote = td.getFingerPrintNote(stringBounder);</span>
 
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">			if (td.getTrueRow() == null)</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">			if (td.getTrueRow() == null)</span>
 <span class="pc bpc" id="L109" title="1 of 2 branches missed.">				for (TaskDraw note : notes) {</span>
 <span class="nc" id="L110">					final FingerPrint otherNote = note.getFingerPrintNote(stringBounder);</span>
 <span class="nc" id="L111">					final double deltaY = otherNote.overlap(taskPrint);</span>
@@ -117,8 +117,8 @@ import net.sourceforge.plantuml.style.ISkinParam;
 
 <span class="nc" id="L118">				}</span>
 
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">			if (fingerPrintNote != null)</span>
-<span class="nc" id="L121">				notes.add(td);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">			if (fingerPrintNote != null)</span>
+<span class="fc" id="L121">				notes.add(td);</span>
 
 <span class="fc" id="L123">		}</span>
 <span class="fc" id="L124">	}</span>
@@ -164,9 +164,9 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="fc" id="L164">				final TaskImpl taskImpl = (TaskImpl) task;</span>
 <span class="pc bpc" id="L165" title="1 of 2 branches missed.">				final String taskLabel = displayConfig.isHideResourceName() ? taskImpl.getCode().getDisplay()</span>
 <span class="fc" id="L166">						: taskImpl.getPrettyDisplay();</span>
-<span class="pc bpc" id="L167" title="1 of 2 branches missed.">				if (taskImpl.isDiamond())</span>
-<span class="nc" id="L168">					draw = new TaskDrawDiamond(timelineStyle.getColorSet(), timeScale, y, taskLabel,</span>
-<span class="nc" id="L169">							timeBounds.getStartForDrawing(taskImpl), taskImpl, this, task.getStyleBuilder(), skinParam);</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">				if (taskImpl.isDiamond())</span>
+<span class="fc" id="L168">					draw = new TaskDrawDiamond(timelineStyle.getColorSet(), timeScale, y, taskLabel,</span>
+<span class="fc" id="L169">							timeBounds.getStartForDrawing(taskImpl), taskImpl, this, task.getStyleBuilder(), skinParam);</span>
 				else
 <span class="fc" id="L171">					draw = createRegularTaskDraw(modelData, timeBounds, timelineStyle, timeScale, y, taskImpl,</span>
 							taskLabel);
@@ -174,7 +174,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="fc" id="L174">				draw.setColorsAndCompletion(taskImpl.getColors(), taskImpl.getCompletion(), taskImpl.getUrl(),</span>
 <span class="fc" id="L175">						taskImpl.getNote(), taskImpl.getNoteStereotype());</span>
 			}
-<span class="pc bpc" id="L177" title="1 of 2 branches missed.">			if (task.getRow() == null)</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">			if (task.getRow() == null)</span>
 <span class="fc" id="L178">				y = y.addAtLeast(draw.getFullHeightTask(stringBounder));</span>
 
 <span class="fc" id="L180">			putTaskDraw(task, draw);</span>
@@ -192,13 +192,13 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (yy == 0) {</span>
 <span class="nc" id="L193">			yy = fullHeaderHeight;</span>
 <span class="pc bpc" id="L194" title="1 of 2 branches missed.">		} else if (displayConfig.isHideResourceFootbox() == false)</span>
-<span class="pc bpc" id="L195" title="1 of 2 branches missed.">			for (Resource res : modelData.getResources()) {</span>
-<span class="nc" id="L196">				final ResourceDraw draw = new ResourceDrawNumbers(modelData, timelineStyle, res, timeScale, yy,</span>
-<span class="nc" id="L197">						TimePoint.ofStartOfDay(timeBounds.getMinDay()),</span>
-<span class="nc" id="L198">						TimePoint.ofEndOfDayMinusOneSecond(timeBounds.getMaxDay()));</span>
-<span class="nc" id="L199">				res.setTaskDraw(draw);</span>
-<span class="nc" id="L200">				yy += draw.getHeight(stringBounder);</span>
-<span class="nc" id="L201">			}</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">			for (Resource res : modelData.getResources()) {</span>
+<span class="fc" id="L196">				final ResourceDraw draw = new ResourceDrawNumbers(modelData, timelineStyle, res, timeScale, yy,</span>
+<span class="fc" id="L197">						TimePoint.ofStartOfDay(timeBounds.getMinDay()),</span>
+<span class="fc" id="L198">						TimePoint.ofEndOfDayMinusOneSecond(timeBounds.getMaxDay()));</span>
+<span class="fc" id="L199">				res.setTaskDraw(draw);</span>
+<span class="fc" id="L200">				yy += draw.getHeight(stringBounder);</span>
+<span class="fc" id="L201">			}</span>
 
 <span class="fc" id="L203">		totalHeightWithoutFooter = yy;</span>
 <span class="fc" id="L204">	}</span>

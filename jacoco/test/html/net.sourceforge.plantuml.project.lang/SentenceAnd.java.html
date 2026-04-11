@@ -71,23 +71,23 @@ public class SentenceAnd&lt;D extends Diagram&gt; implements Sentence&lt;D&gt; {
 	}
 
 	public final CommandExecutionResult execute(D project, RegexResult arg) {
-<span class="nc" id="L74">		final Failable&lt;? extends Object&gt; subject = sentence1.getSubject().getMe(project, arg);</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (subject.isFail())</span>
+<span class="fc" id="L74">		final Failable&lt;? extends Object&gt; subject = sentence1.getSubject().getMe(project, arg);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (subject.isFail())</span>
 <span class="nc" id="L76">			return CommandExecutionResult.error(subject.getError());</span>
 
-<span class="nc" id="L78">		final Failable&lt;? extends Object&gt; complement1 = sentence1.getComplement().getMe(project, arg, &quot;1&quot;);</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (complement1.isFail())</span>
+<span class="fc" id="L78">		final Failable&lt;? extends Object&gt; complement1 = sentence1.getComplement().getMe(project, arg, &quot;1&quot;);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (complement1.isFail())</span>
 <span class="nc" id="L80">			return CommandExecutionResult.error(complement1.getError());</span>
 
-<span class="nc" id="L82">		final CommandExecutionResult result1 = sentence1.execute(project, subject.get(), complement1.get());</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (result1.isOk() == false)</span>
+<span class="fc" id="L82">		final CommandExecutionResult result1 = sentence1.execute(project, subject.get(), complement1.get());</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (result1.isOk() == false)</span>
 <span class="nc" id="L84">			return result1;</span>
 
-<span class="nc" id="L86">		final Failable&lt;? extends Object&gt; complement2 = sentence2.getComplement().getMe(project, arg, &quot;2&quot;);</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (complement2.isFail())</span>
+<span class="fc" id="L86">		final Failable&lt;? extends Object&gt; complement2 = sentence2.getComplement().getMe(project, arg, &quot;2&quot;);</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (complement2.isFail())</span>
 <span class="nc" id="L88">			return CommandExecutionResult.error(complement2.getError());</span>
 
-<span class="nc" id="L90">		return sentence2.execute(project, subject.get(), complement2.get());</span>
+<span class="fc" id="L90">		return sentence2.execute(project, subject.get(), complement2.get());</span>
 
 	}
 

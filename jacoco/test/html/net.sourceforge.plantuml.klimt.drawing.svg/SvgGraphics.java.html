@@ -389,7 +389,7 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 	public String createSvgGradient(String color1, String color2, char policy) {
 <span class="fc" id="L390">		final List&lt;Object&gt; key = Arrays.asList((Object) color1, color2, policy);</span>
 <span class="fc" id="L391">		String id = gradients.get(key);</span>
-<span class="pc bpc" id="L392" title="1 of 2 branches missed.">		if (id == null) {</span>
+<span class="fc bfc" id="L392" title="All 2 branches covered.">		if (id == null) {</span>
 <span class="fc" id="L393">			final Element elt = document.createElement(&quot;linearGradient&quot;);</span>
 <span class="fc bfc" id="L394" title="All 2 branches covered.">			if (policy == '|') {</span>
 <span class="fc" id="L395">				elt.setAttribute(&quot;x1&quot;, &quot;0%&quot;);</span>

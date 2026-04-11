@@ -78,10 +78,10 @@ import net.sourceforge.plantuml.project.core.GSide;
 
 	private XPoint2D lastPointPatched() {
 <span class="fc" id="L80">		final XPoint2D last = points.get(points.size() - 1);</span>
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (atEnd == GSide.LEFT)</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (atEnd == GSide.LEFT)</span>
 <span class="fc" id="L82">			return new XPoint2D(last.getX() - 3, last.getY());</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (atEnd == GSide.RIGHT)</span>
-<span class="nc" id="L84">			return new XPoint2D(last.getX() + 3, last.getY());</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (atEnd == GSide.RIGHT)</span>
+<span class="fc" id="L84">			return new XPoint2D(last.getX() + 3, last.getY());</span>
 <span class="nc" id="L85">		return last;</span>
 	}
 
@@ -93,7 +93,7 @@ import net.sourceforge.plantuml.project.core.GSide;
 <span class="fc" id="L93">		final XPoint2D last = points.get(points.size() - 1);</span>
 <span class="fc" id="L94">		final double x = last.getX();</span>
 <span class="fc" id="L95">		final double y = last.getY();</span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (atEnd == GSide.LEFT) {</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (atEnd == GSide.LEFT) {</span>
 <span class="fc" id="L97">			final UPolygon polygon = new UPolygon(&quot;asToRight&quot;);</span>
 <span class="fc" id="L98">			polygon.addPoint(x - 4, y - delta2);</span>
 <span class="fc" id="L99">			polygon.addPoint(x, y);</span>
@@ -101,13 +101,13 @@ import net.sourceforge.plantuml.project.core.GSide;
 <span class="fc" id="L101">			polygon.addPoint(x - 4, y - delta2);</span>
 <span class="fc" id="L102">			return polygon;</span>
 		}
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (atEnd == GSide.RIGHT) {</span>
-<span class="nc" id="L105">			final UPolygon polygon = new UPolygon(&quot;asToLeft&quot;);</span>
-<span class="nc" id="L106">			polygon.addPoint(x + 4, y - delta2);</span>
-<span class="nc" id="L107">			polygon.addPoint(x, y);</span>
-<span class="nc" id="L108">			polygon.addPoint(x + 4, y + delta2);</span>
-<span class="nc" id="L109">			polygon.addPoint(x + 4, y - delta2);</span>
-<span class="nc" id="L110">			return polygon;</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (atEnd == GSide.RIGHT) {</span>
+<span class="fc" id="L105">			final UPolygon polygon = new UPolygon(&quot;asToLeft&quot;);</span>
+<span class="fc" id="L106">			polygon.addPoint(x + 4, y - delta2);</span>
+<span class="fc" id="L107">			polygon.addPoint(x, y);</span>
+<span class="fc" id="L108">			polygon.addPoint(x + 4, y + delta2);</span>
+<span class="fc" id="L109">			polygon.addPoint(x + 4, y - delta2);</span>
+<span class="fc" id="L110">			return polygon;</span>
 		}
 <span class="nc" id="L112">		assert false;</span>
 <span class="nc" id="L113">		return new UPolygon();</span>

@@ -106,13 +106,13 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc" id="L106">				pendingStart = pause.pos2;</span>
 <span class="fc" id="L107">				continue;</span>
 			}
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">			if (pause.pos1 &lt; pendingStart)</span>
-<span class="nc" id="L110">				continue;</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">			if (pause.pos1 &lt; pendingStart)</span>
+<span class="fc" id="L110">				continue;</span>
 
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">			if (pause.pos1 &gt; this.pos2) {</span>
-<span class="nc bnc" id="L113" title="All 2 branches missed.">				if (pendingStart &lt; this.pos2)</span>
-<span class="nc" id="L114">					result2.add(new Segment(pendingStart, this.pos2));</span>
-<span class="nc" id="L115">				return Collections.unmodifiableCollection(result2);</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">			if (pause.pos1 &gt; this.pos2) {</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">				if (pendingStart &lt; this.pos2)</span>
+<span class="fc" id="L114">					result2.add(new Segment(pendingStart, this.pos2));</span>
+<span class="fc" id="L115">				return Collections.unmodifiableCollection(result2);</span>
 			}
 <span class="pc bpc" id="L117" title="1 of 2 branches missed.">			if (this.contains(pause)) {</span>
 <span class="pc bpc" id="L118" title="2 of 4 branches missed.">				if (TeaVM.a()) assert pendingStart &lt; pause.pos1;</span>

@@ -35,21 +35,37 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-<span class="fc" id="L44">public class ComplementAnything implements Something&lt;GanttDiagram&gt; {</span>
+<span class="fc" id="L49">public class ComplementAnything implements Something&lt;GanttDiagram&gt; {</span>
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L47">		return new RegexLeaf(1, &quot;ANYTHING&quot; + suffix, &quot;(.*?)&quot;);</span>
+<span class="fc" id="L52">		return new RegexLeaf(1, &quot;ANYTHING&quot; + suffix, &quot;(.*?)&quot;);</span>
+	}
+
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+<span class="nc" id="L57">		return new UBrexNamed(&quot;ANYTHING&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3034) + &quot;.&quot;));</span>
+	}
+
+	@Override
+	public Failable&lt;String&gt; ugetMe(GanttDiagram system, UMatcher arg) {
+<span class="nc" id="L62">		final String value = arg.get(&quot;ANYTHING&quot;, 0);</span>
+<span class="nc" id="L63">		return Failable.ok(value);</span>
 	}
 
 	public Failable&lt;String&gt; getMe(GanttDiagram system, RegexResult arg, String suffix) {
-<span class="nc" id="L51">		final String value = arg.get(&quot;ANYTHING&quot; + suffix, 0);</span>
-<span class="nc" id="L52">		return Failable.ok(value);</span>
+<span class="nc" id="L67">		final String value = arg.get(&quot;ANYTHING&quot; + suffix, 0);</span>
+<span class="nc" id="L68">		return Failable.ok(value);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

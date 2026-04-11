@@ -35,21 +35,41 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-<span class="fc" id="L44">public class ComplementNamed implements Something&lt;GanttDiagram&gt; {</span>
+<span class="fc" id="L50">public class ComplementNamed implements Something&lt;GanttDiagram&gt; {</span>
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L47">		return new RegexLeaf(1, &quot;COMPLEMENT&quot; + suffix, &quot;\\[([^\\[\\]]+)\\]&quot;);</span>
+<span class="fc" id="L53">		return new RegexLeaf(1, &quot;COMPLEMENT&quot; + suffix, &quot;\\[([^\\[\\]]+)\\]&quot;);</span>
+	}
+
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+<span class="nc" id="L58">		return UBrexConcat.build( //</span>
+				new UBrexLeaf(&quot;[&quot;), //
+<span class="nc" id="L60">				new UBrexNamed(&quot;COMPLEMENT&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;[]&quot; + String.valueOf((char)0x300D) + &quot;&quot;)), //</span>
+				new UBrexLeaf(&quot;]&quot;));
+	}
+	
+	@Override
+	public Failable&lt;String&gt; ugetMe(GanttDiagram diagram, UMatcher arg) {
+<span class="nc" id="L66">		final String name = arg.get(&quot;COMPLEMENT&quot;, 0);</span>
+<span class="nc" id="L67">		return Failable.ok(name);</span>
 	}
 
 	public Failable&lt;String&gt; getMe(GanttDiagram system, RegexResult arg, String suffix) {
-<span class="nc" id="L51">		final String name = arg.get(&quot;COMPLEMENT&quot; + suffix, 0);</span>
-<span class="nc" id="L52">		return Failable.ok(name);</span>
+<span class="fc" id="L71">		final String name = arg.get(&quot;COMPLEMENT&quot; + suffix, 0);</span>
+<span class="fc" id="L72">		return Failable.ok(name);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

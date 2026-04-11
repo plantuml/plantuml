@@ -4852,8 +4852,8 @@
                 <Class sourceFile="SentenceHappensChronology.java">
                     net.sourceforge.plantuml.chronology.SentenceHappensChronology
                 </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.chronology.SubjectTask
+                <Class sourceFile="SubjectChronologyTask.java">
+                    net.sourceforge.plantuml.chronology.SubjectChronologyTask
                 </Class>
                 <Class sourceFile="TaskChronology.java">
                     net.sourceforge.plantuml.chronology.TaskChronology
@@ -12309,9 +12309,9 @@
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>9</Ca>
-                <Ce>33</Ce>
+                <Ce>32</Ce>
                 <A>0.12</A>
-                <I>0.79</I>
+                <I>0.78</I>
                 <D>0.1</D>
                 <V>1</V>
             </Stats>
@@ -12402,7 +12402,6 @@
                 <Package>net.sourceforge.plantuml.project.solver</Package>
                 <Package>net.sourceforge.plantuml.project.time</Package>
                 <Package>net.sourceforge.plantuml.project.timescale</Package>
-                <Package>net.sourceforge.plantuml.project.ulang</Package>
                 <Package>net.sourceforge.plantuml.real</Package>
                 <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
@@ -12796,14 +12795,14 @@
 
         <Package name="net.sourceforge.plantuml.project.lang">
             <Stats>
-                <TotalClasses>65</TotalClasses>
-                <ConcreteClasses>64</ConcreteClasses>
+                <TotalClasses>101</TotalClasses>
+                <ConcreteClasses>100</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>5</Ca>
                 <Ce>16</Ce>
-                <A>0.02</A>
+                <A>0.01</A>
                 <I>0.76</I>
-                <D>0.22</D>
+                <D>0.23</D>
                 <V>1</V>
             </Stats>
 
@@ -12819,6 +12818,9 @@
                 </Class>
                 <Class sourceFile="ComplementDate.java">
                     net.sourceforge.plantuml.project.lang.ComplementDate$Type
+                </Class>
+                <Class sourceFile="ComplementDeleted.java">
+                    net.sourceforge.plantuml.project.lang.ComplementDeleted
                 </Class>
                 <Class sourceFile="ComplementEmpty.java">
                     net.sourceforge.plantuml.project.lang.ComplementEmpty
@@ -12911,6 +12913,12 @@
                     net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$1
                 </Class>
                 <Class sourceFile="SubjectDayOfWeek.java">
+                    net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$2
+                </Class>
+                <Class sourceFile="SubjectDayOfWeek.java">
+                    net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$3
+                </Class>
+                <Class sourceFile="SubjectDayOfWeek.java">
                     net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$AreClose
                 </Class>
                 <Class sourceFile="SubjectDayOfWeek.java">
@@ -12918,6 +12926,18 @@
                 </Class>
                 <Class sourceFile="SubjectDayOfWeek.java">
                     net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$InColor
+                </Class>
+                <Class sourceFile="SubjectDaysAsDates.java">
+                    net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$1
+                </Class>
+                <Class sourceFile="SubjectDaysAsDates.java">
+                    net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$2
+                </Class>
+                <Class sourceFile="SubjectDaysAsDates.java">
+                    net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$3
+                </Class>
+                <Class sourceFile="SubjectDaysAsDates.java">
+                    net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$4
                 </Class>
                 <Class sourceFile="SubjectDaysAsDates.java">
                     net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$Close
@@ -12947,7 +12967,28 @@
                     net.sourceforge.plantuml.project.lang.SubjectProject$Starts
                 </Class>
                 <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource
+                    net.sourceforge.plantuml.project.lang.SubjectResource$1
+                </Class>
+                <Class sourceFile="SubjectResource.java">
+                    net.sourceforge.plantuml.project.lang.SubjectResource$2
+                </Class>
+                <Class sourceFile="SubjectResource.java">
+                    net.sourceforge.plantuml.project.lang.SubjectResource$3
+                </Class>
+                <Class sourceFile="SubjectResource.java">
+                    net.sourceforge.plantuml.project.lang.SubjectResource$4
+                </Class>
+                <Class sourceFile="SubjectResource.java">
+                    net.sourceforge.plantuml.project.lang.SubjectResource$5
+                </Class>
+                <Class sourceFile="SubjectResource.java">
+                    net.sourceforge.plantuml.project.lang.SubjectResource$6
+                </Class>
+                <Class sourceFile="SubjectResource.java">
+                    net.sourceforge.plantuml.project.lang.SubjectResource$7
+                </Class>
+                <Class sourceFile="SubjectResource.java">
+                    net.sourceforge.plantuml.project.lang.SubjectResource$8
                 </Class>
                 <Class sourceFile="SubjectResource.java">
                     net.sourceforge.plantuml.project.lang.SubjectResource$IsOffAfterDate
@@ -12977,6 +13018,15 @@
                     net.sourceforge.plantuml.project.lang.SubjectSeparator
                 </Class>
                 <Class sourceFile="SubjectSeparator.java">
+                    net.sourceforge.plantuml.project.lang.SubjectSeparator$1
+                </Class>
+                <Class sourceFile="SubjectSeparator.java">
+                    net.sourceforge.plantuml.project.lang.SubjectSeparator$2
+                </Class>
+                <Class sourceFile="SubjectSeparator.java">
+                    net.sourceforge.plantuml.project.lang.SubjectSeparator$3
+                </Class>
+                <Class sourceFile="SubjectSeparator.java">
                     net.sourceforge.plantuml.project.lang.SubjectSeparator$Just
                 </Class>
                 <Class sourceFile="SubjectSeparator.java">
@@ -12989,10 +13039,67 @@
                     net.sourceforge.plantuml.project.lang.SubjectTask$1
                 </Class>
                 <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$10
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$11
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$12
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$14
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$15
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$16
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$17
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$18
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$19
+                </Class>
+                <Class sourceFile="SubjectTask.java">
                     net.sourceforge.plantuml.project.lang.SubjectTask$2
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$20
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$21
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$3
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$4
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$5
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$6
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$7
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$8
                 </Class>
                 <Class sourceFile="SubjectToday.java">
                     net.sourceforge.plantuml.project.lang.SubjectToday
+                </Class>
+                <Class sourceFile="SubjectToday.java">
+                    net.sourceforge.plantuml.project.lang.SubjectToday$1
+                </Class>
+                <Class sourceFile="SubjectToday.java">
+                    net.sourceforge.plantuml.project.lang.SubjectToday$2
                 </Class>
                 <Class sourceFile="SubjectToday.java">
                     net.sourceforge.plantuml.project.lang.SubjectToday$InColor
@@ -15370,8 +15477,8 @@
 
         <Package name="net.sourceforge.plantuml.stereo">
             <Stats>
-                <TotalClasses>3</TotalClasses>
-                <ConcreteClasses>3</ConcreteClasses>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>2</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>35</Ca>
                 <Ce>6</Ce>
@@ -15390,9 +15497,6 @@
                 </Class>
                 <Class sourceFile="Stereostyles.java">
                     net.sourceforge.plantuml.stereo.Stereostyles
-                </Class>
-                <Class sourceFile="StereotypePattern.java">
-                    net.sourceforge.plantuml.stereo.StereotypePattern
                 </Class>
             </ConcreteClasses>
 
@@ -19770,8 +19874,7 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.chronology">
-            <Package>net.sourceforge.plantuml.url</Package>
-            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.klimt.shape</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
@@ -20420,7 +20523,7 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.project.lang">
-            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.klimt.shape</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
@@ -20585,9 +20688,12 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.stereo">
-            <Package>net.sourceforge.plantuml.regex</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-            <Package>net.sourceforge.plantuml.regex</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.klimt.shape</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.style">

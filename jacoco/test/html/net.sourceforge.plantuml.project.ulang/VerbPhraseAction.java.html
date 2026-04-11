@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VerbPhraseAction.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.project.ulang</a> &gt; <span class="el_source">VerbPhraseAction.java</span></div><h1>VerbPhraseAction.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.project.ulang;
+
+import com.plantuml.ubrex.TextNavigator;
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexPart;
+
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.lang.Something;
+import net.sourceforge.plantuml.project.lang.Verbs;
+
+public abstract class VerbPhraseAction {
+
+<span class="nc" id="L51">	private static final UBrexPart SPACES = new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;s&quot;);</span>
+
+	private final Verbs verb;
+	private final UBrexPart ignored;
+	private final Something&lt;GanttDiagram&gt; complement;
+
+	public VerbPhraseAction(Verbs verb, Something&lt;GanttDiagram&gt; complement) {
+<span class="nc" id="L58">		this(verb, null, complement);</span>
+<span class="nc" id="L59">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L63">		return verb + &quot; &quot; + complement.getClass().getSimpleName();</span>
+	}
+
+<span class="nc" id="L66">	public VerbPhraseAction(Verbs verb, UBrexPart ignored, Something&lt;GanttDiagram&gt; complement) {</span>
+<span class="nc" id="L67">		this.verb = verb;</span>
+<span class="nc" id="L68">		this.ignored = ignored;</span>
+<span class="nc" id="L69">		this.complement = complement;</span>
+<span class="nc" id="L70">	}</span>
+
+	public abstract CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement);
+
+	public Failable&lt;? extends Object&gt; getComplement(GanttDiagram project, VerbPhraseMatcher result) {
+<span class="nc" id="L75">		return complement.ugetMe(project, result.getComplementMatcher());</span>
+	}
+
+//	public Failable&lt;? extends Object&gt; getSubject(D project, ParsedSentence result) {
+//		return subject.ugetMe(project, result.getMatcherSubject());
+//	}
+
+	public VerbPhraseMatcher parse(TextNavigator tn) {
+
+<span class="nc" id="L84">		System.out.println(&quot;DEBUT &quot; + tn);</span>
+<span class="nc" id="L85">		return parseVerbPhrase(tn);</span>
+
+//		while (true) {
+//			final UMatcher andMatcher = AND.match(tn);
+//			final String andMatch = andMatcher.getAcceptedMatch();
+//			if (andMatch.length() == 0)
+//				break;
+//
+//			tn.jump(andMatch.length());
+//			verbPhrases.add(parseVerbPhrase(tn));
+//		}
+//
+//		for (VerbPhraseMatcher vp : verbPhrases)
+//			System.out.println(&quot;vp=&quot; + vp);
+
+	}
+
+	private VerbPhraseMatcher parseVerbPhrase(TextNavigator tn) {
+<span class="nc" id="L103">		skipSpaces(tn);</span>
+
+<span class="nc" id="L105">		final UMatcher verbMatch = verb.toUnicodeBracketedExpression().match(tn);</span>
+<span class="nc" id="L106">		final String v2 = verbMatch.getAcceptedMatch();</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (v2.length() == 0)</span>
+<span class="nc" id="L108">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L110">		tn.jump(v2.length());</span>
+<span class="nc" id="L111">		skipSpaces(tn);</span>
+
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (ignored != null) {</span>
+<span class="nc" id="L114">			tn.jump(ignored.match(tn).getAcceptedMatch().length());</span>
+<span class="nc" id="L115">			skipSpaces(tn);</span>
+		}
+
+<span class="nc" id="L118">		final UMatcher complementMatcher = complement.toUnicodeBracketedExpressionComplement().match(tn);</span>
+<span class="nc" id="L119">		final String v3 = complementMatcher.getAcceptedMatch();</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (v3.length() == 0)</span>
+<span class="nc" id="L121">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L123">		tn.jump(v3.length());</span>
+
+<span class="nc" id="L125">		return new VerbPhraseMatcher(verbMatch, complementMatcher);</span>
+	}
+
+	public boolean check(TextNavigator tn) {
+<span class="nc" id="L129">		tn = tn.copy();</span>
+//		final UMatcher matcherSubject = subject.toUnicodeBracketedExpressionSubject().match(tn);
+//		final String v1 = matcherSubject.getAcceptedMatch();
+//		if (v1.length() == 0)
+//			return false;
+//
+//		tn.jump(v1.length());
+//		skipSpaces(tn);
+
+<span class="nc" id="L138">		final UMatcher verbMatch = verb.toUnicodeBracketedExpression().match(tn);</span>
+<span class="nc" id="L139">		final String v2 = verbMatch.getAcceptedMatch();</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (v2.length() == 0)</span>
+<span class="nc" id="L141">			return false;</span>
+<span class="nc" id="L142">		System.out.println(&quot;--&gt;v2=&quot; + v2);</span>
+
+<span class="nc" id="L144">		tn.jump(v2.length());</span>
+<span class="nc" id="L145">		skipSpaces(tn);</span>
+<span class="nc" id="L146">		System.out.println(&quot;--&gt;tn=&quot; + tn);</span>
+
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (ignored != null) {</span>
+<span class="nc" id="L149">			tn.jump(ignored.match(tn).getAcceptedMatch().length());</span>
+<span class="nc" id="L150">			skipSpaces(tn);</span>
+<span class="nc" id="L151">			System.out.println(&quot;--&gt;tn=&quot; + tn);</span>
+		}
+
+<span class="nc" id="L154">		final UMatcher complementMatcher = complement.toUnicodeBracketedExpressionComplement().match(tn);</span>
+<span class="nc" id="L155">		final String v3 = complementMatcher.getAcceptedMatch();</span>
+<span class="nc" id="L156">		System.out.println(&quot;--&gt;v3=&quot; + v3);</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (v3.length() == 0)</span>
+<span class="nc" id="L158">			return false;</span>
+
+		// System.out.println(&quot;&lt;&quot; + v1 + &quot;&gt;&quot;);
+<span class="nc" id="L161">		System.out.println(&quot;[&quot; + v2 + &quot;] &quot; + verbMatch);</span>
+<span class="nc" id="L162">		System.out.println(&quot;{&quot; + v3 + &quot;} &quot; + complementMatcher);</span>
+
+<span class="nc" id="L164">		return true;</span>
+
+	}
+
+	public static void skipSpaces(final TextNavigator tn) {
+<span class="nc" id="L169">		final UMatcher space1 = SPACES.match(tn);</span>
+<span class="nc" id="L170">		tn.jump(space1.getAcceptedMatch().length());</span>
+<span class="nc" id="L171">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

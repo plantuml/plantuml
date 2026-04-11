@@ -212,11 +212,11 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 <span class="fc" id="L212">	}</span>
 
 	public void openDayOfWeek(DayOfWeek day, String task) {
-<span class="nc bnc" id="L215" title="All 2 branches missed.">		if (task.length() == 0)</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if (task.length() == 0)</span>
 <span class="nc" id="L216">			this.dayCalendar.getOpenClose().open(day);</span>
 		else
-<span class="nc" id="L218">			this.dayCalendar.getOpenCloseForTask(task).open(day);</span>
-<span class="nc" id="L219">	}</span>
+<span class="fc" id="L218">			this.dayCalendar.getOpenCloseForTask(task).open(day);</span>
+<span class="fc" id="L219">	}</span>
 
 	public void closeDayAsDate(LocalDate day, String task) {
 <span class="nc bnc" id="L222" title="All 2 branches missed.">		if (task.length() == 0)</span>
@@ -227,29 +227,29 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 <span class="nc" id="L227">	}</span>
 
 	public void openDayAsDate(LocalDate day, String task) {
-<span class="nc bnc" id="L230" title="All 2 branches missed.">		if (task.length() == 0)</span>
-<span class="nc" id="L231">			this.dayCalendar.getOpenClose().open(day);</span>
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">		if (task.length() == 0)</span>
+<span class="fc" id="L231">			this.dayCalendar.getOpenClose().open(day);</span>
 		else
 <span class="nc" id="L233">			this.dayCalendar.getOpenCloseForTask(task).open(day);</span>
 
-<span class="nc" id="L235">	}</span>
+<span class="fc" id="L235">	}</span>
 
 	public TimePoint getThenDate() {
-<span class="nc" id="L238">		TimePoint result = TimePoint.ofStartOfDay(this.timeBounds.getMinDay());</span>
-<span class="nc bnc" id="L239" title="All 2 branches missed.">		for (TimePoint d : this.dayCalendar.getColorDays())</span>
-<span class="nc bnc" id="L240" title="All 2 branches missed.">			if (d.compareTo(result) &gt; 0)</span>
-<span class="nc" id="L241">				result = d;</span>
+<span class="fc" id="L238">		TimePoint result = TimePoint.ofStartOfDay(this.timeBounds.getMinDay());</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">		for (TimePoint d : this.dayCalendar.getColorDays())</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">			if (d.compareTo(result) &gt; 0)</span>
+<span class="fc" id="L241">				result = d;</span>
 
-<span class="nc bnc" id="L243" title="All 2 branches missed.">		for (TimePoint d : this.dayCalendar.getNameDays().keySet())</span>
-<span class="nc bnc" id="L244" title="All 2 branches missed.">			if (d.compareTo(result) &gt; 0)</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">		for (TimePoint d : this.dayCalendar.getNameDays().keySet())</span>
+<span class="pc bpc" id="L244" title="1 of 2 branches missed.">			if (d.compareTo(result) &gt; 0)</span>
 <span class="nc" id="L245">				result = d;</span>
 
-<span class="nc" id="L247">		return result;</span>
+<span class="fc" id="L247">		return result;</span>
 	}
 
 	public Task getExistingTask(String id) {
-<span class="nc" id="L251">		final TaskCode code = TaskCode.fromId(Objects.requireNonNull(id));</span>
-<span class="nc" id="L252">		return this.modelData.getTask(code);</span>
+<span class="fc" id="L251">		final TaskCode code = TaskCode.fromId(Objects.requireNonNull(id));</span>
+<span class="fc" id="L252">		return this.modelData.getTask(code);</span>
 	}
 
 	public GanttConstraint forceTaskOrder(Task task1, Task task2) {
@@ -265,8 +265,8 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 <span class="fc" id="L265">		Task result = this.modelData.getTask(Objects.requireNonNull(code));</span>
 <span class="fc bfc" id="L266" title="All 2 branches covered.">		if (result == null) {</span>
 <span class="fc" id="L267">			Task previous = null;</span>
-<span class="pc bpc" id="L268" title="1 of 2 branches missed.">			if (linkedToPrevious)</span>
-<span class="nc" id="L269">				previous = getLastCreatedTask();</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">			if (linkedToPrevious)</span>
+<span class="fc" id="L269">				previous = getLastCreatedTask();</span>
 
 <span class="fc" id="L271">			result = new TaskImpl(this, getSkinParam().getCurrentStyleBuilder(), code,</span>
 <span class="fc" id="L272">					TimePoint.ofStartOfDay(this.timeBounds.getMinDay()), defaultCompletion);</span>
@@ -275,8 +275,8 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 
 <span class="fc" id="L276">			this.modelData.putTask(code, result);</span>
 
-<span class="pc bpc" id="L278" title="1 of 2 branches missed.">			if (previous != null)</span>
-<span class="nc" id="L279">				forceTaskOrder(previous, result);</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">			if (previous != null)</span>
+<span class="fc" id="L279">				forceTaskOrder(previous, result);</span>
 
 		}
 <span class="fc" id="L282">		return result;</span>
@@ -288,10 +288,10 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	}
 
 	private Task getLastCreatedTask() {
-<span class="nc" id="L291">		final List&lt;Task&gt; all = new ArrayList&lt;&gt;(this.modelData.getTasks());</span>
-<span class="nc bnc" id="L292" title="All 2 branches missed.">		for (int i = all.size() - 1; i &gt;= 0; i--)</span>
-<span class="nc bnc" id="L293" title="All 2 branches missed.">			if (all.get(i) instanceof TaskImpl)</span>
-<span class="nc" id="L294">				return all.get(i);</span>
+<span class="fc" id="L291">		final List&lt;Task&gt; all = new ArrayList&lt;&gt;(this.modelData.getTasks());</span>
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">		for (int i = all.size() - 1; i &gt;= 0; i--)</span>
+<span class="pc bpc" id="L293" title="1 of 2 branches missed.">			if (all.get(i) instanceof TaskImpl)</span>
+<span class="fc" id="L294">				return all.get(i);</span>
 
 <span class="nc" id="L296">		return null;</span>
 	}
@@ -335,7 +335,7 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	}
 
 	public LocalDate getMinDay() {
-<span class="nc" id="L338">		return this.timeBounds.getMinDay();</span>
+<span class="fc" id="L338">		return this.timeBounds.getMinDay();</span>
 	}
 
 	public LocalDate getMaxDay() {
@@ -353,7 +353,7 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	}
 
 	public int daysInWeek() {
-<span class="nc" id="L356">		return this.dayCalendar.getOpenClose().daysInWeek();</span>
+<span class="fc" id="L356">		return this.dayCalendar.getOpenClose().daysInWeek();</span>
 	}
 
 	public int daysInMonth() {
@@ -361,72 +361,72 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	}
 
 	public boolean isOpen(LocalDate day) {
-<span class="nc" id="L364">		return this.dayCalendar.isOpen(day);</span>
+<span class="fc" id="L364">		return this.dayCalendar.isOpen(day);</span>
 	}
 
 	public boolean affectResource(Task result, String description) {
-<span class="nc" id="L368">		final Matcher m = RESOURCE_ASSIGNMENT_PATTERN.matcher(description);</span>
-<span class="nc bnc" id="L369" title="All 2 branches missed.">		if (m.find() == false)</span>
+<span class="fc" id="L368">		final Matcher m = RESOURCE_ASSIGNMENT_PATTERN.matcher(description);</span>
+<span class="pc bpc" id="L369" title="1 of 2 branches missed.">		if (m.find() == false)</span>
 <span class="nc" id="L370">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L372">		final Resource resource = getResource(m.group(1));</span>
-<span class="nc" id="L373">		int percentage = 100;</span>
-<span class="nc bnc" id="L374" title="All 2 branches missed.">		if (m.group(3) != null)</span>
-<span class="nc" id="L375">			percentage = Integer.parseInt(m.group(3));</span>
+<span class="fc" id="L372">		final Resource resource = getResource(m.group(1));</span>
+<span class="fc" id="L373">		int percentage = 100;</span>
+<span class="pc bpc" id="L374" title="1 of 2 branches missed.">		if (m.group(3) != null)</span>
+<span class="fc" id="L375">			percentage = Integer.parseInt(m.group(3));</span>
 
-<span class="nc bnc" id="L377" title="All 2 branches missed.">		if (percentage == 0)</span>
+<span class="pc bpc" id="L377" title="1 of 2 branches missed.">		if (percentage == 0)</span>
 <span class="nc" id="L378">			return false;</span>
 
-<span class="nc" id="L380">		result.addResource(resource, percentage);</span>
-<span class="nc" id="L381">		return true;</span>
+<span class="fc" id="L380">		result.addResource(resource, percentage);</span>
+<span class="fc" id="L381">		return true;</span>
 	}
 
 	public Resource getResource(String resourceName) {
-<span class="nc" id="L385">		Resource resource = this.modelData.getResource(resourceName);</span>
-<span class="nc bnc" id="L386" title="All 2 branches missed.">		if (resource == null)</span>
-<span class="nc" id="L387">			resource = new Resource(resourceName);</span>
+<span class="fc" id="L385">		Resource resource = this.modelData.getResource(resourceName);</span>
+<span class="pc bpc" id="L386" title="1 of 2 branches missed.">		if (resource == null)</span>
+<span class="fc" id="L387">			resource = new Resource(resourceName);</span>
 
-<span class="nc" id="L389">		this.modelData.putResource(resourceName, resource);</span>
-<span class="nc" id="L390">		return resource;</span>
+<span class="fc" id="L389">		this.modelData.putResource(resourceName, resource);</span>
+<span class="fc" id="L390">		return resource;</span>
 	}
 
 	public Moment getExistingMoment(String id) {
-<span class="nc" id="L394">		Moment result = getExistingTask(id);</span>
-<span class="nc bnc" id="L395" title="All 2 branches missed.">		if (result == null) {</span>
-<span class="nc" id="L396">			TimePoint start = null;</span>
-<span class="nc" id="L397">			TimePoint end = null;</span>
-<span class="nc bnc" id="L398" title="All 2 branches missed.">			for (Map.Entry&lt;TimePoint, String&gt; ent : this.dayCalendar.getNameDays().entrySet()) {</span>
-<span class="nc bnc" id="L399" title="All 2 branches missed.">				if (ent.getValue().equalsIgnoreCase(id) == false)</span>
-<span class="nc" id="L400">					continue;</span>
+<span class="fc" id="L394">		Moment result = getExistingTask(id);</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc" id="L396">			TimePoint start = null;</span>
+<span class="fc" id="L397">			TimePoint end = null;</span>
+<span class="fc bfc" id="L398" title="All 2 branches covered.">			for (Map.Entry&lt;TimePoint, String&gt; ent : this.dayCalendar.getNameDays().entrySet()) {</span>
+<span class="fc bfc" id="L399" title="All 2 branches covered.">				if (ent.getValue().equalsIgnoreCase(id) == false)</span>
+<span class="fc" id="L400">					continue;</span>
 
-<span class="nc" id="L402">				start = min(start, ent.getKey());</span>
-<span class="nc" id="L403">				end = max(end, ent.getKey());</span>
-<span class="nc" id="L404">			}</span>
-<span class="nc bnc" id="L405" title="All 2 branches missed.">			if (start != null)</span>
-<span class="nc" id="L406">				result = new MomentImpl(start, end.increment());</span>
+<span class="fc" id="L402">				start = min(start, ent.getKey());</span>
+<span class="fc" id="L403">				end = max(end, ent.getKey());</span>
+<span class="fc" id="L404">			}</span>
+<span class="pc bpc" id="L405" title="1 of 2 branches missed.">			if (start != null)</span>
+<span class="fc" id="L406">				result = new MomentImpl(start, end.increment());</span>
 
 		}
-<span class="nc" id="L409">		return result;</span>
+<span class="fc" id="L409">		return result;</span>
 	}
 
 	private TimePoint min(TimePoint d1, TimePoint d2) {
-<span class="nc bnc" id="L413" title="All 2 branches missed.">		if (d1 == null)</span>
-<span class="nc" id="L414">			return d2;</span>
+<span class="fc bfc" id="L413" title="All 2 branches covered.">		if (d1 == null)</span>
+<span class="fc" id="L414">			return d2;</span>
 
-<span class="nc bnc" id="L416" title="All 2 branches missed.">		if (d1.compareTo(d2) &gt; 0)</span>
-<span class="nc" id="L417">			return d2;</span>
+<span class="pc bpc" id="L416" title="1 of 2 branches missed.">		if (d1.compareTo(d2) &gt; 0)</span>
+<span class="fc" id="L417">			return d2;</span>
 
 <span class="nc" id="L419">		return d1;</span>
 	}
 
 	private TimePoint max(TimePoint d1, TimePoint d2) {
-<span class="nc bnc" id="L423" title="All 2 branches missed.">		if (d1 == null)</span>
-<span class="nc" id="L424">			return d2;</span>
+<span class="fc bfc" id="L423" title="All 2 branches covered.">		if (d1 == null)</span>
+<span class="fc" id="L424">			return d2;</span>
 
-<span class="nc bnc" id="L426" title="All 2 branches missed.">		if (d1.compareTo(d2) &lt; 0)</span>
+<span class="pc bpc" id="L426" title="1 of 2 branches missed.">		if (d1.compareTo(d2) &lt; 0)</span>
 <span class="nc" id="L427">			return d2;</span>
 
-<span class="nc" id="L429">		return d1;</span>
+<span class="fc" id="L429">		return d1;</span>
 	}
 
 	public void colorDay(LocalDate day, HColor color) {
@@ -438,8 +438,8 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 <span class="nc" id="L438">	}</span>
 
 	public void nameDay(LocalDate day, String name) {
-<span class="nc" id="L441">		this.dayCalendar.putNameDay(TimePoint.ofStartOfDay(day), name);</span>
-<span class="nc" id="L442">	}</span>
+<span class="fc" id="L441">		this.dayCalendar.putNameDay(TimePoint.ofStartOfDay(day), name);</span>
+<span class="fc" id="L442">	}</span>
 
 	public LocalDate getToday() {
 <span class="nc bnc" id="L445" title="All 2 branches missed.">		if (today == null)</span>
@@ -449,15 +449,15 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	}
 
 	public void setTodayColors(CenterBorderColor colors) {
-<span class="nc bnc" id="L452" title="All 2 branches missed.">		if (today == null)</span>
+<span class="pc bpc" id="L452" title="1 of 2 branches missed.">		if (today == null)</span>
 <span class="nc" id="L453">			this.today = TimePoint.todayUtcAtMidnight();</span>
 
-<span class="nc" id="L455">		this.dayCalendar.putColorDayToday(today, colors.getCenter());</span>
-<span class="nc" id="L456">	}</span>
+<span class="fc" id="L455">		this.dayCalendar.putColorDayToday(today, colors.getCenter());</span>
+<span class="fc" id="L456">	}</span>
 
 	public CommandExecutionResult setToday(LocalDate date) {
-<span class="nc" id="L459">		this.today = TimePoint.ofStartOfDay(date);</span>
-<span class="nc" id="L460">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L459">		this.today = TimePoint.ofStartOfDay(date);</span>
+<span class="fc" id="L460">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult deleteTask(Task task) {
@@ -471,14 +471,14 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 <span class="nc" id="L471">	}</span>
 
 	public CommandExecutionResult addNote(Display note, Stereotype stereotype) {
-<span class="nc" id="L474">		Task last = null;</span>
-<span class="nc bnc" id="L475" title="All 2 branches missed.">		for (Task current : this.modelData.getTasks())</span>
-<span class="nc" id="L476">			last = current;</span>
-<span class="nc bnc" id="L477" title="All 2 branches missed.">		if (last == null)</span>
+<span class="fc" id="L474">		Task last = null;</span>
+<span class="fc bfc" id="L475" title="All 2 branches covered.">		for (Task current : this.modelData.getTasks())</span>
+<span class="fc" id="L476">			last = current;</span>
+<span class="pc bpc" id="L477" title="1 of 2 branches missed.">		if (last == null)</span>
 <span class="nc" id="L478">			return CommandExecutionResult.error(&quot;No task defined&quot;);</span>
 
-<span class="nc" id="L480">		last.setNote(note, stereotype);</span>
-<span class="nc" id="L481">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L480">		last.setNote(note, stereotype);</span>
+<span class="fc" id="L481">		return CommandExecutionResult.ok();</span>
 	}
 
 	public void setShowFootbox(boolean footbox) {
@@ -549,7 +549,7 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 <span class="nc" id="L549">	}</span>
 
 	public PiecewiseConstant getDefaultPlan() {
-<span class="nc" id="L552">		return this.dayCalendar.getDefaultPlan();</span>
+<span class="fc" id="L552">		return this.dayCalendar.getDefaultPlan();</span>
 	}
 
 	public HColorSet getIHtmlColorSet() {

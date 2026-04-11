@@ -261,10 +261,10 @@ import net.sourceforge.plantuml.utils.PeekerUtils;
 <span class="fc" id="L261">				ins.jump();</span>
 <span class="fc bfc" id="L262" title="All 2 branches covered.">			} else if (current == '@') {</span>
 <span class="fc" id="L263">				result.add(new StyleToken(StyleTokenType.AROBASE_MEDIA, readArobaseMedia(ins)));</span>
-<span class="pc bpc" id="L264" title="1 of 2 branches missed.">			} else if (current == '\&quot;') {</span>
-<span class="nc" id="L265">				final String s = readQuotedString(ins);</span>
-<span class="nc" id="L266">				result.add(new StyleToken(StyleTokenType.STRING, s));</span>
-<span class="nc" id="L267">			} else {</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">			} else if (current == '\&quot;') {</span>
+<span class="fc" id="L265">				final String s = readQuotedString(ins);</span>
+<span class="fc" id="L266">				result.add(new StyleToken(StyleTokenType.STRING, s));</span>
+<span class="fc" id="L267">			} else {</span>
 <span class="fc" id="L268">				final String s = readString(ins);</span>
 <span class="fc" id="L269">				result.add(new StyleToken(StyleTokenType.STRING, s));</span>
 			}
@@ -311,18 +311,18 @@ import net.sourceforge.plantuml.utils.PeekerUtils;
 	}
 
 	private static String readQuotedString(CharInspector ins) {
-<span class="nc" id="L314">		final StringBuilder result = new StringBuilder();</span>
-<span class="nc bnc" id="L315" title="All 2 branches missed.">		if (ins.peek(0) != '\&quot;')</span>
+<span class="fc" id="L314">		final StringBuilder result = new StringBuilder();</span>
+<span class="pc bpc" id="L315" title="1 of 2 branches missed.">		if (ins.peek(0) != '\&quot;')</span>
 <span class="nc" id="L316">			throw new IllegalStateException();</span>
-<span class="nc" id="L317">		ins.jump();</span>
-<span class="nc bnc" id="L318" title="All 4 branches missed.">		while (ins.peek(0) != 0 &amp;&amp; ins.peek(0) != '\&quot;') {</span>
-<span class="nc" id="L319">			char ch = ins.peek(0);</span>
-<span class="nc" id="L320">			ins.jump();</span>
-<span class="nc" id="L321">			result.append(ch);</span>
-<span class="nc" id="L322">		}</span>
-<span class="nc bnc" id="L323" title="All 2 branches missed.">		if (ins.peek(0) == '\&quot;')</span>
-<span class="nc" id="L324">			ins.jump();</span>
-<span class="nc" id="L325">		return result.toString();</span>
+<span class="fc" id="L317">		ins.jump();</span>
+<span class="pc bpc" id="L318" title="1 of 4 branches missed.">		while (ins.peek(0) != 0 &amp;&amp; ins.peek(0) != '\&quot;') {</span>
+<span class="fc" id="L319">			char ch = ins.peek(0);</span>
+<span class="fc" id="L320">			ins.jump();</span>
+<span class="fc" id="L321">			result.append(ch);</span>
+<span class="fc" id="L322">		}</span>
+<span class="pc bpc" id="L323" title="1 of 2 branches missed.">		if (ins.peek(0) == '\&quot;')</span>
+<span class="fc" id="L324">			ins.jump();</span>
+<span class="fc" id="L325">		return result.toString();</span>
 	}
 
 	private static String readString(CharInspector ins) {

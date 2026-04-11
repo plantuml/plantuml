@@ -35,6 +35,12 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.project.Completion;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
@@ -42,15 +48,29 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-<span class="fc" id="L45">public class ComplementCompleted implements Something&lt;GanttDiagram&gt; {</span>
+<span class="fc" id="L51">public class ComplementCompleted implements Something&lt;GanttDiagram&gt; {</span>
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L48">		return new RegexLeaf(1, &quot;COMPLEMENT&quot; + suffix, &quot;(\\d+).*completed?&quot;);</span>
+<span class="fc" id="L54">		return new RegexLeaf(1, &quot;COMPLEMENT&quot; + suffix, &quot;(\\d+).*completed?&quot;);</span>
+	}
+
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+<span class="nc" id="L59">		return UBrexConcat.build(//</span>
+<span class="nc" id="L60">				new UBrexNamed(&quot;COMPLEMENT&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d&quot;)), //</span>
+<span class="nc" id="L61">				new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;W complete&quot; + String.valueOf((char)0x3007) + &quot;?d&quot;)) //</span>
+		;
+	}
+
+	@Override
+	public Failable&lt;Completion&gt; ugetMe(GanttDiagram diagram, UMatcher arg) {
+<span class="nc" id="L67">		final String value = arg.get(&quot;COMPLEMENT&quot;, 0);</span>
+<span class="nc" id="L68">		return Failable.ok(new Completion(Integer.parseInt(value)));</span>
 	}
 
 	public Failable&lt;Completion&gt; getMe(GanttDiagram system, RegexResult arg, String suffix) {
-<span class="nc" id="L52">		final String value = arg.get(&quot;COMPLEMENT&quot; + suffix, 0);</span>
-<span class="nc" id="L53">		return Failable.ok(new Completion(Integer.parseInt(value)));</span>
+<span class="nc" id="L72">		final String value = arg.get(&quot;COMPLEMENT&quot; + suffix, 0);</span>
+<span class="nc" id="L73">		return Failable.ok(new Completion(Integer.parseInt(value)));</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
