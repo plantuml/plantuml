@@ -84,7 +84,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class GanttDiagramFactory extends PSystemCommandFactory {
 
-	private final static boolean FORCE_UBREX = false;
+	private final static boolean FORCE_UBREX = true;
 
 	static private final List<Subject<GanttDiagram>> subjects() {
 		return Arrays.asList(SubjectTask.ME, SubjectProject.ME, SubjectDayOfWeek.ME, SubjectDayAsDate.ME,
