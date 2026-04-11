@@ -75,6 +75,7 @@ public class NaturalGanttCommand implements Command<GanttDiagram> {
 			throws NoSuchColorException {
 
 		final TextNavigator tn = TextNavigator.build(lines.getFirst().getString());
+		VerbPhraseAction.skipSpaces(tn);
 
 		final UMatcher matcherSubject = subject.toUnicodeBracketedExpressionSubject().match(tn);
 		tn.jump(matcherSubject.getAcceptedMatch().length());
@@ -119,6 +120,7 @@ public class NaturalGanttCommand implements Command<GanttDiagram> {
 	@Override
 	public CommandControl isValid(BlocLines lines) {
 		final TextNavigator tn = TextNavigator.build(lines.getFirst().getString());
+		VerbPhraseAction.skipSpaces(tn);
 		System.out.println("1 TN = " + tn);
 
 		final UMatcher matcherSubject = subject.toUnicodeBracketedExpressionSubject().match(tn);
