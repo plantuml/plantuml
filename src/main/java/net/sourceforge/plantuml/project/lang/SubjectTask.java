@@ -284,17 +284,6 @@ public class SubjectTask implements Subject<GanttDiagram> {
 		});
 
 		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),
-				ComplementDate.any()) {
-			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-				final Task task = (Task) subject;
-				final LocalDate pause = (LocalDate) complement;
-				task.addPause(pause);
-				return CommandExecutionResult.ok();
-			}
-		});
-
-		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),
 				new ComplementIntervals()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
@@ -315,6 +304,17 @@ public class SubjectTask implements Subject<GanttDiagram> {
 				final DaysAsDates pauses = (DaysAsDates) complement;
 				for (LocalDate day : pauses)
 					task.addPause(day);
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),
+				ComplementDate.any()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final Task task = (Task) subject;
+				final LocalDate pause = (LocalDate) complement;
+				task.addPause(pause);
 				return CommandExecutionResult.ok();
 			}
 		});
