@@ -66,7 +66,7 @@ public class Words {
 	public final static String WEEK = "week";
 	public final static String WITH = "with";
 	public final static String WORKING = "working";
-	
+
 	public final static String THEN = "then";
 	public final static String IT = "it";
 
@@ -108,6 +108,17 @@ public class Words {
 		final UBrexPart tmp[] = new UBrexPart[words.length];
 		for (int i = 0; i < words.length; i++)
 			tmp[i] = UBrexConcat.build(UBrexLeaf.spaceOneOrMore(), new UBrexLeaf(words[i]));
+
+		return UBrexConcat.build(tmp);
+	}
+
+	public static UBrexPart uexactly2(String... words) {
+		final UBrexPart tmp[] = new UBrexPart[words.length];
+		for (int i = 0; i < words.length; i++)
+			if (i == words.length - 1)
+				tmp[i] = new UBrexLeaf(words[i]);
+			else
+				tmp[i] = UBrexConcat.build(new UBrexLeaf(words[i]), UBrexLeaf.spaceOneOrMore());
 
 		return UBrexConcat.build(tmp);
 	}
