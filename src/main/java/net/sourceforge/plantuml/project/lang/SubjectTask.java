@@ -156,6 +156,17 @@ public class SubjectTask implements Subject<GanttDiagram> {
 			}
 		});
 
+		result.add(new VerbPhraseAction(Verbs.isColored, Words.uexactly(Words.FOR, Words.COMPLETION),
+				new ComplementInColorsFromTo()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final Task task = (Task) subject;
+				final CenterBorderColor[] colors = (CenterBorderColor[]) complement;
+				task.setColors(colors);
+				return CommandExecutionResult.ok();
+			}
+		});
+
 		result.add(new VerbPhraseAction(Verbs.happens, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),
 				ComplementDate.any()) {
 			@Override
