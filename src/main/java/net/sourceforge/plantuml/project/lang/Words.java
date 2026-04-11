@@ -105,21 +105,21 @@ public class Words {
 	}
 
 	public static UBrexPart uexactly(String... words) {
-		final UBrexPart tmp[] = new UBrexPart[words.length];
-		for (int i = 0; i < words.length; i++)
-			tmp[i] = UBrexConcat.build(UBrexLeaf.spaceOneOrMore(), new UBrexLeaf(words[i]));
-
+		final UBrexPart tmp[] = new UBrexPart[words.length * 2];
+		for (int i = 0; i < words.length; i++) {
+			tmp[i * 2] = UBrexLeaf.spaceOneOrMore();
+			tmp[i * 2 + 1] = new UBrexLeaf(words[i]);
+		}
 		return UBrexConcat.build(tmp);
 	}
 
 	public static UBrexPart uexactly2(String... words) {
-		final UBrexPart tmp[] = new UBrexPart[words.length];
-		for (int i = 0; i < words.length; i++)
-			if (i == words.length - 1)
-				tmp[i] = new UBrexLeaf(words[i]);
-			else
-				tmp[i] = UBrexConcat.build(new UBrexLeaf(words[i]), UBrexLeaf.spaceOneOrMore());
-
+		final UBrexPart tmp[] = new UBrexPart[words.length * 2 - 1];
+		for (int i = 0; i < words.length; i++) {
+			if (i > 0)
+				tmp[i * 2 - 1] = UBrexLeaf.spaceOneOrMore();
+			tmp[i * 2] = new UBrexLeaf(words[i]);
+		}
 		return UBrexConcat.build(tmp);
 	}
 
