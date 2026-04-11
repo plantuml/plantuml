@@ -36,10 +36,6 @@
 package net.sourceforge.plantuml.ebnf;
 
 import com.plantuml.ubrex.UnicodeBracketedExpression;
-import com.plantuml.ubrex.builder.UBrexConcat;
-import com.plantuml.ubrex.builder.UBrexLeaf;
-import com.plantuml.ubrex.builder.UBrexNamed;
-import com.plantuml.ubrex.builder.UBrexUpto;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -51,30 +47,19 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class UBrexCommandComment extends UBrexSingleLineCommand2&lt;PSystemEbnf&gt; {
 
 	public UBrexCommandComment() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L50">		super(getRegexConcat());</span>
+<span class="fc" id="L51">	}</span>
 
 	static UnicodeBracketedExpression getRegexConcat() {
-<span class="fc" id="L58">		return UBrexConcat.build( //</span>
-<span class="fc" id="L59">				UBrexLeaf.spaceZeroOrMore(), //</span>
-				new UBrexLeaf(&quot;(*&quot;), //
-				new UBrexNamed(&quot;COMMENT&quot;, //
-						new UBrexUpto(//
-<span class="fc" id="L63">								new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3034) + &quot;.&quot;), //</span>
-<span class="fc" id="L64">								UBrexConcat.build( //</span>
-										new UBrexLeaf(&quot;*)&quot;), //
-<span class="fc" id="L66">										UBrexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L67">										new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3012) + &quot;($)&quot;) //</span>
-								))),
-//				new UBrexLeaf(&quot;〶$COMMENT=〄+〴.-&gt;〘*) 〇*〴s 〒($)〙&quot;), //
-<span class="fc" id="L70">				UBrexLeaf.end());</span>
+<span class="fc" id="L54">		return UnicodeBracketedExpression.build(&quot;&quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3034) + &quot;s (* &quot; + String.valueOf((char)0x3036) + &quot;$COMMENT=&quot; + String.valueOf((char)0x3004) + &quot;&gt;&quot; + String.valueOf((char)0x3018) + &quot;*) &quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3034) + &quot;s &quot; + String.valueOf((char)0x3012) + &quot;($)&quot; + String.valueOf((char)0x3019) + &quot;&quot;);</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(PSystemEbnf diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L76">		final Display note = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;COMMENT&quot;, 0));</span>
-<span class="nc" id="L77">		return diagram.addNote(note, null);</span>
+<span class="nc" id="L60">		final String tmp = arg.get(&quot;COMMENT&quot;, 0).trim();</span>
+<span class="nc" id="L61">		final Display note = Display.getWithNewlines(diagram.getPragma(), tmp);</span>
+<span class="nc" id="L62">		return diagram.addNote(note, null);</span>
 	}
 
 }
