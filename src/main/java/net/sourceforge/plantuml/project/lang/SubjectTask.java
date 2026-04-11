@@ -273,6 +273,14 @@ public class SubjectTask implements Subject<GanttDiagram> {
 			}
 		});
 
+		result.add(new VerbPhraseAction(Verbs.is, new ComplementDeleted()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final Task task = (Task) subject;
+				return project.deleteTask(task);
+			}
+		});
+
 		result.add(new VerbPhraseAction(Verbs.is, new ComplementCompleted()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
