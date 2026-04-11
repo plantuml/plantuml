@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 
 public class UrlBuilder {
-    // ::remove file when __HAXE__
 
 	public static final String URL_KEY = "URL";
 	

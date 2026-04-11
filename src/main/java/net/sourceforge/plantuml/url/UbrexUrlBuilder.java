@@ -43,7 +43,6 @@ import com.plantuml.ubrex.UnicodeBracketedExpression;
 
 // UrlUbrexTest
 public class UbrexUrlBuilder {
-	// ::remove file when __HAXE__
 
 //	public static final IRegex MANDATORY = new RegexLeaf("URL", "(" + UbrexUrlBuilder.getRegexp() + ")");
 //	public static final IRegex OPTIONAL = new RegexOptional(MANDATORY);

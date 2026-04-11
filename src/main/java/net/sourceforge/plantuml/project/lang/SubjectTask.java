@@ -74,6 +74,7 @@ import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.url.Url;
 
 public class SubjectTask implements Subject<GanttDiagram> {
 
@@ -334,6 +335,16 @@ public class SubjectTask implements Subject<GanttDiagram> {
 				final Task task = (Task) subject;
 				final DayOfWeek pause = (DayOfWeek) complement;
 				task.addPause(pause);
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.linksTo, new ComplementUrl()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final Task task = (Task) subject;
+				final Url url = (Url) complement;
+				task.setUrl(url);
 				return CommandExecutionResult.ok();
 			}
 		});
