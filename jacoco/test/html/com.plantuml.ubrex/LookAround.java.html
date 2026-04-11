@@ -35,11 +35,11 @@
 package com.plantuml.ubrex;
 
 <span class="fc" id="L37">public enum LookAround {</span>
-<span class="fc" id="L38">	LOOK_AHEAD_POSITIVE(&quot;(=)&quot;), //</span>
-<span class="fc" id="L39">	LOOK_AHEAD_NEGATIVE(&quot;(!)&quot;), //</span>
-<span class="fc" id="L40">	LOOK_BEHIND_POSITIVE(&quot;(&lt;=)&quot;), //</span>
-<span class="fc" id="L41">	LOOK_BEHIND_NEGATIVE(&quot;(&lt;!)&quot;), //</span>
-<span class="fc" id="L42">	END_OF_TEXT(&quot;($)&quot;);</span>
+<span class="fc" id="L38">	LOOK_AHEAD_POSITIVE(&quot;=&quot;), //</span>
+<span class="fc" id="L39">	LOOK_AHEAD_NEGATIVE(&quot;!&quot;), //</span>
+<span class="fc" id="L40">	LOOK_BEHIND_POSITIVE(&quot;&lt;=&quot;), //</span>
+<span class="fc" id="L41">	LOOK_BEHIND_NEGATIVE(&quot;&lt;!&quot;), //</span>
+<span class="fc" id="L42">	END_OF_TEXT(&quot;$&quot;);</span>
 
 	private final String definition;
 
@@ -49,48 +49,45 @@ package com.plantuml.ubrex;
 
 	public static LookAround from(CharSequence input) {
 <span class="fc" id="L51">		final char ch0 = input.charAt(0);</span>
-<span class="fc" id="L52">		final char ch1 = input.charAt(1);</span>
-<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (ch0 != '(')</span>
-<span class="nc" id="L54">			return null;</span>
 
-<span class="fc bfc" id="L56" title="All 2 branches covered.">		if (ch1 == '$')</span>
-<span class="fc" id="L57">			return END_OF_TEXT;</span>
-<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (ch1 == '=')</span>
-<span class="fc" id="L59">			return LOOK_AHEAD_POSITIVE;</span>
-<span class="fc bfc" id="L60" title="All 2 branches covered.">		if (ch1 == '!')</span>
-<span class="fc" id="L61">			return LOOK_AHEAD_NEGATIVE;</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (ch0 == '$')</span>
+<span class="fc" id="L54">			return END_OF_TEXT;</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		if (ch0 == '=')</span>
+<span class="fc" id="L56">			return LOOK_AHEAD_POSITIVE;</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (ch0 == '!')</span>
+<span class="fc" id="L58">			return LOOK_AHEAD_NEGATIVE;</span>
 
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (ch1 == '&lt;') {</span>
-<span class="fc" id="L64">			final char ch2 = input.charAt(2);</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">			if (ch2 == '=')</span>
-<span class="fc" id="L66">				return LOOK_BEHIND_POSITIVE;</span>
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">			if (ch2 == '!')</span>
-<span class="fc" id="L68">				return LOOK_BEHIND_NEGATIVE;</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (ch0 == '&lt;') {</span>
+<span class="fc" id="L61">			final char ch1 = input.charAt(1);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">			if (ch1 == '=')</span>
+<span class="fc" id="L63">				return LOOK_BEHIND_POSITIVE;</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">			if (ch1 == '!')</span>
+<span class="fc" id="L65">				return LOOK_BEHIND_NEGATIVE;</span>
 		}
 
-<span class="nc" id="L71">		return null;</span>
+<span class="nc" id="L68">		return null;</span>
 	}
 
 	public boolean isLookBehind() {
-<span class="fc bfc" id="L75" title="All 2 branches covered.">		switch (this) {</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		switch (this) {</span>
 		case LOOK_BEHIND_POSITIVE:
 		case LOOK_BEHIND_NEGATIVE:
-<span class="fc" id="L78">			return true;</span>
+<span class="fc" id="L75">			return true;</span>
 		}
-<span class="fc" id="L80">		return false;</span>
+<span class="fc" id="L77">		return false;</span>
 	}
 
 	public boolean isLookAhead() {
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		switch (this) {</span>
 		case LOOK_AHEAD_POSITIVE:
 		case LOOK_AHEAD_NEGATIVE:
-<span class="fc" id="L87">			return true;</span>
+<span class="fc" id="L84">			return true;</span>
 		}
-<span class="nc" id="L89">		return false;</span>
+<span class="nc" id="L86">		return false;</span>
 	}
 
 	public int getDefinitionSize() {
-<span class="fc" id="L93">		return definition.length();</span>
+<span class="fc" id="L90">		return definition.length();</span>
 	}
 
 }
