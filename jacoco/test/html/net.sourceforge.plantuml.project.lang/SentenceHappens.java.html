@@ -55,10 +55,10 @@ public class SentenceHappens extends SentenceSimple&lt;GanttDiagram&gt; {
 <span class="fc" id="L55">		task.setLoad(Load.ofDays(1));</span>
 <span class="fc" id="L56">		task.setDiamond(true);</span>
 <span class="fc" id="L57">		final TaskInstant when = (TaskInstant) complement;</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (when.getAttribute() == TaskAttribute.END)</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (when.getAttribute() == TaskAttribute.END)</span>
 <span class="fc" id="L59">			task.setStart(when.getInstantPrecise().decrement());</span>
 		else
-<span class="nc" id="L61">			task.setStart(when.getInstantPrecise());</span>
+<span class="fc" id="L61">			task.setStart(when.getInstantPrecise());</span>
 <span class="fc" id="L62">		return CommandExecutionResult.ok();</span>
 	}
 
