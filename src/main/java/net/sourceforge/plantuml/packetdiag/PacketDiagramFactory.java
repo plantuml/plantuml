@@ -44,6 +44,14 @@ import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
+import net.sourceforge.plantuml.packetdiag.command.CommandColWidth;
+import net.sourceforge.plantuml.packetdiag.command.CommandNodeHeight;
+import net.sourceforge.plantuml.packetdiag.command.CommandNumRange;
+import net.sourceforge.plantuml.packetdiag.command.CommandPacketDiagEnd;
+import net.sourceforge.plantuml.packetdiag.command.CommandPacketDiagStart;
+import net.sourceforge.plantuml.packetdiag.command.CommandSameHeight;
+import net.sourceforge.plantuml.packetdiag.command.CommandScaleDirection;
+import net.sourceforge.plantuml.packetdiag.command.CommandScaleInterval;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PacketDiagramFactory extends PSystemCommandFactory {
