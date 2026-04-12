@@ -5286,11 +5286,11 @@
                 <TotalClasses>49</TotalClasses>
                 <ConcreteClasses>43</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
-                <Ca>58</Ca>
+                <Ca>59</Ca>
                 <Ce>35</Ce>
                 <A>0.12</A>
-                <I>0.38</I>
-                <D>0.5</D>
+                <I>0.37</I>
+                <D>0.51</D>
                 <V>1</V>
             </Stats>
 
@@ -5528,6 +5528,7 @@
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
                 <Package>net.sourceforge.plantuml.packetdiag</Package>
+                <Package>net.sourceforge.plantuml.packetdiag.command</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.project.command</Package>
                 <Package>net.sourceforge.plantuml.project.lang</Package>
@@ -5692,11 +5693,11 @@
                 <TotalClasses>12</TotalClasses>
                 <ConcreteClasses>10</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>79</Ca>
+                <Ca>80</Ca>
                 <Ce>39</Ce>
                 <A>0.17</A>
                 <I>0.33</I>
-                <D>0.5</D>
+                <D>0.51</D>
                 <V>1</V>
             </Stats>
 
@@ -5839,6 +5840,7 @@
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
                 <Package>net.sourceforge.plantuml.packetdiag</Package>
+                <Package>net.sourceforge.plantuml.packetdiag.command</Package>
                 <Package>net.sourceforge.plantuml.preproc2</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.project.command</Package>
@@ -8753,7 +8755,7 @@
                 <TotalClasses>29</TotalClasses>
                 <ConcreteClasses>28</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>93</Ca>
+                <Ca>94</Ca>
                 <Ce>8</Ce>
                 <A>0.03</A>
                 <I>0.08</I>
@@ -8927,6 +8929,7 @@
                 <Package>net.sourceforge.plantuml.nwdiag.next</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
                 <Package>net.sourceforge.plantuml.packetdiag</Package>
+                <Package>net.sourceforge.plantuml.packetdiag.command</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.project.command</Package>
@@ -11709,14 +11712,14 @@
 
         <Package name="net.sourceforge.plantuml.packetdiag">
             <Stats>
-                <TotalClasses>12</TotalClasses>
-                <ConcreteClasses>12</ConcreteClasses>
+                <TotalClasses>6</TotalClasses>
+                <ConcreteClasses>6</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>0</Ca>
-                <Ce>17</Ce>
+                <Ca>1</Ca>
+                <Ce>16</Ce>
                 <A>0</A>
-                <I>1</I>
-                <D>0</D>
+                <I>0.94</I>
+                <D>0.06</D>
                 <V>1</V>
             </Stats>
 
@@ -11724,24 +11727,6 @@
             </AbstractClasses>
 
             <ConcreteClasses>
-                <Class sourceFile="CommandColWidth.java">
-                    net.sourceforge.plantuml.packetdiag.CommandColWidth
-                </Class>
-                <Class sourceFile="CommandNodeHeight.java">
-                    net.sourceforge.plantuml.packetdiag.CommandNodeHeight
-                </Class>
-                <Class sourceFile="CommandPacketDiagEnd.java">
-                    net.sourceforge.plantuml.packetdiag.CommandPacketDiagEnd
-                </Class>
-                <Class sourceFile="CommandPacketDiagStart.java">
-                    net.sourceforge.plantuml.packetdiag.CommandPacketDiagStart
-                </Class>
-                <Class sourceFile="CommandSameHeight.java">
-                    net.sourceforge.plantuml.packetdiag.CommandSameHeight
-                </Class>
-                <Class sourceFile="CommandScaleInterval.java">
-                    net.sourceforge.plantuml.packetdiag.CommandScaleInterval
-                </Class>
                 <Class sourceFile="PacketBlock.java">
                     net.sourceforge.plantuml.packetdiag.PacketBlock$1
                 </Class>
@@ -11776,13 +11761,65 @@
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.nio</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
+                <Package>net.sourceforge.plantuml.packetdiag.command</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
-                <Package>net.sourceforge.plantuml.regex</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.packetdiag.command</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.packetdiag.command">
+            <Stats>
+                <TotalClasses>6</TotalClasses>
+                <ConcreteClasses>6</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>7</Ce>
+                <A>0</A>
+                <I>0.88</I>
+                <D>0.12</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="CommandColWidth.java">
+                    net.sourceforge.plantuml.packetdiag.command.CommandColWidth
+                </Class>
+                <Class sourceFile="CommandNodeHeight.java">
+                    net.sourceforge.plantuml.packetdiag.command.CommandNodeHeight
+                </Class>
+                <Class sourceFile="CommandPacketDiagEnd.java">
+                    net.sourceforge.plantuml.packetdiag.command.CommandPacketDiagEnd
+                </Class>
+                <Class sourceFile="CommandPacketDiagStart.java">
+                    net.sourceforge.plantuml.packetdiag.command.CommandPacketDiagStart
+                </Class>
+                <Class sourceFile="CommandSameHeight.java">
+                    net.sourceforge.plantuml.packetdiag.command.CommandSameHeight
+                </Class>
+                <Class sourceFile="CommandScaleInterval.java">
+                    net.sourceforge.plantuml.packetdiag.command.CommandScaleInterval
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>net.sourceforge.plantuml.command</Package>
+                <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.klimt.color</Package>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
+                <Package>net.sourceforge.plantuml.regex</Package>
                 <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
+                <Package>net.sourceforge.plantuml.packetdiag</Package>
             </UsedBy>
         </Package>
 
@@ -13533,7 +13570,7 @@
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
-                <Package>net.sourceforge.plantuml.packetdiag</Package>
+                <Package>net.sourceforge.plantuml.packetdiag.command</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.project.command</Package>
                 <Package>net.sourceforge.plantuml.project.lang</Package>
@@ -18136,7 +18173,7 @@
                 <Package>net.sourceforge.plantuml.mindmap</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
-                <Package>net.sourceforge.plantuml.packetdiag</Package>
+                <Package>net.sourceforge.plantuml.packetdiag.command</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.preproc2</Package>
                 <Package>net.sourceforge.plantuml.project.command</Package>
@@ -20438,6 +20475,12 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.packetdiag">
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.klimt.shape</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.packetdiag.command">
             <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.klimt.shape</Package>

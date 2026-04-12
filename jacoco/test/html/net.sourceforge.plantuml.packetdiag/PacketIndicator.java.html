@@ -54,10 +54,31 @@ import net.sourceforge.plantuml.nwdiag.VerticalLine;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
+/**
+ * Renders the bit-position scale for {@code packetdiag} diagrams.
+ * &lt;p&gt;
+ * A {@link PacketIndicator} represents a single tick on the scale (one bit position). Depending on its
+ * configuration it can draw:
+ * &lt;/p&gt;
+ * &lt;ul&gt;
+ *   &lt;li&gt;a full-height or half-height vertical tick line,&lt;/li&gt;
+ *   &lt;li&gt;an optional numeric label centered above the tick.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * &lt;p&gt;
+ * Instances are typically created by {@link PacketDiagram} when building the scale for a given
+ * {@code colWidth} and {@code scaleInterval}.
+ * &lt;/p&gt;
+ */
 public class PacketIndicator extends TextBlockMemoized {
 
+	/**
+	 * Height (in pixels) of a full tick mark.
+	 */
 	public static final double V_LINE_FULL = 32D;
 
+	/**
+	 * Height (in pixels) of a short tick mark (half of {@link #V_LINE_FULL}).
+	 */
 	public static final double V_LINE_SHORT = V_LINE_FULL / 2;
 
 	private final boolean full;
@@ -70,66 +91,125 @@ public class PacketIndicator extends TextBlockMemoized {
 
 	private final ISkinParam skinParam;
 
-<span class="fc" id="L73">	public PacketIndicator(boolean full, boolean numbered, int bitNumber, Style style, ISkinParam skinParam) {</span>
-<span class="fc" id="L74">		this.full = full;</span>
-<span class="fc" id="L75">		this.numbered = numbered;</span>
-<span class="fc" id="L76">		this.style = style;</span>
-<span class="fc" id="L77">		this.bitNumber = bitNumber + &quot;&quot;;</span>
-<span class="fc" id="L78">		this.skinParam = skinParam;</span>
-<span class="fc" id="L79">	}</span>
+	/**
+	 * Creates a scale indicator for a given bit position.
+	 *
+	 * @param full
+	 *            {@code true} to draw a full-height tick mark, {@code false} to draw a short tick mark
+	 * @param numbered
+	 *            {@code true} to render the bit index label, {@code false} to draw only the tick
+	 * @param bitNumber
+	 *            the bit index to display when {@code numbered} is enabled
+	 * @param style
+	 *            the style used for font/stroke/color resolution
+	 * @param skinParam
+	 *            the skin parameters used for rendering (colors, fonts, etc.)
+	 */
+<span class="fc" id="L108">	public PacketIndicator(boolean full, boolean numbered, int bitNumber, Style style, ISkinParam skinParam) {</span>
+<span class="fc" id="L109">		this.full = full;</span>
+<span class="fc" id="L110">		this.numbered = numbered;</span>
+<span class="fc" id="L111">		this.style = style;</span>
+<span class="fc" id="L112">		this.bitNumber = bitNumber + &quot;&quot;;</span>
+<span class="fc" id="L113">		this.skinParam = skinParam;</span>
+<span class="fc" id="L114">	}</span>
 
+	/**
+	 * Draws this indicator (optional centered number + vertical tick) onto the provided graphics context.
+	 * &lt;p&gt;
+	 * The number text block is always measured to keep consistent padding/alignment between numbered and
+	 * non-numbered indicators.
+	 * &lt;/p&gt;
+	 *
+	 * @param ug
+	 *            the target graphics context
+	 */
 	@Override
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L83">		TextBlock numberTb = numberTb();</span>
+<span class="fc" id="L128">		TextBlock numberTb = numberTb();</span>
 		// number dimension is always calculated for consistent padding
-<span class="fc" id="L85">		XDimension2D numberDim = numberTb.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L130">		XDimension2D numberDim = numberTb.calculateDimension(ug.getStringBounder());</span>
 
-<span class="fc bfc" id="L87" title="All 2 branches covered.">		double lineOffsetY = full ? 0 : V_LINE_SHORT;</span>
-<span class="fc bfc" id="L88" title="All 2 branches covered.">		double lineLength = full ? V_LINE_FULL : V_LINE_SHORT;</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (numbered) {</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">			double numberYOffset = full ? 0 : V_LINE_SHORT;</span>
-<span class="fc" id="L91">			numberTb.drawU(ug.apply(new UTranslate(-numberDim.getWidth() / 2, numberYOffset)));</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		double lineOffsetY = full ? 0 : V_LINE_SHORT;</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		double lineLength = full ? V_LINE_FULL : V_LINE_SHORT;</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (numbered) {</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">			double numberYOffset = full ? 0 : V_LINE_SHORT;</span>
+<span class="fc" id="L136">			numberTb.drawU(ug.apply(new UTranslate(-numberDim.getWidth() / 2, numberYOffset)));</span>
 		}
-<span class="fc" id="L93">		TextBlock vLineTb = vLineTb(lineOffsetY, lineLength);</span>
-<span class="fc" id="L94">		vLineTb.drawU(ug.apply(UTranslate.dy(numberDim.getHeight())));</span>
-<span class="fc" id="L95">	}</span>
+<span class="fc" id="L138">		TextBlock vLineTb = vLineTb(lineOffsetY, lineLength);</span>
+<span class="fc" id="L139">		vLineTb.drawU(ug.apply(UTranslate.dy(numberDim.getHeight())));</span>
+<span class="fc" id="L140">	}</span>
 
+	/**
+	 * Computes the indicator dimensions (label + tick).
+	 * &lt;p&gt;
+	 * Height is the label height plus the tick mark height. Width is derived from the label (when present)
+	 * and the stroke thickness used to draw the tick.
+	 * &lt;/p&gt;
+	 *
+	 * @param stringBounder
+	 *            font metrics provider
+	 * @return the bounding box of this indicator
+	 */
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="fc" id="L99">		final XDimension2D numberDim = numberTb().calculateDimension(stringBounder);</span>
-<span class="fc bfc" id="L100" title="All 2 branches covered.">		double vLineHeight = full ? V_LINE_FULL : V_LINE_SHORT;</span>
-<span class="fc" id="L101">		return numberDim.mergeTB(new XDimension2D(0D, vLineHeight));</span>
+<span class="fc" id="L155">		final XDimension2D numberDim = numberTb().calculateDimension(stringBounder);</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		double vLineHeight = full ? V_LINE_FULL : V_LINE_SHORT;</span>
+<span class="fc" id="L157">		return numberDim.mergeTB(new XDimension2D(0D, vLineHeight));</span>
 	}
 
 	TextBlock numberTb() {
-<span class="fc" id="L105">		final FontConfiguration fg = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L106">		return createNumberTextBlock(fg, skinParam, bitNumber);</span>
+<span class="fc" id="L161">		final FontConfiguration fg = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L162">		return createNumberTextBlock(fg, skinParam, bitNumber);</span>
 	}
 
 	TextBlock vLineTb(double y, double height) {
-<span class="fc" id="L110">		return createVLineTextBlock(style, skinParam, y, height);</span>
+<span class="fc" id="L166">		return createVLineTextBlock(style, skinParam, y, height);</span>
 	}
 
+	/**
+	 * Creates a {@link TextBlock} that draws the numeric label for a given indicator.
+	 *
+	 * @param fg
+	 *            font configuration used to render the label
+	 * @param skinParam
+	 *            the skin parameters used for rendering
+	 * @param s
+	 *            the label content (typically the bit index)
+	 * @return a text block that renders the label
+	 */
 	public static TextBlock createNumberTextBlock(FontConfiguration fg, ISkinParam skinParam, CharSequence... s) {
-<span class="fc" id="L114">		return Display.create(s).create8(fg, HorizontalAlignment.LEFT, skinParam, CreoleMode.NO_CREOLE,</span>
+<span class="fc" id="L181">		return Display.create(s).create8(fg, HorizontalAlignment.LEFT, skinParam, CreoleMode.NO_CREOLE,</span>
 				LineBreakStrategy.NONE);
 	}
 
+	/**
+	 * Creates a {@link TextBlock} that draws the vertical tick line of an indicator.
+	 *
+	 * @param style
+	 *            the style used to resolve stroke and color
+	 * @param skinParam
+	 *            the skin parameters used for rendering
+	 * @param y
+	 *            vertical start offset (in pixels) for the tick line
+	 * @param height
+	 *            tick line height (in pixels)
+	 * @return a text block that renders the vertical tick line
+	 */
 	public static TextBlock createVLineTextBlock(Style style, ISkinParam skinParam, double y, double height) {
-<span class="fc" id="L119">		final HColor lineColor = style.getSymbolContext(skinParam.getIHtmlColorSet()).getForeColor();</span>
-<span class="fc" id="L120">		final UStroke stroke = style.getStroke();</span>
-<span class="fc" id="L121">		return new TextBlock() {</span>
+<span class="fc" id="L199">		final HColor lineColor = style.getSymbolContext(skinParam.getIHtmlColorSet()).getForeColor();</span>
+<span class="fc" id="L200">		final UStroke stroke = style.getStroke();</span>
+<span class="fc" id="L201">		return new TextBlock() {</span>
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L124">				return new XDimension2D(stroke.getThickness(), height);</span>
+<span class="nc" id="L204">				return new XDimension2D(stroke.getThickness(), height);</span>
 			}
 
 			@Override
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L129">				ug = ug.apply(lineColor).apply(stroke);</span>
-<span class="fc" id="L130">				VerticalLine vLine = new VerticalLine(y, y + height, Collections.emptySet());</span>
-<span class="fc" id="L131">				vLine.drawU(ug);</span>
-<span class="fc" id="L132">			}</span>
+<span class="fc" id="L209">				ug = ug.apply(lineColor).apply(stroke);</span>
+<span class="fc" id="L210">				VerticalLine vLine = new VerticalLine(y, y + height, Collections.emptySet());</span>
+<span class="fc" id="L211">				vLine.drawU(ug);</span>
+<span class="fc" id="L212">			}</span>
 		};
 	}
 }

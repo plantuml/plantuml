@@ -101,6 +101,16 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PacketDiagramFactory</span>
 <span class="extends-implements">extends <a href="../command/PSystemCommandFactory.html" title="class in net.sourceforge.plantuml.command">PSystemCommandFactory</a></span></div>
+<div class="block">Factory responsible for creating <a href="PacketDiagram.html" title="class in net.sourceforge.plantuml.packetdiag"><code>PacketDiagram</code></a> instances and registering all commands
+ supported by the <code>packetdiag</code> diagram type.
+ <p>
+ This hooks the <code>packetdiag</code> parser into PlantUML by:
+ </p>
+ <ul>
+   <li>adding common PlantUML commands (title, skinparam, etc.),</li>
+   <li>registering packetdiag-specific directives (colwidth, node_height, scale_direction, ...),</li>
+   <li>creating the diagram model (<a href="PacketDiagram.html" title="class in net.sourceforge.plantuml.packetdiag"><code>PacketDiagram</code></a>) for each parsed source.</li>
+ </ul></div>
 </section>
 <section class="summary">
 <ul class="summary-list">

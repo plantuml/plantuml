@@ -964,7 +964,7 @@ Total Classes: 5
 "net.sourceforge.plantuml.code.deflate" --> "java.lang"
 "net.sourceforge.plantuml.code.deflate" --> "java.util"
 
-class "net.sourceforge.plantuml.command" %lighten("red", 50) {
+class "net.sourceforge.plantuml.command" %lighten("red", 49) {
 Total Classes: 49
 }
 "net.sourceforge.plantuml.command" --> "java.io"
@@ -1037,7 +1037,7 @@ Total Classes: 8
 "net.sourceforge.plantuml.command.note.sequence" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.command.note.sequence" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.core" %lighten("red", 50) {
+class "net.sourceforge.plantuml.core" %lighten("red", 49) {
 Total Classes: 12
 }
 "net.sourceforge.plantuml.core" --> "java.awt"
@@ -2304,8 +2304,8 @@ Total Classes: 1
 }
 "net.sourceforge.plantuml.openiconic.data" --> "java.lang"
 
-class "net.sourceforge.plantuml.packetdiag" %lighten("red", 100) {
-Total Classes: 12
+class "net.sourceforge.plantuml.packetdiag" %lighten("red", 94) {
+Total Classes: 6
 }
 "net.sourceforge.plantuml.packetdiag" --> "java.lang"
 "net.sourceforge.plantuml.packetdiag" --> "java.util"
@@ -2320,10 +2320,20 @@ Total Classes: 12
 "net.sourceforge.plantuml.packetdiag" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.packetdiag" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.packetdiag" --> "net.sourceforge.plantuml.nwdiag"
+"net.sourceforge.plantuml.packetdiag" --> "net.sourceforge.plantuml.packetdiag.command"
 "net.sourceforge.plantuml.packetdiag" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.packetdiag" --> "net.sourceforge.plantuml.regex"
 "net.sourceforge.plantuml.packetdiag" --> "net.sourceforge.plantuml.style"
-"net.sourceforge.plantuml.packetdiag" --> "net.sourceforge.plantuml.utils"
+
+class "net.sourceforge.plantuml.packetdiag.command" %lighten("red", 88) {
+Total Classes: 6
+}
+"net.sourceforge.plantuml.packetdiag.command" --> "java.lang"
+"net.sourceforge.plantuml.packetdiag.command" --> "net.sourceforge.plantuml.command"
+"net.sourceforge.plantuml.packetdiag.command" --> "net.sourceforge.plantuml.core"
+"net.sourceforge.plantuml.packetdiag.command" --> "net.sourceforge.plantuml.klimt.color"
+"net.sourceforge.plantuml.packetdiag.command" --> "net.sourceforge.plantuml.packetdiag"
+"net.sourceforge.plantuml.packetdiag.command" --> "net.sourceforge.plantuml.regex"
+"net.sourceforge.plantuml.packetdiag.command" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.pdf" %lighten("red", 100) {
 Total Classes: 1

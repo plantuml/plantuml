@@ -127,12 +127,8 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.objectdiagram.command">net.sourceforge.plantuml.objectdiagram.command</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.packetdiag">net.sourceforge.plantuml.packetdiag</a></div>
-<div class="col-last even-row-color">
-<div class="block">Provides classes used to manage
- <a href="https://plantuml.com/packetdiag" target="_top">
- Packet Diagram</a>.</div>
-</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.packetdiag.command">net.sourceforge.plantuml.packetdiag.command</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.project.command">net.sourceforge.plantuml.project.command</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.regexdiagram">net.sourceforge.plantuml.regexdiagram</a></div>
@@ -867,37 +863,53 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="net.sourceforge.plantuml.packetdiag">
-<h2>Uses of <a href="../SingleLineCommand2.html" title="class in net.sourceforge.plantuml.command">SingleLineCommand2</a> in <a href="../../packetdiag/package-summary.html">net.sourceforge.plantuml.packetdiag</a></h2>
-<div class="caption"><span>Subclasses of <a href="../SingleLineCommand2.html" title="class in net.sourceforge.plantuml.command">SingleLineCommand2</a> in <a href="../../packetdiag/package-summary.html">net.sourceforge.plantuml.packetdiag</a></span></div>
+<section class="detail" id="net.sourceforge.plantuml.packetdiag.command">
+<h2>Uses of <a href="../SingleLineCommand2.html" title="class in net.sourceforge.plantuml.command">SingleLineCommand2</a> in <a href="../../packetdiag/command/package-summary.html">net.sourceforge.plantuml.packetdiag.command</a></h2>
+<div class="caption"><span>Subclasses of <a href="../SingleLineCommand2.html" title="class in net.sourceforge.plantuml.command">SingleLineCommand2</a> in <a href="../../packetdiag/command/package-summary.html">net.sourceforge.plantuml.packetdiag.command</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../packetdiag/CommandColWidth.html" class="type-name-link" title="class in net.sourceforge.plantuml.packetdiag">CommandColWidth</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-second even-row-color"><code><a href="../../packetdiag/command/CommandColWidth.html" class="type-name-link" title="class in net.sourceforge.plantuml.packetdiag.command">CommandColWidth</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Parses and applies the <code>colwidth=&lt;N&gt;</code> directive for <code>packetdiag</code> diagrams.</div>
+</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../packetdiag/CommandNodeHeight.html" class="type-name-link" title="class in net.sourceforge.plantuml.packetdiag">CommandNodeHeight</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-second odd-row-color"><code><a href="../../packetdiag/command/CommandNodeHeight.html" class="type-name-link" title="class in net.sourceforge.plantuml.packetdiag.command">CommandNodeHeight</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Parses and applies the <code>node_height=&lt;N&gt;</code> directive for <code>packetdiag</code> diagrams.</div>
+</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../packetdiag/CommandNumRange.html" class="type-name-link" title="class in net.sourceforge.plantuml.packetdiag">CommandNumRange</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-second even-row-color"><code><a href="../../packetdiag/command/CommandNumRange.html" class="type-name-link" title="class in net.sourceforge.plantuml.packetdiag.command">CommandNumRange</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Parses packet field declarations expressed as a bit number, a bit range, or a <code>*</code> list of bit.</div>
+</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../packetdiag/CommandPacketDiagEnd.html" class="type-name-link" title="class in net.sourceforge.plantuml.packetdiag">CommandPacketDiagEnd</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-second odd-row-color"><code><a href="../../packetdiag/command/CommandPacketDiagEnd.html" class="type-name-link" title="class in net.sourceforge.plantuml.packetdiag.command">CommandPacketDiagEnd</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Parses the end of a <code>packetdiag</code> diagram block.</div>
+</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../packetdiag/CommandPacketDiagStart.html" class="type-name-link" title="class in net.sourceforge.plantuml.packetdiag">CommandPacketDiagStart</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-second even-row-color"><code><a href="../../packetdiag/command/CommandPacketDiagStart.html" class="type-name-link" title="class in net.sourceforge.plantuml.packetdiag.command">CommandPacketDiagStart</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Parses the start of a <code>packetdiag</code> diagram block.</div>
+</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../packetdiag/CommandSameHeight.html" class="type-name-link" title="class in net.sourceforge.plantuml.packetdiag">CommandSameHeight</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-second odd-row-color"><code><a href="../../packetdiag/command/CommandSameHeight.html" class="type-name-link" title="class in net.sourceforge.plantuml.packetdiag.command">CommandSameHeight</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Parses and applies the <code>same_height=&lt;true|false&gt;</code> directive for <code>packetdiag</code> diagrams.</div>
+</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../packetdiag/CommandScaleDirection.html" class="type-name-link" title="class in net.sourceforge.plantuml.packetdiag">CommandScaleDirection</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-second even-row-color"><code><a href="../../packetdiag/command/CommandScaleDirection.html" class="type-name-link" title="class in net.sourceforge.plantuml.packetdiag.command">CommandScaleDirection</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Parses and applies the <code>scale_direction=&lt;ltr|rtl&gt;</code> directive for <code>packetdiag</code> diagrams.</div>
+</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../packetdiag/CommandScaleInterval.html" class="type-name-link" title="class in net.sourceforge.plantuml.packetdiag">CommandScaleInterval</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-second odd-row-color"><code><a href="../../packetdiag/command/CommandScaleInterval.html" class="type-name-link" title="class in net.sourceforge.plantuml.packetdiag.command">CommandScaleInterval</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Parses and applies the <code>scale_interval=&lt;N&gt;</code> directive for <code>packetdiag</code> diagrams.</div>
+</div>
 </div>
 </section>
 </li>

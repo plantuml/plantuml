@@ -99,6 +99,19 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PacketIndicator</span>
 <span class="extends-implements">extends <a href="../klimt/shape/TextBlockMemoized.html" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockMemoized</a></span></div>
+<div class="block">Renders the bit-position scale for <code>packetdiag</code> diagrams.
+ <p>
+ A <a href="PacketIndicator.html" title="class in net.sourceforge.plantuml.packetdiag"><code>PacketIndicator</code></a> represents a single tick on the scale (one bit position). Depending on its
+ configuration it can draw:
+ </p>
+ <ul>
+   <li>a full-height or half-height vertical tick line,</li>
+   <li>an optional numeric label centered above the tick.</li>
+ </ul>
+ <p>
+ Instances are typically created by <a href="PacketDiagram.html" title="class in net.sourceforge.plantuml.packetdiag"><code>PacketDiagram</code></a> when building the scale for a given
+ <code>colWidth</code> and <code>scaleInterval</code>.
+ </p></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -113,10 +126,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final double</code></div>
 <div class="col-second even-row-color"><code><a href="#V_LINE_FULL" class="member-name-link">V_LINE_FULL</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Height (in pixels) of a full tick mark.</div>
+</div>
 <div class="col-first odd-row-color"><code>static final double</code></div>
 <div class="col-second odd-row-color"><code><a href="#V_LINE_SHORT" class="member-name-link">V_LINE_SHORT</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Height (in pixels) of a short tick mark (half of <a href="#V_LINE_FULL"><code>V_LINE_FULL</code></a>).</div>
+</div>
 </div>
 </section>
 </li>
@@ -133,7 +150,9 @@ loadScripts(document, 'script');</script>
  int&nbsp;bitNumber,
  <a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&nbsp;style,
  <a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a scale indicator for a given bit position.</div>
+</div>
 </div>
 </section>
 </li>
@@ -150,21 +169,29 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/geom/XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#calculateDimensionSlow(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">calculateDimensionSlow</a><wbr>(<a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Computes the indicator dimensions (label + tick).</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createNumberTextBlock(net.sourceforge.plantuml.klimt.font.FontConfiguration,net.sourceforge.plantuml.style.ISkinParam,java.lang.CharSequence...)" class="member-name-link">createNumberTextBlock</a><wbr>(<a href="../klimt/font/FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a>&nbsp;fg,
  <a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>...&nbsp;s)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a <a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>TextBlock</code></a> that draws the numeric label for a given indicator.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createVLineTextBlock(net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.style.ISkinParam,double,double)" class="member-name-link">createVLineTextBlock</a><wbr>(<a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&nbsp;style,
  <a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
  double&nbsp;y,
  double&nbsp;height)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a <a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>TextBlock</code></a> that draws the vertical tick line of an indicator.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#drawU(net.sourceforge.plantuml.klimt.drawing.UGraphic)" class="member-name-link">drawU</a><wbr>(<a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Draws this indicator (optional centered number + vertical tick) onto the provided graphics context.</div>
+</div>
 </div>
 </div>
 </div>
@@ -192,6 +219,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="V_LINE_FULL">
 <h3>V_LINE_FULL</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">V_LINE_FULL</span></div>
+<div class="block">Height (in pixels) of a full tick mark.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -206,6 +234,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="V_LINE_SHORT">
 <h3>V_LINE_SHORT</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">V_LINE_SHORT</span></div>
+<div class="block">Height (in pixels) of a short tick mark (half of <a href="#V_LINE_FULL"><code>V_LINE_FULL</code></a>).</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -232,6 +261,15 @@ loadScripts(document, 'script');</script>
  int&nbsp;bitNumber,
  <a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&nbsp;style,
  <a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</span></div>
+<div class="block">Creates a scale indicator for a given bit position.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>full</code> - <code>true</code> to draw a full-height tick mark, <code>false</code> to draw a short tick mark</dd>
+<dd><code>numbered</code> - <code>true</code> to render the bit index label, <code>false</code> to draw only the tick</dd>
+<dd><code>bitNumber</code> - the bit index to display when <code>numbered</code> is enabled</dd>
+<dd><code>style</code> - the style used for font/stroke/color resolution</dd>
+<dd><code>skinParam</code> - the skin parameters used for rendering (colors, fonts, etc.)</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -246,15 +284,33 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="drawU(net.sourceforge.plantuml.klimt.drawing.UGraphic)">
 <h3>drawU</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">drawU</span><wbr><span class="parameters">(<a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug)</span></div>
+<div class="block">Draws this indicator (optional centered number + vertical tick) onto the provided graphics context.
+ <p>
+ The number text block is always measured to keep consistent padding/alignment between numbered and
+ non-numbered indicators.
+ </p></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>ug</code> - the target graphics context</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="calculateDimensionSlow(net.sourceforge.plantuml.klimt.font.StringBounder)">
 <h3>calculateDimensionSlow</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../klimt/geom/XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></span>&nbsp;<span class="element-name">calculateDimensionSlow</span><wbr><span class="parameters">(<a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</span></div>
+<div class="block">Computes the indicator dimensions (label + tick).
+ <p>
+ Height is the label height plus the tick mark height. Width is derived from the label (when present)
+ and the stroke thickness used to draw the tick.
+ </p></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../klimt/shape/TextBlockMemoized.html#calculateDimensionSlow(net.sourceforge.plantuml.klimt.font.StringBounder)">calculateDimensionSlow</a></code>&nbsp;in class&nbsp;<code><a href="../klimt/shape/TextBlockMemoized.html" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockMemoized</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>stringBounder</code> - font metrics provider</dd>
+<dt>Returns:</dt>
+<dd>the bounding box of this indicator</dd>
 </dl>
 </section>
 </li>
@@ -264,6 +320,15 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></span>&nbsp;<span class="element-name">createNumberTextBlock</span><wbr><span class="parameters">(<a href="../klimt/font/FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a>&nbsp;fg,
  <a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>...&nbsp;s)</span></div>
+<div class="block">Creates a <a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>TextBlock</code></a> that draws the numeric label for a given indicator.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>fg</code> - font configuration used to render the label</dd>
+<dd><code>skinParam</code> - the skin parameters used for rendering</dd>
+<dd><code>s</code> - the label content (typically the bit index)</dd>
+<dt>Returns:</dt>
+<dd>a text block that renders the label</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -273,6 +338,16 @@ loadScripts(document, 'script');</script>
  <a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
  double&nbsp;y,
  double&nbsp;height)</span></div>
+<div class="block">Creates a <a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>TextBlock</code></a> that draws the vertical tick line of an indicator.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>style</code> - the style used to resolve stroke and color</dd>
+<dd><code>skinParam</code> - the skin parameters used for rendering</dd>
+<dd><code>y</code> - vertical start offset (in pixels) for the tick line</dd>
+<dd><code>height</code> - tick line height (in pixels)</dd>
+<dt>Returns:</dt>
+<dd>a text block that renders the vertical tick line</dd>
+</dl>
 </section>
 </li>
 </ul>

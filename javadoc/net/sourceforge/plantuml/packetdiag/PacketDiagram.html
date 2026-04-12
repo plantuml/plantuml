@@ -103,6 +103,21 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PacketDiagram</span>
 <span class="extends-implements">extends <a href="../TitledDiagram.html" title="class in net.sourceforge.plantuml">TitledDiagram</a></span></div>
+<div class="block">PlantUML diagram implementation for the <code>packetdiag</code> syntax (bit/field-based packet layout).
+ <p>
+ This diagram collects packet items in declaration order, computes a row-based layout constrained by a
+ configured frame width (number of bits per row), and renders the result as a <a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>TextBlock</code></a>.
+ Items that do not fit in the remaining space of a row are split across rows.
+ </p>
+ <p>
+ The diagram also renders a scale/bit indicator line above the grid. The scale can be customized through:
+ </p>
+ <ul>
+   <li><code>colWidth</code>: number of bits per row (frame width),</li>
+   <li><code>scaleInterval</code>: numbering interval for indicators (defaults to half of <code>colWidth</code>),</li>
+   <li><code>scaleDirection</code>: left-to-right (LTR) or right-to-left (RTL),</li>
+   <li><code>sameHeight</code>: optionally forces all blocks in a row to share the row maximum height.</li>
+ </ul></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -117,7 +132,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final int</code></div>
 <div class="col-second even-row-color"><code><a href="#DEFAULT_COL_WIDTH" class="member-name-link">DEFAULT_COL_WIDTH</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Default number of bits per row (frame width) when no explicit width is provided.</div>
+</div>
 </div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-net.sourceforge.plantuml.TitledDiagram">Fields inherited from class&nbsp;net.sourceforge.plantuml.<a href="../TitledDiagram.html" title="class in net.sourceforge.plantuml">TitledDiagram</a></h3>
@@ -149,25 +166,67 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#checkFinalError()" class="member-name-link">checkFinalError</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColWidth()" class="member-name-link">getColWidth</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addPacketItemRange(int,int,int,java.lang.String,int)" class="member-name-link">addPacketItemRange</a><wbr>(int&nbsp;start,
+ int&nbsp;end,
+ int&nbsp;height,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;desc,
+ int&nbsp;textRotation)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Public command-facing API to add a packet item defined by an explicit bit range.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#checkFinalError()" class="member-name-link">checkFinalError</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../core/DiagramDescription.html" title="class in net.sourceforge.plantuml.core">DiagramDescription</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDescription()" class="member-name-link">getDescription</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColWidth()" class="member-name-link">getColWidth</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the number of bits rendered per row (the packet/frame width).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../core/DiagramDescription.html" title="class in net.sourceforge.plantuml.core">DiagramDescription</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDescription()" class="member-name-link">getDescription</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the Diagram Description.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLastPacketEnd()" class="member-name-link">getLastPacketEnd</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the last packet's end bit-position from the packet frame.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStyle()" class="member-name-link">getStyle</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the merged style used to render this diagram.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTextBlock12026(int,net.sourceforge.plantuml.FileFormatOption)" class="member-name-link">getTextBlock12026</a><wbr>(int&nbsp;num,
  <a href="../FileFormatOption.html" title="class in net.sourceforge.plantuml">FileFormatOption</a>&nbsp;fileFormatOption)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setColWidth(int)" class="member-name-link">setColWidth</a><wbr>(int&nbsp;colWidth)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the number of bits rendered per row (the packet/frame width).</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSameHeight(boolean)" class="member-name-link">setSameHeight</a><wbr>(boolean&nbsp;sameHeight)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">When enabled, forces all blocks within the same row to share the maximum height found in that row.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setScaleDirection(java.lang.String)" class="member-name-link">setScaleDirection</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dir)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Public command-facing API to set the scale direction using a textual value.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateNodeHeight(int)" class="member-name-link">updateNodeHeight</a><wbr>(int&nbsp;nodeHeight)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Updates the height of a single bit cell (in pixels), used as the vertical scale for blocks.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateScaleInterval(int)" class="member-name-link">updateScaleInterval</a><wbr>(int&nbsp;value)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Overrides the indicator numbering interval (in bits).</div>
+</div>
 </div>
 </div>
 </div>
@@ -198,6 +257,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="DEFAULT_COL_WIDTH">
 <h3>DEFAULT_COL_WIDTH</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">DEFAULT_COL_WIDTH</span></div>
+<div class="block">Default number of bits per row (frame width) when no explicit width is provided.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -246,6 +306,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getDescription()">
 <h3>getDescription</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../core/DiagramDescription.html" title="class in net.sourceforge.plantuml.core">DiagramDescription</a></span>&nbsp;<span class="element-name">getDescription</span>()</div>
+<div class="block">Returns the Diagram Description.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the Diagram Description: "Packet Diagram"</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -264,18 +329,128 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getColWidth()">
 <h3>getColWidth</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getColWidth</span>()</div>
+<div class="block">Returns the number of bits rendered per row (the packet/frame width).</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the frame width in bits</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setColWidth(int)">
 <h3>setColWidth</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setColWidth</span><wbr><span class="parameters">(int&nbsp;colWidth)</span></div>
+<div class="block">Sets the number of bits rendered per row (the packet/frame width).
+ <p>
+ Values <code>&lt;= 0</code> are ignored.
+ </p></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>colWidth</code> - the frame width in bits</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="updateScaleInterval(int)">
+<h3>updateScaleInterval</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateScaleInterval</span><wbr><span class="parameters">(int&nbsp;value)</span></div>
+<div class="block">Overrides the indicator numbering interval (in bits).
+ <p>
+ The provided value is clamped to <code>[1..colWidth]</code>. Once called with a valid value, the diagram no longer
+ uses its default interval (which is <code>colWidth / 2</code>).
+ </p></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>value</code> - numbering interval in bits (must be <code>&gt; 0</code>)</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="updateNodeHeight(int)">
+<h3>updateNodeHeight</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateNodeHeight</span><wbr><span class="parameters">(int&nbsp;nodeHeight)</span></div>
+<div class="block">Updates the height of a single bit cell (in pixels), used as the vertical scale for blocks.
+ <p>
+ Negative values are treated as <code>0</code>.
+ </p></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>nodeHeight</code> - bit height in pixels</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setScaleDirection(java.lang.String)">
+<h3>setScaleDirection</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setScaleDirection</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dir)</span></div>
+<div class="block">Public command-facing API to set the scale direction using a textual value.
+ <p>
+ Accepted values are <code>"LTR"</code> and <code>"RTL"</code> (case-insensitive). Unknown or <code>null</code> values fall back
+ to <code>PacketDiagram.ScaleDirection.LTR</code>.
+ </p></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>dir</code> - the direction string (e.g. <code>"LTR"</code> or <code>"RTL"</code>)</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setSameHeight(boolean)">
+<h3>setSameHeight</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSameHeight</span><wbr><span class="parameters">(boolean&nbsp;sameHeight)</span></div>
+<div class="block">When enabled, forces all blocks within the same row to share the maximum height found in that row.
+ <p>
+ This is disabled by default to match the original blockdiag behavior.
+ </p></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>sameHeight</code> - <code>true</code> to enforce a uniform row height, <code>false</code> otherwise</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="addPacketItemRange(int,int,int,java.lang.String,int)">
+<h3>addPacketItemRange</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addPacketItemRange</span><wbr><span class="parameters">(int&nbsp;start,
+ int&nbsp;end,
+ int&nbsp;height,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;desc,
+ int&nbsp;textRotation)</span></div>
+<div class="block">Public command-facing API to add a packet item defined by an explicit bit range.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>start</code> - start bit index (inclusive)</dd>
+<dd><code>end</code> - end bit index (inclusive)</dd>
+<dd><code>height</code> - requested block height (in bit units, as interpreted by the renderer)</dd>
+<dd><code>desc</code> - label/description to display inside the block (may be <code>null</code>)</dd>
+<dd><code>textRotation</code> - text rotation to apply to the block label</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getStyle()">
 <h3>getStyle</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a></span>&nbsp;<span class="element-name">getStyle</span>()</div>
+<div class="block">Returns the merged style used to render this diagram.
+ <p>
+ The style is computed lazily and cached for subsequent calls.
+ </p></div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the current diagram <a href="../style/Style.html" title="class in net.sourceforge.plantuml.style"><code>Style</code></a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getLastPacketEnd()">
+<h3>getLastPacketEnd</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</span>&nbsp;<span class="element-name">getLastPacketEnd</span>()</div>
+<div class="block">Returns the last packet's end bit-position from the packet frame. If the
+ system currently contains no packet, return empty.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link"><code>Optional</code></a> containing the last packet end position, or <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html#empty()" title="class or interface in java.util" class="external-link"><code>Optional.empty()</code></a> if no items exist</dd>
+</dl>
 </section>
 </li>
 </ul>

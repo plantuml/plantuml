@@ -93,6 +93,18 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PacketBlock</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">A single drawable field (block) in a <code>packetdiag</code> diagram.
+ <p>
+ A <a href="PacketBlock.html" title="class in net.sourceforge.plantuml.packetdiag"><code>PacketBlock</code></a> represents a rectangular region spanning a given number of bit columns
+ (<code>width</code>) and a given vertical size (<code>height</code>), with an optional label rendered inside.
+ The block can be marked as "open" on the left and/or right side to indicate that it is a continuation
+ of the same logical field split across multiple rows.
+ </p>
+ <p>
+ This is a low-level rendering model used by <a href="PacketDiagram.html" title="class in net.sourceforge.plantuml.packetdiag"><code>PacketDiagram</code></a> when laying out <code>PacketItem</code>s
+ into a row grid. Actual pixel dimensions are obtained by multiplying bit units by the current scale
+ (bit width/height) and adding margins/padding during shape creation.
+ </p></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -108,14 +120,18 @@ loadScripts(document, 'script');</script>
  int&nbsp;height,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;label,
  <a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a closed block with the given bit-size and label.</div>
+</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,int,java.lang.String,net.sourceforge.plantuml.style.ISkinParam,boolean,boolean)" class="member-name-link">PacketBlock</a><wbr>(int&nbsp;width,
  int&nbsp;height,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;label,
  <a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
  boolean&nbsp;leftOpen,
  boolean&nbsp;rightOpen)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a block with optional open edges to represent a field continued across rows.</div>
+</div>
 </div>
 </section>
 </li>
@@ -132,28 +148,44 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDrawHeight(double)" class="member-name-link">getDrawHeight</a><wbr>(double&nbsp;scale)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the block height in pixels for a given vertical bit scale.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDrawWidth(double)" class="member-name-link">getDrawWidth</a><wbr>(double&nbsp;scale)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the block width in pixels for a given horizontal bit scale.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHeight()" class="member-name-link">getHeight</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the block height in bit units.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLabel()" class="member-name-link">getLabel</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the label text displayed inside this block.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWidth()" class="member-name-link">getWidth</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the block width in bit units.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#openLeft(boolean)" class="member-name-link">openLeft</a><wbr>(boolean&nbsp;leftOpen)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Marks whether the left edge should be rendered as open (continuation indicator).</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#openRight(boolean)" class="member-name-link">openRight</a><wbr>(boolean&nbsp;rightOpen)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Marks whether the right edge should be rendered as open (continuation indicator).</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setHeight(int)" class="member-name-link">setHeight</a><wbr>(int&nbsp;height)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the block height in bit units.</div>
+</div>
 </div>
 </div>
 </div>
@@ -178,6 +210,14 @@ loadScripts(document, 'script');</script>
  int&nbsp;height,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;label,
  <a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</span></div>
+<div class="block">Creates a closed block with the given bit-size and label.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>width</code> - block width in bit units (columns)</dd>
+<dd><code>height</code> - block height in bit units (rows)</dd>
+<dd><code>label</code> - label to display inside the block (may be <code>null</code> depending on caller conventions)</dd>
+<dd><code>skinParam</code> - skin parameters used to resolve styles, fonts and colors</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -189,6 +229,16 @@ loadScripts(document, 'script');</script>
  <a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
  boolean&nbsp;leftOpen,
  boolean&nbsp;rightOpen)</span></div>
+<div class="block">Creates a block with optional open edges to represent a field continued across rows.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>width</code> - block width in bit units (columns)</dd>
+<dd><code>height</code> - block height in bit units (rows)</dd>
+<dd><code>label</code> - label to display inside the block</dd>
+<dd><code>skinParam</code> - skin parameters used to resolve styles, fonts and colors</dd>
+<dd><code>leftOpen</code> - <code>true</code> if the left border is "open" (continuation from a previous row)</dd>
+<dd><code>rightOpen</code> - <code>true</code> if the right border is "open" (continues on the next row)</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -203,48 +253,93 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="openLeft(boolean)">
 <h3>openLeft</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">openLeft</span><wbr><span class="parameters">(boolean&nbsp;leftOpen)</span></div>
+<div class="block">Marks whether the left edge should be rendered as open (continuation indicator).</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>leftOpen</code> - <code>true</code> to open the left edge, <code>false</code> to close it</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="openRight(boolean)">
 <h3>openRight</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">openRight</span><wbr><span class="parameters">(boolean&nbsp;rightOpen)</span></div>
+<div class="block">Marks whether the right edge should be rendered as open (continuation indicator).</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>rightOpen</code> - <code>true</code> to open the right edge, <code>false</code> to close it</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getWidth()">
 <h3>getWidth</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getWidth</span>()</div>
+<div class="block">Returns the block width in bit units.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>width in bit units (columns)</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getHeight()">
 <h3>getHeight</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getHeight</span>()</div>
+<div class="block">Returns the block height in bit units.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>height in bit units (rows)</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setHeight(int)">
 <h3>setHeight</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setHeight</span><wbr><span class="parameters">(int&nbsp;height)</span></div>
+<div class="block">Sets the block height in bit units.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>height</code> - height in bit units (rows)</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getDrawWidth(double)">
 <h3>getDrawWidth</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getDrawWidth</span><wbr><span class="parameters">(double&nbsp;scale)</span></div>
+<div class="block">Returns the block width in pixels for a given horizontal bit scale.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>scale</code> - pixels per bit</dd>
+<dt>Returns:</dt>
+<dd>width in pixels</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getDrawHeight(double)">
 <h3>getDrawHeight</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getDrawHeight</span><wbr><span class="parameters">(double&nbsp;scale)</span></div>
+<div class="block">Returns the block height in pixels for a given vertical bit scale.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>scale</code> - pixels per bit</dd>
+<dt>Returns:</dt>
+<dd>height in pixels</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getLabel()">
 <h3>getLabel</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getLabel</span>()</div>
+<div class="block">Returns the label text displayed inside this block.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the block label (as provided at construction time)
+ (And may be empty depending on caller conventions)</dd>
+</dl>
 </section>
 </li>
 </ul>
