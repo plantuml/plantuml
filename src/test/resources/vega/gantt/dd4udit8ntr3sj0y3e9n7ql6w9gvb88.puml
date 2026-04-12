@@ -1,0 +1,20 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+
+Project starts 2022-06-27
+
+[task1] starts at 2022-06-27 and lasts 1 week
+[task2] starts 20 days after [task1]'s end and lasts 3 days
+
+Separator just at [task1]'s end
+Separator just 2 days after [task1]'s end
+
+Separator just at [task2]'s start
+Separator just 2 days before [task2]'s start
+
+@endgantt

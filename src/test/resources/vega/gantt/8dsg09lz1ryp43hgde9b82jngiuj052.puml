@@ -1,0 +1,15 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+printscale weekly zoom 3
+'printscale daily zoom 2
+saturday are closed
+sunday are closed
+Project starts the 2024-01-08
+[Task1] on {Alice} requires 5 days
+[Task2] on {Bob:50%} requires 2 days
+then [Task3] on {Alice:50%} requires 1 days
+@endgantt

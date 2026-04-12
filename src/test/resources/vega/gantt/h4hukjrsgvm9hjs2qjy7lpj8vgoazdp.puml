@@ -1,0 +1,15 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+Print between 2020-09-01 and 2020-09-30
+Printscale weekly
+
+Project starts 2020-08-01
+[A] starts 2020-08-01 and lasts 1 week
+[B] starts 2020-09-01 and lasts 2 weeks
+
+@endgantt

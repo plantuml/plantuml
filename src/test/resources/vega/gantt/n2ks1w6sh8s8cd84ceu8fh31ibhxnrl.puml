@@ -1,0 +1,18 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+[Task1] lasts 1 days
+then [Task2_long_long_long] as [T2] lasts 2 days
+-- Phase Two --
+then [Task3] as [T3] lasts 2 days
+[Task4] as [T4] lasts 1 day
+[Task5] as [T5] lasts 2 days
+[T2] -> [T4]
+[T2] -> [T5]
+[Task6_long_long_long] as [T6] lasts 4 days
+[T3] -> [T6]
+[T5] -> [T6]
+@endgantt

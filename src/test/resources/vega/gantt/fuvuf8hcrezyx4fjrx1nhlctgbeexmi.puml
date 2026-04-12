@@ -1,0 +1,18 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+Project starts 2022-09-01
+saturdat are closed
+sunday are closed
+
+[Review 01] requires 5 days
+
+[5D] happens on 5 days after [Review 01]'s end
+[5WD] happens on 5 working days after [Review 01]'s end
+
+[1W] happens on 1 week after [Review 01]'s end
+[1WW] happens on 1 working week after [Review 01]'s end
+@endgantt

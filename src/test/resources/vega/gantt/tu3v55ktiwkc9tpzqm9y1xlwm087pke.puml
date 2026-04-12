@@ -1,0 +1,9 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+[Prototype design] as [TASK1] lasts 13 days
+[TASK1] #Lavender/red
+@endgantt

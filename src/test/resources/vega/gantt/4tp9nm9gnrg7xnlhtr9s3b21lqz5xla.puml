@@ -1,0 +1,31 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+<style>
+ganttDiagram {
+  task {
+    BackGroundColor GreenYellow
+    LineColor Green 
+  }
+  
+  .dev {
+	  task {
+	    BackGroundColor Chocolate
+	    LineColor Tomato 
+	  }
+  }
+  
+}
+</style>
+
+
+[Prototype design] requires 20 days.
+then [code prototype] <<dev>> requires 30 days.
+then [Test prototype] requires 10 days.
+it is 50% complete.
+
+@endgantt

@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+[Design phase/Prototype design] lasts 25 days
+[Design phase/Test prototype] starts at [Design phase/Prototype design]'s end and lasts 20 days
+[Design phase/Prototype completed] happens at [Design phase/Test prototype]'s end
+[Production phase/Setup assembly line] lasts 15 days and starts at [Design phase/Prototype completed]'s end
+[Production phase/Hire assemblers] lasts 10 days and ends at [Design phase/Prototype completed]'s end
+[Production phase/Assemble first batch] lasts 3 days and starts at [Production phase/Hire assemblers]'s end
+@endgantt

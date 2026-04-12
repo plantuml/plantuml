@@ -1,0 +1,28 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+<style>
+ganttDiagram {
+	task {
+		FontName Helvetica
+		FontColor red
+		FontSize 18
+		FontStyle bold
+		BackGroundColor blue
+		LineColor yellow
+	}
+	milestone {
+		FontColor blue
+		FontSize 25
+		FontStyle italic
+		BackGroundColor yellow
+		LineColor red
+	}
+}
+</style>
+[Task] lasts 20 days
+[M1] happens on 5 days after [Task]'s end
+@endgantt

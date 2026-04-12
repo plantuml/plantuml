@@ -1,0 +1,18 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+printscale weekly
+weeks starts on Sunday and must have at least 4 days
+saturday are closed
+friday are closed
+
+Project starts the 1st of january 2025
+[Prototype design end] as [TASK1] requires 19 days
+
+[Testing] requires 14 days
+[TASK1]->[Testing]
+
+@endgantt

@@ -1,0 +1,21 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+Project starts the 20th of september 2018
+printscale yearly
+sunday are close
+2018/09/21 to 2018/09/23 are colored in red
+2018/09/21 to 2018/09/30 are named [Vacation in the Bahamas] 
+2018/10/01 and 2 days are colored in lightBlue
+[Prototype design] as [TASK1] lasts 490 days
+[TASK1] is colored in Lavender/LightBlue
+[Prototype completed] happens at [TASK1]'s end
+[Release of new album] happens at the 29th of September 2018
+
+today is 30 days after start and is colored in #AAF
+
+@endgantt

@@ -1,0 +1,18 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+<style>
+ganttDiagram {
+  task {
+    BackGroundColor lightgreen
+    LineColor black
+  }
+}
+</style>
+
+[Task1] lasts 10 days and is 50% complete
+[Task2] lasts 20 days
+@endgantt

@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+Project starts 2020-07-01
+scale 200 width
+[Prototype design] lasts 15 days
+[Test prototype] lasts 10 days
+
+[Prototype design] starts 2020-07-01
+[Test prototype] starts 2020-07-16
+@endgantt

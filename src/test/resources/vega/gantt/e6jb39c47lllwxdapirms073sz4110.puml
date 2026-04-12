@@ -1,0 +1,20 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+2020-07-07 to 2020-07-17 are closed
+2020-07-13 is open
+
+2020-07-14 is open for [Prototype design] 
+2020-07-2 to 2020-07-4 are closed for [Prototype design] 
+
+Project starts the 2020-07-01
+[Prototype design] lasts 10 days
+Then [Test prototype] lasts 10 days
+
+[Foo] lasts 10 days
+
+
+@endgantt

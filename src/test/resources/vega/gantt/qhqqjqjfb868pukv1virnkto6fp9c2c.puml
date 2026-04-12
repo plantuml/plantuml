@@ -1,0 +1,16 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+printscale weekly
+scale 5
+2020/10/26 to 2020/11/01 are colored in salmon
+
+Project starts the 2020-10-15
+[Prototype design] as [TASK1] lasts 25 days
+[TASK1] is colored in Lavender/LightBlue
+[Testing] lasts 15 days
+[TASK1]->[Testing]
+@endgantt

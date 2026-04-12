@@ -1,0 +1,18 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+header some header
+footer <back:red>some footer
+caption caption
+title My title
+caption This is caption
+legend
+<back:red>The legend
+end legend
+[Prototype design] lasts 3 days
+[Test prototype] starts at [Prototype design]'s end
+[Test prototype] lasts 4 days
+@endgantt

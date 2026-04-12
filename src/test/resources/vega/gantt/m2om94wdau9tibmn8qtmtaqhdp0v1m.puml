@@ -1,0 +1,15 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+---
+@startgantt
+title Plan
+
+[UI 1] on {Bob} lasts 5 days
+[UI 2] on {Bob:0%} lasts 4 days
+[UI Task] on {Bob} {Alice} happens 1 days after [UI 2]'s end
+[Start] -[dotted]-> [UI 1]
+[UI 1] -> [UI 2]
+[UI 2] -> [UI Task]
+@endgantt

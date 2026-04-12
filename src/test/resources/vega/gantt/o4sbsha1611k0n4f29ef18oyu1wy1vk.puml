@@ -1,0 +1,26 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+<style>
+separator {
+  LineColor red
+}
+verticalSeparator {
+  LineColor green
+}
+</style>
+
+[task1] lasts 1 week
+[task2] starts 20 days after [task1]'s end and requires 3 days
+
+Separator just at [task1]'s end
+Separator just 2 days after [task1]'s end
+
+-- separator title --
+
+Separator just at [task2]'s start
+Separator just 2 days before [task2]'s start
+@endgantt

@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+[T1] lasts 5 days
+-- Some Name --
+[T2] lasts 15 days
+[T3] lasts 10 days
+@endgantt

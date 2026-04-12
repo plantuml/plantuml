@@ -1,0 +1,16 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+printscale daily
+
+Project starts the 1st of january 2021
+sunday are colored in #AAAAFF
+
+[Automatic branch tag on release] as [s1] starts 2021-01-15 and lasts 1 week
+then [Setup Automatic Alerts] as [s2] lasts 1 week
+
+[End] happens 150 days after start
+@endgantt

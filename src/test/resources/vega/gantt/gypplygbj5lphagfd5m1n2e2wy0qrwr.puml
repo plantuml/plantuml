@@ -1,0 +1,74 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+project starts the 2020/02/01
+
+saturday are closed
+sunday are closed
+
+2020/02/05 is closed
+2020/02/06 is closed
+2020/03/02 is closed
+2020/03/03 is closed
+2020/03/04 is closed
+2020/03/20 is closed
+
+[Employee login] on {MBL:50%} lasts 1 days
+[Employee nav] on {MBL:50%} lasts 2 days
+[Basic entities] on {MBL:50%} lasts 3 days
+[Create job] on {MBL:50%} lasts 2 days
+[Add client] on {MBL:50%} lasts 2 days
+[Applicant search job] on {MBL:50%} lasts 2 days
+[Applicant apply] on {MBL:50%} lasts 2 days
+[Applicantion page] on {MBL:50%} lasts 7 days
+[Build surveys] on {MBL:50%} lasts 5 days
+[Complete survey] on {MBL:50%} lasts 3 days
+[View survey] on {MBL:50%} lasts 2 days
+[Edit survey] on {MBL:50%} lasts 1 days
+[See timeline] on {MBL:50%} lasts 6 days
+[File handling] on {MBL:50%} lasts 1 days
+[Build task lists] on {MBL:50%} lasts 2 days
+[Use task lists] on {MBL:50%} lasts 2 days
+[Create templates] on {MBL:50%} lasts 3 days
+[Hiring process] on {MBL:50%} lasts 7 days
+[Emails] on {MBL:50%} lasts 8 days
+[Interview] on {MBL:50%} lasts 3 days
+[Match] on {MBL:50%} lasts 8 days
+[Board] on {MBL:50%} lasts 2 days
+[Notifications] on {MBL:50%} lasts 2 days
+[Applicant signup] on {MBL:50%} lasts 2 days
+[AWS] on {MBL:50%} lasts 3 days
+
+[Beta] happens on 2020/08/31
+
+[AWS] ends on 2020/08/31
+[Applicant signup] ends at [AWS]'s start
+[Notifications] ends at [Applicant signup]'s start
+[Board] ends at [Notifications]'s start
+[Match] ends at [Board]'s start
+[Interview] ends at [Match]'s start
+[Emails] ends at [Interview]'s start
+[Hiring process] ends at [Emails]'s start
+[Create templates] ends at [Hiring process]'s start
+[Use task lists] ends at [Create templates]'s start
+[Build task lists] ends at [Use task lists]'s start
+[File handling] ends at [Build task lists]'s start
+[See timeline] ends at [File handling]'s start
+[Edit survey] ends at [See timeline]'s start
+[View survey] ends at [Edit survey]'s start
+[Complete survey] ends at [View survey]'s start
+[Build surveys] ends at [Complete survey]'s start
+[Applicantion page] ends at [Build surveys]'s start
+[Applicant apply] ends at [Applicantion page]'s start
+[Applicant search job] ends at [Applicant apply]'s start
+[Add client] ends at [Applicant search job]'s start
+[Create job] ends at [Add client]'s start
+[Basic entities] ends at [Create job]'s start
+[Employee nav] ends at [Basic entities]'s start
+[Employee login] ends at [Employee nav]'s start
+
+@endgantt

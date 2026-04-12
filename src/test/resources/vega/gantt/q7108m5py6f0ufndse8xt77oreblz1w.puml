@@ -1,0 +1,24 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+<style>
+ganttDiagram {
+  document {
+  backgroundColor red
+  }
+  timeline {
+    BackgroundColor palegreen
+ }
+}
+</style>
+printscale yearly
+hide footbox
+Project starts 2020-07-01
+[Design du prototype] starts 2020-07-01
+[Test du prototype] starts 2020-07-16
+[Design du prototype] ends 2020-07-15
+[Test du prototype] ends 2020-07-25
+@endgantt

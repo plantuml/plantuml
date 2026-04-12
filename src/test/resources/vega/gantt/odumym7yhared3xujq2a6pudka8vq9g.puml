@@ -1,0 +1,9 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+---
+@startgantt
+{Alice} starts at 2023-08-15
+{Bob} ends at 2023-12-31
+@endgantt

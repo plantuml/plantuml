@@ -1,0 +1,21 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+<style>
+timeline {
+    BackGroundColor Grey
+    FontName Helvetica
+    FontSize 20
+    FontColor Blue
+}
+</style>
+
+Project starts the 2023/12/04.
+sunday are closed.
+[T1] requires 5 days.
+
+@endgantt

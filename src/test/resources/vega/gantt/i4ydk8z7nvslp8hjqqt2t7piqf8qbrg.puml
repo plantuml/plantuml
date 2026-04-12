@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+ganttscale weekly
+Project starts the 2022/05/02
+[Task1] on {Alice} lasts 10 days
+[Task2] on {Bob:50%} lasts 20 days
+then [Task3] on {Alice:25%} lasts 1 days
+@endgantt

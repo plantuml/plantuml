@@ -1,0 +1,27 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+<style>
+	legend {
+		FontColor blue
+		FontSize 15
+        FontStyle italic
+		LineColor Orange
+	}
+</style>
+
+legend
+hypothesis
+ * Hyp 1
+ * Hyp 2
+end legend
+
+project starts 2021-07-01
+
+[Task] lasts 20 days
+
+@endgantt

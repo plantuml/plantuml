@@ -1,0 +1,30 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+[Prototype design] lasts 3 days
+[Test prototype] starts at [Prototype design]'s end
+[Test prototype] lasts 4 days
+
+legend
+{{wbs
+* root
+** level1
+** level1
+}}
+{{mindmap
+* root
+** level1
+** level1
+}}
+{{salt
+{
+  Login    | "MyName   "
+  Password | "****     "
+  [Cancel] | [  OK   ]
+}
+}}
+end legend
+@endgantt

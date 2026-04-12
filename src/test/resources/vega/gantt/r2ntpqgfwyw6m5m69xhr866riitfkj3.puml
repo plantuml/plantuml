@@ -1,0 +1,8 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+---
+@startgantt
+[Nomination] happens 2022-03-31 and displays on same row as [Nomination]
+@endgantt

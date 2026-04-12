@@ -1,0 +1,24 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+<style>
+.s2n {
+    backgroundcolor green
+    Linecolor red
+    LineThickness 2
+}
+</style>
+
+[task01] requires 15 days
+note bottom <<s2n>>
+  memo1 ...
+  memo2 ...
+  explanations1 ...
+  explanations2 ...
+end note
+
+[task01] -> [task02]
+@endgantt

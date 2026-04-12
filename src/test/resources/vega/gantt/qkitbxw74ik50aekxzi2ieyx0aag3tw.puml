@@ -1,0 +1,28 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+[task01] lasts 15 days
+note bottom
+'note left
+memo1 ...
+memo2 ...
+explanations1 ...
+explanations2 ...
+end note
+
+then [task02] lasts 3 days
+note bottom
+foo1
+end note
+
+-- test02 --
+
+[task03] lasts 16 days
+note bottom
+foo2
+end note
+@endgantt

@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+hide ressources names
+[Task1] on {Alice} lasts 10 days
+[Task2] on {Bob:50%} lasts 2 days
+then [Task3] on {Alice:25%} lasts 1 days
+@endgantt

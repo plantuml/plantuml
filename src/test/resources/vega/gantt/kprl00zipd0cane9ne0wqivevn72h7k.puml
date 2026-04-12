@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+[T1] lasts 5 days
+[T2] lasts 15 days
+[T3] lasts 10 days
+[A - Etude] lasts 7 days and is colored in Cyan/RoyalBlue
+[T1] -> [A - Etude]
+[T2] -> [A - Etude]
+[T3] -> [A - Etude]
+@endgantt

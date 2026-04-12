@@ -1,0 +1,16 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+title this is my title
+
+Project starts the 5th of november 2018
+saturday are closed
+sunday are closed
+[Prototype design] lasts 3 weeks
+then [Prototype completed]  lasts 5 days
+then [Test prototype] lasts 5 days
+[Prototype completed] is deleted
+@endgantt

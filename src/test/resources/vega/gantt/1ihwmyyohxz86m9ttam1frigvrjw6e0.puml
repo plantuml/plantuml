@@ -1,0 +1,15 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+project starts on 2020-07-01
+[P_start] happens 2020-07-03
+[P_end]   happens 2020-07-13
+
+'[Prototype design] starts at [P_start]'s end and ends at [P_end]'s start
+'Why not to remplace by
+[Prototype design] occurs from [P_start] to [P_end]
+
+@endgantt

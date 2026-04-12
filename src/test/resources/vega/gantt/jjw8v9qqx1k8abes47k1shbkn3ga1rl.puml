@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+[task1] lasts 10 days
+[task1] links to [[http://plantuml.com]]
+
+@endgantt

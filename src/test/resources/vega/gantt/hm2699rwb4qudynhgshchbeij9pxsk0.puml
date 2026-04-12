@@ -1,0 +1,18 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+Project starts the 2018/03/26
+2018/04/05 is closed
+2018/05/01 is closed
+2018/05/08 is closed
+2018/05/10 is closed
+2018/05/21 is closed
+Sunday are closed
+Saturday are closed
+
+[Installation de l'infra Rundeck de production] lasts 4 days and is colored in #FFD351
+then [Remédiation des batchs + lien avec GDCP v3 + respect des procédures générales du type B37 et contentions] lasts 4 days and is colored in #FFD351
+@endgantt

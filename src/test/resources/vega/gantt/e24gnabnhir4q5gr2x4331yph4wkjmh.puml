@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+printscale weekly with calendar date
+Project starts the 6th of July 2020
+[Task1] on {Alice} lasts 2 weeks
+[Task2] on {Bob:50%} lasts 2 weeks
+then [Task3] on {Alice:25%} lasts 3 days
+@endgantt

@@ -1,0 +1,21 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+<style>
+timeline {
+    BackGroundColor Grey
+    FontName Helvetica
+    FontSize 20
+    FontColor Blue
+}
+</style>
+
+[Prototype design] as [TASK1] lasts 38 days
+[TASK1] is colored in Lavender/LightBlue
+[Prototype completed] happens at [TASK1]'s end
+
+@endgantt

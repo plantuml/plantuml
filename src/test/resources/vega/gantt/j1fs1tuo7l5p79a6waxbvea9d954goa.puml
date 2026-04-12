@@ -1,0 +1,18 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+project starts 2021-07-20
+
+Saturdays are closed
+Sundays are closed
+
+[Task 1] on {Bob:50%} starts 2021-07-20 and lasts 10 days
+[Task 2] on {Bob:50%} starts 2021-07-20 and lasts 5 days
+[Bob on holiday] on {Bob:100%} Starts 2021-07-23 and ends 2021-07-26
+[Task 1] pauses on 2021-07-23 to 2021-07-26
+[Task 2] pauses on 2021-07-23 to 2021-07-26
+
+@endgantt

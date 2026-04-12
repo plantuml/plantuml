@@ -1,0 +1,17 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+today is 2021-01-11 and is colored in #ff1111aa
+
+Project starts the 1st of january 2021
+[Prototype design end] as [TASK1] lasts 19 days
+Then [Testing] lasts 4 days
+[TASK1]->[Testing]
+
+2021-01-08 to 2021-01-14 are colored in #33ff3333
+
+@endgantt

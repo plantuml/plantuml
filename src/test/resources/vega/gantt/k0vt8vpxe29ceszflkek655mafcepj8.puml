@@ -1,0 +1,37 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+Project starts 2020-09-01
+
+[taskA] starts 2020-09-01 and lasts 3 days
+[taskB] starts 2020-09-10 and lasts 3 days
+[taskB] displays on same row as [taskA]
+
+[task01] starts 2020-09-05 and lasts 4 days
+
+then [task02] lasts 8 days
+note bottom
+  note for task02
+  more notes
+end note
+
+then [task03] lasts 7 days
+note bottom
+  note for task03
+  more notes
+end note
+
+-- separator --
+
+[taskC] starts 2020-09-02 and lasts 5 days
+[taskD] starts 2020-09-09 and lasts 5 days
+[taskD] displays on same row as [taskC]
+
+[task 10] starts 2020-09-05 and lasts 5 days
+then [task 11] lasts 5 days
+
+@endgantt

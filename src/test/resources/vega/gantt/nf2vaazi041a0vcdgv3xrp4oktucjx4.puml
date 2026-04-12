@@ -1,0 +1,15 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+Saturday are closed
+Project starts the 20th of september 2017
+2017/09/26 is closed
+'2017/09/27 is closed
+[Prototype design] as [TASK1] lasts 8 days
+[TASK1] is colored in Lavender/LightBlue
+[Prototype completed] happens at [TASK1]'s end
+'[Prototype design2] as [TASK2] lasts 10 days
+@endgantt
