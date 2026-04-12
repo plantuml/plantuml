@@ -147,239 +147,241 @@ public abstract class PSystemError extends UgDiagram {
 
 	private List&lt;String&gt; header() {
 <span class="fc" id="L149">		final ReportLog result = new ReportLog();</span>
-<span class="fc" id="L150">		result.add(Version.fullDescription());</span>
-<span class="fc" id="L151">		result.checkOldVersionWarningRaw();</span>
-<span class="fc" id="L152">		return result.asList();</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (!Logme.MODE_VEGA) {</span>
+<span class="fc" id="L151">			result.add(Version.fullDescription());</span>
+<span class="fc" id="L152">			result.checkOldVersionWarningRaw();</span>
+		}
+<span class="fc" id="L154">		return result.asList();</span>
 	}
 
 	public List&lt;String&gt; getPureAsciiFormatted() {
-<span class="nc" id="L156">		final List&lt;String&gt; result = getTextFromStack();</span>
-<span class="nc" id="L157">		result.addAll(getTextFullBody());</span>
-<span class="nc" id="L158">		result.add(&quot;^^^^^&quot;);</span>
-<span class="nc" id="L159">		result.addAll(getTextError());</span>
-<span class="nc" id="L160">		return result;</span>
+<span class="nc" id="L158">		final List&lt;String&gt; result = getTextFromStack();</span>
+<span class="nc" id="L159">		result.addAll(getTextFullBody());</span>
+<span class="nc" id="L160">		result.add(&quot;^^^^^&quot;);</span>
+<span class="nc" id="L161">		result.addAll(getTextError());</span>
+<span class="nc" id="L162">		return result;</span>
 	}
 
 	private List&lt;String&gt; getTextFromStack() {
-<span class="fc" id="L164">		LineLocation lineLocation = getLineLocation();</span>
-<span class="fc" id="L165">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (lineLocation != null) {</span>
-<span class="fc" id="L167">			append(result, lineLocation);</span>
-<span class="pc bpc" id="L168" title="1 of 2 branches missed.">			while (lineLocation.getParent() != null) {</span>
-<span class="nc" id="L169">				lineLocation = lineLocation.getParent();</span>
-<span class="nc" id="L170">				append(result, lineLocation);</span>
+<span class="fc" id="L166">		LineLocation lineLocation = getLineLocation();</span>
+<span class="fc" id="L167">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		if (lineLocation != null) {</span>
+<span class="fc" id="L169">			append(result, lineLocation);</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">			while (lineLocation.getParent() != null) {</span>
+<span class="nc" id="L171">				lineLocation = lineLocation.getParent();</span>
+<span class="nc" id="L172">				append(result, lineLocation);</span>
 			}
 		}
-<span class="fc" id="L173">		return result;</span>
+<span class="fc" id="L175">		return result;</span>
 	}
 
 	protected List&lt;String&gt; getTextFullBody() {
-<span class="fc" id="L177">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L178">		result.add(&quot; &quot;);</span>
-<span class="fc" id="L179">		final int traceSize = trace.size();</span>
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">		if (traceSize &gt; 40) {</span>
-<span class="nc bnc" id="L181" title="All 2 branches missed.">			for (StringLocated s : trace.subList(0, 5))</span>
-<span class="nc" id="L182">				addToResult(result, s);</span>
+<span class="fc" id="L179">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L180">		result.add(&quot; &quot;);</span>
+<span class="fc" id="L181">		final int traceSize = trace.size();</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		if (traceSize &gt; 40) {</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">			for (StringLocated s : trace.subList(0, 5))</span>
+<span class="nc" id="L184">				addToResult(result, s);</span>
 
-<span class="nc" id="L184">			result.add(&quot;...&quot;);</span>
-<span class="nc" id="L185">			final int skipped = traceSize - 5 - 20;</span>
-<span class="nc" id="L186">			result.add(&quot;... ( skipping &quot; + skipped + &quot; lines )&quot;);</span>
-<span class="nc" id="L187">			result.add(&quot;...&quot;);</span>
-<span class="nc bnc" id="L188" title="All 2 branches missed.">			for (StringLocated s : trace.subList(traceSize - 20, traceSize))</span>
-<span class="nc" id="L189">				addToResult(result, s);</span>
+<span class="nc" id="L186">			result.add(&quot;...&quot;);</span>
+<span class="nc" id="L187">			final int skipped = traceSize - 5 - 20;</span>
+<span class="nc" id="L188">			result.add(&quot;... ( skipping &quot; + skipped + &quot; lines )&quot;);</span>
+<span class="nc" id="L189">			result.add(&quot;...&quot;);</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">			for (StringLocated s : trace.subList(traceSize - 20, traceSize))</span>
+<span class="nc" id="L191">				addToResult(result, s);</span>
 
-<span class="nc" id="L191">		} else {</span>
-<span class="fc bfc" id="L192" title="All 2 branches covered.">			for (StringLocated s : trace)</span>
-<span class="fc" id="L193">				addToResult(result, s);</span>
+<span class="nc" id="L193">		} else {</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">			for (StringLocated s : trace)</span>
+<span class="fc" id="L195">				addToResult(result, s);</span>
 
 		}
-<span class="fc" id="L196">		return result;</span>
+<span class="fc" id="L198">		return result;</span>
 	}
 
 	private void addToResult(final List&lt;String&gt; result, StringLocated s) {
-<span class="fc" id="L200">		String tmp = s.getString();</span>
-<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		if (tmp.length() &gt; 120)</span>
-<span class="nc" id="L202">			tmp = tmp.substring(0, 120) + &quot; ...&quot;;</span>
+<span class="fc" id="L202">		String tmp = s.getString();</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">		if (tmp.length() &gt; 120)</span>
+<span class="nc" id="L204">			tmp = tmp.substring(0, 120) + &quot; ...&quot;;</span>
 
-<span class="fc" id="L204">		result.add(tmp);</span>
-<span class="fc" id="L205">	}</span>
+<span class="fc" id="L206">		result.add(tmp);</span>
+<span class="fc" id="L207">	}</span>
 
 	private List&lt;String&gt; getTextError() {
-<span class="fc" id="L208">		return Arrays.asList(&quot; &quot; + singleError.getError());</span>
+<span class="fc" id="L210">		return Arrays.asList(&quot; &quot; + singleError.getError());</span>
 	}
 
 	@Override
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws IOException {
-<span class="fc" id="L213">		TextBlock result = getGraphicalFormatted();</span>
+<span class="fc" id="L215">		TextBlock result = getGraphicalFormatted();</span>
 
-<span class="pc bpc" id="L215" title="1 of 4 branches missed.">		if (!TeaVM.isTeaVM() &amp;&amp; !Logme.MODE_VEGA) {</span>
-<span class="fc bfc" id="L216" title="All 2 branches covered.">			if (getSource().getTotalLineCountLessThan5())</span>
-<span class="fc" id="L217">				result = addWelcome(result);</span>
+<span class="pc bpc" id="L217" title="1 of 4 branches missed.">		if (!TeaVM.isTeaVM() &amp;&amp; !Logme.MODE_VEGA) {</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">			if (getSource().getTotalLineCountLessThan5())</span>
+<span class="fc" id="L219">				result = addWelcome(result);</span>
 
-<span class="fc" id="L219">			final int min = (int) (System.currentTimeMillis() / 60000L) % 60;</span>
-<span class="fc bfc" id="L220" title="All 2 branches covered.">			if (disableTimeBasedErrorDecorations) {</span>
+<span class="fc" id="L221">			final int min = (int) (System.currentTimeMillis() / 60000L) % 60;</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">			if (disableTimeBasedErrorDecorations) {</span>
 				// do nothing
-<span class="pc bpc" id="L222" title="4 of 8 branches missed.">			} else if (min == 1 || min == 8 || min == 13 || min == 55)</span>
-<span class="nc" id="L223">				result = addMessagePatreon(result);</span>
-<span class="pc bpc" id="L224" title="1 of 2 branches missed.">			else if (min == 15)</span>
-<span class="nc" id="L225">				result = addMessageLiberapay(result);</span>
-<span class="pc bpc" id="L226" title="3 of 6 branches missed.">			else if (min == 30 || min == 39 || min == 48)</span>
-<span class="nc" id="L227">				result = addMessageDedication(result);</span>
-<span class="pc bpc" id="L228" title="1 of 2 branches missed.">			else if (getSource().containsIgnoreCase(&quot;arecibo&quot;))</span>
-<span class="nc" id="L229">				result = addMessageArecibo(result);</span>
+<span class="pc bpc" id="L224" title="4 of 8 branches missed.">			} else if (min == 1 || min == 8 || min == 13 || min == 55)</span>
+<span class="nc" id="L225">				result = addMessagePatreon(result);</span>
+<span class="pc bpc" id="L226" title="1 of 2 branches missed.">			else if (min == 15)</span>
+<span class="nc" id="L227">				result = addMessageLiberapay(result);</span>
+<span class="pc bpc" id="L228" title="3 of 6 branches missed.">			else if (min == 30 || min == 39 || min == 48)</span>
+<span class="nc" id="L229">				result = addMessageDedication(result);</span>
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">			else if (getSource().containsIgnoreCase(&quot;arecibo&quot;))</span>
+<span class="nc" id="L231">				result = addMessageArecibo(result);</span>
 
 		}
-<span class="fc" id="L232">		return result;</span>
+<span class="fc" id="L234">		return result;</span>
 	}
 
 	private void append(List&lt;String&gt; result, LineLocation lineLocation) {
-<span class="pc bpc" id="L236" title="1 of 2 branches missed.">		if (lineLocation.getDescription() != null)</span>
-<span class="fc" id="L237">			result.add(&quot;[From &quot; + lineLocation.getDescription() + &quot; (line &quot; + (lineLocation.getPosition() + 1) + &quot;) ]&quot;);</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">		if (lineLocation.getDescription() != null)</span>
+<span class="fc" id="L239">			result.add(&quot;[From &quot; + lineLocation.getDescription() + &quot; (line &quot; + (lineLocation.getPosition() + 1) + &quot;) ]&quot;);</span>
 
-<span class="fc" id="L239">	}</span>
+<span class="fc" id="L241">	}</span>
 
 	final public DiagramDescription getDescription() {
-<span class="fc" id="L242">		return new DiagramDescription(&quot;(Error)&quot;);</span>
+<span class="fc" id="L244">		return new DiagramDescription(&quot;(Error)&quot;);</span>
 	}
 
 	private List&lt;String&gt; allButLast(List&lt;String&gt; full) {
-<span class="fc" id="L246">		return full.subList(0, full.size() - 1);</span>
+<span class="fc" id="L248">		return full.subList(0, full.size() - 1);</span>
 	}
 
 	private List&lt;String&gt; onlyLast(List&lt;String&gt; full) {
-<span class="fc" id="L250">		return full.subList(full.size() - 1, full.size());</span>
+<span class="fc" id="L252">		return full.subList(full.size() - 1, full.size());</span>
 	}
 
 	private TextBlock getWelcome() {
-<span class="fc" id="L254">		return new PSystemWelcome(getSource(), GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT, getPreprocessingArtifact())</span>
-<span class="fc" id="L255">				.getTextBlock12026(0, null);</span>
+<span class="fc" id="L256">		return new PSystemWelcome(getSource(), GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT, getPreprocessingArtifact())</span>
+<span class="fc" id="L257">				.getTextBlock12026(0, null);</span>
 	}
 
 	private TextBlock addWelcome(final TextBlock result) {
-<span class="fc" id="L259">		final TextBlock welcome = getWelcome();</span>
-<span class="fc" id="L260">		return TextBlockUtils.mergeTB(welcome, result, HorizontalAlignment.LEFT);</span>
+<span class="fc" id="L261">		final TextBlock welcome = getWelcome();</span>
+<span class="fc" id="L262">		return TextBlockUtils.mergeTB(welcome, result, HorizontalAlignment.LEFT);</span>
 	}
 
 	private TextBlock addMessageLiberapay(final TextBlock source) throws IOException {
-<span class="nc bnc" id="L264" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
-<span class="nc" id="L265">			return source;</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
+<span class="nc" id="L267">			return source;</span>
 
-<span class="nc" id="L267">		final TextBlock message = getMessageLiberapay();</span>
-<span class="nc" id="L268">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L269">		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L270">		return result;</span>
+<span class="nc" id="L269">		final TextBlock message = getMessageLiberapay();</span>
+<span class="nc" id="L270">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L271">		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L272">		return result;</span>
 	}
 
 	private TextBlock addMessagePatreon(final TextBlock source) throws IOException {
-<span class="nc bnc" id="L274" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
-<span class="nc" id="L275">			return source;</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
+<span class="nc" id="L277">			return source;</span>
 
-<span class="nc" id="L277">		final TextBlock message = getMessagePatreon();</span>
-<span class="nc" id="L278">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L279">		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L280">		return result;</span>
+<span class="nc" id="L279">		final TextBlock message = getMessagePatreon();</span>
+<span class="nc" id="L280">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L281">		result = TextBlockUtils.mergeTB(result, message, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L282">		return result;</span>
 	}
 
 	private TextBlock addMessageDedication(final TextBlock source) throws IOException {
-<span class="nc bnc" id="L284" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
-<span class="nc" id="L285">			return source;</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
+<span class="nc" id="L287">			return source;</span>
 
-<span class="nc" id="L287">		final TextBlock message = getMessageDedication();</span>
-<span class="nc" id="L288">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L289">		return result;</span>
+<span class="nc" id="L289">		final TextBlock message = getMessageDedication();</span>
+<span class="nc" id="L290">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L291">		return result;</span>
 	}
 
 	private TextBlock addMessageAdopt(final TextBlock source) throws IOException {
-<span class="nc bnc" id="L293" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
-<span class="nc" id="L294">			return source;</span>
+<span class="nc bnc" id="L295" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
+<span class="nc" id="L296">			return source;</span>
 
-<span class="nc" id="L296">		final TextBlock message = getMessageAdopt();</span>
-<span class="nc" id="L297">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L298">		return result;</span>
+<span class="nc" id="L298">		final TextBlock message = getMessageAdopt();</span>
+<span class="nc" id="L299">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
+<span class="nc" id="L300">		return result;</span>
 	}
 
 	private TextBlock addMessageArecibo(final TextBlock source) throws IOException {
-<span class="nc" id="L302">		final UImage message = new UImage(</span>
-<span class="nc" id="L303">				new PixelImage(PSystemVersion.getArecibo(), AffineTransformType.TYPE_BILINEAR));</span>
-<span class="nc" id="L304">		return TextBlockUtils.mergeLR(source, message, VerticalAlignment.TOP);</span>
+<span class="nc" id="L304">		final UImage message = new UImage(</span>
+<span class="nc" id="L305">				new PixelImage(PSystemVersion.getArecibo(), AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L306">		return TextBlockUtils.mergeLR(source, message, VerticalAlignment.TOP);</span>
 	}
 
 	private TextBlock getMessageDedication() {
-<span class="nc" id="L308">		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite(&quot;#eae2c9&quot;);</span>
+<span class="nc" id="L310">		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite(&quot;#eae2c9&quot;);</span>
 
-<span class="nc" id="L310">		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
-<span class="nc" id="L311">				.exportFlashcode(&quot;https://plantuml.com/dedication&quot;, XColor.BLACK, backColor.getAwtColor()));</span>
-<span class="nc" id="L312">		final Display disp = Display.create(&quot;&lt;b&gt;Add your own dedication into PlantUML&quot;, &quot; &quot;, &quot;For just $5 per month!&quot;,</span>
+<span class="nc" id="L312">		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
+<span class="nc" id="L313">				.exportFlashcode(&quot;https://plantuml.com/dedication&quot;, XColor.BLACK, backColor.getAwtColor()));</span>
+<span class="nc" id="L314">		final Display disp = Display.create(&quot;&lt;b&gt;Add your own dedication into PlantUML&quot;, &quot; &quot;, &quot;For just $5 per month!&quot;,</span>
 				&quot;Details on &lt;i&gt;[[https://plantuml.com/dedication]]&quot;);
 
-<span class="nc" id="L315">		final UFont font = UFontFactory.sansSerif(14);</span>
-<span class="nc" id="L316">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
-<span class="nc" id="L317">		final TextBlock text = TextBlockUtils</span>
-<span class="nc" id="L318">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
+<span class="nc" id="L317">		final UFont font = UFontFactory.sansSerif(14);</span>
+<span class="nc" id="L318">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
+<span class="nc" id="L319">		final TextBlock text = TextBlockUtils</span>
+<span class="nc" id="L320">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
 		final TextBlock result;
-<span class="nc bnc" id="L320" title="All 2 branches missed.">		if (qrcode == null) {</span>
-<span class="nc" id="L321">			result = text;</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">		if (qrcode == null) {</span>
+<span class="nc" id="L323">			result = text;</span>
 		} else {
-<span class="nc" id="L323">			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);</span>
-<span class="nc" id="L324">			result = TextBlockUtils.mergeLR(text, qr, VerticalAlignment.CENTER);</span>
+<span class="nc" id="L325">			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);</span>
+<span class="nc" id="L326">			result = TextBlockUtils.mergeLR(text, qr, VerticalAlignment.CENTER);</span>
 		}
-<span class="nc" id="L326">		return TextBlockUtils.addBackcolor(result, backColor);</span>
+<span class="nc" id="L328">		return TextBlockUtils.addBackcolor(result, backColor);</span>
 
 	}
 
 	private TextBlock getMessageAdopt() {
-<span class="nc" id="L331">		final HColor backColor = HColorSet.instance().getColorOrWhite(&quot;#eff4d2&quot;);</span>
+<span class="nc" id="L333">		final HColor backColor = HColorSet.instance().getColorOrWhite(&quot;#eff4d2&quot;);</span>
 
-<span class="nc" id="L333">		final Display disp = Display.create(&quot;&lt;b&gt;Adopt-a-Word and put your message here!&quot;, &quot; &quot;,</span>
+<span class="nc" id="L335">		final Display disp = Display.create(&quot;&lt;b&gt;Adopt-a-Word and put your message here!&quot;, &quot; &quot;,</span>
 				&quot;Details on &lt;i&gt;[[https://plantuml.com/adopt]]&quot;, &quot; &quot;);
 
-<span class="nc" id="L336">		final UFont font = UFontFactory.sansSerif(14);</span>
-<span class="nc" id="L337">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
-<span class="nc" id="L338">		final TextBlock text = TextBlockUtils</span>
-<span class="nc" id="L339">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
+<span class="nc" id="L338">		final UFont font = UFontFactory.sansSerif(14);</span>
+<span class="nc" id="L339">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
+<span class="nc" id="L340">		final TextBlock text = TextBlockUtils</span>
+<span class="nc" id="L341">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
 		final TextBlock result;
-<span class="nc" id="L341">		result = text;</span>
-<span class="nc" id="L342">		return TextBlockUtils.addBackcolor(result, backColor);</span>
+<span class="nc" id="L343">		result = text;</span>
+<span class="nc" id="L344">		return TextBlockUtils.addBackcolor(result, backColor);</span>
 
 	}
 
 	private TextBlock getMessagePatreon() {
-<span class="nc" id="L347">		return buildMessageWithQrcode(PSystemVersion.getTime01(), &quot;https://plantuml.com/patreon&quot;);</span>
+<span class="nc" id="L349">		return buildMessageWithQrcode(PSystemVersion.getTime01(), &quot;https://plantuml.com/patreon&quot;);</span>
 	}
 
 	private TextBlock getMessageLiberapay() {
-<span class="nc" id="L351">		return buildMessageWithQrcode(PSystemVersion.getTime15(), &quot;https://plantuml.com/lp&quot;);</span>
+<span class="nc" id="L353">		return buildMessageWithQrcode(PSystemVersion.getTime15(), &quot;https://plantuml.com/lp&quot;);</span>
 	}
 
 	private TextBlock buildMessageWithQrcode(PortableImage banner, String url) {
-<span class="nc" id="L355">		final UImage message = new UImage(new PixelImage(banner, AffineTransformType.TYPE_BILINEAR));</span>
-<span class="nc" id="L356">		final XColor back = XColor.from(message.getImage(1).getRGB(0, 0));</span>
-<span class="nc" id="L357">		final HColor backColor = HColors.simple(back);</span>
+<span class="nc" id="L357">		final UImage message = new UImage(new PixelImage(banner, AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L358">		final XColor back = XColor.from(message.getImage(1).getRGB(0, 0));</span>
+<span class="nc" id="L359">		final HColor backColor = HColors.simple(back);</span>
 
-<span class="nc" id="L359">		final PortableImage qrcode = smaller(</span>
-<span class="nc" id="L360">				FlashCodeFactory.getFlashCodeUtils().exportFlashcode(url, XColor.BLACK, XColor.WHITE));</span>
+<span class="nc" id="L361">		final PortableImage qrcode = smaller(</span>
+<span class="nc" id="L362">				FlashCodeFactory.getFlashCodeUtils().exportFlashcode(url, XColor.BLACK, XColor.WHITE));</span>
 
 		TextBlock result;
-<span class="nc bnc" id="L363" title="All 2 branches missed.">		if (qrcode == null) {</span>
-<span class="nc" id="L364">			result = message;</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">		if (qrcode == null) {</span>
+<span class="nc" id="L366">			result = message;</span>
 		} else {
-<span class="nc" id="L366">			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(2);</span>
-<span class="nc" id="L367">			result = TextBlockUtils.mergeLR(message, qr, VerticalAlignment.CENTER);</span>
+<span class="nc" id="L368">			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(2);</span>
+<span class="nc" id="L369">			result = TextBlockUtils.mergeLR(message, qr, VerticalAlignment.CENTER);</span>
 		}
-<span class="nc" id="L369">		return TextBlockUtils.addBackcolor(TextBlockUtils.withMargin(result, 1, 1), backColor);</span>
+<span class="nc" id="L371">		return TextBlockUtils.addBackcolor(TextBlockUtils.withMargin(result, 1, 1), backColor);</span>
 	}
 
 	private PortableImage smaller(PortableImage im) {
-<span class="nc bnc" id="L373" title="All 2 branches missed.">		if (im == null)</span>
-<span class="nc" id="L374">			return null;</span>
+<span class="nc bnc" id="L375" title="All 2 branches missed.">		if (im == null)</span>
+<span class="nc" id="L376">			return null;</span>
 
-<span class="nc" id="L376">		final int nb = 1;</span>
-<span class="nc" id="L377">		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);</span>
+<span class="nc" id="L378">		final int nb = 1;</span>
+<span class="nc" id="L379">		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);</span>
 	}
 
 	public int score() {
-<span class="fc" id="L381">		final int result = trace.size() * 10 + singleError.score();</span>
-<span class="fc" id="L382">		return result;</span>
+<span class="fc" id="L383">		final int result = trace.size() * 10 + singleError.score();</span>
+<span class="fc" id="L384">		return result;</span>
 	}
 
 }
