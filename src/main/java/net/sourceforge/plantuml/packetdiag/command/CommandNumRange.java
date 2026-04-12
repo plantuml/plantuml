@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  kolulu23
- *
+ * Contribution: The-Lum
  * 
  */
 package net.sourceforge.plantuml.packetdiag.command;
@@ -120,12 +120,12 @@ public class CommandNumRange extends SingleLineCommand2<PacketDiagram> {
 			start = system.getLastPacketEnd().map(v -> v + 1).orElse(0);
 			end = start + getLengthAttribute(attr) - 1;
 		}
-		// local height attribute for current packet block
-		int height = getHeightAttribute(attr);
-		PacketDiagram.PacketItem packetItem = PacketDiagram.PacketItem.ofRange(start, end, height, desc);
-		packetItem.textRotation = getRotationAttribute(attr);
+		// local height and rotation attribute for current packet block
+		final int height = getHeightAttribute(attr);
+		final int rotation = getRotationAttribute(attr);
 
-		system.addPacketItem(packetItem);
+		system.addPacketItemRange(start, end, height, desc, rotation);
+
 		return CommandExecutionResult.ok();
 	}
 }

@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  kolulu23
- *
+ * Contribution: The-Lum
  * 
  */
 package net.sourceforge.plantuml.packetdiag.command;
@@ -66,10 +66,10 @@ public class CommandScaleDirection extends SingleLineCommand2<PacketDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-		PacketDiagram.ScaleDirection dir = Optional.ofNullable(arg.get("DIR", 0))
-						.map(String::toUpperCase)
-						.map(PacketDiagram.ScaleDirection::valueOf)
-						.orElse(PacketDiagram.ScaleDirection.LTR);
+		final String dir = Optional.ofNullable(arg.get("DIR", 0))
+				.map(String::toUpperCase)
+				.orElse("LTR");
+
 		system.setScaleDirection(dir);
 		return CommandExecutionResult.ok();
 	}

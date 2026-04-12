@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  kolulu23
- *
+ * Contribution: The-Lum
  * 
  */
 package net.sourceforge.plantuml.packetdiag;
@@ -224,14 +224,14 @@ public class PacketDiagram extends TitledDiagram {
 		return colWidth >= 4 ? colWidth / 4 : colWidth;
 	}
 
-	void updateScaleInterval(int value) {
+	public void updateScaleInterval(int value) {
 		if (value > 0) {
 			this.scaleInterval = Math.min(value, this.colWidth);
 			this.useDefaultScaleInterval = false;
 		}
 	}
 
-	void updateNodeHeight(int nodeHeight) {
+	public void updateNodeHeight(int nodeHeight) {
 		this.bitHeight = Math.max(nodeHeight, 0);
 	}
 
@@ -239,13 +239,40 @@ public class PacketDiagram extends TitledDiagram {
 		this.scaleDirection = scaleDirection;
 	}
 
-	void setSameHeight(boolean sameHeight) {
+	/**
+	 * Public API for commands: set scale direction from textual value (LTR/RTL).
+	 * Unknown/null values default to LTR.
+	 */
+	public void setScaleDirection(String dir) {
+		if (dir == null) {
+			this.scaleDirection = ScaleDirection.LTR;
+			return;
+		}
+		try {
+			this.scaleDirection = ScaleDirection.valueOf(dir.toUpperCase());
+		} catch (IllegalArgumentException e) {
+			this.scaleDirection = ScaleDirection.LTR;
+		}
+	}
+
+	public void setSameHeight(boolean sameHeight) {
 		this.sameHeight = sameHeight;
 	}
 
 	void addPacketItem(PacketItem packetItem) {
 		packetItems.add(packetItem);
 	}
+
+	/**
+	 * Public API for commands: add a packet item defined by an explicit bit range,
+	 * without access PacketItem directly.
+	 */
+	public void addPacketItemRange(int start, int end, int height, String desc, int textRotation) {
+		final PacketItem packetItem = PacketItem.ofRange(start, end, height, desc);
+		packetItem.textRotation = textRotation;
+		this.packetItems.add(packetItem);
+	}
+
 
 	public Style getStyle() {
 		if (style == null) {
@@ -261,7 +288,7 @@ public class PacketDiagram extends TitledDiagram {
 	 *
 	 * @return bit-position of the last packet item in system or empty
 	 */
-	Optional<Integer> getLastPacketEnd() {
+	public Optional<Integer> getLastPacketEnd() {
 		return packetItems.isEmpty() ? Optional.empty() : Optional.of(packetItems.get(packetItems.size() - 1).bitEnd);
 	}
 
