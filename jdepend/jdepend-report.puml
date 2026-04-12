@@ -2561,7 +2561,7 @@ Total Classes: 5
 "net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.style"
 
 class "net.sourceforge.plantuml.project.lang" %lighten("red", 77) {
-Total Classes: 101
+Total Classes: 102
 }
 "net.sourceforge.plantuml.project.lang" --> "com.plantuml.ubrex"
 "net.sourceforge.plantuml.project.lang" --> "com.plantuml.ubrex.builder"

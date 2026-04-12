@@ -35,6 +35,11 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -47,28 +52,48 @@ public class PairOfSomething&lt;D extends Diagram&gt; implements Something&lt;D&
 	private final Something&lt;D&gt; complement1;
 	private final Something&lt;D&gt; complement2;
 
-<span class="fc" id="L50">	public PairOfSomething(Something&lt;D&gt; complement1, Something&lt;D&gt; complement2) {</span>
-<span class="fc" id="L51">		this.complement1 = complement1;</span>
-<span class="fc" id="L52">		this.complement2 = complement2;</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L55">	public PairOfSomething(Something&lt;D&gt; complement1, Something&lt;D&gt; complement2) {</span>
+<span class="fc" id="L56">		this.complement1 = complement1;</span>
+<span class="fc" id="L57">		this.complement2 = complement2;</span>
+<span class="fc" id="L58">	}</span>
+
+	@Override
+	public Failable&lt;? extends Object&gt; ugetMe(D diagram, UMatcher arg) {
+<span class="nc" id="L62">		final Failable&lt;? extends Object&gt; r1 = complement1.ugetMe(diagram, arg);</span>
+<span class="nc" id="L63">		final Failable&lt;? extends Object&gt; r2 = complement2.ugetMe(diagram, arg);</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (r1.isFail())</span>
+<span class="nc" id="L65">			return r1;</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (r2.isFail())</span>
+<span class="nc" id="L67">			return r2;</span>
+<span class="nc" id="L68">		final Object[] result = new Object[] { r1.get(), r2.get() };</span>
+<span class="nc" id="L69">		return Failable.ok(result);</span>
+	}
+
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+<span class="nc" id="L74">		return UBrexConcat.build( //</span>
+<span class="nc" id="L75">				complement1.toUnicodeBracketedExpressionComplement(), //</span>
+<span class="nc" id="L76">				UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L77">				complement2.toUnicodeBracketedExpressionComplement());</span>
+	}
 
 	public Failable&lt;? extends Object&gt; getMe(D diagram, RegexResult arg, String suffix) {
-<span class="nc" id="L56">		final Failable&lt;? extends Object&gt; r1 = complement1.getMe(diagram, arg, &quot;A&quot; + suffix);</span>
-<span class="nc" id="L57">		final Failable&lt;? extends Object&gt; r2 = complement2.getMe(diagram, arg, &quot;B&quot; + suffix);</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (r1.isFail()) {</span>
-<span class="nc" id="L59">			return r1;</span>
-		}
-<span class="nc bnc" id="L61" title="All 2 branches missed.">		if (r2.isFail()) {</span>
-<span class="nc" id="L62">			return r2;</span>
-		}
-<span class="nc" id="L64">		final Object[] result = new Object[] { r1.get(), r2.get() };</span>
-<span class="nc" id="L65">		return Failable.ok(result);</span>
+<span class="nc" id="L81">		final Failable&lt;? extends Object&gt; r1 = complement1.getMe(diagram, arg, &quot;A&quot; + suffix);</span>
+<span class="nc" id="L82">		final Failable&lt;? extends Object&gt; r2 = complement2.getMe(diagram, arg, &quot;B&quot; + suffix);</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (r1.isFail())</span>
+<span class="nc" id="L84">			return r1;</span>
+
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (r2.isFail())</span>
+<span class="nc" id="L87">			return r2;</span>
+
+<span class="nc" id="L89">		final Object[] result = new Object[] { r1.get(), r2.get() };</span>
+<span class="nc" id="L90">		return Failable.ok(result);</span>
 	}
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L69">		final IRegex pattern1 = complement1.toRegex(&quot;A&quot; + suffix);</span>
-<span class="fc" id="L70">		final IRegex pattern2 = complement2.toRegex(&quot;B&quot; + suffix);</span>
-<span class="fc" id="L71">		return new RegexConcat(pattern1, new RegexLeaf(&quot;[%s]+&quot;), pattern2);</span>
+<span class="fc" id="L94">		final IRegex pattern1 = complement1.toRegex(&quot;A&quot; + suffix);</span>
+<span class="fc" id="L95">		final IRegex pattern2 = complement2.toRegex(&quot;B&quot; + suffix);</span>
+<span class="fc" id="L96">		return new RegexConcat(pattern1, new RegexLeaf(&quot;[%s]+&quot;), pattern2);</span>
 	}
 
 }

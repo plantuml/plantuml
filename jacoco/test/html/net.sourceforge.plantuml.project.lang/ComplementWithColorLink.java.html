@@ -35,6 +35,14 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOptional;
+import com.plantuml.ubrex.builder.UBrexOr;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
@@ -42,21 +50,47 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-<span class="fc" id="L45">public class ComplementWithColorLink implements Something&lt;GanttDiagram&gt; {</span>
+<span class="fc" id="L53">public class ComplementWithColorLink implements Something&lt;GanttDiagram&gt; {</span>
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L48">		final String optionalStyle = &quot;(?:(dotted|bold|dashed)[%s]+)?&quot;;</span>
-<span class="fc" id="L49">		return new RegexLeaf(3,</span>
+<span class="fc" id="L56">		final String optionalStyle = &quot;(?:(dotted|bold|dashed)[%s]+)?&quot;;</span>
+<span class="fc" id="L57">		return new RegexLeaf(3,</span>
 				&quot;COMPLEMENT&quot; + suffix, &quot;with[%s]+&quot; + optionalStyle + &quot;(#?\\w+)[%s]+&quot; + optionalStyle + &quot;link&quot;);
+	}
+	
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+<span class="nc" id="L63">		final UBrexPart optionalStyle = new UBrexOptional(UBrexConcat.build( //</span>
+				new UBrexNamed(&quot;STYLE&quot;, new UBrexOr( //
+						new UBrexLeaf(&quot;dotted&quot;), //
+						new UBrexLeaf(&quot;bold&quot;), //
+						new UBrexLeaf(&quot;dashed&quot;))), //
+<span class="nc" id="L68">				UBrexLeaf.spaceOneOrMore()));</span>
+<span class="nc" id="L69">		return UBrexConcat.build( //</span>
+				new UBrexLeaf(&quot;with&quot;), //
+<span class="nc" id="L71">				UBrexLeaf.spaceOneOrMore(), //</span>
+				optionalStyle, //
+<span class="nc" id="L73">				new UBrexNamed(&quot;COLOR&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;?# &quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w&quot;)), //</span>
+<span class="nc" id="L74">				UBrexLeaf.spaceOneOrMore(), //</span>
+				optionalStyle, //
+				new UBrexLeaf(&quot;link&quot;));
+	}
+
+	@Override
+	public Failable&lt;CenterBorderColor&gt; ugetMe(GanttDiagram diagram, UMatcher arg) {
+<span class="nc" id="L81">		final String color1 = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L82">		final String style = arg.get(&quot;STYLE&quot;, 0);</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		final HColor col1 = color1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color1);</span>
+<span class="nc" id="L84">		return Failable.ok(new CenterBorderColor(col1, col1, style));</span>
 	}
 
 	public Failable&lt;CenterBorderColor&gt; getMe(GanttDiagram diagram, RegexResult arg, String suffix) {
-<span class="nc" id="L54">		final String style0 = arg.get(&quot;COMPLEMENT&quot; + suffix, 0);</span>
-<span class="nc" id="L55">		final String color1 = arg.get(&quot;COMPLEMENT&quot; + suffix, 1);</span>
-<span class="nc" id="L56">		final String style2 = arg.get(&quot;COMPLEMENT&quot; + suffix, 2);</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		final HColor col1 = color1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color1);</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		final String style = style0 == null ? style2 : style0;</span>
-<span class="nc" id="L59">		return Failable.ok(new CenterBorderColor(col1, col1, style));</span>
+<span class="nc" id="L88">		final String style0 = arg.get(&quot;COMPLEMENT&quot; + suffix, 0);</span>
+<span class="nc" id="L89">		final String color1 = arg.get(&quot;COMPLEMENT&quot; + suffix, 1);</span>
+<span class="nc" id="L90">		final String style2 = arg.get(&quot;COMPLEMENT&quot; + suffix, 2);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		final HColor col1 = color1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color1);</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		final String style = style0 == null ? style2 : style0;</span>
+<span class="nc" id="L93">		return Failable.ok(new CenterBorderColor(col1, col1, style));</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

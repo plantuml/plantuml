@@ -8886,8 +8886,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 101
-    Concrete Classes: 100
+    Total Classes: 102
+    Concrete Classes: 101
     Abstract Classes: 1
 
     Ca: 5
@@ -8976,10 +8976,9 @@ Concrete Classes:
     net.sourceforge.plantuml.project.lang.SubjectSeparator$JustAfter
     net.sourceforge.plantuml.project.lang.SubjectSeparator$JustBefore
     net.sourceforge.plantuml.project.lang.SubjectTask$1
-    net.sourceforge.plantuml.project.lang.SubjectTask$10
     net.sourceforge.plantuml.project.lang.SubjectTask$11
     net.sourceforge.plantuml.project.lang.SubjectTask$12
-    net.sourceforge.plantuml.project.lang.SubjectTask$14
+    net.sourceforge.plantuml.project.lang.SubjectTask$13
     net.sourceforge.plantuml.project.lang.SubjectTask$15
     net.sourceforge.plantuml.project.lang.SubjectTask$16
     net.sourceforge.plantuml.project.lang.SubjectTask$17
@@ -8988,12 +8987,14 @@ Concrete Classes:
     net.sourceforge.plantuml.project.lang.SubjectTask$2
     net.sourceforge.plantuml.project.lang.SubjectTask$20
     net.sourceforge.plantuml.project.lang.SubjectTask$21
+    net.sourceforge.plantuml.project.lang.SubjectTask$22
     net.sourceforge.plantuml.project.lang.SubjectTask$3
     net.sourceforge.plantuml.project.lang.SubjectTask$4
     net.sourceforge.plantuml.project.lang.SubjectTask$5
     net.sourceforge.plantuml.project.lang.SubjectTask$6
     net.sourceforge.plantuml.project.lang.SubjectTask$7
     net.sourceforge.plantuml.project.lang.SubjectTask$8
+    net.sourceforge.plantuml.project.lang.SubjectTask$9
     net.sourceforge.plantuml.project.lang.SubjectToday
     net.sourceforge.plantuml.project.lang.SubjectToday$1
     net.sourceforge.plantuml.project.lang.SubjectToday$2
@@ -14818,7 +14819,7 @@ net.sourceforge.plantuml.project.core,11,3,9,12,0.27,0.57,0.16,1
 net.sourceforge.plantuml.project.data,7,0,3,17,0,0.85,0.15,1
 net.sourceforge.plantuml.project.draw,9,2,5,25,0.22,0.83,0.06,1
 net.sourceforge.plantuml.project.draw.header,5,2,2,15,0.4,0.88,0.28,1
-net.sourceforge.plantuml.project.lang,101,1,5,16,0.01,0.76,0.23,1
+net.sourceforge.plantuml.project.lang,102,1,5,16,0.01,0.76,0.23,1
 net.sourceforge.plantuml.project.ngm,4,1,2,3,0.25,0.6,0.15,1
 net.sourceforge.plantuml.project.ngm.math,11,2,6,5,0.18,0.45,0.36,1
 net.sourceforge.plantuml.project.solver,2,0,1,7,0,0.88,0.12,1

@@ -12795,8 +12795,8 @@
 
         <Package name="net.sourceforge.plantuml.project.lang">
             <Stats>
-                <TotalClasses>101</TotalClasses>
-                <ConcreteClasses>100</ConcreteClasses>
+                <TotalClasses>102</TotalClasses>
+                <ConcreteClasses>101</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>5</Ca>
                 <Ce>16</Ce>
@@ -13039,16 +13039,13 @@
                     net.sourceforge.plantuml.project.lang.SubjectTask$1
                 </Class>
                 <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$10
-                </Class>
-                <Class sourceFile="SubjectTask.java">
                     net.sourceforge.plantuml.project.lang.SubjectTask$11
                 </Class>
                 <Class sourceFile="SubjectTask.java">
                     net.sourceforge.plantuml.project.lang.SubjectTask$12
                 </Class>
                 <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$14
+                    net.sourceforge.plantuml.project.lang.SubjectTask$13
                 </Class>
                 <Class sourceFile="SubjectTask.java">
                     net.sourceforge.plantuml.project.lang.SubjectTask$15
@@ -13075,6 +13072,9 @@
                     net.sourceforge.plantuml.project.lang.SubjectTask$21
                 </Class>
                 <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$22
+                </Class>
+                <Class sourceFile="SubjectTask.java">
                     net.sourceforge.plantuml.project.lang.SubjectTask$3
                 </Class>
                 <Class sourceFile="SubjectTask.java">
@@ -13091,6 +13091,9 @@
                 </Class>
                 <Class sourceFile="SubjectTask.java">
                     net.sourceforge.plantuml.project.lang.SubjectTask$8
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.project.lang.SubjectTask$9
                 </Class>
                 <Class sourceFile="SubjectToday.java">
                     net.sourceforge.plantuml.project.lang.SubjectToday
