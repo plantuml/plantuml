@@ -66,7 +66,7 @@ public class DriverEllipseTeaVM implements UDriver&lt;UEllipse, SvgGraphicsTeaVM
 
 <span class="nc" id="L67">		DriverRectangleTeaVM.applyFillColor(svg, mapper, param);</span>
 <span class="nc" id="L68">		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);</span>
-<span class="nc" id="L69">		svg.setStrokeWidth(param.getStroke().getThickness());</span>
+<span class="nc" id="L69">		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
 
 		// UEllipse uses width/height, but SVG ellipse uses rx/ry (radii)
 		// And x,y is top-left corner for UEllipse, but center for SVG

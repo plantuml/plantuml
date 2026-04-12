@@ -61,7 +61,7 @@ import net.sourceforge.plantuml.klimt.shape.DotPath;
 
 <span class="nc" id="L62">		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);</span>
 <span class="nc" id="L63">		svg.setFillColor(&quot;none&quot;);</span>
-<span class="nc" id="L64">		svg.setStrokeWidth(param.getStroke().getThickness());</span>
+<span class="nc" id="L64">		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
 
 		// Convert DotPath to UPath and build SVG path data
 <span class="nc" id="L67">		final StringBuilder pathData = new StringBuilder();</span>

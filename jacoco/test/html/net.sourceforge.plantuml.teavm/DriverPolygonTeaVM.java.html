@@ -70,7 +70,7 @@ public class DriverPolygonTeaVM implements UDriver&lt;UPolygon, SvgGraphicsTeaVM
 
 <span class="nc" id="L71">		DriverRectangleTeaVM.applyFillColor(svg, mapper, param);</span>
 <span class="nc" id="L72">		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);</span>
-<span class="nc" id="L73">		svg.setStrokeWidth(param.getStroke().getThickness());</span>
+<span class="nc" id="L73">		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
 
 <span class="nc" id="L75">		svg.drawPolygon(points);</span>
 <span class="nc" id="L76">	}</span>
