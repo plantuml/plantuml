@@ -46,6 +46,13 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
+/**
+ * Parses and applies the {@code scale_interval=<N>} directive for {@code packetdiag} diagrams.
+ * <p>
+ * Controls how often bit positions are numbered on the scale by calling
+ * {@link PacketDiagram#updateScaleInterval(int)}.
+ * </p>
+ */
 public class CommandScaleInterval extends SingleLineCommand2<PacketDiagram> {
 
 	public CommandScaleInterval() {

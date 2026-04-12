@@ -46,6 +46,13 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
+/**
+ * Parses the end of a {@code packetdiag} diagram block.
+ * <p>
+ * Accepts an optional closing brace (with surrounding optional whitespace).
+ * This command mainly serves as a block terminator for the packet diagram parser.
+ * </p>
+ */
 public class CommandPacketDiagEnd extends SingleLineCommand2<PacketDiagram> {
 
 	public CommandPacketDiagEnd() {

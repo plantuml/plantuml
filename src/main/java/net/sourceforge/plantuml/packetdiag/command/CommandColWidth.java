@@ -46,6 +46,16 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
+/**
+ * Parses and applies the {@code colwidth=<N>} directive for {@code packetdiag} diagrams.
+ * <p>
+ * This command updates the diagram frame width (number of bits per row) by calling
+ * {@link PacketDiagram#setColWidth(int)} with the parsed integer value.
+ * </p>
+ * <p>
+ * Syntax accepted by this command is {@code colwidth = <1..3 digits>} with an optional trailing semicolon.
+ * </p>
+ */
 public class CommandColWidth extends SingleLineCommand2<PacketDiagram> {
 
 	public CommandColWidth() {

@@ -60,8 +60,27 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
+/**
+ * PlantUML diagram implementation for the {@code packetdiag} syntax (bit/field-based packet layout).
+ * <p>
+ * This diagram collects packet items in declaration order, computes a row-based layout constrained by a
+ * configured frame width (number of bits per row), and renders the result as a {@link TextBlock}.
+ * Items that do not fit in the remaining space of a row are split across rows.
+ * </p>
+ * <p>
+ * The diagram also renders a scale/bit indicator line above the grid. The scale can be customized through:
+ * </p>
+ * <ul>
+ *   <li>{@code colWidth}: number of bits per row (frame width),</li>
+ *   <li>{@code scaleInterval}: numbering interval for indicators (defaults to half of {@code colWidth}),</li>
+ *   <li>{@code scaleDirection}: left-to-right (LTR) or right-to-left (RTL),</li>
+ *   <li>{@code sameHeight}: optionally forces all blocks in a row to share the row maximum height.</li>
+ * </ul>
+ */
 public class PacketDiagram extends TitledDiagram {
-
+	/**
+	 * Default number of bits per row (frame width) when no explicit width is provided.
+	 */
 	public static final int DEFAULT_COL_WIDTH = 16;
 
 	/**
@@ -193,6 +212,11 @@ public class PacketDiagram extends TitledDiagram {
 		};
 	}
 
+	/**
+	 * Returns the Diagram Description.
+	 *
+	 * @return the Diagram Description: "Packet Diagram"
+	 */
 	@Override
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("Packet Diagram");
@@ -208,10 +232,23 @@ public class PacketDiagram extends TitledDiagram {
 		return useDefaultScaleInterval;
 	}
 
+	/**
+	 * Returns the number of bits rendered per row (the packet/frame width).
+	 *
+	 * @return the frame width in bits
+	 */
 	public int getColWidth() {
 		return colWidth;
 	}
 
+	/**
+	 * Sets the number of bits rendered per row (the packet/frame width).
+	 * <p>
+	 * Values {@code <= 0} are ignored.
+	 * </p>
+	 *
+	 * @param colWidth the frame width in bits
+	 */
 	public void setColWidth(int colWidth) {
 		if (colWidth > 0)
 			this.colWidth = colWidth;
@@ -224,6 +261,15 @@ public class PacketDiagram extends TitledDiagram {
 		return colWidth >= 4 ? colWidth / 4 : colWidth;
 	}
 
+	/**
+	 * Overrides the indicator numbering interval (in bits).
+	 * <p>
+	 * The provided value is clamped to {@code [1..colWidth]}. Once called with a valid value, the diagram no longer
+	 * uses its default interval (which is {@code colWidth / 2}).
+	 * </p>
+	 *
+	 * @param value numbering interval in bits (must be {@code > 0})
+	 */
 	public void updateScaleInterval(int value) {
 		if (value > 0) {
 			this.scaleInterval = Math.min(value, this.colWidth);
@@ -231,6 +277,14 @@ public class PacketDiagram extends TitledDiagram {
 		}
 	}
 
+	/**
+	 * Updates the height of a single bit cell (in pixels), used as the vertical scale for blocks.
+	 * <p>
+	 * Negative values are treated as {@code 0}.
+	 * </p>
+	 *
+	 * @param nodeHeight bit height in pixels
+	 */
 	public void updateNodeHeight(int nodeHeight) {
 		this.bitHeight = Math.max(nodeHeight, 0);
 	}
@@ -240,8 +294,13 @@ public class PacketDiagram extends TitledDiagram {
 	}
 
 	/**
-	 * Public API for commands: set scale direction from textual value (LTR/RTL).
-	 * Unknown/null values default to LTR.
+	 * Public command-facing API to set the scale direction using a textual value.
+	 * <p>
+	 * Accepted values are {@code "LTR"} and {@code "RTL"} (case-insensitive). Unknown or {@code null} values fall back
+	 * to {@link ScaleDirection#LTR}.
+	 * </p>
+	 *
+	 * @param dir the direction string (e.g. {@code "LTR"} or {@code "RTL"})
 	 */
 	public void setScaleDirection(String dir) {
 		if (dir == null) {
@@ -255,6 +314,14 @@ public class PacketDiagram extends TitledDiagram {
 		}
 	}
 
+	/**
+	 * When enabled, forces all blocks within the same row to share the maximum height found in that row.
+	 * <p>
+	 * This is disabled by default to match the original blockdiag behavior.
+	 * </p>
+	 *
+	 * @param sameHeight {@code true} to enforce a uniform row height, {@code false} otherwise
+	 */
 	public void setSameHeight(boolean sameHeight) {
 		this.sameHeight = sameHeight;
 	}
@@ -264,8 +331,13 @@ public class PacketDiagram extends TitledDiagram {
 	}
 
 	/**
-	 * Public API for commands: add a packet item defined by an explicit bit range,
-	 * without access PacketItem directly.
+	 * Public command-facing API to add a packet item defined by an explicit bit range.
+	 *
+	 * @param start        start bit index (inclusive)
+	 * @param end          end bit index (inclusive)
+	 * @param height       requested block height (in bit units, as interpreted by the renderer)
+	 * @param desc         label/description to display inside the block (may be {@code null})
+	 * @param textRotation text rotation to apply to the block label
 	 */
 	public void addPacketItemRange(int start, int end, int height, String desc, int textRotation) {
 		final PacketItem packetItem = PacketItem.ofRange(start, end, height, desc);
@@ -273,7 +345,14 @@ public class PacketDiagram extends TitledDiagram {
 		this.packetItems.add(packetItem);
 	}
 
-
+	/**
+	 * Returns the merged style used to render this diagram.
+	 * <p>
+	 * The style is computed lazily and cached for subsequent calls.
+	 * </p>
+	 *
+	 * @return the current diagram {@link Style}
+	 */
 	public Style getStyle() {
 		if (style == null) {
 			style = StyleSignatureBasic.of(SName.root, SName.element, SName.packetdiagDiagram)
@@ -286,7 +365,7 @@ public class PacketDiagram extends TitledDiagram {
 	 * Returns the last packet's end bit-position from the packet frame. If the
 	 * system currently contains no packet, return empty.
 	 *
-	 * @return bit-position of the last packet item in system or empty
+	 * @return an {@link Optional} containing the last packet end position, or {@link Optional#empty()} if no items exist
 	 */
 	public Optional<Integer> getLastPacketEnd() {
 		return packetItems.isEmpty() ? Optional.empty() : Optional.of(packetItems.get(packetItems.size() - 1).bitEnd);

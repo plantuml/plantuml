@@ -46,6 +46,13 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
+/**
+ * Parses and applies the {@code node_height=<N>} directive for {@code packetdiag} diagrams.
+ * <p>
+ * Updates the vertical bit-cell size (in pixels) used to scale packet blocks by calling
+ * {@link PacketDiagram#updateNodeHeight(int)}.
+ * </p>
+ */
 public class CommandNodeHeight extends SingleLineCommand2<PacketDiagram> {
 
 	public CommandNodeHeight() {

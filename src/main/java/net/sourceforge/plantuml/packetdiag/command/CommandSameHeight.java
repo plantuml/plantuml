@@ -46,6 +46,13 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
+/**
+ * Parses and applies the {@code same_height=<true|false>} directive for {@code packetdiag} diagrams.
+ * <p>
+ * When enabled, forces all blocks within the same row to share the row maximum height by calling
+ * {@link PacketDiagram#setSameHeight(boolean)}.
+ * </p>
+ */
 public class CommandSameHeight extends SingleLineCommand2<PacketDiagram> {
 
 	public CommandSameHeight() {

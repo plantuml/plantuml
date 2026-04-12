@@ -57,6 +57,20 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
+/**
+ * A single drawable field (block) in a {@code packetdiag} diagram.
+ * <p>
+ * A {@link PacketBlock} represents a rectangular region spanning a given number of bit columns
+ * ({@code width}) and a given vertical size ({@code height}), with an optional label rendered inside.
+ * The block can be marked as "open" on the left and/or right side to indicate that it is a continuation
+ * of the same logical field split across multiple rows.
+ * </p>
+ * <p>
+ * This is a low-level rendering model used by {@link PacketDiagram} when laying out {@code PacketItem}s
+ * into a row grid. Actual pixel dimensions are obtained by multiplying bit units by the current scale
+ * (bit width/height) and adding margins/padding during shape creation.
+ * </p>
+ */
 public class PacketBlock {
 
 	private static final UStroke openerStroke = new UStroke(5, 5, 1);
@@ -83,6 +97,18 @@ public class PacketBlock {
 
 	private boolean rightOpen = false;
 
+	/**
+	 * Creates a closed block with the given bit-size and label.
+	 *
+	 * @param width
+	 *            block width in bit units (columns)
+	 * @param height
+	 *            block height in bit units (rows)
+	 * @param label
+	 *            label to display inside the block (may be {@code null} depending on caller conventions)
+	 * @param skinParam
+	 *            skin parameters used to resolve styles, fonts and colors
+	 */
 	public PacketBlock(int width, int height, String label, ISkinParam skinParam) {
 		this.width = width;
 		this.height = height;
@@ -90,6 +116,22 @@ public class PacketBlock {
 		this.skinParam = skinParam;
 	}
 
+	/**
+	 * Creates a block with optional open edges to represent a field continued across rows.
+	 *
+	 * @param width
+	 *            block width in bit units (columns)
+	 * @param height
+	 *            block height in bit units (rows)
+	 * @param label
+	 *            label to display inside the block
+	 * @param skinParam
+	 *            skin parameters used to resolve styles, fonts and colors
+	 * @param leftOpen
+	 *            {@code true} if the left border is "open" (continuation from a previous row)
+	 * @param rightOpen
+	 *            {@code true} if the right border is "open" (continues on the next row)
+	 */
 	public PacketBlock(int width, int height, String label, ISkinParam skinParam, boolean leftOpen, boolean rightOpen) {
 		this.width = width;
 		this.height = height;
@@ -99,34 +141,77 @@ public class PacketBlock {
 		this.rightOpen = rightOpen;
 	}
 
+	/**
+	 * Marks whether the left edge should be rendered as open (continuation indicator).
+	 *
+	 * @param leftOpen {@code true} to open the left edge, {@code false} to close it
+	 */
 	public void openLeft(boolean leftOpen) {
 		this.leftOpen = leftOpen;
 	}
 
+	/**
+	 * Marks whether the right edge should be rendered as open (continuation indicator).
+	 *
+	 * @param rightOpen {@code true} to open the right edge, {@code false} to close it
+	 */
 	public void openRight(boolean rightOpen) {
 		this.rightOpen = rightOpen;
 	}
 
+	/**
+	 * Returns the block width in bit units.
+	 *
+	 * @return width in bit units (columns)
+	 */
 	public int getWidth() {
 		return width;
 	}
 
+	/**
+	 * Returns the block height in bit units.
+	 *
+	 * @return height in bit units (rows)
+	 */
 	public int getHeight() {
 		return height;
 	}
 
+	/**
+	 * Sets the block height in bit units.
+	 *
+	 * @param height height in bit units (rows)
+	 */
 	public void setHeight(int height) {
 		this.height = height;
 	}
 
+	/**
+	 * Returns the block width in pixels for a given horizontal bit scale.
+	 *
+	 * @param scale pixels per bit
+	 * @return width in pixels
+	 */
 	public double getDrawWidth(double scale) {
 		return width * scale;
 	}
 
+	/**
+	 * Returns the block height in pixels for a given vertical bit scale.
+	 *
+	 * @param scale pixels per bit
+	 * @return height in pixels
+	 */
 	public double getDrawHeight(double scale) {
 		return height * scale;
 	}
 
+	/**
+	 * Returns the label text displayed inside this block.
+	 *
+	 * @return the block label (as provided at construction time)
+	 * (And may be empty depending on caller conventions)
+	 */
 	public String getLabel() {
 		return label;
 	}

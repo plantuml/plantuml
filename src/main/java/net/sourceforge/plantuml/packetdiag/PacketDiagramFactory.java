@@ -54,6 +54,18 @@ import net.sourceforge.plantuml.packetdiag.command.CommandScaleDirection;
 import net.sourceforge.plantuml.packetdiag.command.CommandScaleInterval;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
+/**
+ * Factory responsible for creating {@link PacketDiagram} instances and registering all commands
+ * supported by the {@code packetdiag} diagram type.
+ * <p>
+ * This hooks the {@code packetdiag} parser into PlantUML by:
+ * </p>
+ * <ul>
+ *   <li>adding common PlantUML commands (title, skinparam, etc.),</li>
+ *   <li>registering packetdiag-specific directives (colwidth, node_height, scale_direction, ...),</li>
+ *   <li>creating the diagram model ({@link PacketDiagram}) for each parsed source.</li>
+ * </ul>
+ */
 public class PacketDiagramFactory extends PSystemCommandFactory {
 	public PacketDiagramFactory() {
 		super(DiagramType.PACKET);

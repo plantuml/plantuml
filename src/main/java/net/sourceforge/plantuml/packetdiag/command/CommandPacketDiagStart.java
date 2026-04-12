@@ -46,6 +46,13 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
+/**
+ * Parses the start of a {@code packetdiag} diagram block.
+ * <p>
+ * Accepts {@code packetdiag} (optional) followed by optional whitespace and an optional opening brace.
+ * This command mainly serves as a block opener for the packet diagram parser.
+ * </p>
+ */
 public class CommandPacketDiagStart extends SingleLineCommand2<PacketDiagram> {
 
 	public CommandPacketDiagStart() {

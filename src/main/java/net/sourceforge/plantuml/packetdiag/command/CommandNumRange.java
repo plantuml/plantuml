@@ -51,6 +51,22 @@ import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
+/**
+ * Parses packet field declarations expressed as a bit number, a bit range, or a {@code *} list of bit.
+ * <p>
+ * This command is responsible for turning a textual field declaration into one or more packet items
+ * added to the current {@link PacketDiagram} (for example using explicit ranges and optional attributes).
+ * </p>
+ * <p>
+ * Supported forms include:
+ * </p>
+ * <ul>
+ *   <li>{@code N: <desc>} for a single-bit field,</li>
+ *   <li>{@code A-B: <desc>} for a multi-bit field,</li>
+ *   <li>{@code * <desc>} for an auto-positioned field (when supported by the parser).</li>
+ * </ul>
+ * Attributes (such as length) may be provided in brackets depending on the implementation.
+ */
 public class CommandNumRange extends SingleLineCommand2<PacketDiagram> {
 
 	public CommandNumRange() {

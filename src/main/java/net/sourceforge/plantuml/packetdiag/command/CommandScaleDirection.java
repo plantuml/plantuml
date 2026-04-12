@@ -48,6 +48,13 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
+/**
+ * Parses and applies the {@code scale_direction=<ltr|rtl>} directive for {@code packetdiag} diagrams.
+ * <p>
+ * Controls the direction in which the bit scale is rendered by calling
+ * {@link PacketDiagram#setScaleDirection(String)}.
+ * </p>
+ */
 public class CommandScaleDirection extends SingleLineCommand2<PacketDiagram> {
 
 	public CommandScaleDirection() {
