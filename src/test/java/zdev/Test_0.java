@@ -18,18 +18,16 @@ import net.sourceforge.plantuml.preproc.Defines;
 /*
  * 
 
-You can use this file to put a test you are working on.
-Here is a simple example:
+@startgantt
+title Plan
 
-@startuml
-alice->bob: this is a test
-@enduml
-
-So you can edit this file, but please do not push any modification in the "main" branch.
-Put your own tests on your own branches.
-
-However, if your test are interesting, you can add them to the "pdiff" project.
-See https://github.com/plantuml/pdiff
+[UI 1] on {Bob} lasts 5 days
+[UI 2] on {Bob:0%} lasts 4 days
+[UI Task] on {Bob} {Alice} happens 1 days after [UI 2]'s end
+[Start] -[dotted]-> [UI 1]
+[UI 1] -> [UI 2]
+[UI 2] -> [UI Task]
+@endgantt
 
  */
 public class Test_0 {
