@@ -2,7 +2,6 @@
 output: svg
 expected-description: (Error)
 expected-status: 400
-expected-exception: IllegalStateException
 ---
 @startgantt
 title Plan
