@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="153px" preserveAspectRatio="none" style="width:208px;height:153px;background:#FFFFFF;" version="1.1" viewBox="0 0 208 153" width="208px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <rect fill="#F1E5E5" height="109" style="stroke:none;stroke-width:1;" width="24" x="60" y="27"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="5" y="23.7778">2</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="84" x2="84" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="96" x2="96" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="96" x2="96" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="49.5" x="23.25" y="9.3333">Jan 2024</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="96" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="96" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="96" y1="27" y2="27"/>
+    <path d="M40,55 L40,64.5 L45,64.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="44,60.5,48,64.5,44,68.5,44,60.5" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="56" x="2" y="29"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="56" x="2" y="29"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="44" x="2" y="44"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="44" x="2" y="44"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="11" x="50" y="59"/>
+    <path d="M60,70 L50,70 L50,59 L60,59" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="10" x="84" y="59"/>
+    <path d="M84,59 L94,59 L94,70 L84,70" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="63" x2="81" y1="59" y2="59"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="63" x2="81" y1="70" y2="70"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="64.2583" x="62" y="37.5556">Task1 {Alice}</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="85.0667" x="50" y="52.5556">Task2 {Bob:50%}</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="89.375" x="98" y="67.5556">Task3 {Alice:50%}</text>
+    <text fill="#000000" font-family="Serif" font-size="13" lengthAdjust="spacing" textLength="28.275" x="0" y="82.1111">Alice</text>
+    <line style="stroke:#000000;stroke-width:1;" x1="0" x2="95.9999" y1="85" y2="85"/>
+    <text fill="#FF0000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="34.4625" y="95">650</text>
+    <text fill="#000000" font-family="Serif" font-size="13" lengthAdjust="spacing" textLength="23.1833" x="0" y="114.1111">Bob</text>
+    <line style="stroke:#000000;stroke-width:1;" x1="0" x2="95.9999" y1="117" y2="117"/>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="34.4625" y="127">200</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="96" y1="136" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="136" y2="152"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="96" x2="96" y1="136" y2="152"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="49.5" x="23.25" y="145.3333">Jan 2024</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="96" y1="152" y2="152"/>
+  </g>
+</svg>

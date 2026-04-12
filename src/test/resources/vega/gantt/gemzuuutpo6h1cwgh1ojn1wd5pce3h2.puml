@@ -2,6 +2,7 @@
 output: svg
 expected-description: (Error)
 expected-status: 400
+expected-exception: IllegalStateException
 ---
 @startgantt
 Project starts 2020-09-01

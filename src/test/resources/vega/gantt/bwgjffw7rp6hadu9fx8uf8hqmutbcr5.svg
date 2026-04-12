@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="276px" preserveAspectRatio="none" style="width:429px;height:276px;background:#FFFFFF;" version="1.1" viewBox="0 0 429 276" width="429px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <rect fill="#F1E5E5" height="90" style="stroke:none;stroke-width:3;" width="6.4" x="6.4" y="90"/>
+    <rect fill="#F1E5E5" height="90" style="stroke:none;stroke-width:3;" width="6.4" x="28.8" y="90"/>
+    <rect fill="#FA8072" height="90" style="stroke:none;stroke-width:3;" width="22.4" x="35.2" y="90"/>
+    <rect fill="#F1E5E5" height="90" style="stroke:none;stroke-width:3;" width="6.4" x="73.6" y="90"/>
+    <rect fill="#F1E5E5" height="90" style="stroke:none;stroke-width:3;" width="6.4" x="96" y="90"/>
+    <rect fill="#F1E5E5" height="90" style="stroke:none;stroke-width:3;" width="6.4" x="118.4" y="90"/>
+    <line style="stroke:#C0C0C0;stroke-width:3;" x1="0" x2="0" y1="0" y2="48"/>
+    <text fill="#000000" font-family="sans-serif" font-size="36" font-weight="700" lengthAdjust="spacing" textLength="80.4" x="27" y="28">2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:3;" x1="134.4" x2="134.4" y1="0" y2="48"/>
+    <line style="stroke:#C0C0C0;stroke-width:3;" x1="0" x2="0" y1="48" y2="90"/>
+    <line style="stroke:#C0C0C0;stroke-width:3;" x1="54.4" x2="54.4" y1="48" y2="90"/>
+    <text fill="#000000" font-family="sans-serif" font-size="30" lengthAdjust="spacing" textLength="46.5" x="3.95" y="71.3333">Oct</text>
+    <text fill="#000000" font-family="sans-serif" font-size="30" lengthAdjust="spacing" textLength="53.5" x="67.65" y="71.3333">Nov</text>
+    <line style="stroke:#C0C0C0;stroke-width:3;" x1="134.4" x2="134.4" y1="48" y2="90"/>
+    <line style="stroke:#C0C0C0;stroke-width:3;" x1="0" x2="134.4" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:3;" x1="0" x2="134.4" y1="48" y2="48"/>
+    <line style="stroke:#C0C0C0;stroke-width:3;" x1="0" x2="134.4" y1="90" y2="90"/>
+    <path d="M88,129 L88,157.5 L103,157.5" fill="none" style="stroke:#181818;stroke-width:4.5;"/>
+    <polygon fill="#181818" points="100,145.5,112,157.5,100,169.5,100,145.5" style="stroke:#181818;stroke-width:3;"/>
+    <rect fill="#E6E6FA" height="33" style="stroke:none;stroke-width:3;" width="3.4" x="6" y="96"/>
+    <path d="M6.4,129 L6,129 L6,96 L6.4,96" fill="none" style="stroke:#ADD8E6;stroke-width:3;"/>
+    <rect fill="#E6E6FA" height="33" style="stroke:none;stroke-width:3;" width="19" x="12.8" y="96"/>
+    <line style="stroke:#ADD8E6;stroke-width:3;" x1="12.8" x2="28.8" y1="96" y2="96"/>
+    <line style="stroke:#ADD8E6;stroke-width:3;" x1="12.8" x2="28.8" y1="129" y2="129"/>
+    <rect fill="#E6E6FA" height="33" style="stroke:none;stroke-width:3;" width="19" x="35.2" y="96"/>
+    <line style="stroke:#ADD8E6;stroke-width:3;" x1="35.2" x2="51.2" y1="96" y2="96"/>
+    <line style="stroke:#ADD8E6;stroke-width:3;" x1="35.2" x2="51.2" y1="129" y2="129"/>
+    <rect fill="#E6E6FA" height="33" style="stroke:none;stroke-width:3;" width="19" x="57.6" y="96"/>
+    <line style="stroke:#ADD8E6;stroke-width:3;" x1="57.6" x2="73.6" y1="96" y2="96"/>
+    <line style="stroke:#ADD8E6;stroke-width:3;" x1="57.6" x2="73.6" y1="129" y2="129"/>
+    <rect fill="#E6E6FA" height="33" style="stroke:none;stroke-width:3;" width="19" x="80" y="96"/>
+    <line style="stroke:#ADD8E6;stroke-width:3;" x1="80" x2="96" y1="96" y2="96"/>
+    <line style="stroke:#ADD8E6;stroke-width:3;" x1="80" x2="96" y1="129" y2="129"/>
+    <rect fill="#E6E6FA" height="33" style="stroke:none;stroke-width:3;" width="3.6" x="102.4" y="96"/>
+    <path d="M102.4,96 L106,96 L106,129 L102.4,129" fill="none" style="stroke:#ADD8E6;stroke-width:3;"/>
+    <rect fill="#E2E2F0" height="33" style="stroke:none;stroke-width:3;" width="3.4" x="118" y="141"/>
+    <path d="M118.4,174 L118,174 L118,141 L118.4,141" fill="none" style="stroke:#181818;stroke-width:3;"/>
+    <rect fill="#E2E2F0" height="33" style="stroke:none;stroke-width:3;" width="3.6" x="124.8" y="141"/>
+    <path d="M124.8,141 L128.4,141 L128.4,174 L124.8,174" fill="none" style="stroke:#181818;stroke-width:3;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="248.05" x="118" y="121.6667">Prototype design</text>
+    <text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="108.35" x="140.4" y="166.6667">Testing</text>
+    <line style="stroke:#C0C0C0;stroke-width:3;" x1="0" x2="0" y1="180" y2="222"/>
+    <line style="stroke:#C0C0C0;stroke-width:3;" x1="54.4" x2="54.4" y1="180" y2="222"/>
+    <text fill="#000000" font-family="sans-serif" font-size="30" lengthAdjust="spacing" textLength="46.5" x="3.95" y="203.3333">Oct</text>
+    <text fill="#000000" font-family="sans-serif" font-size="30" lengthAdjust="spacing" textLength="53.5" x="67.65" y="203.3333">Nov</text>
+    <line style="stroke:#C0C0C0;stroke-width:3;" x1="134.4" x2="134.4" y1="180" y2="222"/>
+    <line style="stroke:#C0C0C0;stroke-width:3;" x1="0" x2="0" y1="222" y2="270"/>
+    <text fill="#000000" font-family="sans-serif" font-size="36" font-weight="700" lengthAdjust="spacing" textLength="80.4" x="27" y="250">2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:3;" x1="134.4" x2="134.4" y1="222" y2="270"/>
+    <line style="stroke:#C0C0C0;stroke-width:3;" x1="0" x2="134.4" y1="180" y2="180"/>
+    <line style="stroke:#C0C0C0;stroke-width:3;" x1="0" x2="134.4" y1="222" y2="222"/>
+    <line style="stroke:#C0C0C0;stroke-width:3;" x1="0" x2="134.4" y1="270" y2="270"/>
+  </g>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="153px" preserveAspectRatio="none" style="width:272px;height:153px;background:#FFFFFF;" version="1.1" viewBox="0 0 272 153" width="272px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="5" y="23.7778">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="33" y="23.7778">13</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="61" y="23.7778">20</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="89" y="23.7778">27</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="117" y="23.7778">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="145" y="23.7778">10</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="28" x2="28" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="56" x2="56" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="84" x2="84" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="112" x2="112" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="140" x2="140" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="160" x2="160" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="104" x2="104" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="45.5" x="29.25" y="9.3333">Jul 2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="160" x2="160" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="51.5" x="106.25" y="9.3333">Aug 2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="160" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="160" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="160" y1="27" y2="27"/>
+    <path d="M104,55 L104,64.5 L109,64.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="108,60.5,112,64.5,108,68.5,108,60.5" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="52" x="2" y="29"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="52" x="2" y="29"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="108" x="2" y="44"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="108" x="2" y="44"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="44" x="114" y="59"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="44" x="114" y="59"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="64.2583" x="58" y="37.5556">Task1 {Alice}</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="85.0667" x="6" y="52.5556">Task2 {Bob:50%}</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="89.375" x="162" y="67.5556">Task3 {Alice:25%}</text>
+    <text fill="#000000" font-family="Serif" font-size="13" lengthAdjust="spacing" textLength="28.275" x="0" y="82.1111">Alice</text>
+    <line style="stroke:#000000;stroke-width:1;" x1="0" x2="160" y1="85" y2="85"/>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="6.4625" y="95">700</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="34.4625" y="95">700</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="118.4625" y="95">175</text>
+    <text fill="#000000" font-family="Serif" font-size="13" lengthAdjust="spacing" textLength="23.1833" x="0" y="114.1111">Bob</text>
+    <line style="stroke:#000000;stroke-width:1;" x1="0" x2="160" y1="117" y2="117"/>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="6.4625" y="127">350</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="34.4625" y="127">350</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="62.4625" y="127">350</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="90.4625" y="127">350</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="160" y1="136" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="136" y2="152"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="104" x2="104" y1="136" y2="152"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="45.5" x="29.25" y="145.3333">Jul 2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="160" x2="160" y1="136" y2="152"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="51.5" x="106.25" y="145.3333">Aug 2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="160" y1="152" y2="152"/>
+  </g>
+</svg>

@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="52.381px" preserveAspectRatio="none" style="width:200px;height:52px;background:#FFFFFF;" version="1.1" viewBox="0 0 200 52" width="200.4762px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="7.1429" x="0.2381" y="10.3704">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.5556" x="8.6508" y="10.3704">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="4.4841" x="16.8056" y="10.3704">Fr</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.8333" x="23.75" y="10.3704">Sa</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.8333" x="31.369" y="10.3704">Su</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="6.627" x="38.5913" y="10.3704">Mo</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.5556" x="46.746" y="10.3704">Tu</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="7.1429" x="53.5714" y="10.3704">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.5556" x="61.9841" y="10.3704">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="4.4841" x="70.1389" y="10.3704">Fr</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.8333" x="77.0833" y="10.3704">Sa</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.8333" x="84.7024" y="10.3704">Su</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="6.627" x="91.9246" y="10.3704">Mo</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.5556" x="100.0794" y="10.3704">Tu</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="7.1429" x="106.9048" y="10.3704">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.5556" x="115.3175" y="10.3704">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="4.4841" x="123.4722" y="10.3704">Fr</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.8333" x="130.4167" y="10.3704">Sa</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.8333" x="138.0357" y="10.3704">Su</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="6.627" x="145.2579" y="10.3704">Mo</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.5556" x="153.4127" y="10.3704">Tu</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="7.1429" x="160.2381" y="10.3704">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.5556" x="168.6508" y="10.3704">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="4.4841" x="176.8056" y="10.3704">Fr</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.8333" x="183.75" y="10.3704">Sa</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="2.4802" y="16.0847">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="10.0992" y="16.0847">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="17.7183" y="16.0847">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="25.3373" y="16.0847">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="32.9563" y="16.0847">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="40.5754" y="16.0847">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="48.1944" y="16.0847">7</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="55.8135" y="16.0847">8</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="63.4325" y="16.0847">9</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="69.7222" y="16.0847">10</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="77.3413" y="16.0847">11</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="84.9603" y="16.0847">12</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="92.5794" y="16.0847">13</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="100.1984" y="16.0847">14</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="107.8175" y="16.0847">15</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="115.4365" y="16.0847">16</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="123.0556" y="16.0847">17</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="130.6746" y="16.0847">18</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="138.2937" y="16.0847">19</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="145.9127" y="16.0847">20</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="153.5317" y="16.0847">21</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="161.1508" y="16.0847">22</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="168.7698" y="16.0847">23</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="176.3889" y="16.0847">24</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="184.0079" y="16.0847">25</text>
+    <text fill="#000000" font-family="sans-serif" font-size="5.7143" font-weight="700" lengthAdjust="spacing" textLength="24.5238" x="82.9762" y="4.4444">July 2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="0" x2="0" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="7.619" x2="7.619" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="15.2381" x2="15.2381" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="22.8571" x2="22.8571" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="30.4762" x2="30.4762" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="38.0952" x2="38.0952" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="45.7143" x2="45.7143" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="53.3333" x2="53.3333" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="60.9524" x2="60.9524" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="68.5714" x2="68.5714" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="76.1905" x2="76.1905" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="83.8095" x2="83.8095" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="91.4286" x2="91.4286" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="99.0476" x2="99.0476" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="106.6667" x2="106.6667" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="114.2857" x2="114.2857" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="121.9048" x2="121.9048" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="129.5238" x2="129.5238" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="137.1429" x2="137.1429" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="144.7619" x2="144.7619" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="152.381" x2="152.381" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="160" x2="160" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="167.619" x2="167.619" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="175.2381" x2="175.2381" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="182.8571" x2="182.8571" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="190.4762" x2="190.4762" y1="18.5714" y2="32.8571"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="0" x2="190.4762" y1="18.5714" y2="18.5714"/>
+    <line style="stroke:#C0C0C0;stroke-width:0.4762;" x1="0" x2="190.4762" y1="32.8571" y2="32.8571"/>
+    <rect fill="#E2E2F0" height="5.2381" style="stroke:none;stroke-width:0.4762;" width="112.381" x="0.9524" y="19.5238"/>
+    <rect fill="none" height="5.2381" style="stroke:#181818;stroke-width:0.4762;" width="112.381" x="0.9524" y="19.5238"/>
+    <rect fill="#E2E2F0" height="5.2381" style="stroke:none;stroke-width:0.4762;" width="74.2857" x="115.2381" y="26.6667"/>
+    <rect fill="none" height="5.2381" style="stroke:#181818;stroke-width:0.4762;" width="74.2857" x="115.2381" y="26.6667"/>
+    <text fill="#000000" font-family="sans-serif" font-size="5.2381" lengthAdjust="spacing" textLength="39.373" x="2.8571" y="23.5979">Prototype design</text>
+    <text fill="#000000" font-family="sans-serif" font-size="5.2381" lengthAdjust="spacing" textLength="33.4802" x="117.1429" y="30.7407">Test prototype</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="7.1429" x="0.2381" y="36.5608">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.5556" x="8.6508" y="36.5608">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="4.4841" x="16.8056" y="36.5608">Fr</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.8333" x="23.75" y="36.5608">Sa</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.8333" x="31.369" y="36.5608">Su</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="6.627" x="38.5913" y="36.5608">Mo</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.5556" x="46.746" y="36.5608">Tu</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="7.1429" x="53.5714" y="36.5608">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.5556" x="61.9841" y="36.5608">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="4.4841" x="70.1389" y="36.5608">Fr</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.8333" x="77.0833" y="36.5608">Sa</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.8333" x="84.7024" y="36.5608">Su</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="6.627" x="91.9246" y="36.5608">Mo</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.5556" x="100.0794" y="36.5608">Tu</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="7.1429" x="106.9048" y="36.5608">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.5556" x="115.3175" y="36.5608">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="4.4841" x="123.4722" y="36.5608">Fr</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.8333" x="130.4167" y="36.5608">Sa</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.8333" x="138.0357" y="36.5608">Su</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="6.627" x="145.2579" y="36.5608">Mo</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.5556" x="153.4127" y="36.5608">Tu</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="7.1429" x="160.2381" y="36.5608">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.5556" x="168.6508" y="36.5608">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="4.4841" x="176.8056" y="36.5608">Fr</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.8333" x="183.75" y="36.5608">Sa</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="2.4802" y="43.2275">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="10.0992" y="43.2275">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="17.7183" y="43.2275">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="25.3373" y="43.2275">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="32.9563" y="43.2275">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="40.5754" y="43.2275">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="48.1944" y="43.2275">7</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="55.8135" y="43.2275">8</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="2.6587" x="63.4325" y="43.2275">9</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="69.7222" y="43.2275">10</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="77.3413" y="43.2275">11</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="84.9603" y="43.2275">12</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="92.5794" y="43.2275">13</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="100.1984" y="43.2275">14</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="107.8175" y="43.2275">15</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="115.4365" y="43.2275">16</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="123.0556" y="43.2275">17</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="130.6746" y="43.2275">18</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="138.2937" y="43.2275">19</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="145.9127" y="43.2275">20</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="153.5317" y="43.2275">21</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="161.1508" y="43.2275">22</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="168.7698" y="43.2275">23</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="176.3889" y="43.2275">24</text>
+    <text fill="#000000" font-family="sans-serif" font-size="4.7619" lengthAdjust="spacing" textLength="5.3175" x="184.0079" y="43.2275">25</text>
+    <text fill="#000000" font-family="sans-serif" font-size="5.7143" font-weight="700" lengthAdjust="spacing" textLength="24.5238" x="82.9762" y="50.1587">July 2020</text>
+  </g>
+</svg>

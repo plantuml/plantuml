@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="213px" preserveAspectRatio="none" style="width:386px;height:213px;background:#FFFFFF;" version="1.1" viewBox="0 0 386 213" width="386px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="6" y2="204"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="16" x2="16" y1="6" y2="204"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="32" x2="32" y1="6" y2="204"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="48" x2="48" y1="6" y2="204"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="64" x2="64" y1="6" y2="204"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="80" x2="80" y1="6" y2="204"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="96" x2="96" y1="6" y2="204"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="112" x2="112" y1="6" y2="204"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="128" y1="6" y2="204"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="144" x2="144" y1="6" y2="204"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="160" x2="160" y1="6" y2="204"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="176" x2="176" y1="6" y2="204"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="192" x2="192" y1="6" y2="204"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="208" x2="208" y1="6" y2="204"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="224" x2="224" y1="6" y2="204"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="240" x2="240" y1="6" y2="204"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="256" x2="256" y1="6" y2="204"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="272" x2="272" y1="6" y2="204"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="5.2083" y="7.7778">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="21.2083" y="7.7778">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="37.2083" y="7.7778">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="53.2083" y="7.7778">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="69.2083" y="7.7778">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="85.2083" y="7.7778">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="101.2083" y="7.7778">7</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="117.2083" y="7.7778">8</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="133.2083" y="7.7778">9</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="146.4167" y="7.7778">10</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="162.4167" y="7.7778">11</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="178.4167" y="7.7778">12</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="194.4167" y="7.7778">13</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="210.4167" y="7.7778">14</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="226.4167" y="7.7778">15</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="242.4167" y="7.7778">16</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="258.4167" y="7.7778">17</text>
+    <path d="M200,29 L200,38.5 L205,38.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="204,34.5,208,38.5,204,42.5,204,34.5" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M200,29 L200,53.5 L205,53.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="204,49.5,208,53.5,204,57.5,204,49.5" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M200,29 L200,68.5 L205,68.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="204,64.5,208,68.5,204,72.5,204,64.5" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M200,29 L200,83.5 L205,83.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="204,79.5,208,83.5,204,87.5,204,79.5" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M200,29 L200,98.5 L205,98.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="204,94.5,208,98.5,204,102.5,204,94.5" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M200,29 L200,113.5 L205,113.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="204,109.5,208,113.5,204,117.5,204,109.5" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M200,29 L200,128.5 L205,128.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="204,124.5,208,128.5,204,132.5,204,124.5" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M200,29 L200,143.5 L205,143.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="204,139.5,208,143.5,204,147.5,204,139.5" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M200,29 L200,158.5 L205,158.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="204,154.5,208,158.5,204,162.5,204,154.5" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M200,29 L200,173.5 L205,173.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="204,169.5,208,173.5,204,177.5,204,169.5" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M200,29 L200,188.5 L205,188.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="204,184.5,208,188.5,204,192.5,204,184.5" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#FF0000" height="11" style="stroke:none;stroke-width:1;" width="204" x="2" y="18"/>
+    <rect fill="none" height="11" style="stroke:#0000FF;stroke-width:1;" width="204" x="2" y="18"/>
+    <rect fill="#FFFFFF" height="11" style="stroke:none;stroke-width:1;" width="60" x="210" y="33"/>
+    <rect fill="none" height="11" style="stroke:#B22222;stroke-width:1;" width="60" x="210" y="33"/>
+    <rect fill="#FE00FF" height="11" style="stroke:none;stroke-width:1;" width="6" x="210" y="48"/>
+    <rect fill="#FFFFFF" height="11" style="stroke:none;stroke-width:1;" width="54" x="216" y="48"/>
+    <rect fill="none" height="11" style="stroke:#B22222;stroke-width:1;" width="60" x="210" y="48"/>
+    <rect fill="#F800FF" height="11" style="stroke:none;stroke-width:1;" width="12" x="210" y="63"/>
+    <rect fill="#FFFFFF" height="11" style="stroke:none;stroke-width:1;" width="48" x="222" y="63"/>
+    <rect fill="none" height="11" style="stroke:#B22422;stroke-width:1;" width="60" x="210" y="63"/>
+    <rect fill="#E601FF" height="11" style="stroke:none;stroke-width:1;" width="18" x="210" y="78"/>
+    <rect fill="#FFFFFF" height="11" style="stroke:none;stroke-width:1;" width="42" x="228" y="78"/>
+    <rect fill="none" height="11" style="stroke:#B12921;stroke-width:1;" width="60" x="210" y="78"/>
+    <rect fill="#C503FF" height="11" style="stroke:none;stroke-width:1;" width="24" x="210" y="93"/>
+    <rect fill="#FFFFFF" height="11" style="stroke:none;stroke-width:1;" width="36" x="234" y="93"/>
+    <rect fill="none" height="11" style="stroke:#B0321F;stroke-width:1;" width="60" x="210" y="93"/>
+    <rect fill="#8F06FF" height="11" style="stroke:none;stroke-width:1;" width="30" x="210" y="108"/>
+    <rect fill="#FFFFFF" height="11" style="stroke:none;stroke-width:1;" width="30" x="240" y="108"/>
+    <rect fill="none" height="11" style="stroke:#AD411C;stroke-width:1;" width="60" x="210" y="108"/>
+    <rect fill="#400AFF" height="11" style="stroke:none;stroke-width:1;" width="36" x="210" y="123"/>
+    <rect fill="#FFFFFF" height="11" style="stroke:none;stroke-width:1;" width="24" x="246" y="123"/>
+    <rect fill="none" height="11" style="stroke:#A95718;stroke-width:1;" width="60" x="210" y="123"/>
+    <rect fill="#1049FF" height="11" style="stroke:none;stroke-width:1;" width="42" x="210" y="138"/>
+    <rect fill="#FFFFFF" height="11" style="stroke:none;stroke-width:1;" width="18" x="252" y="138"/>
+    <rect fill="none" height="11" style="stroke:#A47613;stroke-width:1;" width="60" x="210" y="138"/>
+    <rect fill="#18DBFF" height="11" style="stroke:none;stroke-width:1;" width="48" x="210" y="153"/>
+    <rect fill="#FFFFFF" height="11" style="stroke:none;stroke-width:1;" width="12" x="258" y="153"/>
+    <rect fill="none" height="11" style="stroke:#989C0D;stroke-width:1;" width="60" x="210" y="153"/>
+    <rect fill="#22FF74" height="11" style="stroke:none;stroke-width:1;" width="54" x="210" y="168"/>
+    <rect fill="#FFFFFF" height="11" style="stroke:none;stroke-width:1;" width="6" x="264" y="168"/>
+    <rect fill="none" height="11" style="stroke:#519007;stroke-width:1;" width="60" x="210" y="168"/>
+    <rect fill="#ADFF2F" height="11" style="stroke:none;stroke-width:1;" width="60" x="210" y="183"/>
+    <rect fill="none" height="11" style="stroke:#008000;stroke-width:1;" width="60" x="210" y="183"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="82.6833" x="6" y="26.5556">Prototype design</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="79.475" x="274" y="41.5556">Test prototype 0</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="85.6167" x="274" y="56.5556">Test prototype 10</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="85.6167" x="274" y="71.5556">Test prototype 20</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="85.6167" x="274" y="86.5556">Test prototype 30</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="85.6167" x="274" y="101.5556">Test prototype 40</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="85.6167" x="274" y="116.5556">Test prototype 50</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="85.6167" x="274" y="131.5556">Test prototype 60</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="85.6167" x="274" y="146.5556">Test prototype 70</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="85.6167" x="274" y="161.5556">Test prototype 80</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="85.6167" x="274" y="176.5556">Test prototype 90</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="91.7583" x="274" y="191.5556">Test prototype 100</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="5.2083" y="206.7778">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="21.2083" y="206.7778">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="37.2083" y="206.7778">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="53.2083" y="206.7778">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="69.2083" y="206.7778">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="85.2083" y="206.7778">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="101.2083" y="206.7778">7</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="117.2083" y="206.7778">8</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="133.2083" y="206.7778">9</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="146.4167" y="206.7778">10</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="162.4167" y="206.7778">11</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="178.4167" y="206.7778">12</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="194.4167" y="206.7778">13</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="210.4167" y="206.7778">14</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="226.4167" y="206.7778">15</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="242.4167" y="206.7778">16</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="258.4167" y="206.7778">17</text>
+  </g>
+</svg>

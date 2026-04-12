@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="141px" preserveAspectRatio="none" style="width:478px;height:141px;background:#FFFFFF;" version="1.1" viewBox="0 0 478 141" width="478px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <rect fill="#808080" height="45" style="stroke:none;stroke-width:1;" width="352" x="0" y="0"/>
+    <rect fill="#808080" height="24" style="stroke:none;stroke-width:1;" width="352" x="0" y="116"/>
+    <rect fill="#FF0000" height="45" style="stroke:none;stroke-width:1;" width="24" x="8" y="71"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="8" x="80" y="71"/>
+    <rect fill="#ADD8E6" height="45" style="stroke:none;stroke-width:1;" width="24" x="88" y="71"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="8" x="136" y="71"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="8" x="192" y="71"/>
+    <rect fill="#AAAAFF" height="45" style="stroke:none;stroke-width:1;" width="8" x="240" y="71"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="8" x="248" y="71"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="8" x="304" y="71"/>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="37" y="39.5556">39</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="93" y="39.5556">40</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="149" y="39.5556">41</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="205" y="39.5556">42</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="261" y="39.5556">43</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="317" y="39.5556">44</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="32" x2="32" y1="24" y2="116"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="88" x2="88" y1="24" y2="116"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="144" x2="144" y1="24" y2="116"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="200" x2="200" y1="24" y2="116"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="256" x2="256" y1="24" y2="116"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="312" x2="312" y1="24" y2="116"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="352" x2="352" y1="24" y2="116"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="24"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="88" x2="88" y1="0" y2="24"/>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" font-weight="700" lengthAdjust="spacing" textLength="85.8333" x="1.0833" y="15.5556">Sep 2018</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="336" x2="336" y1="0" y2="24"/>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" font-weight="700" lengthAdjust="spacing" textLength="81.1667" x="171.4167" y="15.5556">Oct 2018</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="352" x2="352" y1="0" y2="24"/>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" font-weight="700" lengthAdjust="spacing" textLength="35.6667" x="336" y="15.5556">Nov</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="222.6667" x="8" y="60.5556">Vacation in the Bahamas</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="352" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="352" y1="24" y2="24"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="352" y1="71" y2="71"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="23" x="2" y="73"/>
+    <path d="M24,84 L2,84 L2,73 L24,73" fill="none" style="stroke:#ADD8E6;stroke-width:1;"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="49" x="32" y="73"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="32" x2="80" y1="73" y2="73"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="32" x2="80" y1="84" y2="84"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="49" x="88" y="73"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="88" x2="136" y1="73" y2="73"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="88" x2="136" y1="84" y2="84"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="49" x="144" y="73"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="144" x2="192" y1="73" y2="73"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="144" x2="192" y1="84" y2="84"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="49" x="200" y="73"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="200" x2="248" y1="73" y2="73"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="200" x2="248" y1="84" y2="84"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="49" x="256" y="73"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="256" x2="304" y1="73" y2="73"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="256" x2="304" y1="84" y2="84"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="38" x="312" y="73"/>
+    <path d="M312,73 L350,73 L350,84 L312,84" fill="none" style="stroke:#ADD8E6;stroke-width:1;"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;stroke-dasharray:2,3;" x1="27" x2="29" y1="73" y2="73"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;stroke-dasharray:2,3;" x1="27" x2="29" y1="84" y2="84"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;stroke-dasharray:2,3;" x1="83" x2="85" y1="73" y2="73"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;stroke-dasharray:2,3;" x1="83" x2="85" y1="84" y2="84"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;stroke-dasharray:2,3;" x1="139" x2="141" y1="73" y2="73"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;stroke-dasharray:2,3;" x1="139" x2="141" y1="84" y2="84"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;stroke-dasharray:2,3;" x1="195" x2="197" y1="73" y2="73"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;stroke-dasharray:2,3;" x1="195" x2="197" y1="84" y2="84"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;stroke-dasharray:2,3;" x1="251" x2="253" y1="73" y2="73"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;stroke-dasharray:2,3;" x1="251" x2="253" y1="84" y2="84"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;stroke-dasharray:2,3;" x1="307" x2="309" y1="73" y2="73"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;stroke-dasharray:2,3;" x1="307" x2="309" y1="84" y2="84"/>
+    <polygon fill="#000000" points="348,88,353,93,348,98,343,93" style="stroke:#000000;stroke-width:1;"/>
+    <polygon fill="#000000" points="76,103,81,108,76,113,71,108" style="stroke:#000000;stroke-width:1;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="82.6833" x="6" y="81.5556">Prototype design</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="101.0167" x="356" y="96.5556">Prototype completed</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="109.0833" x="84" y="111.5556">Release of new album</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="352" y1="116" y2="116"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="116" y2="140"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="88" x2="88" y1="116" y2="140"/>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" font-weight="700" lengthAdjust="spacing" textLength="85.8333" x="1.0833" y="131.5556">Sep 2018</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="336" x2="336" y1="116" y2="140"/>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" font-weight="700" lengthAdjust="spacing" textLength="81.1667" x="171.4167" y="131.5556">Oct 2018</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="352" x2="352" y1="116" y2="140"/>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" font-weight="700" lengthAdjust="spacing" textLength="35.6667" x="336" y="131.5556">Nov</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="352" y1="140" y2="140"/>
+  </g>
+</svg>

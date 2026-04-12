@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="48px" preserveAspectRatio="none" style="width:125px;height:48px;background:#FF0000;" version="1.1" viewBox="0 0 125 48" width="125px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <rect fill="#FF0000" height="48" style="stroke:none;stroke-width:1;" width="125" x="0" y="0"/>
+    <rect fill="#98FB98" height="17" style="stroke:none;stroke-width:1;" width="6.6667" x="0" y="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="6.6667" x2="6.6667" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="6.6667" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="6.6667" y1="17" y2="17"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="1" x="2" y="19"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="1" x="2" y="19"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="1" x="6" y="34"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="1" x="6" y="34"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="98.6333" x="6" y="27.5556">Design du prototype</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="85.6167" x="8.6667" y="42.5556">Test du prototype</text>
+  </g>
+</svg>

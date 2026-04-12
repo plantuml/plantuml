@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="74px" preserveAspectRatio="none" style="width:1221px;height:74px;background:#FFFFFF;" version="1.1" viewBox="0 0 1221 74" width="1221px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="165" y="23.7778">49</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="445" y="23.7778">50</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="725" y="23.7778">51</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="1005" y="23.7778">52</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="160" x2="160" y1="16" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="440" x2="440" y1="16" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="720" x2="720" y1="16" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="1000" x2="1000" y1="16" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="1200" x2="1200" y1="16" y2="57"/>
+    <line style="stroke:#000000;stroke-width:2;stroke-dasharray:2,2;" x1="280" x2="280" y1="27" y2="57"/>
+    <line style="stroke:#000000;stroke-width:2;stroke-dasharray:2,2;" x1="360" x2="360" y1="27" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="1200" x2="1200" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="51.5" x="574.25" y="9.3333">Dec 2022</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="1200" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="1200" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="1200" y1="27" y2="27"/>
+    <path d="M272,40 L272,49.5 L1077,49.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="1076,45.5,1080,49.5,1076,53.5,1076,45.5" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="276" x="2" y="29"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="276" x="2" y="29"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="116" x="1082" y="44"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="116" x="1082" y="44"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="26.3083" x="6" y="37.5556">task1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="26.3083" x="1086" y="52.5556">task2</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="1200" y1="57" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="57" y2="73"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="1200" x2="1200" y1="57" y2="73"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="51.5" x="574.25" y="66.3333">Dec 2022</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="1200" y1="73" y2="73"/>
+  </g>
+</svg>

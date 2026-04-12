@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="108px" preserveAspectRatio="none" style="width:280px;height:108px;background:#FFFFFF;" version="1.1" viewBox="0 0 280 108" width="280px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <rect fill="#AAAAFF" height="45" style="stroke:none;stroke-width:1;" width="35.6" x="0" y="31"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="26.8" x="59.4" y="9.3333">2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="145.6" x2="145.6" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="16" y2="30"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="36" x2="36" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.3333" x="11.3333" y="23.7778">Q1</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="72.4" x2="72.4" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.3333" x="47.5333" y="23.7778">Q2</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="109.2" x2="109.2" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.3333" x="84.1333" y="23.7778">Q3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.3333" x="120.7333" y="23.7778">Q4</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="145.6" x2="145.6" y1="16" y2="30"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="145.6" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="145.6" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="145.6" y1="30" y2="30"/>
+    <path d="M81.6,44 L81.6,53.5 L86.6,53.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="85.6,49.5,89.6,53.5,85.6,57.5,85.6,49.5" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="80" x="7.6" y="33"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="80" x="7.6" y="33"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="52" x="91.6" y="48"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="52" x="91.6" y="48"/>
+    <polygon fill="#000000" points="120.2,63,125.2,68,120.2,73,115.2,68" style="stroke:#000000;stroke-width:1;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="158.5833" x="91.6" y="41.5556">Automatic branch tag on release</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="111.925" x="147.6" y="56.5556">Setup Automatic Alerts</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="19.6167" x="128.2" y="71.5556">End</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="76" y2="90"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="36" x2="36" y1="76" y2="90"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.3333" x="11.3333" y="83.7778">Q1</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="72.4" x2="72.4" y1="76" y2="90"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.3333" x="47.5333" y="83.7778">Q2</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="109.2" x2="109.2" y1="76" y2="90"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.3333" x="84.1333" y="83.7778">Q3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.3333" x="120.7333" y="83.7778">Q4</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="145.6" x2="145.6" y1="76" y2="90"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="90" y2="106"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="26.8" x="59.4" y="99.3333">2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="145.6" x2="145.6" y1="90" y2="106"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="145.6" y1="76" y2="76"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="145.6" y1="90" y2="90"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="145.6" y1="106" y2="106"/>
+  </g>
+</svg>

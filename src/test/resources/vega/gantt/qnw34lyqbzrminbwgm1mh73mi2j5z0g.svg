@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="63px" preserveAspectRatio="none" style="width:282px;height:63px;background:#FFFFFF;" version="1.1" viewBox="0 0 282 63" width="282px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="6" y2="54"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="16" x2="16" y1="6" y2="54"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="32" x2="32" y1="6" y2="54"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="48" x2="48" y1="6" y2="54"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="64" x2="64" y1="6" y2="54"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="80" x2="80" y1="6" y2="54"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="96" x2="96" y1="6" y2="54"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="112" x2="112" y1="6" y2="54"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="128" y1="6" y2="54"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="144" x2="144" y1="6" y2="54"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="160" x2="160" y1="6" y2="54"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="5.2083" y="7.7778">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="21.2083" y="7.7778">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="37.2083" y="7.7778">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="53.2083" y="7.7778">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="69.2083" y="7.7778">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="85.2083" y="7.7778">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="101.2083" y="7.7778">7</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="117.2083" y="7.7778">8</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="133.2083" y="7.7778">9</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="146.4167" y="7.7778">10</text>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="156" x="2" y="18"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="156" x="2" y="18"/>
+    <ellipse cx="152.25" cy="41.25" fill="#FFCC4D" rx="8.25" ry="8.25" style="stroke:#FFCC4D;stroke-width:1;"/>
+    <path d="M156.5285,43.3716 C156.447,43.2978 156.325,43.2933 156.2375,43.3583 C156.2196,43.3716 154.4399,44.6875 152.25,44.6875 C150.0656,44.6875 148.2799,43.3716 148.2625,43.3583 C148.175,43.2933 148.053,43.2988 147.9715,43.3716 C147.8903,43.445 147.872,43.566 147.9284,43.6595 C147.9875,43.758 149.4028,46.0625 152.25,46.0625 C155.0972,46.0625 156.513,43.758 156.5716,43.6595 C156.628,43.5655 156.6101,43.445 156.5285,43.3716 M155.9167,41.7083 C155.7246,41.7083 155.5459,41.5869 155.4822,41.3948 C155.3891,41.1203 155.0151,40.3333 154.5417,40.3333 C154.0549,40.3333 153.6759,41.1707 153.6012,41.3948 C153.521,41.6345 153.2638,41.7652 153.0214,41.6845 C152.7817,41.6047 152.6515,41.3453 152.7317,41.1047 C152.7895,40.9324 153.3294,39.4167 154.5417,39.4167 C155.754,39.4167 156.2939,40.9324 156.3512,41.1052 C156.4314,41.3453 156.3017,41.6052 156.0615,41.685 C156.0134,41.7005 155.9643,41.7083 155.9167,41.7083 M151.3333,41.7083 C151.1413,41.7083 150.9625,41.5869 150.8984,41.3948 C150.8053,41.1203 150.4323,40.3333 149.9583,40.3333 C149.4716,40.3333 149.093,41.1707 149.0183,41.3948 C148.9381,41.6345 148.68,41.7652 148.4385,41.6845 C148.1983,41.6047 148.0686,41.3453 148.1488,41.1047 C148.2061,40.9324 148.746,39.4167 149.9583,39.4167 C151.1706,39.4167 151.7105,40.9324 151.7683,41.1052 C151.8485,41.3453 151.7188,41.6052 151.4786,41.685 C151.43,41.7005 151.381,41.7083 151.3333,41.7083" fill="#664500"/>
+    <path d="M159.2052,36.8115 C155.061,36.8853 155.061,36.8853 152.25,36.8853 C150.4602,36.8853 145.2806,36.8312 145.2806,36.8312 L145.0418,37.2327 C146.4365,38.0834 149.1961,38.5697 152.25,38.5697 C155.2732,38.5697 158.014,38.093 159.4238,37.2588 L159.4596,37.2373 C159.2882,36.933 159.2882,36.933 159.2052,36.8115" fill="#FFAC33"/>
+    <path d="M154.8978,33.1581 C154.3423,33.115 153.7643,33.0853 153.1685,33.071 C152.8655,33.0637 152.5598,33.0591 152.25,33.0591 C151.942,33.0591 151.6377,33.0637 151.3365,33.0706 C150.7398,33.0848 150.1614,33.1146 149.6054,33.1577 C146.4475,33.4033 144.0775,34.1234 144.0775,35.4232 C144.0775,37.0677 147.8651,38.0683 152.25,38.0683 C156.6349,38.0683 160.4225,37.0677 160.4225,35.4232 C160.4225,34.1238 158.0539,33.4043 154.8978,33.1581 M152.25,36.3839 C149.1054,36.3839 146.3329,36.0021 146.3329,35.1299 C146.3329,34.8842 146.5593,34.661 146.9466,34.4658 C147.4751,34.1995 148.3115,33.9873 149.3249,33.8475 C150.2008,33.7274 151.2032,33.6595 152.25,33.6595 C153.3,33.6595 154.3056,33.7274 155.1833,33.8488 C156.2109,33.9909 157.0561,34.2077 157.5813,34.48 C157.9512,34.6715 158.1671,34.8897 158.1671,35.1299 C158.1671,36.0021 155.3946,36.3839 152.25,36.3839" fill="#5DADEC"/>
+    <path d="M155.1833,33.8493 C156.2109,33.9914 157.0561,34.2082 157.5813,34.4804 L157.6098,34.4882 C156.5625,33.721 155.5152,33.3149 154.8978,33.1581 C154.3423,33.115 153.7643,33.0853 153.1685,33.071 L153.1768,33.0743 L155.1833,33.8493 M146.9466,34.4662 C147.4751,34.1999 148.3115,33.9877 149.3249,33.8479 L151.326,33.0743 L151.3365,33.0706 C150.7398,33.0848 150.1614,33.1146 149.6054,33.1577 C148.988,33.3144 147.9403,33.72 146.8925,34.4878 L146.9466,34.4662" fill="#3B94D9"/>
+    <path d="M157.0497,34.5469 C156.7472,34.3438 156.4328,34.1298 156.1325,33.9694 C154.9757,33.3506 153.6539,33 152.25,33 C150.9075,33 149.6398,33.3208 148.5192,33.8896 C148.02,34.1431 147.657,34.3475 147.5246,34.5469 L157.0497,34.5469" fill="#FFCC4D"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="70.3083" x="6" y="26.5556">Test prototype</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="101.0167" x="160" y="41.5556">Prototype completed</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="5.2083" y="56.7778">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="21.2083" y="56.7778">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="37.2083" y="56.7778">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="53.2083" y="56.7778">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="69.2083" y="56.7778">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="85.2083" y="56.7778">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="101.2083" y="56.7778">7</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="117.2083" y="56.7778">8</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="133.2083" y="56.7778">9</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="146.4167" y="56.7778">10</text>
+  </g>
+</svg>

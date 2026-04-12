@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="80px" preserveAspectRatio="none" style="width:381px;height:80px;background:#FFFFFF;" version="1.1" viewBox="0 0 381 80" width="381px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <rect fill="#AAAAFF" height="45" style="stroke:none;stroke-width:1;" width="23.7333" x="0" y="17"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="97.3333" x2="97.3333" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="31.2667" x="33.0333" y="10.8889">2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="194.6667" x2="194.6667" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="31.2667" x="130.3667" y="10.8889">2022</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="31.2667" x="204.9" y="10.8889">2023</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="246.4" x2="246.4" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="246.4" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="246.4" y1="17" y2="17"/>
+    <path d="M145.0667,30 L145.0667,39.5 L150.0667,39.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="149.0667,35.5,153.0667,39.5,149.0667,43.5,149.0667,35.5" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="145.3333" x="5.7333" y="19"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="145.3333" x="5.7333" y="19"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="89.3333" x="155.0667" y="34"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="89.3333" x="155.0667" y="34"/>
+    <polygon fill="#000000" points="80.1333,49,85.1333,54,80.1333,59,75.1333,54" style="stroke:#000000;stroke-width:1;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="158.5833" x="155.0667" y="27.5556">Automatic branch tag on release</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="111.925" x="248.4" y="42.5556">Setup Automatic Alerts</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="19.6167" x="88.1333" y="57.5556">End</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="62" y2="78"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="97.3333" x2="97.3333" y1="62" y2="78"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="31.2667" x="33.0333" y="72.8889">2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="194.6667" x2="194.6667" y1="62" y2="78"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="31.2667" x="130.3667" y="72.8889">2022</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="31.2667" x="204.9" y="72.8889">2023</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="246.4" x2="246.4" y1="62" y2="78"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="246.4" y1="62" y2="62"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="246.4" y1="79" y2="79"/>
+  </g>
+</svg>

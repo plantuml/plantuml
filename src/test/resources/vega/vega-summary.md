@@ -2,10 +2,10 @@
 
 | Metric | Icon | Count |
 |---|:---:|---:|
-| Total   | = | 92 |
-| Passed  | :white_check_mark: | 81 |
+| Total   | = | 357 |
+| Passed  | :white_check_mark: | 347 |
 | Failed  | :x: | 0 |
-| Skipped | :fast_forward: | 11 |
+| Skipped | :fast_forward: | 10 |
 
 <details>
 <summary><h3>Skipped tests</h3></summary>
@@ -20,6 +20,5 @@
 - `tikz/tikz-scale-down.puml`
 - `tikz/tikz-scale-nested-scale.puml`
 - `tikz/tikz-scale-up.puml`
-- `xgantt/gantt2.puml`
 
 </details>

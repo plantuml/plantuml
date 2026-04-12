@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="59px" preserveAspectRatio="none" style="width:201px;height:59px;background:#FFFFFF;" version="1.1" viewBox="0 0 201 59" width="201px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <rect fill="#F1E5E5" height="15" style="stroke:none;stroke-width:1;" width="4" x="0" y="27"/>
+    <rect fill="#F1E5E5" height="15" style="stroke:none;stroke-width:1;" width="8" x="24" y="27"/>
+    <rect fill="#F1E5E5" height="15" style="stroke:none;stroke-width:1;" width="8" x="52" y="27"/>
+    <rect fill="#F1E5E5" height="15" style="stroke:none;stroke-width:1;" width="8" x="80" y="27"/>
+    <rect fill="#F1E5E5" height="15" style="stroke:none;stroke-width:1;" width="8" x="108" y="27"/>
+    <rect fill="#F1E5E5" height="15" style="stroke:none;stroke-width:1;" width="8" x="136" y="27"/>
+    <rect fill="#F1E5E5" height="15" style="stroke:none;stroke-width:1;" width="8" x="164" y="27"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="9" y="23.7778">31</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="37" y="23.7778">32</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="65" y="23.7778">33</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="93" y="23.7778">34</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="121" y="23.7778">35</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="149" y="23.7778">36</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="4" x2="4" y1="16" y2="42"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="32" x2="32" y1="16" y2="42"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="60" x2="60" y1="16" y2="42"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="88" x2="88" y1="16" y2="42"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="116" x2="116" y1="16" y2="42"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="144" x2="144" y1="16" y2="42"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="172" x2="172" y1="16" y2="42"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="180" x2="180" y1="16" y2="42"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="124" x2="124" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="51.5" x="36.25" y="9.3333">Aug 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="180" x2="180" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="51.5" x="126.25" y="9.3333">Sep 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="180" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="180" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="180" y1="27" y2="27"/>
+    <rect fill="#F34D67" height="11" style="stroke:none;stroke-width:1;" width="11" x="70" y="29"/>
+    <path d="M80,40 L70,40 L70,29 L80,29" fill="none" style="stroke:#F34D67;stroke-width:1;"/>
+    <rect fill="#F34D67" height="11" style="stroke:none;stroke-width:1;" width="21" x="88" y="29"/>
+    <line style="stroke:#F34D67;stroke-width:1;" x1="88" x2="108" y1="29" y2="29"/>
+    <line style="stroke:#F34D67;stroke-width:1;" x1="88" x2="108" y1="40" y2="40"/>
+    <rect fill="#F34D67" height="11" style="stroke:none;stroke-width:1;" width="21" x="116" y="29"/>
+    <line style="stroke:#F34D67;stroke-width:1;" x1="116" x2="136" y1="29" y2="29"/>
+    <line style="stroke:#F34D67;stroke-width:1;" x1="116" x2="136" y1="40" y2="40"/>
+    <rect fill="#F34D67" height="11" style="stroke:none;stroke-width:1;" width="21" x="144" y="29"/>
+    <line style="stroke:#F34D67;stroke-width:1;" x1="144" x2="164" y1="29" y2="29"/>
+    <line style="stroke:#F34D67;stroke-width:1;" x1="144" x2="164" y1="40" y2="40"/>
+    <rect fill="#F34D67" height="11" style="stroke:none;stroke-width:1;" width="6" x="172" y="29"/>
+    <path d="M172,29 L178,29 L178,40 L172,40" fill="none" style="stroke:#F34D67;stroke-width:1;"/>
+    <line style="stroke:#F34D67;stroke-width:1;stroke-dasharray:2,3;" x1="83" x2="85" y1="29" y2="29"/>
+    <line style="stroke:#F34D67;stroke-width:1;stroke-dasharray:2,3;" x1="83" x2="85" y1="40" y2="40"/>
+    <line style="stroke:#F34D67;stroke-width:1;stroke-dasharray:2,3;" x1="111" x2="113" y1="29" y2="29"/>
+    <line style="stroke:#F34D67;stroke-width:1;stroke-dasharray:2,3;" x1="111" x2="113" y1="40" y2="40"/>
+    <line style="stroke:#F34D67;stroke-width:1;stroke-dasharray:2,3;" x1="139" x2="141" y1="29" y2="29"/>
+    <line style="stroke:#F34D67;stroke-width:1;stroke-dasharray:2,3;" x1="139" x2="141" y1="40" y2="40"/>
+    <line style="stroke:#F34D67;stroke-width:1;stroke-dasharray:2,3;" x1="167" x2="169" y1="29" y2="29"/>
+    <line style="stroke:#F34D67;stroke-width:1;stroke-dasharray:2,3;" x1="167" x2="169" y1="40" y2="40"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="26.3083" x="74" y="37.5556">task1</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="180" y1="42" y2="42"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="42" y2="58"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="124" x2="124" y1="42" y2="58"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="51.5" x="36.25" y="51.3333">Aug 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="180" x2="180" y1="42" y2="58"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="51.5" x="126.25" y="51.3333">Sep 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="180" y1="58" y2="58"/>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="61px" preserveAspectRatio="none" style="width:137px;height:61px;background:#FF0000;" version="1.1" viewBox="0 0 137 61" width="137px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <rect fill="#FF0000" height="61" style="stroke:none;stroke-width:1;" width="137" x="0" y="0"/>
+    <rect fill="#98FB98" height="30" style="stroke:none;stroke-width:1;" width="26.6667" x="0" y="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="26.8" x="0" y="9.3333">2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="26.6667" x2="26.6667" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="4.4167" y="23.7778">July</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="26.6667" x2="26.6667" y1="16" y2="30"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="26.6667" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="26.6667" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="26.6667" y1="30" y2="30"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="12" x="2" y="32"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="12" x="2" y="32"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="6.6667" x="18" y="47"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="6.6667" x="18" y="47"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="98.6333" x="18" y="40.5556">Design du prototype</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="85.6167" x="28.6667" y="55.5556">Test du prototype</text>
+  </g>
+</svg>
