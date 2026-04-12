@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="186px" preserveAspectRatio="none" style="width:205px;height:186px;background:#FFFFFF;" version="1.1" viewBox="0 0 205 186" width="205px" zoomAndPan="magnify">
+  <defs>
+    <filter height="1" id="bowtgf1z1w6jb0" width="1" x="0" y="0">
+      <feFlood flood-color="#FF0000" result="flood"/>
+      <feComposite in="SourceGraphic" in2="flood" operator="over"/>
+    </filter>
+  </defs>
+  <g>
+    <g class="header" data-source-line="1">
+      <text fill="#888888" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="58.5" x="144.8083" y="7.7778">some header</text>
+    </g>
+    <g class="title" data-source-line="4">
+      <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="44.3333" x="79.4875" y="31.8889">My title</text>
+    </g>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="52" y2="100"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="16" x2="16" y1="52" y2="100"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="32" x2="32" y1="52" y2="100"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="48" x2="48" y1="52" y2="100"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="64" x2="64" y1="52" y2="100"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="80" x2="80" y1="52" y2="100"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="96" x2="96" y1="52" y2="100"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="112" x2="112" y1="52" y2="100"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="5.2083" y="53.7778">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="21.2083" y="53.7778">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="37.2083" y="53.7778">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="53.2083" y="53.7778">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="69.2083" y="53.7778">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="85.2083" y="53.7778">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="101.2083" y="53.7778">7</text>
+    <path d="M40,75 L40,84.5 L45,84.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="44,80.5,48,84.5,44,88.5,44,80.5" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="44" x="2" y="64"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="44" x="2" y="64"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="60" x="50" y="79"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="60" x="50" y="79"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="82.6833" x="50" y="72.5556">Prototype design</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="70.3083" x="114" y="87.5556">Test prototype</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="5.2083" y="102.7778">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="21.2083" y="102.7778">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="37.2083" y="102.7778">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="53.2083" y="102.7778">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="69.2083" y="102.7778">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="85.2083" y="102.7778">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="101.2083" y="102.7778">7</text>
+    <g class="legend" data-source-line="6">
+      <rect fill="#DDDDDD" height="24" rx="7.5" ry="7.5" style="stroke:#000000;stroke-width:1;" width="80.2333" x="61.5375" y="120"/>
+      <text fill="#000000" filter="url(#bowtgf1z1w6jb0)" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="70.2333" x="66.5375" y="135.8889">The legend</text>
+    </g>
+    <g class="caption" data-source-line="5">
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89.6" x="56.8542" y="168.8889">This is caption</text>
+    </g>
+    <g class="footer" data-source-line="2">
+      <text fill="#888888" filter="url(#bowtgf1z1w6jb0)" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="52.8333" x="75.2375" y="181.7778">some footer</text>
+    </g>
+  </g>
+</svg>

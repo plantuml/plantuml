@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="83px" preserveAspectRatio="none" style="width:1330px;height:83px;background:#FFFFFF;" version="1.1" viewBox="0 0 1330 83" width="1330px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <rect fill="#808080" height="26" style="stroke:none;stroke-width:1;" width="1216" x="0" y="0"/>
+    <rect fill="#808080" height="26" style="stroke:none;stroke-width:1;" width="1216" x="0" y="56"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="32" x2="32" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="64" x2="64" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="96" x2="96" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="128" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="160" x2="160" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="192" x2="192" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="224" x2="224" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="256" x2="256" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="288" x2="288" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="320" x2="320" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="352" x2="352" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="384" x2="384" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="416" x2="416" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="448" x2="448" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="480" x2="480" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="512" x2="512" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="544" x2="544" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="576" x2="576" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="608" x2="608" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="640" x2="640" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="672" x2="672" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="704" x2="704" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="736" x2="736" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="768" x2="768" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="800" x2="800" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="832" x2="832" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="864" x2="864" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="896" x2="896" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="928" x2="928" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="960" x2="960" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="992" x2="992" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="1024" x2="1024" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="1056" x2="1056" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="1088" x2="1088" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="1120" x2="1120" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="1152" x2="1152" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="1184" x2="1184" y1="6" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="1216" x2="1216" y1="6" y2="64"/>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="10.4167" y="15.5556">1</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="42.4167" y="15.5556">2</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="74.4167" y="15.5556">3</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="106.4167" y="15.5556">4</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="138.4167" y="15.5556">5</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="170.4167" y="15.5556">6</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="202.4167" y="15.5556">7</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="234.4167" y="15.5556">8</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="266.4167" y="15.5556">9</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="292.8333" y="15.5556">10</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="324.8333" y="15.5556">11</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="356.8333" y="15.5556">12</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="388.8333" y="15.5556">13</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="420.8333" y="15.5556">14</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="452.8333" y="15.5556">15</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="484.8333" y="15.5556">16</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="516.8333" y="15.5556">17</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="548.8333" y="15.5556">18</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="580.8333" y="15.5556">19</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="612.8333" y="15.5556">20</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="644.8333" y="15.5556">21</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="676.8333" y="15.5556">22</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="708.8333" y="15.5556">23</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="740.8333" y="15.5556">24</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="772.8333" y="15.5556">25</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="804.8333" y="15.5556">26</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="836.8333" y="15.5556">27</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="868.8333" y="15.5556">28</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="900.8333" y="15.5556">29</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="932.8333" y="15.5556">30</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="964.8333" y="15.5556">31</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="996.8333" y="15.5556">32</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="1028.8333" y="15.5556">33</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="1060.8333" y="15.5556">34</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="1092.8333" y="15.5556">35</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="1124.8333" y="15.5556">36</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="1156.8333" y="15.5556">37</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="1188.8333" y="15.5556">38</text>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="1212" x="2" y="28"/>
+    <rect fill="none" height="11" style="stroke:#ADD8E6;stroke-width:1;" width="1212" x="2" y="28"/>
+    <polygon fill="#000000" points="1200,43,1205,48,1200,53,1195,48" style="stroke:#000000;stroke-width:1;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="82.6833" x="6" y="36.5556">Prototype design</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="101.0167" x="1208" y="51.5556">Prototype completed</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="10.4167" y="74.5556">1</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="42.4167" y="74.5556">2</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="74.4167" y="74.5556">3</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="106.4167" y="74.5556">4</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="138.4167" y="74.5556">5</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="170.4167" y="74.5556">6</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="202.4167" y="74.5556">7</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="234.4167" y="74.5556">8</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="11.1667" x="266.4167" y="74.5556">9</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="292.8333" y="74.5556">10</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="324.8333" y="74.5556">11</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="356.8333" y="74.5556">12</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="388.8333" y="74.5556">13</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="420.8333" y="74.5556">14</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="452.8333" y="74.5556">15</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="484.8333" y="74.5556">16</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="516.8333" y="74.5556">17</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="548.8333" y="74.5556">18</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="580.8333" y="74.5556">19</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="612.8333" y="74.5556">20</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="644.8333" y="74.5556">21</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="676.8333" y="74.5556">22</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="708.8333" y="74.5556">23</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="740.8333" y="74.5556">24</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="772.8333" y="74.5556">25</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="804.8333" y="74.5556">26</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="836.8333" y="74.5556">27</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="868.8333" y="74.5556">28</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="900.8333" y="74.5556">29</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="932.8333" y="74.5556">30</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="964.8333" y="74.5556">31</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="996.8333" y="74.5556">32</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="1028.8333" y="74.5556">33</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="1060.8333" y="74.5556">34</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="1092.8333" y="74.5556">35</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="1124.8333" y="74.5556">36</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="1156.8333" y="74.5556">37</text>
+    <text fill="#0000FF" font-family="Helvetica" font-size="20" lengthAdjust="spacing" textLength="22.3333" x="1188.8333" y="74.5556">38</text>
+  </g>
+</svg>

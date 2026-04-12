@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+projectscale daily zoom 1.3
+Project starts 2020-11-13
+[One two three four five six seven] lasts 7 days
+[Eight nine ten eleven twelve] lasts 7 days
+[Eight nine ten eleven twelve] starts at [One two three four five six seven]'s end
+@endgantt

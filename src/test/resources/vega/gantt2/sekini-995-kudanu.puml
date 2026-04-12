@@ -1,0 +1,16 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+scale 1.5
+printscale daily
+saturday are closed
+sunday are closed
+
+Project starts the 1st of january 2021
+[foo] lasts 21 days
+[foo] is 40% completed
+[bar] lasts 30 days and is 10% complete
+@endgantt

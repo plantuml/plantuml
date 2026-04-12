@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+project starts 2021/12/16
+2021/12/16 to 2021/12/17 is named [A]
+2022/01/13 to 2022/01/14 is named [B]
+[Do stuff] starts at [A]'s start and ends at [B]'s end
+@endgantt

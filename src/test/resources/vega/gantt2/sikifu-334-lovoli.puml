@@ -1,0 +1,16 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+Project starts 2021-03-17
+
+saturday are closed
+sunday are closed
+
+' Milestones
+[Review 01] happens at 2021-03-29
+[Review 02] happens on 21 days after [Review 01]'s end
+@endgantt

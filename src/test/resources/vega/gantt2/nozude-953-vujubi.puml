@@ -1,0 +1,58 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+<style>
+ganttDiagram {
+  task {
+    BackGroundColor GreenYellow
+    LineColor Green 
+    unstarted {
+      BackGroundColor Fuchsia 
+      LineColor FireBrick
+    }
+  }
+}
+</style>
+
+[Prototype design] lasts 7 days
+[Test prototype 0] lasts 4 days
+[Test prototype 10] lasts 4 days
+[Test prototype 20] lasts 4 days
+[Test prototype 30] lasts 4 days
+[Test prototype 40] lasts 4 days
+[Test prototype 50] lasts 4 days
+[Test prototype 60] lasts 4 days
+[Test prototype 70] lasts 4 days
+[Test prototype 80] lasts 4 days
+[Test prototype 90] lasts 4 days
+[Test prototype 100] lasts 4 days
+
+[Test prototype 0] starts at [Prototype design]'s end
+[Test prototype 10] starts at [Prototype design]'s end
+[Test prototype 20] starts at [Prototype design]'s end
+[Test prototype 30] starts at [Prototype design]'s end
+[Test prototype 40] starts at [Prototype design]'s end
+[Test prototype 50] starts at [Prototype design]'s end
+[Test prototype 60] starts at [Prototype design]'s end
+[Test prototype 70] starts at [Prototype design]'s end
+[Test prototype 80] starts at [Prototype design]'s end
+[Test prototype 90] starts at [Prototype design]'s end
+[Test prototype 100] starts at [Prototype design]'s end
+
+[Test prototype 0] is 0% complete
+[Test prototype 10] is 10% complete
+[Test prototype 20] is 20% complete
+[Test prototype 30] is 30% complete
+[Test prototype 40] is 40% complete
+[Test prototype 50] is 50% complete
+[Test prototype 60] is 60% complete
+[Test prototype 70] is 70% complete
+[Test prototype 80] is 80% complete
+[Test prototype 90] is 90% complete
+[Test prototype 100] is 100% complete
+
+@endgantt

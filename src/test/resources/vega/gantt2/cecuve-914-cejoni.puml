@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+hide footbox
+title Test
+[Foo] lasts 12 days
+[Dummy] lasts 10 days and starts 10 days after start
+@endgantt

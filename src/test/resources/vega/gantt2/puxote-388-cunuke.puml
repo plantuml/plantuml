@@ -1,0 +1,21 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+<style>
+arrow {
+  LineColor blue
+}
+</style>
+Project starts the 20th of september 2018
+sunday are close
+2018/09/21 to 2018/09/23 are colored in red
+2018/09/21 to 2018/09/30 are named [Vacation in the Bahamas]
+
+today is 30 days after start and is colored in #AAF
+[Foo] happens 40 days after start
+[Dummy] lasts 10 days and starts 10 days after start
+then [Dummy2] lasts 3 days
+@endgantt

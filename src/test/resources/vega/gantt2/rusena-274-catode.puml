@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+Project starts the 2018/10/20
+[Release of new album] starts the 2018/10/21
+[Release of new album] ends the 2018/10/30
+@endgantt

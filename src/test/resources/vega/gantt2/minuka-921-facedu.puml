@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+printscale weekly
+Project starts the 2020/2/3
+[Milestone] happens 2020/2/14
+[Task] lasts 5 weeks
+@endgantt

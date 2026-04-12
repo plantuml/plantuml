@@ -1,0 +1,31 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+project starts the 2023/04/01
+
+D+5 to D+7 are colored in lightBlue
+
+
+[task1] lasts 2 days
+[task2] starts at D+1
+then [task2] lasts 30 days
+
+D+10 is colored in gold
+D+11 is colored in orange
+
+T-1 is colored in #FF0
+T+0 is colored in #F00
+T+3 is colored in #0F0
+
+E-2 is colored in #700
+E-1 is colored in #700
+E-0 is colored in #700
+
+
+'T is colored in red
+'L is colored in red
+
+@endgantt

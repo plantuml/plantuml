@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="154px" preserveAspectRatio="none" style="width:278px;height:154px;background:#FFFFFF;" version="1.1" viewBox="0 0 278 154" width="278px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="6" y2="145"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="16" x2="16" y1="6" y2="145"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="32" x2="32" y1="6" y2="145"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="48" x2="48" y1="6" y2="145"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="64" x2="64" y1="6" y2="145"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="80" x2="80" y1="6" y2="145"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="96" x2="96" y1="6" y2="145"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="112" x2="112" y1="6" y2="145"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="128" y1="6" y2="145"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="144" x2="144" y1="6" y2="145"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="5.2083" y="7.7778">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="21.2083" y="7.7778">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="37.2083" y="7.7778">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="53.2083" y="7.7778">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="69.2083" y="7.7778">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="85.2083" y="7.7778">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="101.2083" y="7.7778">7</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="117.2083" y="7.7778">8</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="133.2083" y="7.7778">9</text>
+    <path d="M8,29 L8,38.5 L13,38.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="12,34.5,16,38.5,12,42.5,12,34.5" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M40,44 L40,84.5 L45,84.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="44,80.5,48,84.5,44,88.5,44,80.5" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M40,44 L40,99.5 L45,99.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="44,95.5,48,99.5,44,103.5,44,95.5" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M40,44 L40,114.5 L45,114.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="44,110.5,48,114.5,44,118.5,44,110.5" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M72,90 L72,129.5 L77,129.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="76,125.5,80,129.5,76,133.5,76,125.5" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M72,120 L72,129.5 L77,129.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="76,125.5,80,129.5,76,133.5,76,125.5" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="12" x="2" y="18"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="12" x="2" y="18"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="28" x="18" y="33"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="28" x="18" y="33"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="0" x2="5" y1="61.5" y2="61.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="70.0917" x2="143" y1="61.5" y2="61.5"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="28" x="50" y="79"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="28" x="50" y="79"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="12" x="50" y="94"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="12" x="50" y="94"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="28" x="50" y="109"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="28" x="50" y="109"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="60" x="82" y="124"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="60" x="82" y="124"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="29.975" x="18" y="26.5556">Task1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="111.1" x="50" y="41.5556">Task2_long_long_long</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="55.0917" x="10" y="64.5556">Phase Two</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="29.975" x="82" y="87.5556">Task3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="29.975" x="66" y="102.5556">Task4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="29.975" x="82" y="117.5556">Task5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="111.1" x="146" y="132.5556">Task6_long_long_long</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="5.2083" y="147.7778">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="21.2083" y="147.7778">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="37.2083" y="147.7778">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="53.2083" y="147.7778">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="69.2083" y="147.7778">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="85.2083" y="147.7778">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="101.2083" y="147.7778">7</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="117.2083" y="147.7778">8</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="133.2083" y="147.7778">9</text>
+  </g>
+</svg>

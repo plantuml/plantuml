@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="194px" preserveAspectRatio="none" style="width:155px;height:194px;background:#FFFFFF;" version="1.1" viewBox="0 0 155 194" width="155px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="9" y="23.7778">46</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="4" x2="4" y1="16" y2="177"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="32" x2="32" y1="16" y2="177"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="36" x2="36" y1="16" y2="177"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="36" x2="36" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="21.4" x="7.3" y="9.3333">Nov</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="36" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="36" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="36" y1="27" y2="27"/>
+    <polygon fill="#000000" points="6,29,11,34,6,39,1,34" style="stroke:#000000;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="24" x="6" y="44"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="24" x="6" y="44"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="20" x="6" y="59"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="20" x="6" y="59"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="16" x="6" y="74"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="16" x="6" y="74"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="12" x="6" y="89"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="12" x="6" y="89"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="8" x="6" y="104"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="8" x="6" y="104"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="4" x="6" y="119"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="4" x="6" y="119"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="1" x="6" y="134"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="1" x="6" y="134"/>
+    <polygon fill="#000000" points="30,149,35,154,30,159,25,154" style="stroke:#000000;stroke-width:1;"/>
+    <polygon fill="#000000" points="34,164,39,169,34,174,29,169" style="stroke:#000000;stroke-width:1;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="69.6667" x="14" y="37.5556">Week first day</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="59.3083" x="34" y="52.5556">Task 7 days</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="59.3083" x="30" y="67.5556">Task 6 days</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="59.3083" x="26" y="82.5556">Task 5 days</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="59.3083" x="22" y="97.5556">Task 4 days</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="59.3083" x="18" y="112.5556">Task 3 days</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="59.3083" x="14" y="127.5556">Task 2 days</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="53.8083" x="10" y="142.5556">Task 1 day</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="69.1167" x="38" y="157.5556">Week last day</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="92.3083" x="42" y="172.5556">NextWeek first day</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="36" y1="177" y2="177"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="177" y2="193"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="36" x2="36" y1="177" y2="193"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="21.4" x="7.3" y="186.3333">Nov</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="36" y1="193" y2="193"/>
+  </g>
+</svg>

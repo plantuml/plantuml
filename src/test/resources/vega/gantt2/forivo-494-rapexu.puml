@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+project starts on 2023-12-01
+[Task1] on {Alice} {Bob} requires 30 days
+{Alice} is off after 2023-12-04
+@endgantt

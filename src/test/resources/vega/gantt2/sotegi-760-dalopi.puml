@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+projectscale monthly zoom 3
+
+Project starts the 2024/11/07 
+[Task1] on {Alice} requires 100 days
+[Task2] on {Bob:50%} requires 20 days
+then [Task3] on {Alice:25%} requires 10 days
+then [Task4] on {Alice:25%} {Bob} requires 10 days
+@endgantt

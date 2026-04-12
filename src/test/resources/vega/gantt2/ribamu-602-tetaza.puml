@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+
+Project starts 2023-01-01
+[Task1] starts 2023-01-01 and lasts 1 week
+[Task2] starts after [Task1]'s end and lasts 2 weeks
+[Multiline\nMilestone\none more!] happens after [Task1]'s end
+
+@endgantt

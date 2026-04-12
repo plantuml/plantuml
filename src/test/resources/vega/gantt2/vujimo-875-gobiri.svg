@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="255px" preserveAspectRatio="none" style="width:213px;height:255px;background:#FFFFFF;" version="1.1" viewBox="0 0 213 255" width="213px" zoomAndPan="magnify">
+  <defs>
+    <filter height="1" id="bdpxuj2nqib1q0" width="1" x="0" y="0">
+      <feFlood flood-color="#FF0000" result="flood"/>
+      <feComposite in="SourceGraphic" in2="flood" operator="over"/>
+    </filter>
+  </defs>
+  <g>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="6" y2="246"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="16" x2="16" y1="6" y2="246"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="32" x2="32" y1="6" y2="246"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="48" x2="48" y1="6" y2="246"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="64" x2="64" y1="6" y2="246"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="80" x2="80" y1="6" y2="246"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="96" x2="96" y1="6" y2="246"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="112" x2="112" y1="6" y2="246"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="128" y1="6" y2="246"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="144" x2="144" y1="6" y2="246"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="160" x2="160" y1="6" y2="246"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="176" x2="176" y1="6" y2="246"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="192" x2="192" y1="6" y2="246"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="5.2083" y="7.7778">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="21.2083" y="7.7778">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="37.2083" y="7.7778">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="53.2083" y="7.7778">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="69.2083" y="7.7778">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="85.2083" y="7.7778">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="101.2083" y="7.7778">7</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="117.2083" y="7.7778">8</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="133.2083" y="7.7778">9</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="146.4167" y="7.7778">10</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="162.4167" y="7.7778">11</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="178.4167" y="7.7778">12</text>
+    <path d="M56,60 L56,119.5 L61,119.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="60,115.5,64,119.5,60,123.5,60,115.5" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M104,221 L104,230.5 L109,230.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="108,226.5,112,230.5,108,234.5,108,226.5" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="0" x2="5" y1="31.5" y2="31.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="44.975" x2="191" y1="31.5" y2="31.5"/>
+    <path d="M0,62 L0,112 L86.625,112 L86.625,72 L76.625,62 L0,62" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M76.625,62 L76.625,72 L86.625,72 L76.625,62" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="9" lengthAdjust="spacing" textLength="39.975" x="6" y="74">memo1 ...</text>
+    <text fill="#000000" font-family="sans-serif" font-size="9" lengthAdjust="spacing" textLength="39.975" x="6" y="84">memo2 ...</text>
+    <text fill="#000000" font-family="sans-serif" font-size="9" lengthAdjust="spacing" textLength="65.625" x="6" y="94">explanations1 ...</text>
+    <text fill="#000000" font-family="sans-serif" font-size="9" lengthAdjust="spacing" textLength="65.625" x="6" y="104">explanations2 ...</text>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="60" x="2" y="49"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="60" x="2" y="49"/>
+    <path d="M64,127 L64,177 L150.625,177 L150.625,137 L140.625,127 L64,127" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M140.625,127 L140.625,137 L150.625,137 L140.625,127" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="9" lengthAdjust="spacing" textLength="39.975" x="70" y="139">memo1 ...</text>
+    <text fill="#000000" font-family="sans-serif" font-size="9" lengthAdjust="spacing" textLength="39.975" x="70" y="149">memo2 ...</text>
+    <text fill="#000000" font-family="sans-serif" font-size="9" lengthAdjust="spacing" textLength="65.625" x="70" y="159">explanations1 ...</text>
+    <text fill="#000000" font-family="sans-serif" font-size="9" lengthAdjust="spacing" textLength="65.625" x="70" y="169">explanations2 ...</text>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="124" x="66" y="114"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="124" x="66" y="114"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="0" x2="5" y1="192.5" y2="192.5"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="44.975" x2="191" y1="192.5" y2="192.5"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="108" x="2" y="210"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="108" x="2" y="210"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="12" x="114" y="225"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="12" x="114" y="225"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="29.975" x="10" y="34.5556">test01</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="32.45" x="6" y="57.5556">task01</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="32.45" x="70" y="122.5556">task02</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="29.975" x="10" y="195.5556">test02</text>
+    <text fill="#000000" filter="url(#bdpxuj2nqib1q0)" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="32.45" x="6" y="218.5556">task03</text>
+    <text fill="#000000" filter="url(#bdpxuj2nqib1q0)" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="9.1667" x="130" y="233.5556">t4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="5.2083" y="248.7778">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="21.2083" y="248.7778">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="37.2083" y="248.7778">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="53.2083" y="248.7778">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="69.2083" y="248.7778">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="85.2083" y="248.7778">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="101.2083" y="248.7778">7</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="117.2083" y="248.7778">8</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="133.2083" y="248.7778">9</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="146.4167" y="248.7778">10</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="162.4167" y="248.7778">11</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="178.4167" y="248.7778">12</text>
+  </g>
+</svg>

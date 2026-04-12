@@ -1,0 +1,18 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+printscale weekly
+scale 0.9
+Project starts on 2020/03/30
+Print between 2020/04/01 and 2020/04/04
+saturday are closed
+sunday are closed
+2020/05/01 is closed
+2020/05/08 is closed
+-- MINIMAL VERSION --
+[IC: Orchestrate jobs calls] as [IC:calls] on {Bob:100%} lasts 10 days
+[IC:CN calls] is colored in #3399ff
+@endgantt

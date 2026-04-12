@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+[Sprint X] lasts 21 days
+then [Sprint X UAT] lasts 7 days
+[Sprint X Checkpoint] happens 7 days after [Sprint X]'s start
+@endgantt

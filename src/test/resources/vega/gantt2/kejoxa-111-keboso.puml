@@ -1,0 +1,16 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+printscale weekly with week numbering from 1
+Project starts the 20th of september 2020
+[Prototype design] as [TASK1] requires 130 days
+[TASK1] is colored in Lavender/LightBlue
+[Testing] requires  20 days
+[TASK1]->[Testing]
+
+2021-01-18 to 2021-01-22 are named [End's committee]
+2021-01-18 to 2021-01-22 are colored in salmon 
+@endgantt

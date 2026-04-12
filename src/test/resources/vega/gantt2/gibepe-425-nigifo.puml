@@ -1,0 +1,8 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+Project starts the 20th of september 2018
+@endgantt

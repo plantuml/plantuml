@@ -1,0 +1,21 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+-- Initialization --
+
+[Config Routing Fabric] as [cfg_rte] lasts 73 days
+[Init Counters] as [cfg_ctr] lasts 4 days
+[Init Decay Ctr] as [cfg_dec] lasts 1 days
+[cfg_rte] -> [cfg_ctr]
+[cfg_ctr] -> [cfg_dec]
+
+-- Run Time --
+
+[foo] lasts 3 days
+then [bar] lasts 5 days
+
+@endgantt

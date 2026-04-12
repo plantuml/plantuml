@@ -1,0 +1,16 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+Project starts the 5th of november 2018
+saturday are closed
+sunday are closed
+2018/11/05 and 9 days are colored in lightblue and are named [Sprint 49]
+then 10 days are colored in lightgreen and are named [Sprint 50]
+then 10 days are colored in lightblue and are named [Sprint 51]
+then 10 days are colored in lightgreen and are named [Sprint 52]
+[Production] lasts 3 days and starts at [Sprint 51]'s start
+
+@endgantt

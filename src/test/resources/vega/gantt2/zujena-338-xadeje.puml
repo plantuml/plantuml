@@ -1,0 +1,17 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+<style>
+arrow {
+  LineColor blue
+}
+</style>
+[Prototype design] lasts 14 days
+[Build prototype] lasts 4 days
+[Prepare test] lasts 6 days
+[Prototype design] -[#012]-> [Build prototype]
+[Prototype design] -[dotted]-> [Prepare test]
+@endgantt

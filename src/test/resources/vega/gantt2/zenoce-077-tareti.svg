@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="142px" preserveAspectRatio="none" style="width:288px;height:142px;background:#FFFFFF;" version="1.1" viewBox="0 0 288 142" width="288px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="6" y2="133"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="28" x2="28" y1="6" y2="133"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="56" x2="56" y1="6" y2="133"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="84" x2="84" y1="6" y2="133"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="112" x2="112" y1="6" y2="133"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="140" x2="140" y1="6" y2="133"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="168" x2="168" y1="6" y2="133"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="11.2083" y="7.7778">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="39.2083" y="7.7778">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="67.2083" y="7.7778">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="95.2083" y="7.7778">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="123.2083" y="7.7778">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="151.2083" y="7.7778">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="179.2083" y="7.7778">7</text>
+    <path d="M152,44 L152,53.5 L157,53.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="156,49.5,160,53.5,156,57.5,156,49.5" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="36" x="2" y="18"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="36" x="2" y="18"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="156" x="2" y="33"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="156" x="2" y="33"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="12" x="162" y="48"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="12" x="162" y="48"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="64.2583" x="42" y="26.5556">Task1 {Alice}</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="85.0667" x="6" y="41.5556">Task2 {Bob:50%}</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="89.375" x="178" y="56.5556">Task3 {Alice:25%}</text>
+    <text fill="#000000" font-family="Serif" font-size="13" lengthAdjust="spacing" textLength="28.275" x="0" y="71.1111">Alice</text>
+    <line style="stroke:#000000;stroke-width:1;" x1="0" x2="176" y1="74" y2="74"/>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="6.4625" y="84">700</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="34.4625" y="84">300</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="10.05" x="148.975" y="84">50</text>
+    <text fill="#000000" font-family="Serif" font-size="13" lengthAdjust="spacing" textLength="23.1833" x="0" y="103.1111">Bob</text>
+    <line style="stroke:#000000;stroke-width:1;" x1="0" x2="176" y1="106" y2="106"/>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="6.4625" y="116">350</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="34.4625" y="116">350</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="62.4625" y="116">350</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="90.4625" y="116">350</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="118.4625" y="116">350</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="146.4625" y="116">250</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="11.2083" y="135.7778">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="39.2083" y="135.7778">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="67.2083" y="135.7778">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="95.2083" y="135.7778">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="123.2083" y="135.7778">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="151.2083" y="135.7778">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="179.2083" y="135.7778">7</text>
+  </g>
+</svg>

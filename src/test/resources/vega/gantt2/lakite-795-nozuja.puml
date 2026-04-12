@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+[task1] lasts 10 days
+[task2A] starts at [task1]'s end
+[task2B] starts after [task1]'s end
+
+[task3A] starts at [task1]'s start
+[task3B] starts with [task1]'s start
+
+@endgantt

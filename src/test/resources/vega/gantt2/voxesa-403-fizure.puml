@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+!$today = %date("YYYY-MM-dd", 200 * 20000)
+Project starts $today
+[foo] lasts 10 days
+@endgantt

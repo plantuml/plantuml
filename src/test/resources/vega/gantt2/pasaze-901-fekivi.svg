@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="296px" preserveAspectRatio="none" style="width:724px;height:296px;background:#FFFFFF;" version="1.1" viewBox="0 0 724 296" width="724px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <rect fill="#FA8072" height="120" style="stroke:none;stroke-width:4;" width="112" x="176" y="108"/>
+    <text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="44.6667" x="84" y="95.1111">43</text>
+    <text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="44.6667" x="196" y="95.1111">44</text>
+    <text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="44.6667" x="308" y="95.1111">45</text>
+    <text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="44.6667" x="420" y="95.1111">46</text>
+    <text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="44.6667" x="532" y="95.1111">47</text>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="64" x2="64" y1="64" y2="228"/>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="176" x2="176" y1="64" y2="228"/>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="288" x2="288" y1="64" y2="228"/>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="400" x2="400" y1="64" y2="228"/>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="512" x2="512" y1="64" y2="228"/>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="624" x2="624" y1="64" y2="228"/>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="640" x2="640" y1="64" y2="228"/>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="0" x2="0" y1="0" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="272" x2="272" y1="0" y2="64"/>
+    <text fill="#000000" font-family="sans-serif" font-size="48" font-weight="700" lengthAdjust="spacing" textLength="194.8" x="38.6" y="37.3333">Oct 2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="640" x2="640" y1="0" y2="64"/>
+    <text fill="#000000" font-family="sans-serif" font-size="48" font-weight="700" lengthAdjust="spacing" textLength="206" x="353" y="37.3333">Nov 2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="0" x2="640" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="0" x2="640" y1="64" y2="64"/>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="0" x2="640" y1="108" y2="108"/>
+    <path d="M368,160 L368,198 L388,198" fill="none" style="stroke:#181818;stroke-width:6;"/>
+    <polygon fill="#181818" points="384,182,400,198,384,214,384,182" style="stroke:#181818;stroke-width:4;"/>
+    <rect fill="#E6E6FA" height="44" style="stroke:none;stroke-width:4;" width="384" x="8" y="116"/>
+    <rect fill="none" height="44" style="stroke:#ADD8E6;stroke-width:4;" width="384" x="8" y="116"/>
+    <rect fill="#E2E2F0" height="44" style="stroke:none;stroke-width:4;" width="224" x="408" y="176"/>
+    <rect fill="none" height="44" style="stroke:#181818;stroke-width:4;" width="224" x="408" y="176"/>
+    <text fill="#000000" font-family="sans-serif" font-size="44" lengthAdjust="spacing" textLength="330.7333" x="24" y="150.2222">Prototype design</text>
+    <text fill="#000000" font-family="sans-serif" font-size="44" lengthAdjust="spacing" textLength="144.4667" x="424" y="210.2222">Testing</text>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="0" x2="640" y1="228" y2="228"/>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="0" x2="0" y1="228" y2="292"/>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="272" x2="272" y1="228" y2="292"/>
+    <text fill="#000000" font-family="sans-serif" font-size="48" font-weight="700" lengthAdjust="spacing" textLength="194.8" x="38.6" y="265.3333">Oct 2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="640" x2="640" y1="228" y2="292"/>
+    <text fill="#000000" font-family="sans-serif" font-size="48" font-weight="700" lengthAdjust="spacing" textLength="206" x="353" y="265.3333">Nov 2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:4;" x1="0" x2="640" y1="292" y2="292"/>
+  </g>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="74px" preserveAspectRatio="none" style="width:141px;height:74px;background:#FFFFFF;" version="1.1" viewBox="0 0 141 74" width="141px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="29" y="23.7778">37</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="57" y="23.7778">38</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="85" y="23.7778">39</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="113" y="23.7778">40</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="24" x2="24" y1="16" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="52" x2="52" y1="16" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="80" x2="80" y1="16" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="108" x2="108" y1="16" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="120" x2="120" y1="16" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="120" x2="120" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="51.5" x="34.25" y="9.3333">Sep 2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="120" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="120" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="120" y1="27" y2="27"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="52" x="2" y="44"/>
+    <path d="M2,44 L54,44 L54,55 L2,55" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="7.3333" x="6" y="52.5556">B</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="120" y1="57" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="57" y2="73"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="120" x2="120" y1="57" y2="73"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="51.5" x="34.25" y="66.3333">Sep 2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="120" y1="73" y2="73"/>
+  </g>
+</svg>

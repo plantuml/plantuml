@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="105px" preserveAspectRatio="none" style="width:304px;height:105px;background:#FFFFFF;" version="1.1" viewBox="0 0 304 105" width="304px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <rect fill="#FF0000" height="45" style="stroke:none;stroke-width:1;" width="12" x="4" y="43"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="4" x="40" y="43"/>
+    <rect fill="#ADD8E6" height="45" style="stroke:none;stroke-width:1;" width="12" x="44" y="43"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="4" x="68" y="43"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="4" x="96" y="43"/>
+    <rect fill="#AAAAFF" height="45" style="stroke:none;stroke-width:1;" width="4" x="120" y="43"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="4" x="124" y="43"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="4" x="152" y="43"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="21" y="23.7778">39</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="49" y="23.7778">40</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="77" y="23.7778">41</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="105" y="23.7778">42</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="133" y="23.7778">43</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="161" y="23.7778">44</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="16" x2="16" y1="16" y2="88"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="44" x2="44" y1="16" y2="88"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="72" x2="72" y1="16" y2="88"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="100" x2="100" y1="16" y2="88"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="128" y1="16" y2="88"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="156" x2="156" y1="16" y2="88"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="176" x2="176" y1="16" y2="88"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="44" x2="44" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="21.4" x="11.3" y="9.3333">Sep</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="168" x2="168" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="48.7" x="81.65" y="9.3333">Oct 2018</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="176" x2="176" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="21.4" x="168" y="9.3333">Nov</text>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="133.6" x="4" y="36.3333">Vacation in the Bahamas</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="176" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="176" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="176" y1="43" y2="43"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="11" x="2" y="45"/>
+    <path d="M12,56 L2,56 L2,45 L12,45" fill="none" style="stroke:#ADD8E6;stroke-width:1;"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="25" x="16" y="45"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="16" x2="40" y1="45" y2="45"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="16" x2="40" y1="56" y2="56"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="25" x="44" y="45"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="44" x2="68" y1="45" y2="45"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="44" x2="68" y1="56" y2="56"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="25" x="72" y="45"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="72" x2="96" y1="45" y2="45"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="72" x2="96" y1="56" y2="56"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="25" x="100" y="45"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="100" x2="124" y1="45" y2="45"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="100" x2="124" y1="56" y2="56"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="25" x="128" y="45"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="128" x2="152" y1="45" y2="45"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="128" x2="152" y1="56" y2="56"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="18" x="156" y="45"/>
+    <path d="M156,45 L174,45 L174,56 L156,56" fill="none" style="stroke:#ADD8E6;stroke-width:1;"/>
+    <polygon fill="#000000" points="174,60,179,65,174,70,169,65" style="stroke:#000000;stroke-width:1;"/>
+    <polygon fill="#000000" points="38,75,43,80,38,85,33,80" style="stroke:#000000;stroke-width:1;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="82.6833" x="6" y="53.5556">Prototype design</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="101.0167" x="182" y="68.5556">Prototype completed</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="109.0833" x="46" y="83.5556">Release of new album</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="176" y1="88" y2="88"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="88" y2="104"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="44" x2="44" y1="88" y2="104"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="21.4" x="11.3" y="97.3333">Sep</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="168" x2="168" y1="88" y2="104"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="48.7" x="81.65" y="97.3333">Oct 2018</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="176" x2="176" y1="88" y2="104"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="21.4" x="168" y="97.3333">Nov</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="176" y1="104" y2="104"/>
+  </g>
+</svg>

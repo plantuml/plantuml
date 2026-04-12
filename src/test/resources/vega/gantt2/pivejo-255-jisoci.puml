@@ -1,0 +1,16 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+project starts 2023-02-01
+saturday are closed
+sunday are closed
+
+2023-02-18 to 2023-04-14 is opened
+2023-02-21 is closed
+2023-02-25 to 2023-03-30 is closed
+
+[Testing] requires 60 days
+@endgantt

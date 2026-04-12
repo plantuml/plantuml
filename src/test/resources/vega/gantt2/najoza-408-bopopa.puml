@@ -1,0 +1,17 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+Task completion default to 0%
+
+[Prototype design] lasts 13 days
+[Test prototype 40] lasts 4 days
+
+[Test prototype 40] starts at [Prototype design]'s end
+
+[Prototype design] is colored in Red/Blue 
+[Test prototype 40] is colored for completion from Fuchsia/FireBrick to GreenYellow/Green 
+
+@endgantt

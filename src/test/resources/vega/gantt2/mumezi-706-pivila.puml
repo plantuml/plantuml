@@ -1,0 +1,19 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-exception: IllegalStateException
+---
+@startgantt
+Project starts 2020-09-01
+today is colored in #ff8080
+saturday are closed
+sunday are closed
+'======================================================'
+-- Sub-project One --
+[Task 1] as [T1] starts at [T2]'s end and ends 2020-10-28
+-- Sub-project Two --
+[Task 2] as [T2] starts 2020-09-01 and ends 2020-09-28
+-- Sub-project Three --
+[Task 3] as [T3] starts at [T2]'s end and ends 2020-10-28
+@endgantt

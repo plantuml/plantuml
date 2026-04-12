@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="74px" preserveAspectRatio="none" style="width:235px;height:74px;background:#FFFFFF;" version="1.1" viewBox="0 0 235 74" width="235px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;stroke-width:1;" width="8" x="8" y="27"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;stroke-width:1;" width="8" x="36" y="27"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;stroke-width:1;" width="8" x="64" y="27"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;stroke-width:1;" width="8" x="92" y="27"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;stroke-width:1;" width="8" x="120" y="27"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;stroke-width:1;" width="8" x="148" y="27"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;stroke-width:1;" width="8" x="176" y="27"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="21" y="23.7778">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="49" y="23.7778">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="77" y="23.7778">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="105" y="23.7778">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="133" y="23.7778">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="161" y="23.7778">7</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="16" x2="16" y1="16" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="44" x2="44" y1="16" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="72" x2="72" y1="16" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="100" x2="100" y1="16" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="128" y1="16" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="156" x2="156" y1="16" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="184" x2="184" y1="16" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="188" x2="188" y1="16" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="124" x2="124" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="49.5" x="37.25" y="9.3333">Jan 2025</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="188" x2="188" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="50.8" x="130.6" y="9.3333">Feb 2025</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="188" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="188" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="188" y1="27" y2="27"/>
+    <path d="M100,40 L100,49.5 L105,49.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="104,45.5,108,49.5,104,53.5,104,45.5" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="7" x="2" y="29"/>
+    <path d="M8,40 L2,40 L2,29 L8,29" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="21" x="16" y="29"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="16" x2="36" y1="29" y2="29"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="16" x2="36" y1="40" y2="40"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="21" x="44" y="29"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="44" x2="64" y1="29" y2="29"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="44" x2="64" y1="40" y2="40"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="21" x="72" y="29"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="72" x2="92" y1="29" y2="29"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="72" x2="92" y1="40" y2="40"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="6" x="100" y="29"/>
+    <path d="M100,29 L106,29 L106,40 L100,40" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="11" x2="13" y1="29" y2="29"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="11" x2="13" y1="40" y2="40"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="39" x2="41" y1="29" y2="29"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="39" x2="41" y1="40" y2="40"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="67" x2="69" y1="29" y2="29"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="67" x2="69" y1="40" y2="40"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="95" x2="97" y1="29" y2="29"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="95" x2="97" y1="40" y2="40"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="11" x="110" y="44"/>
+    <path d="M120,55 L110,55 L110,44 L120,44" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="21" x="128" y="44"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="128" x2="148" y1="44" y2="44"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="128" x2="148" y1="55" y2="55"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="21" x="156" y="44"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="156" x2="176" y1="44" y2="44"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="156" x2="176" y1="55" y2="55"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="2" x="184" y="44"/>
+    <path d="M184,44 L186,44 L186,55 L184,55" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="123" x2="125" y1="44" y2="44"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="123" x2="125" y1="55" y2="55"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="151" x2="153" y1="44" y2="44"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="151" x2="153" y1="55" y2="55"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="179" x2="181" y1="44" y2="44"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="179" x2="181" y1="55" y2="55"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="104.1333" x="110" y="37.5556">Prototype design end</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="36.1167" x="114" y="52.5556">Testing</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="188" y1="57" y2="57"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="57" y2="73"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="124" x2="124" y1="57" y2="73"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="49.5" x="37.25" y="66.3333">Jan 2025</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="188" x2="188" y1="57" y2="73"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="50.8" x="130.6" y="66.3333">Feb 2025</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="188" y1="73" y2="73"/>
+  </g>
+</svg>

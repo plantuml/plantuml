@@ -1,0 +1,15 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+Project starts 2017/09/20
+
+[My task0] as [TASK0] lasts 7 days
+[My task1] as [TASK1] lasts 10 days
+[My task2] as [TASK2] lasts 2 days
+[TASK1] starts the 2017/09/25
+
+TASK1 -> TASK2
+@endgantt

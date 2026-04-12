@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="94px" preserveAspectRatio="none" style="width:502px;height:94px;background:#000000;" version="1.1" viewBox="0 0 502 94" width="502px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <rect fill="#33FF02" height="19" style="stroke:#33FF02;stroke-width:1;" width="131.15" x="5" y="13"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="129.15" x="6" y="28">[From string (line 2) ]</text>
+    <text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="15.1667" x="5" y="46"> </text>
+    <text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="72.5667" x="5" y="60">@startgantt</text>
+    <text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" text-decoration="wavy underline" textLength="479.5" x="5" y="74">[Nomination] happens 2022-03-31 and displays on same row as [Nomination]</text>
+    <text fill="#FF0000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="487.4333" x="8.85" y="88">Gantt diagrams cannot last more than 20 years (Assumed diagram type: gantt)</text>
+  </g>
+</svg>

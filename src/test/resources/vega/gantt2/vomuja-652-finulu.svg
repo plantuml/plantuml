@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="123px" preserveAspectRatio="none" style="width:366px;height:123px;background:#FFFFFF;" version="1.1" viewBox="0 0 366 123" width="366px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <rect fill="#FF0000" height="45" style="stroke:none;stroke-width:1;" width="3.2" x="1.0667" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="10.6667" y="46"/>
+    <rect fill="#ADD8E6" height="45" style="stroke:none;stroke-width:1;" width="3.2" x="11.7333" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="18.1333" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="25.6" y="46"/>
+    <rect fill="#AAAAFF" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="32" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="33.0667" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="40.5333" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="48" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="55.4667" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="62.9333" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="70.4" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="77.8667" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="85.3333" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="92.8" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="100.2667" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="107.7333" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="115.2" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="122.6667" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="130.1333" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="137.6" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="145.0667" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="152.5333" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="160" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="167.4667" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="174.9333" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="182.4" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="189.8667" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="197.3333" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="204.8" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="212.2667" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="219.7333" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="227.2" y="46"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="1.0667" x="234.6667" y="46"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="109.8667" x2="109.8667" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="26.8" x="41.5333" y="9.3333">2018</text>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="26.8" x="159.9333" y="9.3333">2019</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="236.8" x2="236.8" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="16" y2="30"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="11.7333" x2="11.7333" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="0" y="23.7778">Sep</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="44.8" x2="44.8" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15.5" x="20.5167" y="23.7778">Oct</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="76.8" x2="76.8" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="51.8833" y="23.7778">Nov</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="109.8667" x2="109.8667" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="84.4167" y="23.7778">Dec</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="142.9333" x2="142.9333" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="16.1667" x="118.3167" y="23.7778">Jan</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="172.8" x2="172.8" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.25" x="149.2417" y="23.7778">Feb</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="205.8667" x2="205.8667" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="27.8333" x="175.4167" y="23.7778">March</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="20.0833" x="211.2917" y="23.7778">April</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="236.8" x2="236.8" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="133.6" x="1.0667" y="39.3333">Vacation in the Bahamas</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="236.8" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="236.8" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="236.8" y1="30" y2="30"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="2.2" x="2" y="48"/>
+    <path d="M3.2,59 L2,59 L2,48 L3.2,48" fill="none" style="stroke:#ADD8E6;stroke-width:1;"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="4.2667" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="4.2667" x2="10.6667" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="4.2667" x2="10.6667" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="11.7333" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="11.7333" x2="18.1333" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="11.7333" x2="18.1333" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="19.2" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="19.2" x2="25.6" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="19.2" x2="25.6" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="26.6667" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="26.6667" x2="33.0667" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="26.6667" x2="33.0667" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="34.1333" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="34.1333" x2="40.5333" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="34.1333" x2="40.5333" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="41.6" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="41.6" x2="48" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="41.6" x2="48" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="49.0667" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="49.0667" x2="55.4667" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="49.0667" x2="55.4667" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="56.5333" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="56.5333" x2="62.9333" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="56.5333" x2="62.9333" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="64" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="64" x2="70.4" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="64" x2="70.4" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="71.4667" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="71.4667" x2="77.8667" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="71.4667" x2="77.8667" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="78.9333" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="78.9333" x2="85.3333" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="78.9333" x2="85.3333" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="86.4" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="86.4" x2="92.8" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="86.4" x2="92.8" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="93.8667" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="93.8667" x2="100.2667" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="93.8667" x2="100.2667" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="101.3333" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="101.3333" x2="107.7333" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="101.3333" x2="107.7333" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="108.8" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="108.8" x2="115.2" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="108.8" x2="115.2" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="116.2667" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="116.2667" x2="122.6667" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="116.2667" x2="122.6667" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="123.7333" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="123.7333" x2="130.1333" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="123.7333" x2="130.1333" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="131.2" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="131.2" x2="137.6" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="131.2" x2="137.6" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="138.6667" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="138.6667" x2="145.0667" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="138.6667" x2="145.0667" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="146.1333" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="146.1333" x2="152.5333" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="146.1333" x2="152.5333" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="153.6" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="153.6" x2="160" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="153.6" x2="160" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="161.0667" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="161.0667" x2="167.4667" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="161.0667" x2="167.4667" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="168.5333" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="168.5333" x2="174.9333" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="168.5333" x2="174.9333" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="176" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="176" x2="182.4" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="176" x2="182.4" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="183.4667" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="183.4667" x2="189.8667" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="183.4667" x2="189.8667" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="190.9333" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="190.9333" x2="197.3333" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="190.9333" x2="197.3333" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="198.4" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="198.4" x2="204.8" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="198.4" x2="204.8" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="205.8667" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="205.8667" x2="212.2667" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="205.8667" x2="212.2667" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="213.3333" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="213.3333" x2="219.7333" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="213.3333" x2="219.7333" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="7.4" x="220.8" y="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="220.8" x2="227.2" y1="48" y2="48"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="220.8" x2="227.2" y1="59" y2="59"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="6.5333" x="228.2667" y="48"/>
+    <path d="M228.2667,48 L234.8,48 L234.8,59 L228.2667,59" fill="none" style="stroke:#ADD8E6;stroke-width:1;"/>
+    <polygon fill="#000000" points="236.2667,63,241.2667,68,236.2667,73,231.2667,68" style="stroke:#000000;stroke-width:1;"/>
+    <polygon fill="#000000" points="10.1333,78,15.1333,83,10.1333,88,5.1333,83" style="stroke:#000000;stroke-width:1;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="82.6833" x="6" y="56.5556">Prototype design</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="101.0167" x="244.2667" y="71.5556">Prototype completed</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="109.0833" x="18.1333" y="86.5556">Release of new album</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="91" y2="105"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="11.7333" x2="11.7333" y1="91" y2="105"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="0" y="98.7778">Sep</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="44.8" x2="44.8" y1="91" y2="105"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15.5" x="20.5167" y="98.7778">Oct</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="76.8" x2="76.8" y1="91" y2="105"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="51.8833" y="98.7778">Nov</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="109.8667" x2="109.8667" y1="91" y2="105"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="84.4167" y="98.7778">Dec</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="142.9333" x2="142.9333" y1="91" y2="105"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="16.1667" x="118.3167" y="98.7778">Jan</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="172.8" x2="172.8" y1="91" y2="105"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.25" x="149.2417" y="98.7778">Feb</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="205.8667" x2="205.8667" y1="91" y2="105"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="27.8333" x="175.4167" y="98.7778">March</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="20.0833" x="211.2917" y="98.7778">April</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="236.8" x2="236.8" y1="91" y2="105"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="105" y2="121"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="109.8667" x2="109.8667" y1="105" y2="121"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="26.8" x="41.5333" y="114.3333">2018</text>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="26.8" x="159.9333" y="114.3333">2019</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="236.8" x2="236.8" y1="105" y2="121"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="236.8" y1="91" y2="91"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="236.8" y1="105" y2="105"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="236.8" y1="121" y2="121"/>
+  </g>
+</svg>

@@ -1,0 +1,23 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+-- Architectural design--
+[Create draft of architecture] lasts 10 days
+then [Prepare construction documents] lasts 10 days
+then [Agreement on architectural plan] lasts 1 day
+
+-- Interior design--
+then [Pre design] lasts 3 days
+then [Furniture selection] lasts 3 days
+[Equipement planning] lasts 3 days and starts after [Pre design]'s end
+
+-- Construction phase--
+[Building foundation] lasts 15 days and starts after [Agreement on architectural plan]'s end
+then [Ground Floor building] lasts 10 days
+then [Frist Floor building] lasts 10 days
+then [Roof] lasts 10 days
+
+@endgantt

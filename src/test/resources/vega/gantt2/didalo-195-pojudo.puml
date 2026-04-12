@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+[Test prototype] requires 10 days.
+[Prototype completed] happens at [Test prototype]'s end.
+It is displayed as <:innocent:>
+'[Setup assembly line] requires 12 days.
+'[Setup assembly line] starts at [Test prototype]'s end.
+@endgantt

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="110px" preserveAspectRatio="none" style="width:742px;height:110px;background:#FFFFFF;" version="1.1" viewBox="0 0 742 110" width="742px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;stroke-width:1;" width="32" x="80" y="39"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.9167" x="1.0417" y="21.7778">Mo</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="18.1667" y="21.7778">Tu</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15" x="32.5" y="21.7778">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="50.1667" y="21.7778">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="9.4167" x="67.2917" y="21.7778">Fr</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="81.875" y="21.7778">Sa</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="97.875" y="21.7778">Su</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.9167" x="113.0417" y="21.7778">Mo</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="130.1667" y="21.7778">Tu</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15" x="144.5" y="21.7778">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="2.4167" y="33.7778">26</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="18.4167" y="33.7778">27</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="34.4167" y="33.7778">28</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="50.4167" y="33.7778">29</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="66.4167" y="33.7778">30</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="82.4167" y="33.7778">31</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="101.2083" y="33.7778">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="117.2083" y="33.7778">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="133.2083" y="33.7778">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="149.2083" y="33.7778">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="63.5" x="16.25" y="9.3333">March 2018</text>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="54.2" x="100.9" y="9.3333">April 2018</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="16" x2="16" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="32" x2="32" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="48" x2="48" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="64" x2="64" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="80" x2="80" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="96" x2="96" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="112" x2="112" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="128" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="144" x2="144" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="160" x2="160" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="160" y1="39" y2="39"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="160" y1="69" y2="69"/>
+    <path d="M56,52 L56,61.5 L61,61.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="60,57.5,64,61.5,60,65.5,60,57.5" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#FFD351" height="11" style="stroke:none;stroke-width:1;" width="60" x="2" y="41"/>
+    <rect fill="none" height="11" style="stroke:#FFD351;stroke-width:1;" width="60" x="2" y="41"/>
+    <rect fill="#FFD351" height="11" style="stroke:none;stroke-width:1;" width="15" x="66" y="56"/>
+    <path d="M80,67 L66,67 L66,56 L80,56" fill="none" style="stroke:#FFD351;stroke-width:1;"/>
+    <rect fill="#FFD351" height="11" style="stroke:none;stroke-width:1;" width="46" x="112" y="56"/>
+    <path d="M112,56 L158,56 L158,67 L112,67" fill="none" style="stroke:#FFD351;stroke-width:1;"/>
+    <line style="stroke:#FFD351;stroke-width:1;stroke-dasharray:2,3;" x1="83" x2="109" y1="56" y2="56"/>
+    <line style="stroke:#FFD351;stroke-width:1;stroke-dasharray:2,3;" x1="83" x2="109" y1="67" y2="67"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="213.4917" x="66" y="49.5556">Installation de l'infra Rundeck de production</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="559.35" x="162" y="64.5556">Remédiation des batchs + lien avec GDCP v3 + respect des procédures générales du type B37 et contentions</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.9167" x="1.0417" y="76.7778">Mo</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="18.1667" y="76.7778">Tu</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15" x="32.5" y="76.7778">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="50.1667" y="76.7778">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="9.4167" x="67.2917" y="76.7778">Fr</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="81.875" y="76.7778">Sa</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="97.875" y="76.7778">Su</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.9167" x="113.0417" y="76.7778">Mo</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="130.1667" y="76.7778">Tu</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15" x="144.5" y="76.7778">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="2.4167" y="90.7778">26</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="18.4167" y="90.7778">27</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="34.4167" y="90.7778">28</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="50.4167" y="90.7778">29</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="66.4167" y="90.7778">30</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="82.4167" y="90.7778">31</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="101.2083" y="90.7778">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="117.2083" y="90.7778">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="133.2083" y="90.7778">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="149.2083" y="90.7778">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="63.5" x="16.25" y="105.3333">March 2018</text>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="54.2" x="100.9" y="105.3333">April 2018</text>
+  </g>
+</svg>

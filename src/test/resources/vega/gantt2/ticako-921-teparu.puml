@@ -1,0 +1,16 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+[Prototype design] lasts 13 days
+[Test prototype] lasts 4 days and 1 week
+[Test prototype] starts 1 week and 2 days after [Prototype design]'s end
+[Test prototype] displays on same row as [Prototype design]
+[r1] happens on 5 days after [Prototype design]'s end
+[r2] happens on 5 days after [r1]'s end
+[r3] happens on 5 days after [r2]'s end
+[r2] displays on same row as [r1]
+[r3] displays on same row as [r1]
+@endgantt

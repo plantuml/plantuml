@@ -1,0 +1,19 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+<style>
+ganttDiagram {
+	task {
+		RoundCorder 0
+        Margin 5
+        Padding 3 0 0 0
+	}
+	
+}
+</style>
+[Task1] lasts 20 days
+[<size:16>Task2] lasts 20 days
+@endgantt

@@ -1,0 +1,20 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+saturday are closed
+sunday are closed
+
+saturday are open for [Foo] 
+
+Project starts the 2020-07-01
+[Prototype design] lasts 10 days
+Then [Test prototype] lasts 10 days
+
+[Foo] lasts 10 days
+
+
+@endgantt

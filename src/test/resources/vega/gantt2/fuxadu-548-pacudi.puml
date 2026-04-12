@@ -1,0 +1,19 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+2021-01-18 to 2021-01-22 are colored in palegreen
+saturday are closed
+sunday are closed
+
+Project starts the 1st of january 2021
+[Prototype design end] as [TASK1] lasts 19 days
+[TASK1] is colored in Lavender/LightBlue
+[Testing] lasts 4 days
+[TASK1]->[Testing]
+
+
+@endgantt

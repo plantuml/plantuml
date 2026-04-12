@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+Project starts the 2018/04/03
+sunday are closed
+[T1] on {source 1:50%} lasts 5 days
+[T2] lasts 2 days
+then [T3] on {source 1} lasts 2 days
+@endgantt

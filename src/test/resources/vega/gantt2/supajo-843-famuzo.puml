@@ -1,0 +1,22 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+
+title "Example"
+!$start_date = "2022-10-01"
+printscale daily
+Saturday are closed
+Sunday are closed
+Project starts at $start_date
+[activity 1] starts on $start_date and lasts 6 days
+[activity 2] starts after [activity 1]'s end and lasts 4 days
+' This should happen on the next Monday after activity 2 has finished
+' but I don't want to manually have to calculate the date
+[Approval] happens on 2022-10-17
+' Example of a syntax that would allow me to express what I want
+'[Approval] happens on first Monday after [activity 2]'s end
+
+@endgantt

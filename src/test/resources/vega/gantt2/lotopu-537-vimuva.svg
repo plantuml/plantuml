@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="92px" preserveAspectRatio="none" style="width:693px;height:92px;background:#FFFFFF;" version="1.1" viewBox="0 0 693 92" width="693px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="355.2" x2="355.2" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="26.8" x="164.2" y="9.3333">2020</text>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="26.8" x="500.2" y="9.3333">2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="672" x2="672" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="16" y2="30"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="28.8" x2="28.8" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.25" x="5.775" y="23.7778">Feb</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="61.8667" x2="61.8667" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="27.8333" x="31.4167" y="23.7778">March</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="93.8667" x2="93.8667" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="20.0833" x="67.825" y="23.7778">April</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="126.9333" x2="126.9333" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="18.9167" x="100.9417" y="23.7778">May</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="158.9333" x2="158.9333" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="21.75" x="132.0583" y="23.7778">June</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="192" x2="192" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="166.55" y="23.7778">July</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="225.0667" x2="225.0667" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="31.1667" x="192.95" y="23.7778">August</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="257.0667" x2="257.0667" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="232.15" y="23.7778">Sep</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="290.1333" x2="290.1333" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15.5" x="265.85" y="23.7778">Oct</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="322.1333" x2="322.1333" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="297.2167" y="23.7778">Nov</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="355.2" x2="355.2" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="329.75" y="23.7778">Dec</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="388.2667" x2="388.2667" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="16.1667" x="363.65" y="23.7778">Jan</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="418.1333" x2="418.1333" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.25" x="394.575" y="23.7778">Feb</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="451.2" x2="451.2" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="27.8333" x="420.75" y="23.7778">March</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="483.2" x2="483.2" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="20.0833" x="457.1583" y="23.7778">April</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="516.2667" x2="516.2667" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="18.9167" x="490.275" y="23.7778">May</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="548.2667" x2="548.2667" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="21.75" x="521.3917" y="23.7778">June</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="581.3333" x2="581.3333" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="555.8833" y="23.7778">July</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="614.4" x2="614.4" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="31.1667" x="582.2833" y="23.7778">August</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="646.4" x2="646.4" y1="16" y2="30"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="621.4833" y="23.7778">Sep</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15.5" x="651.45" y="23.7778">Oct</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="672" x2="672" y1="16" y2="30"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="672" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="672" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="672" y1="30" y2="30"/>
+    <polygon fill="#000000" points="12.2667,32,17.2667,37,12.2667,42,7.2667,37" style="stroke:#000000;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="668" x="2" y="47"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="668" x="2" y="47"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="47.2083" x="20.2667" y="40.5556">Milestone</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="23.8333" x="6" y="55.5556">Task</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="60" y2="74"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="28.8" x2="28.8" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.25" x="5.775" y="67.7778">Feb</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="61.8667" x2="61.8667" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="27.8333" x="31.4167" y="67.7778">March</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="93.8667" x2="93.8667" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="20.0833" x="67.825" y="67.7778">April</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="126.9333" x2="126.9333" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="18.9167" x="100.9417" y="67.7778">May</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="158.9333" x2="158.9333" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="21.75" x="132.0583" y="67.7778">June</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="192" x2="192" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="166.55" y="67.7778">July</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="225.0667" x2="225.0667" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="31.1667" x="192.95" y="67.7778">August</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="257.0667" x2="257.0667" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="232.15" y="67.7778">Sep</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="290.1333" x2="290.1333" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15.5" x="265.85" y="67.7778">Oct</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="322.1333" x2="322.1333" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="297.2167" y="67.7778">Nov</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="355.2" x2="355.2" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="329.75" y="67.7778">Dec</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="388.2667" x2="388.2667" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="16.1667" x="363.65" y="67.7778">Jan</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="418.1333" x2="418.1333" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.25" x="394.575" y="67.7778">Feb</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="451.2" x2="451.2" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="27.8333" x="420.75" y="67.7778">March</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="483.2" x2="483.2" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="20.0833" x="457.1583" y="67.7778">April</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="516.2667" x2="516.2667" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="18.9167" x="490.275" y="67.7778">May</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="548.2667" x2="548.2667" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="21.75" x="521.3917" y="67.7778">June</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="581.3333" x2="581.3333" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="555.8833" y="67.7778">July</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="614.4" x2="614.4" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="31.1667" x="582.2833" y="67.7778">August</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="646.4" x2="646.4" y1="60" y2="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8333" x="621.4833" y="67.7778">Sep</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15.5" x="651.45" y="67.7778">Oct</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="672" x2="672" y1="60" y2="74"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="74" y2="90"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="355.2" x2="355.2" y1="74" y2="90"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="26.8" x="164.2" y="83.3333">2020</text>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="26.8" x="500.2" y="83.3333">2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="672" x2="672" y1="74" y2="90"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="672" y1="60" y2="60"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="672" y1="74" y2="74"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="672" y1="90" y2="90"/>
+  </g>
+</svg>

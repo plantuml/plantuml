@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="153px" preserveAspectRatio="none" style="width:288px;height:153px;background:#FFFFFF;" version="1.1" viewBox="0 0 288 153" width="288px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="5" y="23.7778">18</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="33" y="23.7778">19</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="61" y="23.7778">20</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="89" y="23.7778">21</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="117" y="23.7778">22</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="145" y="23.7778">23</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="28" x2="28" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="56" x2="56" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="84" x2="84" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="112" x2="112" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="140" x2="140" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="168" x2="168" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="176" x2="176" y1="16" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="120" x2="120" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="52.8" x="33.6" y="9.3333">May 2022</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="176" x2="176" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="49.5" x="123.25" y="9.3333">Jun 2022</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="176" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="176" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="176" y1="27" y2="27"/>
+    <path d="M152,55 L152,64.5 L157,64.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="156,60.5,160,64.5,156,68.5,156,60.5" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="36" x="2" y="29"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="36" x="2" y="29"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="156" x="2" y="44"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="156" x="2" y="44"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="12" x="162" y="59"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="12" x="162" y="59"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="64.2583" x="42" y="37.5556">Task1 {Alice}</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="85.0667" x="6" y="52.5556">Task2 {Bob:50%}</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="89.375" x="178" y="67.5556">Task3 {Alice:25%}</text>
+    <text fill="#000000" font-family="Serif" font-size="13" lengthAdjust="spacing" textLength="28.275" x="0" y="82.1111">Alice</text>
+    <line style="stroke:#000000;stroke-width:1;" x1="0" x2="176" y1="85" y2="85"/>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="6.4625" y="95">700</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="34.4625" y="95">300</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="10.05" x="148.975" y="95">50</text>
+    <text fill="#000000" font-family="Serif" font-size="13" lengthAdjust="spacing" textLength="23.1833" x="0" y="114.1111">Bob</text>
+    <line style="stroke:#000000;stroke-width:1;" x1="0" x2="176" y1="117" y2="117"/>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="6.4625" y="127">350</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="34.4625" y="127">350</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="62.4625" y="127">350</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="90.4625" y="127">350</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="118.4625" y="127">350</text>
+    <text fill="#000000" font-family="Serif" font-size="9" lengthAdjust="spacing" textLength="15.075" x="146.4625" y="127">250</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="176" y1="136" y2="136"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="136" y2="152"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="120" x2="120" y1="136" y2="152"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="52.8" x="33.6" y="145.3333">May 2022</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="176" x2="176" y1="136" y2="152"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="49.5" x="123.25" y="145.3333">Jun 2022</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="176" y1="152" y2="152"/>
+  </g>
+</svg>

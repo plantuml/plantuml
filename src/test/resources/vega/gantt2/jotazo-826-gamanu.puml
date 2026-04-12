@@ -1,0 +1,27 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+Project starts 2020-09-08
+saturday are closed
+sunday are closed
+
+[5 business days] as [LT] lasts 5 days
+[collection day] as [C] lasts 1 day
+
+-- correct --
+[C] starts at [LT]'s end
+[S0] happens at [LT]'s start
+[S1] happens 1 day after [LT]'s start
+[S2] happens 2 day after [LT]'s start
+[S3] happens 3 day after [LT]'s start
+[S4] happens 4 day after [LT]'s start
+-- INCORRECT --
+[F0] happens at [LT]'s end
+[F1] happens 1 day before [LT]'s end
+[F2] happens 2 day before [LT]'s end
+[F3] happens 3 day before [LT]'s end
+[F4] happens 4 day before [LT]'s end
+@endgantt

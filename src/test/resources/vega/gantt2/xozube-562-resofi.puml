@@ -1,0 +1,27 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+Project starts 2020-11-08
+'OK with dayly printscale
+printscale weekly
+[Week first day] happens 2020-11-09
+[Task 7 days] as [T7] starts at 2020-11-09
+[T7] ends at 2020-11-15
+[Task 6 days] as [T6] starts at 2020-11-09
+[T6] ends at 2020-11-14
+[Task 5 days] as [T5] starts at 2020-11-09
+[T5] ends at 2020-11-13
+[Task 4 days] as [T4] starts at 2020-11-09
+[T4] ends at 2020-11-12
+[Task 3 days] as [T3] starts at 2020-11-09
+[T3] ends at 2020-11-11
+[Task 2 days] as [T2] starts at 2020-11-09
+[T2] ends at 2020-11-10
+[Task 1 day] as [T1] starts at 2020-11-09
+[T1] ends at 2020-11-09
+[Week last day] happens 2020-11-15
+[NextWeek first day] happens 2020-11-16
+@endgantt

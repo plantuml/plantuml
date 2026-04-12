@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="89px" preserveAspectRatio="none" style="width:650px;height:89px;background:#FFFFFF;" version="1.1" viewBox="0 0 650 89" width="650px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="g22rqvnxoab4f0" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#33B2E2"/>
+      <stop offset="100%" stop-color="#009FDB"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <rect fill="#D2D2D2" height="45" style="stroke:none;stroke-width:1;" width="28" x="12" y="27"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="17" y="23.7778">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="45" y="23.7778">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="73" y="23.7778">3</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="101" y="23.7778">4</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="129" y="23.7778">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="157" y="23.7778">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="185" y="23.7778">7</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="213" y="23.7778">8</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="241" y="23.7778">9</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="269" y="23.7778">10</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="297" y="23.7778">11</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="325" y="23.7778">12</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="353" y="23.7778">13</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="381" y="23.7778">14</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="409" y="23.7778">15</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="437" y="23.7778">16</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="465" y="23.7778">17</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="493" y="23.7778">18</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="521" y="23.7778">19</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="549" y="23.7778">20</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="577" y="23.7778">21</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="12" x2="12" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="40" x2="40" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="68" x2="68" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="96" x2="96" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="124" x2="124" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="152" x2="152" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="180" x2="180" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="208" x2="208" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="236" x2="236" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="264" x2="264" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="292" x2="292" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="320" x2="320" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="348" x2="348" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="376" x2="376" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="404" x2="404" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="432" x2="432" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="460" x2="460" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="488" x2="488" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="516" x2="516" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="544" x2="544" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="572" x2="572" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="600" x2="600" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="604" x2="604" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="124" x2="124" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="49.5" x="37.25" y="9.3333">Jan 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="236" x2="236" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="50.8" x="154.6" y="9.3333">Feb 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="360" x2="360" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="50.8" x="272.6" y="9.3333">Mar 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="480" x2="480" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="48.8" x="395.6" y="9.3333">Apr 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="604" x2="604" y1="0" y2="16"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="52.8" x="515.6" y="9.3333">May 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="604" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="604" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="604" y1="27" y2="27"/>
+    <path d="M76,40 L76,49.5 L81,49.5" fill="none" style="stroke:#000000;stroke-width:1.5;"/>
+    <polygon fill="#000000" points="80,45.5,84,49.5,80,53.5,80,45.5" style="stroke:#000000;stroke-width:1;"/>
+    <rect fill="url(#g22rqvnxoab4f0)" height="11" style="stroke:none;stroke-width:1;" width="24" x="58" y="29"/>
+    <rect fill="none" height="11" style="stroke:#C2C2C2;stroke-width:1;" width="24" x="58" y="29"/>
+    <rect fill="url(#g22rqvnxoab4f0)" height="11" style="stroke:none;stroke-width:1;" width="24" x="86" y="44"/>
+    <rect fill="none" height="11" style="stroke:#C2C2C2;stroke-width:1;" width="24" x="86" y="44"/>
+    <polygon fill="#000000" points="602,59,607,64,602,69,597,64" style="stroke:#000000;stroke-width:1;"/>
+    <text fill="#5A5A5A" font-family="Cascadia Code PL" font-size="11" font-weight="700" lengthAdjust="spacing" textLength="158.5833" x="86" y="37.5556">Automatic branch tag on release</text>
+    <text fill="#5A5A5A" font-family="Cascadia Code PL" font-size="11" font-weight="700" lengthAdjust="spacing" textLength="111.925" x="114" y="52.5556">Setup Automatic Alerts</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="19.6167" x="610" y="67.5556">End</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="604" y1="72" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="72" y2="88"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="124" x2="124" y1="72" y2="88"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="49.5" x="37.25" y="81.3333">Jan 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="236" x2="236" y1="72" y2="88"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="50.8" x="154.6" y="81.3333">Feb 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="360" x2="360" y1="72" y2="88"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="50.8" x="272.6" y="81.3333">Mar 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="480" x2="480" y1="72" y2="88"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="48.8" x="395.6" y="81.3333">Apr 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="604" x2="604" y1="72" y2="88"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="52.8" x="515.6" y="81.3333">May 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="604" y1="88" y2="88"/>
+  </g>
+</svg>

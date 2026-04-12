@@ -1,0 +1,23 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+printscale weekly
+saturday are closed
+sunday are closed
+Project starts 2021-08-1
+
+<style>
+ganttDiagram {
+    task {
+        BackGroundColor #f34d67
+        LineColor #f34d67
+    }
+}
+</style>
+[task1] ends 2021-09-14
+[task1] lasts 20 days
+[task1] is 153% completed
+@endgantt
