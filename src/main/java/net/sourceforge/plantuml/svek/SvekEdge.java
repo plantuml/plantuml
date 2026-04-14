@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -285,11 +286,17 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		} else {
 			final HorizontalAlignment alignment = getMessageTextAlignment(diagramType(), skinParam);
 			final boolean hasSeveralGuideLines = link.getLabel().hasSeveralGuideLines();
+			final Style arrowStyle = getDefaultStyleDefinition(link.getStereotype())
+					.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			final LineBreakStrategy styleWidth = arrowStyle.wrapWidth();
+			final LineBreakStrategy wrapWidth = styleWidth.getMaxWidth() > 0
+					? styleWidth
+					: skinParam.maxMessageSize();
 			final TextBlock block;
 			if (hasSeveralGuideLines)
 				block = StringWithArrow.addSeveralMagicArrows(link.getLabel(), this, font, alignment, skinParam);
 			else
-				block = link.getLabel().create0(font, alignment, skinParam, skinParam.maxMessageSize(),
+				block = link.getLabel().create0(font, alignment, skinParam, wrapWidth,
 						CreoleMode.SIMPLE_LINE, null, null);
 
 			labelOnly = addVisibilityModifier(block, link, skinParam);

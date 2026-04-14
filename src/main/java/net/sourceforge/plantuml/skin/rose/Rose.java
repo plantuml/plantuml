@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -283,8 +284,13 @@ public class Rose {
 			Display stringsToDisplay) {
 		checkRose();
 
+		final LineBreakStrategy styleWidth = styles[0].wrapWidth();
+		final LineBreakStrategy maxMessageSize = styleWidth.getMaxWidth() > 0
+				? styleWidth
+				: param.maxMessageSize();
+
 		if (config.getArrowDirection() == ArrowDirection.SELF)
-			return new ComponentRoseSelfArrow(styles[0], stringsToDisplay, config, param, param.maxMessageSize(),
+			return new ComponentRoseSelfArrow(styles[0], stringsToDisplay, config, param, maxMessageSize,
 					param.strictUmlStyle() == false);
 
 		final ArrowDirection arrowDirection = config.getArrowDirection();
@@ -329,7 +335,7 @@ public class Rose {
 		}
 
 		return new ComponentRoseArrow(styles[0], stringsToDisplay, config, messageHorizontalAlignment, param,
-				param.maxMessageSize(), param.strictUmlStyle() == false, param.responseMessageBelowArrow());
+				maxMessageSize, param.strictUmlStyle() == false, param.responseMessageBelowArrow());
 	}
 
 	static public UStroke getStroke(ISkinParam param, LineParam lineParam, double defaultValue) {
