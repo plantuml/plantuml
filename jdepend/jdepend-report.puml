@@ -3375,14 +3375,15 @@ Total Classes: 4
 "net.sourceforge.plantuml.url" --> "java.util"
 "net.sourceforge.plantuml.url" --> "net.sourceforge.plantuml.klimt.geom"
 
-class "net.sourceforge.plantuml.utils" %lighten("red", 57) {
-Total Classes: 16
+class "net.sourceforge.plantuml.utils" %lighten("red", 56) {
+Total Classes: 17
 }
 "net.sourceforge.plantuml.utils" --> "java.io"
 "net.sourceforge.plantuml.utils" --> "java.lang"
 "net.sourceforge.plantuml.utils" --> "java.nio.charset"
 "net.sourceforge.plantuml.utils" --> "java.security"
 "net.sourceforge.plantuml.utils" --> "java.security.spec"
+"net.sourceforge.plantuml.utils" --> "java.time"
 "net.sourceforge.plantuml.utils" --> "java.util"
 "net.sourceforge.plantuml.utils" --> "javax.crypto"
 "net.sourceforge.plantuml.utils" --> "javax.crypto.spec"

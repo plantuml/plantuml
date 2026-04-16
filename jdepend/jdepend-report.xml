@@ -18045,14 +18045,14 @@
 
         <Package name="net.sourceforge.plantuml.utils">
             <Stats>
-                <TotalClasses>16</TotalClasses>
-                <ConcreteClasses>11</ConcreteClasses>
+                <TotalClasses>17</TotalClasses>
+                <ConcreteClasses>12</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
                 <Ca>60</Ca>
-                <Ce>21</Ce>
-                <A>0.31</A>
-                <I>0.26</I>
-                <D>0.43</D>
+                <Ce>22</Ce>
+                <A>0.29</A>
+                <I>0.27</I>
+                <D>0.44</D>
                 <V>1</V>
             </Stats>
 
@@ -18087,6 +18087,9 @@
                 <Class sourceFile="I18n.java">
                     net.sourceforge.plantuml.utils.I18n
                 </Class>
+                <Class sourceFile="I18nTimeData.java">
+                    net.sourceforge.plantuml.utils.I18nTimeData$1
+                </Class>
                 <Class sourceFile="MTRandom.java">
                     net.sourceforge.plantuml.utils.MTRandom
                 </Class>
@@ -18116,6 +18119,7 @@
                 <Package>java.nio.charset</Package>
                 <Package>java.security</Package>
                 <Package>java.security.spec</Package>
+                <Package>java.time</Package>
                 <Package>java.util</Package>
                 <Package>javax.crypto</Package>
                 <Package>javax.crypto.spec</Package>

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>I18nTimeDataGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.utils</a> &gt; <span class="el_source">I18nTimeDataGenerator.java</span></div><h1>I18nTimeDataGenerator.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.utils;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
+import java.time.DayOfWeek;
+import java.time.Month;
+import java.time.format.TextStyle;
+import java.util.Locale;
+
+/**
+ * Generates {@code I18nTimeData.java} by extracting short localized names for
+ * {@link DayOfWeek} and {@link Month} from the running JVM.
+ * &lt;p&gt;
+ * Run this class on a standard JVM (NOT under TeaVM) from the project root. It
+ * overwrites {@code src/main/java/net/sourceforge/plantuml/utils/I18nTimeData.java}
+ * in place:
+ *
+ * &lt;pre&gt;
+ * java net.sourceforge.plantuml.utils.I18nTimeDataGenerator
+ * &lt;/pre&gt;
+ *
+ * The generated class exposes {@code shortName(DayOfWeek, Locale)} and
+ * {@code shortName(Month, Locale)} implementations that do not rely on
+ * {@code ResourceBundle} or {@code DateTimeTextProvider}, so they are safe to
+ * use in a TeaVM-compiled context.
+ * &lt;p&gt;
+ * back to the English short form.
+ */
+<span class="nc" id="L67">public class I18nTimeDataGenerator {</span>
+
+	// Languages supported by the generated I18nTimeData.
+	// Order only affects readability of the generated code; dispatch is done
+	// on Locale.getLanguage() and each branch is independent.
+<span class="nc" id="L72">	private static final String[] LANGUAGES = { &quot;en&quot;, &quot;de&quot;, &quot;es&quot;, &quot;fr&quot;, &quot;ja&quot;, &quot;ko&quot;, &quot;ru&quot;, &quot;zh&quot; };</span>
+
+	public static void main(String[] args) throws Exception {
+		// Write I18nData.java next to this generator's source file.
+		// The path is resolved relative to the current working directory, which
+		// is expected to be the project root (same convention as other PlantUML
+		// code-generation utilities).
+<span class="nc" id="L79">		final File output = new File(&quot;src/main/java/net/sourceforge/plantuml/utils/I18nTimeData.java&quot;);</span>
+<span class="nc" id="L80">		final File parent = output.getParentFile();</span>
+<span class="nc bnc" id="L81" title="All 4 branches missed.">		if (parent != null &amp;&amp; !parent.isDirectory())</span>
+<span class="nc" id="L82">			throw new IOException(&quot;Target directory does not exist: &quot; + parent);</span>
+
+<span class="nc" id="L84">		try (PrintStream out = new PrintStream(new FileOutputStream(output), false, StandardCharsets.UTF_8.name())) {</span>
+<span class="nc" id="L85">			emitHeader(out);</span>
+<span class="nc" id="L86">			emitDayOfWeekMethod(out);</span>
+<span class="nc" id="L87">			out.println();</span>
+<span class="nc" id="L88">			emitMonthMethod(out);</span>
+<span class="nc" id="L89">			out.println();</span>
+<span class="nc" id="L90">			emitMonthLongNameMethod(out);</span>
+<span class="nc" id="L91">			emitFooter(out);</span>
+		}
+
+<span class="nc" id="L94">		System.out.println(&quot;Generated &quot; + output.getAbsolutePath());</span>
+<span class="nc" id="L95">	}</span>
+
+	private static void emitHeader(PrintStream out) {
+<span class="nc" id="L98">		out.println(&quot;package net.sourceforge.plantuml.utils;&quot;);</span>
+<span class="nc" id="L99">		out.println();</span>
+<span class="nc" id="L100">		out.println(&quot;import java.time.DayOfWeek;&quot;);</span>
+<span class="nc" id="L101">		out.println(&quot;import java.time.Month;&quot;);</span>
+<span class="nc" id="L102">		out.println(&quot;import java.util.Locale;&quot;);</span>
+<span class="nc" id="L103">		out.println();</span>
+<span class="nc" id="L104">		out.println(&quot;// Generated \u2014 do not edit&quot;);</span>
+<span class="nc" id="L105">		out.println(&quot;// Build by I18nDataTimeGenerator&quot;);</span>
+<span class="nc" id="L106">		out.println(&quot;public class I18nTimeData {&quot;);</span>
+<span class="nc" id="L107">		out.println();</span>
+<span class="nc" id="L108">	}</span>
+
+	private static void emitFooter(PrintStream out) {
+<span class="nc" id="L111">		out.println(&quot;}&quot;);</span>
+<span class="nc" id="L112">	}</span>
+
+	private static void emitDayOfWeekMethod(PrintStream out) {
+<span class="nc" id="L115">		out.println(&quot;\tpublic static String shortName(DayOfWeek dayOfWeek, Locale locale) {&quot;);</span>
+<span class="nc" id="L116">		out.println(&quot;\t\tfinal String lang = locale.getLanguage();&quot;);</span>
+<span class="nc" id="L117">		out.println(&quot;\t\tswitch (lang) {&quot;);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		for (String lang : LANGUAGES) {</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			if (&quot;en&quot;.equals(lang))</span>
+<span class="nc" id="L120">				continue; // english is the fallback</span>
+<span class="nc" id="L121">			final Locale loc = Locale.forLanguageTag(lang);</span>
+<span class="nc" id="L122">			out.println(&quot;\t\tcase \&quot;&quot; + lang + &quot;\&quot;:&quot;);</span>
+<span class="nc" id="L123">			out.println(&quot;\t\t\tswitch (dayOfWeek) {&quot;);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">			for (DayOfWeek d : DayOfWeek.values()) {</span>
+<span class="nc" id="L125">				final String shortName = dayShortName(d, loc);</span>
+<span class="nc" id="L126">				out.println(&quot;\t\t\tcase &quot; + d.name() + &quot;: return \&quot;&quot; + escape(shortName) + &quot;\&quot;;&quot;);</span>
+			}
+<span class="nc" id="L128">			out.println(&quot;\t\t\t}&quot;);</span>
+<span class="nc" id="L129">			out.println(&quot;\t\t\tbreak;&quot;);</span>
+		}
+<span class="nc" id="L131">		out.println(&quot;\t\t}&quot;);</span>
+		// English fallback (also used when locale is unsupported)
+<span class="nc" id="L133">		out.println(&quot;\t\t// Fallback: English short form (first two letters of enum name)&quot;);</span>
+<span class="nc" id="L134">		out.println(&quot;\t\tswitch (dayOfWeek) {&quot;);</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		for (DayOfWeek d : DayOfWeek.values()) {</span>
+<span class="nc" id="L136">			final String shortName = dayShortName(d, Locale.ENGLISH);</span>
+<span class="nc" id="L137">			out.println(&quot;\t\tcase &quot; + d.name() + &quot;: return \&quot;&quot; + escape(shortName) + &quot;\&quot;;&quot;);</span>
+		}
+<span class="nc" id="L139">		out.println(&quot;\t\t}&quot;);</span>
+<span class="nc" id="L140">		out.println(&quot;\t\tthrow new IllegalArgumentException();&quot;);</span>
+<span class="nc" id="L141">		out.println(&quot;\t}&quot;);</span>
+<span class="nc" id="L142">	}</span>
+
+	private static void emitMonthMethod(PrintStream out) {
+<span class="nc" id="L145">		out.println(&quot;\tpublic static String shortName(Month month, Locale locale) {&quot;);</span>
+<span class="nc" id="L146">		out.println(&quot;\t\tfinal String lang = locale.getLanguage();&quot;);</span>
+<span class="nc" id="L147">		out.println(&quot;\t\tswitch (lang) {&quot;);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		for (String lang : LANGUAGES) {</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			if (&quot;en&quot;.equals(lang))</span>
+<span class="nc" id="L150">				continue;</span>
+<span class="nc" id="L151">			final Locale loc = Locale.forLanguageTag(lang);</span>
+<span class="nc" id="L152">			out.println(&quot;\t\tcase \&quot;&quot; + lang + &quot;\&quot;:&quot;);</span>
+<span class="nc" id="L153">			out.println(&quot;\t\t\tswitch (month) {&quot;);</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">			for (Month m : Month.values()) {</span>
+<span class="nc" id="L155">				final String shortName = monthShortName(m, loc);</span>
+<span class="nc" id="L156">				out.println(&quot;\t\t\tcase &quot; + m.name() + &quot;: return \&quot;&quot; + escape(shortName) + &quot;\&quot;;&quot;);</span>
+			}
+<span class="nc" id="L158">			out.println(&quot;\t\t\t}&quot;);</span>
+<span class="nc" id="L159">			out.println(&quot;\t\t\tbreak;&quot;);</span>
+		}
+<span class="nc" id="L161">		out.println(&quot;\t\t}&quot;);</span>
+<span class="nc" id="L162">		out.println(&quot;\t\t// Fallback: English short form (first three letters of enum name)&quot;);</span>
+<span class="nc" id="L163">		out.println(&quot;\t\tswitch (month) {&quot;);</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">		for (Month m : Month.values()) {</span>
+<span class="nc" id="L165">			final String shortName = monthShortName(m, Locale.ENGLISH);</span>
+<span class="nc" id="L166">			out.println(&quot;\t\tcase &quot; + m.name() + &quot;: return \&quot;&quot; + escape(shortName) + &quot;\&quot;;&quot;);</span>
+		}
+<span class="nc" id="L168">		out.println(&quot;\t\t}&quot;);</span>
+<span class="nc" id="L169">		out.println(&quot;\t\tthrow new IllegalArgumentException();&quot;);</span>
+<span class="nc" id="L170">		out.println(&quot;\t}&quot;);</span>
+<span class="nc" id="L171">	}</span>
+
+	private static void emitMonthLongNameMethod(PrintStream out) {
+<span class="nc" id="L174">		out.println(&quot;\tpublic static String longName(Month month, Locale locale) {&quot;);</span>
+<span class="nc" id="L175">		out.println(&quot;\t\tfinal String lang = locale.getLanguage();&quot;);</span>
+<span class="nc" id="L176">		out.println(&quot;\t\tswitch (lang) {&quot;);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		for (String lang : LANGUAGES) {</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">			if (&quot;en&quot;.equals(lang))</span>
+<span class="nc" id="L179">				continue;</span>
+<span class="nc" id="L180">			final Locale loc = Locale.forLanguageTag(lang);</span>
+<span class="nc" id="L181">			out.println(&quot;\t\tcase \&quot;&quot; + lang + &quot;\&quot;:&quot;);</span>
+<span class="nc" id="L182">			out.println(&quot;\t\t\tswitch (month) {&quot;);</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">			for (Month m : Month.values()) {</span>
+<span class="nc" id="L184">				final String longName = monthLongName(m, loc);</span>
+<span class="nc" id="L185">				out.println(&quot;\t\t\tcase &quot; + m.name() + &quot;: return \&quot;&quot; + escape(longName) + &quot;\&quot;;&quot;);</span>
+			}
+<span class="nc" id="L187">			out.println(&quot;\t\t\t}&quot;);</span>
+<span class="nc" id="L188">			out.println(&quot;\t\t\tbreak;&quot;);</span>
+		}
+<span class="nc" id="L190">		out.println(&quot;\t\t}&quot;);</span>
+<span class="nc" id="L191">		out.println(&quot;\t\t// Fallback: English long form&quot;);</span>
+<span class="nc" id="L192">		out.println(&quot;\t\tswitch (month) {&quot;);</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		for (Month m : Month.values()) {</span>
+<span class="nc" id="L194">			final String longName = monthLongName(m, Locale.ENGLISH);</span>
+<span class="nc" id="L195">			out.println(&quot;\t\tcase &quot; + m.name() + &quot;: return \&quot;&quot; + escape(longName) + &quot;\&quot;;&quot;);</span>
+		}
+<span class="nc" id="L197">		out.println(&quot;\t\t}&quot;);</span>
+<span class="nc" id="L198">		out.println(&quot;\t\tthrow new IllegalArgumentException();&quot;);</span>
+<span class="nc" id="L199">		out.println(&quot;\t}&quot;);</span>
+<span class="nc" id="L200">	}</span>
+
+	// ------------------------------------------------------------------
+	// Reproduce DayOfWeekUtils.shortName / MonthUtils.shortName semantics
+	// ------------------------------------------------------------------
+
+	private static String capitalize(String s) {
+<span class="nc bnc" id="L207" title="All 4 branches missed.">		if (s == null || s.isEmpty())</span>
+<span class="nc" id="L208">			return s;</span>
+<span class="nc" id="L209">		return Character.toUpperCase(s.charAt(0)) + s.toLowerCase().substring(1);</span>
+	}
+
+	private static String dayShortName(DayOfWeek d, Locale locale) {
+<span class="nc bnc" id="L213" title="All 4 branches missed.">		if (locale == Locale.ENGLISH || &quot;en&quot;.equals(locale.getLanguage()))</span>
+<span class="nc" id="L214">			return capitalize(d.name().substring(0, 2));</span>
+<span class="nc" id="L215">		final String s = capitalize(d.getDisplayName(TextStyle.SHORT_STANDALONE, locale));</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		if (s.length() &gt; 2)</span>
+<span class="nc" id="L217">			return capitalize(s.substring(0, 2));</span>
+<span class="nc" id="L218">		return capitalize(s);</span>
+	}
+
+	private static String monthShortName(Month m, Locale locale) {
+<span class="nc bnc" id="L222" title="All 4 branches missed.">		if (locale == Locale.ENGLISH || &quot;en&quot;.equals(locale.getLanguage()))</span>
+<span class="nc" id="L223">			return capitalize(m.name()).substring(0, 3);</span>
+<span class="nc" id="L224">		return capitalize(m.getDisplayName(TextStyle.SHORT_STANDALONE, locale));</span>
+	}
+
+	private static String monthLongName(Month m, Locale locale) {
+<span class="nc bnc" id="L228" title="All 4 branches missed.">		if (locale == Locale.ENGLISH || &quot;en&quot;.equals(locale.getLanguage()))</span>
+<span class="nc" id="L229">			return capitalize(m.name());</span>
+<span class="nc" id="L230">		return capitalize(m.getDisplayName(TextStyle.FULL_STANDALONE, locale));</span>
+	}
+
+	// Escape only characters that have a special meaning inside a Java string
+	// literal. Non-ASCII characters are emitted as-is: the generated file is
+	// written in UTF-8, which keeps the source human-readable.
+	private static String escape(String s) {
+<span class="nc" id="L237">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="nc" id="L239">			final char c = s.charAt(i);</span>
+<span class="nc bnc" id="L240" title="All 5 branches missed.">			switch (c) {</span>
+			case '&quot;':
+			case '\\':
+<span class="nc" id="L243">				sb.append('\\').append(c);</span>
+<span class="nc" id="L244">				break;</span>
+			case '\n':
+<span class="nc" id="L246">				sb.append(&quot;\\n&quot;);</span>
+<span class="nc" id="L247">				break;</span>
+			case '\r':
+<span class="nc" id="L249">				sb.append(&quot;\\r&quot;);</span>
+<span class="nc" id="L250">				break;</span>
+			case '\t':
+<span class="nc" id="L252">				sb.append(&quot;\\t&quot;);</span>
+<span class="nc" id="L253">				break;</span>
+			default:
+<span class="nc" id="L255">				sb.append(c);</span>
+				break;
+			}
+		}
+<span class="nc" id="L259">		return sb.toString();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -45,61 +45,56 @@ import com.plantuml.ubrex.builder.UBrexOr;
 import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.utils.I18nTimeData;
 
-<span class="nc" id="L49">public class MonthUtils {</span>
+<span class="nc" id="L50">public class MonthUtils {</span>
 
 	public static String getRegexString() {
-<span class="fc" id="L52">		final StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L53" title="All 2 branches covered.">		for (Month month : Month.values()) {</span>
-<span class="fc bfc" id="L54" title="All 2 branches covered.">			if (sb.length() &gt; 0)</span>
-<span class="fc" id="L55">				sb.append(&quot;|&quot;);</span>
+<span class="fc" id="L53">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">		for (Month month : Month.values()) {</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">			if (sb.length() &gt; 0)</span>
+<span class="fc" id="L56">				sb.append(&quot;|&quot;);</span>
 
-<span class="fc" id="L57">			sb.append(month.name().substring(0, 3) + &quot;[a-z]*&quot;);</span>
+<span class="fc" id="L58">			sb.append(month.name().substring(0, 3) + &quot;[a-z]*&quot;);</span>
 		}
-<span class="fc" id="L59">		return sb.toString();</span>
+<span class="fc" id="L60">		return sb.toString();</span>
 	}
 
 	public static UnicodeBracketedExpression getUbrex() {
-<span class="fc" id="L63">		final UBrexPart[] alternatives = new UBrexPart[Month.values().length];</span>
-<span class="fc" id="L64">		int i = 0;</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">		for (Month month : Month.values()) {</span>
-<span class="fc" id="L66">			final String prefix = month.name().substring(0, 3);</span>
-<span class="fc" id="L67">			final StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">			for (char c : prefix.toCharArray()) {</span>
-<span class="fc" id="L69">				final char upper = Character.toUpperCase(c);</span>
-<span class="fc" id="L70">				final char lower = Character.toLowerCase(c);</span>
-<span class="fc" id="L71">				sb.append('「');</span>
-<span class="fc" id="L72">				sb.append(upper);</span>
-<span class="fc" id="L73">				sb.append(lower);</span>
-<span class="fc" id="L74">				sb.append('」');</span>
+<span class="fc" id="L64">		final UBrexPart[] alternatives = new UBrexPart[Month.values().length];</span>
+<span class="fc" id="L65">		int i = 0;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		for (Month month : Month.values()) {</span>
+<span class="fc" id="L67">			final String prefix = month.name().substring(0, 3);</span>
+<span class="fc" id="L68">			final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">			for (char c : prefix.toCharArray()) {</span>
+<span class="fc" id="L70">				final char upper = Character.toUpperCase(c);</span>
+<span class="fc" id="L71">				final char lower = Character.toLowerCase(c);</span>
+<span class="fc" id="L72">				sb.append('「');</span>
+<span class="fc" id="L73">				sb.append(upper);</span>
+<span class="fc" id="L74">				sb.append(lower);</span>
+<span class="fc" id="L75">				sb.append('」');</span>
 			}
-<span class="fc" id="L76">			sb.append(&quot; &quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3034) + &quot;le&quot;);</span>
-<span class="fc" id="L77">			alternatives[i++] = new UBrexLeaf(sb.toString());</span>
+<span class="fc" id="L77">			sb.append(&quot; &quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3034) + &quot;le&quot;);</span>
+<span class="fc" id="L78">			alternatives[i++] = new UBrexLeaf(sb.toString());</span>
 		}
-<span class="fc" id="L79">		return new UBrexOr(alternatives);</span>
+<span class="fc" id="L80">		return new UBrexOr(alternatives);</span>
 	}
 
 	public static Month fromString(String value) {
-<span class="fc" id="L83">		value = StringUtils.goUpperCase(value).substring(0, 3);</span>
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		for (Month m : Month.values())</span>
-<span class="fc bfc" id="L85" title="All 2 branches covered.">			if (m.name().startsWith(value))</span>
-<span class="fc" id="L86">				return m;</span>
+<span class="fc" id="L84">		value = StringUtils.goUpperCase(value).substring(0, 3);</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		for (Month m : Month.values())</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">			if (m.name().startsWith(value))</span>
+<span class="fc" id="L87">				return m;</span>
 
-<span class="nc" id="L88">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L89">		throw new IllegalArgumentException();</span>
 	}
 
 	public static String shortName(Month month, Locale locale) {
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (locale == Locale.ENGLISH)</span>
-<span class="fc" id="L93">			return StringUtils.capitalize(month.name()).substring(0, 3);</span>
-
-<span class="nc" id="L95">		return StringUtils.capitalize(month.getDisplayName(TextStyle.SHORT_STANDALONE, locale));</span>
+<span class="fc" id="L93">		return I18nTimeData.shortName(month, locale);</span>
 	}
 
 	public static String longName(Month month, Locale locale) {
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (locale == Locale.ENGLISH)</span>
-<span class="fc" id="L100">			return StringUtils.capitalize(month.name());</span>
-
-<span class="nc" id="L102">		return month.getDisplayName(TextStyle.FULL_STANDALONE, locale);</span>
+<span class="fc" id="L97">		return I18nTimeData.longName(month, locale);</span>
 	}
 
 }
