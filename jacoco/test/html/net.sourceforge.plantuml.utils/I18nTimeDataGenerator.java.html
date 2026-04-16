@@ -212,22 +212,22 @@ import java.util.Locale;
 	private static String dayShortName(DayOfWeek d, Locale locale) {
 <span class="nc bnc" id="L213" title="All 4 branches missed.">		if (locale == Locale.ENGLISH || &quot;en&quot;.equals(locale.getLanguage()))</span>
 <span class="nc" id="L214">			return capitalize(d.name().substring(0, 2));</span>
-<span class="nc" id="L215">		final String s = capitalize(d.getDisplayName(TextStyle.SHORT_STANDALONE, locale));</span>
+<span class="nc" id="L215">		final String s = d.getDisplayName(TextStyle.SHORT_STANDALONE, locale);</span>
 <span class="nc bnc" id="L216" title="All 2 branches missed.">		if (s.length() &gt; 2)</span>
-<span class="nc" id="L217">			return capitalize(s.substring(0, 2));</span>
-<span class="nc" id="L218">		return capitalize(s);</span>
+<span class="nc" id="L217">			return s.substring(0, 2);</span>
+<span class="nc" id="L218">		return s;</span>
 	}
 
 	private static String monthShortName(Month m, Locale locale) {
 <span class="nc bnc" id="L222" title="All 4 branches missed.">		if (locale == Locale.ENGLISH || &quot;en&quot;.equals(locale.getLanguage()))</span>
 <span class="nc" id="L223">			return capitalize(m.name()).substring(0, 3);</span>
-<span class="nc" id="L224">		return capitalize(m.getDisplayName(TextStyle.SHORT_STANDALONE, locale));</span>
+<span class="nc" id="L224">		return m.getDisplayName(TextStyle.SHORT_STANDALONE, locale);</span>
 	}
 
 	private static String monthLongName(Month m, Locale locale) {
 <span class="nc bnc" id="L228" title="All 4 branches missed.">		if (locale == Locale.ENGLISH || &quot;en&quot;.equals(locale.getLanguage()))</span>
 <span class="nc" id="L229">			return capitalize(m.name());</span>
-<span class="nc" id="L230">		return capitalize(m.getDisplayName(TextStyle.FULL_STANDALONE, locale));</span>
+<span class="nc" id="L230">		return m.getDisplayName(TextStyle.FULL_STANDALONE, locale);</span>
 	}
 
 	// Escape only characters that have a special meaning inside a Java string
