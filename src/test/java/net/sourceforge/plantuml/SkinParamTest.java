@@ -135,8 +135,8 @@ class SkinParamTest {
 		assertThat(skinParam.packageStyle()).isEqualTo(PackageStyle.FOLDER);
 
 		assertThat(skinParam.getPadding().isZero());
-		assertThat(skinParam.getPadding(PaddingParam.BOX).isZero());
-		assertThat(skinParam.getPadding(PaddingParam.PARTICIPANT).isZero());
+		assertThat(skinParam.getPaddingTOBEREMOVED(PaddingParam.BOX).isZero());
+		assertThat(skinParam.getPaddingTOBEREMOVED(PaddingParam.PARTICIPANT).isZero());
 
 		assertThat(skinParam.getPreserveAspectRatio()).isEqualTo("none");
 

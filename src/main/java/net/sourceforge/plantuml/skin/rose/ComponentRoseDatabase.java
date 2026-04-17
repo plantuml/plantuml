@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
@@ -58,14 +59,14 @@ public class ComponentRoseDatabase extends AbstractTextualComponent {
 
 	public ComponentRoseDatabase(Style style, Style stereo, Display stringsToDisplay, boolean head,
 			ISkinParam skinParam) {
-		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, skinParam, stringsToDisplay, false);
+		super(style, stereo, LineBreakStrategy.NONE, ClockwiseTopRightBottomLeft.topRightBottomLeft(0, 3, 0, 3),
+				skinParam, stringsToDisplay, false);
 		this.head = head;
 
 		final Fashion biColor = getSymbolContext();
 
 		final Fashion symbolContext = new Fashion(biColor.getBackColor(), biColor.getForeColor())
-				.withStroke(getStroke())
-				.withShadow(biColor.getDeltaShadow());
+				.withStroke(getStroke()).withShadow(biColor.getDeltaShadow());
 		this.stickman = USymbols.DATABASE.asSmall(null, TextBlockUtils.empty(16, 17), TextBlockUtils.empty(0, 0),
 				symbolContext, HorizontalAlignment.CENTER);
 	}

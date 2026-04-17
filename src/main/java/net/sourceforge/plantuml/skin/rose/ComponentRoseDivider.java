@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
@@ -63,7 +64,8 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 	private final double roundCorner;
 
 	public ComponentRoseDivider(Style style, Display stringsToDisplay, ISkinParam skinParam) {
-		super(style, LineBreakStrategy.NONE, 4, 4, 4, skinParam, stringsToDisplay, false);
+		super(style, LineBreakStrategy.NONE, ClockwiseTopRightBottomLeft.topRightBottomLeft(4, 4, 4, 4), skinParam,
+				stringsToDisplay, false);
 
 		this.background = getColorBackGround();
 		this.borderColor = getColorLine();
@@ -98,7 +100,7 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 			rect.setDeltaShadow(shadow);
 
 			ug.apply(new UTranslate(xpos, ypos)).draw(rect);
-			textBlock.drawU(ug.apply(new UTranslate(xpos + deltaX, ypos + getMarginY())));
+			textBlock.drawU(ug.apply(new UTranslate(xpos + deltaX, ypos + getOldPaddingY())));
 		}
 	}
 

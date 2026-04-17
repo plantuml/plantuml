@@ -143,7 +143,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		final double yText;
 		if (isBelowForResponse()) {
 			posArrow = 0;
-			yText = getMarginY();
+			yText = getOldPaddingY();
 		} else {
 			posArrow = getTextHeight(stringBounder);
 			yText = 0;
@@ -168,10 +168,10 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 			textPos = (dimensionToUse.getWidth() - Math.abs(area.getTextDeltaX()) - textWidth) / 2;
 		} else if (messagePosition == HorizontalAlignment.RIGHT) {
 			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();
-			textPos = dimensionToUse.getWidth() - Math.abs(area.getTextDeltaX()) - textWidth - getMarginX2()
+			textPos = dimensionToUse.getWidth() - Math.abs(area.getTextDeltaX()) - textWidth - getOldPaddingX2()
 					- (direction2 == ArrowDirection.LEFT_TO_RIGHT_NORMAL ? getArrowDeltaX() : 0);
 		} else {
-			textPos = getMarginX1()
+			textPos = getOldPaddingX1()
 					+ (direction2 == ArrowDirection.RIGHT_TO_LEFT_REVERSE || direction2 == ArrowDirection.BOTH_DIRECTION
 							? getArrowDeltaX()
 							: 0);
@@ -189,7 +189,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		if (isBelowForResponse())
 			return 0;
 
-		return getTextHeight(stringBounder) - 2 * getMarginY();
+		return getTextHeight(stringBounder) - 2 * getOldPaddingY();
 	}
 
 	private boolean isBelowForResponse() {

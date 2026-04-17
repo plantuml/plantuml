@@ -131,23 +131,24 @@ public class Rose {
 
 		// final Stereotype stereotype = stringsToDisplay == null ? null : stringsToDisplay.getStereotypeIfAny();
 
-		final ClockwiseTopRightBottomLeft padding = param.getPadding(PaddingParam.PARTICIPANT);
+		final ClockwiseTopRightBottomLeft padding = styles[0].getPadding(); //  param.getPadding(PaddingParam.PARTICIPANT);
+		final ClockwiseTopRightBottomLeft margin = styles[0].getMargin();
 
 		if (type == ComponentType.PARTICIPANT_HEAD)
 			return new ComponentRoseParticipant(styles[0], styles[1], stringsToDisplay, param,
-					getMinClassWidth(styles[0]), false, padding);
+					getMinClassWidth(styles[0]), false, padding, margin);
 
 		if (type == ComponentType.PARTICIPANT_TAIL)
 			return new ComponentRoseParticipant(styles[0], styles[1], stringsToDisplay, param,
-					getMinClassWidth(styles[0]), false, padding);
+					getMinClassWidth(styles[0]), false, padding, margin);
 
 		if (type == ComponentType.COLLECTIONS_HEAD)
 			return new ComponentRoseParticipant(styles[0], styles[1], stringsToDisplay, param,
-					getMinClassWidth(styles[0]), true, padding);
+					getMinClassWidth(styles[0]), true, padding, margin);
 
 		if (type == ComponentType.COLLECTIONS_TAIL)
 			return new ComponentRoseParticipant(styles[0], styles[1], stringsToDisplay, param,
-					getMinClassWidth(styles[0]), true, padding);
+					getMinClassWidth(styles[0]), true, padding, margin);
 
 		if (type == ComponentType.ACTOR_HEAD)
 			return new ComponentRoseActor(param.actorStyle(), styles[0], styles == null ? null : styles[1],

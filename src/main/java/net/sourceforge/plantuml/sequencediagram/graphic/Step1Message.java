@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
-import net.sourceforge.plantuml.skin.PaddingParam;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.teavm.TeaVM;
@@ -255,9 +255,11 @@ class Step1Message extends Step1Abstract {
 		if (messageArrow == null)
 			throw new IllegalStateException();
 
+		final Style[] styles = ((Message) getMessage()).getParticipant2().getUsedStyles();
+		final ClockwiseTopRightBottomLeft margin = styles[0].getMargin();
+
 		Arrow result = new ArrowAndParticipant(getDrawingSet().getCounter(), getDrawingSet().getSkinParam().getPragma(),
-				getStringBounder(), messageArrow, getParticipantBox2(),
-				getDrawingSet().getSkinParam().getPadding(PaddingParam.PARTICIPANT), getMessage().getLineLocation());
+				getStringBounder(), messageArrow, getParticipantBox2(), margin, getMessage().getLineLocation());
 		if (getMessage().getNoteOnMessages().size() > 0) {
 			final List<NoteBox> noteBoxes = new ArrayList<>();
 			for (int i = 0; i < getNotes().size(); i++) {

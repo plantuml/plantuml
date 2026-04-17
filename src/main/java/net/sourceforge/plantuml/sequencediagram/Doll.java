@@ -236,7 +236,7 @@ public class Doll implements WithStyle {
 	}
 
 	private ClockwiseTopRightBottomLeft padding() {
-		return tileArguments.getSkinParam().getPadding(PaddingParam.BOX);
+		return tileArguments.getSkinParam().getPaddingTOBEREMOVED(PaddingParam.BOX);
 	}
 
 	public Real getMinX(StringBounder stringBounder) {

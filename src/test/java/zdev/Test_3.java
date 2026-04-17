@@ -22,16 +22,20 @@ import net.sourceforge.plantuml.preproc.Defines;
 
 <style>
   participant {
-     Padding: 2 20
-     Margin: 0 50
+     Margin: 0 30
  }
 </style>
 
-Bob -> Alice : hello
+
+participant bbbbbbb
+participant a
+
+bbbbbbb->a
 @enduml
 
+
  */
-public class Test_0 {
+public class Test_3 {
 
 	protected File getJavaFile() {
 		final String name = getClass().getName();

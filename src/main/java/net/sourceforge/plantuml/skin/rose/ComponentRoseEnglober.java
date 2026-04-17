@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
@@ -54,7 +55,8 @@ public class ComponentRoseEnglober extends AbstractTextualComponent {
 	private final double roundCorner;
 
 	public ComponentRoseEnglober(Style style, Display strings, ISkinParam skinParam) {
-		super(style, LineBreakStrategy.NONE, 3, 3, 1, skinParam, strings, false);
+		super(style, LineBreakStrategy.NONE, ClockwiseTopRightBottomLeft.topRightBottomLeft(1, 3, 1, 3), skinParam,
+				strings, false);
 		this.roundCorner = getRoundCorner();
 		this.symbolContext = getSymbolContext();
 	}

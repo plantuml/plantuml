@@ -325,8 +325,8 @@ public class SkinParamDelegator implements ISkinParam {
 	}
 
 	@Override
-	public ClockwiseTopRightBottomLeft getPadding(PaddingParam param) {
-		return skinParam.getPadding(param);
+	public ClockwiseTopRightBottomLeft getPaddingTOBEREMOVED(PaddingParam param) {
+		return skinParam.getPaddingTOBEREMOVED(param);
 	}
 
 	@Override

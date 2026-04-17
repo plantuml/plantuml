@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Padder;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
@@ -58,7 +59,8 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 
 	public AbstractComponentRoseArrow(Style style, Display stringsToDisplay, ArrowConfiguration arrowConfiguration,
 			ISkinParam skinParam, LineBreakStrategy maxMessageSize) {
-		super(style, maxMessageSize, 7, 7, 1, skinParam, stringsToDisplay, false);
+		super(style, maxMessageSize, ClockwiseTopRightBottomLeft.topRightBottomLeft(1, 7, 1, 7), skinParam,
+				stringsToDisplay, false);
 
 		this.foregroundColor = getColorLine();
 		this.backgroundColor = getColorBackGround();

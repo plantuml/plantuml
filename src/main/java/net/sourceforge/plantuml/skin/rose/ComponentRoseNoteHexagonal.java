@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
@@ -54,7 +55,8 @@ final public class ComponentRoseNoteHexagonal extends AbstractTextualComponent {
 	private final Fashion symbolContext;
 
 	public ComponentRoseNoteHexagonal(Style style, Display strings, ISkinParam skinParam, Colors colors) {
-		super(style, style.wrapWidth(), 12, 12, 4, skinParam, strings, false);
+		super(style, style.wrapWidth(), ClockwiseTopRightBottomLeft.topRightBottomLeft(4, 12, 4, 12), skinParam,
+				strings, false);
 
 		this.symbolContext = getSymbolContext(colors);
 
@@ -108,7 +110,7 @@ final public class ComponentRoseNoteHexagonal extends AbstractTextualComponent {
 		ug.draw(polygon);
 		ug = ug.apply(UStroke.simple());
 
-		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1() + diffX / 2, getMarginY())));
+		getTextBlock().drawU(ug.apply(new UTranslate(getOldPaddingX1() + diffX / 2, getOldPaddingY())));
 
 	}
 

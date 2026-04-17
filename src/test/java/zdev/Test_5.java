@@ -18,20 +18,38 @@ import net.sourceforge.plantuml.preproc.Defines;
 /*
  * 
 
+{
+  "sha1": "7q5kspootzmb6i7dpcwjm9fm7cdygsr",
+  "insertion": {
+    "when": "2024-05-30T20:48:21.258Z",
+    "user": "plantuml@gmail.com"
+  },
+  "humhash": "kumovo-90-zira054"
+}
 @startuml
-
 <style>
   participant {
-     Padding: 2 20
-     Margin: 0 50
+     Margin: 0 30
  }
 </style>
 
-Bob -> Alice : hello
+skinparam ParticipantPadding 20
+skinparam BoxPadding 10
+box "a1"
+participant Alice1
+participant Alice2
+end box
+box "b1"
+participant Bob1
+participant Bob2
+end box
+Alice1 -> Bob1 : hello
+Alice1 -> Out : out
 @enduml
 
+
  */
-public class Test_0 {
+public class Test_5 {
 
 	protected File getJavaFile() {
 		final String name = getClass().getName();

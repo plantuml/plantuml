@@ -173,6 +173,7 @@ sequenceDiagram {
 
 	  FontSize 13
 	  FontStyle bold
+	  Padding 4
 	}
 
   newpage {
@@ -186,6 +187,7 @@ sequenceDiagram {
 	participant,actor,boundary,control,entity,queue,database,collections {
 	  BackgroundColor: var(--grey-blue);
 	  HorizontalAlignment center
+	  Padding 7
 	}
 }
 

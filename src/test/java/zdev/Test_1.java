@@ -19,19 +19,15 @@ import net.sourceforge.plantuml.preproc.Defines;
  * 
 
 @startuml
+participant A
+collections C
+A -> C: messages
+C -> A: responces
 
-<style>
-  participant {
-     Padding: 2 20
-     Margin: 0 50
- }
-</style>
-
-Bob -> Alice : hello
 @enduml
 
  */
-public class Test_0 {
+public class Test_1 {
 
 	protected File getJavaFile() {
 		final String name = getClass().getName();

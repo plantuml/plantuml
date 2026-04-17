@@ -1109,7 +1109,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	@Override
-	public ClockwiseTopRightBottomLeft getPadding(PaddingParam param) {
+	public ClockwiseTopRightBottomLeft getPaddingTOBEREMOVED(PaddingParam param) {
 		final String name = param.getSkinName();
 		return getAsDouble(name);
 	}

@@ -165,7 +165,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public TikzFontDistortion getTikzFontDistortion();
 
-	public ClockwiseTopRightBottomLeft getPadding(PaddingParam param);
+	public ClockwiseTopRightBottomLeft getPaddingTOBEREMOVED(PaddingParam param);
 
 	public boolean useRankSame();
 

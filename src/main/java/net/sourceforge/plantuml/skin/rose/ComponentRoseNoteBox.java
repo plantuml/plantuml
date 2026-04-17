@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
@@ -54,7 +55,8 @@ final public class ComponentRoseNoteBox extends AbstractTextualComponent {
 	private final double roundCorner;
 
 	public ComponentRoseNoteBox(Style style, Display strings, ISkinParam skinParam, Colors colors) {
-		super(style, style.wrapWidth(), 4, 4, 4, skinParam, strings, false);
+		super(style, style.wrapWidth(), ClockwiseTopRightBottomLeft.topRightBottomLeft(4, 4, 4, 4), skinParam, strings,
+				false);
 
 		this.symbolContext = getSymbolContext(colors);
 		this.roundCorner = getRoundCorner();
@@ -100,7 +102,7 @@ final public class ComponentRoseNoteBox extends AbstractTextualComponent {
 		ug.draw(rect);
 		ug = ug.apply(UStroke.simple());
 
-		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1() + diffX / 2, getMarginY())));
+		getTextBlock().drawU(ug.apply(new UTranslate(getOldPaddingX1() + diffX / 2, getOldPaddingY())));
 
 	}
 }

@@ -47,32 +47,35 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockEmpty;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
 public abstract class AbstractTextualComponent extends AbstractComponent {
 
-	private final int marginX1;
-	private final int marginX2;
-	private final int marginY;
-
 	private final TextBlock textBlock;
 
-	public AbstractTextualComponent(Style style, LineBreakStrategy maxMessageSize, int marginX1, int marginX2,
-			int marginY, ISkinParam skinParam, CharSequence label) {
-		this(style, style, maxMessageSize, marginX1, marginX2, marginY, skinParam,
+	private final ClockwiseTopRightBottomLeft padding;
+
+	public AbstractTextualComponent(Style style, LineBreakStrategy maxMessageSize, ClockwiseTopRightBottomLeft padding,
+			ISkinParam skinParam, CharSequence label) {
+		this(style, style, maxMessageSize, padding, skinParam,
 				Display.getWithNewlines(skinParam.getPragma(), label == null ? "" : label.toString()), false);
 	}
 
-	public AbstractTextualComponent(Style style, LineBreakStrategy maxMessageSize, int marginX1, int marginX2,
-			int marginY, ISkinParam skinParam, Display display, boolean enhanced) {
-		this(style, style, maxMessageSize, marginX1, marginX2, marginY, skinParam, display, enhanced);
+	public AbstractTextualComponent(Style style, LineBreakStrategy maxMessageSize, ClockwiseTopRightBottomLeft padding,
+			ISkinParam skinParam, Display display, boolean enhanced) {
+		this(style, style, maxMessageSize, padding, skinParam, display, enhanced);
 	}
 
-	public AbstractTextualComponent(Style style, Style stereo, LineBreakStrategy maxMessageSize, int marginX1,
-			int marginX2, int marginY, ISkinParam skinParam, Display display, boolean enhanced) {
+	public AbstractTextualComponent(Style style, Style stereo, LineBreakStrategy maxMessageSize,
+			ClockwiseTopRightBottomLeft padding, ISkinParam skinParam, Display display, boolean enhanced) {
 		super(style, skinParam);
+
+		// this.padding = ClockwiseTopRightBottomLeft.topRightBottomLeft(marginY,
+		// marginX2, marginY, marginX1);
+		this.padding = padding;
 
 		final FontConfiguration fc = getFontConfiguration();
 		final HorizontalAlignment horizontalAlignment = getHorizontalAlignment();
@@ -80,17 +83,13 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 		final HColor htmlColorForStereotype = stereo.value(PName.FontColor).asColor(getIHtmlColorSet());
 		display = display.withoutStereotypeIfNeeded(style);
 
-		this.marginX1 = marginX1;
-		this.marginX2 = marginX2;
-		this.marginY = marginY;
-
 		if (display.size() == 1 && display.get(0).length() == 0)
 			textBlock = new TextBlockEmpty();
 		else if (enhanced)
 			textBlock = BodyFactory.create3(display, skinParam, horizontalAlignment, fc, maxMessageSize, style);
 		else
 			textBlock = display.create0(fc, horizontalAlignment, skinParam, maxMessageSize, CreoleMode.FULL,
-					fontForStereotype, htmlColorForStereotype, marginX1, marginX2);
+					fontForStereotype, htmlColorForStereotype, padding.getLeft(), padding.getRight());
 
 	}
 
@@ -105,25 +104,29 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 	}
 
 	final public double getTextWidth(StringBounder stringBounder) {
-		return getPureTextWidth(stringBounder) + marginX1 + marginX2;
+		return getPureTextWidth(stringBounder) + getOldPaddingX1() + getOldPaddingX2();
 	}
 
 	final protected double getTextHeight(StringBounder stringBounder) {
 		final TextBlock textBlock = getTextBlock();
 		final XDimension2D size = textBlock.calculateDimension(stringBounder);
-		return size.getHeight() + 2 * marginY;
+		return size.getHeight() + padding.getTop() + padding.getBottom();
 	}
 
-	final protected int getMarginX1() {
-		return marginX1;
+	final protected double getOldPaddingX1() {
+		return padding.getLeft();
 	}
 
-	final protected int getMarginX2() {
-		return marginX2;
+	final protected double getOldPaddingX2() {
+		return padding.getRight();
 	}
 
-	final protected int getMarginY() {
-		return marginY;
+	final protected double getOldPaddingY() {
+		return padding.getTop();
+	}
+
+	final protected ClockwiseTopRightBottomLeft getPadding() {
+		return padding;
 	}
 
 }

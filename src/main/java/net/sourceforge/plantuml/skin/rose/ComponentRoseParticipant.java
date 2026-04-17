@@ -63,10 +63,12 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 	private final double minWidth;
 	private final boolean collections;
 	private final ClockwiseTopRightBottomLeft padding;
+	private final ClockwiseTopRightBottomLeft margin;
 
 	public ComponentRoseParticipant(Style style, Style stereo, Display stringsToDisplay, ISkinParam skinParam,
-			double minWidth, boolean collections, ClockwiseTopRightBottomLeft padding) {
-		super(style, stereo, LineBreakStrategy.NONE, 7, 7, 7, skinParam, stringsToDisplay, false);
+			double minWidth, boolean collections, ClockwiseTopRightBottomLeft padding,
+			ClockwiseTopRightBottomLeft margin) {
+		super(style, stereo, LineBreakStrategy.NONE, style.getPadding(), skinParam, stringsToDisplay, false);
 
 		this.roundCorner = getRoundCorner();
 		this.diagonalCorner = getDiagonalCorner();
@@ -74,6 +76,7 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 		this.stroke = getStroke();
 
 		this.padding = padding;
+		this.margin = margin;
 		this.minWidth = minWidth;
 		this.collections = collections;
 		this.back = biColor.getBackColor();
@@ -84,14 +87,22 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		ug = ug.apply(UTranslate.dx(padding.getLeft()));
+
+		// Margin: empty space outside the box
+		ug = ug.apply(new UTranslate(margin.getLeft(), margin.getTop()));
+
 		if (foregroundColor != null)
 			ug = ug.apply(foregroundColor);
 		if (back != null)
 			ug = ug.apply(back.bg());
 		ug = ug.apply(stroke);
-		final Shadowable rect = URectangle.build(getTextWidth(stringBounder), getTextHeight(stringBounder))
-				.rounded(roundCorner).diagonalCorner(diagonalCorner);
+
+		// Padding: space inside the box, between border and text
+		final double boxWidth = getTextWidth(stringBounder);
+		final double boxHeight = getTextHeight(stringBounder);
+
+		final Shadowable rect = URectangle.build(boxWidth, boxHeight).rounded(roundCorner)
+				.diagonalCorner(diagonalCorner);
 		rect.setDeltaShadow(deltaShadow);
 		if (collections) {
 			ug.apply(UTranslate.dx(getDeltaCollection())).draw(rect);
@@ -99,8 +110,12 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 		}
 		ug.draw(rect);
 		ug = ug.apply(UStroke.simple());
+
+		// Text: centered inside the box, offset by padding
 		final TextBlock textBlock = getTextBlock();
-		textBlock.drawU(ug.apply(new UTranslate(getMarginX1() + suppWidth(stringBounder) / 2, getMarginY())));
+		// textBlock.drawU(ug.apply(new UTranslate(padding.getLeft() +
+		// suppWidth(stringBounder) / 2, padding.getTop())));
+		textBlock.drawU(ug.apply(padding.getTranslate()));
 	}
 
 	private double getDeltaCollection() {
@@ -112,13 +127,13 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-		return getTextHeight(stringBounder) + deltaShadow + 1 + getDeltaCollection();
+		return getTextHeight(stringBounder) + margin.getTop() + margin.getBottom() + deltaShadow + 1
+				+ getDeltaCollection();
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return getTextWidth(stringBounder) + deltaShadow + getDeltaCollection() + padding.getLeft()
-				+ padding.getRight();
+		return getTextWidth(stringBounder) + margin.getLeft() + margin.getRight() + deltaShadow + getDeltaCollection();
 	}
 
 	@Override
@@ -126,8 +141,8 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 		return Math.max(super.getPureTextWidth(stringBounder), minWidth);
 	}
 
-	private final double suppWidth(StringBounder stringBounder) {
-		return getPureTextWidth(stringBounder) - super.getPureTextWidth(stringBounder);
-	}
+//	private final double suppWidth(StringBounder stringBounder) {
+//		return getPureTextWidth(stringBounder) - super.getPureTextWidth(stringBounder);
+//	}
 
 }

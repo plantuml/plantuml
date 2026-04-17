@@ -202,7 +202,7 @@ class DrawableSetInitializer {
 	}
 
 	private void takeParticipantEngloberPadding(StringBounder stringBounder) {
-		final ClockwiseTopRightBottomLeft padding = drawableSet.getSkinParam().getPadding(PaddingParam.BOX);
+		final ClockwiseTopRightBottomLeft padding = drawableSet.getSkinParam().getPaddingTOBEREMOVED(PaddingParam.BOX);
 		if (padding.isZero())
 			return;
 
