@@ -1,0 +1,4 @@
+@startpacketdiag
+1: server [numbered = 2]
+2: database [numbered = 1]
+@endpacketdiag
