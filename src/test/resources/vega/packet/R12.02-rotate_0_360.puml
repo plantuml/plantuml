@@ -1,0 +1,12 @@
+@startpacketdiag
+1: A [rotate =   0]
+2: B [rotate =  45]
+3: C [rotate =  90]
+4: D [rotate = 135]
+5: E [rotate = 180]
+6: F [rotate = 225]
+7: G [rotate = 270]
+8: H [rotate = 315]
+9: I [rotate = 360]
+10: J
+@endpacketdiag
