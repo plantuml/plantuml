@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.LengthAdjust;
 import net.sourceforge.plantuml.style.Style;
@@ -73,416 +74,416 @@ public class SkinParamDelegator implements ISkinParam {
 
 	final private ISkinParam skinParam;
 
-<span class="fc" id="L76">	public SkinParamDelegator(ISkinParam skinParam) {</span>
-<span class="fc" id="L77">		this.skinParam = skinParam;</span>
-<span class="fc" id="L78">	}</span>
+<span class="fc" id="L77">	public SkinParamDelegator(ISkinParam skinParam) {</span>
+<span class="fc" id="L78">		this.skinParam = skinParam;</span>
+<span class="fc" id="L79">	}</span>
 
 	@Override
 	public HColor getHyperlinkColor() {
-<span class="nc" id="L82">		return skinParam.getHyperlinkColor();</span>
+<span class="nc" id="L83">		return skinParam.getHyperlinkColor();</span>
 	}
 
 	@Override
 	public HColor getBackgroundColor() {
-<span class="nc" id="L87">		return skinParam.getBackgroundColor();</span>
+<span class="nc" id="L88">		return skinParam.getBackgroundColor();</span>
 	}
 
 	@Override
 	public int getCircledCharacterRadius() {
-<span class="nc" id="L92">		return skinParam.getCircledCharacterRadius();</span>
+<span class="nc" id="L93">		return skinParam.getCircledCharacterRadius();</span>
 	}
 
 	@Override
 	public UFont getFont(Stereotype stereotype, boolean inPackageTitle, FontParam... fontParam) {
-<span class="nc" id="L97">		return skinParam.getFont(stereotype, false, fontParam);</span>
+<span class="nc" id="L98">		return skinParam.getFont(stereotype, false, fontParam);</span>
 	}
 
 	@Override
 	public HColor getFontHtmlColor(Stereotype stereotype, FontParam... param) {
-<span class="nc" id="L102">		return skinParam.getFontHtmlColor(stereotype, param);</span>
+<span class="nc" id="L103">		return skinParam.getFontHtmlColor(stereotype, param);</span>
 	}
 
 	@Override
 	public HColor getHtmlColor(ColorParam param, Stereotype stereotype, boolean clickable) {
-<span class="nc" id="L107">		return skinParam.getHtmlColor(param, stereotype, clickable);</span>
+<span class="nc" id="L108">		return skinParam.getHtmlColor(param, stereotype, clickable);</span>
 	}
 
 	@Override
 	public String getValue(String key) {
-<span class="nc" id="L112">		return skinParam.getValue(key);</span>
+<span class="nc" id="L113">		return skinParam.getValue(key);</span>
 	}
 
 	@Override
 	public int classAttributeIconSize() {
-<span class="nc" id="L117">		return skinParam.classAttributeIconSize();</span>
+<span class="nc" id="L118">		return skinParam.classAttributeIconSize();</span>
 	}
 
 	@Override
 	public int getDpi() {
-<span class="nc" id="L122">		return skinParam.getDpi();</span>
+<span class="nc" id="L123">		return skinParam.getDpi();</span>
 	}
 
 	@Override
 	public DotSplines getDotSplines() {
-<span class="nc" id="L127">		return skinParam.getDotSplines();</span>
+<span class="nc" id="L128">		return skinParam.getDotSplines();</span>
 	}
 
 	@Override
 	public HorizontalAlignment getHorizontalAlignment(AlignmentParam param, ArrowDirection arrowDirection,
 			boolean isReverseDefine, HorizontalAlignment overrideDefault) {
-<span class="fc" id="L133">		return skinParam.getHorizontalAlignment(param, arrowDirection, isReverseDefine, overrideDefault);</span>
+<span class="fc" id="L134">		return skinParam.getHorizontalAlignment(param, arrowDirection, isReverseDefine, overrideDefault);</span>
 	}
 
 	@Override
 	public boolean shadowing(Stereotype stereotype) {
-<span class="nc" id="L138">		return skinParam.shadowing(stereotype);</span>
+<span class="nc" id="L139">		return skinParam.shadowing(stereotype);</span>
 	}
 
 	@Override
 	public PackageStyle packageStyle() {
-<span class="fc" id="L143">		return skinParam.packageStyle();</span>
+<span class="fc" id="L144">		return skinParam.packageStyle();</span>
 	}
 
 	@Override
 	public Sprite getSprite(String name) {
-<span class="nc" id="L148">		return skinParam.getSprite(name);</span>
+<span class="nc" id="L149">		return skinParam.getSprite(name);</span>
 	}
 
 	@Override
 	public ComponentStyle componentStyle() {
-<span class="nc" id="L153">		return skinParam.componentStyle();</span>
+<span class="nc" id="L154">		return skinParam.componentStyle();</span>
 	}
 
 	@Override
 	public boolean stereotypePositionTop() {
-<span class="nc" id="L158">		return skinParam.stereotypePositionTop();</span>
+<span class="nc" id="L159">		return skinParam.stereotypePositionTop();</span>
 	}
 
 	@Override
 	public boolean useSwimlanes(DiagramType type) {
-<span class="fc" id="L163">		return skinParam.useSwimlanes(type);</span>
+<span class="fc" id="L164">		return skinParam.useSwimlanes(type);</span>
 	}
 
 	@Override
 	public double getNodesep() {
-<span class="nc" id="L168">		return skinParam.getNodesep();</span>
+<span class="nc" id="L169">		return skinParam.getNodesep();</span>
 	}
 
 	@Override
 	public double getRanksep() {
-<span class="nc" id="L173">		return skinParam.getRanksep();</span>
+<span class="nc" id="L174">		return skinParam.getRanksep();</span>
 	}
 
 	@Override
 	public double getRoundCorner(CornerParam param, Stereotype stereotype) {
-<span class="nc" id="L178">		return skinParam.getRoundCorner(param, stereotype);</span>
+<span class="nc" id="L179">		return skinParam.getRoundCorner(param, stereotype);</span>
 	}
 
 	@Override
 	public double getDiagonalCorner(CornerParam param, Stereotype stereotype) {
-<span class="nc" id="L183">		return skinParam.getDiagonalCorner(param, stereotype);</span>
+<span class="nc" id="L184">		return skinParam.getDiagonalCorner(param, stereotype);</span>
 	}
 
 	@Override
 	public UStroke getThickness(LineParam param, Stereotype stereotype) {
-<span class="nc" id="L188">		return skinParam.getThickness(param, stereotype);</span>
+<span class="nc" id="L189">		return skinParam.getThickness(param, stereotype);</span>
 	}
 
 	@Override
 	public LineBreakStrategy maxMessageSize() {
-<span class="nc" id="L193">		return skinParam.maxMessageSize();</span>
+<span class="nc" id="L194">		return skinParam.maxMessageSize();</span>
 	}
 
 	@Override
 	public boolean strictUmlStyle() {
-<span class="fc" id="L198">		return skinParam.strictUmlStyle();</span>
+<span class="fc" id="L199">		return skinParam.strictUmlStyle();</span>
 	}
 
 	@Override
 	public boolean forceSequenceParticipantUnderlined() {
-<span class="nc" id="L203">		return skinParam.forceSequenceParticipantUnderlined();</span>
+<span class="nc" id="L204">		return skinParam.forceSequenceParticipantUnderlined();</span>
 	}
 
 	@Override
 	public ConditionStyle getConditionStyle() {
-<span class="nc" id="L208">		return skinParam.getConditionStyle();</span>
+<span class="nc" id="L209">		return skinParam.getConditionStyle();</span>
 	}
 
 	@Override
 	public ConditionEndStyle getConditionEndStyle() {
-<span class="nc" id="L213">		return skinParam.getConditionEndStyle();</span>
+<span class="nc" id="L214">		return skinParam.getConditionEndStyle();</span>
 	}
 
 	@Override
 	public boolean sameClassWidth() {
-<span class="nc" id="L218">		return skinParam.sameClassWidth();</span>
+<span class="nc" id="L219">		return skinParam.sameClassWidth();</span>
 	}
 
 	@Override
 	public Rankdir getRankdir() {
-<span class="fc" id="L223">		return skinParam.getRankdir();</span>
+<span class="fc" id="L224">		return skinParam.getRankdir();</span>
 	}
 
 	@Override
 	public boolean useOctagonForActivity(Stereotype stereotype) {
-<span class="nc" id="L228">		return skinParam.useOctagonForActivity(stereotype);</span>
+<span class="nc" id="L229">		return skinParam.useOctagonForActivity(stereotype);</span>
 	}
 
 	@Override
 	public HColorSet getIHtmlColorSet() {
-<span class="fc" id="L233">		return skinParam.getIHtmlColorSet();</span>
+<span class="fc" id="L234">		return skinParam.getIHtmlColorSet();</span>
 	}
 
 	@Override
 	public UStroke useUnderlineForHyperlink() {
-<span class="nc" id="L238">		return skinParam.useUnderlineForHyperlink();</span>
+<span class="nc" id="L239">		return skinParam.useUnderlineForHyperlink();</span>
 	}
 
 	@Override
 	public HorizontalAlignment getDefaultTextAlignment(HorizontalAlignment defaultValue) {
-<span class="fc" id="L243">		return skinParam.getDefaultTextAlignment(defaultValue);</span>
+<span class="fc" id="L244">		return skinParam.getDefaultTextAlignment(defaultValue);</span>
 	}
 
 	@Override
-	public double getPadding() {
-<span class="fc" id="L248">		return skinParam.getPadding();</span>
+	public ClockwiseTopRightBottomLeft getPadding() {
+<span class="fc" id="L249">		return skinParam.getPadding();</span>
 	}
 
 	@Override
 	public int groupInheritance() {
-<span class="nc" id="L253">		return skinParam.groupInheritance();</span>
+<span class="nc" id="L254">		return skinParam.groupInheritance();</span>
 	}
 
 	@Override
 	public Guillemet guillemet() {
-<span class="nc" id="L258">		return skinParam.guillemet();</span>
+<span class="nc" id="L259">		return skinParam.guillemet();</span>
 	}
 
 	@Override
 	public boolean handwritten() {
-<span class="nc" id="L263">		return skinParam.handwritten();</span>
+<span class="nc" id="L264">		return skinParam.handwritten();</span>
 	}
 
 	@Override
 	public String getSvgLinkTarget() {
-<span class="nc" id="L268">		return skinParam.getSvgLinkTarget();</span>
+<span class="nc" id="L269">		return skinParam.getSvgLinkTarget();</span>
 	}
 
 	@Override
 	public String getPreserveAspectRatio() {
-<span class="nc" id="L273">		return skinParam.getPreserveAspectRatio();</span>
+<span class="nc" id="L274">		return skinParam.getPreserveAspectRatio();</span>
 	}
 
 	@Override
 	public String getMonospacedFamily() {
-<span class="nc" id="L278">		return skinParam.getMonospacedFamily();</span>
+<span class="nc" id="L279">		return skinParam.getMonospacedFamily();</span>
 	}
 
 	@Override
 	public Colors getColors(ColorParam param, Stereotype stereotype) throws NoSuchColorException {
-<span class="nc" id="L283">		return skinParam.getColors(param, stereotype);</span>
+<span class="nc" id="L284">		return skinParam.getColors(param, stereotype);</span>
 	}
 
 	@Override
 	public int getTabSize() {
-<span class="nc" id="L288">		return skinParam.getTabSize();</span>
+<span class="nc" id="L289">		return skinParam.getTabSize();</span>
 	}
 
 	@Override
 	public boolean shadowingForNote(Stereotype stereotype) {
-<span class="nc" id="L293">		return shadowingForNote(stereotype);</span>
+<span class="nc" id="L294">		return shadowingForNote(stereotype);</span>
 	}
 
 	@Override
 	public int maxAsciiMessageLength() {
-<span class="nc" id="L298">		return skinParam.maxAsciiMessageLength();</span>
+<span class="nc" id="L299">		return skinParam.maxAsciiMessageLength();</span>
 	}
 
 	@Override
 	public int colorArrowSeparationSpace() {
-<span class="nc" id="L303">		return skinParam.colorArrowSeparationSpace();</span>
+<span class="nc" id="L304">		return skinParam.colorArrowSeparationSpace();</span>
 	}
 
 	@Override
 	public SplitParam getSplitParam() {
-<span class="nc" id="L308">		return skinParam.getSplitParam();</span>
+<span class="nc" id="L309">		return skinParam.getSplitParam();</span>
 	}
 
 	@Override
 	public int swimlaneWidth() {
-<span class="nc" id="L313">		return skinParam.swimlaneWidth();</span>
+<span class="nc" id="L314">		return skinParam.swimlaneWidth();</span>
 	}
 
 	@Override
 	public DiagramType getDiagramType() {
-<span class="nc" id="L318">		return skinParam.getDiagramType();</span>
+<span class="nc" id="L319">		return skinParam.getDiagramType();</span>
 	}
 
 	@Override
 	public HColor hoverPathColor() {
-<span class="nc" id="L323">		return skinParam.hoverPathColor();</span>
+<span class="nc" id="L324">		return skinParam.hoverPathColor();</span>
 	}
 
 	@Override
-	public double getPadding(PaddingParam param) {
-<span class="nc" id="L328">		return skinParam.getPadding(param);</span>
+	public ClockwiseTopRightBottomLeft getPadding(PaddingParam param) {
+<span class="nc" id="L329">		return skinParam.getPadding(param);</span>
 	}
 
 	@Override
 	public boolean useRankSame() {
-<span class="nc" id="L333">		return skinParam.useRankSame();</span>
+<span class="nc" id="L334">		return skinParam.useRankSame();</span>
 	}
 
 	@Override
 	public boolean displayGenericWithOldFashion() {
-<span class="nc" id="L338">		return skinParam.displayGenericWithOldFashion();</span>
+<span class="nc" id="L339">		return skinParam.displayGenericWithOldFashion();</span>
 	}
 
 	@Override
 	public TikzFontDistortion getTikzFontDistortion() {
-<span class="nc" id="L343">		return skinParam.getTikzFontDistortion();</span>
+<span class="nc" id="L344">		return skinParam.getTikzFontDistortion();</span>
 	}
 
 	@Override
 	public boolean responseMessageBelowArrow() {
-<span class="nc" id="L348">		return skinParam.responseMessageBelowArrow();</span>
+<span class="nc" id="L349">		return skinParam.responseMessageBelowArrow();</span>
 	}
 
 	@Override
 	public boolean svgDimensionStyle() {
-<span class="nc" id="L353">		return skinParam.svgDimensionStyle();</span>
+<span class="nc" id="L354">		return skinParam.svgDimensionStyle();</span>
 	}
 
 	@Override
 	public char getCircledCharacter(Stereotype stereotype) {
-<span class="nc" id="L358">		return skinParam.getCircledCharacter(stereotype);</span>
+<span class="nc" id="L359">		return skinParam.getCircledCharacter(stereotype);</span>
 	}
 
 	@Override
 	public LineBreakStrategy swimlaneWrapTitleWidth() {
-<span class="nc" id="L363">		return skinParam.swimlaneWrapTitleWidth();</span>
+<span class="nc" id="L364">		return skinParam.swimlaneWrapTitleWidth();</span>
 	}
 
 	@Override
 	public boolean fixCircleLabelOverlapping() {
-<span class="nc" id="L368">		return skinParam.fixCircleLabelOverlapping();</span>
+<span class="nc" id="L369">		return skinParam.fixCircleLabelOverlapping();</span>
 	}
 
 	@Override
 	public void setUseVizJs(boolean useVizJs) {
-<span class="nc" id="L373">		skinParam.setUseVizJs(useVizJs);</span>
-<span class="nc" id="L374">	}</span>
+<span class="nc" id="L374">		skinParam.setUseVizJs(useVizJs);</span>
+<span class="nc" id="L375">	}</span>
 
 	@Override
 	public boolean isUseVizJs() {
-<span class="nc" id="L378">		return skinParam.isUseVizJs();</span>
+<span class="nc" id="L379">		return skinParam.isUseVizJs();</span>
 	}
 
 	@Override
 	public void copyAllFrom(Map&lt;String, String&gt; other) {
-<span class="nc" id="L383">		skinParam.copyAllFrom(other);</span>
-<span class="nc" id="L384">	}</span>
+<span class="nc" id="L384">		skinParam.copyAllFrom(other);</span>
+<span class="nc" id="L385">	}</span>
 
 	@Override
 	public Map&lt;String, String&gt; values() {
-<span class="nc" id="L388">		return skinParam.values();</span>
+<span class="nc" id="L389">		return skinParam.values();</span>
 	}
 
 	@Override
 	public HorizontalAlignment getStereotypeAlignment() {
-<span class="fc" id="L393">		return skinParam.getStereotypeAlignment();</span>
+<span class="fc" id="L394">		return skinParam.getStereotypeAlignment();</span>
 	}
 
 	@Override
 	public Padder sequenceDiagramPadder() {
-<span class="nc" id="L398">		return skinParam.sequenceDiagramPadder();</span>
+<span class="nc" id="L399">		return skinParam.sequenceDiagramPadder();</span>
 	}
 
 	@Override
 	public StyleBuilder getCurrentStyleBuilder() {
-<span class="fc" id="L403">		return skinParam.getCurrentStyleBuilder();</span>
+<span class="fc" id="L404">		return skinParam.getCurrentStyleBuilder();</span>
 	}
 
 	@Override
 	public void muteStyle(Collection&lt;Style&gt; modifiedStyles) {
-<span class="nc" id="L408">		skinParam.muteStyle(modifiedStyles);</span>
-<span class="nc" id="L409">	}</span>
+<span class="nc" id="L409">		skinParam.muteStyle(modifiedStyles);</span>
+<span class="nc" id="L410">	}</span>
 
 	@Override
 	public Collection&lt;String&gt; getAllSpriteNames() {
-<span class="nc" id="L413">		return skinParam.getAllSpriteNames();</span>
+<span class="nc" id="L414">		return skinParam.getAllSpriteNames();</span>
 	}
 
 	@Override
 	public String getDefaultSkin() {
-<span class="nc" id="L418">		return skinParam.getDefaultSkin();</span>
+<span class="nc" id="L419">		return skinParam.getDefaultSkin();</span>
 	}
 
 	@Override
 	public void setDefaultSkin(String newFileName) {
-<span class="nc" id="L423">		skinParam.setDefaultSkin(newFileName);</span>
-<span class="nc" id="L424">	}</span>
+<span class="nc" id="L424">		skinParam.setDefaultSkin(newFileName);</span>
+<span class="nc" id="L425">	}</span>
 
 	@Override
 	public ActorStyle actorStyle() {
-<span class="nc" id="L428">		return skinParam.actorStyle();</span>
+<span class="nc" id="L429">		return skinParam.actorStyle();</span>
 	}
 
 	@Override
 	public void setSvgSize(String origin, String sizeToUse) {
-<span class="nc" id="L433">		skinParam.setSvgSize(origin, sizeToUse);</span>
-<span class="nc" id="L434">	}</span>
+<span class="nc" id="L434">		skinParam.setSvgSize(origin, sizeToUse);</span>
+<span class="nc" id="L435">	}</span>
 
 	@Override
 	public String transformStringForSizeHack(String s) {
-<span class="nc" id="L438">		return skinParam.transformStringForSizeHack(s);</span>
+<span class="nc" id="L439">		return skinParam.transformStringForSizeHack(s);</span>
 	}
 
 	@Override
 	public LengthAdjust getlengthAdjust() {
-<span class="nc" id="L443">		return skinParam.getlengthAdjust();</span>
+<span class="nc" id="L444">		return skinParam.getlengthAdjust();</span>
 	}
 
 	@Override
 	public double getParamSameClassWidth() {
-<span class="nc" id="L448">		return skinParam.getParamSameClassWidth();</span>
+<span class="nc" id="L449">		return skinParam.getParamSameClassWidth();</span>
 	}
 
 	@Override
 	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			CreoleMode creoleMode) {
-<span class="fc" id="L454">		return skinParam.sheet(fontConfiguration, horizontalAlignment, creoleMode);</span>
+<span class="fc" id="L455">		return skinParam.sheet(fontConfiguration, horizontalAlignment, creoleMode);</span>
 	}
 
 	@Override
 	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			CreoleMode creoleMode, FontConfiguration stereo) {
-<span class="fc" id="L460">		return skinParam.sheet(fontConfiguration, horizontalAlignment, creoleMode, stereo);</span>
+<span class="fc" id="L461">		return skinParam.sheet(fontConfiguration, horizontalAlignment, creoleMode, stereo);</span>
 	}
 
 	@Override
 	public Arrows arrows() {
-<span class="fc" id="L465">		return skinParam.arrows();</span>
+<span class="fc" id="L466">		return skinParam.arrows();</span>
 	}
 
 	@Override
 	public Pragma getPragma() {
-<span class="fc" id="L470">		return skinParam.getPragma();</span>
+<span class="fc" id="L471">		return skinParam.getPragma();</span>
 	}
 
 	@Override
 	public ConfigurationStore&lt;OptionKey&gt; options() {
-<span class="fc" id="L475">		return skinParam.options();</span>
+<span class="fc" id="L476">		return skinParam.options();</span>
 	}
 
 	@Override
 	public PathSystem getPathSystem() {
-<span class="nc" id="L480">		return skinParam.getPathSystem();</span>
+<span class="nc" id="L481">		return skinParam.getPathSystem();</span>
 	}
 
 	@Override
 	public String getFromMd5(String md5) {
-<span class="nc" id="L485">		return skinParam.getFromMd5(md5);</span>
+<span class="nc" id="L486">		return skinParam.getFromMd5(md5);</span>
 	}
 
 }

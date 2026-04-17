@@ -54,126 +54,127 @@ import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.WrappedElement;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.text.Guillemet;
 
 public class SaltDictionary implements SpriteContainer, ISkinSimple {
 
-<span class="nc" id="L63">	private final Map&lt;String, Element&gt; data = new HashMap&lt;String, Element&gt;();</span>
+<span class="nc" id="L64">	private final Map&lt;String, Element&gt; data = new HashMap&lt;String, Element&gt;();</span>
 	private final ConfigurationStore&lt;OptionKey&gt; option;
 	private final PathSystem pathSystem;
 
-<span class="nc" id="L67">	public SaltDictionary(PathSystem pathSystem, ConfigurationStore&lt;OptionKey&gt; option) {</span>
-<span class="nc" id="L68">		this.pathSystem = pathSystem;</span>
-<span class="nc" id="L69">		this.option = option;</span>
-<span class="nc" id="L70">	}</span>
+<span class="nc" id="L68">	public SaltDictionary(PathSystem pathSystem, ConfigurationStore&lt;OptionKey&gt; option) {</span>
+<span class="nc" id="L69">		this.pathSystem = pathSystem;</span>
+<span class="nc" id="L70">		this.option = option;</span>
+<span class="nc" id="L71">	}</span>
 
 	public void put(String name, Element element) {
-<span class="nc" id="L73">		data.put(name, element);</span>
-<span class="nc" id="L74">	}</span>
+<span class="nc" id="L74">		data.put(name, element);</span>
+<span class="nc" id="L75">	}</span>
 
 	public Element get(String name) {
-<span class="nc" id="L77">		final Element result = Objects.requireNonNull(data.get(Objects.requireNonNull(name)));</span>
-<span class="nc" id="L78">		return new WrappedElement(result);</span>
+<span class="nc" id="L78">		final Element result = Objects.requireNonNull(data.get(Objects.requireNonNull(name)));</span>
+<span class="nc" id="L79">		return new WrappedElement(result);</span>
 	}
 
 	@Override
 	public Sprite getSprite(String name) {
-<span class="nc" id="L83">		return sprites.get(name);</span>
+<span class="nc" id="L84">		return sprites.get(name);</span>
 	}
 
 	@Override
 	public String getValue(String key) {
-<span class="nc" id="L88">		return null;</span>
+<span class="nc" id="L89">		return null;</span>
 	}
 
 	@Override
-	public double getPadding() {
-<span class="nc" id="L93">		return 0;</span>
+	public ClockwiseTopRightBottomLeft getPadding() {
+<span class="nc" id="L94">		return ClockwiseTopRightBottomLeft.none();</span>
 	}
 
 	@Override
 	public Guillemet guillemet() {
-<span class="nc" id="L98">		return Guillemet.GUILLEMET;</span>
+<span class="nc" id="L99">		return Guillemet.GUILLEMET;</span>
 	}
 
 	@Override
 	public String getMonospacedFamily() {
-<span class="nc" id="L103">		return Parser.MONOSPACED;</span>
+<span class="nc" id="L104">		return Parser.MONOSPACED;</span>
 	}
 
 	@Override
 	public int getTabSize() {
-<span class="nc" id="L108">		return 8;</span>
+<span class="nc" id="L109">		return 8;</span>
 	}
 
 	@Override
 	public HColorSet getIHtmlColorSet() {
-<span class="nc" id="L113">		return HColorSet.instance();</span>
+<span class="nc" id="L114">		return HColorSet.instance();</span>
 	}
 
 	@Override
 	public int getDpi() {
-<span class="nc" id="L118">		return 96;</span>
+<span class="nc" id="L119">		return 96;</span>
 	}
 
-<span class="nc" id="L121">	private final Map&lt;String, Sprite&gt; sprites = new HashMap&lt;String, Sprite&gt;();</span>
+<span class="nc" id="L122">	private final Map&lt;String, Sprite&gt; sprites = new HashMap&lt;String, Sprite&gt;();</span>
 
 	public void addSprite(String name, Sprite sprite) {
-<span class="nc" id="L124">		sprites.put(name, sprite);</span>
+<span class="nc" id="L125">		sprites.put(name, sprite);</span>
 
-<span class="nc" id="L126">	}</span>
+<span class="nc" id="L127">	}</span>
 
 	@Override
 	public void copyAllFrom(Map&lt;String, String&gt; other) {
-<span class="nc" id="L130">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L131">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public Map&lt;String, String&gt; values() {
-<span class="nc" id="L135">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L136">		throw new UnsupportedOperationException();</span>
 	}
 
 	public double minClassWidthTOBEREMOVED(Style style) {
-<span class="nc" id="L139">		return 0;</span>
+<span class="nc" id="L140">		return 0;</span>
 	}
 
 	@Override
 	public String transformStringForSizeHack(String s) {
-<span class="nc" id="L144">		return s;</span>
+<span class="nc" id="L145">		return s;</span>
 	}
 
 	@Override
 	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			CreoleMode creoleMode) {
-<span class="nc" id="L150">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L151">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			CreoleMode creoleMode, FontConfiguration stereo) {
-<span class="nc" id="L156">		return new CreoleParser(fontConfiguration, horizontalAlignment, this, creoleMode, stereo);</span>
+<span class="nc" id="L157">		return new CreoleParser(fontConfiguration, horizontalAlignment, this, creoleMode, stereo);</span>
 	}
 
 	@Override
 	public Pragma getPragma() {
-<span class="nc" id="L161">		return Pragma.createEmpty();</span>
+<span class="nc" id="L162">		return Pragma.createEmpty();</span>
 	}
 
 	@Override
 	public ConfigurationStore&lt;OptionKey&gt; options() {
-<span class="nc" id="L166">		return option;</span>
+<span class="nc" id="L167">		return option;</span>
 	}
 
 	@Override
 	public PathSystem getPathSystem() {
-<span class="nc" id="L171">		return pathSystem;</span>
+<span class="nc" id="L172">		return pathSystem;</span>
 	}
 
 	@Override
 	public String getFromMd5(String md5) {
-<span class="nc" id="L176">		return null;</span>
+<span class="nc" id="L177">		return null;</span>
 	}
 
 }

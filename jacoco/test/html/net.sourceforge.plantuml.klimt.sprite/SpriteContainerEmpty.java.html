@@ -48,101 +48,102 @@ import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.text.Guillemet;
 
-<span class="fc" id="L55">public class SpriteContainerEmpty implements SpriteContainer, ISkinSimple {</span>
+<span class="fc" id="L56">public class SpriteContainerEmpty implements SpriteContainer, ISkinSimple {</span>
 
 	@Override
 	public Sprite getSprite(String name) {
-<span class="nc" id="L59">		return SpriteImage.fromInternal(name);</span>
+<span class="nc" id="L60">		return SpriteImage.fromInternal(name);</span>
 	}
 
 	@Override
 	public String getValue(String key) {
-<span class="nc" id="L64">		return null;</span>
+<span class="nc" id="L65">		return null;</span>
 	}
 
 	@Override
-	public double getPadding() {
-<span class="fc" id="L69">		return 0;</span>
+	public ClockwiseTopRightBottomLeft getPadding() {
+<span class="fc" id="L70">		return ClockwiseTopRightBottomLeft.none();</span>
 	}
 
 	@Override
 	public Guillemet guillemet() {
-<span class="fc" id="L74">		return Guillemet.DOUBLE_COMPARATOR;</span>
+<span class="fc" id="L75">		return Guillemet.DOUBLE_COMPARATOR;</span>
 	}
 
 	@Override
 	public String getMonospacedFamily() {
-<span class="fc" id="L79">		return Parser.MONOSPACED;</span>
+<span class="fc" id="L80">		return Parser.MONOSPACED;</span>
 	}
 
 	@Override
 	public int getTabSize() {
-<span class="nc" id="L84">		return 8;</span>
+<span class="nc" id="L85">		return 8;</span>
 	}
 
 	@Override
 	public HColorSet getIHtmlColorSet() {
-<span class="nc" id="L89">		return HColorSet.instance();</span>
+<span class="nc" id="L90">		return HColorSet.instance();</span>
 	}
 
 	@Override
 	public int getDpi() {
-<span class="nc" id="L94">		return 96;</span>
+<span class="nc" id="L95">		return 96;</span>
 	}
 
 	@Override
 	public void copyAllFrom(Map&lt;String, String&gt; other) {
-<span class="nc" id="L99">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L100">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public Map&lt;String, String&gt; values() {
-<span class="nc" id="L104">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L105">		throw new UnsupportedOperationException();</span>
 	}
 
 	public double minClassWidthTOBEREMOVED(Style style) {
-<span class="nc" id="L108">		return 0;</span>
+<span class="nc" id="L109">		return 0;</span>
 	}
 
 	@Override
 	public String transformStringForSizeHack(String s) {
-<span class="nc" id="L113">		return s;</span>
+<span class="nc" id="L114">		return s;</span>
 	}
 
 	@Override
 	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			CreoleMode creoleMode) {
-<span class="nc" id="L119">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L120">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			CreoleMode creoleMode, FontConfiguration stereo) {
-<span class="fc" id="L125">		return new CreoleParser(fontConfiguration, horizontalAlignment, this, creoleMode, stereo);</span>
+<span class="fc" id="L126">		return new CreoleParser(fontConfiguration, horizontalAlignment, this, creoleMode, stereo);</span>
 	}
 
 	@Override
 	public Pragma getPragma() {
-<span class="nc" id="L130">		return Pragma.createEmpty();</span>
+<span class="nc" id="L131">		return Pragma.createEmpty();</span>
 	}
 
 	@Override
 	public ConfigurationStore&lt;OptionKey&gt; options() {
-<span class="nc" id="L135">		return ConfigurationStore.createEmpty();</span>
+<span class="nc" id="L136">		return ConfigurationStore.createEmpty();</span>
 	}
 
 	@Override
 	public PathSystem getPathSystem() {
-<span class="nc" id="L140">		return PathSystem.fetch();</span>
+<span class="nc" id="L141">		return PathSystem.fetch();</span>
 	}
 
 	@Override
 	public String getFromMd5(String md5) {
-<span class="nc" id="L145">		return null;</span>
+<span class="nc" id="L146">		return null;</span>
 	}
 
 }

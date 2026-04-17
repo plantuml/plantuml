@@ -71,6 +71,7 @@ import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -96,101 +97,101 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 	// but it was not incorporated. We are now gradually removing occurrences of
 	// &lt;code&gt;null&lt;/code&gt; in the &lt;code&gt;Display&lt;/code&gt; logic throughout our codebase.
 	// Reference: https://en.wikipedia.org/wiki/Null_object_pattern
-<span class="fc" id="L99">	public final static Display NULL = new Display(true, null, null, true, CreoleMode.FULL);</span>
+<span class="fc" id="L100">	public final static Display NULL = new Display(true, null, null, true, CreoleMode.FULL);</span>
 
 	@Override
 	public int hashCode() {
-<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (isNull)</span>
-<span class="fc" id="L104">			return 42;</span>
-<span class="fc" id="L105">		return displayData.hashCode();</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (isNull)</span>
+<span class="fc" id="L105">			return 42;</span>
+<span class="fc" id="L106">		return displayData.hashCode();</span>
 	}
 
 	@Override
 	public boolean equals(Object other) {
-<span class="fc" id="L110">		return this.displayData.equals(((Display) other).displayData);</span>
+<span class="fc" id="L111">		return this.displayData.equals(((Display) other).displayData);</span>
 	}
 
 	public boolean equalsLike(Display other) {
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (isNull(this))</span>
-<span class="nc" id="L115">			return isNull(other);</span>
-<span class="fc" id="L116">		return this.displayData.equals(other.displayData);</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (isNull(this))</span>
+<span class="nc" id="L116">			return isNull(other);</span>
+<span class="fc" id="L117">		return this.displayData.equals(other.displayData);</span>
 	}
 
 	public boolean showStereotype() {
-<span class="nc" id="L120">		return showStereotype;</span>
+<span class="nc" id="L121">		return showStereotype;</span>
 	}
 
 	public Display withoutStereotypeIfNeeded(Style usedStyle) {
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (this == NULL)</span>
-<span class="nc" id="L125">			return NULL;</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (this == NULL)</span>
+<span class="nc" id="L126">			return NULL;</span>
 
-<span class="fc" id="L127">		final Value showStereotype = usedStyle.value(PName.ShowStereotype);</span>
-<span class="pc bpc" id="L128" title="3 of 4 branches missed.">		if (showStereotype instanceof ValueNull || showStereotype.asBoolean())</span>
-<span class="fc" id="L129">			return this;</span>
+<span class="fc" id="L128">		final Value showStereotype = usedStyle.value(PName.ShowStereotype);</span>
+<span class="pc bpc" id="L129" title="3 of 4 branches missed.">		if (showStereotype instanceof ValueNull || showStereotype.asBoolean())</span>
+<span class="fc" id="L130">			return this;</span>
 
-<span class="nc" id="L131">		return new Display(false, this, this.defaultCreoleMode);</span>
+<span class="nc" id="L132">		return new Display(false, this, this.defaultCreoleMode);</span>
 
 	}
 
 	public Stereotype getStereotypeIfAny() {
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		for (CharSequence cs : displayData)</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">			if (cs instanceof Stereotype)</span>
-<span class="nc" id="L138">				return (Stereotype) cs;</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		for (CharSequence cs : displayData)</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">			if (cs instanceof Stereotype)</span>
+<span class="nc" id="L139">				return (Stereotype) cs;</span>
 
-<span class="nc" id="L140">		return null;</span>
+<span class="nc" id="L141">		return null;</span>
 
 	}
 
 	@JawsStrange
 	public Display replaceBackslashT() {
-<span class="fc" id="L146">		final Display result = new Display(this.showStereotype, this, defaultCreoleMode);</span>
-<span class="fc bfc" id="L147" title="All 2 branches covered.">		for (int i = 0; i &lt; result.displayData.size(); i++) {</span>
-<span class="fc" id="L148">			final CharSequence s = displayData.get(i);</span>
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">			if (s.toString().contains(&quot;\\t&quot;))</span>
-<span class="nc" id="L150">				result.displayData.set(i, s.toString().replace(&quot;\\t&quot;, &quot;\t&quot;));</span>
+<span class="fc" id="L147">		final Display result = new Display(this.showStereotype, this, defaultCreoleMode);</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		for (int i = 0; i &lt; result.displayData.size(); i++) {</span>
+<span class="fc" id="L149">			final CharSequence s = displayData.get(i);</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">			if (s.toString().contains(&quot;\\t&quot;))</span>
+<span class="nc" id="L151">				result.displayData.set(i, s.toString().replace(&quot;\\t&quot;, &quot;\t&quot;));</span>
 		}
-<span class="fc" id="L152">		return result;</span>
+<span class="fc" id="L153">		return result;</span>
 	}
 
 	public Display replace(String src, String dest) {
-<span class="fc" id="L156">		final List&lt;CharSequence&gt; newDisplay = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L157" title="All 2 branches covered.">		for (CharSequence cs : displayData) {</span>
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">			if (cs.toString().contains(src))</span>
-<span class="nc" id="L159">				cs = cs.toString().replace(src, dest);</span>
+<span class="fc" id="L157">		final List&lt;CharSequence&gt; newDisplay = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		for (CharSequence cs : displayData) {</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">			if (cs.toString().contains(src))</span>
+<span class="nc" id="L160">				cs = cs.toString().replace(src, dest);</span>
 
-<span class="fc" id="L161">			newDisplay.add(cs);</span>
-<span class="fc" id="L162">		}</span>
-<span class="fc" id="L163">		return new Display(showStereotype, newDisplay, naturalHorizontalAlignment, isNull, defaultCreoleMode);</span>
+<span class="fc" id="L162">			newDisplay.add(cs);</span>
+<span class="fc" id="L163">		}</span>
+<span class="fc" id="L164">		return new Display(showStereotype, newDisplay, naturalHorizontalAlignment, isNull, defaultCreoleMode);</span>
 	}
 
-<span class="fc" id="L166">	private static final Pattern ONLY_WHITESPACE = Pattern.compile(&quot;\\s*&quot;);</span>
+<span class="fc" id="L167">	private static final Pattern ONLY_WHITESPACE = Pattern.compile(&quot;\\s*&quot;);</span>
 
 	public boolean isWhite() {
-<span class="pc bpc" id="L169" title="1 of 4 branches missed.">		return displayData == null || displayData.isEmpty()</span>
-<span class="pc bpc" id="L170" title="1 of 4 branches missed.">				|| (displayData.size() == 1 &amp;&amp; ONLY_WHITESPACE.matcher(displayData.get(0)).matches());</span>
+<span class="pc bpc" id="L170" title="1 of 4 branches missed.">		return displayData == null || displayData.isEmpty()</span>
+<span class="pc bpc" id="L171" title="1 of 4 branches missed.">				|| (displayData.size() == 1 &amp;&amp; ONLY_WHITESPACE.matcher(displayData.get(0)).matches());</span>
 	}
 
 	public static Display empty() {
-<span class="fc" id="L174">		return new Display(true, (HorizontalAlignment) null, false, CreoleMode.FULL);</span>
+<span class="fc" id="L175">		return new Display(true, (HorizontalAlignment) null, false, CreoleMode.FULL);</span>
 	}
 
 	public static Display create(CharSequence... s) {
-<span class="fc" id="L178">		return create(Arrays.asList(s));</span>
+<span class="fc" id="L179">		return create(Arrays.asList(s));</span>
 	}
 
 	public static Display createFoo(List&lt;StringLocated&gt; data) throws NoSuchColorException {
-<span class="fc" id="L182">		final List&lt;CharSequence&gt; tmp = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L183" title="All 2 branches covered.">		for (StringLocated s : data)</span>
-<span class="fc" id="L184">			tmp.add(s.getString());</span>
+<span class="fc" id="L183">		final List&lt;CharSequence&gt; tmp = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">		for (StringLocated s : data)</span>
+<span class="fc" id="L185">			tmp.add(s.getString());</span>
 
-<span class="fc bfc" id="L186" title="All 2 branches covered.">		if (tmp.size() &gt; 2)</span>
-<span class="fc bfc" id="L187" title="All 2 branches covered.">			if (tmp.get(tmp.size() - 1).toString().isEmpty()</span>
-<span class="fc bfc" id="L188" title="All 2 branches covered.">					&amp;&amp; tmp.get(tmp.size() - 2).toString().equals(EmbeddedDiagram.EMBEDDED_END))</span>
-<span class="fc" id="L189">				tmp.remove(tmp.size() - 1);</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (tmp.size() &gt; 2)</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">			if (tmp.get(tmp.size() - 1).toString().isEmpty()</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">					&amp;&amp; tmp.get(tmp.size() - 2).toString().equals(EmbeddedDiagram.EMBEDDED_END))</span>
+<span class="fc" id="L190">				tmp.remove(tmp.size() - 1);</span>
 
-<span class="fc" id="L191">		final Display result = create(tmp);</span>
+<span class="fc" id="L192">		final Display result = create(tmp);</span>
 		// CreoleParser.checkColor(result);
-<span class="fc" id="L193">		return result;</span>
+<span class="fc" id="L194">		return result;</span>
 	}
 
 //	private static List&lt;String&gt; skip(String type, Iterator&lt;StringLocated&gt; it) {
@@ -213,63 +214,63 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 //	}
 
 	public static Display create(Collection&lt;? extends CharSequence&gt; other) {
-<span class="fc" id="L216">		return new Display(true, other, null, false, CreoleMode.FULL);</span>
+<span class="fc" id="L217">		return new Display(true, other, null, false, CreoleMode.FULL);</span>
 	}
 
 	public static Display getWithNewlines(Quark&lt;Entity&gt; s) {
-<span class="fc" id="L220">		return getWithNewlines(Pragma.createEmpty(), s.getName());</span>
+<span class="fc" id="L221">		return getWithNewlines(Pragma.createEmpty(), s.getName());</span>
 	}
 
 	public static Display getWithNewlines2(Pragma pragma, String s) throws NoSuchColorException {
-<span class="fc" id="L224">		final Display result = getWithNewlines(pragma, s);</span>
+<span class="fc" id="L225">		final Display result = getWithNewlines(pragma, s);</span>
 		// CreoleParser.checkColor(result);
-<span class="fc" id="L226">		return result;</span>
+<span class="fc" id="L227">		return result;</span>
 	}
 
 	public static List&lt;String&gt; getWithNewlines3(CharSequence s) {
-<span class="nc bnc" id="L230" title="All 2 branches missed.">		if (s == null)</span>
-<span class="nc" id="L231">			return null;</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">		if (s == null)</span>
+<span class="nc" id="L232">			return null;</span>
 
-<span class="nc" id="L233">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L234">		final StringBuilder current = new StringBuilder();</span>
-<span class="nc bnc" id="L235" title="All 2 branches missed.">		for (int i = 0; i &lt; s.length(); i++) {</span>
-<span class="nc" id="L236">			final char c = s.charAt(i);</span>
-<span class="nc bnc" id="L237" title="All 4 branches missed.">			if (c == '\\' &amp;&amp; i &lt; s.length() - 1) {</span>
-<span class="nc" id="L238">				final char c2 = s.charAt(i + 1);</span>
-<span class="nc" id="L239">				i++;</span>
-<span class="nc bnc" id="L240" title="All 2 branches missed.">				if (c2 == 'n') {</span>
-<span class="nc" id="L241">					result.add(current.toString());</span>
-<span class="nc" id="L242">					current.setLength(0);</span>
-<span class="nc bnc" id="L243" title="All 2 branches missed.">				} else if (c2 == 't') {</span>
-<span class="nc" id="L244">					current.append('\t');</span>
-<span class="nc bnc" id="L245" title="All 2 branches missed.">				} else if (c2 == '\\') {</span>
-<span class="nc" id="L246">					current.append(c2);</span>
+<span class="nc" id="L234">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L235">		final StringBuilder current = new StringBuilder();</span>
+<span class="nc bnc" id="L236" title="All 2 branches missed.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="nc" id="L237">			final char c = s.charAt(i);</span>
+<span class="nc bnc" id="L238" title="All 4 branches missed.">			if (c == '\\' &amp;&amp; i &lt; s.length() - 1) {</span>
+<span class="nc" id="L239">				final char c2 = s.charAt(i + 1);</span>
+<span class="nc" id="L240">				i++;</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">				if (c2 == 'n') {</span>
+<span class="nc" id="L242">					result.add(current.toString());</span>
+<span class="nc" id="L243">					current.setLength(0);</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">				} else if (c2 == 't') {</span>
+<span class="nc" id="L245">					current.append('\t');</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">				} else if (c2 == '\\') {</span>
+<span class="nc" id="L247">					current.append(c2);</span>
 				}
-<span class="nc" id="L248">			} else {</span>
-<span class="nc" id="L249">				current.append(c);</span>
+<span class="nc" id="L249">			} else {</span>
+<span class="nc" id="L250">				current.append(c);</span>
 			}
 		}
-<span class="nc" id="L252">		result.add(current.toString());</span>
-<span class="nc" id="L253">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L253">		result.add(current.toString());</span>
+<span class="nc" id="L254">		return Collections.unmodifiableList(result);</span>
 	}
 
-<span class="fc" id="L256">	private final static Warning MORE_INFO = new Warning(&quot;More info on https://plantuml.com/newline&quot;);</span>
+<span class="fc" id="L257">	private final static Warning MORE_INFO = new Warning(&quot;More info on https://plantuml.com/newline&quot;);</span>
 
 	public static Display getWithNewlines(Pragma pragma, String s) {
-<span class="fc bfc" id="L259" title="All 2 branches covered.">		if (s == null)</span>
-<span class="fc" id="L260">			return NULL;</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">		if (s == null)</span>
+<span class="fc" id="L261">			return NULL;</span>
 
-<span class="fc" id="L262">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L263">		final StringBuilder current = new StringBuilder();</span>
-<span class="fc" id="L264">		HorizontalAlignment naturalHorizontalAlignment = null;</span>
-<span class="fc" id="L265">		boolean rawMode = false;</span>
-<span class="fc bfc" id="L266" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
-<span class="fc" id="L267">			final char c = s.charAt(i);</span>
-<span class="fc" id="L268">			final String sub = s.substring(i);</span>
-<span class="pc bpc" id="L269" title="2 of 6 branches missed.">			if (sub.startsWith(&quot;&lt;math&gt;&quot;) || sub.startsWith(&quot;&lt;latex&gt;&quot;) || sub.startsWith(&quot;[[&quot;))</span>
-<span class="fc" id="L270">				rawMode = true;</span>
-<span class="pc bpc" id="L271" title="2 of 6 branches missed.">			else if (sub.startsWith(&quot;&lt;/math&gt;&quot;) || sub.startsWith(&quot;&lt;/latex&gt;&quot;) || sub.startsWith(&quot;]]&quot;))</span>
-<span class="fc" id="L272">				rawMode = false;</span>
+<span class="fc" id="L263">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L264">		final StringBuilder current = new StringBuilder();</span>
+<span class="fc" id="L265">		HorizontalAlignment naturalHorizontalAlignment = null;</span>
+<span class="fc" id="L266">		boolean rawMode = false;</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L268">			final char c = s.charAt(i);</span>
+<span class="fc" id="L269">			final String sub = s.substring(i);</span>
+<span class="pc bpc" id="L270" title="2 of 6 branches missed.">			if (sub.startsWith(&quot;&lt;math&gt;&quot;) || sub.startsWith(&quot;&lt;latex&gt;&quot;) || sub.startsWith(&quot;[[&quot;))</span>
+<span class="fc" id="L271">				rawMode = true;</span>
+<span class="pc bpc" id="L272" title="2 of 6 branches missed.">			else if (sub.startsWith(&quot;&lt;/math&gt;&quot;) || sub.startsWith(&quot;&lt;/latex&gt;&quot;) || sub.startsWith(&quot;]]&quot;))</span>
+<span class="fc" id="L273">				rawMode = false;</span>
 
 			if (JawsFlags.SPECIAL_NEWLINE_IN_DISPLAY_CLASS &amp;&amp; sub.startsWith(&quot;%newline()&quot;)) {
 				result.add(current.toString());
@@ -281,95 +282,95 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 				current.setLength(0);
 				i += 3;
 				// throw new IllegalStateException();
-<span class="pc bpc" id="L284" title="1 of 6 branches missed.">			} else if (Pragma.legacyReplaceBackslashNByNewline() &amp;&amp; rawMode == false &amp;&amp; c == '\\'</span>
-<span class="pc bpc" id="L285" title="1 of 2 branches missed.">					&amp;&amp; i &lt; s.length() - 1) {</span>
-<span class="fc" id="L286">				final char c2 = s.charAt(i + 1);</span>
-<span class="fc" id="L287">				i++;</span>
-<span class="fc bfc" id="L288" title="All 6 branches covered.">				if (c2 == 'n' || c2 == 'r' || c2 == 'l') {</span>
-<span class="fc bfc" id="L289" title="All 2 branches covered.">					if (c2 == 'r') {</span>
-<span class="fc" id="L290">						naturalHorizontalAlignment = HorizontalAlignment.RIGHT;</span>
-<span class="fc" id="L291">						addWarning(pragma, JawsWarning.BACKSLASH_RIGHT);</span>
-<span class="fc bfc" id="L292" title="All 2 branches covered.">					} else if (c2 == 'l') {</span>
-<span class="fc" id="L293">						naturalHorizontalAlignment = HorizontalAlignment.LEFT;</span>
-<span class="fc" id="L294">						addWarning(pragma, JawsWarning.BACKSLASH_LEFT);</span>
+<span class="pc bpc" id="L285" title="1 of 6 branches missed.">			} else if (Pragma.legacyReplaceBackslashNByNewline() &amp;&amp; rawMode == false &amp;&amp; c == '\\'</span>
+<span class="pc bpc" id="L286" title="1 of 2 branches missed.">					&amp;&amp; i &lt; s.length() - 1) {</span>
+<span class="fc" id="L287">				final char c2 = s.charAt(i + 1);</span>
+<span class="fc" id="L288">				i++;</span>
+<span class="fc bfc" id="L289" title="All 6 branches covered.">				if (c2 == 'n' || c2 == 'r' || c2 == 'l') {</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">					if (c2 == 'r') {</span>
+<span class="fc" id="L291">						naturalHorizontalAlignment = HorizontalAlignment.RIGHT;</span>
+<span class="fc" id="L292">						addWarning(pragma, JawsWarning.BACKSLASH_RIGHT);</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">					} else if (c2 == 'l') {</span>
+<span class="fc" id="L294">						naturalHorizontalAlignment = HorizontalAlignment.LEFT;</span>
+<span class="fc" id="L295">						addWarning(pragma, JawsWarning.BACKSLASH_LEFT);</span>
 					} else {
-<span class="fc" id="L296">						addWarning(pragma, JawsWarning.BACKSLASH_NEWLINE);</span>
+<span class="fc" id="L297">						addWarning(pragma, JawsWarning.BACKSLASH_NEWLINE);</span>
 					}
 
-<span class="fc" id="L299">					result.add(current.toString());</span>
-<span class="fc" id="L300">					current.setLength(0);</span>
-<span class="fc bfc" id="L301" title="All 2 branches covered.">				} else if (c2 == 't') {</span>
-<span class="fc" id="L302">					current.append('\t');</span>
-<span class="fc" id="L303">					addWarning(pragma, JawsWarning.BACKSLASH_TABULATION);</span>
-<span class="fc bfc" id="L304" title="All 2 branches covered.">				} else if (c2 == '\\') {</span>
-<span class="fc" id="L305">					current.append(c2);</span>
-<span class="fc" id="L306">					addWarning(pragma, JawsWarning.BACKSLASH_BACKSLASH);</span>
+<span class="fc" id="L300">					result.add(current.toString());</span>
+<span class="fc" id="L301">					current.setLength(0);</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">				} else if (c2 == 't') {</span>
+<span class="fc" id="L303">					current.append('\t');</span>
+<span class="fc" id="L304">					addWarning(pragma, JawsWarning.BACKSLASH_TABULATION);</span>
+<span class="fc bfc" id="L305" title="All 2 branches covered.">				} else if (c2 == '\\') {</span>
+<span class="fc" id="L306">					current.append(c2);</span>
+<span class="fc" id="L307">					addWarning(pragma, JawsWarning.BACKSLASH_BACKSLASH);</span>
 				} else {
-<span class="fc" id="L308">					current.append(c);</span>
-<span class="fc" id="L309">					current.append(c2);</span>
+<span class="fc" id="L309">					current.append(c);</span>
+<span class="fc" id="L310">					current.append(c2);</span>
 				}
-<span class="pc bpc" id="L311" title="1 of 2 branches missed.">			} else if (c == Jaws.BLOCK_E1_REAL_TABULATION) {</span>
+<span class="pc bpc" id="L312" title="1 of 2 branches missed.">			} else if (c == Jaws.BLOCK_E1_REAL_TABULATION) {</span>
 				// current.append('\t');
-<span class="nc" id="L313">				current.append(c);</span>
-<span class="pc bpc" id="L314" title="1 of 2 branches missed.">			} else if (c == Jaws.BLOCK_E1_REAL_BACKSLASH) {</span>
-<span class="nc" id="L315">				current.append('\\');</span>
-<span class="pc bpc" id="L316" title="1 of 2 branches missed.">			} else if (c == Jaws.BLOCK_E1_NEWLINE_LEFT_ALIGN) {</span>
-<span class="nc" id="L317">				naturalHorizontalAlignment = HorizontalAlignment.LEFT;</span>
-<span class="nc" id="L318">				result.add(current.toString());</span>
-<span class="nc" id="L319">				current.setLength(0);</span>
-<span class="pc bpc" id="L320" title="1 of 2 branches missed.">			} else if (c == Jaws.BLOCK_E1_INVISIBLE_QUOTE) {</span>
+<span class="nc" id="L314">				current.append(c);</span>
+<span class="pc bpc" id="L315" title="1 of 2 branches missed.">			} else if (c == Jaws.BLOCK_E1_REAL_BACKSLASH) {</span>
+<span class="nc" id="L316">				current.append('\\');</span>
+<span class="pc bpc" id="L317" title="1 of 2 branches missed.">			} else if (c == Jaws.BLOCK_E1_NEWLINE_LEFT_ALIGN) {</span>
+<span class="nc" id="L318">				naturalHorizontalAlignment = HorizontalAlignment.LEFT;</span>
+<span class="nc" id="L319">				result.add(current.toString());</span>
+<span class="nc" id="L320">				current.setLength(0);</span>
+<span class="pc bpc" id="L321" title="1 of 2 branches missed.">			} else if (c == Jaws.BLOCK_E1_INVISIBLE_QUOTE) {</span>
 				// No thing to do, just ignore this character
-<span class="pc bpc" id="L322" title="1 of 2 branches missed.">			} else if (c == Jaws.BLOCK_E1_NEWLINE_RIGHT_ALIGN) {</span>
-<span class="nc" id="L323">				naturalHorizontalAlignment = HorizontalAlignment.RIGHT;</span>
-<span class="nc" id="L324">				result.add(current.toString());</span>
-<span class="nc" id="L325">				current.setLength(0);</span>
-<span class="fc bfc" id="L326" title="All 4 branches covered.">			} else if (rawMode == false &amp;&amp; c == Jaws.BLOCK_E1_NEWLINE) {</span>
-<span class="fc" id="L327">				result.add(current.toString());</span>
-<span class="fc" id="L328">				current.setLength(0);</span>
-<span class="pc bpc" id="L329" title="1 of 2 branches missed.">			} else if (c == Jaws.BLOCK_E1_BREAKLINE) {</span>
+<span class="pc bpc" id="L323" title="1 of 2 branches missed.">			} else if (c == Jaws.BLOCK_E1_NEWLINE_RIGHT_ALIGN) {</span>
+<span class="nc" id="L324">				naturalHorizontalAlignment = HorizontalAlignment.RIGHT;</span>
+<span class="nc" id="L325">				result.add(current.toString());</span>
+<span class="nc" id="L326">				current.setLength(0);</span>
+<span class="fc bfc" id="L327" title="All 4 branches covered.">			} else if (rawMode == false &amp;&amp; c == Jaws.BLOCK_E1_NEWLINE) {</span>
+<span class="fc" id="L328">				result.add(current.toString());</span>
+<span class="fc" id="L329">				current.setLength(0);</span>
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">			} else if (c == Jaws.BLOCK_E1_BREAKLINE) {</span>
 				// Because of embedded diagrams
-<span class="nc" id="L331">				result.add(current.toString());</span>
-<span class="nc" id="L332">				current.setLength(0);</span>
-<span class="pc bpc" id="L333" title="1 of 4 branches missed.">			} else if (rawMode == false &amp;&amp; c == BackSlash.hiddenNewLine()) {</span>
-<span class="nc" id="L334">				result.add(current.toString());</span>
-<span class="nc" id="L335">				current.setLength(0);</span>
+<span class="nc" id="L332">				result.add(current.toString());</span>
+<span class="nc" id="L333">				current.setLength(0);</span>
+<span class="pc bpc" id="L334" title="1 of 4 branches missed.">			} else if (rawMode == false &amp;&amp; c == BackSlash.hiddenNewLine()) {</span>
+<span class="nc" id="L335">				result.add(current.toString());</span>
+<span class="nc" id="L336">				current.setLength(0);</span>
 			} else {
-<span class="fc" id="L337">				current.append(c);</span>
+<span class="fc" id="L338">				current.append(c);</span>
 			}
 		}
-<span class="fc" id="L340">		result.add(current.toString());</span>
-<span class="fc" id="L341">		return new Display(true, result, naturalHorizontalAlignment, false, CreoleMode.FULL);</span>
+<span class="fc" id="L341">		result.add(current.toString());</span>
+<span class="fc" id="L342">		return new Display(true, result, naturalHorizontalAlignment, false, CreoleMode.FULL);</span>
 	}
 
 	private static void addWarning(Pragma pragma, JawsWarning warning) {
-<span class="pc bpc" id="L345" title="1 of 2 branches missed.">		if (pragma.isTrue(PragmaKey.SHOW_DEPRECATION)) {</span>
-<span class="nc" id="L346">			pragma.addWarning(MORE_INFO);</span>
-<span class="nc" id="L347">			pragma.addWarning(warning.toWarning());</span>
+<span class="pc bpc" id="L346" title="1 of 2 branches missed.">		if (pragma.isTrue(PragmaKey.SHOW_DEPRECATION)) {</span>
+<span class="nc" id="L347">			pragma.addWarning(MORE_INFO);</span>
+<span class="nc" id="L348">			pragma.addWarning(warning.toWarning());</span>
 		}
-<span class="fc" id="L349">	}</span>
+<span class="fc" id="L350">	}</span>
 
 	private Display(boolean showStereotype, Display other, CreoleMode mode) {
-<span class="fc" id="L352">		this(showStereotype, other.naturalHorizontalAlignment, other.isNull, mode);</span>
-<span class="fc" id="L353">		this.displayData.addAll(other.displayData);</span>
-<span class="fc" id="L354">	}</span>
+<span class="fc" id="L353">		this(showStereotype, other.naturalHorizontalAlignment, other.isNull, mode);</span>
+<span class="fc" id="L354">		this.displayData.addAll(other.displayData);</span>
+<span class="fc" id="L355">	}</span>
 
 	private Display(boolean showStereotype, HorizontalAlignment naturalHorizontalAlignment, boolean isNull,
-<span class="fc" id="L357">			CreoleMode defaultCreoleMode) {</span>
-<span class="fc" id="L358">		this.showStereotype = showStereotype;</span>
-<span class="fc" id="L359">		this.defaultCreoleMode = defaultCreoleMode;</span>
-<span class="fc" id="L360">		this.isNull = isNull;</span>
-<span class="fc bfc" id="L361" title="All 2 branches covered.">		this.displayData = isNull ? null : new ArrayList&lt;CharSequence&gt;();</span>
-<span class="fc bfc" id="L362" title="All 2 branches covered.">		this.naturalHorizontalAlignment = isNull ? null : naturalHorizontalAlignment;</span>
-<span class="fc" id="L363">	}</span>
+<span class="fc" id="L358">			CreoleMode defaultCreoleMode) {</span>
+<span class="fc" id="L359">		this.showStereotype = showStereotype;</span>
+<span class="fc" id="L360">		this.defaultCreoleMode = defaultCreoleMode;</span>
+<span class="fc" id="L361">		this.isNull = isNull;</span>
+<span class="fc bfc" id="L362" title="All 2 branches covered.">		this.displayData = isNull ? null : new ArrayList&lt;CharSequence&gt;();</span>
+<span class="fc bfc" id="L363" title="All 2 branches covered.">		this.naturalHorizontalAlignment = isNull ? null : naturalHorizontalAlignment;</span>
+<span class="fc" id="L364">	}</span>
 
 	private Display(boolean showStereotype, Collection&lt;? extends CharSequence&gt; other,
 			HorizontalAlignment naturalHorizontalAlignment, boolean isNull, CreoleMode defaultCreoleMode) {
-<span class="fc" id="L367">		this(showStereotype, naturalHorizontalAlignment, isNull, defaultCreoleMode);</span>
-<span class="fc bfc" id="L368" title="All 2 branches covered.">		if (isNull == false)</span>
+<span class="fc" id="L368">		this(showStereotype, naturalHorizontalAlignment, isNull, defaultCreoleMode);</span>
+<span class="fc bfc" id="L369" title="All 2 branches covered.">		if (isNull == false)</span>
 			// this.displayData.addAll(manageEmbeddedDiagrams(other));
-<span class="fc" id="L370">			this.displayData.addAll(other);</span>
+<span class="fc" id="L371">			this.displayData.addAll(other);</span>
 
-<span class="fc" id="L372">	}</span>
+<span class="fc" id="L373">	}</span>
 
 //	private static List&lt;CharSequence&gt; manageEmbeddedDiagrams(final Collection&lt;? extends CharSequence&gt; strings) {
 //		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();
@@ -404,342 +405,343 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 //	}
 
 	public Display manageGuillemet(boolean manageVisibilityModifier) {
-<span class="fc" id="L407">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L408">		boolean first = true;</span>
-<span class="fc bfc" id="L409" title="All 2 branches covered.">		for (CharSequence line : displayData) {</span>
-<span class="fc" id="L410">			String lineString = line.toString();</span>
-<span class="pc bpc" id="L411" title="2 of 6 branches missed.">			if (manageVisibilityModifier &amp;&amp; first &amp;&amp; VisibilityModifier.isVisibilityCharacter(line))</span>
-<span class="nc" id="L412">				lineString = lineString.substring(1).trim();</span>
+<span class="fc" id="L408">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L409">		boolean first = true;</span>
+<span class="fc bfc" id="L410" title="All 2 branches covered.">		for (CharSequence line : displayData) {</span>
+<span class="fc" id="L411">			String lineString = line.toString();</span>
+<span class="pc bpc" id="L412" title="2 of 6 branches missed.">			if (manageVisibilityModifier &amp;&amp; first &amp;&amp; VisibilityModifier.isVisibilityCharacter(line))</span>
+<span class="nc" id="L413">				lineString = lineString.substring(1).trim();</span>
 
-<span class="fc" id="L414">			final String withGuillement = Guillemet.GUILLEMET.manageGuillemet(lineString);</span>
-<span class="fc" id="L415">			result.add(withGuillement);</span>
+<span class="fc" id="L415">			final String withGuillement = Guillemet.GUILLEMET.manageGuillemet(lineString);</span>
+<span class="fc" id="L416">			result.add(withGuillement);</span>
 
-<span class="fc" id="L417">			first = false;</span>
-<span class="fc" id="L418">		}</span>
-<span class="fc" id="L419">		return new Display(showStereotype, result, this.naturalHorizontalAlignment, this.isNull,</span>
+<span class="fc" id="L418">			first = false;</span>
+<span class="fc" id="L419">		}</span>
+<span class="fc" id="L420">		return new Display(showStereotype, result, this.naturalHorizontalAlignment, this.isNull,</span>
 				this.defaultCreoleMode);
 	}
 
 	public Display withPage(int page, int lastpage) {
-<span class="nc bnc" id="L424" title="All 2 branches missed.">		if (displayData == null)</span>
-<span class="nc" id="L425">			return this;</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">		if (displayData == null)</span>
+<span class="nc" id="L426">			return this;</span>
 
-<span class="nc" id="L427">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L428" title="All 2 branches missed.">		for (CharSequence line : displayData) {</span>
-<span class="nc" id="L429">			line = line.toString().replace(&quot;%page%&quot;, &quot;&quot; + page);</span>
-<span class="nc" id="L430">			line = line.toString().replace(&quot;%lastpage%&quot;, &quot;&quot; + lastpage);</span>
-<span class="nc" id="L431">			result.add(line);</span>
-<span class="nc" id="L432">		}</span>
-<span class="nc" id="L433">		return new Display(showStereotype, result, this.naturalHorizontalAlignment, this.isNull,</span>
+<span class="nc" id="L428">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L429" title="All 2 branches missed.">		for (CharSequence line : displayData) {</span>
+<span class="nc" id="L430">			line = line.toString().replace(&quot;%page%&quot;, &quot;&quot; + page);</span>
+<span class="nc" id="L431">			line = line.toString().replace(&quot;%lastpage%&quot;, &quot;&quot; + lastpage);</span>
+<span class="nc" id="L432">			result.add(line);</span>
+<span class="nc" id="L433">		}</span>
+<span class="nc" id="L434">		return new Display(showStereotype, result, this.naturalHorizontalAlignment, this.isNull,</span>
 				this.defaultCreoleMode);
 	}
 
 	public Display removeEndingStereotype() {
-<span class="nc" id="L438">		final Matcher2 m = patternStereotype.matcher(displayData.get(displayData.size() - 1));</span>
-<span class="nc bnc" id="L439" title="All 2 branches missed.">		if (m.matches()) {</span>
-<span class="nc" id="L440">			final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;(this.displayData);</span>
-<span class="nc" id="L441">			result.set(result.size() - 1, m.group(1));</span>
-<span class="nc" id="L442">			return new Display(showStereotype, result, this.naturalHorizontalAlignment, this.isNull,</span>
+<span class="nc" id="L439">		final Matcher2 m = patternStereotype.matcher(displayData.get(displayData.size() - 1));</span>
+<span class="nc bnc" id="L440" title="All 2 branches missed.">		if (m.matches()) {</span>
+<span class="nc" id="L441">			final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;(this.displayData);</span>
+<span class="nc" id="L442">			result.set(result.size() - 1, m.group(1));</span>
+<span class="nc" id="L443">			return new Display(showStereotype, result, this.naturalHorizontalAlignment, this.isNull,</span>
 					this.defaultCreoleMode);
 		}
-<span class="nc" id="L445">		return this;</span>
+<span class="nc" id="L446">		return this;</span>
 	}
 
-<span class="fc" id="L448">	public final static Pattern2 patternStereotype = Pattern2.cmpile(&quot;^(.*?)(\\&lt;\\&lt;\\s*(.*)\\s*\\&gt;\\&gt;)\\s*$&quot;);</span>
+<span class="fc" id="L449">	public final static Pattern2 patternStereotype = Pattern2.cmpile(&quot;^(.*?)(\\&lt;\\&lt;\\s*(.*)\\s*\\&gt;\\&gt;)\\s*$&quot;);</span>
 
 	public Stereotype getEndingStereotype() {
-<span class="fc" id="L451">		final Matcher2 m = patternStereotype.matcher(displayData.get(displayData.size() - 1));</span>
-<span class="pc bpc" id="L452" title="1 of 2 branches missed.">		if (m.matches())</span>
-<span class="nc" id="L453">			return Stereotype.build(m.group(2));</span>
+<span class="fc" id="L452">		final Matcher2 m = patternStereotype.matcher(displayData.get(displayData.size() - 1));</span>
+<span class="pc bpc" id="L453" title="1 of 2 branches missed.">		if (m.matches())</span>
+<span class="nc" id="L454">			return Stereotype.build(m.group(2));</span>
 
-<span class="fc" id="L455">		return null;</span>
+<span class="fc" id="L456">		return null;</span>
 	}
 
 	public Display underlined() {
-<span class="nc" id="L459">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L460" title="All 2 branches missed.">		for (CharSequence line : displayData)</span>
-<span class="nc" id="L461">			result.add(&quot;&lt;u&gt;&quot; + line);</span>
+<span class="nc" id="L460">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L461" title="All 2 branches missed.">		for (CharSequence line : displayData)</span>
+<span class="nc" id="L462">			result.add(&quot;&lt;u&gt;&quot; + line);</span>
 
-<span class="nc" id="L463">		return new Display(showStereotype, result, this.naturalHorizontalAlignment, this.isNull,</span>
+<span class="nc" id="L464">		return new Display(showStereotype, result, this.naturalHorizontalAlignment, this.isNull,</span>
 				this.defaultCreoleMode);
 	}
 
-<span class="fc" id="L467">	private static final Pattern p = Pattern.compile(&quot;^([^:]+?)(\\s*:.+)$&quot;);</span>
+<span class="fc" id="L468">	private static final Pattern p = Pattern.compile(&quot;^([^:]+?)(\\s*:.+)$&quot;);</span>
 
 	public Display underlinedName() {
-<span class="nc" id="L470">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L471" title="All 2 branches missed.">		for (CharSequence line : displayData) {</span>
-<span class="nc bnc" id="L472" title="All 2 branches missed.">			if (result.size() == 0) {</span>
-<span class="nc" id="L473">				final Matcher m = p.matcher(line);</span>
-<span class="nc bnc" id="L474" title="All 2 branches missed.">				if (m.matches())</span>
-<span class="nc" id="L475">					result.add(&quot;&lt;u&gt;&quot; + m.group(1) + &quot;&lt;/u&gt;&quot; + m.group(2));</span>
+<span class="nc" id="L471">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L472" title="All 2 branches missed.">		for (CharSequence line : displayData) {</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">			if (result.size() == 0) {</span>
+<span class="nc" id="L474">				final Matcher m = p.matcher(line);</span>
+<span class="nc bnc" id="L475" title="All 2 branches missed.">				if (m.matches())</span>
+<span class="nc" id="L476">					result.add(&quot;&lt;u&gt;&quot; + m.group(1) + &quot;&lt;/u&gt;&quot; + m.group(2));</span>
 				else
-<span class="nc" id="L477">					result.add(&quot;&lt;u&gt;&quot; + line);</span>
-<span class="nc" id="L478">			} else {</span>
-<span class="nc" id="L479">				result.add(&quot;&lt;u&gt;&quot; + line);</span>
+<span class="nc" id="L478">					result.add(&quot;&lt;u&gt;&quot; + line);</span>
+<span class="nc" id="L479">			} else {</span>
+<span class="nc" id="L480">				result.add(&quot;&lt;u&gt;&quot; + line);</span>
 			}
-<span class="nc" id="L481">		}</span>
-<span class="nc" id="L482">		return new Display(showStereotype, result, this.naturalHorizontalAlignment, this.isNull,</span>
+<span class="nc" id="L482">		}</span>
+<span class="nc" id="L483">		return new Display(showStereotype, result, this.naturalHorizontalAlignment, this.isNull,</span>
 				this.defaultCreoleMode);
 	}
 
 	public Display withCreoleMode(CreoleMode mode) {
-<span class="pc bpc" id="L487" title="1 of 2 branches missed.">		if (isNull)</span>
-<span class="nc" id="L488">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L488" title="1 of 2 branches missed.">		if (isNull)</span>
+<span class="nc" id="L489">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L490">		return new Display(this.showStereotype, this, mode);</span>
+<span class="fc" id="L491">		return new Display(this.showStereotype, this, mode);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="fc bfc" id="L495" title="All 2 branches covered.">		if (isNull)</span>
-<span class="fc" id="L496">			return &quot;NULL&quot;;</span>
+<span class="fc bfc" id="L496" title="All 2 branches covered.">		if (isNull)</span>
+<span class="fc" id="L497">			return &quot;NULL&quot;;</span>
 
-<span class="fc" id="L498">		return displayData.toString();</span>
+<span class="fc" id="L499">		return displayData.toString();</span>
 	}
 
 	public Display addAll(Display other) {
-<span class="fc" id="L502">		final Display result = new Display(this.showStereotype, this, this.defaultCreoleMode);</span>
-<span class="fc" id="L503">		result.displayData.addAll(other.displayData);</span>
-<span class="fc" id="L504">		return result;</span>
+<span class="fc" id="L503">		final Display result = new Display(this.showStereotype, this, this.defaultCreoleMode);</span>
+<span class="fc" id="L504">		result.displayData.addAll(other.displayData);</span>
+<span class="fc" id="L505">		return result;</span>
 	}
 
 	public Display addFirst(CharSequence s) {
-<span class="nc" id="L508">		final Display result = new Display(this.showStereotype, this, this.defaultCreoleMode);</span>
-<span class="nc" id="L509">		result.displayData.add(0, s);</span>
-<span class="nc" id="L510">		return result;</span>
+<span class="nc" id="L509">		final Display result = new Display(this.showStereotype, this, this.defaultCreoleMode);</span>
+<span class="nc" id="L510">		result.displayData.add(0, s);</span>
+<span class="nc" id="L511">		return result;</span>
 	}
 
 	public Display appendFirstLine(String appended) {
-<span class="nc" id="L514">		final Display result = new Display(this.showStereotype, this, this.defaultCreoleMode);</span>
-<span class="nc" id="L515">		result.displayData.set(0, appended + result.displayData.get(0));</span>
-<span class="nc" id="L516">		return result;</span>
+<span class="nc" id="L515">		final Display result = new Display(this.showStereotype, this, this.defaultCreoleMode);</span>
+<span class="nc" id="L516">		result.displayData.set(0, appended + result.displayData.get(0));</span>
+<span class="nc" id="L517">		return result;</span>
 	}
 
 	public Display add(CharSequence s) {
-<span class="fc" id="L520">		final Display result = new Display(this.showStereotype, this, this.defaultCreoleMode);</span>
-<span class="fc" id="L521">		result.displayData.add(s);</span>
-<span class="fc" id="L522">		return result;</span>
+<span class="fc" id="L521">		final Display result = new Display(this.showStereotype, this, this.defaultCreoleMode);</span>
+<span class="fc" id="L522">		result.displayData.add(s);</span>
+<span class="fc" id="L523">		return result;</span>
 	}
 
 	public Display addGeneric(CharSequence s) {
-<span class="nc" id="L526">		final Display result = new Display(this.showStereotype, this, this.defaultCreoleMode);</span>
-<span class="nc" id="L527">		final int size = displayData.size();</span>
-<span class="nc bnc" id="L528" title="All 2 branches missed.">		if (size == 0)</span>
-<span class="nc" id="L529">			result.displayData.add(&quot;&lt;&quot; + s + &quot;&gt;&quot;);</span>
+<span class="nc" id="L527">		final Display result = new Display(this.showStereotype, this, this.defaultCreoleMode);</span>
+<span class="nc" id="L528">		final int size = displayData.size();</span>
+<span class="nc bnc" id="L529" title="All 2 branches missed.">		if (size == 0)</span>
+<span class="nc" id="L530">			result.displayData.add(&quot;&lt;&quot; + s + &quot;&gt;&quot;);</span>
 		else
-<span class="nc" id="L531">			result.displayData.set(size - 1, displayData.get(size - 1) + &quot;&lt;&quot; + s + &quot;&gt;&quot;);</span>
+<span class="nc" id="L532">			result.displayData.set(size - 1, displayData.get(size - 1) + &quot;&lt;&quot; + s + &quot;&gt;&quot;);</span>
 
-<span class="nc" id="L533">		return result;</span>
+<span class="nc" id="L534">		return result;</span>
 	}
 
 	public int size() {
-<span class="fc bfc" id="L537" title="All 2 branches covered.">		if (isNull)</span>
-<span class="fc" id="L538">			return 0;</span>
+<span class="fc bfc" id="L538" title="All 2 branches covered.">		if (isNull)</span>
+<span class="fc" id="L539">			return 0;</span>
 
-<span class="fc" id="L540">		return displayData.size();</span>
+<span class="fc" id="L541">		return displayData.size();</span>
 	}
 
 	public CharSequence get(int i) {
-<span class="fc" id="L544">		return displayData.get(i);</span>
+<span class="fc" id="L545">		return displayData.get(i);</span>
 	}
 
 	public ListIterator&lt;CharSequence&gt; iterator() {
-<span class="fc" id="L548">		return Collections.unmodifiableList(displayData).listIterator();</span>
+<span class="fc" id="L549">		return Collections.unmodifiableList(displayData).listIterator();</span>
 	}
 
 	public Display subList(int i, int size) {
-<span class="fc" id="L552">		return new Display(showStereotype, displayData.subList(i, size), this.naturalHorizontalAlignment, this.isNull,</span>
+<span class="fc" id="L553">		return new Display(showStereotype, displayData.subList(i, size), this.naturalHorizontalAlignment, this.isNull,</span>
 				this.defaultCreoleMode);
 	}
 
 	public List&lt;? extends CharSequence&gt; asList() {
-<span class="fc bfc" id="L557" title="All 2 branches covered.">		if (displayData == null)</span>
-<span class="fc" id="L558">			return Collections.emptyList();</span>
-<span class="fc" id="L559">		return Collections.unmodifiableList(displayData);</span>
+<span class="fc bfc" id="L558" title="All 2 branches covered.">		if (displayData == null)</span>
+<span class="fc" id="L559">			return Collections.emptyList();</span>
+<span class="fc" id="L560">		return Collections.unmodifiableList(displayData);</span>
 	}
 
 	public boolean hasUrl() {
-<span class="fc" id="L563">		final UrlBuilder urlBuilder = new UrlBuilder(null, UrlMode.ANYWHERE);</span>
-<span class="fc bfc" id="L564" title="All 2 branches covered.">		for (CharSequence s : this)</span>
-<span class="pc bpc" id="L565" title="1 of 2 branches missed.">			if (urlBuilder.getUrl(s.toString()) != null)</span>
-<span class="nc" id="L566">				return true;</span>
+<span class="fc" id="L564">		final UrlBuilder urlBuilder = new UrlBuilder(null, UrlMode.ANYWHERE);</span>
+<span class="fc bfc" id="L565" title="All 2 branches covered.">		for (CharSequence s : this)</span>
+<span class="pc bpc" id="L566" title="1 of 2 branches missed.">			if (urlBuilder.getUrl(s.toString()) != null)</span>
+<span class="nc" id="L567">				return true;</span>
 
-<span class="fc" id="L568">		return false;</span>
+<span class="fc" id="L569">		return false;</span>
 	}
 
 	public HorizontalAlignment getNaturalHorizontalAlignment() {
-<span class="fc" id="L572">		return naturalHorizontalAlignment;</span>
+<span class="fc" id="L573">		return naturalHorizontalAlignment;</span>
 	}
 
 	public List&lt;Display&gt; splitMultiline(Pattern2 separator) {
-<span class="nc" id="L576">		final List&lt;Display&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L577">		Display pending = new Display(showStereotype, this.naturalHorizontalAlignment, this.isNull,</span>
+<span class="nc" id="L577">		final List&lt;Display&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L578">		Display pending = new Display(showStereotype, this.naturalHorizontalAlignment, this.isNull,</span>
 				this.defaultCreoleMode);
-<span class="nc" id="L579">		result.add(pending);</span>
-<span class="nc bnc" id="L580" title="All 2 branches missed.">		for (CharSequence line : displayData) {</span>
-<span class="nc" id="L581">			final Matcher2 m = separator.matcher(line);</span>
-<span class="nc bnc" id="L582" title="All 2 branches missed.">			if (m.find()) {</span>
-<span class="nc" id="L583">				final CharSequence s1 = line.subSequence(0, m.start());</span>
-<span class="nc" id="L584">				pending.displayData.add(s1);</span>
-<span class="nc" id="L585">				final CharSequence s2 = line.subSequence(m.end(), line.length());</span>
-<span class="nc" id="L586">				pending = new Display(showStereotype, this.naturalHorizontalAlignment, this.isNull,</span>
+<span class="nc" id="L580">		result.add(pending);</span>
+<span class="nc bnc" id="L581" title="All 2 branches missed.">		for (CharSequence line : displayData) {</span>
+<span class="nc" id="L582">			final Matcher2 m = separator.matcher(line);</span>
+<span class="nc bnc" id="L583" title="All 2 branches missed.">			if (m.find()) {</span>
+<span class="nc" id="L584">				final CharSequence s1 = line.subSequence(0, m.start());</span>
+<span class="nc" id="L585">				pending.displayData.add(s1);</span>
+<span class="nc" id="L586">				final CharSequence s2 = line.subSequence(m.end(), line.length());</span>
+<span class="nc" id="L587">				pending = new Display(showStereotype, this.naturalHorizontalAlignment, this.isNull,</span>
 						this.defaultCreoleMode);
-<span class="nc" id="L588">				result.add(pending);</span>
-<span class="nc" id="L589">				pending.displayData.add(s2);</span>
-<span class="nc" id="L590">			} else {</span>
-<span class="nc" id="L591">				pending.displayData.add(line);</span>
+<span class="nc" id="L589">				result.add(pending);</span>
+<span class="nc" id="L590">				pending.displayData.add(s2);</span>
+<span class="nc" id="L591">			} else {</span>
+<span class="nc" id="L592">				pending.displayData.add(line);</span>
 			}
-<span class="nc" id="L593">		}</span>
-<span class="nc" id="L594">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L594">		}</span>
+<span class="nc" id="L595">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public String toTooltipText() {
-<span class="fc bfc" id="L598" title="All 2 branches covered.">		if (size() == 0)</span>
-<span class="fc" id="L599">			return &quot;&quot;;</span>
-<span class="fc" id="L600">		return get(0).toString();</span>
+<span class="fc bfc" id="L599" title="All 2 branches covered.">		if (size() == 0)</span>
+<span class="fc" id="L600">			return &quot;&quot;;</span>
+<span class="fc" id="L601">		return get(0).toString();</span>
 	}
 
 	// ------
 
 	public static boolean isNull(Display display) {
 		// Objects.requireNonNull(display);
-<span class="pc bpc" id="L607" title="1 of 4 branches missed.">		return display == null || display.isNull;</span>
+<span class="pc bpc" id="L608" title="1 of 4 branches missed.">		return display == null || display.isNull;</span>
 	}
 
 	public TextBlock create(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer) {
-<span class="fc" id="L612">		return create7(fontConfiguration, horizontalAlignment, spriteContainer, CreoleMode.FULL);</span>
+<span class="fc" id="L613">		return create7(fontConfiguration, horizontalAlignment, spriteContainer, CreoleMode.FULL);</span>
 	}
 
 	public TextBlock create7(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, CreoleMode creoleMode) {
-<span class="fc" id="L617">		return create0(fontConfiguration, horizontalAlignment, spriteContainer, LineBreakStrategy.NONE, creoleMode,</span>
+<span class="fc" id="L618">		return create0(fontConfiguration, horizontalAlignment, spriteContainer, LineBreakStrategy.NONE, creoleMode,</span>
 				null, null);
 	}
 
 	public TextBlock create8(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, CreoleMode modeSimpleLine, LineBreakStrategy maxMessageSize) {
-<span class="fc" id="L623">		return create0(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, modeSimpleLine, null,</span>
+<span class="fc" id="L624">		return create0(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, modeSimpleLine, null,</span>
 				null);
 	}
 
 	public TextBlock create9(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize) {
-<span class="fc" id="L629">		return create0(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, defaultCreoleMode, null,</span>
+<span class="fc" id="L630">		return create0(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, defaultCreoleMode, null,</span>
 				null);
 	}
 
 	public TextBlock create0(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, CreoleMode creoleMode,
 			UFont fontForStereotype, HColor htmlColorForStereotype) {
-<span class="fc" id="L636">		return create0(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, creoleMode,</span>
+<span class="fc" id="L637">		return create0(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, creoleMode,</span>
 				fontForStereotype, htmlColorForStereotype, 0, 0);
 	}
 
 	public TextBlock create0(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, CreoleMode creoleMode,
 			UFont fontForStereotype, HColor htmlColorForStereotype, double marginX1, double marginX2) {
-<span class="fc" id="L643">		Objects.requireNonNull(maxMessageSize);</span>
-<span class="fc bfc" id="L644" title="All 2 branches covered.">		if (getNaturalHorizontalAlignment() != null)</span>
-<span class="fc" id="L645">			horizontalAlignment = getNaturalHorizontalAlignment();</span>
+<span class="fc" id="L644">		Objects.requireNonNull(maxMessageSize);</span>
+<span class="fc bfc" id="L645" title="All 2 branches covered.">		if (getNaturalHorizontalAlignment() != null)</span>
+<span class="fc" id="L646">			horizontalAlignment = getNaturalHorizontalAlignment();</span>
 
-<span class="fc" id="L647">		final FontConfiguration stereotypeConfiguration = fontConfiguration.forceFont(fontForStereotype,</span>
+<span class="fc" id="L648">		final FontConfiguration stereotypeConfiguration = fontConfiguration.forceFont(fontForStereotype,</span>
 				htmlColorForStereotype);
-<span class="fc bfc" id="L649" title="All 2 branches covered.">		if (size() &gt; 0) {</span>
-<span class="pc bpc" id="L650" title="1 of 2 branches missed.">			if (get(0) instanceof Stereotype)</span>
-<span class="nc" id="L651">				return createStereotype(fontConfiguration, horizontalAlignment, spriteContainer, 0, fontForStereotype,</span>
+<span class="fc bfc" id="L650" title="All 2 branches covered.">		if (size() &gt; 0) {</span>
+<span class="pc bpc" id="L651" title="1 of 2 branches missed.">			if (get(0) instanceof Stereotype)</span>
+<span class="nc" id="L652">				return createStereotype(fontConfiguration, horizontalAlignment, spriteContainer, 0, fontForStereotype,</span>
 						htmlColorForStereotype, maxMessageSize, creoleMode, marginX1, marginX2);
 
-<span class="pc bpc" id="L654" title="1 of 2 branches missed.">			if (get(size() - 1) instanceof Stereotype)</span>
-<span class="nc" id="L655">				return createStereotype(fontConfiguration, horizontalAlignment, spriteContainer, size() - 1,</span>
+<span class="pc bpc" id="L655" title="1 of 2 branches missed.">			if (get(size() - 1) instanceof Stereotype)</span>
+<span class="nc" id="L656">				return createStereotype(fontConfiguration, horizontalAlignment, spriteContainer, size() - 1,</span>
 						fontForStereotype, htmlColorForStereotype, maxMessageSize, creoleMode, marginX1, marginX2);
 
-<span class="fc bfc" id="L658" title="All 2 branches covered.">			if (get(0) instanceof MessageNumber)</span>
-<span class="fc" id="L659">				return createMessageNumber(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize,</span>
+<span class="fc bfc" id="L659" title="All 2 branches covered.">			if (get(0) instanceof MessageNumber)</span>
+<span class="fc" id="L660">				return createMessageNumber(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize,</span>
 						stereotypeConfiguration, marginX1, marginX2);
 		}
 
-<span class="fc" id="L663">		return getCreole(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, creoleMode,</span>
+<span class="fc" id="L664">		return getCreole(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize, creoleMode,</span>
 				stereotypeConfiguration, marginX1, marginX2);
 	}
 
 	private TextBlock createStereotype(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			SpriteContainer spriteContainer, int position, UFont fontForStereotype, HColor htmlColorForStereotype,
 			LineBreakStrategy maxMessageSize, CreoleMode creoleMode, double marginX1, double marginX2) {
-<span class="nc" id="L670">		final Stereotype stereotype = (Stereotype) get(position);</span>
-<span class="nc" id="L671">		TextBlock circledCharacter = null;</span>
-<span class="nc bnc" id="L672" title="All 2 branches missed.">		if (stereotype.isSpotted())</span>
-<span class="nc" id="L673">			circledCharacter = new CircledCharacter(stereotype.getCharacter(), stereotype.getRadius(),</span>
-<span class="nc" id="L674">					stereotype.getCircledFont(), stereotype.getHtmlColor(), null, fontConfiguration.getColor());</span>
+<span class="nc" id="L671">		final Stereotype stereotype = (Stereotype) get(position);</span>
+<span class="nc" id="L672">		TextBlock circledCharacter = null;</span>
+<span class="nc bnc" id="L673" title="All 2 branches missed.">		if (stereotype.isSpotted())</span>
+<span class="nc" id="L674">			circledCharacter = new CircledCharacter(stereotype.getCharacter(), stereotype.getRadius(),</span>
+<span class="nc" id="L675">					stereotype.getCircledFont(), stereotype.getHtmlColor(), null, fontConfiguration.getColor());</span>
 		else
-<span class="nc" id="L676">			circledCharacter = stereotype.getSprite(spriteContainer);</span>
+<span class="nc" id="L677">			circledCharacter = stereotype.getSprite(spriteContainer);</span>
 
-<span class="nc" id="L678">		final FontConfiguration stereotypeConfiguration = fontConfiguration.forceFont(fontForStereotype,</span>
+<span class="nc" id="L679">		final FontConfiguration stereotypeConfiguration = fontConfiguration.forceFont(fontForStereotype,</span>
 				htmlColorForStereotype);
-<span class="nc" id="L680">		final TextBlock result = getCreole(fontConfiguration, horizontalAlignment, (ISkinSimple) spriteContainer,</span>
+<span class="nc" id="L681">		final TextBlock result = getCreole(fontConfiguration, horizontalAlignment, (ISkinSimple) spriteContainer,</span>
 				maxMessageSize, creoleMode, stereotypeConfiguration, marginX1, marginX2);
-<span class="nc bnc" id="L682" title="All 2 branches missed.">		if (circledCharacter != null)</span>
-<span class="nc" id="L683">			return new TextBlockSprited(circledCharacter, result);</span>
+<span class="nc bnc" id="L683" title="All 2 branches missed.">		if (circledCharacter != null)</span>
+<span class="nc" id="L684">			return new TextBlockSprited(circledCharacter, result);</span>
 
-<span class="nc" id="L685">		return result;</span>
+<span class="nc" id="L686">		return result;</span>
 	}
 
 	private TextBlock getCreole(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, CreoleMode creoleMode,
 			FontConfiguration stereotypeConfiguration, double marginX1, double marginX2) {
-<span class="fc" id="L691">		final Sheet sheet = spriteContainer</span>
-<span class="fc" id="L692">				.sheet(fontConfiguration, horizontalAlignment, creoleMode, stereotypeConfiguration).createSheet(this);</span>
-<span class="pc bpc" id="L693" title="1 of 2 branches missed.">		final double padding = spriteContainer == null ? 0 : spriteContainer.getPadding();</span>
-<span class="fc" id="L694">		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, maxMessageSize, padding, marginX1, marginX2);</span>
-<span class="fc" id="L695">		return new SheetBlock2(sheetBlock1, sheetBlock1, UStroke.withThickness(1.5));</span>
+<span class="fc" id="L692">		final Sheet sheet = spriteContainer</span>
+<span class="fc" id="L693">				.sheet(fontConfiguration, horizontalAlignment, creoleMode, stereotypeConfiguration).createSheet(this);</span>
+<span class="pc bpc" id="L694" title="1 of 2 branches missed.">		final ClockwiseTopRightBottomLeft padding = spriteContainer == null ? ClockwiseTopRightBottomLeft.none()</span>
+<span class="fc" id="L695">				: spriteContainer.getPadding();</span>
+<span class="fc" id="L696">		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, maxMessageSize, padding, marginX1, marginX2);</span>
+<span class="fc" id="L697">		return new SheetBlock2(sheetBlock1, sheetBlock1, UStroke.withThickness(1.5));</span>
 	}
 
 	private TextBlock createMessageNumber(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, FontConfiguration stereotypeConfiguration,
 			double marginX1, double marginX2) {
-<span class="fc" id="L701">		TextBlock tb1 = subList(0, 1).getCreole(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize,</span>
+<span class="fc" id="L703">		TextBlock tb1 = subList(0, 1).getCreole(fontConfiguration, horizontalAlignment, spriteContainer, maxMessageSize,</span>
 				CreoleMode.FULL, stereotypeConfiguration, marginX1, marginX2);
-<span class="fc" id="L703">		tb1 = TextBlockUtils.withMargin(tb1, 0, 4, 0, 0);</span>
-<span class="fc" id="L704">		final TextBlock tb2 = subList(1, size()).getCreole(fontConfiguration, horizontalAlignment, spriteContainer,</span>
+<span class="fc" id="L705">		tb1 = TextBlockUtils.withMargin(tb1, 0, 4, 0, 0);</span>
+<span class="fc" id="L706">		final TextBlock tb2 = subList(1, size()).getCreole(fontConfiguration, horizontalAlignment, spriteContainer,</span>
 				maxMessageSize, CreoleMode.FULL, stereotypeConfiguration, marginX1, marginX2);
-<span class="fc" id="L706">		return TextBlockUtils.mergeLR(tb1, tb2, VerticalAlignment.CENTER);</span>
+<span class="fc" id="L708">		return TextBlockUtils.mergeLR(tb1, tb2, VerticalAlignment.CENTER);</span>
 
 	}
 
 	public boolean hasSeveralGuideLines() {
-<span class="fc" id="L711">		return hasSeveralGuideLines(displayData);</span>
+<span class="fc" id="L713">		return hasSeveralGuideLines(displayData);</span>
 	}
 
 	@JawsStrange
 	public static boolean hasSeveralGuideLines(String s) {
 		final List&lt;String&gt; split;
-<span class="pc bpc" id="L717" title="1 of 2 branches missed.">		if (Pragma.legacyReplaceBackslashNByNewline())</span>
-<span class="fc" id="L718">			split = Arrays.asList(s.split(&quot;\\\\n&quot;));</span>
+<span class="pc bpc" id="L719" title="1 of 2 branches missed.">		if (Pragma.legacyReplaceBackslashNByNewline())</span>
+<span class="fc" id="L720">			split = Arrays.asList(s.split(&quot;\\\\n&quot;));</span>
 		else
-<span class="nc" id="L720">			split = Arrays.asList(s.split(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE));</span>
-<span class="fc" id="L721">		return hasSeveralGuideLines(split);</span>
+<span class="nc" id="L722">			split = Arrays.asList(s.split(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE));</span>
+<span class="fc" id="L723">		return hasSeveralGuideLines(split);</span>
 	}
 
 	private static boolean hasSeveralGuideLines(Collection&lt;? extends CharSequence&gt; all) {
-<span class="fc bfc" id="L725" title="All 2 branches covered.">		if (all.size() &lt;= 1)</span>
-<span class="fc" id="L726">			return false;</span>
+<span class="fc bfc" id="L727" title="All 2 branches covered.">		if (all.size() &lt;= 1)</span>
+<span class="fc" id="L728">			return false;</span>
 
-<span class="fc bfc" id="L728" title="All 2 branches covered.">		for (CharSequence cs : all) {</span>
-<span class="fc" id="L729">			final String s = cs.toString();</span>
-<span class="pc bpc" id="L730" title="1 of 2 branches missed.">			if (s.startsWith(&quot;&lt; &quot;))</span>
-<span class="nc" id="L731">				return true;</span>
+<span class="fc bfc" id="L730" title="All 2 branches covered.">		for (CharSequence cs : all) {</span>
+<span class="fc" id="L731">			final String s = cs.toString();</span>
+<span class="pc bpc" id="L732" title="1 of 2 branches missed.">			if (s.startsWith(&quot;&lt; &quot;))</span>
+<span class="nc" id="L733">				return true;</span>
 
-<span class="pc bpc" id="L733" title="1 of 2 branches missed.">			if (s.startsWith(&quot;&gt; &quot;))</span>
-<span class="nc" id="L734">				return true;</span>
+<span class="pc bpc" id="L735" title="1 of 2 branches missed.">			if (s.startsWith(&quot;&gt; &quot;))</span>
+<span class="nc" id="L736">				return true;</span>
 
-<span class="pc bpc" id="L736" title="1 of 2 branches missed.">			if (s.endsWith(&quot; &lt;&quot;))</span>
-<span class="nc" id="L737">				return true;</span>
+<span class="pc bpc" id="L738" title="1 of 2 branches missed.">			if (s.endsWith(&quot; &lt;&quot;))</span>
+<span class="nc" id="L739">				return true;</span>
 
-<span class="pc bpc" id="L739" title="1 of 2 branches missed.">			if (s.endsWith(&quot; &gt;&quot;))</span>
-<span class="nc" id="L740">				return true;</span>
-<span class="fc" id="L741">		}</span>
-<span class="fc" id="L742">		return false;</span>
+<span class="pc bpc" id="L741" title="1 of 2 branches missed.">			if (s.endsWith(&quot; &gt;&quot;))</span>
+<span class="nc" id="L742">				return true;</span>
+<span class="fc" id="L743">		}</span>
+<span class="fc" id="L744">		return false;</span>
 	}
 
 //	private Object data;

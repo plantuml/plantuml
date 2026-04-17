@@ -48,63 +48,64 @@ import net.sourceforge.plantuml.klimt.creole.atom.Atom;
 import net.sourceforge.plantuml.klimt.creole.atom.AtomTree;
 import net.sourceforge.plantuml.klimt.creole.atom.AtomWithMargin;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinSimple;
 
 public class StripeTree implements Stripe {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private FontConfiguration fontConfiguration;
 	final private ISkinSimple skinParam;
 	final private AtomTree tree;
 	final private Atom marged;
-<span class="nc" id="L60">	final private StripeStyle stripeStyle = new StripeStyle(StripeStyleType.TREE, 0, '\0');</span>
+<span class="nc" id="L61">	final private StripeStyle stripeStyle = new StripeStyle(StripeStyleType.TREE, 0, '\0');</span>
 
-<span class="nc" id="L62">	public StripeTree(FontConfiguration fontConfiguration, ISkinSimple skinParam, String line) {</span>
-<span class="nc" id="L63">		this.fontConfiguration = fontConfiguration;</span>
-<span class="nc" id="L64">		this.skinParam = skinParam;</span>
-<span class="nc" id="L65">		this.tree = new AtomTree(fontConfiguration.getColor());</span>
-<span class="nc" id="L66">		this.marged = new AtomWithMargin(tree, 2, 2);</span>
-<span class="nc" id="L67">		analyzeAndAdd(line);</span>
-<span class="nc" id="L68">	}</span>
+<span class="nc" id="L63">	public StripeTree(FontConfiguration fontConfiguration, ISkinSimple skinParam, String line) {</span>
+<span class="nc" id="L64">		this.fontConfiguration = fontConfiguration;</span>
+<span class="nc" id="L65">		this.skinParam = skinParam;</span>
+<span class="nc" id="L66">		this.tree = new AtomTree(fontConfiguration.getColor());</span>
+<span class="nc" id="L67">		this.marged = new AtomWithMargin(tree, 2, 2);</span>
+<span class="nc" id="L68">		analyzeAndAdd(line);</span>
+<span class="nc" id="L69">	}</span>
 
 	public List&lt;Atom&gt; getAtoms() {
-<span class="nc" id="L71">		return Collections.&lt;Atom&gt;singletonList(marged);</span>
+<span class="nc" id="L72">		return Collections.&lt;Atom&gt;singletonList(marged);</span>
 	}
 
 	public Atom getLHeader() {
-<span class="nc" id="L75">		return null;</span>
+<span class="nc" id="L76">		return null;</span>
 	}
 
 	public void analyzeAndAdd(String line) {
-<span class="nc" id="L79">		final List&lt;String&gt; lines = StripeTable.getWithNewlinesInternal(line);</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		for (String s : lines) {</span>
-<span class="nc" id="L81">			final StripeSimple cell = new StripeSimple(fontConfiguration, stripeStyle, new CreoleContext(), skinParam,</span>
+<span class="nc" id="L80">		final List&lt;String&gt; lines = StripeTable.getWithNewlinesInternal(line);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		for (String s : lines) {</span>
+<span class="nc" id="L82">			final StripeSimple cell = new StripeSimple(fontConfiguration, stripeStyle, new CreoleContext(), skinParam,</span>
 					CreoleMode.FULL);
-<span class="nc" id="L83">			final String text = s.replaceFirst(&quot;^\\s*\\|_&quot;, &quot;&quot;);</span>
-<span class="nc" id="L84">			final int level = computeLevel(s);</span>
-<span class="nc" id="L85">			cell.analyzeAndAdd(text);</span>
-<span class="nc" id="L86">			this.tree.addCell(StripeTable.asAtom(Collections.singletonList(cell), 0), level);</span>
-<span class="nc" id="L87">		}</span>
+<span class="nc" id="L84">			final String text = s.replaceFirst(&quot;^\\s*\\|_&quot;, &quot;&quot;);</span>
+<span class="nc" id="L85">			final int level = computeLevel(s);</span>
+<span class="nc" id="L86">			cell.analyzeAndAdd(text);</span>
+<span class="nc" id="L87">			this.tree.addCell(StripeTable.asAtom(Collections.singletonList(cell), ClockwiseTopRightBottomLeft.none()),</span>
+					level);
+<span class="nc" id="L89">		}</span>
 
-<span class="nc" id="L89">	}</span>
+<span class="nc" id="L91">	}</span>
 
-	
 	@JawsStrange
 	private int computeLevel(String s) {
-<span class="nc" id="L94">		int result = 1;</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		while (s.length() &gt; 0) {</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">			if (s.startsWith(&quot;  &quot;)) {</span>
-<span class="nc" id="L97">				result++;</span>
-<span class="nc" id="L98">				s = s.substring(2);</span>
-<span class="nc" id="L99">				continue;</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">			} else if (s.startsWith(&quot;\t&quot;)) {</span>
-<span class="nc" id="L101">				result++;</span>
-<span class="nc" id="L102">				s = s.substring(1);</span>
-<span class="nc" id="L103">				continue;</span>
+<span class="nc" id="L95">		int result = 1;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		while (s.length() &gt; 0) {</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (s.startsWith(&quot;  &quot;)) {</span>
+<span class="nc" id="L98">				result++;</span>
+<span class="nc" id="L99">				s = s.substring(2);</span>
+<span class="nc" id="L100">				continue;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			} else if (s.startsWith(&quot;\t&quot;)) {</span>
+<span class="nc" id="L102">				result++;</span>
+<span class="nc" id="L103">				s = s.substring(1);</span>
+<span class="nc" id="L104">				continue;</span>
 			}
-<span class="nc" id="L105">			return result;</span>
+<span class="nc" id="L106">			return result;</span>
 		}
-<span class="nc" id="L107">		return result;</span>
+<span class="nc" id="L108">		return result;</span>
 	}
 
 }
