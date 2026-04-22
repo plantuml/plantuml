@@ -1198,16 +1198,30 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 	public void manageCollision(Collection<SvekNode> allNodes) {
 		for (SvekNode sh : allNodes) {
 			final Positionable cl = PositionableUtils.addMargin(sh, 8, 8);
+
 			if ((startTailText != null || startTailRoleText != null) && startTailLabelXY != null
-					&& PositionableUtils.intersect(cl, startTailLabelXY))
+							&& PositionableUtils.intersect(cl, startTailLabelXY))
 				startTailLabelXY = PositionableUtils.moveAwayFrom(cl, startTailLabelXY);
 
 			if ((endHeadText != null || endHeadRoleText != null) && endHeadLabelXY != null
-					&& PositionableUtils.intersect(cl, endHeadLabelXY))
+							&& PositionableUtils.intersect(cl, endHeadLabelXY))
 				endHeadLabelXY = PositionableUtils.moveAwayFrom(cl, endHeadLabelXY);
 
+			if (labelXY != null && PositionableUtils.intersect(cl, labelXY))
+				labelXY = PositionableUtils.moveAwayFrom(cl, labelXY);
 		}
 
+		if (labelXY != null && startTailLabelXY != null) {
+			while (PositionableUtils.intersect(labelXY, startTailLabelXY)) {
+				labelXY = PositionableUtils.moveAwayFrom(startTailLabelXY, labelXY);
+			}
+		}
+
+		if (labelXY != null && endHeadLabelXY != null) {
+			while (PositionableUtils.intersect(labelXY, endHeadLabelXY)) {
+				labelXY = PositionableUtils.moveAwayFrom(endHeadLabelXY, labelXY);
+			}
+		}
 	}
 
 	private XPoint2D avoid2(XPoint2D move, Positionable pos, SvekNode sh) {
