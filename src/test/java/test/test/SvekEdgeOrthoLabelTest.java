@@ -3,6 +3,7 @@ package test.test;
 import static test.utils.PlantUmlTestUtils.exportDiagram;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import net.sourceforge.plantuml.FileFormat;
 import org.junit.jupiter.api.Test;
 
 class SvekEdgeOrthoLabelTest {
@@ -23,7 +24,7 @@ class SvekEdgeOrthoLabelTest {
 						"A --> C : Crossing label",
 						"",
 						"@enduml"
-		).asString();
+		).asString(FileFormat.SVG);
 
 		assertThat(output).isNotEmpty();
 
@@ -52,7 +53,7 @@ class SvekEdgeOrthoLabelTest {
 						"B --> D : Crossing label",
 						"",
 						"@enduml"
-		).asString();
+		).asString(FileFormat.SVG);
 
 		assertThat(output).isNotEmpty();
 
