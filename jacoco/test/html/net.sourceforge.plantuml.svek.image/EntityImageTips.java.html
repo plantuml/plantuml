@@ -161,7 +161,7 @@ public class EntityImageTips extends AbstractEntityImage {
 <span class="nc bnc" id="L161" title="All 2 branches missed.">			if (direction == Direction.LEFT)</span>
 <span class="nc" id="L162">				x += memberPosition.getMaxX();</span>
 			else
-<span class="nc" id="L164">				x += 4;</span>
+<span class="nc" id="L164">				x += memberPosition.getMinX();</span>
 
 <span class="nc" id="L166">			final double y = positionOther.getY() - positionMe.getY() - height + memberPosition.getCenterY();</span>
 <span class="nc" id="L167">			final XPoint2D pp2 = new XPoint2D(x, y);</span>

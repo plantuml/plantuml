@@ -1314,45 +1314,49 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 	public XPoint2D getStartContactPoint() {
 <span class="nc bnc" id="L1315" title="All 2 branches missed.">		if (dotPath == null)</span>
 <span class="nc" id="L1316">			return null;</span>
-<span class="nc" id="L1317">		final XPoint2D start = dotPath.getStartPoint();</span>
-<span class="nc bnc" id="L1318" title="All 2 branches missed.">		if (start == null)</span>
-<span class="nc" id="L1319">			return null;</span>
+		
+<span class="nc" id="L1318">		final XPoint2D start = dotPath.getStartPoint();</span>
+<span class="nc bnc" id="L1319" title="All 2 branches missed.">		if (start == null)</span>
+<span class="nc" id="L1320">			return null;</span>
 
-<span class="nc" id="L1321">		return new UTranslate(dx, dy).getTranslated(start);</span>
+<span class="nc" id="L1322">		return new UTranslate(dx, dy).getTranslated(start);</span>
 		// return new XPoint2D(dx + start.getX(), dy + start.getY());
 	}
 
 	public XPoint2D getEndContactPoint() {
-<span class="nc" id="L1326">		final XPoint2D end = dotPath.getEndPoint();</span>
-<span class="nc bnc" id="L1327" title="All 2 branches missed.">		if (end == null)</span>
+<span class="nc bnc" id="L1327" title="All 2 branches missed.">		if (dotPath == null)</span>
 <span class="nc" id="L1328">			return null;</span>
 
-<span class="nc" id="L1330">		return new UTranslate(dx, dy).getTranslated(end);</span>
+<span class="nc" id="L1330">		final XPoint2D end = dotPath.getEndPoint();</span>
+<span class="nc bnc" id="L1331" title="All 2 branches missed.">		if (end == null)</span>
+<span class="nc" id="L1332">			return null;</span>
+
+<span class="nc" id="L1334">		return new UTranslate(dx, dy).getTranslated(end);</span>
 		// return new XPoint2D(dx + end.getX(), dy + end.getY());
 	}
 
 	public StyleBuilder getCurrentStyleBuilder() {
-<span class="nc" id="L1335">		return link.getStyleBuilder();</span>
+<span class="nc" id="L1339">		return link.getStyleBuilder();</span>
 	}
 
 	public Stereotype getStereotype() {
-<span class="nc" id="L1339">		return link.getStereotype();</span>
+<span class="nc" id="L1343">		return link.getStereotype();</span>
 	}
 
 	public void moveStartPoint(double dx, double dy) {
-<span class="nc" id="L1343">		dotPath.moveStartPoint(dx, dy);</span>
-<span class="nc" id="L1344">		dotPathInit.moveStartPoint(dx, dy);</span>
-<span class="nc" id="L1345">	}</span>
+<span class="nc" id="L1347">		dotPath.moveStartPoint(dx, dy);</span>
+<span class="nc" id="L1348">		dotPathInit.moveStartPoint(dx, dy);</span>
+<span class="nc" id="L1349">	}</span>
 
 	public void moveEndPoint(double dx, double dy) {
-<span class="nc" id="L1348">		dotPath.moveEndPoint(dx, dy);</span>
-<span class="nc" id="L1349">		dotPathInit.moveEndPoint(dx, dy);</span>
-<span class="nc" id="L1350">	}</span>
+<span class="nc" id="L1352">		dotPath.moveEndPoint(dx, dy);</span>
+<span class="nc" id="L1353">		dotPathInit.moveEndPoint(dx, dy);</span>
+<span class="nc" id="L1354">	}</span>
 
 	public void replaceDotPath(net.sourceforge.plantuml.klimt.shape.DotPath newPath) {
-<span class="nc" id="L1353">		this.dotPath = newPath;</span>
-<span class="nc" id="L1354">		this.dotPathInit = newPath.copy();</span>
-<span class="nc" id="L1355">	}</span>
+<span class="nc" id="L1357">		this.dotPath = newPath;</span>
+<span class="nc" id="L1358">		this.dotPathInit = newPath.copy();</span>
+<span class="nc" id="L1359">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
