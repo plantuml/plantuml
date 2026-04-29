@@ -44,37 +44,39 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseDelayText extends AbstractTextualComponent {
 
 	public ComponentRoseDelayText(Style style, Display stringsToDisplay, ISkinParam skinParam) {
-<span class="nc" id="L53">		super(style, LineBreakStrategy.NONE, 0, 0, 4, skinParam, stringsToDisplay, false);</span>
-<span class="nc" id="L54">	}</span>
+<span class="nc" id="L54">		super(style, LineBreakStrategy.NONE, ClockwiseTopRightBottomLeft.topRightBottomLeft(4, 0, 4, 0)	, skinParam,</span>
+				stringsToDisplay, false);
+<span class="nc" id="L56">	}</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
-<span class="nc" id="L58">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="nc" id="L59">		final TextBlock textBlock = getTextBlock();</span>
-<span class="nc" id="L60">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L61">		final double textWidth = getTextWidth(stringBounder);</span>
-<span class="nc" id="L62">		final double textHeight = getTextHeight(stringBounder);</span>
+<span class="nc" id="L60">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="nc" id="L61">		final TextBlock textBlock = getTextBlock();</span>
+<span class="nc" id="L62">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L63">		final double textWidth = getTextWidth(stringBounder);</span>
+<span class="nc" id="L64">		final double textHeight = getTextHeight(stringBounder);</span>
 
-<span class="nc" id="L64">		final double xpos = (dimensionToUse.getWidth() - textWidth) / 2;</span>
-<span class="nc" id="L65">		final double ypos = (dimensionToUse.getHeight() - textHeight) / 2;</span>
+<span class="nc" id="L66">		final double xpos = (dimensionToUse.getWidth() - textWidth) / 2;</span>
+<span class="nc" id="L67">		final double ypos = (dimensionToUse.getHeight() - textHeight) / 2;</span>
 
-<span class="nc" id="L67">		textBlock.drawU(ug.apply(new UTranslate(xpos, (ypos + getMarginY()))));</span>
-<span class="nc" id="L68">	}</span>
+<span class="nc" id="L69">		textBlock.drawU(ug.apply(new UTranslate(xpos, (ypos + getOldPaddingY()))));</span>
+<span class="nc" id="L70">	}</span>
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="nc" id="L72">		return getTextHeight(stringBounder) + 20;</span>
+<span class="nc" id="L74">		return getTextHeight(stringBounder) + 20;</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L77">		return getPureTextWidth(stringBounder);</span>
+<span class="nc" id="L79">		return getPureTextWidth(stringBounder);</span>
 	}
 
 }

@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
-import net.sourceforge.plantuml.skin.PaddingParam;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.teavm.TeaVM;
@@ -255,51 +255,53 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc bnc" id="L255" title="All 2 branches missed.">		if (messageArrow == null)</span>
 <span class="nc" id="L256">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L258">		Arrow result = new ArrowAndParticipant(getDrawingSet().getCounter(), getDrawingSet().getSkinParam().getPragma(),</span>
-<span class="nc" id="L259">				getStringBounder(), messageArrow, getParticipantBox2(),</span>
-<span class="nc" id="L260">				getDrawingSet().getSkinParam().getPadding(PaddingParam.PARTICIPANT), getMessage().getLineLocation());</span>
-<span class="nc bnc" id="L261" title="All 2 branches missed.">		if (getMessage().getNoteOnMessages().size() &gt; 0) {</span>
-<span class="nc" id="L262">			final List&lt;NoteBox&gt; noteBoxes = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L263" title="All 2 branches missed.">			for (int i = 0; i &lt; getNotes().size(); i++) {</span>
-<span class="nc" id="L264">				final Component note = getNotes().get(i);</span>
-<span class="nc" id="L265">				final Note noteOnMessage = getMessage().getNoteOnMessages().get(i);</span>
-<span class="nc" id="L266">				final NoteBox noteBox = createNoteBox(getStringBounder(), result, note, noteOnMessage);</span>
-<span class="nc bnc" id="L267" title="All 2 branches missed.">				if (noteOnMessage.getPosition() == NotePosition.RIGHT)</span>
-<span class="nc" id="L268">					noteBox.pushToRight(getParticipantBox2().getPreferredWidth(getStringBounder()) / 2);</span>
+<span class="nc" id="L258">		final Style[] styles = ((Message) getMessage()).getParticipant2().getUsedStyles();</span>
+<span class="nc" id="L259">		final ClockwiseTopRightBottomLeft margin = styles[0].getMargin();</span>
 
-<span class="nc" id="L270">				noteBoxes.add(noteBox);</span>
+<span class="nc" id="L261">		Arrow result = new ArrowAndParticipant(getDrawingSet().getCounter(), getDrawingSet().getSkinParam().getPragma(),</span>
+<span class="nc" id="L262">				getStringBounder(), messageArrow, getParticipantBox2(), margin, getMessage().getLineLocation());</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">		if (getMessage().getNoteOnMessages().size() &gt; 0) {</span>
+<span class="nc" id="L264">			final List&lt;NoteBox&gt; noteBoxes = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">			for (int i = 0; i &lt; getNotes().size(); i++) {</span>
+<span class="nc" id="L266">				final Component note = getNotes().get(i);</span>
+<span class="nc" id="L267">				final Note noteOnMessage = getMessage().getNoteOnMessages().get(i);</span>
+<span class="nc" id="L268">				final NoteBox noteBox = createNoteBox(getStringBounder(), result, note, noteOnMessage);</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">				if (noteOnMessage.getPosition() == NotePosition.RIGHT)</span>
+<span class="nc" id="L270">					noteBox.pushToRight(getParticipantBox2().getPreferredWidth(getStringBounder()) / 2);</span>
+
+<span class="nc" id="L272">				noteBoxes.add(noteBox);</span>
 			}
-<span class="nc" id="L272">			result = new ArrowAndNoteBox(getDrawingSet().getCounter(), getDrawingSet().getSkinParam().getPragma(),</span>
-<span class="nc" id="L273">					getStringBounder(), result, noteBoxes, getMessage().getLineLocation());</span>
+<span class="nc" id="L274">			result = new ArrowAndNoteBox(getDrawingSet().getCounter(), getDrawingSet().getSkinParam().getPragma(),</span>
+<span class="nc" id="L275">					getStringBounder(), result, noteBoxes, getMessage().getLineLocation());</span>
 		}
-<span class="nc" id="L275">		getLivingParticipantBox2()</span>
-<span class="nc" id="L276">				.create(getFreeY().getFreeY(getParticipantRange()) + result.getPreferredHeight(getStringBounder()) / 2);</span>
-<span class="nc" id="L277">		return result;</span>
+<span class="nc" id="L277">		getLivingParticipantBox2()</span>
+<span class="nc" id="L278">				.create(getFreeY().getFreeY(getParticipantRange()) + result.getPreferredHeight(getStringBounder()) / 2);</span>
+<span class="nc" id="L279">		return result;</span>
 	}
 
 	private ArrowConfiguration getSelfArrowType(Message m) {
-<span class="fc" id="L281">		ArrowConfiguration result = ArrowConfiguration.withDirectionSelf(m.getArrowConfiguration().isReverseDefine());</span>
-<span class="fc bfc" id="L282" title="All 2 branches covered.">		if (m.getArrowConfiguration().isDotted())</span>
-<span class="fc" id="L283">			result = result.withBody(ArrowBody.DOTTED);</span>
+<span class="fc" id="L283">		ArrowConfiguration result = ArrowConfiguration.withDirectionSelf(m.getArrowConfiguration().isReverseDefine());</span>
+<span class="fc bfc" id="L284" title="All 2 branches covered.">		if (m.getArrowConfiguration().isDotted())</span>
+<span class="fc" id="L285">			result = result.withBody(ArrowBody.DOTTED);</span>
 
-<span class="pc bpc" id="L285" title="1 of 2 branches missed.">		if (m.getArrowConfiguration().isHidden())</span>
-<span class="nc" id="L286">			result = result.withBody(ArrowBody.HIDDEN);</span>
+<span class="pc bpc" id="L287" title="1 of 2 branches missed.">		if (m.getArrowConfiguration().isHidden())</span>
+<span class="nc" id="L288">			result = result.withBody(ArrowBody.HIDDEN);</span>
 
-<span class="fc" id="L288">		result = result.withHead1(m.getArrowConfiguration().getDressing1().getHead());</span>
-<span class="fc" id="L289">		result = result.withHead2(m.getArrowConfiguration().getDressing2().getHead());</span>
-<span class="fc" id="L290">		result = result.withPart(m.getArrowConfiguration().getPart());</span>
-<span class="fc" id="L291">		result = result.withColor(m.getArrowConfiguration().getColor());</span>
-<span class="fc" id="L292">		result = result.withDecoration1(m.getArrowConfiguration().getDecoration1());</span>
-<span class="fc" id="L293">		result = result.withDecoration2(m.getArrowConfiguration().getDecoration2());</span>
+<span class="fc" id="L290">		result = result.withHead1(m.getArrowConfiguration().getDressing1().getHead());</span>
+<span class="fc" id="L291">		result = result.withHead2(m.getArrowConfiguration().getDressing2().getHead());</span>
+<span class="fc" id="L292">		result = result.withPart(m.getArrowConfiguration().getPart());</span>
+<span class="fc" id="L293">		result = result.withColor(m.getArrowConfiguration().getColor());</span>
+<span class="fc" id="L294">		result = result.withDecoration1(m.getArrowConfiguration().getDecoration1());</span>
+<span class="fc" id="L295">		result = result.withDecoration2(m.getArrowConfiguration().getDecoration2());</span>
 
-<span class="fc" id="L295">		return result;</span>
+<span class="fc" id="L297">		return result;</span>
 	}
 
 	private ArrowConfiguration getArrowType(Message m, final double x1, final double x2) {
-<span class="fc bfc" id="L299" title="All 2 branches covered.">		if (x2 &gt; x1)</span>
-<span class="fc" id="L300">			return m.getArrowConfiguration();</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">		if (x2 &gt; x1)</span>
+<span class="fc" id="L302">			return m.getArrowConfiguration();</span>
 
-<span class="fc" id="L302">		return m.getArrowConfiguration().reverse();</span>
+<span class="fc" id="L304">		return m.getArrowConfiguration().reverse();</span>
 	}
 
 }

@@ -131,220 +131,221 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 		// final Stereotype stereotype = stringsToDisplay == null ? null : stringsToDisplay.getStereotypeIfAny();
 
-<span class="fc" id="L134">		final ClockwiseTopRightBottomLeft padding = param.getPadding(PaddingParam.PARTICIPANT);</span>
+<span class="fc" id="L134">		final ClockwiseTopRightBottomLeft padding = styles[0].getPadding(); //  param.getPadding(PaddingParam.PARTICIPANT);</span>
+<span class="fc" id="L135">		final ClockwiseTopRightBottomLeft margin = styles[0].getMargin();</span>
 
-<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (type == ComponentType.PARTICIPANT_HEAD)</span>
-<span class="fc" id="L137">			return new ComponentRoseParticipant(styles[0], styles[1], stringsToDisplay, param,</span>
-<span class="fc" id="L138">					getMinClassWidth(styles[0]), false, padding);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		if (type == ComponentType.PARTICIPANT_HEAD)</span>
+<span class="fc" id="L138">			return new ComponentRoseParticipant(styles[0], styles[1], stringsToDisplay, param,</span>
+<span class="fc" id="L139">					getMinClassWidth(styles[0]), false, padding, margin);</span>
 
-<span class="fc bfc" id="L140" title="All 2 branches covered.">		if (type == ComponentType.PARTICIPANT_TAIL)</span>
-<span class="fc" id="L141">			return new ComponentRoseParticipant(styles[0], styles[1], stringsToDisplay, param,</span>
-<span class="fc" id="L142">					getMinClassWidth(styles[0]), false, padding);</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		if (type == ComponentType.PARTICIPANT_TAIL)</span>
+<span class="fc" id="L142">			return new ComponentRoseParticipant(styles[0], styles[1], stringsToDisplay, param,</span>
+<span class="fc" id="L143">					getMinClassWidth(styles[0]), false, padding, margin);</span>
 
-<span class="fc bfc" id="L144" title="All 2 branches covered.">		if (type == ComponentType.COLLECTIONS_HEAD)</span>
-<span class="fc" id="L145">			return new ComponentRoseParticipant(styles[0], styles[1], stringsToDisplay, param,</span>
-<span class="fc" id="L146">					getMinClassWidth(styles[0]), true, padding);</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		if (type == ComponentType.COLLECTIONS_HEAD)</span>
+<span class="fc" id="L146">			return new ComponentRoseParticipant(styles[0], styles[1], stringsToDisplay, param,</span>
+<span class="fc" id="L147">					getMinClassWidth(styles[0]), true, padding, margin);</span>
 
-<span class="fc bfc" id="L148" title="All 2 branches covered.">		if (type == ComponentType.COLLECTIONS_TAIL)</span>
-<span class="fc" id="L149">			return new ComponentRoseParticipant(styles[0], styles[1], stringsToDisplay, param,</span>
-<span class="fc" id="L150">					getMinClassWidth(styles[0]), true, padding);</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (type == ComponentType.COLLECTIONS_TAIL)</span>
+<span class="fc" id="L150">			return new ComponentRoseParticipant(styles[0], styles[1], stringsToDisplay, param,</span>
+<span class="fc" id="L151">					getMinClassWidth(styles[0]), true, padding, margin);</span>
 
-<span class="fc bfc" id="L152" title="All 2 branches covered.">		if (type == ComponentType.ACTOR_HEAD)</span>
-<span class="pc bpc" id="L153" title="1 of 2 branches missed.">			return new ComponentRoseActor(param.actorStyle(), styles[0], styles == null ? null : styles[1],</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		if (type == ComponentType.ACTOR_HEAD)</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">			return new ComponentRoseActor(param.actorStyle(), styles[0], styles == null ? null : styles[1],</span>
 					stringsToDisplay, true, param);
 
-<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (type == ComponentType.ACTOR_TAIL)</span>
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">			return new ComponentRoseActor(param.actorStyle(), styles[0], styles == null ? null : styles[1],</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">		if (type == ComponentType.ACTOR_TAIL)</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">			return new ComponentRoseActor(param.actorStyle(), styles[0], styles == null ? null : styles[1],</span>
 					stringsToDisplay, false, param);
 
-<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (type == ComponentType.BOUNDARY_HEAD)</span>
-<span class="fc" id="L161">			return new ComponentRoseBoundary(styles[0], styles[1], stringsToDisplay, true, param);</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (type == ComponentType.BOUNDARY_HEAD)</span>
+<span class="fc" id="L162">			return new ComponentRoseBoundary(styles[0], styles[1], stringsToDisplay, true, param);</span>
 
-<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (type == ComponentType.BOUNDARY_TAIL)</span>
-<span class="fc" id="L164">			return new ComponentRoseBoundary(styles[0], styles[1], stringsToDisplay, false, param);</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		if (type == ComponentType.BOUNDARY_TAIL)</span>
+<span class="fc" id="L165">			return new ComponentRoseBoundary(styles[0], styles[1], stringsToDisplay, false, param);</span>
 
-<span class="fc bfc" id="L166" title="All 2 branches covered.">		if (type == ComponentType.CONTROL_HEAD)</span>
-<span class="fc" id="L167">			return new ComponentRoseControl(styles[0], styles[1], stringsToDisplay, true, param);</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		if (type == ComponentType.CONTROL_HEAD)</span>
+<span class="fc" id="L168">			return new ComponentRoseControl(styles[0], styles[1], stringsToDisplay, true, param);</span>
 
-<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (type == ComponentType.CONTROL_TAIL)</span>
-<span class="fc" id="L170">			return new ComponentRoseControl(styles[0], styles[1], stringsToDisplay, false, param);</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (type == ComponentType.CONTROL_TAIL)</span>
+<span class="fc" id="L171">			return new ComponentRoseControl(styles[0], styles[1], stringsToDisplay, false, param);</span>
 
-<span class="fc bfc" id="L172" title="All 2 branches covered.">		if (type == ComponentType.ENTITY_HEAD)</span>
-<span class="fc" id="L173">			return new ComponentRoseEntity(styles[0], styles[1], stringsToDisplay, true, param);</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">		if (type == ComponentType.ENTITY_HEAD)</span>
+<span class="fc" id="L174">			return new ComponentRoseEntity(styles[0], styles[1], stringsToDisplay, true, param);</span>
 
-<span class="fc bfc" id="L175" title="All 2 branches covered.">		if (type == ComponentType.ENTITY_TAIL)</span>
-<span class="fc" id="L176">			return new ComponentRoseEntity(styles[0], styles[1], stringsToDisplay, false, param);</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">		if (type == ComponentType.ENTITY_TAIL)</span>
+<span class="fc" id="L177">			return new ComponentRoseEntity(styles[0], styles[1], stringsToDisplay, false, param);</span>
 
-<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (type == ComponentType.QUEUE_HEAD)</span>
-<span class="fc" id="L179">			return new ComponentRoseQueue(styles[0], styles[1], stringsToDisplay, true, param);</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		if (type == ComponentType.QUEUE_HEAD)</span>
+<span class="fc" id="L180">			return new ComponentRoseQueue(styles[0], styles[1], stringsToDisplay, true, param);</span>
 
-<span class="fc bfc" id="L181" title="All 2 branches covered.">		if (type == ComponentType.QUEUE_TAIL)</span>
-<span class="fc" id="L182">			return new ComponentRoseQueue(styles[0], styles[1], stringsToDisplay, false, param);</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		if (type == ComponentType.QUEUE_TAIL)</span>
+<span class="fc" id="L183">			return new ComponentRoseQueue(styles[0], styles[1], stringsToDisplay, false, param);</span>
 
-<span class="fc bfc" id="L184" title="All 2 branches covered.">		if (type == ComponentType.DATABASE_HEAD)</span>
-<span class="fc" id="L185">			return new ComponentRoseDatabase(styles[0], styles[1], stringsToDisplay, true, param);</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">		if (type == ComponentType.DATABASE_HEAD)</span>
+<span class="fc" id="L186">			return new ComponentRoseDatabase(styles[0], styles[1], stringsToDisplay, true, param);</span>
 
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		if (type == ComponentType.DATABASE_TAIL)</span>
-<span class="fc" id="L188">			return new ComponentRoseDatabase(styles[0], styles[1], stringsToDisplay, false, param);</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		if (type == ComponentType.DATABASE_TAIL)</span>
+<span class="fc" id="L189">			return new ComponentRoseDatabase(styles[0], styles[1], stringsToDisplay, false, param);</span>
 
-<span class="nc" id="L190">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L191">		throw new UnsupportedOperationException();</span>
 	}
 
 	public Component createComponent(Style[] styles, ComponentType type, ArrowConfiguration config, ISkinParam param,
 			Display stringsToDisplay) {
-<span class="fc" id="L195">		checkRose();</span>
+<span class="fc" id="L196">		checkRose();</span>
 
-<span class="fc bfc" id="L197" title="All 6 branches covered.">		if (type == ComponentType.DELAY_LINE || type == ComponentType.GROUPING_SPACE || type == ComponentType.DESTROY) {</span>
+<span class="fc bfc" id="L198" title="All 6 branches covered.">		if (type == ComponentType.DELAY_LINE || type == ComponentType.GROUPING_SPACE || type == ComponentType.DESTROY) {</span>
 
 		} else {
-<span class="pc bpc" id="L200" title="1 of 2 branches missed.">			if (styles == null)</span>
-<span class="nc" id="L201">				throw new UnsupportedOperationException(type.toString());</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">			if (styles == null)</span>
+<span class="nc" id="L202">				throw new UnsupportedOperationException(type.toString());</span>
 		}
 
 		// final Stereotype stereotype = stringsToDisplay == null ? null : stringsToDisplay.getStereotypeIfAny();
 
-<span class="pc bpc" id="L206" title="1 of 2 branches missed.">		if (type.isArrow())</span>
-<span class="nc" id="L207">			return createComponentArrow(null, config, param, stringsToDisplay);</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (type.isArrow())</span>
+<span class="nc" id="L208">			return createComponentArrow(null, config, param, stringsToDisplay);</span>
 
-<span class="fc bfc" id="L209" title="All 2 branches covered.">		if (type == ComponentType.PARTICIPANT_LINE)</span>
-<span class="fc" id="L210">			return new ComponentRoseLine(styles[0], false, stringsToDisplay, param);</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">		if (type == ComponentType.PARTICIPANT_LINE)</span>
+<span class="fc" id="L211">			return new ComponentRoseLine(styles[0], false, stringsToDisplay, param);</span>
 
 		// if (type == ComponentType.CONTINUE_LINE)
 		//	return new ComponentRoseLine(styles[0], true, stringsToDisplay, param);
 
-<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if (type == ComponentType.NOTE)</span>
-<span class="nc" id="L216">			throw new UnsupportedOperationException();</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">		if (type == ComponentType.NOTE)</span>
+<span class="nc" id="L217">			throw new UnsupportedOperationException();</span>
 
-<span class="pc bpc" id="L218" title="1 of 2 branches missed.">		if (type == ComponentType.NOTE_HEXAGONAL)</span>
-<span class="nc" id="L219">			throw new UnsupportedOperationException();</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">		if (type == ComponentType.NOTE_HEXAGONAL)</span>
+<span class="nc" id="L220">			throw new UnsupportedOperationException();</span>
 
-<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (type == ComponentType.NOTE_BOX)</span>
-<span class="nc" id="L222">			throw new UnsupportedOperationException();</span>
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">		if (type == ComponentType.NOTE_BOX)</span>
+<span class="nc" id="L223">			throw new UnsupportedOperationException();</span>
 
-<span class="fc bfc" id="L224" title="All 2 branches covered.">		if (type == ComponentType.GROUPING_HEADER_LEGACY)</span>
-<span class="fc" id="L225">			return new ComponentRoseGroupingHeader(false, styles[0], styles[1], stringsToDisplay, param);</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">		if (type == ComponentType.GROUPING_HEADER_LEGACY)</span>
+<span class="fc" id="L226">			return new ComponentRoseGroupingHeader(false, styles[0], styles[1], stringsToDisplay, param);</span>
 
-<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (type == ComponentType.GROUPING_HEADER_TEOZ)</span>
-<span class="fc" id="L228">			return new ComponentRoseGroupingHeader(true, styles[0], styles[1], stringsToDisplay, param);</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">		if (type == ComponentType.GROUPING_HEADER_TEOZ)</span>
+<span class="fc" id="L229">			return new ComponentRoseGroupingHeader(true, styles[0], styles[1], stringsToDisplay, param);</span>
 
-<span class="pc bpc" id="L230" title="1 of 2 branches missed.">		if (type == ComponentType.GROUPING_ELSE_LEGACY)</span>
-<span class="nc" id="L231">			return new ComponentRoseGroupingElse(false, styles[0], stringsToDisplay.get(0), param);</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">		if (type == ComponentType.GROUPING_ELSE_LEGACY)</span>
+<span class="nc" id="L232">			return new ComponentRoseGroupingElse(false, styles[0], stringsToDisplay.get(0), param);</span>
 
-<span class="fc bfc" id="L233" title="All 2 branches covered.">		if (type == ComponentType.GROUPING_ELSE_TEOZ)</span>
-<span class="fc" id="L234">			return new ComponentRoseGroupingElse(true, styles[0], stringsToDisplay.get(0), param);</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">		if (type == ComponentType.GROUPING_ELSE_TEOZ)</span>
+<span class="fc" id="L235">			return new ComponentRoseGroupingElse(true, styles[0], stringsToDisplay.get(0), param);</span>
 
-<span class="fc bfc" id="L236" title="All 2 branches covered.">		if (type == ComponentType.GROUPING_SPACE)</span>
-<span class="fc" id="L237">			return new ComponentRoseGroupingSpace(7);</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">		if (type == ComponentType.GROUPING_SPACE)</span>
+<span class="fc" id="L238">			return new ComponentRoseGroupingSpace(7);</span>
 
-<span class="fc bfc" id="L239" title="All 2 branches covered.">		if (type == ComponentType.ACTIVATION_BOX_CLOSE_CLOSE)</span>
-<span class="fc" id="L240">			return new ComponentRoseActiveLine(styles[0], true, true, stringsToDisplay, param);</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">		if (type == ComponentType.ACTIVATION_BOX_CLOSE_CLOSE)</span>
+<span class="fc" id="L241">			return new ComponentRoseActiveLine(styles[0], true, true, stringsToDisplay, param);</span>
 
-<span class="pc bpc" id="L242" title="1 of 2 branches missed.">		if (type == ComponentType.ACTIVATION_BOX_CLOSE_OPEN)</span>
-<span class="nc" id="L243">			return new ComponentRoseActiveLine(styles[0], true, false, stringsToDisplay, param);</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">		if (type == ComponentType.ACTIVATION_BOX_CLOSE_OPEN)</span>
+<span class="nc" id="L244">			return new ComponentRoseActiveLine(styles[0], true, false, stringsToDisplay, param);</span>
 
-<span class="pc bpc" id="L245" title="1 of 2 branches missed.">		if (type == ComponentType.ACTIVATION_BOX_OPEN_CLOSE) {</span>
-<span class="nc" id="L246">			return new ComponentRoseActiveLine(styles[0], false, true, stringsToDisplay, param);</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">		if (type == ComponentType.ACTIVATION_BOX_OPEN_CLOSE) {</span>
+<span class="nc" id="L247">			return new ComponentRoseActiveLine(styles[0], false, true, stringsToDisplay, param);</span>
 		}
-<span class="fc bfc" id="L248" title="All 2 branches covered.">		if (type == ComponentType.ACTIVATION_BOX_OPEN_OPEN)</span>
-<span class="fc" id="L249">			return new ComponentRoseActiveLine(styles[0], false, false, stringsToDisplay, param);</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">		if (type == ComponentType.ACTIVATION_BOX_OPEN_OPEN)</span>
+<span class="fc" id="L250">			return new ComponentRoseActiveLine(styles[0], false, false, stringsToDisplay, param);</span>
 
-<span class="fc bfc" id="L251" title="All 2 branches covered.">		if (type == ComponentType.DELAY_LINE)</span>
-<span class="fc" id="L252">			return new ComponentRoseDelayLine(styles[0], param);</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">		if (type == ComponentType.DELAY_LINE)</span>
+<span class="fc" id="L253">			return new ComponentRoseDelayLine(styles[0], param);</span>
 
-<span class="pc bpc" id="L254" title="1 of 2 branches missed.">		if (type == ComponentType.DELAY_TEXT)</span>
-<span class="nc" id="L255">			return new ComponentRoseDelayText(styles[0], stringsToDisplay, param);</span>
+<span class="pc bpc" id="L255" title="1 of 2 branches missed.">		if (type == ComponentType.DELAY_TEXT)</span>
+<span class="nc" id="L256">			return new ComponentRoseDelayText(styles[0], stringsToDisplay, param);</span>
 
-<span class="fc bfc" id="L257" title="All 2 branches covered.">		if (type == ComponentType.DESTROY)</span>
-<span class="fc" id="L258">			return new ComponentRoseDestroy(styles[0], param);</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">		if (type == ComponentType.DESTROY)</span>
+<span class="fc" id="L259">			return new ComponentRoseDestroy(styles[0], param);</span>
 
-<span class="pc bpc" id="L260" title="1 of 2 branches missed.">		if (type == ComponentType.NEWPAGE)</span>
-<span class="nc" id="L261">			throw new UnsupportedOperationException();</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">		if (type == ComponentType.NEWPAGE)</span>
+<span class="nc" id="L262">			throw new UnsupportedOperationException();</span>
 
-<span class="pc bpc" id="L263" title="1 of 2 branches missed.">		if (type == ComponentType.DIVIDER)</span>
-<span class="fc" id="L264">			return new ComponentRoseDivider(styles[0], stringsToDisplay, param);</span>
+<span class="pc bpc" id="L264" title="1 of 2 branches missed.">		if (type == ComponentType.DIVIDER)</span>
+<span class="fc" id="L265">			return new ComponentRoseDivider(styles[0], stringsToDisplay, param);</span>
 
-<span class="nc bnc" id="L266" title="All 2 branches missed.">		if (type == ComponentType.REFERENCE)</span>
-<span class="nc" id="L267">			return new ComponentRoseReference(styles[0], styles[1], stringsToDisplay, param);</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">		if (type == ComponentType.REFERENCE)</span>
+<span class="nc" id="L268">			return new ComponentRoseReference(styles[0], styles[1], stringsToDisplay, param);</span>
 
-<span class="nc bnc" id="L269" title="All 2 branches missed.">		if (type == ComponentType.ENGLOBER)</span>
-<span class="nc" id="L270">			return new ComponentRoseEnglober(styles[0], stringsToDisplay, param);</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">		if (type == ComponentType.ENGLOBER)</span>
+<span class="nc" id="L271">			return new ComponentRoseEnglober(styles[0], stringsToDisplay, param);</span>
 
-<span class="nc" id="L272">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L273">		throw new UnsupportedOperationException();</span>
 	}
 
 	private double getMinClassWidth(Style style) {
-<span class="fc" id="L276">		return style.value(PName.MinimumWidth).asDouble();</span>
+<span class="fc" id="L277">		return style.value(PName.MinimumWidth).asDouble();</span>
 	}
 
 	public Component createComponentNewPage(Style[] styles, ISkinParam param) {
-<span class="fc" id="L280">		checkRose();</span>
-<span class="fc" id="L281">		return new ComponentRoseNewpage(styles[0], param);</span>
+<span class="fc" id="L281">		checkRose();</span>
+<span class="fc" id="L282">		return new ComponentRoseNewpage(styles[0], param);</span>
 	}
 
 	public ArrowComponent createComponentArrow(Style[] styles, ArrowConfiguration config, ISkinParam param,
 			Display stringsToDisplay) {
-<span class="fc" id="L286">		checkRose();</span>
+<span class="fc" id="L287">		checkRose();</span>
 
-<span class="fc" id="L288">		final LineBreakStrategy styleWidth = styles[0].wrapWidth();</span>
-<span class="pc bpc" id="L289" title="1 of 2 branches missed.">		final LineBreakStrategy maxMessageSize = styleWidth.getMaxWidth() &gt; 0</span>
-<span class="nc" id="L290">				? styleWidth</span>
-<span class="fc" id="L291">				: param.maxMessageSize();</span>
+<span class="fc" id="L289">		final LineBreakStrategy styleWidth = styles[0].wrapWidth();</span>
+<span class="pc bpc" id="L290" title="1 of 2 branches missed.">		final LineBreakStrategy maxMessageSize = styleWidth.getMaxWidth() &gt; 0</span>
+<span class="nc" id="L291">				? styleWidth</span>
+<span class="fc" id="L292">				: param.maxMessageSize();</span>
 
-<span class="fc bfc" id="L293" title="All 2 branches covered.">		if (config.getArrowDirection() == ArrowDirection.SELF)</span>
-<span class="fc" id="L294">			return new ComponentRoseSelfArrow(styles[0], stringsToDisplay, config, param, maxMessageSize,</span>
-<span class="pc bpc" id="L295" title="1 of 2 branches missed.">					param.strictUmlStyle() == false);</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">		if (config.getArrowDirection() == ArrowDirection.SELF)</span>
+<span class="fc" id="L295">			return new ComponentRoseSelfArrow(styles[0], stringsToDisplay, config, param, maxMessageSize,</span>
+<span class="pc bpc" id="L296" title="1 of 2 branches missed.">					param.strictUmlStyle() == false);</span>
 
-<span class="fc" id="L297">		final ArrowDirection arrowDirection = config.getArrowDirection();</span>
+<span class="fc" id="L298">		final ArrowDirection arrowDirection = config.getArrowDirection();</span>
 
-<span class="fc" id="L299">		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram,</span>
+<span class="fc" id="L300">		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram,</span>
 				SName.arrow);
-<span class="fc" id="L301">		final Style textStyle = signature.getMergedStyle(param.getCurrentStyleBuilder());</span>
-<span class="fc" id="L302">		final String value = textStyle.value(PName.HorizontalAlignment).asString();</span>
-<span class="fc" id="L303">		HorizontalAlignment messageHorizontalAlignment = textStyle.getHorizontalAlignment();</span>
+<span class="fc" id="L302">		final Style textStyle = signature.getMergedStyle(param.getCurrentStyleBuilder());</span>
+<span class="fc" id="L303">		final String value = textStyle.value(PName.HorizontalAlignment).asString();</span>
+<span class="fc" id="L304">		HorizontalAlignment messageHorizontalAlignment = textStyle.getHorizontalAlignment();</span>
 
-<span class="pc bpc" id="L305" title="1 of 2 branches missed.">		if (&quot;first&quot;.equalsIgnoreCase(value)) {</span>
-<span class="nc" id="L306">			final boolean isReverseDefine = config.isReverseDefine();</span>
-<span class="nc bnc" id="L307" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {</span>
-<span class="nc bnc" id="L308" title="All 2 branches missed.">				if (isReverseDefine)</span>
-<span class="nc" id="L309">					messageHorizontalAlignment = HorizontalAlignment.LEFT;</span>
+<span class="pc bpc" id="L306" title="1 of 2 branches missed.">		if (&quot;first&quot;.equalsIgnoreCase(value)) {</span>
+<span class="nc" id="L307">			final boolean isReverseDefine = config.isReverseDefine();</span>
+<span class="nc bnc" id="L308" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {</span>
+<span class="nc bnc" id="L309" title="All 2 branches missed.">				if (isReverseDefine)</span>
+<span class="nc" id="L310">					messageHorizontalAlignment = HorizontalAlignment.LEFT;</span>
 				else
-<span class="nc" id="L311">					messageHorizontalAlignment = HorizontalAlignment.RIGHT;</span>
+<span class="nc" id="L312">					messageHorizontalAlignment = HorizontalAlignment.RIGHT;</span>
 
 			} else {
-<span class="nc bnc" id="L314" title="All 2 branches missed.">				if (isReverseDefine)</span>
-<span class="nc" id="L315">					messageHorizontalAlignment = HorizontalAlignment.RIGHT;</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">				if (isReverseDefine)</span>
+<span class="nc" id="L316">					messageHorizontalAlignment = HorizontalAlignment.RIGHT;</span>
 				else
-<span class="nc" id="L317">					messageHorizontalAlignment = HorizontalAlignment.LEFT;</span>
+<span class="nc" id="L318">					messageHorizontalAlignment = HorizontalAlignment.LEFT;</span>
 
 			}
-<span class="pc bpc" id="L320" title="1 of 2 branches missed.">		} else if (&quot;direction&quot;.equalsIgnoreCase(value)) {</span>
-<span class="nc bnc" id="L321" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL)</span>
-<span class="nc" id="L322">				messageHorizontalAlignment = HorizontalAlignment.LEFT;</span>
-<span class="nc bnc" id="L323" title="All 2 branches missed.">			else if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE)</span>
-<span class="nc" id="L324">				messageHorizontalAlignment = HorizontalAlignment.RIGHT;</span>
-<span class="nc bnc" id="L325" title="All 2 branches missed.">			else if (arrowDirection == ArrowDirection.BOTH_DIRECTION)</span>
-<span class="nc" id="L326">				messageHorizontalAlignment = HorizontalAlignment.CENTER;</span>
+<span class="pc bpc" id="L321" title="1 of 2 branches missed.">		} else if (&quot;direction&quot;.equalsIgnoreCase(value)) {</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL)</span>
+<span class="nc" id="L323">				messageHorizontalAlignment = HorizontalAlignment.LEFT;</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">			else if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE)</span>
+<span class="nc" id="L325">				messageHorizontalAlignment = HorizontalAlignment.RIGHT;</span>
+<span class="nc bnc" id="L326" title="All 2 branches missed.">			else if (arrowDirection == ArrowDirection.BOTH_DIRECTION)</span>
+<span class="nc" id="L327">				messageHorizontalAlignment = HorizontalAlignment.CENTER;</span>
 
-<span class="pc bpc" id="L328" title="1 of 2 branches missed.">		} else if (&quot;reversedirection&quot;.equalsIgnoreCase(value)) {</span>
-<span class="nc bnc" id="L329" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL)</span>
-<span class="nc" id="L330">				messageHorizontalAlignment = HorizontalAlignment.RIGHT;</span>
-<span class="nc bnc" id="L331" title="All 2 branches missed.">			else if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE)</span>
-<span class="nc" id="L332">				messageHorizontalAlignment = HorizontalAlignment.LEFT;</span>
-<span class="nc bnc" id="L333" title="All 2 branches missed.">			else if (arrowDirection == ArrowDirection.BOTH_DIRECTION)</span>
-<span class="nc" id="L334">				messageHorizontalAlignment = HorizontalAlignment.CENTER;</span>
+<span class="pc bpc" id="L329" title="1 of 2 branches missed.">		} else if (&quot;reversedirection&quot;.equalsIgnoreCase(value)) {</span>
+<span class="nc bnc" id="L330" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL)</span>
+<span class="nc" id="L331">				messageHorizontalAlignment = HorizontalAlignment.RIGHT;</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">			else if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE)</span>
+<span class="nc" id="L333">				messageHorizontalAlignment = HorizontalAlignment.LEFT;</span>
+<span class="nc bnc" id="L334" title="All 2 branches missed.">			else if (arrowDirection == ArrowDirection.BOTH_DIRECTION)</span>
+<span class="nc" id="L335">				messageHorizontalAlignment = HorizontalAlignment.CENTER;</span>
 
 		}
 
-<span class="fc" id="L338">		return new ComponentRoseArrow(styles[0], stringsToDisplay, config, messageHorizontalAlignment, param,</span>
-<span class="pc bpc" id="L339" title="1 of 2 branches missed.">				maxMessageSize, param.strictUmlStyle() == false, param.responseMessageBelowArrow());</span>
+<span class="fc" id="L339">		return new ComponentRoseArrow(styles[0], stringsToDisplay, config, messageHorizontalAlignment, param,</span>
+<span class="pc bpc" id="L340" title="1 of 2 branches missed.">				maxMessageSize, param.strictUmlStyle() == false, param.responseMessageBelowArrow());</span>
 	}
 
 	static public UStroke getStroke(ISkinParam param, LineParam lineParam, double defaultValue) {
-<span class="nc" id="L343">		final UStroke result = param.getThickness(lineParam, null);</span>
-<span class="nc bnc" id="L344" title="All 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L345">			return UStroke.withThickness(defaultValue);</span>
+<span class="nc" id="L344">		final UStroke result = param.getThickness(lineParam, null);</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L346">			return UStroke.withThickness(defaultValue);</span>
 
-<span class="nc" id="L347">		return result;</span>
+<span class="nc" id="L348">		return result;</span>
 	}
 
 }

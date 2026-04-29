@@ -143,7 +143,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		final double yText;
 <span class="pc bpc" id="L144" title="1 of 2 branches missed.">		if (isBelowForResponse()) {</span>
 <span class="nc" id="L145">			posArrow = 0;</span>
-<span class="nc" id="L146">			yText = getMarginY();</span>
+<span class="nc" id="L146">			yText = getOldPaddingY();</span>
 		} else {
 <span class="fc" id="L148">			posArrow = getTextHeight(stringBounder);</span>
 <span class="fc" id="L149">			yText = 0;</span>
@@ -168,10 +168,10 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 <span class="nc" id="L168">			textPos = (dimensionToUse.getWidth() - Math.abs(area.getTextDeltaX()) - textWidth) / 2;</span>
 <span class="pc bpc" id="L169" title="1 of 2 branches missed.">		} else if (messagePosition == HorizontalAlignment.RIGHT) {</span>
 <span class="nc" id="L170">			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();</span>
-<span class="nc" id="L171">			textPos = dimensionToUse.getWidth() - Math.abs(area.getTextDeltaX()) - textWidth - getMarginX2()</span>
+<span class="nc" id="L171">			textPos = dimensionToUse.getWidth() - Math.abs(area.getTextDeltaX()) - textWidth - getOldPaddingX2()</span>
 <span class="nc bnc" id="L172" title="All 2 branches missed.">					- (direction2 == ArrowDirection.LEFT_TO_RIGHT_NORMAL ? getArrowDeltaX() : 0);</span>
 <span class="nc" id="L173">		} else {</span>
-<span class="fc" id="L174">			textPos = getMarginX1()</span>
+<span class="fc" id="L174">			textPos = getOldPaddingX1()</span>
 <span class="fc bfc" id="L175" title="All 4 branches covered.">					+ (direction2 == ArrowDirection.RIGHT_TO_LEFT_REVERSE || direction2 == ArrowDirection.BOTH_DIRECTION</span>
 <span class="fc" id="L176">							? getArrowDeltaX()</span>
 <span class="fc" id="L177">							: 0);</span>
@@ -189,7 +189,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 <span class="pc bpc" id="L189" title="1 of 2 branches missed.">		if (isBelowForResponse())</span>
 <span class="nc" id="L190">			return 0;</span>
 
-<span class="fc" id="L192">		return getTextHeight(stringBounder) - 2 * getMarginY();</span>
+<span class="fc" id="L192">		return getTextHeight(stringBounder) - 2 * getOldPaddingY();</span>
 	}
 
 	private boolean isBelowForResponse() {

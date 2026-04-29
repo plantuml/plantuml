@@ -382,55 +382,62 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
 <span class="nc" id="L383">		final ULayoutGroup group = getLayout(stringBounder);</span>
 <span class="nc" id="L384">		final XDimension2D dim = calculateDimension(stringBounder);</span>
-<span class="nc" id="L385">		return group.getInnerPosition(member, dim.getWidth(), dim.getHeight(), stringBounder);</span>
+<span class="nc" id="L385">		final XRectangle2D result = group.getInnerPosition(member, dim.getWidth(), dim.getHeight(), stringBounder);</span>
+<span class="nc bnc" id="L386" title="All 4 branches missed.">		if (result != null &amp;&amp; hasSmallIcon()) {</span>
+			// Extend the inner position to include the visibility modifier on its left
+<span class="nc" id="L388">			final double smallIcon = skinParam.getCircledCharacterRadius() + 3;</span>
+<span class="nc" id="L389">			return new XRectangle2D(result.getMinX() - smallIcon, result.getMinY(),</span>
+<span class="nc" id="L390">					result.getWidth() + smallIcon, result.getHeight());</span>
+		}
+<span class="nc" id="L392">		return result;</span>
 	}
 
 	private ULayoutGroup getLayout(final StringBounder stringBounder) {
 		final ULayoutGroup group;
-<span class="fc bfc" id="L390" title="All 2 branches covered.">		if (hasSmallIcon()) {</span>
-<span class="fc" id="L391">			group = new ULayoutGroup(</span>
-<span class="fc" id="L392">					new PlacementStrategyVisibility(stringBounder, skinParam.getCircledCharacterRadius() + 3));</span>
-<span class="fc bfc" id="L393" title="All 2 branches covered.">			for (CharSequence cs : members) {</span>
-<span class="fc" id="L394">				final TextBlock block = createTextBlock(cs);</span>
+<span class="fc bfc" id="L397" title="All 2 branches covered.">		if (hasSmallIcon()) {</span>
+<span class="fc" id="L398">			group = new ULayoutGroup(</span>
+<span class="fc" id="L399">					new PlacementStrategyVisibility(stringBounder, skinParam.getCircledCharacterRadius() + 3));</span>
+<span class="fc bfc" id="L400" title="All 2 branches covered.">			for (CharSequence cs : members) {</span>
+<span class="fc" id="L401">				final TextBlock block = createTextBlock(cs);</span>
 //				if (cs instanceof EmbeddedDiagram) {
 //					group.add(getUBlock(null, null));
 //				} else {
-<span class="fc" id="L398">				final Member att = (Member) cs;</span>
-<span class="fc" id="L399">				final VisibilityModifier modifier = att.getVisibilityModifier();</span>
-<span class="fc" id="L400">				group.add(getUBlock(modifier, att.getUrl()));</span>
+<span class="fc" id="L405">				final Member att = (Member) cs;</span>
+<span class="fc" id="L406">				final VisibilityModifier modifier = att.getVisibilityModifier();</span>
+<span class="fc" id="L407">				group.add(getUBlock(modifier, att.getUrl()));</span>
 //				}
-<span class="fc" id="L402">				group.add(block);</span>
-<span class="fc" id="L403">			}</span>
+<span class="fc" id="L409">				group.add(block);</span>
+<span class="fc" id="L410">			}</span>
 		} else {
 			final PlacementStrategy placementStrategy;
-<span class="pc bpc" id="L406" title="1 of 2 branches missed.">			if (align == HorizontalAlignment.LEFT)</span>
-<span class="fc" id="L407">				placementStrategy = new PlacementStrategyY1Y2Left(stringBounder);</span>
-<span class="nc bnc" id="L408" title="All 2 branches missed.">			else if (align == HorizontalAlignment.CENTER)</span>
-<span class="nc" id="L409">				placementStrategy = new PlacementStrategyY1Y2Center(stringBounder);</span>
+<span class="pc bpc" id="L413" title="1 of 2 branches missed.">			if (align == HorizontalAlignment.LEFT)</span>
+<span class="fc" id="L414">				placementStrategy = new PlacementStrategyY1Y2Left(stringBounder);</span>
+<span class="nc bnc" id="L415" title="All 2 branches missed.">			else if (align == HorizontalAlignment.CENTER)</span>
+<span class="nc" id="L416">				placementStrategy = new PlacementStrategyY1Y2Center(stringBounder);</span>
 			else
-<span class="nc" id="L411">				placementStrategy = new PlacementStrategyY1Y2Right(stringBounder);</span>
+<span class="nc" id="L418">				placementStrategy = new PlacementStrategyY1Y2Right(stringBounder);</span>
 
-<span class="fc" id="L413">			group = new ULayoutGroup(placementStrategy);</span>
-<span class="fc bfc" id="L414" title="All 2 branches covered.">			for (CharSequence cs : members) {</span>
-<span class="fc" id="L415">				final TextBlock block = createTextBlock(cs);</span>
-<span class="fc" id="L416">				group.add(block);</span>
-<span class="fc" id="L417">			}</span>
+<span class="fc" id="L420">			group = new ULayoutGroup(placementStrategy);</span>
+<span class="fc bfc" id="L421" title="All 2 branches covered.">			for (CharSequence cs : members) {</span>
+<span class="fc" id="L422">				final TextBlock block = createTextBlock(cs);</span>
+<span class="fc" id="L423">				group.add(block);</span>
+<span class="fc" id="L424">			}</span>
 		}
-<span class="fc" id="L419">		return group;</span>
+<span class="fc" id="L426">		return group;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L423">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L424">		final ULayoutGroup group = getLayout(stringBounder);</span>
-<span class="fc" id="L425">		final XDimension2D dim = calculateDimensionOnlyMembers(stringBounder);</span>
-<span class="fc" id="L426">		group.drawU(ug, dim.getWidth(), dim.getHeight());</span>
-<span class="fc" id="L427">		ug = ug.apply(UTranslate.dy(dim.getHeight()));</span>
+<span class="fc" id="L430">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L431">		final ULayoutGroup group = getLayout(stringBounder);</span>
+<span class="fc" id="L432">		final XDimension2D dim = calculateDimensionOnlyMembers(stringBounder);</span>
+<span class="fc" id="L433">		group.drawU(ug, dim.getWidth(), dim.getHeight());</span>
+<span class="fc" id="L434">		ug = ug.apply(UTranslate.dy(dim.getHeight()));</span>
 
-<span class="pc bpc" id="L429" title="1 of 2 branches missed.">		for (EmbeddedDiagram embedded : embeddeds) {</span>
-<span class="nc" id="L430">			embedded.drawU(ug);</span>
-<span class="nc" id="L431">			ug = ug.apply(UTranslate.dy(embedded.calculateDimension(stringBounder).getHeight()));</span>
-<span class="nc" id="L432">		}</span>
-<span class="fc" id="L433">	}</span>
+<span class="pc bpc" id="L436" title="1 of 2 branches missed.">		for (EmbeddedDiagram embedded : embeddeds) {</span>
+<span class="nc" id="L437">			embedded.drawU(ug);</span>
+<span class="nc" id="L438">			ug = ug.apply(UTranslate.dy(embedded.calculateDimension(stringBounder).getHeight()));</span>
+<span class="nc" id="L439">		}</span>
+<span class="fc" id="L440">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

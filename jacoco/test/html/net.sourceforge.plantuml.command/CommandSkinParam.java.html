@@ -69,13 +69,19 @@ public class CommandSkinParam extends SingleLineCommand2&lt;TitledDiagram&gt; {
 <span class="pc bpc" id="L69" title="1 of 2 branches missed.">			if (&quot;handwritten&quot;.equalsIgnoreCase(name))</span>
 <span class="nc" id="L70">				diagram.addWarning(new Warning(&quot;Please use '!option handwritten true' to enable handwritten &quot;));</span>
 
-<span class="fc" id="L72">			diagram.setParam(name, arg.get(&quot;VALUE&quot;, 0));</span>
-<span class="fc" id="L73">			diagram.setSkinParamUsed(true);</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">			if (&quot;ParticipantPadding&quot;.equalsIgnoreCase(name))</span>
+<span class="fc" id="L73">				diagram.addWarning(new Warning(&quot;Please use CSS style instead of skinparam ParticipantPadding&quot;));</span>
 
-<span class="fc" id="L75">			return CommandExecutionResult.ok();</span>
-<span class="nc" id="L76">		} catch (NoStyleAvailableException e) {</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">			if (&quot;padding&quot;.equalsIgnoreCase(name))</span>
+<span class="nc" id="L76">				diagram.addWarning(new Warning(&quot;Please use CSS style instead of skinparam padding&quot;));</span>
+
+<span class="fc" id="L78">			diagram.setParam(name, arg.get(&quot;VALUE&quot;, 0));</span>
+<span class="fc" id="L79">			diagram.setSkinParamUsed(true);</span>
+
+<span class="fc" id="L81">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L82">		} catch (NoStyleAvailableException e) {</span>
 			// Logme.error(e);
-<span class="nc" id="L78">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
+<span class="nc" id="L84">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
 		}
 
 	}

@@ -48,12 +48,13 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.image.Opale;
 
 final public class ComponentRoseNote extends AbstractTextualComponent implements Stencil {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private final double paddingX;
 	private final double paddingY;
@@ -61,83 +62,87 @@ final public class ComponentRoseNote extends AbstractTextualComponent implements
 	private final double roundCorner;
 	private final HorizontalAlignment position;
 
-	public ComponentRoseNote(Style style, Display strings, double paddingX, double paddingY,
-			ISkinParam skinParam, HorizontalAlignment textAlignment, HorizontalAlignment position,
-			Colors colors) {
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		super(style, style.wrapWidth(), textAlignment == HorizontalAlignment.CENTER ? 15 : 6, 15, 5, skinParam,</span>
-				strings, true);
-<span class="fc" id="L69">		this.paddingX = paddingX;</span>
-<span class="fc" id="L70">		this.paddingY = paddingY;</span>
-<span class="fc" id="L71">		this.position = position;</span>
-<span class="fc" id="L72">		this.symbolContext = getSymbolContext(colors);</span>
-<span class="fc" id="L73">		this.roundCorner = getRoundCorner();</span>
+	public ComponentRoseNote(Style style, Display strings, double paddingX, double paddingY, ISkinParam skinParam,
+			HorizontalAlignment textAlignment, HorizontalAlignment position, Colors colors) {
+<span class="fc" id="L67">		super(style, style.wrapWidth(),</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">				textAlignment == HorizontalAlignment.CENTER</span>
+<span class="nc" id="L69">						? ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 15, 5, 15)</span>
+<span class="fc" id="L70">						: ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 15, 5, 6),</span>
+				skinParam, strings, true);
+//		super(style, style.wrapWidth(), textAlignment == HorizontalAlignment.CENTER ? 15 : 6, 15, 5, skinParam,
+//				strings, true);
+<span class="fc" id="L74">		this.paddingX = paddingX;</span>
+<span class="fc" id="L75">		this.paddingY = paddingY;</span>
+<span class="fc" id="L76">		this.position = position;</span>
+<span class="fc" id="L77">		this.symbolContext = getSymbolContext(colors);</span>
+<span class="fc" id="L78">		this.roundCorner = getRoundCorner();</span>
 
-<span class="fc" id="L75">	}</span>
+<span class="fc" id="L80">	}</span>
 
 	@Override
 	final public double getPreferredWidth(StringBounder stringBounder) {
-<span class="fc" id="L79">		final double result = getTextWidth(stringBounder) + 2 * getPaddingX() + symbolContext.getDeltaShadow();</span>
-<span class="fc" id="L80">		return result;</span>
+<span class="fc" id="L84">		final double result = getTextWidth(stringBounder) + 2 * getPaddingX() + symbolContext.getDeltaShadow();</span>
+<span class="fc" id="L85">		return result;</span>
 	}
 
 	@Override
 	final public double getPreferredHeight(StringBounder stringBounder) {
-<span class="fc" id="L85">		return getTextHeight(stringBounder) + 2 * getPaddingY() + symbolContext.getDeltaShadow();</span>
+<span class="fc" id="L90">		return getTextHeight(stringBounder) + 2 * getPaddingY() + symbolContext.getDeltaShadow();</span>
 	}
 
 	@Override
 	public double getPaddingX() {
-<span class="fc" id="L90">		return paddingX;</span>
+<span class="fc" id="L95">		return paddingX;</span>
 	}
 
 	@Override
 	public double getPaddingY() {
-<span class="fc" id="L95">		return paddingY;</span>
+<span class="fc" id="L100">		return paddingY;</span>
 	}
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {
 
-<span class="fc" id="L101">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L102">		final int textHeight = (int) getTextHeight(stringBounder);</span>
+<span class="fc" id="L106">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L107">		final int textHeight = (int) getTextHeight(stringBounder);</span>
 
-<span class="fc" id="L104">		int x2 = (int) getTextWidth(stringBounder);</span>
-<span class="fc" id="L105">		final double diffX = area.getDimensionToUse().getWidth() - getPreferredWidth(stringBounder);</span>
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (diffX &lt; 0) {</span>
-<span class="nc" id="L107">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L109">		int x2 = (int) getTextWidth(stringBounder);</span>
+<span class="fc" id="L110">		final double diffX = area.getDimensionToUse().getWidth() - getPreferredWidth(stringBounder);</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (diffX &lt; 0) {</span>
+<span class="nc" id="L112">			throw new IllegalArgumentException();</span>
 		}
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (area.getDimensionToUse().getWidth() &gt; getPreferredWidth(stringBounder)) {</span>
-<span class="nc" id="L110">			x2 = (int) (area.getDimensionToUse().getWidth() - 2 * getPaddingX());</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (area.getDimensionToUse().getWidth() &gt; getPreferredWidth(stringBounder)) {</span>
+<span class="nc" id="L115">			x2 = (int) (area.getDimensionToUse().getWidth() - 2 * getPaddingX());</span>
 		}
 
-<span class="fc" id="L113">		final UPath polygon = Opale.getPolygonNormal(x2, textHeight, roundCorner);</span>
-<span class="fc" id="L114">		polygon.setDeltaShadow(symbolContext.getDeltaShadow());</span>
+<span class="fc" id="L118">		final UPath polygon = Opale.getPolygonNormal(x2, textHeight, roundCorner);</span>
+<span class="fc" id="L119">		polygon.setDeltaShadow(symbolContext.getDeltaShadow());</span>
 
-<span class="fc" id="L116">		ug = symbolContext.apply(ug);</span>
-<span class="fc" id="L117">		ug.draw(polygon);</span>
+<span class="fc" id="L121">		ug = symbolContext.apply(ug);</span>
+<span class="fc" id="L122">		ug.draw(polygon);</span>
 
-<span class="fc" id="L119">		ug.draw(Opale.getCorner(x2, roundCorner));</span>
-<span class="fc" id="L120">		UGraphic ug2 = UGraphicStencil.create(ug, this, UStroke.simple());</span>
+<span class="fc" id="L124">		ug.draw(Opale.getCorner(x2, roundCorner));</span>
+<span class="fc" id="L125">		UGraphic ug2 = UGraphicStencil.create(ug, this, UStroke.simple());</span>
 
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (position == HorizontalAlignment.LEFT) {</span>
-<span class="fc" id="L123">			ug2 = ug2.apply(new UTranslate(getMarginX1(), getMarginY()));</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		} else if (position == HorizontalAlignment.RIGHT) {</span>
-<span class="nc" id="L125">			ug2 = ug2.apply(</span>
-<span class="nc" id="L126">					new UTranslate(area.getDimensionToUse().getWidth() - getTextWidth(stringBounder), getMarginY()));</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (position == HorizontalAlignment.LEFT) {</span>
+<span class="fc" id="L128">			ug2 = ug2.apply(new UTranslate(getOldPaddingX1(), getOldPaddingY()));</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		} else if (position == HorizontalAlignment.RIGHT) {</span>
+<span class="nc" id="L130">			ug2 = ug2.apply(new UTranslate(area.getDimensionToUse().getWidth() - getTextWidth(stringBounder),</span>
+<span class="nc" id="L131">					getOldPaddingY()));</span>
 		} else {
-<span class="nc" id="L128">			ug2 = ug2.apply(new UTranslate(getMarginX1() + diffX / 2, getMarginY()));</span>
+<span class="nc" id="L133">			ug2 = ug2.apply(new UTranslate(getOldPaddingX1() + diffX / 2, getOldPaddingY()));</span>
 		}
 
-<span class="fc" id="L131">		getTextBlock().drawU(ug2);</span>
+<span class="fc" id="L136">		getTextBlock().drawU(ug2);</span>
 
-<span class="fc" id="L133">	}</span>
+<span class="fc" id="L138">	}</span>
 
 	public double getStartingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L136">		return 0;</span>
+<span class="nc" id="L141">		return 0;</span>
 	}
 
 	public double getEndingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L140">		return getTextWidth(stringBounder);</span>
+<span class="nc" id="L145">		return getTextWidth(stringBounder);</span>
 	}
 
 }

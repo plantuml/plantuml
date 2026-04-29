@@ -52,16 +52,16 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 
 	private final Arrow arrow;
 	private final ParticipantBox participantBox;
-	private final ClockwiseTopRightBottomLeft paddingParticipant;
+	private final ClockwiseTopRightBottomLeft margin;
 
 	public ArrowAndParticipant(AtomicInteger counter, Pragma pragma, StringBounder stringBounder, Arrow arrow,
-			ParticipantBox participantBox, ClockwiseTopRightBottomLeft paddingParticipant, LineLocation location) {
+			ParticipantBox participantBox, ClockwiseTopRightBottomLeft margin, LineLocation location) {
 <span class="nc" id="L59">		super(counter, pragma, arrow.getStartingY(), arrow.getSkin(), arrow.getArrowComponent(), arrow.getUrl(),</span>
 				location);
 <span class="nc" id="L61">		this.arrow = arrow;</span>
 <span class="nc" id="L62">		this.participantBox = participantBox;</span>
-<span class="nc" id="L63">		this.paddingParticipant = paddingParticipant;</span>
-<span class="nc" id="L64">		arrow.setPaddingArrowHead(participantBox.getPreferredWidth(stringBounder) / 2 - paddingParticipant.getLeft());</span>
+<span class="nc" id="L63">		this.margin = margin;</span>
+<span class="nc" id="L64">		arrow.setPaddingArrowHead(participantBox.getPreferredWidth(stringBounder) / 2 - margin.getLeft());</span>
 <span class="nc" id="L65">	}</span>
 
 	@Override
@@ -114,7 +114,7 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 <span class="nc" id="L114">			arrow.drawInternalU(ug, maxX, context);</span>
 		} else {
 <span class="nc" id="L116">			final double boxWidth = participantBox.getPreferredWidth(ug.getStringBounder());</span>
-<span class="nc" id="L117">			arrow.drawInternalU(ug.apply(UTranslate.dx(boxWidth / 2 - paddingParticipant.getLeft())), maxX, context);</span>
+<span class="nc" id="L117">			arrow.drawInternalU(ug.apply(UTranslate.dx(boxWidth / 2 - margin.getLeft())), maxX, context);</span>
 		}
 
 <span class="nc" id="L120">		final double arrowHeight = arrow.getPreferredHeight(ug.getStringBounder());</span>
