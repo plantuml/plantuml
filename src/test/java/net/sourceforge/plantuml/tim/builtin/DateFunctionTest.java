@@ -46,7 +46,7 @@ public class DateFunctionTest {
         long timestamp = 1609459200L; // 2021-01-01 00:00:00 UTC
         TValue result = dateFunction.executeReturnFunction(null, null, null, Arrays.asList(TValue.fromString("yyyy-MM-dd"), TValue.fromInt((int) timestamp)), null);
         String formattedDate = result.toString();
-        assertThat(formattedDate).isEqualTo("2021-01-01");
+        assertThat(formattedDate).isEqualTo(new SimpleDateFormat("yyyy-MM-dd").format(timestamp * 1000L));
     }
 
     @Test
