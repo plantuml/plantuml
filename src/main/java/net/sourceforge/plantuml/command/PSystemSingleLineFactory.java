@@ -62,9 +62,6 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 	final public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing) {
 
-		if (source.getTotalLineCount() != 3)
-			return null;
-
 		final IteratorCounter2 it = source.iterator2();
 		if (source.isEmpty()) {
 			final LineLocation location = it.next().getLocation();
@@ -78,18 +75,33 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 		if (it.hasNext() == false)
 			return buildEmptyError(source, startLine.getLocation(), it.getTrace(), preprocessing);
 
-		final StringLocated s = it.next();
-		if (StartUtils.isEndDirective(s.getString()))
-			return buildEmptyError(source, s.getLocation(), it.getTrace(), preprocessing);
+		while (it.hasNext()) {
+			final StringLocated s = it.next().getTrimmed();
 
-		final Diagram sys = executeLine(source, s.getString(), preprocessing);
-		if (sys == null) {
-			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, s.getLocation(),
-					getDiagramType());
-			// return PSystemErrorUtils.buildV1(source, err, null);
-			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace(), preprocessing);
+			if (s.length() == 0) {
+				continue;
+			}
+
+			if (s.getString().startsWith("!pragma ")) {
+				continue;
+			}
+
+			if (StartUtils.isEndDirective(s.getString()))
+				return buildEmptyError(source, s.getLocation(), it.getTrace(), preprocessing);
+
+			final Diagram sys = executeLine(source, s.getString(), preprocessing);
+			if (sys == null) {
+				final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, s.getLocation(),
+						getDiagramType());
+				// return PSystemErrorUtils.buildV1(source, err, null);
+				return PSystemErrorUtils.buildV2(source, err, null, it.getTrace(), preprocessing);
+			}
+
+			return sys;
 		}
-		return sys;
+
+		// if the logic above is correct, this line is unreachable
+		throw new IllegalStateException();
 
 	}
 
