@@ -64,7 +64,7 @@ public abstract class PSystemBasicFactory&lt;P extends Diagram&gt; extends PSyst
 
 	@Override
 	final public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L67">		source = source.removeInitialSkinparam();</span>
+<span class="fc" id="L67">		source = source.removeInitialNoise();</span>
 <span class="fc" id="L68">		final IteratorCounter2 it = source.iterator2();</span>
 <span class="fc" id="L69">		final StringLocated startLine = it.next();</span>
 <span class="fc" id="L70">		P system = initDiagram(source, startLine.getString(), preprocessing);</span>
