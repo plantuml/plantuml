@@ -8,7 +8,7 @@
     function getLineEdgesAndNodes(startingNode) {
         function findNextEdgesAndNodes(startingNode, forwards, elementsEncounteredSoFar = new Set()) {
             elementsEncounteredSoFar.add(startingNode);
-            const nodeName = startingNode.getAttribute("data-entity");
+            const nodeName = startingNode.id;
             const escapedNodeName = escapeForCssAttributeSelector(nodeName);
             const thisLinkAttributeIndex = forwards ? 2 : 1;
             const nextLinkAttributeIndex = forwards ? 1 : 2;
@@ -18,7 +18,7 @@
                     elementsEncounteredSoFar.add(link);
 
                     const linkStartNodeName = link.getAttribute(`data-entity-${thisLinkAttributeIndex}`);
-                    const linkStartNode = svg.querySelector(`[data-entity="${escapeForCssAttributeSelector(linkStartNodeName)}"]`);
+                    const linkStartNode = svg.querySelector(`[id="${escapeForCssAttributeSelector(linkStartNodeName)}"]`);
 
                     if (! elementsEncounteredSoFar.has(linkStartNode)) {
                         elementsEncounteredSoFar.add(linkStartNode);
@@ -37,7 +37,7 @@
     }
 
 	function getEdgesAndDistance1Nodes(startingNode) {
-		const nodeName = startingNode.getAttribute("data-entity");
+		const nodeName = startingNode.id;
 		const escapedNodeName = escapeForCssAttributeSelector(nodeName);
 		let results = new Set();
 
@@ -46,10 +46,10 @@
             const linkEndNodeName = link.getAttribute("data-entity-2");
 
             if (linkStartNodeName === nodeName) {
-                results.add(svg.querySelector(`[data-entity="${escapeForCssAttributeSelector(linkEndNodeName)}"]`));
+                results.add(svg.querySelector(`[id="${escapeForCssAttributeSelector(linkEndNodeName)}"]`));
                 results.add(link);
             } else if (linkEndNodeName === nodeName) {
-                results.add(svg.querySelector(`[data-entity="${escapeForCssAttributeSelector(linkStartNodeName)}"]`));
+                results.add(svg.querySelector(`[id="${escapeForCssAttributeSelector(linkStartNodeName)}"]`));
                 results.add(link);
 			}
 		});
