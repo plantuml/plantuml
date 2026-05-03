@@ -17262,11 +17262,11 @@
 
         <Package name="net.sourceforge.plantuml.tim.builtin">
             <Stats>
-                <TotalClasses>69</TotalClasses>
-                <ConcreteClasses>68</ConcreteClasses>
+                <TotalClasses>68</TotalClasses>
+                <ConcreteClasses>67</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>15</Ce>
+                <Ce>14</Ce>
                 <A>0.01</A>
                 <I>1</I>
                 <D>0.01</D>
@@ -17297,9 +17297,6 @@
                 </Class>
                 <Class sourceFile="Darken.java">
                     net.sourceforge.plantuml.tim.builtin.Darken
-                </Class>
-                <Class sourceFile="DateFunction.java">
-                    net.sourceforge.plantuml.tim.builtin.DateFunction
                 </Class>
                 <Class sourceFile="Dirpath.java">
                     net.sourceforge.plantuml.tim.builtin.Dirpath
@@ -17489,7 +17486,6 @@
             <DependsUpon>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
-                <Package>java.text</Package>
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml.jaws</Package>
                 <Package>net.sourceforge.plantuml.json</Package>

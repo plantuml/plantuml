@@ -11716,12 +11716,12 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 69
-    Concrete Classes: 68
+    Total Classes: 68
+    Concrete Classes: 67
     Abstract Classes: 1
 
     Ca: 0
-    Ce: 15
+    Ce: 14
 
     A: 0.01
     I: 1
@@ -11737,7 +11737,6 @@ Concrete Classes:
     net.sourceforge.plantuml.tim.builtin.Breakline
     net.sourceforge.plantuml.tim.builtin.Chr
     net.sourceforge.plantuml.tim.builtin.Darken
-    net.sourceforge.plantuml.tim.builtin.DateFunction
     net.sourceforge.plantuml.tim.builtin.Dirpath
     net.sourceforge.plantuml.tim.builtin.Dollar
     net.sourceforge.plantuml.tim.builtin.Eval
@@ -11803,7 +11802,6 @@ Concrete Classes:
 Depends Upon:
     java.io
     java.lang
-    java.text
     java.util
     net.sourceforge.plantuml.jaws
     net.sourceforge.plantuml.json
@@ -14699,7 +14697,7 @@ java.nio.charset,0,0,18,0,0,0,1,1
 java.nio.file,0,0,3,0,0,0,1,1
 java.security,0,0,3,0,0,0,1,1
 java.security.spec,0,0,2,0,0,0,1,1
-java.text,0,0,7,0,0,0,1,1
+java.text,0,0,6,0,0,0,1,1
 java.time,0,0,13,0,0,0,1,1
 java.time.temporal,0,0,1,0,0,0,1,1
 java.util,0,0,170,0,0,0,1,1
@@ -14909,7 +14907,7 @@ net.sourceforge.plantuml.text,5,1,38,4,0.2,0.1,0.7,1
 net.sourceforge.plantuml.theme,1,0,1,6,0,0.86,0.14,1
 net.sourceforge.plantuml.tikz,0,0,1,0,0,0,1,1
 net.sourceforge.plantuml.tim,38,4,3,14,0.11,0.82,0.07,1
-net.sourceforge.plantuml.tim.builtin,69,1,0,15,0.01,1,0.01,1
+net.sourceforge.plantuml.tim.builtin,68,1,0,14,0.01,1,0.01,1
 net.sourceforge.plantuml.tim.expression,17,3,3,3,0.18,0.5,0.32,1
 net.sourceforge.plantuml.tim.iterator,16,3,1,8,0.19,0.89,0.08,1
 net.sourceforge.plantuml.timingdiagram,25,4,2,25,0.16,0.93,0.09,1

@@ -41,7 +41,7 @@
 <tr>
 <td>
 <div class="infoBox">
-<div class="counter">4</div>
+<div class="counter">29</div>
 <p>tests</p>
 </div>
 </td>
@@ -59,7 +59,7 @@
 </td>
 <td>
 <div class="infoBox duration">
-<div class="counter">0.005s</div>
+<div class="counter">0.020s</div>
 <p>duration</p>
 </div>
 </td>
@@ -89,8 +89,8 @@
 </tr>
 </thead>
 <tr>
-<td class="success">testDateFunctionInvalidFormat()</td>
-<td class="path" hidden="">testDateFunctionInvalidFormat()</td>
+<td class="success">testCanCoverRejectsOtherArities()</td>
+<td class="path" hidden="">testCanCoverRejectsOtherArities()</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
@@ -98,8 +98,26 @@
 <td class="success">100%</td>
 </tr>
 <tr>
-<td class="success">testDateFunctionNoArgs()</td>
-<td class="path" hidden="">testDateFunctionNoArgs()</td>
+<td class="success">testCanCoverZeroToThreeArgs()</td>
+<td class="path" hidden="">testCanCoverZeroToThreeArgs()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">testEmptyTimeZoneStringThrows()</td>
+<td class="path" hidden="">testEmptyTimeZoneStringThrows()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">testExplicitTimeZoneIsIndependentOfJvmDefault()</td>
+<td class="path" hidden="">testExplicitTimeZoneIsIndependentOfJvmDefault()</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
@@ -107,8 +125,17 @@
 <td class="success">100%</td>
 </tr>
 <tr>
-<td class="success">testDateFunctionWithFormat()</td>
-<td class="path" hidden="">testDateFunctionWithFormat()</td>
+<td class="success">testInvalidFormatThrows()</td>
+<td class="path" hidden="">testInvalidFormatThrows()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.001s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">testInvalidFormatWithTimestampAndTimeZoneThrows()</td>
+<td class="path" hidden="">testInvalidFormatWithTimestampAndTimeZoneThrows()</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
@@ -116,12 +143,140 @@
 <td class="success">100%</td>
 </tr>
 <tr>
-<td class="success">testDateFunctionWithFormatAndTimestamp()</td>
-<td class="path" hidden="">testDateFunctionWithFormatAndTimestamp()</td>
+<td class="success">testInvalidFormatWithTimestampThrows()</td>
+<td class="path" hidden="">testInvalidFormatWithTimestampThrows()</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td>0.004s</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">testNoArgsMatchesDateToStringPattern()</td>
+<td class="path" hidden="">testNoArgsMatchesDateToStringPattern()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">testNoArgsReturnsNonEmptyString()</td>
+<td class="path" hidden="">testNoArgsReturnsNonEmptyString()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">testSignatureName()</td>
+<td class="path" hidden="">testSignatureName()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="7w5ashDNUT0/index.html">testTimestampAcrossTimeZones(String, String)</a>
+</td>
+<td class="path" hidden="">testTimestampAcrossTimeZones(String, String)</td>
+<td>9</td>
+<td>0</td>
+<td>0</td>
+<td>0.007s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">testTimeZoneIsCaseSensitive()</td>
+<td class="path" hidden="">testTimeZoneIsCaseSensitive()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.001s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">testUnknownTimeZoneThrows()</td>
+<td class="path" hidden="">testUnknownTimeZoneThrows()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.001s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">testWithDateOnlyFormatTokyoCrossesMidnight()</td>
+<td class="path" hidden="">testWithDateOnlyFormatTokyoCrossesMidnight()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.003s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">testWithExplicitGmtAlias()</td>
+<td class="path" hidden="">testWithExplicitGmtAlias()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">testWithExplicitUtcFullFormat()</td>
+<td class="path" hidden="">testWithExplicitUtcFullFormat()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">testWithExplicitUtcTimeZone()</td>
+<td class="path" hidden="">testWithExplicitUtcTimeZone()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">testWithFormatAndTimestampUsesDefaultTimeZone()</td>
+<td class="path" hidden="">testWithFormatAndTimestampUsesDefaultTimeZone()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.001s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">testWithFormatAndTimestampZero()</td>
+<td class="path" hidden="">testWithFormatAndTimestampZero()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.001s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">testWithFormatHourMinuteHasExpectedShape()</td>
+<td class="path" hidden="">testWithFormatHourMinuteHasExpectedShape()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.001s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">testWithFormatUsesDefaultTimeZone()</td>
+<td class="path" hidden="">testWithFormatUsesDefaultTimeZone()</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.001s</td>
 <td class="success">100%</td>
 </tr>
 </table>
@@ -137,7 +292,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 9.4.1</a> at May 2, 2026, 9:37:42 PM</p>
+<a href="https://www.gradle.org">Gradle 9.4.1</a> at May 3, 2026, 10:28:11 AM</p>
 </div>
 </div>
 </body>

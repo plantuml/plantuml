@@ -3268,11 +3268,10 @@ Total Classes: 38
 "net.sourceforge.plantuml.tim" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.tim.builtin" %lighten("red", 99) {
-Total Classes: 69
+Total Classes: 68
 }
 "net.sourceforge.plantuml.tim.builtin" --> "java.io"
 "net.sourceforge.plantuml.tim.builtin" --> "java.lang"
-"net.sourceforge.plantuml.tim.builtin" --> "java.text"
 "net.sourceforge.plantuml.tim.builtin" --> "java.util"
 "net.sourceforge.plantuml.tim.builtin" --> "net.sourceforge.plantuml.jaws"
 "net.sourceforge.plantuml.tim.builtin" --> "net.sourceforge.plantuml.json"
