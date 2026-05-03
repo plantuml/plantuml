@@ -94,9 +94,9 @@ public class PartitionTile extends GroupingTile {
 
 			@Override
 			public void drawU(UGraphic ug, Area area, Context2D context) {
-				final Style style = getGroupingStart().getUsedStyles()[1];
+				final Style[] styles = getGroupingStart().getUsedStyles();
 				final Display display = Display.create(getGroupingStart().getComment());
-				final TextBlock title = display.create(style.getFontConfiguration(getSkinParam().getIHtmlColorSet()),
+				final TextBlock title = display.create(styles[1].getFontConfiguration(getSkinParam().getIHtmlColorSet()),
 						HorizontalAlignment.LEFT, getSkinParam());
 				final double border1 = getBorder1();
 				final double delta = (getWidth() - title.calculateDimension(stringBounder).getWidth()) / 2;
@@ -105,7 +105,7 @@ public class PartitionTile extends GroupingTile {
 
 				final URectangle rect = URectangle.build(area.getDimensionToUse());
 
-				ug = style.applyStrokeAndLineColor(ug, getSkinParam().getIHtmlColorSet());
+				ug = styles[0].applyStrokeAndLineColor(ug, getSkinParam().getIHtmlColorSet());
 				ug.apply(UTranslate.dx(border1)).draw(rect);
 
 			}
