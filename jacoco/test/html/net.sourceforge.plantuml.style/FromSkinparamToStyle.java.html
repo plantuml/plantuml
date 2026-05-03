@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -261,168 +261,172 @@ public class FromSkinparamToStyle {
 <span class="fc" id="L261">		addConvert(&quot;stereotypeIBorderColor&quot;, PName.LineColor, SName.spotInterface);</span>
 <span class="fc" id="L262">		addConvert(&quot;stereotypeNBackgroundColor&quot;, PName.BackGroundColor, SName.spotAnnotation);</span>
 <span class="fc" id="L263">		addConvert(&quot;stereotypeNBorderColor&quot;, PName.LineColor, SName.spotAnnotation);</span>
-<span class="fc" id="L264">	}</span>
+<span class="fc" id="L264">		addConvert(&quot;stereotypeRBackgroundColor&quot;, PName.BackGroundColor, SName.spotRecord);</span>
+<span class="fc" id="L265">		addConvert(&quot;stereotypeRBorderColor&quot;, PName.LineColor, SName.spotRecord);</span>
+<span class="fc" id="L266">		addConvert(&quot;stereotypeDBackgroundColor&quot;, PName.BackGroundColor, SName.spotDataClass);</span>
+<span class="fc" id="L267">		addConvert(&quot;stereotypeDBorderColor&quot;, PName.LineColor, SName.spotDataClass);</span>
+<span class="fc" id="L268">	}</span>
 
 	private static void addMagic(SName sname) {
-<span class="fc" id="L267">		final String cleanName = sname.name().replace(&quot;_&quot;, &quot;&quot;);</span>
-<span class="fc" id="L268">		addConvert(cleanName + &quot;BackgroundColor&quot;, PName.BackGroundColor, sname);</span>
-<span class="fc" id="L269">		addConvert(cleanName + &quot;BorderColor&quot;, PName.LineColor, sname);</span>
-<span class="fc" id="L270">		addConvert(cleanName + &quot;BorderThickness&quot;, PName.LineThickness, sname);</span>
-<span class="fc" id="L271">		addConvert(cleanName + &quot;RoundCorner&quot;, PName.RoundCorner, sname);</span>
-<span class="fc" id="L272">		addConvert(cleanName + &quot;DiagonalCorner&quot;, PName.DiagonalCorner, sname);</span>
-<span class="fc" id="L273">		addConvert(cleanName + &quot;BorderStyle&quot;, PName.LineStyle, sname);</span>
-<span class="fc" id="L274">		addConFont(cleanName, sname);</span>
-<span class="fc" id="L275">		addConvert(cleanName + &quot;Shadowing&quot;, PName.Shadowing, sname);</span>
+<span class="fc" id="L271">		final String cleanName = sname.name().replace(&quot;_&quot;, &quot;&quot;);</span>
+<span class="fc" id="L272">		addConvert(cleanName + &quot;BackgroundColor&quot;, PName.BackGroundColor, sname);</span>
+<span class="fc" id="L273">		addConvert(cleanName + &quot;BorderColor&quot;, PName.LineColor, sname);</span>
+<span class="fc" id="L274">		addConvert(cleanName + &quot;BorderThickness&quot;, PName.LineThickness, sname);</span>
+<span class="fc" id="L275">		addConvert(cleanName + &quot;RoundCorner&quot;, PName.RoundCorner, sname);</span>
+<span class="fc" id="L276">		addConvert(cleanName + &quot;DiagonalCorner&quot;, PName.DiagonalCorner, sname);</span>
+<span class="fc" id="L277">		addConvert(cleanName + &quot;BorderStyle&quot;, PName.LineStyle, sname);</span>
+<span class="fc" id="L278">		addConFont(cleanName, sname);</span>
+<span class="fc" id="L279">		addConvert(cleanName + &quot;Shadowing&quot;, PName.Shadowing, sname);</span>
 
-<span class="fc" id="L277">		addConvert(cleanName + &quot;StereotypeFontSize&quot;, PName.FontSize, SName.stereotype, sname);</span>
-<span class="fc" id="L278">		addConvert(cleanName + &quot;StereotypeFontStyle&quot;, PName.FontStyle, SName.stereotype, sname);</span>
-<span class="fc" id="L279">		addConvert(cleanName + &quot;StereotypeFontColor&quot;, PName.FontColor, SName.stereotype, sname);</span>
-<span class="fc" id="L280">		addConvert(cleanName + &quot;StereotypeFontName&quot;, PName.FontName, SName.stereotype, sname);</span>
+<span class="fc" id="L281">		addConvert(cleanName + &quot;StereotypeFontSize&quot;, PName.FontSize, SName.stereotype, sname);</span>
+<span class="fc" id="L282">		addConvert(cleanName + &quot;StereotypeFontStyle&quot;, PName.FontStyle, SName.stereotype, sname);</span>
+<span class="fc" id="L283">		addConvert(cleanName + &quot;StereotypeFontColor&quot;, PName.FontColor, SName.stereotype, sname);</span>
+<span class="fc" id="L284">		addConvert(cleanName + &quot;StereotypeFontName&quot;, PName.FontName, SName.stereotype, sname);</span>
 
-<span class="fc" id="L282">	}</span>
+<span class="fc" id="L286">	}</span>
 
-<span class="fc" id="L284">	private final List&lt;Style&gt; styles = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L288">	private final List&lt;Style&gt; styles = new ArrayList&lt;&gt;();</span>
 	private final String stereo;
 	private final String key;
 
-<span class="fc" id="L288">	public FromSkinparamToStyle(String key) {</span>
+<span class="fc" id="L292">	public FromSkinparamToStyle(String key) {</span>
 
-<span class="fc bfc" id="L290" title="All 2 branches covered.">		if (key.contains(&quot;&lt;&lt;&quot;)) {</span>
-<span class="fc" id="L291">			final StringTokenizer st = new StringTokenizer(key, &quot;&lt;&gt;&quot;);</span>
-<span class="fc" id="L292">			this.key = st.nextToken();</span>
-<span class="pc bpc" id="L293" title="1 of 2 branches missed.">			this.stereo = st.hasMoreTokens() ? st.nextToken().trim() : null;</span>
-<span class="fc" id="L294">		} else {</span>
-<span class="fc" id="L295">			this.key = key;</span>
-<span class="fc" id="L296">			this.stereo = null;</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">		if (key.contains(&quot;&lt;&lt;&quot;)) {</span>
+<span class="fc" id="L295">			final StringTokenizer st = new StringTokenizer(key, &quot;&lt;&gt;&quot;);</span>
+<span class="fc" id="L296">			this.key = st.nextToken();</span>
+<span class="pc bpc" id="L297" title="1 of 2 branches missed.">			this.stereo = st.hasMoreTokens() ? st.nextToken().trim() : null;</span>
+<span class="fc" id="L298">		} else {</span>
+<span class="fc" id="L299">			this.key = key;</span>
+<span class="fc" id="L300">			this.stereo = null;</span>
 		}
 
-<span class="fc" id="L299">	}</span>
+<span class="fc" id="L303">	}</span>
 
 	public void convertNow(String value, final AutomaticCounter counter) {
-<span class="fc bfc" id="L302" title="All 2 branches covered.">		if (key.endsWith(&quot;shadowing&quot;)) {</span>
-<span class="pc bpc" id="L303" title="1 of 2 branches missed.">			if (value.equalsIgnoreCase(&quot;false&quot;))</span>
-<span class="fc" id="L304">				value = &quot;0&quot;;</span>
-<span class="nc bnc" id="L305" title="All 2 branches missed.">			else if (value.equalsIgnoreCase(&quot;true&quot;))</span>
-<span class="nc" id="L306">				value = &quot;3&quot;;</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">		if (key.endsWith(&quot;shadowing&quot;)) {</span>
+<span class="pc bpc" id="L307" title="1 of 2 branches missed.">			if (value.equalsIgnoreCase(&quot;false&quot;))</span>
+<span class="fc" id="L308">				value = &quot;0&quot;;</span>
+<span class="nc bnc" id="L309" title="All 2 branches missed.">			else if (value.equalsIgnoreCase(&quot;true&quot;))</span>
+<span class="nc" id="L310">				value = &quot;3&quot;;</span>
 //		} else if (key.equals(&quot;lifelinestrategy&quot;)) {
 //			if (value.equalsIgnoreCase(&quot;solid&quot;))
 //				value = &quot;0&quot;;
-<span class="fc bfc" id="L310" title="All 2 branches covered.">		} else if (key.equals(&quot;hyperlinkunderline&quot;)) {</span>
-<span class="fc bfc" id="L311" title="All 2 branches covered.">			if (value.equalsIgnoreCase(&quot;false&quot;))</span>
-<span class="fc" id="L312">				value = &quot;0&quot;;</span>
-<span class="pc bpc" id="L313" title="1 of 2 branches missed.">			if (value.equalsIgnoreCase(&quot;true&quot;))</span>
-<span class="nc" id="L314">				value = &quot;1&quot;;</span>
+<span class="fc bfc" id="L314" title="All 2 branches covered.">		} else if (key.equals(&quot;hyperlinkunderline&quot;)) {</span>
+<span class="fc bfc" id="L315" title="All 2 branches covered.">			if (value.equalsIgnoreCase(&quot;false&quot;))</span>
+<span class="fc" id="L316">				value = &quot;0&quot;;</span>
+<span class="pc bpc" id="L317" title="1 of 2 branches missed.">			if (value.equalsIgnoreCase(&quot;true&quot;))</span>
+<span class="nc" id="L318">				value = &quot;1&quot;;</span>
 		}
 
-<span class="pc bpc" id="L317" title="1 of 2 branches missed.">		if (value.equalsIgnoreCase(&quot;right:right&quot;))</span>
-<span class="nc" id="L318">			value = &quot;right&quot;;</span>
-<span class="pc bpc" id="L319" title="1 of 2 branches missed.">		if (value.equalsIgnoreCase(&quot;dotted&quot;))</span>
-<span class="nc" id="L320">			value = &quot;1;3&quot;;</span>
-<span class="fc bfc" id="L321" title="All 2 branches covered.">		if (value.equalsIgnoreCase(&quot;dashed&quot;))</span>
-<span class="fc" id="L322">			value = &quot;7;7&quot;;</span>
+<span class="pc bpc" id="L321" title="1 of 2 branches missed.">		if (value.equalsIgnoreCase(&quot;right:right&quot;))</span>
+<span class="nc" id="L322">			value = &quot;right&quot;;</span>
+<span class="pc bpc" id="L323" title="1 of 2 branches missed.">		if (value.equalsIgnoreCase(&quot;dotted&quot;))</span>
+<span class="nc" id="L324">			value = &quot;1;3&quot;;</span>
+<span class="fc bfc" id="L325" title="All 2 branches covered.">		if (value.equalsIgnoreCase(&quot;dashed&quot;))</span>
+<span class="fc" id="L326">			value = &quot;7;7&quot;;</span>
 
-<span class="fc" id="L324">		final List&lt;Data&gt; datas = knowledge.get(key.toLowerCase());</span>
+<span class="fc" id="L328">		final List&lt;Data&gt; datas = knowledge.get(key.toLowerCase());</span>
 
-<span class="fc bfc" id="L326" title="All 2 branches covered.">		if (datas == null) {</span>
-<span class="fc bfc" id="L327" title="All 2 branches covered.">			if (key.equalsIgnoreCase(&quot;shadowing&quot;))</span>
-<span class="fc" id="L328">				addStyle(PName.Shadowing, getShadowingValue(value, counter), SName.root);</span>
-<span class="pc bpc" id="L329" title="1 of 2 branches missed.">			else if (key.equalsIgnoreCase(&quot;noteshadowing&quot;))</span>
-<span class="nc" id="L330">				addStyle(PName.Shadowing, getShadowingValue(value, counter), SName.root, SName.note);</span>
-<span class="fc" id="L331">			return;</span>
+<span class="fc bfc" id="L330" title="All 2 branches covered.">		if (datas == null) {</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">			if (key.equalsIgnoreCase(&quot;shadowing&quot;))</span>
+<span class="fc" id="L332">				addStyle(PName.Shadowing, getShadowingValue(value, counter), SName.root);</span>
+<span class="pc bpc" id="L333" title="1 of 2 branches missed.">			else if (key.equalsIgnoreCase(&quot;noteshadowing&quot;))</span>
+<span class="nc" id="L334">				addStyle(PName.Shadowing, getShadowingValue(value, counter), SName.root, SName.note);</span>
+<span class="fc" id="L335">			return;</span>
 		}
 
-<span class="fc" id="L334">		final boolean complex = isComplexValue(value);</span>
-<span class="fc bfc" id="L335" title="All 2 branches covered.">		if (complex) {</span>
-<span class="pc bpc" id="L336" title="1 of 2 branches missed.">			if (value.contains(&quot;;&quot;)) {</span>
-<span class="pc bpc" id="L337" title="1 of 2 branches missed.">				if (value.startsWith(&quot;;&quot;))</span>
-<span class="nc" id="L338">					value = &quot; &quot; + value;</span>
-<span class="fc" id="L339">				final StringTokenizer st = new StringTokenizer(value, &quot;;&quot;);</span>
-<span class="fc" id="L340">				value = st.nextToken();</span>
-<span class="fc bfc" id="L341" title="All 2 branches covered.">				while (st.hasMoreTokens()) {</span>
-<span class="fc" id="L342">					final String read = st.nextToken();</span>
-<span class="fc" id="L343">					readValue(read, datas, counter);</span>
-<span class="fc" id="L344">				}</span>
-<span class="fc" id="L345">			} else {</span>
-<span class="nc" id="L346">				readValue(value, datas, counter);</span>
-<span class="nc" id="L347">				return;</span>
+<span class="fc" id="L338">		final boolean complex = isComplexValue(value);</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">		if (complex) {</span>
+<span class="pc bpc" id="L340" title="1 of 2 branches missed.">			if (value.contains(&quot;;&quot;)) {</span>
+<span class="pc bpc" id="L341" title="1 of 2 branches missed.">				if (value.startsWith(&quot;;&quot;))</span>
+<span class="nc" id="L342">					value = &quot; &quot; + value;</span>
+<span class="fc" id="L343">				final StringTokenizer st = new StringTokenizer(value, &quot;;&quot;);</span>
+<span class="fc" id="L344">				value = st.nextToken();</span>
+<span class="fc bfc" id="L345" title="All 2 branches covered.">				while (st.hasMoreTokens()) {</span>
+<span class="fc" id="L346">					final String read = st.nextToken();</span>
+<span class="fc" id="L347">					readValue(read, datas, counter);</span>
+<span class="fc" id="L348">				}</span>
+<span class="fc" id="L349">			} else {</span>
+<span class="nc" id="L350">				readValue(value, datas, counter);</span>
+<span class="nc" id="L351">				return;</span>
 			}
 		}
 
-<span class="pc bpc" id="L351" title="1 of 2 branches missed.">		if (&quot; &quot;.equals(value) == false)</span>
-<span class="fc bfc" id="L352" title="All 2 branches covered.">			for (Data data : datas)</span>
-<span class="fc" id="L353">				addStyle(data.propertyName, ValueImpl.regular(value, counter), data.styleNames);</span>
+<span class="pc bpc" id="L355" title="1 of 2 branches missed.">		if (&quot; &quot;.equals(value) == false)</span>
+<span class="fc bfc" id="L356" title="All 2 branches covered.">			for (Data data : datas)</span>
+<span class="fc" id="L357">				addStyle(data.propertyName, ValueImpl.regular(value, counter), data.styleNames);</span>
 
-<span class="fc" id="L355">	}</span>
+<span class="fc" id="L359">	}</span>
 
 	private void readValue(final String read, final List&lt;Data&gt; datas, final AutomaticCounter counter) {
-<span class="pc bpc" id="L358" title="1 of 2 branches missed.">		if (read.startsWith(&quot;text:&quot;)) {</span>
-<span class="nc" id="L359">			final String value2 = read.split(&quot;:&quot;)[1];</span>
-<span class="nc bnc" id="L360" title="All 2 branches missed.">			for (Data data : datas)</span>
-<span class="nc" id="L361">				addStyle(PName.FontColor, ValueImpl.regular(value2, counter), data.styleNames);</span>
-<span class="pc bpc" id="L362" title="1 of 2 branches missed.">		} else if (read.startsWith(&quot;line.dotted&quot;)) {</span>
-<span class="nc bnc" id="L363" title="All 2 branches missed.">			for (Data data : datas)</span>
-<span class="nc" id="L364">				addStyle(PName.LineStyle, ValueImpl.regular(&quot;1;3&quot;, counter), data.styleNames);</span>
-<span class="pc bpc" id="L365" title="1 of 2 branches missed.">		} else if (read.startsWith(&quot;line.dashed&quot;)) {</span>
-<span class="nc bnc" id="L366" title="All 2 branches missed.">			for (Data data : datas)</span>
-<span class="nc" id="L367">				addStyle(PName.LineStyle, ValueImpl.regular(&quot;7;7&quot;, counter), data.styleNames);</span>
-<span class="pc bpc" id="L368" title="1 of 2 branches missed.">		} else if (read.toLowerCase().contains(&quot;bold&quot;)) {</span>
-<span class="nc bnc" id="L369" title="All 2 branches missed.">			for (Data data : datas)</span>
-<span class="nc" id="L370">				addStyle(PName.LineThickness, ValueImpl.regular(&quot;2&quot;, counter), data.styleNames);</span>
+<span class="pc bpc" id="L362" title="1 of 2 branches missed.">		if (read.startsWith(&quot;text:&quot;)) {</span>
+<span class="nc" id="L363">			final String value2 = read.split(&quot;:&quot;)[1];</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">			for (Data data : datas)</span>
+<span class="nc" id="L365">				addStyle(PName.FontColor, ValueImpl.regular(value2, counter), data.styleNames);</span>
+<span class="pc bpc" id="L366" title="1 of 2 branches missed.">		} else if (read.startsWith(&quot;line.dotted&quot;)) {</span>
+<span class="nc bnc" id="L367" title="All 2 branches missed.">			for (Data data : datas)</span>
+<span class="nc" id="L368">				addStyle(PName.LineStyle, ValueImpl.regular(&quot;1;3&quot;, counter), data.styleNames);</span>
+<span class="pc bpc" id="L369" title="1 of 2 branches missed.">		} else if (read.startsWith(&quot;line.dashed&quot;)) {</span>
+<span class="nc bnc" id="L370" title="All 2 branches missed.">			for (Data data : datas)</span>
+<span class="nc" id="L371">				addStyle(PName.LineStyle, ValueImpl.regular(&quot;7;7&quot;, counter), data.styleNames);</span>
+<span class="pc bpc" id="L372" title="1 of 2 branches missed.">		} else if (read.toLowerCase().contains(&quot;bold&quot;)) {</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">			for (Data data : datas)</span>
+<span class="nc" id="L374">				addStyle(PName.LineThickness, ValueImpl.regular(&quot;2&quot;, counter), data.styleNames);</span>
 		}
-<span class="fc" id="L372">	}</span>
+<span class="fc" id="L376">	}</span>
 
 	private boolean isComplexValue(String value) {
-<span class="fc bfc" id="L375" title="All 2 branches covered.">		if (value.contains(&quot;;&quot;))</span>
-<span class="fc" id="L376">			return true;</span>
-<span class="pc bpc" id="L377" title="1 of 2 branches missed.">		if (value.startsWith(&quot;text:&quot;))</span>
-<span class="nc" id="L378">			return true;</span>
-<span class="fc" id="L379">		return false;</span>
+<span class="fc bfc" id="L379" title="All 2 branches covered.">		if (value.contains(&quot;;&quot;))</span>
+<span class="fc" id="L380">			return true;</span>
+<span class="pc bpc" id="L381" title="1 of 2 branches missed.">		if (value.startsWith(&quot;text:&quot;))</span>
+<span class="nc" id="L382">			return true;</span>
+<span class="fc" id="L383">		return false;</span>
 	}
 
 	private ValueImpl getShadowingValue(final String value, final AutomaticCounter counter) {
-<span class="pc bpc" id="L383" title="2 of 4 branches missed.">		if (value.equalsIgnoreCase(&quot;false&quot;) || value.equalsIgnoreCase(&quot;no&quot;))</span>
-<span class="nc" id="L384">			return ValueImpl.regular(&quot;0&quot;, counter);</span>
+<span class="pc bpc" id="L387" title="2 of 4 branches missed.">		if (value.equalsIgnoreCase(&quot;false&quot;) || value.equalsIgnoreCase(&quot;no&quot;))</span>
+<span class="nc" id="L388">			return ValueImpl.regular(&quot;0&quot;, counter);</span>
 
-<span class="pc bpc" id="L386" title="2 of 4 branches missed.">		if (value.equalsIgnoreCase(&quot;true&quot;) || value.equalsIgnoreCase(&quot;yes&quot;))</span>
-<span class="nc" id="L387">			return ValueImpl.regular(&quot;3&quot;, counter);</span>
+<span class="pc bpc" id="L390" title="2 of 4 branches missed.">		if (value.equalsIgnoreCase(&quot;true&quot;) || value.equalsIgnoreCase(&quot;yes&quot;))</span>
+<span class="nc" id="L391">			return ValueImpl.regular(&quot;3&quot;, counter);</span>
 
-<span class="fc" id="L389">		return ValueImpl.regular(value, counter);</span>
+<span class="fc" id="L393">		return ValueImpl.regular(value, counter);</span>
 	}
 
 	private void addStyle(PName propertyName, Value value, SName... styleNames) {
-<span class="fc" id="L393">		Map&lt;PName, Value&gt; map = new EnumMap&lt;PName, Value&gt;(PName.class);</span>
-<span class="fc" id="L394">		map.put(propertyName, value);</span>
-<span class="fc" id="L395">		StyleSignatureBasic sig = StyleSignatureBasic.of(styleNames);</span>
-<span class="fc bfc" id="L396" title="All 2 branches covered.">		if (stereo != null) {</span>
-<span class="fc" id="L397">			map = StyleLoader.addPriorityForStereotype(map);</span>
-<span class="fc bfc" id="L398" title="All 2 branches covered.">			for (String s : stereo.split(&quot;\\&amp;&quot;))</span>
-<span class="fc" id="L399">				sig = sig.addStereotype(s);</span>
+<span class="fc" id="L397">		Map&lt;PName, Value&gt; map = new EnumMap&lt;PName, Value&gt;(PName.class);</span>
+<span class="fc" id="L398">		map.put(propertyName, value);</span>
+<span class="fc" id="L399">		StyleSignatureBasic sig = StyleSignatureBasic.of(styleNames);</span>
+<span class="fc bfc" id="L400" title="All 2 branches covered.">		if (stereo != null) {</span>
+<span class="fc" id="L401">			map = StyleLoader.addPriorityForStereotype(map);</span>
+<span class="fc bfc" id="L402" title="All 2 branches covered.">			for (String s : stereo.split(&quot;\\&amp;&quot;))</span>
+<span class="fc" id="L403">				sig = sig.addStereotype(s);</span>
 		}
 
-<span class="fc" id="L402">		final Style style = new Style(sig, map);</span>
-<span class="fc" id="L403">		styles.add(style);</span>
-<span class="fc" id="L404">	}</span>
+<span class="fc" id="L406">		final Style style = new Style(sig, map);</span>
+<span class="fc" id="L407">		styles.add(style);</span>
+<span class="fc" id="L408">	}</span>
 
 	public List&lt;Style&gt; getStyles() {
-<span class="fc" id="L407">		return Collections.unmodifiableList(styles);</span>
+<span class="fc" id="L411">		return Collections.unmodifiableList(styles);</span>
 	}
 
 	private static void addConvert(String skinparam, PName propertyName, SName... styleNames) {
-<span class="fc" id="L411">		skinparam = skinparam.toLowerCase();</span>
-<span class="fc" id="L412">		List&lt;Data&gt; datas = knowledge.get(skinparam);</span>
-<span class="fc bfc" id="L413" title="All 2 branches covered.">		if (datas == null) {</span>
-<span class="fc" id="L414">			datas = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L415">			knowledge.put(skinparam, datas);</span>
+<span class="fc" id="L415">		skinparam = skinparam.toLowerCase();</span>
+<span class="fc" id="L416">		List&lt;Data&gt; datas = knowledge.get(skinparam);</span>
+<span class="fc bfc" id="L417" title="All 2 branches covered.">		if (datas == null) {</span>
+<span class="fc" id="L418">			datas = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L419">			knowledge.put(skinparam, datas);</span>
 		}
-<span class="fc" id="L417">		datas.add(new Data(styleNames, propertyName));</span>
-<span class="fc" id="L418">	}</span>
+<span class="fc" id="L421">		datas.add(new Data(styleNames, propertyName));</span>
+<span class="fc" id="L422">	}</span>
 
 	private static void addConFont(String skinparam, SName... styleNames) {
-<span class="fc" id="L421">		addConvert(skinparam + &quot;FontSize&quot;, PName.FontSize, styleNames);</span>
-<span class="fc" id="L422">		addConvert(skinparam + &quot;FontStyle&quot;, PName.FontStyle, styleNames);</span>
-<span class="fc" id="L423">		addConvert(skinparam + &quot;FontColor&quot;, PName.FontColor, styleNames);</span>
-<span class="fc" id="L424">		addConvert(skinparam + &quot;FontName&quot;, PName.FontName, styleNames);</span>
-<span class="fc" id="L425">	}</span>
+<span class="fc" id="L425">		addConvert(skinparam + &quot;FontSize&quot;, PName.FontSize, styleNames);</span>
+<span class="fc" id="L426">		addConvert(skinparam + &quot;FontStyle&quot;, PName.FontStyle, styleNames);</span>
+<span class="fc" id="L427">		addConvert(skinparam + &quot;FontColor&quot;, PName.FontColor, styleNames);</span>
+<span class="fc" id="L428">		addConvert(skinparam + &quot;FontName&quot;, PName.FontName, styleNames);</span>
+<span class="fc" id="L429">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

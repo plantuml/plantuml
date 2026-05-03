@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -209,13 +209,13 @@ import net.sourceforge.plantuml.utils.Position;
 <span class="pc bpc" id="L209" title="1 of 2 branches missed.">			if (newType == this.leafType)</span>
 <span class="fc" id="L210">				return true;</span>
 
-<span class="nc bnc" id="L212" title="All 10 branches missed.">			if (leafType != LeafType.ANNOTATION &amp;&amp; leafType != LeafType.ABSTRACT_CLASS &amp;&amp; leafType != LeafType.CLASS</span>
-					&amp;&amp; leafType != LeafType.ENUM &amp;&amp; leafType != LeafType.INTERFACE) {
+<span class="nc bnc" id="L212" title="All 14 branches missed.">			if (leafType != LeafType.ANNOTATION &amp;&amp; leafType != LeafType.ABSTRACT_CLASS &amp;&amp; leafType != LeafType.CLASS</span>
+					&amp;&amp; leafType != LeafType.ENUM &amp;&amp; leafType != LeafType.INTERFACE &amp;&amp; leafType != LeafType.RECORD &amp;&amp; leafType != LeafType.DATACLASS) {
 <span class="nc" id="L214">				return false;</span>
 				// throw new IllegalArgumentException(&quot;type=&quot; + leafType);
 			}
-<span class="nc bnc" id="L217" title="All 12 branches missed.">			if (newType != LeafType.ANNOTATION &amp;&amp; newType != LeafType.ABSTRACT_CLASS &amp;&amp; newType != LeafType.CLASS</span>
-					&amp;&amp; newType != LeafType.ENUM &amp;&amp; newType != LeafType.INTERFACE &amp;&amp; newType != LeafType.OBJECT) {
+<span class="nc bnc" id="L217" title="All 16 branches missed.">			if (newType != LeafType.ANNOTATION &amp;&amp; newType != LeafType.ABSTRACT_CLASS &amp;&amp; newType != LeafType.CLASS</span>
+					&amp;&amp; newType != LeafType.ENUM &amp;&amp; newType != LeafType.INTERFACE &amp;&amp; newType != LeafType.RECORD &amp;&amp; newType != LeafType.DATACLASS &amp;&amp; newType != LeafType.OBJECT) {
 <span class="nc" id="L219">				return false;</span>
 				// throw new IllegalArgumentException(&quot;newtype=&quot; + newType);
 			}

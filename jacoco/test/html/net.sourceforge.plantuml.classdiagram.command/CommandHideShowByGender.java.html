@@ -143,109 +143,113 @@ public class CommandHideShowByGender extends SingleLineCommand2&lt;TitledDiagram
 <span class="nc" id="L143">			gender = EntityGenderUtils.byEntityType(LeafType.METACLASS);</span>
 <span class="nc bnc" id="L144" title="All 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;stereotype&quot;))</span>
 <span class="nc" id="L145">			gender = EntityGenderUtils.byEntityType(LeafType.STEREOTYPE);</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">		else if (arg1.startsWith(&quot;&lt;&lt;&quot;))</span>
-<span class="nc" id="L147">			gender = EntityGenderUtils.byStereotype(arg1);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;record&quot;))</span>
+<span class="nc" id="L147">			gender = EntityGenderUtils.byEntityType(LeafType.RECORD);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;data&quot;))</span>
+<span class="nc" id="L149">			gender = EntityGenderUtils.byEntityType(LeafType.DATACLASS);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		else if (arg1.startsWith(&quot;&lt;&lt;&quot;))</span>
+<span class="nc" id="L151">			gender = EntityGenderUtils.byStereotype(arg1);</span>
 		else {
-<span class="nc" id="L149">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(arg1));</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">			if (quark.getData() == null)</span>
-<span class="nc" id="L151">				return CommandExecutionResult.error(&quot;No such element &quot; + quark.getName());</span>
-<span class="nc" id="L152">			final Entity entity = quark.getData();</span>
-<span class="nc" id="L153">			gender = EntityGenderUtils.byEntityAlone(entity);</span>
+<span class="nc" id="L153">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(arg1));</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">			if (quark.getData() == null)</span>
+<span class="nc" id="L155">				return CommandExecutionResult.error(&quot;No such element &quot; + quark.getName());</span>
+<span class="nc" id="L156">			final Entity entity = quark.getData();</span>
+<span class="nc" id="L157">			gender = EntityGenderUtils.byEntityAlone(entity);</span>
 		}
 
-<span class="nc" id="L156">		diagram.hideOrShow(gender, portion, arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
-<span class="nc" id="L157">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L160">		diagram.hideOrShow(gender, portion, arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
+<span class="nc" id="L161">		return CommandExecutionResult.ok();</span>
 	}
 
 	private CommandExecutionResult executeClassDiagram(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
 
-<span class="fc" id="L162">		final EntityPortion portion = getEntityPortion(arg.get(&quot;PORTION&quot;, 0));</span>
+<span class="fc" id="L166">		final EntityPortion portion = getEntityPortion(arg.get(&quot;PORTION&quot;, 0));</span>
 
-<span class="fc" id="L164">		EntityGender gender = null;</span>
-<span class="fc" id="L165">		String arg1 = arg.get(&quot;GENDER&quot;, 0);</span>
-<span class="fc bfc" id="L166" title="All 2 branches covered.">		if (arg1 == null)</span>
-<span class="fc" id="L167">			gender = EntityGenderUtils.all();</span>
-<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;class&quot;))</span>
-<span class="nc" id="L169">			gender = EntityGenderUtils.byEntityType(LeafType.CLASS);</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;object&quot;))</span>
-<span class="nc" id="L171">			gender = EntityGenderUtils.byEntityType(LeafType.OBJECT);</span>
-<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;interface&quot;))</span>
-<span class="nc" id="L173">			gender = EntityGenderUtils.byEntityType(LeafType.INTERFACE);</span>
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;enum&quot;))</span>
-<span class="nc" id="L175">			gender = EntityGenderUtils.byEntityType(LeafType.ENUM);</span>
-<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;abstract&quot;))</span>
-<span class="nc" id="L177">			gender = EntityGenderUtils.byEntityType(LeafType.ABSTRACT_CLASS);</span>
-<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;annotation&quot;))</span>
-<span class="nc" id="L179">			gender = EntityGenderUtils.byEntityType(LeafType.ANNOTATION);</span>
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;protocol&quot;))</span>
-<span class="nc" id="L181">			gender = EntityGenderUtils.byEntityType(LeafType.PROTOCOL);</span>
-<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;struct&quot;))</span>
-<span class="nc" id="L183">			gender = EntityGenderUtils.byEntityType(LeafType.STRUCT);</span>
-<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;exception&quot;))</span>
-<span class="nc" id="L185">			gender = EntityGenderUtils.byEntityType(LeafType.EXCEPTION);</span>
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;metaclass&quot;))</span>
-<span class="nc" id="L187">			gender = EntityGenderUtils.byEntityType(LeafType.METACLASS);</span>
-<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;stereotype&quot;))</span>
-<span class="nc" id="L189">			gender = EntityGenderUtils.byEntityType(LeafType.STEREOTYPE);</span>
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;data&quot;))</span>
-<span class="nc" id="L191">			gender = EntityGenderUtils.byEntityType(LeafType.DATACLASS);</span>
-<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;record&quot;))</span>
-<span class="nc" id="L193">			gender = EntityGenderUtils.byEntityType(LeafType.RECORD);</span>
-<span class="fc bfc" id="L194" title="All 2 branches covered.">		else if (arg1.startsWith(&quot;&lt;&lt;&quot;))</span>
-<span class="fc" id="L195">			gender = EntityGenderUtils.byStereotype(arg1);</span>
+<span class="fc" id="L168">		EntityGender gender = null;</span>
+<span class="fc" id="L169">		String arg1 = arg.get(&quot;GENDER&quot;, 0);</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (arg1 == null)</span>
+<span class="fc" id="L171">			gender = EntityGenderUtils.all();</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;class&quot;))</span>
+<span class="nc" id="L173">			gender = EntityGenderUtils.byEntityType(LeafType.CLASS);</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;object&quot;))</span>
+<span class="nc" id="L175">			gender = EntityGenderUtils.byEntityType(LeafType.OBJECT);</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;interface&quot;))</span>
+<span class="nc" id="L177">			gender = EntityGenderUtils.byEntityType(LeafType.INTERFACE);</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;enum&quot;))</span>
+<span class="nc" id="L179">			gender = EntityGenderUtils.byEntityType(LeafType.ENUM);</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;abstract&quot;))</span>
+<span class="nc" id="L181">			gender = EntityGenderUtils.byEntityType(LeafType.ABSTRACT_CLASS);</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;annotation&quot;))</span>
+<span class="nc" id="L183">			gender = EntityGenderUtils.byEntityType(LeafType.ANNOTATION);</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;protocol&quot;))</span>
+<span class="nc" id="L185">			gender = EntityGenderUtils.byEntityType(LeafType.PROTOCOL);</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;struct&quot;))</span>
+<span class="nc" id="L187">			gender = EntityGenderUtils.byEntityType(LeafType.STRUCT);</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;exception&quot;))</span>
+<span class="nc" id="L189">			gender = EntityGenderUtils.byEntityType(LeafType.EXCEPTION);</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;metaclass&quot;))</span>
+<span class="nc" id="L191">			gender = EntityGenderUtils.byEntityType(LeafType.METACLASS);</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;stereotype&quot;))</span>
+<span class="nc" id="L193">			gender = EntityGenderUtils.byEntityType(LeafType.STEREOTYPE);</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;dataclass&quot;))</span>
+<span class="nc" id="L195">			gender = EntityGenderUtils.byEntityType(LeafType.DATACLASS);</span>
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">		else if (arg1.equalsIgnoreCase(&quot;record&quot;))</span>
+<span class="nc" id="L197">			gender = EntityGenderUtils.byEntityType(LeafType.RECORD);</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">		else if (arg1.startsWith(&quot;&lt;&lt;&quot;))</span>
+<span class="fc" id="L199">			gender = EntityGenderUtils.byStereotype(arg1);</span>
 		else {
-<span class="fc" id="L197">			arg1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg1);</span>
-<span class="fc" id="L198">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(arg1));</span>
-<span class="pc bpc" id="L199" title="1 of 2 branches missed.">			if (quark == null)</span>
+<span class="fc" id="L201">			arg1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg1);</span>
+<span class="fc" id="L202">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(arg1));</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">			if (quark == null)</span>
 				// Not sure it could really happens... to be checked
-<span class="nc" id="L201">				return CommandExecutionResult.error(&quot;No such quark &quot; + arg1);</span>
+<span class="nc" id="L205">				return CommandExecutionResult.error(&quot;No such quark &quot; + arg1);</span>
 
-<span class="pc bpc" id="L203" title="1 of 2 branches missed.">			if (portion == EntityPortion.METHOD)</span>
-<span class="fc" id="L204">				gender = EntityGenderUtils.byClassName(arg1);</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">			if (portion == EntityPortion.METHOD)</span>
+<span class="fc" id="L208">				gender = EntityGenderUtils.byClassName(arg1);</span>
 			else {
-<span class="nc" id="L206">				Entity entity = quark.getData();</span>
-<span class="nc bnc" id="L207" title="All 2 branches missed.">				if (entity == null)</span>
-<span class="nc" id="L208">					return CommandExecutionResult.error(&quot;No such element &quot; + quark.getName());</span>
-<span class="nc" id="L209">				gender = EntityGenderUtils.byEntityAlone(entity);</span>
+<span class="nc" id="L210">				Entity entity = quark.getData();</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">				if (entity == null)</span>
+<span class="nc" id="L212">					return CommandExecutionResult.error(&quot;No such element &quot; + quark.getName());</span>
+<span class="nc" id="L213">				gender = EntityGenderUtils.byEntityAlone(entity);</span>
 			}
 		}
-<span class="pc bpc" id="L212" title="1 of 2 branches missed.">		final boolean empty = arg.get(&quot;EMPTY&quot;, 0) != null;</span>
-<span class="pc bpc" id="L213" title="3 of 4 branches missed.">		final boolean emptyMembers = empty &amp;&amp; portion == EntityPortion.MEMBER;</span>
-<span class="pc bpc" id="L214" title="3 of 4 branches missed.">		if (empty &amp;&amp; !emptyMembers)</span>
-<span class="nc" id="L215">			gender = EntityGenderUtils.and(gender, emptyByGender(portion));</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">		final boolean empty = arg.get(&quot;EMPTY&quot;, 0) != null;</span>
+<span class="pc bpc" id="L217" title="3 of 4 branches missed.">		final boolean emptyMembers = empty &amp;&amp; portion == EntityPortion.MEMBER;</span>
+<span class="pc bpc" id="L218" title="3 of 4 branches missed.">		if (empty &amp;&amp; !emptyMembers)</span>
+<span class="nc" id="L219">			gender = EntityGenderUtils.and(gender, emptyByGender(portion));</span>
 
-<span class="pc bpc" id="L217" title="1 of 2 branches missed.">		if (!diagram.getCurrentGroup().isRoot())</span>
-<span class="nc" id="L218">			gender = EntityGenderUtils.and(gender, EntityGenderUtils.byPackage(diagram.getCurrentGroup()));</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (!diagram.getCurrentGroup().isRoot())</span>
+<span class="nc" id="L222">			gender = EntityGenderUtils.and(gender, EntityGenderUtils.byPackage(diagram.getCurrentGroup()));</span>
 
-<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (emptyMembers) {</span>
-<span class="nc" id="L221">			diagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.FIELD)), EntityPortion.FIELD,</span>
-<span class="nc" id="L222">					arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
-<span class="nc" id="L223">			diagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.METHOD)), EntityPortion.METHOD,</span>
-<span class="nc" id="L224">					arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">		if (emptyMembers) {</span>
+<span class="nc" id="L225">			diagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.FIELD)), EntityPortion.FIELD,</span>
+<span class="nc" id="L226">					arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
+<span class="nc" id="L227">			diagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.METHOD)), EntityPortion.METHOD,</span>
+<span class="nc" id="L228">					arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
 		} else
-<span class="fc" id="L226">			diagram.hideOrShow(gender, portion, arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
+<span class="fc" id="L230">			diagram.hideOrShow(gender, portion, arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
 
-<span class="fc" id="L228">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L232">		return CommandExecutionResult.ok();</span>
 	}
 
 	private EntityPortion getEntityPortion(String s) {
-<span class="fc" id="L232">		final String sub = StringUtils.goLowerCase(s.substring(0, 3));</span>
-<span class="fc bfc" id="L233" title="All 2 branches covered.">		if (sub.equals(&quot;met&quot;))</span>
-<span class="fc" id="L234">			return EntityPortion.METHOD;</span>
+<span class="fc" id="L236">		final String sub = StringUtils.goLowerCase(s.substring(0, 3));</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">		if (sub.equals(&quot;met&quot;))</span>
+<span class="fc" id="L238">			return EntityPortion.METHOD;</span>
 
-<span class="fc bfc" id="L236" title="All 2 branches covered.">		if (sub.equals(&quot;mem&quot;))</span>
-<span class="fc" id="L237">			return EntityPortion.MEMBER;</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">		if (sub.equals(&quot;mem&quot;))</span>
+<span class="fc" id="L241">			return EntityPortion.MEMBER;</span>
 
-<span class="pc bpc" id="L239" title="2 of 4 branches missed.">		if (sub.equals(&quot;att&quot;) || sub.equals(&quot;fie&quot;))</span>
-<span class="nc" id="L240">			return EntityPortion.FIELD;</span>
+<span class="pc bpc" id="L243" title="2 of 4 branches missed.">		if (sub.equals(&quot;att&quot;) || sub.equals(&quot;fie&quot;))</span>
+<span class="nc" id="L244">			return EntityPortion.FIELD;</span>
 
-<span class="pc bpc" id="L242" title="1 of 2 branches missed.">		if (sub.equals(&quot;cir&quot;))</span>
-<span class="nc" id="L243">			return EntityPortion.CIRCLED_CHARACTER;</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">		if (sub.equals(&quot;cir&quot;))</span>
+<span class="nc" id="L247">			return EntityPortion.CIRCLED_CHARACTER;</span>
 
-<span class="pc bpc" id="L245" title="1 of 2 branches missed.">		if (sub.equals(&quot;ste&quot;))</span>
-<span class="fc" id="L246">			return EntityPortion.STEREOTYPE;</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">		if (sub.equals(&quot;ste&quot;))</span>
+<span class="fc" id="L250">			return EntityPortion.STEREOTYPE;</span>
 
-<span class="nc" id="L248">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L252">		throw new IllegalArgumentException();</span>
 	}
 
 }
