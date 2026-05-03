@@ -55,11 +55,15 @@ public abstract class Grouping extends AbstractEvent implements Event, WithStyle
 	final private Style style;
 	final private Style styleHeader;
 
-	public StyleSignatureBasic getStyleSignature() {
+	final public StyleSignatureBasic getStyleSignature() {
+		if (type == GroupingType.START_PARTITION)
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.partition);
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.group);
 	}
 
-	private StyleSignatureBasic getHeaderStyleDefinition() {
+	final private StyleSignatureBasic getHeaderStyleDefinition() {
+		if (type == GroupingType.START_PARTITION)
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.partitionHeader);
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.groupHeader);
 	}
 

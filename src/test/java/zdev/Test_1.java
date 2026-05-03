@@ -22,33 +22,42 @@ https://github.com/plantuml/plantuml/issues/2679
 
 
 @startuml
-!pragma teoz true
-
 <style>
-sequenceDiagram {
-  partition {
-    title {
-      FontColor red
-      FontSize 16
-      FontStyle bold
-    }
-  }
+partition {
+  LineColor green
+  LineStyle 5
+  BackgroundColor lightCyan
+  LineThickness 3
+  ArrowThickness 0.5
+  FontName Arial Narrow
+  FontColor red
+  FontSize 11
+  FontStyle regular
+  RoundCorner 30
+}
+partitionHeader {
+  FontStyle plain
+  BackGroundColor palegreen
+  LineColor blue
+  LineStyle 2
 }
 </style>
+!pragma teoz
+participant a
 
-participant A
-participant B
-
-partition "My Partition"
-
-A -> B: hello
-B --> A: world
+partition p1
+b -> c: msg
+c --> b: OK
+note right: Some right note
 end
 
+partition p2
+a -> b: msg
+note left: Some left note
+end
 @enduml
-
  */
-public class Test_0 {
+public class Test_1 {
 
 	protected File getJavaFile() {
 		final String name = getClass().getName();
