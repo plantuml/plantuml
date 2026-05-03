@@ -28,13 +28,11 @@ partition {
   LineStyle 5
   BackgroundColor lightCyan
   LineThickness 3
-  ArrowThickness 0.5
-  FontName Arial Narrow
   RoundCorner 30
   title {
     BackGroundColor palegreen
     FontColor red
-    FontSize 11
+    FontSize 20
     FontStyle bold
   }
 }

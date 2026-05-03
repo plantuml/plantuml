@@ -128,7 +128,6 @@ public enum SName {
 	package_, //
 	participant, //
 	partition, //
-	partitionHeader, //
 	person, //
 	port, //
 	process, //
