@@ -29,7 +29,7 @@ partition {
   BackgroundColor lightCyan
   LineThickness 3
   RoundCorner 30
-  title {
+  header {
     BackGroundColor palegreen
     FontColor red
     FontSize 20
