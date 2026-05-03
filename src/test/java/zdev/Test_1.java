@@ -30,16 +30,13 @@ partition {
   LineThickness 3
   ArrowThickness 0.5
   FontName Arial Narrow
-  FontColor red
-  FontSize 11
-  FontStyle regular
   RoundCorner 30
-}
-partitionHeader {
-  FontStyle plain
-  BackGroundColor palegreen
-  LineColor blue
-  LineStyle 2
+  title {
+    BackGroundColor palegreen
+    FontColor red
+    FontSize 11
+    FontStyle bold
+  }
 }
 </style>
 !pragma teoz
