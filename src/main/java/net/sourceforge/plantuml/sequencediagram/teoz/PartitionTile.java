@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.sequencediagram.GroupingStart;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 
@@ -96,14 +97,16 @@ public class PartitionTile extends GroupingTile {
 			public void drawU(UGraphic ug, Area area, Context2D context) {
 				final Style[] styles = getGroupingStart().getUsedStyles();
 				final Display display = Display.create(getGroupingStart().getComment());
-				final TextBlock title = display.create(styles[1].getFontConfiguration(getSkinParam().getIHtmlColorSet()),
-						HorizontalAlignment.LEFT, getSkinParam());
+				final TextBlock title = display.create(
+						styles[1].getFontConfiguration(getSkinParam().getIHtmlColorSet()), HorizontalAlignment.LEFT,
+						getSkinParam());
 				final double border1 = getBorder1();
 				final double delta = (getWidth() - title.calculateDimension(stringBounder).getWidth()) / 2;
 
 				title.drawU(ug.apply(UTranslate.dx(border1 + delta)));
 
-				final URectangle rect = URectangle.build(area.getDimensionToUse());
+				final double roundCorner = styles[0].value(PName.RoundCorner).asDouble();
+				final URectangle rect = URectangle.build(area.getDimensionToUse()).rounded(roundCorner);
 
 				ug = styles[0].applyStrokeAndLineColor(ug, getSkinParam().getIHtmlColorSet());
 				ug.apply(UTranslate.dx(border1)).draw(rect);
