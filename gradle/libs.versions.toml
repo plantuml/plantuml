@@ -21,7 +21,7 @@ adarshr-test-logger = "4.0.0"
 xmlunit-core        = "2.11.0"
 junit-pioneer       = "2.3.0"
 teavm               = "0.14.0"
-sonarqube           = "7.2.3.7755"
+sonarqube           = "7.3.0.8198"
 
 [libraries]
 # name                      = { module = "", version.ref = "" }
