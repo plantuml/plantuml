@@ -5534,11 +5534,11 @@ Stats:
     Abstract Classes: 1
 
     Ca: 6
-    Ce: 4
+    Ce: 5
 
     A: 0.25
-    I: 0.4
-    D: 0.35
+    I: 0.45
+    D: 0.3
 
 Abstract Classes:
     net.sourceforge.plantuml.jaws.JawsStrange
@@ -5553,6 +5553,7 @@ Depends Upon:
     java.lang.annotation
     java.util
     net.sourceforge.plantuml.text
+    net.sourceforge.plantuml.utils
 
 Used By:
     net.sourceforge.plantuml.command
@@ -12166,7 +12167,7 @@ Stats:
     Concrete Classes: 12
     Abstract Classes: 5
 
-    Ca: 60
+    Ca: 61
     Ce: 22
 
     A: 0.29
@@ -12246,6 +12247,7 @@ Used By:
     net.sourceforge.plantuml.elk
     net.sourceforge.plantuml.flowdiagram
     net.sourceforge.plantuml.graphml
+    net.sourceforge.plantuml.jaws
     net.sourceforge.plantuml.klimt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.compress
@@ -13905,9 +13907,10 @@ net.sourceforge.plantuml.help
 
 net.sourceforge.plantuml.jaws
     |
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.regex
-    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml.text
+    |-> net.sourceforge.plantuml.regex
 
 net.sourceforge.plantuml.jcckit
     |
@@ -14119,9 +14122,10 @@ net.sourceforge.plantuml.nwdiag
 net.sourceforge.plantuml.nwdiag.core
     |
     |   net.sourceforge.plantuml.jaws
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.regex
-    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml.text
+    |-> net.sourceforge.plantuml.regex
 
 net.sourceforge.plantuml.nwdiag.next
     |
@@ -14804,7 +14808,7 @@ net.sourceforge.plantuml.golem,10,0,1,10,0,0.91,0.09,1
 net.sourceforge.plantuml.graphml,2,0,0,17,0,1,0,1
 net.sourceforge.plantuml.hcl,3,0,0,10,0,1,0,1
 net.sourceforge.plantuml.help,2,0,0,13,0,1,0,1
-net.sourceforge.plantuml.jaws,4,1,6,4,0.25,0.4,0.35,1
+net.sourceforge.plantuml.jaws,4,1,6,5,0.25,0.45,0.3,1
 net.sourceforge.plantuml.jcckit,1,0,0,12,0,1,0,1
 net.sourceforge.plantuml.json,18,2,11,3,0.11,0.21,0.67,1
 net.sourceforge.plantuml.jsondiagram,6,0,4,23,0,0.85,0.15,1
@@ -14914,7 +14918,7 @@ net.sourceforge.plantuml.timingdiagram,25,4,2,25,0.16,0.93,0.09,1
 net.sourceforge.plantuml.timingdiagram.command,13,1,1,10,0.08,0.91,0.01,1
 net.sourceforge.plantuml.timingdiagram.graphic,17,3,1,15,0.18,0.94,0.11,1
 net.sourceforge.plantuml.url,4,0,30,4,0,0.12,0.88,1
-net.sourceforge.plantuml.utils,17,5,60,22,0.29,0.27,0.44,1
+net.sourceforge.plantuml.utils,17,5,61,22,0.29,0.27,0.44,1
 net.sourceforge.plantuml.version,7,1,6,14,0.14,0.7,0.16,1
 net.sourceforge.plantuml.vizjs,7,0,0,6,0,1,0,1
 net.sourceforge.plantuml.warning,2,1,5,2,0.5,0.29,0.21,1

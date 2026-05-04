@@ -35,14 +35,13 @@
  */
 package net.sourceforge.plantuml.jaws;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.LineLocation;
 
-<span class="nc" id="L44">public class Jaws {</span>
-	
+<span class="nc" id="L43">public class Jaws {</span>
+
 	public static final boolean TRACE = false;
 
 	public static final char BLOCK_E1_NEWLINE = '\uE100';
@@ -57,38 +56,128 @@ import net.sourceforge.plantuml.text.StringLocated;
 	public static final char BLOCK_E1_START_TEXTBLOCK = '\uE122';
 	public static final char BLOCK_E1_END_TEXTBLOCK = '\uE123';
 
-	public static List&lt;StringLocated&gt; expandsJawsForPreprocessor(List&lt;StringLocated&gt; input) {
-<span class="fc" id="L61">		final List&lt;StringLocated&gt; output = new ArrayList&lt;StringLocated&gt;();</span>
-<span class="fc bfc" id="L62" title="All 2 branches covered.">		for (int i = 0; i &lt; input.size(); i++) {</span>
-<span class="fc" id="L63">			List&lt;StringLocated&gt; split = input.get(i).expandsJawsForPreprocessor();</span>
-<span class="fc" id="L64">			StringLocated line = split.get(0);</span>
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">			if (split.size() == 2) {</span>
-<span class="nc" id="L66">				final int headerLength = line.length() + 3;</span>
-<span class="nc" id="L67">				line = line.append(BLOCK_E1_INVISIBLE_QUOTE);</span>
-<span class="nc" id="L68">				final MultilinesBloc block = new MultilinesBloc(headerLength, split.get(1).getString());</span>
-				while (true) {
-<span class="nc" id="L70">					i++;</span>
-<span class="nc" id="L71">					split = input.get(i).expandsJawsForPreprocessor();</span>
-<span class="nc" id="L72">					block.add(split.get(0).getString());</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">					if (split.size() == 2)</span>
-<span class="nc" id="L74">						break;</span>
-				}
-<span class="nc" id="L76">				line = line.append(block.getMerged());</span>
-<span class="nc" id="L77">				line = line.append(BLOCK_E1_INVISIBLE_QUOTE);</span>
-<span class="nc" id="L78">				line = line.append(split.get(1).getString());</span>
-			}
-<span class="fc" id="L80">			output.add(line);</span>
-		}
-<span class="fc" id="L82">		return Collections.unmodifiableList(output);</span>
-	}
+	public static void mutateExpands1(List&lt;StringLocated&gt; tmp) {
+<span class="fc" id="L60">		mutateExpandsBreakline(tmp);</span>
+		if (JawsFlags.PARSE_NEW_MULTILINE_TRIPLE_MARKS)
+			mergeTripleMarkBlocks(tmp);
+<span class="fc" id="L63">	}</span>
 
-	public static List&lt;StringLocated&gt; expands0(List&lt;StringLocated&gt; input) {
-<span class="fc" id="L86">		final List&lt;StringLocated&gt; output = new ArrayList&lt;StringLocated&gt;();</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">		for (StringLocated sl : input) </span>
-<span class="fc" id="L88">			output.addAll(sl.expandsBreaklineButEmbedded());</span>
-		
-<span class="fc" id="L90">		return output;</span>
-	}
+	private static void mutateExpandsBreakline(List&lt;StringLocated&gt; tmp) {
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		for (int i = 0; i &lt; tmp.size(); i++) {</span>
+<span class="fc" id="L67">			final StringLocated sl = tmp.get(i);</span>
+<span class="fc" id="L68">			final String s = sl.getString();</span>
+
+			// Fast path: no breakline -&gt; nothing to do for this entry.
+<span class="fc bfc" id="L71" title="All 2 branches covered.">			if (s.indexOf(BLOCK_E1_BREAKLINE) == -1)</span>
+<span class="fc" id="L72">				continue;</span>
+
+			// Split the line at every BLOCK_E1_BREAKLINE that is not inside a {{...}}
+			// embedded block. Write the first piece in place at index i, then insert the
+			// remaining pieces right after.
+<span class="fc" id="L77">			final LineLocation location = sl.getLocation();</span>
+<span class="fc" id="L78">			final String preprocessorError = sl.getPreprocessorError();</span>
+<span class="fc" id="L79">			final int len = s.length();</span>
+<span class="fc" id="L80">			final StringBuilder pending = new StringBuilder(len);</span>
+<span class="fc" id="L81">			int level = 0;</span>
+<span class="fc" id="L82">			boolean firstWritten = false;</span>
+<span class="fc" id="L83">			int inserted = 0;</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">			for (int j = 0; j &lt; len; j++) {</span>
+<span class="fc" id="L85">				final char ch = s.charAt(j);</span>
+
+<span class="pc bpc" id="L87" title="2 of 6 branches missed.">				if (ch == '{' &amp;&amp; j + 1 &lt; len &amp;&amp; s.charAt(j + 1) == '{')</span>
+<span class="nc" id="L88">					level++;</span>
+<span class="pc bpc" id="L89" title="2 of 6 branches missed.">				else if (ch == '}' &amp;&amp; j + 1 &lt; len &amp;&amp; s.charAt(j + 1) == '}')</span>
+<span class="nc" id="L90">					level--;</span>
+
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">				if (level &gt; 0) {</span>
+<span class="nc" id="L93">					pending.append(ch);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">				} else if (ch == BLOCK_E1_BREAKLINE) {</span>
+<span class="fc" id="L95">					final StringLocated piece = new StringLocated(pending.toString(), location, preprocessorError);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">					if (firstWritten == false) {</span>
+<span class="fc" id="L97">						tmp.set(i, piece);</span>
+<span class="fc" id="L98">						firstWritten = true;</span>
+					} else {
+<span class="fc" id="L100">						tmp.add(i + 1 + inserted, piece);</span>
+<span class="fc" id="L101">						inserted++;</span>
+					}
+<span class="fc" id="L103">					pending.setLength(0);</span>
+<span class="fc" id="L104">				} else {</span>
+<span class="fc" id="L105">					pending.append(ch);</span>
+				}
+			}
+
+			// Tail piece (always emitted, even when empty, to match the legacy behaviour).
+<span class="fc" id="L110">			final StringLocated tail = new StringLocated(pending.toString(), location, preprocessorError);</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">			if (firstWritten == false) {</span>
+				// No actual split happened (the BLOCK_E1_BREAKLINE chars were all inside
+				// {{...}} blocks). Replace in place if the content is materially different.
+<span class="nc" id="L114">				tmp.set(i, tail);</span>
+			} else {
+<span class="fc" id="L116">				tmp.add(i + 1 + inserted, tail);</span>
+<span class="fc" id="L117">				inserted++;</span>
+			}
+
+<span class="fc" id="L120">			i += inserted;</span>
+		}
+<span class="fc" id="L122">	}</span>
+
+	private static void mergeTripleMarkBlocks(List&lt;StringLocated&gt; tmp) {
+		// in-place expansion of triple-mark
+		// separators ('''/!!!/&quot;&quot;&quot;).
+		// Common case (no triple-mark on a line): the entry is left untouched.
+		// When a triple-mark opens on line i, we consume input lines until the closing
+		// triple-mark and merge them all into a single output line at write index w.
+<span class="nc" id="L130">		final int n = tmp.size();</span>
+<span class="nc" id="L131">		int w = 0;</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L133">			final StringLocated current = tmp.get(i);</span>
+<span class="nc" id="L134">			final int x = current.findMultilineTripleSeparator();</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">			if (x == -1) {</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">				if (w != i)</span>
+<span class="nc" id="L137">					tmp.set(w, current);</span>
+<span class="nc" id="L138">				w++;</span>
+<span class="nc" id="L139">				continue;</span>
+			}
+
+			// Opening triple-mark found. Build the merged line in a single StringBuilder
+			// to avoid the cascade of StringLocated.append() that allocate at each step.
+<span class="nc" id="L144">			final StringLocated[] head = current.splitAtTripleSeparator(x);</span>
+<span class="nc" id="L145">			final StringLocated openLine = head[0];</span>
+<span class="nc" id="L146">			final String openTail = head[1].getString();</span>
+
+<span class="nc" id="L148">			final int headerLength = openLine.length() + 3;</span>
+<span class="nc" id="L149">			final MultilinesBloc block = new MultilinesBloc(headerLength, openTail);</span>
+
+<span class="nc" id="L151">			String closeTail = &quot;&quot;;</span>
+			while (true) {
+<span class="nc" id="L153">				i++;</span>
+<span class="nc" id="L154">				final StringLocated mid = tmp.get(i);</span>
+<span class="nc" id="L155">				final int xMid = mid.findMultilineTripleSeparator();</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">				if (xMid == -1) {</span>
+<span class="nc" id="L157">					block.add(mid.jawsHideBackslash().getString());</span>
+				} else {
+<span class="nc" id="L159">					final StringLocated[] tail = mid.splitAtTripleSeparator(xMid);</span>
+<span class="nc" id="L160">					block.add(tail[0].getString());</span>
+<span class="nc" id="L161">					closeTail = tail[1].getString();</span>
+<span class="nc" id="L162">					break;</span>
+				}
+<span class="nc" id="L164">			}</span>
+
+<span class="nc" id="L166">			final StringBuilder sb = new StringBuilder(</span>
+<span class="nc" id="L167">					openLine.length() + 2 + block.getMerged().length() + closeTail.length());</span>
+<span class="nc" id="L168">			sb.append(openLine.getString());</span>
+<span class="nc" id="L169">			sb.append(BLOCK_E1_INVISIBLE_QUOTE);</span>
+<span class="nc" id="L170">			sb.append(block.getMerged());</span>
+<span class="nc" id="L171">			sb.append(BLOCK_E1_INVISIBLE_QUOTE);</span>
+<span class="nc" id="L172">			sb.append(closeTail);</span>
+
+<span class="nc" id="L174">			tmp.set(w++, new StringLocated(sb.toString(), openLine.getLocation(), openLine.getPreprocessorError()));</span>
+		}
+
+		// Drop the now-unused tail in one shot.
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		if (w &lt; n)</span>
+<span class="nc" id="L179">			tmp.subList(w, n).clear();</span>
+<span class="nc" id="L180">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

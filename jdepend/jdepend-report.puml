@@ -1688,13 +1688,14 @@ Total Classes: 2
 "net.sourceforge.plantuml.help" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.help" --> "net.sourceforge.plantuml.style"
 
-class "net.sourceforge.plantuml.jaws" %lighten("red", 65) {
+class "net.sourceforge.plantuml.jaws" %lighten("red", 70) {
 Total Classes: 4
 }
 "net.sourceforge.plantuml.jaws" --> "java.lang"
 "net.sourceforge.plantuml.jaws" --> "java.lang.annotation"
 "net.sourceforge.plantuml.jaws" --> "java.util"
 "net.sourceforge.plantuml.jaws" --> "net.sourceforge.plantuml.text"
+"net.sourceforge.plantuml.jaws" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.jcckit" %lighten("red", 100) {
 Total Classes: 1

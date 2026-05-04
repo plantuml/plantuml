@@ -8251,10 +8251,10 @@
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>6</Ca>
-                <Ce>4</Ce>
+                <Ce>5</Ce>
                 <A>0.25</A>
-                <I>0.4</I>
-                <D>0.35</D>
+                <I>0.45</I>
+                <D>0.3</D>
                 <V>1</V>
             </Stats>
 
@@ -8281,6 +8281,7 @@
                 <Package>java.lang.annotation</Package>
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -18044,7 +18045,7 @@
                 <TotalClasses>17</TotalClasses>
                 <ConcreteClasses>12</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>60</Ca>
+                <Ca>61</Ca>
                 <Ce>22</Ce>
                 <A>0.29</A>
                 <I>0.27</I>
@@ -18162,6 +18163,7 @@
                 <Package>net.sourceforge.plantuml.elk</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
                 <Package>net.sourceforge.plantuml.graphml</Package>
+                <Package>net.sourceforge.plantuml.jaws</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.compress</Package>
@@ -20235,9 +20237,10 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.jaws">
-            <Package>net.sourceforge.plantuml.text</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
             <Package>net.sourceforge.plantuml.regex</Package>
             <Package>net.sourceforge.plantuml.text</Package>
+            <Package>net.sourceforge.plantuml.regex</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.jcckit">
@@ -20449,9 +20452,10 @@
 
         <Package Name="net.sourceforge.plantuml.nwdiag.core">
             <Package>net.sourceforge.plantuml.jaws</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
+            <Package>net.sourceforge.plantuml.utils</Package>
             <Package>net.sourceforge.plantuml.regex</Package>
             <Package>net.sourceforge.plantuml.text</Package>
+            <Package>net.sourceforge.plantuml.regex</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.nwdiag.next">

@@ -143,88 +143,87 @@ public class PSystemBuilder2 {
 <span class="nc" id="L143">		timLoader.load(rawSource);</span>
 <span class="nc" id="L144">		BrowserLog.consoleLog(PSystemBuilder2.class, &quot;createDiagram ok&quot;);</span>
 <span class="nc" id="L145">		List&lt;StringLocated&gt; tmp = timLoader.getResultList();</span>
-<span class="nc" id="L146">		tmp = Jaws.expands0(tmp);</span>
-<span class="nc" id="L147">		tmp = Jaws.expandsJawsForPreprocessor(tmp);</span>
+<span class="nc" id="L146">		Jaws.mutateExpands1(tmp);</span>
 
-<span class="nc" id="L149">		final PreprocessingArtifact preprocessing = timLoader.getPreprocessingArtifact();</span>
+<span class="nc" id="L148">		final PreprocessingArtifact preprocessing = timLoader.getPreprocessingArtifact();</span>
 
-<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (timLoader.isPreprocessorError())</span>
-<span class="nc" id="L152">			return new PSystemErrorPreprocessor(tmp, timLoader.getDebug(), preprocessing);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (timLoader.isPreprocessorError())</span>
+<span class="nc" id="L151">			return new PSystemErrorPreprocessor(tmp, timLoader.getDebug(), preprocessing);</span>
 
-<span class="nc" id="L154">		return createDiagramFromPreprocessed(tmp, preprocessing);</span>
+<span class="nc" id="L153">		return createDiagramFromPreprocessed(tmp, preprocessing);</span>
 	}
 
 	@DuplicateCode(reference = &quot;PSystemBuilder&quot;)
 	public Diagram createDiagramFromPreprocessed(List&lt;StringLocated&gt; source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L159">		final UmlSource umlSource = UmlSource.create(source, false);</span>
+<span class="nc" id="L158">		final UmlSource umlSource = UmlSource.create(source, false);</span>
 
-<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (umlSource.getTotalLineCount() &lt; 10)</span>
-<span class="nc" id="L162">			lastFactory = null;</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (umlSource.getTotalLineCount() &lt; 10)</span>
+<span class="nc" id="L161">			lastFactory = null;</span>
 
-<span class="nc" id="L164">		umlSource.patchBase64();</span>
+<span class="nc" id="L163">		umlSource.patchBase64();</span>
 
-<span class="nc" id="L166">		final Collection&lt;DiagramType&gt; diagramTypes = umlSource.getDiagramTypes();</span>
-<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (diagramTypes.contains(DiagramType.UNKNOWN))</span>
-<span class="nc" id="L168">			return new PSystemUnsupported(umlSource, preprocessing);</span>
+<span class="nc" id="L165">		final Collection&lt;DiagramType&gt; diagramTypes = umlSource.getDiagramTypes();</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (diagramTypes.contains(DiagramType.UNKNOWN))</span>
+<span class="nc" id="L167">			return new PSystemUnsupported(umlSource, preprocessing);</span>
 
-<span class="nc bnc" id="L170" title="All 4 branches missed.">		if (diagramTypes.contains(DiagramType.SEQUENCE) &amp;&amp; source.size() &gt; 1) {</span>
-<span class="nc" id="L171">			final String secondLine = source.get(1).getString();</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">			if (secondLine.trim().equals(&quot;nwdiag {&quot;)) {</span>
-<span class="nc" id="L173">				final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,</span>
+<span class="nc bnc" id="L169" title="All 4 branches missed.">		if (diagramTypes.contains(DiagramType.SEQUENCE) &amp;&amp; source.size() &gt; 1) {</span>
+<span class="nc" id="L170">			final String secondLine = source.get(1).getString();</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">			if (secondLine.trim().equals(&quot;nwdiag {&quot;)) {</span>
+<span class="nc" id="L172">				final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,</span>
 						&quot;This looks like a network diagram. Please use @startnwdiag instead of @startuml.&quot;, 100,
-<span class="nc" id="L175">						source.get(1).getLocation(), DiagramType.SEQUENCE);</span>
+<span class="nc" id="L174">						source.get(1).getLocation(), DiagramType.SEQUENCE);</span>
 
-<span class="nc" id="L177">				return PSystemErrorUtils.buildV2(umlSource, error, Collections.&lt;String&gt;emptyList(), source,</span>
+<span class="nc" id="L176">				return PSystemErrorUtils.buildV2(umlSource, error, Collections.&lt;String&gt;emptyList(), source,</span>
 						preprocessing);
 			}
 		}
-<span class="nc" id="L181">		final List&lt;PSystemError&gt; errors = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L180">		final List&lt;PSystemError&gt; errors = new ArrayList&lt;&gt;();</span>
 
-<span class="nc bnc" id="L183" title="All 4 branches missed.">		if (lastFactory != null &amp;&amp; diagramTypes.contains(lastFactory.getDiagramType())) {</span>
-<span class="nc" id="L184">			final Diagram sys = lastFactory.createSystem(null, umlSource, null, preprocessing);</span>
-<span class="nc bnc" id="L185" title="All 2 branches missed.">			if (isOk(sys))</span>
-<span class="nc" id="L186">				return sys;</span>
-<span class="nc" id="L187">			errors.add((PSystemError) sys);</span>
+<span class="nc bnc" id="L182" title="All 4 branches missed.">		if (lastFactory != null &amp;&amp; diagramTypes.contains(lastFactory.getDiagramType())) {</span>
+<span class="nc" id="L183">			final Diagram sys = lastFactory.createSystem(null, umlSource, null, preprocessing);</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">			if (isOk(sys))</span>
+<span class="nc" id="L185">				return sys;</span>
+<span class="nc" id="L186">			errors.add((PSystemError) sys);</span>
 		}
 
-<span class="nc bnc" id="L190" title="All 2 branches missed.">		for (PSystemFactory f : factories) {</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">			if (!diagramTypes.contains(f.getDiagramType()))</span>
-<span class="nc" id="L192">				continue;</span>
-<span class="nc bnc" id="L193" title="All 2 branches missed.">			if (f == lastFactory)</span>
-<span class="nc" id="L194">				continue;</span>
-<span class="nc" id="L195">			BrowserLog.consoleLog(PSystemBuilder2.class, &quot;trying &quot; + f.getClass());</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">		for (PSystemFactory f : factories) {</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">			if (!diagramTypes.contains(f.getDiagramType()))</span>
+<span class="nc" id="L191">				continue;</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">			if (f == lastFactory)</span>
+<span class="nc" id="L193">				continue;</span>
+<span class="nc" id="L194">			BrowserLog.consoleLog(PSystemBuilder2.class, &quot;trying &quot; + f.getClass());</span>
 
-<span class="nc" id="L197">			final Diagram sys = f.createSystem(null, umlSource, null, preprocessing);</span>
-<span class="nc bnc" id="L198" title="All 2 branches missed.">			if (isOk(sys)) {</span>
-<span class="nc" id="L199">				BrowserLog.consoleLog(PSystemBuilder2.class, &quot;ok!&quot;);</span>
-<span class="nc" id="L200">				this.lastFactory = f;</span>
-<span class="nc" id="L201">				return sys;</span>
+<span class="nc" id="L196">			final Diagram sys = f.createSystem(null, umlSource, null, preprocessing);</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">			if (isOk(sys)) {</span>
+<span class="nc" id="L198">				BrowserLog.consoleLog(PSystemBuilder2.class, &quot;ok!&quot;);</span>
+<span class="nc" id="L199">				this.lastFactory = f;</span>
+<span class="nc" id="L200">				return sys;</span>
 			}
-<span class="nc" id="L203">			errors.add((PSystemError) sys);</span>
-<span class="nc" id="L204">		}</span>
+<span class="nc" id="L202">			errors.add((PSystemError) sys);</span>
+<span class="nc" id="L203">		}</span>
 
-<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (errors.size() == 0)</span>
-<span class="nc" id="L207">			return new PSystemUnsupported(umlSource, preprocessing);</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (errors.size() == 0)</span>
+<span class="nc" id="L206">			return new PSystemUnsupported(umlSource, preprocessing);</span>
 
-<span class="nc" id="L209">		return PSystemErrorUtils.merge(errors);</span>
+<span class="nc" id="L208">		return PSystemErrorUtils.merge(errors);</span>
 	}
 
 	private boolean isOk(Diagram ps) {
-<span class="nc bnc" id="L213" title="All 6 branches missed.">		if (ps == null || ps instanceof PSystemError || ps instanceof PSystemUnsupported)</span>
-<span class="nc" id="L214">			return false;</span>
+<span class="nc bnc" id="L212" title="All 6 branches missed.">		if (ps == null || ps instanceof PSystemError || ps instanceof PSystemUnsupported)</span>
+<span class="nc" id="L213">			return false;</span>
 
-<span class="nc" id="L216">		return true;</span>
+<span class="nc" id="L215">		return true;</span>
 	}
 
 	private List&lt;String&gt; clean(String[] tab) {
-<span class="nc" id="L220">		final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L221" title="All 2 branches missed.">		for (String s : tab)</span>
-<span class="nc" id="L222">			lines.add(s);</span>
+<span class="nc" id="L219">		final List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">		for (String s : tab)</span>
+<span class="nc" id="L221">			lines.add(s);</span>
 
-<span class="nc bnc" id="L224" title="All 4 branches missed.">		while (lines.size() &gt; 2 &amp;&amp; lines.get(lines.size() - 1).trim().isEmpty())</span>
-<span class="nc" id="L225">			lines.remove(lines.size() - 1);</span>
+<span class="nc bnc" id="L223" title="All 4 branches missed.">		while (lines.size() &gt; 2 &amp;&amp; lines.get(lines.size() - 1).trim().isEmpty())</span>
+<span class="nc" id="L224">			lines.remove(lines.size() - 1);</span>
 
-<span class="nc" id="L227">		return lines;</span>
+<span class="nc" id="L226">		return lines;</span>
 	}
 
 }
