@@ -34,6 +34,7 @@ partition {
     FontColor red
     FontSize 20
     FontStyle bold
+    padding 20
   }
 }
 </style>
