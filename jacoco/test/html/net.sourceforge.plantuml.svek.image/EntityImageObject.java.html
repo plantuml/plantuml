@@ -95,7 +95,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 <span class="nc" id="L95">		final FontConfiguration fcHeader = getStyleHeader().getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
 
 <span class="nc" id="L97">		final TextBlock tmp = getUnderlinedName(entity).create(fcHeader, HorizontalAlignment.CENTER, getSkinParam());</span>
-<span class="nc" id="L98">		this.name = TextBlockUtils.withMargin(tmp, 2, 2);</span>
+<span class="nc" id="L98">		this.name = TextBlockUtils.withMargin(tmp, getStyle().getPadding());</span>
 
 <span class="nc bnc" id="L100" title="All 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null</span>
 <span class="nc bnc" id="L101" title="All 2 branches missed.">				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false)</span>
