@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import com.plantuml.ubrex.UMatcher;
@@ -51,46 +53,47 @@ public class CommandCreoleExposantChange implements Command {
 	private final UnicodeBracketedExpression ubrex;
 
 	@Override
-	public String startingChars() {
-<span class="fc" id="L55">		return &quot;&lt;&quot;;</span>
+	public Collection&lt;String&gt; starters() {
+<span class="fc" id="L57">		return Collections.singleton(&quot;&lt;s&quot;);</span>
 	}
 
-<span class="fc" id="L58">	private CommandCreoleExposantChange(String ubrexString, FontPosition position) {</span>
-<span class="fc" id="L59">		this.position = position;</span>
-<span class="fc" id="L60">		this.ubrex = UnicodeBracketedExpression.build(ubrexString);</span>
-<span class="fc" id="L61">	}</span>
+<span class="fc" id="L60">	private CommandCreoleExposantChange(String ubrexString, FontPosition position) {</span>
+<span class="fc" id="L61">		this.position = position;</span>
+<span class="fc" id="L62">		this.ubrex = UnicodeBracketedExpression.build(ubrexString);</span>
+<span class="fc" id="L63">	}</span>
 
 	public static Command create(FontPosition position) {
-<span class="fc" id="L64">		final String htmlTag = position.getHtmlTag();</span>
-<span class="fc" id="L65">		final String ubrexString = &quot;&lt;&quot; + htmlTag + &quot;&gt;&quot; + String.valueOf((char)0x3036) + &quot;$V=&quot; + String.valueOf((char)0x3004) + &quot;&gt;&quot; + String.valueOf((char)0x3018) + &quot;&lt;/&quot; + htmlTag + &quot;&gt;&quot; + String.valueOf((char)0x3019) + &quot;&quot;;</span>
-<span class="fc" id="L66">		return new CommandCreoleExposantChange(ubrexString, position);</span>
-	}
-
-	public int matchingSize(String line) {
-<span class="fc" id="L70">		final UMatcher matcher = ubrex.match(line);</span>
-<span class="fc" id="L71">		final List&lt;String&gt; value = matcher.getCapture(&quot;V&quot;);</span>
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (value.size() == 0)</span>
-<span class="fc" id="L73">			return 0;</span>
-<span class="nc" id="L74">		return value.get(0).length();</span>
+<span class="fc" id="L66">		final String htmlTag = position.getHtmlTag();</span>
+<span class="fc" id="L67">		final String ubrexString = &quot;&lt;&quot; + htmlTag + &quot;&gt;&quot; + String.valueOf((char)0x3036) + &quot;$V=&quot; + String.valueOf((char)0x3004) + &quot;&gt;&quot; + String.valueOf((char)0x3018) + &quot;&lt;/&quot; + htmlTag + &quot;&gt;&quot; + String.valueOf((char)0x3019) + &quot;&quot;;</span>
+<span class="fc" id="L68">		return new CommandCreoleExposantChange(ubrexString, position);</span>
 	}
 
 	@Override
-	public String executeAndGetRemaining(ISkinSimple skinSimple, String line, StripeSimple stripe) {
+	public int matchingSize(String line, int pos) {
+<span class="nc" id="L73">		final UMatcher matcher = ubrex.match(line, pos);</span>
+<span class="nc" id="L74">		final List&lt;String&gt; value = matcher.getCapture(&quot;V&quot;);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (value.size() == 0)</span>
+<span class="nc" id="L76">			return 0;</span>
+<span class="nc" id="L77">		return value.get(0).length();</span>
+	}
 
-<span class="nc" id="L80">		final UMatcher matcher = ubrex.match(line);</span>
-<span class="nc" id="L81">		final List&lt;String&gt; value = matcher.getCapture(&quot;V&quot;);</span>
-<span class="nc" id="L82">		final String accepted = matcher.getAcceptedMatch();</span>
+	@Override
+	public int executeAndGetRemaining(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
 
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (value.size() == 0)</span>
-<span class="nc" id="L85">			throw new IllegalStateException();</span>
+<span class="nc" id="L83">		final UMatcher matcher = ubrex.match(line, pos);</span>
+<span class="nc" id="L84">		final List&lt;String&gt; value = matcher.getCapture(&quot;V&quot;);</span>
+<span class="nc" id="L85">		final String accepted = matcher.getAcceptedMatch();</span>
 
-<span class="nc" id="L87">		final FontConfiguration fc1 = stripe.getActualFontConfiguration();</span>
-<span class="nc" id="L88">		final FontConfiguration fc2 = fc1.changeFontPosition(position);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (value.size() == 0)</span>
+<span class="nc" id="L88">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L90">		stripe.setActualFontConfiguration(fc2);</span>
-<span class="nc" id="L91">		stripe.analyzeAndAdd(value.get(0));</span>
-<span class="nc" id="L92">		stripe.setActualFontConfiguration(fc1);</span>
-<span class="nc" id="L93">		return line.substring(accepted.length());</span>
+<span class="nc" id="L90">		final FontConfiguration fc1 = stripe.getActualFontConfiguration();</span>
+<span class="nc" id="L91">		final FontConfiguration fc2 = fc1.changeFontPosition(position);</span>
+
+<span class="nc" id="L93">		stripe.setActualFontConfiguration(fc2);</span>
+<span class="nc" id="L94">		stripe.analyzeAndAdd(value.get(0));</span>
+<span class="nc" id="L95">		stripe.setActualFontConfiguration(fc1);</span>
+<span class="nc" id="L96">		return accepted.length();</span>
 	}
 
 }

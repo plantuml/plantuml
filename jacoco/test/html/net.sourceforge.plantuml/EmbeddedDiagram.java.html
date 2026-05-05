@@ -100,213 +100,269 @@ public class EmbeddedDiagram extends TextBlockMemoized implements Line, Atom {
 <span class="fc" id="L100">		int nested = 1;</span>
 <span class="pc bpc" id="L101" title="1 of 2 branches missed.">		while (it.hasNext()) {</span>
 <span class="fc" id="L102">			final CharSequence s2 = it.next();</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">			if (EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(s2)) != null)</span>
-				// if (StringUtils.trinNoTrace(s2).startsWith(EmbeddedDiagram.EMBEDDED_START))
-<span class="fc" id="L105">				nested++;</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">			else if (StringUtils.trinNoTrace(s2).equals(EmbeddedDiagram.EMBEDDED_END)) {</span>
-<span class="fc" id="L107">				nested--;</span>
-<span class="fc bfc" id="L108" title="All 2 branches covered.">				if (nested == 0)</span>
-<span class="fc" id="L109">					break;</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">			if (EmbeddedDiagram.getEmbeddedType(s2) != null)</span>
+<span class="fc" id="L104">				nested++;</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">			else if (StringUtils.trim2(s2.toString()).equals(EmbeddedDiagram.EMBEDDED_END)) {</span>
+<span class="fc" id="L106">				nested--;</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">				if (nested == 0)</span>
+<span class="fc" id="L108">					break;</span>
 			}
-<span class="fc" id="L111">			result.add(s2.toString());</span>
-<span class="fc" id="L112">		}</span>
-<span class="fc" id="L113">		result.add(&quot;@end&quot; + type);</span>
-<span class="fc" id="L114">		return EmbeddedDiagram.from(skinParam, result);</span>
+<span class="fc" id="L110">			result.add(s2.toString());</span>
+<span class="fc" id="L111">		}</span>
+<span class="fc" id="L112">		result.add(&quot;@end&quot; + type);</span>
+<span class="fc" id="L113">		return EmbeddedDiagram.from(skinParam, result);</span>
 
 	}
 
 	public static EmbeddedDiagram from(ISkinSimple skinParam, List&lt;String&gt; strings) {
-<span class="fc" id="L119">		return new EmbeddedDiagram(skinParam, BlockUml.convert(strings));</span>
+<span class="fc" id="L118">		return new EmbeddedDiagram(skinParam, BlockUml.convert(strings));</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="fc" id="L123">		return 0;</span>
+<span class="fc" id="L122">		return 0;</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
 		try {
-<span class="pc bpc" id="L129" title="1 of 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">				if (stringBounder.matchesProperty(&quot;SVG&quot;)) {</span>
-<span class="nc" id="L131">					final String imageSvg = getImageSvg(stringBounder.getFileFormat());</span>
-<span class="nc" id="L132">					final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
-<span class="nc" id="L133">					return new XDimension2D(svg.getWidth(), svg.getHeight());</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">				if (stringBounder.matchesProperty(&quot;SVG&quot;)) {</span>
+<span class="nc" id="L130">					final String imageSvg = getImageSvg(stringBounder.getFileFormat());</span>
+<span class="nc" id="L131">					final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
+<span class="nc" id="L132">					return new XDimension2D(svg.getWidth(), svg.getHeight());</span>
 				}
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">				if (stringBounder.matchesProperty(&quot;TIKZ&quot;)) {</span>
-<span class="nc" id="L136">					final UImageTikz tikz = getImageTikz(stringBounder.getFileFormat());</span>
-<span class="nc" id="L137">					return new XDimension2D(tikz.getWidth(), tikz.getHeight());</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">				if (stringBounder.matchesProperty(&quot;TIKZ&quot;)) {</span>
+<span class="nc" id="L135">					final UImageTikz tikz = getImageTikz(stringBounder.getFileFormat());</span>
+<span class="nc" id="L136">					return new XDimension2D(tikz.getWidth(), tikz.getHeight());</span>
 				}
-<span class="fc" id="L139">				final PortableImage im = getImage(stringBounder.getFileFormat());</span>
-<span class="fc" id="L140">				return new XDimension2D(im.getWidth(), im.getHeight());</span>
+<span class="fc" id="L138">				final PortableImage im = getImage(stringBounder.getFileFormat());</span>
+<span class="fc" id="L139">				return new XDimension2D(im.getWidth(), im.getHeight());</span>
 			} else {
 				// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
-<span class="nc" id="L143">				final TextBlock tb = getInternalTextBlock(stringBounder.getFileFormat());</span>
-<span class="nc" id="L144">				final XDimension2D result = tb.calculateDimension(stringBounder);</span>
-<span class="nc" id="L145">				PSystemBuilder2.getInstance().reset();</span>
-<span class="nc" id="L146">				return result;</span>
+<span class="nc" id="L142">				final TextBlock tb = getInternalTextBlock(stringBounder.getFileFormat());</span>
+<span class="nc" id="L143">				final XDimension2D result = tb.calculateDimension(stringBounder);</span>
+<span class="nc" id="L144">				PSystemBuilder2.getInstance().reset();</span>
+<span class="nc" id="L145">				return result;</span>
 				// ::done
 			}
-<span class="fc" id="L149">		} catch (Exception e) {</span>
-<span class="fc" id="L150">			Logme.error(e);</span>
+<span class="fc" id="L148">		} catch (Exception e) {</span>
+<span class="fc" id="L149">			Logme.error(e);</span>
 		}
-<span class="fc" id="L152">		return new XDimension2D(42, 42);</span>
+<span class="fc" id="L151">		return new XDimension2D(42, 42);</span>
 	}
 
 	public TextBlock getInternalTextBlock(FileFormat fileFormat) throws Exception {
 		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
-<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (textBlock == null) {</span>
-<span class="nc" id="L158">			PSystemBuilder2.getInstance().reset();</span>
-<span class="nc" id="L159">			final UgDiagram ugDiagram = (UgDiagram) diagram;</span>
-<span class="nc" id="L160">			textBlock = ugDiagram.getTextBlock12026(0, new FileFormatOption(fileFormat));</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (textBlock == null) {</span>
+<span class="nc" id="L157">			PSystemBuilder2.getInstance().reset();</span>
+<span class="nc" id="L158">			final UgDiagram ugDiagram = (UgDiagram) diagram;</span>
+<span class="nc" id="L159">			textBlock = ugDiagram.getTextBlock12026(0, new FileFormatOption(fileFormat));</span>
 		}
 		// ::done
-<span class="nc" id="L163">		return textBlock;</span>
+<span class="nc" id="L162">		return textBlock;</span>
 	}
 
 	public void drawU(UGraphic ug) {
 		try {
-<span class="fc" id="L168">			final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
-<span class="fc" id="L170">				final boolean isSvg = ug.matchesProperty(&quot;SVG&quot;);</span>
-<span class="fc bfc" id="L171" title="All 2 branches covered.">				if (isSvg) {</span>
-<span class="fc" id="L172">					final String imageSvg = getImageSvg(stringBounder.getFileFormat());</span>
-<span class="fc" id="L173">					final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
-<span class="fc" id="L174">					ug.draw(svg);</span>
-<span class="fc" id="L175">					return;</span>
+<span class="fc" id="L167">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L169">				final boolean isSvg = ug.matchesProperty(&quot;SVG&quot;);</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">				if (isSvg) {</span>
+<span class="fc" id="L171">					final String imageSvg = getImageSvg(stringBounder.getFileFormat());</span>
+<span class="fc" id="L172">					final UImageSvg svg = new UImageSvg(imageSvg, 1);</span>
+<span class="fc" id="L173">					ug.draw(svg);</span>
+<span class="fc" id="L174">					return;</span>
 				}
-<span class="fc bfc" id="L177" title="All 2 branches covered.">				if (ug.matchesProperty(&quot;TIKZ&quot;)) {</span>
-<span class="fc" id="L178">					ug.draw(getImageTikz(stringBounder.getFileFormat()));</span>
-<span class="fc" id="L179">					return;</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">				if (ug.matchesProperty(&quot;TIKZ&quot;)) {</span>
+<span class="fc" id="L177">					ug.draw(getImageTikz(stringBounder.getFileFormat()));</span>
+<span class="fc" id="L178">					return;</span>
 				}
-<span class="fc" id="L181">				final PortableImage im = getImage(stringBounder.getFileFormat());</span>
-<span class="fc" id="L182">				final UShape image = new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));</span>
-<span class="fc" id="L183">				ug.draw(image);</span>
-<span class="fc" id="L184">			} else {</span>
+<span class="fc" id="L180">				final PortableImage im = getImage(stringBounder.getFileFormat());</span>
+<span class="fc" id="L181">				final UShape image = new UImage(new PixelImage(im, AffineTransformType.TYPE_BILINEAR));</span>
+<span class="fc" id="L182">				ug.draw(image);</span>
+<span class="fc" id="L183">			} else {</span>
 				// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
-<span class="nc" id="L186">				final TextBlock tb = getInternalTextBlock(stringBounder.getFileFormat());</span>
-<span class="nc" id="L187">				ug = ug.apply(HColors.transparent().bg());</span>
-<span class="nc" id="L188">				tb.drawU(ug);</span>
-<span class="nc" id="L189">				PSystemBuilder2.getInstance().reset();</span>
+<span class="nc" id="L185">				final TextBlock tb = getInternalTextBlock(stringBounder.getFileFormat());</span>
+<span class="nc" id="L186">				ug = ug.apply(HColors.transparent().bg());</span>
+<span class="nc" id="L187">				tb.drawU(ug);</span>
+<span class="nc" id="L188">				PSystemBuilder2.getInstance().reset();</span>
 				// ::done
 			}
-<span class="fc" id="L192">		} catch (Exception e) {</span>
-<span class="fc" id="L193">			Logme.error(e);</span>
-<span class="fc" id="L194">		}</span>
+<span class="fc" id="L191">		} catch (Exception e) {</span>
+<span class="fc" id="L192">			Logme.error(e);</span>
+<span class="fc" id="L193">		}</span>
 
-<span class="fc" id="L196">	}</span>
+<span class="fc" id="L195">	}</span>
 
 	private String getImageSvg(FileFormat fileFormat) throws IOException, InterruptedException {
-<span class="pc bpc" id="L199" title="1 of 2 branches missed.">		if (svg == null)</span>
-<span class="fc" id="L200">			svg = getImageSvgSlow(fileFormat).replaceAll(&quot;&lt;\\?plantuml.+?\\?&gt;&quot;, &quot;&quot;);</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">		if (svg == null)</span>
+<span class="fc" id="L199">			svg = getImageSvgSlow(fileFormat).replaceAll(&quot;&lt;\\?plantuml.+?\\?&gt;&quot;, &quot;&quot;);</span>
 
-<span class="fc" id="L202">		return svg;</span>
+<span class="fc" id="L201">		return svg;</span>
 
 	}
 
 	private String getImageSvgSlow(FileFormat fileFormat) throws IOException, InterruptedException {
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="fc" id="L208">			final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
-<span class="fc" id="L209">			diagram.exportDiagram(os, 0, new FileFormatOption(fileFormat));</span>
-<span class="fc" id="L210">			os.close();</span>
-<span class="fc" id="L211">			return new String(os.toByteArray());</span>
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L207">			final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
+<span class="fc" id="L208">			diagram.exportDiagram(os, 0, new FileFormatOption(fileFormat));</span>
+<span class="fc" id="L209">			os.close();</span>
+<span class="fc" id="L210">			return new String(os.toByteArray());</span>
 		}
-<span class="nc" id="L213">		throw new UnsupportedOperationException(&quot;TEAVM4586&quot;);</span>
+<span class="nc" id="L212">		throw new UnsupportedOperationException(&quot;TEAVM4586&quot;);</span>
 	}
 
 	private UImageTikz getImageTikz(FileFormat fileFormat) throws IOException, InterruptedException {
-<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (imageTikz == null)</span>
-<span class="fc" id="L218">			imageTikz = getImageTikzSlow(fileFormat);</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">		if (imageTikz == null)</span>
+<span class="fc" id="L217">			imageTikz = getImageTikzSlow(fileFormat);</span>
 
-<span class="fc" id="L220">		return imageTikz;</span>
+<span class="fc" id="L219">		return imageTikz;</span>
 	}
 
 	private UImageTikz getImageTikzSlow(FileFormat fileFormat) throws IOException, InterruptedException {
-<span class="fc" id="L224">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
-<span class="fc" id="L225">		final ImageData imageData = diagram.exportDiagram(os, 0, new FileFormatOption(fileFormat));</span>
-<span class="fc" id="L226">		os.close();</span>
-<span class="fc" id="L227">		return new UImageTikz(new String(os.toByteArray(), StandardCharsets.UTF_8), imageData.getWidth(),</span>
-<span class="fc" id="L228">				imageData.getHeight());</span>
+<span class="fc" id="L223">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
+<span class="fc" id="L224">		final ImageData imageData = diagram.exportDiagram(os, 0, new FileFormatOption(fileFormat));</span>
+<span class="fc" id="L225">		os.close();</span>
+<span class="fc" id="L226">		return new UImageTikz(new String(os.toByteArray(), StandardCharsets.UTF_8), imageData.getWidth(),</span>
+<span class="fc" id="L227">				imageData.getHeight());</span>
 	}
 
 	private PortableImage getImage(FileFormat fileFormat) throws IOException, InterruptedException {
-<span class="fc" id="L232">		BrowserLog.consoleLog(getClass(), &quot;=======getImage&quot;);</span>
-<span class="fc bfc" id="L233" title="All 2 branches covered.">		if (image == null)</span>
-<span class="fc" id="L234">			image = getImageSlow(fileFormat);</span>
-<span class="fc" id="L235">		return image;</span>
+<span class="fc" id="L231">		BrowserLog.consoleLog(getClass(), &quot;=======getImage&quot;);</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">		if (image == null)</span>
+<span class="fc" id="L233">			image = getImageSlow(fileFormat);</span>
+<span class="fc" id="L234">		return image;</span>
 	}
 
 	private PortableImage getImageSlow(FileFormat fileFormat) throws IOException, InterruptedException {
-<span class="fc" id="L239">		BrowserLog.consoleLog(getClass(), &quot;=======getImageSlow&quot;);</span>
-<span class="pc bpc" id="L240" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="fc" id="L241">			final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
-<span class="fc" id="L242">			diagram.exportDiagram(os, 0, new FileFormatOption(fileFormat));</span>
-<span class="fc" id="L243">			os.close();</span>
-<span class="fc" id="L244">			return SImageIO.read(os.toByteArray());</span>
+<span class="fc" id="L238">		BrowserLog.consoleLog(getClass(), &quot;=======getImageSlow&quot;);</span>
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L240">			final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
+<span class="fc" id="L241">			diagram.exportDiagram(os, 0, new FileFormatOption(fileFormat));</span>
+<span class="fc" id="L242">			os.close();</span>
+<span class="fc" id="L243">			return SImageIO.read(os.toByteArray());</span>
 		}
-<span class="nc" id="L246">		throw new UnsupportedOperationException(&quot;TEAVM4585&quot;);</span>
+<span class="nc" id="L245">		throw new UnsupportedOperationException(&quot;TEAVM4585&quot;);</span>
 	}
 
 	public HorizontalAlignment getHorizontalAlignment() {
-<span class="nc" id="L250">		return HorizontalAlignment.LEFT;</span>
+<span class="nc" id="L249">		return HorizontalAlignment.LEFT;</span>
 	}
 
 	@Override
 	public List&lt;Neutron&gt; getNeutrons() {
-<span class="nc" id="L255">		return Arrays.asList(Neutron.create(this));</span>
+<span class="nc" id="L254">		return Arrays.asList(Neutron.create(this));</span>
 	}
 
 	public static String getEmbeddedType(CharSequence cs) {
-<span class="pc bpc" id="L259" title="1 of 2 branches missed.">		if (cs == null)</span>
-<span class="nc" id="L260">			return null;</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">		if (cs == null)</span>
+<span class="nc" id="L259">			return null;</span>
 
-<span class="fc" id="L262">		final String s = StringUtils.trin(cs.toString());</span>
-<span class="fc bfc" id="L263" title="All 2 branches covered.">		if (s.startsWith(EMBEDDED_START) == false)</span>
-<span class="fc" id="L264">			return null;</span>
+<span class="fc" id="L261">		final int len = cs.length();</span>
 
-<span class="pc bpc" id="L266" title="20 of 21 branches missed.">		switch (s) {</span>
-		case EMBEDDED_START:
-<span class="fc" id="L268">			return &quot;uml&quot;;</span>
-		case EMBEDDED_START + &quot;ditaa&quot;:
-<span class="nc" id="L270">			return &quot;ditaa&quot;;</span>
-		case EMBEDDED_START + &quot;salt&quot;:
-<span class="nc" id="L272">			return &quot;salt&quot;;</span>
-		case EMBEDDED_START + &quot;uml&quot;:
-<span class="nc" id="L274">			return &quot;uml&quot;;</span>
-		case EMBEDDED_START + &quot;wbs&quot;:
-<span class="nc" id="L276">			return &quot;wbs&quot;;</span>
-		case EMBEDDED_START + &quot;mindmap&quot;:
-<span class="nc" id="L278">			return &quot;mindmap&quot;;</span>
-		case EMBEDDED_START + &quot;gantt&quot;:
-<span class="nc" id="L280">			return &quot;gantt&quot;;</span>
-		case EMBEDDED_START + &quot;json&quot;:
-<span class="nc" id="L282">			return &quot;json&quot;;</span>
-		case EMBEDDED_START + &quot;yaml&quot;:
-<span class="nc" id="L284">			return &quot;yaml&quot;;</span>
-		case EMBEDDED_START + &quot;wire&quot;:
-<span class="nc" id="L286">			return &quot;wire&quot;;</span>
-		case EMBEDDED_START + &quot;creole&quot;:
-<span class="nc" id="L288">			return &quot;creole&quot;;</span>
-		case EMBEDDED_START + &quot;board&quot;:
-<span class="nc" id="L290">			return &quot;board&quot;;</span>
-		case EMBEDDED_START + &quot;ebnf&quot;:
-<span class="nc" id="L292">			return &quot;ebnf&quot;;</span>
-		case EMBEDDED_START + &quot;regex&quot;:
-<span class="nc" id="L294">			return &quot;regex&quot;;</span>
-		case EMBEDDED_START + &quot;files&quot;:
-<span class="nc" id="L296">			return &quot;files&quot;;</span>
-		case EMBEDDED_START + &quot;chronology&quot;:
-<span class="nc" id="L298">			return &quot;chronology&quot;;</span>
-		case EMBEDDED_START + &quot;chen&quot;:
-<span class="nc" id="L300">			return &quot;chen&quot;;</span>
-		case EMBEDDED_START + &quot;chart&quot;:
-<span class="nc" id="L302">			return &quot;chart&quot;;</span>
-		case EMBEDDED_START + &quot;nwdiag&quot;:
-<span class="nc" id="L304">			return &quot;nwdiag&quot;;</span>
-		case EMBEDDED_START + &quot;packetdiag&quot;:
-<span class="nc" id="L306">			return &quot;packetdiag&quot;;</span>
-		default:
-<span class="nc" id="L308">			return null;</span>
+		// Skip leading whitespace
+<span class="fc" id="L264">		int p = 0;</span>
+<span class="fc bfc" id="L265" title="All 4 branches covered.">		while (p &lt; len &amp;&amp; Character.isWhitespace(cs.charAt(p)))</span>
+<span class="fc" id="L266">			p++;</span>
+
+		// Must start with &quot;{{&quot;
+<span class="fc bfc" id="L269" title="All 6 branches covered.">		if (p + 2 &gt; len || cs.charAt(p) != '{' || cs.charAt(p + 1) != '{')</span>
+<span class="fc" id="L270">			return null;</span>
+<span class="fc" id="L271">		p += 2;</span>
+
+		// Find end (skip trailing whitespace)
+<span class="fc" id="L274">		int end = len;</span>
+<span class="pc bpc" id="L275" title="3 of 4 branches missed.">		while (end &gt; p &amp;&amp; Character.isWhitespace(cs.charAt(end - 1)))</span>
+<span class="nc" id="L276">			end--;</span>
+
+<span class="fc" id="L278">		final int suffixLen = end - p;</span>
+
+		// &quot;{{&quot; alone -&gt; uml
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">		if (suffixLen == 0)</span>
+<span class="fc" id="L282">			return &quot;uml&quot;;</span>
+
+		// Dispatch on first char to avoid scanning every keyword
+<span class="nc bnc" id="L285" title="All 16 branches missed.">		switch (cs.charAt(p)) {</span>
+		case 'b':
+<span class="nc bnc" id="L287" title="All 2 branches missed.">			if (match(cs, p, end, &quot;board&quot;))</span>
+<span class="nc" id="L288">				return &quot;board&quot;;</span>
+			break;
+		case 'c':
+<span class="nc bnc" id="L291" title="All 2 branches missed.">			if (match(cs, p, end, &quot;creole&quot;))</span>
+<span class="nc" id="L292">				return &quot;creole&quot;;</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">			if (match(cs, p, end, &quot;chronology&quot;))</span>
+<span class="nc" id="L294">				return &quot;chronology&quot;;</span>
+<span class="nc bnc" id="L295" title="All 2 branches missed.">			if (match(cs, p, end, &quot;chen&quot;))</span>
+<span class="nc" id="L296">				return &quot;chen&quot;;</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">			if (match(cs, p, end, &quot;chart&quot;))</span>
+<span class="nc" id="L298">				return &quot;chart&quot;;</span>
+			break;
+		case 'd':
+<span class="nc bnc" id="L301" title="All 2 branches missed.">			if (match(cs, p, end, &quot;ditaa&quot;))</span>
+<span class="nc" id="L302">				return &quot;ditaa&quot;;</span>
+			break;
+		case 'e':
+<span class="nc bnc" id="L305" title="All 2 branches missed.">			if (match(cs, p, end, &quot;ebnf&quot;))</span>
+<span class="nc" id="L306">				return &quot;ebnf&quot;;</span>
+			break;
+		case 'f':
+<span class="nc bnc" id="L309" title="All 2 branches missed.">			if (match(cs, p, end, &quot;files&quot;))</span>
+<span class="nc" id="L310">				return &quot;files&quot;;</span>
+			break;
+		case 'g':
+<span class="nc bnc" id="L313" title="All 2 branches missed.">			if (match(cs, p, end, &quot;gantt&quot;))</span>
+<span class="nc" id="L314">				return &quot;gantt&quot;;</span>
+			break;
+		case 'j':
+<span class="nc bnc" id="L317" title="All 2 branches missed.">			if (match(cs, p, end, &quot;json&quot;))</span>
+<span class="nc" id="L318">				return &quot;json&quot;;</span>
+			break;
+		case 'm':
+<span class="nc bnc" id="L321" title="All 2 branches missed.">			if (match(cs, p, end, &quot;mindmap&quot;))</span>
+<span class="nc" id="L322">				return &quot;mindmap&quot;;</span>
+			break;
+		case 'n':
+<span class="nc bnc" id="L325" title="All 2 branches missed.">			if (match(cs, p, end, &quot;nwdiag&quot;))</span>
+<span class="nc" id="L326">				return &quot;nwdiag&quot;;</span>
+			break;
+		case 'p':
+<span class="nc bnc" id="L329" title="All 2 branches missed.">			if (match(cs, p, end, &quot;packetdiag&quot;))</span>
+<span class="nc" id="L330">				return &quot;packetdiag&quot;;</span>
+			break;
+		case 'r':
+<span class="nc bnc" id="L333" title="All 2 branches missed.">			if (match(cs, p, end, &quot;regex&quot;))</span>
+<span class="nc" id="L334">				return &quot;regex&quot;;</span>
+			break;
+		case 's':
+<span class="nc bnc" id="L337" title="All 2 branches missed.">			if (match(cs, p, end, &quot;salt&quot;))</span>
+<span class="nc" id="L338">				return &quot;salt&quot;;</span>
+			break;
+		case 'u':
+<span class="nc bnc" id="L341" title="All 2 branches missed.">			if (match(cs, p, end, &quot;uml&quot;))</span>
+<span class="nc" id="L342">				return &quot;uml&quot;;</span>
+			break;
+		case 'w':
+<span class="nc bnc" id="L345" title="All 2 branches missed.">			if (match(cs, p, end, &quot;wbs&quot;))</span>
+<span class="nc" id="L346">				return &quot;wbs&quot;;</span>
+<span class="nc bnc" id="L347" title="All 2 branches missed.">			if (match(cs, p, end, &quot;wire&quot;))</span>
+<span class="nc" id="L348">				return &quot;wire&quot;;</span>
+			break;
+		case 'y':
+<span class="nc bnc" id="L351" title="All 2 branches missed.">			if (match(cs, p, end, &quot;yaml&quot;))</span>
+<span class="nc" id="L352">				return &quot;yaml&quot;;</span>
+			break;
 		}
+<span class="nc" id="L355">		return null;</span>
+	}
+
+	private static boolean match(CharSequence cs, int from, int end, String key) {
+<span class="nc" id="L359">		final int klen = key.length();</span>
+<span class="nc bnc" id="L360" title="All 2 branches missed.">		if (end - from != klen)</span>
+<span class="nc" id="L361">			return false;</span>
+<span class="nc bnc" id="L362" title="All 2 branches missed.">		for (int i = 0; i &lt; klen; i++)</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">			if (cs.charAt(from + i) != key.charAt(i))</span>
+<span class="nc" id="L364">				return false;</span>
+<span class="nc" id="L365">		return true;</span>
 	}
 
 }

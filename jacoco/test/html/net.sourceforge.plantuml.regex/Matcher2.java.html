@@ -53,120 +53,122 @@ public class Matcher2 {
 <span class="fc" id="L53">		this.id = id;</span>
 <span class="fc" id="L54">	}</span>
 
-	public static Matcher2 build(Pattern pattern, CharSequence input) {
+	public static Matcher2 build(Pattern pattern, CharSequence input, int pos) {
 <span class="fc" id="L57">		final long now = System.currentTimeMillis();</span>
 <span class="fc" id="L58">		final String id = pattern.pattern();</span>
 		try {
-<span class="fc" id="L60">			final Matcher matcher2 = pattern.matcher(input);</span>
-<span class="fc" id="L61">			return new Matcher2(matcher2, id);</span>
+<span class="fc" id="L60">			final Matcher matcher = pattern.matcher(input);</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">			if (pos &gt; 0)</span>
+<span class="fc" id="L62">				matcher.region(pos, input.length());</span>
+<span class="fc" id="L63">			return new Matcher2(matcher, id);</span>
 		} finally {
-<span class="nc" id="L63">			if (INSTRUMENT) {</span>
+<span class="nc" id="L65">			if (INSTRUMENT) {</span>
 				addTime(id, System.currentTimeMillis() - now);
 			}
-<span class="nc" id="L66">		}</span>
+<span class="nc" id="L68">		}</span>
 	}
 
 	public boolean matches() {
-<span class="fc" id="L70">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L72">		final long now = System.currentTimeMillis();</span>
 		try {
-<span class="fc" id="L72">			return matcher.matches();</span>
+<span class="fc" id="L74">			return matcher.matches();</span>
 		} finally {
-<span class="fc" id="L74">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L76">			addTime(System.currentTimeMillis() - now);</span>
 		}
 	}
 
 	private void addTime(long duration) {
 		if (INSTRUMENT == false) {
-<span class="fc" id="L80">			return;</span>
+<span class="fc" id="L82">			return;</span>
 		}
 		addTime(id, duration);
 	}
 
-<span class="fc" id="L85">	private static final Map&lt;String, Long&gt; durations = new HashMap&lt;String, Long&gt;();</span>
+<span class="fc" id="L87">	private static final Map&lt;String, Long&gt; durations = new HashMap&lt;String, Long&gt;();</span>
 	private static long printed;
 
 	private static synchronized void addTime(String id, long duration) {
-<span class="nc" id="L89">		Long total = durations.get(id);</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (total == null)</span>
-<span class="nc" id="L91">			total = 0L;</span>
+<span class="nc" id="L91">		Long total = durations.get(id);</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (total == null)</span>
+<span class="nc" id="L93">			total = 0L;</span>
 
-<span class="nc" id="L93">		total += duration;</span>
-<span class="nc" id="L94">		durations.put(id, total);</span>
-<span class="nc" id="L95">		final String longest = getLongest();</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (longest == null)</span>
-<span class="nc" id="L97">			return;</span>
+<span class="nc" id="L95">		total += duration;</span>
+<span class="nc" id="L96">		durations.put(id, total);</span>
+<span class="nc" id="L97">		final String longest = getLongest();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (longest == null)</span>
+<span class="nc" id="L99">			return;</span>
 
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (durations.get(longest) &gt; printed) {</span>
-<span class="nc" id="L100">			Log.info(() -&gt; &quot;---------- Regex &quot; + longest + &quot; &quot; + durations.get(longest) + &quot;ms (&quot; + durations.size()</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (durations.get(longest) &gt; printed) {</span>
+<span class="nc" id="L102">			Log.info(() -&gt; &quot;---------- Regex &quot; + longest + &quot; &quot; + durations.get(longest) + &quot;ms (&quot; + durations.size()</span>
 					+ &quot;)&quot;);
-<span class="nc" id="L102">			printed = durations.get(longest);</span>
+<span class="nc" id="L104">			printed = durations.get(longest);</span>
 		}
 
-<span class="nc" id="L105">	}</span>
+<span class="nc" id="L107">	}</span>
 
 	private static String getLongest() {
-<span class="nc" id="L108">		long max = 0;</span>
-<span class="nc" id="L109">		String result = null;</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		for (Map.Entry&lt;String, Long&gt; ent : durations.entrySet()) {</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">			if (ent.getValue() &gt; max) {</span>
-<span class="nc" id="L112">				max = ent.getValue();</span>
-<span class="nc" id="L113">				result = ent.getKey();</span>
+<span class="nc" id="L110">		long max = 0;</span>
+<span class="nc" id="L111">		String result = null;</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		for (Map.Entry&lt;String, Long&gt; ent : durations.entrySet()) {</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">			if (ent.getValue() &gt; max) {</span>
+<span class="nc" id="L114">				max = ent.getValue();</span>
+<span class="nc" id="L115">				result = ent.getKey();</span>
 			}
-<span class="nc" id="L115">		}</span>
-<span class="nc" id="L116">		return result;</span>
+<span class="nc" id="L117">		}</span>
+<span class="nc" id="L118">		return result;</span>
 	}
 
 	public String group(int n) {
-<span class="fc" id="L120">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L122">		final long now = System.currentTimeMillis();</span>
 		try {
-<span class="fc" id="L122">			return matcher.group(n);</span>
+<span class="fc" id="L124">			return matcher.group(n);</span>
 		} finally {
-<span class="fc" id="L124">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L126">			addTime(System.currentTimeMillis() - now);</span>
 		}
 	}
 
 	public String group() {
-<span class="fc" id="L129">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L131">		final long now = System.currentTimeMillis();</span>
 		try {
-<span class="fc" id="L131">			return matcher.group();</span>
+<span class="fc" id="L133">			return matcher.group();</span>
 		} finally {
-<span class="fc" id="L133">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L135">			addTime(System.currentTimeMillis() - now);</span>
 		}
 	}
 
 	public int groupCount() {
-<span class="fc" id="L138">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L140">		final long now = System.currentTimeMillis();</span>
 		try {
-<span class="fc" id="L140">			return matcher.groupCount();</span>
+<span class="fc" id="L142">			return matcher.groupCount();</span>
 		} finally {
-<span class="fc" id="L142">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L144">			addTime(System.currentTimeMillis() - now);</span>
 		}
 	}
 
 	public boolean find() {
-<span class="fc" id="L147">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L149">		final long now = System.currentTimeMillis();</span>
 		try {
-<span class="fc" id="L149">			return matcher.find();</span>
+<span class="fc" id="L151">			return matcher.find();</span>
 		} finally {
-<span class="fc" id="L151">			addTime(System.currentTimeMillis() - now);</span>
+<span class="fc" id="L153">			addTime(System.currentTimeMillis() - now);</span>
 		}
 	}
 
 	public int end() {
-<span class="nc" id="L156">		final long now = System.currentTimeMillis();</span>
+<span class="nc" id="L158">		final long now = System.currentTimeMillis();</span>
 		try {
-<span class="nc" id="L158">			return matcher.end();</span>
+<span class="nc" id="L160">			return matcher.end();</span>
 		} finally {
-<span class="nc" id="L160">			addTime(System.currentTimeMillis() - now);</span>
+<span class="nc" id="L162">			addTime(System.currentTimeMillis() - now);</span>
 		}
 	}
 
 	public int start() {
-<span class="nc" id="L165">		final long now = System.currentTimeMillis();</span>
+<span class="nc" id="L167">		final long now = System.currentTimeMillis();</span>
 		try {
-<span class="nc" id="L167">			return matcher.start();</span>
+<span class="nc" id="L169">			return matcher.start();</span>
 		} finally {
-<span class="nc" id="L169">			addTime(System.currentTimeMillis() - now);</span>
+<span class="nc" id="L171">			addTime(System.currentTimeMillis() - now);</span>
 		}
 	}
 

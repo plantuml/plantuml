@@ -92,13 +92,13 @@ import net.sourceforge.plantuml.utils.BlocLines;
 <span class="nc bnc" id="L92" title="All 2 branches missed.">		if (first == null)</span>
 <span class="nc" id="L93">			return CommandControl.NOT_OK;</span>
 
-<span class="nc" id="L95">		final UMatcher result1 = starting.match(first.getTrimmed().getString());</span>
+<span class="nc" id="L95">		final UMatcher result1 = starting.match(first.getTrimmed().getString(), 0);</span>
 <span class="nc bnc" id="L96" title="All 2 branches missed.">		if (result1.exactMatch() == false)</span>
 <span class="nc" id="L97">			return CommandControl.NOT_OK;</span>
 
 <span class="nc bnc" id="L99" title="All 2 branches missed.">		if (lines.size() == 1)</span>
 <span class="nc" id="L100">			return CommandControl.OK_PARTIAL;</span>
-<span class="nc" id="L101">		final UMatcher m1 = end.get().match(trimEnd.trim(lines.getLast()));</span>
+<span class="nc" id="L101">		final UMatcher m1 = end.get().match(trimEnd.trim(lines.getLast()), 0);</span>
 <span class="nc bnc" id="L102" title="All 2 branches missed.">		if (m1.exactMatch() == false)</span>
 <span class="nc" id="L103">			return CommandControl.OK_PARTIAL;</span>
 

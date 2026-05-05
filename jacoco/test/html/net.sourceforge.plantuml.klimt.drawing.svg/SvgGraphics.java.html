@@ -1073,19 +1073,19 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 	private String manageScale(UImageSvg svgImage) {
 <span class="fc" id="L1074">		final double svgScale = svgImage.getScale();</span>
 <span class="fc" id="L1075">		String svg = svgImage.getSvg(false);</span>
-<span class="pc bpc" id="L1076" title="1 of 2 branches missed.">		if (svgScale * option.getScale() == 1)</span>
+<span class="fc bfc" id="L1076" title="All 2 branches covered.">		if (svgScale * option.getScale() == 1)</span>
 <span class="fc" id="L1077">			return svg;</span>
 
-<span class="nc" id="L1079">		final String svg2 = svg.replace('\n', ' ').replace('\r', ' ');</span>
-<span class="nc bnc" id="L1080" title="All 4 branches missed.">		if (svg2.contains(&quot;&lt;g &quot;) == false &amp;&amp; svg2.contains(&quot;&lt;g&gt;&quot;) == false) {</span>
+<span class="fc" id="L1079">		final String svg2 = svg.replace('\n', ' ').replace('\r', ' ');</span>
+<span class="pc bpc" id="L1080" title="3 of 4 branches missed.">		if (svg2.contains(&quot;&lt;g &quot;) == false &amp;&amp; svg2.contains(&quot;&lt;g&gt;&quot;) == false) {</span>
 <span class="nc" id="L1081">			svg = svg.replaceFirst(&quot;\\&lt;svg\\&gt;&quot;, &quot;&lt;svg&gt;&lt;g&gt;&quot;);</span>
 <span class="nc" id="L1082">			svg = svg.replaceFirst(&quot;\\&lt;/svg\\&gt;&quot;, &quot;&lt;/g&gt;&lt;/svg&gt;&quot;);</span>
 		}
-<span class="nc" id="L1084">		final String factor = format(svgScale);</span>
-<span class="nc" id="L1085">		final String s1 = &quot;\\&lt;g\\b&quot;;</span>
-<span class="nc" id="L1086">		final String s2 = &quot;&lt;g transform=\&quot;scale(&quot; + factor + &quot;,&quot; + factor + &quot;)\&quot; &quot;;</span>
-<span class="nc" id="L1087">		svg = svg.replaceFirst(s1, s2);</span>
-<span class="nc" id="L1088">		return svg;</span>
+<span class="fc" id="L1084">		final String factor = format(svgScale);</span>
+<span class="fc" id="L1085">		final String s1 = &quot;\\&lt;g\\b&quot;;</span>
+<span class="fc" id="L1086">		final String s2 = &quot;&lt;g transform=\&quot;scale(&quot; + factor + &quot;,&quot; + factor + &quot;)\&quot; &quot;;</span>
+<span class="fc" id="L1087">		svg = svg.replaceFirst(s1, s2);</span>
+<span class="fc" id="L1088">		return svg;</span>
 	}
 
 	private String toBase64(PortableImage image) throws IOException {

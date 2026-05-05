@@ -59,14 +59,14 @@ public abstract class CommandMultilines&lt;S extends Diagram&gt; implements Comm
 <span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (isCommandForbidden(lines))</span>
 <span class="nc" id="L60">			return CommandControl.NOT_OK;</span>
 
-<span class="fc" id="L62">		Matcher2 m1 = starting.matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L62">		Matcher2 m1 = starting.matcher(lines.getFirst().getTrimmed().getString(), 0);</span>
 <span class="fc bfc" id="L63" title="All 2 branches covered.">		if (m1.matches() == false)</span>
 <span class="fc" id="L64">			return CommandControl.NOT_OK;</span>
 
 <span class="fc bfc" id="L66" title="All 2 branches covered.">		if (lines.size() == 1)</span>
 <span class="fc" id="L67">			return CommandControl.OK_PARTIAL;</span>
 
-<span class="fc" id="L69">		m1 = ending.matcher(lines.getLast().getTrimmed().getString());</span>
+<span class="fc" id="L69">		m1 = ending.matcher(lines.getLast().getTrimmed().getString(), 0);</span>
 <span class="fc bfc" id="L70" title="All 2 branches covered.">		if (m1.matches() == false)</span>
 <span class="fc" id="L71">			return CommandControl.OK_PARTIAL;</span>
 

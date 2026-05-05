@@ -103,23 +103,23 @@ public class UrlBuilder {
 
 	public Url getUrl(String s) {
 		Matcher2 m;
-<span class="fc" id="L106">		m = QUOTED.matcher(s);</span>
+<span class="fc" id="L106">		m = QUOTED.matcher(s, 0);</span>
 <span class="fc bfc" id="L107" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
 <span class="fc" id="L108">			return new Url(withTopUrl(m.group(1)), m.group(2), m.group(3));</span>
 
-<span class="fc" id="L110">		m = ONLY_TOOLTIP.matcher(s);</span>
+<span class="fc" id="L110">		m = ONLY_TOOLTIP.matcher(s, 0);</span>
 <span class="fc bfc" id="L111" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
 <span class="fc" id="L112">			return new Url(&quot;&quot;, m.group(1), null);</span>
 
-<span class="fc" id="L114">		m = ONLY_TOOLTIP_AND_LABEL.matcher(s);</span>
+<span class="fc" id="L114">		m = ONLY_TOOLTIP_AND_LABEL.matcher(s, 0);</span>
 <span class="fc bfc" id="L115" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
 <span class="fc" id="L116">			return new Url(&quot;&quot;, m.group(1), m.group(2));</span>
 
-<span class="fc" id="L118">		m = LINK_TOOLTIP_NOLABEL.matcher(s);</span>
+<span class="fc" id="L118">		m = LINK_TOOLTIP_NOLABEL.matcher(s, 0);</span>
 <span class="fc bfc" id="L119" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
 <span class="fc" id="L120">			return new Url(withTopUrl(m.group(1)), m.group(2), null);</span>
 
-<span class="fc" id="L122">		m = LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL.matcher(s);</span>
+<span class="fc" id="L122">		m = LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL.matcher(s, 0);</span>
 <span class="fc bfc" id="L123" title="All 2 branches covered.">		if (matchesOrFind(m))</span>
 <span class="fc" id="L124">			return new Url(withTopUrl(m.group(1)), m.group(2), m.group(3));</span>
 

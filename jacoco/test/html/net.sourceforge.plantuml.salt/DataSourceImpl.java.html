@@ -60,7 +60,7 @@ public class DataSourceImpl implements DataSource {
 <span class="nc" id="L60">					continue;</span>
 
 <span class="nc bnc" id="L62" title="All 2 branches missed.">				final Terminator terminator = st.hasMoreTokens() ? Terminator.NEWCOL : Terminator.NEWLINE;</span>
-<span class="nc" id="L63">				final Matcher2 m = STRUCTURED_BLOCK_START_PATTERN.matcher(token);</span>
+<span class="nc" id="L63">				final Matcher2 m = STRUCTURED_BLOCK_START_PATTERN.matcher(token, 0);</span>
 <span class="nc" id="L64">				final boolean found = m.find();</span>
 <span class="nc bnc" id="L65" title="All 2 branches missed.">				if (found == false) {</span>
 <span class="nc" id="L66">					addInternal(token, terminator);</span>

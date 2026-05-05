@@ -65,7 +65,7 @@ public class SvgAttributes {
 	public static SvgAttributes build(String args) {
 <span class="nc" id="L66">		final SvgAttributes result = new SvgAttributes();</span>
 		// ::comment when __HAXE__
-<span class="nc" id="L68">		final Matcher2 m = p.matcher(args);</span>
+<span class="nc" id="L68">		final Matcher2 m = p.matcher(args, 0);</span>
 <span class="nc bnc" id="L69" title="All 2 branches missed.">		while (m.find())</span>
 <span class="nc" id="L70">			result.attributes.put(m.group(1), StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(2)));</span>
 		// ::done

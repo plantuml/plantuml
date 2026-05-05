@@ -92,7 +92,7 @@ public class CreoleParser implements SheetBuilder {
 <span class="fc" id="L92">			final StripeTable table = (StripeTable) lastStripe;</span>
 <span class="fc" id="L93">			table.analyzeAndAddLine(line);</span>
 <span class="fc" id="L94">			return null;</span>
-<span class="pc bpc" id="L95" title="3 of 4 branches missed.">		} else if (lastStripe instanceof StripeTree &amp;&amp; Parser.isTreeStart(StringUtils.trinNoTrace(line))) {</span>
+<span class="pc bpc" id="L95" title="3 of 4 branches missed.">		} else if (lastStripe instanceof StripeTree &amp;&amp; Parser.isTreeStart(StringUtils.trim2(line))) {</span>
 <span class="nc" id="L96">			final StripeTree tree = (StripeTree) lastStripe;</span>
 <span class="nc" id="L97">			tree.analyzeAndAdd(line);</span>
 <span class="nc" id="L98">			return null;</span>
@@ -118,7 +118,7 @@ public class CreoleParser implements SheetBuilder {
 
 <span class="fc" id="L119">	private static final Pattern STARTS_BY_COLOR_PATTERN = Pattern.compile(&quot;^\\=?\\s*(\\&lt;#\\w+(,#?\\w+)?\\&gt;).*&quot;);</span>
 
-	public static boolean isTableLine(String line) {
+	public static boolean isTableLine(CharSequence line) {
 <span class="fc" id="L122">		return TABLE_LINE_PATTERN.matcher(line).matches();</span>
 	}
 
@@ -149,7 +149,7 @@ public class CreoleParser implements SheetBuilder {
 				if (Jaws.TRACE)
 					System.err.println(&quot;createSheetSlow:&quot; + cs);
 				final List&lt;Stripe&gt; stripes;
-<span class="fc" id="L152">				final String type = EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(cs));</span>
+<span class="fc" id="L152">				final String type = EmbeddedDiagram.getEmbeddedType(cs);</span>
 <span class="fc bfc" id="L153" title="All 2 branches covered.">				if (type != null) {</span>
 <span class="fc" id="L154">					final Atom embeddedDiagram = EmbeddedDiagram.createAndSkip(type, it, skinParam);</span>
 <span class="pc bpc" id="L155" title="1 of 2 branches missed.">					if (checkColor)</span>

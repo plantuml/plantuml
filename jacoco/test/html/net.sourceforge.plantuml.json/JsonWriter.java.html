@@ -120,8 +120,8 @@ class JsonWriter {
 			}
 <span class="nc bnc" id="L121" title="All 2 branches missed.">			return ch == '\u2028' ? UNICODE_2028_CHARS : UNICODE_2029_CHARS;</span>
 		}
-<span class="fc bfc" id="L123" title="All 2 branches covered.">		if (ch == '\\') {</span>
-<span class="fc" id="L124">			return BS_CHARS;</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (ch == '\\') {</span>
+<span class="nc" id="L124">			return BS_CHARS;</span>
 		}
 <span class="fc bfc" id="L126" title="All 2 branches covered.">		if (ch &gt; '&quot;') {</span>
 			// This range contains '0' .. '9' and 'A' .. 'Z'. Need 3 checks to get here.

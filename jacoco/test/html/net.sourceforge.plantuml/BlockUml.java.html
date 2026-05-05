@@ -162,7 +162,7 @@ public class BlockUml {
 <span class="pc bpc" id="L162" title="1 of 2 branches missed.">		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD))</span>
 <span class="nc" id="L163">			return null;</span>
 
-<span class="fc" id="L165">		final Matcher2 m = StartUtils.patternFilename.matcher(StringUtils.trin(data.get(0).getString()));</span>
+<span class="fc" id="L165">		final Matcher2 m = StartUtils.patternFilename.matcher(StringUtils.trin(data.get(0).getString()), 0);</span>
 <span class="fc" id="L166">		final boolean ok = m.find();</span>
 <span class="fc bfc" id="L167" title="All 2 branches covered.">		if (ok == false)</span>
 <span class="fc" id="L168">			return null;</span>

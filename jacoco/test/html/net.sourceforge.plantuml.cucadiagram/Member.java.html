@@ -59,15 +59,15 @@ public class Member implements CharSequence {
 
 	@Override
 	public String toString() {
-<span class="fc" id="L62">		return raw.toString();</span>
+<span class="nc" id="L62">		return raw.toString();</span>
 	}
 
 	public char charAt(int index) {
-<span class="nc" id="L66">		return raw.charAt(index);</span>
+<span class="fc" id="L66">		return raw.charAt(index);</span>
 	}
 
 	public int length() {
-<span class="nc" id="L70">		return raw.length();</span>
+<span class="fc" id="L70">		return raw.length();</span>
 	}
 
 	public CharSequence subSequence(int start, int end) {
@@ -103,7 +103,7 @@ public class Member implements CharSequence {
 <span class="fc" id="L103">		tmpDisplay = REMOVE_TAG_PATTERN.matcher(tmpDisplay.toString()).replaceAll(&quot;&quot;);</span>
 
 <span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (manageModifier) {</span>
-<span class="fc" id="L106">			final Matcher2 matcher = URL.matcher(tmpDisplay);</span>
+<span class="fc" id="L106">			final Matcher2 matcher = URL.matcher(tmpDisplay, 0);</span>
 <span class="pc bpc" id="L107" title="1 of 2 branches missed.">			if (matcher.matches() == false)</span>
 <span class="nc" id="L108">				throw new IllegalStateException();</span>
 

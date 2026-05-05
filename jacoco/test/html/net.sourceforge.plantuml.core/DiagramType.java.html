@@ -66,7 +66,7 @@ import net.sourceforge.plantuml.style.SName;
 		}
 	}
 
-	static public Collection&lt;DiagramType&gt; findStartTypes(String text) {
+	static public Collection&lt;DiagramType&gt; findStartTypes(CharSequence text) {
 <span class="fc bfc" id="L70" title="All 2 branches covered.">		for (int i = 0; i &lt; text.length(); i++) {</span>
 <span class="fc" id="L71">			final char c = text.charAt(i);</span>
 
@@ -91,7 +91,7 @@ import net.sourceforge.plantuml.style.SName;
 <span class="fc" id="L91">		return EMPTY;</span>
 	}
 
-	private static Collection&lt;DiagramType&gt; getTypes(String text, final int p) {
+	private static Collection&lt;DiagramType&gt; getTypes(CharSequence text, final int p) {
 <span class="fc bfc" id="L95" title="All 18 branches covered.">		switch (Character.toLowerCase(text.charAt(p))) {</span>
 
 		case 'b':
@@ -217,78 +217,88 @@ import net.sourceforge.plantuml.style.SName;
 		}
 	}
 
-	static boolean check(String key, String text, int p) {
-<span class="fc" id="L221">		return text.regionMatches(true, p, key, 0, key.length());</span>
+	static boolean check(String key, CharSequence text, int p) {
+<span class="fc" id="L221">		final int len = key.length();</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">		if (p + len &gt; text.length())</span>
+<span class="fc" id="L223">			return false;</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">		for (int i = 0; i &lt; len; i++) {</span>
+<span class="fc" id="L225">			char c = text.charAt(p + i);</span>
+<span class="fc bfc" id="L226" title="All 4 branches covered.">			if (c &gt;= 'A' &amp;&amp; c &lt;= 'Z')</span>
+<span class="fc" id="L227">				c += 'a' - 'A';</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">			if (c != key.charAt(i))</span>
+<span class="fc" id="L229">				return false;</span>
+		}
+<span class="fc" id="L231">		return true;</span>
 	}
 
 	public SName getStyleName() {
-<span class="fc bfc" id="L225" title="All 2 branches covered.">		if (this == SEQUENCE)</span>
-<span class="fc" id="L226">			return SName.sequenceDiagram;</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">		if (this == SEQUENCE)</span>
+<span class="fc" id="L236">			return SName.sequenceDiagram;</span>
 
-<span class="fc bfc" id="L228" title="All 2 branches covered.">		if (this == STATE)</span>
-<span class="fc" id="L229">			return SName.stateDiagram;</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">		if (this == STATE)</span>
+<span class="fc" id="L239">			return SName.stateDiagram;</span>
 
-<span class="fc bfc" id="L231" title="All 2 branches covered.">		if (this == CLASS)</span>
-<span class="fc" id="L232">			return SName.classDiagram;</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">		if (this == CLASS)</span>
+<span class="fc" id="L242">			return SName.classDiagram;</span>
 
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">		if (this == OBJECT)</span>
-<span class="nc" id="L235">			return SName.objectDiagram;</span>
+<span class="pc bpc" id="L244" title="1 of 2 branches missed.">		if (this == OBJECT)</span>
+<span class="nc" id="L245">			return SName.objectDiagram;</span>
 
-<span class="fc bfc" id="L237" title="All 2 branches covered.">		if (this == ACTIVITY)</span>
-<span class="fc" id="L238">			return SName.activityDiagram;</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">		if (this == ACTIVITY)</span>
+<span class="fc" id="L248">			return SName.activityDiagram;</span>
 
-<span class="fc bfc" id="L240" title="All 2 branches covered.">		if (this == DESCRIPTION)</span>
-<span class="fc" id="L241">			return SName.componentDiagram;</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">		if (this == DESCRIPTION)</span>
+<span class="fc" id="L251">			return SName.componentDiagram;</span>
 
-<span class="fc bfc" id="L243" title="All 2 branches covered.">		if (this == MINDMAP)</span>
-<span class="fc" id="L244">			return SName.mindmapDiagram;</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">		if (this == MINDMAP)</span>
+<span class="fc" id="L254">			return SName.mindmapDiagram;</span>
 
-<span class="fc bfc" id="L246" title="All 2 branches covered.">		if (this == WBS)</span>
-<span class="fc" id="L247">			return SName.wbsDiagram;</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">		if (this == WBS)</span>
+<span class="fc" id="L257">			return SName.wbsDiagram;</span>
 
-<span class="fc bfc" id="L249" title="All 2 branches covered.">		if (this == GANTT)</span>
-<span class="fc" id="L250">			return SName.ganttDiagram;</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">		if (this == GANTT)</span>
+<span class="fc" id="L260">			return SName.ganttDiagram;</span>
 
-<span class="pc bpc" id="L252" title="1 of 2 branches missed.">		if (this == SALT)</span>
-<span class="nc" id="L253">			return SName.saltDiagram;</span>
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">		if (this == SALT)</span>
+<span class="nc" id="L263">			return SName.saltDiagram;</span>
 
-<span class="pc bpc" id="L255" title="1 of 2 branches missed.">		if (this == YAML)</span>
-<span class="nc" id="L256">			return SName.yamlDiagram;</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">		if (this == YAML)</span>
+<span class="nc" id="L266">			return SName.yamlDiagram;</span>
 
-<span class="pc bpc" id="L258" title="1 of 2 branches missed.">		if (this == HCL)</span>
-<span class="nc" id="L259">			return SName.yamlDiagram;</span>
+<span class="pc bpc" id="L268" title="1 of 2 branches missed.">		if (this == HCL)</span>
+<span class="nc" id="L269">			return SName.yamlDiagram;</span>
 
-<span class="fc bfc" id="L261" title="All 2 branches covered.">		if (this == JSON)</span>
-<span class="fc" id="L262">			return SName.jsonDiagram;</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">		if (this == JSON)</span>
+<span class="fc" id="L272">			return SName.jsonDiagram;</span>
 
-<span class="fc bfc" id="L264" title="All 2 branches covered.">		if (this == TIMING)</span>
-<span class="fc" id="L265">			return SName.timingDiagram;</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">		if (this == TIMING)</span>
+<span class="fc" id="L275">			return SName.timingDiagram;</span>
 
-<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (this == NWDIAG)</span>
-<span class="nc" id="L268">			return SName.nwdiagDiagram;</span>
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">		if (this == NWDIAG)</span>
+<span class="nc" id="L278">			return SName.nwdiagDiagram;</span>
 
-<span class="pc bpc" id="L270" title="1 of 2 branches missed.">		if (this == EBNF)</span>
-<span class="nc" id="L271">			return SName.ebnf;</span>
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">		if (this == EBNF)</span>
+<span class="nc" id="L281">			return SName.ebnf;</span>
 
-<span class="pc bpc" id="L273" title="1 of 2 branches missed.">		if (this == REGEX)</span>
-<span class="nc" id="L274">			return SName.regex;</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">		if (this == REGEX)</span>
+<span class="nc" id="L284">			return SName.regex;</span>
 
-<span class="pc bpc" id="L276" title="1 of 2 branches missed.">		if (this == CHRONOLOGY)</span>
-<span class="nc" id="L277">			return SName.ganttDiagram;</span>
+<span class="pc bpc" id="L286" title="1 of 2 branches missed.">		if (this == CHRONOLOGY)</span>
+<span class="nc" id="L287">			return SName.ganttDiagram;</span>
 
-<span class="pc bpc" id="L279" title="1 of 2 branches missed.">		if (this == CHART)</span>
-<span class="nc" id="L280">			return SName.chartDiagram;</span>
+<span class="pc bpc" id="L289" title="1 of 2 branches missed.">		if (this == CHART)</span>
+<span class="nc" id="L290">			return SName.chartDiagram;</span>
 
-<span class="fc bfc" id="L282" title="All 2 branches covered.">		if (this == PACKET)</span>
-<span class="fc" id="L283">			return SName.packetdiagDiagram;</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">		if (this == PACKET)</span>
+<span class="fc" id="L293">			return SName.packetdiagDiagram;</span>
 
-<span class="fc" id="L285">		return SName.activityDiagram;</span>
+<span class="fc" id="L295">		return SName.activityDiagram;</span>
 	}
 
 	public String humanReadableName() {
-<span class="pc bpc" id="L289" title="1 of 2 branches missed.">		if (this == DESCRIPTION)</span>
-<span class="nc" id="L290">			return &quot;component&quot;;</span>
-<span class="fc" id="L291">		return name().toLowerCase();</span>
+<span class="pc bpc" id="L299" title="1 of 2 branches missed.">		if (this == DESCRIPTION)</span>
+<span class="nc" id="L300">			return &quot;component&quot;;</span>
+<span class="fc" id="L301">		return name().toLowerCase();</span>
 	}
 
 }

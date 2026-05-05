@@ -1840,7 +1840,7 @@ Total Classes: 14
 "net.sourceforge.plantuml.klimt.creole.atom" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.klimt.creole.atom" --> "net.sourceforge.plantuml.url"
 
-class "net.sourceforge.plantuml.klimt.creole.command" %lighten("red", 98) {
+class "net.sourceforge.plantuml.klimt.creole.command" %lighten("red", 96) {
 Total Classes: 19
 }
 "net.sourceforge.plantuml.klimt.creole.command" --> "java.lang"
@@ -1858,8 +1858,8 @@ Total Classes: 19
 "net.sourceforge.plantuml.klimt.creole.command" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.klimt.creole.command" --> "net.sourceforge.plantuml.url"
 
-class "net.sourceforge.plantuml.klimt.creole.legacy" %lighten("red", 90) {
-Total Classes: 16
+class "net.sourceforge.plantuml.klimt.creole.legacy" %lighten("red", 89) {
+Total Classes: 15
 }
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "java.lang"
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "java.util"
@@ -1872,7 +1872,6 @@ Total Classes: 16
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.klimt.creole"
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.klimt.creole.atom"
-"net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.klimt.creole.command"
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.klimt.drawing"
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.klimt.font"
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.klimt.geom"
@@ -1881,7 +1880,6 @@ Total Classes: 16
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.regex"
-"net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.security"
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.stereo"
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.style"
@@ -2750,7 +2748,7 @@ Total Classes: 3
 "net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.svek"
 
-class "net.sourceforge.plantuml.security" %lighten("red", 49) {
+class "net.sourceforge.plantuml.security" %lighten("red", 50) {
 Total Classes: 7
 }
 "net.sourceforge.plantuml.security" --> "java.awt.image"

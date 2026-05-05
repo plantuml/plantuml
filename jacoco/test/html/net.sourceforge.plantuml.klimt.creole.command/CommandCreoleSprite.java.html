@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
@@ -46,48 +49,49 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 public class CommandCreoleSprite implements Command {
 
 	@Override
-	public String startingChars() {
-<span class="fc" id="L50">		return &quot;&lt;&quot;;</span>
+	public Collection&lt;String&gt; starters() {
+<span class="fc" id="L53">		return Arrays.asList(&quot;&lt;#&quot;, &quot;&lt;$&quot;);</span>
 	}
 
-<span class="fc" id="L53">	private static final Pattern2 pattern = Pattern2.cmpile(&quot;^(&quot; + Splitter.spritePattern + &quot;)&quot;);</span>
+<span class="fc" id="L56">	private static final Pattern2 pattern = Pattern2.cmpile(&quot;^(&quot; + Splitter.spritePattern + &quot;)&quot;);</span>
 
 	private CommandCreoleSprite() {
 	}
 
 	public static Command create() {
-<span class="fc" id="L59">		return new CommandCreoleSprite();</span>
-	}
-
-	public int matchingSize(String line) {
-<span class="fc" id="L63">		final Matcher2 m = pattern.matcher(line);</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (m.find() == false)</span>
-<span class="fc" id="L65">			return 0;</span>
-
-<span class="fc" id="L67">		return m.group(1).length();</span>
+<span class="fc" id="L62">		return new CommandCreoleSprite();</span>
 	}
 
 	@Override
-	public String executeAndGetRemaining(ISkinSimple skinSimple, String line, StripeSimple stripe) {
-<span class="fc" id="L72">		final Matcher2 m = pattern.matcher(line);</span>
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (m.find() == false)</span>
-<span class="nc" id="L74">			throw new IllegalStateException();</span>
+	public int matchingSize(String line, int pos) {
+<span class="fc" id="L67">		final Matcher2 m = pattern.matcher(line, pos);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (m.find() == false)</span>
+<span class="nc" id="L69">			return 0;</span>
 
-<span class="fc" id="L76">		final FontConfiguration fc = stripe.getActualFontConfiguration();</span>
-<span class="fc" id="L77">		final String src = m.group(3);</span>
-<span class="fc" id="L78">		final double scale = Parser.getScale(m.group(4), 1) * fc.getSize2D() / 13.0;</span>
+<span class="fc" id="L71">		return m.group(1).length();</span>
+	}
 
-<span class="fc" id="L80">		String colorName = m.group(2);</span>
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (colorName == null)</span>
-<span class="fc" id="L82">			colorName = Parser.getColor(m.group(4));</span>
+	@Override
+	public int executeAndGetRemaining(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
+<span class="fc" id="L76">		final Matcher2 m = pattern.matcher(line, pos);</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (m.find() == false)</span>
+<span class="nc" id="L78">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L84">		HColor color = null;</span>
-<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (colorName != null) {</span>
-<span class="fc" id="L86">			final ISkinSimple skinParam = stripe.getSkinParam();</span>
-<span class="fc" id="L87">			color = skinParam.getIHtmlColorSet().getColorOrWhite(colorName);</span>
+<span class="fc" id="L80">		final FontConfiguration fc = stripe.getActualFontConfiguration();</span>
+<span class="fc" id="L81">		final String src = m.group(3);</span>
+<span class="fc" id="L82">		final double scale = Parser.getScale(m.group(4), 1) * fc.getSize2D() / 13.0;</span>
+
+<span class="fc" id="L84">		String colorName = m.group(2);</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (colorName == null)</span>
+<span class="fc" id="L86">			colorName = Parser.getColor(m.group(4));</span>
+
+<span class="fc" id="L88">		HColor color = null;</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (colorName != null) {</span>
+<span class="fc" id="L90">			final ISkinSimple skinParam = stripe.getSkinParam();</span>
+<span class="fc" id="L91">			color = skinParam.getIHtmlColorSet().getColorOrWhite(colorName);</span>
 		}
-<span class="fc" id="L89">		stripe.addSprite(src, scale, color);</span>
-<span class="fc" id="L90">		return line.substring(m.group(1).length());</span>
+<span class="fc" id="L93">		stripe.addSprite(src, scale, color);</span>
+<span class="fc" id="L94">		return m.group(1).length();</span>
 	}
 
 }

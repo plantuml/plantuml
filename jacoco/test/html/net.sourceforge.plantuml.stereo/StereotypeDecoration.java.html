@@ -186,7 +186,7 @@ public class StereotypeDecoration {
 
 	static List&lt;String&gt; cutLabels(final String label, Guillemet guillemet) {
 <span class="fc" id="L188">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L189">		final Matcher2 m = p.matcher(label);</span>
+<span class="fc" id="L189">		final Matcher2 m = p.matcher(label, 0);</span>
 <span class="fc bfc" id="L190" title="All 2 branches covered.">		while (m.find()) {</span>
 <span class="fc" id="L191">			final String group = m.group();</span>
 <span class="pc bpc" id="L192" title="1 of 2 branches missed.">			if (group.startsWith(&quot;&lt;&lt;&lt;&quot;) == false)</span>

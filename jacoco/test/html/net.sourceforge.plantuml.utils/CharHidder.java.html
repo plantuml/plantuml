@@ -36,69 +36,93 @@
 package net.sourceforge.plantuml.utils;
 
 <span class="nc" id="L38">public class CharHidder {</span>
-	// ::remove file when __HAXE__
 
 	public static String addTileAtBegin(String s) {
-<span class="nc" id="L42">		return &quot;~&quot; + s;</span>
+<span class="nc" id="L41">		return &quot;~&quot; + s;</span>
 	}
 
 	public static String hide(String s) {
-		// System.err.println(&quot;hide &quot; + s);
-<span class="fc" id="L47">		final StringBuilder result = new StringBuilder();</span>
-<span class="fc bfc" id="L48" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
-<span class="fc" id="L49">			final char c = s.charAt(i);</span>
-<span class="pc bpc" id="L50" title="1 of 6 branches missed.">			if (c == '\\' &amp;&amp; i + 1 &lt; s.length() &amp;&amp; s.charAt(i + 1) == '~') {</span>
-<span class="nc" id="L51">				result.append(hideChar('~'));</span>
-<span class="nc" id="L52">				i++;</span>
-<span class="pc bpc" id="L53" title="1 of 4 branches missed.">			} else if (c == '~' &amp;&amp; i + 1 &lt; s.length()) {</span>
-<span class="fc" id="L54">				i++;</span>
-<span class="fc" id="L55">				final char c2 = s.charAt(i);</span>
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">				if (isToBeHidden(c2)) {</span>
-<span class="nc" id="L57">					result.append(hideChar(c2));</span>
-				} else {
-<span class="fc" id="L59">					result.append(c);</span>
-<span class="fc" id="L60">					result.append(c2);</span>
-				}
-
-<span class="fc" id="L63">			} else {</span>
-<span class="fc" id="L64">				result.append(c);</span>
-			}
-		}
-		// System.err.println(&quot;---&gt; &quot; + result);
-<span class="fc" id="L68">		return result.toString();</span>
+<span class="fc" id="L45">	    final int len = s.length();</span>
+<span class="fc" id="L46">	    char[] buf = null; // allocated lazily on first match</span>
+<span class="fc" id="L47">	    int n = 0; // write index in buf</span>
+<span class="fc" id="L48">	    int i = 0;</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">	    while (i &lt; len) {</span>
+<span class="fc" id="L50">	        final char c = s.charAt(i);</span>
+<span class="fc bfc" id="L51" title="All 6 branches covered.">	        if (c == '\\' &amp;&amp; i + 1 &lt; len &amp;&amp; s.charAt(i + 1) == '~') {</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">	            if (buf == null) {</span>
+<span class="fc" id="L53">	                buf = new char[len];</span>
+<span class="fc" id="L54">	                s.getChars(0, i, buf, 0);</span>
+<span class="fc" id="L55">	                n = i;</span>
+	            }
+<span class="fc" id="L57">	            buf[n++] = (char) ('\uE000' + '~');</span>
+<span class="fc" id="L58">	            i += 2;</span>
+<span class="fc bfc" id="L59" title="All 4 branches covered.">	        } else if (c == '~' &amp;&amp; i + 1 &lt; len) {</span>
+<span class="fc" id="L60">	            final char c2 = s.charAt(i + 1);</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">	            if (isToBeHidden(c2)) {</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">	                if (buf == null) {</span>
+<span class="fc" id="L63">	                    buf = new char[len];</span>
+<span class="fc" id="L64">	                    s.getChars(0, i, buf, 0);</span>
+<span class="fc" id="L65">	                    n = i;</span>
+	                }
+<span class="fc" id="L67">	                buf[n++] = (char) ('\uE000' + c2);</span>
+<span class="fc" id="L68">	                i += 2;</span>
+	            } else {
+<span class="fc bfc" id="L70" title="All 2 branches covered.">	                if (buf != null) {</span>
+<span class="fc" id="L71">	                    buf[n++] = c;</span>
+<span class="fc" id="L72">	                    buf[n++] = c2;</span>
+	                }
+<span class="fc" id="L74">	                i += 2;</span>
+	            }
+<span class="fc" id="L76">	        } else {</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">	            if (buf != null)</span>
+<span class="fc" id="L78">	                buf[n++] = c;</span>
+<span class="fc" id="L79">	            i++;</span>
+	        }
+<span class="fc" id="L81">	    }</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">	    return buf == null ? s : new String(buf, 0, n);</span>
 	}
-
 	private static boolean isToBeHidden(final char c) {
-<span class="pc bpc" id="L72" title="10 of 20 branches missed.">		if (c == '_' || c == '-' || c == '\&quot;' || c == '#' || c == ']' || c == '[' || c == '*' || c == '.' || c == '/'</span>
-				|| c == '&lt;') {
-<span class="nc" id="L74">			return true;</span>
-		}
-<span class="fc" id="L76">		return false;</span>
+<span class="fc bfc" id="L85" title="All 20 branches covered.">		if (c == '_' || c == '-' || c == '\&quot;' || c == '#' || c == ']' || c == '[' || c == '*' || c == '.' || c == '/'</span>
+				|| c == '&lt;')
+<span class="fc" id="L87">			return true;</span>
+
+<span class="fc" id="L89">		return false;</span>
 	}
 
 	private static char hideChar(char c) {
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (c &gt; 255) {</span>
-<span class="nc" id="L81">			throw new IllegalArgumentException();</span>
-		}
-<span class="nc" id="L83">		return (char) ('\uE000' + c);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (c &gt; 255)</span>
+<span class="nc" id="L94">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L96">		return (char) ('\uE000' + c);</span>
 	}
 
 	private static char unhideChar(char c) {
-<span class="pc bpc" id="L87" title="1 of 4 branches missed.">		if (c &gt;= '\uE000' &amp;&amp; c &lt;= '\uE0FF') {</span>
-<span class="nc" id="L88">			return (char) (c - '\uE000');</span>
-		}
-<span class="fc" id="L90">		return c;</span>
+<span class="nc bnc" id="L100" title="All 4 branches missed.">		if (c &gt;= '\uE000' &amp;&amp; c &lt;= '\uE0FF')</span>
+<span class="nc" id="L101">			return (char) (c - '\uE000');</span>
+
+<span class="nc" id="L103">		return c;</span>
 	}
 
 	public static String unhide(String s) {
-<span class="fc" id="L94">		final StringBuilder result = new StringBuilder();</span>
-<span class="fc bfc" id="L95" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
-<span class="fc" id="L96">			final char c = s.charAt(i);</span>
-<span class="fc" id="L97">			result.append(unhideChar(c));</span>
-		}
-		// System.err.println(&quot;unhide &quot; + result);
-<span class="fc" id="L100">		return result.toString();</span>
+<span class="fc" id="L107">	    final int len = s.length();</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">	    for (int i = 0; i &lt; len; i++) {</span>
+<span class="fc" id="L109">	        final char c = s.charAt(i);</span>
+<span class="fc bfc" id="L110" title="All 4 branches covered.">	        if (c &gt;= '\uE000' &amp;&amp; c &lt;= '\uE0FF') {</span>
+	            // First hidden char found at position i.
+<span class="fc" id="L112">	            final char[] buf = new char[len];</span>
+<span class="fc" id="L113">	            s.getChars(0, i, buf, 0);</span>
+<span class="fc" id="L114">	            buf[i] = (char) (c - '\uE000');</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">	            for (int j = i + 1; j &lt; len; j++) {</span>
+<span class="fc" id="L116">	                final char cj = s.charAt(j);</span>
+<span class="pc bpc" id="L117" title="1 of 4 branches missed.">	                if (cj &gt;= '\uE000' &amp;&amp; cj &lt;= '\uE0FF')</span>
+<span class="fc" id="L118">	                    buf[j] = (char) (cj - '\uE000');</span>
+	                else
+<span class="fc" id="L120">	                    buf[j] = cj;</span>
+	            }
+<span class="fc" id="L122">	            return new String(buf);</span>
+	        }
+	    }
+<span class="fc" id="L125">	    return s;</span>
 	}
-
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

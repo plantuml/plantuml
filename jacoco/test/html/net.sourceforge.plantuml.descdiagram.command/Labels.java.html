@@ -77,21 +77,21 @@ public class Labels {
 
 	private String init(String labelLink) {
 <span class="pc bpc" id="L79" title="2 of 4 branches missed.">		if (firstLabel == null &amp;&amp; secondLabel == null) {</span>
-<span class="fc" id="L80">			final Matcher2 m1 = BOTH_LABELS.matcher(labelLink);</span>
+<span class="fc" id="L80">			final Matcher2 m1 = BOTH_LABELS.matcher(labelLink, 0);</span>
 <span class="pc bpc" id="L81" title="1 of 2 branches missed.">			if (m1.matches()) {</span>
 <span class="nc" id="L82">				firstLabel = m1.group(1);</span>
 <span class="nc" id="L83">				secondLabel = m1.group(3);</span>
 <span class="nc" id="L84">				return StringUtils</span>
 <span class="nc" id="L85">						.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m1.group(2))));</span>
 			}
-<span class="fc" id="L87">			final Matcher2 m2 = FIRST_LABEL_ONLY.matcher(labelLink);</span>
+<span class="fc" id="L87">			final Matcher2 m2 = FIRST_LABEL_ONLY.matcher(labelLink, 0);</span>
 <span class="pc bpc" id="L88" title="1 of 2 branches missed.">			if (m2.matches()) {</span>
 <span class="nc" id="L89">				firstLabel = m2.group(1);</span>
 <span class="nc" id="L90">				secondLabel = null;</span>
 <span class="nc" id="L91">				return StringUtils</span>
 <span class="nc" id="L92">						.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m2.group(2))));</span>
 			}
-<span class="fc" id="L94">			final Matcher2 m3 = SECOND_LABEL_ONLY.matcher(labelLink);</span>
+<span class="fc" id="L94">			final Matcher2 m3 = SECOND_LABEL_ONLY.matcher(labelLink, 0);</span>
 <span class="pc bpc" id="L95" title="1 of 2 branches missed.">			if (m3.matches()) {</span>
 <span class="nc" id="L96">				firstLabel = null;</span>
 <span class="nc" id="L97">				secondLabel = m3.group(2);</span>

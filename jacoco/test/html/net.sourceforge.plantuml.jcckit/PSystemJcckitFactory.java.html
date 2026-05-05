@@ -75,7 +75,7 @@ public class PSystemJcckitFactory extends PSystemBasicFactory&lt;PSystemJcckit&g
 <span class="nc" id="L75">	private static final Pattern2 p = Pattern2.cmpile(&quot;\\((\\d+),(\\d+)\\)&quot;);</span>
 
 	private void extractDimension(String startLine) {
-<span class="nc" id="L78">		final Matcher2 m = p.matcher(startLine);</span>
+<span class="nc" id="L78">		final Matcher2 m = p.matcher(startLine, 0);</span>
 <span class="nc" id="L79">		final boolean ok = m.find();</span>
 <span class="nc bnc" id="L80" title="All 2 branches missed.">		if (ok) {</span>
 <span class="nc" id="L81">			width = Integer.parseInt(m.group(1));</span>

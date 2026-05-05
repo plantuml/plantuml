@@ -88,7 +88,7 @@ public class BodyEnhanced2 extends BodyEnhancedAbstract {
 <span class="fc" id="L88">		final Iterator&lt;CharSequence&gt; it = rawBody.iterator();</span>
 <span class="fc bfc" id="L89" title="All 2 branches covered.">		while (it.hasNext()) {</span>
 <span class="fc" id="L90">			final CharSequence s = it.next();</span>
-<span class="fc" id="L91">			final String type = EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(s));</span>
+<span class="fc" id="L91">			final String type = EmbeddedDiagram.getEmbeddedType(s);</span>
 <span class="fc bfc" id="L92" title="All 2 branches covered.">			if (type != null) {</span>
 <span class="fc" id="L93">				display = display.add(s);</span>
 <span class="fc" id="L94">				display = addOneSingleLineManageEmbedded2(it, display);</span>
@@ -123,21 +123,20 @@ public class BodyEnhanced2 extends BodyEnhancedAbstract {
 <span class="pc bpc" id="L123" title="1 of 2 branches missed.">		while (it.hasNext()) {</span>
 <span class="fc" id="L124">			final CharSequence s = it.next();</span>
 <span class="fc" id="L125">			display = display.add(s);</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">			if (EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(s)) != null)</span>
-				// if (s.getTrimmed().getString().startsWith(EmbeddedDiagram.EMBEDDED_START))
-<span class="fc" id="L128">				nested++;</span>
-<span class="fc bfc" id="L129" title="All 2 branches covered.">			else if (StringUtils.trinNoTrace(s).equals(EmbeddedDiagram.EMBEDDED_END)) {</span>
-<span class="fc" id="L130">				nested--;</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">				if (nested == 0)</span>
-<span class="fc" id="L132">					return display;</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">			if (EmbeddedDiagram.getEmbeddedType(s) != null)</span>
+<span class="fc" id="L127">				nested++;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">			else if (StringUtils.trim2(s).equals(EmbeddedDiagram.EMBEDDED_END)) {</span>
+<span class="fc" id="L129">				nested--;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">				if (nested == 0)</span>
+<span class="fc" id="L131">					return display;</span>
 			}
-<span class="fc" id="L134">		}</span>
-<span class="nc" id="L135">		return display;</span>
+<span class="fc" id="L133">		}</span>
+<span class="nc" id="L134">		return display;</span>
 	}
 
 	private TextBlock getTextBlock(Display display) {
-<span class="fc" id="L139">		final TextBlock result = display.create9(titleConfig, align, skinParam, lineBreakStrategy);</span>
-<span class="fc" id="L140">		return result;</span>
+<span class="fc" id="L138">		final TextBlock result = display.create9(titleConfig, align, skinParam, lineBreakStrategy);</span>
+<span class="fc" id="L139">		return result;</span>
 	}
 
 }

@@ -38,8 +38,8 @@ import java.util.List;
 
 public interface UnicodeBracketedExpression {
 
-	public default UMatcher match(String string) {
-<span class="fc" id="L42">		return match(TextNavigator.build(string), 0);</span>
+	public default UMatcher match(String string, int pos) {
+<span class="fc" id="L42">		return match(TextNavigator.build(string), pos);</span>
 	}
 
 	public default UMatcher match(TextNavigator string) {

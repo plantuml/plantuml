@@ -273,7 +273,7 @@ public class SkinParam implements ISkinParam {
 <span class="fc" id="L273">		key = patternCleanArrow.matcher(key).replaceAll(&quot;arrow&quot;);</span>
 <span class="fc" id="L274">		key = patternCleanAlign.matcher(key).replaceAll(&quot;alignment&quot;);</span>
 
-<span class="fc" id="L276">		final Matcher2 mm = stereoPattern.matcher(key);</span>
+<span class="fc" id="L276">		final Matcher2 mm = stereoPattern.matcher(key, 0);</span>
 <span class="fc" id="L277">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L278" title="All 2 branches covered.">		while (mm.find()) {</span>
 <span class="fc" id="L279">			final String s = mm.group(1);</span>

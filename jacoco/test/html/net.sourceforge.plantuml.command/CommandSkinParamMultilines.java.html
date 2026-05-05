@@ -56,11 +56,11 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket&lt;Titl
 <span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (hasStartingQuote(line))</span>
 <span class="nc" id="L57">			return true;</span>
 
-<span class="fc" id="L59">		return SkinLoader.p1.matcher(line).matches();</span>
+<span class="fc" id="L59">		return SkinLoader.p1.matcher(line, 0).matches();</span>
 	}
 
 	private boolean hasStartingQuote(CharSequence line) {
-<span class="fc" id="L63">		return COMMENT_SINGLE_LINE.matcher(line).matches();</span>
+<span class="fc" id="L63">		return COMMENT_SINGLE_LINE.matcher(line, 0).matches();</span>
 	}
 
 	public CommandExecutionResult execute(TitledDiagram diagram, BlocLines lines, ParserPass currentPass) {
@@ -68,7 +68,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket&lt;Titl
 
 <span class="fc" id="L69">		lines = lines.expandsNewline(true);</span>
 
-<span class="fc" id="L71">		final Matcher2 mStart = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L71">		final Matcher2 mStart = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString(), 0);</span>
 <span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (mStart.find() == false)</span>
 <span class="nc" id="L73">			return CommandExecutionResult.error(&quot;Bad syntax for skinparam&quot;);</span>
 

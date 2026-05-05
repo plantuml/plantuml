@@ -124,7 +124,7 @@ public class WBSDiagram extends TitledDiagram {
 
 	public CommandExecutionResult addIdea(String code, HColor backColor, int level, String label, Direction direction,
 			IdeaShape shape) {
-<span class="fc" id="L127">		final Matcher2 m = patternStereotype.matcher(label);</span>
+<span class="fc" id="L127">		final Matcher2 m = patternStereotype.matcher(label, 0);</span>
 <span class="fc" id="L128">		String stereotype = null;</span>
 <span class="pc bpc" id="L129" title="1 of 2 branches missed.">		if (m.matches()) {</span>
 <span class="nc" id="L130">			label = m.group(1);</span>

@@ -66,7 +66,7 @@ public class UncommentReadLine implements ReadLine {
 <span class="fc" id="L66">			headerToRemove = tmp;</span>
 		}
 <span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (paused) {</span>
-<span class="nc" id="L69">			final Matcher2 m2 = unpause.matcher(result.getString());</span>
+<span class="nc" id="L69">			final Matcher2 m2 = unpause.matcher(result.getString(), 0);</span>
 <span class="nc bnc" id="L70" title="All 2 branches missed.">			if (m2.find()) {</span>
 <span class="nc" id="L71">				headerToRemove = m2.group(1);</span>
 			}

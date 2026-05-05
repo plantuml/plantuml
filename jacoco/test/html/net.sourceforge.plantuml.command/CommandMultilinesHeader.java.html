@@ -58,7 +58,7 @@ public class CommandMultilinesHeader extends CommandMultilines&lt;TitledDiagram&
 			throws NoSuchColorException {
 <span class="nc" id="L59">		final LineLocation location = lines.getLocation();</span>
 <span class="nc" id="L60">		lines = lines.trim();</span>
-<span class="nc" id="L61">		final Matcher2 m = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L61">		final Matcher2 m = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString(), 0);</span>
 <span class="nc bnc" id="L62" title="All 2 branches missed.">		if (m.find() == false) {</span>
 <span class="nc" id="L63">			throw new IllegalStateException();</span>
 		}

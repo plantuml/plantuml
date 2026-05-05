@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.regex.Matcher2;
@@ -44,37 +47,38 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 public class CommandCreoleQrcode implements Command {
 
 	@Override
-	public String startingChars() {
-<span class="fc" id="L48">		return &quot;&lt;&quot;;</span>
+	public Collection&lt;String&gt; starters() {
+<span class="fc" id="L51">		return Collections.singleton(&quot;&lt;q&quot;);</span>
 	}
 
-<span class="fc" id="L51">	private static final Pattern2 pattern = Pattern2.cmpile(&quot;^(&quot; + Splitter.qrcodePattern + &quot;)&quot;);</span>
+<span class="fc" id="L54">	private static final Pattern2 pattern = Pattern2.cmpile(&quot;^(&quot; + Splitter.qrcodePattern + &quot;)&quot;);</span>
 
 	private CommandCreoleQrcode() {
 	}
 
 	public static Command create() {
-<span class="fc" id="L57">		return new CommandCreoleQrcode();</span>
-	}
-
-	public int matchingSize(String line) {
-<span class="fc" id="L61">		final Matcher2 m = pattern.matcher(line);</span>
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (m.find() == false) {</span>
-<span class="fc" id="L63">			return 0;</span>
-		}
-<span class="nc" id="L65">		return m.group(1).length();</span>
+<span class="fc" id="L60">		return new CommandCreoleQrcode();</span>
 	}
 
 	@Override
-	public String executeAndGetRemaining(ISkinSimple skinSimple, String line, StripeSimple stripe) {
-<span class="nc" id="L70">		final Matcher2 m = pattern.matcher(line);</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (m.find() == false) </span>
-<span class="nc" id="L72">			throw new IllegalStateException();</span>
-		
-<span class="nc" id="L74">		final String src = m.group(2);</span>
-<span class="nc" id="L75">		final double scale = Parser.getScale(m.group(3), 3);</span>
-<span class="nc" id="L76">		stripe.addQrcode(src, scale);</span>
-<span class="nc" id="L77">		return line.substring(m.group(1).length());</span>
+	public int matchingSize(String line, int pos) {
+<span class="nc" id="L65">		final Matcher2 m = pattern.matcher(line, pos);</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (m.find() == false)</span>
+<span class="nc" id="L67">			return 0;</span>
+
+<span class="nc" id="L69">		return m.group(1).length();</span>
+	}
+
+	@Override
+	public int executeAndGetRemaining(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
+<span class="nc" id="L74">		final Matcher2 m = pattern.matcher(line, pos);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (m.find() == false)</span>
+<span class="nc" id="L76">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L78">		final String src = m.group(2);</span>
+<span class="nc" id="L79">		final double scale = Parser.getScale(m.group(3), 3);</span>
+<span class="nc" id="L80">		stripe.addQrcode(src, scale);</span>
+<span class="nc" id="L81">		return m.group(1).length();</span>
 	}
 
 }

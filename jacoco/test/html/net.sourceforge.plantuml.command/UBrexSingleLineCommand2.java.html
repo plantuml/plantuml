@@ -100,7 +100,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 <span class="nc" id="L100">			return CommandControl.NOT_OK;</span>
 		}
 
-<span class="fc" id="L103">		final UMatcher result = pattern.match(line2.getString());</span>
+<span class="fc" id="L103">		final UMatcher result = pattern.match(line2.getString(), 0);</span>
 <span class="fc bfc" id="L104" title="All 2 branches covered.">		if (result.exactMatch())</span>
 <span class="fc" id="L105">			return finalVerification();</span>
 
@@ -135,7 +135,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 <span class="nc" id="L135">			return CommandExecutionResult.error(&quot;Syntax error: &quot; + line);</span>
 
 		// final RegexResult arg = pattern.matcher(line);
-<span class="fc" id="L138">		final UMatcher result = pattern.match(line);</span>
+<span class="fc" id="L138">		final UMatcher result = pattern.match(line, 0);</span>
 
 <span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (result.exactMatch() == false)</span>
 <span class="nc" id="L141">			return CommandExecutionResult.error(&quot;Cannot parse line &quot; + line);</span>

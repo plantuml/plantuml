@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.regex.Matcher2;
@@ -44,50 +47,51 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 public class CommandCreoleFontFamilyChange implements Command {
 
 	@Override
-	public String startingChars() {
-<span class="fc" id="L48">		return &quot;&lt;&quot;;</span>
+	public Collection&lt;String&gt; starters() {
+<span class="fc" id="L51">		return Collections.singleton(&quot;&lt;f&quot;);</span>
 	}
 
-<span class="fc" id="L51">	private static final Pattern2 pattern = Pattern2.cmpile(&quot;^(&quot; + Splitter.fontFamilyPattern + &quot;(.*?)\\&lt;/font\\&gt;)&quot;);</span>
+<span class="fc" id="L54">	private static final Pattern2 pattern = Pattern2.cmpile(&quot;^(&quot; + Splitter.fontFamilyPattern + &quot;(.*?)\\&lt;/font\\&gt;)&quot;);</span>
 
-<span class="fc" id="L53">	private static final Pattern2 patternEol = Pattern2.cmpile(&quot;^(&quot; + Splitter.fontFamilyPattern + &quot;(.*)$)&quot;);</span>
+<span class="fc" id="L56">	private static final Pattern2 patternEol = Pattern2.cmpile(&quot;^(&quot; + Splitter.fontFamilyPattern + &quot;(.*)$)&quot;);</span>
 
 	private final Pattern2 mypattern;
 
 	public static Command create() {
-<span class="fc" id="L58">		return new CommandCreoleFontFamilyChange(pattern);</span>
+<span class="fc" id="L61">		return new CommandCreoleFontFamilyChange(pattern);</span>
 	}
 
 	public static Command createEol() {
-<span class="fc" id="L62">		return new CommandCreoleFontFamilyChange(patternEol);</span>
+<span class="fc" id="L65">		return new CommandCreoleFontFamilyChange(patternEol);</span>
 	}
 
-<span class="fc" id="L65">	private CommandCreoleFontFamilyChange(Pattern2 p) {</span>
-<span class="fc" id="L66">		this.mypattern = p;</span>
+<span class="fc" id="L68">	private CommandCreoleFontFamilyChange(Pattern2 p) {</span>
+<span class="fc" id="L69">		this.mypattern = p;</span>
 
-<span class="fc" id="L68">	}</span>
+<span class="fc" id="L71">	}</span>
 
-	public int matchingSize(String line) {
-<span class="fc" id="L71">		final Matcher2 m = mypattern.matcher(line);</span>
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (m.find() == false) {</span>
-<span class="fc" id="L73">			return 0;</span>
-		}
-<span class="nc" id="L75">		return m.group(1).length();</span>
+	@Override
+	public int matchingSize(String line, int pos) {
+<span class="nc" id="L75">		final Matcher2 m = mypattern.matcher(line, pos);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (m.find() == false)</span>
+<span class="nc" id="L77">			return 0;</span>
+
+<span class="nc" id="L79">		return m.group(1).length();</span>
 	}
 
 	@Override
-	public String executeAndGetRemaining(ISkinSimple skinSimple, String line, StripeSimple stripe) {
-<span class="nc" id="L80">		final Matcher2 m = mypattern.matcher(line);</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (m.find() == false) {</span>
-<span class="nc" id="L82">			throw new IllegalStateException();</span>
-		}
-<span class="nc" id="L84">		final FontConfiguration fc1 = stripe.getActualFontConfiguration();</span>
-<span class="nc" id="L85">		final String family = m.group(2);</span>
-<span class="nc" id="L86">		final FontConfiguration fc2 = fc1.changeFamily(family);</span>
-<span class="nc" id="L87">		stripe.setActualFontConfiguration(fc2);</span>
-<span class="nc" id="L88">		stripe.analyzeAndAdd(m.group(3));</span>
-<span class="nc" id="L89">		stripe.setActualFontConfiguration(fc1);</span>
-<span class="nc" id="L90">		return line.substring(m.group(1).length());</span>
+	public int executeAndGetRemaining(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
+<span class="nc" id="L84">		final Matcher2 m = mypattern.matcher(line, pos);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (m.find() == false)</span>
+<span class="nc" id="L86">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L88">		final FontConfiguration fc1 = stripe.getActualFontConfiguration();</span>
+<span class="nc" id="L89">		final String family = m.group(2);</span>
+<span class="nc" id="L90">		final FontConfiguration fc2 = fc1.changeFamily(family);</span>
+<span class="nc" id="L91">		stripe.setActualFontConfiguration(fc2);</span>
+<span class="nc" id="L92">		stripe.analyzeAndAdd(m.group(3));</span>
+<span class="nc" id="L93">		stripe.setActualFontConfiguration(fc1);</span>
+<span class="nc" id="L94">		return m.group(1).length();</span>
 	}
 
 }

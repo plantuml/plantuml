@@ -65,7 +65,7 @@ public abstract class CommandMultilinesBracket&lt;S extends Diagram&gt; implemen
 <span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (isCommandForbidden(lines))</span>
 <span class="nc" id="L66">			return CommandControl.NOT_OK;</span>
 
-<span class="fc" id="L68">		final Matcher2 m1 = starting.matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L68">		final Matcher2 m1 = starting.matcher(lines.getFirst().getTrimmed().getString(), 0);</span>
 <span class="fc bfc" id="L69" title="All 2 branches covered.">		if (m1.matches() == false)</span>
 <span class="fc" id="L70">			return CommandControl.NOT_OK;</span>
 

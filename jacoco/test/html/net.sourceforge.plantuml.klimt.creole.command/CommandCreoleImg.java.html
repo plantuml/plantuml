@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
@@ -45,41 +48,42 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 public class CommandCreoleImg implements Command {
 
 	@Override
-	public String startingChars() {
-<span class="fc" id="L49">		return &quot;&lt;&quot;;</span>
+	public Collection&lt;String&gt; starters() {
+<span class="fc" id="L52">		return Collections.singleton(&quot;&lt;i&quot;);</span>
 	}
 
-<span class="fc" id="L52">	private static final Pattern2 pattern = Pattern2.cmpile(&quot;^(&quot; + Splitter.imgPatternNoSrcColon + &quot;)&quot;);</span>
+<span class="fc" id="L55">	private static final Pattern2 pattern = Pattern2.cmpile(&quot;^(&quot; + Splitter.imgPatternNoSrcColon + &quot;)&quot;);</span>
 
 	private CommandCreoleImg() {
 	}
 
 	public static Command create() {
-<span class="fc" id="L58">		return new CommandCreoleImg();</span>
-	}
-
-	public int matchingSize(String line) {
-<span class="fc" id="L62">		final Matcher2 m = pattern.matcher(line);</span>
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (m.find() == false)</span>
-<span class="fc" id="L64">			return 0;</span>
-
-<span class="nc" id="L66">		return m.group(1).length();</span>
+<span class="fc" id="L61">		return new CommandCreoleImg();</span>
 	}
 
 	@Override
-	public String executeAndGetRemaining(ISkinSimple skinSimple, String line, StripeSimple stripe) {
-<span class="nc" id="L71">		final Matcher2 m = pattern.matcher(line);</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (m.find() == false)</span>
-<span class="nc" id="L73">			throw new IllegalStateException();</span>
+	public int matchingSize(String line, int pos) {
+<span class="fc" id="L66">		final Matcher2 m = pattern.matcher(line, pos);</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (m.find() == false)</span>
+<span class="fc" id="L68">			return 0;</span>
 
-<span class="nc" id="L75">		String src = m.group(2);</span>
-<span class="nc" id="L76">		final double scale = Parser.getScale(m.group(3), 1);</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (src.toLowerCase().startsWith(&quot;src=&quot;))</span>
-<span class="nc" id="L78">			src = src.substring(4);</span>
+<span class="nc" id="L70">		return m.group(1).length();</span>
+	}
 
-<span class="nc" id="L80">		src = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(src, &quot;\&quot;&quot;);</span>
-<span class="nc" id="L81">		stripe.addImage(src, scale);</span>
-<span class="nc" id="L82">		return line.substring(m.group(1).length());</span>
+	@Override
+	public int executeAndGetRemaining(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
+<span class="nc" id="L75">		final Matcher2 m = pattern.matcher(line, pos);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (m.find() == false)</span>
+<span class="nc" id="L77">			throw new IllegalStateException();</span>
+
+<span class="nc" id="L79">		String src = m.group(2);</span>
+<span class="nc" id="L80">		final double scale = Parser.getScale(m.group(3), 1);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (src.toLowerCase().startsWith(&quot;src=&quot;))</span>
+<span class="nc" id="L82">			src = src.substring(4);</span>
+
+<span class="nc" id="L84">		src = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(src, &quot;\&quot;&quot;);</span>
+<span class="nc" id="L85">		stripe.addImage(src, scale);</span>
+<span class="nc" id="L86">		return m.group(1).length();</span>
 	}
 
 }

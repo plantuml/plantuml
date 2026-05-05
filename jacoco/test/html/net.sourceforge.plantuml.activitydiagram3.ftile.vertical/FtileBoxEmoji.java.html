@@ -120,14 +120,14 @@ public class FtileBoxEmoji extends AbstractFtile {
 
 <span class="nc" id="L121">		final Command commandCreoleEmoji = CommandCreoleEmoji.create();</span>
 <span class="nc" id="L122">		final String s = label.get(0).toString();</span>
-<span class="nc" id="L123">		final int tmp = commandCreoleEmoji.matchingSize(s);</span>
+<span class="nc" id="L123">		final int tmp = commandCreoleEmoji.matchingSize(s, 0);</span>
 <span class="nc bnc" id="L124" title="All 2 branches missed.">		if (tmp == 0) {</span>
 <span class="nc" id="L125">			this.emoji = label.create(fc, HorizontalAlignment.LEFT, skinParam);</span>
 <span class="nc" id="L126">			this.name = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
 		} else {
-<span class="nc" id="L128">			final String remaining = commandCreoleEmoji.executeAndGetRemaining(skinParam, s, null);</span>
+<span class="nc" id="L128">			final int remaining = commandCreoleEmoji.executeAndGetRemaining(skinParam, s, 0, null);</span>
 
-<span class="nc" id="L130">			final int position = s.length() - remaining.length();</span>
+<span class="nc" id="L130">			final int position = s.length() - remaining;</span>
 <span class="nc" id="L131">			final String part1 = s.substring(0, position);</span>
 <span class="nc" id="L132">			final String part2 = s.substring(position);</span>
 

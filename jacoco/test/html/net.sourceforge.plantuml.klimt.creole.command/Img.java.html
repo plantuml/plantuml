@@ -65,7 +65,7 @@ public class Img implements HtmlCommand {
 <span class="nc" id="L65">	}</span>
 
 	static int getVspace(String html) {
-<span class="nc" id="L68">		final Matcher2 m = vspacePattern.matcher(html);</span>
+<span class="nc" id="L68">		final Matcher2 m = vspacePattern.matcher(html, 0);</span>
 <span class="nc bnc" id="L69" title="All 2 branches missed.">		if (m.find() == false)</span>
 <span class="nc" id="L70">			return 0;</span>
 
@@ -73,7 +73,7 @@ public class Img implements HtmlCommand {
 	}
 
 	static ImgValign getValign(String html) {
-<span class="nc" id="L76">		final Matcher2 m = valignPattern.matcher(html);</span>
+<span class="nc" id="L76">		final Matcher2 m = valignPattern.matcher(html, 0);</span>
 <span class="nc bnc" id="L77" title="All 2 branches missed.">		if (m.find() == false)</span>
 <span class="nc" id="L78">			return ImgValign.TOP;</span>
 
@@ -82,12 +82,12 @@ public class Img implements HtmlCommand {
 
 	static HtmlCommand getInstance(String html, boolean withSrc) {
 <span class="nc bnc" id="L84" title="All 2 branches missed.">		if (withSrc) {</span>
-<span class="nc" id="L85">			final Matcher2 m = srcPattern.matcher(html);</span>
+<span class="nc" id="L85">			final Matcher2 m = srcPattern.matcher(html, 0);</span>
 <span class="nc" id="L86">			final int vspace = getVspace(html);</span>
 <span class="nc" id="L87">			final ImgValign valign = getValign(html);</span>
 <span class="nc" id="L88">			return build(m, valign, vspace);</span>
 		}
-<span class="nc" id="L90">		final Matcher2 m = noSrcColonPattern.matcher(html);</span>
+<span class="nc" id="L90">		final Matcher2 m = noSrcColonPattern.matcher(html, 0);</span>
 <span class="nc" id="L91">		return build(m, ImgValign.TOP, 0);</span>
 	}
 

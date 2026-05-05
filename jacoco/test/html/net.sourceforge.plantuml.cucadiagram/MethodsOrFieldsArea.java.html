@@ -111,7 +111,7 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 
 <span class="fc bfc" id="L112" title="All 2 branches covered.">		while (it.hasNext()) {</span>
 <span class="fc" id="L113">			final CharSequence cs = it.next();</span>
-<span class="fc" id="L114">			final String type = EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(cs));</span>
+<span class="fc" id="L114">			final String type = EmbeddedDiagram.getEmbeddedType(cs);</span>
 <span class="pc bpc" id="L115" title="1 of 2 branches missed.">			if (type != null)</span>
 <span class="nc" id="L116">				embeddeds.add(EmbeddedDiagram.createAndSkip(type, it, skinParam));</span>
 			else
@@ -386,8 +386,8 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 <span class="nc bnc" id="L386" title="All 4 branches missed.">		if (result != null &amp;&amp; hasSmallIcon()) {</span>
 			// Extend the inner position to include the visibility modifier on its left
 <span class="nc" id="L388">			final double smallIcon = skinParam.getCircledCharacterRadius() + 3;</span>
-<span class="nc" id="L389">			return new XRectangle2D(result.getMinX() - smallIcon, result.getMinY(),</span>
-<span class="nc" id="L390">					result.getWidth() + smallIcon, result.getHeight());</span>
+<span class="nc" id="L389">			return new XRectangle2D(result.getMinX() - smallIcon, result.getMinY(), result.getWidth() + smallIcon,</span>
+<span class="nc" id="L390">					result.getHeight());</span>
 		}
 <span class="nc" id="L392">		return result;</span>
 	}

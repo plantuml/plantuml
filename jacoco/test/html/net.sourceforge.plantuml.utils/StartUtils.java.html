@@ -144,7 +144,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 
 	public static StringLocated getPossibleAppend(StringLocated cs) {
 <span class="nc" id="L146">		final String s = cs.getString();</span>
-<span class="nc" id="L147">		final Matcher2 m = append.matcher(s);</span>
+<span class="nc" id="L147">		final Matcher2 m = append.matcher(s, 0);</span>
 <span class="nc bnc" id="L148" title="All 2 branches missed.">		if (m.find()) {</span>
 <span class="nc" id="L149">			final String tmp = s.substring(m.group(0).length(), s.length());</span>
 <span class="nc" id="L150">			return new StringLocated(StringUtils.trin(tmp), cs.getLocation(), cs.getPreprocessorError());</span>

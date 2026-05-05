@@ -239,23 +239,22 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	private static BlocLines addOneSingleLineManageEmbedded2(IteratorCounter2 it, BlocLines lines) {
 <span class="fc" id="L240">		final StringLocated linetoBeAdded = it.next();</span>
 <span class="fc" id="L241">		lines = lines.add(linetoBeAdded);</span>
-<span class="fc bfc" id="L242" title="All 2 branches covered.">		if (EmbeddedDiagram.getEmbeddedType(linetoBeAdded.getTrimmed().getString()) != null) {</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">		if (EmbeddedDiagram.getEmbeddedType(linetoBeAdded.getString()) != null) {</span>
 <span class="fc" id="L243">			int nested = 1;</span>
 <span class="pc bpc" id="L244" title="1 of 2 branches missed.">			while (it.hasNext()) {</span>
 <span class="fc" id="L245">				final StringLocated s = it.next();</span>
 <span class="fc" id="L246">				lines = lines.add(s);</span>
-<span class="fc bfc" id="L247" title="All 2 branches covered.">				if (EmbeddedDiagram.getEmbeddedType(s.getTrimmed().getString()) != null)</span>
-					// if (s.getTrimmed().getString().startsWith(EmbeddedDiagram.EMBEDDED_START))
-<span class="fc" id="L249">					nested++;</span>
-<span class="fc bfc" id="L250" title="All 2 branches covered.">				else if (s.getTrimmed().getString().equals(EmbeddedDiagram.EMBEDDED_END)) {</span>
-<span class="fc" id="L251">					nested--;</span>
-<span class="fc bfc" id="L252" title="All 2 branches covered.">					if (nested == 0)</span>
-<span class="fc" id="L253">						return lines;</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">				if (EmbeddedDiagram.getEmbeddedType(s.getString()) != null)</span>
+<span class="fc" id="L248">					nested++;</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">				else if (s.getTrimmed().getString().equals(EmbeddedDiagram.EMBEDDED_END)) {</span>
+<span class="fc" id="L250">					nested--;</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">					if (nested == 0)</span>
+<span class="fc" id="L252">						return lines;</span>
 				}
-<span class="fc" id="L255">			}</span>
+<span class="fc" id="L254">			}</span>
 		}
 
-<span class="fc" id="L258">		return lines;</span>
+<span class="fc" id="L257">		return lines;</span>
 	}
 
 }

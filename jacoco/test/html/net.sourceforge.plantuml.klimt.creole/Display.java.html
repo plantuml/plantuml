@@ -436,7 +436,7 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 	}
 
 	public Display removeEndingStereotype() {
-<span class="nc" id="L439">		final Matcher2 m = patternStereotype.matcher(displayData.get(displayData.size() - 1));</span>
+<span class="nc" id="L439">		final Matcher2 m = patternStereotype.matcher(displayData.get(displayData.size() - 1), 0);</span>
 <span class="nc bnc" id="L440" title="All 2 branches missed.">		if (m.matches()) {</span>
 <span class="nc" id="L441">			final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;(this.displayData);</span>
 <span class="nc" id="L442">			result.set(result.size() - 1, m.group(1));</span>
@@ -449,7 +449,7 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 <span class="fc" id="L449">	public final static Pattern2 patternStereotype = Pattern2.cmpile(&quot;^(.*?)(\\&lt;\\&lt;\\s*(.*)\\s*\\&gt;\\&gt;)\\s*$&quot;);</span>
 
 	public Stereotype getEndingStereotype() {
-<span class="fc" id="L452">		final Matcher2 m = patternStereotype.matcher(displayData.get(displayData.size() - 1));</span>
+<span class="fc" id="L452">		final Matcher2 m = patternStereotype.matcher(displayData.get(displayData.size() - 1), 0);</span>
 <span class="pc bpc" id="L453" title="1 of 2 branches missed.">		if (m.matches())</span>
 <span class="nc" id="L454">			return Stereotype.build(m.group(2));</span>
 
@@ -579,7 +579,7 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 				this.defaultCreoleMode);
 <span class="nc" id="L580">		result.add(pending);</span>
 <span class="nc bnc" id="L581" title="All 2 branches missed.">		for (CharSequence line : displayData) {</span>
-<span class="nc" id="L582">			final Matcher2 m = separator.matcher(line);</span>
+<span class="nc" id="L582">			final Matcher2 m = separator.matcher(line, 0);</span>
 <span class="nc bnc" id="L583" title="All 2 branches missed.">			if (m.find()) {</span>
 <span class="nc" id="L584">				final CharSequence s1 = line.subSequence(0, m.start());</span>
 <span class="nc" id="L585">				pending.displayData.add(s1);</span>

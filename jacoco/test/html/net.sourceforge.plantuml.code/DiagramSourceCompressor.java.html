@@ -80,7 +80,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 <span class="fc" id="L80">	}</span>
 
 	private String compressOld(String s) throws IOException {
-<span class="fc" id="L83">		final Matcher2 m = pattern.matcher(s);</span>
+<span class="fc" id="L83">		final Matcher2 m = pattern.matcher(s, 0);</span>
 <span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (m.find()) {</span>
 <span class="fc" id="L85">			return clean(m.group(2));</span>
 		}
@@ -111,7 +111,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 	}
 
 	private String clean1(String s) {
-<span class="fc" id="L114">		final Matcher2 m = pattern.matcher(s);</span>
+<span class="fc" id="L114">		final Matcher2 m = pattern.matcher(s, 0);</span>
 <span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (m.matches())</span>
 <span class="fc" id="L116">			return m.group(2);</span>
 

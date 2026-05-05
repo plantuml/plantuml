@@ -101,7 +101,7 @@ import net.sourceforge.plantuml.utils.BlocLines;
 <span class="fc bfc" id="L101" title="All 2 branches covered.">		if (lines.size() == 1)</span>
 <span class="fc" id="L102">			return CommandControl.OK_PARTIAL;</span>
 
-<span class="fc" id="L104">		final Matcher2 m1 = end.get().matcher(trimEnd.trim(lines.getLast()));</span>
+<span class="fc" id="L104">		final Matcher2 m1 = end.get().matcher(trimEnd.trim(lines.getLast()), 0);</span>
 <span class="fc bfc" id="L105" title="All 2 branches covered.">		if (m1.matches() == false)</span>
 <span class="fc" id="L106">			return CommandControl.OK_PARTIAL;</span>
 

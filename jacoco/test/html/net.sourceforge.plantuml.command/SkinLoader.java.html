@@ -91,7 +91,7 @@ public class SkinLoader {
 <span class="nc" id="L91">					this.pop();</span>
 <span class="nc" id="L92">					continue;</span>
 				}
-<span class="fc" id="L94">				final Matcher2 m = p1.matcher(s.getString());</span>
+<span class="fc" id="L94">				final Matcher2 m = p1.matcher(s.getString(), 0);</span>
 <span class="pc bpc" id="L95" title="1 of 2 branches missed.">				if (m.find() == false) {</span>
 <span class="nc" id="L96">					throw new IllegalStateException();</span>
 				}

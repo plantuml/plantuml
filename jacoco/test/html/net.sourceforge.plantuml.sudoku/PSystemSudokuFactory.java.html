@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.regex.Pattern2;
 
 	@Override
 	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L53">		final Matcher2 m = p.matcher(line);</span>
+<span class="fc" id="L53">		final Matcher2 m = p.matcher(line, 0);</span>
 <span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if (m.find() == false) </span>
 <span class="fc" id="L55">			return null;</span>
 		
