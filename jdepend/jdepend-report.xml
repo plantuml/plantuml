@@ -5693,11 +5693,11 @@
                 <TotalClasses>12</TotalClasses>
                 <ConcreteClasses>10</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>80</Ca>
+                <Ca>79</Ca>
                 <Ce>39</Ce>
                 <A>0.17</A>
                 <I>0.33</I>
-                <D>0.51</D>
+                <D>0.5</D>
                 <V>1</V>
             </Stats>
 
@@ -5860,7 +5860,6 @@
                 <Package>net.sourceforge.plantuml.syntax</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram</Package>
                 <Package>net.sourceforge.plantuml.timingdiagram.command</Package>
-                <Package>net.sourceforge.plantuml.utils</Package>
                 <Package>net.sourceforge.plantuml.version</Package>
                 <Package>net.sourceforge.plantuml.wbs</Package>
                 <Package>net.sourceforge.plantuml.wire</Package>
@@ -18039,10 +18038,10 @@
                 <ConcreteClasses>12</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
                 <Ca>61</Ca>
-                <Ce>22</Ce>
+                <Ce>21</Ce>
                 <A>0.29</A>
-                <I>0.27</I>
-                <D>0.44</D>
+                <I>0.26</I>
+                <D>0.45</D>
                 <V>1</V>
             </Stats>
 
@@ -18116,7 +18115,6 @@
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.code</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
-                <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.jaws</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>

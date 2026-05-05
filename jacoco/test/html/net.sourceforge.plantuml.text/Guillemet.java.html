@@ -79,25 +79,29 @@ public class Guillemet {
 <span class="fc bfc" id="L79" title="All 2 branches covered.">		if (this == DOUBLE_COMPARATOR)</span>
 <span class="fc" id="L80">			return st;</span>
 
-<span class="fc" id="L82">		return GUILLEMET_PATTERN.matcher(st)</span>
-<span class="fc" id="L83">				.replaceAll(Matcher.quoteReplacement(start) + &quot;$1&quot; + Matcher.quoteReplacement(end));</span>
+		// Fast path: no '&lt;' at all =&gt; nothing to do, return the original String.
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (st.indexOf('&lt;') &lt; 0)</span>
+<span class="fc" id="L84">			return st;</span>
+
+<span class="fc" id="L86">		return GUILLEMET_PATTERN.matcher(st)</span>
+<span class="fc" id="L87">				.replaceAll(Matcher.quoteReplacement(start) + &quot;$1&quot; + Matcher.quoteReplacement(end));</span>
 	}
 
 	public String manageGuillemetStrict(String st) {
-<span class="fc bfc" id="L87" title="All 2 branches covered.">		if (this == DOUBLE_COMPARATOR)</span>
-<span class="fc" id="L88">			return st;</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (this == DOUBLE_COMPARATOR)</span>
+<span class="fc" id="L92">			return st;</span>
 
-<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (st.startsWith(&quot;&lt;&lt; &quot;))</span>
-<span class="fc" id="L91">			st = start + st.substring(3);</span>
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		else if (st.startsWith(&quot;&lt;&lt;&quot;))</span>
-<span class="fc" id="L93">			st = start + st.substring(2);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (st.startsWith(&quot;&lt;&lt; &quot;))</span>
+<span class="fc" id="L95">			st = start + st.substring(3);</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		else if (st.startsWith(&quot;&lt;&lt;&quot;))</span>
+<span class="fc" id="L97">			st = start + st.substring(2);</span>
 
-<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (st.endsWith(&quot; &gt;&gt;&quot;))</span>
-<span class="fc" id="L96">			st = st.substring(0, st.length() - 3) + end;</span>
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		else if (st.endsWith(&quot;&gt;&gt;&quot;))</span>
-<span class="fc" id="L98">			st = st.substring(0, st.length() - 2) + end;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (st.endsWith(&quot; &gt;&gt;&quot;))</span>
+<span class="fc" id="L100">			st = st.substring(0, st.length() - 3) + end;</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		else if (st.endsWith(&quot;&gt;&gt;&quot;))</span>
+<span class="fc" id="L102">			st = st.substring(0, st.length() - 2) + end;</span>
 
-<span class="fc" id="L100">		return st;</span>
+<span class="fc" id="L104">		return st;</span>
 	}
 
 }

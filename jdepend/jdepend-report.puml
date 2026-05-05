@@ -1037,7 +1037,7 @@ Total Classes: 8
 "net.sourceforge.plantuml.command.note.sequence" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.command.note.sequence" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.core" %lighten("red", 49) {
+class "net.sourceforge.plantuml.core" %lighten("red", 50) {
 Total Classes: 12
 }
 "net.sourceforge.plantuml.core" --> "java.awt"
@@ -3373,7 +3373,7 @@ Total Classes: 4
 "net.sourceforge.plantuml.url" --> "java.util"
 "net.sourceforge.plantuml.url" --> "net.sourceforge.plantuml.klimt.geom"
 
-class "net.sourceforge.plantuml.utils" %lighten("red", 56) {
+class "net.sourceforge.plantuml.utils" %lighten("red", 55) {
 Total Classes: 17
 }
 "net.sourceforge.plantuml.utils" --> "java.io"
@@ -3388,7 +3388,6 @@ Total Classes: 17
 "net.sourceforge.plantuml.utils" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.utils" --> "net.sourceforge.plantuml.code"
 "net.sourceforge.plantuml.utils" --> "net.sourceforge.plantuml.command"
-"net.sourceforge.plantuml.utils" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.utils" --> "net.sourceforge.plantuml.jaws"
 "net.sourceforge.plantuml.utils" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.utils" --> "net.sourceforge.plantuml.klimt.creole"
