@@ -83,7 +83,7 @@ public class CommandCreoleColorChange implements Command {
 	}
 
 	@Override
-	public int executeAndGetRemaining(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe)
+	public int executeAndAdvance(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe)
 			throws NoSuchColorRuntimeException {
 <span class="fc" id="L88">		final Matcher2 m = mypattern.matcher(line, pos);</span>
 <span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (m.find() == false)</span>

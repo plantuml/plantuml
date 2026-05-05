@@ -80,7 +80,7 @@ public class CommandCreoleFontFamilyChange implements Command {
 	}
 
 	@Override
-	public int executeAndGetRemaining(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
+	public int executeAndAdvance(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
 <span class="nc" id="L84">		final Matcher2 m = mypattern.matcher(line, pos);</span>
 <span class="nc bnc" id="L85" title="All 2 branches missed.">		if (m.find() == false)</span>
 <span class="nc" id="L86">			throw new IllegalStateException();</span>

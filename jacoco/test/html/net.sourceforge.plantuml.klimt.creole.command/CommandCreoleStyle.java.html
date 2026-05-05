@@ -99,7 +99,7 @@ public class CommandCreoleStyle implements Command {
 	}
 
 	@Override
-	public int executeAndGetRemaining(ISkinSimple skinSimple, final String line, int pos, StripeSimple stripe) {
+	public int executeAndAdvance(ISkinSimple skinSimple, final String line, int pos, StripeSimple stripe) {
 <span class="fc" id="L103">		final UMatcher matcher = ubrex.match(line, pos);</span>
 
 <span class="fc" id="L105">		final List&lt;String&gt; value = matcher.getCapture(&quot;V&quot;);</span>

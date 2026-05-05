@@ -280,7 +280,7 @@ public class StripeSimple implements Stripe {
 <span class="fc" id="L280">				pos++;</span>
 			} else {
 <span class="fc" id="L282">				addPending(pending);</span>
-<span class="fc" id="L283">				pos += cmd.executeAndGetRemaining(skinParam, line, pos, this);</span>
+<span class="fc" id="L283">				pos += cmd.executeAndAdvance(skinParam, line, pos, this);</span>
 			}
 <span class="fc" id="L285">		}</span>
 <span class="fc" id="L286">		addPending(pending);</span>

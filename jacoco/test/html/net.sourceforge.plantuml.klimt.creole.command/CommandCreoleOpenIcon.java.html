@@ -71,7 +71,7 @@ public class CommandCreoleOpenIcon implements Command {
 	}
 
 	@Override
-	public int executeAndGetRemaining(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
+	public int executeAndAdvance(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
 <span class="nc" id="L75">		final Matcher2 m = pattern.matcher(line, pos);</span>
 <span class="nc bnc" id="L76" title="All 2 branches missed.">		if (m.find() == false)</span>
 <span class="nc" id="L77">			throw new IllegalStateException();</span>

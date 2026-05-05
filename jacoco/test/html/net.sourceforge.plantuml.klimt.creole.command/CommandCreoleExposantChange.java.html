@@ -78,7 +78,7 @@ public class CommandCreoleExposantChange implements Command {
 	}
 
 	@Override
-	public int executeAndGetRemaining(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
+	public int executeAndAdvance(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
 
 <span class="nc" id="L83">		final UMatcher matcher = ubrex.match(line, pos);</span>
 <span class="nc" id="L84">		final List&lt;String&gt; value = matcher.getCapture(&quot;V&quot;);</span>
