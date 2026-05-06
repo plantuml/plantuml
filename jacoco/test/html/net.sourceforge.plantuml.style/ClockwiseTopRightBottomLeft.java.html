@@ -70,15 +70,15 @@ public class ClockwiseTopRightBottomLeft {
 <span class="fc" id="L70">		final String[] split = value.trim().split(&quot; +&quot;);</span>
 
 		try {
-<span class="pc bpc" id="L73" title="3 of 5 branches missed.">			switch (split.length) {</span>
+<span class="pc bpc" id="L73" title="2 of 5 branches missed.">			switch (split.length) {</span>
 			case 1: {
 <span class="fc" id="L75">				final double v = Integer.parseInt(split[0]);</span>
 <span class="fc" id="L76">				return new ClockwiseTopRightBottomLeft(v, v, v, v);</span>
 			}
 			case 2: {
-<span class="nc" id="L79">				final double a = Integer.parseInt(split[0]);</span>
-<span class="nc" id="L80">				final double b = Integer.parseInt(split[1]);</span>
-<span class="nc" id="L81">				return new ClockwiseTopRightBottomLeft(a, b, a, b);</span>
+<span class="fc" id="L79">				final double a = Integer.parseInt(split[0]);</span>
+<span class="fc" id="L80">				final double b = Integer.parseInt(split[1]);</span>
+<span class="fc" id="L81">				return new ClockwiseTopRightBottomLeft(a, b, a, b);</span>
 			}
 			case 3: {
 <span class="nc" id="L84">				final double a = Integer.parseInt(split[0]);</span>
