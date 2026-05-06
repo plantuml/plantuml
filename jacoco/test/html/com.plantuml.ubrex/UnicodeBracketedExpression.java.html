@@ -98,13 +98,8 @@ public interface UnicodeBracketedExpression {
 					}
 
 					@Override
-					public List&lt;String&gt; getKeysToBeRefactored() {
-<span class="fc" id="L102">						return shallWePass.getKeysToBeRefactored();</span>
-					}
-
-					@Override
-					public List&lt;String&gt; getRootKeys() {
-<span class="nc" id="L107">						return shallWePass.getRootKeys();</span>
+					public List&lt;String&gt; findFirstValuesByKeyPrefix(String keyPrefix) {
+<span class="fc" id="L102">						return shallWePass.findFirstValuesByKeyPrefix(keyPrefix);</span>
 					}
 
 				};

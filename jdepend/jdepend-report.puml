@@ -8,12 +8,13 @@ end title
 set separator none
 hide empty members
 
-class "com.plantuml.ubrex" %lighten("red", 42.00000000000001) {
-Total Classes: 26
+class "com.plantuml.ubrex" %lighten("red", 47) {
+Total Classes: 27
 }
 "com.plantuml.ubrex" --> "java.lang"
 "com.plantuml.ubrex" --> "java.util"
 "com.plantuml.ubrex" --> "java.util.concurrent.atomic"
+"com.plantuml.ubrex" --> "java.util.function"
 
 class "com.plantuml.ubrex.builder" %lighten("red", 62) {
 Total Classes: 8

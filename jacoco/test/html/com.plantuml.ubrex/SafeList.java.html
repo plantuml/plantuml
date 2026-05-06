@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SafeList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">com.plantuml.ubrex</a> &gt; <span class="el_source">SafeList.java</span></div><h1>SafeList.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package com.plantuml.ubrex;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.Function;
+
+public class SafeList&lt;E&gt; implements Iterable&lt;E&gt; {
+
+<span class="fc" id="L45">	private static final SafeList&lt;?&gt; EMPTY = new SafeList&lt;Object&gt;(0, null, null, null);</span>
+
+	// Each node holds either a single element (data1) or a block of elements
+	// (data2).
+	// Exactly one of them is non-null, except for the empty node where both are
+	// null.
+	// 'size' is the cumulative size of the whole chain, not the local block size.
+	private final int size;
+	private final SafeList&lt;E&gt; previous;
+	private final E data1;
+	private final E[] data2;
+	private E[] cachedArray;
+
+<span class="fc" id="L58">	private SafeList(int size, SafeList&lt;E&gt; previous, E data1, E[] data2) {</span>
+<span class="fc" id="L59">		this.size = size;</span>
+<span class="fc" id="L60">		this.previous = previous;</span>
+<span class="fc" id="L61">		this.data1 = data1;</span>
+<span class="fc" id="L62">		this.data2 = data2;</span>
+<span class="fc" id="L63">	}</span>
+
+	public int size() {
+<span class="fc" id="L66">		return size;</span>
+	}
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public static &lt;E&gt; SafeList&lt;E&gt; createEmpty() {
+<span class="fc" id="L71">		return (SafeList&lt;E&gt;) EMPTY;</span>
+	}
+
+	public SafeList&lt;E&gt; add(E data) {
+<span class="fc" id="L75">		return new SafeList&lt;E&gt;(this.size + 1, this, data, null);</span>
+	}
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public SafeList&lt;E&gt; mapped(Function&lt;E, E&gt; fn) {
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		if (size == 0)</span>
+<span class="fc" id="L81">			return this;</span>
+
+<span class="fc" id="L83">		final E[] source = getCachedArray();</span>
+<span class="fc" id="L84">		final E[] transformed = (E[]) new Object[size];</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		for (int i = 0; i &lt; size; i++)</span>
+<span class="fc" id="L86">			transformed[i] = fn.apply(source[i]);</span>
+
+<span class="fc" id="L88">		final SafeList&lt;E&gt; empty = createEmpty();</span>
+<span class="fc" id="L89">		final SafeList&lt;E&gt; result = new SafeList&lt;E&gt;(size, empty, null, transformed);</span>
+		// The block IS the full materialized list, so we can use it as the cache
+		// directly.
+<span class="fc" id="L92">		result.cachedArray = transformed;</span>
+<span class="fc" id="L93">		return result;</span>
+	}
+
+	private int blockSize() {
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (data1 != null)</span>
+<span class="fc" id="L98">			return 1;</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (data2 != null)</span>
+<span class="fc" id="L100">			return data2.length;</span>
+<span class="nc" id="L101">		return 0;</span>
+	}
+
+	private void copyBlockInto(E[] dest, int destEnd) {
+		// Copies this node's block into dest, ending at index destEnd (exclusive).
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		if (data1 != null) {</span>
+<span class="fc" id="L107">			dest[destEnd - 1] = data1;</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		} else if (data2 != null) {</span>
+<span class="fc" id="L109">			System.arraycopy(data2, 0, dest, destEnd - data2.length, data2.length);</span>
+		}
+<span class="fc" id="L111">	}</span>
+
+	private List&lt;E&gt; toList() {
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (size == 0)</span>
+<span class="fc" id="L115">			return Collections.emptyList();</span>
+
+<span class="fc" id="L117">		return Arrays.asList(getCachedArray());</span>
+	}
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	private E[] getCachedArray() {
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (cachedArray != null)</span>
+<span class="fc" id="L123">			return cachedArray;</span>
+
+<span class="fc" id="L125">		this.cachedArray = (E[]) new Object[size];</span>
+<span class="fc" id="L126">		SafeList&lt;E&gt; current = this;</span>
+<span class="fc" id="L127">		int end = size;</span>
+<span class="pc bpc" id="L128" title="1 of 4 branches missed.">		while (current != null &amp;&amp; current.size != 0) {</span>
+<span class="fc" id="L129">			current.copyBlockInto(cachedArray, end);</span>
+<span class="fc" id="L130">			end -= current.blockSize();</span>
+<span class="fc" id="L131">			current = current.previous;</span>
+		}
+
+<span class="fc" id="L134">		return cachedArray;</span>
+	}
+
+	@Override
+	public Iterator&lt;E&gt; iterator() {
+<span class="fc" id="L139">		return toList().iterator();</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="fc" id="L144">		return toList().toString();</span>
+	}
+
+	private E singletonElement() {
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (data1 != null)</span>
+<span class="fc" id="L149">			return data1;</span>
+<span class="nc" id="L150">		return data2[0];</span>
+	}
+
+	public SafeList&lt;E&gt; addAll(SafeList&lt;E&gt; other) {
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if (other.size == 0)</span>
+<span class="nc" id="L155">			return this;</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (this.size == 0)</span>
+<span class="nc" id="L157">			return other;</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		if (other.size == 1)</span>
+<span class="fc" id="L159">			return this.add(other.singletonElement());</span>
+
+<span class="fc" id="L161">		final E[] otherArray = other.getCachedArray();</span>
+<span class="fc" id="L162">		return new SafeList&lt;E&gt;(this.size + other.size, this, null, otherArray);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

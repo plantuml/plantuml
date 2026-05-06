@@ -4,14 +4,14 @@
 
         <Package name="com.plantuml.ubrex">
             <Stats>
-                <TotalClasses>26</TotalClasses>
-                <ConcreteClasses>23</ConcreteClasses>
+                <TotalClasses>27</TotalClasses>
+                <ConcreteClasses>24</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>7</Ca>
-                <Ce>3</Ce>
-                <A>0.12</A>
-                <I>0.3</I>
-                <D>0.58</D>
+                <Ce>4</Ce>
+                <A>0.11</A>
+                <I>0.36</I>
+                <D>0.53</D>
                 <V>1</V>
             </Stats>
 
@@ -94,6 +94,9 @@
                 <Class sourceFile="Repetition.java">
                     com.plantuml.ubrex.Repetition
                 </Class>
+                <Class sourceFile="SafeList.java">
+                    com.plantuml.ubrex.SafeList
+                </Class>
                 <Class sourceFile="UnicodeBracketedExpression.java">
                     com.plantuml.ubrex.UnicodeBracketedExpression$1
                 </Class>
@@ -103,6 +106,7 @@
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
                 <Package>java.util.concurrent.atomic</Package>
+                <Package>java.util.function</Package>
             </DependsUpon>
 
             <UsedBy>

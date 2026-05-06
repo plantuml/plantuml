@@ -4,16 +4,16 @@
 --------------------------------------------------
 
 Stats:
-    Total Classes: 26
-    Concrete Classes: 23
+    Total Classes: 27
+    Concrete Classes: 24
     Abstract Classes: 3
 
     Ca: 7
-    Ce: 3
+    Ce: 4
 
-    A: 0.12
-    I: 0.3
-    D: 0.58
+    A: 0.11
+    I: 0.36
+    D: 0.53
 
 Abstract Classes:
     com.plantuml.ubrex.Challenge
@@ -43,12 +43,14 @@ Concrete Classes:
     com.plantuml.ubrex.CompositeList
     com.plantuml.ubrex.LookAround
     com.plantuml.ubrex.Repetition
+    com.plantuml.ubrex.SafeList
     com.plantuml.ubrex.UnicodeBracketedExpression$1
 
 Depends Upon:
     java.lang
     java.util
     java.util.concurrent.atomic
+    java.util.function
 
 Used By:
     com.plantuml.ubrex.builder
@@ -14664,7 +14666,7 @@ zext.plantuml.com.google.zxing.qrcode.encoder
 
 Name, Class Count, Abstract Class Count, Ca, Ce, A, I, D, V:
 
-com.plantuml.ubrex,26,3,7,3,0.12,0.3,0.58,1
+com.plantuml.ubrex,27,3,7,4,0.11,0.36,0.53,1
 com.plantuml.ubrex.builder,8,1,3,3,0.12,0.5,0.38,1
 gen.annotation,9,9,0,2,1,1,1,1
 gen.lib.cdt,18,0,3,4,0,0.57,0.43,1
@@ -14700,7 +14702,7 @@ java.time.temporal,0,0,1,0,0,0,1,1
 java.util,0,0,170,0,0,0,1,1
 java.util.concurrent,0,0,6,0,0,0,1,1
 java.util.concurrent.atomic,0,0,5,0,0,0,1,1
-java.util.function,0,0,1,0,0,0,1,1
+java.util.function,0,0,2,0,0,0,1,1
 java.util.logging,0,0,2,0,0,0,1,1
 java.util.regex,0,0,16,0,0,0,1,1
 java.util.zip,0,0,2,0,0,0,1,1

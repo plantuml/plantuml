@@ -67,16 +67,12 @@ public class ChallengeResult {
 <span class="fc" id="L67">		return capture.findValuesByKey(path);</span>
 	}
 
-	public List&lt;String&gt; getKeysToBeRefactored() {
-<span class="fc" id="L71">		return capture.getKeysToBeRefactored();</span>
-	}
-
-	public List&lt;String&gt; getRootKeys() {
-<span class="nc" id="L75">		return capture.getRootKeys();</span>
+	public List&lt;String&gt; findFirstValuesByKeyPrefix(String keyPrefix) {
+<span class="fc" id="L71">		return capture.findFirstValuesByKeyPrefix(keyPrefix);</span>
 	}
 
 	public Capture getCapture() {
-<span class="fc" id="L79">		return capture;</span>
+<span class="fc" id="L75">		return capture;</span>
 	}
 
 }
