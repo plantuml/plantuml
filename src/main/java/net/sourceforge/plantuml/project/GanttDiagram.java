@@ -443,14 +443,14 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 
 	public LocalDate getToday() {
 		if (today == null)
-			this.today = TimePoint.todayUtcAtMidnight();
+			this.today = TimePoint.todayAtMidnight();
 
 		return today.toDay();
 	}
 
 	public void setTodayColors(CenterBorderColor colors) {
 		if (today == null)
-			this.today = TimePoint.todayUtcAtMidnight();
+			this.today = TimePoint.todayAtMidnight();
 
 		this.dayCalendar.putColorDayToday(today, colors.getCenter());
 	}
