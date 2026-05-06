@@ -167,7 +167,7 @@ public class PSystemRegex extends TitledDiagram {
 <span class="nc bnc" id="L167" title="All 4 branches missed.">				else if (token.getType() == ReTokenType.QUANTIFIER &amp;&amp; token.getData().startsWith(&quot;?&quot;))</span>
 <span class="nc" id="L168">					optional();</span>
 <span class="nc bnc" id="L169" title="All 4 branches missed.">				else if (token.getType() == ReTokenType.QUANTIFIER &amp;&amp; token.getData().startsWith(&quot;{&quot;))</span>
-<span class="nc" id="L170">					repetitionOneOrMore(token.getData());</span>
+<span class="nc" id="L170">					repetitionBraced(token.getData());</span>
 				else
 <span class="nc" id="L172">					throw new RegexParsingException(token.toString());</span>
 <span class="nc" id="L173">		} catch (RegexParsingException ex) {</span>
@@ -232,69 +232,141 @@ public class PSystemRegex extends TitledDiagram {
 
 <span class="nc" id="L233">	}</span>
 
-	private void alternation() {
-<span class="nc" id="L236">		final ETile arg1 = stack.removeFirst();</span>
-<span class="nc" id="L237">		final ETile arg2 = stack.removeFirst();</span>
-<span class="nc bnc" id="L238" title="All 2 branches missed.">		if (arg1 instanceof ETileAlternation) {</span>
-<span class="nc" id="L239">			arg1.push(arg2);</span>
-<span class="nc" id="L240">			stack.addFirst(arg1);</span>
-<span class="nc bnc" id="L241" title="All 2 branches missed.">		} else if (arg2 instanceof ETileAlternation) {</span>
-<span class="nc" id="L242">			arg2.push(arg1);</span>
-<span class="nc" id="L243">			stack.addFirst(arg2);</span>
-		} else {
-<span class="nc" id="L245">			final ETile concat = new ETileAlternation();</span>
-<span class="nc" id="L246">			concat.push(arg1);</span>
-<span class="nc" id="L247">			concat.push(arg2);</span>
-<span class="nc" id="L248">			stack.addFirst(concat);</span>
+	private void repetitionBraced(String repetition) {
+		// repetition is of the form &quot;{N}&quot;, &quot;{N,}&quot; or &quot;{N,M}&quot; (optionally followed by '?')
+<span class="nc" id="L237">		final int min = parseBracedMin(repetition);</span>
+<span class="nc bnc" id="L238" title="All 4 branches missed.">		final boolean unboundedOrZeroMax = isBracedMaxUnbounded(repetition) || parseBracedMax(repetition) == 0;</span>
+<span class="nc bnc" id="L239" title="All 4 branches missed.">		if (min == 0 &amp;&amp; unboundedOrZeroMax) {</span>
+			// {0,} is equivalent to *
+<span class="nc" id="L241">			repetitionZeroOrMore();</span>
+<span class="nc" id="L242">			return;</span>
 		}
-<span class="nc" id="L250">	}</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">		if (min == 0) {</span>
+<span class="nc" id="L245">			final int max = parseBracedMax(repetition);</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">			if (max == 1) {</span>
+				// {0,1} is equivalent to ?
+<span class="nc" id="L248">				optional();</span>
+<span class="nc" id="L249">				return;</span>
+			}
+			// {0,N} with N &gt;= 2: wrap a OneOrMore (labeled) into an Optional
+<span class="nc" id="L252">			final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L253">			final ETile inner = new ETileOneOrMore(arg1, repetition, fontConfiguration.bigger(-2), getSkinParam());</span>
+<span class="nc" id="L254">			stack.addFirst(new ETileOptional2(inner, getSkinParam()));</span>
+<span class="nc" id="L255">			return;</span>
+		}
+<span class="nc" id="L257">		repetitionOneOrMore(repetition);</span>
+<span class="nc" id="L258">	}</span>
+
+	private static String stripBraces(String repetition) {
+<span class="nc" id="L261">		String s = repetition;</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">		if (s.endsWith(&quot;?&quot;))</span>
+<span class="nc" id="L263">			s = s.substring(0, s.length() - 1);</span>
+<span class="nc bnc" id="L264" title="All 4 branches missed.">		if (s.startsWith(&quot;{&quot;) &amp;&amp; s.endsWith(&quot;}&quot;))</span>
+<span class="nc" id="L265">			s = s.substring(1, s.length() - 1);</span>
+<span class="nc" id="L266">		return s;</span>
+	}
+
+	private static int parseBracedMin(String repetition) {
+<span class="nc" id="L270">		final String inside = stripBraces(repetition);</span>
+<span class="nc" id="L271">		final int comma = inside.indexOf(',');</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">		final String minStr = (comma == -1 ? inside : inside.substring(0, comma)).trim();</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">		if (minStr.length() == 0)</span>
+<span class="nc" id="L274">			return 0;</span>
+		try {
+<span class="nc" id="L276">			return Integer.parseInt(minStr);</span>
+<span class="nc" id="L277">		} catch (NumberFormatException ex) {</span>
+<span class="nc" id="L278">			return -1;</span>
+		}
+	}
+
+	private static int parseBracedMax(String repetition) {
+<span class="nc" id="L283">		final String inside = stripBraces(repetition);</span>
+<span class="nc" id="L284">		final int comma = inside.indexOf(',');</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">		if (comma == -1) {</span>
+			// {N} : max == min
+<span class="nc" id="L287">			return parseBracedMin(repetition);</span>
+		}
+<span class="nc" id="L289">		final String maxStr = inside.substring(comma + 1).trim();</span>
+<span class="nc bnc" id="L290" title="All 2 branches missed.">		if (maxStr.length() == 0)</span>
+<span class="nc" id="L291">			return -1;</span>
+		try {
+<span class="nc" id="L293">			return Integer.parseInt(maxStr);</span>
+<span class="nc" id="L294">		} catch (NumberFormatException ex) {</span>
+<span class="nc" id="L295">			return -1;</span>
+		}
+	}
+
+	private static boolean isBracedMaxUnbounded(String repetition) {
+<span class="nc" id="L300">		final String inside = stripBraces(repetition);</span>
+<span class="nc" id="L301">		final int comma = inside.indexOf(',');</span>
+<span class="nc bnc" id="L302" title="All 2 branches missed.">		if (comma == -1)</span>
+<span class="nc" id="L303">			return false;</span>
+<span class="nc bnc" id="L304" title="All 2 branches missed.">		return inside.substring(comma + 1).trim().length() == 0;</span>
+	}
+
+	private void alternation() {
+<span class="nc" id="L308">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L309">		final ETile arg2 = stack.removeFirst();</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">		if (arg1 instanceof ETileAlternation) {</span>
+<span class="nc" id="L311">			arg1.push(arg2);</span>
+<span class="nc" id="L312">			stack.addFirst(arg1);</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">		} else if (arg2 instanceof ETileAlternation) {</span>
+<span class="nc" id="L314">			arg2.push(arg1);</span>
+<span class="nc" id="L315">			stack.addFirst(arg2);</span>
+		} else {
+<span class="nc" id="L317">			final ETile concat = new ETileAlternation();</span>
+<span class="nc" id="L318">			concat.push(arg1);</span>
+<span class="nc" id="L319">			concat.push(arg2);</span>
+<span class="nc" id="L320">			stack.addFirst(concat);</span>
+		}
+<span class="nc" id="L322">	}</span>
 
 	private void concatenation() {
-<span class="nc" id="L253">		final ETile arg1 = stack.removeFirst();</span>
-<span class="nc" id="L254">		final ETile arg2 = stack.removeFirst();</span>
-<span class="nc bnc" id="L255" title="All 4 branches missed.">		if (isBoxMergeable(arg1) &amp;&amp; isBoxMergeable(arg2)) {</span>
-<span class="nc" id="L256">			final ETileBox box1 = (ETileBox) arg1;</span>
-<span class="nc" id="L257">			final ETileBox box2 = (ETileBox) arg2;</span>
-<span class="nc" id="L258">			stack.addFirst(box2.mergeWith(box1));</span>
-<span class="nc" id="L259">			return;</span>
+<span class="nc" id="L325">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L326">		final ETile arg2 = stack.removeFirst();</span>
+<span class="nc bnc" id="L327" title="All 4 branches missed.">		if (isBoxMergeable(arg1) &amp;&amp; isBoxMergeable(arg2)) {</span>
+<span class="nc" id="L328">			final ETileBox box1 = (ETileBox) arg1;</span>
+<span class="nc" id="L329">			final ETileBox box2 = (ETileBox) arg2;</span>
+<span class="nc" id="L330">			stack.addFirst(box2.mergeWith(box1));</span>
+<span class="nc" id="L331">			return;</span>
 		}
-<span class="nc bnc" id="L261" title="All 4 branches missed.">		if (isConcatenation1Mergeable(arg1) &amp;&amp; isBoxMergeable(arg2)) {</span>
-<span class="nc" id="L262">			final ETileConcatenation concat1 = (ETileConcatenation) arg1;</span>
-<span class="nc" id="L263">			final ETileBox box1 = (ETileBox) concat1.getFirst();</span>
-<span class="nc" id="L264">			final ETileBox box2 = (ETileBox) arg2;</span>
-<span class="nc" id="L265">			concat1.overideFirst(box2.mergeWith(box1));</span>
-<span class="nc" id="L266">			stack.addFirst(concat1);</span>
-<span class="nc" id="L267">			return;</span>
+<span class="nc bnc" id="L333" title="All 4 branches missed.">		if (isConcatenation1Mergeable(arg1) &amp;&amp; isBoxMergeable(arg2)) {</span>
+<span class="nc" id="L334">			final ETileConcatenation concat1 = (ETileConcatenation) arg1;</span>
+<span class="nc" id="L335">			final ETileBox box1 = (ETileBox) concat1.getFirst();</span>
+<span class="nc" id="L336">			final ETileBox box2 = (ETileBox) arg2;</span>
+<span class="nc" id="L337">			concat1.overideFirst(box2.mergeWith(box1));</span>
+<span class="nc" id="L338">			stack.addFirst(concat1);</span>
+<span class="nc" id="L339">			return;</span>
 		}
-<span class="nc bnc" id="L269" title="All 2 branches missed.">		if (arg1 instanceof ETileConcatenation) {</span>
-<span class="nc" id="L270">			arg1.push(arg2);</span>
-<span class="nc" id="L271">			stack.addFirst(arg1);</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">		if (arg1 instanceof ETileConcatenation) {</span>
+<span class="nc" id="L342">			arg1.push(arg2);</span>
+<span class="nc" id="L343">			stack.addFirst(arg1);</span>
 			// This does not work for (A[B])(C)
 //		} else if (arg2 instanceof ETileConcatenation) {
 //			arg2.push(arg1);
 //			stack.addFirst(arg2);
 		} else {
-<span class="nc" id="L277">			final ETile concat = new ETileConcatenation();</span>
-<span class="nc" id="L278">			concat.push(arg1);</span>
-<span class="nc" id="L279">			concat.push(arg2);</span>
-<span class="nc" id="L280">			stack.addFirst(concat);</span>
+<span class="nc" id="L349">			final ETile concat = new ETileConcatenation();</span>
+<span class="nc" id="L350">			concat.push(arg1);</span>
+<span class="nc" id="L351">			concat.push(arg2);</span>
+<span class="nc" id="L352">			stack.addFirst(concat);</span>
 		}
-<span class="nc" id="L282">	}</span>
+<span class="nc" id="L354">	}</span>
 
 	private boolean isConcatenation1Mergeable(ETile tile) {
-<span class="nc bnc" id="L285" title="All 2 branches missed.">		if (tile instanceof ETileConcatenation) {</span>
-<span class="nc" id="L286">			final ETileConcatenation concat = (ETileConcatenation) tile;</span>
-<span class="nc" id="L287">			return isBoxMergeable(concat.getFirst());</span>
+<span class="nc bnc" id="L357" title="All 2 branches missed.">		if (tile instanceof ETileConcatenation) {</span>
+<span class="nc" id="L358">			final ETileConcatenation concat = (ETileConcatenation) tile;</span>
+<span class="nc" id="L359">			return isBoxMergeable(concat.getFirst());</span>
 		}
-<span class="nc" id="L289">		return false;</span>
+<span class="nc" id="L361">		return false;</span>
 	}
 
 	private boolean isBoxMergeable(ETile tile) {
-<span class="nc bnc" id="L293" title="All 2 branches missed.">		if (tile instanceof ETileBox) {</span>
-<span class="nc" id="L294">			final ETileBox box = (ETileBox) tile;</span>
-<span class="nc bnc" id="L295" title="All 2 branches missed.">			return box.getSymbol() == Symbol.TERMINAL_STRING1;</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">		if (tile instanceof ETileBox) {</span>
+<span class="nc" id="L366">			final ETileBox box = (ETileBox) tile;</span>
+<span class="nc bnc" id="L367" title="All 2 branches missed.">			return box.getSymbol() == Symbol.TERMINAL_STRING1;</span>
 		}
-<span class="nc" id="L297">		return false;</span>
+<span class="nc" id="L369">		return false;</span>
 	}
 
 }
