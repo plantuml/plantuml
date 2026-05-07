@@ -98,72 +98,75 @@ public class EbnfEngine {
 
 	public void repetitionSymbol() {
 <span class="nc" id="L100">		final ETile arg1 = stack.removeFirst();</span>
-<span class="nc" id="L101">		final String arg2 = stack.removeFirst().getRepetitionLabel() + &quot;\u00D7&quot;;</span>
-<span class="nc" id="L102">		stack.addFirst(new ETileOneOrMore(arg1, arg2, fontConfiguration.bigger(-2), skinParam));</span>
+<span class="nc" id="L101">		final String repetitionLabel = stack.removeFirst().getRepetitionLabel();</span>
+<span class="nc" id="L102">		ETile tile = new ETileOneOrMore(arg1, repetitionLabel + &quot;\u00D7&quot;, fontConfiguration.bigger(-2), skinParam);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (&quot;0&quot;.equals(repetitionLabel))</span>
+<span class="nc" id="L104">			tile = new ETileOptional2(tile, skinParam);</span>
+<span class="nc" id="L105">		stack.addFirst(tile);</span>
 
-<span class="nc" id="L104">	}</span>
+<span class="nc" id="L107">	}</span>
 
 	public void alternation() {
-<span class="nc" id="L107">		final ETile arg1 = stack.removeFirst();</span>
-<span class="nc" id="L108">		final ETile arg2 = stack.removeFirst();</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (arg1 instanceof ETileAlternation) {</span>
-<span class="nc" id="L110">			arg1.push(arg2);</span>
-<span class="nc" id="L111">			stack.addFirst(arg1);</span>
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		} else if (arg2 instanceof ETileAlternation) {</span>
-<span class="nc" id="L113">			arg2.push(arg1);</span>
-<span class="nc" id="L114">			stack.addFirst(arg2);</span>
+<span class="nc" id="L110">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L111">		final ETile arg2 = stack.removeFirst();</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (arg1 instanceof ETileAlternation) {</span>
+<span class="nc" id="L113">			arg1.push(arg2);</span>
+<span class="nc" id="L114">			stack.addFirst(arg1);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		} else if (arg2 instanceof ETileAlternation) {</span>
+<span class="nc" id="L116">			arg2.push(arg1);</span>
+<span class="nc" id="L117">			stack.addFirst(arg2);</span>
 		} else {
-<span class="nc" id="L116">			final ETile concat = new ETileAlternation();</span>
-<span class="nc" id="L117">			concat.push(arg1);</span>
-<span class="nc" id="L118">			concat.push(arg2);</span>
-<span class="nc" id="L119">			stack.addFirst(concat);</span>
+<span class="nc" id="L119">			final ETile concat = new ETileAlternation();</span>
+<span class="nc" id="L120">			concat.push(arg1);</span>
+<span class="nc" id="L121">			concat.push(arg2);</span>
+<span class="nc" id="L122">			stack.addFirst(concat);</span>
 		}
-<span class="nc" id="L121">	}</span>
+<span class="nc" id="L124">	}</span>
 
 	public void concatenation() {
 
-<span class="nc" id="L125">		final ETile arg1 = stack.removeFirst();</span>
-<span class="nc" id="L126">		final ETile arg2 = stack.removeFirst();</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (arg1 instanceof ETileConcatenation) {</span>
-<span class="nc" id="L128">			arg1.push(arg2);</span>
-<span class="nc" id="L129">			stack.addFirst(arg1);</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		} else if (arg2 instanceof ETileConcatenation) {</span>
-<span class="nc" id="L131">			((ETileConcatenation) arg2).pushLast(arg1);</span>
-<span class="nc" id="L132">			stack.addFirst(arg2);</span>
+<span class="nc" id="L128">		final ETile arg1 = stack.removeFirst();</span>
+<span class="nc" id="L129">		final ETile arg2 = stack.removeFirst();</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (arg1 instanceof ETileConcatenation) {</span>
+<span class="nc" id="L131">			arg1.push(arg2);</span>
+<span class="nc" id="L132">			stack.addFirst(arg1);</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		} else if (arg2 instanceof ETileConcatenation) {</span>
+<span class="nc" id="L134">			((ETileConcatenation) arg2).pushLast(arg1);</span>
+<span class="nc" id="L135">			stack.addFirst(arg2);</span>
 		} else {
-<span class="nc" id="L134">			final ETile concat = new ETileConcatenation();</span>
-<span class="nc" id="L135">			concat.push(arg1);</span>
-<span class="nc" id="L136">			concat.push(arg2);</span>
-<span class="nc" id="L137">			stack.addFirst(concat);</span>
+<span class="nc" id="L137">			final ETile concat = new ETileConcatenation();</span>
+<span class="nc" id="L138">			concat.push(arg1);</span>
+<span class="nc" id="L139">			concat.push(arg2);</span>
+<span class="nc" id="L140">			stack.addFirst(concat);</span>
 		}
-<span class="nc" id="L139">	}</span>
+<span class="nc" id="L142">	}</span>
 
 	public TextBlock getTextBlock() {
-<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (stack.size() != 1)</span>
-<span class="nc" id="L143">			return syntaxError(fontConfiguration, skinParam);</span>
-<span class="nc" id="L144">		return new ETileWithCircles(stack.peekFirst(), lineColor);</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		if (stack.size() != 1)</span>
+<span class="nc" id="L146">			return syntaxError(fontConfiguration, skinParam);</span>
+<span class="nc" id="L147">		return new ETileWithCircles(stack.peekFirst(), lineColor);</span>
 	}
 
 	public static TextBlock syntaxError(FontConfiguration fontConfiguration, ISkinSimple spriteContainer) {
-<span class="nc" id="L148">		final Display msg = Display.create(&quot;Syntax error!&quot;);</span>
-<span class="nc" id="L149">		return msg.create(fontConfiguration, HorizontalAlignment.LEFT, spriteContainer);</span>
+<span class="nc" id="L151">		final Display msg = Display.create(&quot;Syntax error!&quot;);</span>
+<span class="nc" id="L152">		return msg.create(fontConfiguration, HorizontalAlignment.LEFT, spriteContainer);</span>
 	}
 
 	public void commentBelow(String comment) {
-<span class="nc" id="L153">		final ETile arg1 = stack.peekFirst();</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (arg1 == null)</span>
-<span class="nc" id="L155">			throw new IllegalStateException();</span>
+<span class="nc" id="L156">		final ETile arg1 = stack.peekFirst();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (arg1 == null)</span>
+<span class="nc" id="L158">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L157">		arg1.addCommentBelow(comment);</span>
-<span class="nc" id="L158">	}</span>
+<span class="nc" id="L160">		arg1.addCommentBelow(comment);</span>
+<span class="nc" id="L161">	}</span>
 
 	public void commentAbove(String comment) {
-<span class="nc" id="L161">		final ETile arg1 = stack.peekFirst();</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (arg1 == null)</span>
-<span class="nc" id="L163">			throw new IllegalStateException();</span>
+<span class="nc" id="L164">		final ETile arg1 = stack.peekFirst();</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (arg1 == null)</span>
+<span class="nc" id="L166">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L165">		arg1.addCommentAbove(comment);</span>
-<span class="nc" id="L166">	}</span>
+<span class="nc" id="L168">		arg1.addCommentAbove(comment);</span>
+<span class="nc" id="L169">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
