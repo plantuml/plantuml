@@ -9968,18 +9968,24 @@
 
         <Package name="net.sourceforge.plantuml.klimt.drawing.svg">
             <Stats>
-                <TotalClasses>11</TotalClasses>
-                <ConcreteClasses>11</ConcreteClasses>
-                <AbstractClasses>0</AbstractClasses>
-                <Ca>2</Ca>
-                <Ce>16</Ce>
-                <A>0</A>
-                <I>0.89</I>
-                <D>0.11</D>
+                <TotalClasses>16</TotalClasses>
+                <ConcreteClasses>14</ConcreteClasses>
+                <AbstractClasses>2</AbstractClasses>
+                <Ca>3</Ca>
+                <Ce>17</Ce>
+                <A>0.12</A>
+                <I>0.85</I>
+                <D>0.02</D>
                 <V>1</V>
             </Stats>
 
             <AbstractClasses>
+                <Class sourceFile="IElement.java">
+                    net.sourceforge.plantuml.klimt.drawing.svg.IElement
+                </Class>
+                <Class sourceFile="PortableSvgDocument.java">
+                    net.sourceforge.plantuml.klimt.drawing.svg.PortableSvgDocument
+                </Class>
             </AbstractClasses>
 
             <ConcreteClasses>
@@ -10010,11 +10016,20 @@
                 <Class sourceFile="DriverTextSvg.java">
                     net.sourceforge.plantuml.klimt.drawing.svg.DriverTextSvg$ExtraLines
                 </Class>
+                <Class sourceFile="PortableSvgDocument.java">
+                    net.sourceforge.plantuml.klimt.drawing.svg.PortableSvgDocument$1
+                </Class>
                 <Class sourceFile="SvgGraphics.java">
                     net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics$1
                 </Class>
                 <Class sourceFile="UGraphicSvg.java">
                     net.sourceforge.plantuml.klimt.drawing.svg.UGraphicSvg
+                </Class>
+                <Class sourceFile="W3cElementAdapter.java">
+                    net.sourceforge.plantuml.klimt.drawing.svg.W3cElementAdapter
+                </Class>
+                <Class sourceFile="W3cSvgDocument.java">
+                    net.sourceforge.plantuml.klimt.drawing.svg.W3cSvgDocument
                 </Class>
             </ConcreteClasses>
 
@@ -10035,11 +10050,13 @@
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
+                <Package>org.w3c.dom</Package>
             </DependsUpon>
 
             <UsedBy>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.hand</Package>
+                <Package>net.sourceforge.plantuml.teavm</Package>
             </UsedBy>
         </Package>
 
@@ -16772,14 +16789,14 @@
 
         <Package name="net.sourceforge.plantuml.teavm">
             <Stats>
-                <TotalClasses>17</TotalClasses>
-                <ConcreteClasses>16</ConcreteClasses>
+                <TotalClasses>19</TotalClasses>
+                <ConcreteClasses>18</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>42</Ca>
-                <Ce>12</Ce>
-                <A>0.06</A>
-                <I>0.22</I>
-                <D>0.72</D>
+                <Ce>14</Ce>
+                <A>0.05</A>
+                <I>0.25</I>
+                <D>0.7</D>
                 <V>1</V>
             </Stats>
 
@@ -16835,6 +16852,12 @@
                 <Class sourceFile="TeaVM.java">
                     net.sourceforge.plantuml.teavm.TeaVM
                 </Class>
+                <Class sourceFile="TeaVMElementAdapter.java">
+                    net.sourceforge.plantuml.teavm.TeaVMElementAdapter
+                </Class>
+                <Class sourceFile="TeaVMSvgDocument.java">
+                    net.sourceforge.plantuml.teavm.TeaVMSvgDocument
+                </Class>
                 <Class sourceFile="UGraphicTeaVM.java">
                     net.sourceforge.plantuml.teavm.UGraphicTeaVM
                 </Class>
@@ -16848,11 +16871,13 @@
                 <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing.svg</Package>
                 <Package>net.sourceforge.plantuml.klimt.font</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
                 <Package>org.teavm.jso</Package>
+                <Package>org.teavm.jso.dom.xml</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -19187,6 +19212,10 @@
         </Package>
 
         <Package name="org.teavm.jso">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.teavm.jso.dom.xml">
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
 

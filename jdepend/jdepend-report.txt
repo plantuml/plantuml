@@ -6785,18 +6785,20 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 11
-    Concrete Classes: 11
-    Abstract Classes: 0
+    Total Classes: 16
+    Concrete Classes: 14
+    Abstract Classes: 2
 
-    Ca: 2
-    Ce: 16
+    Ca: 3
+    Ce: 17
 
-    A: 0
-    I: 0.89
-    D: 0.11
+    A: 0.12
+    I: 0.85
+    D: 0.02
 
 Abstract Classes:
+    net.sourceforge.plantuml.klimt.drawing.svg.IElement
+    net.sourceforge.plantuml.klimt.drawing.svg.PortableSvgDocument
 
 Concrete Classes:
     net.sourceforge.plantuml.klimt.drawing.svg.DriverDotPathSvg
@@ -6808,8 +6810,11 @@ Concrete Classes:
     net.sourceforge.plantuml.klimt.drawing.svg.DriverPolygonSvg
     net.sourceforge.plantuml.klimt.drawing.svg.DriverTextAsPathSvg
     net.sourceforge.plantuml.klimt.drawing.svg.DriverTextSvg$ExtraLines
+    net.sourceforge.plantuml.klimt.drawing.svg.PortableSvgDocument$1
     net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics$1
     net.sourceforge.plantuml.klimt.drawing.svg.UGraphicSvg
+    net.sourceforge.plantuml.klimt.drawing.svg.W3cElementAdapter
+    net.sourceforge.plantuml.klimt.drawing.svg.W3cSvgDocument
 
 Depends Upon:
     java.awt
@@ -6828,10 +6833,12 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.url
+    org.w3c.dom
 
 Used By:
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.klimt.drawing.hand
+    net.sourceforge.plantuml.teavm
 
 --------------------------------------------------
 - Package: net.sourceforge.plantuml.klimt.drawing.tikz
@@ -11370,16 +11377,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 17
-    Concrete Classes: 16
+    Total Classes: 19
+    Concrete Classes: 18
     Abstract Classes: 1
 
     Ca: 42
-    Ce: 12
+    Ce: 14
 
-    A: 0.06
-    I: 0.22
-    D: 0.72
+    A: 0.05
+    I: 0.25
+    D: 0.7
 
 Abstract Classes:
     net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine$StringCallback
@@ -11400,6 +11407,8 @@ Concrete Classes:
     net.sourceforge.plantuml.teavm.StringBounderTeaVM$1
     net.sourceforge.plantuml.teavm.StringBounderTeaVM$CacheKey
     net.sourceforge.plantuml.teavm.TeaVM
+    net.sourceforge.plantuml.teavm.TeaVMElementAdapter
+    net.sourceforge.plantuml.teavm.TeaVMSvgDocument
     net.sourceforge.plantuml.teavm.UGraphicTeaVM
 
 Depends Upon:
@@ -11410,11 +11419,13 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.drawing
+    net.sourceforge.plantuml.klimt.drawing.svg
     net.sourceforge.plantuml.klimt.font
     net.sourceforge.plantuml.klimt.geom
     net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.url
     org.teavm.jso
+    org.teavm.jso.dom.xml
 
 Used By:
     net.sourceforge.plantuml
@@ -12982,6 +12993,11 @@ Used By:
 
 --------------------------------------------------
 - Package: org.teavm.jso
+--------------------------------------------------
+No stats available: package referenced, but not analyzed.
+
+--------------------------------------------------
+- Package: org.teavm.jso.dom.xml
 --------------------------------------------------
 No stats available: package referenced, but not analyzed.
 
@@ -14821,7 +14837,7 @@ net.sourceforge.plantuml.klimt.drawing.eps,15,1,1,14,0.07,0.93,0,1
 net.sourceforge.plantuml.klimt.drawing.g2d,14,1,3,19,0.07,0.86,0.06,1
 net.sourceforge.plantuml.klimt.drawing.hand,8,0,1,8,0,0.89,0.11,1
 net.sourceforge.plantuml.klimt.drawing.html5,3,0,1,8,0,0.89,0.11,1
-net.sourceforge.plantuml.klimt.drawing.svg,11,0,2,16,0,0.89,0.11,1
+net.sourceforge.plantuml.klimt.drawing.svg,16,2,3,17,0.12,0.85,0.02,1
 net.sourceforge.plantuml.klimt.drawing.tikz,11,0,1,13,0,0.93,0.07,1
 net.sourceforge.plantuml.klimt.drawing.txt,1,0,4,13,0,0.76,0.24,1
 net.sourceforge.plantuml.klimt.drawing.visio,8,1,1,10,0.12,0.91,0.03,1
@@ -14899,7 +14915,7 @@ net.sourceforge.plantuml.svek.image,37,2,12,23,0.05,0.66,0.29,1
 net.sourceforge.plantuml.svg.parser,11,1,1,13,0.09,0.93,0.02,1
 net.sourceforge.plantuml.swing,36,0,0,15,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
-net.sourceforge.plantuml.teavm,17,1,42,12,0.06,0.22,0.72,1
+net.sourceforge.plantuml.teavm,19,1,42,14,0.05,0.25,0.7,1
 net.sourceforge.plantuml.teavm.browser,5,5,2,2,1,0.5,0.5,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.text,5,1,38,4,0.2,0.1,0.7,1
@@ -14931,7 +14947,8 @@ org.stathissideris.ascii2image.core,10,0,2,7,0,0.78,0.22,1
 org.stathissideris.ascii2image.graphics,6,0,2,11,0,0.85,0.15,1
 org.stathissideris.ascii2image.text,9,0,2,5,0,0.71,0.29,1
 org.teavm.jso,0,0,2,0,0,0,1,1
-org.w3c.dom,0,0,5,0,0,0,1,1
+org.teavm.jso.dom.xml,0,0,1,0,0,0,1,1
+org.w3c.dom,0,0,6,0,0,0,1,1
 org.xml.sax,0,0,2,0,0,0,1,1
 org.xml.sax.helpers,0,0,2,0,0,0,1,1
 smetana.core,12,5,11,8,0.42,0.42,0.16,1

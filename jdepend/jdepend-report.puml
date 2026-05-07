@@ -1980,8 +1980,8 @@ Total Classes: 3
 "net.sourceforge.plantuml.klimt.drawing.html5" --> "net.sourceforge.plantuml.klimt.font"
 "net.sourceforge.plantuml.klimt.drawing.html5" --> "net.sourceforge.plantuml.klimt.shape"
 
-class "net.sourceforge.plantuml.klimt.drawing.svg" %lighten("red", 89) {
-Total Classes: 11
+class "net.sourceforge.plantuml.klimt.drawing.svg" %lighten("red", 98) {
+Total Classes: 16
 }
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "java.awt"
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "java.awt.font"
@@ -1999,6 +1999,7 @@ Total Classes: 11
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "net.sourceforge.plantuml.url"
+"net.sourceforge.plantuml.klimt.drawing.svg" --> "org.w3c.dom"
 
 class "net.sourceforge.plantuml.klimt.drawing.tikz" %lighten("red", 93) {
 Total Classes: 11
@@ -3199,8 +3200,8 @@ Total Classes: 2
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.teavm" %lighten("red", 28) {
-Total Classes: 17
+class "net.sourceforge.plantuml.teavm" %lighten("red", 30) {
+Total Classes: 19
 }
 "net.sourceforge.plantuml.teavm" --> "java.io"
 "net.sourceforge.plantuml.teavm" --> "java.lang"
@@ -3209,11 +3210,13 @@ Total Classes: 17
 "net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.awt"
 "net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.drawing"
+"net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.drawing.svg"
 "net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.font"
 "net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.teavm" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.teavm" --> "org.teavm.jso"
+"net.sourceforge.plantuml.teavm" --> "org.teavm.jso.dom.xml"
 
 class "net.sourceforge.plantuml.teavm.browser" %lighten("red", 50) {
 Total Classes: 5
@@ -3623,6 +3626,10 @@ Total Classes: 9
 "org.stathissideris.ascii2image.text" --> "java.util.regex"
 
 class "org.teavm.jso"{
+
+}
+
+class "org.teavm.jso.dom.xml"{
 
 }
 
