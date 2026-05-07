@@ -47,186 +47,175 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.OptionKey;
-import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.style.LengthAdjust;
 
 public class SvgOption {
 
-<span class="fc" id="L55">	private LengthAdjust lengthAdjust = LengthAdjust.defaultValue();</span>
-<span class="fc" id="L56">	private String preserveAspectRatio = &quot;none&quot;;</span>
+<span class="fc" id="L54">	private LengthAdjust lengthAdjust = LengthAdjust.defaultValue();</span>
+<span class="fc" id="L55">	private String preserveAspectRatio = &quot;none&quot;;</span>
 	private String hover;
-<span class="fc" id="L58">	private boolean svgDimensionStyle = true;</span>
-<span class="fc" id="L59">	private XDimension2D minDim = new XDimension2D(0, 0);</span>
+<span class="fc" id="L57">	private boolean svgDimensionStyle = true;</span>
+<span class="fc" id="L58">	private XDimension2D minDim = new XDimension2D(0, 0);</span>
 	private HColor backcolor;
-<span class="fc" id="L61">	private double scale = 1.0;</span>
-<span class="fc" id="L62">	private ColorMapper colorMapper = ColorMapper.IDENTITY;</span>
+<span class="fc" id="L60">	private double scale = 1.0;</span>
+<span class="fc" id="L61">	private ColorMapper colorMapper = ColorMapper.IDENTITY;</span>
 	private String linkTarget;
 	private String font;
 	private String title;
 	private String interactiveBaseFilename;
-<span class="fc" id="L67">	private final Map&lt;String, String&gt; rootAttributes = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L66">	private final Map&lt;String, String&gt; rootAttributes = new LinkedHashMap&lt;&gt;();</span>
 	private ConfigurationStore&lt;OptionKey&gt; options;
 
 	public String getInteractiveBaseFilename() {
-<span class="fc" id="L71">		return interactiveBaseFilename;</span>
+<span class="fc" id="L70">		return interactiveBaseFilename;</span>
 	}
 
 	public static SvgOption basic() {
-<span class="fc" id="L75">		return new SvgOption();</span>
+<span class="fc" id="L74">		return new SvgOption();</span>
 	}
 
-<span class="fc" id="L78">	private SvgOption() {</span>
-<span class="fc" id="L79">	}</span>
-
-	// This method will be removed once Pragma SVGNEWDATA will be removed
-
-	public Pragma pragma;
-
-	@Deprecated
-	public SvgOption withPragma(Pragma pragma) {
-<span class="fc" id="L87">		this.pragma = pragma;</span>
-<span class="fc" id="L88">		return this;</span>
-	}
+<span class="fc" id="L77">	private SvgOption() {</span>
+<span class="fc" id="L78">	}</span>
 
 	public SvgOption withConfigurationStore(ConfigurationStore&lt;OptionKey&gt; options) {
-<span class="fc" id="L92">		this.options = options;</span>
-<span class="fc" id="L93">		return this;</span>
+<span class="fc" id="L81">		this.options = options;</span>
+<span class="fc" id="L82">		return this;</span>
 	}
 
 	private String getValueFromOptions(OptionKey key) {
-<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (options == null)</span>
-<span class="fc" id="L98">			return null;</span>
-<span class="fc" id="L99">		return options.getValue(key);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (options == null)</span>
+<span class="fc" id="L87">			return null;</span>
+<span class="fc" id="L88">		return options.getValue(key);</span>
 	}
 
 	public String getTitle() {
-<span class="fc" id="L103">		final String optionTitle = getValueFromOptions(OptionKey.SVG_TITLE);</span>
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (optionTitle != null)</span>
-<span class="nc" id="L105">			return optionTitle;</span>
-<span class="fc" id="L106">		return title;</span>
+<span class="fc" id="L92">		final String optionTitle = getValueFromOptions(OptionKey.SVG_TITLE);</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (optionTitle != null)</span>
+<span class="nc" id="L94">			return optionTitle;</span>
+<span class="fc" id="L95">		return title;</span>
 	}
 
 	public String getDesc() {
-<span class="fc" id="L110">		return getValueFromOptions(OptionKey.SVG_DESC);</span>
+<span class="fc" id="L99">		return getValueFromOptions(OptionKey.SVG_DESC);</span>
 	}
 
 	public SvgOption withTitle(Display titleDisplay) {
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (titleDisplay.size() &gt; 0) {</span>
-<span class="nc" id="L115">			title = StreamSupport.stream(titleDisplay.spliterator(), false) //</span>
-<span class="nc" id="L116">	            .map(CharSequence::toString) //</span>
-<span class="nc" id="L117">	            .collect(Collectors.joining(&quot;\n&quot;));</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (titleDisplay.size() &gt; 0) {</span>
+<span class="nc" id="L104">			title = StreamSupport.stream(titleDisplay.spliterator(), false) //</span>
+<span class="nc" id="L105">	            .map(CharSequence::toString) //</span>
+<span class="nc" id="L106">	            .collect(Collectors.joining(&quot;\n&quot;));</span>
 		}
-<span class="nc" id="L119">		return this;</span>
+<span class="nc" id="L108">		return this;</span>
 	}
 
 
 
 	public SvgOption withInteractive(String interactiveBaseFilename) {
-<span class="fc" id="L125">		this.interactiveBaseFilename = interactiveBaseFilename;</span>
-<span class="fc" id="L126">		return this;</span>
+<span class="fc" id="L114">		this.interactiveBaseFilename = interactiveBaseFilename;</span>
+<span class="fc" id="L115">		return this;</span>
 	}
 
 	public SvgOption withLengthAdjust(LengthAdjust lengthAdjust) {
-<span class="fc" id="L130">		this.lengthAdjust = lengthAdjust;</span>
-<span class="fc" id="L131">		return this;</span>
+<span class="fc" id="L119">		this.lengthAdjust = lengthAdjust;</span>
+<span class="fc" id="L120">		return this;</span>
 	}
 
 	public SvgOption withPreserveAspectRatio(String preserveAspectRatio) {
-<span class="fc" id="L135">		this.preserveAspectRatio = preserveAspectRatio;</span>
-<span class="fc" id="L136">		return this;</span>
+<span class="fc" id="L124">		this.preserveAspectRatio = preserveAspectRatio;</span>
+<span class="fc" id="L125">		return this;</span>
 	}
 
 	public SvgOption withHoverPathColorRGB(String hover) {
-<span class="fc" id="L140">		this.hover = hover;</span>
-<span class="fc" id="L141">		return this;</span>
+<span class="fc" id="L129">		this.hover = hover;</span>
+<span class="fc" id="L130">		return this;</span>
 	}
 
 	public SvgOption withSvgDimensionStyle(boolean svgDimensionStyle) {
-<span class="fc" id="L145">		this.svgDimensionStyle = svgDimensionStyle;</span>
-<span class="fc" id="L146">		return this;</span>
+<span class="fc" id="L134">		this.svgDimensionStyle = svgDimensionStyle;</span>
+<span class="fc" id="L135">		return this;</span>
 	}
 
 	public SvgOption withMinDim(XDimension2D minDim) {
-<span class="fc" id="L150">		this.minDim = minDim;</span>
-<span class="fc" id="L151">		return this;</span>
+<span class="fc" id="L139">		this.minDim = minDim;</span>
+<span class="fc" id="L140">		return this;</span>
 	}
 
 	public SvgOption withBackcolor(HColor backcolor) {
-<span class="fc" id="L155">		this.backcolor = backcolor;</span>
-<span class="fc" id="L156">		return this;</span>
+<span class="fc" id="L144">		this.backcolor = backcolor;</span>
+<span class="fc" id="L145">		return this;</span>
 	}
 
 	public SvgOption withScale(double scale) {
-<span class="fc" id="L160">		this.scale = scale;</span>
-<span class="fc" id="L161">		return this;</span>
+<span class="fc" id="L149">		this.scale = scale;</span>
+<span class="fc" id="L150">		return this;</span>
 	}
 
 	public SvgOption withColorMapper(ColorMapper colorMapper) {
-<span class="fc" id="L165">		this.colorMapper = colorMapper;</span>
-<span class="fc" id="L166">		return this;</span>
+<span class="fc" id="L154">		this.colorMapper = colorMapper;</span>
+<span class="fc" id="L155">		return this;</span>
 	}
 
 	public SvgOption withLinkTarget(String linkTarget) {
-<span class="fc" id="L170">		this.linkTarget = linkTarget;</span>
-<span class="fc" id="L171">		return this;</span>
+<span class="fc" id="L159">		this.linkTarget = linkTarget;</span>
+<span class="fc" id="L160">		return this;</span>
 	}
 
 	public SvgOption withFont(String font) {
-<span class="fc" id="L175">		this.font = font;</span>
-<span class="fc" id="L176">		return this;</span>
+<span class="fc" id="L164">		this.font = font;</span>
+<span class="fc" id="L165">		return this;</span>
 	}
 
 	public Map&lt;String, String&gt; getRootAttributes() {
-<span class="fc" id="L180">		return Collections.unmodifiableMap(rootAttributes);</span>
+<span class="fc" id="L169">		return Collections.unmodifiableMap(rootAttributes);</span>
 	}
 
 	public SvgOption withRootAttribute(String key, String value) {
-<span class="fc" id="L184">		this.rootAttributes.put(key, value);</span>
-<span class="fc" id="L185">		return this;</span>
+<span class="fc" id="L173">		this.rootAttributes.put(key, value);</span>
+<span class="fc" id="L174">		return this;</span>
 	}
 
 	public String getPreserveAspectRatio() {
-<span class="fc" id="L189">		return preserveAspectRatio;</span>
+<span class="fc" id="L178">		return preserveAspectRatio;</span>
 	}
 
 	public boolean isInteractive() {
-<span class="fc bfc" id="L193" title="All 2 branches covered.">		return interactiveBaseFilename != null;</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		return interactiveBaseFilename != null;</span>
 	}
 
 	public LengthAdjust getLengthAdjust() {
-<span class="fc" id="L197">		return lengthAdjust;</span>
+<span class="fc" id="L186">		return lengthAdjust;</span>
 	}
 
 	public String getHover() {
-<span class="fc" id="L201">		return hover;</span>
+<span class="fc" id="L190">		return hover;</span>
 	}
 
 	public boolean getSvgDimensionStyle() {
-<span class="fc" id="L205">		return svgDimensionStyle;</span>
+<span class="fc" id="L194">		return svgDimensionStyle;</span>
 	}
 
 	public XDimension2D getMinDim() {
-<span class="fc" id="L209">		return minDim;</span>
+<span class="fc" id="L198">		return minDim;</span>
 	}
 
 	public HColor getBackcolor() {
-<span class="fc" id="L213">		return backcolor;</span>
+<span class="fc" id="L202">		return backcolor;</span>
 	}
 
 	public double getScale() {
-<span class="fc" id="L217">		return scale;</span>
+<span class="fc" id="L206">		return scale;</span>
 	}
 
 	public ColorMapper getColorMapper() {
-<span class="fc" id="L221">		return colorMapper;</span>
+<span class="fc" id="L210">		return colorMapper;</span>
 	}
 
 	public String getLinkTarget() {
-<span class="nc" id="L225">		return linkTarget;</span>
+<span class="nc" id="L214">		return linkTarget;</span>
 	}
 
 	public String getFont() {
-<span class="nc" id="L229">		return font;</span>
+<span class="nc" id="L218">		return font;</span>
 	}
 
 }
