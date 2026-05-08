@@ -1,0 +1,4 @@
+@startpacketdiag
+1-10: server [color="palegreen", textcolor="blue", linecolor="red"]
+11-20: database [color="pink"]
+@endpacketdiag

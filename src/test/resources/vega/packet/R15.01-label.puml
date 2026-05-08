@@ -1,0 +1,4 @@
+@startpacketdiag
+1-10: server [label = label_1]
+11-20: database [label = label_2]
+@endpacketdiag
