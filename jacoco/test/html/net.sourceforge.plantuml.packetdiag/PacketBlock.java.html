@@ -244,8 +244,8 @@ public class PacketBlock {
 		// Unicode code points
 <span class="fc" id="L245">		String abbr = label;</span>
 <span class="fc bfc" id="L246" title="All 2 branches covered.">		for (int i = label.length(); i &gt; 0; i--) {</span>
-<span class="pc bpc" id="L247" title="1 of 2 branches missed.">			if (labelDim.getWidth() + padDim.getWidth() &lt; reqWidth) {</span>
-<span class="nc" id="L248">				break;</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">			if (labelDim.getWidth() + padDim.getWidth() &lt; reqWidth) {</span>
+<span class="fc" id="L248">				break;</span>
 			}
 <span class="fc" id="L250">			abbr = label.substring(0, i) + pad;</span>
 <span class="fc" id="L251">			labelDim = stringBounder.calculateDimension(font, abbr);</span>

@@ -295,7 +295,7 @@ public class NwDiagram extends TitledDiagram {
 <span class="fc" id="L295">		final Matcher m = p.matcher(definition);</span>
 <span class="fc bfc" id="L296" title="All 2 branches covered.">		while (m.find()) {</span>
 <span class="fc" id="L297">			final String name = m.group(1);</span>
-<span class="pc bpc" id="L298" title="1 of 2 branches missed.">			final String value = m.group(3) == null ? m.group(2) : m.group(3);</span>
+<span class="fc bfc" id="L298" title="All 2 branches covered.">			final String value = m.group(3) == null ? m.group(2) : m.group(3);</span>
 <span class="fc" id="L299">			result.put(name, value);</span>
 <span class="fc" id="L300">		}</span>
 <span class="fc" id="L301">		return result;</span>

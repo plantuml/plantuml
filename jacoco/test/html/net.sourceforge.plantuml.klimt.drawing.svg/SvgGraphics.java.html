@@ -898,8 +898,8 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 <span class="fc" id="L898">	}</span>
 
 	private void addFilterShadowId(final Element elt, double deltaShadow) {
-<span class="pc bpc" id="L901" title="1 of 2 branches missed.">		if (deltaShadow &gt; 0)</span>
-<span class="nc" id="L902">			elt.setAttribute(&quot;filter&quot;, &quot;url(#&quot; + shadowId + &quot;)&quot;);</span>
+<span class="fc bfc" id="L901" title="All 2 branches covered.">		if (deltaShadow &gt; 0)</span>
+<span class="fc" id="L902">			elt.setAttribute(&quot;filter&quot;, &quot;url(#&quot; + shadowId + &quot;)&quot;);</span>
 
 <span class="fc" id="L904">	}</span>
 
@@ -1104,36 +1104,36 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 <span class="fc" id="L1104">	private boolean withShadow = false;</span>
 
 	private void manageShadow(double deltaShadow) {
-<span class="pc bpc" id="L1107" title="1 of 2 branches missed.">		if (deltaShadow != 0) {</span>
-<span class="nc bnc" id="L1108" title="All 2 branches missed.">			if (withShadow == false) {</span>
+<span class="fc bfc" id="L1107" title="All 2 branches covered.">		if (deltaShadow != 0) {</span>
+<span class="fc bfc" id="L1108" title="All 2 branches covered.">			if (withShadow == false) {</span>
 				// &lt;filter id=&quot;f1&quot; x=&quot;0&quot; y=&quot;0&quot; width=&quot;120%&quot; height=&quot;120%&quot;&gt;
-<span class="nc" id="L1110">				final Element filter = document.createElement(&quot;filter&quot;);</span>
-<span class="nc" id="L1111">				filter.setAttribute(&quot;id&quot;, shadowId);</span>
-<span class="nc" id="L1112">				filter.setAttribute(&quot;x&quot;, &quot;-1&quot;);</span>
-<span class="nc" id="L1113">				filter.setAttribute(&quot;y&quot;, &quot;-1&quot;);</span>
-<span class="nc" id="L1114">				filter.setAttribute(&quot;width&quot;, &quot;300%&quot;);</span>
-<span class="nc" id="L1115">				filter.setAttribute(&quot;height&quot;, &quot;300%&quot;);</span>
-<span class="nc" id="L1116">				addFilter(filter, &quot;feGaussianBlur&quot;, &quot;result&quot;, &quot;blurOut&quot;, &quot;stdDeviation&quot;, format(2));</span>
-<span class="nc" id="L1117">				addFilter(filter, &quot;feColorMatrix&quot;, &quot;type&quot;, &quot;matrix&quot;, &quot;in&quot;, &quot;blurOut&quot;, &quot;result&quot;, &quot;blurOut2&quot;, &quot;values&quot;,</span>
+<span class="fc" id="L1110">				final Element filter = document.createElement(&quot;filter&quot;);</span>
+<span class="fc" id="L1111">				filter.setAttribute(&quot;id&quot;, shadowId);</span>
+<span class="fc" id="L1112">				filter.setAttribute(&quot;x&quot;, &quot;-1&quot;);</span>
+<span class="fc" id="L1113">				filter.setAttribute(&quot;y&quot;, &quot;-1&quot;);</span>
+<span class="fc" id="L1114">				filter.setAttribute(&quot;width&quot;, &quot;300%&quot;);</span>
+<span class="fc" id="L1115">				filter.setAttribute(&quot;height&quot;, &quot;300%&quot;);</span>
+<span class="fc" id="L1116">				addFilter(filter, &quot;feGaussianBlur&quot;, &quot;result&quot;, &quot;blurOut&quot;, &quot;stdDeviation&quot;, format(2));</span>
+<span class="fc" id="L1117">				addFilter(filter, &quot;feColorMatrix&quot;, &quot;type&quot;, &quot;matrix&quot;, &quot;in&quot;, &quot;blurOut&quot;, &quot;result&quot;, &quot;blurOut2&quot;, &quot;values&quot;,</span>
 						&quot;0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0&quot;);
-<span class="nc" id="L1119">				addFilter(filter, &quot;feOffset&quot;, &quot;result&quot;, &quot;blurOut3&quot;, &quot;in&quot;, &quot;blurOut2&quot;, &quot;dx&quot;, format(4), &quot;dy&quot;, format(4));</span>
-<span class="nc" id="L1120">				addFilter(filter, &quot;feBlend&quot;, &quot;in&quot;, &quot;SourceGraphic&quot;, &quot;in2&quot;, &quot;blurOut3&quot;, &quot;mode&quot;, &quot;normal&quot;);</span>
-<span class="nc" id="L1121">				defs.appendChild(filter);</span>
+<span class="fc" id="L1119">				addFilter(filter, &quot;feOffset&quot;, &quot;result&quot;, &quot;blurOut3&quot;, &quot;in&quot;, &quot;blurOut2&quot;, &quot;dx&quot;, format(4), &quot;dy&quot;, format(4));</span>
+<span class="fc" id="L1120">				addFilter(filter, &quot;feBlend&quot;, &quot;in&quot;, &quot;SourceGraphic&quot;, &quot;in2&quot;, &quot;blurOut3&quot;, &quot;mode&quot;, &quot;normal&quot;);</span>
+<span class="fc" id="L1121">				defs.appendChild(filter);</span>
 
 			}
-<span class="nc" id="L1124">			withShadow = true;</span>
+<span class="fc" id="L1124">			withShadow = true;</span>
 		}
 <span class="fc" id="L1126">	}</span>
 
 	private void addFilter(Element filter, String name, String... data) {
-<span class="nc bnc" id="L1129" title="All 2 branches missed.">		if (TeaVM.a())</span>
-<span class="nc bnc" id="L1130" title="All 2 branches missed.">			assert data.length % 2 == 0;</span>
-<span class="nc" id="L1131">		final Element elt = document.createElement(name);</span>
-<span class="nc bnc" id="L1132" title="All 2 branches missed.">		for (int i = 0; i &lt; data.length; i += 2)</span>
-<span class="nc" id="L1133">			elt.setAttribute(data[i], data[i + 1]);</span>
+<span class="pc bpc" id="L1129" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
+<span class="pc bpc" id="L1130" title="1 of 2 branches missed.">			assert data.length % 2 == 0;</span>
+<span class="fc" id="L1131">		final Element elt = document.createElement(name);</span>
+<span class="fc bfc" id="L1132" title="All 2 branches covered.">		for (int i = 0; i &lt; data.length; i += 2)</span>
+<span class="fc" id="L1133">			elt.setAttribute(data[i], data[i + 1]);</span>
 
-<span class="nc" id="L1135">		filter.appendChild(elt);</span>
-<span class="nc" id="L1136">	}</span>
+<span class="fc" id="L1135">		filter.appendChild(elt);</span>
+<span class="fc" id="L1136">	}</span>
 
 	private boolean hidden;
 
