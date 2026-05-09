@@ -71,10 +71,10 @@ public class PairOfSomething&lt;D extends Diagram&gt; implements Something&lt;D&
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
-<span class="nc" id="L74">		return UBrexConcat.build( //</span>
-<span class="nc" id="L75">				complement1.toUnicodeBracketedExpressionComplement(), //</span>
-<span class="nc" id="L76">				UBrexLeaf.spaceOneOrMore(), //</span>
-<span class="nc" id="L77">				complement2.toUnicodeBracketedExpressionComplement());</span>
+<span class="fc" id="L74">		return UBrexConcat.build( //</span>
+<span class="fc" id="L75">				complement1.toUnicodeBracketedExpressionComplement(), //</span>
+<span class="fc" id="L76">				UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L77">				complement2.toUnicodeBracketedExpressionComplement());</span>
 	}
 
 	public Failable&lt;? extends Object&gt; getMe(D diagram, RegexResult arg, String suffix) {
@@ -91,9 +91,9 @@ public class PairOfSomething&lt;D extends Diagram&gt; implements Something&lt;D&
 	}
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L94">		final IRegex pattern1 = complement1.toRegex(&quot;A&quot; + suffix);</span>
-<span class="fc" id="L95">		final IRegex pattern2 = complement2.toRegex(&quot;B&quot; + suffix);</span>
-<span class="fc" id="L96">		return new RegexConcat(pattern1, new RegexLeaf(&quot;[%s]+&quot;), pattern2);</span>
+<span class="nc" id="L94">		final IRegex pattern1 = complement1.toRegex(&quot;A&quot; + suffix);</span>
+<span class="nc" id="L95">		final IRegex pattern2 = complement2.toRegex(&quot;B&quot; + suffix);</span>
+<span class="nc" id="L96">		return new RegexConcat(pattern1, new RegexLeaf(&quot;[%s]+&quot;), pattern2);</span>
 	}
 
 }

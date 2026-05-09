@@ -63,12 +63,12 @@ public class SubjectSeparator implements Subject&lt;GanttDiagram&gt; {
 	}
 
 	public IRegex toRegex() {
-<span class="fc" id="L66">		return new RegexLeaf(0, &quot;SUBJECT&quot;, &quot;separator&quot;);</span>
+<span class="nc" id="L66">		return new RegexLeaf(0, &quot;SUBJECT&quot;, &quot;separator&quot;);</span>
 	}
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionSubject() {
-<span class="nc" id="L71">		return new UBrexLeaf(&quot;separator&quot;);</span>
+<span class="fc" id="L71">		return new UBrexLeaf(&quot;separator&quot;);</span>
 	}
 
 	public Failable&lt;GanttDiagram&gt; getMe(GanttDiagram project, RegexResult arg) {
@@ -81,7 +81,7 @@ public class SubjectSeparator implements Subject&lt;GanttDiagram&gt; {
 	}
 
 	public Collection&lt;? extends SentenceSimple&lt;GanttDiagram&gt;&gt; getSentences() {
-<span class="fc" id="L84">		return Arrays.asList(new JustBefore(), new JustAfter(), new Just());</span>
+<span class="nc" id="L84">		return Arrays.asList(new JustBefore(), new JustAfter(), new Just());</span>
 	}
 
 	@Override
@@ -126,11 +126,11 @@ public class SubjectSeparator implements Subject&lt;GanttDiagram&gt; {
 
 	}
 
-<span class="fc" id="L129">	class JustBefore extends SentenceSimple&lt;GanttDiagram&gt; {</span>
+<span class="nc" id="L129">	class JustBefore extends SentenceSimple&lt;GanttDiagram&gt; {</span>
 
-<span class="fc" id="L131">		public JustBefore() {</span>
-<span class="fc" id="L132">			super(SubjectSeparator.this, Verbs.just.getRegex(), Words.exactly(Words.BEFORE), ComplementDate.any());</span>
-<span class="fc" id="L133">		}</span>
+<span class="nc" id="L131">		public JustBefore() {</span>
+<span class="nc" id="L132">			super(SubjectSeparator.this, Verbs.just.getRegex(), Words.exactly(Words.BEFORE), ComplementDate.any());</span>
+<span class="nc" id="L133">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
@@ -143,11 +143,11 @@ public class SubjectSeparator implements Subject&lt;GanttDiagram&gt; {
 
 	}
 
-<span class="fc" id="L146">	class JustAfter extends SentenceSimple&lt;GanttDiagram&gt; {</span>
+<span class="nc" id="L146">	class JustAfter extends SentenceSimple&lt;GanttDiagram&gt; {</span>
 
-<span class="fc" id="L148">		public JustAfter() {</span>
-<span class="fc" id="L149">			super(SubjectSeparator.this, Verbs.just.getRegex(), Words.exactly(Words.AFTER), ComplementDate.any());</span>
-<span class="fc" id="L150">		}</span>
+<span class="nc" id="L148">		public JustAfter() {</span>
+<span class="nc" id="L149">			super(SubjectSeparator.this, Verbs.just.getRegex(), Words.exactly(Words.AFTER), ComplementDate.any());</span>
+<span class="nc" id="L150">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
@@ -160,11 +160,11 @@ public class SubjectSeparator implements Subject&lt;GanttDiagram&gt; {
 
 	}
 
-<span class="fc" id="L163">	class Just extends SentenceSimple&lt;GanttDiagram&gt; {</span>
+<span class="nc" id="L163">	class Just extends SentenceSimple&lt;GanttDiagram&gt; {</span>
 
-<span class="fc" id="L165">		public Just() {</span>
-<span class="fc" id="L166">			super(SubjectSeparator.this, Verbs.just.getRegex(), new ComplementBeforeOrAfterOrAtTaskStartOrEnd());</span>
-<span class="fc" id="L167">		}</span>
+<span class="nc" id="L165">		public Just() {</span>
+<span class="nc" id="L166">			super(SubjectSeparator.this, Verbs.just.getRegex(), new ComplementBeforeOrAfterOrAtTaskStartOrEnd());</span>
+<span class="nc" id="L167">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {

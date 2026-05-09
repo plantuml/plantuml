@@ -12361,10 +12361,10 @@
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>9</Ca>
-                <Ce>32</Ce>
+                <Ce>31</Ce>
                 <A>0.12</A>
-                <I>0.78</I>
-                <D>0.1</D>
+                <I>0.77</I>
+                <D>0.11</D>
                 <V>1</V>
             </Stats>
 
@@ -12457,7 +12457,6 @@
                 <Package>net.sourceforge.plantuml.real</Package>
                 <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -16792,11 +16791,11 @@
                 <TotalClasses>19</TotalClasses>
                 <ConcreteClasses>18</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>42</Ca>
+                <Ca>41</Ca>
                 <Ce>14</Ce>
                 <A>0.05</A>
                 <I>0.25</I>
-                <D>0.7</D>
+                <D>0.69</D>
                 <V>1</V>
             </Stats>
 
@@ -16907,7 +16906,6 @@
                 <Package>net.sourceforge.plantuml.mindmap</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.project.lang</Package>
                 <Package>net.sourceforge.plantuml.project.solver</Package>

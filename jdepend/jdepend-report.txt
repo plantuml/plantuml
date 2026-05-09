@@ -8578,11 +8578,11 @@ Stats:
     Abstract Classes: 2
 
     Ca: 9
-    Ce: 32
+    Ce: 31
 
     A: 0.12
-    I: 0.78
-    D: 0.1
+    I: 0.77
+    D: 0.11
 
 Abstract Classes:
     net.sourceforge.plantuml.project.GanttStyle
@@ -8637,7 +8637,6 @@ Depends Upon:
     net.sourceforge.plantuml.real
     net.sourceforge.plantuml.stereo
     net.sourceforge.plantuml.style
-    net.sourceforge.plantuml.teavm
 
 Used By:
     net.sourceforge.plantuml.chronology
@@ -11381,12 +11380,12 @@ Stats:
     Concrete Classes: 18
     Abstract Classes: 1
 
-    Ca: 42
+    Ca: 41
     Ce: 14
 
     A: 0.05
     I: 0.25
-    D: 0.7
+    D: 0.69
 
 Abstract Classes:
     net.sourceforge.plantuml.teavm.GraphVizjsTeaVMEngine$StringCallback
@@ -11454,7 +11453,6 @@ Used By:
     net.sourceforge.plantuml.mindmap
     net.sourceforge.plantuml.nwdiag
     net.sourceforge.plantuml.objectdiagram
-    net.sourceforge.plantuml.project
     net.sourceforge.plantuml.project.draw
     net.sourceforge.plantuml.project.lang
     net.sourceforge.plantuml.project.solver
@@ -14869,7 +14867,7 @@ net.sourceforge.plantuml.png.quantx,7,0,0,4,0,1,0,1
 net.sourceforge.plantuml.posimo,5,2,1,10,0.4,0.91,0.31,1
 net.sourceforge.plantuml.preproc,17,3,61,15,0.18,0.2,0.63,1
 net.sourceforge.plantuml.preproc2,10,1,3,8,0.1,0.73,0.17,1
-net.sourceforge.plantuml.project,17,2,9,32,0.12,0.78,0.1,1
+net.sourceforge.plantuml.project,17,2,9,31,0.12,0.77,0.11,1
 net.sourceforge.plantuml.project.command,14,0,2,14,0,0.88,0.12,1
 net.sourceforge.plantuml.project.core,11,3,9,12,0.27,0.57,0.16,1
 net.sourceforge.plantuml.project.data,7,0,3,17,0,0.85,0.15,1
@@ -14915,7 +14913,7 @@ net.sourceforge.plantuml.svek.image,37,2,12,23,0.05,0.66,0.29,1
 net.sourceforge.plantuml.svg.parser,11,1,1,13,0.09,0.93,0.02,1
 net.sourceforge.plantuml.swing,36,0,0,15,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
-net.sourceforge.plantuml.teavm,19,1,42,14,0.05,0.25,0.7,1
+net.sourceforge.plantuml.teavm,19,1,41,14,0.05,0.25,0.69,1
 net.sourceforge.plantuml.teavm.browser,5,5,2,2,1,0.5,0.5,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.text,5,1,38,4,0.2,0.1,0.7,1

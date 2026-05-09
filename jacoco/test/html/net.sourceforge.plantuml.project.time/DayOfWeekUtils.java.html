@@ -59,23 +59,23 @@ import net.sourceforge.plantuml.utils.I18nTimeData;
 	}
 
 	public static UBrexPart getUbrex() {
-<span class="nc" id="L62">		final UBrexPart[] alternatives = new UBrexPart[DayOfWeek.values().length];</span>
-<span class="nc" id="L63">		int i = 0;</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		for (DayOfWeek day : DayOfWeek.values()) {</span>
-<span class="nc" id="L65">			final String prefix = day.name().substring(0, 3);</span>
-<span class="nc" id="L66">			final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">			for (char c : prefix.toCharArray()) {</span>
-<span class="nc" id="L68">				final char upper = Character.toUpperCase(c);</span>
-<span class="nc" id="L69">				final char lower = Character.toLowerCase(c);</span>
-<span class="nc" id="L70">				sb.append('「');</span>
-<span class="nc" id="L71">				sb.append(upper);</span>
-<span class="nc" id="L72">				sb.append(lower);</span>
-<span class="nc" id="L73">				sb.append('」');</span>
+<span class="fc" id="L62">		final UBrexPart[] alternatives = new UBrexPart[DayOfWeek.values().length];</span>
+<span class="fc" id="L63">		int i = 0;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		for (DayOfWeek day : DayOfWeek.values()) {</span>
+<span class="fc" id="L65">			final String prefix = day.name().substring(0, 3);</span>
+<span class="fc" id="L66">			final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">			for (char c : prefix.toCharArray()) {</span>
+<span class="fc" id="L68">				final char upper = Character.toUpperCase(c);</span>
+<span class="fc" id="L69">				final char lower = Character.toLowerCase(c);</span>
+<span class="fc" id="L70">				sb.append('「');</span>
+<span class="fc" id="L71">				sb.append(upper);</span>
+<span class="fc" id="L72">				sb.append(lower);</span>
+<span class="fc" id="L73">				sb.append('」');</span>
 			}
-<span class="nc" id="L75">			sb.append(&quot;&quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3034) + &quot;le&quot;);</span>
-<span class="nc" id="L76">			alternatives[i++] = new UBrexLeaf(sb.toString());</span>
+<span class="fc" id="L75">			sb.append(&quot;&quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3034) + &quot;le&quot;);</span>
+<span class="fc" id="L76">			alternatives[i++] = new UBrexLeaf(sb.toString());</span>
 		}
-<span class="nc" id="L78">		return new UBrexOr(alternatives);</span>
+<span class="fc" id="L78">		return new UBrexOr(alternatives);</span>
 	}
 
 	public static DayOfWeek fromString(String value) {

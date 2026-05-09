@@ -200,12 +200,12 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 	}
 
 	public Collection&lt;? extends SentenceSimple&lt;GanttDiagram&gt;&gt; getSentences() {
-<span class="fc" id="L203">		return Arrays.asList(new IsOffDate(), new IsOffDates(), new IsOffDayOfWeek(), new IsOnDate(), new IsOnDates(),</span>
+<span class="nc" id="L203">		return Arrays.asList(new IsOffDate(), new IsOffDates(), new IsOffDayOfWeek(), new IsOnDate(), new IsOnDates(),</span>
 				new IsOffBeforeDate(), new IsOffAfterDate(), new WorksOn());
 	}
 
 	public IRegex toRegex() {
-<span class="fc" id="L208">		return new RegexOr( //</span>
+<span class="nc" id="L208">		return new RegexOr( //</span>
 				new RegexLeaf(1, &quot;THEY&quot;, &quot;(she|he|they)&quot;), //
 				new RegexLeaf(1, &quot;RESOURCE&quot;, &quot;\\{([^{}]+)\\}&quot;) //
 		);
@@ -213,19 +213,19 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionSubject() {
-<span class="nc" id="L216">		return new UBrexOr( //</span>
-<span class="nc" id="L217">				new UBrexNamed(&quot;THEY&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot;she&quot; + String.valueOf((char)0x2507) + &quot;he&quot; + String.valueOf((char)0x2507) + &quot;they&quot; + String.valueOf((char)0x3011) + &quot;&quot;)), //</span>
-<span class="nc" id="L218">				UBrexConcat.build( //</span>
+<span class="fc" id="L216">		return new UBrexOr( //</span>
+<span class="fc" id="L217">				new UBrexNamed(&quot;THEY&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot;she&quot; + String.valueOf((char)0x2507) + &quot;he&quot; + String.valueOf((char)0x2507) + &quot;they&quot; + String.valueOf((char)0x3011) + &quot;&quot;)), //</span>
+<span class="fc" id="L218">				UBrexConcat.build( //</span>
 						new UBrexLeaf(&quot;{&quot;), //
-<span class="nc" id="L220">						new UBrexNamed(&quot;RESOURCE&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;{}&quot; + String.valueOf((char)0x300D) + &quot;&quot;)), //</span>
+<span class="fc" id="L220">						new UBrexNamed(&quot;RESOURCE&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;{}&quot; + String.valueOf((char)0x300D) + &quot;&quot;)), //</span>
 						new UBrexLeaf(&quot;}&quot;)));
 	}
 
 	public class WorksOn extends SentenceSimple&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L226">		public WorksOn() {</span>
-<span class="fc" id="L227">			super(SubjectResource.this, Verbs.worksOn.getRegex(), new ComplementTask());</span>
-<span class="fc" id="L228">		}</span>
+<span class="nc" id="L226">		public WorksOn() {</span>
+<span class="nc" id="L227">			super(SubjectResource.this, Verbs.worksOn.getRegex(), new ComplementTask());</span>
+<span class="nc" id="L228">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
@@ -239,10 +239,10 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 
 	public class IsOffBeforeDate extends SentenceSimple&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L242">		public IsOffBeforeDate() {</span>
-<span class="fc" id="L243">			super(SubjectResource.this, Verbs.isOff.getRegex(),</span>
-<span class="fc" id="L244">					Words.concat(Words.exactly(Words.BEFORE), Words.zeroOrMore(Words.THE)), ComplementDate.any());</span>
-<span class="fc" id="L245">		}</span>
+<span class="nc" id="L242">		public IsOffBeforeDate() {</span>
+<span class="nc" id="L243">			super(SubjectResource.this, Verbs.isOff.getRegex(),</span>
+<span class="nc" id="L244">					Words.concat(Words.exactly(Words.BEFORE), Words.zeroOrMore(Words.THE)), ComplementDate.any());</span>
+<span class="nc" id="L245">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
@@ -256,10 +256,10 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 
 	public class IsOffAfterDate extends SentenceSimple&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L259">		public IsOffAfterDate() {</span>
-<span class="fc" id="L260">			super(SubjectResource.this, Verbs.isOff.getRegex(),</span>
-<span class="fc" id="L261">					Words.concat(Words.exactly(Words.AFTER), Words.zeroOrMore(Words.THE)), ComplementDate.any());</span>
-<span class="fc" id="L262">		}</span>
+<span class="nc" id="L259">		public IsOffAfterDate() {</span>
+<span class="nc" id="L260">			super(SubjectResource.this, Verbs.isOff.getRegex(),</span>
+<span class="nc" id="L261">					Words.concat(Words.exactly(Words.AFTER), Words.zeroOrMore(Words.THE)), ComplementDate.any());</span>
+<span class="nc" id="L262">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
@@ -273,10 +273,10 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 
 	public class IsOffDate extends SentenceSimple&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L276">		public IsOffDate() {</span>
-<span class="fc" id="L277">			super(SubjectResource.this, Verbs.isOff.getRegex(),</span>
-<span class="fc" id="L278">					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), ComplementDate.any());</span>
-<span class="fc" id="L279">		}</span>
+<span class="nc" id="L276">		public IsOffDate() {</span>
+<span class="nc" id="L277">			super(SubjectResource.this, Verbs.isOff.getRegex(),</span>
+<span class="nc" id="L278">					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), ComplementDate.any());</span>
+<span class="nc" id="L279">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
@@ -290,10 +290,10 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 
 	public class IsOffDates extends SentenceSimple&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L293">		public IsOffDates() {</span>
-<span class="fc" id="L294">			super(SubjectResource.this, Verbs.isOff.getRegex(),</span>
-<span class="fc" id="L295">					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementIntervals());</span>
-<span class="fc" id="L296">		}</span>
+<span class="nc" id="L293">		public IsOffDates() {</span>
+<span class="nc" id="L294">			super(SubjectResource.this, Verbs.isOff.getRegex(),</span>
+<span class="nc" id="L295">					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementIntervals());</span>
+<span class="nc" id="L296">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
@@ -308,10 +308,10 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 
 	public class IsOffDayOfWeek extends SentenceSimple&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L311">		public IsOffDayOfWeek() {</span>
-<span class="fc" id="L312">			super(SubjectResource.this, Verbs.isOff.getRegex(),</span>
-<span class="fc" id="L313">					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementDayOfWeek());</span>
-<span class="fc" id="L314">		}</span>
+<span class="nc" id="L311">		public IsOffDayOfWeek() {</span>
+<span class="nc" id="L312">			super(SubjectResource.this, Verbs.isOff.getRegex(),</span>
+<span class="nc" id="L313">					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementDayOfWeek());</span>
+<span class="nc" id="L314">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
@@ -324,10 +324,10 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 
 	public class IsOnDate extends SentenceSimple&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L327">		public IsOnDate() {</span>
-<span class="fc" id="L328">			super(SubjectResource.this, Verbs.isOn.getRegex(),</span>
-<span class="fc" id="L329">					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), ComplementDate.any());</span>
-<span class="fc" id="L330">		}</span>
+<span class="nc" id="L327">		public IsOnDate() {</span>
+<span class="nc" id="L328">			super(SubjectResource.this, Verbs.isOn.getRegex(),</span>
+<span class="nc" id="L329">					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), ComplementDate.any());</span>
+<span class="nc" id="L330">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
@@ -341,10 +341,10 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 
 	public class IsOnDates extends SentenceSimple&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L344">		public IsOnDates() {</span>
-<span class="fc" id="L345">			super(SubjectResource.this, Verbs.isOn.getRegex(),</span>
-<span class="fc" id="L346">					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementIntervals());</span>
-<span class="fc" id="L347">		}</span>
+<span class="nc" id="L344">		public IsOnDates() {</span>
+<span class="nc" id="L345">			super(SubjectResource.this, Verbs.isOn.getRegex(),</span>
+<span class="nc" id="L346">					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementIntervals());</span>
+<span class="nc" id="L347">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {

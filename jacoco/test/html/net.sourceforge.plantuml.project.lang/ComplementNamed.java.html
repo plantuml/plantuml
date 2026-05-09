@@ -50,26 +50,26 @@ import net.sourceforge.plantuml.regex.RegexResult;
 <span class="fc" id="L50">public class ComplementNamed implements Something&lt;GanttDiagram&gt; {</span>
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L53">		return new RegexLeaf(1, &quot;COMPLEMENT&quot; + suffix, &quot;\\[([^\\[\\]]+)\\]&quot;);</span>
+<span class="nc" id="L53">		return new RegexLeaf(1, &quot;COMPLEMENT&quot; + suffix, &quot;\\[([^\\[\\]]+)\\]&quot;);</span>
 	}
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
-<span class="nc" id="L58">		return UBrexConcat.build( //</span>
+<span class="fc" id="L58">		return UBrexConcat.build( //</span>
 				new UBrexLeaf(&quot;[&quot;), //
-<span class="nc" id="L60">				new UBrexNamed(&quot;COMPLEMENT&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;[]&quot; + String.valueOf((char)0x300D) + &quot;&quot;)), //</span>
+<span class="fc" id="L60">				new UBrexNamed(&quot;COMPLEMENT&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;[]&quot; + String.valueOf((char)0x300D) + &quot;&quot;)), //</span>
 				new UBrexLeaf(&quot;]&quot;));
 	}
 	
 	@Override
 	public Failable&lt;String&gt; ugetMe(GanttDiagram diagram, UMatcher arg) {
-<span class="nc" id="L66">		final String name = arg.get(&quot;COMPLEMENT&quot;, 0);</span>
-<span class="nc" id="L67">		return Failable.ok(name);</span>
+<span class="fc" id="L66">		final String name = arg.get(&quot;COMPLEMENT&quot;, 0);</span>
+<span class="fc" id="L67">		return Failable.ok(name);</span>
 	}
 
 	public Failable&lt;String&gt; getMe(GanttDiagram system, RegexResult arg, String suffix) {
-<span class="fc" id="L71">		final String name = arg.get(&quot;COMPLEMENT&quot; + suffix, 0);</span>
-<span class="fc" id="L72">		return Failable.ok(name);</span>
+<span class="nc" id="L71">		final String name = arg.get(&quot;COMPLEMENT&quot; + suffix, 0);</span>
+<span class="nc" id="L72">		return Failable.ok(name);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

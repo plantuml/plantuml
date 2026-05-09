@@ -45,30 +45,30 @@ import net.sourceforge.plantuml.project.core.TaskInstant;
 public class SentenceOccurs extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	public SentenceOccurs() {
-<span class="fc" id="L48">		super(SubjectTask.ME, Verbs.occurs.getRegex(), new ComplementFromTo());</span>
-<span class="fc" id="L49">	}</span>
+<span class="nc" id="L48">		super(SubjectTask.ME, Verbs.occurs.getRegex(), new ComplementFromTo());</span>
+<span class="nc" id="L49">	}</span>
 
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="fc" id="L53">		final Task task = (Task) subject;</span>
-<span class="fc" id="L54">		final TwoNames bothNames = (TwoNames) complement;</span>
-<span class="fc" id="L55">		final String name1 = bothNames.getName1();</span>
-<span class="fc" id="L56">		final String name2 = bothNames.getName2();</span>
-<span class="fc" id="L57">		final Task from = project.getExistingTask(name1);</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (from == null) </span>
+<span class="nc" id="L53">		final Task task = (Task) subject;</span>
+<span class="nc" id="L54">		final TwoNames bothNames = (TwoNames) complement;</span>
+<span class="nc" id="L55">		final String name1 = bothNames.getName1();</span>
+<span class="nc" id="L56">		final String name2 = bothNames.getName2();</span>
+<span class="nc" id="L57">		final Task from = project.getExistingTask(name1);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (from == null) </span>
 <span class="nc" id="L59">			return CommandExecutionResult.error(&quot;No such &quot; + name1 + &quot; task&quot;);</span>
 		
-<span class="fc" id="L61">		final Task to = project.getExistingTask(name2);</span>
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (to == null) </span>
+<span class="nc" id="L61">		final Task to = project.getExistingTask(name2);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (to == null) </span>
 <span class="nc" id="L63">			return CommandExecutionResult.error(&quot;No such &quot; + name2 + &quot; task&quot;);</span>
 		
-<span class="fc" id="L65">		task.setStart(from.getStart());</span>
-<span class="fc" id="L66">		task.setEnd(to.getEnd());</span>
-<span class="fc" id="L67">		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),</span>
+<span class="nc" id="L65">		task.setStart(from.getStart());</span>
+<span class="nc" id="L66">		task.setEnd(to.getEnd());</span>
+<span class="nc" id="L67">		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),</span>
 				new TaskInstant(from, TaskAttribute.START), new TaskInstant(task, TaskAttribute.START)));
-<span class="fc" id="L69">		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),</span>
+<span class="nc" id="L69">		project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),</span>
 				new TaskInstant(to, TaskAttribute.END), new TaskInstant(task, TaskAttribute.END)));
-<span class="fc" id="L71">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L71">		return CommandExecutionResult.ok();</span>
 	}
 
 }

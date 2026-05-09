@@ -20,7 +20,7 @@
 <div class="tab-container">
 <ul class="tabLinks">
 <li>
-<a class="skippedGroup" href="#">Gradle Test Run :test</a>
+<a class="successGroup" href="#">Gradle Test Run :test</a>
 </li>
 </ul>
 <div class="tab">
@@ -30,6 +30,9 @@
 <ul class="tabLinks">
 <li>
 <a class="" href="#">summary</a>
+</li>
+<li>
+<a class="" href="#">standard output</a>
 </li>
 </ul>
 <div class="tab">
@@ -56,13 +59,13 @@
 </td>
 <td>
 <div class="infoBox">
-<div class="counter">1</div>
+<div class="counter">0</div>
 <p>skipped</p>
 </div>
 </td>
 <td>
 <div class="infoBox duration">
-<div class="counter">0.023s</div>
+<div class="counter">0.019s</div>
 <p>duration</p>
 </div>
 </td>
@@ -71,7 +74,7 @@
 </div>
 </td>
 <td>
-<div class="infoBox skipped successRate">
+<div class="infoBox success successRate">
 <div class="percent">100%</div>
 <p>successful</p>
 </div>
@@ -79,19 +82,246 @@
 </tr>
 </table>
 </div>
-<div class="result-details">
-<h3>Skip details</h3>
+</div>
+</div>
+<div class="tab">
+<h2>standard output</h2>
 <span class="code">
-<pre id="root-0-test-failure-testAllPumlFiles()[10][4]">org.opentest4j.TestAbortedException: Assumption failed: Known failure (allow-failure: true): src/test/resources/vega/xgantt/gantt2.puml - Error message mismatch for src/test/resources/vega/xgantt/gantt2.puml ==&gt; expected: &lt;No matching verb phrase (Assumed diagram type: gantt)&gt; but was: &lt;Syntax Error? (Assumed diagram type: gantt)&gt;
-	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:340)
-	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:127)
-	at test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:264)
-	at test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:174)
+<pre id="root-0-test-stdout-testAllPumlFiles()[10][4]">1 TN = [Prototype design] lasts 13 days
+1 TN = [Prototype design] lasts 13 days
+1 TN = [Prototype design] lasts 13 days
+2 TN = lasts 13 days
+3 VP = (lasts|requires) ComplementDuration
+--&gt;v2=lasts
+--&gt;tn=13 days
+--&gt;tn=13 days
+--&gt;v3=13 days
+[lasts] lasts fullCaptureLength=5 []
+{13 days} 13 days fullCaptureLength=7 [CNUM1=13, CUNIT1=day]
+4 OK! class net.sourceforge.plantuml.project.lang.SubjectTask class net.sourceforge.plantuml.project.lang.SubjectTask$1
+--&gt;v2=lasts
+--&gt;tn=13 days
+--&gt;tn=13 days
+--&gt;v3=13 days
+[lasts] lasts fullCaptureLength=5 []
+{13 days} 13 days fullCaptureLength=7 [CNUM1=13, CUNIT1=day]
+DEBUT lasts 13 days
+1 TN = [Test prototype] lasts 4 days
+1 TN = [Test prototype] lasts 4 days
+1 TN = [Test prototype] lasts 4 days
+2 TN = lasts 4 days
+3 VP = (lasts|requires) ComplementDuration
+--&gt;v2=lasts
+--&gt;tn=4 days
+--&gt;tn=4 days
+--&gt;v3=4 days
+[lasts] lasts fullCaptureLength=5 []
+{4 days} 4 days fullCaptureLength=6 [CNUM1=4, CUNIT1=day]
+4 OK! class net.sourceforge.plantuml.project.lang.SubjectTask class net.sourceforge.plantuml.project.lang.SubjectTask$1
+--&gt;v2=lasts
+--&gt;tn=4 days
+--&gt;tn=4 days
+--&gt;v3=4 days
+[lasts] lasts fullCaptureLength=5 []
+{4 days} 4 days fullCaptureLength=6 [CNUM1=4, CUNIT1=day]
+DEBUT lasts 4 days
+1 TN = [Test prototype] starts 3 days after [Prototype design]'s start
+1 TN = [Test prototype] starts 3 days after [Prototype design]'s start
+1 TN = [Test prototype] starts 3 days after [Prototype design]'s start
+2 TN = starts 3 days after [Prototype design]'s start
+3 VP = (lasts|requires) ComplementDuration
+3 VP = starts PairOfSomething
+--&gt;v2=starts
+--&gt;tn=3 days after [Prototype design]'s start
+--&gt;v3=
+3 VP = starts ComplementBeforeOrAfterOrAtTaskStartOrEnd
+--&gt;v2=starts
+--&gt;tn=3 days after [Prototype design]'s start
+--&gt;v3=3 days after [Prototype design]'s start
+[starts] starts fullCaptureLength=6 []
+{3 days after [Prototype design]'s start} 3 days after [Prototype design]'s start fullCaptureLength=39 [COMPLEMENT_NB1=3, COMPLEMENT_DAY_OR_WEEK1=day, COMPLEMENT_BEFORE_OR_AFTER=after, COMPLEMENT_CODE_OTHER=Prototype design, COMPLEMENT_START_OR_END=start]
+4 OK! class net.sourceforge.plantuml.project.lang.SubjectTask class net.sourceforge.plantuml.project.lang.SubjectTask$3
+--&gt;v2=starts
+--&gt;tn=3 days after [Prototype design]'s start
+--&gt;v3=
+--&gt;v2=starts
+--&gt;tn=3 days after [Prototype design]'s start
+--&gt;v3=3 days after [Prototype design]'s start
+[starts] starts fullCaptureLength=6 []
+{3 days after [Prototype design]'s start} 3 days after [Prototype design]'s start fullCaptureLength=39 [COMPLEMENT_NB1=3, COMPLEMENT_DAY_OR_WEEK1=day, COMPLEMENT_BEFORE_OR_AFTER=after, COMPLEMENT_CODE_OTHER=Prototype design, COMPLEMENT_START_OR_END=start]
+DEBUT starts 3 days after [Prototype design]'s start
+1 TN = [foo] lasts 3 days and ends at [Test prototype]'s end
+1 TN = [foo] lasts 3 days and ends at [Test prototype]'s end
+1 TN = [foo] lasts 3 days and ends at [Test prototype]'s end
+2 TN = lasts 3 days and ends at [Test prototype]'s end
+3 VP = (lasts|requires) ComplementDuration
+--&gt;v2=lasts
+--&gt;tn=3 days and ends at [Test prototype]'s end
+--&gt;tn=3 days and ends at [Test prototype]'s end
+--&gt;v3=3 days
+[lasts] lasts fullCaptureLength=5 []
+{3 days} 3 days fullCaptureLength=6 [CNUM1=3, CUNIT1=day]
+4 OK! class net.sourceforge.plantuml.project.lang.SubjectTask class net.sourceforge.plantuml.project.lang.SubjectTask$1
+--&gt;v2=lasts
+--&gt;tn=3 days and ends at [Test prototype]'s end
+--&gt;tn=3 days and ends at [Test prototype]'s end
+--&gt;v3=3 days
+[lasts] lasts fullCaptureLength=5 []
+{3 days} 3 days fullCaptureLength=6 [CNUM1=3, CUNIT1=day]
+DEBUT lasts 3 days and ends at [Test prototype]'s end
+--&gt;v2=ends
+--&gt;tn=at [Test prototype]'s end
+--&gt;v3=at [Test prototype]'s end
+[ends] ends fullCaptureLength=4 []
+{at [Test prototype]'s end} at [Test prototype]'s end fullCaptureLength=25 [COMPLEMENT_CODE_OTHER=Test prototype, COMPLEMENT_START_OR_END=end]
+DEBUT ends at [Test prototype]'s end
+1 TN = [foo2] lasts 3 days and starts 2 days before [foo]'s start and foo
+1 TN = [foo2] lasts 3 days and starts 2 days before [foo]'s start and foo
+1 TN = [foo2] lasts 3 days and starts 2 days before [foo]'s start and foo
+2 TN = lasts 3 days and starts 2 days before [foo]'s start and foo
+3 VP = (lasts|requires) ComplementDuration
+--&gt;v2=lasts
+--&gt;tn=3 days and starts 2 days before [foo]'s start and foo
+--&gt;tn=3 days and starts 2 days before [foo]'s start and foo
+--&gt;v3=3 days
+[lasts] lasts fullCaptureLength=5 []
+{3 days} 3 days fullCaptureLength=6 [CNUM1=3, CUNIT1=day]
+4 OK! class net.sourceforge.plantuml.project.lang.SubjectTask class net.sourceforge.plantuml.project.lang.SubjectTask$1
+--&gt;v2=lasts
+--&gt;tn=3 days and starts 2 days before [foo]'s start and foo
+--&gt;tn=3 days and starts 2 days before [foo]'s start and foo
+--&gt;v3=3 days
+[lasts] lasts fullCaptureLength=5 []
+{3 days} 3 days fullCaptureLength=6 [CNUM1=3, CUNIT1=day]
+DEBUT lasts 3 days and starts 2 days before [foo]'s start and foo
+--&gt;v2=starts
+--&gt;tn=2 days before [foo]'s start and foo
+--&gt;v3=
+--&gt;v2=starts
+--&gt;tn=2 days before [foo]'s start and foo
+--&gt;v3=2 days before [foo]'s start
+[starts] starts fullCaptureLength=6 []
+{2 days before [foo]'s start} 2 days before [foo]'s start fullCaptureLength=27 [COMPLEMENT_NB1=2, COMPLEMENT_DAY_OR_WEEK1=day, COMPLEMENT_BEFORE_OR_AFTER=before, COMPLEMENT_CODE_OTHER=foo, COMPLEMENT_START_OR_END=start]
+DEBUT starts 2 days before [foo]'s start and foo
+1 TN = [Prototype design] lasts 13 days
+1 TN = [Prototype design] lasts 13 days
+1 TN = [Prototype design] lasts 13 days
+2 TN = lasts 13 days
+3 VP = (lasts|requires) ComplementDuration
+--&gt;v2=lasts
+--&gt;tn=13 days
+--&gt;tn=13 days
+--&gt;v3=13 days
+[lasts] lasts fullCaptureLength=5 []
+{13 days} 13 days fullCaptureLength=7 [CNUM1=13, CUNIT1=day]
+4 OK! class net.sourceforge.plantuml.project.lang.SubjectTask class net.sourceforge.plantuml.project.lang.SubjectTask$1
+--&gt;v2=lasts
+--&gt;tn=13 days
+--&gt;tn=13 days
+--&gt;v3=13 days
+[lasts] lasts fullCaptureLength=5 []
+{13 days} 13 days fullCaptureLength=7 [CNUM1=13, CUNIT1=day]
+DEBUT lasts 13 days
+1 TN = [Test prototype] lasts 4 days
+1 TN = [Test prototype] lasts 4 days
+1 TN = [Test prototype] lasts 4 days
+2 TN = lasts 4 days
+3 VP = (lasts|requires) ComplementDuration
+--&gt;v2=lasts
+--&gt;tn=4 days
+--&gt;tn=4 days
+--&gt;v3=4 days
+[lasts] lasts fullCaptureLength=5 []
+{4 days} 4 days fullCaptureLength=6 [CNUM1=4, CUNIT1=day]
+4 OK! class net.sourceforge.plantuml.project.lang.SubjectTask class net.sourceforge.plantuml.project.lang.SubjectTask$1
+--&gt;v2=lasts
+--&gt;tn=4 days
+--&gt;tn=4 days
+--&gt;v3=4 days
+[lasts] lasts fullCaptureLength=5 []
+{4 days} 4 days fullCaptureLength=6 [CNUM1=4, CUNIT1=day]
+DEBUT lasts 4 days
+1 TN = [Test prototype] starts 3 days after [Prototype design]'s start
+1 TN = [Test prototype] starts 3 days after [Prototype design]'s start
+1 TN = [Test prototype] starts 3 days after [Prototype design]'s start
+2 TN = starts 3 days after [Prototype design]'s start
+3 VP = (lasts|requires) ComplementDuration
+3 VP = starts PairOfSomething
+--&gt;v2=starts
+--&gt;tn=3 days after [Prototype design]'s start
+--&gt;v3=
+3 VP = starts ComplementBeforeOrAfterOrAtTaskStartOrEnd
+--&gt;v2=starts
+--&gt;tn=3 days after [Prototype design]'s start
+--&gt;v3=3 days after [Prototype design]'s start
+[starts] starts fullCaptureLength=6 []
+{3 days after [Prototype design]'s start} 3 days after [Prototype design]'s start fullCaptureLength=39 [COMPLEMENT_NB1=3, COMPLEMENT_DAY_OR_WEEK1=day, COMPLEMENT_BEFORE_OR_AFTER=after, COMPLEMENT_CODE_OTHER=Prototype design, COMPLEMENT_START_OR_END=start]
+4 OK! class net.sourceforge.plantuml.project.lang.SubjectTask class net.sourceforge.plantuml.project.lang.SubjectTask$3
+--&gt;v2=starts
+--&gt;tn=3 days after [Prototype design]'s start
+--&gt;v3=
+--&gt;v2=starts
+--&gt;tn=3 days after [Prototype design]'s start
+--&gt;v3=3 days after [Prototype design]'s start
+[starts] starts fullCaptureLength=6 []
+{3 days after [Prototype design]'s start} 3 days after [Prototype design]'s start fullCaptureLength=39 [COMPLEMENT_NB1=3, COMPLEMENT_DAY_OR_WEEK1=day, COMPLEMENT_BEFORE_OR_AFTER=after, COMPLEMENT_CODE_OTHER=Prototype design, COMPLEMENT_START_OR_END=start]
+DEBUT starts 3 days after [Prototype design]'s start
+1 TN = [foo] lasts 3 days and ends at [Test prototype]'s end
+1 TN = [foo] lasts 3 days and ends at [Test prototype]'s end
+1 TN = [foo] lasts 3 days and ends at [Test prototype]'s end
+2 TN = lasts 3 days and ends at [Test prototype]'s end
+3 VP = (lasts|requires) ComplementDuration
+--&gt;v2=lasts
+--&gt;tn=3 days and ends at [Test prototype]'s end
+--&gt;tn=3 days and ends at [Test prototype]'s end
+--&gt;v3=3 days
+[lasts] lasts fullCaptureLength=5 []
+{3 days} 3 days fullCaptureLength=6 [CNUM1=3, CUNIT1=day]
+4 OK! class net.sourceforge.plantuml.project.lang.SubjectTask class net.sourceforge.plantuml.project.lang.SubjectTask$1
+--&gt;v2=lasts
+--&gt;tn=3 days and ends at [Test prototype]'s end
+--&gt;tn=3 days and ends at [Test prototype]'s end
+--&gt;v3=3 days
+[lasts] lasts fullCaptureLength=5 []
+{3 days} 3 days fullCaptureLength=6 [CNUM1=3, CUNIT1=day]
+DEBUT lasts 3 days and ends at [Test prototype]'s end
+--&gt;v2=ends
+--&gt;tn=at [Test prototype]'s end
+--&gt;v3=at [Test prototype]'s end
+[ends] ends fullCaptureLength=4 []
+{at [Test prototype]'s end} at [Test prototype]'s end fullCaptureLength=25 [COMPLEMENT_CODE_OTHER=Test prototype, COMPLEMENT_START_OR_END=end]
+DEBUT ends at [Test prototype]'s end
+1 TN = [foo2] lasts 3 days and starts 2 days before [foo]'s start and foo
+1 TN = [foo2] lasts 3 days and starts 2 days before [foo]'s start and foo
+1 TN = [foo2] lasts 3 days and starts 2 days before [foo]'s start and foo
+2 TN = lasts 3 days and starts 2 days before [foo]'s start and foo
+3 VP = (lasts|requires) ComplementDuration
+--&gt;v2=lasts
+--&gt;tn=3 days and starts 2 days before [foo]'s start and foo
+--&gt;tn=3 days and starts 2 days before [foo]'s start and foo
+--&gt;v3=3 days
+[lasts] lasts fullCaptureLength=5 []
+{3 days} 3 days fullCaptureLength=6 [CNUM1=3, CUNIT1=day]
+4 OK! class net.sourceforge.plantuml.project.lang.SubjectTask class net.sourceforge.plantuml.project.lang.SubjectTask$1
+--&gt;v2=lasts
+--&gt;tn=3 days and starts 2 days before [foo]'s start and foo
+--&gt;tn=3 days and starts 2 days before [foo]'s start and foo
+--&gt;v3=3 days
+[lasts] lasts fullCaptureLength=5 []
+{3 days} 3 days fullCaptureLength=6 [CNUM1=3, CUNIT1=day]
+DEBUT lasts 3 days and starts 2 days before [foo]'s start and foo
+--&gt;v2=starts
+--&gt;tn=2 days before [foo]'s start and foo
+--&gt;v3=
+--&gt;v2=starts
+--&gt;tn=2 days before [foo]'s start and foo
+--&gt;v3=2 days before [foo]'s start
+[starts] starts fullCaptureLength=6 []
+{2 days before [foo]'s start} 2 days before [foo]'s start fullCaptureLength=27 [COMPLEMENT_NB1=2, COMPLEMENT_DAY_OR_WEEK1=day, COMPLEMENT_BEFORE_OR_AFTER=before, COMPLEMENT_CODE_OTHER=foo, COMPLEMENT_START_OR_END=start]
+DEBUT starts 2 days before [foo]'s start and foo
 </pre>
-<button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="root-0-test-failure-testAllPumlFiles()[10][4]">Copy</button>
+<button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="root-0-test-stdout-testAllPumlFiles()[10][4]">Copy</button>
 </span>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -103,7 +333,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 9.4.1</a> at May 9, 2026, 2:36:06 PM</p>
+<a href="https://www.gradle.org">Gradle 9.4.1</a> at May 9, 2026, 2:45:12 PM</p>
 </div>
 </div>
 </body>

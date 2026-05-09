@@ -68,16 +68,16 @@ public class SubjectDayAsDate implements Subject&lt;GanttDiagram&gt; {
 
 	@Override
 	public Collection&lt;VerbPhraseAction&gt; getVerbPhrases() {
-<span class="nc" id="L71">		final List&lt;VerbPhraseAction&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L72">		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementOpen()) {</span>
+<span class="fc" id="L71">		final List&lt;VerbPhraseAction&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L72">		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementOpen()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L75">				project.openDayAsDate((LocalDate) subject, (String) complement);</span>
-<span class="nc" id="L76">				return CommandExecutionResult.ok();</span>
+<span class="fc" id="L75">				project.openDayAsDate((LocalDate) subject, (String) complement);</span>
+<span class="fc" id="L76">				return CommandExecutionResult.ok();</span>
 			}
 		});
 
-<span class="nc" id="L80">		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementClose()) {</span>
+<span class="fc" id="L80">		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementClose()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L83">				project.closeDayAsDate((LocalDate) subject, (String) complement);</span>
@@ -85,23 +85,23 @@ public class SubjectDayAsDate implements Subject&lt;GanttDiagram&gt; {
 			}
 		});
 
-<span class="nc" id="L88">		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {</span>
+<span class="fc" id="L88">		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L91">				final HColor color = ((CenterBorderColor) complement).getCenter();</span>
-<span class="nc" id="L92">				project.colorDay((LocalDate) subject, color);</span>
-<span class="nc" id="L93">				return CommandExecutionResult.ok();</span>
+<span class="fc" id="L91">				final HColor color = ((CenterBorderColor) complement).getCenter();</span>
+<span class="fc" id="L92">				project.colorDay((LocalDate) subject, color);</span>
+<span class="fc" id="L93">				return CommandExecutionResult.ok();</span>
 			}
 		});
 
-<span class="nc" id="L97">		return result;</span>
+<span class="fc" id="L97">		return result;</span>
 
 	}
 
 	@Override
 	public Failable&lt;LocalDate&gt; ugetMe(GanttDiagram project, UMatcher arg) {
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (arg.get(&quot;BDAY&quot;, 0) != null)</span>
-<span class="nc" id="L104">			return Failable.ok(resultB(arg));</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (arg.get(&quot;BDAY&quot;, 0) != null)</span>
+<span class="fc" id="L104">			return Failable.ok(resultB(arg));</span>
 
 <span class="nc bnc" id="L106" title="All 2 branches missed.">		if (arg.get(&quot;ECOUNT&quot;, 0) != null)</span>
 <span class="nc" id="L107">			return Failable.ok(resultE(project, arg));</span>
@@ -110,8 +110,8 @@ public class SubjectDayAsDate implements Subject&lt;GanttDiagram&gt; {
 	}
 
 	public Failable&lt;LocalDate&gt; getMe(GanttDiagram project, RegexResult arg) {
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (arg.get(&quot;BDAY&quot;, 0) != null)</span>
-<span class="fc" id="L114">			return Failable.ok(resultB(arg));</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (arg.get(&quot;BDAY&quot;, 0) != null)</span>
+<span class="nc" id="L114">			return Failable.ok(resultB(arg));</span>
 
 <span class="nc bnc" id="L116" title="All 2 branches missed.">		if (arg.get(&quot;ECOUNT&quot;, 0) != null)</span>
 <span class="nc" id="L117">			return Failable.ok(resultE(project, arg));</span>
@@ -121,17 +121,17 @@ public class SubjectDayAsDate implements Subject&lt;GanttDiagram&gt; {
 	}
 
 	private LocalDate resultB(UMatcher arg) {
-<span class="nc" id="L124">		final int day = Integer.parseInt(arg.get(&quot;BDAY&quot;, 0));</span>
-<span class="nc" id="L125">		final int month = Integer.parseInt(arg.get(&quot;BMONTH&quot;, 0));</span>
-<span class="nc" id="L126">		final int year = Integer.parseInt(arg.get(&quot;BYEAR&quot;, 0));</span>
-<span class="nc" id="L127">		return LocalDate.of(year, month, day);</span>
+<span class="fc" id="L124">		final int day = Integer.parseInt(arg.get(&quot;BDAY&quot;, 0));</span>
+<span class="fc" id="L125">		final int month = Integer.parseInt(arg.get(&quot;BMONTH&quot;, 0));</span>
+<span class="fc" id="L126">		final int year = Integer.parseInt(arg.get(&quot;BYEAR&quot;, 0));</span>
+<span class="fc" id="L127">		return LocalDate.of(year, month, day);</span>
 	}
 
 	private LocalDate resultB(RegexResult arg) {
-<span class="fc" id="L131">		final int day = Integer.parseInt(arg.get(&quot;BDAY&quot;, 0));</span>
-<span class="fc" id="L132">		final int month = Integer.parseInt(arg.get(&quot;BMONTH&quot;, 0));</span>
-<span class="fc" id="L133">		final int year = Integer.parseInt(arg.get(&quot;BYEAR&quot;, 0));</span>
-<span class="fc" id="L134">		return LocalDate.of(year, month, day);</span>
+<span class="nc" id="L131">		final int day = Integer.parseInt(arg.get(&quot;BDAY&quot;, 0));</span>
+<span class="nc" id="L132">		final int month = Integer.parseInt(arg.get(&quot;BMONTH&quot;, 0));</span>
+<span class="nc" id="L133">		final int year = Integer.parseInt(arg.get(&quot;BYEAR&quot;, 0));</span>
+<span class="nc" id="L134">		return LocalDate.of(year, month, day);</span>
 	}
 
 	private LocalDate resultE(GanttDiagram system, RegexResult arg) {
@@ -165,14 +165,14 @@ public class SubjectDayAsDate implements Subject&lt;GanttDiagram&gt; {
 	}
 
 	public Collection&lt;? extends SentenceSimple&lt;GanttDiagram&gt;&gt; getSentences() {
-<span class="fc" id="L168">		return Arrays.asList(new Close(), new Open(), new InColor());</span>
+<span class="nc" id="L168">		return Arrays.asList(new Close(), new Open(), new InColor());</span>
 	}
 
 	class Close extends SentenceSimple&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L173">		public Close() {</span>
-<span class="fc" id="L174">			super(SubjectDayAsDate.this, Verbs.isOrAre.getRegex(), new ComplementClose());</span>
-<span class="fc" id="L175">		}</span>
+<span class="nc" id="L173">		public Close() {</span>
+<span class="nc" id="L174">			super(SubjectDayAsDate.this, Verbs.isOrAre.getRegex(), new ComplementClose());</span>
+<span class="nc" id="L175">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
@@ -182,42 +182,42 @@ public class SubjectDayAsDate implements Subject&lt;GanttDiagram&gt; {
 	}
 
 	class Open extends SentenceSimple&lt;GanttDiagram&gt; {
-<span class="fc" id="L185">		public Open() {</span>
-<span class="fc" id="L186">			super(SubjectDayAsDate.this, Verbs.isOrAre.getRegex(), new ComplementOpen());</span>
-<span class="fc" id="L187">		}</span>
+<span class="nc" id="L185">		public Open() {</span>
+<span class="nc" id="L186">			super(SubjectDayAsDate.this, Verbs.isOrAre.getRegex(), new ComplementOpen());</span>
+<span class="nc" id="L187">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="fc" id="L191">			project.openDayAsDate((LocalDate) subject, (String) complement);</span>
-<span class="fc" id="L192">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L191">			project.openDayAsDate((LocalDate) subject, (String) complement);</span>
+<span class="nc" id="L192">			return CommandExecutionResult.ok();</span>
 		}
 	}
 
 	class InColor extends SentenceSimple&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L198">		public InColor() {</span>
-<span class="fc" id="L199">			super(SubjectDayAsDate.this, Verbs.isOrAre.getRegex(), new ComplementInColors2());</span>
-<span class="fc" id="L200">		}</span>
+<span class="nc" id="L198">		public InColor() {</span>
+<span class="nc" id="L199">			super(SubjectDayAsDate.this, Verbs.isOrAre.getRegex(), new ComplementInColors2());</span>
+<span class="nc" id="L200">		}</span>
 
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="fc" id="L204">			final HColor color = ((CenterBorderColor) complement).getCenter();</span>
-<span class="fc" id="L205">			project.colorDay((LocalDate) subject, color);</span>
-<span class="fc" id="L206">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L204">			final HColor color = ((CenterBorderColor) complement).getCenter();</span>
+<span class="nc" id="L205">			project.colorDay((LocalDate) subject, color);</span>
+<span class="nc" id="L206">			return CommandExecutionResult.ok();</span>
 		}
 
 	}
 
 	public IRegex toRegex() {
-<span class="fc" id="L212">		return new RegexOr(toRegexB(), toRegexE());</span>
+<span class="nc" id="L212">		return new RegexOr(toRegexB(), toRegexE());</span>
 	}
 
 	private IRegex toRegexB() {
-<span class="fc" id="L216">		return TimeResolution.toRegexB_YYYY_MM_DD(&quot;BYEAR&quot;, &quot;BMONTH&quot;, &quot;BDAY&quot;);</span>
+<span class="nc" id="L216">		return TimeResolution.toRegexB_YYYY_MM_DD(&quot;BYEAR&quot;, &quot;BMONTH&quot;, &quot;BDAY&quot;);</span>
 	}
 
 	private IRegex toRegexE() {
-<span class="fc" id="L220">		return new RegexConcat( //</span>
+<span class="nc" id="L220">		return new RegexConcat( //</span>
 				new RegexLeaf(1, &quot;ETYPE&quot;, &quot;([dDtTeE])&quot;), //
 				new RegexLeaf(1, &quot;EOPERATION&quot;, &quot;([-+])&quot;), //
 				new RegexLeaf(1, &quot;ECOUNT&quot;, &quot;([\\d]+)&quot;) //
@@ -225,20 +225,20 @@ public class SubjectDayAsDate implements Subject&lt;GanttDiagram&gt; {
 	}
 
 	private UBrexPart toUbrexB() {
-<span class="nc" id="L228">		return TimeResolution.toUbrexB_YYYY_MM_DD(&quot;BYEAR&quot;, &quot;BMONTH&quot;, &quot;BDAY&quot;);</span>
+<span class="fc" id="L228">		return TimeResolution.toUbrexB_YYYY_MM_DD(&quot;BYEAR&quot;, &quot;BMONTH&quot;, &quot;BDAY&quot;);</span>
 	}
 
 	private UBrexPart toUbrexE() {
-<span class="nc" id="L232">		return UBrexConcat.build( //</span>
-<span class="nc" id="L233">				new UBrexNamed(&quot;ETYPE&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x300C) + &quot;dDtTeE&quot; + String.valueOf((char)0x300D) + &quot;&quot;)), //</span>
-<span class="nc" id="L234">				new UBrexNamed(&quot;EOPERATION&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x300C) + &quot;-+&quot; + String.valueOf((char)0x300D) + &quot;&quot;)), //</span>
-<span class="nc" id="L235">				new UBrexNamed(&quot;ECOUNT&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d&quot;)) //</span>
+<span class="fc" id="L232">		return UBrexConcat.build( //</span>
+<span class="fc" id="L233">				new UBrexNamed(&quot;ETYPE&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x300C) + &quot;dDtTeE&quot; + String.valueOf((char)0x300D) + &quot;&quot;)), //</span>
+<span class="fc" id="L234">				new UBrexNamed(&quot;EOPERATION&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x300C) + &quot;-+&quot; + String.valueOf((char)0x300D) + &quot;&quot;)), //</span>
+<span class="fc" id="L235">				new UBrexNamed(&quot;ECOUNT&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d&quot;)) //</span>
 		);
 	}
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionSubject() {
-<span class="nc" id="L241">		return new UBrexOr(toUbrexB(), toUbrexE());</span>
+<span class="fc" id="L241">		return new UBrexOr(toUbrexB(), toUbrexE());</span>
 	}
 
 }

@@ -49,10 +49,10 @@ public interface UMatcher {
 	public List&lt;String&gt; findFirstValuesByKeyPrefix(String keyPrefix);
 
 	public default String get(String key, int num) {
-<span class="nc" id="L52">		final List&lt;String&gt; tmp = getCapture(key);</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (num &gt;= tmp.size())</span>
-<span class="nc" id="L54">			return null;</span>
-<span class="nc" id="L55">		return tmp.get(num);</span>
+<span class="fc" id="L52">		final List&lt;String&gt; tmp = getCapture(key);</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (num &gt;= tmp.size())</span>
+<span class="fc" id="L54">			return null;</span>
+<span class="fc" id="L55">		return tmp.get(num);</span>
 	}
 
 }

@@ -2432,7 +2432,7 @@ Total Classes: 10
 "net.sourceforge.plantuml.preproc2" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.preproc2" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.project" %lighten("red", 90) {
+class "net.sourceforge.plantuml.project" %lighten("red", 89) {
 Total Classes: 17
 }
 "net.sourceforge.plantuml.project" --> "java.lang"
@@ -2466,7 +2466,6 @@ Total Classes: 17
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.real"
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.stereo"
 "net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.style"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.teavm"
 
 class "net.sourceforge.plantuml.project.command" %lighten("red", 88) {
 Total Classes: 14
@@ -3200,7 +3199,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.syntax" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.teavm" %lighten("red", 30) {
+class "net.sourceforge.plantuml.teavm" %lighten("red", 31) {
 Total Classes: 19
 }
 "net.sourceforge.plantuml.teavm" --> "java.io"

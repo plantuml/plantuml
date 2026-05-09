@@ -42,9 +42,9 @@ import net.sourceforge.plantuml.project.core.Task;
 public class SentenceIsColoredForCompletion extends SentenceSimple&lt;GanttDiagram&gt; {
 
 	public SentenceIsColoredForCompletion() {
-<span class="fc" id="L45">		super(SubjectTask.ME, Verbs.isColored.getRegex(), Words.exactly(Words.FOR, Words.COMPLETION),</span>
+<span class="nc" id="L45">		super(SubjectTask.ME, Verbs.isColored.getRegex(), Words.exactly(Words.FOR, Words.COMPLETION),</span>
 				new ComplementInColorsFromTo());
-<span class="fc" id="L47">	}</span>
+<span class="nc" id="L47">	}</span>
 
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {

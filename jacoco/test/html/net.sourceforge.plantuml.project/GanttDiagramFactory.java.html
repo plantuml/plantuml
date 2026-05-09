@@ -84,10 +84,10 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class GanttDiagramFactory extends PSystemCommandFactory {
 
-	private final static boolean FORCE_UBREX = false;
+	private final static boolean FORCE_UBREX = true;
 
 	static private final List&lt;Subject&lt;GanttDiagram&gt;&gt; subjects() {
-<span class="fc" id="L90">		return Arrays.asList(SubjectTask.ME, SubjectProject.ME, SubjectDayOfWeek.ME, SubjectDayAsDate.ME,</span>
+<span class="nc" id="L90">		return Arrays.asList(SubjectTask.ME, SubjectProject.ME, SubjectDayOfWeek.ME, SubjectDayAsDate.ME,</span>
 				SubjectDaysAsDates.ME, SubjectResource.ME, SubjectToday.ME, SubjectSeparator.ME);
 	}
 
@@ -130,40 +130,40 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 
 	private void addLanguageCommands(List&lt;Command&gt; cmd) {
 
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (FORCE_UBREX || TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L134">			cmd.add(new NaturalGanttCommand(SubjectProject.ME));</span>
-<span class="nc" id="L135">			cmd.add(new NaturalGanttCommand(SubjectToday.ME));</span>
-<span class="nc" id="L136">			cmd.add(new NaturalGanttCommand(SubjectTask.ME));</span>
-<span class="nc" id="L137">			cmd.add(new NaturalGanttCommand(SubjectResource.ME));</span>
-<span class="nc" id="L138">			cmd.add(new NaturalGanttCommand(SubjectDaysAsDates.ME));</span>
-<span class="nc" id="L139">			cmd.add(new NaturalGanttCommand(SubjectDayOfWeek.ME));</span>
-<span class="nc" id="L140">			cmd.add(new NaturalGanttCommand(SubjectDayAsDate.ME));</span>
-<span class="nc" id="L141">			cmd.add(new NaturalGanttCommand(SubjectSeparator.ME));</span>
+		if (FORCE_UBREX || TeaVM.isTeaVM()) {
+<span class="fc" id="L134">			cmd.add(new NaturalGanttCommand(SubjectProject.ME));</span>
+<span class="fc" id="L135">			cmd.add(new NaturalGanttCommand(SubjectToday.ME));</span>
+<span class="fc" id="L136">			cmd.add(new NaturalGanttCommand(SubjectTask.ME));</span>
+<span class="fc" id="L137">			cmd.add(new NaturalGanttCommand(SubjectResource.ME));</span>
+<span class="fc" id="L138">			cmd.add(new NaturalGanttCommand(SubjectDaysAsDates.ME));</span>
+<span class="fc" id="L139">			cmd.add(new NaturalGanttCommand(SubjectDayOfWeek.ME));</span>
+<span class="fc" id="L140">			cmd.add(new NaturalGanttCommand(SubjectDayAsDate.ME));</span>
+<span class="fc" id="L141">			cmd.add(new NaturalGanttCommand(SubjectSeparator.ME));</span>
 		} else {
-<span class="fc bfc" id="L143" title="All 2 branches covered.">			for (Subject&lt;GanttDiagram&gt; subject : subjects())</span>
-<span class="fc bfc" id="L144" title="All 2 branches covered.">				for (SentenceSimple&lt;GanttDiagram&gt; sentenceA : subject.getSentences()) {</span>
-<span class="fc" id="L145">					cmd.add(NaturalCommand.create(sentenceA));</span>
-<span class="fc bfc" id="L146" title="All 2 branches covered.">					for (SentenceSimple&lt;GanttDiagram&gt; sentenceB : subject.getSentences()) {</span>
-<span class="fc" id="L147">						final String signatureA = sentenceA.getSignature();</span>
-<span class="fc" id="L148">						final String signatureB = sentenceB.getSignature();</span>
-<span class="fc bfc" id="L149" title="All 2 branches covered.">						if (signatureA.equals(signatureB) == false)</span>
-<span class="fc" id="L150">							cmd.add(NaturalCommand.create(new SentenceAnd&lt;GanttDiagram&gt;(sentenceA, sentenceB)));</span>
+			for (Subject&lt;GanttDiagram&gt; subject : subjects())
+				for (SentenceSimple&lt;GanttDiagram&gt; sentenceA : subject.getSentences()) {
+					cmd.add(NaturalCommand.create(sentenceA));
+					for (SentenceSimple&lt;GanttDiagram&gt; sentenceB : subject.getSentences()) {
+						final String signatureA = sentenceA.getSignature();
+						final String signatureB = sentenceB.getSignature();
+						if (signatureA.equals(signatureB) == false)
+							cmd.add(NaturalCommand.create(new SentenceAnd&lt;GanttDiagram&gt;(sentenceA, sentenceB)));
 
-<span class="fc" id="L152">					}</span>
-<span class="fc" id="L153">				}</span>
+					}
+				}
 
-<span class="fc bfc" id="L155" title="All 2 branches covered.">			for (Subject&lt;GanttDiagram&gt; subject : subjects())</span>
-<span class="fc bfc" id="L156" title="All 2 branches covered.">				for (SentenceSimple&lt;GanttDiagram&gt; sentenceA : subject.getSentences())</span>
-<span class="fc bfc" id="L157" title="All 2 branches covered.">					for (SentenceSimple&lt;GanttDiagram&gt; sentenceB : subject.getSentences())</span>
-<span class="fc bfc" id="L158" title="All 2 branches covered.">						for (SentenceSimple&lt;GanttDiagram&gt; sentenceC : subject.getSentences()) {</span>
-<span class="fc" id="L159">							final String signatureA = sentenceA.getSignature();</span>
-<span class="fc" id="L160">							final String signatureB = sentenceB.getSignature();</span>
-<span class="fc" id="L161">							final String signatureC = sentenceC.getSignature();</span>
-<span class="fc bfc" id="L162" title="All 4 branches covered.">							if (signatureA.equals(signatureB) == false &amp;&amp; signatureA.equals(signatureC) == false</span>
-<span class="fc bfc" id="L163" title="All 2 branches covered.">									&amp;&amp; signatureC.equals(signatureB) == false)</span>
-<span class="fc" id="L164">								cmd.add(NaturalCommand</span>
-<span class="fc" id="L165">										.create(new SentenceAndAnd&lt;GanttDiagram&gt;(sentenceA, sentenceB, sentenceC)));</span>
-<span class="fc" id="L166">						}</span>
+			for (Subject&lt;GanttDiagram&gt; subject : subjects())
+				for (SentenceSimple&lt;GanttDiagram&gt; sentenceA : subject.getSentences())
+					for (SentenceSimple&lt;GanttDiagram&gt; sentenceB : subject.getSentences())
+						for (SentenceSimple&lt;GanttDiagram&gt; sentenceC : subject.getSentences()) {
+							final String signatureA = sentenceA.getSignature();
+							final String signatureB = sentenceB.getSignature();
+							final String signatureC = sentenceC.getSignature();
+							if (signatureA.equals(signatureB) == false &amp;&amp; signatureA.equals(signatureC) == false
+									&amp;&amp; signatureC.equals(signatureB) == false)
+								cmd.add(NaturalCommand
+										.create(new SentenceAndAnd&lt;GanttDiagram&gt;(sentenceA, sentenceB, sentenceC)));
+						}
 		}
 <span class="fc" id="L168">	}</span>
 

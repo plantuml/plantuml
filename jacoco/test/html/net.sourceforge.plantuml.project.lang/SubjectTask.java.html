@@ -82,9 +82,9 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 	public static final String REGEX_TASK_CODE = &quot;\\[([^\\[\\]]+?)\\]&quot;;
 
 	public static UBrexPart taskCode(String name) {
-<span class="nc" id="L85">		return UBrexConcat.build( //</span>
+<span class="fc" id="L85">		return UBrexConcat.build( //</span>
 				new UBrexLeaf(&quot;[&quot;), //
-<span class="nc" id="L87">				new UBrexNamed(name, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;[]&quot; + String.valueOf((char)0x300D) + &quot;&quot;)), //</span>
+<span class="fc" id="L87">				new UBrexNamed(name, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;[]&quot; + String.valueOf((char)0x300D) + &quot;&quot;)), //</span>
 				new UBrexLeaf(&quot;]&quot;));
 	}
 
@@ -93,20 +93,20 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 
 	@Override
 	public Collection&lt;VerbPhraseAction&gt; getVerbPhrases() {
-<span class="nc" id="L96">		final List&lt;VerbPhraseAction&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L97">		result.add(new VerbPhraseAction(Verbs.requires, Words.uzeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT),</span>
-<span class="nc" id="L98">				new ComplementDuration()) {</span>
+<span class="fc" id="L96">		final List&lt;VerbPhraseAction&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L97">		result.add(new VerbPhraseAction(Verbs.requires, Words.uzeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT),</span>
+<span class="fc" id="L98">				new ComplementDuration()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L101">				final Task task = (Task) subject;</span>
-<span class="nc" id="L102">				final Load duration = (Load) complement;</span>
-<span class="nc" id="L103">				task.setLoad(duration);</span>
-<span class="nc" id="L104">				return CommandExecutionResult.ok();</span>
+<span class="fc" id="L101">				final Task task = (Task) subject;</span>
+<span class="fc" id="L102">				final Load duration = (Load) complement;</span>
+<span class="fc" id="L103">				task.setLoad(duration);</span>
+<span class="fc" id="L104">				return CommandExecutionResult.ok();</span>
 			}
 		});
 
-<span class="nc" id="L108">		result.add(new VerbPhraseAction(Verbs.starts,</span>
-<span class="nc" id="L109">				new PairOfSomething&lt;&gt;(new ComplementBeforeOrAfterOrAtTaskStartOrEnd(), new ComplementWithColorLink())) {</span>
+<span class="fc" id="L108">		result.add(new VerbPhraseAction(Verbs.starts,</span>
+<span class="fc" id="L109">				new PairOfSomething&lt;&gt;(new ComplementBeforeOrAfterOrAtTaskStartOrEnd(), new ComplementWithColorLink())) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram diagram, Object subject, Object complement) {
 <span class="nc" id="L112">				final Task task = (Task) subject;</span>
@@ -128,24 +128,24 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 			}
 		});
 
-<span class="nc" id="L131">		result.add(new VerbPhraseAction(Verbs.starts, new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {</span>
+<span class="fc" id="L131">		result.add(new VerbPhraseAction(Verbs.starts, new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L134">				final Task task = (Task) subject;</span>
+<span class="fc" id="L134">				final Task task = (Task) subject;</span>
 				final TaskInstant when;
-<span class="nc" id="L136">				HColor color = null;</span>
-<span class="nc" id="L137">				when = (TaskInstant) complement;</span>
-<span class="nc" id="L138">				task.setStart(when.getInstantPrecise());</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">				if (when.isTask())</span>
-<span class="nc" id="L140">					project.addContraint(new GanttConstraint(project.getIHtmlColorSet(),</span>
-<span class="nc" id="L141">							project.getCurrentStyleBuilder(), when, new TaskInstant(task, TaskAttribute.START), color));</span>
+<span class="fc" id="L136">				HColor color = null;</span>
+<span class="fc" id="L137">				when = (TaskInstant) complement;</span>
+<span class="fc" id="L138">				task.setStart(when.getInstantPrecise());</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">				if (when.isTask())</span>
+<span class="fc" id="L140">					project.addContraint(new GanttConstraint(project.getIHtmlColorSet(),</span>
+<span class="fc" id="L141">							project.getCurrentStyleBuilder(), when, new TaskInstant(task, TaskAttribute.START), color));</span>
 
-<span class="nc" id="L143">				return CommandExecutionResult.ok();</span>
+<span class="fc" id="L143">				return CommandExecutionResult.ok();</span>
 			}
 		});
 
-<span class="nc" id="L147">		result.add(new VerbPhraseAction(Verbs.starts, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
-<span class="nc" id="L148">				ComplementDate.onlyRelative()) {</span>
+<span class="fc" id="L147">		result.add(new VerbPhraseAction(Verbs.starts, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
+<span class="fc" id="L148">				ComplementDate.onlyRelative()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L151">				final Task task = (Task) subject;</span>
@@ -156,32 +156,32 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 			}
 		});
 
-<span class="nc" id="L159">		result.add(new VerbPhraseAction(Verbs.starts, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
-<span class="nc" id="L160">				ComplementDate.any()) {</span>
+<span class="fc" id="L159">		result.add(new VerbPhraseAction(Verbs.starts, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
+<span class="fc" id="L160">				ComplementDate.any()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L163">				final Task task = (Task) subject;</span>
-<span class="nc" id="L164">				final LocalDate start = (LocalDate) complement;</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">				if (project.getMinDay().equals(TimePoint.epoch()))</span>
+<span class="fc" id="L163">				final Task task = (Task) subject;</span>
+<span class="fc" id="L164">				final LocalDate start = (LocalDate) complement;</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">				if (project.getMinDay().equals(TimePoint.epoch()))</span>
 <span class="nc" id="L166">					return CommandExecutionResult.error(&quot;No starting date for the project&quot;);</span>
 
-<span class="nc" id="L168">				task.setStart(TimePoint.ofStartOfDay(start));</span>
-<span class="nc" id="L169">				return CommandExecutionResult.ok();</span>
+<span class="fc" id="L168">				task.setStart(TimePoint.ofStartOfDay(start));</span>
+<span class="fc" id="L169">				return CommandExecutionResult.ok();</span>
 			}
 		});
 
-<span class="nc" id="L173">		result.add(new VerbPhraseAction(Verbs.isColored, new ComplementInColors()) {</span>
+<span class="fc" id="L173">		result.add(new VerbPhraseAction(Verbs.isColored, new ComplementInColors()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L176">				final Task task = (Task) subject;</span>
-<span class="nc" id="L177">				final CenterBorderColor colors = (CenterBorderColor) complement;</span>
-<span class="nc" id="L178">				task.setColors(colors);</span>
-<span class="nc" id="L179">				return CommandExecutionResult.ok();</span>
+<span class="fc" id="L176">				final Task task = (Task) subject;</span>
+<span class="fc" id="L177">				final CenterBorderColor colors = (CenterBorderColor) complement;</span>
+<span class="fc" id="L178">				task.setColors(colors);</span>
+<span class="fc" id="L179">				return CommandExecutionResult.ok();</span>
 			}
 		});
 
-<span class="nc" id="L183">		result.add(new VerbPhraseAction(Verbs.isColored, Words.uexactly2(Words.FOR, Words.COMPLETION),</span>
-<span class="nc" id="L184">				new ComplementInColorsFromTo()) {</span>
+<span class="fc" id="L183">		result.add(new VerbPhraseAction(Verbs.isColored, Words.uexactly2(Words.FOR, Words.COMPLETION),</span>
+<span class="fc" id="L184">				new ComplementInColorsFromTo()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L187">				final Task task = (Task) subject;</span>
@@ -191,75 +191,75 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 			}
 		});
 
-<span class="nc" id="L194">		result.add(new VerbPhraseAction(Verbs.happens, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
-<span class="nc" id="L195">				ComplementDate.any()) {</span>
+<span class="fc" id="L194">		result.add(new VerbPhraseAction(Verbs.happens, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
+<span class="fc" id="L195">				ComplementDate.any()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L198">				final Task task = (Task) subject;</span>
-<span class="nc" id="L199">				task.setLoad(Load.ofDays(1));</span>
-<span class="nc" id="L200">				final LocalDate start = (LocalDate) complement;</span>
-<span class="nc" id="L201">				task.setStart(TimePoint.ofStartOfDay(start));</span>
-<span class="nc" id="L202">				task.setDiamond(true);</span>
-<span class="nc" id="L203">				return CommandExecutionResult.ok();</span>
+<span class="fc" id="L198">				final Task task = (Task) subject;</span>
+<span class="fc" id="L199">				task.setLoad(Load.ofDays(1));</span>
+<span class="fc" id="L200">				final LocalDate start = (LocalDate) complement;</span>
+<span class="fc" id="L201">				task.setStart(TimePoint.ofStartOfDay(start));</span>
+<span class="fc" id="L202">				task.setDiamond(true);</span>
+<span class="fc" id="L203">				return CommandExecutionResult.ok();</span>
 			}
 		});
 
-<span class="nc" id="L207">		result.add(new VerbPhraseAction(Verbs.happens, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
-<span class="nc" id="L208">				new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {</span>
+<span class="fc" id="L207">		result.add(new VerbPhraseAction(Verbs.happens, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
+<span class="fc" id="L208">				new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L211">				final Task task = (Task) subject;</span>
-<span class="nc" id="L212">				task.setLoad(Load.ofDays(1));</span>
-<span class="nc" id="L213">				task.setDiamond(true);</span>
-<span class="nc" id="L214">				final TaskInstant when = (TaskInstant) complement;</span>
-<span class="nc bnc" id="L215" title="All 2 branches missed.">				if (when.getAttribute() == TaskAttribute.END)</span>
-<span class="nc" id="L216">					task.setStart(when.getInstantPrecise().decrement());</span>
+<span class="fc" id="L211">				final Task task = (Task) subject;</span>
+<span class="fc" id="L212">				task.setLoad(Load.ofDays(1));</span>
+<span class="fc" id="L213">				task.setDiamond(true);</span>
+<span class="fc" id="L214">				final TaskInstant when = (TaskInstant) complement;</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">				if (when.getAttribute() == TaskAttribute.END)</span>
+<span class="fc" id="L216">					task.setStart(when.getInstantPrecise().decrement());</span>
 				else
-<span class="nc" id="L218">					task.setStart(when.getInstantPrecise());</span>
-<span class="nc" id="L219">				return CommandExecutionResult.ok();</span>
+<span class="fc" id="L218">					task.setStart(when.getInstantPrecise());</span>
+<span class="fc" id="L219">				return CommandExecutionResult.ok();</span>
 
 			}
 		});
 
-<span class="nc" id="L224">		result.add(new VerbPhraseAction(Verbs.occurs, new ComplementFromTo()) {</span>
+<span class="fc" id="L224">		result.add(new VerbPhraseAction(Verbs.occurs, new ComplementFromTo()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L227">				final Task task = (Task) subject;</span>
-<span class="nc" id="L228">				final TwoNames bothNames = (TwoNames) complement;</span>
-<span class="nc" id="L229">				final String name1 = bothNames.getName1();</span>
-<span class="nc" id="L230">				final String name2 = bothNames.getName2();</span>
-<span class="nc" id="L231">				final Task from = project.getExistingTask(name1);</span>
-<span class="nc bnc" id="L232" title="All 2 branches missed.">				if (from == null)</span>
+<span class="fc" id="L227">				final Task task = (Task) subject;</span>
+<span class="fc" id="L228">				final TwoNames bothNames = (TwoNames) complement;</span>
+<span class="fc" id="L229">				final String name1 = bothNames.getName1();</span>
+<span class="fc" id="L230">				final String name2 = bothNames.getName2();</span>
+<span class="fc" id="L231">				final Task from = project.getExistingTask(name1);</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">				if (from == null)</span>
 <span class="nc" id="L233">					return CommandExecutionResult.error(&quot;No such &quot; + name1 + &quot; task&quot;);</span>
 
-<span class="nc" id="L235">				final Task to = project.getExistingTask(name2);</span>
-<span class="nc bnc" id="L236" title="All 2 branches missed.">				if (to == null)</span>
+<span class="fc" id="L235">				final Task to = project.getExistingTask(name2);</span>
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">				if (to == null)</span>
 <span class="nc" id="L237">					return CommandExecutionResult.error(&quot;No such &quot; + name2 + &quot; task&quot;);</span>
 
-<span class="nc" id="L239">				task.setStart(from.getStart());</span>
-<span class="nc" id="L240">				task.setEnd(to.getEnd());</span>
-<span class="nc" id="L241">				project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),</span>
+<span class="fc" id="L239">				task.setStart(from.getStart());</span>
+<span class="fc" id="L240">				task.setEnd(to.getEnd());</span>
+<span class="fc" id="L241">				project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),</span>
 						new TaskInstant(from, TaskAttribute.START), new TaskInstant(task, TaskAttribute.START)));
-<span class="nc" id="L243">				project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),</span>
+<span class="fc" id="L243">				project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),</span>
 						new TaskInstant(to, TaskAttribute.END), new TaskInstant(task, TaskAttribute.END)));
-<span class="nc" id="L245">				return CommandExecutionResult.ok();</span>
+<span class="fc" id="L245">				return CommandExecutionResult.ok();</span>
 			}
 		});
 
-<span class="nc" id="L249">		result.add(new VerbPhraseAction(Verbs.ends, new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {</span>
+<span class="fc" id="L249">		result.add(new VerbPhraseAction(Verbs.ends, new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L252">				final Task task = (Task) subject;</span>
-<span class="nc" id="L253">				final TaskInstant when = (TaskInstant) complement;</span>
-<span class="nc" id="L254">				task.setEnd(when.getInstantPrecise());</span>
-<span class="nc" id="L255">				project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),</span>
+<span class="fc" id="L252">				final Task task = (Task) subject;</span>
+<span class="fc" id="L253">				final TaskInstant when = (TaskInstant) complement;</span>
+<span class="fc" id="L254">				task.setEnd(when.getInstantPrecise());</span>
+<span class="fc" id="L255">				project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),</span>
 						when, new TaskInstant(task, TaskAttribute.END)));
-<span class="nc" id="L257">				return CommandExecutionResult.ok();</span>
+<span class="fc" id="L257">				return CommandExecutionResult.ok();</span>
 			}
 		});
 
-<span class="nc" id="L261">		result.add(new VerbPhraseAction(Verbs.ends, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
-<span class="nc" id="L262">				ComplementDate.onlyRelative()) {</span>
+<span class="fc" id="L261">		result.add(new VerbPhraseAction(Verbs.ends, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
+<span class="fc" id="L262">				ComplementDate.onlyRelative()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L265">				final Task task = (Task) subject;</span>
@@ -270,34 +270,34 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 			}
 		});
 
-<span class="nc" id="L273">		result.add(new VerbPhraseAction(Verbs.ends, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
-<span class="nc" id="L274">				ComplementDate.any()) {</span>
+<span class="fc" id="L273">		result.add(new VerbPhraseAction(Verbs.ends, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
+<span class="fc" id="L274">				ComplementDate.any()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L277">				final Task task = (Task) subject;</span>
-<span class="nc" id="L278">				final LocalDate end = (LocalDate) complement;</span>
-<span class="nc bnc" id="L279" title="All 2 branches missed.">				if (project.getMinDay().equals(TimePoint.epoch()))</span>
+<span class="fc" id="L277">				final Task task = (Task) subject;</span>
+<span class="fc" id="L278">				final LocalDate end = (LocalDate) complement;</span>
+<span class="pc bpc" id="L279" title="1 of 2 branches missed.">				if (project.getMinDay().equals(TimePoint.epoch()))</span>
 <span class="nc" id="L280">					return CommandExecutionResult.error(&quot;No starting date for the project&quot;);</span>
-<span class="nc" id="L281">				task.setEnd(TimePoint.ofStartOfDay(end).increment());</span>
+<span class="fc" id="L281">				task.setEnd(TimePoint.ofStartOfDay(end).increment());</span>
 
-<span class="nc" id="L283">				return CommandExecutionResult.ok();</span>
+<span class="fc" id="L283">				return CommandExecutionResult.ok();</span>
 			}
 		});
 
-<span class="nc" id="L287">		result.add(new VerbPhraseAction(Verbs.displayOnSameRowAs, new ComplementNamed()) {</span>
+<span class="fc" id="L287">		result.add(new VerbPhraseAction(Verbs.displayOnSameRowAs, new ComplementNamed()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-<span class="nc" id="L290">				final Task task1 = (Task) subject;</span>
-<span class="nc" id="L291">				final Task task2 = project.getExistingTask((String) complement);</span>
-<span class="nc bnc" id="L292" title="All 2 branches missed.">				if (task2 == null)</span>
+<span class="fc" id="L290">				final Task task1 = (Task) subject;</span>
+<span class="fc" id="L291">				final Task task2 = project.getExistingTask((String) complement);</span>
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">				if (task2 == null)</span>
 <span class="nc" id="L293">					return CommandExecutionResult.error(&quot;No such task &quot; + task2);</span>
 
-<span class="nc" id="L295">				task1.putInSameRowAs(task2);</span>
-<span class="nc" id="L296">				return CommandExecutionResult.ok();</span>
+<span class="fc" id="L295">				task1.putInSameRowAs(task2);</span>
+<span class="fc" id="L296">				return CommandExecutionResult.ok();</span>
 			}
 		});
 
-<span class="nc" id="L300">		result.add(new VerbPhraseAction(Verbs.is, new ComplementDeleted()) {</span>
+<span class="fc" id="L300">		result.add(new VerbPhraseAction(Verbs.is, new ComplementDeleted()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L303">				final Task task = (Task) subject;</span>
@@ -305,7 +305,7 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 			}
 		});
 
-<span class="nc" id="L308">		result.add(new VerbPhraseAction(Verbs.is, new ComplementCompleted()) {</span>
+<span class="fc" id="L308">		result.add(new VerbPhraseAction(Verbs.is, new ComplementCompleted()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L311">				final Task task = (Task) subject;</span>
@@ -315,8 +315,8 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 			}
 		});
 
-<span class="nc" id="L318">		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
-<span class="nc" id="L319">				new ComplementIntervals()) {</span>
+<span class="fc" id="L318">		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
+<span class="fc" id="L319">				new ComplementIntervals()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L322">				final Task task = (Task) subject;</span>
@@ -328,8 +328,8 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 			}
 		});
 
-<span class="nc" id="L331">		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
-<span class="nc" id="L332">				new ComplementIntervalsSmart()) {</span>
+<span class="fc" id="L331">		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
+<span class="fc" id="L332">				new ComplementIntervalsSmart()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L335">				final Task task = (Task) subject;</span>
@@ -340,8 +340,8 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 			}
 		});
 
-<span class="nc" id="L343">		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
-<span class="nc" id="L344">				ComplementDate.any()) {</span>
+<span class="fc" id="L343">		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
+<span class="fc" id="L344">				ComplementDate.any()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L347">				final Task task = (Task) subject;</span>
@@ -351,8 +351,8 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 			}
 		});
 
-<span class="nc" id="L354">		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
-<span class="nc" id="L355">				new ComplementDayOfWeek()) {</span>
+<span class="fc" id="L354">		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
+<span class="fc" id="L355">				new ComplementDayOfWeek()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L358">				final Task task = (Task) subject;</span>
@@ -362,7 +362,7 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 			}
 		});
 
-<span class="nc" id="L365">		result.add(new VerbPhraseAction(Verbs.linksTo, new ComplementUrl()) {</span>
+<span class="fc" id="L365">		result.add(new VerbPhraseAction(Verbs.linksTo, new ComplementUrl()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L368">				final Task task = (Task) subject;</span>
@@ -372,7 +372,7 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 			}
 		});
 
-<span class="nc" id="L375">		result.add(new VerbPhraseAction(Verbs.isDisplayedAs, new ComplementAnything()) {</span>
+<span class="fc" id="L375">		result.add(new VerbPhraseAction(Verbs.isDisplayedAs, new ComplementAnything()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 <span class="nc" id="L378">				final Task task = (Task) subject;</span>
@@ -382,48 +382,48 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 			}
 		});
 
-<span class="nc" id="L385">		return result;</span>
+<span class="fc" id="L385">		return result;</span>
 
 	}
 
 	public IRegex toRegex() {
-<span class="fc" id="L390">		return new RegexOr( //</span>
+<span class="nc" id="L390">		return new RegexOr( //</span>
 				new RegexLeaf(1, &quot;IT&quot;, &quot;(it)&quot;), //
 				new RegexConcat(new RegexLeaf(1, &quot;THEN&quot;, &quot;(then[%s]+)?&quot;), //
 						new RegexLeaf(1, &quot;SUBJECT&quot;, REGEX_TASK_CODE), //
-<span class="fc" id="L394">						StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+<span class="nc" id="L394">						StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
 						new RegexOptional(new RegexConcat(//
-<span class="fc" id="L396">								Words.exactly(Words.AS), //</span>
-<span class="fc" id="L397">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L396">								Words.exactly(Words.AS), //</span>
+<span class="nc" id="L397">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;SHORTNAME&quot;, REGEX_TASK_CODE))), //
 						new RegexOptional(new RegexConcat( //
-<span class="fc" id="L400">								Words.exactly(Words.ON), //</span>
-<span class="fc" id="L401">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L400">								Words.exactly(Words.ON), //</span>
+<span class="nc" id="L401">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;RESOURCE&quot;, &quot;((?:\\{[^{}]+\\}[%s]*)+)&quot;) //
 						))));
 	}
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionSubject() {
-<span class="nc" id="L408">		return new UBrexOr( //</span>
-<span class="nc" id="L409">				new UBrexNamed(&quot;IT&quot;, Words.usingle(Words.IT)), //</span>
-<span class="nc" id="L410">				UBrexConcat.build( //</span>
-<span class="nc" id="L411">						new UBrexOptional(UBrexConcat.build( //</span>
-<span class="nc" id="L412">								new UBrexNamed(&quot;THEN&quot;, Words.usingle(Words.THEN)), //</span>
-<span class="nc" id="L413">								UBrexLeaf.spaceOneOrMore())), //</span>
-<span class="nc" id="L414">						SubjectTask.taskCode(&quot;SUBJECT&quot;), //</span>
-<span class="nc" id="L415">						StereotypePattern.uoptional(&quot;STEREOTYPE&quot;), //</span>
-<span class="nc" id="L416">						new UBrexOptional(UBrexConcat.build( //</span>
-<span class="nc" id="L417">								Words.uexactly(Words.AS), //</span>
-<span class="nc" id="L418">								UBrexLeaf.spaceOneOrMore(), //</span>
-<span class="nc" id="L419">								SubjectTask.taskCode(&quot;SHORTNAME&quot;))), //</span>
-<span class="nc" id="L420">						new UBrexOptional(UBrexConcat.build( //</span>
-<span class="nc" id="L421">								Words.uexactly(Words.ON), //</span>
-<span class="nc" id="L422">								UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L408">		return new UBrexOr( //</span>
+<span class="fc" id="L409">				new UBrexNamed(&quot;IT&quot;, Words.usingle(Words.IT)), //</span>
+<span class="fc" id="L410">				UBrexConcat.build( //</span>
+<span class="fc" id="L411">						new UBrexOptional(UBrexConcat.build( //</span>
+<span class="fc" id="L412">								new UBrexNamed(&quot;THEN&quot;, Words.usingle(Words.THEN)), //</span>
+<span class="fc" id="L413">								UBrexLeaf.spaceOneOrMore())), //</span>
+<span class="fc" id="L414">						SubjectTask.taskCode(&quot;SUBJECT&quot;), //</span>
+<span class="fc" id="L415">						StereotypePattern.uoptional(&quot;STEREOTYPE&quot;), //</span>
+<span class="fc" id="L416">						new UBrexOptional(UBrexConcat.build( //</span>
+<span class="fc" id="L417">								Words.uexactly(Words.AS), //</span>
+<span class="fc" id="L418">								UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L419">								SubjectTask.taskCode(&quot;SHORTNAME&quot;))), //</span>
+<span class="fc" id="L420">						new UBrexOptional(UBrexConcat.build( //</span>
+<span class="fc" id="L421">								Words.uexactly(Words.ON), //</span>
+<span class="fc" id="L422">								UBrexLeaf.spaceOneOrMore(), //</span>
 								new UBrexNamed(&quot;RESOURCE&quot;, new UBrexOneOrMore( //
-<span class="nc" id="L424">										UBrexConcat.build( //</span>
-<span class="nc" id="L425">												new UBrexLeaf(&quot;{&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;{}&quot; + String.valueOf((char)0x300D) + &quot;}&quot;), //</span>
-<span class="nc" id="L426">												UBrexLeaf.spaceZeroOrMore() //</span>
+<span class="fc" id="L424">										UBrexConcat.build( //</span>
+<span class="fc" id="L425">												new UBrexLeaf(&quot;{&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;{}&quot; + String.valueOf((char)0x300D) + &quot;}&quot;), //</span>
+<span class="fc" id="L426">												UBrexLeaf.spaceZeroOrMore() //</span>
 										)))) //
 						) //
 				));
@@ -432,87 +432,87 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 	@Override
 	public Failable&lt;Task&gt; ugetMe(GanttDiagram gantt, UMatcher arg) {
 		final Task result;
-<span class="nc bnc" id="L435" title="All 2 branches missed.">		if (arg.get(&quot;IT&quot;, 0) != null) {</span>
+<span class="pc bpc" id="L435" title="1 of 2 branches missed.">		if (arg.get(&quot;IT&quot;, 0) != null) {</span>
 <span class="nc" id="L436">			result = gantt.getIt();</span>
 <span class="nc bnc" id="L437" title="All 2 branches missed.">			if (result == null)</span>
 <span class="nc" id="L438">				return Failable.error(&quot;Not sure what are you refering to?&quot;);</span>
 		} else {
-<span class="nc" id="L440">			final String subject = arg.get(&quot;SUBJECT&quot;, 0);</span>
-<span class="nc" id="L441">			final String shortName = arg.get(&quot;SHORTNAME&quot;, 0);</span>
-<span class="nc" id="L442">			final String then = arg.get(&quot;THEN&quot;, 0);</span>
-<span class="nc" id="L443">			final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="fc" id="L440">			final String subject = arg.get(&quot;SUBJECT&quot;, 0);</span>
+<span class="fc" id="L441">			final String shortName = arg.get(&quot;SHORTNAME&quot;, 0);</span>
+<span class="fc" id="L442">			final String then = arg.get(&quot;THEN&quot;, 0);</span>
+<span class="fc" id="L443">			final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
 
-<span class="nc" id="L445">			final TaskCode code = TaskCode.fromIdAndDisplay(shortName, subject);</span>
-<span class="nc bnc" id="L446" title="All 2 branches missed.">			result = gantt.getOrCreateTask(code, then != null);</span>
+<span class="fc" id="L445">			final TaskCode code = TaskCode.fromIdAndDisplay(shortName, subject);</span>
+<span class="fc bfc" id="L446" title="All 2 branches covered.">			result = gantt.getOrCreateTask(code, then != null);</span>
 
-<span class="nc bnc" id="L448" title="All 2 branches missed.">			if (stereotype != null)</span>
+<span class="pc bpc" id="L448" title="1 of 2 branches missed.">			if (stereotype != null)</span>
 <span class="nc" id="L449">				result.setStereotype(Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0)));</span>
 
-<span class="nc" id="L451">			gantt.setIt(result);</span>
+<span class="fc" id="L451">			gantt.setIt(result);</span>
 		}
 
-<span class="nc bnc" id="L454" title="All 2 branches missed.">		if (result == null)</span>
+<span class="pc bpc" id="L454" title="1 of 2 branches missed.">		if (result == null)</span>
 <span class="nc" id="L455">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L457">		final String resource = arg.get(&quot;RESOURCE&quot;, 0);</span>
-<span class="nc bnc" id="L458" title="All 2 branches missed.">		if (resource != null) {</span>
-<span class="nc bnc" id="L459" title="All 2 branches missed.">			for (final StringTokenizer st = new StringTokenizer(resource, &quot;{}&quot;); st.hasMoreTokens();) {</span>
-<span class="nc" id="L460">				final String part = st.nextToken().trim();</span>
-<span class="nc bnc" id="L461" title="All 2 branches missed.">				if (part.length() &gt; 0) {</span>
-<span class="nc" id="L462">					final boolean ok = gantt.affectResource(result, part);</span>
-<span class="nc bnc" id="L463" title="All 2 branches missed.">					if (ok == false)</span>
+<span class="fc" id="L457">		final String resource = arg.get(&quot;RESOURCE&quot;, 0);</span>
+<span class="fc bfc" id="L458" title="All 2 branches covered.">		if (resource != null) {</span>
+<span class="fc bfc" id="L459" title="All 2 branches covered.">			for (final StringTokenizer st = new StringTokenizer(resource, &quot;{}&quot;); st.hasMoreTokens();) {</span>
+<span class="fc" id="L460">				final String part = st.nextToken().trim();</span>
+<span class="fc bfc" id="L461" title="All 2 branches covered.">				if (part.length() &gt; 0) {</span>
+<span class="fc" id="L462">					final boolean ok = gantt.affectResource(result, part);</span>
+<span class="pc bpc" id="L463" title="1 of 2 branches missed.">					if (ok == false)</span>
 <span class="nc" id="L464">						return Failable.error(&quot;Bad argument for resource&quot;);</span>
 
 				}
-<span class="nc" id="L467">			}</span>
+<span class="fc" id="L467">			}</span>
 
 		}
-<span class="nc" id="L470">		return Failable.ok(result);</span>
+<span class="fc" id="L470">		return Failable.ok(result);</span>
 
 	}
 
 	public Failable&lt;Task&gt; getMe(GanttDiagram gantt, RegexResult arg) {
 		final Task result;
-<span class="pc bpc" id="L476" title="1 of 2 branches missed.">		if (arg.get(&quot;IT&quot;, 0) != null) {</span>
+<span class="nc bnc" id="L476" title="All 2 branches missed.">		if (arg.get(&quot;IT&quot;, 0) != null) {</span>
 <span class="nc" id="L477">			result = gantt.getIt();</span>
 <span class="nc bnc" id="L478" title="All 2 branches missed.">			if (result == null)</span>
 <span class="nc" id="L479">				return Failable.error(&quot;Not sure what are you refering to?&quot;);</span>
 		} else {
-<span class="fc" id="L481">			final String subject = arg.get(&quot;SUBJECT&quot;, 0);</span>
-<span class="fc" id="L482">			final String shortName = arg.get(&quot;SHORTNAME&quot;, 0);</span>
-<span class="fc" id="L483">			final String then = arg.get(&quot;THEN&quot;, 0);</span>
-<span class="fc" id="L484">			final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="nc" id="L481">			final String subject = arg.get(&quot;SUBJECT&quot;, 0);</span>
+<span class="nc" id="L482">			final String shortName = arg.get(&quot;SHORTNAME&quot;, 0);</span>
+<span class="nc" id="L483">			final String then = arg.get(&quot;THEN&quot;, 0);</span>
+<span class="nc" id="L484">			final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
 
-<span class="fc" id="L486">			final TaskCode code = TaskCode.fromIdAndDisplay(shortName, subject);</span>
-<span class="fc bfc" id="L487" title="All 2 branches covered.">			result = gantt.getOrCreateTask(code, then != null);</span>
+<span class="nc" id="L486">			final TaskCode code = TaskCode.fromIdAndDisplay(shortName, subject);</span>
+<span class="nc bnc" id="L487" title="All 2 branches missed.">			result = gantt.getOrCreateTask(code, then != null);</span>
 
-<span class="pc bpc" id="L489" title="1 of 2 branches missed.">			if (stereotype != null)</span>
+<span class="nc bnc" id="L489" title="All 2 branches missed.">			if (stereotype != null)</span>
 <span class="nc" id="L490">				result.setStereotype(Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0)));</span>
 
-<span class="fc" id="L492">			gantt.setIt(result);</span>
+<span class="nc" id="L492">			gantt.setIt(result);</span>
 		}
 
-<span class="pc bpc" id="L495" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="nc bnc" id="L495" title="All 2 branches missed.">		if (result == null)</span>
 <span class="nc" id="L496">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L498">		final String resource = arg.get(&quot;RESOURCE&quot;, 0);</span>
-<span class="fc bfc" id="L499" title="All 2 branches covered.">		if (resource != null) {</span>
-<span class="fc bfc" id="L500" title="All 2 branches covered.">			for (final StringTokenizer st = new StringTokenizer(resource, &quot;{}&quot;); st.hasMoreTokens();) {</span>
-<span class="fc" id="L501">				final String part = st.nextToken().trim();</span>
-<span class="pc bpc" id="L502" title="1 of 2 branches missed.">				if (part.length() &gt; 0) {</span>
-<span class="fc" id="L503">					final boolean ok = gantt.affectResource(result, part);</span>
-<span class="pc bpc" id="L504" title="1 of 2 branches missed.">					if (ok == false)</span>
+<span class="nc" id="L498">		final String resource = arg.get(&quot;RESOURCE&quot;, 0);</span>
+<span class="nc bnc" id="L499" title="All 2 branches missed.">		if (resource != null) {</span>
+<span class="nc bnc" id="L500" title="All 2 branches missed.">			for (final StringTokenizer st = new StringTokenizer(resource, &quot;{}&quot;); st.hasMoreTokens();) {</span>
+<span class="nc" id="L501">				final String part = st.nextToken().trim();</span>
+<span class="nc bnc" id="L502" title="All 2 branches missed.">				if (part.length() &gt; 0) {</span>
+<span class="nc" id="L503">					final boolean ok = gantt.affectResource(result, part);</span>
+<span class="nc bnc" id="L504" title="All 2 branches missed.">					if (ok == false)</span>
 <span class="nc" id="L505">						return Failable.error(&quot;Bad argument for resource&quot;);</span>
 
 				}
-<span class="fc" id="L508">			}</span>
+<span class="nc" id="L508">			}</span>
 
 		}
-<span class="fc" id="L511">		return Failable.ok(result);</span>
+<span class="nc" id="L511">		return Failable.ok(result);</span>
 	}
 
 	public Collection&lt;? extends SentenceSimple&lt;GanttDiagram&gt;&gt; getSentences() {
-<span class="fc" id="L515">		return Arrays.asList(new SentenceRequire(), new SentenceTaskStarts(), new SentenceTaskStartsWithColor(),</span>
+<span class="nc" id="L515">		return Arrays.asList(new SentenceRequire(), new SentenceTaskStarts(), new SentenceTaskStartsWithColor(),</span>
 				new SentenceTaskStartsOnlyRelative(), new SentenceTaskStartsAbsolute(), new SentenceHappens(),
 				new SentenceHappensDate(), new SentenceEnds(), new SentenceTaskEndsOnlyRelative(),
 				new SentenceTaskEndsAbsolute(), new SentenceIsColored(), new SentenceIsColoredForCompletion(),

@@ -58,101 +58,101 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class NaturalGanttCommand implements Command&lt;GanttDiagram&gt; {
 
-<span class="nc" id="L61">	private static final UBrexPart AND = new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;s and &quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;s&quot;);</span>
+<span class="fc" id="L61">	private static final UBrexPart AND = new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;s and &quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;s&quot;);</span>
 
 	private final Subject&lt;GanttDiagram&gt; subject;
 
-<span class="nc" id="L65">	public NaturalGanttCommand(Subject&lt;GanttDiagram&gt; subject) {</span>
-<span class="nc" id="L66">		this.subject = subject;</span>
-<span class="nc" id="L67">	}</span>
+<span class="fc" id="L65">	public NaturalGanttCommand(Subject&lt;GanttDiagram&gt; subject) {</span>
+<span class="fc" id="L66">		this.subject = subject;</span>
+<span class="fc" id="L67">	}</span>
 
 	private Collection&lt;VerbPhraseAction&gt; getVerbPhrases() {
-<span class="nc" id="L70">		return subject.getVerbPhrases();</span>
+<span class="fc" id="L70">		return subject.getVerbPhrases();</span>
 	}
 
 	@Override
 	public CommandExecutionResult execute(GanttDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
 
-<span class="nc" id="L77">		final TextNavigator tn = TextNavigator.build(lines.getFirst().getString());</span>
-<span class="nc" id="L78">		VerbPhraseAction.skipSpaces(tn);</span>
+<span class="fc" id="L77">		final TextNavigator tn = TextNavigator.build(lines.getFirst().getString());</span>
+<span class="fc" id="L78">		VerbPhraseAction.skipSpaces(tn);</span>
 
-<span class="nc" id="L80">		final UMatcher matcherSubject = subject.toUnicodeBracketedExpressionSubject().match(tn);</span>
-<span class="nc" id="L81">		tn.jump(matcherSubject.getAcceptedMatch().length());</span>
-<span class="nc" id="L82">		VerbPhraseAction.skipSpaces(tn);</span>
+<span class="fc" id="L80">		final UMatcher matcherSubject = subject.toUnicodeBracketedExpressionSubject().match(tn);</span>
+<span class="fc" id="L81">		tn.jump(matcherSubject.getAcceptedMatch().length());</span>
+<span class="fc" id="L82">		VerbPhraseAction.skipSpaces(tn);</span>
 
-<span class="nc" id="L84">		CommandExecutionResult result = null;</span>
+<span class="fc" id="L84">		CommandExecutionResult result = null;</span>
 
-<span class="nc" id="L86">		final Deque&lt;VerbPhraseAction&gt; candidates = new ArrayDeque&lt;VerbPhraseAction&gt;(getVerbPhrases());</span>
+<span class="fc" id="L86">		final Deque&lt;VerbPhraseAction&gt; candidates = new ArrayDeque&lt;VerbPhraseAction&gt;(getVerbPhrases());</span>
 
-<span class="nc" id="L88">		final Failable&lt;? extends Object&gt; subjectResult = subject.ugetMe(diagram, matcherSubject);</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (subjectResult.isFail())</span>
+<span class="fc" id="L88">		final Failable&lt;? extends Object&gt; subjectResult = subject.ugetMe(diagram, matcherSubject);</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (subjectResult.isFail())</span>
 <span class="nc" id="L90">			return CommandExecutionResult.error(subjectResult.getError());</span>
 
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		while (!candidates.isEmpty()) {</span>
-<span class="nc" id="L93">			final VerbPhraseAction verbPhrase = candidates.removeFirst();</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">			if (verbPhrase.check(tn) == false)</span>
-<span class="nc" id="L95">				continue;</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		while (!candidates.isEmpty()) {</span>
+<span class="fc" id="L93">			final VerbPhraseAction verbPhrase = candidates.removeFirst();</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">			if (verbPhrase.check(tn) == false)</span>
+<span class="fc" id="L95">				continue;</span>
 
-<span class="nc" id="L97">			final VerbPhraseMatcher args = verbPhrase.parse(tn);</span>
+<span class="fc" id="L97">			final VerbPhraseMatcher args = verbPhrase.parse(tn);</span>
 
-<span class="nc" id="L99">			final Failable&lt;? extends Object&gt; complement = verbPhrase.getComplement(diagram, args);</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (complement.isFail())</span>
+<span class="fc" id="L99">			final Failable&lt;? extends Object&gt; complement = verbPhrase.getComplement(diagram, args);</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">			if (complement.isFail())</span>
 <span class="nc" id="L101">				return CommandExecutionResult.error(complement.getError());</span>
 
-<span class="nc" id="L103">			result = verbPhrase.execute(diagram, subjectResult.get(), complement.get());</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">			if (result.isOk() == false)</span>
+<span class="fc" id="L103">			result = verbPhrase.execute(diagram, subjectResult.get(), complement.get());</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">			if (result.isOk() == false)</span>
 <span class="nc" id="L105">				return result;</span>
 
-<span class="nc" id="L107">			final UMatcher andMatcher = AND.match(tn);</span>
-<span class="nc" id="L108">			final String andMatch = andMatcher.getAcceptedMatch();</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (andMatch.length() == 0)</span>
-<span class="nc" id="L110">				return result;</span>
+<span class="fc" id="L107">			final UMatcher andMatcher = AND.match(tn);</span>
+<span class="fc" id="L108">			final String andMatch = andMatcher.getAcceptedMatch();</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">			if (andMatch.length() == 0)</span>
+<span class="fc" id="L110">				return result;</span>
 
-<span class="nc" id="L112">			result = null;</span>
-<span class="nc" id="L113">			tn.jump(andMatch.length());</span>
+<span class="fc" id="L112">			result = null;</span>
+<span class="fc" id="L113">			tn.jump(andMatch.length());</span>
 
-<span class="nc" id="L115">			candidates.clear();</span>
-<span class="nc" id="L116">			candidates.addAll(getVerbPhrases());</span>
+<span class="fc" id="L115">			candidates.clear();</span>
+<span class="fc" id="L116">			candidates.addAll(getVerbPhrases());</span>
 
-<span class="nc" id="L118">		}</span>
+<span class="fc" id="L118">		}</span>
 
-<span class="nc" id="L120">		return CommandExecutionResult.error(&quot;No matching verb phrase&quot;);</span>
+<span class="fc" id="L120">		return CommandExecutionResult.error(&quot;No matching verb phrase&quot;);</span>
 
 	}
 
 	@Override
 	public CommandControl isValid(BlocLines lines) {
-<span class="nc" id="L126">		final TextNavigator tn = TextNavigator.build(lines.getFirst().getString());</span>
-<span class="nc" id="L127">		VerbPhraseAction.skipSpaces(tn);</span>
-<span class="nc" id="L128">		System.out.println(&quot;1 TN = &quot; + tn);</span>
+<span class="fc" id="L126">		final TextNavigator tn = TextNavigator.build(lines.getFirst().getString());</span>
+<span class="fc" id="L127">		VerbPhraseAction.skipSpaces(tn);</span>
+<span class="fc" id="L128">		System.out.println(&quot;1 TN = &quot; + tn);</span>
 
-<span class="nc" id="L130">		final UMatcher matcherSubject = subject.toUnicodeBracketedExpressionSubject().match(tn);</span>
-<span class="nc" id="L131">		final String v1 = matcherSubject.getAcceptedMatch();</span>
-<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (v1.length() == 0)</span>
-<span class="nc" id="L133">			return CommandControl.NOT_OK;</span>
+<span class="fc" id="L130">		final UMatcher matcherSubject = subject.toUnicodeBracketedExpressionSubject().match(tn);</span>
+<span class="fc" id="L131">		final String v1 = matcherSubject.getAcceptedMatch();</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (v1.length() == 0)</span>
+<span class="fc" id="L133">			return CommandControl.NOT_OK;</span>
 
-<span class="nc" id="L135">		tn.jump(v1.length());</span>
-<span class="nc" id="L136">		VerbPhraseAction.skipSpaces(tn);</span>
-<span class="nc" id="L137">		System.out.println(&quot;2 TN = &quot; + tn);</span>
+<span class="fc" id="L135">		tn.jump(v1.length());</span>
+<span class="fc" id="L136">		VerbPhraseAction.skipSpaces(tn);</span>
+<span class="fc" id="L137">		System.out.println(&quot;2 TN = &quot; + tn);</span>
 
-<span class="nc bnc" id="L139" title="All 2 branches missed.">		for (VerbPhraseAction verbPhrase : getVerbPhrases()) {</span>
-<span class="nc" id="L140">			System.out.println(&quot;3 VP = &quot; + verbPhrase);</span>
-<span class="nc bnc" id="L141" title="All 2 branches missed.">			if (verbPhrase.check(tn)) {</span>
-<span class="nc" id="L142">				System.out.println(&quot;4 OK! &quot; + subject.getClass() + &quot; &quot; + verbPhrase.getClass());</span>
-<span class="nc" id="L143">				return CommandControl.OK;</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		for (VerbPhraseAction verbPhrase : getVerbPhrases()) {</span>
+<span class="fc" id="L140">			System.out.println(&quot;3 VP = &quot; + verbPhrase);</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">			if (verbPhrase.check(tn)) {</span>
+<span class="fc" id="L142">				System.out.println(&quot;4 OK! &quot; + subject.getClass() + &quot; &quot; + verbPhrase.getClass());</span>
+<span class="fc" id="L143">				return CommandControl.OK;</span>
 			}
-<span class="nc" id="L145">		}</span>
+<span class="fc" id="L145">		}</span>
 
 		// TODO: manage &quot;AND&quot;
 
-<span class="nc" id="L149">		System.out.println(&quot;4 NOT_OK!&quot;);</span>
-<span class="nc" id="L150">		return CommandControl.NOT_OK;</span>
+<span class="fc" id="L149">		System.out.println(&quot;4 NOT_OK!&quot;);</span>
+<span class="fc" id="L150">		return CommandControl.NOT_OK;</span>
 	}
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		return pass == ParserPass.ONE;</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
 	}
 
 }

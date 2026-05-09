@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 <span class="fc" id="L57">public class ComplementIntervals implements Something&lt;GanttDiagram&gt; {</span>
 
 	public IRegex toRegex(String suffix) {
-<span class="fc" id="L60">		return new RegexOr(toRegexB(suffix), toRegexE(suffix));</span>
+<span class="nc" id="L60">		return new RegexOr(toRegexB(suffix), toRegexE(suffix));</span>
 	}
 
 	@Override
@@ -66,14 +66,14 @@ import net.sourceforge.plantuml.regex.RegexResult;
 	}
 
 	private IRegex toRegexB(String suffix) {
-<span class="fc" id="L69">		final DayPattern dayPattern1 = new DayPattern(&quot;1&quot;);</span>
-<span class="fc" id="L70">		final DayPattern dayPattern2 = new DayPattern(&quot;2&quot;);</span>
-<span class="fc" id="L71">		return new RegexConcat( //</span>
-<span class="fc" id="L72">				dayPattern1.toRegex(), //</span>
-<span class="fc" id="L73">				Words.exactly(Words.TO), //</span>
-<span class="fc" id="L74">				Words.zeroOrMore(Words.THE), //</span>
-<span class="fc" id="L75">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L76">				dayPattern2.toRegex() //</span>
+<span class="nc" id="L69">		final DayPattern dayPattern1 = new DayPattern(&quot;1&quot;);</span>
+<span class="nc" id="L70">		final DayPattern dayPattern2 = new DayPattern(&quot;2&quot;);</span>
+<span class="nc" id="L71">		return new RegexConcat( //</span>
+<span class="nc" id="L72">				dayPattern1.toRegex(), //</span>
+<span class="nc" id="L73">				Words.exactly(Words.TO), //</span>
+<span class="nc" id="L74">				Words.zeroOrMore(Words.THE), //</span>
+<span class="nc" id="L75">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L76">				dayPattern2.toRegex() //</span>
 		);
 	}
 
@@ -90,12 +90,12 @@ import net.sourceforge.plantuml.regex.RegexResult;
 	}
 
 	private IRegex toRegexE(String suffix) {
-<span class="fc" id="L93">		return new RegexConcat( //</span>
+<span class="nc" id="L93">		return new RegexConcat( //</span>
 				new RegexLeaf(&quot;[dD]\\+&quot;), //
 				new RegexLeaf(1, &quot;ECOUNT1&quot; + suffix, &quot;([\\d]+)&quot;), //
-<span class="fc" id="L96">				Words.exactly(Words.TO), //</span>
-<span class="fc" id="L97">				Words.zeroOrMore(Words.THE), //</span>
-<span class="fc" id="L98">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L96">				Words.exactly(Words.TO), //</span>
+<span class="nc" id="L97">				Words.zeroOrMore(Words.THE), //</span>
+<span class="nc" id="L98">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;[dD]\\+&quot;), //
 				new RegexLeaf(1, &quot;ECOUNT2&quot; + suffix, &quot;([\\d]+)&quot;) //
 		);
