@@ -36,10 +36,6 @@
 package net.sourceforge.plantuml.ebnf;
 
 import com.plantuml.ubrex.UnicodeBracketedExpression;
-import com.plantuml.ubrex.builder.UBrexConcat;
-import com.plantuml.ubrex.builder.UBrexLeaf;
-import com.plantuml.ubrex.builder.UBrexNamed;
-import com.plantuml.ubrex.builder.UBrexUpto;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -55,25 +51,14 @@ public class UBrexCommandComment extends UBrexSingleLineCommand2<PSystemEbnf> {
 	}
 
 	static UnicodeBracketedExpression getRegexConcat() {
-		return UBrexConcat.build( //
-				UBrexLeaf.spaceZeroOrMore(), //
-				new UBrexLeaf("(*"), //
-				new UBrexNamed("COMMENT", //
-						new UBrexUpto(//
-								new UBrexLeaf("〴."), //
-								UBrexConcat.build( //
-										new UBrexLeaf("*)"), //
-										UBrexLeaf.spaceZeroOrMore(), //
-										new UBrexLeaf("〒($)") //
-								))),
-//				new UBrexLeaf("〶$COMMENT=〄+〴.->〘*) 〇*〴s 〒($)〙"), //
-				UBrexLeaf.end());
+		return UnicodeBracketedExpression.build("〇*〴s (* 〶$COMMENT=〄>〘*) 〇*〴s 〒$〙");
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(PSystemEbnf diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-		final Display note = Display.getWithNewlines(diagram.getPragma(), arg.get("COMMENT", 0));
+		final String tmp = arg.get("COMMENT", 0).trim();
+		final Display note = Display.getWithNewlines(diagram.getPragma(), tmp);
 		return diagram.addNote(note, null);
 	}
 

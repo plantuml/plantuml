@@ -45,6 +45,7 @@ import com.plantuml.ubrex.builder.UBrexOr;
 import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.utils.I18nTimeData;
 
 public class MonthUtils {
 
@@ -89,17 +90,11 @@ public class MonthUtils {
 	}
 
 	public static String shortName(Month month, Locale locale) {
-		if (locale == Locale.ENGLISH)
-			return StringUtils.capitalize(month.name()).substring(0, 3);
-
-		return StringUtils.capitalize(month.getDisplayName(TextStyle.SHORT_STANDALONE, locale));
+		return I18nTimeData.shortName(month, locale);
 	}
 
 	public static String longName(Month month, Locale locale) {
-		if (locale == Locale.ENGLISH)
-			return StringUtils.capitalize(month.name());
-
-		return month.getDisplayName(TextStyle.FULL_STANDALONE, locale);
+		return I18nTimeData.longName(month, locale);
 	}
 
 }

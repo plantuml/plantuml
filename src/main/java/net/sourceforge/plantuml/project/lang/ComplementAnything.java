@@ -35,6 +35,11 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -45,6 +50,17 @@ public class ComplementAnything implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexLeaf(1, "ANYTHING" + suffix, "(.*?)");
+	}
+
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+		return new UBrexNamed("ANYTHING", new UBrexLeaf("〇*〴."));
+	}
+
+	@Override
+	public Failable<String> ugetMe(GanttDiagram system, UMatcher arg) {
+		final String value = arg.get("ANYTHING", 0);
+		return Failable.ok(value);
 	}
 
 	public Failable<String> getMe(GanttDiagram system, RegexResult arg, String suffix) {

@@ -7,7 +7,7 @@ public class SequenceLeftMessageAndActiveLifeLines_0001_TestResult {
 DPI: 96
 dimension: [ 1563.1416 ; 464.0000 ]
 scaleFactor: 1.0000
-seed: 6683878288238933950
+seed: -4910283392903407466
 svgLinkTarget: _top
 hoverPathColorRGB: null
 preserveAspectRatio: none

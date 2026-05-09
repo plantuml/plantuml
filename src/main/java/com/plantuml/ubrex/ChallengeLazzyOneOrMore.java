@@ -37,11 +37,11 @@ package com.plantuml.ubrex;
 public class ChallengeLazzyOneOrMore implements Challenge {
 
 	private final Challenge origin;
-	private final Challenge end;
+	private final Challenge stopCondition;
 
-	public ChallengeLazzyOneOrMore(Challenge origin, Challenge end) {
+	public ChallengeLazzyOneOrMore(Challenge origin, Challenge stopCondition) {
 		this.origin = origin;
-		this.end = end;
+		this.stopCondition = stopCondition;
 	}
 
 	@Override
@@ -52,19 +52,18 @@ public class ChallengeLazzyOneOrMore implements Challenge {
 		while (true) {
 			final ChallengeResult match1 = origin.runChallenge(string, currentPos);
 			if (match1.getFullCaptureLength() < 0)
-				return new ChallengeResult(NO_MATCH);
+				return ChallengeResult.NO_MATCH;
 			if (match1.getFullCaptureLength() == 0)
 				throw new IllegalStateException("infinite loop");
 			capture = capture.merge(match1.getCapture());
 			currentPos += match1.getFullCaptureLength();
 
-			final ChallengeResult match2 = end.runChallenge(string, currentPos);
-			if (match2.getFullCaptureLength() >= 0) {
-				final int result = currentPos + match2.getFullCaptureLength() - position;
-				final int nameLength = currentPos - position;
-				// capture = capture.merge(match2.getCapture());
-				return new ChallengeResult(result, capture).withNameLength(nameLength, match2.getCapture());
-			}
+			// Only peek at the stop condition, don't consume it.
+			// The stop condition challenges will be matched as siblings
+			// by the parent CompositeList/CompositeNamed.
+			final ChallengeResult match2 = stopCondition.runChallenge(string, currentPos);
+			if (match2.getFullCaptureLength() >= 0)
+				return new ChallengeResult(currentPos - position, capture);
 
 		}
 	}

@@ -75,7 +75,7 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 	private static final Pattern2 p = Pattern2.cmpile("\\((\\d+),(\\d+)\\)");
 
 	private void extractDimension(String startLine) {
-		final Matcher2 m = p.matcher(startLine);
+		final Matcher2 m = p.matcher(startLine, 0);
 		final boolean ok = m.find();
 		if (ok) {
 			width = Integer.parseInt(m.group(1));

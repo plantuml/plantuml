@@ -7,7 +7,7 @@ public class HideShow001_TestResult {
 DPI: 96
 dimension: [ 157.0000 ; 63.0000 ]
 scaleFactor: 1.0000
-seed: -6671548050035206981
+seed: 2371428818360949307
 svgLinkTarget: _top
 hoverPathColorRGB: null
 preserveAspectRatio: none

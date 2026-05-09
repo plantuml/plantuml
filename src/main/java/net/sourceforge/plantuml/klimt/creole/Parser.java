@@ -58,8 +58,10 @@ public class Parser {
 		return line.equals("</code>");
 	}
 
-	public static boolean isTreeStart(String line) {
-		return line.startsWith("|_");
+	public static boolean isTreeStart(CharSequence line) {
+		if (line.length() < 2)
+			return false;
+		return line.charAt(0) == '|' && line.charAt(1) == '_';
 	}
 
 	private static final Pattern SCALE = Pattern.compile("(?:scale=|\\*)([0-9.]+)");

@@ -1,1 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="PACKET" height="165px" preserveAspectRatio="none" style="width:735px;height:165px;background:#FFFFFF;" version="1.1" viewBox="0 0 735 165" width="735px" zoomAndPan="magnify"><?plantuml 1.2026.3beta6?><defs/><g><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="8.8525" x="5.5737" y="23.5352">0</text><path d="M10,26.4883 L10,58.4883" fill="none" style="stroke:#181818;stroke-width:0.5;"/><path d="M52,42.4883 L52,58.4883" fill="none" style="stroke:#181818;stroke-width:0.5;"/><path d="M94,42.4883 L94,58.4883" fill="none" style="stroke:#181818;stroke-width:0.5;"/><path d="M136,42.4883 L136,58.4883" fill="none" style="stroke:#181818;stroke-width:0.5;"/><path d="M178,26.4883 L178,58.4883" fill="none" style="stroke:#181818;stroke-width:0.5;"/><path d="M220,42.4883 L220,58.4883" fill="none" style="stroke:#181818;stroke-width:0.5;"/><path d="M262,42.4883 L262,58.4883" fill="none" style="stroke:#181818;stroke-width:0.5;"/><path d="M304,42.4883 L304,58.4883" fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="8.8525" x="341.5737" y="23.5352">8</text><path d="M346,26.4883 L346,58.4883" fill="none" style="stroke:#181818;stroke-width:0.5;"/><path d="M388,42.4883 L388,58.4883" fill="none" style="stroke:#181818;stroke-width:0.5;"/><path d="M430,42.4883 L430,58.4883" fill="none" style="stroke:#181818;stroke-width:0.5;"/><path d="M472,42.4883 L472,58.4883" fill="none" style="stroke:#181818;stroke-width:0.5;"/><path d="M514,26.4883 L514,58.4883" fill="none" style="stroke:#181818;stroke-width:0.5;"/><path d="M556,42.4883 L556,58.4883" fill="none" style="stroke:#181818;stroke-width:0.5;"/><path d="M598,42.4883 L598,58.4883" fill="none" style="stroke:#181818;stroke-width:0.5;"/><path d="M640,42.4883 L640,58.4883" fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="17.7051" x="673.1475" y="23.5352">16</text><path d="M682,26.4883 L682,58.4883" fill="none" style="stroke:#181818;stroke-width:0.5;"/><rect fill="#F1F1F1" height="96" style="stroke:#181818;stroke-width:0.5;" width="168" x="10" y="58.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.6592" x="89.1704" y="111.7793">A</text><rect fill="#F1F1F1" height="96" style="stroke:#181818;stroke-width:0.5;" width="168" x="178" y="58.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="8.0527" x="257.9736" y="111.7793">B</text><rect fill="#F1F1F1" height="96" style="stroke:#181818;stroke-width:0.5;" width="336" x="346" y="58.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.6865" x="509.1567" y="111.7793">C</text><?plantuml-src SoWkIImgAKXCpaujISbCJEUgvb9GICxFASzCASbGi5KmD0FoYnDpK-CpKZFJCqg0GYL5fQb0GGDTOoi5HuLekBXnB53KHDVSIi49oB3GDJIrKd3cgkLoICrBGRA0or3FoC38JCyuARKaqGm0?></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="PACKET" height="163px" preserveAspectRatio="none" style="width:735px;height:163px;background:#FFFFFF;" version="1.1" viewBox="0 0 735 163" width="735px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.8167" x="6.0917" y="20.8889">0</text>
+    <path d="M10,24 L10,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M52,40 L52,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M94,40 L94,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M136,40 L136,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M178,24 L178,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M220,40 L220,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M262,40 L262,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M304,40 L304,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.8167" x="342.0917" y="20.8889">8</text>
+    <path d="M346,24 L346,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M388,40 L388,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M430,40 L430,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M472,40 L472,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M514,24 L514,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M556,40 L556,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M598,40 L598,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M640,40 L640,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.6333" x="674.1833" y="20.8889">16</text>
+    <path d="M682,24 L682,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#F1F1F1" height="96" style="stroke:#181818;stroke-width:0.5;" width="168" x="10" y="56"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="89.3333" y="107.8889">A</text>
+    <rect fill="#F1F1F1" height="96" style="stroke:#181818;stroke-width:0.5;" width="168" x="178" y="56"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="257.3333" y="107.8889">B</text>
+    <rect fill="#F1F1F1" height="96" style="stroke:#181818;stroke-width:0.5;" width="336" x="346" y="56"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10.15" x="508.925" y="107.8889">C</text>
+  </g>
+</svg>

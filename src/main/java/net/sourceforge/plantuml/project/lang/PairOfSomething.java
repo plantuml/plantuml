@@ -35,6 +35,11 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -52,15 +57,35 @@ public class PairOfSomething<D extends Diagram> implements Something<D> {
 		this.complement2 = complement2;
 	}
 
+	@Override
+	public Failable<? extends Object> ugetMe(D diagram, UMatcher arg) {
+		final Failable<? extends Object> r1 = complement1.ugetMe(diagram, arg);
+		final Failable<? extends Object> r2 = complement2.ugetMe(diagram, arg);
+		if (r1.isFail())
+			return r1;
+		if (r2.isFail())
+			return r2;
+		final Object[] result = new Object[] { r1.get(), r2.get() };
+		return Failable.ok(result);
+	}
+
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+		return UBrexConcat.build( //
+				complement1.toUnicodeBracketedExpressionComplement(), //
+				UBrexLeaf.spaceOneOrMore(), //
+				complement2.toUnicodeBracketedExpressionComplement());
+	}
+
 	public Failable<? extends Object> getMe(D diagram, RegexResult arg, String suffix) {
 		final Failable<? extends Object> r1 = complement1.getMe(diagram, arg, "A" + suffix);
 		final Failable<? extends Object> r2 = complement2.getMe(diagram, arg, "B" + suffix);
-		if (r1.isFail()) {
+		if (r1.isFail())
 			return r1;
-		}
-		if (r2.isFail()) {
+
+		if (r2.isFail())
 			return r2;
-		}
+
 		final Object[] result = new Object[] { r1.get(), r2.get() };
 		return Failable.ok(result);
 	}

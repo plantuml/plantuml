@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 final public class StringLocated {
-	// ::remove folder when __HAXE__
 
 	private final String s;
 	private final LineLocation location;
@@ -59,71 +58,26 @@ final public class StringLocated {
 	private long fox = -1;
 	private TLineType type;
 
-//	public StringLocated jawsPatchNewlines() {
-//	return new StringLocated(s.replace("\\n", "%n()"), location, preprocessorError);
-//}
-//
-//public BlocLines expandsJaws() {
-//	BlocLines result = BlocLines.create();
-//	for (String part : s.split("" + Jaws.BLOCK_E1_NEWLINE))
-//		result = result.add(new StringLocated(part, location, preprocessorError));
-//	return result;
-//}
+	public int findMultilineTripleSeparator() {
+		final Matcher matcher = TRIPLE_PATTERN.matcher(s);
+		if (matcher.find())
+			return matcher.start();
+		return -1;
+	}
 
-	public List<StringLocated> expandsJawsForPreprocessor() {
-		if (JawsFlags.PARSE_NEW_MULTILINE_TRIPLE_MARKS) {
-			final int x = searchMultilineTripleSeparators();
-			if (x == -1)
-				return Arrays.asList(this);
-			final String s1 = s.substring(0, x);
-			final String s2 = s.substring(x + 3);
-			return Arrays.asList(new StringLocated(s1, location, preprocessorError).jawsHideBackslash(),
-					new StringLocated(s2, location, preprocessorError).jawsHideBackslash());
-		}
-		return Arrays.asList(this);
+	public StringLocated[] splitAtTripleSeparator(int x) {
+		final String s1 = s.substring(0, x);
+		final String s2 = s.substring(x + 3);
+		return new StringLocated[] { new StringLocated(s1, location, preprocessorError).jawsHideBackslash(),
+				new StringLocated(s2, location, preprocessorError).jawsHideBackslash() };
 	}
 
 	private static final Pattern TRIPLE_PATTERN = Pattern.compile("!!!|'''|\"\"\"");
-
-	private int searchMultilineTripleSeparators() {
-		final Matcher matcher = TRIPLE_PATTERN.matcher(s);
-
-		if (matcher.find())
-			return matcher.start();
-
-		return -1;
-	}
 
 	public List<StringLocated> expandsNewline() {
 		final List<StringLocated> copy = new ArrayList<>();
 		for (String s : Arrays.asList(s.split("" + Jaws.BLOCK_E1_NEWLINE)))
 			copy.add(new StringLocated(s, location, preprocessorError));
-		return copy;
-	}
-
-	public List<StringLocated> expandsBreaklineButEmbedded() {
-		final List<StringLocated> copy = new ArrayList<>();
-		int level = 0;
-		StringBuilder pending = new StringBuilder();
-		for (int i = 0; i < s.length(); i++) {
-			final char ch = s.charAt(i);
-
-			if (ch == '{' && i + 1 < s.length() && s.charAt(i + 1) == '{')
-				level++;
-			else if (ch == '}' && i + 1 < s.length() && s.charAt(i + 1) == '}')
-				level--;
-
-			if (level > 0) {
-				pending.append(ch);
-			} else if (ch == Jaws.BLOCK_E1_BREAKLINE) {
-				copy.add(new StringLocated(pending.toString(), location, preprocessorError));
-				pending.setLength(0);
-			} else {
-				pending.append(ch);
-			}
-		}
-		copy.add(new StringLocated(pending.toString(), location, preprocessorError));
-
 		return copy;
 	}
 

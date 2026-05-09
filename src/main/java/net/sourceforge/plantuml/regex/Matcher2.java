@@ -53,12 +53,14 @@ public class Matcher2 {
 		this.id = id;
 	}
 
-	public static Matcher2 build(Pattern pattern, CharSequence input) {
+	public static Matcher2 build(Pattern pattern, CharSequence input, int pos) {
 		final long now = System.currentTimeMillis();
 		final String id = pattern.pattern();
 		try {
-			final Matcher matcher2 = pattern.matcher(input);
-			return new Matcher2(matcher2, id);
+			final Matcher matcher = pattern.matcher(input);
+			if (pos > 0)
+				matcher.region(pos, input.length());
+			return new Matcher2(matcher, id);
 		} finally {
 			if (INSTRUMENT) {
 				addTime(id, System.currentTimeMillis() - now);

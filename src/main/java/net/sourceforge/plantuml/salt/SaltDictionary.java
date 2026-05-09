@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.WrappedElement;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.text.Guillemet;
@@ -89,8 +90,8 @@ public class SaltDictionary implements SpriteContainer, ISkinSimple {
 	}
 
 	@Override
-	public double getPadding() {
-		return 0;
+	public ClockwiseTopRightBottomLeft getPadding() {
+		return ClockwiseTopRightBottomLeft.none();
 	}
 
 	@Override

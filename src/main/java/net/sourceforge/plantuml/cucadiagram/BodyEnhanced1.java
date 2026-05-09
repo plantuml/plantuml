@@ -114,8 +114,8 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 		return 6;
 	}
 
-	private static boolean isTreeOrTable(String s) {
-		s = StringUtils.trinNoTrace(s);
+	private static boolean isTreeOrTable(CharSequence s) {
+		s = StringUtils.trim2(s);
 		return Parser.isTreeStart(s) || CreoleParser.isTableLine(s);
 	}
 

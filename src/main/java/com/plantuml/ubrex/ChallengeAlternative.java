@@ -54,7 +54,7 @@ public class ChallengeAlternative implements Challenge {
 				return tmp;
 
 		}
-		return new ChallengeResult(NO_MATCH);
+		return ChallengeResult.NO_MATCH;
 	}
 
 	public void addAlternative(Challenge pattern) {

@@ -70,6 +70,10 @@ inspiration: https://superuser.com/a/1206781
     FontColor $BGCOLOR
     FontStyle bold
   }
+  participant {
+    Margin 5 10
+    Padding 5 5
+  }
 </style>
 
 skinparam ArrowLollipopColor $FGCOLOR
@@ -77,7 +81,6 @@ skinparam BackgroundColor $BGCOLOR
 skinparam DefaultFontName $FONT_NAME
 skinparam DefaultMonospacedFontName $FONT_NAME_MONOSPACED
 skinparam LifelineStrategy solid
-skinparam ParticipantPadding 10
 skinparam SequenceLifeLineBorderColor $FGCOLOR
 skinparam Shadowing false
 skinparam UseBetaStyle true

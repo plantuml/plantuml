@@ -111,7 +111,7 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 
 		while (it.hasNext()) {
 			final CharSequence cs = it.next();
-			final String type = EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(cs));
+			final String type = EmbeddedDiagram.getEmbeddedType(cs);
 			if (type != null)
 				embeddeds.add(EmbeddedDiagram.createAndSkip(type, it, skinParam));
 			else
@@ -382,7 +382,14 @@ public class MethodsOrFieldsArea extends TextBlockMemoized implements WithPorts 
 	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
 		final ULayoutGroup group = getLayout(stringBounder);
 		final XDimension2D dim = calculateDimension(stringBounder);
-		return group.getInnerPosition(member, dim.getWidth(), dim.getHeight(), stringBounder);
+		final XRectangle2D result = group.getInnerPosition(member, dim.getWidth(), dim.getHeight(), stringBounder);
+		if (result != null && hasSmallIcon()) {
+			// Extend the inner position to include the visibility modifier on its left
+			final double smallIcon = skinParam.getCircledCharacterRadius() + 3;
+			return new XRectangle2D(result.getMinX() - smallIcon, result.getMinY(), result.getWidth() + smallIcon,
+					result.getHeight());
+		}
+		return result;
 	}
 
 	private ULayoutGroup getLayout(final StringBounder stringBounder) {

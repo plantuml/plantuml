@@ -36,20 +36,20 @@ public class AlternativeTest {
 	@Test
 	public void test4() {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("partition∙〇+〴S∙【 # 〇{6}「0〜9a〜fA〜F」┇ 〇?# 〇+〴w 】");
-		assertEquals("partition to #012345", cut.match("partition to #012345").getAcceptedMatch());
-		assertEquals("partition to gray", cut.match("partition to gray").getAcceptedMatch());
+		assertEquals("partition to #012345", cut.match("partition to #012345", 0).getAcceptedMatch());
+		assertEquals("partition to gray", cut.match("partition to gray", 0).getAcceptedMatch());
 	}
 
 	@Test
 	public void test5() {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("partition∙〇+〴S∙# 〇{6}「0〜9a〜fA〜F」");
-		assertEquals("partition to #012345", cut.match("partition to #012345").getAcceptedMatch());
+		assertEquals("partition to #012345", cut.match("partition to #012345", 0).getAcceptedMatch());
 	}
 
 	@Test
 	public void test50() {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("partition∙〇+〴S∙# 〇+「0〜9」");
-		assertEquals("partition to #012345", cut.match("partition to #012345").getAcceptedMatch());
+		assertEquals("partition to #012345", cut.match("partition to #012345", 0).getAcceptedMatch());
 	}
 
 

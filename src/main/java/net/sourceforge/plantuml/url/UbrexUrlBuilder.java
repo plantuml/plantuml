@@ -43,7 +43,6 @@ import com.plantuml.ubrex.UnicodeBracketedExpression;
 
 // UrlUbrexTest
 public class UbrexUrlBuilder {
-	// ::remove file when __HAXE__
 
 //	public static final IRegex MANDATORY = new RegexLeaf("URL", "(" + UbrexUrlBuilder.getRegexp() + ")");
 //	public static final IRegex OPTIONAL = new RegexOptional(MANDATORY);
@@ -140,7 +139,7 @@ public class UbrexUrlBuilder {
 
 	private UMatcher getMatcher(UnicodeBracketedExpression ubrex, String s) {
 		if (mode == UrlMode.STRICT)
-			return ubrex.match(s);
+			return ubrex.match(s, 0);
 		final TextNavigator tn = TextNavigator.build(s);
 		for (int i = 0; i < tn.length() - 2; i++) {
 			final UMatcher matcher = ubrex.match(tn, i);
@@ -207,15 +206,9 @@ public class UbrexUrlBuilder {
 		}
 
 		@Override
-		public List<String> getKeysToBeRefactored() {
+		public List<String> findFirstValuesByKeyPrefix(String keyPrefix) {
 			throw new UnsupportedOperationException();
 		}
-
-		@Override
-		public List<String> getRootKeys() {
-			throw new UnsupportedOperationException();
-		}
-
 	}
 
 }

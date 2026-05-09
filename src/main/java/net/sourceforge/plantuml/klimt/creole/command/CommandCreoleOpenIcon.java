@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
@@ -45,8 +48,8 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 public class CommandCreoleOpenIcon implements Command {
 
 	@Override
-	public String startingChars() {
-		return "<";
+	public Collection<String> starters() {
+		return Arrays.asList("<#", "<&");
 	}
 
 	private static final Pattern2 pattern = Pattern2.cmpile("^(" + Splitter.openiconPattern + ")");
@@ -58,8 +61,9 @@ public class CommandCreoleOpenIcon implements Command {
 		return new CommandCreoleOpenIcon();
 	}
 
-	public int matchingSize(String line) {
-		final Matcher2 m = pattern.matcher(line);
+	@Override
+	public int matchingSize(String line, int pos) {
+		final Matcher2 m = pattern.matcher(line, pos);
 		if (m.find() == false)
 			return 0;
 
@@ -67,8 +71,8 @@ public class CommandCreoleOpenIcon implements Command {
 	}
 
 	@Override
-	public String executeAndGetRemaining(ISkinSimple skinSimple, String line, StripeSimple stripe) {
-		final Matcher2 m = pattern.matcher(line);
+	public int executeAndAdvance(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
+		final Matcher2 m = pattern.matcher(line, pos);
 		if (m.find() == false)
 			throw new IllegalStateException();
 
@@ -76,7 +80,7 @@ public class CommandCreoleOpenIcon implements Command {
 		final String src = m.group(3);
 		final double scale = Parser.getScale(m.group(4), 1);
 		final String colorName2 = Parser.getColor(m.group(4));
-		
+
 		final String colorName = colorName1 == null ? colorName2 : colorName1;
 		HColor color = null;
 		if (colorName != null) {
@@ -84,7 +88,7 @@ public class CommandCreoleOpenIcon implements Command {
 			color = skinParam.getIHtmlColorSet().getColorOrWhite(colorName);
 		}
 		stripe.addOpenIcon(src, scale, color);
-		return line.substring(m.group(1).length());
+		return m.group(1).length();
 	}
 
 }

@@ -57,7 +57,7 @@ public class ChallengeRepetition implements Challenge {
 				if (currentPos > position && repetition.match(count))
 					return new ChallengeResult(currentPos - position, capture);
 				else
-					return new ChallengeResult(NO_MATCH);
+					return ChallengeResult.NO_MATCH;
 
 			if (shallWePass.getFullCaptureLength() == 0)
 				throw new IllegalStateException("infinite loop");

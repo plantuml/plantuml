@@ -35,14 +35,13 @@
  */
 package net.sourceforge.plantuml.jaws;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class Jaws {
-	
+
 	public static final boolean TRACE = false;
 
 	public static final char BLOCK_E1_NEWLINE = '\uE100';
@@ -57,37 +56,127 @@ public class Jaws {
 	public static final char BLOCK_E1_START_TEXTBLOCK = '\uE122';
 	public static final char BLOCK_E1_END_TEXTBLOCK = '\uE123';
 
-	public static List<StringLocated> expandsJawsForPreprocessor(List<StringLocated> input) {
-		final List<StringLocated> output = new ArrayList<StringLocated>();
-		for (int i = 0; i < input.size(); i++) {
-			List<StringLocated> split = input.get(i).expandsJawsForPreprocessor();
-			StringLocated line = split.get(0);
-			if (split.size() == 2) {
-				final int headerLength = line.length() + 3;
-				line = line.append(BLOCK_E1_INVISIBLE_QUOTE);
-				final MultilinesBloc block = new MultilinesBloc(headerLength, split.get(1).getString());
-				while (true) {
-					i++;
-					split = input.get(i).expandsJawsForPreprocessor();
-					block.add(split.get(0).getString());
-					if (split.size() == 2)
-						break;
-				}
-				line = line.append(block.getMerged());
-				line = line.append(BLOCK_E1_INVISIBLE_QUOTE);
-				line = line.append(split.get(1).getString());
-			}
-			output.add(line);
-		}
-		return Collections.unmodifiableList(output);
+	public static void mutateExpands1(List<StringLocated> tmp) {
+		mutateExpandsBreakline(tmp);
+		if (JawsFlags.PARSE_NEW_MULTILINE_TRIPLE_MARKS)
+			mergeTripleMarkBlocks(tmp);
 	}
 
-	public static List<StringLocated> expands0(List<StringLocated> input) {
-		final List<StringLocated> output = new ArrayList<StringLocated>();
-		for (StringLocated sl : input) 
-			output.addAll(sl.expandsBreaklineButEmbedded());
-		
-		return output;
+	private static void mutateExpandsBreakline(List<StringLocated> tmp) {
+		for (int i = 0; i < tmp.size(); i++) {
+			final StringLocated sl = tmp.get(i);
+			final String s = sl.getString();
+
+			// Fast path: no breakline -> nothing to do for this entry.
+			if (s.indexOf(BLOCK_E1_BREAKLINE) == -1)
+				continue;
+
+			// Split the line at every BLOCK_E1_BREAKLINE that is not inside a {{...}}
+			// embedded block. Write the first piece in place at index i, then insert the
+			// remaining pieces right after.
+			final LineLocation location = sl.getLocation();
+			final String preprocessorError = sl.getPreprocessorError();
+			final int len = s.length();
+			final StringBuilder pending = new StringBuilder(len);
+			int level = 0;
+			boolean firstWritten = false;
+			int inserted = 0;
+			for (int j = 0; j < len; j++) {
+				final char ch = s.charAt(j);
+
+				if (ch == '{' && j + 1 < len && s.charAt(j + 1) == '{')
+					level++;
+				else if (ch == '}' && j + 1 < len && s.charAt(j + 1) == '}')
+					level--;
+
+				if (level > 0) {
+					pending.append(ch);
+				} else if (ch == BLOCK_E1_BREAKLINE) {
+					final StringLocated piece = new StringLocated(pending.toString(), location, preprocessorError);
+					if (firstWritten == false) {
+						tmp.set(i, piece);
+						firstWritten = true;
+					} else {
+						tmp.add(i + 1 + inserted, piece);
+						inserted++;
+					}
+					pending.setLength(0);
+				} else {
+					pending.append(ch);
+				}
+			}
+
+			// Tail piece (always emitted, even when empty, to match the legacy behaviour).
+			final StringLocated tail = new StringLocated(pending.toString(), location, preprocessorError);
+			if (firstWritten == false) {
+				// No actual split happened (the BLOCK_E1_BREAKLINE chars were all inside
+				// {{...}} blocks). Replace in place if the content is materially different.
+				tmp.set(i, tail);
+			} else {
+				tmp.add(i + 1 + inserted, tail);
+				inserted++;
+			}
+
+			i += inserted;
+		}
+	}
+
+	private static void mergeTripleMarkBlocks(List<StringLocated> tmp) {
+		// in-place expansion of triple-mark
+		// separators ('''/!!!/""").
+		// Common case (no triple-mark on a line): the entry is left untouched.
+		// When a triple-mark opens on line i, we consume input lines until the closing
+		// triple-mark and merge them all into a single output line at write index w.
+		final int n = tmp.size();
+		int w = 0;
+		for (int i = 0; i < n; i++) {
+			final StringLocated current = tmp.get(i);
+			final int x = current.findMultilineTripleSeparator();
+			if (x == -1) {
+				if (w != i)
+					tmp.set(w, current);
+				w++;
+				continue;
+			}
+
+			// Opening triple-mark found. Build the merged line in a single StringBuilder
+			// to avoid the cascade of StringLocated.append() that allocate at each step.
+			final StringLocated[] head = current.splitAtTripleSeparator(x);
+			final StringLocated openLine = head[0];
+			final String openTail = head[1].getString();
+
+			final int headerLength = openLine.length() + 3;
+			final MultilinesBloc block = new MultilinesBloc(headerLength, openTail);
+
+			String closeTail = "";
+			while (true) {
+				i++;
+				final StringLocated mid = tmp.get(i);
+				final int xMid = mid.findMultilineTripleSeparator();
+				if (xMid == -1) {
+					block.add(mid.jawsHideBackslash().getString());
+				} else {
+					final StringLocated[] tail = mid.splitAtTripleSeparator(xMid);
+					block.add(tail[0].getString());
+					closeTail = tail[1].getString();
+					break;
+				}
+			}
+
+			final StringBuilder sb = new StringBuilder(
+					openLine.length() + 2 + block.getMerged().length() + closeTail.length());
+			sb.append(openLine.getString());
+			sb.append(BLOCK_E1_INVISIBLE_QUOTE);
+			sb.append(block.getMerged());
+			sb.append(BLOCK_E1_INVISIBLE_QUOTE);
+			sb.append(closeTail);
+
+			tmp.set(w++, new StringLocated(sb.toString(), openLine.getLocation(), openLine.getPreprocessorError()));
+		}
+
+		// Drop the now-unused tail in one shot.
+		if (w < n)
+			tmp.subList(w, n).clear();
 	}
 
 }

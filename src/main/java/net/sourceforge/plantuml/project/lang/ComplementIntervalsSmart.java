@@ -37,6 +37,13 @@ package net.sourceforge.plantuml.project.lang;
 
 import java.time.LocalDate;
 
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOptional;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
@@ -51,6 +58,63 @@ import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementIntervalsSmart extends AbstractComplementTaskInstant {
+	
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+		final DayPattern dayPattern1 = new DayPattern("1");
+
+		final UBrexPart durationBeforeOrAfter = UBrexConcat.build( //
+				new UBrexNamed("COMPLEMENT_NB1", new UBrexLeaf("〇+〴d")), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexOptional(UBrexConcat.build(new UBrexNamed("COMPLEMENT_WORKING1", new UBrexLeaf("working")),
+						UBrexLeaf.spaceOneOrMore())), //
+				new UBrexNamed("COMPLEMENT_DAY_OR_WEEK1", new UBrexLeaf("【day┇week】")), //
+				new UBrexLeaf("〇?s"), //
+				new UBrexOptional(UBrexConcat.build( //
+						UBrexLeaf.spaceOneOrMore(), //
+						new UBrexLeaf("and"), //
+						UBrexLeaf.spaceOneOrMore(), //
+						new UBrexNamed("COMPLEMENT_NB2", new UBrexLeaf("〇+〴d")), //
+						UBrexLeaf.spaceOneOrMore(), //
+						new UBrexOptional(
+								UBrexConcat.build(new UBrexNamed("COMPLEMENT_WORKING2", new UBrexLeaf("working")),
+										UBrexLeaf.spaceOneOrMore())), //
+						new UBrexNamed("COMPLEMENT_DAY_OR_WEEK2", new UBrexLeaf("【day┇week】")), //
+						new UBrexLeaf("〇?s"))), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexNamed("COMPLEMENT_BEFORE_OR_AFTER", Words.uoneOf(Words.BEFORE, Words.AFTER)));
+
+		return UBrexConcat.build( //
+				dayPattern1.toUbrex(), //
+				Words.uexactly(Words.TO), //
+				UBrexLeaf.spaceZeroOrMore(), //
+				new UBrexOptional(durationBeforeOrAfter), //
+				UBrexLeaf.spaceZeroOrMore(), //
+				UBrexConcat.build( //
+						SubjectTask.taskCode("COMPLEMENT_CODE_OTHER"), //
+						new UBrexLeaf("〴.s")), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexNamed("COMPLEMENT_START_OR_END", Words.uoneOf(Words.START, Words.END)));
+	}
+
+	@Override
+	public Failable<DaysAsDates> ugetMe(GanttDiagram system, UMatcher arg) {
+		final LocalDate d1 = new DayPattern("1").getDay(arg);
+
+		final Failable<TaskInstant> i2 = getComplementTaskInstant(system, arg);
+
+		if (i2.isFail())
+			return Failable.error(i2.getError());
+
+		final TaskInstant end = i2.get();
+		TimePoint precise = end.getInstantPrecise();
+		if (end.getAttribute() == TaskAttribute.END)
+			precise = precise.decrement();
+
+		final DaysAsDates days = new DaysAsDates(d1, precise.toDay());
+		return Failable.ok(days);
+	}
+
 
 	@DuplicateCode(reference = "ComplementBeforeOrAfterOrAtTaskStartOrEnd")
 	public IRegex toRegex(String suffix) {

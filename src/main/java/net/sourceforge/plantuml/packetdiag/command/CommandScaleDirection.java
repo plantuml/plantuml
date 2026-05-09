@@ -30,37 +30,54 @@
  *
  *
  * Original Author:  kolulu23
- *
+ * Contribution: The-Lum
  * 
  */
-package net.sourceforge.plantuml.packetdiag;
+package net.sourceforge.plantuml.packetdiag.command;
+
+import java.util.Optional;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.packetdiag.PacketDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandPacketDiagEnd extends SingleLineCommand2<PacketDiagram> {
+/**
+ * Parses and applies the {@code scale_direction=<ltr|rtl>} directive for {@code packetdiag} diagrams.
+ * <p>
+ * Controls the direction in which the bit scale is rendered by calling
+ * {@link PacketDiagram#setScaleDirection(String)}.
+ * </p>
+ */
+public class CommandScaleDirection extends SingleLineCommand2<PacketDiagram> {
 
-	public CommandPacketDiagEnd() {
+	public CommandScaleDirection() {
 		super(getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandPacketDiagEnd.class.getName(), RegexLeaf.start(), //
+		return RegexConcat.build(CommandScaleDirection.class.getName(), RegexLeaf.start(), //
+						new RegexLeaf("scale_direction"), //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("\\}?"), //
+						new RegexLeaf("="), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf(1, "DIR", "(ltr|rtl);?"), //
 						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
-
 	@Override
 	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
+		final String dir = Optional.ofNullable(arg.get("DIR", 0))
+				.map(String::toUpperCase)
+				.orElse("LTR");
+
+		system.setScaleDirection(dir);
 		return CommandExecutionResult.ok();
 	}
 }

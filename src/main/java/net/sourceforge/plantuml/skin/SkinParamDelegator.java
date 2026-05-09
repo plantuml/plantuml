@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.LengthAdjust;
 import net.sourceforge.plantuml.style.Style;
@@ -244,7 +245,7 @@ public class SkinParamDelegator implements ISkinParam {
 	}
 
 	@Override
-	public double getPadding() {
+	public ClockwiseTopRightBottomLeft getPadding() {
 		return skinParam.getPadding();
 	}
 
@@ -324,8 +325,8 @@ public class SkinParamDelegator implements ISkinParam {
 	}
 
 	@Override
-	public double getPadding(PaddingParam param) {
-		return skinParam.getPadding(param);
+	public ClockwiseTopRightBottomLeft getPaddingTOBEREMOVED(PaddingParam param) {
+		return skinParam.getPaddingTOBEREMOVED(param);
 	}
 
 	@Override

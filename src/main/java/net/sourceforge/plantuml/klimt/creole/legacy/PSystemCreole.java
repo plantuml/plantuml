@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.SkinParam;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
 public class PSystemCreole extends UgDiagram {
 
@@ -83,7 +84,7 @@ public class PSystemCreole extends UgDiagram {
 				Pragma.createEmpty(), getPreprocessingArtifact().getOption());
 		final Sheet sheet = skinParam.sheet(fontConfiguration, HorizontalAlignment.LEFT, CreoleMode.FULL)
 				.createSheet(display);
-		return new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
+		return new SheetBlock1(sheet, LineBreakStrategy.NONE, ClockwiseTopRightBottomLeft.none());
 
 	}
 

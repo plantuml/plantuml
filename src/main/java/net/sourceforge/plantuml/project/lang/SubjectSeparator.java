@@ -36,13 +36,20 @@
 package net.sourceforge.plantuml.project.lang;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.TaskInstant;
+import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -59,12 +66,64 @@ public class SubjectSeparator implements Subject<GanttDiagram> {
 		return new RegexLeaf(0, "SUBJECT", "separator");
 	}
 
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionSubject() {
+		return new UBrexLeaf("separator");
+	}
+
 	public Failable<GanttDiagram> getMe(GanttDiagram project, RegexResult arg) {
+		return Failable.ok(project);
+	}
+
+	@Override
+	public Failable<GanttDiagram> ugetMe(GanttDiagram project, UMatcher arg) {
 		return Failable.ok(project);
 	}
 
 	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
 		return Arrays.asList(new JustBefore(), new JustAfter(), new Just());
+	}
+
+	@Override
+	public Collection<VerbPhraseAction> getVerbPhrases() {
+		final List<VerbPhraseAction> result = new ArrayList<>();
+
+		result.add(new VerbPhraseAction(Verbs.just, Words.usingle(Words.BEFORE), ComplementDate.any()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final LocalDate day = (LocalDate) complement;
+				if (TeaVM.a())
+					assert project == subject;
+				project.addVerticalSeparatorBefore(day);
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.just, Words.usingle(Words.AFTER), ComplementDate.any()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final LocalDate day = (LocalDate) complement;
+				if (TeaVM.a())
+					assert project == subject;
+				project.addVerticalSeparatorBefore(day.plusDays(1));
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.just, new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final TaskInstant when = (TaskInstant) complement;
+
+				if (TeaVM.a())
+					assert project == subject;
+				project.addVerticalSeparatorBefore(when.getInstantPrecise().toDay());
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		return result;
+
 	}
 
 	class JustBefore extends SentenceSimple<GanttDiagram> {
@@ -76,7 +135,8 @@ public class SubjectSeparator implements Subject<GanttDiagram> {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final LocalDate day = (LocalDate) complement;
-			if (TeaVM.a()) assert project == subject;
+			if (TeaVM.a())
+				assert project == subject;
 			project.addVerticalSeparatorBefore(day);
 			return CommandExecutionResult.ok();
 		}
@@ -92,7 +152,8 @@ public class SubjectSeparator implements Subject<GanttDiagram> {
 		@Override
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final LocalDate day = (LocalDate) complement;
-			if (TeaVM.a()) assert project == subject;
+			if (TeaVM.a())
+				assert project == subject;
 			project.addVerticalSeparatorBefore(day.plusDays(1));
 			return CommandExecutionResult.ok();
 		}
@@ -109,7 +170,8 @@ public class SubjectSeparator implements Subject<GanttDiagram> {
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final TaskInstant when = (TaskInstant) complement;
 
-			if (TeaVM.a()) assert project == subject;
+			if (TeaVM.a())
+				assert project == subject;
 			project.addVerticalSeparatorBefore(when.getInstantPrecise().toDay());
 			return CommandExecutionResult.ok();
 		}

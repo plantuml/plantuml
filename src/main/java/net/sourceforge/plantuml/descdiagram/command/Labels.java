@@ -77,21 +77,21 @@ public class Labels {
 
 	private String init(String labelLink) {
 		if (firstLabel == null && secondLabel == null) {
-			final Matcher2 m1 = BOTH_LABELS.matcher(labelLink);
+			final Matcher2 m1 = BOTH_LABELS.matcher(labelLink, 0);
 			if (m1.matches()) {
 				firstLabel = m1.group(1);
 				secondLabel = m1.group(3);
 				return StringUtils
 						.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m1.group(2))));
 			}
-			final Matcher2 m2 = FIRST_LABEL_ONLY.matcher(labelLink);
+			final Matcher2 m2 = FIRST_LABEL_ONLY.matcher(labelLink, 0);
 			if (m2.matches()) {
 				firstLabel = m2.group(1);
 				secondLabel = null;
 				return StringUtils
 						.trin(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(m2.group(2))));
 			}
-			final Matcher2 m3 = SECOND_LABEL_ONLY.matcher(labelLink);
+			final Matcher2 m3 = SECOND_LABEL_ONLY.matcher(labelLink, 0);
 			if (m3.matches()) {
 				firstLabel = null;
 				secondLabel = m3.group(2);

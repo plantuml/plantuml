@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
@@ -65,7 +66,7 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 	private double roundCorner;
 
 	public ComponentRoseReference(Style style, Style styleHeader, Display stringsToDisplay, ISkinParam skinParam) {
-		super(style, LineBreakStrategy.NONE, 4, 4, 4, skinParam,
+		super(style, LineBreakStrategy.NONE, ClockwiseTopRightBottomLeft.topRightBottomLeft(4, 4, 4, 4), skinParam,
 				stringsToDisplay.subList(1, stringsToDisplay.size()), false);
 
 		this.symbolContextHeader = styleHeader.getSymbolContext(getIHtmlColorSet());
@@ -129,11 +130,11 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 			textPos = (dimensionToUse.getWidth() - textWidth) / 2;
 		} else if (position == HorizontalAlignment.RIGHT) {
 			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();
-			textPos = dimensionToUse.getWidth() - textWidth - getMarginX2() - xMargin;
+			textPos = dimensionToUse.getWidth() - textWidth - getOldPaddingX2() - xMargin;
 		} else {
-			textPos = getMarginX1() + xMargin;
+			textPos = getOldPaddingX1() + xMargin;
 		}
-		getTextBlock().drawU(ug.apply(new UTranslate(textPos, (getMarginY() + textHeaderHeight))));
+		getTextBlock().drawU(ug.apply(new UTranslate(textPos, (getOldPaddingY() + textHeaderHeight))));
 	}
 
 	private double getHeaderHeight(StringBounder stringBounder) {

@@ -36,8 +36,17 @@
 package net.sourceforge.plantuml.project.lang;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOr;
+import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -45,6 +54,7 @@ import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.TimePoint;
+import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -62,12 +72,36 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 		return new RegexOr(toRegexB(), toRegexE(), andRegex(), thenRegex());
 	}
 
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionSubject() {
+		return new UBrexOr(toUBrexB(), toUBrexE(), andUBrex(), thenUBrex());
+	}
+
+	private UBrexPart toUBrexB() {
+		return UBrexConcat.build( //
+				TimeResolution.toUbrexB_YYYY_MM_DD("BYEAR1", "BMONTH1", "BDAY1"), //
+				Words.uexactly(Words.TO), //
+				UBrexLeaf.spaceOneOrMore(), //
+				TimeResolution.toUbrexB_YYYY_MM_DD("BYEAR2", "BMONTH2", "BDAY2") //
+		);
+	}
+
 	private IRegex toRegexB() {
 		return new RegexConcat( //
 				TimeResolution.toRegexB_YYYY_MM_DD("BYEAR1", "BMONTH1", "BDAY1"), //
 				Words.exactly(Words.TO), //
 				RegexLeaf.spaceOneOrMore(), //
 				TimeResolution.toRegexB_YYYY_MM_DD("BYEAR2", "BMONTH2", "BDAY2") //
+		);
+	}
+
+	private UBrexPart toUBrexE() {
+		return UBrexConcat.build( //
+				new UBrexLeaf("「dD」+"), //
+				new UBrexNamed("ECOUNT1", new UBrexLeaf("〇+〴d")), Words.uexactly(Words.TO), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexLeaf("「dD」+"), //
+				new UBrexNamed("ECOUNT2", new UBrexLeaf("〇+〴d")) //
 		);
 	}
 
@@ -79,6 +113,17 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("[dD]\\+"), //
 				new RegexLeaf(1, "ECOUNT2", "([\\d]+)") //
+		);
+	}
+
+	private UBrexPart andUBrex() {
+		return UBrexConcat.build( //
+				TimeResolution.toUbrexB_YYYY_MM_DD("BYEAR3", "BMONTH3", "BDAY3"), //
+				Words.uexactly(Words.AND), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexNamed("COUNT_AND", new UBrexLeaf("〇+〴d")), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexLeaf("day〇?s") //
 		);
 	}
 
@@ -94,6 +139,16 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 		);
 	}
 
+	private UBrexPart thenUBrex() {
+		return UBrexConcat.build( //
+				new UBrexLeaf("then"), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexNamed("COUNT_THEN", new UBrexLeaf("〇+〴d")), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexLeaf("day〇?s") //
+		);
+	}
+
 	private IRegex thenRegex() {
 		return new RegexConcat( //
 				new RegexLeaf("then"), //
@@ -103,6 +158,25 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 				new RegexLeaf("days?") //
 
 		);
+	}
+
+	@Override
+	public Failable<DaysAsDates> ugetMe(GanttDiagram project, UMatcher arg) {
+		final String countAnd = arg.get("COUNT_AND", 0);
+		if (countAnd != null) {
+			final TimePoint date3 = getDate(project, arg, "3");
+			final int nb = Integer.parseInt(countAnd);
+			return Failable.ok(new DaysAsDates(project, date3.toDay(), nb));
+		}
+		final String countThen = arg.get("COUNT_THEN", 0);
+		if (countThen != null) {
+			final TimePoint date3 = project.getThenDate();
+			final int nb = Integer.parseInt(countThen);
+			return Failable.ok(new DaysAsDates(project, date3.toDay(), nb));
+		}
+		final TimePoint date1 = getDate(project, arg, "1");
+		final TimePoint date2 = getDate(project, arg, "2");
+		return Failable.ok(new DaysAsDates(date1.toDay(), date2.toDay()));
 	}
 
 	public Failable<DaysAsDates> getMe(GanttDiagram project, RegexResult arg) {
@@ -137,8 +211,81 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 		throw new IllegalStateException();
 	}
 
+	private TimePoint getDate(GanttDiagram project, UMatcher arg, String suffix) {
+		if (arg.get("BDAY" + suffix, 0) != null) {
+			final int day = Integer.parseInt(arg.get("BDAY" + suffix, 0));
+			final int month = Integer.parseInt(arg.get("BMONTH" + suffix, 0));
+			final int year = Integer.parseInt(arg.get("BYEAR" + suffix, 0));
+			return TimePoint.ofStartOfDay(year, month, day);
+		}
+		if (arg.get("ECOUNT" + suffix, 0) != null) {
+			final int day = Integer.parseInt(arg.get("ECOUNT" + suffix, 0));
+			return project.getMinTimePoint().addDays(day);
+		}
+		throw new IllegalStateException();
+	}
+
 	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
 		return Arrays.asList(new Close(), new Open(), new InColor(), new Named());
+	}
+
+	@Override
+	public Collection<VerbPhraseAction> getVerbPhrases() {
+		final List<VerbPhraseAction> result = new ArrayList<>();
+		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementClose()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				for (LocalDate d : (DaysAsDates) subject)
+					project.closeDayAsDate(d, (String) complement);
+
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementOpen()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				for (LocalDate d : (DaysAsDates) subject)
+					project.openDayAsDate(d, (String) complement);
+
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final HColor color = ((CenterBorderColor) complement).getCenter();
+				for (LocalDate d : (DaysAsDates) subject)
+					project.colorDay(d, color);
+
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.isOrAreNamed, new ComplementNamed()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final String name = (String) complement;
+				final DaysAsDates days = (DaysAsDates) subject;
+				for (LocalDate d : days)
+					project.nameDay(d, name);
+
+				return CommandExecutionResult.ok();
+			}
+		});
+
+//		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {
+//			@Override
+//			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+//				final HColor color = ((CenterBorderColor) complement).getCenter();
+//				project.colorDay((LocalDate) subject, color);
+//				return CommandExecutionResult.ok();
+//			}
+//		});
+
+		return result;
+
 	}
 
 	class Close extends SentenceSimple<GanttDiagram> {
@@ -202,9 +349,9 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 			final String name = (String) complement;
 			final DaysAsDates days = (DaysAsDates) subject;
-			for (LocalDate d : days) {
+			for (LocalDate d : days)
 				project.nameDay(d, name);
-			}
+
 			return CommandExecutionResult.ok();
 		}
 

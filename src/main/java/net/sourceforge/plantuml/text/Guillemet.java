@@ -79,6 +79,10 @@ public class Guillemet {
 		if (this == DOUBLE_COMPARATOR)
 			return st;
 
+		// Fast path: no '<' at all => nothing to do, return the original String.
+		if (st.indexOf('<') < 0)
+			return st;
+
 		return GUILLEMET_PATTERN.matcher(st)
 				.replaceAll(Matcher.quoteReplacement(start) + "$1" + Matcher.quoteReplacement(end));
 	}

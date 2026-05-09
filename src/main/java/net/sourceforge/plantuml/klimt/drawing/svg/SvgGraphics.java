@@ -95,7 +95,6 @@ import net.sourceforge.plantuml.version.Version;
 import net.sourceforge.plantuml.xml.XmlFactories;
 
 public class SvgGraphics {
-	// ::remove file when __HAXE__
 
 	// http://tutorials.jenkov.com/svg/index.html
 	// http://www.svgbasics.com/
@@ -1320,45 +1319,11 @@ public class SvgGraphics {
 		closeTopActiveLinkIfNeeded();
 
 		pendingElements.add(0, document.createElement("g"));
+		final W3cElementAdapter ielement = new W3cElementAdapter(pendingElements.get(0));
 
-		for (Map.Entry<UGroupType, String> typeIdent : typeIdents.entrySet()) {
-			if (typeIdent.getKey() == UGroupType.TITLE) {
-				Element title = document.createElement(UGroupType.TITLE.getSvgKeyAttributeName());
-				title.setTextContent(typeIdent.getValue());
-				pendingElements.get(0).appendChild(title);
-			}
-
-			switch (typeIdent.getKey()) {
-			case ID:
-				// ignored
-				break;
-			case DATA_UID:
-				// DATA_UID *will* be rename to ID, but right now, we do some hack
-				pendingElements.get(0).setAttribute("id", typeIdent.getValue());
-				break;
-
-			// I also suggest that we rename "data-participant-1" to "data-entity-1" and
-			// "data-participant-2" to "data-entity-2"
-
-			case DATA_PARTICIPANT_1:
-			case DATA_ENTITY_1_UID:
-				pendingElements.get(0).setAttribute("data-entity-1", typeIdent.getValue());
-				break;
-			case DATA_PARTICIPANT_2:
-			case DATA_ENTITY_2_UID:
-				pendingElements.get(0).setAttribute("data-entity-2", typeIdent.getValue());
-				break;
-
-			case CLASS:
-			case DATA_SOURCE_LINE:
-			case DATA_QUALIFIED_NAME:
-			case DATA_ENTITY_UID:
-			case DATA_VISIBILITY_MODIFIER:
-			case DATA_LINK_TYPE:
-				pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(), typeIdent.getValue());
-
-			}
-		}
+		final PortableSvgDocument idocument = new W3cSvgDocument(document);
+		for (Map.Entry<UGroupType, String> entry : typeIdents.entrySet())
+			idocument.applyGroupAttribute(ielement, entry.getKey(), entry.getValue());
 
 		// Restore link state after group creation if needed
 		addTopOpenedLinkIfNeeded();

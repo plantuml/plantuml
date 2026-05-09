@@ -205,7 +205,13 @@ sequenceDiagram {
 
 	  FontSize 13
 	  FontStyle bold
+	  Padding 4
 	}
+
+	participant,actor,boundary,control,entity,queue,database,collections {
+	  Padding 7
+	}
+
 }
 
 classDiagram {

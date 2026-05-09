@@ -7,7 +7,7 @@ public class TeozAltElseParallel_0002_TestResult {
 DPI: 96
 dimension: [ 472.6340 ; 223.5000 ]
 scaleFactor: 1.0000
-seed: 2548330507147149947
+seed: -93606485541384165
 svgLinkTarget: _top
 hoverPathColorRGB: null
 preserveAspectRatio: none

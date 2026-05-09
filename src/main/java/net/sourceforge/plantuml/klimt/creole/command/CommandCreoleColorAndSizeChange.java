@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -48,8 +51,8 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 public class CommandCreoleColorAndSizeChange implements Command {
 
 	@Override
-	public String startingChars() {
-		return "<";
+	public Collection<String> starters() {
+		return Collections.singleton("<f");
 	}
 
 	private final Pattern2 mypattern;
@@ -72,8 +75,9 @@ public class CommandCreoleColorAndSizeChange implements Command {
 		this.mypattern = pattern;
 	}
 
-	public int matchingSize(String line) {
-		final Matcher2 m = mypattern.matcher(line);
+	@Override
+	public int matchingSize(String line, int pos) {
+		final Matcher2 m = mypattern.matcher(line, pos);
 		if (m.find() == false)
 			return 0;
 
@@ -81,9 +85,9 @@ public class CommandCreoleColorAndSizeChange implements Command {
 	}
 
 	@Override
-	public String executeAndGetRemaining(ISkinSimple skinSimple, String line, StripeSimple stripe)
+	public int executeAndAdvance(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe)
 			throws NoSuchColorRuntimeException {
-		final Matcher2 m = mypattern.matcher(line);
+		final Matcher2 m = mypattern.matcher(line, pos);
 		if (m.find() == false)
 			throw new IllegalStateException();
 
@@ -102,7 +106,7 @@ public class CommandCreoleColorAndSizeChange implements Command {
 			stripe.setActualFontConfiguration(fc2);
 			stripe.analyzeAndAdd(m.group(4));
 			stripe.setActualFontConfiguration(fc1);
-			return line.substring(m.group(1).length());
+			return m.group(1).length();
 		} catch (NoSuchColorException e) {
 			throw new NoSuchColorRuntimeException();
 		}

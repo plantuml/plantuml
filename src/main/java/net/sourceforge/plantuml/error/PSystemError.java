@@ -70,6 +70,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockRaw;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
+import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.BackSlash;
@@ -146,8 +147,10 @@ public abstract class PSystemError extends UgDiagram {
 
 	private List<String> header() {
 		final ReportLog result = new ReportLog();
-		result.add(Version.fullDescription());
-		result.checkOldVersionWarningRaw();
+		if (!Logme.MODE_VEGA) {
+			result.add(Version.fullDescription());
+			result.checkOldVersionWarningRaw();
+		}
 		return result.asList();
 	}
 
@@ -211,22 +214,22 @@ public abstract class PSystemError extends UgDiagram {
 	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws IOException {
 		TextBlock result = getGraphicalFormatted();
 
-		if (!TeaVM.isTeaVM()) {
+		if (!TeaVM.isTeaVM() && !Logme.MODE_VEGA) {
 			if (getSource().getTotalLineCountLessThan5())
 				result = addWelcome(result);
 
 			final int min = (int) (System.currentTimeMillis() / 60000L) % 60;
 			if (disableTimeBasedErrorDecorations) {
 				// do nothing
-			} else if (min == 1 || min == 8 || min == 13 || min == 55) {
+			} else if (min == 1 || min == 8 || min == 13 || min == 55)
 				result = addMessagePatreon(result);
-			} else if (min == 15) {
+			else if (min == 15)
 				result = addMessageLiberapay(result);
-			} else if (min == 30 || min == 39 || min == 48) {
+			else if (min == 30 || min == 39 || min == 48)
 				result = addMessageDedication(result);
-			} else if (getSource().containsIgnoreCase("arecibo")) {
+			else if (getSource().containsIgnoreCase("arecibo"))
 				result = addMessageArecibo(result);
-			}
+
 		}
 		return result;
 	}

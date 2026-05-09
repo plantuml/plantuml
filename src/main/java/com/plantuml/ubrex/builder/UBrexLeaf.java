@@ -43,7 +43,7 @@ public class UBrexLeaf extends UBrexPart {
 	}
 
 	public static UBrexLeaf end() {
-		return new UBrexLeaf("〒($)");
+		return new UBrexLeaf("〒$");
 	}
 
 	public static UBrexLeaf spaceOneOrMore() {

@@ -41,7 +41,7 @@ public class ChallengeCharClass implements Challenge {
 	public ChallengeCharClass(CharClass charClass) {
 		this.charClass = charClass;
 	}
-	
+
 	@Override
 	public String toString() {
 		return charClass.name();
@@ -50,11 +50,11 @@ public class ChallengeCharClass implements Challenge {
 	@Override
 	public ChallengeResult runChallenge(TextNavigator string, int position) {
 		if (string.length() == position)
-			return new ChallengeResult(NO_MATCH);
+			return ChallengeResult.NO_MATCH;
 		final char ch = string.charAt(position);
 		if (charClass.matches(ch))
-			return new ChallengeResult(1);
-		return new ChallengeResult(NO_MATCH);
+			return ChallengeResult.ONE;
+		return ChallengeResult.NO_MATCH;
 	}
 
 }

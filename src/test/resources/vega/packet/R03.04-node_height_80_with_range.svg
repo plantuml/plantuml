@@ -22,10 +22,10 @@
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.6333" x="674.1833" y="20.8889">16</text>
     <path d="M682,24 L682,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
     <rect fill="#F1F1F1" height="80" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="56"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="26.3333" y="122.8889">A</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="26.3333" y="99.8889">A</text>
     <rect fill="#F1F1F1" height="80" style="stroke:#181818;stroke-width:0.5;" width="630" x="52" y="56"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="362.3333" y="122.8889">B</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="362.3333" y="99.8889">B</text>
     <rect fill="#F1F1F1" height="80" style="stroke:#181818;stroke-width:0.5;" width="588" x="10" y="136"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="299.3333" y="202.8889">B</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="299.3333" y="179.8889">B</text>
   </g>
 </svg>

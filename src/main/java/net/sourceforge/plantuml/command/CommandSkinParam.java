@@ -69,6 +69,12 @@ public class CommandSkinParam extends SingleLineCommand2<TitledDiagram> {
 			if ("handwritten".equalsIgnoreCase(name))
 				diagram.addWarning(new Warning("Please use '!option handwritten true' to enable handwritten "));
 
+			if ("ParticipantPadding".equalsIgnoreCase(name))
+				diagram.addWarning(new Warning("Please use CSS style instead of skinparam ParticipantPadding"));
+
+			if ("padding".equalsIgnoreCase(name))
+				diagram.addWarning(new Warning("Please use CSS style instead of skinparam padding"));
+
 			diagram.setParam(name, arg.get("VALUE", 0));
 			diagram.setSkinParamUsed(true);
 

@@ -17,7 +17,7 @@ public class VegaCheckerSvg extends VegaChecker {
 		final String cleanedSvg = SvgCleaner.clean(rawSvg);
 		final Path expectedFile = getExpectedFile(data.getPath(), suffix, ".svg");
 
-		if (Files.exists(expectedFile) == false) {
+		if (Files.exists(expectedFile) == false || data.forceWrite()) {
 			Files.write(expectedFile, cleanedSvg.getBytes(UTF_8));
 			return expectedFile;
 		}

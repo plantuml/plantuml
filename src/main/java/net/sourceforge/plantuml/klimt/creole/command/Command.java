@@ -35,14 +35,16 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import java.util.Collection;
+
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.style.ISkinSimple;
 
 public interface Command {
 
-	public String startingChars();
+	public Collection<String> starters();
 
-	public int matchingSize(String line);
+	public int matchingSize(String line, int pos);
 
-	public String executeAndGetRemaining(ISkinSimple skinSimple, String line, StripeSimple stripe);
+	public int executeAndAdvance(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe);
 }

@@ -20,7 +20,7 @@ public class LookAheadTest {
 
 	@Test
 	public void test3() {
-		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("a 〒(=)b");
+		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("a 〒=b");
 		assertEquals("a", cut.match(TextNavigator.build("abc")).getAcceptedMatch());
 		assertEquals("a", cut.match(TextNavigator.build("ab")).getAcceptedMatch());
 		assertEquals("", cut.match(TextNavigator.build("a")).getAcceptedMatch());
@@ -29,7 +29,7 @@ public class LookAheadTest {
 
 	@Test
 	public void test4() {
-		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("a 〒(!)b");
+		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("a 〒!b");
 		assertEquals("", cut.match(TextNavigator.build("abc")).getAcceptedMatch());
 		assertEquals("", cut.match(TextNavigator.build("ab")).getAcceptedMatch());
 		assertEquals("a", cut.match(TextNavigator.build("a")).getAcceptedMatch());

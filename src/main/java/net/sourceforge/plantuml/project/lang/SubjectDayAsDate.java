@@ -52,8 +52,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.ulang.GanttParseResult;
-import net.sourceforge.plantuml.project.ulang.UbrexSentence;
+import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -68,9 +67,9 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Collection<UbrexSentence<GanttDiagram>> getUSentences() {
-		final List<UbrexSentence<GanttDiagram>> result = new ArrayList<>();
-		result.add(new UbrexSentence<GanttDiagram>(this, Verbs.isOrAre, new ComplementOpen()) {
+	public Collection<VerbPhraseAction> getVerbPhrases() {
+		final List<VerbPhraseAction> result = new ArrayList<>();
+		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementOpen()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 				project.openDayAsDate((LocalDate) subject, (String) complement);
@@ -78,7 +77,7 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 			}
 		});
 
-		result.add(new UbrexSentence<GanttDiagram>(this, Verbs.isOrAre, new ComplementClose()) {
+		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementClose()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 				project.closeDayAsDate((LocalDate) subject, (String) complement);
@@ -86,7 +85,7 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 			}
 		});
 
-		result.add(new UbrexSentence<GanttDiagram>(this, Verbs.isOrAre, new ComplementInColors2()) {
+		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 				final HColor color = ((CenterBorderColor) complement).getCenter();
@@ -100,8 +99,14 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<? extends Object> ugetMe(GanttDiagram diagram, UMatcher arg) {
-		return Failable.ok(resultB(arg));
+	public Failable<LocalDate> ugetMe(GanttDiagram project, UMatcher arg) {
+		if (arg.get("BDAY", 0) != null)
+			return Failable.ok(resultB(arg));
+
+		if (arg.get("ECOUNT", 0) != null)
+			return Failable.ok(resultE(project, arg));
+
+		throw new IllegalStateException();
 	}
 
 	public Failable<LocalDate> getMe(GanttDiagram project, RegexResult arg) {
@@ -116,9 +121,9 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 	}
 
 	private LocalDate resultB(UMatcher arg) {
-		final int day = Integer.parseInt(arg.getCapture("BDAY").get(0));
-		final int month = Integer.parseInt(arg.getCapture("BMONTH").get(0));
-		final int year = Integer.parseInt(arg.getCapture("BYEAR").get(0));
+		final int day = Integer.parseInt(arg.get("BDAY", 0));
+		final int month = Integer.parseInt(arg.get("BMONTH", 0));
+		final int year = Integer.parseInt(arg.get("BYEAR", 0));
 		return LocalDate.of(year, month, day);
 	}
 
@@ -130,6 +135,21 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 	}
 
 	private LocalDate resultE(GanttDiagram system, RegexResult arg) {
+		final String type = arg.get("ETYPE", 0).toUpperCase();
+		final String operation = arg.get("EOPERATION", 0);
+		int day = Integer.parseInt(arg.get("ECOUNT", 0));
+		if ("-".equals(operation))
+			day = -day;
+		if ("D".equals(type))
+			return system.getMinDay().plusDays(day);
+		if ("T".equals(type))
+			return system.getToday().plusDays(day);
+		if ("E".equals(type))
+			return system.getMaxDay().plusDays(day);
+		throw new IllegalStateException();
+	}
+
+	private LocalDate resultE(GanttDiagram system, UMatcher arg) {
 		final String type = arg.get("ETYPE", 0).toUpperCase();
 		final String operation = arg.get("EOPERATION", 0);
 		int day = Integer.parseInt(arg.get("ECOUNT", 0));

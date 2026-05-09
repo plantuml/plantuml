@@ -71,8 +71,8 @@ public class SheetBlock1 extends TextBlockMemoized implements Atom, Stencil {
 	private Class<? extends StringBounder> lastCaller;
 	private double minimumWidth;
 
-	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, double padding) {
-		this(sheet, maxWidth, ClockwiseTopRightBottomLeft.same(padding), 0, 0);
+	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, ClockwiseTopRightBottomLeft padding) {
+		this(sheet, maxWidth, padding, 0, 0);
 	}
 
 	public SheetBlock1(Sheet sheet, LineBreakStrategy maxWidth, Style style) {

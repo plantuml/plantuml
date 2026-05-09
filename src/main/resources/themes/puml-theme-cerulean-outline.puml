@@ -155,6 +155,11 @@ skinparam useBetaStyle false
 		Padding 5
 	}
   }
+  participant {
+    Margin 5 40
+    Padding 15 20
+  }
+  
   ganttDiagram {
 	task {
 		$primary_scheme()
@@ -197,9 +202,7 @@ skinparam defaultFontSize       12
 skinparam dpi                   100
 skinparam shadowing             false
 skinparam roundcorner           8
-skinparam ParticipantPadding    40
 skinparam BoxPadding            40
-skinparam Padding               5
 skinparam ArrowColor            $GRAY
 skinparam stereotype {
     CBackgroundColor $SECONDARY_LIGHT

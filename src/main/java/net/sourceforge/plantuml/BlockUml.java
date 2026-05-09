@@ -149,8 +149,8 @@ public class BlockUml {
 			final TimLoader timLoader = new TimLoader(pathSystem, defines, charset, definitions, this.rawSource.get(0));
 			this.included.addAll(timLoader.load(this.rawSource));
 			List<StringLocated> tmp = timLoader.getResultList();
-			tmp = Jaws.expands0(tmp);
-			tmp = Jaws.expandsJawsForPreprocessor(tmp);
+			Jaws.mutateExpands1(tmp);
+			
 			this.data = tmp;
 			this.debug = timLoader.getDebug();
 			this.preprocessorError = timLoader.isPreprocessorError();
@@ -162,7 +162,7 @@ public class BlockUml {
 		if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD))
 			return null;
 
-		final Matcher2 m = StartUtils.patternFilename.matcher(StringUtils.trin(data.get(0).getString()));
+		final Matcher2 m = StartUtils.patternFilename.matcher(StringUtils.trin(data.get(0).getString()), 0);
 		final boolean ok = m.find();
 		if (ok == false)
 			return null;

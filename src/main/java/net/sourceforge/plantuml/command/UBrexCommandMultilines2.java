@@ -92,13 +92,13 @@ public abstract class UBrexCommandMultilines2<S extends Diagram> implements Comm
 		if (first == null)
 			return CommandControl.NOT_OK;
 
-		final UMatcher result1 = starting.match(first.getTrimmed().getString());
+		final UMatcher result1 = starting.match(first.getTrimmed().getString(), 0);
 		if (result1.exactMatch() == false)
 			return CommandControl.NOT_OK;
 
 		if (lines.size() == 1)
 			return CommandControl.OK_PARTIAL;
-		final UMatcher m1 = end.get().match(trimEnd.trim(lines.getLast()));
+		final UMatcher m1 = end.get().match(trimEnd.trim(lines.getLast()), 0);
 		if (m1.exactMatch() == false)
 			return CommandControl.OK_PARTIAL;
 

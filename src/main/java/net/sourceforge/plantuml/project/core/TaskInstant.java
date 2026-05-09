@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.project.core;
@@ -69,16 +69,20 @@ public class TaskInstant {
 	}
 
 	private TimePoint manageDelta(TimePoint value) {
-		if (delta > 0)
-			for (int i = 0; i < delta; i++) {
+		if (delta > 0) {
+			int added = 0;
+			while (added < delta) {
+				value = value.increment();
+
 				if (mode == GanttConstraintMode.DO_NOT_COUNT_CLOSE_DAY) {
-					int tmp = 0;
-					while (PiecewiseConstantUtils.isZeroOnDay(calendar, value.toDay()) && tmp++ < 1000)
-						value = value.increment();
+					if (PiecewiseConstantUtils.isZeroOnDay(calendar, value.toDay())) {
+						continue; // skip closed days
+					}
 				}
 
-				value = value.increment();
+				added++;
 			}
+		}
 
 		if (delta < 0)
 			for (int i = 0; i < -delta; i++)

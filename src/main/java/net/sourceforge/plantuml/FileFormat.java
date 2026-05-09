@@ -95,6 +95,7 @@ public enum FileFormat {
 	BRAILLE_PNG("braille-png", "image/png"), //
 	OBFUSCATE("obfuscate", "text/plain"), //
 	DEBUG("debug", "text/plain"), //
+	NULL("null", "text/plain"), //
 
 	PREPROC("preproc", "text/plain"), //
 	PNG("png", "image/png"), //

@@ -67,7 +67,6 @@ import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.text.Guillemet;
 
 public interface ISkinParam extends ISkinSimple {
-	// ::remove file when __HAXE__
 
 	public static final int SWIMLANE_WIDTH_SAME = -1;
 
@@ -166,7 +165,7 @@ public interface ISkinParam extends ISkinSimple {
 
 	public TikzFontDistortion getTikzFontDistortion();
 
-	public double getPadding(PaddingParam param);
+	public ClockwiseTopRightBottomLeft getPaddingTOBEREMOVED(PaddingParam param);
 
 	public boolean useRankSame();
 

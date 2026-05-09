@@ -61,29 +61,20 @@ public class CompositeNamed implements Challenge {
 	public ChallengeResult runChallenge(TextNavigator string, int position) {
 
 		Capture capture = Capture.EMPTY;
-		String value = null;
-		Capture nonMergeableCapture = Capture.EMPTY;
 
 		int current = position;
 		for (Challenge challenge : challenges) {
 			final ChallengeResult shallWePass = challenge.runChallenge(string, current);
 			if (shallWePass.getFullCaptureLength() < 0)
-				return new ChallengeResult(NO_MATCH, capture);
+				return ChallengeResult.NO_MATCH;
 
 			current += shallWePass.getFullCaptureLength();
 			capture = capture.merge(shallWePass.getCapture());
-
-			if (value == null) {
-				final int onlyNameLength = shallWePass.getOnlyNameLength();
-				final int endIndex = position + onlyNameLength;
-				value = string.subSequence(position, endIndex).toString();
-				nonMergeableCapture = shallWePass.getNonMergeableCapture();
-			}
 		}
 
+		final String value = string.subSequence(position, current).toString();
 		capture = capture.withPrefixedKeys(name);
 		capture = capture.withEntry(name, value);
-		capture = capture.merge(nonMergeableCapture);
 
 		return new ChallengeResult(current - position, capture);
 	}

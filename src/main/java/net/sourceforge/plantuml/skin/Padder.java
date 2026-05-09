@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.skin;
 
 import net.sourceforge.plantuml.annotation.Fast;
-import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -44,23 +43,26 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
 public class Padder {
 
-	private final double margin;
-	private final double padding;
+	private final ClockwiseTopRightBottomLeft margin;
+	private final ClockwiseTopRightBottomLeft padding;
 	private final HColor backgroundColor;
 	private final HColor borderColor;
 	private final double roundCorner;
 
-	public static final Padder NONE = new Padder(0, 0, null, null, 0);
+	public static final Padder NONE = new Padder(ClockwiseTopRightBottomLeft.none(), ClockwiseTopRightBottomLeft.none(),
+			null, null, 0);
 
 	@Override
 	public String toString() {
 		return "" + margin + "/" + padding + "/" + borderColor + "/" + backgroundColor;
 	}
 
-	private Padder(double margin, double padding, HColor backgroundColor, HColor borderColor, double roundCorner) {
+	private Padder(ClockwiseTopRightBottomLeft margin, ClockwiseTopRightBottomLeft padding, HColor backgroundColor,
+			HColor borderColor, double roundCorner) {
 		this.margin = margin;
 		this.padding = padding;
 		this.borderColor = borderColor;
@@ -68,11 +70,11 @@ public class Padder {
 		this.roundCorner = roundCorner;
 	}
 
-	public Padder withMargin(double margin) {
+	public Padder withMargin(ClockwiseTopRightBottomLeft margin) {
 		return new Padder(margin, padding, backgroundColor, borderColor, roundCorner);
 	}
 
-	public Padder withPadding(double padding) {
+	public Padder withPadding(ClockwiseTopRightBottomLeft padding) {
 		return new Padder(margin, padding, backgroundColor, borderColor, roundCorner);
 	}
 
@@ -88,11 +90,11 @@ public class Padder {
 		return new Padder(margin, padding, backgroundColor, borderColor, roundCorner);
 	}
 
-	public final double getMargin() {
+	public final ClockwiseTopRightBottomLeft getMargin() {
 		return margin;
 	}
 
-	public final double getPadding() {
+	public final ClockwiseTopRightBottomLeft getPadding() {
 		return padding;
 	}
 
@@ -111,11 +113,11 @@ public class Padder {
 		return new TextBlock() {
 			@Fast
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return orig.calculateDimension(stringBounder).delta(2 * (margin + padding));
+				return padding.apply(margin.apply(orig.calculateDimension(stringBounder)));
 			}
 
 			public void drawU(UGraphic ug) {
-				ug = ug.apply(new UTranslate(margin, margin));
+				ug = ug.apply(margin.getTranslate());
 				UGraphic ug2 = ug;
 				if (borderColor == null)
 					ug2 = ug2.apply(HColors.none());
@@ -128,9 +130,9 @@ public class Padder {
 					ug2 = ug2.apply(backgroundColor.bg());
 
 				final XDimension2D originalDim = orig.calculateDimension(ug.getStringBounder());
-				final URectangle rect = URectangle.build(originalDim.delta(2 * padding)).rounded(roundCorner);
+				final URectangle rect = URectangle.build(padding.apply(originalDim)).rounded(roundCorner);
 				ug2.draw(rect);
-				orig.drawU(ug.apply(new UTranslate(padding, padding)));
+				orig.drawU(ug.apply(padding.getTranslate()));
 			}
 		};
 	}

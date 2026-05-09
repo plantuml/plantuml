@@ -60,6 +60,10 @@ inspiration:
   node {
     MaximumWidth 300
   }
+  participant {
+    Margin 5 10
+    Padding 5 5
+  }
 </style>
 
 skinparam ArrowLollipopColor $FGCOLOR
@@ -67,7 +71,6 @@ skinparam BackgroundColor $BGCOLOR
 skinparam DefaultFontName $FONT_NAME
 skinparam DefaultMonospacedFontName $FONT_NAME_MONOSPACED
 skinparam LifelineStrategy nosolid
-skinparam ParticipantPadding 10
 skinparam SequenceLifeLineBorderColor $FGCOLOR
 skinparam Shadowing false
 skinparam UseBetaStyle true

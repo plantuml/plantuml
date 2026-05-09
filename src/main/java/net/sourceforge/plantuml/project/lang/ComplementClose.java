@@ -59,12 +59,13 @@ public class ComplementClose implements Something<GanttDiagram> {
 		return new UBrexNamed("CLOSED", //
 				UBrexConcat.build( //
 						new UBrexLeaf("close〇?d"), //
-						new UBrexOptional(new UBrexLeaf("∙for∙" + SubjectTask.UBREX_TASK_CODE))));
+						new UBrexOptional(
+								UBrexConcat.build(new UBrexLeaf("∙for∙"), SubjectTask.taskCode("FOO")))));
 	}
 
 	@Override
-	public Failable<? extends Object> ugetMe(GanttDiagram diagram, UMatcher arg) {
-		final String value = arg.getCapture("CLOSED").get(0);
+	public Failable<String> ugetMe(GanttDiagram diagram, UMatcher arg) {
+		final String value = arg.get("CLOSED", 0);
 		final int x = value.indexOf('[');
 		if (x > 0) {
 			final int y = value.lastIndexOf(']');

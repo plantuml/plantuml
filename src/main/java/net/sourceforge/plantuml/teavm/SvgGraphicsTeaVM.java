@@ -44,6 +44,7 @@ import org.teavm.jso.dom.xml.Document;
 import org.teavm.jso.dom.xml.Element;
 
 import net.sourceforge.plantuml.klimt.UGroupType;
+import net.sourceforge.plantuml.klimt.drawing.svg.PortableSvgDocument;
 
 /**
  * SVG Graphics implementation for TeaVM. Uses browser's native DOM API instead
@@ -98,19 +99,14 @@ public class SvgGraphicsTeaVM {
 	}
 
 	public void startGroup(Map<UGroupType, String> attrs) {
-		Element g = createSvgElement("g");
-		for (Map.Entry<UGroupType, String> entry : attrs.entrySet()) {
-			final UGroupType key = entry.getKey();
-			final String value = entry.getValue();
-			if (key == UGroupType.DATA_UID)
-				g.setAttribute("id", value);
-			else if (key == UGroupType.TITLE) {
-				// skip — no DOM title element in TeaVM SVG
-			} else if (key != UGroupType.ID)
-				g.setAttribute(key.getSvgKeyAttributeName(), value);
-		}
-		currentGroup().appendChild(g);
-		groupStack.add(g);
+		final Element element = createSvgElement("g");
+		final TeaVMElementAdapter ielement = new TeaVMElementAdapter(element);
+		final PortableSvgDocument idocument = new TeaVMSvgDocument();
+		for (Map.Entry<UGroupType, String> entry : attrs.entrySet())
+			idocument.applyGroupAttribute(ielement, entry.getKey(), entry.getValue());
+
+		currentGroup().appendChild(element);
+		groupStack.add(element);
 	}
 
 	public void closeGroup() {

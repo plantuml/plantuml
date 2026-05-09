@@ -43,11 +43,11 @@ class CommandPartitionTest {
 	@Test
 	void test1() {
 		UnicodeBracketedExpression cut = cut();
-		assertTrue(cut.match("partition \"foo\"").exactMatch());
-		assertFalse(cut.match(" partition \"foo\"").exactMatch());
-		assertFalse(cut.match("partition \"foo\"Z").exactMatch());
+		assertTrue(cut.match("partition \"foo\"", 0).exactMatch());
+		assertFalse(cut.match(" partition \"foo\"", 0).exactMatch());
+		assertFalse(cut.match("partition \"foo\"Z", 0).exactMatch());
 
-		final UMatcher match = cut.match("partition \"foo\"");
+		final UMatcher match = cut.match("partition \"foo\"", 0);
 		assertTrue(match.exactMatch());
 		assertEquals("[foo]", match.getCapture("NAME").toString());
 
@@ -56,7 +56,7 @@ class CommandPartitionTest {
 	@Test
 	void test2() {
 		UnicodeBracketedExpression cut = cut();
-		final UMatcher match = cut.match("partition DUMMY");
+		final UMatcher match = cut.match("partition DUMMY", 0);
 		assertTrue(match.exactMatch());
 		assertEquals("[DUMMY]", match.getCapture("NAME").toString());
 
@@ -65,7 +65,7 @@ class CommandPartitionTest {
 	@Test
 	void test3() {
 		UnicodeBracketedExpression cut = cut();
-		final UMatcher match = cut.match("partition DUMMY <<my-stereo>>");
+		final UMatcher match = cut.match("partition DUMMY <<my-stereo>>", 0);
 		assertTrue(match.exactMatch());
 		assertEquals("[DUMMY]", match.getCapture("NAME").toString());
 		assertEquals("[<<my-stereo>>]", match.getCapture("STEREOTYPE").toString());

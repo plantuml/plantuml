@@ -220,7 +220,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 
 		final HorizontalAlignment horizontalAlignment = style.value(PName.HorizontalAlignment).asHorizontalAlignment();
 		final Sheet sheet = skinParam.sheet(fc, horizontalAlignment, CreoleMode.FULL).createSheet(note);
-		final double padding = style.value(PName.Padding).asDouble();
+		final ClockwiseTopRightBottomLeft padding = style.getPadding();
 		final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, padding);
 
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getColorSet());

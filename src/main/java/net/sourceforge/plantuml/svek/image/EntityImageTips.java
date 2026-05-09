@@ -161,7 +161,7 @@ public class EntityImageTips extends AbstractEntityImage {
 			if (direction == Direction.LEFT)
 				x += memberPosition.getMaxX();
 			else
-				x += 4;
+				x += memberPosition.getMinX();
 
 			final double y = positionOther.getY() - positionMe.getY() - height + memberPosition.getCenterY();
 			final XPoint2D pp2 = new XPoint2D(x, y);

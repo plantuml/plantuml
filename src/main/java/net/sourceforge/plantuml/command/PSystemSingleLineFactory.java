@@ -61,6 +61,8 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 	@Override
 	final public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing) {
+		
+		source = source.removeInitialNoise();
 
 		if (source.getTotalLineCount() != 3)
 			return null;

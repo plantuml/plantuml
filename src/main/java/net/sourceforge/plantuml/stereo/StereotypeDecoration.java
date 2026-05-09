@@ -186,7 +186,7 @@ public class StereotypeDecoration {
 
 	static List<String> cutLabels(final String label, Guillemet guillemet) {
 		final List<String> result = new ArrayList<>();
-		final Matcher2 m = p.matcher(label);
+		final Matcher2 m = p.matcher(label, 0);
 		while (m.find()) {
 			final String group = m.group();
 			if (group.startsWith("<<<") == false)

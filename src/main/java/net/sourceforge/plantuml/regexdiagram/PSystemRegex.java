@@ -167,7 +167,7 @@ public class PSystemRegex extends TitledDiagram {
 				else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("?"))
 					optional();
 				else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("{"))
-					repetitionOneOrMore(token.getData());
+					repetitionBraced(token.getData());
 				else
 					throw new RegexParsingException(token.toString());
 		} catch (RegexParsingException ex) {
@@ -230,6 +230,78 @@ public class PSystemRegex extends TitledDiagram {
 		final ETile arg1 = stack.removeFirst();
 		stack.addFirst(new ETileOneOrMore(arg1, repetition, fontConfiguration.bigger(-2), getSkinParam()));
 
+	}
+
+	private void repetitionBraced(String repetition) {
+		// repetition is of the form "{N}", "{N,}" or "{N,M}" (optionally followed by '?')
+		final int min = parseBracedMin(repetition);
+		final boolean unboundedOrZeroMax = isBracedMaxUnbounded(repetition) || parseBracedMax(repetition) == 0;
+		if (min == 0 && unboundedOrZeroMax) {
+			// {0,} is equivalent to *
+			repetitionZeroOrMore();
+			return;
+		}
+		if (min == 0) {
+			final int max = parseBracedMax(repetition);
+			if (max == 1) {
+				// {0,1} is equivalent to ?
+				optional();
+				return;
+			}
+			// {0,N} with N >= 2: wrap a OneOrMore (labeled) into an Optional
+			final ETile arg1 = stack.removeFirst();
+			final ETile inner = new ETileOneOrMore(arg1, repetition, fontConfiguration.bigger(-2), getSkinParam());
+			stack.addFirst(new ETileOptional2(inner, getSkinParam()));
+			return;
+		}
+		repetitionOneOrMore(repetition);
+	}
+
+	private static String stripBraces(String repetition) {
+		String s = repetition;
+		if (s.endsWith("?"))
+			s = s.substring(0, s.length() - 1);
+		if (s.startsWith("{") && s.endsWith("}"))
+			s = s.substring(1, s.length() - 1);
+		return s;
+	}
+
+	private static int parseBracedMin(String repetition) {
+		final String inside = stripBraces(repetition);
+		final int comma = inside.indexOf(',');
+		final String minStr = (comma == -1 ? inside : inside.substring(0, comma)).trim();
+		if (minStr.length() == 0)
+			return 0;
+		try {
+			return Integer.parseInt(minStr);
+		} catch (NumberFormatException ex) {
+			return -1;
+		}
+	}
+
+	private static int parseBracedMax(String repetition) {
+		final String inside = stripBraces(repetition);
+		final int comma = inside.indexOf(',');
+		if (comma == -1) {
+			// {N} : max == min
+			return parseBracedMin(repetition);
+		}
+		final String maxStr = inside.substring(comma + 1).trim();
+		if (maxStr.length() == 0)
+			return -1;
+		try {
+			return Integer.parseInt(maxStr);
+		} catch (NumberFormatException ex) {
+			return -1;
+		}
+	}
+
+	private static boolean isBracedMaxUnbounded(String repetition) {
+		final String inside = stripBraces(repetition);
+		final int comma = inside.indexOf(',');
+		if (comma == -1)
+			return false;
+		return inside.substring(comma + 1).trim().length() == 0;
 	}
 
 	private void alternation() {

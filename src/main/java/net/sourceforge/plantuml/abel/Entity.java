@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -210,12 +210,12 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 				return true;
 
 			if (leafType != LeafType.ANNOTATION && leafType != LeafType.ABSTRACT_CLASS && leafType != LeafType.CLASS
-					&& leafType != LeafType.ENUM && leafType != LeafType.INTERFACE) {
+					&& leafType != LeafType.ENUM && leafType != LeafType.INTERFACE && leafType != LeafType.RECORD && leafType != LeafType.DATACLASS) {
 				return false;
 				// throw new IllegalArgumentException("type=" + leafType);
 			}
 			if (newType != LeafType.ANNOTATION && newType != LeafType.ABSTRACT_CLASS && newType != LeafType.CLASS
-					&& newType != LeafType.ENUM && newType != LeafType.INTERFACE && newType != LeafType.OBJECT) {
+					&& newType != LeafType.ENUM && newType != LeafType.INTERFACE && newType != LeafType.RECORD && newType != LeafType.DATACLASS && newType != LeafType.OBJECT) {
 				return false;
 				// throw new IllegalArgumentException("newtype=" + newType);
 			}

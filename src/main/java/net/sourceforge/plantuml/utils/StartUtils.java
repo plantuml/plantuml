@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.utils;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -50,7 +49,17 @@ public class StartUtils {
 	public static final String START_PATTERN = "((?:[^\\w~]|\\<[^<>]*\\>)*)[@\\\\]start";
 
 	public static boolean isStartDirective(String s) {
-		return DiagramType.findStartTypes(s).size() > 0;
+		final int n = s.length();
+		int i = 0;
+		while (i < n && Character.isWhitespace(s.charAt(i)))
+			i++;
+		if (i >= n)
+			return false;
+		final char c = s.charAt(i);
+		if (c != '@' && c != '\\')
+			return false;
+		// need '@' + "start" + at least one char after
+		return i + 6 < n && s.regionMatches(i + 1, "start", 0, 5);
 	}
 
 	public static String beforeStartUml(final String s) {
@@ -64,9 +73,9 @@ public class StartUtils {
 			final char c = s.charAt(i);
 
 			if (inside) {
-				if (c == '>') {
+				if (c == '>')
 					inside = false;
-				}
+
 				continue;
 			}
 
@@ -144,7 +153,7 @@ public class StartUtils {
 
 	public static StringLocated getPossibleAppend(StringLocated cs) {
 		final String s = cs.getString();
-		final Matcher2 m = append.matcher(s);
+		final Matcher2 m = append.matcher(s, 0);
 		if (m.find()) {
 			final String tmp = s.substring(m.group(0).length(), s.length());
 			return new StringLocated(StringUtils.trin(tmp), cs.getLocation(), cs.getPreprocessorError());

@@ -34,48 +34,25 @@
  */
 package com.plantuml.ubrex;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Capture {
 
-	public static final Capture EMPTY = new Capture();
+	public static final Capture EMPTY = new Capture(SafeList.<CaptureEntry>createEmpty());
+	private final SafeList<CaptureEntry> entries;
 
-	private Capture() {
-
-	}
-
-	private List<Map.Entry<String, String>> getList() {
-		if (list == null)
-			list = new ArrayList<>();
-
-		return list;
-	}
-
-	public List<Map.Entry<String, String>> getCaptures() {
-		if (list == null)
-			return Collections.emptyList();
-		return Collections.unmodifiableList(list);
+	private Capture(SafeList<CaptureEntry> list) {
+		this.entries = list;
 	}
 
 	@Override
 	public String toString() {
-		if (list == null)
-			return "[]";
-		return getCaptures().toString();
+		return entries.toString();
 	}
 
 	public Capture withEntry(String key, String value) {
-		final Capture copy = new Capture();
-		if (this.list != null)
-			copy.getList().addAll(this.list);
-
-		copy.getList().add(new AbstractMap.SimpleEntry<>(key, value));
-		return copy;
+		return new Capture(entries.add(new CaptureEntry(key, value)));
 	}
 
 	public Capture merge(Capture other) {
@@ -85,53 +62,25 @@ public class Capture {
 		if (this == EMPTY)
 			return other;
 
-		final Capture copy = new Capture();
-		if (this.list != null)
-			copy.getList().addAll(this.list);
-
-		if (other.list != null)
-			copy.getList().addAll(other.list);
-
-		return copy;
+		return new Capture(this.entries.addAll(other.entries));
 	}
 
 	public Capture withPrefixedKeys(String prefix) {
-		if (this.list == null)
-			return this;
-
-		final Capture copy = new Capture();
-		for (Map.Entry<String, String> entry : this.list)
-			copy.getList().add(new AbstractMap.SimpleEntry<>(prefix + "/" + entry.getKey(), entry.getValue()));
-
-		return copy;
+		return new Capture(this.entries.mapped(entry -> entry.withPrefixedKey(prefix)));
 	}
-
-	private List<Map.Entry<String, String>> list;
 
 	public List<String> findValuesByKey(String key) {
-		if (this.list == null)
-			return Collections.emptyList();
-
-		return this.list.stream() //
-				.filter(e -> e.getKey().equals(key)) //
-				.map(Map.Entry::getValue) //
-				.collect(Collectors.toList());
-
-	}
-
-	public List<String> getKeysToBeRefactored() {
 		final List<String> result = new ArrayList<>();
-		for (Map.Entry<String, String> entry : this.list)
-			result.add(entry.getKey());
+		for (CaptureEntry entry : this.entries)
+			if (entry.getKey().equals(key))
+				result.add(entry.getValue());
 		return result;
 	}
 
-	public List<String> getRootKeys() {
-		final List<String> result = new ArrayList<>();
-		for (Map.Entry<String, String> entry : this.list)
-			if (entry.getKey().indexOf('/') == -1)
-				result.add(entry.getKey());
-		return result;
+	public List<String> findFirstValuesByKeyPrefix(String keyPrefix) {
+		for (CaptureEntry entry : this.entries)
+			if (entry.getKey().startsWith(keyPrefix))
+				return findValuesByKey(entry.getKey());
+		return null;
 	}
-
 }

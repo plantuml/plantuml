@@ -66,7 +66,7 @@ public class UncommentReadLine implements ReadLine {
 			headerToRemove = tmp;
 		}
 		if (paused) {
-			final Matcher2 m2 = unpause.matcher(result.getString());
+			final Matcher2 m2 = unpause.matcher(result.getString(), 0);
 			if (m2.find()) {
 				headerToRemove = m2.group(1);
 			}

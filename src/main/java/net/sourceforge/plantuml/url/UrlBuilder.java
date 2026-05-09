@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 
 public class UrlBuilder {
-    // ::remove file when __HAXE__
 
 	public static final String URL_KEY = "URL";
 	
@@ -104,23 +103,23 @@ public class UrlBuilder {
 
 	public Url getUrl(String s) {
 		Matcher2 m;
-		m = QUOTED.matcher(s);
+		m = QUOTED.matcher(s, 0);
 		if (matchesOrFind(m))
 			return new Url(withTopUrl(m.group(1)), m.group(2), m.group(3));
 
-		m = ONLY_TOOLTIP.matcher(s);
+		m = ONLY_TOOLTIP.matcher(s, 0);
 		if (matchesOrFind(m))
 			return new Url("", m.group(1), null);
 
-		m = ONLY_TOOLTIP_AND_LABEL.matcher(s);
+		m = ONLY_TOOLTIP_AND_LABEL.matcher(s, 0);
 		if (matchesOrFind(m))
 			return new Url("", m.group(1), m.group(2));
 
-		m = LINK_TOOLTIP_NOLABEL.matcher(s);
+		m = LINK_TOOLTIP_NOLABEL.matcher(s, 0);
 		if (matchesOrFind(m))
 			return new Url(withTopUrl(m.group(1)), m.group(2), null);
 
-		m = LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL.matcher(s);
+		m = LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL.matcher(s, 0);
 		if (matchesOrFind(m))
 			return new Url(withTopUrl(m.group(1)), m.group(2), m.group(3));
 

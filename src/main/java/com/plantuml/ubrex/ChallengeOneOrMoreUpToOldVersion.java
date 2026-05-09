@@ -52,7 +52,7 @@ public class ChallengeOneOrMoreUpToOldVersion implements Challenge {
 		while (true) {
 			final ChallengeResult shallWePass = origin.runChallenge(string, currentPos);
 			if (shallWePass.getFullCaptureLength() < 0)
-				return new ChallengeResult(NO_MATCH);
+				return ChallengeResult.NO_MATCH;
 			if (shallWePass.getFullCaptureLength() == 0)
 				throw new IllegalStateException("infinite loop");
 			capture = capture.merge(shallWePass.getCapture());

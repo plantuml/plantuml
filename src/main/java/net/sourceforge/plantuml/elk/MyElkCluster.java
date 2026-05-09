@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.elk.proxy.graph.ElkNode;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -110,7 +111,9 @@ public class MyElkCluster {
 		final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),
 				clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);
 
-		final HColor borderColor = HColors.BLACK;
+		HColor borderColor = group.getColors().getColor(ColorType.LINE);
+		if (borderColor == null)
+			borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		decoration.drawU(ug.apply(UTranslate.point(corner)), backColor, borderColor, shadowing, roundCorner,
 				skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null),
 				skinParam.getStereotypeAlignment(), 0);

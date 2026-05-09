@@ -29,43 +29,53 @@
  * USA.
  *
  *
- * Original Author:  Duy Nguyen
+ * Original Author:  kolulu23
  *
  * 
  */
-package net.sourceforge.plantuml.packetdiag;
+package net.sourceforge.plantuml.packetdiag.command;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.packetdiag.PacketDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandSameHeight extends SingleLineCommand2<PacketDiagram> {
+/**
+ * Parses and applies the {@code scale_interval=<N>} directive for {@code packetdiag} diagrams.
+ * <p>
+ * Controls how often bit positions are numbered on the scale by calling
+ * {@link PacketDiagram#updateScaleInterval(int)}.
+ * </p>
+ */
+public class CommandScaleInterval extends SingleLineCommand2<PacketDiagram> {
 
-	public CommandSameHeight() {
+	public CommandScaleInterval() {
 		super(getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandSameHeight.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("same_height"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("="), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(1, "VALUE", "(true|false);?"), //
-				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
+		return RegexConcat.build(CommandScaleInterval.class.getName(), RegexLeaf.start(), //
+						new RegexLeaf("scale_interval"), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf("="), //
+						RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf(1, "INTERVAL", "(\\d+);?"), //
+						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg,
-			ParserPass currentPass) throws NoSuchColorException {
-		final String value = arg.get("VALUE", 0);
-		system.setSameHeight("true".equalsIgnoreCase(value));
+	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
+		try {
+			system.updateScaleInterval(Integer.parseInt(arg.get("INTERVAL", 0)));
+		} catch (NumberFormatException e) {
+			return CommandExecutionResult.error("Scale interval invalid", e);
+		}
 		return CommandExecutionResult.ok();
 	}
 }

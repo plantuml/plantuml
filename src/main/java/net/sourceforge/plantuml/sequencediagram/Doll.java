@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.PaddingParam;
 import net.sourceforge.plantuml.skin.SkinParamBackcolored;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -219,7 +220,8 @@ public class Doll implements WithStyle {
 			getFirstLivingSpace().ensureMarginBefore(marginX);
 			getLastLivingSpace().ensureMarginAfter(marginX);
 		}
-		getPosA(stringBounder).ensureBiggerThan(getPosAA(stringBounder).addFixed(10 + padding()));
+		final ClockwiseTopRightBottomLeft padding = padding();
+		getPosA(stringBounder).ensureBiggerThan(getPosAA(stringBounder).addFixed(10 + padding.getLeft()));
 
 	}
 
@@ -228,11 +230,13 @@ public class Doll implements WithStyle {
 		if (next == null)
 			return;
 
-		next.getPosA(stringBounder).ensureBiggerThan(getPosE(stringBounder).addFixed(20 + 2 * padding()));
+		final ClockwiseTopRightBottomLeft padding = padding();
+		next.getPosA(stringBounder)
+				.ensureBiggerThan(getPosE(stringBounder).addFixed(20 + padding.getLeft() + padding.getRight()));
 	}
 
-	private double padding() {
-		return tileArguments.getSkinParam().getPadding(PaddingParam.BOX);
+	private ClockwiseTopRightBottomLeft padding() {
+		return tileArguments.getSkinParam().getPaddingTOBEREMOVED(PaddingParam.BOX);
 	}
 
 	public Real getMinX(StringBounder stringBounder) {

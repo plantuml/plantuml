@@ -30,10 +30,10 @@
  *
  *
  * Original Author:  kolulu23
- *
+ * Contribution: The-Lum
  * 
  */
-package net.sourceforge.plantuml.packetdiag;
+package net.sourceforge.plantuml.packetdiag.command;
 
 import java.util.Map;
 import java.util.Optional;
@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.nwdiag.NwDiagram;
+import net.sourceforge.plantuml.packetdiag.PacketDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -50,6 +51,22 @@ import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
+/**
+ * Parses packet field declarations expressed as a bit number, a bit range, or a {@code *} list of bit.
+ * <p>
+ * This command is responsible for turning a textual field declaration into one or more packet items
+ * added to the current {@link PacketDiagram} (for example using explicit ranges and optional attributes).
+ * </p>
+ * <p>
+ * Supported forms include:
+ * </p>
+ * <ul>
+ *   <li>{@code N: <desc>} for a single-bit field,</li>
+ *   <li>{@code A-B: <desc>} for a multi-bit field,</li>
+ *   <li>{@code * <desc>} for an auto-positioned field (when supported by the parser).</li>
+ * </ul>
+ * Attributes (such as length) may be provided in brackets depending on the implementation.
+ */
 public class CommandNumRange extends SingleLineCommand2<PacketDiagram> {
 
 	public CommandNumRange() {
@@ -119,12 +136,12 @@ public class CommandNumRange extends SingleLineCommand2<PacketDiagram> {
 			start = system.getLastPacketEnd().map(v -> v + 1).orElse(0);
 			end = start + getLengthAttribute(attr) - 1;
 		}
-		// local height attribute for current packet block
-		int height = getHeightAttribute(attr);
-		PacketDiagram.PacketItem packetItem = PacketDiagram.PacketItem.ofRange(start, end, height, desc);
-		packetItem.textRotation = getRotationAttribute(attr);
+		// local height and rotation attribute for current packet block
+		final int height = getHeightAttribute(attr);
+		final int rotation = getRotationAttribute(attr);
 
-		system.addPacketItem(packetItem);
+		system.addPacketItemRange(start, end, height, desc, rotation);
+
 		return CommandExecutionResult.ok();
 	}
 }

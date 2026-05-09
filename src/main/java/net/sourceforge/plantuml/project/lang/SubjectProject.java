@@ -48,7 +48,7 @@ import com.plantuml.ubrex.builder.UBrexPart;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.ulang.UbrexSentence;
+import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -67,9 +67,9 @@ public class SubjectProject implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Collection<UbrexSentence<GanttDiagram>> getUSentences() {
-		final List<UbrexSentence<GanttDiagram>> result = new ArrayList<>();
-		result.add(new UbrexSentence<GanttDiagram>(this, Verbs.starts,
+	public Collection<VerbPhraseAction> getVerbPhrases() {
+		final List<VerbPhraseAction> result = new ArrayList<>();
+		result.add(new VerbPhraseAction(Verbs.starts,
 				Words.uzeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT), ComplementDate.onlyAbsolute()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
@@ -92,7 +92,7 @@ public class SubjectProject implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<? extends Object> ugetMe(GanttDiagram project, UMatcher arg) {
+	public Failable<GanttDiagram> ugetMe(GanttDiagram project, UMatcher arg) {
 		return Failable.ok(project);
 	}
 

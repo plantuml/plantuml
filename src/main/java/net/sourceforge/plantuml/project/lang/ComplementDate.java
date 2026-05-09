@@ -38,6 +38,10 @@ package net.sourceforge.plantuml.project.lang;
 import java.time.LocalDate;
 
 import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOr;
 import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.project.Failable;
@@ -75,7 +79,13 @@ public class ComplementDate implements Something<GanttDiagram> {
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
 		final DayPattern dayPattern = new DayPattern("");
-		return dayPattern.toUbrex();
+		switch (type) {
+		case ONLY_ABSOLUTE:
+			return dayPattern.toUbrex();
+		case ONLY_RELATIVE:
+			return new UBrexOr(toUbrexD(), toUbrexE());
+		}
+		return new UBrexOr(dayPattern.toUbrex(), toUbrexD(), toUbrexE());
 	}
 
 	public IRegex toRegex(String suffix) {
@@ -101,18 +111,44 @@ public class ComplementDate implements Something<GanttDiagram> {
 		);
 	}
 
+	private UBrexPart toUbrexD() {
+		return UBrexConcat.build( //
+				new UBrexNamed("DCOUNT", new UBrexLeaf("〇+〴d")), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexLeaf("day〇?s"), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexLeaf("after"), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexLeaf("start") //
+		);
+	}
+
 	private IRegex toRegexE(String suffix) {
 		return new RegexConcat( //
 				new RegexLeaf("[dD]\\+"), //
 				new RegexLeaf(1, "ECOUNT" + suffix, "([\\d]+)") //
 		);
 	}
-	
+
+	private UBrexPart toUbrexE() {
+		return UBrexConcat.build( //
+				new UBrexLeaf("「dD」+"), //
+				new UBrexNamed("ECOUNT", new UBrexLeaf("〇+〴d")));
+	}
+
 	@Override
-	public Failable<? extends Object> ugetMe(GanttDiagram diagram, UMatcher arg) {
+	public Failable<LocalDate> ugetMe(GanttDiagram system, UMatcher arg) {
 		final DayPattern dayPattern = new DayPattern("");
 		final LocalDate result = dayPattern.getDay(arg);
-		return Failable.ok(result);
+		if (result != null)
+			return Failable.ok(result);
+		if (arg.get("DCOUNT", 0) != null)
+			return Failable.ok(resultD(system, arg));
+
+		if (arg.get("ECOUNT", 0) != null)
+			return Failable.ok(resultE(system, arg));
+
+		throw new IllegalStateException();
 	}
 
 	public Failable<LocalDate> getMe(GanttDiagram system, RegexResult arg, String suffix) {
@@ -129,6 +165,16 @@ public class ComplementDate implements Something<GanttDiagram> {
 			return Failable.ok(resultE(system, arg, suffix));
 
 		throw new IllegalStateException();
+	}
+
+	private LocalDate resultD(GanttDiagram system, UMatcher arg) {
+		final int day = Integer.parseInt(arg.get("DCOUNT", 0));
+		return system.getMinDay().plusDays(day);
+	}
+
+	private LocalDate resultE(GanttDiagram system, UMatcher arg) {
+		final int day = Integer.parseInt(arg.get("ECOUNT", 0));
+		return system.getMinDay().plusDays(day);
 	}
 
 	private LocalDate resultD(GanttDiagram system, RegexResult arg, String suffix) {

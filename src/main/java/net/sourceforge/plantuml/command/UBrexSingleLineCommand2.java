@@ -100,7 +100,7 @@ public abstract class UBrexSingleLineCommand2<S extends Diagram> implements Comm
 			return CommandControl.NOT_OK;
 		}
 
-		final UMatcher result = pattern.match(line2.getString());
+		final UMatcher result = pattern.match(line2.getString(), 0);
 		if (result.exactMatch())
 			return finalVerification();
 
@@ -135,7 +135,7 @@ public abstract class UBrexSingleLineCommand2<S extends Diagram> implements Comm
 			return CommandExecutionResult.error("Syntax error: " + line);
 
 		// final RegexResult arg = pattern.matcher(line);
-		final UMatcher result = pattern.match(line);
+		final UMatcher result = pattern.match(line, 0);
 
 		if (result.exactMatch() == false)
 			return CommandExecutionResult.error("Cannot parse line " + line);

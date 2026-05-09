@@ -92,7 +92,7 @@ public class CreoleParser implements SheetBuilder {
 			final StripeTable table = (StripeTable) lastStripe;
 			table.analyzeAndAddLine(line);
 			return null;
-		} else if (lastStripe instanceof StripeTree && Parser.isTreeStart(StringUtils.trinNoTrace(line))) {
+		} else if (lastStripe instanceof StripeTree && Parser.isTreeStart(StringUtils.trim2(line))) {
 			final StripeTree tree = (StripeTree) lastStripe;
 			tree.analyzeAndAdd(line);
 			return null;
@@ -118,7 +118,7 @@ public class CreoleParser implements SheetBuilder {
 
 	private static final Pattern STARTS_BY_COLOR_PATTERN = Pattern.compile("^\\=?\\s*(\\<#\\w+(,#?\\w+)?\\>).*");
 
-	public static boolean isTableLine(String line) {
+	public static boolean isTableLine(CharSequence line) {
 		return TABLE_LINE_PATTERN.matcher(line).matches();
 	}
 
@@ -149,7 +149,7 @@ public class CreoleParser implements SheetBuilder {
 				if (Jaws.TRACE)
 					System.err.println("createSheetSlow:" + cs);
 				final List<Stripe> stripes;
-				final String type = EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(cs));
+				final String type = EmbeddedDiagram.getEmbeddedType(cs);
 				if (type != null) {
 					final Atom embeddedDiagram = EmbeddedDiagram.createAndSkip(type, it, skinParam);
 					if (checkColor)

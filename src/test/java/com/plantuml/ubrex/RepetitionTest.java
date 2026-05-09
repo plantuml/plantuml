@@ -25,18 +25,18 @@ public class RepetitionTest {
 	@Test
 	public void testExact2() {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("〇{2}a");
-		assertTrue(cut.match("aa").exactMatch());
-		assertFalse(cut.match("a").exactMatch());
-		assertFalse(cut.match("aaa").exactMatch());
+		assertTrue(cut.match("aa", 0).exactMatch());
+		assertFalse(cut.match("a", 0).exactMatch());
+		assertFalse(cut.match("aaa", 0).exactMatch());
 	}
 
 	@Test
 	public void testExactMultiDigit() {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("〇{12}x");
 		final String twelve = "xxxxxxxxxxxx";
-		assertTrue(cut.match(twelve).exactMatch());
-		assertFalse(cut.match(twelve + "x").exactMatch());
-		assertFalse(cut.match(twelve.substring(1)).exactMatch());
+		assertTrue(cut.match(twelve, 0).exactMatch());
+		assertFalse(cut.match(twelve + "x", 0).exactMatch());
+		assertFalse(cut.match(twelve.substring(1), 0).exactMatch());
 	}
 
 	// ========== Range {m-n} ==========
@@ -44,19 +44,19 @@ public class RepetitionTest {
 	@Test
 	public void testRange1to3() {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("〇{1-3}aZ");
-		assertTrue(cut.match("aZ").exactMatch());
-		assertTrue(cut.match("aaZ").exactMatch());
-		assertTrue(cut.match("aaaZ").exactMatch());
-		assertFalse(cut.match("Z").exactMatch());
-		assertFalse(cut.match("aaaaZ").exactMatch());
+		assertTrue(cut.match("aZ", 0).exactMatch());
+		assertTrue(cut.match("aaZ", 0).exactMatch());
+		assertTrue(cut.match("aaaZ", 0).exactMatch());
+		assertFalse(cut.match("Z", 0).exactMatch());
+		assertFalse(cut.match("aaaaZ", 0).exactMatch());
 	}
 
 	@Test
 	public void testRange2to2() {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("〇{2-2}a");
-		assertTrue(cut.match("aa").exactMatch());
-		assertFalse(cut.match("a").exactMatch());
-		assertFalse(cut.match("aaa").exactMatch());
+		assertTrue(cut.match("aa", 0).exactMatch());
+		assertFalse(cut.match("a", 0).exactMatch());
+		assertFalse(cut.match("aaa", 0).exactMatch());
 	}
 
 	// ========== Min or more {n+} ==========
@@ -64,19 +64,19 @@ public class RepetitionTest {
 	@Test
 	public void testMinOrMore2() {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("〇{2+}aZ");
-		assertFalse(cut.match("aZ").exactMatch());
-		assertTrue(cut.match("aaZ").exactMatch());
-		assertTrue(cut.match("aaaZ").exactMatch());
-		assertTrue(cut.match("aaaaaZ").exactMatch());
+		assertFalse(cut.match("aZ", 0).exactMatch());
+		assertTrue(cut.match("aaZ", 0).exactMatch());
+		assertTrue(cut.match("aaaZ", 0).exactMatch());
+		assertTrue(cut.match("aaaaaZ", 0).exactMatch());
 	}
 
 	@Test
 	public void testMinOrMore1() {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("〇{1+}b");
-		assertTrue(cut.match("b").exactMatch());
-		assertTrue(cut.match("bb").exactMatch());
-		assertTrue(cut.match("bbbbb").exactMatch());
-		assertFalse(cut.match("").exactMatch());
+		assertTrue(cut.match("b", 0).exactMatch());
+		assertTrue(cut.match("bb", 0).exactMatch());
+		assertTrue(cut.match("bbbbb", 0).exactMatch());
+		assertFalse(cut.match("", 0).exactMatch());
 	}
 
 	// ========== Combined {m;n;...} ==========
@@ -84,26 +84,26 @@ public class RepetitionTest {
 	@Test
 	public void testCombinedExact() {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("〇{1;3;5}xZ");
-		assertTrue(cut.match("xZ").exactMatch());
-		assertFalse(cut.match("xxZ").exactMatch());
-		assertTrue(cut.match("xxxZ").exactMatch());
-		assertFalse(cut.match("xxxxZ").exactMatch());
-		assertTrue(cut.match("xxxxxZ").exactMatch());
+		assertTrue(cut.match("xZ", 0).exactMatch());
+		assertFalse(cut.match("xxZ", 0).exactMatch());
+		assertTrue(cut.match("xxxZ", 0).exactMatch());
+		assertFalse(cut.match("xxxxZ", 0).exactMatch());
+		assertTrue(cut.match("xxxxxZ", 0).exactMatch());
 	}
 
 	@Test
 	public void testCombinedRangeAndMore() {
 		// 2 times, or 4 to 6 times, or 8+ times
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("〇{2;4-6;8+}aZ");
-		assertFalse(cut.match("aZ").exactMatch());
-		assertTrue(cut.match("aaZ").exactMatch());
-		assertFalse(cut.match("aaaZ").exactMatch());
-		assertTrue(cut.match("aaaaZ").exactMatch());
-		assertTrue(cut.match("aaaaaZ").exactMatch());
-		assertTrue(cut.match("aaaaaaZ").exactMatch());
-		assertFalse(cut.match("aaaaaaaZ").exactMatch());
-		assertTrue(cut.match("aaaaaaaaZ").exactMatch());
-		assertTrue(cut.match("aaaaaaaaaaZ").exactMatch());
+		assertFalse(cut.match("aZ", 0).exactMatch());
+		assertTrue(cut.match("aaZ", 0).exactMatch());
+		assertFalse(cut.match("aaaZ", 0).exactMatch());
+		assertTrue(cut.match("aaaaZ", 0).exactMatch());
+		assertTrue(cut.match("aaaaaZ", 0).exactMatch());
+		assertTrue(cut.match("aaaaaaZ", 0).exactMatch());
+		assertFalse(cut.match("aaaaaaaZ", 0).exactMatch());
+		assertTrue(cut.match("aaaaaaaaZ", 0).exactMatch());
+		assertTrue(cut.match("aaaaaaaaaaZ", 0).exactMatch());
 	}
 
 	// ========== Repetition.parse + match unit tests ==========
@@ -178,23 +178,23 @@ public class RepetitionTest {
 	@Test
 	public void testRangeWithCharSet() {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("〇{1-2}「ab」Z");
-		assertTrue(cut.match("aZ").exactMatch());
-		assertTrue(cut.match("bZ").exactMatch());
-		assertTrue(cut.match("abZ").exactMatch());
-		assertTrue(cut.match("baZ").exactMatch());
-		assertFalse(cut.match("aabZ").exactMatch());
-		assertFalse(cut.match("cZ").exactMatch());
+		assertTrue(cut.match("aZ", 0).exactMatch());
+		assertTrue(cut.match("bZ", 0).exactMatch());
+		assertTrue(cut.match("abZ", 0).exactMatch());
+		assertTrue(cut.match("baZ", 0).exactMatch());
+		assertFalse(cut.match("aabZ", 0).exactMatch());
+		assertFalse(cut.match("cZ", 0).exactMatch());
 	}
 
 	@Test
 	public void testRangeWithDigitClass() {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("〇{1-4}〴d");
-		assertTrue(cut.match("1").exactMatch());
-		assertTrue(cut.match("12").exactMatch());
-		assertTrue(cut.match("123").exactMatch());
-		assertTrue(cut.match("1234").exactMatch());
-		assertFalse(cut.match("12345").exactMatch());
-		assertFalse(cut.match("").exactMatch());
+		assertTrue(cut.match("1", 0).exactMatch());
+		assertTrue(cut.match("12", 0).exactMatch());
+		assertTrue(cut.match("123", 0).exactMatch());
+		assertTrue(cut.match("1234", 0).exactMatch());
+		assertFalse(cut.match("12345", 0).exactMatch());
+		assertFalse(cut.match("", 0).exactMatch());
 	}
 
 }

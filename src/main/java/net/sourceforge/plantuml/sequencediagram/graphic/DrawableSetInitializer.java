@@ -72,6 +72,7 @@ import net.sourceforge.plantuml.skin.PaddingParam;
 import net.sourceforge.plantuml.skin.SkinParamBackcolored;
 import net.sourceforge.plantuml.skin.SkinParamBackcoloredReference;
 import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
@@ -201,8 +202,8 @@ class DrawableSetInitializer {
 	}
 
 	private void takeParticipantEngloberPadding(StringBounder stringBounder) {
-		final double padding = drawableSet.getSkinParam().getPadding(PaddingParam.BOX);
-		if (padding == 0)
+		final ClockwiseTopRightBottomLeft padding = drawableSet.getSkinParam().getPaddingTOBEREMOVED(PaddingParam.BOX);
+		if (padding.isZero())
 			return;
 
 		for (Doll pe : drawableSet.getExistingParticipantEnglober(stringBounder)) {
@@ -210,8 +211,8 @@ class DrawableSetInitializer {
 					.getParticipantBox();
 			final ParticipantBox last = drawableSet.getLivingParticipantBox(pe.getLast2TOBEPRIVATE())
 					.getParticipantBox();
-			constraintSet.pushToLeftParticipantBox(padding, first, true);
-			constraintSet.pushToLeftParticipantBox(padding, last, false);
+			constraintSet.pushToLeftParticipantBox(padding.getLeft(), first, true);
+			constraintSet.pushToLeftParticipantBox(padding.getLeft(), last, false);
 		}
 	}
 

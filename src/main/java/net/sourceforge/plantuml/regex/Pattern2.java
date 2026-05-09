@@ -81,8 +81,8 @@ public class Pattern2 {
 
 	}
 
-	public Matcher2 matcher(CharSequence input) {
-		return Matcher2.build(pattern.get(), input);
+	public Matcher2 matcher(CharSequence input, int pos) {
+		return Matcher2.build(pattern.get(), input, pos);
 	}
 
 	public String pattern() {

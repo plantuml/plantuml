@@ -39,8 +39,8 @@ public class ChallengeEndOfText implements Challenge {
 	@Override
 	public ChallengeResult runChallenge(TextNavigator string, int position) {
 		if (position >= string.length())
-			return new ChallengeResult(0);
-		return new ChallengeResult(NO_MATCH);
+			return ChallengeResult.ZERO;
+		return ChallengeResult.NO_MATCH;
 	}
 
 }

@@ -101,7 +101,7 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 		if (lines.size() == 1)
 			return CommandControl.OK_PARTIAL;
 
-		final Matcher2 m1 = end.get().matcher(trimEnd.trim(lines.getLast()));
+		final Matcher2 m1 = end.get().matcher(trimEnd.trim(lines.getLast()), 0);
 		if (m1.matches() == false)
 			return CommandControl.OK_PARTIAL;
 

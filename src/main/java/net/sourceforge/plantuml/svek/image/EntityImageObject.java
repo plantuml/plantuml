@@ -95,7 +95,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 		final FontConfiguration fcHeader = getStyleHeader().getFontConfiguration(getSkinParam().getIHtmlColorSet());
 
 		final TextBlock tmp = getUnderlinedName(entity).create(fcHeader, HorizontalAlignment.CENTER, getSkinParam());
-		this.name = TextBlockUtils.withMargin(tmp, 2, 2);
+		this.name = TextBlockUtils.withMargin(tmp, getStyle().getPadding());
 
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
 				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false)

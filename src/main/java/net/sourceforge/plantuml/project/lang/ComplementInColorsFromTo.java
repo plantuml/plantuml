@@ -35,6 +35,13 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOptional;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
@@ -47,6 +54,39 @@ public class ComplementInColorsFromTo implements Something<GanttDiagram> {
 	public IRegex toRegex(String suffix) {
 		return new RegexLeaf(4,
 				"COMPLEMENT" + suffix, "from[%s]+(#?\\w+)(?:/(#?\\w+))?[%s]+to[%s]+(#?\\w+)(?:/(#?\\w+))?");
+	}
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+		return UBrexConcat.build( //
+				new UBrexLeaf("from"), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexNamed("FROM1", new UBrexLeaf("〇?# 〇+〴w")), //
+				new UBrexOptional(UBrexConcat.build( //
+						new UBrexLeaf("/"), //
+						new UBrexNamed("FROM2", new UBrexLeaf("〇?# 〇+〴w")))), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexLeaf("to"), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexNamed("TO1", new UBrexLeaf("〇?# 〇+〴w")), //
+				new UBrexOptional(UBrexConcat.build( //
+						new UBrexLeaf("/"), //
+						new UBrexNamed("TO2", new UBrexLeaf("〇?# 〇+〴w")))) //
+		);
+	}
+
+	@Override
+	public Failable<CenterBorderColor[]> ugetMe(GanttDiagram diagram, UMatcher arg) {
+		final String arg0 = arg.get("FROM1", 0);
+		final String arg1 = arg.get("FROM2", 0);
+		final String arg2 = arg.get("TO1", 0);
+		final String arg3 = arg.get("TO2", 0);
+		final HColor from0 = arg0 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg0);
+		final HColor from1 = arg1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg1);
+		final HColor to0 = arg2 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg2);
+		final HColor to1 = arg3 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg3);
+		final CenterBorderColor result[] = new CenterBorderColor[] { new CenterBorderColor(from0, from1),
+				new CenterBorderColor(to0, to1) };
+		return Failable.ok(result);
 	}
 
 	public Failable<CenterBorderColor[]> getMe(GanttDiagram diagram, RegexResult arg, String suffix) {

@@ -80,7 +80,7 @@ public class DiagramSourceCompressor implements StringCompressor {
 	}
 
 	private String compressOld(String s) throws IOException {
-		final Matcher2 m = pattern.matcher(s);
+		final Matcher2 m = pattern.matcher(s, 0);
 		if (m.find()) {
 			return clean(m.group(2));
 		}
@@ -111,7 +111,7 @@ public class DiagramSourceCompressor implements StringCompressor {
 	}
 
 	private String clean1(String s) {
-		final Matcher2 m = pattern.matcher(s);
+		final Matcher2 m = pattern.matcher(s, 0);
 		if (m.matches())
 			return m.group(2);
 

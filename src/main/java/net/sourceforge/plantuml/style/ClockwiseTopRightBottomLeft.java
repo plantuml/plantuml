@@ -42,6 +42,8 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class ClockwiseTopRightBottomLeft {
 
+	private static final ClockwiseTopRightBottomLeft NONE = new ClockwiseTopRightBottomLeft(0, 0, 0, 0);
+
 	private final double top;
 	private final double right;
 	private final double bottom;
@@ -52,7 +54,7 @@ public class ClockwiseTopRightBottomLeft {
 	}
 
 	public static ClockwiseTopRightBottomLeft none() {
-		return new ClockwiseTopRightBottomLeft(0, 0, 0, 0);
+		return NONE;
 	}
 
 	private static final Pattern NUMBERS_ONLY = Pattern.compile("[0-9 ]+");
@@ -139,12 +141,10 @@ public class ClockwiseTopRightBottomLeft {
 		return left;
 	}
 
-	// ::comment when __HAXE__
 	public static ClockwiseTopRightBottomLeft marginForDocument(StyleBuilder styleBuilder) {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.document).getMergedStyle(styleBuilder);
 		return style.getMargin();
 	}
-	// ::done
 
 	public UTranslate getTranslate() {
 		return new UTranslate(left, top);
@@ -152,6 +152,10 @@ public class ClockwiseTopRightBottomLeft {
 
 	public XDimension2D apply(XDimension2D dim) {
 		return new XDimension2D(left + dim.getWidth() + right, top + dim.getHeight() + bottom);
+	}
+
+	public boolean isZero() {
+		return left == 0 && right == 0 && top == 0 && bottom == 0;
 	}
 
 }

@@ -136,13 +136,13 @@ Capture allows you to assign a **name** to a pattern, enabling later reference a
 ### Syntax
 
 ```
-〶$<name>=<pattern>
+〶$<n>=<pattern>
 ```
 
 | Component | Description                                             |
 | --------- | ------------------------------------------------------- |
 | `〶$`      | Indicates the start of a capture.                       |
-| `<name>`  | Assigns a **unique name** to the captured pattern.      |
+| `<n>`  | Assigns a **unique name** to the captured pattern.      |
 | `=`       | Separates the name from the **pattern to be captured**. |
 
 ### Example
@@ -169,16 +169,17 @@ To solve this, **ubrex introduces the "up-to" pattern**, which allows matching *
 〄>[PATTERN]
 ```
 
-| Component   | Description                                                          |
-| ----------- | -------------------------------------------------------------------- |
-| `〄>`        | Consume all characters **until** the specified `[PATTERN]` is found. |
-| `[PATTERN]` | Stopping condition—matching stops once this pattern is encountered.  |
+| Component   | Description                                                                          |
+| ----------- | ------------------------------------------------------------------------------------ |
+| `〄>`        | Consume all characters **up to and including** the specified `[PATTERN]`.             |
+| `[PATTERN]` | Stopping condition—the stop pattern is **consumed and included** in the match result. |
 
 #### Example
 
-| Pattern | Input String       | Match Result     | Explanation                                                                            |
-| ------- | ------------------ | ---------------- | -------------------------------------------------------------------------------------- |
-| `a〄>1`  | `anything until 1` | `anything until` | Starts with `a`, consumes **everything until** `1`. Matching stops just **after** `1`. |
+| Pattern    | Input String       | Match Result        | Explanation                                                                                              |
+| ---------- | ------------------ | ------------------- | -------------------------------------------------------------------------------------------------------- |
+| `a〄>1`     | `anything until 1` | `anything until 1`  | Starts with `a`, consumes **everything up to and including** `1`. The stop pattern is part of the match. |
+| `[[〄>]]`   | `[[link]]`         | `[[link]]`          | Matches `[[`, then consumes everything up to and including `]]`.                                         |
 
 ### Advanced Syntax
 
@@ -199,7 +200,7 @@ The basic syntax **accepts any character** until the stop pattern is reached. Ho
 
 | Pattern                | Input String | Captured Value | Explanation                                                                               |
 | ---------------------- | ------------ | -------------- | ----------------------------------------------------------------------------------------- |
-| `〶$NAME=〄+〴w ->〘zend〙` | `abcdzend`   | `abcd`         | Captures only **word characters** up to the sequence `zend`. Matching stops after `zend`. |
+| `〶$NAME=〄+〴w ->〘zend〙` | `abcdzend`   | `abcd`         | Captures only **word characters** up to the sequence `zend`. Matching stops after `zend`. |
 
 ### Key Notes
 
@@ -216,16 +217,16 @@ All lookaround assertions use the `〒` symbol followed by a **type specifier** 
 ### Syntax
 
 ```
-〒(<type>)<pattern>
+〒<type><pattern>
 ```
 
 | Type                    | Syntax  | Name                  | Description                                                                                                                                                |
 | ----------------------- | ------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Positive LookAhead**  | `〒(=)`  | *LookAhead Positive*  | Succeeds if `<pattern>` **matches** immediately after the current position. Does **not** advance the position.                                             |
-| **Negative LookAhead**  | `〒(!)`  | *LookAhead Negative*  | Succeeds if `<pattern>` **does not match** immediately after the current position. Does **not** advance the position.                                      |
-| **Positive LookBehind** | `〒(<=)` | *LookBehind Positive* | Succeeds if `<pattern>` **matches** immediately before the current position (by examining characters already consumed). Does **not** advance the position. |
-| **Negative LookBehind** | `〒(<!)` | *LookBehind Negative* | Succeeds if `<pattern>` **does not match** immediately before the current position. Does **not** advance the position.                                     |
-| **End of Text**         | `〒($)`  | *End of Text*         | Succeeds only if the current position is at the **end of the input text**.                                                                                 |
+| **Positive LookAhead**  | `〒=`  | *LookAhead Positive*  | Succeeds if `<pattern>` **matches** immediately after the current position. Does **not** advance the position.                                             |
+| **Negative LookAhead**  | `〒!`  | *LookAhead Negative*  | Succeeds if `<pattern>` **does not match** immediately after the current position. Does **not** advance the position.                                      |
+| **Positive LookBehind** | `〒<=` | *LookBehind Positive* | Succeeds if `<pattern>` **matches** immediately before the current position (by examining characters already consumed). Does **not** advance the position. |
+| **Negative LookBehind** | `〒<!` | *LookBehind Negative* | Succeeds if `<pattern>` **does not match** immediately before the current position. Does **not** advance the position.                                     |
+| **End of Text**         | `〒$`  | *End of Text*         | Succeeds only if the current position is at the **end of the input text**.                                                                                 |
 
 ### Key Concepts
 
@@ -237,26 +238,26 @@ All lookaround assertions use the `〒` symbol followed by a **type specifier** 
 
 | Pattern                | Input | Result       | Explanation                                                                                                                                                            |
 | ---------------------- | ----- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `a 〒(=)b`              | `abc` | `a`          | Matches `a`, then asserts that `b` follows. It does, so the match succeeds. Only `a` is consumed.                                                                      |
-| `a 〒(=)b`              | `a`   | *(no match)* | Matches `a`, then asserts that `b` follows. It does not, so the match fails.                                                                                           |
-| `a 〒(=)b`              | `aa`  | *(no match)* | Matches `a`, then asserts that `b` follows. `a` is found instead, so the match fails.                                                                                  |
-| `a 〒(!)b`              | `abc` | *(no match)* | Matches `a`, then asserts that `b` does **not** follow. But `b` is present, so the match fails.                                                                        |
-| `a 〒(!)b`              | `a`   | `a`          | Matches `a`, then asserts that `b` does **not** follow. End of input means no `b`, so the match succeeds.                                                              |
-| `a 〒(!)b`              | `aa`  | `a`          | Matches `a`, then asserts that `b` does **not** follow. `a` follows (not `b`), so the match succeeds.                                                                  |
-| `a【 ; ┇ 〒(!)「〴w;:.」 】` | `a;`  | `a;`         | After `a`, tries `;` first—matches.                                                                                                                                    |
-| `a【 ; ┇ 〒(!)「〴w;:.」 】` | `a,`  | `a`          | After `a`, tries `;`—fails. Then tries negative lookahead asserting next char is **not** in `「〴w;:.」`. `,` is not in that set, so the assertion succeeds (zero-width). |
-| `a【 ; ┇ 〒(!)「〴w;:.」 】` | `a.`  | *(no match)* | After `a`, tries `;`—fails. Then tries negative lookahead—but `.` **is** in `「〴w;:.」`, so the assertion fails. No alternative matches.                                 |
+| `a 〒=b`              | `abc` | `a`          | Matches `a`, then asserts that `b` follows. It does, so the match succeeds. Only `a` is consumed.                                                                      |
+| `a 〒=b`              | `a`   | *(no match)* | Matches `a`, then asserts that `b` follows. It does not, so the match fails.                                                                                           |
+| `a 〒=b`              | `aa`  | *(no match)* | Matches `a`, then asserts that `b` follows. `a` is found instead, so the match fails.                                                                                  |
+| `a 〒!b`              | `abc` | *(no match)* | Matches `a`, then asserts that `b` does **not** follow. But `b` is present, so the match fails.                                                                        |
+| `a 〒!b`              | `a`   | `a`          | Matches `a`, then asserts that `b` does **not** follow. End of input means no `b`, so the match succeeds.                                                              |
+| `a 〒!b`              | `aa`  | `a`          | Matches `a`, then asserts that `b` does **not** follow. `a` follows (not `b`), so the match succeeds.                                                                  |
+| `a【 ; ┇ 〒!「〴w;:.」 】` | `a;`  | `a;`         | After `a`, tries `;` first—matches.                                                                                                                                    |
+| `a【 ; ┇ 〒!「〴w;:.」 】` | `a,`  | `a`          | After `a`, tries `;`—fails. Then tries negative lookahead asserting next char is **not** in `「〴w;:.」`. `,` is not in that set, so the assertion succeeds (zero-width). |
+| `a【 ; ┇ 〒!「〴w;:.」 】` | `a.`  | *(no match)* | After `a`, tries `;`—fails. Then tries negative lookahead—but `.` **is** in `「〴w;:.」`, so the assertion fails. No alternative matches.                                 |
 
 ### Summary of LookAround Symbols
 
 | Symbol | Unicode Block | Usage                              |
 | ------ | ------------- | ---------------------------------- |
 | `〒`    | `U+3000`      | Introduces a LookAround assertion. |
-| `(=)`  | ASCII         | Positive LookAhead specifier.      |
-| `(!)`  | ASCII         | Negative LookAhead specifier.      |
-| `(<=)` | ASCII         | Positive LookBehind specifier.     |
-| `(<!)` | ASCII         | Negative LookBehind specifier.     |
-| `($)`  | ASCII         | End of Text specifier.             |
+| `=`  | ASCII         | Positive LookAhead specifier.      |
+| `!`  | ASCII         | Negative LookAhead specifier.      |
+| `<=` | ASCII         | Positive LookBehind specifier.     |
+| `<!` | ASCII         | Negative LookBehind specifier.     |
+| `$`  | ASCII         | End of Text specifier.             |
 
 ## General considerations
 

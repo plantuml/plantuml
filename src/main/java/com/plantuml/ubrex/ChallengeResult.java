@@ -38,14 +38,16 @@ import java.util.List;
 
 public class ChallengeResult {
 
+	public static final ChallengeResult NO_MATCH = new ChallengeResult(Challenge.NO_MATCH);
+	public static final ChallengeResult ZERO = new ChallengeResult(0);
+	public static final ChallengeResult ONE = new ChallengeResult(1);
+
 	private final int fullCaptureLength;
-	private final int onlyNameLength;
 	private final Capture capture;
-	private final Capture nonMergeableCapture;
 
 	@Override
 	public String toString() {
-		return "fullCaptureLength=" + fullCaptureLength + " onlyNameLength=" + onlyNameLength + " " + capture;
+		return "fullCaptureLength=" + fullCaptureLength + " " + capture;
 	}
 
 	public ChallengeResult(int result) {
@@ -54,25 +56,8 @@ public class ChallengeResult {
 
 	public ChallengeResult(int fullCaptureLength, Capture capture) {
 		this.fullCaptureLength = fullCaptureLength;
-		this.onlyNameLength = fullCaptureLength;
 		this.capture = capture;
-		this.nonMergeableCapture = Capture.EMPTY;
 	}
-
-	private ChallengeResult(int onlyNameLength, int fullCaptureLength, Capture capture, Capture nonMergeableCapture) {
-		this.onlyNameLength = onlyNameLength;
-		this.fullCaptureLength = fullCaptureLength;
-		this.capture = capture;
-		this.nonMergeableCapture = nonMergeableCapture;
-	}
-
-	public ChallengeResult withNameLength(int onlyNameLength, Capture nonMergeableCapture) {
-		return new ChallengeResult(onlyNameLength, fullCaptureLength, capture, nonMergeableCapture);
-	}
-
-//	public ChallengeResult withNonMergeableCapture(Capture nonMergeableCapture) {
-//		return new ChallengeResult(onlyNameLength, fullCaptureLength, capture, nonMergeableCapture);
-//	}
 
 	public int getFullCaptureLength() {
 		return fullCaptureLength;
@@ -82,26 +67,12 @@ public class ChallengeResult {
 		return capture.findValuesByKey(path);
 	}
 
-	public List<String> getKeysToBeRefactored() {
-		return capture.getKeysToBeRefactored();
+	public List<String> findFirstValuesByKeyPrefix(String keyPrefix) {
+		return capture.findFirstValuesByKeyPrefix(keyPrefix);
 	}
-
-
-	public List<String> getRootKeys() {
-		return capture.getRootKeys();
-	}
-
 
 	public Capture getCapture() {
 		return capture;
-	}
-
-	public int getOnlyNameLength() {
-		return onlyNameLength;
-	}
-
-	public Capture getNonMergeableCapture() {
-		return nonMergeableCapture;
 	}
 
 }

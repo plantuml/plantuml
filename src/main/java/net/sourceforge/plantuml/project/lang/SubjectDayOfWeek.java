@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.DayOfWeekUtils;
-import net.sourceforge.plantuml.project.ulang.UbrexSentence;
+import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
@@ -72,9 +72,18 @@ public class SubjectDayOfWeek implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Collection<UbrexSentence<GanttDiagram>> getUSentences() {
-		final List<UbrexSentence<GanttDiagram>> result = new ArrayList<>();
-		result.add(new UbrexSentence<GanttDiagram>(this, Verbs.are, new ComplementClose()) {
+	public Collection<VerbPhraseAction> getVerbPhrases() {
+		final List<VerbPhraseAction> result = new ArrayList<>();
+		result.add(new VerbPhraseAction(Verbs.are, new ComplementOpen()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final DayOfWeek day = (DayOfWeek) subject;
+				project.openDayOfWeek(day, (String) complement);
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.are, new ComplementClose()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 				final DayOfWeek day = (DayOfWeek) subject;
@@ -82,19 +91,30 @@ public class SubjectDayOfWeek implements Subject<GanttDiagram> {
 				return CommandExecutionResult.ok();
 			}
 		});
+
+		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final HColor color = ((CenterBorderColor) complement).getCenter();
+				final DayOfWeek day = (DayOfWeek) subject;
+				project.colorDay(day, color);
+
+				return CommandExecutionResult.ok();
+			}
+		});
+
 		return result;
 
 	}
 
-	public Failable<? extends Object> getMe(GanttDiagram project, RegexResult arg) {
+	public Failable<DayOfWeek> getMe(GanttDiagram project, RegexResult arg) {
 		final String s = arg.get("SUBJECT", 0);
 		return Failable.ok(DayOfWeekUtils.fromString(s));
 	}
 
 	@Override
-	public Failable<? extends Object> ugetMe(GanttDiagram diagram, UMatcher arg) {
-		System.out.println("ugetMe " + arg);
-		final String s = arg.getCapture("SUBJECT").get(0);
+	public Failable<DayOfWeek> ugetMe(GanttDiagram diagram, UMatcher arg) {
+		final String s = arg.get("SUBJECT", 0);
 		return Failable.ok(DayOfWeekUtils.fromString(s));
 	}
 

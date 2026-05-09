@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="110px" preserveAspectRatio="none" style="width:461px;height:110px;background:#FFFFFF;" version="1.1" viewBox="0 0 461 110" width="461px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;stroke-width:1;" width="32" x="48" y="39"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;stroke-width:1;" width="32" x="160" y="39"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;stroke-width:1;" width="32" x="272" y="39"/>
+    <rect fill="#FFA500" height="30" style="stroke:none;stroke-width:1;" width="16" x="384" y="39"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15" x="0.5" y="21.7778">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="18.1667" y="21.7778">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="9.4167" x="35.2917" y="21.7778">Fr</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="49.875" y="21.7778">Sa</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="65.875" y="21.7778">Su</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.9167" x="81.0417" y="21.7778">Mo</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="98.1667" y="21.7778">Tu</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15" x="112.5" y="21.7778">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="130.1667" y="21.7778">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="9.4167" x="147.2917" y="21.7778">Fr</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="161.875" y="21.7778">Sa</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="177.875" y="21.7778">Su</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.9167" x="193.0417" y="21.7778">Mo</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="210.1667" y="21.7778">Tu</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15" x="224.5" y="21.7778">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="242.1667" y="21.7778">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="9.4167" x="259.2917" y="21.7778">Fr</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="273.875" y="21.7778">Sa</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="289.875" y="21.7778">Su</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.9167" x="305.0417" y="21.7778">Mo</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="322.1667" y="21.7778">Tu</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15" x="336.5" y="21.7778">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="354.1667" y="21.7778">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="9.4167" x="371.2917" y="21.7778">Fr</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="385.875" y="21.7778">Sa</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="5.2083" y="33.7778">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="21.2083" y="33.7778">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="37.2083" y="33.7778">7</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="53.2083" y="33.7778">8</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="69.2083" y="33.7778">9</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="82.4167" y="33.7778">10</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="98.4167" y="33.7778">11</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="114.4167" y="33.7778">12</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="130.4167" y="33.7778">13</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="146.4167" y="33.7778">14</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="162.4167" y="33.7778">15</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="178.4167" y="33.7778">16</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="194.4167" y="33.7778">17</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="210.4167" y="33.7778">18</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="226.4167" y="33.7778">19</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="242.4167" y="33.7778">20</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="258.4167" y="33.7778">21</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="274.4167" y="33.7778">22</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="290.4167" y="33.7778">23</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="306.4167" y="33.7778">24</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="322.4167" y="33.7778">25</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="338.4167" y="33.7778">26</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="354.4167" y="33.7778">27</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="370.4167" y="33.7778">28</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="386.4167" y="33.7778">29</text>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="85.6" x="157.2" y="9.3333">December 2018</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="16" x2="16" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="32" x2="32" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="48" x2="48" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="64" x2="64" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="80" x2="80" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="96" x2="96" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="112" x2="112" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="128" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="144" x2="144" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="160" x2="160" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="176" x2="176" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="192" x2="192" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="208" x2="208" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="224" x2="224" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="240" x2="240" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="256" x2="256" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="272" x2="272" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="288" x2="288" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="304" x2="304" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="320" x2="320" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="336" x2="336" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="352" x2="352" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="368" x2="368" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="384" x2="384" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="400" x2="400" y1="39" y2="69"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="400" y1="39" y2="39"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="400" y1="69" y2="69"/>
+    <path d="M328,52 L328,61.5 L333,61.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <polygon fill="#181818" points="332,57.5,336,61.5,332,65.5,332,57.5" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="47" x="2" y="41"/>
+    <path d="M48,52 L2,52 L2,41 L48,41" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="81" x="80" y="41"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="80" x2="160" y1="41" y2="41"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="80" x2="160" y1="52" y2="52"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="81" x="192" y="41"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="192" x2="272" y1="41" y2="41"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="192" x2="272" y1="52" y2="52"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="30" x="304" y="41"/>
+    <path d="M304,41 L334,41 L334,52 L304,52" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="51" x2="77" y1="41" y2="41"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="51" x2="77" y1="52" y2="52"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="163" x2="189" y1="41" y2="41"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="163" x2="189" y1="52" y2="52"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="275" x2="301" y1="41" y2="41"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="275" x2="301" y1="52" y2="52"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="28" x="338" y="56"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="28" x="338" y="56"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="82.6833" x="6" y="49.5556">Prototype design</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="70.3083" x="370" y="64.5556">Test prototype</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15" x="0.5" y="76.7778">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="18.1667" y="76.7778">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="9.4167" x="35.2917" y="76.7778">Fr</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="49.875" y="76.7778">Sa</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="65.875" y="76.7778">Su</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.9167" x="81.0417" y="76.7778">Mo</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="98.1667" y="76.7778">Tu</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15" x="112.5" y="76.7778">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="130.1667" y="76.7778">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="9.4167" x="147.2917" y="76.7778">Fr</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="161.875" y="76.7778">Sa</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="177.875" y="76.7778">Su</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.9167" x="193.0417" y="76.7778">Mo</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="210.1667" y="76.7778">Tu</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15" x="224.5" y="76.7778">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="242.1667" y="76.7778">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="9.4167" x="259.2917" y="76.7778">Fr</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="273.875" y="76.7778">Sa</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="289.875" y="76.7778">Su</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.9167" x="305.0417" y="76.7778">Mo</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="322.1667" y="76.7778">Tu</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15" x="336.5" y="76.7778">We</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="354.1667" y="76.7778">Th</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="9.4167" x="371.2917" y="76.7778">Fr</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="12.25" x="385.875" y="76.7778">Sa</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="5.2083" y="90.7778">5</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="21.2083" y="90.7778">6</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="37.2083" y="90.7778">7</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="53.2083" y="90.7778">8</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5833" x="69.2083" y="90.7778">9</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="82.4167" y="90.7778">10</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="98.4167" y="90.7778">11</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="114.4167" y="90.7778">12</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="130.4167" y="90.7778">13</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="146.4167" y="90.7778">14</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="162.4167" y="90.7778">15</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="178.4167" y="90.7778">16</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="194.4167" y="90.7778">17</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="210.4167" y="90.7778">18</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="226.4167" y="90.7778">19</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="242.4167" y="90.7778">20</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="258.4167" y="90.7778">21</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="274.4167" y="90.7778">22</text>
+    <text fill="#989898" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="290.4167" y="90.7778">23</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="306.4167" y="90.7778">24</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="322.4167" y="90.7778">25</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="338.4167" y="90.7778">26</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="354.4167" y="90.7778">27</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="370.4167" y="90.7778">28</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="386.4167" y="90.7778">29</text>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="85.6" x="157.2" y="105.3333">December 2018</text>
+  </g>
+</svg>

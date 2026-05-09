@@ -35,6 +35,13 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOptional;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
@@ -46,6 +53,26 @@ public class ComplementInColors implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexLeaf(2, "COMPLEMENT" + suffix, "in[%s]+(#?\\w+)(?:/(#?\\w+))?");
+	}
+
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+		return UBrexConcat.build(new UBrexLeaf("in"), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexNamed("COMPLEMENT1", new UBrexLeaf("〇?# 〇+〴w")), //
+				new UBrexOptional(UBrexConcat.build( //
+						new UBrexLeaf("/"), //
+						new UBrexNamed("COMPLEMENT2", new UBrexLeaf("〇?# 〇+〴w")))) //
+		);
+	}
+
+	@Override
+	public Failable<CenterBorderColor> ugetMe(GanttDiagram diagram, UMatcher arg) {
+		final String color1 = arg.get("COMPLEMENT1", 0);
+		final String color2 = arg.get("COMPLEMENT2", 0);
+		final HColor col1 = color1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color1);
+		final HColor col2 = color2 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color2);
+		return Failable.ok(new CenterBorderColor(col1, col2));
 	}
 
 	public Failable<CenterBorderColor> getMe(GanttDiagram diagram, RegexResult arg, String suffix) {

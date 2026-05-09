@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
@@ -45,8 +48,8 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 public class CommandCreoleImg implements Command {
 
 	@Override
-	public String startingChars() {
-		return "<";
+	public Collection<String> starters() {
+		return Collections.singleton("<i");
 	}
 
 	private static final Pattern2 pattern = Pattern2.cmpile("^(" + Splitter.imgPatternNoSrcColon + ")");
@@ -58,8 +61,9 @@ public class CommandCreoleImg implements Command {
 		return new CommandCreoleImg();
 	}
 
-	public int matchingSize(String line) {
-		final Matcher2 m = pattern.matcher(line);
+	@Override
+	public int matchingSize(String line, int pos) {
+		final Matcher2 m = pattern.matcher(line, pos);
 		if (m.find() == false)
 			return 0;
 
@@ -67,8 +71,8 @@ public class CommandCreoleImg implements Command {
 	}
 
 	@Override
-	public String executeAndGetRemaining(ISkinSimple skinSimple, String line, StripeSimple stripe) {
-		final Matcher2 m = pattern.matcher(line);
+	public int executeAndAdvance(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
+		final Matcher2 m = pattern.matcher(line, pos);
 		if (m.find() == false)
 			throw new IllegalStateException();
 
@@ -79,7 +83,7 @@ public class CommandCreoleImg implements Command {
 
 		src = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(src, "\"");
 		stripe.addImage(src, scale);
-		return line.substring(m.group(1).length());
+		return m.group(1).length();
 	}
 
 }

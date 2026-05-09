@@ -101,7 +101,7 @@ public abstract class RegexComposed implements IRegex {
 	}
 
 	public RegexResult matcher(String s) {
-		final Matcher2 matcher = getPattern2().matcher(s);
+		final Matcher2 matcher = getPattern2().matcher(s, 0);
 		if (matcher.find() == false)
 			return null;
 
@@ -111,7 +111,7 @@ public abstract class RegexComposed implements IRegex {
 
 	public boolean match(StringLocated s) {
 		final String tmp = s.getString();
-		final Matcher2 matcher = getPattern2().matcher(tmp);
+		final Matcher2 matcher = getPattern2().matcher(tmp, 0);
 		if (matcher == null)
 			return false;
 

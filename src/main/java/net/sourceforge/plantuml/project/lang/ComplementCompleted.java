@@ -35,6 +35,12 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.project.Completion;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
@@ -46,6 +52,20 @@ public class ComplementCompleted implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexLeaf(1, "COMPLEMENT" + suffix, "(\\d+).*completed?");
+	}
+
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+		return UBrexConcat.build(//
+				new UBrexNamed("COMPLEMENT", new UBrexLeaf("〇+〴d")), //
+				new UBrexLeaf("〇+〴W complete〇?d")) //
+		;
+	}
+
+	@Override
+	public Failable<Completion> ugetMe(GanttDiagram diagram, UMatcher arg) {
+		final String value = arg.get("COMPLEMENT", 0);
+		return Failable.ok(new Completion(Integer.parseInt(value)));
 	}
 
 	public Failable<Completion> getMe(GanttDiagram system, RegexResult arg, String suffix) {

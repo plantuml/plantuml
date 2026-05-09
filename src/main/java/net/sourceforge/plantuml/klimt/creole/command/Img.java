@@ -65,7 +65,7 @@ public class Img implements HtmlCommand {
 	}
 
 	static int getVspace(String html) {
-		final Matcher2 m = vspacePattern.matcher(html);
+		final Matcher2 m = vspacePattern.matcher(html, 0);
 		if (m.find() == false)
 			return 0;
 
@@ -73,7 +73,7 @@ public class Img implements HtmlCommand {
 	}
 
 	static ImgValign getValign(String html) {
-		final Matcher2 m = valignPattern.matcher(html);
+		final Matcher2 m = valignPattern.matcher(html, 0);
 		if (m.find() == false)
 			return ImgValign.TOP;
 
@@ -82,12 +82,12 @@ public class Img implements HtmlCommand {
 
 	static HtmlCommand getInstance(String html, boolean withSrc) {
 		if (withSrc) {
-			final Matcher2 m = srcPattern.matcher(html);
+			final Matcher2 m = srcPattern.matcher(html, 0);
 			final int vspace = getVspace(html);
 			final ImgValign valign = getValign(html);
 			return build(m, valign, vspace);
 		}
-		final Matcher2 m = noSrcColonPattern.matcher(html);
+		final Matcher2 m = noSrcColonPattern.matcher(html, 0);
 		return build(m, ImgValign.TOP, 0);
 	}
 

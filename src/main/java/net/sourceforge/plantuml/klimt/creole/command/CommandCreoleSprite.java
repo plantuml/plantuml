@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
@@ -46,8 +49,8 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 public class CommandCreoleSprite implements Command {
 
 	@Override
-	public String startingChars() {
-		return "<";
+	public Collection<String> starters() {
+		return Arrays.asList("<#", "<$");
 	}
 
 	private static final Pattern2 pattern = Pattern2.cmpile("^(" + Splitter.spritePattern + ")");
@@ -59,8 +62,9 @@ public class CommandCreoleSprite implements Command {
 		return new CommandCreoleSprite();
 	}
 
-	public int matchingSize(String line) {
-		final Matcher2 m = pattern.matcher(line);
+	@Override
+	public int matchingSize(String line, int pos) {
+		final Matcher2 m = pattern.matcher(line, pos);
 		if (m.find() == false)
 			return 0;
 
@@ -68,8 +72,8 @@ public class CommandCreoleSprite implements Command {
 	}
 
 	@Override
-	public String executeAndGetRemaining(ISkinSimple skinSimple, String line, StripeSimple stripe) {
-		final Matcher2 m = pattern.matcher(line);
+	public int executeAndAdvance(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
+		final Matcher2 m = pattern.matcher(line, pos);
 		if (m.find() == false)
 			throw new IllegalStateException();
 
@@ -87,7 +91,7 @@ public class CommandCreoleSprite implements Command {
 			color = skinParam.getIHtmlColorSet().getColorOrWhite(colorName);
 		}
 		stripe.addSprite(src, scale, color);
-		return line.substring(m.group(1).length());
+		return m.group(1).length();
 	}
 
 }

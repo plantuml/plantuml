@@ -51,7 +51,7 @@ public class ChallengeUpTo implements Challenge {
 				return new ChallengeResult(currentPos - position);
 			currentPos += 1;
 			if (currentPos > string.length())
-				return new ChallengeResult(NO_MATCH);
+				return ChallengeResult.NO_MATCH;
 		}
 	}
 

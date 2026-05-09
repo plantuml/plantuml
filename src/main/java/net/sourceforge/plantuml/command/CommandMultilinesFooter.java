@@ -58,7 +58,7 @@ public class CommandMultilinesFooter extends CommandMultilines<TitledDiagram> {
 			throws NoSuchColorException {
 		final LineLocation location = lines.getLocation();
 		lines = lines.trim();
-		final Matcher2 m = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+		final Matcher2 m = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString(), 0);
 		if (m.find() == false) {
 			throw new IllegalStateException();
 		}

@@ -239,13 +239,12 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	private static BlocLines addOneSingleLineManageEmbedded2(IteratorCounter2 it, BlocLines lines) {
 		final StringLocated linetoBeAdded = it.next();
 		lines = lines.add(linetoBeAdded);
-		if (EmbeddedDiagram.getEmbeddedType(linetoBeAdded.getTrimmed().getString()) != null) {
+		if (EmbeddedDiagram.getEmbeddedType(linetoBeAdded.getString()) != null) {
 			int nested = 1;
 			while (it.hasNext()) {
 				final StringLocated s = it.next();
 				lines = lines.add(s);
-				if (EmbeddedDiagram.getEmbeddedType(s.getTrimmed().getString()) != null)
-					// if (s.getTrimmed().getString().startsWith(EmbeddedDiagram.EMBEDDED_START))
+				if (EmbeddedDiagram.getEmbeddedType(s.getString()) != null)
 					nested++;
 				else if (s.getTrimmed().getString().equals(EmbeddedDiagram.EMBEDDED_END)) {
 					nested--;

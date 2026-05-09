@@ -50,7 +50,7 @@ public class PSystemSudokuFactory extends PSystemSingleLineFactory {
 
 	@Override
 	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
-		final Matcher2 m = p.matcher(line);
+		final Matcher2 m = p.matcher(line, 0);
 		if (m.find() == false) 
 			return null;
 		

@@ -91,7 +91,7 @@ public class SkinLoader {
 					this.pop();
 					continue;
 				}
-				final Matcher2 m = p1.matcher(s.getString());
+				final Matcher2 m = p1.matcher(s.getString(), 0);
 				if (m.find() == false) {
 					throw new IllegalStateException();
 				}

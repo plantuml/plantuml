@@ -60,7 +60,7 @@ public class DataSourceImpl implements DataSource {
 					continue;
 
 				final Terminator terminator = st.hasMoreTokens() ? Terminator.NEWCOL : Terminator.NEWLINE;
-				final Matcher2 m = STRUCTURED_BLOCK_START_PATTERN.matcher(token);
+				final Matcher2 m = STRUCTURED_BLOCK_START_PATTERN.matcher(token, 0);
 				final boolean found = m.find();
 				if (found == false) {
 					addInternal(token, terminator);

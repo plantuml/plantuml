@@ -61,7 +61,7 @@ public class DriverRectangleTeaVM implements UDriver<URectangle, SvgGraphicsTeaV
 
 		applyFillColor(svg, mapper, param);
 		applyStrokeColor(svg, mapper, param);
-		svg.setStrokeWidth(param.getStroke().getThickness());
+		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 
 		final UClip clip = clipContainer.getClip();
 		if (clip != null) {

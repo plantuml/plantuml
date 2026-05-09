@@ -35,10 +35,13 @@
 package net.sourceforge.plantuml.tim.builtin;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
@@ -49,7 +52,9 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class DateFunction extends SimpleReturnFunction {
 
-	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%date", 2);
+	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%date", 3);
+
+	private static final Set<String> KNOWN_TIME_ZONE_IDS = new HashSet<>(Arrays.asList(TimeZone.getAvailableIDs()));
 
 	public TFunctionSignature getSignature() {
 		return SIGNATURE;
@@ -57,7 +62,7 @@ public class DateFunction extends SimpleReturnFunction {
 
 	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
-		return nbArg == 0 || nbArg == 1 || nbArg == 2;
+		return nbArg == 0 || nbArg == 1 || nbArg == 2 || nbArg == 3;
 	}
 
 	@Override
@@ -68,13 +73,27 @@ public class DateFunction extends SimpleReturnFunction {
 
 		final String format = values.get(0).toString();
 		final long now;
-		if (values.size() == 2)
+		if (values.size() >= 2)
 			now = 1000L * values.get(1).toInt();
 		else
 			now = System.currentTimeMillis();
 
+		final TimeZone timeZone;
+		if (values.size() == 3) {
+			final String tzId = values.get(2).toString();
+			// SimpleDateFormat#setTimeZone silently falls back to GMT for unknown ids,
+			// so validate explicitly and fail loudly to help users diagnose typos.
+			if (KNOWN_TIME_ZONE_IDS.contains(tzId) == false)
+				throw new EaterException("Unknown time zone: " + tzId, location);
+			timeZone = TimeZone.getTimeZone(tzId);
+		} else {
+			timeZone = TimeZone.getDefault();
+		}
+
 		try {
-			return TValue.fromString(new SimpleDateFormat(format).format(now));
+			final SimpleDateFormat formatter = new SimpleDateFormat(format);
+			formatter.setTimeZone(timeZone);
+			return TValue.fromString(formatter.format(now));
 		} catch (Exception e) {
 			throw new EaterException("Bad date pattern", location);
 		}

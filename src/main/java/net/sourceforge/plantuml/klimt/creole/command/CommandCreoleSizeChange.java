@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.regex.Matcher2;
@@ -44,8 +47,8 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 public class CommandCreoleSizeChange implements Command {
 
 	@Override
-	public String startingChars() {
-		return "<";
+	public Collection<String> starters() {
+		return Collections.singleton("<s");
 	}
 
 	private final Pattern2 mypattern;
@@ -65,20 +68,21 @@ public class CommandCreoleSizeChange implements Command {
 		this.mypattern = p;
 	}
 
-	public int matchingSize(String line) {
-		final Matcher2 m = mypattern.matcher(line);
-		if (m.find() == false) {
+	@Override
+	public int matchingSize(String line, int pos) {
+		final Matcher2 m = mypattern.matcher(line, pos);
+		if (m.find() == false)
 			return 0;
-		}
+
 		return m.group(2).length();
 	}
 
 	@Override
-	public String executeAndGetRemaining(ISkinSimple skinSimple, String line, StripeSimple stripe) {
-		final Matcher2 m = mypattern.matcher(line);
-		if (m.find() == false) 
+	public int executeAndAdvance(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
+		final Matcher2 m = mypattern.matcher(line, pos);
+		if (m.find() == false)
 			throw new IllegalStateException();
-		
+
 		final int size = Integer.parseInt(m.group(2));
 		final FontConfiguration fc1 = stripe.getActualFontConfiguration();
 		final FontConfiguration fc2 = fc1.changeSize(size);
@@ -86,7 +90,7 @@ public class CommandCreoleSizeChange implements Command {
 		stripe.setActualFontConfiguration(fc2);
 		stripe.analyzeAndAdd(m.group(3));
 		stripe.setActualFontConfiguration(fc1);
-		return line.substring(m.group(1).length());
+		return m.group(1).length();
 	}
 
 }

@@ -66,7 +66,7 @@ public enum DiagramType {
 		}
 	}
 
-	static public Collection<DiagramType> findStartTypes(String text) {
+	static public Collection<DiagramType> findStartTypes(CharSequence text) {
 		for (int i = 0; i < text.length(); i++) {
 			final char c = text.charAt(i);
 
@@ -91,7 +91,7 @@ public enum DiagramType {
 		return EMPTY;
 	}
 
-	private static Collection<DiagramType> getTypes(String text, final int p) {
+	private static Collection<DiagramType> getTypes(CharSequence text, final int p) {
 		switch (Character.toLowerCase(text.charAt(p))) {
 
 		case 'b':
@@ -217,8 +217,18 @@ public enum DiagramType {
 		}
 	}
 
-	static boolean check(String key, String text, int p) {
-		return text.regionMatches(true, p, key, 0, key.length());
+	static boolean check(String key, CharSequence text, int p) {
+		final int len = key.length();
+		if (p + len > text.length())
+			return false;
+		for (int i = 0; i < len; i++) {
+			char c = text.charAt(p + i);
+			if (c >= 'A' && c <= 'Z')
+				c += 'a' - 'A';
+			if (c != key.charAt(i))
+				return false;
+		}
+		return true;
 	}
 
 	public SName getStyleName() {

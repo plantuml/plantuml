@@ -65,7 +65,7 @@ public class SvgAttributes {
 	public static SvgAttributes build(String args) {
 		final SvgAttributes result = new SvgAttributes();
 		// ::comment when __HAXE__
-		final Matcher2 m = p.matcher(args);
+		final Matcher2 m = p.matcher(args, 0);
 		while (m.find())
 			result.attributes.put(m.group(1), StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(2)));
 		// ::done

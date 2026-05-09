@@ -1,4 +1,5 @@
 ---
+expected-status: 400
 expected-description: (Error)
 expected-error-line: 2
 expected-error-message: Syntax Error? (Assumed diagram type: packet)

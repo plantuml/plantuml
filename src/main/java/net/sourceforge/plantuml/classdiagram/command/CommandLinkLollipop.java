@@ -173,7 +173,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 			labelLink = arg.get("LABEL_LINK", 0);
 			if (firstLabel == null && secondLabel == null) {
 				final Pattern2 p1 = Pattern2.cmpile("^\"([^\"]+)\"([^\"]+)\"([^\"]+)\"$");
-				final Matcher2 m1 = p1.matcher(labelLink);
+				final Matcher2 m1 = p1.matcher(labelLink, 0);
 				if (m1.matches()) {
 					firstLabel = m1.group(1);
 					labelLink = StringUtils.trin(
@@ -181,7 +181,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 					secondLabel = m1.group(3);
 				} else {
 					final Pattern2 p2 = Pattern2.cmpile("^\"([^\"]+)\"([^\"]+)$");
-					final Matcher2 m2 = p2.matcher(labelLink);
+					final Matcher2 m2 = p2.matcher(labelLink, 0);
 					if (m2.matches()) {
 						firstLabel = m2.group(1);
 						labelLink = StringUtils.trin(StringUtils
@@ -189,7 +189,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 						secondLabel = null;
 					} else {
 						final Pattern2 p3 = Pattern2.cmpile("^([^\"]+)\"([^\"]+)\"$");
-						final Matcher2 m3 = p3.matcher(labelLink);
+						final Matcher2 m3 = p3.matcher(labelLink, 0);
 						if (m3.matches()) {
 							firstLabel = null;
 							labelLink = StringUtils.trin(StringUtils

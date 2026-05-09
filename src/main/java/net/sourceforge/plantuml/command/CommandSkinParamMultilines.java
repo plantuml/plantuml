@@ -56,11 +56,11 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<TitledD
 		if (hasStartingQuote(line))
 			return true;
 
-		return SkinLoader.p1.matcher(line).matches();
+		return SkinLoader.p1.matcher(line, 0).matches();
 	}
 
 	private boolean hasStartingQuote(CharSequence line) {
-		return COMMENT_SINGLE_LINE.matcher(line).matches();
+		return COMMENT_SINGLE_LINE.matcher(line, 0).matches();
 	}
 
 	public CommandExecutionResult execute(TitledDiagram diagram, BlocLines lines, ParserPass currentPass) {
@@ -68,7 +68,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<TitledD
 
 		lines = lines.expandsNewline(true);
 
-		final Matcher2 mStart = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+		final Matcher2 mStart = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString(), 0);
 		if (mStart.find() == false)
 			return CommandExecutionResult.error("Bad syntax for skinparam");
 

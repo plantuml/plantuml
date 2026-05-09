@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
@@ -61,7 +62,8 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 	private final boolean teoz;
 
 	public ComponentRoseGroupingElse(boolean teoz, Style style, CharSequence comment, ISkinParam skinParam) {
-		super(style, LineBreakStrategy.NONE, 5, 5, 1, skinParam, comment == null ? null : "[" + comment + "]");
+		super(style, LineBreakStrategy.NONE, ClockwiseTopRightBottomLeft.topRightBottomLeft(1, 5, 1, 5), skinParam,
+				comment == null ? null : "[" + comment + "]");
 
 		this.teoz = teoz;
 		this.roundCorner = getRoundCorner();
@@ -105,9 +107,9 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 		ug.apply(UTranslate.dy(1)).draw(ULine.hline(dimensionToUse.getWidth()));
 		ug = ug.apply(UStroke.simple());
 		if (teoz)
-			getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY() + 2)));
+			getTextBlock().drawU(ug.apply(new UTranslate(getOldPaddingX1(), getOldPaddingY() + 2)));
 		else
-			getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));
+			getTextBlock().drawU(ug.apply(new UTranslate(getOldPaddingX1(), getOldPaddingY())));
 	}
 
 	@Override

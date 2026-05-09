@@ -7,7 +7,7 @@ public class ChenRankDir_TestResult {
 DPI: 96
 dimension: [ 658.0000 ; 105.0000 ]
 scaleFactor: 1.0000
-seed: -4308824771398432496
+seed: -3890317289898220766
 svgLinkTarget: _top
 hoverPathColorRGB: null
 preserveAspectRatio: none

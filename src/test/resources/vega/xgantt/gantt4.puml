@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+Project starts the 20th of september 2018
+2018/09/22 is colored in red
+2018/09/23 to 2018/09/26 are colored in lightblue
+[Prototype design] as [TASK1] lasts 8 days
+[TASK1] is colored in Lavender/LightBlue
+[Prototype completed] happens at [TASK1]'s end
+[Release of new album] happens at the 29th of September 2018
+@endgantt

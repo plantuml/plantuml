@@ -44,13 +44,15 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseDelayText extends AbstractTextualComponent {
 
 	public ComponentRoseDelayText(Style style, Display stringsToDisplay, ISkinParam skinParam) {
-		super(style, LineBreakStrategy.NONE, 0, 0, 4, skinParam, stringsToDisplay, false);
+		super(style, LineBreakStrategy.NONE, ClockwiseTopRightBottomLeft.topRightBottomLeft(4, 0, 4, 0)	, skinParam,
+				stringsToDisplay, false);
 	}
 
 	@Override
@@ -64,7 +66,7 @@ public class ComponentRoseDelayText extends AbstractTextualComponent {
 		final double xpos = (dimensionToUse.getWidth() - textWidth) / 2;
 		final double ypos = (dimensionToUse.getHeight() - textHeight) / 2;
 
-		textBlock.drawU(ug.apply(new UTranslate(xpos, (ypos + getMarginY()))));
+		textBlock.drawU(ug.apply(new UTranslate(xpos, (ypos + getOldPaddingY()))));
 	}
 
 	@Override

@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -72,7 +73,8 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 	public ComponentRoseGroupingHeader(boolean teoz, Style style, Style styleHeader, Display strings,
 			ISkinParam skinParam) {
-		super(styleHeader, LineBreakStrategy.NONE, 15, 30, 1, skinParam, strings.get(0));
+		super(styleHeader, LineBreakStrategy.NONE, ClockwiseTopRightBottomLeft.topRightBottomLeft(1, 30, 1, 15),
+				skinParam, strings.get(0));
 
 		this.roundCorner = style.value(PName.RoundCorner).asInt(false);
 		this.background = teoz ? HColors.transparent() : style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
@@ -109,7 +111,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 			sup = commentMargin * 2;
 		} else {
 			final XDimension2D size = commentTextBlock.calculateDimension(stringBounder);
-			sup = getMarginX1() + commentMargin + size.getWidth();
+			sup = getOldPaddingX1() + commentMargin + size.getWidth();
 
 		}
 		return getTextWidth(stringBounder) + sup;
@@ -146,11 +148,11 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 		ug = ug.apply(UStroke.simple());
 
-		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));
+		getTextBlock().drawU(ug.apply(new UTranslate(getOldPaddingX1(), getOldPaddingY())));
 
 		if (commentTextBlock != null) {
-			final double x1 = getMarginX1() + textWidth;
-			final double y2 = getMarginY() + 1;
+			final double x1 = getOldPaddingX1() + textWidth;
+			final double y2 = getOldPaddingY() + 1;
 
 			commentTextBlock.drawU(ug.apply(new UTranslate(x1 + commentMargin, y2)));
 		}

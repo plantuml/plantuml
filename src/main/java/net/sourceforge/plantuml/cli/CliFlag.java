@@ -156,6 +156,10 @@ public enum CliFlag {
 	@CliFlagDoc(value = "Use <n> threads for processing  (auto = available processors)", usage = "--threads <n|auto>", level = 1)
 	NB_THREAD("--threads", aliases(DEPRECATED("-nbthread")), Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
+	@CliFlagDoc(value = "Runs the generation process <n> times, useful for performance testing", usage = "--loop <n>", level = 1)
+	@CliDefaultValue("1")
+	LOOP("--loop", Arity.BINARY_NEXT_ARGUMENT_VALUE),
+
 	// Metadata & assets:
 	@CliFlagDoc(value = "Extract embedded PlantUML source from PNG or SVG metadata", level = 0, newGroup = "Metadata & assets")
 	RETRIEVE_METADATA("--extract-source", aliases(DEPRECATED("-metadata")), Arity.UNARY_BOOLEAN),
@@ -268,6 +272,7 @@ public enum CliFlag {
 
 	@CliFlagDoc(value = "Generate SVG images", level = 0)
 	T_SVG("--svg", aliases(DEPRECATED("-tsvg"), DEPRECATED("-svg")), Arity.UNARY_BOOLEAN, FileFormat.SVG),
+	T_NULL("--null", Arity.UNARY_BOOLEAN, FileFormat.NULL),
 
 	@CliFlagDoc(value = "Generate ASCII art diagrams", level = 0)
 	T_TXT("--txt", aliases(DEPRECATED("-ttxt"), DEPRECATED("-txt")), Arity.UNARY_BOOLEAN, FileFormat.ATXT),
@@ -280,13 +285,13 @@ public enum CliFlag {
 
 	@CliFlagDoc(value = "Generate XMI files for class diagrams", level = 1)
 	T_XMI("--xmi", aliases(DEPRECATED("-txmi"), DEPRECATED("-xmi")), Arity.UNARY_BOOLEAN, FileFormat.XMI_STANDARD),
-	T_XMI_ARGO("--txmi:argo", aliases(DEPRECATED("-xmi:argo")), Arity.UNARY_BOOLEAN, FileFormat.XMI_ARGO),
-	T_XMI_CUSTOM("--txmi:custom", aliases(DEPRECATED("-xmi:custom")), Arity.UNARY_BOOLEAN, FileFormat.XMI_CUSTOM),
-	T_XMI_SCRIPT("--txmi:script", aliases(DEPRECATED("-xmi:script")), Arity.UNARY_BOOLEAN, FileFormat.XMI_SCRIPT),
-	T_XMI_STAR("--txmi:star", aliases(DEPRECATED("-xmi:star")), Arity.UNARY_BOOLEAN, FileFormat.XMI_STAR),
+	T_XMI_ARGO("--xmi:argo", aliases(DEPRECATED("-xmi:argo")), Arity.UNARY_BOOLEAN, FileFormat.XMI_ARGO),
+	T_XMI_CUSTOM("--xmi:custom", aliases(DEPRECATED("-xmi:custom")), Arity.UNARY_BOOLEAN, FileFormat.XMI_CUSTOM),
+	T_XMI_SCRIPT("--xmi:script", aliases(DEPRECATED("-xmi:script")), Arity.UNARY_BOOLEAN, FileFormat.XMI_SCRIPT),
+	T_XMI_STAR("--xmi:star", aliases(DEPRECATED("-xmi:star")), Arity.UNARY_BOOLEAN, FileFormat.XMI_STAR),
 
-	T_BASE64("--tbase64", Arity.UNARY_BOOLEAN, FileFormat.BASE64),
-	T_BRAILLE("--tbraille", Arity.UNARY_BOOLEAN, FileFormat.BRAILLE_PNG),
+	T_BASE64("--base64", Arity.UNARY_BOOLEAN, FileFormat.BASE64),
+	T_BRAILLE("--braille", Arity.UNARY_BOOLEAN, FileFormat.BRAILLE_PNG),
 
 
 	// ************************ stats

@@ -68,7 +68,6 @@ import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.openiconic.OpenIcon;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.teavm.TeaVM;
-import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.CharHidder;
 
@@ -78,7 +77,7 @@ public class StripeSimple implements Stripe {
 
 	final private List<Atom> atoms = new ArrayList<>();
 
-	final private Map<Character, List<Command>> commands;
+	final private Map<String, List<Command>> commands;
 
 	private HorizontalAlignment align = HorizontalAlignment.LEFT;
 
@@ -273,14 +272,15 @@ public class StripeSimple implements Stripe {
 	private void modifyStripe(String line) {
 		final StringBuilder pending = new StringBuilder();
 
-		while (line.length() > 0) {
-			final Command cmd = searchCommand(line);
+		int pos = 0;
+		while (pos < line.length()) {
+			final Command cmd = searchCommand(line, pos);
 			if (cmd == null) {
-				pending.append(line.charAt(0));
-				line = line.substring(1);
+				pending.append(line.charAt(pos));
+				pos++;
 			} else {
 				addPending(pending);
-				line = cmd.executeAndGetRemaining(skinParam, line, this);
+				pos += cmd.executeAndAdvance(skinParam, line, pos, this);
 			}
 		}
 		addPending(pending);
@@ -294,12 +294,18 @@ public class StripeSimple implements Stripe {
 		pending.setLength(0);
 	}
 
-	private Command searchCommand(String line) {
-		final List<Command> localList = commands.get(line.charAt(0));
-		if (localList != null)
-			for (Command cmd : localList)
-				if (cmd.matchingSize(line) != 0)
-					return cmd;
+	private Command searchCommand(String line, int pos) {
+		if (line.length() > pos + 2) {
+			final List<Command> localList = commands.get(line.substring(pos, pos + 2));
+			if (localList != null) {
+//				System.err.println("locallist=" + localList.size() + " " + line);
+//				for (Command cmd : localList)
+//					System.err.println("cmd=" + cmd);
+				for (Command cmd : localList)
+					if (cmd.matchingSize(line, pos) != 0)
+						return cmd;
+			}
+		}
 
 		return null;
 	}

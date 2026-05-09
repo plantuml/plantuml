@@ -7,7 +7,7 @@ public class TeozTimelineIssues_0007_TestResult {
 DPI: 96
 dimension: [ 469.7779 ; 413.0000 ]
 scaleFactor: 1.0000
-seed: 6953751912199821903
+seed: -4728447008152435729
 svgLinkTarget: _top
 hoverPathColorRGB: null
 preserveAspectRatio: none

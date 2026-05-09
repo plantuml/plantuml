@@ -83,7 +83,7 @@ public class Help extends TitledDiagram {
 		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);
 		final Sheet sheet = getSkinParam().sheet(fontConfiguration, HorizontalAlignment.LEFT, CreoleMode.FULL)
 				.createSheet(display);
-		return new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);
+		return new SheetBlock1(sheet, LineBreakStrategy.NONE, ClockwiseTopRightBottomLeft.none());
 	}
 
 }

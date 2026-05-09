@@ -2,15 +2,15 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,40 +30,39 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.project.ulang;
+package net.sourceforge.plantuml.klimt.drawing.svg;
 
-import com.plantuml.ubrex.UMatcher;
+import org.w3c.dom.Element;
 
-public class GanttParseResult {
+public class W3cElementAdapter implements IElement {
 
-	private final UMatcher matcherSubject;
-	private final UMatcher verbMatch;
-	private final UMatcher complementMatcher;
+	private final Element wrapped;
 
-	public GanttParseResult(UMatcher matcherSubject, UMatcher verbMatch, UMatcher complementMatcher) {
-		this.matcherSubject = matcherSubject;
-		this.verbMatch = verbMatch;
-		this.complementMatcher = complementMatcher;
+	public W3cElementAdapter(Element wrapped) {
+		this.wrapped = wrapped;
+	}
+
+	public Element getWrapped() {
+		return wrapped;
 	}
 
 	@Override
-	public String toString() {
-		return "\n {" + matcherSubject.toString() + "} /\n  {" + verbMatch + "} /\n   {" + complementMatcher + "}";
+	public void appendChild(IElement child) {
+		final W3cElementAdapter other = (W3cElementAdapter) child;
+		wrapped.appendChild(other.wrapped);
 	}
 
-	public UMatcher getMatcherSubject() {
-		return matcherSubject;
+	@Override
+	public void setAttribute(String name, String value) {
+		wrapped.setAttribute(name, value);
 	}
 
-	public UMatcher getVerbMatch() {
-		return verbMatch;
-	}
-
-	public UMatcher getComplementMatcher() {
-		return complementMatcher;
+	@Override
+	public void setTextContent(String value) {
+		wrapped.setTextContent(value);
 	}
 
 }

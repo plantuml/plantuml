@@ -48,10 +48,11 @@ import net.sourceforge.plantuml.klimt.creole.atom.Atom;
 import net.sourceforge.plantuml.klimt.creole.atom.AtomTree;
 import net.sourceforge.plantuml.klimt.creole.atom.AtomWithMargin;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinSimple;
 
 public class StripeTree implements Stripe {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private FontConfiguration fontConfiguration;
 	final private ISkinSimple skinParam;
@@ -83,12 +84,12 @@ public class StripeTree implements Stripe {
 			final String text = s.replaceFirst("^\\s*\\|_", "");
 			final int level = computeLevel(s);
 			cell.analyzeAndAdd(text);
-			this.tree.addCell(StripeTable.asAtom(Collections.singletonList(cell), 0), level);
+			this.tree.addCell(StripeTable.asAtom(Collections.singletonList(cell), ClockwiseTopRightBottomLeft.none()),
+					level);
 		}
 
 	}
 
-	
 	@JawsStrange
 	private int computeLevel(String s) {
 		int result = 1;

@@ -23,14 +23,14 @@ public class EndTest {
 
 	@Test
 	public void test3() {
-		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("ab 〒($)");
+		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("ab 〒$");
 		assertTrue(cut.match(TextNavigator.build("ab")).startMatch());
 	}
 
 
 	@Test
 	public void test4() {
-		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("ab 〒($)");
+		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("ab 〒$");
 		assertFalse(cut.match(TextNavigator.build("abc")).startMatch());
 	}
 

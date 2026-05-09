@@ -67,6 +67,9 @@ public class Words {
 	public final static String WITH = "with";
 	public final static String WORKING = "working";
 
+	public final static String THEN = "then";
+	public final static String IT = "it";
+
 	public static IRegex zeroOrMore(String... words) {
 		final IRegex tmp[] = new IRegex[words.length];
 		for (int i = 0; i < words.length; i++)
@@ -101,6 +104,25 @@ public class Words {
 		return new RegexConcat(tmp);
 	}
 
+	public static UBrexPart uexactly(String... words) {
+		final UBrexPart tmp[] = new UBrexPart[words.length * 2];
+		for (int i = 0; i < words.length; i++) {
+			tmp[i * 2] = UBrexLeaf.spaceOneOrMore();
+			tmp[i * 2 + 1] = new UBrexLeaf(words[i]);
+		}
+		return UBrexConcat.build(tmp);
+	}
+
+	public static UBrexPart uexactly2(String... words) {
+		final UBrexPart tmp[] = new UBrexPart[words.length * 2 - 1];
+		for (int i = 0; i < words.length; i++) {
+			if (i > 0)
+				tmp[i * 2 - 1] = UBrexLeaf.spaceOneOrMore();
+			tmp[i * 2] = new UBrexLeaf(words[i]);
+		}
+		return UBrexConcat.build(tmp);
+	}
+
 	public static UBrexPart usingle(String word) {
 		return new UBrexLeaf(word);
 	}
@@ -123,6 +145,10 @@ public class Words {
 
 	public static IRegex concat(IRegex... expressions) {
 		return new RegexConcat(expressions);
+	}
+
+	public static UBrexPart uconcat(UBrexPart... expressions) {
+		return UBrexConcat.build(expressions);
 	}
 
 }

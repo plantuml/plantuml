@@ -43,7 +43,7 @@ class TimeResolutionTest {
 	})
 	void testUbrexA(String input, String expectedDay, String expectedMonth, String expectedYear) {
 		final UnicodeBracketedExpression ubrex = TimeResolution.toUbrexA_DD_MONTH_YYYY("YEAR", "MONTH", "DAY");
-		final UMatcher matcher = ubrex.match(input);
+		final UMatcher matcher = ubrex.match(input, 0);
 		assertTrue(matcher.startMatch(), "Should match: " + input);
 		assertEquals(expectedDay.trim(), matcher.getCapture("DAY").get(0));
 		assertEquals(expectedMonth.trim(), matcher.getCapture("MONTH").get(0));
@@ -75,7 +75,7 @@ class TimeResolutionTest {
 	})
 	void testUbrexB(String input, String expectedYear, String expectedMonth, String expectedDay) {
 		final UnicodeBracketedExpression ubrex = TimeResolution.toUbrexB_YYYY_MM_DD("YEAR", "MONTH", "DAY");
-		final UMatcher matcher = ubrex.match(input);
+		final UMatcher matcher = ubrex.match(input, 0);
 		assertTrue(matcher.startMatch(), "Should match: " + input);
 		assertEquals(expectedYear.trim(), matcher.getCapture("YEAR").get(0));
 		assertEquals(expectedMonth.trim(), matcher.getCapture("MONTH").get(0));
@@ -109,7 +109,7 @@ class TimeResolutionTest {
 	})
 	void testUbrexC(String input, String expectedMonth, String expectedDay, String expectedYear) {
 		final UnicodeBracketedExpression ubrex = TimeResolution.toUbrexC_MONTH_DD_YYYY("YEAR", "MONTH", "DAY");
-		final UMatcher matcher = ubrex.match(input);
+		final UMatcher matcher = ubrex.match(input, 0);
 		assertTrue(matcher.startMatch(), "Should match: " + input);
 		assertEquals(expectedMonth.trim(), matcher.getCapture("MONTH").get(0));
 		assertEquals(expectedDay.trim(), matcher.getCapture("DAY").get(0));
@@ -125,7 +125,7 @@ class TimeResolutionTest {
 		final RegexResult regexResult = regex.matcher(input);
 
 		final UnicodeBracketedExpression ubrex = TimeResolution.toUbrexA_DD_MONTH_YYYY("YEAR", "MONTH", "DAY");
-		final UMatcher ubrexMatcher = ubrex.match(input);
+		final UMatcher ubrexMatcher = ubrex.match(input, 0);
 
 		assertTrue(ubrexMatcher.startMatch());
 		assertEquals(regexResult.get("YEAR", 0), ubrexMatcher.getCapture("YEAR").get(0));
@@ -140,7 +140,7 @@ class TimeResolutionTest {
 		final RegexResult regexResult = regex.matcher(input);
 
 		final UnicodeBracketedExpression ubrex = TimeResolution.toUbrexB_YYYY_MM_DD("YEAR", "MONTH", "DAY");
-		final UMatcher ubrexMatcher = ubrex.match(input);
+		final UMatcher ubrexMatcher = ubrex.match(input, 0);
 
 		assertTrue(ubrexMatcher.startMatch());
 		assertEquals(regexResult.get("YEAR", 0), ubrexMatcher.getCapture("YEAR").get(0));
@@ -155,7 +155,7 @@ class TimeResolutionTest {
 		final RegexResult regexResult = regex.matcher(input);
 
 		final UnicodeBracketedExpression ubrex = TimeResolution.toUbrexC_MONTH_DD_YYYY("YEAR", "MONTH", "DAY");
-		final UMatcher ubrexMatcher = ubrex.match(input);
+		final UMatcher ubrexMatcher = ubrex.match(input, 0);
 
 		assertTrue(ubrexMatcher.startMatch());
 		assertEquals(regexResult.get("YEAR", 0), ubrexMatcher.getCapture("YEAR").get(0));
@@ -171,7 +171,7 @@ class TimeResolutionTest {
 		System.err.println(regexResult);
 
 		final UnicodeBracketedExpression ubrex = TimeResolution.toUbrexA_DD_MONTH_YYYY("YEAR", "MONTH", "DAY");
-		final UMatcher ubrexMatcher = ubrex.match(input);
+		final UMatcher ubrexMatcher = ubrex.match(input, 0);
 		System.err.println(ubrexMatcher);
 
 		assertTrue(ubrexMatcher.startMatch());

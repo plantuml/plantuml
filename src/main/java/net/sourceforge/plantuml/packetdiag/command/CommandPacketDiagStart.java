@@ -33,43 +33,41 @@
  *
  * 
  */
-package net.sourceforge.plantuml.packetdiag;
-
-import java.util.Optional;
+package net.sourceforge.plantuml.packetdiag.command;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.packetdiag.PacketDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandScaleDirection extends SingleLineCommand2<PacketDiagram> {
+/**
+ * Parses the start of a {@code packetdiag} diagram block.
+ * <p>
+ * Accepts {@code packetdiag} (optional) followed by optional whitespace and an optional opening brace.
+ * This command mainly serves as a block opener for the packet diagram parser.
+ * </p>
+ */
+public class CommandPacketDiagStart extends SingleLineCommand2<PacketDiagram> {
 
-	public CommandScaleDirection() {
+	public CommandPacketDiagStart() {
 		super(getRegexConcat());
 	}
 
 	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandScaleDirection.class.getName(), RegexLeaf.start(), //
-						new RegexLeaf("scale_direction"), //
+		return RegexConcat.build(CommandPacketDiagStart.class.getName(), RegexLeaf.start(), //
+						new RegexLeaf(1, "TYPE", "(packetdiag)?"), //
 						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("="), //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf(1, "DIR", "(ltr|rtl);?"), //
-						RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
+						new RegexLeaf("\\{?"), RegexLeaf.end()); //
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-		PacketDiagram.ScaleDirection dir = Optional.ofNullable(arg.get("DIR", 0))
-						.map(String::toUpperCase)
-						.map(PacketDiagram.ScaleDirection::valueOf)
-						.orElse(PacketDiagram.ScaleDirection.LTR);
-		system.setScaleDirection(dir);
 		return CommandExecutionResult.ok();
 	}
 }

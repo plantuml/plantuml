@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
-import net.sourceforge.plantuml.directdot.PSystemDotFactory;
 import net.sourceforge.plantuml.ebnf.PSystemEbnfFactory;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorPreprocessor;
@@ -144,8 +143,7 @@ public class PSystemBuilder2 {
 		timLoader.load(rawSource);
 		BrowserLog.consoleLog(PSystemBuilder2.class, "createDiagram ok");
 		List<StringLocated> tmp = timLoader.getResultList();
-		tmp = Jaws.expands0(tmp);
-		tmp = Jaws.expandsJawsForPreprocessor(tmp);
+		Jaws.mutateExpands1(tmp);
 
 		final PreprocessingArtifact preprocessing = timLoader.getPreprocessingArtifact();
 
@@ -185,6 +183,7 @@ public class PSystemBuilder2 {
 			final Diagram sys = lastFactory.createSystem(null, umlSource, null, preprocessing);
 			if (isOk(sys))
 				return sys;
+			errors.add((PSystemError) sys);
 		}
 
 		for (PSystemFactory f : factories) {

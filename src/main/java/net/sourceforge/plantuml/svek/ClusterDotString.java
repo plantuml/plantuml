@@ -90,7 +90,7 @@ public class ClusterDotString {
 		}
 		final boolean thereALinkFromOrToGroup2 = isThereALinkFromOrToGroup(lines);
 		boolean thereALinkFromOrToGroup1 = thereALinkFromOrToGroup2;
-		final boolean useProtectionWhenThereALinkFromOrToGroup = TeaVM.isTeaVM() ? false
+		final boolean useProtectionWhenThereALinkFromOrToGroup = TeaVM.isTeaVM() ? true
 				: graphvizVersion.useProtectionWhenThereALinkFromOrToGroup();
 		if (useProtectionWhenThereALinkFromOrToGroup == false)
 			thereALinkFromOrToGroup1 = false;

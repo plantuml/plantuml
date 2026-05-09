@@ -59,7 +59,7 @@ public class ChallengeOneOrMore implements Challenge {
 				if (currentPos > position)
 					return new ChallengeResult(currentPos - position, capture);
 				else
-					return new ChallengeResult(NO_MATCH);
+					return ChallengeResult.NO_MATCH;
 			if (shallWePass.getFullCaptureLength() == 0)
 				throw new IllegalStateException("infinite loop");
 			capture = capture.merge(shallWePass.getCapture());

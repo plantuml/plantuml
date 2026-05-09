@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.Boundary;
@@ -56,7 +57,8 @@ public class ComponentRoseBoundary extends AbstractTextualComponent {
 
 	public ComponentRoseBoundary(Style style, Style stereo, Display stringsToDisplay, boolean head,
 			ISkinParam skinParam) {
-		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, skinParam, stringsToDisplay, false);
+		super(style, stereo, LineBreakStrategy.NONE, ClockwiseTopRightBottomLeft.topRightBottomLeft(0, 3, 0, 3),
+				skinParam, stringsToDisplay, false);
 		final Fashion biColor = getSymbolContext();
 
 		this.head = head;

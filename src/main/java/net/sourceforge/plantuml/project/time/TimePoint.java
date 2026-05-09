@@ -91,8 +91,9 @@ public class TimePoint implements Comparable<TimePoint>, PValue {
 		return new TimePoint(LocalDateTime.now(ZoneOffset.UTC));
 	}
 
-	public static TimePoint todayUtcAtMidnight() {
-		return new TimePoint(LocalDate.now(ZoneOffset.UTC).atStartOfDay());
+	public static TimePoint todayAtMidnight() {
+		return new TimePoint(LocalDate.now().atStartOfDay());
+
 	}
 
 	private TimePoint(LocalDateTime utcDateTime) {

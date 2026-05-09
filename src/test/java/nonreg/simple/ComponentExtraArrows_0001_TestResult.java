@@ -7,7 +7,7 @@ public class ComponentExtraArrows_0001_TestResult {
 DPI: 96
 dimension: [ 406.0000 ; 152.0000 ]
 scaleFactor: 1.0000
-seed: -2222432377358940502
+seed: 6212256799898977158
 svgLinkTarget: _top
 hoverPathColorRGB: null
 preserveAspectRatio: none

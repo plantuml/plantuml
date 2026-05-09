@@ -71,6 +71,7 @@ import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -571,7 +572,13 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			// block = StringWithArrow.addSeveralMagicArrows(link.getLabel(), this, font,
 			// alignment, skinParam);
 			// else
-			block = link.getLabel().create0(font, alignment, skinParam, skinParam.maxMessageSize(),
+			final Style arrowStyle = getDefaultStyleDefinitionArrow(link.getStereotype(),
+					skinParam.getDiagramType().getStyleName()).getMergedStyle(link.getStyleBuilder());
+			final LineBreakStrategy styleWidth = arrowStyle.wrapWidth();
+			final LineBreakStrategy wrapWidth = styleWidth.getMaxWidth() > 0
+					? styleWidth
+					: skinParam.maxMessageSize();
+			block = link.getLabel().create0(font, alignment, skinParam, wrapWidth,
 					CreoleMode.SIMPLE_LINE, null, null);
 
 			labelOnly = addVisibilityModifier(block, link, skinParam);

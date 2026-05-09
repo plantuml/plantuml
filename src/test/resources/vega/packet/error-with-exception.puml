@@ -1,4 +1,5 @@
 ---
+expected-status: 503
 output: debug
 expected-description: Packet Diagram
 expected-exception: IllegalArgumentException

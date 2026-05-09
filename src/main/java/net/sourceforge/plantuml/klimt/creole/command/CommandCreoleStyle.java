@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.plantuml.ubrex.UMatcher;
@@ -50,34 +51,41 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 public class CommandCreoleStyle implements Command {
 
 	@Override
-	public String startingChars() {
-		return "</*_~-";
+	public Collection<String> starters() {
+		return style.starters(isCreolePure);
 	}
 
 	private final FontStyle style;
 	private final boolean tryExtendedColor;
+	private final boolean isCreolePure;
 	private final UnicodeBracketedExpression ubrex;
+
+	@Override
+	public String toString() {
+		return super.toString() + " " + style + " " + tryExtendedColor + " " + isCreolePure;
+	}
 
 	public static Command createCreole(FontStyle style) {
 		final String ubrexString = style.getUbrexCreoleSyntax() + "〶$V=〄+〴.->〘" + style.getUbrexCreoleSyntax() + "〙";
-		return new CommandCreoleStyle(ubrexString, style, false);
+		return new CommandCreoleStyle(ubrexString, style, false, true);
 	}
 
 	public static Command createLegacy(FontStyle style) {
 		final String ubrexString = style.getUbrexActivationPattern() + "〶$V=〄>〘" + style.getUbrexDeactivationPattern()
 				+ "〙";
-		return new CommandCreoleStyle(ubrexString, style, style.canHaveExtendedColor());
+		return new CommandCreoleStyle(ubrexString, style, style.canHaveExtendedColor(), false);
 	}
 
 	public static Command createLegacyEol(FontStyle style) {
 		final String ubrexString = style.getUbrexActivationPattern() + "〶$V=〇+〴.";
-		return new CommandCreoleStyle(ubrexString, style, style.canHaveExtendedColor());
+		return new CommandCreoleStyle(ubrexString, style, style.canHaveExtendedColor(), false);
 	}
 
-	private CommandCreoleStyle(String ubrexString, FontStyle style, boolean tryExtendedColor) {
+	private CommandCreoleStyle(String ubrexString, FontStyle style, boolean tryExtendedColor, boolean isCreolePure) {
 		this.ubrex = UnicodeBracketedExpression.build(ubrexString);
 		this.style = style;
 		this.tryExtendedColor = tryExtendedColor;
+		this.isCreolePure = isCreolePure;
 	}
 
 	private HColor getExtendedColor(UMatcher matcher) {
@@ -91,8 +99,8 @@ public class CommandCreoleStyle implements Command {
 	}
 
 	@Override
-	public String executeAndGetRemaining(ISkinSimple skinSimple, final String line, StripeSimple stripe) {
-		final UMatcher matcher = ubrex.match(line);
+	public int executeAndAdvance(ISkinSimple skinSimple, final String line, int pos, StripeSimple stripe) {
+		final UMatcher matcher = ubrex.match(line, pos);
 
 		final List<String> value = matcher.getCapture("V");
 		final String accepted = matcher.getAcceptedMatch();
@@ -105,11 +113,12 @@ public class CommandCreoleStyle implements Command {
 
 		stripe.analyzeAndAdd(value.get(0));
 		stripe.setActualFontConfiguration(fc1);
-		return line.substring(accepted.length());
+		return accepted.length();
 	}
 
-	public int matchingSize(String line) {
-		final UMatcher matcher = ubrex.match(line);
+	@Override
+	public int matchingSize(String line, int pos) {
+		final UMatcher matcher = ubrex.match(line, pos);
 		final List<String> value = matcher.getCapture("V");
 		if (value.size() == 0)
 			return 0;

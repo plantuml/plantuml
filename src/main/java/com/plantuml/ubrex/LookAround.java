@@ -35,11 +35,11 @@
 package com.plantuml.ubrex;
 
 public enum LookAround {
-	LOOK_AHEAD_POSITIVE("(=)"), //
-	LOOK_AHEAD_NEGATIVE("(!)"), //
-	LOOK_BEHIND_POSITIVE("(<=)"), //
-	LOOK_BEHIND_NEGATIVE("(<!)"), //
-	END_OF_TEXT("($)");
+	LOOK_AHEAD_POSITIVE("="), //
+	LOOK_AHEAD_NEGATIVE("!"), //
+	LOOK_BEHIND_POSITIVE("<="), //
+	LOOK_BEHIND_NEGATIVE("<!"), //
+	END_OF_TEXT("$");
 
 	private final String definition;
 
@@ -49,22 +49,19 @@ public enum LookAround {
 
 	public static LookAround from(CharSequence input) {
 		final char ch0 = input.charAt(0);
-		final char ch1 = input.charAt(1);
-		if (ch0 != '(')
-			return null;
 
-		if (ch1 == '$')
+		if (ch0 == '$')
 			return END_OF_TEXT;
-		if (ch1 == '=')
+		if (ch0 == '=')
 			return LOOK_AHEAD_POSITIVE;
-		if (ch1 == '!')
+		if (ch0 == '!')
 			return LOOK_AHEAD_NEGATIVE;
 
-		if (ch1 == '<') {
-			final char ch2 = input.charAt(2);
-			if (ch2 == '=')
+		if (ch0 == '<') {
+			final char ch1 = input.charAt(1);
+			if (ch1 == '=')
 				return LOOK_BEHIND_POSITIVE;
-			if (ch2 == '!')
+			if (ch1 == '!')
 				return LOOK_BEHIND_NEGATIVE;
 		}
 

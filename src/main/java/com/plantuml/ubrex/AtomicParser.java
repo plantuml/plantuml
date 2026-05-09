@@ -34,6 +34,7 @@
  */
 package com.plantuml.ubrex;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -71,7 +72,7 @@ public class AtomicParser {
 		case '【':
 			return Collections.singletonList(manageAlternative(input));
 		case '〇':
-			return Collections.singletonList(manageQuantifier(input));
+			return manageQuantifier(input);
 		case '〄':
 			return manageUpTo(input);
 		case '〘':
@@ -81,7 +82,7 @@ public class AtomicParser {
 		case '〴':
 			return Collections.singletonList(manageClass(input));
 		case '〶':
-			return Collections.singletonList(manageNamed(input));
+			return manageNamed(input);
 		case '〃':
 			return Collections.singletonList(manageDoubleQuote(input));
 		default:
@@ -120,33 +121,40 @@ public class AtomicParser {
 		return new ChallengeCharClass(result);
 	}
 
-	private Challenge manageQuantifier(TextNavigator input) {
+	private List<Challenge> manageQuantifier(TextNavigator input) {
 		final char operator = input.charAt(1);
 		input.jump(2);
 		if (operator == '{')
-			return manageQuantifierBracket(input);
+			return Collections.singletonList(manageQuantifierBracket(input));
 		else if (operator == 'l')
 			return manageQuantifierLazzy(input);
 
 		final Challenge origin = parseSingle(input);
 		switch (operator) {
 		case '+':
-			return new ChallengeOneOrMore(origin);
+			return Collections.singletonList(new ChallengeOneOrMore(origin));
 		case '*':
-			return new ChallengeZeroOrMore(origin);
+			return Collections.singletonList(new ChallengeZeroOrMore(origin));
 		case '?':
-			return new ChallengeOptional(origin);
+			return Collections.singletonList(new ChallengeOptional(origin));
 		default:
 			throw new UnsupportedOperationException("wip01");
 		}
 	}
 
-	private Challenge manageQuantifierLazzy(TextNavigator input) {
+	private List<Challenge> manageQuantifierLazzy(TextNavigator input) {
 		input.jump(1);
 		final Challenge origin = parseSingle(input);
 		final CompositeList remaining = CompositeList.parseAndBuildFromTextNavigator(input);
 
-		return new ChallengeLazzyOneOrMore(origin, remaining);
+		// The lazzy quantifier only peeks at remaining as a stop condition.
+		// The remaining challenges are returned as siblings, so they get
+		// matched normally by the parent CompositeList/CompositeNamed.
+		final List<Challenge> result = new ArrayList<>();
+		result.add(new ChallengeLazzyOneOrMore(origin, remaining));
+		for (Challenge c : remaining.getInternalChallengesList())
+			result.add(c);
+		return result;
 	}
 
 	private Challenge manageQuantifierBracket(TextNavigator input) {
@@ -230,7 +238,7 @@ public class AtomicParser {
 		throw new UnsupportedOperationException("wip32");
 	}
 
-	private Challenge manageNamed(TextNavigator input) {
+	private List<Challenge> manageNamed(TextNavigator input) {
 		final StringBuilder name = new StringBuilder();
 		if (input.charAt(1) != '$')
 			throw new UnsupportedOperationException("varname must have a $");
@@ -242,8 +250,18 @@ public class AtomicParser {
 			if (ch == '=') {
 				if (name.length() == 0)
 					throw new UnsupportedOperationException("no name!");
-				final CompositeNamed result = new CompositeNamed(name.toString(), parse(input));
-
+				final List<Challenge> parsed = parse(input);
+				// The first element is the named group's content.
+				// Any additional elements (e.g. siblings from a lazzy quantifier)
+				// must live outside the named group, at the parent level.
+				final CompositeNamed named = new CompositeNamed(name.toString(),
+						Collections.singletonList(parsed.get(0)));
+				if (parsed.size() == 1)
+					return Collections.singletonList(named);
+				final List<Challenge> result = new ArrayList<>();
+				result.add(named);
+				for (int i = 1; i < parsed.size(); i++)
+					result.add(parsed.get(i));
 				return result;
 			}
 			if (Character.isJavaIdentifierPart(ch))

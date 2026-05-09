@@ -98,13 +98,22 @@ public class DayPattern {
 	}
 
 	public LocalDate getDay(UMatcher arg) {
-		return resultA(arg);
+		if (arg.get(dayKeyA, 0) != null)
+			return resultA(arg);
+
+		if (arg.get(dayKeyB, 0) != null)
+			return resultB(arg);
+
+		if (arg.get(dayKeyC, 0) != null)
+			return resultC(arg);
+
+		return null;
 	}
 
 	private LocalDate resultA(UMatcher arg) {
-		final int day = Integer.parseInt(arg.getCapture(dayKeyA).get(0));
-		final Month month = MonthUtils.fromString(arg.getCapture(monthKeyA).get(0));
-		final int year = Integer.parseInt(arg.getCapture(yearKeyA).get(0));
+		final int day = Integer.parseInt(arg.get(dayKeyA, 0));
+		final Month month = MonthUtils.fromString(arg.get(monthKeyA, 0));
+		final int year = Integer.parseInt(arg.get(yearKeyA, 0));
 		return LocalDate.of(year, month, day);
 	}
 
@@ -112,6 +121,13 @@ public class DayPattern {
 		final int day = Integer.parseInt(arg.get(dayKeyA, 0));
 		final Month month = MonthUtils.fromString(arg.get(monthKeyA, 0));
 		final int year = Integer.parseInt(arg.get(yearKeyA, 0));
+		return LocalDate.of(year, month, day);
+	}
+
+	private LocalDate resultB(UMatcher arg) {
+		final int day = Integer.parseInt(arg.get(dayKeyB, 0));
+		final int month = Integer.parseInt(arg.get(monthKeyB, 0));
+		final int year = Integer.parseInt(arg.get(yearKeyB, 0));
 		return LocalDate.of(year, month, day);
 	}
 
@@ -123,6 +139,13 @@ public class DayPattern {
 	}
 
 	private LocalDate resultC(RegexResult arg) {
+		final int day = Integer.parseInt(arg.get(dayKeyC, 0));
+		final Month month = MonthUtils.fromString(arg.get(monthKeyC, 0));
+		final int year = Integer.parseInt(arg.get(yearKeyC, 0));
+		return LocalDate.of(year, month, day);
+	}
+
+	private LocalDate resultC(UMatcher arg) {
 		final int day = Integer.parseInt(arg.get(dayKeyC, 0));
 		final Month month = MonthUtils.fromString(arg.get(monthKeyC, 0));
 		final int year = Integer.parseInt(arg.get(yearKeyC, 0));

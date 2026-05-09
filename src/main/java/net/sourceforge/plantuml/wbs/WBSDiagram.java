@@ -124,7 +124,7 @@ public class WBSDiagram extends TitledDiagram {
 
 	public CommandExecutionResult addIdea(String code, HColor backColor, int level, String label, Direction direction,
 			IdeaShape shape) {
-		final Matcher2 m = patternStereotype.matcher(label);
+		final Matcher2 m = patternStereotype.matcher(label, 0);
 		String stereotype = null;
 		if (m.matches()) {
 			label = m.group(1);

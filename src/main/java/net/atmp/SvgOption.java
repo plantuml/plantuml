@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.OptionKey;
-import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.style.LengthAdjust;
 
 public class SvgOption {
@@ -76,16 +75,6 @@ public class SvgOption {
 	}
 
 	private SvgOption() {
-	}
-
-	// This method will be removed once Pragma SVGNEWDATA will be removed
-
-	public Pragma pragma;
-
-	@Deprecated
-	public SvgOption withPragma(Pragma pragma) {
-		this.pragma = pragma;
-		return this;
 	}
 
 	public SvgOption withConfigurationStore(ConfigurationStore<OptionKey> options) {

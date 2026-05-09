@@ -51,13 +51,13 @@ public class ChallengeLookBehind implements Challenge {
 		switch (ahead) {
 		case LOOK_BEHIND_POSITIVE:
 			if (tmp < 0)
-				return new ChallengeResult(NO_MATCH);
-			return new ChallengeResult(0);
+				return ChallengeResult.NO_MATCH;
+			return ChallengeResult.ZERO;
 
 		case LOOK_BEHIND_NEGATIVE:
 			if (tmp < 0)
-				return new ChallengeResult(0);
-			return new ChallengeResult(NO_MATCH);
+				return ChallengeResult.ZERO;
+			return ChallengeResult.NO_MATCH;
 		}
 		throw new IllegalStateException();
 	}

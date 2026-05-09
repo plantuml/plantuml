@@ -7,7 +7,7 @@ public class ChenMovieExtended_TestResult {
 DPI: 96
 dimension: [ 1610.0000 ; 714.0000 ]
 scaleFactor: 1.0000
-seed: -8173812650123393805
+seed: 7425993312804225199
 svgLinkTarget: _top
 hoverPathColorRGB: null
 preserveAspectRatio: none

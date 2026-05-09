@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import java.util.List;
-
 import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
@@ -80,17 +78,17 @@ public class ComplementDuration implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<? extends Object> ugetMe(GanttDiagram system, UMatcher arg) {
+	public Failable<Load> ugetMe(GanttDiagram system, UMatcher arg) {
 
-		final int firstValue = Integer.parseInt(arg.getCapture("CNUM1").get(0));
-		final String firstUnit = arg.getCapture("CUNIT1").get(0);
+		final int firstValue = Integer.parseInt(arg.get("CNUM1", 0));
+		final String firstUnit = arg.get("CUNIT1", 0);
 		final int[] firstDaysAndHours = toDaysAndHours(system, firstValue, firstUnit);
 
 		int[] secondDaysAndHours = { 0, 0 };
-		final List<String> secondValue = arg.getCapture("CNUM2");
-		if (secondValue.size() > 0) {
-			final int value = Integer.parseInt(secondValue.get(0));
-			final String unit = arg.getCapture("CUNIT2").get(0);
+		final String secondValue = arg.get("CNUM2", 0);
+		if (secondValue != null) {
+			final int value = Integer.parseInt(secondValue);
+			final String unit = arg.get("CUNIT2", 0);
 			secondDaysAndHours = toDaysAndHours(system, value, unit);
 		}
 

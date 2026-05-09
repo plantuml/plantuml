@@ -7,7 +7,7 @@ public class SequenceLayout_0004_TestResult {
 DPI: 96
 dimension: [ 232.7480 ; 193.0000 ]
 scaleFactor: 1.0000
-seed: 673835451655751822
+seed: -7561087626620559922
 svgLinkTarget: _top
 hoverPathColorRGB: null
 preserveAspectRatio: none

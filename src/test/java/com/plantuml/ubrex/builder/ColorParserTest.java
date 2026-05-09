@@ -33,7 +33,7 @@ class ColorParserTest {
 				new UBrexOneOrMore(UBrexConcat.build( //
 						new UBrexLeaf("【text┇back┇header┇line.dashed┇line.dotted┇line.bold┇line┇shadowing】"), //
 						new UBrexLeaf("# 〇?〘 〇+〴w 〇?〘 「-\\|/」 〇+〴w 〙  〙"), //
-						new UBrexLeaf("【 ; ┇ 〒(!)「〴w;:.」 】"))) //
+						new UBrexLeaf("【 ; ┇ 〒!「〴w;:.」 】"))) //
 		);
 		return cut;
 	}
@@ -47,22 +47,22 @@ class ColorParserTest {
 	void testCut() {
 		UnicodeBracketedExpression cut = cutPart();
 		// 200
-		assertTrue(cut.match("#foo-bar;text#foo;").exactMatch());
-		assertTrue(cut.match("#foo;text#foo;").exactMatch());
+		assertTrue(cut.match("#foo-bar;text#foo;", 0).exactMatch());
+		assertTrue(cut.match("#foo;text#foo;", 0).exactMatch());
 
 		// 201
-		assertTrue(cut.match("#foo-bar;header#foo;").exactMatch());
+		assertTrue(cut.match("#foo-bar;header#foo;", 0).exactMatch());
 
 		// 202
-		assertTrue(cut.match("#foo-bar;header#foo").exactMatch());
+		assertTrue(cut.match("#foo-bar;header#foo", 0).exactMatch());
 		
 		// 203
-		assertTrue(cut.match("#foo-bar;header#foo,").startMatch());
-		assertFalse(cut.match("#foo-bar;header#foo,").exactMatch());
+		assertTrue(cut.match("#foo-bar;header#foo,", 0).startMatch());
+		assertFalse(cut.match("#foo-bar;header#foo,", 0).exactMatch());
 
 		// 100
-		assertTrue(cut.match("#foo-bar").exactMatch());
-		assertTrue(cut.match("#foo").exactMatch());
+		assertTrue(cut.match("#foo-bar", 0).exactMatch());
+		assertTrue(cut.match("#foo", 0).exactMatch());
 
 
 	}
@@ -70,14 +70,14 @@ class ColorParserTest {
 	@Test
 	void test200() {
 		UnicodeBracketedExpression cut = cutPart2();
-		assertTrue(cut.match("#foo-bar;text#foo;").exactMatch());
-		assertTrue(cut.match("#foo;text#foo;").exactMatch());
+		assertTrue(cut.match("#foo-bar;text#foo;", 0).exactMatch());
+		assertTrue(cut.match("#foo;text#foo;", 0).exactMatch());
 	}
 
 	@Test
 	void test201() {
 		UnicodeBracketedExpression cut = cutPart2();
-		final UMatcher match = cut.match("#foo-bar;header#foo;");
+		final UMatcher match = cut.match("#foo-bar;header#foo;", 0);
 		assertTrue(match.exactMatch());
 		// assertEquals("[#foo-bar;header#foo;]", match.getCapture("COLOR").toString());
 	}
@@ -85,7 +85,7 @@ class ColorParserTest {
 	@Test
 	void test202() {
 		UnicodeBracketedExpression cut = cutPart2();
-		final UMatcher match = cut.match("#foo-bar;header#foo");
+		final UMatcher match = cut.match("#foo-bar;header#foo", 0);
 		assertTrue(match.exactMatch());
 		// assertEquals("[#foo-bar;header#foo]", match.getCapture("COLOR").toString());
 	}
@@ -93,7 +93,7 @@ class ColorParserTest {
 	@Test
 	void test203() {
 		UnicodeBracketedExpression cut = cutPart2();
-		final UMatcher match = cut.match("#foo-bar;header#foo,");
+		final UMatcher match = cut.match("#foo-bar;header#foo,", 0);
 		assertTrue(match.startMatch());
 		assertFalse(match.exactMatch());
 		// assertEquals("[#foo-bar;header#foo]", match.getCapture("COLOR").toString());
@@ -102,8 +102,8 @@ class ColorParserTest {
 	@Test
 	void test100() {
 		UnicodeBracketedExpression cut = cutPart1();
-		assertTrue(cut.match("#foo-bar").exactMatch());
-		assertTrue(cut.match("#foo").exactMatch());
+		assertTrue(cut.match("#foo-bar", 0).exactMatch());
+		assertTrue(cut.match("#foo", 0).exactMatch());
 	}
 
 }

@@ -1,0 +1,15 @@
+---
+allow-failure: true
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 5
+expected-error-message: No matching verb phrase (Assumed diagram type: gantt)
+---
+@startgantt
+[Prototype design] lasts 13 days
+[Test prototype] lasts 4 days
+[Test prototype] starts 3 days after [Prototype design]'s start
+[foo] lasts 3 days and ends at [Test prototype]'s end
+[foo2] lasts 3 days and starts 2 days before [foo]'s start and foo
+@endgantt

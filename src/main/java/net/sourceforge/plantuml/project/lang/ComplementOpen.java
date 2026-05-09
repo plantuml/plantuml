@@ -56,14 +56,16 @@ public class ComplementOpen implements Something<GanttDiagram> {
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
-		return new UBrexNamed("OPEN", UBrexConcat.build( //
-				new UBrexLeaf("open〇?e〇?d"), //
-				new UBrexOptional(new UBrexLeaf(" for " + SubjectTask.UBREX_TASK_CODE))));
+		return new UBrexNamed("OPEN", //
+				UBrexConcat.build( //
+						new UBrexLeaf("open〇?e〇?d"), //
+						new UBrexOptional(
+								UBrexConcat.build(new UBrexLeaf("∙for∙"), SubjectTask.taskCode("FOO")))));
 	}
 
 	@Override
-	public Failable<? extends Object> ugetMe(GanttDiagram diagram, UMatcher arg) {
-		final String value = arg.getCapture("OPEN").get(0);
+	public Failable<String> ugetMe(GanttDiagram diagram, UMatcher arg) {
+		final String value = arg.get("OPEN", 0);
 		final int x = value.indexOf('[');
 		if (x > 0) {
 			final int y = value.lastIndexOf(']');

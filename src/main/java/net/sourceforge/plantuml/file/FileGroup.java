@@ -71,7 +71,7 @@ public class FileGroup {
 	}
 
 	private void recurse() {
-		final Matcher2 m = predirPath.matcher(pattern);
+		final Matcher2 m = predirPath.matcher(pattern, 0);
 		final boolean ok = m.find();
 		if (ok == false)
 			throw new IllegalArgumentException();
@@ -130,7 +130,7 @@ public class FileGroup {
 
 	private void initWithSimpleStar() {
 		if (TeaVM.a()) assert pattern.indexOf("**") == -1;
-		final Matcher2 m = noStarInDirectory.matcher(pattern);
+		final Matcher2 m = noStarInDirectory.matcher(pattern, 0);
 		if (m.find()) {
 			File dir = new File(".");
 			if (m.group(1) != null) {

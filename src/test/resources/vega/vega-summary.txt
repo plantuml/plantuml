@@ -1,27 +1,21 @@
 ===========================================
  VEGA TEST SUMMARY
 ===========================================
- Total:    83
- Passed:   66
+ Total:    92
+ Passed:   81
  Failed:   0
- Skipped:  17
+ Skipped:  11
 ===========================================
  Skipped tests:
    - mvp/hello-debug-skipped.puml
-   - packet/R03.02-node_height_80.puml
-   - packet/R03.04-node_height_80_with_range.puml
-   - packet/R03.06-node_height_80_at_end_with_range.puml
    - packet/R07.01-Range_Error1.puml
    - packet/R07.02-Range_Error2.puml
    - packet/R11.01-len_0.puml
    - packet/R11.07-len_0_8.puml
-   - packet/R22.01-same_height_default.puml
-   - packet/R22.02-same_height_true.puml
-   - packet/R22.03-same_height_false.puml
-   - th/th1.puml
    - tikz/tikz-1926-svg.puml
    - tikz/tikz-1926.puml
    - tikz/tikz-scale-down.puml
    - tikz/tikz-scale-nested-scale.puml
    - tikz/tikz-scale-up.puml
+   - xgantt/gantt2.puml
 ===========================================

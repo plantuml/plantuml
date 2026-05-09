@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
 
 public class CliOptions {
-	
+
 	// ::remove file when __HAXE__
 
 	private final List<String> config = new ArrayList<>();
@@ -260,7 +260,6 @@ public class CliOptions {
 		return result;
 	}
 
-
 	private Map<String, String> defines() {
 		final Map<String, String> result = flags.getMap(CliFlag.DEFINE, CliFlag.DEFINE_LONG);
 		return Collections.unmodifiableMap(result);
@@ -303,8 +302,6 @@ public class CliOptions {
 		return fileFormatOption;
 	}
 
-
-
 	public final int getNbThreads() {
 		final String value = flags.getString(CliFlag.NB_THREAD);
 		if (value != null && "auto".equalsIgnoreCase(value) == false)
@@ -315,18 +312,22 @@ public class CliOptions {
 		return defaultNbThreads();
 	}
 
-
+	public final int getLoop() {
+		final String value = flags.getString(CliFlag.LOOP);
+		try {
+			return Integer.parseInt(value);
+		} catch (Throwable t) {
+		}
+		return 1;
+	}
 
 	public static int defaultNbThreads() {
 		return Runtime.getRuntime().availableProcessors();
 	}
 
-
 	public final boolean isFailfastOrFailfast2() {
 		return isTrue(CliFlag.FAIL_FAST) || isTrue(CliFlag.FAIL_FAST2);
 	}
-
-
 
 	public final int getImageIndex() {
 		try {

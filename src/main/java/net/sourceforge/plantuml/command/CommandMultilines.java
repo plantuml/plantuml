@@ -59,14 +59,14 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 		if (isCommandForbidden(lines))
 			return CommandControl.NOT_OK;
 
-		Matcher2 m1 = starting.matcher(lines.getFirst().getTrimmed().getString());
+		Matcher2 m1 = starting.matcher(lines.getFirst().getTrimmed().getString(), 0);
 		if (m1.matches() == false)
 			return CommandControl.NOT_OK;
 
 		if (lines.size() == 1)
 			return CommandControl.OK_PARTIAL;
 
-		m1 = ending.matcher(lines.getLast().getTrimmed().getString());
+		m1 = ending.matcher(lines.getLast().getTrimmed().getString(), 0);
 		if (m1.matches() == false)
 			return CommandControl.OK_PARTIAL;
 

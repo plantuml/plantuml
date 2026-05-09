@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.klimt.creole.legacy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,10 +66,10 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class CommandCreoleBuilder {
 
-	final private Map<Character, List<Command>> commands = new HashMap<>();
-
 	public static CommandCreoleBuilder FULL = new CommandCreoleBuilder(CreoleMode.FULL);
 	public static CommandCreoleBuilder OTHER = new CommandCreoleBuilder(null);
+
+	private final Map<String, List<Command>> commands = new HashMap<>();
 
 	private CommandCreoleBuilder(CreoleMode modeSimpleLine) {
 
@@ -124,19 +125,12 @@ public class CommandCreoleBuilder {
 	}
 
 	private void addCommand(Command cmd) {
-		final String starters = cmd.startingChars();
-		for (int i = 0; i < starters.length(); i++) {
-			final char ch = starters.charAt(i);
-			List<Command> localList = commands.get(ch);
-			if (localList == null) {
-				localList = new ArrayList<Command>();
-				commands.put(ch, localList);
-			}
-			localList.add(cmd);
-		}
+		for (String starter : cmd.starters())
+			commands.computeIfAbsent(starter, key -> new ArrayList<>()).add(cmd);
+
 	}
 
-	public Map<Character, List<Command>> getMap() {
+	public Map<String, List<Command>> getMap() {
 		return commands;
 	}
 

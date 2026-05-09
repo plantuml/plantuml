@@ -61,7 +61,7 @@ public class Stereostyles {
 
 	public static Stereostyles build(String label) {
 		final Stereostyles result = new Stereostyles();
-		final Matcher2 m = p.matcher(label);
+		final Matcher2 m = p.matcher(label, 0);
 		while (m.find())
 			result.names.add(m.group(1));
 

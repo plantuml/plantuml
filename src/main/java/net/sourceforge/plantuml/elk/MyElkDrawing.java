@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.decoration.symbol.USymbolFolder;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkEdge;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkNode;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -268,7 +269,13 @@ class MyElkDrawing implements TextBlock {
 			// block = StringWithArrow.addSeveralMagicArrows(link.getLabel(), this, font,
 			// alignment, skinParam);
 			// else
-			block = link.getLabel().create0(font, alignment, skinParam, skinParam.maxMessageSize(),
+			final Style arrowStyle = getDefaultStyleDefinitionArrow(link.getStereotype(),
+					skinParam.getDiagramType().getStyleName()).getMergedStyle(link.getStyleBuilder());
+			final LineBreakStrategy styleWidth = arrowStyle.wrapWidth();
+			final LineBreakStrategy wrapWidth = styleWidth.getMaxWidth() > 0
+					? styleWidth
+					: skinParam.maxMessageSize();
+			block = link.getLabel().create0(font, alignment, skinParam, wrapWidth,
 					CreoleMode.SIMPLE_LINE, null, null);
 
 			labelOnly = addVisibilityModifier(block, link, skinParam);

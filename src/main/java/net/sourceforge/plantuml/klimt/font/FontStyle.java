@@ -35,9 +35,42 @@
  */
 package net.sourceforge.plantuml.klimt.font;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 public enum FontStyle {
 
 	PLAIN, ITALIC, BOLD, UNDERLINE, STRIKE, WAVE, BACKCOLOR;
+
+	public Collection<String> starters(boolean isCreolePure) {
+		switch (this) {
+		case PLAIN:
+			return Arrays.asList("<p", "<P");
+		case ITALIC:
+			if (isCreolePure)
+				return Arrays.asList("//");
+			return Arrays.asList("<i", "<I");
+		case BOLD:
+			if (isCreolePure)
+				return Arrays.asList("**");
+			return Arrays.asList("<b", "<B");
+		case UNDERLINE:
+			if (isCreolePure)
+				return Arrays.asList("__");
+			return Arrays.asList("<u", "<U");
+		case STRIKE:
+			if (isCreolePure)
+				return Arrays.asList("--");
+			return Arrays.asList("<s", "<S", "<d", "<D");
+		case WAVE:
+			if (isCreolePure)
+				return Arrays.asList("~~");
+			return Arrays.asList("<w");
+		case BACKCOLOR:
+			return Arrays.asList("<b", "<B");
+		}
+		throw new IllegalStateException();
+	}
 
 	public UFont mutateFont(UFont font) {
 		if (this == PLAIN)

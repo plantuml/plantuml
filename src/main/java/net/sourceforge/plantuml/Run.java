@@ -88,7 +88,7 @@ import net.sourceforge.plantuml.utils.Obfuscate;
 import net.sourceforge.plantuml.version.Version;
 
 public class Run {
-	
+
 	// ::remove file when __HAXE__
 
 	public static void main(String[] argsArray)
@@ -219,13 +219,14 @@ public class Run {
 
 			incTotal(runner.size());
 
-			if (option.isTrue(CliFlag.COMPUTE_URL)) {
-				runner.computeUrl();
-				return;
-			} else if (option.isTrue(CliFlag.FAIL_FAST2) && runner.checkError()) {
-				// There are some errors, we won't do processInputsInParallel()
-			} else
-				runner.processInputsInParallel();
+			for (int i = 0; i < option.getLoop(); i++)
+				if (option.isTrue(CliFlag.COMPUTE_URL)) {
+					runner.computeUrl();
+					return;
+				} else if (option.isTrue(CliFlag.FAIL_FAST2) && runner.checkError()) {
+					// There are some errors, we won't do processInputsInParallel()
+				} else
+					runner.processInputsInParallel();
 
 		} catch (CliParsingException e) {
 			System.err.println(e.getMessage());

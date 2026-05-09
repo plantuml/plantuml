@@ -14,7 +14,7 @@ class UBrexLeafTest {
 	@Test
 	void test1() {
 		UBrexLeaf cut = new UBrexLeaf("else");
-		UMatcher m = cut.match("else");
+		UMatcher m = cut.match("else", 0);
 
 		assertTrue(m.startMatch());
 		assertTrue(m.exactMatch());
@@ -23,7 +23,7 @@ class UBrexLeafTest {
 	@Test
 	void test2() {
 		UBrexLeaf cut = new UBrexLeaf("else");
-		UMatcher m = cut.match("elsex");
+		UMatcher m = cut.match("elsex", 0);
 
 		assertTrue(m.startMatch());
 		assertFalse(m.exactMatch());
@@ -75,8 +75,8 @@ class UBrexLeafTest {
 				new UBrexLeaf("else"), //
 				UBrexLeaf.end() //
 		);
-		assertTrue(cut.match("else").exactMatch());
-		assertFalse(cut.match("else ").exactMatch());
+		assertTrue(cut.match("else", 0).exactMatch());
+		assertFalse(cut.match("else ", 0).exactMatch());
 
 	}
 

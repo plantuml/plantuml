@@ -100,10 +100,9 @@ public class EmbeddedDiagram extends TextBlockMemoized implements Line, Atom {
 		int nested = 1;
 		while (it.hasNext()) {
 			final CharSequence s2 = it.next();
-			if (EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(s2)) != null)
-				// if (StringUtils.trinNoTrace(s2).startsWith(EmbeddedDiagram.EMBEDDED_START))
+			if (EmbeddedDiagram.getEmbeddedType(s2) != null)
 				nested++;
-			else if (StringUtils.trinNoTrace(s2).equals(EmbeddedDiagram.EMBEDDED_END)) {
+			else if (StringUtils.trim2(s2.toString()).equals(EmbeddedDiagram.EMBEDDED_END)) {
 				nested--;
 				if (nested == 0)
 					break;
@@ -259,54 +258,111 @@ public class EmbeddedDiagram extends TextBlockMemoized implements Line, Atom {
 		if (cs == null)
 			return null;
 
-		final String s = StringUtils.trin(cs.toString());
-		if (s.startsWith(EMBEDDED_START) == false)
-			return null;
+		final int len = cs.length();
 
-		switch (s) {
-		case EMBEDDED_START:
-			return "uml";
-		case EMBEDDED_START + "ditaa":
-			return "ditaa";
-		case EMBEDDED_START + "salt":
-			return "salt";
-		case EMBEDDED_START + "uml":
-			return "uml";
-		case EMBEDDED_START + "wbs":
-			return "wbs";
-		case EMBEDDED_START + "mindmap":
-			return "mindmap";
-		case EMBEDDED_START + "gantt":
-			return "gantt";
-		case EMBEDDED_START + "json":
-			return "json";
-		case EMBEDDED_START + "yaml":
-			return "yaml";
-		case EMBEDDED_START + "wire":
-			return "wire";
-		case EMBEDDED_START + "creole":
-			return "creole";
-		case EMBEDDED_START + "board":
-			return "board";
-		case EMBEDDED_START + "ebnf":
-			return "ebnf";
-		case EMBEDDED_START + "regex":
-			return "regex";
-		case EMBEDDED_START + "files":
-			return "files";
-		case EMBEDDED_START + "chronology":
-			return "chronology";
-		case EMBEDDED_START + "chen":
-			return "chen";
-		case EMBEDDED_START + "chart":
-			return "chart";
-		case EMBEDDED_START + "nwdiag":
-			return "nwdiag";
-		case EMBEDDED_START + "packetdiag":
-			return "packetdiag";
-		default:
+		// Skip leading whitespace
+		int p = 0;
+		while (p < len && Character.isWhitespace(cs.charAt(p)))
+			p++;
+
+		// Must start with "{{"
+		if (p + 2 > len || cs.charAt(p) != '{' || cs.charAt(p + 1) != '{')
 			return null;
+		p += 2;
+
+		// Find end (skip trailing whitespace)
+		int end = len;
+		while (end > p && Character.isWhitespace(cs.charAt(end - 1)))
+			end--;
+
+		final int suffixLen = end - p;
+
+		// "{{" alone -> uml
+		if (suffixLen == 0)
+			return "uml";
+
+		// Dispatch on first char to avoid scanning every keyword
+		switch (cs.charAt(p)) {
+		case 'b':
+			if (match(cs, p, end, "board"))
+				return "board";
+			break;
+		case 'c':
+			if (match(cs, p, end, "creole"))
+				return "creole";
+			if (match(cs, p, end, "chronology"))
+				return "chronology";
+			if (match(cs, p, end, "chen"))
+				return "chen";
+			if (match(cs, p, end, "chart"))
+				return "chart";
+			break;
+		case 'd':
+			if (match(cs, p, end, "ditaa"))
+				return "ditaa";
+			break;
+		case 'e':
+			if (match(cs, p, end, "ebnf"))
+				return "ebnf";
+			break;
+		case 'f':
+			if (match(cs, p, end, "files"))
+				return "files";
+			break;
+		case 'g':
+			if (match(cs, p, end, "gantt"))
+				return "gantt";
+			break;
+		case 'j':
+			if (match(cs, p, end, "json"))
+				return "json";
+			break;
+		case 'm':
+			if (match(cs, p, end, "mindmap"))
+				return "mindmap";
+			break;
+		case 'n':
+			if (match(cs, p, end, "nwdiag"))
+				return "nwdiag";
+			break;
+		case 'p':
+			if (match(cs, p, end, "packetdiag"))
+				return "packetdiag";
+			break;
+		case 'r':
+			if (match(cs, p, end, "regex"))
+				return "regex";
+			break;
+		case 's':
+			if (match(cs, p, end, "salt"))
+				return "salt";
+			break;
+		case 'u':
+			if (match(cs, p, end, "uml"))
+				return "uml";
+			break;
+		case 'w':
+			if (match(cs, p, end, "wbs"))
+				return "wbs";
+			if (match(cs, p, end, "wire"))
+				return "wire";
+			break;
+		case 'y':
+			if (match(cs, p, end, "yaml"))
+				return "yaml";
+			break;
 		}
+		return null;
+	}
+
+	private static boolean match(CharSequence cs, int from, int end, String key) {
+		final int klen = key.length();
+		if (end - from != klen)
+			return false;
+		for (int i = 0; i < klen; i++)
+			if (cs.charAt(from + i) != key.charAt(i))
+				return false;
+		return true;
 	}
 
 }

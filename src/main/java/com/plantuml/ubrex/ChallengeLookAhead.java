@@ -55,13 +55,13 @@ public class ChallengeLookAhead implements Challenge {
 		switch (ahead) {
 		case LOOK_AHEAD_POSITIVE:
 			if (tmp < 0)
-				return new ChallengeResult(NO_MATCH);
-			return new ChallengeResult(0);
+				return ChallengeResult.NO_MATCH;
+			return ChallengeResult.ZERO;
 
 		case LOOK_AHEAD_NEGATIVE:
 			if (tmp < 0)
-				return new ChallengeResult(0);
-			return new ChallengeResult(NO_MATCH);
+				return ChallengeResult.ZERO;
+			return ChallengeResult.NO_MATCH;
 		}
 		throw new IllegalStateException();
 	}

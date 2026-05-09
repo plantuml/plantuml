@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.klimt.creole.command;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.regex.Matcher2;
@@ -44,8 +47,8 @@ import net.sourceforge.plantuml.style.ISkinSimple;
 public class CommandCreoleQrcode implements Command {
 
 	@Override
-	public String startingChars() {
-		return "<";
+	public Collection<String> starters() {
+		return Collections.singleton("<q");
 	}
 
 	private static final Pattern2 pattern = Pattern2.cmpile("^(" + Splitter.qrcodePattern + ")");
@@ -57,24 +60,25 @@ public class CommandCreoleQrcode implements Command {
 		return new CommandCreoleQrcode();
 	}
 
-	public int matchingSize(String line) {
-		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false) {
+	@Override
+	public int matchingSize(String line, int pos) {
+		final Matcher2 m = pattern.matcher(line, pos);
+		if (m.find() == false)
 			return 0;
-		}
+
 		return m.group(1).length();
 	}
 
 	@Override
-	public String executeAndGetRemaining(ISkinSimple skinSimple, String line, StripeSimple stripe) {
-		final Matcher2 m = pattern.matcher(line);
-		if (m.find() == false) 
+	public int executeAndAdvance(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
+		final Matcher2 m = pattern.matcher(line, pos);
+		if (m.find() == false)
 			throw new IllegalStateException();
-		
+
 		final String src = m.group(2);
 		final double scale = Parser.getScale(m.group(3), 3);
 		stripe.addQrcode(src, scale);
-		return line.substring(m.group(1).length());
+		return m.group(1).length();
 	}
 
 }

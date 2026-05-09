@@ -7,7 +7,7 @@ public class TimingMessageArrowFont_0002_TestResult {
 DPI: 96
 dimension: [ 580.1399 ; 263.0000 ]
 scaleFactor: 1.0000
-seed: 5278471955808858281
+seed: -3824361993868579443
 svgLinkTarget: _top
 hoverPathColorRGB: null
 preserveAspectRatio: none

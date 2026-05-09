@@ -86,16 +86,10 @@ public class RegexResult {
 
 	public String getLazzy(String key, int num) {
 		if (matcher != null) {
-			for (String candidate : matcher.getKeysToBeRefactored()) {
-				if (candidate.startsWith(key) == false)
-					continue;
-				final List<String> list = matcher.getCapture(candidate);
-				if (list == null || list.size() == 0)
-					return null;
-				return list.get(num);
-
-			}
-			return null;
+			final List<String> list = matcher.findFirstValuesByKeyPrefix(key);
+			if (list == null || list.size() == 0)
+				return null;
+			return list.get(num);
 		}
 
 		for (Map.Entry<String, RegexPartialMatch> ent : data.entrySet()) {

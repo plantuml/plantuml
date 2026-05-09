@@ -73,15 +73,36 @@ final public class UmlSource {
 	final private PathSystem pathSystem = PathSystem.fetch();
 	final private Map<String, String> md5map = new HashMap<>();
 
-	public UmlSource removeInitialSkinparam() {
-		if (hasInitialSkinparam(source) == false)
+	private long seedCache;
+	private boolean seedCacheValid;
+
+	public UmlSource removeInitialNoise() {
+		final int size = source.size();
+		int cut = 1;
+		while (cut < size && isNoise(source.get(cut).getString()))
+			cut++;
+
+		if (cut == 1)
 			return this;
 
-		final List<StringLocated> copy = new ArrayList<>(source);
-		while (hasInitialSkinparam(copy))
-			copy.remove(1);
+		final List<StringLocated> trimmed = new ArrayList<>(size - cut + 1);
+		trimmed.add(source.get(0));
+		trimmed.addAll(source.subList(cut, size));
 
-		return new UmlSource(copy, rawSource);
+		return new UmlSource(trimmed, rawSource);
+	}
+
+	private static boolean isNoise(String line) {
+		if (line.isEmpty())
+			return true;
+		switch (line.charAt(0)) {
+		case 's':
+			return line.startsWith("skinparam ") || line.startsWith("skinparamlocked ");
+		case '!':
+			return line.startsWith("!pragma ");
+		default:
+			return false;
+		}
 	}
 
 	public boolean containsIgnoreCase(String searched) {
@@ -90,11 +111,6 @@ final public class UmlSource {
 				return true;
 
 		return false;
-	}
-
-	private static boolean hasInitialSkinparam(final List<StringLocated> copy) {
-		return copy.size() > 1 && (copy.get(1).getString().startsWith("skinparam ")
-				|| copy.get(1).getString().startsWith("skinparamlocked "));
 	}
 
 	private UmlSource(List<StringLocated> source, List<StringLocated> rawSource) {
@@ -195,7 +211,17 @@ final public class UmlSource {
 	}
 
 	public long seed() {
-		return StringUtils.seed(getPlainString("\n"));
+		if (seedCacheValid)
+			return seedCache;
+
+		long h = 1125899906842597L; // prime
+		for (StringLocated sl : source) {
+		    h = 31 * h + sl.getString().hashCode();
+		    h = 31 * h + '\n';
+		}
+		seedCache = h;
+		seedCacheValid = true;
+		return h;
 	}
 
 	/**
@@ -242,7 +268,7 @@ final public class UmlSource {
 	 */
 	public Display getTitle() {
 		for (StringLocated s : source) {
-			final Matcher2 m = TITLE.matcher(s.getString());
+			final Matcher2 m = TITLE.matcher(s.getString(), 0);
 			final boolean ok = m.matches();
 			if (ok)
 				return Display.create(m.group(1));
@@ -273,6 +299,7 @@ final public class UmlSource {
 	private static final BoyerMoore BASE64_BM = new BoyerMoore(BASE64_TAG_START);
 
 	public void patchBase64() {
+		seedCacheValid = false;
 		for (int i = 0; i < source.size(); i++) {
 			final StringLocated original = source.get(i);
 			final String line = original.getString();

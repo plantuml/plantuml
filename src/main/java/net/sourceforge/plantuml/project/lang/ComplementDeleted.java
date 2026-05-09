@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2026, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -29,37 +29,39 @@
  * USA.
  *
  *
- * Original Author:  kolulu23
- *
+ * Original Author:  Arnaud Roques
  * 
+ *
  */
-package net.sourceforge.plantuml.packetdiag;
+package net.sourceforge.plantuml.project.lang;
 
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.ParserPass;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexPart;
+
+import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
-import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandPacketDiagStart extends SingleLineCommand2<PacketDiagram> {
+public class ComplementDeleted implements Something<GanttDiagram> {
 
-	public CommandPacketDiagStart() {
-		super(getRegexConcat());
-	}
-
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandPacketDiagStart.class.getName(), RegexLeaf.start(), //
-						new RegexLeaf(1, "TYPE", "(packetdiag)?"), //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("\\{?"), RegexLeaf.end()); //
+	public IRegex toRegex(String suffix) {
+		return new RegexLeaf("deleted");
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(PacketDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-		return CommandExecutionResult.ok();
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+		return new UBrexLeaf("deleted");
+	}
+
+	@Override
+	public Failable<Object> ugetMe(GanttDiagram system, UMatcher arg) {
+		return Failable.ok(new Object());
+	}
+
+	public Failable<Object> getMe(GanttDiagram system, RegexResult arg, String suffix) {
+		return Failable.ok(new Object());
 	}
 }

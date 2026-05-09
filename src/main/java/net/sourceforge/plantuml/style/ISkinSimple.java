@@ -54,7 +54,7 @@ public interface ISkinSimple extends SpriteContainer {
 
 	public Map<String, String> values();
 
-	public double getPadding();
+	public ClockwiseTopRightBottomLeft getPadding();
 
 	public String getMonospacedFamily();
 

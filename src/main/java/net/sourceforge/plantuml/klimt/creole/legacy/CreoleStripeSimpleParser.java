@@ -89,27 +89,27 @@ public class CreoleStripeSimpleParser {
 			return;
 		}
 
-		final Matcher2 m4 = SECTION_HEADER_PATTERN.matcher(line);
+		final Matcher2 m4 = SECTION_HEADER_PATTERN.matcher(line, 0);
 		if (m4.find()) {
 			this.line = m4.group(1);
 			this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '-');
 			return;
 		}
 
-		final Matcher2 m5 = SECTION_TITLE_PATTERN.matcher(line);
+		final Matcher2 m5 = SECTION_TITLE_PATTERN.matcher(line, 0);
 		if (m5.find()) {
 			this.line = m5.group(1);
 			this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '=');
 			return;
 		}
-		final Matcher2 m5b = SECTION_SEPARATOR_PATTERN.matcher(line);
+		final Matcher2 m5b = SECTION_SEPARATOR_PATTERN.matcher(line, 0);
 		if (m5b.find()) {
 			this.line = "";
 			this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '=');
 			return;
 		}
 
-		final Matcher2 m7 = DOUBLE_DOT_DELIMITED_LINE.matcher(line);
+		final Matcher2 m7 = DOUBLE_DOT_DELIMITED_LINE.matcher(line, 0);
 		if (m7.find()) {
 			this.line = m7.group(1);
 			this.style = new StripeStyle(StripeStyleType.HORIZONTAL_LINE, 0, '.');
@@ -117,7 +117,7 @@ public class CreoleStripeSimpleParser {
 		}
 
 		if (mode == CreoleMode.FULL) {
-			final Matcher2 m1 = ASTERISK_PREFIXED_LINE_PATTERN.matcher(line);
+			final Matcher2 m1 = ASTERISK_PREFIXED_LINE_PATTERN.matcher(line, 0);
 			if (m1.find()) {
 				this.line = StringUtils.trin(m1.group(2));
 				final int order = m1.group(1).length() - 1;
@@ -127,7 +127,7 @@ public class CreoleStripeSimpleParser {
 		}
 
 		if (mode == CreoleMode.FULL) {
-			final Matcher2 m1 = ASTERISK_HEADER_LINE_PATTERN.matcher(line);
+			final Matcher2 m1 = ASTERISK_HEADER_LINE_PATTERN.matcher(line, 0);
 			if (m1.find()) {
 				this.line = StringUtils.trin(m1.group(2));
 				final int order = m1.group(1).length() - 1;
@@ -137,7 +137,7 @@ public class CreoleStripeSimpleParser {
 		}
 
 		if (mode == CreoleMode.FULL) {
-			final Matcher2 m2 = HASH_HEADING_PATTERN.matcher(CharHidder.hide(line));
+			final Matcher2 m2 = HASH_HEADING_PATTERN.matcher(CharHidder.hide(line), 0);
 			if (m2.find()) {
 				this.line = StringUtils.trin(CharHidder.unhide(m2.group(2)));
 				final int order = CharHidder.unhide(m2.group(1)).length() - 1;
@@ -146,7 +146,7 @@ public class CreoleStripeSimpleParser {
 			}
 		}
 
-		final Matcher2 m3 = EQUALS_HEADING_PATTERN.matcher(line);
+		final Matcher2 m3 = EQUALS_HEADING_PATTERN.matcher(line, 0);
 		if (m3.find()) {
 			this.line = StringUtils.trin(m3.group(2));
 			final int order = m3.group(1).length() - 1;

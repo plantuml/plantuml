@@ -103,7 +103,7 @@ public class Member implements CharSequence {
 		tmpDisplay = REMOVE_TAG_PATTERN.matcher(tmpDisplay.toString()).replaceAll("");
 
 		if (manageModifier) {
-			final Matcher2 matcher = URL.matcher(tmpDisplay);
+			final Matcher2 matcher = URL.matcher(tmpDisplay, 0);
 			if (matcher.matches() == false)
 				throw new IllegalStateException();
 

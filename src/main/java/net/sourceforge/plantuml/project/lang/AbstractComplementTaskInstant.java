@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import java.util.List;
-
 import com.plantuml.ubrex.UMatcher;
 
 import net.sourceforge.plantuml.project.Failable;
@@ -50,37 +48,32 @@ import net.sourceforge.plantuml.regex.RegexResult;
 abstract class AbstractComplementTaskInstant implements Something<GanttDiagram> {
 
 	final public Failable<TaskInstant> getComplementTaskInstant(GanttDiagram system, UMatcher arg) {
-		final String code = arg.getCapture("COMPLEMENT_CODE_OTHER").get(0);
-		final String startOrEnd = arg.getCapture("COMPLEMENT_START_OR_END").get(0);
+		final String code = arg.get("COMPLEMENT_CODE_OTHER", 0);
+		final String startOrEnd = arg.get("COMPLEMENT_START_OR_END", 0);
 
 		final Moment task = system.getExistingMoment(code);
 		if (task == null)
 			return Failable.error("No such task " + code);
 
 		TaskInstant result = new TaskInstant(task, TaskAttribute.fromString(startOrEnd));
-		final List<String> nb1List = arg.getCapture("COMPLEMENT_NB1");
-		if (nb1List.size() > 0) {
-			final String nb1 = nb1List.get(0);
-			final String dayOrWeek1 = arg.getCapture("COMPLEMENT_DAY_OR_WEEK1").get(0);
-			final int factor1 = dayOrWeek1.startsWith("w") ? system.daysInWeek() : 1;
+		final String nb1 = arg.get("COMPLEMENT_NB1", 0);
+		if (nb1 != null) {
+			final int factor1 = arg.get("COMPLEMENT_DAY_OR_WEEK1", 0).startsWith("w") ? system.daysInWeek() : 1;
 			final int days1 = Integer.parseInt(nb1) * factor1;
 
-			final List<String> nb2List = arg.getCapture("COMPLEMENT_NB2");
+			final String nb2 = arg.get("COMPLEMENT_NB2", 0);
 			int days2 = 0;
-			if (nb2List.size() > 0) {
-				final String nb2 = nb2List.get(0);
-				final String dayOrWeek2 = arg.getCapture("COMPLEMENT_DAY_OR_WEEK2").get(0);
-				final int factor2 = dayOrWeek2.startsWith("w") ? system.daysInWeek() : 1;
+			if (nb2 != null) {
+				final int factor2 = arg.get("COMPLEMENT_DAY_OR_WEEK2", 0).startsWith("w") ? system.daysInWeek() : 1;
 				days2 = Integer.parseInt(nb2) * factor2;
 			}
 
 			int delta = days1 + days2;
-			if ("before".equalsIgnoreCase(arg.getCapture("COMPLEMENT_BEFORE_OR_AFTER").get(0)))
+			if ("before".equalsIgnoreCase(arg.get("COMPLEMENT_BEFORE_OR_AFTER", 0)))
 				delta = -delta;
 
-			final List<String> working1List = arg.getCapture("COMPLEMENT_WORKING1");
-			final List<String> working2List = arg.getCapture("COMPLEMENT_WORKING2");
-			final boolean working = working1List.size() > 0 || working2List.size() > 0;
+			final boolean working = arg.get("COMPLEMENT_WORKING1", 0) != null
+					|| arg.get("COMPLEMENT_WORKING2", 0) != null;
 
 			final GanttConstraintMode mode = working ? GanttConstraintMode.DO_NOT_COUNT_CLOSE_DAY
 					: GanttConstraintMode.IGNORE_CALENDAR;

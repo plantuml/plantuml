@@ -18,7 +18,7 @@ class MonthUtilsTest {
 				"NOV", "DEC" };
 
 		for (String month : months)
-			assertTrue(ubrex.match(month).startMatch(), month);
+			assertTrue(ubrex.match(month, 0).startMatch(), month);
 
 	}
 
@@ -29,7 +29,7 @@ class MonthUtilsTest {
 		final String[] months = { "foo", "14January" };
 
 		for (String month : months)
-			assertFalse(ubrex.match(month).startMatch(), month);
+			assertFalse(ubrex.match(month, 0).startMatch(), month);
 
 	}
 

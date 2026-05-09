@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.klimt.creole.atom.AtomWithMargin;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.text.BackSlash;
 
@@ -92,7 +93,7 @@ public class StripeTable implements Stripe {
 		return null;
 	}
 
-	static Atom asAtom(List<StripeSimple> cells, double padding) {
+	static Atom asAtom(List<StripeSimple> cells, ClockwiseTopRightBottomLeft padding) {
 		final Sheet sheet = new Sheet(HorizontalAlignment.LEFT);
 		for (StripeSimple cell : cells)
 			sheet.add(cell);

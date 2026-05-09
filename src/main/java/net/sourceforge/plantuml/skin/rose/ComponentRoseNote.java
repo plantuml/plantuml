@@ -48,12 +48,13 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.image.Opale;
 
 final public class ComponentRoseNote extends AbstractTextualComponent implements Stencil {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private final double paddingX;
 	private final double paddingY;
@@ -61,11 +62,15 @@ final public class ComponentRoseNote extends AbstractTextualComponent implements
 	private final double roundCorner;
 	private final HorizontalAlignment position;
 
-	public ComponentRoseNote(Style style, Display strings, double paddingX, double paddingY,
-			ISkinParam skinParam, HorizontalAlignment textAlignment, HorizontalAlignment position,
-			Colors colors) {
-		super(style, style.wrapWidth(), textAlignment == HorizontalAlignment.CENTER ? 15 : 6, 15, 5, skinParam,
-				strings, true);
+	public ComponentRoseNote(Style style, Display strings, double paddingX, double paddingY, ISkinParam skinParam,
+			HorizontalAlignment textAlignment, HorizontalAlignment position, Colors colors) {
+		super(style, style.wrapWidth(),
+				textAlignment == HorizontalAlignment.CENTER
+						? ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 15, 5, 15)
+						: ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 15, 5, 6),
+				skinParam, strings, true);
+//		super(style, style.wrapWidth(), textAlignment == HorizontalAlignment.CENTER ? 15 : 6, 15, 5, skinParam,
+//				strings, true);
 		this.paddingX = paddingX;
 		this.paddingY = paddingY;
 		this.position = position;
@@ -120,12 +125,12 @@ final public class ComponentRoseNote extends AbstractTextualComponent implements
 		UGraphic ug2 = UGraphicStencil.create(ug, this, UStroke.simple());
 
 		if (position == HorizontalAlignment.LEFT) {
-			ug2 = ug2.apply(new UTranslate(getMarginX1(), getMarginY()));
+			ug2 = ug2.apply(new UTranslate(getOldPaddingX1(), getOldPaddingY()));
 		} else if (position == HorizontalAlignment.RIGHT) {
-			ug2 = ug2.apply(
-					new UTranslate(area.getDimensionToUse().getWidth() - getTextWidth(stringBounder), getMarginY()));
+			ug2 = ug2.apply(new UTranslate(area.getDimensionToUse().getWidth() - getTextWidth(stringBounder),
+					getOldPaddingY()));
 		} else {
-			ug2 = ug2.apply(new UTranslate(getMarginX1() + diffX / 2, getMarginY()));
+			ug2 = ug2.apply(new UTranslate(getOldPaddingX1() + diffX / 2, getOldPaddingY()));
 		}
 
 		getTextBlock().drawU(ug2);

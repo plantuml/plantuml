@@ -35,6 +35,14 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOptional;
+import com.plantuml.ubrex.builder.UBrexOr;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
@@ -48,6 +56,32 @@ public class ComplementWithColorLink implements Something<GanttDiagram> {
 		final String optionalStyle = "(?:(dotted|bold|dashed)[%s]+)?";
 		return new RegexLeaf(3,
 				"COMPLEMENT" + suffix, "with[%s]+" + optionalStyle + "(#?\\w+)[%s]+" + optionalStyle + "link");
+	}
+	
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+		final UBrexPart optionalStyle = new UBrexOptional(UBrexConcat.build( //
+				new UBrexNamed("STYLE", new UBrexOr( //
+						new UBrexLeaf("dotted"), //
+						new UBrexLeaf("bold"), //
+						new UBrexLeaf("dashed"))), //
+				UBrexLeaf.spaceOneOrMore()));
+		return UBrexConcat.build( //
+				new UBrexLeaf("with"), //
+				UBrexLeaf.spaceOneOrMore(), //
+				optionalStyle, //
+				new UBrexNamed("COLOR", new UBrexLeaf("〇?# 〇+〴w")), //
+				UBrexLeaf.spaceOneOrMore(), //
+				optionalStyle, //
+				new UBrexLeaf("link"));
+	}
+
+	@Override
+	public Failable<CenterBorderColor> ugetMe(GanttDiagram diagram, UMatcher arg) {
+		final String color1 = arg.get("COLOR", 0);
+		final String style = arg.get("STYLE", 0);
+		final HColor col1 = color1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color1);
+		return Failable.ok(new CenterBorderColor(col1, col1, style));
 	}
 
 	public Failable<CenterBorderColor> getMe(GanttDiagram diagram, RegexResult arg, String suffix) {

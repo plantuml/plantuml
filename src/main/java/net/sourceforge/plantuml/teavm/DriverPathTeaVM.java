@@ -61,7 +61,7 @@ public class DriverPathTeaVM implements UDriver<UPath, SvgGraphicsTeaVM> {
 
 		DriverRectangleTeaVM.applyFillColor(svg, mapper, param);
 		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);
-		svg.setStrokeWidth(param.getStroke().getThickness());
+		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 
 		// Build SVG path data string
 		final StringBuilder pathData = new StringBuilder();

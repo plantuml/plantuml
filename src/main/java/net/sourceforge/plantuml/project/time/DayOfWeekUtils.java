@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.project.time;
 
 import java.time.DayOfWeek;
-import java.time.format.TextStyle;
 import java.util.Locale;
 
 import com.plantuml.ubrex.builder.UBrexLeaf;
@@ -44,6 +43,7 @@ import com.plantuml.ubrex.builder.UBrexOr;
 import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.utils.I18nTimeData;
 
 public abstract class DayOfWeekUtils {
 
@@ -89,12 +89,7 @@ public abstract class DayOfWeekUtils {
 	}
 
 	public static String shortName(DayOfWeek dayOfWeek, Locale locale) {
-		if (locale == Locale.ENGLISH)
-			return StringUtils.capitalize(dayOfWeek.name().substring(0, 2));
-		final String s = StringUtils.capitalize(dayOfWeek.getDisplayName(TextStyle.SHORT_STANDALONE, locale));
-		if (s.length() > 2)
-			return s.substring(0, 2);
-		return s;
+		return I18nTimeData.shortName(dayOfWeek, locale);
 	}
 
 }

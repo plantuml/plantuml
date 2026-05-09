@@ -3,6 +3,21 @@
 \definecolor{plantucolor0002}{RGB}{0,0,0}%
 \begin{tikzpicture}[yscale=-1
 ]
-\draw[color=plantucolor0001,fill=plantucolor0000,line width=0.5pt] (16pt,41pt) arc (180:270:25pt) -- (41pt,16pt) -- (82pt,16pt) arc (270:360:25pt) -- (107pt,41pt) -- (107pt,82pt) arc (0:90:25pt) -- (82pt,107pt) -- (41pt,107pt) arc (90:180:25pt) -- (16pt,82pt) -- cycle;
+\draw[color=plantucolor0001,fill=plantucolor0000,line width=0.5pt] (16pt,41pt) arc (180:270:25pt) -- (41pt,16pt) -- (53pt,16pt) arc (270:360:25pt) -- (78pt,41pt) -- (78pt,65pt) arc (0:90:25pt) -- (53pt,90pt) -- (41pt,90pt) arc (90:180:25pt) -- (16pt,65pt) -- cycle;
 \node at (26pt,26pt)[below right,color=black,inner sep=0]{Test};
+\node[inner sep=0pt,outer sep=0pt,anchor=north west] at (26pt,38pt) {%
+\definecolor{plantucolor0000}{RGB}{241,241,241}%
+\definecolor{plantucolor0001}{RGB}{24,24,24}%
+\definecolor{plantucolor0002}{RGB}{0,0,0}%
+\begin{tikzpicture}[yscale=-1
+,pstyle1/.style={color=plantucolor0001,line width=0.5pt}
+]
+\draw[color=plantucolor0001,fill=plantucolor0000,line width=0.5pt] (6pt,22pt) -- (16pt,12pt) -- (56.15pt,12pt) -- (56.15pt,46pt) -- (46.15pt,56pt) -- (6pt,56pt) -- (6pt,22pt) -- cycle;
+\draw[pstyle1] (46.15pt,22pt) -- (56.15pt,12pt);
+\draw[pstyle1] (6pt,22pt) -- (46.15pt,22pt);
+\draw[pstyle1] (46.15pt,22pt) -- (46.15pt,56pt);
+\node at (21pt,32pt)[below right,color=black,inner sep=0]{N};
+\end{tikzpicture}%
+
+};
 \end{tikzpicture}%

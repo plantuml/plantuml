@@ -61,7 +61,7 @@ public class DriverDotPathTeaVM implements UDriver<DotPath, SvgGraphicsTeaVM> {
 
 		DriverRectangleTeaVM.applyStrokeColor(svg, mapper, param);
 		svg.setFillColor("none");
-		svg.setStrokeWidth(param.getStroke().getThickness());
+		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 
 		// Convert DotPath to UPath and build SVG path data
 		final StringBuilder pathData = new StringBuilder();

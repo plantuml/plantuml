@@ -5,6 +5,6 @@
     <path d="M10,24 L10,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
     <path d="M52,24 L52,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
     <rect fill="#F1F1F1" height="80" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="56"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="26.3333" y="122.8889">A</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="26.3333" y="99.8889">A</text>
   </g>
 </svg>
