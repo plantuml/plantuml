@@ -1,0 +1,36 @@
+@startuml
+!pragma svgparser sax
+' Stress test: polygon/polyline points with scientific-notation coordinates.
+' SVG 1.1 §9.7.1 coordinate grammar includes floating-point-constant which allows
+' exponent notation: e.g. "1.5e1" = 15, "2.5E+1" = 25, "3.0e-1" = 0.3.
+' The regex captures this via the optional (?:[eE][+-]?\d+)? suffix.
+' Scientific notation appears in SVG output from tools that export coordinates
+' at high precision or scale, e.g. Inkscape, Adobe Illustrator, matplotlib.
+
+sprite square_sci <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+  <!-- 1e1=10, 4e1=40: plain scientific (no decimal mantissa) -->
+  <polygon points="1e1,1e1 4e1,1e1 4e1,4e1 1e1,4e1" fill="#4285f4"/>
+</svg>
+
+sprite triangle_sci_upper <svg viewBox="0 0 60 50" xmlns="http://www.w3.org/2000/svg">
+  <!-- Uppercase E, explicit positive exponent: 5E+0=5, 5.5E+1=55, 2.5E+1=25, 4.5E+1=45 -->
+  <polygon points="5E+0,4.5E+1 3E+1,5E+0 5.5E+1,4.5E+1" fill="#34a853"/>
+</svg>
+
+sprite line_sci_negative_exp <svg viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+  <!-- Negative exponent (small fractional numbers scaled to viewBox):
+       5e0=5, 1e1=10, 9.5e1=95 — polyline across the shape -->
+  <polyline points="5e0,1e1 5e1,5e-1 9.5e1,1e1" fill="none" stroke="#ea4335" stroke-width="2"/>
+</svg>
+
+Alice -> Bob : Square <$square_sci>
+Bob -> Charlie : Triangle <$triangle_sci_upper>
+Charlie -> Alice : Line <$line_sci_negative_exp>
+
+note right
+  Scientific-notation polygon tests:
+  <$square_sci> plain eN exponent
+  <$triangle_sci_upper> uppercase E+N
+  <$line_sci_negative_exp> e-N negative exponent
+end note
+@enduml

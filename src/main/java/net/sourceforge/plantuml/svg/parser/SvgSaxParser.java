@@ -560,30 +560,35 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 				return;
 			}
 
-			String[] pointPairs = pointsStr.trim().split("\\s+");
+			// Per SVG 1.1 §9.7.1, whitespace alone is a valid separator between coordinates.
+			// All of these are equivalent: "x,y x,y" / "x y x y" / "x,y,x,y" / mixed.
+			// Extract all numeric tokens in order and pair them as (x, y).
+			final Matcher numMatcher = P_POINTS_NUMBER.matcher(pointsStr);
+			final List<Double> nums = new ArrayList<Double>();
+			while (numMatcher.find()) {
+				try {
+					nums.add(Double.parseDouble(numMatcher.group()));
+				} catch (NumberFormatException e) {
+					// skip malformed token
+				}
+			}
+
 			net.sourceforge.plantuml.klimt.UPath path = new net.sourceforge.plantuml.klimt.UPath(
 					closed ? "polygon" : "polyline", null);
 
 			boolean first = true;
 			double firstX = 0;
 			double firstY = 0;
-			for (String pair : pointPairs) {
-				String[] coords = pair.split(",");
-				if (coords.length == 2) {
-					try {
-						double x = Double.parseDouble(coords[0].trim());
-						double y = Double.parseDouble(coords[1].trim());
-						if (first) {
-							path.moveTo(x, y);
-							firstX = x;
-							firstY = y;
-							first = false;
-						} else {
-							path.lineTo(x, y);
-						}
-					} catch (NumberFormatException e) {
-						// Skip invalid points
-					}
+			for (int i = 0; i + 1 < nums.size(); i += 2) {
+				final double x = nums.get(i);
+				final double y = nums.get(i + 1);
+				if (first) {
+					path.moveTo(x, y);
+					firstX = x;
+					firstY = y;
+					first = false;
+				} else {
+					path.lineTo(x, y);
 				}
 			}
 
@@ -1178,6 +1183,9 @@ public class SvgSaxParser implements ISvgSpriteParser, GrayLevelRange {
 
 		private static final Pattern P_TRANSFORM_OP = Pattern
 				.compile("(translate|rotate|scale|matrix)\\s*\\(([^)]*)\\)");
+
+		private static final Pattern P_POINTS_NUMBER = Pattern
+				.compile("[+-]?(?:\\d+\\.\\d*|\\.\\d+|\\d+)(?:[eE][+-]?\\d+)?");
 
 		private UGraphicWithScale applyTransform(UGraphicWithScale ugs, String transform) {
 			if (transform == null || transform.isEmpty()) {

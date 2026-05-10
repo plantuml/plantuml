@@ -1,0 +1,37 @@
+@startuml
+!pragma svgparser sax
+' Stress test: polygon/polyline points with decimal (floating-point) coordinates.
+' SVG 1.1 §9.7.1 coordinate grammar supports both integer and floating-point values.
+' The regex handles three decimal forms:
+'   \d+\.\d*   e.g. "10."  or "10.5"
+'   \.\d+      e.g. ".5"
+'   \d+        e.g. "10"
+' This file exercises all three decimal forms in polygon/polyline points.
+
+sprite rect_decimal <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+  <!-- Standard decimal: \d+\.\d* form -->
+  <polygon points="5.0,5.0 45.0,5.0 45.0,45.0 5.0,45.0" fill="#4285f4"/>
+</svg>
+
+sprite triangle_leadingdot <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+  <!-- Leading-dot decimal: \.\d+ form (e.g. ".5" instead of "0.5") -->
+  <polygon points=".5,49.5 49.5,49.5 25.,.5" fill="#ea4335"/>
+</svg>
+
+sprite chevron_fractional <svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fine-grained fractional coords typical of icon SVGs -->
+  <polyline points="2.5,20.0 22.75,5.25 22.75,13.5 57.5,13.5 57.5,26.5 22.75,26.5 22.75,34.75"
+            fill="none" stroke="#34a853" stroke-width="2.5"/>
+</svg>
+
+Alice -> Bob : Rect <$rect_decimal>
+Bob -> Charlie : Triangle <$triangle_leadingdot>
+Charlie -> Alice : Chevron <$chevron_fractional>
+
+note right
+  Decimal coordinate polygon tests:
+  <$rect_decimal> integer.decimal form
+  <$triangle_leadingdot> leading-dot form
+  <$chevron_fractional> fine-grained fractions
+end note
+@enduml

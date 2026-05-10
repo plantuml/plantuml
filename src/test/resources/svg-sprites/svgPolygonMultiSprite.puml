@@ -1,0 +1,24 @@
+@startuml
+!pragma svgparser sax
+' Regression test: two SVG sprites each containing polygon elements in the same diagram.
+' Previously caused a Width/Height = Integer.MAX_VALUE crash when polygon points used
+' space-separated coordinates (valid per SVG spec) rather than comma-separated pairs.
+' See: polygon points="x,y x,y" vs "x y x y" — both must be supported.
+
+sprite hexagon <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+  <polygon points="30,5 55,17.5 55,42.5 30,55 5,42.5 5,17.5" fill="#4285f4" stroke="#1a73e8" stroke-width="2"/>
+</svg>
+
+sprite diamond <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+  <polygon points="30,5 55,30 30,55 5,30" fill="#34a853" stroke="#1e8e3e" stroke-width="2"/>
+</svg>
+
+Alice -> Bob : Hexagon shape <$hexagon>
+Bob -> Alice : Diamond shape <$diamond>
+
+note right of Bob
+  Multi-polygon sprite test:
+  <$hexagon> hexagon
+  <$diamond> diamond
+end note
+@enduml

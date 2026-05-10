@@ -1,0 +1,41 @@
+@startuml
+!pragma svgparser sax
+' Stress test: polygon/polyline points with negative coordinates.
+' SVG 1.1 §9.7.1 defines "negative-coordinate" as a separate token where the
+' minus sign acts as an implicit separator (no comma or space required before it).
+' E.g. "10-20 30-40" is valid SVG meaning four coordinates: 10, -20, 30, -40.
+' The regex [+-]?(?:\d+\.\d*|\.\d+|\d+)(?:[eE][+-]?\d+)? handles this because
+' each token can start with an optional sign, and the matcher finds the next
+' match after position where '-' begins even without a preceding separator.
+'
+' NOTE: viewBox must use non-negative values (UImageSvg.VIEWBOX regex requires [0-9.]+).
+' Negative values appear only in polygon `points`; they render partially outside the
+' viewBox (clipped) which is valid SVG. The test validates parsing, not rendering.
+
+sprite triangle_neg <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Explicit negatives: points extend outside viewBox (clipped) — parsing is what matters -->
+  <polygon points="-10,70 40,-10 90,70" fill="#4285f4"/>
+</svg>
+
+sprite diamond_neg <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Mixed negative and positive coords, comma-wsp separated -->
+  <polygon points="40,5 75,40 40,75 5,40 40,-5 80,40 40,85 -5,40" fill="#34a853"/>
+</svg>
+
+sprite arrow_neg <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+  <!-- Implicit-negative-as-separator: "x-y" is valid SVG for token x then token -y.
+       E.g. "20-5" parses as x=20, y=-5. Tests the regex sign-as-separator edge case. -->
+  <polyline points="5,20 25-5 50,20 75,5 95,20" fill="none" stroke="#ea4335" stroke-width="3"/>
+</svg>
+
+Alice -> Bob : Triangle <$triangle_neg>
+Bob -> Charlie : Diamond <$diamond_neg>
+Charlie -> Alice : Arrow <$arrow_neg>
+
+note right
+  Negative coordinate polygon tests:
+  <$triangle_neg> coords outside viewBox
+  <$diamond_neg> mixed neg+pos
+  <$arrow_neg> implicit-negative separator
+end note
+@enduml

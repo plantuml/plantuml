@@ -1,0 +1,48 @@
+@startuml
+!pragma svgparser sax
+' Test: fill-rule attribute behaviour in SAX SVG sprite parser.
+'
+' fill-rule controls the fill algorithm for self-intersecting paths:
+'   fill-rule="nonzero"  (default) — fills all enclosed regions
+'   fill-rule="evenodd"  — alternates filled/unfilled for each crossing
+'
+' The classic visual difference: a five-pointed star drawn as a single closed
+' path.  With fill-rule="evenodd" the centre pentagon is hollow; with
+' fill-rule="nonzero" (default) or when fill-rule is ignored, it is filled.
+'
+' PlantUML SAX parser BEHAVIOUR: fill-rule is not yet supported and is silently
+' ignored.  Both sprites below will therefore render identically — a fully
+' filled star — rather than one hollow-centred star.  This test documents that
+' expected (ignored) behaviour so any future implementation is detectable.
+'
+' Importantly: fill-rule does NOT crash the parser; it is safely discarded.
+
+sprite star_nonzero <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- nonzero (SVG default): centre of star should be filled -->
+  <path d="M50,5 L61,35 L95,35 L68,57 L79,91 L50,70 L21,91 L32,57 L5,35 L39,35 Z"
+        fill="#4285f4" fill-rule="nonzero"/>
+</svg>
+
+sprite star_evenodd <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- evenodd: centre pentagon should be hollow — but SAX ignores fill-rule,
+       so it will render the same as star_nonzero (fully filled). -->
+  <path d="M50,5 L61,35 L95,35 L68,57 L79,91 L50,70 L21,91 L32,57 L5,35 L39,35 Z"
+        fill="#ea4335" fill-rule="evenodd"/>
+</svg>
+
+sprite star_no_rule <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- no fill-rule attribute at all: pure default behaviour baseline -->
+  <path d="M50,5 L61,35 L95,35 L68,57 L79,91 L50,70 L21,91 L32,57 L5,35 L39,35 Z"
+        fill="#34a853"/>
+</svg>
+
+Alice -> Bob : nonzero <$star_nonzero>
+Bob -> Alice : evenodd (ignored, same render) <$star_evenodd>
+Alice -> Charlie : no fill-rule <$star_no_rule>
+
+note right of Bob
+  fill-rule ignored by SAX parser:
+  nonzero <$star_nonzero> = evenodd <$star_evenodd>
+  Both render as fully filled stars.
+end note
+@enduml

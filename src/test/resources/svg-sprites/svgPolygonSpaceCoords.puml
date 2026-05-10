@@ -1,0 +1,34 @@
+@startuml
+!pragma svgparser sax
+' Regression test: polygon points using space-separated coordinate format (SVG spec valid).
+' The SVG spec (section 9.7.1) allows points as "x1,y1 x2,y2" OR "x1 y1 x2 y2" OR mixed.
+' PlantUML must support both. Previously only comma-separated pairs were accepted; space-separated
+' coordinates produced empty paths (no points parsed), causing Integer.MAX_VALUE bounding boxes
+' when multiple such sprites appeared in the same diagram.
+
+sprite arrow_space <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
+  <!-- Space-separated: "x y x y" format (also valid per SVG spec) -->
+  <polygon points="0 20 60 0 60 15 80 15 80 25 60 25 60 40" fill="#ea4335"/>
+</svg>
+
+sprite chevron_space <svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg">
+  <!-- Mixed format: some pairs comma-separated, others space-separated -->
+  <polygon points="0,0 40,0 60,20 40,40 0,40 20,20" fill="#fbbc04"/>
+</svg>
+
+sprite star_space <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fully space-separated: x y x y ... -->
+  <polygon points="50 10 61 35 88 35 67 57 76 81 50 65 24 81 33 57 12 35 39 35" fill="#4285f4"/>
+</svg>
+
+Alice -> Bob : Arrow <$arrow_space>
+Bob -> Charlie : Chevron <$chevron_space>
+Charlie -> Alice : Star <$star_space>
+
+note right
+  Space-separated polygon coords:
+  <$arrow_space> arrow
+  <$chevron_space> chevron
+  <$star_space> star
+end note
+@enduml
