@@ -85,8 +85,8 @@ public class Bibliotekon {
 	}
 
 	public void addLine(SvekEdge line) {
-<span class="nc" id="L88">		allLines.add(line);</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (first(line)) {</span>
+<span class="fc" id="L88">		allLines.add(line);</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (first(line)) {</span>
 <span class="nc bnc" id="L90" title="All 2 branches missed.">			if (line.hasNoteLabelText()) {</span>
 				// lines0.add(0, line);
 <span class="nc bnc" id="L92" title="All 2 branches missed.">				for (int i = 0; i &lt; lines0.size(); i++) {</span>
@@ -101,16 +101,16 @@ public class Bibliotekon {
 <span class="nc" id="L101">				lines0.add(line);</span>
 			}
 		} else {
-<span class="nc" id="L104">			lines1.add(line);</span>
+<span class="fc" id="L104">			lines1.add(line);</span>
 		}
-<span class="nc" id="L106">	}</span>
+<span class="fc" id="L106">	}</span>
 
 	private static boolean first(SvekEdge line) {
-<span class="nc" id="L109">		final int length = line.getLength();</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (length == 1)</span>
+<span class="fc" id="L109">		final int length = line.getLength();</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (length == 1)</span>
 <span class="nc" id="L111">			return true;</span>
 
-<span class="nc" id="L113">		return false;</span>
+<span class="fc" id="L113">		return false;</span>
 	}
 
 	public void addCluster(Cluster current) {
@@ -123,13 +123,13 @@ public class Bibliotekon {
 
 	public String getNodeUid(Entity ent) {
 		// System.err.println(&quot;Getting for &quot; + ent);
-<span class="nc" id="L126">		final SvekNode result = getNode(ent);</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (result != null) {</span>
-<span class="nc" id="L128">			String uid = result.getUid();</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">			if (result.isShielded())</span>
+<span class="fc" id="L126">		final SvekNode result = getNode(ent);</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (result != null) {</span>
+<span class="fc" id="L128">			String uid = result.getUid();</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">			if (result.isShielded())</span>
 <span class="nc" id="L130">				uid = uid + &quot;:h&quot;;</span>
 
-<span class="nc" id="L132">			return uid;</span>
+<span class="fc" id="L132">			return uid;</span>
 		}
 <span class="nc bnc" id="L134" title="All 2 branches missed.">		if (ent.isGroup())</span>
 <span class="nc" id="L135">			return Cluster.getSpecialPointId(ent);</span>

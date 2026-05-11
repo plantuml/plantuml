@@ -88,16 +88,16 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 
 	private List&lt;Link&gt; getOrderedLinks() {
 <span class="fc" id="L90">		final List&lt;Link&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		for (Link l : diagram.getLinks())</span>
-<span class="nc" id="L92">			addLinkNew(result, l);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		for (Link l : diagram.getLinks())</span>
+<span class="fc" id="L92">			addLinkNew(result, l);</span>
 
 <span class="fc" id="L94">		return result;</span>
 	}
 
 	private void addLinkNew(List&lt;Link&gt; result, Link link) {
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		for (int i = 0; i &lt; result.size(); i++) {</span>
-<span class="nc" id="L99">			final Link other = result.get(i);</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (other.sameConnections(link)) {</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		for (int i = 0; i &lt; result.size(); i++) {</span>
+<span class="fc" id="L99">			final Link other = result.get(i);</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">			if (other.sameConnections(link)) {</span>
 <span class="nc bnc" id="L101" title="All 4 branches missed.">				while (i &lt; result.size() &amp;&amp; result.get(i).sameConnections(link))</span>
 <span class="nc" id="L102">					i++;</span>
 
@@ -109,8 +109,8 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 <span class="nc" id="L109">				return;</span>
 			}
 		}
-<span class="nc" id="L112">		result.add(link);</span>
-<span class="nc" id="L113">	}</span>
+<span class="fc" id="L112">		result.add(link);</span>
+<span class="fc" id="L113">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

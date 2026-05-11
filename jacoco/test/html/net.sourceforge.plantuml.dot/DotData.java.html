@@ -67,7 +67,7 @@ final public class DotData {
 	}
 
 	public boolean isDegeneratedWithFewEntities(int nb) {
-<span class="pc bpc" id="L70" title="2 of 6 branches missed.">		return entityFactory.groups().size() == 0 &amp;&amp; getLinks().size() == 0 &amp;&amp; getLeafs().size() == nb;</span>
+<span class="pc bpc" id="L70" title="1 of 6 branches missed.">		return entityFactory.groups().size() == 0 &amp;&amp; getLinks().size() == 0 &amp;&amp; getLeafs().size() == nb;</span>
 	}
 
 	public final boolean isHideEmptyDescriptionForState() {
@@ -121,13 +121,13 @@ final public class DotData {
 
 	public void removeIrrelevantSametail() {
 <span class="fc" id="L123">		final Map&lt;String, Integer&gt; sametails = new HashMap&lt;String, Integer&gt;();</span>
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		for (Link link : links) {</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">			if (link.getType().getDecor2().isExtendsLike())</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		for (Link link : links) {</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (link.getType().getDecor2().isExtendsLike())</span>
 <span class="nc" id="L126">				link.setSametail(link.getEntity1().getUid());</span>
 
-<span class="nc" id="L128">			final String sametail = link.getSametail();</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">			if (sametail == null)</span>
-<span class="nc" id="L130">				continue;</span>
+<span class="fc" id="L128">			final String sametail = link.getSametail();</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">			if (sametail == null)</span>
+<span class="fc" id="L130">				continue;</span>
 
 <span class="nc" id="L132">			final Integer value = sametails.get(sametail);</span>
 <span class="nc bnc" id="L133" title="All 2 branches missed.">			sametails.put(sametail, value == null ? 1 : value + 1);</span>
@@ -150,10 +150,10 @@ final public class DotData {
 			}
 <span class="nc" id="L151">		}</span>
 
-<span class="pc bpc" id="L153" title="1 of 2 branches missed.">		for (Link link : links) {</span>
-<span class="nc" id="L154">			final String sametail = link.getSametail();</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">			if (sametail == null)</span>
-<span class="nc" id="L156">				continue;</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		for (Link link : links) {</span>
+<span class="fc" id="L154">			final String sametail = link.getSametail();</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">			if (sametail == null)</span>
+<span class="fc" id="L156">				continue;</span>
 
 <span class="nc bnc" id="L158" title="All 2 branches missed.">			if (toremove.contains(sametail))</span>
 <span class="nc" id="L159">				link.setSametail(null);</span>

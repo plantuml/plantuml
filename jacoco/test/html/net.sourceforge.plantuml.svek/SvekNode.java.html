@@ -220,14 +220,14 @@ public class SvekNode implements XNode {
 <span class="nc" id="L220">	}</span>
 
 	private Margins shield() {
-<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (shield == null) {</span>
-<span class="nc" id="L224">			this.shield = image.getShield(stringBounder);</span>
-<span class="nc bnc" id="L225" title="All 8 branches missed.">			if (!shield.isZero() &amp;&amp; type != ShapeType.RECTANGLE &amp;&amp; type != ShapeType.RECTANGLE_HTML_FOR_PORTS</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">		if (shield == null) {</span>
+<span class="fc" id="L224">			this.shield = image.getShield(stringBounder);</span>
+<span class="pc bpc" id="L225" title="7 of 8 branches missed.">			if (!shield.isZero() &amp;&amp; type != ShapeType.RECTANGLE &amp;&amp; type != ShapeType.RECTANGLE_HTML_FOR_PORTS</span>
 					&amp;&amp; type != ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE)
 <span class="nc" id="L227">				throw new IllegalStateException();</span>
 		}
 
-<span class="nc" id="L230">		return shield;</span>
+<span class="fc" id="L230">		return shield;</span>
 	}
 
 	private void appendHtml(StringBuilder sb) {
@@ -387,12 +387,12 @@ public class SvekNode implements XNode {
 		// This node will have a shield if it is target of a qualified association (will
 		// have a qualifier label
 		// placed besides this type's bounding box.)
-<span class="nc bnc" id="L390" title="All 2 branches missed.">		for (Link link : this.leaf.getDiagram().getLinks())</span>
-<span class="nc bnc" id="L391" title="All 4 branches missed.">			if ((this.leaf == link.getEntity1() &amp;&amp; link.hasKal1())</span>
-<span class="nc bnc" id="L392" title="All 4 branches missed.">					|| (this.leaf == link.getEntity2() &amp;&amp; link.hasKal2()))</span>
+<span class="fc bfc" id="L390" title="All 2 branches covered.">		for (Link link : this.leaf.getDiagram().getLinks())</span>
+<span class="pc bpc" id="L391" title="1 of 4 branches missed.">			if ((this.leaf == link.getEntity1() &amp;&amp; link.hasKal1())</span>
+<span class="pc bpc" id="L392" title="1 of 4 branches missed.">					|| (this.leaf == link.getEntity2() &amp;&amp; link.hasKal2()))</span>
 <span class="nc" id="L393">				return true;</span>
 
-<span class="nc bnc" id="L395" title="All 2 branches missed.">		return shield().isZero() == false;</span>
+<span class="pc bpc" id="L395" title="1 of 2 branches missed.">		return shield().isZero() == false;</span>
 	}
 
 	public void resetMove() {

@@ -119,7 +119,7 @@ import net.sourceforge.plantuml.utils.Position;
 @DuplicateCode(reference = &quot;SvekEdge, CucaDiagramFileMakerElk, CucaDiagramFileMakerSmetana&quot;)
 public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 
-<span class="nc" id="L122">	private static final XDimension2D CONSTRAINT_SPOT = new XDimension2D(10, 10);</span>
+<span class="fc" id="L122">	private static final XDimension2D CONSTRAINT_SPOT = new XDimension2D(10, 10);</span>
 
 	private final Cluster ltail;
 	private final Cluster lhead;
@@ -132,7 +132,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 	private final TextBlock startTailRoleText;
 	private final TextBlock endHeadRoleText;
 	private final TextBlock labelText;
-<span class="nc" id="L135">	private boolean divideLabelWidthByTwo = false;</span>
+<span class="fc" id="L135">	private boolean divideLabelWidthByTwo = false;</span>
 
 	private final int lineColor;
 	private final int noteLabelColor;
@@ -227,60 +227,60 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 	public SvekEdge(Link link, ISkinParam skinParam, StringBounder stringBounder, FontConfiguration font,
 			FontConfiguration cardinalityFont, Bibliotekon bibliotekon, Pragma pragma,
 			GraphvizVersion graphvizVersion) {
-<span class="nc" id="L230">		super(link, skinParam, bibliotekon);</span>
+<span class="fc" id="L230">		super(link, skinParam, bibliotekon);</span>
 
-<span class="nc bnc" id="L232" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="nc bnc" id="L233" title="All 2 branches missed.">			if (graphvizVersion.useShieldForQuantifier()</span>
-<span class="nc bnc" id="L234" title="All 4 branches missed.">					&amp;&amp; (link.getLinkArg().getQuantifier1() != null || link.getLinkArg().getRole1() != null))</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">			if (graphvizVersion.useShieldForQuantifier()</span>
+<span class="pc bpc" id="L234" title="2 of 4 branches missed.">					&amp;&amp; (link.getLinkArg().getQuantifier1() != null || link.getLinkArg().getRole1() != null))</span>
 <span class="nc" id="L235">				link.getEntity1().ensureMargins(Margins.uniform(16));</span>
 
-<span class="nc bnc" id="L237" title="All 2 branches missed.">			if (graphvizVersion.useShieldForQuantifier()</span>
-<span class="nc bnc" id="L238" title="All 4 branches missed.">					&amp;&amp; (link.getLinkArg().getQuantifier2() != null || link.getLinkArg().getRole2() != null))</span>
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">			if (graphvizVersion.useShieldForQuantifier()</span>
+<span class="pc bpc" id="L238" title="2 of 4 branches missed.">					&amp;&amp; (link.getLinkArg().getQuantifier2() != null || link.getLinkArg().getRole2() != null))</span>
 <span class="nc" id="L239">				link.getEntity2().ensureMargins(Margins.uniform(16));</span>
 		}
 
-<span class="nc bnc" id="L242" title="All 2 branches missed.">		if (link.getLinkArg().getKal1() != null)</span>
+<span class="pc bpc" id="L242" title="1 of 2 branches missed.">		if (link.getLinkArg().getKal1() != null)</span>
 <span class="nc" id="L243">			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), skinParam, link.getEntity1(), link, stringBounder);</span>
 
-<span class="nc bnc" id="L245" title="All 2 branches missed.">		if (link.getLinkArg().getKal2() != null)</span>
+<span class="pc bpc" id="L245" title="1 of 2 branches missed.">		if (link.getLinkArg().getKal2() != null)</span>
 <span class="nc" id="L246">			this.kal2 = new Kal(this, link.getLinkArg().getKal2(), skinParam, link.getEntity2(), link, stringBounder);</span>
 
-<span class="nc" id="L248">		this.useRankSame = skinParam.useRankSame();</span>
-<span class="nc" id="L249">		this.startUid = link.getEntityPort1(bibliotekon);</span>
-<span class="nc" id="L250">		this.endUid = link.getEntityPort2(bibliotekon);</span>
+<span class="fc" id="L248">		this.useRankSame = skinParam.useRankSame();</span>
+<span class="fc" id="L249">		this.startUid = link.getEntityPort1(bibliotekon);</span>
+<span class="fc" id="L250">		this.endUid = link.getEntityPort2(bibliotekon);</span>
 
-<span class="nc" id="L252">		Cluster ltail = null;</span>
-<span class="nc bnc" id="L253" title="All 2 branches missed.">		if (startUid.startsWith(Cluster.CENTER_ID))</span>
+<span class="fc" id="L252">		Cluster ltail = null;</span>
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">		if (startUid.startsWith(Cluster.CENTER_ID))</span>
 <span class="nc" id="L254">			ltail = getCluster2(bibliotekon, link.getEntity1());</span>
 
-<span class="nc" id="L256">		Cluster lhead = null;</span>
-<span class="nc bnc" id="L257" title="All 2 branches missed.">		if (endUid.startsWith(Cluster.CENTER_ID))</span>
+<span class="fc" id="L256">		Cluster lhead = null;</span>
+<span class="pc bpc" id="L257" title="1 of 2 branches missed.">		if (endUid.startsWith(Cluster.CENTER_ID))</span>
 <span class="nc" id="L258">			lhead = getCluster2(bibliotekon, link.getEntity2());</span>
 
-<span class="nc bnc" id="L260" title="All 2 branches missed.">		if (link.getColors() != null) {</span>
-<span class="nc" id="L261">			skinParam = link.getColors().mute(skinParam);</span>
-<span class="nc" id="L262">			font = font.mute(link.getColors());</span>
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">		if (link.getColors() != null) {</span>
+<span class="fc" id="L261">			skinParam = link.getColors().mute(skinParam);</span>
+<span class="fc" id="L262">			font = font.mute(link.getColors());</span>
 		}
-<span class="nc" id="L264">		this.backgroundColor = skinParam.getBackgroundColor();</span>
-<span class="nc" id="L265">		this.defaultThickness = skinParam.getThickness(LineParam.arrow, null);</span>
-<span class="nc" id="L266">		this.arrowLollipopColor = skinParam.getHtmlColor(ColorParam.arrowLollipop, null, false);</span>
-<span class="nc bnc" id="L267" title="All 2 branches missed.">		if (arrowLollipopColor == null)</span>
-<span class="nc" id="L268">			this.arrowLollipopColor = backgroundColor;</span>
+<span class="fc" id="L264">		this.backgroundColor = skinParam.getBackgroundColor();</span>
+<span class="fc" id="L265">		this.defaultThickness = skinParam.getThickness(LineParam.arrow, null);</span>
+<span class="fc" id="L266">		this.arrowLollipopColor = skinParam.getHtmlColor(ColorParam.arrowLollipop, null, false);</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (arrowLollipopColor == null)</span>
+<span class="fc" id="L268">			this.arrowLollipopColor = backgroundColor;</span>
 
-<span class="nc" id="L270">		this.pragma = pragma;</span>
-<span class="nc" id="L271">		this.stringBounder = stringBounder;</span>
-<span class="nc" id="L272">		this.ltail = ltail;</span>
-<span class="nc" id="L273">		this.lhead = lhead;</span>
+<span class="fc" id="L270">		this.pragma = pragma;</span>
+<span class="fc" id="L271">		this.stringBounder = stringBounder;</span>
+<span class="fc" id="L272">		this.ltail = ltail;</span>
+<span class="fc" id="L273">		this.lhead = lhead;</span>
 
-<span class="nc" id="L275">		this.lineColor = bibliotekon.getColorSequence().getValue();</span>
-<span class="nc" id="L276">		this.noteLabelColor = bibliotekon.getColorSequence().getValue();</span>
-<span class="nc" id="L277">		this.startTailColor = bibliotekon.getColorSequence().getValue();</span>
-<span class="nc" id="L278">		this.endHeadColor = bibliotekon.getColorSequence().getValue();</span>
+<span class="fc" id="L275">		this.lineColor = bibliotekon.getColorSequence().getValue();</span>
+<span class="fc" id="L276">		this.noteLabelColor = bibliotekon.getColorSequence().getValue();</span>
+<span class="fc" id="L277">		this.startTailColor = bibliotekon.getColorSequence().getValue();</span>
+<span class="fc" id="L278">		this.endHeadColor = bibliotekon.getColorSequence().getValue();</span>
 
 		TextBlock labelOnly;
-<span class="nc bnc" id="L281" title="All 2 branches missed.">		if (Display.isNull(link.getLabel())) {</span>
-<span class="nc" id="L282">			labelOnly = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
-<span class="nc bnc" id="L283" title="All 2 branches missed.">			if (getLinkArrow() != LinkArrow.NONE_OR_SEVERAL)</span>
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">		if (Display.isNull(link.getLabel())) {</span>
+<span class="fc" id="L282">			labelOnly = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">			if (getLinkArrow() != LinkArrow.NONE_OR_SEVERAL)</span>
 <span class="nc" id="L284">				labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);</span>
 
 		} else {
@@ -305,9 +305,9 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 		}
 
-<span class="nc" id="L308">		final CucaNote note = link.getNote();</span>
-<span class="nc bnc" id="L309" title="All 2 branches missed.">		if (note == null) {</span>
-<span class="nc" id="L310">			labelText = labelOnly;</span>
+<span class="fc" id="L308">		final CucaNote note = link.getNote();</span>
+<span class="pc bpc" id="L309" title="1 of 2 branches missed.">		if (note == null) {</span>
+<span class="fc" id="L310">			labelText = labelOnly;</span>
 		} else {
 <span class="nc" id="L312">			final TextBlock noteOnly = new EntityImageNoteLink(note.getDisplay(), note.getColors(), skinParam,</span>
 <span class="nc" id="L313">					link.getStyleBuilder());</span>
@@ -326,36 +326,36 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 		}
 
-<span class="nc bnc" id="L329" title="All 2 branches missed.">		if (link.getQuantifier1() == null)</span>
-<span class="nc" id="L330">			startTailText = null;</span>
+<span class="pc bpc" id="L329" title="1 of 2 branches missed.">		if (link.getQuantifier1() == null)</span>
+<span class="fc" id="L330">			startTailText = null;</span>
 		else
 <span class="nc" id="L332">			startTailText = Display.getWithNewlines(skinParam.getPragma(), link.getQuantifier1())</span>
 <span class="nc" id="L333">					.create(cardinalityFont, HorizontalAlignment.CENTER, skinParam);</span>
 
-<span class="nc bnc" id="L335" title="All 2 branches missed.">		if (link.getQuantifier2() == null)</span>
-<span class="nc" id="L336">			endHeadText = null;</span>
+<span class="pc bpc" id="L335" title="1 of 2 branches missed.">		if (link.getQuantifier2() == null)</span>
+<span class="fc" id="L336">			endHeadText = null;</span>
 		else
 <span class="nc" id="L338">			endHeadText = Display.getWithNewlines(skinParam.getPragma(), link.getQuantifier2()).create(cardinalityFont,</span>
 					HorizontalAlignment.CENTER, skinParam);
 
-<span class="nc bnc" id="L341" title="All 2 branches missed.">		if (link.getRole1() == null)</span>
-<span class="nc" id="L342">			startTailRoleText = null;</span>
+<span class="pc bpc" id="L341" title="1 of 2 branches missed.">		if (link.getRole1() == null)</span>
+<span class="fc" id="L342">			startTailRoleText = null;</span>
 		else
 <span class="nc" id="L344">			startTailRoleText = Display.getWithNewlines(skinParam.getPragma(), link.getRole1()).create(cardinalityFont,</span>
 					HorizontalAlignment.CENTER, skinParam);
 
-<span class="nc bnc" id="L347" title="All 2 branches missed.">		if (link.getRole2() == null)</span>
-<span class="nc" id="L348">			endHeadRoleText = null;</span>
+<span class="pc bpc" id="L347" title="1 of 2 branches missed.">		if (link.getRole2() == null)</span>
+<span class="fc" id="L348">			endHeadRoleText = null;</span>
 		else
 <span class="nc" id="L350">			endHeadRoleText = Display.getWithNewlines(skinParam.getPragma(), link.getRole2()).create(cardinalityFont,</span>
 					HorizontalAlignment.CENTER, skinParam);
 
-<span class="nc bnc" id="L353" title="All 2 branches missed.">		if (link.getType().getMiddleDecor() == LinkMiddleDecor.NONE)</span>
-<span class="nc" id="L354">			this.labelShield = 0;</span>
+<span class="pc bpc" id="L353" title="1 of 2 branches missed.">		if (link.getType().getMiddleDecor() == LinkMiddleDecor.NONE)</span>
+<span class="fc" id="L354">			this.labelShield = 0;</span>
 		else
 <span class="nc" id="L356">			this.labelShield = 7;</span>
 
-<span class="nc" id="L358">	}</span>
+<span class="fc" id="L358">	}</span>
 
 	private Kal kal1;
 	private Kal kal2;
@@ -385,7 +385,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 	}
 
 	private LinkArrow getLinkArrow() {
-<span class="nc" id="L388">		return link.getLinkArrow();</span>
+<span class="fc" id="L388">		return link.getLinkArrow();</span>
 	}
 
 	public void appendLine(GraphvizVersion graphvizVersion, StringBuilder sb, DotMode dotMode, DotSplines dotSplines) {
@@ -1250,7 +1250,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 	}
 
 	public int getLength() {
-<span class="nc" id="L1253">		return link.getLength();</span>
+<span class="fc" id="L1253">		return link.getLength();</span>
 	}
 
 	public void setOpale(boolean opale) {

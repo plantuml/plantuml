@@ -217,17 +217,17 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public EntityPort getEntityPort1(Bibliotekon bibliotekon) {
-<span class="nc" id="L220">		return getEntityPort(cl1, port1, bibliotekon);</span>
+<span class="fc" id="L220">		return getEntityPort(cl1, port1, bibliotekon);</span>
 	}
 
 	public EntityPort getEntityPort2(Bibliotekon bibliotekon) {
-<span class="nc" id="L224">		return getEntityPort(cl2, port2, bibliotekon);</span>
+<span class="fc" id="L224">		return getEntityPort(cl2, port2, bibliotekon);</span>
 	}
 
 	private EntityPort getEntityPort(Entity leaf, String port, Bibliotekon bibliotekon) {
-<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (leaf.getEntityPosition().usePortP())</span>
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">		if (leaf.getEntityPosition().usePortP())</span>
 <span class="nc" id="L229">			return EntityPort.forPort(bibliotekon.getNodeUid(leaf));</span>
-<span class="nc" id="L230">		return EntityPort.create(bibliotekon.getNodeUid(leaf), port);</span>
+<span class="fc" id="L230">		return EntityPort.create(bibliotekon.getNodeUid(leaf), port);</span>
 	}
 
 	@Override
@@ -567,11 +567,11 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public final boolean hasKal1() {
-<span class="nc bnc" id="L570" title="All 4 branches missed.">		return this.linkArg.getKal1() != null &amp;&amp; !this.linkArg.getKal1().isEmpty();</span>
+<span class="pc bpc" id="L570" title="3 of 4 branches missed.">		return this.linkArg.getKal1() != null &amp;&amp; !this.linkArg.getKal1().isEmpty();</span>
 	}
 
 	public final boolean hasKal2() {
-<span class="nc bnc" id="L574" title="All 4 branches missed.">		return this.linkArg.getKal2() != null &amp;&amp; !this.linkArg.getKal2().isEmpty();</span>
+<span class="pc bpc" id="L574" title="3 of 4 branches missed.">		return this.linkArg.getKal2() != null &amp;&amp; !this.linkArg.getKal2().isEmpty();</span>
 	}
 
 	public LineLocation getLocation() {
