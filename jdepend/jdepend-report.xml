@@ -4975,8 +4975,8 @@
 
         <Package name="net.sourceforge.plantuml.classdiagram.command">
             <Stats>
-                <TotalClasses>11</TotalClasses>
-                <ConcreteClasses>11</ConcreteClasses>
+                <TotalClasses>10</TotalClasses>
+                <ConcreteClasses>10</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>5</Ca>
                 <Ce>15</Ce>
@@ -5016,9 +5016,6 @@
                 </Class>
                 <Class sourceFile="CommandLayoutNewLine.java">
                     net.sourceforge.plantuml.classdiagram.command.CommandLayoutNewLine
-                </Class>
-                <Class sourceFile="CommandNamespaceSeparator.java">
-                    net.sourceforge.plantuml.classdiagram.command.CommandNamespaceSeparator
                 </Class>
                 <Class sourceFile="CommandRemoveRestore.java">
                     net.sourceforge.plantuml.classdiagram.command.CommandRemoveRestore

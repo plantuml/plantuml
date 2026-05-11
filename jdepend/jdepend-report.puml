@@ -917,7 +917,7 @@ Total Classes: 3
 "net.sourceforge.plantuml.classdiagram" --> "net.sourceforge.plantuml.preproc"
 
 class "net.sourceforge.plantuml.classdiagram.command" %lighten("red", 75) {
-Total Classes: 11
+Total Classes: 10
 }
 "net.sourceforge.plantuml.classdiagram.command" --> "java.lang"
 "net.sourceforge.plantuml.classdiagram.command" --> "java.util"
