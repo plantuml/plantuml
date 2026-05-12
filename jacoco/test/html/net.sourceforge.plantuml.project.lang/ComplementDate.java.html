@@ -113,9 +113,9 @@ public class ComplementDate implements Something&lt;GanttDiagram&gt; {
 
 	private UBrexPart toUbrexD() {
 <span class="fc" id="L115">		return UBrexConcat.build( //</span>
-<span class="fc" id="L116">				new UBrexNamed(&quot;DCOUNT&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d&quot;)), //</span>
+				new UBrexNamed(&quot;DCOUNT&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)), //
 <span class="fc" id="L117">				UBrexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L118">				new UBrexLeaf(&quot;day&quot; + String.valueOf((char)0x3007) + &quot;?s&quot;), //</span>
+				new UBrexLeaf(&quot;day〇?s&quot;), //
 <span class="fc" id="L119">				UBrexLeaf.spaceOneOrMore(), //</span>
 				new UBrexLeaf(&quot;after&quot;), //
 <span class="fc" id="L121">				UBrexLeaf.spaceOneOrMore(), //</span>
@@ -132,8 +132,8 @@ public class ComplementDate implements Something&lt;GanttDiagram&gt; {
 
 	private UBrexPart toUbrexE() {
 <span class="fc" id="L134">		return UBrexConcat.build( //</span>
-<span class="fc" id="L135">				new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x300C) + &quot;dD&quot; + String.valueOf((char)0x300D) + &quot;+&quot;), //</span>
-<span class="fc" id="L136">				new UBrexNamed(&quot;ECOUNT&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d&quot;)));</span>
+				new UBrexLeaf(&quot;「dD」+&quot;), //
+				new UBrexNamed(&quot;ECOUNT&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)));
 	}
 
 	@Override

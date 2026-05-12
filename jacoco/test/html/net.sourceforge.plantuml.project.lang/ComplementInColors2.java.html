@@ -58,13 +58,13 @@ import net.sourceforge.plantuml.regex.RegexResult;
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
 <span class="fc" id="L60">		return UBrexConcat.build( //</span>
-<span class="fc" id="L61">				new UBrexLeaf(&quot;colo&quot; + String.valueOf((char)0x3007) + &quot;?ured&quot;), //</span>
+				new UBrexLeaf(&quot;colo〇?ured&quot;), //
 <span class="fc" id="L62">				UBrexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L63">				new UBrexOptional(new UBrexLeaf(&quot;in&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;s&quot;)), //</span>
-<span class="fc" id="L64">				new UBrexNamed(&quot;COMPLEMENT1&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;?#&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w&quot;)), //</span>
+				new UBrexOptional(new UBrexLeaf(&quot;in〇+〴s&quot;)), //
+				new UBrexNamed(&quot;COMPLEMENT1&quot;, new UBrexLeaf(&quot;〇?#〇+〴w&quot;)), //
 <span class="fc" id="L65">				new UBrexOptional(UBrexConcat.build( //</span>
 						new UBrexLeaf(&quot;/&quot;), //
-<span class="fc" id="L67">						new UBrexNamed(&quot;COMPLEMENT2&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;?#&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w&quot;)))));</span>
+						new UBrexNamed(&quot;COMPLEMENT2&quot;, new UBrexLeaf(&quot;〇?#〇+〴w&quot;)))));
 	}
 
 	@Override

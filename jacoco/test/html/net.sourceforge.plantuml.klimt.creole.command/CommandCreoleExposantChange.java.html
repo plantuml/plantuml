@@ -64,7 +64,7 @@ public class CommandCreoleExposantChange implements Command {
 
 	public static Command create(FontPosition position) {
 <span class="fc" id="L66">		final String htmlTag = position.getHtmlTag();</span>
-<span class="fc" id="L67">		final String ubrexString = &quot;&lt;&quot; + htmlTag + &quot;&gt;&quot; + String.valueOf((char)0x3036) + &quot;$V=&quot; + String.valueOf((char)0x3004) + &quot;&gt;&quot; + String.valueOf((char)0x3018) + &quot;&lt;/&quot; + htmlTag + &quot;&gt;&quot; + String.valueOf((char)0x3019) + &quot;&quot;;</span>
+<span class="fc" id="L67">		final String ubrexString = &quot;&lt;&quot; + htmlTag + &quot;&gt;〶$V=〄&gt;〘&lt;/&quot; + htmlTag + &quot;&gt;〙&quot;;</span>
 <span class="fc" id="L68">		return new CommandCreoleExposantChange(ubrexString, position);</span>
 	}
 

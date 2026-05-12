@@ -43,15 +43,15 @@ public class UBrexLeaf extends UBrexPart {
 <span class="fc" id="L43">	}</span>
 
 	public static UBrexLeaf end() {
-<span class="fc" id="L46">		return new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3012) + &quot;$&quot;);</span>
+<span class="fc" id="L46">		return new UBrexLeaf(&quot;〒$&quot;);</span>
 	}
 
 	public static UBrexLeaf spaceOneOrMore() {
-<span class="fc" id="L50">		return new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;s&quot;);</span>
+<span class="fc" id="L50">		return new UBrexLeaf(&quot;〇+〴s&quot;);</span>
 	}
 
 	public static UBrexLeaf spaceZeroOrMore() {
-<span class="fc" id="L54">		return new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3034) + &quot;s&quot;);</span>
+<span class="fc" id="L54">		return new UBrexLeaf(&quot;〇*〴s&quot;);</span>
 	}
 
 }

@@ -58,9 +58,9 @@ import net.sourceforge.plantuml.regex.RegexResult;
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
 <span class="fc" id="L59">		return new UBrexNamed(&quot;OPEN&quot;, //</span>
 <span class="fc" id="L60">				UBrexConcat.build( //</span>
-<span class="fc" id="L61">						new UBrexLeaf(&quot;open&quot; + String.valueOf((char)0x3007) + &quot;?e&quot; + String.valueOf((char)0x3007) + &quot;?d&quot;), //</span>
+						new UBrexLeaf(&quot;open〇?e〇?d&quot;), //
 						new UBrexOptional(
-<span class="fc" id="L63">								UBrexConcat.build(new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x2219) + &quot;for&quot; + String.valueOf((char)0x2219) + &quot;&quot;), SubjectTask.taskCode(&quot;FOO&quot;)))));</span>
+<span class="fc" id="L63">								UBrexConcat.build(new UBrexLeaf(&quot;∙for∙&quot;), SubjectTask.taskCode(&quot;FOO&quot;)))));</span>
 	}
 
 	@Override

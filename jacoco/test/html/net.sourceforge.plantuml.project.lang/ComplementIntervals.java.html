@@ -103,13 +103,13 @@ import net.sourceforge.plantuml.regex.RegexResult;
 
 	private UBrexPart toRegexE() {
 <span class="nc" id="L105">		return UBrexConcat.build( //</span>
-<span class="nc" id="L106">				new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x300C) + &quot;dD&quot; + String.valueOf((char)0x300D) + &quot;+&quot;), //</span>
-<span class="nc" id="L107">				new UBrexNamed(&quot;ECOUNT1&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d&quot;)), //</span>
+				new UBrexLeaf(&quot;「dD」+&quot;), //
+				new UBrexNamed(&quot;ECOUNT1&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)), //
 <span class="nc" id="L108">				Words.uexactly(Words.TO), //</span>
 <span class="nc" id="L109">				Words.uzeroOrMore(Words.THE), //</span>
 <span class="nc" id="L110">				UBrexLeaf.spaceOneOrMore(), //</span>
-<span class="nc" id="L111">				new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x300C) + &quot;dD&quot; + String.valueOf((char)0x300D) + &quot;+&quot;), //</span>
-<span class="nc" id="L112">				new UBrexNamed(&quot;ECOUNT2&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d&quot;)));</span>
+				new UBrexLeaf(&quot;「dD」+&quot;), //
+				new UBrexNamed(&quot;ECOUNT2&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)));
 	}
 
 	@Override

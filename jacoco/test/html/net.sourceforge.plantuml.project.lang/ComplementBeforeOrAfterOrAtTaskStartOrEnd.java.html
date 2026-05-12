@@ -88,24 +88,24 @@ import net.sourceforge.plantuml.regex.RegexResult;
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
 <span class="fc" id="L90">		final UBrexPart durationBeforeOrAfter = UBrexConcat.build( //</span>
-<span class="fc" id="L91">				new UBrexNamed(&quot;COMPLEMENT_NB1&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d&quot;)), //</span>
+				new UBrexNamed(&quot;COMPLEMENT_NB1&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)), //
 <span class="fc" id="L92">				UBrexLeaf.spaceOneOrMore(), //</span>
 <span class="fc" id="L93">				new UBrexOptional(UBrexConcat.build(new UBrexNamed(&quot;COMPLEMENT_WORKING1&quot;, new UBrexLeaf(&quot;working&quot;)),</span>
 <span class="fc" id="L94">						UBrexLeaf.spaceOneOrMore())), //</span>
-<span class="fc" id="L95">				new UBrexNamed(&quot;COMPLEMENT_DAY_OR_WEEK1&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot;day&quot; + String.valueOf((char)0x2507) + &quot;week&quot; + String.valueOf((char)0x3011) + &quot;&quot;)), //</span>
-<span class="fc" id="L96">				new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;?s&quot;), //</span>
+				new UBrexNamed(&quot;COMPLEMENT_DAY_OR_WEEK1&quot;, new UBrexLeaf(&quot;【day┇week】&quot;)), //
+				new UBrexLeaf(&quot;〇?s&quot;), //
 <span class="fc" id="L97">				new UBrexOptional(UBrexConcat.build( //</span>
 <span class="fc" id="L98">						UBrexLeaf.spaceOneOrMore(), //</span>
 						new UBrexLeaf(&quot;and&quot;), //
 <span class="fc" id="L100">						UBrexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L101">						new UBrexNamed(&quot;COMPLEMENT_NB2&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d&quot;)), //</span>
+						new UBrexNamed(&quot;COMPLEMENT_NB2&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)), //
 <span class="fc" id="L102">						UBrexLeaf.spaceOneOrMore(), //</span>
 
 						new UBrexOptional(
 <span class="fc" id="L105">								UBrexConcat.build(new UBrexNamed(&quot;COMPLEMENT_WORKING2&quot;, new UBrexLeaf(&quot;working&quot;)),</span>
 <span class="fc" id="L106">										UBrexLeaf.spaceOneOrMore())), //</span>
-<span class="fc" id="L107">						new UBrexNamed(&quot;COMPLEMENT_DAY_OR_WEEK2&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot;day&quot; + String.valueOf((char)0x2507) + &quot;week&quot; + String.valueOf((char)0x3011) + &quot;&quot;)), //</span>
-<span class="fc" id="L108">						new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;?s&quot;))), //</span>
+						new UBrexNamed(&quot;COMPLEMENT_DAY_OR_WEEK2&quot;, new UBrexLeaf(&quot;【day┇week】&quot;)), //
+						new UBrexLeaf(&quot;〇?s&quot;))), //
 <span class="fc" id="L109">				UBrexLeaf.spaceOneOrMore(), //</span>
 <span class="fc" id="L110">				new UBrexNamed(&quot;COMPLEMENT_BEFORE_OR_AFTER&quot;, Words.uoneOf(Words.BEFORE, Words.AFTER)));</span>
 
@@ -118,7 +118,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 <span class="fc" id="L118">				UBrexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L119">				UBrexConcat.build( //</span>
 <span class="fc" id="L120">						SubjectTask.taskCode(&quot;COMPLEMENT_CODE_OTHER&quot;), //</span>
-<span class="fc" id="L121">						new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3034) + &quot;.s&quot;)), //</span>
+						new UBrexLeaf(&quot;〴.s&quot;)), //
 <span class="fc" id="L122">				UBrexLeaf.spaceOneOrMore(), //</span>
 <span class="fc" id="L123">				new UBrexNamed(&quot;COMPLEMENT_START_OR_END&quot;, Words.uoneOf(Words.START, Words.END)));</span>
 	}

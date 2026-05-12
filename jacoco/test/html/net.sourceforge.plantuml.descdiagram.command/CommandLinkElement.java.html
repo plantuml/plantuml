@@ -67,15 +67,15 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandLinkElement extends SingleLineCommand2&lt;DescriptionDiagram&gt; {
 
 	private static final String KEY1 = &quot;dotted|dashed|plain|bold|hidden|norank|single|node|thickness=\\d+&quot;;
-<span class="fc" id="L70">	private static final String UBREX_KEY1 = &quot;dotted&quot; + String.valueOf((char)0x2507) + &quot;dashed&quot; + String.valueOf((char)0x2507) + &quot;plain&quot; + String.valueOf((char)0x2507) + &quot;bold&quot; + String.valueOf((char)0x2507) + &quot;hidden&quot; + String.valueOf((char)0x2507) + &quot;norank&quot; + String.valueOf((char)0x2507) + &quot;single&quot; + String.valueOf((char)0x2507) + &quot;node&quot; + String.valueOf((char)0x2507) + &quot;thickness=&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d&quot;;</span>
+	private static final String UBREX_KEY1 = &quot;dotted┇dashed┇plain┇bold┇hidden┇norank┇single┇node┇thickness=〇+〴d&quot;;
 
 	private static final String KEY2 = &quot;,dotted|,dashed|,plain|,bold|,hidden|,norank|,single|,node|,thickness=\\d+&quot;;
-<span class="fc" id="L73">	private static final String UBREX_KEY2 = &quot;,dotted&quot; + String.valueOf((char)0x2507) + &quot;,dashed&quot; + String.valueOf((char)0x2507) + &quot;,plain&quot; + String.valueOf((char)0x2507) + &quot;,bold&quot; + String.valueOf((char)0x2507) + &quot;,hidden&quot; + String.valueOf((char)0x2507) + &quot;,norank&quot; + String.valueOf((char)0x2507) + &quot;,single&quot; + String.valueOf((char)0x2507) + &quot;,node&quot; + String.valueOf((char)0x2507) + &quot;,thickness=&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d&quot;;</span>
+	private static final String UBREX_KEY2 = &quot;,dotted┇,dashed┇,plain┇,bold┇,hidden┇,norank┇,single┇,node┇,thickness=〇+〴d&quot;;
 
 	public static final String LINE_STYLE = &quot;(?:#\\w+|&quot; + CommandLinkElement.KEY1 + &quot;)(?:,#\\w+|&quot;
 			+ CommandLinkElement.KEY2 + &quot;)*&quot;;
-<span class="fc" id="L77">	public static final String UBREX_LINE_STYLE = &quot;&quot; + String.valueOf((char)0x3010) + &quot; #&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w &quot; + String.valueOf((char)0x2507) + &quot;&quot; + CommandLinkElement.UBREX_KEY1 + &quot;&quot; + String.valueOf((char)0x3011) + &quot; &quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3010) + &quot; ,#&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w &quot; + String.valueOf((char)0x2507) + &quot;&quot;</span>
-<span class="fc" id="L78">			+ CommandLinkElement.UBREX_KEY2 + &quot;&quot; + String.valueOf((char)0x3011) + &quot;&quot;;</span>
+	public static final String UBREX_LINE_STYLE = &quot;【 #〇+〴w ┇&quot; + CommandLinkElement.UBREX_KEY1 + &quot;】 〇*【 ,#〇+〴w ┇&quot;
+			+ CommandLinkElement.UBREX_KEY2 + &quot;】&quot;;
 
 	private static final String LINE_STYLE_MULTIPLES = LINE_STYLE + &quot;(?:(?:;&quot; + LINE_STYLE + &quot;)*)&quot;;
 	public static final String STYLE_COLORS_MULTIPLES = &quot;-\\[(&quot; + LINE_STYLE_MULTIPLES + &quot;*)\\]-&gt;&quot;;

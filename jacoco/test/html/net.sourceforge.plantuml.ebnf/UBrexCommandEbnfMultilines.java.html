@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class UBrexCommandEbnfMultilines extends UBrexCommandMultilines2&lt;PSystemEbnf&gt; {
 
-<span class="pc" id="L54">	private final static Lazy&lt;UnicodeBracketedExpression&gt; END = new Lazy&lt;&gt;(() -&gt; new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3018) + &quot; &quot; + String.valueOf((char)0x3004) + &quot;&gt;; &quot; + String.valueOf((char)0x3019) + &quot;&quot;));</span>
+<span class="pc" id="L54">	private final static Lazy&lt;UnicodeBracketedExpression&gt; END = new Lazy&lt;&gt;(() -&gt; new UBrexLeaf(&quot;〇+〘 〄&gt;; 〙&quot;));</span>
 
 	public UBrexCommandEbnfMultilines() {
 <span class="fc" id="L57">		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);</span>
@@ -61,11 +61,11 @@ public class UBrexCommandEbnfMultilines extends UBrexCommandMultilines2&lt;PSyst
 
 <span class="fc" id="L62">		return new UBrexNamed(&quot;LINE&quot;, //</span>
 <span class="fc" id="L63">				UBrexConcat.build( //</span>
-<span class="fc" id="L64">						new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3034) + &quot;an_&quot; + String.valueOf((char)0x300D) + &quot;&quot;), //</span>
-<span class="fc" id="L65">						new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3034) + &quot;an_-&quot; + String.valueOf((char)0x300D) + &quot;&quot;), //</span>
+						new UBrexLeaf(&quot;「〴an_」&quot;), //
+						new UBrexLeaf(&quot;〇*「〴an_-」&quot;), //
 <span class="fc" id="L66">						UBrexLeaf.spaceZeroOrMore(), //</span>
 						new UBrexLeaf(&quot;=&quot;), //
-<span class="fc" id="L68">						new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3034) + &quot;.&quot;) //</span>
+						new UBrexLeaf(&quot;〇*〴.&quot;) //
 				));
 
 	}

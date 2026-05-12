@@ -66,18 +66,18 @@ public class CommandCreoleStyle implements Command {
 	}
 
 	public static Command createCreole(FontStyle style) {
-<span class="fc" id="L69">		final String ubrexString = style.getUbrexCreoleSyntax() + &quot;&quot; + String.valueOf((char)0x3036) + &quot;$V=&quot; + String.valueOf((char)0x3004) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;.-&gt;&quot; + String.valueOf((char)0x3018) + &quot;&quot; + style.getUbrexCreoleSyntax() + &quot;&quot; + String.valueOf((char)0x3019) + &quot;&quot;;</span>
+<span class="fc" id="L69">		final String ubrexString = style.getUbrexCreoleSyntax() + &quot;〶$V=〄+〴.-&gt;〘&quot; + style.getUbrexCreoleSyntax() + &quot;〙&quot;;</span>
 <span class="fc" id="L70">		return new CommandCreoleStyle(ubrexString, style, false, true);</span>
 	}
 
 	public static Command createLegacy(FontStyle style) {
-<span class="fc" id="L74">		final String ubrexString = style.getUbrexActivationPattern() + &quot;&quot; + String.valueOf((char)0x3036) + &quot;$V=&quot; + String.valueOf((char)0x3004) + &quot;&gt;&quot; + String.valueOf((char)0x3018) + &quot;&quot; + style.getUbrexDeactivationPattern()</span>
-<span class="fc" id="L75">				+ &quot;&quot; + String.valueOf((char)0x3019) + &quot;&quot;;</span>
+<span class="fc" id="L74">		final String ubrexString = style.getUbrexActivationPattern() + &quot;〶$V=〄&gt;〘&quot; + style.getUbrexDeactivationPattern()</span>
+				+ &quot;〙&quot;;
 <span class="fc" id="L76">		return new CommandCreoleStyle(ubrexString, style, style.canHaveExtendedColor(), false);</span>
 	}
 
 	public static Command createLegacyEol(FontStyle style) {
-<span class="fc" id="L80">		final String ubrexString = style.getUbrexActivationPattern() + &quot;&quot; + String.valueOf((char)0x3036) + &quot;$V=&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;.&quot;;</span>
+<span class="fc" id="L80">		final String ubrexString = style.getUbrexActivationPattern() + &quot;〶$V=〇+〴.&quot;;</span>
 <span class="fc" id="L81">		return new CommandCreoleStyle(ubrexString, style, style.canHaveExtendedColor(), false);</span>
 	}
 

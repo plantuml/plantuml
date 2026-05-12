@@ -68,14 +68,14 @@ public class UBrexCommandPartition extends UBrexSingleLineCommand2&lt;ActivityDi
 <span class="fc" id="L68">		return UBrexConcat.build(</span>
 				new UBrexLeaf(&quot;partition&quot;), //
 <span class="fc" id="L70">				UBrexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L71">				new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot; &quot; + String.valueOf((char)0x3003) + &quot; &quot; + String.valueOf((char)0x3036) + &quot;$NAME=&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;&quot; + String.valueOf((char)0x3003) + &quot;&quot; + String.valueOf((char)0x300D) + &quot; &quot; + String.valueOf((char)0x3003) + &quot; &quot; + String.valueOf((char)0x2507) + &quot; &quot; + String.valueOf((char)0x3036) + &quot;$NAME=&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;S   &quot; + String.valueOf((char)0x3011) + &quot;&quot;), //</span>
+				new UBrexLeaf(&quot;【 〃 〶$NAME=〇+「〤〃」 〃 ┇ 〶$NAME=〇+〴S   】&quot;), //
 <span class="fc" id="L72">				UBrexLeaf.spaceZeroOrMore(), //</span>
 				new UBrexOr( //
 <span class="fc" id="L74">						color().getRegex(), //</span>
-<span class="fc" id="L75">						new UBrexOptional(new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot; # &quot; + String.valueOf((char)0x3007) + &quot;{6}&quot; + String.valueOf((char)0x300C) + &quot;0&quot; + String.valueOf((char)0x301C) + &quot;9a&quot; + String.valueOf((char)0x301C) + &quot;fA&quot; + String.valueOf((char)0x301C) + &quot;F&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x2507) + &quot; &quot; + String.valueOf((char)0x3007) + &quot;?# &quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w &quot; + String.valueOf((char)0x3011) + &quot;&quot;)) // LEGACYCOLORIGNORED</span>
+						new UBrexOptional(new UBrexLeaf(&quot;【 # 〇{6}「0〜9a〜fA〜F」┇ 〇?# 〇+〴w 】&quot;)) // LEGACYCOLORIGNORED
 						), //
 				new UBrexOptional(new UBrexNamed(&quot;STEREOTYPE&quot;, //
-<span class="fc" id="L78">						new UBrexLeaf(&quot;&lt;&lt;  &quot; + String.valueOf((char)0x3004) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;. -&gt;&quot; + String.valueOf((char)0x3018) + &quot; &gt;&gt;&quot; + String.valueOf((char)0x3019) + &quot;&quot;))), // </span>
+						new UBrexLeaf(&quot;&lt;&lt;  〄+〴. -&gt;〘 &gt;&gt;〙&quot;))), // 
 <span class="fc" id="L79">				UBrexLeaf.spaceZeroOrMore(), //</span>
 				new UBrexOptional(new UBrexLeaf(&quot;{&quot;)), //
 				

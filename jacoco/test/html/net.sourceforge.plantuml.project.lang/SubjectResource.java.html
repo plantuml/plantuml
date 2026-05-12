@@ -214,10 +214,10 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionSubject() {
 <span class="fc" id="L216">		return new UBrexOr( //</span>
-<span class="fc" id="L217">				new UBrexNamed(&quot;THEY&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot;she&quot; + String.valueOf((char)0x2507) + &quot;he&quot; + String.valueOf((char)0x2507) + &quot;they&quot; + String.valueOf((char)0x3011) + &quot;&quot;)), //</span>
+				new UBrexNamed(&quot;THEY&quot;, new UBrexLeaf(&quot;【she┇he┇they】&quot;)), //
 <span class="fc" id="L218">				UBrexConcat.build( //</span>
 						new UBrexLeaf(&quot;{&quot;), //
-<span class="fc" id="L220">						new UBrexNamed(&quot;RESOURCE&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;{}&quot; + String.valueOf((char)0x300D) + &quot;&quot;)), //</span>
+						new UBrexNamed(&quot;RESOURCE&quot;, new UBrexLeaf(&quot;〇+「〤{}」&quot;)), //
 						new UBrexLeaf(&quot;}&quot;)));
 	}
 

@@ -59,10 +59,10 @@ import net.sourceforge.plantuml.regex.RegexResult;
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
 <span class="fc" id="L60">		return UBrexConcat.build(new UBrexLeaf(&quot;in&quot;), //</span>
 <span class="fc" id="L61">				UBrexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L62">				new UBrexNamed(&quot;COMPLEMENT1&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;?# &quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w&quot;)), //</span>
+				new UBrexNamed(&quot;COMPLEMENT1&quot;, new UBrexLeaf(&quot;〇?# 〇+〴w&quot;)), //
 <span class="fc" id="L63">				new UBrexOptional(UBrexConcat.build( //</span>
 						new UBrexLeaf(&quot;/&quot;), //
-<span class="fc" id="L65">						new UBrexNamed(&quot;COMPLEMENT2&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;?# &quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;w&quot;)))) //</span>
+						new UBrexNamed(&quot;COMPLEMENT2&quot;, new UBrexLeaf(&quot;〇?# 〇+〴w&quot;)))) //
 		);
 	}
 

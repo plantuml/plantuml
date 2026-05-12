@@ -47,38 +47,38 @@ public class UbrexUrlBuilder {
 //	public static final IRegex MANDATORY = new RegexLeaf(&quot;URL&quot;, &quot;(&quot; + UbrexUrlBuilder.getRegexp() + &quot;)&quot;);
 //	public static final IRegex OPTIONAL = new RegexOptional(MANDATORY);
 
-<span class="fc" id="L50">	private static final String START_PART = &quot;[[ &quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3034) + &quot;s&quot;;</span>
-<span class="fc" id="L51">	private static final String END_PART = &quot;&quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3034) + &quot;s  ]]&quot;;</span>
+	private static final String START_PART = &quot;[[ 〇*〴s&quot;;
+	private static final String END_PART = &quot;〇*〴s  ]]&quot;;
 
-<span class="fc" id="L53">	private static final String S_QUOTED = START_PART + //</span>
-<span class="fc" id="L54">			&quot;&quot; + String.valueOf((char)0x3003) + &quot;  &quot; + String.valueOf((char)0x3036) + &quot;$URL=&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;&quot; + String.valueOf((char)0x3003) + &quot;&quot; + String.valueOf((char)0x300D) + &quot; &quot; + String.valueOf((char)0x3003) + &quot;&quot; + // Quoted part</span>
-<span class="fc" id="L55">			&quot;&quot; + String.valueOf((char)0x3007) + &quot;?&quot; + String.valueOf((char)0x3018) + &quot; &quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3034) + &quot;s { &quot; + String.valueOf((char)0x3036) + &quot;$TOOLTIP=&quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;{}&quot; + String.valueOf((char)0x300D) + &quot; } &quot; + String.valueOf((char)0x3019) + &quot;&quot; + // Optional tooltip</span>
-<span class="fc" id="L56">			&quot;&quot; + String.valueOf((char)0x3007) + &quot;?&quot; + String.valueOf((char)0x3018) + &quot; &quot; + String.valueOf((char)0x3034) + &quot;s &quot; + String.valueOf((char)0x3036) + &quot;$LABEL=&quot; + String.valueOf((char)0x3018) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;&quot; + String.valueOf((char)0x3034) + &quot;s{}[]&quot; + String.valueOf((char)0x300D) + &quot;  &quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;[]&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x3019) + &quot;  &quot; + String.valueOf((char)0x3019) + &quot;&quot; + // Optional label</span>
+	private static final String S_QUOTED = START_PART + //
+			&quot;〃  〶$URL=〇+「〤〃」 〃&quot; + // Quoted part
+			&quot;〇?〘 〇*〴s { 〶$TOOLTIP=〇*「〤{}」 } 〙&quot; + // Optional tooltip
+			&quot;〇?〘 〴s 〶$LABEL=〘「〤〴s{}[]」  〇*「〤[]」〙  〙&quot; + // Optional label
 			END_PART;
 
-<span class="fc" id="L59">	private static final String S_ONLY_TOOLTIP = START_PART + //</span>
-<span class="fc" id="L60">			&quot;{  &quot; + String.valueOf((char)0x3036) + &quot;$TOOLTIP=&quot; + String.valueOf((char)0x3004) + &quot;&gt;&quot; + String.valueOf((char)0x3018) + &quot; }&quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3034) + &quot;s]]&quot; + String.valueOf((char)0x3019) + &quot;&quot;; // Tooltip WARNING!! Not exactly the same</span>
+	private static final String S_ONLY_TOOLTIP = START_PART + //
+			&quot;{  〶$TOOLTIP=〄&gt;〘 }〇*〴s]]〙&quot;; // Tooltip WARNING!! Not exactly the same
 
-<span class="fc" id="L62">	private static final String S_ONLY_TOOLTIP_AND_LABEL = START_PART + //</span>
-<span class="fc" id="L63">			&quot;{  &quot; + String.valueOf((char)0x3036) + &quot;$TOOLTIP=&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;{}&quot; + String.valueOf((char)0x300D) + &quot; }&quot; + // Tooltip</span>
-<span class="fc" id="L64">			&quot;&quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3034) + &quot;s&quot; + //</span>
-<span class="fc" id="L65">			&quot;&quot; + String.valueOf((char)0x3036) + &quot;$LABEL=&quot; + String.valueOf((char)0x3018) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;&quot; + String.valueOf((char)0x3034) + &quot;s[]{}&quot; + String.valueOf((char)0x300D) + &quot; &quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;[]&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x3019) + &quot;&quot; // Label</span>
+	private static final String S_ONLY_TOOLTIP_AND_LABEL = START_PART + //
+			&quot;{  〶$TOOLTIP=〇+「〤{}」 }&quot; + // Tooltip
+			&quot;〇*〴s&quot; + //
+			&quot;〶$LABEL=〘「〤〴s[]{}」 〇*「〤[]」〙&quot; // Label
 			+ END_PART;
 
-<span class="fc" id="L68">	private static final String S_LINK_TOOLTIP_NOLABEL = START_PART + //</span>
-<span class="fc" id="L69">			&quot;&quot; + String.valueOf((char)0x3036) + &quot;$URL=&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;&quot; + String.valueOf((char)0x3034) + &quot;s&quot; + String.valueOf((char)0x3034) + &quot;g{}[]&quot; + String.valueOf((char)0x300D) + &quot;&quot; + // Link</span>
-<span class="fc" id="L70">			&quot;&quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3034) + &quot;s&quot; + //</span>
-<span class="fc" id="L71">			&quot;{  &quot; + String.valueOf((char)0x3036) + &quot;$TOOLTIP=&quot; + String.valueOf((char)0x3004) + &quot;&gt;&quot; + String.valueOf((char)0x3018) + &quot; }&quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3034) + &quot;s]]&quot; + String.valueOf((char)0x3019) + &quot;&quot;; // Tooltip</span>
+	private static final String S_LINK_TOOLTIP_NOLABEL = START_PART + //
+			&quot;〶$URL=〇+「〤〴s〴g{}[]」&quot; + // Link
+			&quot;〇*〴s&quot; + //
+			&quot;{  〶$TOOLTIP=〄&gt;〘 }〇*〴s]]〙&quot;; // Tooltip
 
-<span class="fc" id="L73">	private static final String S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL = START_PART + //</span>
-<span class="fc" id="L74">			&quot;&quot; + String.valueOf((char)0x3036) + &quot;$URL=&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;&quot; + String.valueOf((char)0x3034) + &quot;s&quot; + String.valueOf((char)0x3034) + &quot;g{}[]&quot; + String.valueOf((char)0x300D) + &quot;&quot; + // Link</span>
-<span class="fc" id="L75">			&quot;&quot; + String.valueOf((char)0x3007) + &quot;?&quot; + String.valueOf((char)0x3018) + &quot;  &quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x3034) + &quot;s  {  &quot; + String.valueOf((char)0x3036) + &quot;$TOOLTIP=&quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;{}&quot; + String.valueOf((char)0x300D) + &quot;  } &quot; + String.valueOf((char)0x3019) + &quot;&quot; + // Optional tooltip</span>
-<span class="fc" id="L76">			&quot;&quot; + String.valueOf((char)0x3007) + &quot;?&quot; + String.valueOf((char)0x3018) + &quot;  &quot; + String.valueOf((char)0x3034) + &quot;s &quot; + String.valueOf((char)0x3036) + &quot;$LABEL=&quot; + String.valueOf((char)0x3018) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;&quot; + String.valueOf((char)0x3034) + &quot;s{}[]&quot; + String.valueOf((char)0x300D) + &quot; &quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;[]&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x3019) + &quot;  &quot; + String.valueOf((char)0x3019) + &quot;&quot; + // Optional label</span>
+	private static final String S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL = START_PART + //
+			&quot;〶$URL=〇+「〤〴s〴g{}[]」&quot; + // Link
+			&quot;〇?〘  〇*〴s  {  〶$TOOLTIP=〇*「〤{}」  } 〙&quot; + // Optional tooltip
+			&quot;〇?〘  〴s 〶$LABEL=〘「〤〴s{}[]」 〇*「〤[]」〙  〙&quot; + // Optional label
 			END_PART;
 
-<span class="fc" id="L79">	private static final String S_LINK_NOTOOLTIP_WITH_OPTIONAL_LABEL = START_PART + //</span>
-<span class="fc" id="L80">			&quot;&quot; + String.valueOf((char)0x3036) + &quot;$URL=&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;&quot; + String.valueOf((char)0x3034) + &quot;s&quot; + String.valueOf((char)0x3034) + &quot;g[]&quot; + String.valueOf((char)0x300D) + &quot;&quot; + // Link</span>
-<span class="fc" id="L81">			&quot;&quot; + String.valueOf((char)0x3007) + &quot;?&quot; + String.valueOf((char)0x3018) + &quot;  &quot; + String.valueOf((char)0x3034) + &quot;s &quot; + String.valueOf((char)0x3036) + &quot;$LABEL=&quot; + String.valueOf((char)0x3018) + &quot;&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;&quot; + String.valueOf((char)0x3034) + &quot;s{}[]&quot; + String.valueOf((char)0x300D) + &quot; &quot; + String.valueOf((char)0x3007) + &quot;*&quot; + String.valueOf((char)0x300C) + &quot;&quot; + String.valueOf((char)0x3024) + &quot;[]&quot; + String.valueOf((char)0x300D) + &quot;&quot; + String.valueOf((char)0x3019) + &quot;  &quot; + String.valueOf((char)0x3019) + &quot;&quot; + // Optional label</span>
+	private static final String S_LINK_NOTOOLTIP_WITH_OPTIONAL_LABEL = START_PART + //
+			&quot;〶$URL=〇+「〤〴s〴g[]」&quot; + // Link
+			&quot;〇?〘  〴s 〶$LABEL=〘「〤〴s{}[]」 〇*「〤[]」〙  〙&quot; + // Optional label
 			END_PART;
 
 //	public static String getRegexp() {

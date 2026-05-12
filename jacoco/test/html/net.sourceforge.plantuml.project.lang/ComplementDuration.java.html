@@ -63,18 +63,18 @@ import net.sourceforge.plantuml.regex.RegexResult;
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
 <span class="fc" id="L64">		return UBrexConcat.build( //</span>
 <span class="fc" id="L65">				UBrexConcat.build( //</span>
-<span class="fc" id="L66">						new UBrexNamed(&quot;CNUM1&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d&quot;)), //</span>
+						new UBrexNamed(&quot;CNUM1&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)), //
 <span class="fc" id="L67">						UBrexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L68">						new UBrexNamed(&quot;CUNIT1&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot;hour&quot; + String.valueOf((char)0x2507) + &quot;day&quot; + String.valueOf((char)0x2507) + &quot;week&quot; + String.valueOf((char)0x2507) + &quot;month&quot; + String.valueOf((char)0x3011) + &quot;&quot;)), //</span>
-<span class="fc" id="L69">						new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;?s&quot;)), //</span>
+						new UBrexNamed(&quot;CUNIT1&quot;, new UBrexLeaf(&quot;【hour┇day┇week┇month】&quot;)), //
+						new UBrexLeaf(&quot;〇?s&quot;)), //
 <span class="fc" id="L70">				new UBrexOptional(UBrexConcat.build( //</span>
 <span class="fc" id="L71">						UBrexLeaf.spaceOneOrMore(), //</span>
 						new UBrexLeaf(&quot;and&quot;), //
 <span class="fc" id="L73">						UBrexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L74">						new UBrexNamed(&quot;CNUM2&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d&quot;)), //</span>
+						new UBrexNamed(&quot;CNUM2&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)), //
 <span class="fc" id="L75">						UBrexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L76">						new UBrexNamed(&quot;CUNIT2&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3010) + &quot;hour&quot; + String.valueOf((char)0x2507) + &quot;day&quot; + String.valueOf((char)0x2507) + &quot;week&quot; + String.valueOf((char)0x2507) + &quot;month&quot; + String.valueOf((char)0x3011) + &quot;&quot;)), //</span>
-<span class="fc" id="L77">						new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;?s&quot;))));</span>
+						new UBrexNamed(&quot;CUNIT2&quot;, new UBrexLeaf(&quot;【hour┇day┇week┇month】&quot;)), //
+						new UBrexLeaf(&quot;〇?s&quot;))));
 	}
 
 	@Override

@@ -230,9 +230,9 @@ public class SubjectDayAsDate implements Subject&lt;GanttDiagram&gt; {
 
 	private UBrexPart toUbrexE() {
 <span class="fc" id="L232">		return UBrexConcat.build( //</span>
-<span class="fc" id="L233">				new UBrexNamed(&quot;ETYPE&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x300C) + &quot;dDtTeE&quot; + String.valueOf((char)0x300D) + &quot;&quot;)), //</span>
-<span class="fc" id="L234">				new UBrexNamed(&quot;EOPERATION&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x300C) + &quot;-+&quot; + String.valueOf((char)0x300D) + &quot;&quot;)), //</span>
-<span class="fc" id="L235">				new UBrexNamed(&quot;ECOUNT&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d&quot;)) //</span>
+				new UBrexNamed(&quot;ETYPE&quot;, new UBrexLeaf(&quot;「dDtTeE」&quot;)), //
+				new UBrexNamed(&quot;EOPERATION&quot;, new UBrexLeaf(&quot;「-+」&quot;)), //
+				new UBrexNamed(&quot;ECOUNT&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)) //
 		);
 	}
 

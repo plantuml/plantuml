@@ -57,8 +57,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
 <span class="nc" id="L59">		return UBrexConcat.build(//</span>
-<span class="nc" id="L60">				new UBrexNamed(&quot;COMPLEMENT&quot;, new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;d&quot;)), //</span>
-<span class="nc" id="L61">				new UBrexLeaf(&quot;&quot; + String.valueOf((char)0x3007) + &quot;+&quot; + String.valueOf((char)0x3034) + &quot;W complete&quot; + String.valueOf((char)0x3007) + &quot;?d&quot;)) //</span>
+				new UBrexNamed(&quot;COMPLEMENT&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)), //
+				new UBrexLeaf(&quot;〇+〴W complete〇?d&quot;)) //
 		;
 	}
 
