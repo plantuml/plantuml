@@ -42,12 +42,11 @@ return ok
 	<div id="out"></div>
 
 	<script src="viz-global.js"></script>
-	<script src="plantuml.js"></script>
-	<script>
-		plantumlLoad();
+	<script type="module">
+		import { render } from "./plantuml.js";
 		const textarea = document.getElementById("src");
 		function renderNow() {
-			window.plantuml.render(textarea.value.split(/\r\n|\r|\n/), "out", {dark: true});
+			render(textarea.value.split(/\r\n|\r|\n/), "out", {dark: true});
 		}
 		textarea.addEventListener("input", renderNow);
 		renderNow();

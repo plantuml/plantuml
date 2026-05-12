@@ -256,10 +256,10 @@ body {
   <div class="impl-code">
     <div class="code-tab"><span>plantuml-worker-frame.html</span></div>
     <pre><span class="comment">// This HTML page is loaded into each hidden iframe.</span>
-<span class="comment">// It contains &lt;script&gt; tags for viz-global.js and plantuml.js,</span>
-<span class="comment">// plus this listener:</span>
+<span class="comment">// It contains a &lt;script&gt; tag for viz-global.js,</span>
+<span class="comment">// then imports plantuml.js as an ES2015 module:</span>
 
-<span class="fn">plantumlLoad</span>();
+<span class="keyword">import</span> { render } <span class="keyword">from</span> <span class="string">'./plantuml.js'</span>;
 
 <span class="keyword">const</span> target = document.<span class="fn">createElement</span>(<span class="string">'div'</span>);
 target.id = <span class="string">'out'</span>;
@@ -279,7 +279,7 @@ window.<span class="fn">addEventListener</span>(<span class="string">'message'</
   });
   observer.<span class="fn">observe</span>(target, { childList: <span class="keyword">true</span>, subtree: <span class="keyword">true</span> });
 
-  window.plantuml.<span class="fn">render</span>(lines, <span class="string">'out'</span>, dark ? { dark: <span class="keyword">true</span> } : <span class="keyword">undefined</span>);
+  <span class="fn">render</span>(lines, <span class="string">'out'</span>, dark ? { dark: <span class="keyword">true</span> } : <span class="keyword">undefined</span>);
 });</pre>
   </div>
 </div>
@@ -405,16 +405,14 @@ function renderInWorker(lines, targetId, dark) {
   pendingRenders++;
   var requestId = 'puml-' + targetId + '-' + Date.now();
 
-  // Build the worker iframe HTML as a blob URL so we don't need
-  // a separate file — the iframe loads plantuml.js and viz-global.js
-  // from the same directory.
+  // Build the worker iframe HTML as srcdoc. The iframe loads viz-global.js
+  // and imports plantuml.js as an ES2015 module from the same directory.
   var workerHtml = '<!DOCTYPE html><html><head>'
     + '<script src="viz-global.js"><\/script>'
-    + '<script src="plantuml.js"><\/script>'
     + '<\/head><body>'
     + '<div id="out"></div>'
-    + '<script>'
-    + 'plantumlLoad();'
+    + '<script type="module">'
+    + 'import { render } from "./plantuml.js";'
     + 'var target = document.getElementById("out");'
     + 'window.addEventListener("message", function(e) {'
     + '  var observer = new MutationObserver(function() {'
@@ -424,7 +422,7 @@ function renderInWorker(lines, targetId, dark) {
     + '    }'
     + '  });'
     + '  observer.observe(target, { childList: true, subtree: true });'
-    + '  window.plantuml.render(e.data.lines, "out", e.data.dark ? { dark: true } : undefined);'
+    + '  render(e.data.lines, "out", e.data.dark ? { dark: true } : undefined);'
     + '});'
     + '<\/script><\/body><\/html>';
 

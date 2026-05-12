@@ -257,12 +257,12 @@ body {
   <div class="impl-code">
     <div class="code-tab"><span>plantuml-renderer.js</span></div>
     <pre><span class="comment">// Loaded inside the sandboxed iframe on render.githubusercontent.com</span>
-<span class="comment">// plantuml.js and viz-global.js are already included via &lt;script&gt; tags</span>
+<span class="comment">// viz-global.js is loaded via a &lt;script&gt; tag,</span>
+<span class="comment">// plantuml.js is imported as an ES2015 module.</span>
+
+<span class="keyword">import</span> { render } <span class="keyword">from</span> <span class="string">'./plantuml.js'</span>;
 
 <span class="keyword">const</span> ALLOWED_ORIGIN = <span class="string">'https://github.com'</span>;
-
-<span class="comment">// Initialize the PlantUML engine once</span>
-<span class="fn">plantumlLoad</span>();
 
 <span class="keyword">const</span> renderTarget = document.<span class="fn">createElement</span>(<span class="string">'div'</span>);
 renderTarget.id = <span class="string">'plantuml-output'</span>;
@@ -292,7 +292,7 @@ window.<span class="fn">addEventListener</span>(<span class="string">'message'</
   observer.<span class="fn">observe</span>(renderTarget, { childList: <span class="keyword">true</span>, subtree: <span class="keyword">true</span> });
 
   <span class="keyword">try</span> {
-    window.plantuml.<span class="fn">render</span>(lines, <span class="string">'plantuml-output'</span>, { dark });
+    <span class="fn">render</span>(lines, <span class="string">'plantuml-output'</span>, { dark });
   } <span class="keyword">catch</span> (err) {
     observer.<span class="fn">disconnect</span>();
     window.parent.<span class="fn">postMessage</span>({
@@ -415,16 +415,17 @@ document.<span class="fn">addEventListener</span>(<span class="string">'DOMConte
 </div>
 
 <div class="note-box">
-  <strong>Key selling points for GitHub:</strong> Zero server cost &mdash; no Java process, no Graphviz binary. The TeaVM-compiled engine runs entirely in the browser. The API is 3 calls: <code>plantumlLoad()</code>, <code>plantuml.render(lines, targetId)</code>, and optionally <code>plantuml.render(lines, targetId, {dark: true})</code>. The sandbox architecture is the same pattern GitHub already uses for Mermaid.
+  <strong>Key selling points for GitHub:</strong> Zero server cost &mdash; no Java process, no Graphviz binary. The TeaVM-compiled engine runs entirely in the browser. The API is 2 exported functions: <code>render(lines, targetId)</code> and <code>renderToString(lines, onSuccess, onError)</code>, both imported as ES2015 modules. The sandbox architecture is the same pattern GitHub already uses for Mermaid.
 </div>
 
 <!-- ========== SCRIPTS ========== -->
 <script src="viz-global.js"></script>
-<script src="plantuml.js"></script>
-<script>
+<script type="module">
+import { render } from "./plantuml.js";
+
 // The PlantUML JS rendering queue.
 //
-// plantuml.render() is asynchronous: it returns immediately but writes
+// render() is asynchronous: it returns immediately but writes
 // the SVG into the target element later.  The engine uses shared internal
 // state, so we MUST serialize renders — start the next one only after
 // the previous SVG has appeared in the DOM.
@@ -472,51 +473,41 @@ function processQueue() {
     }
   }, 5000);
 
-  window.plantuml.render(job.lines, job.targetId);
+  render(job.lines, job.targetId);
 }
 
 // ─── Init ───
-var engineReady = false;
-try {
-  if (typeof plantumlLoad === 'function') {
-    plantumlLoad();
-    engineReady = true;
-  }
-} catch(e) { /* engine not available */ }
+enqueueRender([
+  '@startuml',
+  'participant Client',
+  'participant "Auth API" as Auth',
+  'participant Database as DB',
+  '',
+  'Client -> Auth : POST /login',
+  'Auth -> DB : verify credentials',
+  'DB --> Auth : user record',
+  'Auth --> Client : JWT token',
+  '@enduml'
+], 'diagram-1');
 
-if (engineReady) {
-  enqueueRender([
-    '@startuml',
-    'participant Client',
-    'participant "Auth API" as Auth',
-    'participant Database as DB',
-    '',
-    'Client -> Auth : POST /login',
-    'Auth -> DB : verify credentials',
-    'DB --> Auth : user record',
-    'Auth --> Client : JWT token',
-    '@enduml'
-  ], 'diagram-1');
+enqueueRender([
+  '@startuml',
+  'node "Load Balancer" as lb',
+  'node "App Node 1" as n1',
+  'node "App Node 2" as n2',
+  'node "App Node 3" as n3',
+  'database "PostgreSQL" as db',
+  '',
+  'lb --> n1',
+  'lb --> n2',
+  'lb --> n3',
+  'n1 --> db',
+  'n2 --> db',
+  'n3 --> db',
+  '@enduml'
+], 'diagram-2');
 
-  enqueueRender([
-    '@startuml',
-    'node "Load Balancer" as lb',
-    'node "App Node 1" as n1',
-    'node "App Node 2" as n2',
-    'node "App Node 3" as n3',
-    'database "PostgreSQL" as db',
-    '',
-    'lb --> n1',
-    'lb --> n2',
-    'lb --> n3',
-    'n1 --> db',
-    'n2 --> db',
-    'n3 --> db',
-    '@enduml'
-  ], 'diagram-2');
-}
-
-function copyDiagram(btn) {
+window.copyDiagram = function(btn) {
   var container = btn.closest('.plantuml-render');
   var svg = container.querySelector('.diagram-output').innerHTML;
   navigator.clipboard.writeText(svg).then(function() {
@@ -524,7 +515,7 @@ function copyDiagram(btn) {
     btn.textContent = 'copied!';
     setTimeout(function() { btn.textContent = orig; }, 1500);
   });
-}
+};
 </script>
 </body>
 </html>

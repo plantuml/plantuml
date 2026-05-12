@@ -1,3 +1,5 @@
+import { render } from "./plantuml.js";
+
 const editor = document.getElementById("editor");
 
 renderer();
@@ -8,10 +10,8 @@ function renderer() {
 	const loading = document.getElementById("loading");
 
 	try {
-		plantumlLoad();
-
-		editor.addEventListener("input", render);
-		render();
+		editor.addEventListener("input", renderNow);
+		renderNow();
 
 		loading.style.display = "none";
 	} catch (err) {
@@ -19,9 +19,9 @@ function renderer() {
 		loading.textContent = "Error: " + err.message;
 	}
 
-	function render() {
+	function renderNow() {
 		const lines = editor.value.split(/\r\n|\r|\n/);
-		window.plantuml.render(lines, "out");
+		render(lines, "out");
 	}
 }
 

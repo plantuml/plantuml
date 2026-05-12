@@ -11506,9 +11506,9 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 5
+    Total Classes: 3
     Concrete Classes: 0
-    Abstract Classes: 5
+    Abstract Classes: 3
 
     Ca: 2
     Ce: 2
@@ -11518,8 +11518,6 @@ Stats:
     D: 0.5
 
 Abstract Classes:
-    net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser$RenderCallback
-    net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser$RenderToStringCallback
     net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser$StringCallback
     net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader$Err
     net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader$Ok
@@ -14944,7 +14942,7 @@ net.sourceforge.plantuml.svg.parser,11,1,1,13,0.09,0.93,0.02,1
 net.sourceforge.plantuml.swing,36,0,0,15,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
 net.sourceforge.plantuml.teavm,19,1,41,14,0.05,0.25,0.69,1
-net.sourceforge.plantuml.teavm.browser,5,5,2,2,1,0.5,0.5,1
+net.sourceforge.plantuml.teavm.browser,3,3,2,2,1,0.5,0.5,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.text,5,1,38,4,0.2,0.1,0.7,1
 net.sourceforge.plantuml.theme,1,0,1,6,0,0.86,0.14,1

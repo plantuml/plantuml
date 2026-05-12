@@ -16986,9 +16986,9 @@
 
         <Package name="net.sourceforge.plantuml.teavm.browser">
             <Stats>
-                <TotalClasses>5</TotalClasses>
+                <TotalClasses>3</TotalClasses>
                 <ConcreteClasses>0</ConcreteClasses>
-                <AbstractClasses>5</AbstractClasses>
+                <AbstractClasses>3</AbstractClasses>
                 <Ca>2</Ca>
                 <Ce>2</Ce>
                 <A>1</A>
@@ -16998,12 +16998,6 @@
             </Stats>
 
             <AbstractClasses>
-                <Class sourceFile="PlantUMLBrowser.java">
-                    net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser$RenderCallback
-                </Class>
-                <Class sourceFile="PlantUMLBrowser.java">
-                    net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser$RenderToStringCallback
-                </Class>
                 <Class sourceFile="PlantUMLBrowser.java">
                     net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser$StringCallback
                 </Class>
