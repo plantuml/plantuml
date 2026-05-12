@@ -116,3 +116,12 @@ PlantUML is licensed under several licenses; you can choose the one that suits y
 
 For more information, please refer to the [PlantUML license FAQ](https://plantuml.com/en/faq#ddbc9d04378ee462) to help determine which license is appropriate for your use case.
 
+## Compiling
+
+You have 2 options:
+
+1) `./gradlew jar`
+
+or
+
+2) `ant`
