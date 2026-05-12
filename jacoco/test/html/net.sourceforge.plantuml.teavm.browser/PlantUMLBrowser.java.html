@@ -238,8 +238,23 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 	 * {@code elementId}.
 	 *
 	 * &lt;p&gt;
+	 * This method does NOT perform the rendering itself — it only queues the
+	 * request and wakes up the worker thread. This is necessary because:
+	 *
+	 * &lt;ol&gt;
+	 * &lt;li&gt;This method is called from a native JS context (event handler,
+	 * setTimeout, etc.)&lt;/li&gt;
+	 * &lt;li&gt;Viz.js async calls require a TeaVM coroutine context&lt;/li&gt;
+	 * &lt;li&gt;The worker thread provides that coroutine context&lt;/li&gt;
+	 * &lt;/ol&gt;
+	 *
+	 * &lt;p&gt;
 	 * This call is asynchronous: it returns immediately, and the SVG is inserted
 	 * later from the worker thread.
+	 *
+	 * &lt;p&gt;
+	 * If a previous request is still pending (worker hasn't picked it up yet), it
+	 * will be overwritten. This is the desired behavior for live-typing scenarios.
 	 *
 	 * @param lines     the PlantUML source code, split into lines by the JavaScript
 	 *                  caller
@@ -250,20 +265,25 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 	 */
 	@JSExport
 	public static void render(String[] lines, String elementId, JSObject options) {
-<span class="nc" id="L253">		ensureWorkerStarted();</span>
-<span class="nc" id="L254">		synchronized (LOCK) {</span>
-<span class="nc" id="L255">			pendingLines = lines;</span>
-<span class="nc" id="L256">			pendingElementId = elementId;</span>
-<span class="nc" id="L257">			pendingOnSuccess = null;</span>
-<span class="nc" id="L258">			pendingOnError = null;</span>
-<span class="nc" id="L259">			pendingDarkMode = isDark(options);</span>
-<span class="nc" id="L260">			LOCK.notify();</span>
-<span class="nc" id="L261">		}</span>
-<span class="nc" id="L262">	}</span>
+<span class="nc" id="L268">		ensureWorkerStarted();</span>
+<span class="nc" id="L269">		synchronized (LOCK) {</span>
+<span class="nc" id="L270">			pendingLines = lines;</span>
+<span class="nc" id="L271">			pendingElementId = elementId;</span>
+<span class="nc" id="L272">			pendingOnSuccess = null;</span>
+<span class="nc" id="L273">			pendingOnError = null;</span>
+<span class="nc" id="L274">			pendingDarkMode = isDark(options);</span>
+<span class="nc" id="L275">			LOCK.notify();</span>
+<span class="nc" id="L276">		}</span>
+<span class="nc" id="L277">	}</span>
 
 	/**
 	 * Renders a PlantUML diagram and delivers the resulting SVG as a string via
 	 * the {@code onSuccess} callback. Errors go to {@code onError}.
+	 *
+	 * &lt;p&gt;
+	 * Same queueing and asynchronous behavior as {@link #render}: this method
+	 * only queues the request; the worker thread performs the actual rendering
+	 * and invokes the callback. A previous pending request will be overwritten.
 	 *
 	 * @param lines     the PlantUML source code, split into lines by the JavaScript
 	 *                  caller
@@ -275,16 +295,16 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 	@JSExport
 	public static void renderToString(String[] lines, StringCallback onSuccess, StringCallback onError,
 			JSObject options) {
-<span class="nc" id="L278">		ensureWorkerStarted();</span>
-<span class="nc" id="L279">		synchronized (LOCK) {</span>
-<span class="nc" id="L280">			pendingLines = lines;</span>
-<span class="nc" id="L281">			pendingElementId = null;</span>
-<span class="nc" id="L282">			pendingOnSuccess = onSuccess;</span>
-<span class="nc" id="L283">			pendingOnError = onError;</span>
-<span class="nc" id="L284">			pendingDarkMode = isDark(options);</span>
-<span class="nc" id="L285">			LOCK.notify();</span>
-<span class="nc" id="L286">		}</span>
-<span class="nc" id="L287">	}</span>
+<span class="nc" id="L298">		ensureWorkerStarted();</span>
+<span class="nc" id="L299">		synchronized (LOCK) {</span>
+<span class="nc" id="L300">			pendingLines = lines;</span>
+<span class="nc" id="L301">			pendingElementId = null;</span>
+<span class="nc" id="L302">			pendingOnSuccess = onSuccess;</span>
+<span class="nc" id="L303">			pendingOnError = onError;</span>
+<span class="nc" id="L304">			pendingDarkMode = isDark(options);</span>
+<span class="nc" id="L305">			LOCK.notify();</span>
+<span class="nc" id="L306">		}</span>
+<span class="nc" id="L307">	}</span>
 
 	// =========================================================================
 	// Options extraction (called from JavaScript)
@@ -327,35 +347,35 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 			StringCallback onError;
 			boolean darkMode;
 
-<span class="nc" id="L330">			synchronized (LOCK) {</span>
-<span class="nc bnc" id="L331" title="All 2 branches missed.">				while (pendingLines == null) {</span>
+<span class="nc" id="L350">			synchronized (LOCK) {</span>
+<span class="nc bnc" id="L351" title="All 2 branches missed.">				while (pendingLines == null) {</span>
 					try {
-<span class="nc" id="L333">						LOCK.wait();</span>
-<span class="nc" id="L334">					} catch (InterruptedException e) {</span>
+<span class="nc" id="L353">						LOCK.wait();</span>
+<span class="nc" id="L354">					} catch (InterruptedException e) {</span>
 						// Interruption is not expected, but if it happens, just retry
-<span class="nc" id="L336">					}</span>
+<span class="nc" id="L356">					}</span>
 				}
 
 				// Capture the request and clear the pending state atomically.
-<span class="nc" id="L340">				lines = pendingLines;</span>
-<span class="nc" id="L341">				elementId = pendingElementId;</span>
-<span class="nc" id="L342">				onSuccess = pendingOnSuccess;</span>
-<span class="nc" id="L343">				onError = pendingOnError;</span>
-<span class="nc" id="L344">				darkMode = pendingDarkMode;</span>
-<span class="nc" id="L345">				pendingLines = null;</span>
-<span class="nc" id="L346">				pendingElementId = null;</span>
-<span class="nc" id="L347">				pendingOnSuccess = null;</span>
-<span class="nc" id="L348">				pendingOnError = null;</span>
-<span class="nc" id="L349">				pendingDarkMode = false;</span>
-<span class="nc" id="L350">			}</span>
+<span class="nc" id="L360">				lines = pendingLines;</span>
+<span class="nc" id="L361">				elementId = pendingElementId;</span>
+<span class="nc" id="L362">				onSuccess = pendingOnSuccess;</span>
+<span class="nc" id="L363">				onError = pendingOnError;</span>
+<span class="nc" id="L364">				darkMode = pendingDarkMode;</span>
+<span class="nc" id="L365">				pendingLines = null;</span>
+<span class="nc" id="L366">				pendingElementId = null;</span>
+<span class="nc" id="L367">				pendingOnSuccess = null;</span>
+<span class="nc" id="L368">				pendingOnError = null;</span>
+<span class="nc" id="L369">				pendingDarkMode = false;</span>
+<span class="nc" id="L370">			}</span>
 
 			// Perform rendering OUTSIDE the synchronized block so new requests
 			// can be queued while we're rendering.
-<span class="nc bnc" id="L354" title="All 2 branches missed.">			if (onSuccess != null)</span>
-<span class="nc" id="L355">				doRenderToString(lines, onSuccess, onError, darkMode);</span>
+<span class="nc bnc" id="L374" title="All 2 branches missed.">			if (onSuccess != null)</span>
+<span class="nc" id="L375">				doRenderToString(lines, onSuccess, onError, darkMode);</span>
 			else
-<span class="nc" id="L357">				doRender(lines, elementId, darkMode);</span>
-<span class="nc" id="L358">		}</span>
+<span class="nc" id="L377">				doRender(lines, elementId, darkMode);</span>
+<span class="nc" id="L378">		}</span>
 	}
 
 	// =========================================================================
@@ -364,66 +384,66 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 
 	/** Parses and renders PlantUML source lines to an SVG graphics context. */
 	private static SvgGraphicsTeaVM buildSvg(String[] lines, boolean darkMode) throws Exception {
-<span class="nc" id="L367">		final SvgGraphicsTeaVM svg = new SvgGraphicsTeaVM();</span>
-<span class="nc bnc" id="L368" title="All 2 branches missed.">		final ColorMapper colorMapper = darkMode ? ColorMapper.TEAVM_DARK : ColorMapper.TEAVM_LIGHT;</span>
-<span class="nc bnc" id="L369" title="All 2 branches missed.">		final HColor back = darkMode ? HColors.BLACK : HColors.WHITE;</span>
+<span class="nc" id="L387">		final SvgGraphicsTeaVM svg = new SvgGraphicsTeaVM();</span>
+<span class="nc bnc" id="L388" title="All 2 branches missed.">		final ColorMapper colorMapper = darkMode ? ColorMapper.TEAVM_DARK : ColorMapper.TEAVM_LIGHT;</span>
+<span class="nc bnc" id="L389" title="All 2 branches missed.">		final HColor back = darkMode ? HColors.BLACK : HColors.WHITE;</span>
 
-<span class="nc" id="L371">		UGraphic ug = UGraphicTeaVM.build(back, colorMapper, STRING_BOUNDER, svg);</span>
-<span class="nc" id="L372">		final Diagram diagram = PSystemBuilder2.getInstance().createDiagram(lines);</span>
-<span class="nc" id="L373">		final FileFormatOption fileFormat = new FileFormatOption(FileFormat.SVG);</span>
+<span class="nc" id="L391">		UGraphic ug = UGraphicTeaVM.build(back, colorMapper, STRING_BOUNDER, svg);</span>
+<span class="nc" id="L392">		final Diagram diagram = PSystemBuilder2.getInstance().createDiagram(lines);</span>
+<span class="nc" id="L393">		final FileFormatOption fileFormat = new FileFormatOption(FileFormat.SVG);</span>
 
-<span class="nc bnc" id="L375" title="All 2 branches missed.">		if (diagram instanceof UgDiagram == false)</span>
-<span class="nc" id="L376">			throw new RuntimeException(&quot;Unsupported diagram type&quot;);</span>
+<span class="nc bnc" id="L395" title="All 2 branches missed.">		if (diagram instanceof UgDiagram == false)</span>
+<span class="nc" id="L396">			throw new RuntimeException(&quot;Unsupported diagram type&quot;);</span>
 
-<span class="nc" id="L378">		final Scale scale = ((AbstractDiagram) diagram).getScale();</span>
-<span class="nc" id="L379">		final UgDiagram ugDiagram = (UgDiagram) diagram;</span>
-<span class="nc" id="L380">		TextBlock tb = ugDiagram.getTextBlock12026(0, fileFormat);</span>
+<span class="nc" id="L398">		final Scale scale = ((AbstractDiagram) diagram).getScale();</span>
+<span class="nc" id="L399">		final UgDiagram ugDiagram = (UgDiagram) diagram;</span>
+<span class="nc" id="L400">		TextBlock tb = ugDiagram.getTextBlock12026(0, fileFormat);</span>
 
-<span class="nc bnc" id="L382" title="All 2 branches missed.">		if (diagram instanceof TitledDiagram)</span>
-<span class="nc" id="L383">			tb = DiagramChromeFactory12026.create(tb, (TitledDiagram) ugDiagram,</span>
-<span class="nc" id="L384">					((TitledDiagram) ugDiagram).getSkinParam(), ugDiagram.getWarnings());</span>
+<span class="nc bnc" id="L402" title="All 2 branches missed.">		if (diagram instanceof TitledDiagram)</span>
+<span class="nc" id="L403">			tb = DiagramChromeFactory12026.create(tb, (TitledDiagram) ugDiagram,</span>
+<span class="nc" id="L404">					((TitledDiagram) ugDiagram).getSkinParam(), ugDiagram.getWarnings());</span>
 
-<span class="nc bnc" id="L386" title="All 2 branches missed.">		if (ugDiagram.isHandwritten())</span>
-<span class="nc" id="L387">			ug = new UGraphicHandwritten(ug);</span>
+<span class="nc bnc" id="L406" title="All 2 branches missed.">		if (ugDiagram.isHandwritten())</span>
+<span class="nc" id="L407">			ug = new UGraphicHandwritten(ug);</span>
 
-<span class="nc" id="L389">		tb.drawU(ug);</span>
+<span class="nc" id="L409">		tb.drawU(ug);</span>
 
-<span class="nc" id="L391">		final XDimension2D dim = tb.calculateDimension(STRING_BOUNDER);</span>
+<span class="nc" id="L411">		final XDimension2D dim = tb.calculateDimension(STRING_BOUNDER);</span>
 
-<span class="nc bnc" id="L393" title="All 4 branches missed.">		if (dim.getWidth() &gt; MAX_SVG_SIZE || dim.getHeight() &gt; MAX_SVG_SIZE)</span>
-<span class="nc" id="L394">			throw new RuntimeException(&quot;Diagram too large for browser rendering: &quot;</span>
-<span class="nc" id="L395">					+ (int) dim.getWidth() + &quot;x&quot; + (int) dim.getHeight()</span>
+<span class="nc bnc" id="L413" title="All 4 branches missed.">		if (dim.getWidth() &gt; MAX_SVG_SIZE || dim.getHeight() &gt; MAX_SVG_SIZE)</span>
+<span class="nc" id="L414">			throw new RuntimeException(&quot;Diagram too large for browser rendering: &quot;</span>
+<span class="nc" id="L415">					+ (int) dim.getWidth() + &quot;x&quot; + (int) dim.getHeight()</span>
 					+ &quot; (max &quot; + MAX_SVG_SIZE + &quot;)&quot;);
 
-<span class="nc bnc" id="L398" title="All 2 branches missed.">		final double scaleFactor = scale == null ? 1.0 : scale.getScale(dim.getWidth(), dim.getHeight());</span>
-<span class="nc" id="L399">		svg.updateSvgSize(dim.getWidth(), dim.getHeight(), scaleFactor);</span>
-<span class="nc" id="L400">		return svg;</span>
+<span class="nc bnc" id="L418" title="All 2 branches missed.">		final double scaleFactor = scale == null ? 1.0 : scale.getScale(dim.getWidth(), dim.getHeight());</span>
+<span class="nc" id="L419">		svg.updateSvgSize(dim.getWidth(), dim.getHeight(), scaleFactor);</span>
+<span class="nc" id="L420">		return svg;</span>
 	}
 
 	private static void doRender(String[] lines, String elementId, boolean darkMode) {
-<span class="nc" id="L404">		final HTMLElement out = HTMLDocument.current().getElementById(elementId);</span>
-<span class="nc bnc" id="L405" title="All 2 branches missed.">		if (out == null)</span>
-<span class="nc" id="L406">			return;</span>
+<span class="nc" id="L424">		final HTMLElement out = HTMLDocument.current().getElementById(elementId);</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">		if (out == null)</span>
+<span class="nc" id="L426">			return;</span>
 
 		try {
-<span class="nc" id="L409">			BrowserLog.reset();</span>
-<span class="nc" id="L410">			final SvgGraphicsTeaVM svg = buildSvg(lines, darkMode);</span>
-<span class="nc" id="L411">			removeAllChildren(out);</span>
-<span class="nc" id="L412">			appendSvgElement(out, svg.getSvgRoot());</span>
-<span class="nc" id="L413">		} catch (Exception e) {</span>
-<span class="nc" id="L414">			out.setTextContent(String.valueOf(e));</span>
-<span class="nc" id="L415">		}</span>
-<span class="nc" id="L416">		BrowserLog.jsStatusDuration();</span>
-<span class="nc" id="L417">	}</span>
+<span class="nc" id="L429">			BrowserLog.reset();</span>
+<span class="nc" id="L430">			final SvgGraphicsTeaVM svg = buildSvg(lines, darkMode);</span>
+<span class="nc" id="L431">			removeAllChildren(out);</span>
+<span class="nc" id="L432">			appendSvgElement(out, svg.getSvgRoot());</span>
+<span class="nc" id="L433">		} catch (Exception e) {</span>
+<span class="nc" id="L434">			out.setTextContent(String.valueOf(e));</span>
+<span class="nc" id="L435">		}</span>
+<span class="nc" id="L436">		BrowserLog.jsStatusDuration();</span>
+<span class="nc" id="L437">	}</span>
 
 	private static void doRenderToString(String[] lines, StringCallback onSuccess, StringCallback onError,
 			boolean darkMode) {
 		try {
-<span class="nc" id="L422">			onSuccess.call(serializeSvg(buildSvg(lines, darkMode).getSvgRoot()));</span>
-<span class="nc" id="L423">		} catch (Exception e) {</span>
-<span class="nc" id="L424">			onError.call(String.valueOf(e));</span>
-<span class="nc" id="L425">		}</span>
-<span class="nc" id="L426">	}</span>
+<span class="nc" id="L442">			onSuccess.call(serializeSvg(buildSvg(lines, darkMode).getSvgRoot()));</span>
+<span class="nc" id="L443">		} catch (Exception e) {</span>
+<span class="nc" id="L444">			onError.call(String.valueOf(e));</span>
+<span class="nc" id="L445">		}</span>
+<span class="nc" id="L446">	}</span>
 
 	// =========================================================================
 	// JavaScript interop utilities

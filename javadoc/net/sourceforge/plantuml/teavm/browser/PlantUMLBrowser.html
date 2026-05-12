@@ -312,8 +312,23 @@ loadScripts(document, 'script');</script>
  <code>elementId</code>.
 
  <p>
+ This method does NOT perform the rendering itself — it only queues the
+ request and wakes up the worker thread. This is necessary because:
+
+ <ol>
+ <li>This method is called from a native JS context (event handler,
+ setTimeout, etc.)</li>
+ <li>Viz.js async calls require a TeaVM coroutine context</li>
+ <li>The worker thread provides that coroutine context</li>
+ </ol>
+
+ <p>
  This call is asynchronous: it returns immediately, and the SVG is inserted
- later from the worker thread.</div>
+ later from the worker thread.
+
+ <p>
+ If a previous request is still pending (worker hasn't picked it up yet), it
+ will be overwritten. This is the desired behavior for live-typing scenarios.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>lines</code> - the PlantUML source code, split into lines by the JavaScript
@@ -333,7 +348,12 @@ loadScripts(document, 'script');</script>
  <a href="PlantUMLBrowser.StringCallback.html" title="interface in net.sourceforge.plantuml.teavm.browser">PlantUMLBrowser.StringCallback</a>&nbsp;onError,
  org.teavm.jso.JSObject&nbsp;options)</span></div>
 <div class="block">Renders a PlantUML diagram and delivers the resulting SVG as a string via
- the <code>onSuccess</code> callback. Errors go to <code>onError</code>.</div>
+ the <code>onSuccess</code> callback. Errors go to <code>onError</code>.
+
+ <p>
+ Same queueing and asynchronous behavior as <a href="#render(java.lang.String%5B%5D,java.lang.String,org.teavm.jso.JSObject)"><code>render(java.lang.String[], java.lang.String, org.teavm.jso.JSObject)</code></a>: this method
+ only queues the request; the worker thread performs the actual rendering
+ and invokes the callback. A previous pending request will be overwritten.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>lines</code> - the PlantUML source code, split into lines by the JavaScript
