@@ -40,22 +40,28 @@ import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.svek.RoundedContainer;
 
 public class EntityImageState extends EntityImageStateCommon {
 
 	final private TextBlock fields;
-	final private HorizontalAlignment horizontalAlignmentFields;
+//	final private HorizontalAlignment horizontalAlignmentFields;
 
 	final private static int MIN_WIDTH = 50;
 	final private static int MIN_HEIGHT = 50;
@@ -67,87 +73,112 @@ public class EntityImageState extends EntityImageStateCommon {
 	final static private double smallMarginX = 7;
 	final static private double smallMarginY = 4;
 
+	final private Style styleName;
+	final private Style styleDescription;
+	final private Style style;
+
 	public EntityImageState(Entity entity) {
-<span class="fc" id="L71">		super(entity);</span>
+<span class="fc" id="L81">		super(entity);</span>
 
-<span class="fc" id="L73">		final Stereotype stereotype = entity.getStereotype();</span>
+<span class="fc" id="L83">		final Stereotype stereotype = entity.getStereotype();</span>
 
-<span class="pc bpc" id="L75" title="3 of 4 branches missed.">		this.withSymbol = stereotype != null &amp;&amp; stereotype.isWithOOSymbol();</span>
-<span class="fc" id="L76">		final Display list = Display.create(entity.getBodier().getRawBody());</span>
+<span class="pc bpc" id="L85" title="3 of 4 branches missed.">		this.withSymbol = stereotype != null &amp;&amp; stereotype.isWithOOSymbol();</span>
+<span class="fc" id="L86">		final Display list = Display.create(entity.getBodier().getRawBody());</span>
 
-<span class="fc" id="L78">		final FontConfiguration fieldsFontConfiguration = getStyleStateHeader()</span>
-<span class="fc" id="L79">				.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L88">		final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();</span>
+<span class="fc" id="L89">		this.style = STYLE.withTOBECHANGED(getEntity().getStereotype()).getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L90">		this.styleName = STYLE.addSName(SName.name).withTOBECHANGED(getEntity().getStereotype())</span>
+<span class="fc" id="L91">				.getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L92">		this.styleDescription = STYLE.addSName(SName.description).withTOBECHANGED(getEntity().getStereotype())</span>
+<span class="fc" id="L93">				.getMergedStyle(styleBuilder);</span>
 
-<span class="fc" id="L81">		this.horizontalAlignmentFields = getStyleStateHeader().getHorizontalAlignment();</span>
-<span class="fc" id="L82">		this.fields = list.create8(fieldsFontConfiguration, horizontalAlignmentFields, getSkinParam(), CreoleMode.FULL,</span>
-<span class="fc" id="L83">				getStyleState().wrapWidth());</span>
+<span class="fc" id="L95">		final FontConfiguration fieldsFontConfiguration = styleDescription</span>
+<span class="fc" id="L96">				.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="fc" id="L85">	}</span>
+<span class="fc" id="L98">		this.fields = list.create8(fieldsFontConfiguration, styleDescription.getHorizontalAlignment(), getSkinParam(),</span>
+<span class="fc" id="L99">				CreoleMode.FULL, getStyleState().wrapWidth());</span>
+
+<span class="fc" id="L101">	}</span>
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="fc" id="L89">		final XDimension2D dim = title.calculateDimension(stringBounder)</span>
-<span class="fc" id="L90">				.mergeTB(fields.calculateDimension(stringBounder));</span>
-<span class="fc" id="L91">		double heightSymbol = 0;</span>
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (withSymbol)</span>
-<span class="nc" id="L93">			heightSymbol += 2 * smallRadius + smallMarginY;</span>
+<span class="fc" id="L105">		final XDimension2D dim = name.calculateDimension(stringBounder)</span>
+<span class="fc" id="L106">				.mergeTB(fields.calculateDimension(stringBounder));</span>
+<span class="fc" id="L107">		double heightSymbol = 0;</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (withSymbol)</span>
+<span class="nc" id="L109">			heightSymbol += 2 * smallRadius + smallMarginY;</span>
 
-<span class="fc" id="L95">		final XDimension2D result = dim.delta(MARGIN * 2 + 2 * MARGIN_LINE + heightSymbol);</span>
-<span class="fc" id="L96">		return result.atLeast(MIN_WIDTH, MIN_HEIGHT);</span>
+<span class="fc" id="L111">		final XDimension2D result = dim.delta(MARGIN * 2 + 2 * MARGIN_LINE + heightSymbol);</span>
+<span class="fc" id="L112">		return result.atLeast(MIN_WIDTH, MIN_HEIGHT);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="fc" id="L100">		final UGroup group = UGroup.singletonMap(UGroupType.ID, getEntity().getQuark().toStringPoint());</span>
-<span class="fc" id="L101">		group.put(UGroupType.CLASS, &quot;entity&quot;);</span>
-<span class="fc" id="L102">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
-<span class="fc" id="L103">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
-<span class="fc" id="L104">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
-<span class="fc" id="L105">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
-<span class="fc" id="L106">		ug.startGroup(group);</span>
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L108">			ug.startUrl(url);</span>
+<span class="fc" id="L116">		final UGroup group = UGroup.singletonMap(UGroupType.ID, getEntity().getQuark().toStringPoint());</span>
+<span class="fc" id="L117">		group.put(UGroupType.CLASS, &quot;entity&quot;);</span>
+<span class="fc" id="L118">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
+<span class="fc" id="L119">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
+<span class="fc" id="L120">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
+<span class="fc" id="L121">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
+<span class="fc" id="L122">		ug.startGroup(group);</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L124">			ug.startUrl(url);</span>
 
-<span class="fc" id="L110">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L111">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
-<span class="fc" id="L112">		final XDimension2D dimDesc = title.calculateDimension(stringBounder);</span>
+<span class="fc" id="L126">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L127">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="fc" id="L128">		final XDimension2D dimName = name.calculateDimension(stringBounder);</span>
 
-<span class="fc" id="L114">		final UStroke stroke = getStyleState().getStroke(lineConfig.getColors());</span>
+<span class="fc" id="L130">		final UStroke stroke = style.getStroke(lineConfig.getColors());</span>
 
-<span class="fc" id="L116">		ug = applyColor(ug);</span>
-<span class="fc" id="L117">		ug = ug.apply(stroke);</span>
-<span class="fc" id="L118">		ug.draw(getShape(dimTotal));</span>
+<span class="fc" id="L132">		ug = applyColor(ug);</span>
+<span class="fc" id="L133">		ug = ug.apply(stroke);</span>
 
-<span class="fc" id="L120">		final double yLine = MARGIN + dimDesc.getHeight() + MARGIN_LINE;</span>
-<span class="fc" id="L121">		ug.apply(UTranslate.dy(yLine)).draw(ULine.hline(dimTotal.getWidth()));</span>
+<span class="fc" id="L135">		final HColorSet colorSet = getSkinParam().getIHtmlColorSet();</span>
+<span class="fc" id="L136">		final double yLine = MARGIN + dimName.getHeight() + MARGIN_LINE;</span>
 
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (withSymbol) {</span>
-<span class="nc" id="L124">			final double xSymbol = dimTotal.getWidth();</span>
-<span class="nc" id="L125">			final double ySymbol = dimTotal.getHeight();</span>
-<span class="nc" id="L126">			drawSymbol(ug, xSymbol, ySymbol);</span>
+<span class="fc" id="L138">		HColor northBackcolor = styleName.value(PName.BackGroundColor).asColor(colorSet);</span>
+<span class="fc" id="L139">		HColor southBackcolor = styleDescription.value(PName.BackGroundColor).asColor(colorSet);</span>
+
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">		if (northBackcolor.equals(southBackcolor)) {</span>
+<span class="fc" id="L142">			ug.draw(getShape(dimTotal));</span>
+		} else {
+<span class="nc" id="L144">			final double corner = getStyleState().value(PName.RoundCorner).asDouble();</span>
+<span class="nc" id="L145">			final double shadowing = getStyleState().getShadowing();</span>
+
+<span class="nc" id="L147">			final RoundedContainer r = new RoundedContainer(getBorderColor(), dimTotal, yLine, 0, northBackcolor,</span>
+					southBackcolor, southBackcolor, stroke, corner, shadowing);
+<span class="nc" id="L149">			r.drawU(ug);</span>
 		}
 
-<span class="fc" id="L129">		final double xDesc = (dimTotal.getWidth() - dimDesc.getWidth()) / 2;</span>
-<span class="fc" id="L130">		final double yDesc = MARGIN;</span>
-<span class="fc" id="L131">		title.drawU(ug.apply(new UTranslate(xDesc, yDesc)));</span>
+<span class="fc" id="L152">		ug.apply(UTranslate.dy(yLine)).draw(ULine.hline(dimTotal.getWidth()));</span>
 
-<span class="fc" id="L133">		final double xFields = MARGIN;</span>
-<span class="fc" id="L134">		final double yFields = yLine + MARGIN_LINE;</span>
-<span class="fc" id="L135">		this.horizontalAlignmentFields.draw(ug, fields, xFields, yFields, dimTotal.getWidth());</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if (withSymbol) {</span>
+<span class="nc" id="L155">			final double xSymbol = dimTotal.getWidth();</span>
+<span class="nc" id="L156">			final double ySymbol = dimTotal.getHeight();</span>
+<span class="nc" id="L157">			drawSymbol(ug, xSymbol, ySymbol);</span>
+		}
 
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L138">			ug.closeUrl();</span>
+<span class="fc" id="L160">		final double xDesc = (dimTotal.getWidth() - dimName.getWidth()) / 2;</span>
+<span class="fc" id="L161">		final double yDesc = MARGIN;</span>
+<span class="fc" id="L162">		this.name.drawU(ug.apply(new UTranslate(xDesc, yDesc)));</span>
 
-<span class="fc" id="L140">		ug.closeGroup();</span>
-<span class="fc" id="L141">	}</span>
+<span class="fc" id="L164">		final double xFields = MARGIN;</span>
+<span class="fc" id="L165">		final double yFields = yLine + MARGIN_LINE;</span>
+<span class="fc" id="L166">		this.styleDescription.getHorizontalAlignment().draw(ug, fields, xFields, yFields, dimTotal.getWidth());</span>
+
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L169">			ug.closeUrl();</span>
+
+<span class="fc" id="L171">		ug.closeGroup();</span>
+<span class="fc" id="L172">	}</span>
 
 	public static void drawSymbol(UGraphic ug, double xSymbol, double ySymbol) {
-<span class="nc" id="L144">		xSymbol -= 4 * smallRadius + smallLine + smallMarginX;</span>
-<span class="nc" id="L145">		ySymbol -= 2 * smallRadius + smallMarginY;</span>
-<span class="nc" id="L146">		final UEllipse small = UEllipse.build(2 * smallRadius, 2 * smallRadius);</span>
-<span class="nc" id="L147">		ug.apply(new UTranslate(xSymbol, ySymbol)).draw(small);</span>
-<span class="nc" id="L148">		ug.apply(new UTranslate(xSymbol + smallLine + 2 * smallRadius, ySymbol)).draw(small);</span>
-<span class="nc" id="L149">		ug.apply(new UTranslate(xSymbol + 2 * smallRadius, ySymbol + smallLine)).draw(ULine.hline(smallLine));</span>
-<span class="nc" id="L150">	}</span>
+<span class="nc" id="L175">		xSymbol -= 4 * smallRadius + smallLine + smallMarginX;</span>
+<span class="nc" id="L176">		ySymbol -= 2 * smallRadius + smallMarginY;</span>
+<span class="nc" id="L177">		final UEllipse small = UEllipse.build(2 * smallRadius, 2 * smallRadius);</span>
+<span class="nc" id="L178">		ug.apply(new UTranslate(xSymbol, ySymbol)).draw(small);</span>
+<span class="nc" id="L179">		ug.apply(new UTranslate(xSymbol + smallLine + 2 * smallRadius, ySymbol)).draw(small);</span>
+<span class="nc" id="L180">		ug.apply(new UTranslate(xSymbol + 2 * smallRadius, ySymbol + smallLine)).draw(ULine.hline(smallLine));</span>
+<span class="nc" id="L181">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

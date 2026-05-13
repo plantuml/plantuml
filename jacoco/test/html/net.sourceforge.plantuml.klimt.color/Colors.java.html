@@ -110,7 +110,7 @@ public class Colors {
 <span class="nc" id="L110">					this.shadowing = value.equalsIgnoreCase(&quot;true&quot;);</span>
 				} else {
 <span class="fc" id="L112">					final ColorType key = ColorType.getType(name);</span>
-<span class="fc" id="L113">					final HColor color = set.getColor(value);</span>
+<span class="fc" id="L113">					final HColor color = set.getColorOrNull(value);</span>
 <span class="fc" id="L114">					map.put(key, color);</span>
 				}
 			}

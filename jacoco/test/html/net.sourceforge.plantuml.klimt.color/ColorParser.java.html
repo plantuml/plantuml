@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ColorParser {
-	// ::remove file when __HAXE__
 
 	private static final String COLOR_REGEXP = &quot;#\\w+[-\\\\|/]?\\w+&quot;;
 
@@ -50,69 +49,69 @@ public class ColorParser {
 	private final String name;
 	private final ColorType mainType;
 
-<span class="fc" id="L53">	private ColorParser(String name, RegexLeaf regex, ColorType mainType) {</span>
-<span class="fc" id="L54">		this.regex = regex;</span>
-<span class="fc" id="L55">		this.name = name;</span>
-<span class="fc" id="L56">		this.mainType = mainType;</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L52">	private ColorParser(String name, RegexLeaf regex, ColorType mainType) {</span>
+<span class="fc" id="L53">		this.regex = regex;</span>
+<span class="fc" id="L54">		this.name = name;</span>
+<span class="fc" id="L55">		this.mainType = mainType;</span>
+<span class="fc" id="L56">	}</span>
 
 	public Colors getColor(RegexResult arg, HColorSet set) throws NoSuchColorException {
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (mainType == null)</span>
-<span class="nc" id="L61">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (mainType == null)</span>
+<span class="nc" id="L60">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L63">		final String data = arg.getLazzy(name, 0);</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (data == null)</span>
-<span class="fc" id="L65">			return Colors.empty();</span>
+<span class="fc" id="L62">		final String data = arg.getLazzy(name, 0);</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		if (data == null)</span>
+<span class="fc" id="L64">			return Colors.empty();</span>
 
-<span class="fc" id="L67">		return new Colors(data, set, mainType);</span>
+<span class="fc" id="L66">		return new Colors(data, set, mainType);</span>
 	}
 
 	// New Parsers
 	public static ColorParser simpleColor(ColorType mainType) {
-<span class="fc" id="L72">		return simpleColor(mainType, &quot;COLOR&quot;);</span>
+<span class="fc" id="L71">		return simpleColor(mainType, &quot;COLOR&quot;);</span>
 	}
 
 	public static ColorParser simpleColor(ColorType mainType, String id) {
-<span class="fc" id="L76">		return new ColorParser(id, new RegexLeaf(1, id, &quot;(&quot; + COLORS_REGEXP + &quot;)?&quot;), mainType);</span>
+<span class="fc" id="L75">		return new ColorParser(id, new RegexLeaf(1, id, &quot;(&quot; + COLORS_REGEXP + &quot;)?&quot;), mainType);</span>
 	}
 
 	public static ColorParser mandatoryColor(ColorType mainType) {
-<span class="nc" id="L80">		return new ColorParser(&quot;COLOR&quot;, new RegexLeaf(1, &quot;COLOR&quot;, &quot;(&quot; + COLORS_REGEXP + &quot;)&quot;), mainType);</span>
+<span class="nc" id="L79">		return new ColorParser(&quot;COLOR&quot;, new RegexLeaf(1, &quot;COLOR&quot;, &quot;(&quot; + COLORS_REGEXP + &quot;)&quot;), mainType);</span>
 	}
 
 	public static ColorParser simpleColor(String optPrefix, ColorType mainType) {
-<span class="nc" id="L84">		return new ColorParser(&quot;COLOR&quot;, new RegexLeaf(1, &quot;COLOR&quot;, &quot;(?:&quot; + optPrefix + &quot; (&quot; + COLORS_REGEXP + &quot;))?&quot;),</span>
+<span class="nc" id="L83">		return new ColorParser(&quot;COLOR&quot;, new RegexLeaf(1, &quot;COLOR&quot;, &quot;(?:&quot; + optPrefix + &quot; (&quot; + COLORS_REGEXP + &quot;))?&quot;),</span>
 				mainType);
 	}
 
 	// Old Parsers
 
 	public static RegexLeaf exp1() {
-<span class="fc" id="L91">		return simpleColor(null).regex;</span>
+<span class="fc" id="L90">		return simpleColor(null).regex;</span>
 	}
 
 	public static RegexLeaf exp2() {
-<span class="fc" id="L95">		return new RegexLeaf(1, &quot;BACKCOLOR&quot;, &quot;(&quot; + COLOR_REGEXP + &quot;)?&quot;);</span>
+<span class="fc" id="L94">		return new RegexLeaf(1, &quot;BACKCOLOR&quot;, &quot;(&quot; + COLOR_REGEXP + &quot;)?&quot;);</span>
 	}
 
 	public static RegexLeaf exp3() {
-<span class="fc" id="L99">		return new RegexLeaf(1, &quot;BACKCOLOR2&quot;, &quot;(&quot; + COLOR_REGEXP + &quot;)?&quot;);</span>
+<span class="fc" id="L98">		return new RegexLeaf(1, &quot;BACKCOLOR2&quot;, &quot;(&quot; + COLOR_REGEXP + &quot;)?&quot;);</span>
 	}
 
 	public static RegexLeaf exp4() {
-<span class="fc" id="L103">		return new RegexLeaf(1, &quot;COLOR&quot;, &quot;(?:(&quot; + COLOR_REGEXP + &quot;):)?&quot;);</span>
+<span class="fc" id="L102">		return new RegexLeaf(1, &quot;COLOR&quot;, &quot;(?:(&quot; + COLOR_REGEXP + &quot;):)?&quot;);</span>
 	}
 
 	public static RegexLeaf exp6() {
-<span class="fc" id="L107">		return new RegexLeaf(1, &quot;COLOR&quot;, &quot;(?:(&quot; + COLOR_REGEXP + &quot;)\\|)?&quot;);</span>
+<span class="fc" id="L106">		return new RegexLeaf(1, &quot;COLOR&quot;, &quot;(?:(&quot; + COLOR_REGEXP + &quot;)\\|)?&quot;);</span>
 	}
 
 	public static RegexLeaf exp7() {
-<span class="fc" id="L111">		return new RegexLeaf(1, &quot;COLOR&quot;, &quot;(?:(&quot; + COLOR_REGEXP + &quot;))?&quot;);</span>
+<span class="fc" id="L110">		return new RegexLeaf(1, &quot;COLOR&quot;, &quot;(?:(&quot; + COLOR_REGEXP + &quot;))?&quot;);</span>
 	}
 
 	public RegexLeaf getRegex() {
-<span class="fc" id="L115">		return regex;</span>
+<span class="fc" id="L114">		return regex;</span>
 	}
 
 }

@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
@@ -52,36 +53,37 @@ public class EntityImageCircleEnd extends AbstractEntityImage {
 	private static final int SIZE = 22;
 	private final CircleEnd circle;
 
-	public StyleSignatureBasic getDefaultStyleDefinitionCircle() {
-<span class="fc" id="L56">		return StyleSignatureBasic.of(SName.root, SName.element, getSkinParam().getDiagramType().getStyleName(),</span>
+	@Override
+	public StyleSignature getStyleSignature() {
+<span class="fc" id="L58">		return StyleSignatureBasic.of(SName.root, SName.element, getSkinParam().getDiagramType().getStyleName(),</span>
 				SName.circle, SName.end);
 	}
 
 	public EntityImageCircleEnd(Entity entity) {
-<span class="fc" id="L61">		super(entity);</span>
-<span class="fc" id="L62">		final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
-<span class="fc" id="L63">		this.circle = new CircleEnd(getSkinParam(), style, entity.getColors());</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L63">		super(entity);</span>
+<span class="fc" id="L64">		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L65">		this.circle = new CircleEnd(getSkinParam(), style, entity.getColors());</span>
+<span class="fc" id="L66">	}</span>
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="fc" id="L68">		return new XDimension2D(SIZE, SIZE);</span>
+<span class="fc" id="L70">		return new XDimension2D(SIZE, SIZE);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="fc" id="L72">		final UGroup group = new UGroup(getEntity().getLocation());</span>
-<span class="fc" id="L73">		group.put(UGroupType.CLASS, &quot;end_entity&quot;);</span>
-<span class="fc" id="L74">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
-<span class="fc" id="L75">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
-<span class="fc" id="L76">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
-<span class="fc" id="L77">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
-<span class="fc" id="L78">		ug.startGroup(group);</span>
-<span class="fc" id="L79">		circle.drawU(ug);</span>
-<span class="fc" id="L80">		ug.closeGroup();</span>
-<span class="fc" id="L81">	}</span>
+<span class="fc" id="L74">		final UGroup group = new UGroup(getEntity().getLocation());</span>
+<span class="fc" id="L75">		group.put(UGroupType.CLASS, &quot;end_entity&quot;);</span>
+<span class="fc" id="L76">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
+<span class="fc" id="L77">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
+<span class="fc" id="L78">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
+<span class="fc" id="L79">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
+<span class="fc" id="L80">		ug.startGroup(group);</span>
+<span class="fc" id="L81">		circle.drawU(ug);</span>
+<span class="fc" id="L82">		ug.closeGroup();</span>
+<span class="fc" id="L83">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="fc" id="L84">		return ShapeType.CIRCLE;</span>
+<span class="fc" id="L86">		return ShapeType.CIRCLE;</span>
 	}
 
 }

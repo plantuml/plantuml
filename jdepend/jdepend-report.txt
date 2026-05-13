@@ -1407,12 +1407,12 @@ Stats:
     Concrete Classes: 22
     Abstract Classes: 8
 
-    Ca: 30
+    Ca: 31
     Ce: 18
 
     A: 0.27
-    I: 0.38
-    D: 0.36
+    I: 0.37
+    D: 0.37
 
 Abstract Classes:
     net.sourceforge.plantuml.abel.Bag
@@ -1494,6 +1494,7 @@ Used By:
     net.sourceforge.plantuml.sdot
     net.sourceforge.plantuml.sequencediagram.graphic
     net.sourceforge.plantuml.statediagram.command
+    net.sourceforge.plantuml.stereo
     net.sourceforge.plantuml.svek
     net.sourceforge.plantuml.svek.image
     net.sourceforge.plantuml.xmi
@@ -10645,11 +10646,11 @@ Stats:
     Abstract Classes: 0
 
     Ca: 36
-    Ce: 7
+    Ce: 9
 
     A: 0
-    I: 0.16
-    D: 0.84
+    I: 0.2
+    D: 0.8
 
 Abstract Classes:
 
@@ -10663,9 +10664,11 @@ Depends Upon:
     java.lang
     java.util
     java.util.regex
+    net.sourceforge.plantuml.abel
     net.sourceforge.plantuml.activitydiagram3.ftile
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.regex
+    net.sourceforge.plantuml.style
 
 Used By:
     net.sourceforge.plantuml.abel
@@ -10714,7 +10717,7 @@ Stats:
     Concrete Classes: 15
     Abstract Classes: 7
 
-    Ca: 68
+    Ca: 69
     Ce: 17
 
     A: 0.32
@@ -10827,6 +10830,7 @@ Used By:
     net.sourceforge.plantuml.skin
     net.sourceforge.plantuml.skin.rose
     net.sourceforge.plantuml.statediagram.command
+    net.sourceforge.plantuml.stereo
     net.sourceforge.plantuml.style.parser
     net.sourceforge.plantuml.svek
     net.sourceforge.plantuml.svek.image
@@ -14768,7 +14772,7 @@ jcckit.transformation,1,1,1,3,1,0.75,0.75,1
 jcckit.util,7,2,5,2,0.29,0.29,0.43,1
 net.atmp,3,0,19,10,0,0.34,0.66,1
 net.sourceforge.plantuml,38,13,96,33,0.34,0.26,0.4,1
-net.sourceforge.plantuml.abel,30,8,30,18,0.27,0.38,0.36,1
+net.sourceforge.plantuml.abel,30,8,31,18,0.27,0.37,0.37,1
 net.sourceforge.plantuml.activitydiagram,2,0,2,12,0,0.86,0.14,1
 net.sourceforge.plantuml.activitydiagram.command,9,0,1,14,0,0.93,0.07,1
 net.sourceforge.plantuml.activitydiagram3,27,4,6,25,0.15,0.81,0.05,1
@@ -14931,8 +14935,8 @@ net.sourceforge.plantuml.statediagram,1,0,3,11,0,0.79,0.21,1
 net.sourceforge.plantuml.statediagram.command,7,0,2,17,0,0.89,0.11,1
 net.sourceforge.plantuml.stats,14,1,1,11,0.07,0.92,0.01,1
 net.sourceforge.plantuml.stats.api,4,3,1,2,0.75,0.67,0.42,1
-net.sourceforge.plantuml.stereo,3,0,36,7,0,0.16,0.84,1
-net.sourceforge.plantuml.style,22,7,68,17,0.32,0.2,0.48,1
+net.sourceforge.plantuml.stereo,3,0,36,9,0,0.2,0.8,1
+net.sourceforge.plantuml.style,22,7,69,17,0.32,0.2,0.48,1
 net.sourceforge.plantuml.style.parser,4,0,3,4,0,0.57,0.43,1
 net.sourceforge.plantuml.sudoku,4,1,0,8,0.25,1,0.25,1
 net.sourceforge.plantuml.svek,65,9,21,35,0.14,0.62,0.24,1

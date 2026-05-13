@@ -195,30 +195,31 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	}
 
 	private Style getStyle() {
-<span class="nc" id="L198">		return getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L198">		return getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
-	private StyleSignature getDefaultStyleDefinition() {
-<span class="nc" id="L202">		final LeafType type = getEntity().getLeafType();</span>
-<span class="nc bnc" id="L203" title="All 2 branches missed.">		if (type == LeafType.USECASE_BUSINESS)</span>
-<span class="nc" id="L204">			return StyleSignatureBasic</span>
-<span class="nc" id="L205">					.of(SName.root, SName.element, SName.componentDiagram, SName.usecase, SName.business)</span>
-<span class="nc" id="L206">					.withTOBECHANGED(getStereo());</span>
-<span class="nc" id="L207">		return StyleSignatureBasic.of(SName.root, SName.element, SName.componentDiagram, SName.usecase)</span>
-<span class="nc" id="L208">				.withTOBECHANGED(getStereo());</span>
+	@Override
+	public StyleSignature getStyleSignature() {
+<span class="nc" id="L203">		final LeafType type = getEntity().getLeafType();</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		if (type == LeafType.USECASE_BUSINESS)</span>
+<span class="nc" id="L205">			return StyleSignatureBasic</span>
+<span class="nc" id="L206">					.of(SName.root, SName.element, SName.componentDiagram, SName.usecase, SName.business)</span>
+<span class="nc" id="L207">					.withTOBECHANGED(getStereo());</span>
+<span class="nc" id="L208">		return StyleSignatureBasic.of(SName.root, SName.element, SName.componentDiagram, SName.usecase)</span>
+<span class="nc" id="L209">				.withTOBECHANGED(getStereo());</span>
 	}
 
 	private HColor getLineColor() {
-<span class="nc" id="L212">		HColor linecolor = getEntity().getColors().getColor(ColorType.LINE);</span>
-<span class="nc bnc" id="L213" title="All 2 branches missed.">		if (linecolor == null) {</span>
-<span class="nc" id="L214">			final Style style = getStyle();</span>
-<span class="nc" id="L215">			linecolor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L213">		HColor linecolor = getEntity().getColors().getColor(ColorType.LINE);</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">		if (linecolor == null) {</span>
+<span class="nc" id="L215">			final Style style = getStyle();</span>
+<span class="nc" id="L216">			linecolor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 		}
-<span class="nc" id="L217">		return linecolor;</span>
+<span class="nc" id="L218">		return linecolor;</span>
 	}
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L221">		return ShapeType.OVAL;</span>
+<span class="nc" id="L222">		return ShapeType.OVAL;</span>
 	}
 
 	static class MyUGraphicEllipse extends AbstractUGraphicHorizontalLine {
@@ -229,54 +230,54 @@ public class EntityImageUseCase extends AbstractEntityImage {
 
 		@Override
 		protected AbstractUGraphicHorizontalLine copy(UGraphic ug) {
-<span class="nc" id="L232">			return new MyUGraphicEllipse(ug, startingX, yTheoricalPosition, ellipse);</span>
+<span class="nc" id="L233">			return new MyUGraphicEllipse(ug, startingX, yTheoricalPosition, ellipse);</span>
 		}
 
 		MyUGraphicEllipse(UGraphic ug, double startingX, double yTheoricalPosition, UEllipse ellipse) {
-<span class="nc" id="L236">			super(ug);</span>
-<span class="nc" id="L237">			this.startingX = startingX;</span>
-<span class="nc" id="L238">			this.ellipse = ellipse;</span>
-<span class="nc" id="L239">			this.yTheoricalPosition = yTheoricalPosition;</span>
-<span class="nc" id="L240">		}</span>
+<span class="nc" id="L237">			super(ug);</span>
+<span class="nc" id="L238">			this.startingX = startingX;</span>
+<span class="nc" id="L239">			this.ellipse = ellipse;</span>
+<span class="nc" id="L240">			this.yTheoricalPosition = yTheoricalPosition;</span>
+<span class="nc" id="L241">		}</span>
 
 		private double getNormalized(double y) {
-<span class="nc bnc" id="L243" title="All 2 branches missed.">			if (y &lt; yTheoricalPosition)</span>
-<span class="nc" id="L244">				throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">			if (y &lt; yTheoricalPosition)</span>
+<span class="nc" id="L245">				throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L246">			y = y - yTheoricalPosition;</span>
-<span class="nc bnc" id="L247" title="All 2 branches missed.">			if (y &gt; ellipse.getHeight())</span>
-<span class="nc" id="L248">				throw new IllegalArgumentException();</span>
+<span class="nc" id="L247">			y = y - yTheoricalPosition;</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">			if (y &gt; ellipse.getHeight())</span>
+<span class="nc" id="L249">				throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L250">			return y;</span>
+<span class="nc" id="L251">			return y;</span>
 		}
 
 		private double getStartingXInternal(double y) {
-<span class="nc" id="L254">			return startingX + ellipse.getStartingX(getNormalized(y));</span>
+<span class="nc" id="L255">			return startingX + ellipse.getStartingX(getNormalized(y));</span>
 		}
 
 		private double getEndingXInternal(double y) {
-<span class="nc" id="L258">			return startingX + ellipse.getEndingX(getNormalized(y));</span>
+<span class="nc" id="L259">			return startingX + ellipse.getEndingX(getNormalized(y));</span>
 		}
 
 		private Stencil getStencil2(UTranslate translate) {
-<span class="nc" id="L262">			final double dy = translate.getDy();</span>
-<span class="nc" id="L263">			return new Stencil() {</span>
+<span class="nc" id="L263">			final double dy = translate.getDy();</span>
+<span class="nc" id="L264">			return new Stencil() {</span>
 
 				public double getStartingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L266">					return getStartingXInternal(y + dy);</span>
+<span class="nc" id="L267">					return getStartingXInternal(y + dy);</span>
 				}
 
 				public double getEndingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L270">					return getEndingXInternal(y + dy);</span>
+<span class="nc" id="L271">					return getEndingXInternal(y + dy);</span>
 				}
 			};
 		}
 
 		@Override
 		protected void drawHline(UGraphic ug, UHorizontalLine line, UTranslate translate) {
-<span class="nc" id="L277">			final UStroke stroke = UStroke.withThickness(1.5);</span>
-<span class="nc" id="L278">			line.drawLineInternal(ug.apply(translate), getStencil2(translate), 0, stroke);</span>
-<span class="nc" id="L279">		}</span>
+<span class="nc" id="L278">			final UStroke stroke = UStroke.withThickness(1.5);</span>
+<span class="nc" id="L279">			line.drawLineInternal(ug.apply(translate), getStencil2(translate), 0, stroke);</span>
+<span class="nc" id="L280">		}</span>
 
 	}
 

@@ -54,7 +54,7 @@ public class EntityImageStateEmptyDescription extends EntityImageStateCommon {
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L57">		final XDimension2D dim = title.calculateDimension(stringBounder);</span>
+<span class="nc" id="L57">		final XDimension2D dim = name.calculateDimension(stringBounder);</span>
 <span class="nc" id="L58">		final XDimension2D result = dim.delta(MARGIN * 2);</span>
 <span class="nc" id="L59">		return result.atLeast(MIN_WIDTH, MIN_HEIGHT);</span>
 	}
@@ -65,7 +65,7 @@ public class EntityImageStateEmptyDescription extends EntityImageStateCommon {
 
 <span class="nc" id="L66">		final StringBounder stringBounder = ug.getStringBounder();</span>
 <span class="nc" id="L67">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
-<span class="nc" id="L68">		final XDimension2D dimDesc = title.calculateDimension(stringBounder);</span>
+<span class="nc" id="L68">		final XDimension2D dimHeader = name.calculateDimension(stringBounder);</span>
 
 <span class="nc" id="L70">		final UStroke stroke = getStyleState().getStroke(lineConfig.getColors());</span>
 
@@ -74,9 +74,9 @@ public class EntityImageStateEmptyDescription extends EntityImageStateCommon {
 
 <span class="nc" id="L75">		ug.draw(getShape(dimTotal));</span>
 
-<span class="nc" id="L77">		final double xDesc = (dimTotal.getWidth() - dimDesc.getWidth()) / 2;</span>
-<span class="nc" id="L78">		final double yDesc = (dimTotal.getHeight() - dimDesc.getHeight()) / 2;</span>
-<span class="nc" id="L79">		title.drawU(ug.apply(new UTranslate(xDesc, yDesc)));</span>
+<span class="nc" id="L77">		final double xDesc = (dimTotal.getWidth() - dimHeader.getWidth()) / 2;</span>
+<span class="nc" id="L78">		final double yDesc = (dimTotal.getHeight() - dimHeader.getHeight()) / 2;</span>
+<span class="nc" id="L79">		name.drawU(ug.apply(new UTranslate(xDesc, yDesc)));</span>
 
 <span class="nc bnc" id="L81" title="All 2 branches missed.">		if (url != null)</span>
 <span class="nc" id="L82">			ug.closeUrl();</span>

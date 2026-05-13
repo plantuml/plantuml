@@ -39,36 +39,35 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class GlobalConfig {
-	// ::remove file when __HAXE__
 
-<span class="fc" id="L44">	private static final GlobalConfig singleton = new GlobalConfig();</span>
+<span class="fc" id="L43">	private static final GlobalConfig singleton = new GlobalConfig();</span>
 	static public final boolean STRICT_SELFMESSAGE_POSITION = true;
 	static public final boolean USE_INTERFACE_EYE1 = false;
 	static public final boolean USE_INTERFACE_EYE2 = false;
 	static public final boolean FORCE_TEOZ = false;
 
 	public static GlobalConfig getInstance() {
-<span class="fc" id="L51">		return singleton;</span>
+<span class="fc" id="L50">		return singleton;</span>
 	}
 
-<span class="fc" id="L54">	private GlobalConfig() {</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L53">	private GlobalConfig() {</span>
+<span class="fc" id="L54">	}</span>
 
-<span class="fc" id="L57">	private final Map&lt;GlobalConfigKey, Object&gt; keys = new EnumMap&lt;&gt;(GlobalConfigKey.class);</span>
+<span class="fc" id="L56">	private final Map&lt;GlobalConfigKey, Object&gt; keys = new EnumMap&lt;&gt;(GlobalConfigKey.class);</span>
 
 	public void put(GlobalConfigKey key, Object value) {
-<span class="fc" id="L60">		this.keys.put(key, value);</span>
-<span class="fc" id="L61">	}</span>
+<span class="fc" id="L59">		this.keys.put(key, value);</span>
+<span class="fc" id="L60">	}</span>
 
 	public boolean boolValue(GlobalConfigKey key) {
-<span class="fc" id="L64">		return (Boolean) value(key);</span>
+<span class="fc" id="L63">		return (Boolean) value(key);</span>
 	}
 
 	public Object value(GlobalConfigKey key) {
-<span class="fc" id="L68">		final Object value = keys.get(key);</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (value == null)</span>
-<span class="fc" id="L70">			return key.getDefaultValue();</span>
-<span class="fc" id="L71">		return value;</span>
+<span class="fc" id="L67">		final Object value = keys.get(key);</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (value == null)</span>
+<span class="fc" id="L69">			return key.getDefaultValue();</span>
+<span class="fc" id="L70">		return value;</span>
 	}
 
 	// ::done

@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.Ports;
@@ -85,167 +86,172 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 	final private LineConfigurable lineConfig;
 
 	public EntityImageMap(Entity entity, PortionShower portionShower) {
-<span class="nc" id="L88">		super(entity);</span>
-<span class="nc" id="L89">		this.lineConfig = entity;</span>
-<span class="nc" id="L90">		final Stereotype stereotype = entity.getStereotype();</span>
-<span class="nc" id="L91">		this.roundCorner = getStyle().value(PName.RoundCorner).asDouble();</span>
+<span class="nc" id="L89">		super(entity);</span>
+<span class="nc" id="L90">		this.lineConfig = entity;</span>
+<span class="nc" id="L91">		final Stereotype stereotype = entity.getStereotype();</span>
+<span class="nc" id="L92">		this.roundCorner = getStyle().value(PName.RoundCorner).asDouble();</span>
 
-<span class="nc" id="L93">		final FontConfiguration fcHeader = getStyleHeader().getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L94">		final FontConfiguration fcHeader = getStyleHeader().getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="nc" id="L95">		this.name = TextBlockUtils</span>
-<span class="nc" id="L96">				.withMargin(entity.getDisplay().create(fcHeader, HorizontalAlignment.CENTER, getSkinParam()), 2, 2);</span>
+<span class="nc" id="L96">		this.name = TextBlockUtils</span>
+<span class="nc" id="L97">				.withMargin(entity.getDisplay().create(fcHeader, HorizontalAlignment.CENTER, getSkinParam()), 2, 2);</span>
 
-<span class="nc bnc" id="L98" title="All 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false)</span>
-<span class="nc" id="L100">			this.stereo = null;</span>
+<span class="nc bnc" id="L99" title="All 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false)</span>
+<span class="nc" id="L101">			this.stereo = null;</span>
 		else
-<span class="nc" id="L102">			this.stereo = Display.create(stereotype.getLabels(getSkinParam().guillemet())).create(</span>
-<span class="nc" id="L103">					FontConfiguration.create(getSkinParam(), FontParam.OBJECT_STEREOTYPE, stereotype),</span>
-<span class="nc" id="L104">					HorizontalAlignment.CENTER, getSkinParam());</span>
+<span class="nc" id="L103">			this.stereo = Display.create(stereotype.getLabels(getSkinParam().guillemet())).create(</span>
+<span class="nc" id="L104">					FontConfiguration.create(getSkinParam(), FontParam.OBJECT_STEREOTYPE, stereotype),</span>
+<span class="nc" id="L105">					HorizontalAlignment.CENTER, getSkinParam());</span>
 
-<span class="nc" id="L106">		final FontConfiguration fontConfiguration = getStyle().getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L107">		this.entries = entity.getBodier().getBody(getSkinParam(), false, false, entity.getStereotype(), getStyle(),</span>
+<span class="nc" id="L107">		final FontConfiguration fontConfiguration = getStyle().getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L108">		this.entries = entity.getBodier().getBody(getSkinParam(), false, false, entity.getStereotype(), getStyle(),</span>
 				fontConfiguration);
 
-<span class="nc" id="L110">		this.url = entity.getUrl99();</span>
+<span class="nc" id="L111">		this.url = entity.getUrl99();</span>
 
-<span class="nc" id="L112">	}</span>
+<span class="nc" id="L113">	}</span>
 
 	@Override
 	public Ports getPorts(StringBounder stringBounder) {
-<span class="nc" id="L116">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
-<span class="nc" id="L117">		return ((WithPorts) entries).getPorts(stringBounder).translateY(dimTitle.getHeight());</span>
+<span class="nc" id="L117">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
+<span class="nc" id="L118">		return ((WithPorts) entries).getPorts(stringBounder).translateY(dimTitle.getHeight());</span>
 	}
 
-<span class="nc" id="L120">	private int marginEmptyFieldsOrMethod = 13;</span>
+<span class="nc" id="L121">	private int marginEmptyFieldsOrMethod = 13;</span>
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L124">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
-<span class="nc" id="L125">		final XDimension2D dimFields = entries.calculateDimension(stringBounder);</span>
-<span class="nc" id="L126">		double width = Math.max(dimFields.getWidth(), dimTitle.getWidth() + 2 * xMarginCircle);</span>
-<span class="nc" id="L127">		final double minClassWidth = getStyle().value(PName.MinimumWidth).asDouble();</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (width &lt; minClassWidth)</span>
-<span class="nc" id="L129">			width = minClassWidth;</span>
+<span class="nc" id="L125">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
+<span class="nc" id="L126">		final XDimension2D dimFields = entries.calculateDimension(stringBounder);</span>
+<span class="nc" id="L127">		double width = Math.max(dimFields.getWidth(), dimTitle.getWidth() + 2 * xMarginCircle);</span>
+<span class="nc" id="L128">		final double minClassWidth = getStyle().value(PName.MinimumWidth).asDouble();</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (width &lt; minClassWidth)</span>
+<span class="nc" id="L130">			width = minClassWidth;</span>
 
-<span class="nc" id="L131">		final double height = getMethodOrFieldHeight(dimFields) + dimTitle.getHeight();</span>
-<span class="nc" id="L132">		return new XDimension2D(width, height);</span>
+<span class="nc" id="L132">		final double height = getMethodOrFieldHeight(dimFields) + dimTitle.getHeight();</span>
+<span class="nc" id="L133">		return new XDimension2D(width, height);</span>
+	}
+
+	@Override
+	public StyleSignature getStyleSignature() {
+<span class="nc" id="L138">		return StyleSignatureBasic.of(SName.root, SName.element, SName.objectDiagram, SName.map);</span>
 	}
 
 	private Style getStyle() {
-<span class="nc" id="L136">		return StyleSignatureBasic.of(SName.root, SName.element, SName.objectDiagram, SName.map)</span>
-<span class="nc" id="L137">				.withTOBECHANGED(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L142">		return getStyleSignature().withTOBECHANGED(getEntity().getStereotype())</span>
+<span class="nc" id="L143">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
 	private Style getStyleHeader() {
-<span class="nc" id="L141">		return StyleSignatureBasic.of(SName.root, SName.element, SName.objectDiagram, SName.map, SName.header)</span>
-<span class="nc" id="L142">				.withTOBECHANGED(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L147">		return StyleSignatureBasic.of(SName.root, SName.element, SName.objectDiagram, SName.map, SName.header)</span>
+<span class="nc" id="L148">				.withTOBECHANGED(getEntity().getStereotype()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc" id="L146">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L147">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
-<span class="nc" id="L148">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
+<span class="nc" id="L152">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L153">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="nc" id="L154">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
 
-<span class="nc" id="L150">		final double widthTotal = dimTotal.getWidth();</span>
-<span class="nc" id="L151">		final double heightTotal = dimTotal.getHeight();</span>
-<span class="nc" id="L152">		final Shadowable rect = URectangle.build(widthTotal, heightTotal).rounded(roundCorner);</span>
+<span class="nc" id="L156">		final double widthTotal = dimTotal.getWidth();</span>
+<span class="nc" id="L157">		final double heightTotal = dimTotal.getHeight();</span>
+<span class="nc" id="L158">		final Shadowable rect = URectangle.build(widthTotal, heightTotal).rounded(roundCorner);</span>
 
-<span class="nc" id="L154">		HColor borderColor = lineConfig.getColors().getColor(ColorType.LINE);</span>
-<span class="nc" id="L155">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
-<span class="nc" id="L156">		HColor headerBackcolor = getEntity().getColors().getColor(ColorType.HEADER);</span>
+<span class="nc" id="L160">		HColor borderColor = lineConfig.getColors().getColor(ColorType.LINE);</span>
+<span class="nc" id="L161">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
+<span class="nc" id="L162">		HColor headerBackcolor = getEntity().getColors().getColor(ColorType.HEADER);</span>
 
-<span class="nc" id="L158">		final Style style = getStyle();</span>
+<span class="nc" id="L164">		final Style style = getStyle();</span>
 
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (borderColor == null)</span>
-<span class="nc" id="L161">			borderColor = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (borderColor == null)</span>
+<span class="nc" id="L167">			borderColor = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (headerBackcolor == null)</span>
-<span class="nc bnc" id="L164" title="All 2 branches missed.">			headerBackcolor = backcolor == null</span>
-<span class="nc" id="L165">					? getStyleHeader().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet())</span>
-<span class="nc" id="L166">					: backcolor;</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (headerBackcolor == null)</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">			headerBackcolor = backcolor == null</span>
+<span class="nc" id="L171">					? getStyleHeader().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet())</span>
+<span class="nc" id="L172">					: backcolor;</span>
 
-<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (backcolor == null)</span>
-<span class="nc" id="L169">			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (backcolor == null)</span>
+<span class="nc" id="L175">			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
 		// final HorizontalAlignment horizontalAlignment =
 		// style.value(PName.HorizontalAlignment).asHorizontalAlignment();
-<span class="nc" id="L173">		final HorizontalAlignment horizontalAlignment = HorizontalAlignment.CENTER;</span>
+<span class="nc" id="L179">		final HorizontalAlignment horizontalAlignment = HorizontalAlignment.CENTER;</span>
 
-<span class="nc" id="L175">		rect.setDeltaShadow(style.getShadowing());</span>
-<span class="nc" id="L176">		final UStroke stroke = style.getStroke();</span>
+<span class="nc" id="L181">		rect.setDeltaShadow(style.getShadowing());</span>
+<span class="nc" id="L182">		final UStroke stroke = style.getStroke();</span>
 
-<span class="nc" id="L178">		ug = ug.apply(borderColor).apply(backcolor.bg());</span>
+<span class="nc" id="L184">		ug = ug.apply(borderColor).apply(backcolor.bg());</span>
 
-<span class="nc bnc" id="L180" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L181">			ug.startUrl(url);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L187">			ug.startUrl(url);</span>
 
-<span class="nc" id="L183">		final UGroup group = new UGroup(getEntity().getLocation());</span>
-<span class="nc" id="L184">		group.put(UGroupType.CLASS, &quot;entity&quot;);</span>
-<span class="nc" id="L185">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
-<span class="nc" id="L186">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
-<span class="nc" id="L187">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
-<span class="nc" id="L188">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
-<span class="nc" id="L189">		ug.startGroup(group);</span>
-<span class="nc" id="L190">		ug.apply(stroke).draw(rect);</span>
+<span class="nc" id="L189">		final UGroup group = new UGroup(getEntity().getLocation());</span>
+<span class="nc" id="L190">		group.put(UGroupType.CLASS, &quot;entity&quot;);</span>
+<span class="nc" id="L191">		group.put(UGroupType.ID, &quot;entity_&quot; + getEntity().getName());</span>
+<span class="nc" id="L192">		group.put(UGroupType.DATA_ENTITY, getEntity().getName());</span>
+<span class="nc" id="L193">		group.put(UGroupType.DATA_UID, getEntity().getUid());</span>
+<span class="nc" id="L194">		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());</span>
+<span class="nc" id="L195">		ug.startGroup(group);</span>
+<span class="nc" id="L196">		ug.apply(stroke).draw(rect);</span>
 
-<span class="nc bnc" id="L192" title="All 4 branches missed.">		if (headerBackcolor != null &amp;&amp; backcolor.equals(headerBackcolor) == false) {</span>
-<span class="nc" id="L193">			final Shadowable rect2 = URectangle.build(widthTotal, dimTitle.getHeight()).halfRounded(roundCorner);</span>
-<span class="nc" id="L194">			final UGraphic ugHeader = ug.apply(headerBackcolor.bg());</span>
-<span class="nc" id="L195">			ugHeader.apply(stroke).draw(rect2);</span>
+<span class="nc bnc" id="L198" title="All 4 branches missed.">		if (headerBackcolor != null &amp;&amp; backcolor.equals(headerBackcolor) == false) {</span>
+<span class="nc" id="L199">			final Shadowable rect2 = URectangle.build(widthTotal, dimTitle.getHeight()).halfRounded(roundCorner);</span>
+<span class="nc" id="L200">			final UGraphic ugHeader = ug.apply(headerBackcolor.bg());</span>
+<span class="nc" id="L201">			ugHeader.apply(stroke).draw(rect2);</span>
 		}
 
-<span class="nc" id="L198">		final PlacementStrategy placementStrategy = horizontalAlignment.asPlacementStrategy(ug.getStringBounder());</span>
-<span class="nc" id="L199">		final ULayoutGroup header = new ULayoutGroup(placementStrategy);</span>
-<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (stereo != null)</span>
-<span class="nc" id="L201">			header.add(stereo);</span>
+<span class="nc" id="L204">		final PlacementStrategy placementStrategy = horizontalAlignment.asPlacementStrategy(ug.getStringBounder());</span>
+<span class="nc" id="L205">		final ULayoutGroup header = new ULayoutGroup(placementStrategy);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (stereo != null)</span>
+<span class="nc" id="L207">			header.add(stereo);</span>
 
-<span class="nc" id="L203">		header.add(name);</span>
-<span class="nc" id="L204">		header.drawU(ug, dimTotal.getWidth(), dimTitle.getHeight());</span>
+<span class="nc" id="L209">		header.add(name);</span>
+<span class="nc" id="L210">		header.drawU(ug, dimTotal.getWidth(), dimTitle.getHeight());</span>
 
-<span class="nc" id="L206">		final UGraphic ug2 = UGraphicStencil.create(ug, this, stroke);</span>
-<span class="nc" id="L207">		((TextBlockMap) entries).setTotalWidth(dimTotal.getWidth());</span>
-<span class="nc" id="L208">		entries.drawU(ug2.apply(UTranslate.dy(dimTitle.getHeight())));</span>
+<span class="nc" id="L212">		final UGraphic ug2 = UGraphicStencil.create(ug, this, stroke);</span>
+<span class="nc" id="L213">		((TextBlockMap) entries).setTotalWidth(dimTotal.getWidth());</span>
+<span class="nc" id="L214">		entries.drawU(ug2.apply(UTranslate.dy(dimTitle.getHeight())));</span>
 
-<span class="nc bnc" id="L210" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L211">			ug.closeUrl();</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L217">			ug.closeUrl();</span>
 
-<span class="nc" id="L213">		ug.closeGroup();</span>
-<span class="nc" id="L214">	}</span>
+<span class="nc" id="L219">		ug.closeGroup();</span>
+<span class="nc" id="L220">	}</span>
 
 	private double getMethodOrFieldHeight(final XDimension2D dim) {
-<span class="nc" id="L217">		final double fieldsHeight = dim.getHeight();</span>
-<span class="nc bnc" id="L218" title="All 4 branches missed.">		if (fieldsHeight == 0 &amp;&amp; this.getEntity().getLeafType() != LeafType.MAP)</span>
-<span class="nc" id="L219">			return marginEmptyFieldsOrMethod;</span>
+<span class="nc" id="L223">		final double fieldsHeight = dim.getHeight();</span>
+<span class="nc bnc" id="L224" title="All 4 branches missed.">		if (fieldsHeight == 0 &amp;&amp; this.getEntity().getLeafType() != LeafType.MAP)</span>
+<span class="nc" id="L225">			return marginEmptyFieldsOrMethod;</span>
 
-<span class="nc" id="L221">		return fieldsHeight;</span>
+<span class="nc" id="L227">		return fieldsHeight;</span>
 	}
 
-<span class="nc" id="L224">	private int xMarginCircle = 5;</span>
+<span class="nc" id="L230">	private int xMarginCircle = 5;</span>
 
 	private XDimension2D getTitleDimension(StringBounder stringBounder) {
-<span class="nc" id="L227">		return getNameAndSteretypeDimension(stringBounder);</span>
+<span class="nc" id="L233">		return getNameAndSteretypeDimension(stringBounder);</span>
 	}
 
 	private XDimension2D getNameAndSteretypeDimension(StringBounder stringBounder) {
-<span class="nc" id="L231">		final XDimension2D nameDim = name.calculateDimension(stringBounder);</span>
-<span class="nc bnc" id="L232" title="All 2 branches missed.">		final XDimension2D stereoDim = stereo == null ? new XDimension2D(0, 0)</span>
-<span class="nc" id="L233">				: stereo.calculateDimension(stringBounder);</span>
-<span class="nc" id="L234">		final XDimension2D nameAndStereo = new XDimension2D(Math.max(nameDim.getWidth(), stereoDim.getWidth()),</span>
-<span class="nc" id="L235">				nameDim.getHeight() + stereoDim.getHeight());</span>
-<span class="nc" id="L236">		return nameAndStereo;</span>
+<span class="nc" id="L237">		final XDimension2D nameDim = name.calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">		final XDimension2D stereoDim = stereo == null ? new XDimension2D(0, 0)</span>
+<span class="nc" id="L239">				: stereo.calculateDimension(stringBounder);</span>
+<span class="nc" id="L240">		final XDimension2D nameAndStereo = new XDimension2D(Math.max(nameDim.getWidth(), stereoDim.getWidth()),</span>
+<span class="nc" id="L241">				nameDim.getHeight() + stereoDim.getHeight());</span>
+<span class="nc" id="L242">		return nameAndStereo;</span>
 	}
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L240">		return ShapeType.RECTANGLE_HTML_FOR_PORTS;</span>
+<span class="nc" id="L246">		return ShapeType.RECTANGLE_HTML_FOR_PORTS;</span>
 	}
 
 	public double getStartingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L244">		return 0;</span>
+<span class="nc" id="L250">		return 0;</span>
 	}
 
 	public double getEndingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L248">		return calculateDimension(stringBounder).getWidth();</span>
+<span class="nc" id="L254">		return calculateDimension(stringBounder).getWidth();</span>
 	}
 
 }

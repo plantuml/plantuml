@@ -2149,11 +2149,11 @@
                 <TotalClasses>30</TotalClasses>
                 <ConcreteClasses>22</ConcreteClasses>
                 <AbstractClasses>8</AbstractClasses>
-                <Ca>30</Ca>
+                <Ca>31</Ca>
                 <Ce>18</Ce>
                 <A>0.27</A>
-                <I>0.38</I>
-                <D>0.36</D>
+                <I>0.37</I>
+                <D>0.37</D>
                 <V>1</V>
             </Stats>
 
@@ -2300,6 +2300,7 @@
                 <Package>net.sourceforge.plantuml.sdot</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.statediagram.command</Package>
+                <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>
                 <Package>net.sourceforge.plantuml.xmi</Package>
@@ -15589,10 +15590,10 @@
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>36</Ca>
-                <Ce>7</Ce>
+                <Ce>9</Ce>
                 <A>0</A>
-                <I>0.16</I>
-                <D>0.84</D>
+                <I>0.2</I>
+                <D>0.8</D>
                 <V>1</V>
             </Stats>
 
@@ -15616,9 +15617,11 @@
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
                 <Package>java.util.regex</Package>
+                <Package>net.sourceforge.plantuml.abel</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.ftile</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.regex</Package>
+                <Package>net.sourceforge.plantuml.style</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -15666,7 +15669,7 @@
                 <TotalClasses>22</TotalClasses>
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>7</AbstractClasses>
-                <Ca>68</Ca>
+                <Ca>69</Ca>
                 <Ce>17</Ce>
                 <A>0.32</A>
                 <I>0.2</I>
@@ -15827,6 +15830,7 @@
                 <Package>net.sourceforge.plantuml.skin</Package>
                 <Package>net.sourceforge.plantuml.skin.rose</Package>
                 <Package>net.sourceforge.plantuml.statediagram.command</Package>
+                <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.style.parser</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>

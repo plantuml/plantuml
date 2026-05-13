@@ -86,9 +86,9 @@ public class EntityImageMachine extends AbstractEntityImage {
 	private UStroke getStroke() {
 <span class="nc" id="L87">		UStroke stroke = getSkinParam().getThickness(LineParam.machineBorder, getStereo());</span>
 
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (stroke == null) {</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (stroke == null)</span>
 <span class="nc" id="L90">			stroke = UStroke.withThickness(1.5);</span>
-		}
+
 <span class="nc" id="L92">		return stroke;</span>
 	}
 
@@ -125,37 +125,36 @@ public class EntityImageMachine extends AbstractEntityImage {
 
 <span class="nc" id="L126">		ug = ug.apply(SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.machineBorder));</span>
 <span class="nc" id="L127">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (backcolor == null) {</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (backcolor == null)</span>
 <span class="nc" id="L129">			backcolor = SkinParamUtils.getColor(getSkinParam(), getStereo(), ColorParam.machineBackground);</span>
-		}
+
 <span class="nc" id="L131">		ug = ug.apply(backcolor.bg());</span>
-<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (url != null) {</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (url != null)</span>
 <span class="nc" id="L133">			ug.startUrl(url);</span>
-		}
 
-<span class="nc" id="L136">		final UStroke stroke = getStroke();</span>
-<span class="nc" id="L137">		ug.apply(stroke).draw(rect);</span>
-<span class="nc" id="L138">		ug.apply(UTranslate.dx(4)).apply(stroke).draw(rect2);</span>
+<span class="nc" id="L135">		final UStroke stroke = getStroke();</span>
+<span class="nc" id="L136">		ug.apply(stroke).draw(rect);</span>
+<span class="nc" id="L137">		ug.apply(UTranslate.dx(4)).apply(stroke).draw(rect2);</span>
 
-<span class="nc" id="L140">		final ULayoutGroup header = new ULayoutGroup(new PlacementStrategyY1Y2(ug.getStringBounder()));</span>
-<span class="nc" id="L141">		header.add(name);</span>
-<span class="nc" id="L142">		header.drawU(ug.apply(UTranslate.dx(5)), dimTotal.getWidth(), dimTitle.getHeight());</span>
+<span class="nc" id="L139">		final ULayoutGroup header = new ULayoutGroup(new PlacementStrategyY1Y2(ug.getStringBounder()));</span>
+<span class="nc" id="L140">		header.add(name);</span>
+<span class="nc" id="L141">		header.drawU(ug.apply(UTranslate.dx(5)), dimTotal.getWidth(), dimTitle.getHeight());</span>
 
-<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (url != null) {</span>
-<span class="nc" id="L145">			ug.closeUrl();</span>
-		}
-<span class="nc" id="L147">	}</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L144">			ug.closeUrl();</span>
+
+<span class="nc" id="L146">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L150">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L149">		return ShapeType.RECTANGLE;</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L155">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
-<span class="nc" id="L156">		final double width = dimTitle.getWidth();</span>
-<span class="nc" id="L157">		final double height = dimTitle.getHeight();</span>
-<span class="nc" id="L158">		return new XDimension2D(width + 10, height);</span>
+<span class="nc" id="L154">		final XDimension2D dimTitle = getTitleDimension(stringBounder);</span>
+<span class="nc" id="L155">		final double width = dimTitle.getWidth();</span>
+<span class="nc" id="L156">		final double height = dimTitle.getHeight();</span>
+<span class="nc" id="L157">		return new XDimension2D(width + 10, height);</span>
 	}
 
 }

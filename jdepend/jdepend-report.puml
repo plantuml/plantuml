@@ -380,7 +380,7 @@ Total Classes: 38
 "net.sourceforge.plantuml" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.abel" %lighten("red", 64) {
+class "net.sourceforge.plantuml.abel" %lighten("red", 63) {
 Total Classes: 30
 }
 "net.sourceforge.plantuml.abel" --> "java.lang"
@@ -3026,16 +3026,18 @@ Total Classes: 4
 "net.sourceforge.plantuml.stats.api" --> "java.lang"
 "net.sourceforge.plantuml.stats.api" --> "java.util"
 
-class "net.sourceforge.plantuml.stereo" %lighten("red", 16) {
+class "net.sourceforge.plantuml.stereo" %lighten("red", 20) {
 Total Classes: 3
 }
 "net.sourceforge.plantuml.stereo" --> "com.plantuml.ubrex.builder"
 "net.sourceforge.plantuml.stereo" --> "java.lang"
 "net.sourceforge.plantuml.stereo" --> "java.util"
 "net.sourceforge.plantuml.stereo" --> "java.util.regex"
+"net.sourceforge.plantuml.stereo" --> "net.sourceforge.plantuml.abel"
 "net.sourceforge.plantuml.stereo" --> "net.sourceforge.plantuml.activitydiagram3.ftile"
 "net.sourceforge.plantuml.stereo" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.stereo" --> "net.sourceforge.plantuml.regex"
+"net.sourceforge.plantuml.stereo" --> "net.sourceforge.plantuml.style"
 
 class "net.sourceforge.plantuml.style" %lighten("red", 52) {
 Total Classes: 22

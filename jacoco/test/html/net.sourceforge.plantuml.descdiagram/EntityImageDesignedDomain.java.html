@@ -72,23 +72,23 @@ public class EntityImageDesignedDomain extends AbstractEntityImage {
 <span class="nc" id="L72">		this.name = TextBlockUtils.withMargin(entity.getDisplay().create(</span>
 <span class="nc" id="L73">				FontConfiguration.create(getSkinParam(), FontParam.DESIGNED_DOMAIN, stereotype),</span>
 <span class="nc" id="L74">				HorizontalAlignment.CENTER, getSkinParam()), 2, 2);</span>
-<span class="nc bnc" id="L75" title="All 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {</span>
-<span class="nc" id="L76">			this.stereo = null;</span>
-		} else {
-<span class="nc" id="L78">			this.stereo = Display.create(stereotype.getLabels(getSkinParam().guillemet())).create(</span>
-<span class="nc" id="L79">					FontConfiguration.create(getSkinParam(), FontParam.DESIGNED_DOMAIN_STEREOTYPE, stereotype),</span>
-<span class="nc" id="L80">					HorizontalAlignment.CENTER, getSkinParam());</span>
-		}
-<span class="nc" id="L82">		this.url = entity.getUrl99();</span>
-		// System.out.println(entity.getStereotype());
+
+<span class="nc bnc" id="L76" title="All 4 branches missed.">		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null)</span>
+<span class="nc" id="L77">			this.stereo = null;</span>
+		else
+<span class="nc" id="L79">			this.stereo = Display.create(stereotype.getLabels(getSkinParam().guillemet())).create(</span>
+<span class="nc" id="L80">					FontConfiguration.create(getSkinParam(), FontParam.DESIGNED_DOMAIN_STEREOTYPE, stereotype),</span>
+<span class="nc" id="L81">					HorizontalAlignment.CENTER, getSkinParam());</span>
+
+<span class="nc" id="L83">		this.url = entity.getUrl99();</span>
 <span class="nc" id="L84">	}</span>
 
 	private UStroke getStroke() {
 <span class="nc" id="L87">		UStroke stroke = getSkinParam().getThickness(LineParam.designedDomainBorder, getStereo());</span>
 
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (stroke == null) {</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (stroke == null)</span>
 <span class="nc" id="L90">			stroke = UStroke.withThickness(1.5);</span>
-		}
+
 <span class="nc" id="L92">		return stroke;</span>
 	}
 

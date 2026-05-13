@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ClusterDecoration;
@@ -82,90 +83,95 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 	private final double diagonalCorner;
 	private final HColor back;
 
+	@Override
+	public StyleSignature getStyleSignature() {
+<span class="nc" id="L88">		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.package_, SName.title);</span>
+	}
+
 	private Style getStyle() {
-<span class="nc" id="L86">		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.package_, SName.title)</span>
-<span class="nc" id="L87">				.withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L92">		return getStyleSignature().withTOBECHANGED(stereotype)</span>
+<span class="nc" id="L93">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
 	public EntityImageEmptyPackage(Entity entity, PortionShower portionShower) {
-<span class="nc" id="L91">		super(entity);</span>
+<span class="nc" id="L97">		super(entity);</span>
 
-<span class="nc" id="L93">		final Colors colors = entity.getColors();</span>
-<span class="nc" id="L94">		final HColor specificBackColor = colors.getColor(ColorType.BACK);</span>
-<span class="nc" id="L95">		this.stereotype = entity.getStereotype();</span>
-<span class="nc" id="L96">		this.url = entity.getUrl99();</span>
+<span class="nc" id="L99">		final Colors colors = entity.getColors();</span>
+<span class="nc" id="L100">		final HColor specificBackColor = colors.getColor(ColorType.BACK);</span>
+<span class="nc" id="L101">		this.stereotype = entity.getStereotype();</span>
+<span class="nc" id="L102">		this.url = entity.getUrl99();</span>
 
-<span class="nc" id="L98">		Style style = getStyle();</span>
-<span class="nc" id="L99">		style = style.eventuallyOverride(colors);</span>
-<span class="nc" id="L100">		this.borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L101">		this.shadowing = style.getShadowing();</span>
-<span class="nc" id="L102">		this.stroke = style.getStroke(colors);</span>
-<span class="nc" id="L103">		this.roundCorner = style.value(PName.RoundCorner).asDouble();</span>
-<span class="nc" id="L104">		this.diagonalCorner = style.value(PName.DiagonalCorner).asDouble();</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (specificBackColor == null)</span>
-<span class="nc" id="L106">			this.back = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L104">		Style style = getStyle();</span>
+<span class="nc" id="L105">		style = style.eventuallyOverride(colors);</span>
+<span class="nc" id="L106">		this.borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L107">		this.shadowing = style.getShadowing();</span>
+<span class="nc" id="L108">		this.stroke = style.getStroke(colors);</span>
+<span class="nc" id="L109">		this.roundCorner = style.value(PName.RoundCorner).asDouble();</span>
+<span class="nc" id="L110">		this.diagonalCorner = style.value(PName.DiagonalCorner).asDouble();</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (specificBackColor == null)</span>
+<span class="nc" id="L112">			this.back = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 		else
-<span class="nc" id="L108">			this.back = specificBackColor;</span>
+<span class="nc" id="L114">			this.back = specificBackColor;</span>
 
-<span class="nc" id="L110">		final FontConfiguration titleFontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L111">		final HorizontalAlignment titleHorizontalAlignment = style.getHorizontalAlignment();</span>
+<span class="nc" id="L116">		final FontConfiguration titleFontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L117">		final HorizontalAlignment titleHorizontalAlignment = style.getHorizontalAlignment();</span>
 
-<span class="nc" id="L113">		this.desc = entity.getDisplay().create(titleFontConfiguration, titleHorizontalAlignment, getSkinParam());</span>
+<span class="nc" id="L119">		this.desc = entity.getDisplay().create(titleFontConfiguration, titleHorizontalAlignment, getSkinParam());</span>
 
-<span class="nc" id="L115">		final DisplayPositioned legend = ((Entity) entity).getLegend();</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (legend != null) {</span>
-<span class="nc" id="L117">			final TextBlock legendBlock = EntityImageLegend.create(legend.getDisplay(), getSkinParam());</span>
-<span class="nc" id="L118">			stereoBlock = legendBlock;</span>
-<span class="nc" id="L119">		} else {</span>
-<span class="nc bnc" id="L120" title="All 4 branches missed.">			if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">					|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false)</span>
-<span class="nc" id="L122">				stereoBlock = TextBlockUtils.empty(0, 0);</span>
+<span class="nc" id="L121">		final DisplayPositioned legend = ((Entity) entity).getLegend();</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (legend != null) {</span>
+<span class="nc" id="L123">			final TextBlock legendBlock = EntityImageLegend.create(legend.getDisplay(), getSkinParam());</span>
+<span class="nc" id="L124">			stereoBlock = legendBlock;</span>
+<span class="nc" id="L125">		} else {</span>
+<span class="nc bnc" id="L126" title="All 4 branches missed.">			if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">					|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false)</span>
+<span class="nc" id="L128">				stereoBlock = TextBlockUtils.empty(0, 0);</span>
 			else
-<span class="nc" id="L124">				stereoBlock = TextBlockUtils.withMargin(Display.create(stereotype.getLabels(getSkinParam().guillemet()))</span>
-<span class="nc" id="L125">						.create(FontConfiguration.create(getSkinParam(), FontParam.PACKAGE_STEREOTYPE, stereotype),</span>
-<span class="nc" id="L126">								titleHorizontalAlignment, getSkinParam()),</span>
+<span class="nc" id="L130">				stereoBlock = TextBlockUtils.withMargin(Display.create(stereotype.getLabels(getSkinParam().guillemet()))</span>
+<span class="nc" id="L131">						.create(FontConfiguration.create(getSkinParam(), FontParam.PACKAGE_STEREOTYPE, stereotype),</span>
+<span class="nc" id="L132">								titleHorizontalAlignment, getSkinParam()),</span>
 						1, 0);
 		}
 
-<span class="nc" id="L130">	}</span>
+<span class="nc" id="L136">	}</span>
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L134">		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);</span>
-<span class="nc" id="L135">		XDimension2D dim = TextBlockUtils.mergeTB(desc, stereoBlock, HorizontalAlignment.LEFT)</span>
-<span class="nc" id="L136">				.calculateDimension(stringBounder);</span>
-<span class="nc" id="L137">		dim = dim.atLeast(0, 2 * dimDesc.getHeight());</span>
-<span class="nc" id="L138">		return dim.delta(MARGIN * 2, MARGIN * 2);</span>
+<span class="nc" id="L140">		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);</span>
+<span class="nc" id="L141">		XDimension2D dim = TextBlockUtils.mergeTB(desc, stereoBlock, HorizontalAlignment.LEFT)</span>
+<span class="nc" id="L142">				.calculateDimension(stringBounder);</span>
+<span class="nc" id="L143">		dim = dim.atLeast(0, 2 * dimDesc.getHeight());</span>
+<span class="nc" id="L144">		return dim.delta(MARGIN * 2, MARGIN * 2);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L143">			ug.startUrl(url);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L149">			ug.startUrl(url);</span>
 
-<span class="nc" id="L145">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L146">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="nc" id="L151">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L152">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L148">		final double widthTotal = dimTotal.getWidth();</span>
-<span class="nc" id="L149">		final double heightTotal = dimTotal.getHeight();</span>
+<span class="nc" id="L154">		final double widthTotal = dimTotal.getWidth();</span>
+<span class="nc" id="L155">		final double heightTotal = dimTotal.getHeight();</span>
 
-<span class="nc" id="L151">		final RectangleArea rectangleArea = new RectangleArea(0, 0, widthTotal, heightTotal);</span>
-<span class="nc" id="L152">		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().packageStyle(), null, desc,</span>
+<span class="nc" id="L157">		final RectangleArea rectangleArea = new RectangleArea(0, 0, widthTotal, heightTotal);</span>
+<span class="nc" id="L158">		final ClusterDecoration decoration = new ClusterDecoration(getSkinParam().packageStyle(), null, desc,</span>
 				stereoBlock, rectangleArea, stroke);
 
-<span class="nc" id="L155">		final HorizontalAlignment horizontalAlignment = getSkinParam()</span>
-<span class="nc" id="L156">				.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null);</span>
-<span class="nc" id="L157">		final HorizontalAlignment stereotypeAlignment = getSkinParam().getStereotypeAlignment();</span>
+<span class="nc" id="L161">		final HorizontalAlignment horizontalAlignment = getSkinParam()</span>
+<span class="nc" id="L162">				.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null);</span>
+<span class="nc" id="L163">		final HorizontalAlignment stereotypeAlignment = getSkinParam().getStereotypeAlignment();</span>
 
-<span class="nc" id="L159">		decoration.drawU(ug, back, borderColor, shadowing, roundCorner, horizontalAlignment, stereotypeAlignment,</span>
+<span class="nc" id="L165">		decoration.drawU(ug, back, borderColor, shadowing, roundCorner, horizontalAlignment, stereotypeAlignment,</span>
 				diagonalCorner);
 
-<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L163">			ug.closeUrl();</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L169">			ug.closeUrl();</span>
 
-<span class="nc" id="L165">	}</span>
+<span class="nc" id="L171">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="nc" id="L168">		return ShapeType.RECTANGLE;</span>
+<span class="nc" id="L174">		return ShapeType.RECTANGLE;</span>
 	}
 
 }

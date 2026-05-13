@@ -59,7 +59,7 @@ public class EntityImageBranch extends AbstractEntityImage {
 <span class="fc" id="L59">		super(entity);</span>
 <span class="fc" id="L60">	}</span>
 
-	public StyleSignatureBasic getDefaultStyleDefinition() {
+	public StyleSignatureBasic getStyleSignature() {
 <span class="fc" id="L63">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);</span>
 	}
 
@@ -76,7 +76,7 @@ public class EntityImageBranch extends AbstractEntityImage {
 <span class="fc" id="L76">		diams.addPoint(0, SIZE);</span>
 <span class="fc" id="L77">		diams.addPoint(SIZE, 0);</span>
 
-<span class="fc" id="L79">		final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L79">		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 <span class="fc" id="L80">		final HColor border = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 <span class="fc" id="L81">		final HColor back = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 <span class="fc" id="L82">		final UStroke stroke = style.getStroke();</span>

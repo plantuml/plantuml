@@ -47,44 +47,45 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.AbstractEntityImage;
 import net.sourceforge.plantuml.svek.ShapeType;
 
 public class EntityImageSynchroBar extends AbstractEntityImage {
 
-
 	public EntityImageSynchroBar(Entity entity) {
 <span class="fc" id="L58">		super(entity);</span>
 <span class="fc" id="L59">	}</span>
 
-	private StyleSignatureBasic getStyleSignature() {
-<span class="fc" id="L62">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activityBar);</span>
+	@Override
+	public StyleSignature getStyleSignature() {
+<span class="fc" id="L63">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activityBar);</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (getSkinParam().getRankdir() == Rankdir.LEFT_TO_RIGHT)</span>
-<span class="nc" id="L68">			return new XDimension2D(8, 80);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (getSkinParam().getRankdir() == Rankdir.LEFT_TO_RIGHT)</span>
+<span class="nc" id="L69">			return new XDimension2D(8, 80);</span>
 
-<span class="fc" id="L70">		return new XDimension2D(80, 8);</span>
+<span class="fc" id="L71">		return new XDimension2D(80, 8);</span>
 	}
 
 	final public void drawU(UGraphic ug) {
-<span class="fc" id="L74">		final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L75">		final Shadowable rect = URectangle.build(dim.getWidth(), dim.getHeight());</span>
+<span class="fc" id="L75">		final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L76">		final Shadowable rect = URectangle.build(dim.getWidth(), dim.getHeight());</span>
 
-<span class="fc" id="L77">		final Style style = getStyleSignature().withTOBECHANGED(getEntity().getStereotype())</span>
-<span class="fc" id="L78">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
-<span class="fc" id="L79">		final HColor color = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L80">		final double shadowing = style.getShadowing();</span>
+<span class="fc" id="L78">		final Style style = getStyleSignature().withTOBECHANGED(getEntity().getStereotype())</span>
+<span class="fc" id="L79">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L80">		final HColor color = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L81">		final double shadowing = style.getShadowing();</span>
 
-<span class="fc" id="L82">		rect.setDeltaShadow(shadowing);</span>
-<span class="fc" id="L83">		ug.apply(HColors.none()).apply(color.bg()).draw(rect);</span>
-<span class="fc" id="L84">	}</span>
+<span class="fc" id="L83">		rect.setDeltaShadow(shadowing);</span>
+<span class="fc" id="L84">		ug.apply(HColors.none()).apply(color.bg()).draw(rect);</span>
+<span class="fc" id="L85">	}</span>
 
 	public ShapeType getShapeType() {
-<span class="fc" id="L87">		return ShapeType.RECTANGLE;</span>
+<span class="fc" id="L88">		return ShapeType.RECTANGLE;</span>
 	}
 
 }

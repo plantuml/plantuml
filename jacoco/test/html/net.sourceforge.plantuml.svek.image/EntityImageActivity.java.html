@@ -73,7 +73,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 <span class="fc" id="L73">		super(entity);</span>
 <span class="fc" id="L74">		this.bibliotekon = bibliotekon;</span>
 
-<span class="fc" id="L76">		final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L76">		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 <span class="fc" id="L77">		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
 <span class="fc" id="L78">		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();</span>
 <span class="fc" id="L79">		this.shadowing = style.getShadowing();</span>
@@ -129,7 +129,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 
 <span class="fc" id="L130">		ug = applyColors(ug);</span>
 
-<span class="fc" id="L132">		final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L132">		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
 <span class="fc" id="L133">		final UStroke stroke = style.getStroke();</span>
 
 <span class="fc" id="L135">		ug.apply(stroke).draw(rect);</span>
@@ -138,30 +138,31 @@ public class EntityImageActivity extends AbstractEntityImage {
 <span class="fc" id="L138">		return ug;</span>
 	}
 
-	public StyleSignature getDefaultStyleDefinition() {
-<span class="fc" id="L142">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity)</span>
-<span class="fc" id="L143">				.withTOBECHANGED(getStereo());</span>
+	@Override
+	public StyleSignature getStyleSignature() {
+<span class="fc" id="L143">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity)</span>
+<span class="fc" id="L144">				.withTOBECHANGED(getStereo());</span>
 	}
 
 	private UGraphic applyColors(UGraphic ug) {
 
-<span class="fc" id="L148">		final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
-<span class="fc" id="L149">		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L150">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (backcolor == null)</span>
-<span class="fc" id="L152">			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L149">		final Style style = getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L150">		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L151">		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (backcolor == null)</span>
+<span class="fc" id="L153">			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="fc" id="L154">		ug = ug.apply(borderColor);</span>
-<span class="fc" id="L155">		ug = ug.apply(backcolor.bg());</span>
-<span class="fc" id="L156">		return ug;</span>
+<span class="fc" id="L155">		ug = ug.apply(borderColor);</span>
+<span class="fc" id="L156">		ug = ug.apply(backcolor.bg());</span>
+<span class="fc" id="L157">		return ug;</span>
 	}
 
 	public ShapeType getShapeType() {
-<span class="fc" id="L160">		final Stereotype stereotype = getStereo();</span>
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if (getSkinParam().useOctagonForActivity(stereotype))</span>
-<span class="nc" id="L162">			return ShapeType.OCTAGON;</span>
+<span class="fc" id="L161">		final Stereotype stereotype = getStereo();</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">		if (getSkinParam().useOctagonForActivity(stereotype))</span>
+<span class="nc" id="L163">			return ShapeType.OCTAGON;</span>
 
-<span class="fc" id="L164">		return ShapeType.ROUND_RECTANGLE;</span>
+<span class="fc" id="L165">		return ShapeType.ROUND_RECTANGLE;</span>
 	}
 
 }

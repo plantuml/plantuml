@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPosition;
-import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.klimt.Shadowable;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
@@ -56,6 +55,7 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
@@ -69,7 +69,7 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 <span class="fc" id="L69">	}</span>
 
 	@Override
-	protected StyleSignatureBasic getSignature() {
+	public StyleSignature getStyleSignature() {
 <span class="fc" id="L73">		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.port);</span>
 	}
 
