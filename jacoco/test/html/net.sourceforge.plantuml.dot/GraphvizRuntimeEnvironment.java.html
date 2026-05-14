@@ -179,7 +179,7 @@ public class GraphvizRuntimeEnvironment {
 
 	@DuplicateCode(reference = &quot;GraphvizUtils&quot;)
 	public boolean useVizJs(ISkinParam skinParam) {
-<span class="pc bpc" id="L182" title="3 of 6 branches missed.">		if (skinParam != null &amp;&amp; skinParam.isUseVizJs() &amp;&amp; VizJsEngine.isOk())</span>
+<span class="pc bpc" id="L182" title="4 of 6 branches missed.">		if (skinParam != null &amp;&amp; skinParam.isUseVizJs() &amp;&amp; VizJsEngine.isOk())</span>
 <span class="nc" id="L183">			return true;</span>
 
 <span class="pc bpc" id="L185" title="3 of 4 branches missed.">		if (VIZJS.equalsIgnoreCase(GraphvizRuntimeEnvironment.getInstance().getenvGraphvizDot()) &amp;&amp; VizJsEngine.isOk())</span>
@@ -190,7 +190,7 @@ public class GraphvizRuntimeEnvironment {
 
 	@DuplicateCode(reference = &quot;GraphvizUtils&quot;)
 	public File getDotExe() {
-<span class="fc" id="L193">		return create(null, &quot;png&quot;).getDotExe();</span>
+<span class="nc" id="L193">		return create(null, &quot;png&quot;).getDotExe();</span>
 	}
 
 	@DuplicateCode(reference = &quot;GraphvizUtils&quot;)

@@ -80,11 +80,11 @@ public class CommandHideShowByGender extends SingleLineCommand2&lt;TitledDiagram
 	}
 
 	private final EntityGender emptyByGender(EntityPortion portion) {
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (portion == EntityPortion.METHOD)</span>
-<span class="nc" id="L84">			return EntityGenderUtils.emptyMethods();</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (portion == EntityPortion.METHOD)</span>
+<span class="fc" id="L84">			return EntityGenderUtils.emptyMethods();</span>
 
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (portion == EntityPortion.FIELD)</span>
-<span class="nc" id="L87">			return EntityGenderUtils.emptyFields();</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (portion == EntityPortion.FIELD)</span>
+<span class="fc" id="L87">			return EntityGenderUtils.emptyFields();</span>
 
 <span class="nc bnc" id="L89" title="All 2 branches missed.">		if (portion == EntityPortion.MEMBER)</span>
 <span class="nc" id="L90">			throw new IllegalArgumentException();</span>
@@ -213,19 +213,19 @@ public class CommandHideShowByGender extends SingleLineCommand2&lt;TitledDiagram
 <span class="nc" id="L213">				gender = EntityGenderUtils.byEntityAlone(entity);</span>
 			}
 		}
-<span class="pc bpc" id="L216" title="1 of 2 branches missed.">		final boolean empty = arg.get(&quot;EMPTY&quot;, 0) != null;</span>
-<span class="pc bpc" id="L217" title="3 of 4 branches missed.">		final boolean emptyMembers = empty &amp;&amp; portion == EntityPortion.MEMBER;</span>
-<span class="pc bpc" id="L218" title="3 of 4 branches missed.">		if (empty &amp;&amp; !emptyMembers)</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">		final boolean empty = arg.get(&quot;EMPTY&quot;, 0) != null;</span>
+<span class="pc bpc" id="L217" title="1 of 4 branches missed.">		final boolean emptyMembers = empty &amp;&amp; portion == EntityPortion.MEMBER;</span>
+<span class="pc bpc" id="L218" title="1 of 4 branches missed.">		if (empty &amp;&amp; !emptyMembers)</span>
 <span class="nc" id="L219">			gender = EntityGenderUtils.and(gender, emptyByGender(portion));</span>
 
 <span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (!diagram.getCurrentGroup().isRoot())</span>
 <span class="nc" id="L222">			gender = EntityGenderUtils.and(gender, EntityGenderUtils.byPackage(diagram.getCurrentGroup()));</span>
 
-<span class="pc bpc" id="L224" title="1 of 2 branches missed.">		if (emptyMembers) {</span>
-<span class="nc" id="L225">			diagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.FIELD)), EntityPortion.FIELD,</span>
-<span class="nc" id="L226">					arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
-<span class="nc" id="L227">			diagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.METHOD)), EntityPortion.METHOD,</span>
-<span class="nc" id="L228">					arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">		if (emptyMembers) {</span>
+<span class="fc" id="L225">			diagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.FIELD)), EntityPortion.FIELD,</span>
+<span class="fc" id="L226">					arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
+<span class="fc" id="L227">			diagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.METHOD)), EntityPortion.METHOD,</span>
+<span class="fc" id="L228">					arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
 		} else
 <span class="fc" id="L230">			diagram.hideOrShow(gender, portion, arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
 

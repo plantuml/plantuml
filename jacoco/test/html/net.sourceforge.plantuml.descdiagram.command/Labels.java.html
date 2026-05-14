@@ -76,7 +76,7 @@ public class Labels {
 <span class="fc" id="L76">	private static final Pattern2 SECOND_LABEL_ONLY = Pattern2.cmpile(&quot;^([^%g]+)[%g]([^%g]+)[%g]$&quot;);</span>
 
 	private String init(String labelLink) {
-<span class="pc bpc" id="L79" title="2 of 4 branches missed.">		if (firstLabel == null &amp;&amp; secondLabel == null) {</span>
+<span class="pc bpc" id="L79" title="1 of 4 branches missed.">		if (firstLabel == null &amp;&amp; secondLabel == null) {</span>
 <span class="fc" id="L80">			final Matcher2 m1 = BOTH_LABELS.matcher(labelLink, 0);</span>
 <span class="pc bpc" id="L81" title="1 of 2 branches missed.">			if (m1.matches()) {</span>
 <span class="nc" id="L82">				firstLabel = m1.group(1);</span>

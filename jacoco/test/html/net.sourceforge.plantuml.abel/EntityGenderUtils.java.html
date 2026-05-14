@@ -111,9 +111,9 @@ import net.sourceforge.plantuml.text.Guillemet;
 	}
 
 	static public EntityGender and(final EntityGender g1, final EntityGender g2) {
-<span class="nc" id="L114">		return new EntityGender() {</span>
+<span class="fc" id="L114">		return new EntityGender() {</span>
 			public boolean contains(Entity test) {
-<span class="nc bnc" id="L116" title="All 4 branches missed.">				return g1.contains(test) &amp;&amp; g2.contains(test);</span>
+<span class="pc bpc" id="L116" title="2 of 4 branches missed.">				return g1.contains(test) &amp;&amp; g2.contains(test);</span>
 			}
 
 			@Override
@@ -137,9 +137,9 @@ import net.sourceforge.plantuml.text.Guillemet;
 	}
 
 	static public EntityGender emptyMethods() {
-<span class="nc" id="L140">		return new EntityGender() {</span>
+<span class="fc" id="L140">		return new EntityGender() {</span>
 			public boolean contains(Entity test) {
-<span class="nc bnc" id="L142" title="All 2 branches missed.">				return test.getBodier().getMethodsToDisplay().size() == 0;</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">				return test.getBodier().getMethodsToDisplay().size() == 0;</span>
 			}
 
 			@Override
@@ -150,9 +150,9 @@ import net.sourceforge.plantuml.text.Guillemet;
 	}
 
 	static public EntityGender emptyFields() {
-<span class="nc" id="L153">		return new EntityGender() {</span>
+<span class="fc" id="L153">		return new EntityGender() {</span>
 			public boolean contains(Entity test) {
-<span class="nc bnc" id="L155" title="All 2 branches missed.">				return test.getBodier().getFieldsToDisplay().size() == 0;</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">				return test.getBodier().getFieldsToDisplay().size() == 0;</span>
 			}
 
 			@Override

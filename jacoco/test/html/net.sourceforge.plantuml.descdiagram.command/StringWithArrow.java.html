@@ -77,9 +77,9 @@ public class StringWithArrow {
 <span class="fc bfc" id="L77" title="All 2 branches covered.">			} else if (completeLabel.startsWith(&quot;&gt; &quot;)) {</span>
 <span class="fc" id="L78">				this.linkArrow = LinkArrow.DIRECT_NORMAL;</span>
 <span class="fc" id="L79">				this.label = StringUtils.trin(completeLabel.substring(2));</span>
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">			} else if (completeLabel.endsWith(&quot; &gt;&quot;)) {</span>
-<span class="nc" id="L81">				this.linkArrow = LinkArrow.DIRECT_NORMAL;</span>
-<span class="nc" id="L82">				this.label = StringUtils.trin(completeLabel.substring(0, completeLabel.length() - 2));</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">			} else if (completeLabel.endsWith(&quot; &gt;&quot;)) {</span>
+<span class="fc" id="L81">				this.linkArrow = LinkArrow.DIRECT_NORMAL;</span>
+<span class="fc" id="L82">				this.label = StringUtils.trin(completeLabel.substring(0, completeLabel.length() - 2));</span>
 <span class="pc bpc" id="L83" title="1 of 2 branches missed.">			} else if (completeLabel.endsWith(&quot; &lt;&quot;)) {</span>
 <span class="nc" id="L84">				this.linkArrow = LinkArrow.BACKWARD;</span>
 <span class="nc" id="L85">				this.label = StringUtils.trin(completeLabel.substring(0, completeLabel.length() - 2));</span>

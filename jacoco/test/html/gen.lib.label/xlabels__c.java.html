@@ -212,7 +212,7 @@ public static int xlhorder(ST_XLabels_t xlp) {
 try {
 <span class="fc" id="L213">    double maxx = xlp.params.bb.UR.x;</span>
 <span class="fc" id="L214">    double maxy = xlp.params.bb.UR.y;</span>
-<span class="pc bpc" id="L215" title="1 of 2 branches missed.">    return floorLog2(maxx &gt; maxy ? (int)maxx : (int)maxy) + 1;</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">    return floorLog2(maxx &gt; maxy ? (int)maxx : (int)maxy) + 1;</span>
 } finally {
 <span class="fc" id="L217">LEAVING(&quot;uvnzthcpf4xiih05gxie2rx1&quot;,&quot;xlhorder&quot;);</span>
 }
@@ -272,7 +272,7 @@ try {
 <span class="fc bfc" id="L272" title="All 2 branches covered."> 	r.boundary[0] &gt; s.boundary[0] ? r.boundary[0] : s.boundary[0];</span>
      /* upmost bottom edge */
      iminy =
-<span class="pc bpc" id="L275" title="1 of 2 branches missed."> 	r.boundary[1] &gt; s.boundary[1] ? r.boundary[1] : s.boundary[1];</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered."> 	r.boundary[1] &gt; s.boundary[1] ? r.boundary[1] : s.boundary[1];</span>
      /* leftmost right edge */
      imaxx =
 <span class="fc bfc" id="L278" title="All 2 branches covered."> 	r.boundary[2] &lt; s.boundary[2] ? r.boundary[2] : s.boundary[2];</span>
@@ -624,8 +624,8 @@ private static ST_BestPos_t xladjust_(ST_XLabels_t xlp, ST_object_t objp) {
      /*bottom */
 <span class="fc" id="L625">     lp.get__(0).pos.y = objp.pos.y - lp.get__(0).sz.y;</span>
 <span class="fc" id="L626">     nbp.___(xlintersections(xlp, objp, intrsx));</span>
-<span class="pc bpc" id="L627" title="1 of 2 branches missed.">     if (nbp.n == 0)</span>
-<span class="nc" id="L628"> 	return nbp;</span>
+<span class="fc bfc" id="L627" title="All 2 branches covered.">     if (nbp.n == 0)</span>
+<span class="fc" id="L628"> 	return nbp;</span>
 <span class="pc bpc" id="L629" title="1 of 2 branches missed.">     if (nbp.area &lt; bp.area)</span>
 <span class="nc" id="L630"> 	bp.___(nbp);</span>
      /*x mid */
