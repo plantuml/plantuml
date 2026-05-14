@@ -2307,11 +2307,6 @@ Total Classes: 7
 "net.sourceforge.plantuml.openiconic" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.openiconic" --> "net.sourceforge.plantuml.style"
 
-class "net.sourceforge.plantuml.openiconic.data" %lighten("red", 100) {
-Total Classes: 1
-}
-"net.sourceforge.plantuml.openiconic.data" --> "java.lang"
-
 class "net.sourceforge.plantuml.packetdiag" %lighten("red", 94) {
 Total Classes: 6
 }

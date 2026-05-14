@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.klimt.creole.Parser;
 import net.sourceforge.plantuml.klimt.creole.atom.Atom;
 import net.sourceforge.plantuml.klimt.creole.atom.AtomHorizontalTexts;
 import net.sourceforge.plantuml.klimt.creole.atom.AtomImg;
-import net.sourceforge.plantuml.klimt.creole.atom.AtomOpenIcon;
+import net.sourceforge.plantuml.klimt.creole.atom.AtomOpenIconic;
 import net.sourceforge.plantuml.klimt.creole.atom.AtomSprite;
 import net.sourceforge.plantuml.klimt.creole.atom.AtomVerticalTexts;
 import net.sourceforge.plantuml.klimt.creole.command.Splitter;
@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.ImgValign;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
-import net.sourceforge.plantuml.openiconic.OpenIcon;
+import net.sourceforge.plantuml.openiconic.OpenIconic;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.url.Url;
 
@@ -111,10 +111,10 @@ import net.sourceforge.plantuml.url.Url;
 <span class="nc" id="L111">				throw new UnsupportedOperationException();</span>
 
 <span class="nc bnc" id="L113" title="All 2 branches missed.">			if (valOpenicon != null) {</span>
-<span class="nc" id="L114">				final OpenIcon openIcon = OpenIcon.retrieve(valOpenicon);</span>
+<span class="nc" id="L114">				final OpenIconic openIcon = OpenIconic.retrieve(valOpenicon);</span>
 <span class="nc bnc" id="L115" title="All 2 branches missed.">				if (openIcon != null) {</span>
 <span class="nc" id="L116">					final double scale = Parser.getScale(m.group(3), 1);</span>
-<span class="nc" id="L117">					result.add(new AtomOpenIcon(null, scale, openIcon, fontConfiguration, url));</span>
+<span class="nc" id="L117">					result.add(new AtomOpenIconic(null, scale, openIcon, fontConfiguration, url));</span>
 				}
 <span class="nc bnc" id="L119" title="All 2 branches missed.">			} else if (valSprite != null) {</span>
 				// Note: sprites are probably not working in URL

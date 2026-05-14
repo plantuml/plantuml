@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OpenIconic.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.openiconic</a> &gt; <span class="el_source">OpenIconic.java</span></div><h1>OpenIconic.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.openiconic;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+// ::comment when JAVA8
+import org.teavm.jso.JSBody;
+// ::done
+
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
+import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
+
+public class OpenIconic {
+
+<span class="nc" id="L67">	private final static Pattern patternTranslate = Pattern.compile(&quot;translate\\((\\d+)\\s*(\\d*)\\)&quot;);</span>
+
+	private SvgPath svgPath;
+<span class="nc" id="L70">	private List&lt;String&gt; rawData = new ArrayList&lt;&gt;();</span>
+	private final String id;
+
+	public static OpenIconic retrieve(String name) {
+		// ::comment when JAVA8
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L76">			return retrieveFromJs(name);</span>
+		// ::done
+<span class="nc" id="L78">		final InputStream is = getResource(name);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L80">			return null;</span>
+
+		try {
+<span class="nc" id="L83">			return new OpenIconic(is, name);</span>
+<span class="nc" id="L84">		} catch (IOException e) {</span>
+<span class="nc" id="L85">			Logme.error(e);</span>
+<span class="nc" id="L86">			return null;</span>
+		}
+	}
+
+	// ::comment when JAVA8
+	private static OpenIconic retrieveFromJs(String name) {
+<span class="nc" id="L92">		loadOpeniconicJsIfNeeded();</span>
+<span class="nc" id="L93">		final String pathLine = jsGetPathLine(name);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (pathLine == null)</span>
+<span class="nc" id="L95">			return null;</span>
+<span class="nc" id="L96">		final String svg = &quot;&lt;svg xmlns=\&quot;http://www.w3.org/2000/svg\&quot; width=\&quot;8\&quot; height=\&quot;8\&quot; viewBox=\&quot;0 0 8 8\&quot;&gt;\n&quot;</span>
+				+ pathLine + &quot;\n&quot; + &quot;&lt;/svg&gt;\n&quot;;
+
+<span class="nc" id="L99">		final InputStream is = new ByteArrayInputStream(svg.getBytes(StandardCharsets.UTF_8));</span>
+		try {
+<span class="nc" id="L101">			return new OpenIconic(is, name);</span>
+<span class="nc" id="L102">		} catch (IOException e) {</span>
+<span class="nc" id="L103">			Logme.error(e);</span>
+<span class="nc" id="L104">			return null;</span>
+		}
+	}
+
+<span class="nc" id="L108">	private static volatile boolean openiconicJsLoaded = false;</span>
+
+	private static void loadOpeniconicJsIfNeeded() {
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (openiconicJsLoaded)</span>
+<span class="nc" id="L112">			return;</span>
+<span class="nc" id="L113">		TeaVmScriptLoader.loadOnceSync(&quot;openiconic.js&quot;);</span>
+<span class="nc" id="L114">		openiconicJsLoaded = true;</span>
+<span class="nc" id="L115">	}</span>
+
+	@JSBody(params = &quot;name&quot;, script = &quot;var o = window.PLANTUML_OPENICONIC;&quot; + &quot;return (o &amp;&amp; o[name]) ? o[name] : null;&quot;)
+	private static native String jsGetPathLine(String name);
+	// ::done
+
+	OpenIconic(String name) throws IOException {
+<span class="nc" id="L122">		this(getResource(name), name);</span>
+<span class="nc" id="L123">	}</span>
+
+	private static InputStream getResource(String name) {
+<span class="nc" id="L126">		return OpenIconic.class.getResourceAsStream(&quot;/openiconic/&quot; + name + &quot;.svg&quot;);</span>
+	}
+
+<span class="nc" id="L129">	private OpenIconic(InputStream is, String id) throws IOException {</span>
+<span class="nc" id="L130">		this.id = id;</span>
+<span class="nc" id="L131">		UTranslate translate = UTranslate.none();</span>
+<span class="nc" id="L132">		try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {</span>
+<span class="nc" id="L133">			String s = null;</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">			while ((s = br.readLine()) != null) {</span>
+<span class="nc" id="L135">				rawData.add(s);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">				if (s.contains(&quot;transform=\&quot;&quot;))</span>
+<span class="nc" id="L137">					translate = getTranslate(s);</span>
+			}
+		}
+<span class="nc bnc" id="L140" title="All 4 branches missed.">		if (rawData.size() != 3 &amp;&amp; rawData.size() != 4)</span>
+<span class="nc" id="L141">			throw new IllegalStateException();</span>
+
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		for (String s : rawData)</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			if (s.contains(&quot;&lt;path&quot;)) {</span>
+<span class="nc" id="L145">				final int x1 = s.indexOf('&quot;');</span>
+<span class="nc" id="L146">				final int x2 = s.indexOf('&quot;', x1 + 1);</span>
+<span class="nc" id="L147">				svgPath = new SvgPath(s.substring(x1 + 1, x2), translate);</span>
+			}
+<span class="nc" id="L149">	}</span>
+
+	private static UTranslate getTranslate(String s) {
+<span class="nc" id="L152">		final Matcher matcher = patternTranslate.matcher(s);</span>
+
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (matcher.find()) {</span>
+<span class="nc" id="L155">			final String xStr = matcher.group(1);</span>
+<span class="nc" id="L156">			final String yStr = matcher.group(2);</span>
+<span class="nc" id="L157">			final int x = Integer.parseInt(xStr);</span>
+<span class="nc bnc" id="L158" title="All 4 branches missed.">			final int y = (yStr == null || yStr.isEmpty()) ? 0 : Integer.parseInt(yStr);</span>
+
+<span class="nc" id="L160">			return new UTranslate(x, y);</span>
+		}
+
+<span class="nc" id="L163">		return UTranslate.none();</span>
+	}
+
+//	void saveCopy(SFile fnew) throws IOException {
+//		try (PrintWriter pw = fnew.createPrintWriter()) {
+//			pw.println(rawData.get(0));
+//			pw.println(svgPath.toSvg());
+//			pw.println(rawData.get(rawData.size() - 1));
+//		}
+//	}
+
+	private XDimension2D getDimension(double factor) {
+<span class="nc" id="L175">		final String width = getNumber(rawData.get(0), &quot;width&quot;);</span>
+<span class="nc" id="L176">		final String height = getNumber(rawData.get(0), &quot;height&quot;);</span>
+<span class="nc" id="L177">		return new XDimension2D(Integer.parseInt(width) * factor, Integer.parseInt(height) * factor);</span>
+	}
+
+	private String getNumber(String s, String arg) {
+<span class="nc" id="L181">		int x1 = s.indexOf(arg);</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		if (x1 == -1)</span>
+<span class="nc" id="L183">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L185">		x1 = s.indexOf(&quot;\&quot;&quot;, x1);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (x1 == -1)</span>
+<span class="nc" id="L187">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L189">		final int x2 = s.indexOf(&quot;\&quot;&quot;, x1 + 1);</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		if (x2 == -1)</span>
+<span class="nc" id="L191">			throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L193">		return s.substring(x1 + 1, x2);</span>
+	}
+
+	public TextBlock asTextBlock(final HColor color, final double factor) {
+<span class="nc" id="L197">		return new TextBlockMemoized() {</span>
+			public void drawU(UGraphic ug) {
+<span class="nc" id="L199">				final HColor textColor = color.getAppropriateColor(ug.getParam().getBackcolor());</span>
+<span class="nc" id="L200">				ug = ug.apply(textColor).apply(textColor.bg()).apply(UStroke.withThickness(0));</span>
+<span class="nc" id="L201">				svgPath.drawMe(ug, factor);</span>
+<span class="nc" id="L202">			}</span>
+
+			@Override
+			public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="nc" id="L206">				return getDimension(factor);</span>
+			}
+		};
+	}
+
+//	public static void main(String[] args) throws IOException {
+//		final String outputFile = (args.length &gt; 0) ? args[0] : &quot;src/main/resources/teavm/openiconic.js&quot;;
+//
+//		try (PrintWriter pw = new PrintWriter(new FileWriter(outputFile))) {
+//			pw.println(&quot;// openiconic.js - Generated by OpenIconic.main()&quot;);
+//			pw.println(&quot;// Do not edit manually&quot;);
+//			pw.println(&quot;(function () {&quot;);
+//			pw.println(&quot;window.PLANTUML_OPENICONIC = window.PLANTUML_OPENICONIC || {};&quot;);
+//			pw.println();
+//
+//			final InputStream is = OpenIconic.class.getResourceAsStream(&quot;/openiconic/all.txt&quot;);
+//			if (is == null)
+//				throw new IOException(&quot;Cannot find /openiconic/all.txt resource&quot;);
+//
+//			int count = 0;
+//			try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+//				String name;
+//				while ((name = br.readLine()) != null) {
+//					name = name.trim();
+//					if (name.isEmpty())
+//						continue;
+//
+//					final String pathLine = readPathLine(name);
+//					if (pathLine == null) {
+//						System.err.println(&quot;WARNING: No &lt;path&gt; found for &quot; + name);
+//						continue;
+//					}
+//					pw.println(&quot;window.PLANTUML_OPENICONIC[\&quot;&quot; + name + &quot;\&quot;]=\&quot;&quot; + escapeForJs(pathLine) + &quot;\&quot;;&quot;);
+//					count++;
+//				}
+//			}
+//
+//			pw.println();
+//			pw.println(&quot;})();&quot;);
+//			System.out.println(&quot;Generated &quot; + outputFile + &quot; with &quot; + count + &quot; icons.&quot;);
+//		}
+//	}
+//
+//	private static String readPathLine(String name) {
+//		final InputStream svgStream = OpenIconic.class.getResourceAsStream(&quot;/openiconic/&quot; + name + &quot;.svg&quot;);
+//		if (svgStream == null)
+//			return null;
+//
+//		try (BufferedReader br = new BufferedReader(new InputStreamReader(svgStream))) {
+//			final StringBuilder sb = new StringBuilder();
+//			boolean inPath = false;
+//			String line;
+//			while ((line = br.readLine()) != null) {
+//				final String trimmed = line.trim();
+//				if (!inPath &amp;&amp; trimmed.contains(&quot;&lt;path&quot;)) {
+//					inPath = true;
+//					sb.append(trimmed);
+//					if (trimmed.endsWith(&quot;/&gt;&quot;) || trimmed.endsWith(&quot;&lt;/path&gt;&quot;))
+//						return sb.toString();
+//				} else if (inPath) {
+//					sb.append(' ').append(trimmed);
+//					if (trimmed.endsWith(&quot;/&gt;&quot;) || trimmed.endsWith(&quot;&lt;/path&gt;&quot;))
+//						return sb.toString();
+//				}
+//			}
+//			return sb.length() == 0 ? null : sb.toString();
+//		} catch (IOException e) {
+//			System.err.println(&quot;ERROR reading &quot; + name + &quot;.svg: &quot; + e.getMessage());
+//			return null;
+//		}
+//	}
+//
+//	private static String escapeForJs(String s) {
+//		return s.replace(&quot;\\&quot;, &quot;\\\\&quot;).replace(&quot;\&quot;&quot;, &quot;\\\&quot;&quot;).replace(&quot;\n&quot;, &quot;\\n&quot;).replace(&quot;\r&quot;, &quot;&quot;);
+//	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

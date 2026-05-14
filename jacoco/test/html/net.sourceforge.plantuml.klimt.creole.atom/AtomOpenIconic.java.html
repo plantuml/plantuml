@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AtomOpenIcon.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.creole.atom</a> &gt; <span class="el_source">AtomOpenIcon.java</span></div><h1>AtomOpenIcon.java</h1><pre class="source lang-java linenums">/* ========================================================================
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AtomOpenIconic.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.creole.atom</a> &gt; <span class="el_source">AtomOpenIconic.java</span></div><h1>AtomOpenIconic.java</h1><pre class="source lang-java linenums">/* ========================================================================
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
@@ -42,26 +42,26 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
-import net.sourceforge.plantuml.openiconic.OpenIcon;
+import net.sourceforge.plantuml.openiconic.OpenIconic;
 import net.sourceforge.plantuml.url.Url;
 
-public class AtomOpenIcon extends AbstractAtom implements Atom {
+public class AtomOpenIconic extends AbstractAtom implements Atom {
 
-	private final OpenIcon openIcon;
+	private final OpenIconic openIconic;
 	private final double factor;
 	private final Url url;
 	private final HColor color;
 
-	public AtomOpenIcon(HColor newColor, double scale, OpenIcon openIcon, FontConfiguration fontConfiguration,
+	public AtomOpenIconic(HColor newColor, double scale, OpenIconic openIconic, FontConfiguration fontConfiguration,
 <span class="nc" id="L56">			Url url) {</span>
 <span class="nc" id="L57">		this.url = url;</span>
-<span class="nc" id="L58">		this.openIcon = openIcon;</span>
+<span class="nc" id="L58">		this.openIconic = openIconic;</span>
 <span class="nc" id="L59">		this.factor = scale * fontConfiguration.getSize2D() / 12.0;</span>
 <span class="nc bnc" id="L60" title="All 2 branches missed.">		this.color = newColor == null ? fontConfiguration.getColor() : newColor;</span>
 <span class="nc" id="L61">	}</span>
 
 	private TextBlock asTextBlock() {
-<span class="nc" id="L64">		return TextBlockUtils.withMargin(openIcon.asTextBlock(color, factor), 1, 0);</span>
+<span class="nc" id="L64">		return TextBlockUtils.withMargin(openIconic.asTextBlock(color, factor), 1, 0);</span>
 	}
 
 	@Override
