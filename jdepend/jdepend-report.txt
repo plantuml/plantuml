@@ -10890,12 +10890,12 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 65
-    Concrete Classes: 56
+    Total Classes: 64
+    Concrete Classes: 55
     Abstract Classes: 9
 
     Ca: 21
-    Ce: 35
+    Ce: 34
 
     A: 0.14
     I: 0.62
@@ -10952,7 +10952,6 @@ Concrete Classes:
     net.sourceforge.plantuml.svek.IEntityImageUtils$1
     net.sourceforge.plantuml.svek.IEntityImageUtils$1$1
     net.sourceforge.plantuml.svek.InnerActivity
-    net.sourceforge.plantuml.svek.InnerStateAutonom
     net.sourceforge.plantuml.svek.Kal
     net.sourceforge.plantuml.svek.Kal$1
     net.sourceforge.plantuml.svek.LineOfSegments
@@ -11004,7 +11003,6 @@ Depends Upon:
     net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.teavm.browser
     net.sourceforge.plantuml.text
-    net.sourceforge.plantuml.url
     net.sourceforge.plantuml.utils
 
 Used By:
@@ -12117,7 +12115,7 @@ Stats:
     Concrete Classes: 4
     Abstract Classes: 0
 
-    Ca: 30
+    Ca: 29
     Ce: 4
 
     A: 0
@@ -12166,7 +12164,6 @@ Used By:
     net.sourceforge.plantuml.sequencediagram.command
     net.sourceforge.plantuml.sequencediagram.graphic
     net.sourceforge.plantuml.statediagram.command
-    net.sourceforge.plantuml.svek
     net.sourceforge.plantuml.svek.image
     net.sourceforge.plantuml.teavm
 
@@ -14911,7 +14908,7 @@ net.sourceforge.plantuml.stereo,3,0,36,9,0,0.2,0.8,1
 net.sourceforge.plantuml.style,22,7,69,17,0.32,0.2,0.48,1
 net.sourceforge.plantuml.style.parser,4,0,3,4,0,0.57,0.43,1
 net.sourceforge.plantuml.sudoku,4,1,0,8,0.25,1,0.25,1
-net.sourceforge.plantuml.svek,65,9,21,35,0.14,0.62,0.24,1
+net.sourceforge.plantuml.svek,64,9,21,34,0.14,0.62,0.24,1
 net.sourceforge.plantuml.svek.extremity,55,4,3,11,0.07,0.79,0.14,1
 net.sourceforge.plantuml.svek.image,37,2,12,23,0.05,0.66,0.29,1
 net.sourceforge.plantuml.svg.parser,11,1,1,13,0.09,0.93,0.02,1
@@ -14930,7 +14927,7 @@ net.sourceforge.plantuml.tim.iterator,16,3,1,8,0.19,0.89,0.08,1
 net.sourceforge.plantuml.timingdiagram,25,4,2,25,0.16,0.93,0.09,1
 net.sourceforge.plantuml.timingdiagram.command,13,1,1,10,0.08,0.91,0.01,1
 net.sourceforge.plantuml.timingdiagram.graphic,17,3,1,15,0.18,0.94,0.11,1
-net.sourceforge.plantuml.url,4,0,30,4,0,0.12,0.88,1
+net.sourceforge.plantuml.url,4,0,29,4,0,0.12,0.88,1
 net.sourceforge.plantuml.utils,18,5,61,21,0.28,0.26,0.47,1
 net.sourceforge.plantuml.version,7,1,6,14,0.14,0.7,0.16,1
 net.sourceforge.plantuml.vizjs,7,0,0,6,0,1,0,1

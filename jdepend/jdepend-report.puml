@@ -3076,7 +3076,7 @@ Total Classes: 4
 "net.sourceforge.plantuml.sudoku" --> "net.sourceforge.plantuml.regex"
 
 class "net.sourceforge.plantuml.svek" %lighten("red", 76) {
-Total Classes: 65
+Total Classes: 64
 }
 "net.sourceforge.plantuml.svek" --> "java.io"
 "net.sourceforge.plantuml.svek" --> "java.lang"
@@ -3111,7 +3111,6 @@ Total Classes: 65
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.teavm.browser"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.text"
-"net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.svek.extremity" %lighten("red", 86) {

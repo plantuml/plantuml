@@ -15905,11 +15905,11 @@
 
         <Package name="net.sourceforge.plantuml.svek">
             <Stats>
-                <TotalClasses>65</TotalClasses>
-                <ConcreteClasses>56</ConcreteClasses>
+                <TotalClasses>64</TotalClasses>
+                <ConcreteClasses>55</ConcreteClasses>
                 <AbstractClasses>9</AbstractClasses>
                 <Ca>21</Ca>
-                <Ce>35</Ce>
+                <Ce>34</Ce>
                 <A>0.14</A>
                 <I>0.62</I>
                 <D>0.24</D>
@@ -16064,9 +16064,6 @@
                 <Class sourceFile="InnerActivity.java">
                     net.sourceforge.plantuml.svek.InnerActivity
                 </Class>
-                <Class sourceFile="InnerStateAutonom.java">
-                    net.sourceforge.plantuml.svek.InnerStateAutonom
-                </Class>
                 <Class sourceFile="Kal.java">
                     net.sourceforge.plantuml.svek.Kal
                 </Class>
@@ -16151,7 +16148,6 @@
                 <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.teavm.browser</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
-                <Package>net.sourceforge.plantuml.url</Package>
                 <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
@@ -18020,7 +18016,7 @@
                 <TotalClasses>4</TotalClasses>
                 <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>30</Ca>
+                <Ca>29</Ca>
                 <Ce>4</Ce>
                 <A>0</A>
                 <I>0.12</I>
@@ -18081,7 +18077,6 @@
                 <Package>net.sourceforge.plantuml.sequencediagram.command</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.statediagram.command</Package>
-                <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
             </UsedBy>
