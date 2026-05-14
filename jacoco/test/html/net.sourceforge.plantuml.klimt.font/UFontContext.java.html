@@ -44,14 +44,12 @@ import net.sourceforge.plantuml.klimt.shape.UText;
 
 <span class="fc" id="L45">	EPS, SVG, G2D, TIKZ;</span>
 
-	// ::comment when __HAXE__ or __TEAVM__
 	public TextLayout createTextLayout(UText shape) {
-<span class="fc" id="L49">		return createTextLayout(shape.getFontConfiguration().getFont(), shape.getText());</span>
+<span class="fc" id="L48">		return createTextLayout(shape.getFontConfiguration().getFont(), shape.getText());</span>
 	}
 
 	public TextLayout createTextLayout(UFont font, String text) {
-<span class="fc" id="L53">		return new TextLayout(text, UFontImpl.getUnderlayingFont(font, text), FileFormat.gg.getFontRenderContext());</span>
+<span class="fc" id="L52">		return new TextLayout(text, UFontImpl.getUnderlayingFont(font, text), FileFormat.gg.getFontRenderContext());</span>
 	}
-	// ::done
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -101,7 +101,7 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 <span class="fc" id="L101">	PNG(&quot;png&quot;, &quot;image/png&quot;), //</span>
 <span class="fc" id="L102">	PNG_EMPTY(&quot;png-empty&quot;, &quot;image/png&quot;), //</span>
 <span class="fc" id="L103">	RAW(&quot;raw&quot;, &quot;image/raw&quot;), //</span>
-<span class="fc" id="L104">	SVG_FIXED(&quot;svg&quot;, &quot;image/svg+xml&quot;), //</span>
+<span class="fc" id="L104">	SVG_DETERMINISTIC(&quot;svg&quot;, &quot;image/svg+xml&quot;), //</span>
 <span class="fc" id="L105">	SVG(&quot;svg&quot;, &quot;image/svg+xml&quot;); //</span>
 
 	private final String mimeType;
@@ -146,7 +146,7 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 <span class="pc bpc" id="L146" title="1 of 2 branches missed.">			if (this == BRAILLE_PNG)</span>
 <span class="nc" id="L147">				return &quot;.braille.png&quot;;</span>
 
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">			if (this == SVG_FIXED)</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">			if (this == SVG_DETERMINISTIC)</span>
 <span class="nc" id="L150">				return &quot;.svg&quot;;</span>
 
 <span class="fc bfc" id="L152" title="All 2 branches covered.">			if (this == EPS_TEXT)</span>
@@ -189,7 +189,7 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 <span class="fc bfc" id="L189" title="All 2 branches covered.">		if (this == SVG)</span>
 <span class="fc" id="L190">			return getSvgStringBounder(charSizeHack);</span>
 
-<span class="fc bfc" id="L192" title="All 4 branches covered.">		if (this == SVG_FIXED || this == LATEX_FIXED)</span>
+<span class="fc bfc" id="L192" title="All 4 branches covered.">		if (this == SVG_DETERMINISTIC || this == LATEX_FIXED)</span>
 <span class="fc" id="L193">			return new StringBounderFixed(this);</span>
 
 <span class="fc" id="L195">		return getNormalStringBounder();</span>

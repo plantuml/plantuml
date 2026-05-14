@@ -243,7 +243,7 @@ public class TextBlockExporter12026 {
 <span class="fc" id="L243">			return createUGraphicPNG(scaleFactor, dim, fileFormatOption.getWatermark(),</span>
 <span class="fc" id="L244">					fileFormatOption.getFileFormat());</span>
 		case SVG:
-		case SVG_FIXED:
+		case SVG_DETERMINISTIC:
 		case NULL:
 <span class="fc" id="L248">			return createUGraphicSVG(scaleFactor, dim, p);</span>
 		case EPS:
@@ -299,7 +299,7 @@ public class TextBlockExporter12026 {
 <span class="fc" id="L299">			option = option.withSvgDimensionStyle(skinParam.svgDimensionStyle());</span>
 		}
 
-<span class="fc" id="L302">		return UGraphicSvg.build(option, false, seed, stringBounder);</span>
+<span class="fc" id="L302">		return UGraphicSvg.build(option, false, seed, stringBounder, fileFormatOption.getFileFormat());</span>
 	}
 
 	private UGraphic createUGraphicPNG(double scaleFactor, XDimension2D dim, String watermark, FileFormat format) {

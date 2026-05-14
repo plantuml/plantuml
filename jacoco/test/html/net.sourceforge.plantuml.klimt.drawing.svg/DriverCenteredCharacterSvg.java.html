@@ -35,7 +35,9 @@
 package net.sourceforge.plantuml.klimt.drawing.svg;
 
 import java.awt.font.TextLayout;
+import java.util.HashMap;
 
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -45,22 +47,39 @@ import net.sourceforge.plantuml.klimt.font.UFontContext;
 import net.sourceforge.plantuml.klimt.font.UnusedSpace;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
 
-<span class="fc" id="L48">public class DriverCenteredCharacterSvg implements UDriver&lt;UCenteredCharacter, SvgGraphics&gt; {</span>
+public class DriverCenteredCharacterSvg implements UDriver&lt;UCenteredCharacter, SvgGraphics&gt; {
+
+	private final FileFormat fileFormat;
+
+<span class="fc" id="L54">	public DriverCenteredCharacterSvg(FileFormat fileFormat) {</span>
+<span class="fc" id="L55">		this.fileFormat = fileFormat;</span>
+<span class="fc" id="L56">	}</span>
 
 	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param,
 			SvgGraphics svg) {
-<span class="fc" id="L52">		final char c = characterCircled.getChar();</span>
-<span class="fc" id="L53">		final UFont font = characterCircled.getFont();</span>
-<span class="fc" id="L54">		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);</span>
+<span class="fc" id="L60">		final char c = characterCircled.getChar();</span>
+<span class="fc" id="L61">		final HColor textColor = param.getColor();</span>
 
-<span class="fc" id="L56">		final double xpos = x - unusedSpace.getCenterX() - 0.5;</span>
-<span class="fc" id="L57">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
+		// For deterministic SVG output (used by tests), avoid rendering the glyph as a
+		// vector path derived from the system font (which differs across OS/JVM).
+		// Instead, emit a simple &lt;text&gt; element with a fixed font-family.
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (fileFormat == FileFormat.SVG_DETERMINISTIC) {</span>
+<span class="fc" id="L67">			svg.setFillColor(textColor.toSvg(mapper));</span>
+<span class="fc" id="L68">			svg.text(String.valueOf(c), x - 5, y + 5, &quot;monospace&quot;, 14, null, null, null, 0,</span>
+					new HashMap&lt;String, String&gt;(), null);
+<span class="fc" id="L70">			return;</span>
+		}
 
-<span class="fc" id="L59">		final TextLayout t = UFontContext.SVG.createTextLayout(font, &quot;&quot; + c);</span>
-<span class="fc" id="L60">		final HColor textColor = param.getColor();</span>
-<span class="fc" id="L61">		svg.setFillColor(textColor.toSvg(mapper));</span>
+<span class="nc" id="L73">		final UFont font = characterCircled.getFont();</span>
+<span class="nc" id="L74">		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);</span>
 
-<span class="fc" id="L63">		svg.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));</span>
-<span class="fc" id="L64">	}</span>
+<span class="nc" id="L76">		final double xpos = x - unusedSpace.getCenterX() - 0.5;</span>
+<span class="nc" id="L77">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
+
+<span class="nc" id="L79">		final TextLayout t = UFontContext.SVG.createTextLayout(font, &quot;&quot; + c);</span>
+<span class="nc" id="L80">		svg.setFillColor(textColor.toSvg(mapper));</span>
+
+<span class="nc" id="L82">		svg.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));</span>
+<span class="nc" id="L83">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

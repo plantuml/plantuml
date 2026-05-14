@@ -125,34 +125,27 @@ public class NaturalGanttCommand implements Command&lt;GanttDiagram&gt; {
 	public CommandControl isValid(BlocLines lines) {
 <span class="fc" id="L126">		final TextNavigator tn = TextNavigator.build(lines.getFirst().getString());</span>
 <span class="fc" id="L127">		VerbPhraseAction.skipSpaces(tn);</span>
-<span class="fc" id="L128">		System.out.println(&quot;1 TN = &quot; + tn);</span>
 
-<span class="fc" id="L130">		final UMatcher matcherSubject = subject.toUnicodeBracketedExpressionSubject().match(tn);</span>
-<span class="fc" id="L131">		final String v1 = matcherSubject.getAcceptedMatch();</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (v1.length() == 0)</span>
-<span class="fc" id="L133">			return CommandControl.NOT_OK;</span>
+<span class="fc" id="L129">		final UMatcher matcherSubject = subject.toUnicodeBracketedExpressionSubject().match(tn);</span>
+<span class="fc" id="L130">		final String v1 = matcherSubject.getAcceptedMatch();</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (v1.length() == 0)</span>
+<span class="fc" id="L132">			return CommandControl.NOT_OK;</span>
 
-<span class="fc" id="L135">		tn.jump(v1.length());</span>
-<span class="fc" id="L136">		VerbPhraseAction.skipSpaces(tn);</span>
-<span class="fc" id="L137">		System.out.println(&quot;2 TN = &quot; + tn);</span>
+<span class="fc" id="L134">		tn.jump(v1.length());</span>
+<span class="fc" id="L135">		VerbPhraseAction.skipSpaces(tn);</span>
 
-<span class="fc bfc" id="L139" title="All 2 branches covered.">		for (VerbPhraseAction verbPhrase : getVerbPhrases()) {</span>
-<span class="fc" id="L140">			System.out.println(&quot;3 VP = &quot; + verbPhrase);</span>
-<span class="fc bfc" id="L141" title="All 2 branches covered.">			if (verbPhrase.check(tn)) {</span>
-<span class="fc" id="L142">				System.out.println(&quot;4 OK! &quot; + subject.getClass() + &quot; &quot; + verbPhrase.getClass());</span>
-<span class="fc" id="L143">				return CommandControl.OK;</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		for (VerbPhraseAction verbPhrase : getVerbPhrases()) {</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">			if (verbPhrase.check(tn)) {</span>
+<span class="fc" id="L139">				return CommandControl.OK;</span>
 			}
-<span class="fc" id="L145">		}</span>
+<span class="fc" id="L141">		}</span>
 
-		// TODO: manage &quot;AND&quot;
-
-<span class="fc" id="L149">		System.out.println(&quot;4 NOT_OK!&quot;);</span>
-<span class="fc" id="L150">		return CommandControl.NOT_OK;</span>
+<span class="fc" id="L143">		return CommandControl.NOT_OK;</span>
 	}
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
 	}
 
 }

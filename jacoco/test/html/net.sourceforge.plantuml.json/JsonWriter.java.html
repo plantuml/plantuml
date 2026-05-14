@@ -114,14 +114,14 @@ class JsonWriter {
 
 	private static char[] getReplacementChars(char ch) {
 <span class="fc bfc" id="L116" title="All 2 branches covered.">		if (ch &gt; '\\') {</span>
-<span class="pc bpc" id="L117" title="1 of 4 branches missed.">			if (ch &lt; '\u2028' || ch &gt; '\u2029') {</span>
+<span class="pc bpc" id="L117" title="3 of 4 branches missed.">			if (ch &lt; '\u2028' || ch &gt; '\u2029') {</span>
 				// The lower range contains 'a' .. 'z'. Only 2 checks required.
 <span class="fc" id="L119">				return null;</span>
 			}
 <span class="nc bnc" id="L121" title="All 2 branches missed.">			return ch == '\u2028' ? UNICODE_2028_CHARS : UNICODE_2029_CHARS;</span>
 		}
-<span class="fc bfc" id="L123" title="All 2 branches covered.">		if (ch == '\\') {</span>
-<span class="fc" id="L124">			return BS_CHARS;</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (ch == '\\') {</span>
+<span class="nc" id="L124">			return BS_CHARS;</span>
 		}
 <span class="fc bfc" id="L126" title="All 2 branches covered.">		if (ch &gt; '&quot;') {</span>
 			// This range contains '0' .. '9' and 'A' .. 'Z'. Need 3 checks to get here.
@@ -133,14 +133,14 @@ class JsonWriter {
 <span class="fc bfc" id="L133" title="All 2 branches covered.">		if (ch &gt; CONTROL_CHARACTERS_END) {</span>
 <span class="fc" id="L134">			return null;</span>
 		}
-<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (ch == '\n') {</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (ch == '\n') {</span>
 <span class="fc" id="L137">			return LF_CHARS;</span>
 		}
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (ch == '\r') {</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (ch == '\r') {</span>
 <span class="nc" id="L140">			return CR_CHARS;</span>
 		}
-<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if (ch == '\t') {</span>
-<span class="fc" id="L143">			return TAB_CHARS;</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (ch == '\t') {</span>
+<span class="nc" id="L143">			return TAB_CHARS;</span>
 		}
 <span class="nc" id="L145">		return new char[] { '\\', 'u', '0', '0', HEX_DIGITS[ch &gt;&gt; 4 &amp; 0x000f], HEX_DIGITS[ch &amp; 0x000f] };</span>
 	}
