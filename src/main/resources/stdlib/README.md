@@ -12,5 +12,5 @@ For the source of the Standard Library (`stdlib`):
 
 ### Format
 For the compressed format (`.repx`), see this part of code:
- - [src/net/sourceforge/plantuml/preproc/Stdlib.java](https://github.com/plantuml/plantuml/blob/master/src/net/sourceforge/plantuml/preproc/Stdlib.java)
+ - [net/sourceforge/plantuml/preproc/Stdlib.java](https://github.com/plantuml/plantuml/blob/master/src/main/java/net/sourceforge/plantuml/preproc/Stdlib.java)
 
