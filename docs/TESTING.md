@@ -14,13 +14,9 @@ To run the tests included with the project, use the following command:
 gradle test
 ```
 
-### Run a specific test, for only one licence
+### Run a specific test
 
-Comment those lines on [`settings.gradle.kts`](../settings.gradle.kts):
-
-https://github.com/plantuml/plantuml/blob/a327d636a7fcc7f05a88b796a2838da16e2ba3e3/settings.gradle.kts#L12-L16
-
-Then you can run a specific test _(e.g. the `aTestClass` Class)_:
+You can run a specific test _(e.g. the `aTestClass` Class)_:
 ```sh
 gradle test --tests aTestClass
 ```
@@ -33,17 +29,17 @@ If you have any changes to contribute, please submit a pull request through the 
 
 ## Test Directory Architecture
 
-- [test/](../test)
-  - [com/plantuml/wasm](../test/com/plantuml/wasm)
-  - [net/sourceforge/plantuml](../test/net/sourceforge/plantuml)
-  - [nonreg](../test/nonreg)
+- [test/java/](../src/test/java)
+  - [com/plantuml/wasm](../src/test/java/com/plantuml/wasm)
+  - [net/sourceforge/plantuml](../src/test/java/net/sourceforge/plantuml)
+  - [nonreg](../src/test/java/nonreg)
 
 ```mermaid
 %%{ init : { "flowchart" : { "curve" : "stepBefore" }}}%%
 graph LR
 T["test/"]
-T -->|"Unit Test\n(of src/com/plantuml/api/cheerpj)"| W["com/plantuml/wasm"]
-T -->|"Unit Test\n(of src/net/sourceforge/plantuml)"| U["net/sourceforge/plantuml"]
+T -->|"Unit Test\n(of main/java/com/plantuml/api/cheerpj)"| W["com/plantuml/wasm"]
+T -->|"Unit Test\n(of main/java/net/sourceforge/plantuml)"| U["net/sourceforge/plantuml"]
 T -->|"Non-regression Test"| N[nonreg]
 ```
 
