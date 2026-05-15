@@ -122,8 +122,8 @@ loadScripts(document, 'script');</script>
  &lt;/script&gt;
  </pre>
 
- Both functions accept an optional <code>options</code> object as the last
- argument, e.g. <code>{ dark: true }</code> to enable dark-mode rendering.
+ Both functions accept an optional <code>options</code> object as the last argument,
+ e.g. <code>{ dark: true }</code> to enable dark-mode rendering.
 
  <h2 id="architecture-javascript-driven-paradigm-heading">Architecture: JavaScript-driven paradigm</h2>
 
@@ -177,8 +177,8 @@ loadScripts(document, 'script');</script>
 
  We solve this by:
  <ol>
- <li>Lazily starting a background thread on the first call to <a href="#render(java.lang.String%5B%5D,java.lang.String,org.teavm.jso.JSObject)"><code>render(java.lang.String[], java.lang.String, org.teavm.jso.JSObject)</code></a>
- or <a href="#renderToString(java.lang.String%5B%5D,net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser.StringCallback,net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser.StringCallback,org.teavm.jso.JSObject)"><code>renderToString(java.lang.String[], net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser.StringCallback, net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser.StringCallback, org.teavm.jso.JSObject)</code></a></li>
+ <li>Lazily starting a background thread on the first call to
+ <a href="#render(java.lang.String%5B%5D,java.lang.String,org.teavm.jso.JSObject)"><code>render(java.lang.String[], java.lang.String, org.teavm.jso.JSObject)</code></a> or <a href="#renderToString(java.lang.String%5B%5D,net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser.StringCallback,net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser.StringCallback,org.teavm.jso.JSObject)"><code>renderToString(java.lang.String[], net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser.StringCallback, net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser.StringCallback, org.teavm.jso.JSObject)</code></a></li>
  <li>Having the exported function just queue a render request and wake the
  thread</li>
  <li>The worker thread performs the actual rendering in the correct coroutine
@@ -192,8 +192,8 @@ loadScripts(document, 'script');</script>
 
  The class uses a simple producer-consumer pattern:
  <ul>
- <li>Producer: <a href="#render(java.lang.String%5B%5D,java.lang.String,org.teavm.jso.JSObject)"><code>render(java.lang.String[], java.lang.String, org.teavm.jso.JSObject)</code></a> / <a href="#renderToString(java.lang.String%5B%5D,net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser.StringCallback,net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser.StringCallback,org.teavm.jso.JSObject)"><code>renderToString(java.lang.String[], net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser.StringCallback, net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser.StringCallback, org.teavm.jso.JSObject)</code></a> called from JS, sets
- pending request and notifies</li>
+ <li>Producer: <a href="#render(java.lang.String%5B%5D,java.lang.String,org.teavm.jso.JSObject)"><code>render(java.lang.String[], java.lang.String, org.teavm.jso.JSObject)</code></a> / <a href="#renderToString(java.lang.String%5B%5D,net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser.StringCallback,net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser.StringCallback,org.teavm.jso.JSObject)"><code>renderToString(java.lang.String[], net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser.StringCallback, net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser.StringCallback, org.teavm.jso.JSObject)</code></a> called from JS,
+ sets pending request and notifies</li>
  <li>Consumer: <code>workerLoop()</code> waits for requests, processes them one at
  a time</li>
  </ul>
@@ -268,8 +268,8 @@ loadScripts(document, 'script');</script>
  <a href="PlantUMLBrowser.StringCallback.html" title="interface in net.sourceforge.plantuml.teavm.browser">PlantUMLBrowser.StringCallback</a>&nbsp;onError,
  org.teavm.jso.JSObject&nbsp;options)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Renders a PlantUML diagram and delivers the resulting SVG as a string via the
- <code>onSuccess</code> callback.</div>
+<div class="block">Renders a PlantUML diagram and delivers the resulting SVG as a string via
+ the <code>onSuccess</code> callback.</div>
 </div>
 </div>
 </div>
@@ -335,8 +335,8 @@ loadScripts(document, 'script');</script>
                   caller</dd>
 <dd><code>elementId</code> - the <code>id</code> of the HTML element where the SVG should be
                   rendered</dd>
-<dd><code>options</code> - optional JS object with rendering options (e.g. <code>{
-                  dark: true }</code>); may be <code>null</code></dd>
+<dd><code>options</code> - optional JS object with rendering options (e.g.
+                  <code>{ dark: true }</code>); may be <code>null</code></dd>
 </dl>
 </section>
 </li>
@@ -347,21 +347,21 @@ loadScripts(document, 'script');</script>
  <a href="PlantUMLBrowser.StringCallback.html" title="interface in net.sourceforge.plantuml.teavm.browser">PlantUMLBrowser.StringCallback</a>&nbsp;onSuccess,
  <a href="PlantUMLBrowser.StringCallback.html" title="interface in net.sourceforge.plantuml.teavm.browser">PlantUMLBrowser.StringCallback</a>&nbsp;onError,
  org.teavm.jso.JSObject&nbsp;options)</span></div>
-<div class="block">Renders a PlantUML diagram and delivers the resulting SVG as a string via the
- <code>onSuccess</code> callback. Errors go to <code>onError</code>.
+<div class="block">Renders a PlantUML diagram and delivers the resulting SVG as a string via
+ the <code>onSuccess</code> callback. Errors go to <code>onError</code>.
 
  <p>
- Same queueing and asynchronous behavior as <a href="#render(java.lang.String%5B%5D,java.lang.String,org.teavm.jso.JSObject)"><code>render(java.lang.String[], java.lang.String, org.teavm.jso.JSObject)</code></a>: this method only
- queues the request; the worker thread performs the actual rendering and
- invokes the callback. A previous pending request will be overwritten.</div>
+ Same queueing and asynchronous behavior as <a href="#render(java.lang.String%5B%5D,java.lang.String,org.teavm.jso.JSObject)"><code>render(java.lang.String[], java.lang.String, org.teavm.jso.JSObject)</code></a>: this method
+ only queues the request; the worker thread performs the actual rendering
+ and invokes the callback. A previous pending request will be overwritten.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>lines</code> - the PlantUML source code, split into lines by the JavaScript
                   caller</dd>
 <dd><code>onSuccess</code> - callback invoked with the SVG string when rendering succeeds</dd>
 <dd><code>onError</code> - callback invoked with an error message when rendering fails</dd>
-<dd><code>options</code> - optional JS object with rendering options (e.g. <code>{
-                  dark: true }</code>); may be <code>null</code></dd>
+<dd><code>options</code> - optional JS object with rendering options (e.g.
+                  <code>{ dark: true }</code>); may be <code>null</code></dd>
 </dl>
 </section>
 </li>
