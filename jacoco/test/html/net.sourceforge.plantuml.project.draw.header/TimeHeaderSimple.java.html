@@ -181,29 +181,35 @@ class TimeHeaderSimple extends TimeHeader {
 <span class="fc" id="L181">	}</span>
 
 	@Override
-	public void drawTimeHeader(UGraphic ug, double totalHeightWithoutFooter) {
-<span class="fc" id="L185">		drawSmallVlinesDay(ug, totalHeightWithoutFooter);</span>
-<span class="fc" id="L186">		printVerticalSeparators(ug, totalHeightWithoutFooter);</span>
-<span class="fc" id="L187">		drawSimpleDayCounter(ug);</span>
+	protected boolean isZeroOnDay(TimePoint instant) {
+<span class="fc" id="L185">		return false;</span>
+	}
 
-<span class="fc" id="L189">	}</span>
+	@Override
+	public void drawTimeHeader(UGraphic ug, double totalHeightWithoutFooter) {
+<span class="fc" id="L190">		drawColorsBackground(ug, totalHeightWithoutFooter);</span>
+<span class="fc" id="L191">		drawSmallVlinesDay(ug, totalHeightWithoutFooter);</span>
+<span class="fc" id="L192">		printVerticalSeparators(ug, totalHeightWithoutFooter);</span>
+<span class="fc" id="L193">		drawSimpleDayCounter(ug);</span>
+
+<span class="fc" id="L195">	}</span>
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-<span class="fc" id="L193">		ug = ug.apply(UTranslate.dy(3));</span>
-<span class="fc" id="L194">		drawSimpleDayCounter(ug);</span>
-<span class="fc" id="L195">	}</span>
+<span class="fc" id="L199">		ug = ug.apply(UTranslate.dy(3));</span>
+<span class="fc" id="L200">		drawSimpleDayCounter(ug);</span>
+<span class="fc" id="L201">	}</span>
 
 	protected final void drawTextsBackground(UGraphic ug, double totalHeightWithoutFooter) {
 
-<span class="nc" id="L199">		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());</span>
-<span class="nc" id="L200">		Pending pending = null;</span>
+<span class="nc" id="L205">		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());</span>
+<span class="nc" id="L206">		Pending pending = null;</span>
 
-<span class="nc bnc" id="L202" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
-<span class="nc" id="L203">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
-<span class="nc" id="L204">			final double x1 = getTimeScale().getPosition(wink);</span>
-<span class="nc" id="L205">			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);</span>
-<span class="nc" id="L206">			HColor back = getColor(wink);</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
+<span class="nc" id="L209">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="nc" id="L210">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="nc" id="L211">			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);</span>
+<span class="nc" id="L212">			HColor back = getColor(wink);</span>
 //			// Day of week should be stronger than period of time (back color).
 //			final HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());
 //			if (backDoW != null) {
@@ -212,23 +218,23 @@ class TimeHeaderSimple extends TimeHeader {
 //			if (back == null &amp;&amp; defaultPlan.getLoadAt(wink) == 0) {
 //				back = closedBackgroundColor();
 //			}
-<span class="nc bnc" id="L215" title="All 2 branches missed.">			if (back == null) {</span>
-<span class="nc bnc" id="L216" title="All 2 branches missed.">				if (pending != null)</span>
-<span class="nc" id="L217">					pending.draw(ug, height);</span>
-<span class="nc" id="L218">				pending = null;</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">			if (back == null) {</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">				if (pending != null)</span>
+<span class="nc" id="L223">					pending.draw(ug, height);</span>
+<span class="nc" id="L224">				pending = null;</span>
 			} else {
-<span class="nc bnc" id="L220" title="All 4 branches missed.">				if (pending != null &amp;&amp; pending.color.equals(back) == false) {</span>
-<span class="nc" id="L221">					pending.draw(ug, height);</span>
-<span class="nc" id="L222">					pending = null;</span>
+<span class="nc bnc" id="L226" title="All 4 branches missed.">				if (pending != null &amp;&amp; pending.color.equals(back) == false) {</span>
+<span class="nc" id="L227">					pending.draw(ug, height);</span>
+<span class="nc" id="L228">					pending = null;</span>
 				}
-<span class="nc bnc" id="L224" title="All 2 branches missed.">				if (pending == null)</span>
-<span class="nc" id="L225">					pending = new Pending(back, x1, x2);</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">				if (pending == null)</span>
+<span class="nc" id="L231">					pending = new Pending(back, x1, x2);</span>
 				else
-<span class="nc" id="L227">					pending.x2 = x2;</span>
+<span class="nc" id="L233">					pending.x2 = x2;</span>
 
 			}
 		}
-<span class="nc" id="L231">	}</span>
+<span class="nc" id="L237">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

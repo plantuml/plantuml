@@ -154,89 +154,131 @@ public abstract class TimeHeader {
 
 <span class="fc" id="L155">		return FontConfiguration.create(font, color, color, null);</span>
 	}
-	
+
+	protected abstract boolean isZeroOnDay(TimePoint instant);
+
+	protected final void drawColorsBackground(UGraphic ug, double totalHeightWithoutFooter) {
+
+<span class="fc" id="L162">		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());</span>
+<span class="fc" id="L163">		Pending pending = null;</span>
+
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
+<span class="fc" id="L166">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="fc" id="L167">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="fc" id="L168">			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);</span>
+<span class="fc" id="L169">			HColor back = getColor(wink);</span>
+			// Day of week should be stronger than period of time (back color).
+<span class="fc" id="L171">			final HColor backDoW = getColor(wink.toDayOfWeek());</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			if (backDoW != null)</span>
+<span class="nc" id="L173">				back = backDoW;</span>
+
+<span class="fc bfc" id="L175" title="All 4 branches covered.">			if (back == null &amp;&amp; isZeroOnDay(wink))</span>
+<span class="fc" id="L176">				back = closedBackgroundColor();</span>
+
+<span class="fc bfc" id="L178" title="All 2 branches covered.">			if (back == null) {</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">				if (pending != null)</span>
+<span class="fc" id="L180">					pending.draw(ug, height);</span>
+<span class="fc" id="L181">				pending = null;</span>
+			} else {
+<span class="fc bfc" id="L183" title="All 4 branches covered.">				if (pending != null &amp;&amp; pending.color.equals(back) == false) {</span>
+<span class="fc" id="L184">					pending.draw(ug, height);</span>
+<span class="fc" id="L185">					pending = null;</span>
+				}
+<span class="fc bfc" id="L187" title="All 2 branches covered.">				if (pending == null)</span>
+<span class="fc" id="L188">					pending = new Pending(back, x1, x2);</span>
+				else
+<span class="fc" id="L190">					pending.x2 = x2;</span>
+
+			}
+		}
+
+<span class="fc bfc" id="L195" title="All 2 branches covered.">		if (pending != null)</span>
+<span class="fc" id="L196">			pending.draw(ug, height);</span>
+
+<span class="fc" id="L198">	}</span>
+
 	private static final class TextBlockKey {
 		private final String text;
 		private final FontConfiguration fontConfiguration;
 		private final int hash;
 
-<span class="fc" id="L163">		TextBlockKey(String text, FontConfiguration fontConfiguration) {</span>
-<span class="fc" id="L164">			this.text = text;</span>
-<span class="fc" id="L165">			this.fontConfiguration = fontConfiguration;</span>
-<span class="fc" id="L166">			this.hash = Objects.hash(text, fontConfiguration);</span>
-<span class="fc" id="L167">		}</span>
+<span class="fc" id="L205">		TextBlockKey(String text, FontConfiguration fontConfiguration) {</span>
+<span class="fc" id="L206">			this.text = text;</span>
+<span class="fc" id="L207">			this.fontConfiguration = fontConfiguration;</span>
+<span class="fc" id="L208">			this.hash = Objects.hash(text, fontConfiguration);</span>
+<span class="fc" id="L209">		}</span>
 
 		@Override
 		public int hashCode() {
-<span class="fc" id="L171">			return hash;</span>
+<span class="fc" id="L213">			return hash;</span>
 		}
 
 		@Override
 		public boolean equals(Object obj) {
-<span class="pc bpc" id="L176" title="1 of 2 branches missed.">			if (this == obj)</span>
-<span class="nc" id="L177">				return true;</span>
-<span class="pc bpc" id="L178" title="1 of 2 branches missed.">			if (obj instanceof TextBlockKey == false)</span>
-<span class="nc" id="L179">				return false;</span>
-<span class="fc" id="L180">			final TextBlockKey other = (TextBlockKey) obj;</span>
-<span class="pc bpc" id="L181" title="2 of 4 branches missed.">			return text.equals(other.text) &amp;&amp; fontConfiguration.equals(other.fontConfiguration);</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">			if (this == obj)</span>
+<span class="nc" id="L219">				return true;</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">			if (obj instanceof TextBlockKey == false)</span>
+<span class="nc" id="L221">				return false;</span>
+<span class="fc" id="L222">			final TextBlockKey other = (TextBlockKey) obj;</span>
+<span class="pc bpc" id="L223" title="2 of 4 branches missed.">			return text.equals(other.text) &amp;&amp; fontConfiguration.equals(other.fontConfiguration);</span>
 		}
 	}
 
-<span class="fc" id="L185">	private final Map&lt;TextBlockKey, TextBlock&gt; cache = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L227">	private final Map&lt;TextBlockKey, TextBlock&gt; cache = new HashMap&lt;&gt;();</span>
 
 	protected final TextBlock getTextBlockSLOW(String text, FontConfiguration fontConfiguration) {
-<span class="fc" id="L188">		final TextBlockKey key = new TextBlockKey(text, fontConfiguration);</span>
-<span class="fc" id="L189">		return cache.computeIfAbsent(key, k -&gt; Display.getWithNewlines(getPragma(), text).create(fontConfiguration,</span>
+<span class="fc" id="L230">		final TextBlockKey key = new TextBlockKey(text, fontConfiguration);</span>
+<span class="fc" id="L231">		return cache.computeIfAbsent(key, k -&gt; Display.getWithNewlines(getPragma(), text).create(fontConfiguration,</span>
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty()));
 	}
 
 	protected final FontConfiguration getFontConfigurationSLOW(SName param, boolean bold, HColor color) {
-<span class="fc" id="L194">		final UFont font = timelineStyle.getFont(param);</span>
-<span class="fc" id="L195">		return getFontConfiguration(font, bold, color);</span>
+<span class="fc" id="L236">		final UFont font = timelineStyle.getFont(param);</span>
+<span class="fc" id="L237">		return getFontConfiguration(font, bold, color);</span>
 	}
 
 	protected final void printCentered(UGraphic ug, TextBlock text, double start, double end) {
-<span class="fc" id="L199">		final double width = text.calculateDimension(ug.getStringBounder()).getWidth();</span>
-<span class="fc" id="L200">		final double available = end - start;</span>
-<span class="fc" id="L201">		final double diff = Math.max(0, available - width);</span>
-<span class="fc" id="L202">		text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));</span>
-<span class="fc" id="L203">	}</span>
+<span class="fc" id="L241">		final double width = text.calculateDimension(ug.getStringBounder()).getWidth();</span>
+<span class="fc" id="L242">		final double available = end - start;</span>
+<span class="fc" id="L243">		final double diff = Math.max(0, available - width);</span>
+<span class="fc" id="L244">		text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));</span>
+<span class="fc" id="L245">	}</span>
 
 	protected final void printCentered(UGraphic ug, boolean hideIfTooBig, double start, double end,
 			TextBlock... texts) {
-<span class="fc" id="L207">		final double available = end - start;</span>
-<span class="fc bfc" id="L208" title="All 2 branches covered.">		for (int i = texts.length - 1; i &gt;= 0; i--) {</span>
-<span class="fc" id="L209">			final TextBlock text = texts[i];</span>
-<span class="fc" id="L210">			final double width = text.calculateDimension(ug.getStringBounder()).getWidth();</span>
-<span class="fc bfc" id="L211" title="All 6 branches covered.">			if ((i == 0 &amp;&amp; hideIfTooBig == false) || width &lt;= available) {</span>
-<span class="fc" id="L212">				final double diff = Math.max(0, available - width);</span>
-<span class="fc" id="L213">				text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));</span>
-<span class="fc" id="L214">				return;</span>
+<span class="fc" id="L249">		final double available = end - start;</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">		for (int i = texts.length - 1; i &gt;= 0; i--) {</span>
+<span class="fc" id="L251">			final TextBlock text = texts[i];</span>
+<span class="fc" id="L252">			final double width = text.calculateDimension(ug.getStringBounder()).getWidth();</span>
+<span class="fc bfc" id="L253" title="All 6 branches covered.">			if ((i == 0 &amp;&amp; hideIfTooBig == false) || width &lt;= available) {</span>
+<span class="fc" id="L254">				final double diff = Math.max(0, available - width);</span>
+<span class="fc" id="L255">				text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));</span>
+<span class="fc" id="L256">				return;</span>
 			}
 		}
-<span class="fc" id="L217">	}</span>
+<span class="fc" id="L259">	}</span>
 
 	protected final void drawRectangle(UGraphic ug, double height, double x1, double x2) {
-<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (height == 0)</span>
-<span class="nc" id="L221">			return;</span>
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">		if (height == 0)</span>
+<span class="nc" id="L263">			return;</span>
 
-<span class="fc" id="L223">		ug = ug.apply(HColors.none());</span>
-<span class="fc" id="L224">		ug = ug.apply(new UTranslate(x1, getFullHeaderHeight(ug.getStringBounder())));</span>
-<span class="pc bpc" id="L225" title="1 of 2 branches missed.">		if (x2 &gt; x1)</span>
-<span class="fc" id="L226">			ug.draw(URectangle.build(x2 - x1, height));</span>
-<span class="fc" id="L227">	}</span>
+<span class="fc" id="L265">		ug = ug.apply(HColors.none());</span>
+<span class="fc" id="L266">		ug = ug.apply(new UTranslate(x1, getFullHeaderHeight(ug.getStringBounder())));</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (x2 &gt; x1)</span>
+<span class="fc" id="L268">			ug.draw(URectangle.build(x2 - x1, height));</span>
+<span class="fc" id="L269">	}</span>
 
 	protected void printVerticalSeparators(UGraphic ug, double totalHeightWithoutFooter) {
-<span class="fc" id="L230">		ug = timelineStyle.applyVerticalSeparatorStyle(ug);</span>
-<span class="fc bfc" id="L231" title="All 2 branches covered.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1))</span>
-<span class="pc bpc" id="L232" title="1 of 2 branches missed.">			if (isBold(day))</span>
-<span class="nc" id="L233">				drawVline(ug, getTimeScale().getPosition(TimePoint.ofStartOfDay(day)),</span>
-<span class="nc" id="L234">						getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);</span>
+<span class="fc" id="L272">		ug = timelineStyle.applyVerticalSeparatorStyle(ug);</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1))</span>
+<span class="pc bpc" id="L274" title="1 of 2 branches missed.">			if (isBold(day))</span>
+<span class="nc" id="L275">				drawVline(ug, getTimeScale().getPosition(TimePoint.ofStartOfDay(day)),</span>
+<span class="nc" id="L276">						getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);</span>
 
-<span class="fc" id="L236">	}</span>
+<span class="fc" id="L278">	}</span>
 
 	protected Pragma getPragma() {
-<span class="fc" id="L239">		return Pragma.createEmpty();</span>
+<span class="fc" id="L281">		return Pragma.createEmpty();</span>
 	}
 
 	class Pending {
@@ -244,15 +286,15 @@ public abstract class TimeHeader {
 		double x2;
 		final HColor color;
 
-<span class="fc" id="L247">		Pending(HColor color, double x1, double x2) {</span>
-<span class="fc" id="L248">			this.x1 = x1;</span>
-<span class="fc" id="L249">			this.x2 = x2;</span>
-<span class="fc" id="L250">			this.color = color;</span>
-<span class="fc" id="L251">		}</span>
+<span class="fc" id="L289">		Pending(HColor color, double x1, double x2) {</span>
+<span class="fc" id="L290">			this.x1 = x1;</span>
+<span class="fc" id="L291">			this.x2 = x2;</span>
+<span class="fc" id="L292">			this.color = color;</span>
+<span class="fc" id="L293">		}</span>
 
 		public void draw(UGraphic ug, double height) {
-<span class="fc" id="L254">			drawRectangle(ug.apply(color.bg()), height, x1, x2);</span>
-<span class="fc" id="L255">		}</span>
+<span class="fc" id="L296">			drawRectangle(ug.apply(color.bg()), height, x1, x2);</span>
+<span class="fc" id="L297">		}</span>
 	}
 
 }
