@@ -37,10 +37,26 @@ return ok
 			<div id="out"></div>
 			<div id="status"></div>
 			<div class="controls">
+				<button id="theme" type="button" title="Toggle dark mode">
+					<svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<circle cx="12" cy="12" r="4"/>
+						<path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+					</svg>
+					<svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+					</svg>
+				</button>
 				<button id="copy" type="button" title="Copy diagram to clipboard">
 					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 						<rect x="9" y="9" width="13" height="13" rx="2"/>
 						<path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+					</svg>
+				</button>
+				<button id="copy-bitmap" type="button" title="Copy diagram as bitmap">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<rect x="3" y="3" width="18" height="18" rx="2"/>
+						<circle cx="8.5" cy="8.5" r="1.5"/>
+						<polyline points="21,15 16,10 5,21"/>
 					</svg>
 				</button>
 				<button id="save" type="button" title="Save diagram">

@@ -149,6 +149,20 @@ main {
 	outline: 1px solid color-mix(in srgb, var(--accent) 30%, #ef7373);
 }
 
+/* Theme toggle: show sun in dark mode, moon in light mode */
+#theme .icon-sun {
+	display: none;
+}
+#theme .icon-moon {
+	display: block;
+}
+:root.dark #theme .icon-sun {
+	display: block;
+}
+:root.dark #theme .icon-moon {
+	display: none;
+}
+
 #loading {
 	position: absolute;
 	inset: 0;

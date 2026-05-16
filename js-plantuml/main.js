@@ -1,6 +1,7 @@
 import { render } from "./plantuml.js";
 
 const editor = document.getElementById("editor");
+let dark = false;
 
 renderer();
 resize();
@@ -18,11 +19,11 @@ function renderer() {
 		console.error("Error", err);
 		loading.textContent = "Error: " + err.message;
 	}
+}
 
-	function renderNow() {
-		const lines = editor.value.split(/\r\n|\r|\n/);
-		render(lines, "out");
-	}
+function renderNow() {
+	const lines = editor.value.split(/\r\n|\r|\n/);
+	render(lines, "out", {dark: dark});
 }
 
 function resize() {
@@ -63,6 +64,76 @@ function controls() {
 			}
 		);
 
+	});
+
+	const copyBitmap = document.getElementById("copy-bitmap");
+	copyBitmap.addEventListener("click", async () => {
+		try {
+			const out = document.getElementById("out");
+			const svg = out.querySelector("svg");
+			if (svg == null) {
+				throw new Error("No SVG to copy");
+			}
+
+			// Serialize SVG with proper xmlns (required for standalone rendering)
+			const clone = svg.cloneNode(true);
+			if (clone.getAttribute("xmlns") == null) {
+				clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+			}
+			const svgString = new XMLSerializer().serializeToString(clone);
+			const svgBlob = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+			const url = URL.createObjectURL(svgBlob);
+
+			// Determine target dimensions (account for devicePixelRatio for crisp output)
+			const rect = svg.getBoundingClientRect();
+			const width = rect.width || svg.viewBox.baseVal.width;
+			const height = rect.height || svg.viewBox.baseVal.height;
+			const ratio = window.devicePixelRatio || 1;
+
+			// Load SVG into an Image
+			const img = new Image();
+			img.width = width;
+			img.height = height;
+			await new Promise((resolve, reject) => {
+				img.onload = resolve;
+				img.onerror = () => reject(new Error("Image load failed"));
+				img.src = url;
+			});
+
+			// Draw on canvas with white background
+			const canvas = document.createElement("canvas");
+			canvas.width = Math.ceil(width * ratio);
+			canvas.height = Math.ceil(height * ratio);
+			const ctx = canvas.getContext("2d");
+			// Use the theme's background color so the PNG looks right when pasted
+			const bg = getComputedStyle(document.body).backgroundColor || "white";
+			ctx.fillStyle = bg;
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+			ctx.scale(ratio, ratio);
+			ctx.drawImage(img, 0, 0, width, height);
+			URL.revokeObjectURL(url);
+
+			// Convert canvas to PNG blob and copy to clipboard
+			const blob = await new Promise((resolve, reject) => {
+				canvas.toBlob(b => b == null ? reject(new Error("toBlob failed")) : resolve(b), "image/png");
+			});
+			await navigator.clipboard.write([new ClipboardItem({"image/png": blob})]);
+
+			copyBitmap.classList.add("success");
+			setTimeout(() => (copyBitmap.classList.remove("success")), 300);
+		} catch (err) {
+			console.error("Copy bitmap failed:", err);
+			copyBitmap.classList.add("error");
+			setTimeout(() => (copyBitmap.classList.remove("error")), 3000);
+		}
+	});
+
+	const theme = document.getElementById("theme");
+	theme.addEventListener("click", () => {
+		dark = !dark;
+		document.documentElement.classList.toggle("dark", dark);
+		document.documentElement.style.colorScheme = dark ? "dark" : "light";
+		renderNow();
 	});
 
 	const save = document.getElementById("save");
