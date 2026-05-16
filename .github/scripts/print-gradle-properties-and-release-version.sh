@@ -4,5 +4,6 @@ set -euo pipefail
 
 echo "::group::[gradle.properties]"
 cat gradle.properties
+echo
 echo "::endgroup::"
-echo "RELEASE_VERSION=$RELEASE_VERSION"
+echo "RELEASE_VERSION=${RELEASE_VERSION}"
