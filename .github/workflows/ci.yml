@@ -78,7 +78,6 @@ jobs:
     outputs:
       do_release: ${{ steps.config.outputs.do_release }}
       do_snapshot_release: ${{ steps.config.outputs.do_snapshot_release }}
-      pom_version: ${{ steps.config.outputs.pom_version }}
       do_javadoc: ${{ steps.config.outputs.do_javadoc }}
       do_test_linux: ${{ steps.config.outputs.do_test_linux }}
       do_test_windows: ${{ steps.config.outputs.do_test_windows }}
@@ -174,13 +173,6 @@ jobs:
           cache: gradle
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6.1.0
-#      - name: Set version in gradle.properties
-#        if: env.POM_VERSION
-#        env:
-#          POM_VERSION: ${{ needs.workflow_config.outputs.pom_version }}
-#        run: |
-#          sed -i "s/version = .*/version = $POM_VERSION/" gradle.properties
-#          cat gradle.properties
       - name: Generate artifacts
         run: |
           echo "print gradle.properties"
