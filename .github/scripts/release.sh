@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 set -ex
 
+echo "::group::[List JAR/ASC]"
 find . -name "*.jar"
 find . -name "*.asc"
+echo "::endgroup::"
 
 mkdir "github_release"
 
@@ -73,6 +75,7 @@ fi
 
 gh release create \
   --target "${GITHUB_SHA}" \
+  --generate-notes \
   --title "${TAG}" \
   "${TAG}" github_release/*
 
