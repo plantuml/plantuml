@@ -197,6 +197,7 @@ jobs:
           ls -l plantuml-epl/build/libs
           ls -l plantuml-lgpl/build/libs
           ls -l plantuml-mit/build/libs
+          ls -l plantuml-mit-light/build/libs
           ls -l plantuml-gplv2/build/libs
       - name: Get release version
         id: version
@@ -213,6 +214,7 @@ jobs:
             plantuml-epl/build/libs
             plantuml-lgpl/build/libs
             plantuml-mit/build/libs
+            plantuml-mit-light/build/libs
             plantuml-gplv2/build/libs
           key: "libs-${{ github.run_id }}"
           enableCrossOsArchive: true
@@ -314,6 +316,7 @@ jobs:
             plantuml-epl/build/libs
             plantuml-lgpl/build/libs
             plantuml-mit/build/libs
+            plantuml-mit-light/build/libs
             plantuml-gplv2/build/libs
           key: "libs-${{ github.run_id }}"
           fail-on-cache-miss: true
@@ -332,6 +335,7 @@ jobs:
             plantuml-epl/build/libs
             plantuml-lgpl/build/libs
             plantuml-mit/build/libs
+            plantuml-mit-light/build/libs
             plantuml-gplv2/build/libs
 
       - name: Create snapshot
