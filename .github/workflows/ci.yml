@@ -175,6 +175,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v6.1.0
       - name: Generate artifacts
         run: |
+          chmod +x .github/scripts/print-gradle-properties-and-release-version.sh
           .github/scripts/print-gradle-properties-and-release-version.sh
           gradle patchCompilationInfo
           gradle clean build \
@@ -353,6 +354,7 @@ jobs:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ARTIFACT_SIGNING_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
         run: |
+          chmod +x .github/scripts/print-gradle-properties-and-release-version.sh
           .github/scripts/print-gradle-properties-and-release-version.sh
           .github/scripts/release-snapshot.sh
 
@@ -368,6 +370,7 @@ jobs:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ARTIFACT_SIGNING_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
         run: |
+          chmod +x .github/scripts/print-gradle-properties-and-release-version.sh
           .github/scripts/print-gradle-properties-and-release-version.sh
           .github/scripts/release.sh
           gradle --debug publish

@@ -9,7 +9,7 @@
 set -euo pipefail
 
 cat <<-EOF
-  ::group::[Debug Info]
+  ::group::Debug Info
   GITHUB_EVENT_NAME       : '${GITHUB_EVENT_NAME}'
   EVENT_ACTION            : '${EVENT_ACTION}'
   REF_TYPE                : '${REF_TYPE}'
