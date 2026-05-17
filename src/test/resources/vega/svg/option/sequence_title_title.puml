@@ -1,0 +1,9 @@
+---
+output: svg
+issue: 2292
+---
+@startuml
+!option svgTitle "This is the SVG title"
+title This is the PlantUML title
+alice -> bob: hello
+@enduml

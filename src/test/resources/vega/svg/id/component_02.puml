@@ -1,0 +1,7 @@
+---
+output: svg
+issue: 2069
+---
+@startuml
+rectangle "PlantUML at its best" as leaf42
+@enduml

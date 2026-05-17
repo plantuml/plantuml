@@ -1,0 +1,9 @@
+---
+output: svg
+issue: 2292
+---
+@startuml
+!option svgTitle "This is the title"
+
+alice -> bob: hello
+@enduml
