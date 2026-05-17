@@ -1,0 +1,13 @@
+---
+output: svg
+issue: 2224
+---
+@startuml
+state A.x
+state A.y.foo
+state B.z
+
+[*] -> x
+A -> B
+y --> [*]
+@enduml

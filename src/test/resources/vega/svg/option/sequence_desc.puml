@@ -1,0 +1,9 @@
+---
+output: svg
+issue: 2292
+---
+@startuml
+!option svgDesc "This is the description"
+
+alice -> bob: hello
+@enduml

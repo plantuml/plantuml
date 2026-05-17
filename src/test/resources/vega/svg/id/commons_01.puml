@@ -1,0 +1,24 @@
+---
+output: svg
+issue: 2080
+---
+@startuml
+header this is a header
+
+title the title
+
+rectangle in1 as "this is a long
+mutliline thing
+"
+mainframe This is a **mainframe**
+
+card c
+
+legend
+this is the legend
+end legend
+
+caption this is a caption
+
+footer this is a footer
+@enduml
