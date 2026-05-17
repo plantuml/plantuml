@@ -32,15 +32,15 @@ JavaScript version compiled via TeaVM.
 │                                                                                 │
 │   TRIGGERS: push (all branches) | pull_request | tag create | workflow_dispatch │
 │                                                                                 │
-│   ┌─────────────┐     ┌─────────────────┐     ┌─────────────────┐              │
-│   │    jdk8     │     │ workflow_config │     │   test_linux    │              │
+│   ┌─────────────┐     ┌─────────────────┐     ┌─────────────────┐               │
+│   │    jdk8     │     │ workflow_config │     │   test_linux    │               │
 │   │ (Ant build) │     │  (determines    │────▶│  (Gradle test)  │              │
-│   │  Java 8     │     │   release type) │     │    Java 17      │              │
-│   └──────┬──────┘     └────────┬────────┘     └────────┬────────┘              │
+│   │  Java 8     │     │   release type) │     │    Java 17      │               │
+│   └──────┬──────┘     └────────┬────────┘     └────────┬────────┘               │
 │          │                     │                       │                        │
 │          │                     ▼                       │                        │
 │          │            ┌─────────────────┐              │                        │
-│          │            │ build_artifacts │◀─────────────┘                        │
+│          │            │ build_artifacts │◀─────────────┘                       │
 │          │            │  (Gradle build) │                                       │
 │          │            │ JARs + TeaVM JS │                                       │
 │          │            └────────┬────────┘                                       │
@@ -115,33 +115,33 @@ public class CompilationInfo {
 │                        CompilationInfo Injection Pipeline                       │
 ├─────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                 │
-│   ┌───────────────────────┐                                                     │
-│   │  generateGitProperties │  Gradle plugin: gradle-git-properties             │
-│   │                        │  Output: build/resources/main/git.properties      │
+│   ┌────────────────────────┐                                                    │
+│   │  generateGitProperties │  Gradle plugin: gradle-git-properties              │
+│   │                        │  Output: build/resources/main/git.properties       │
 │   │  Extracts:             │                                                    │
-│   │  • git.commit.id.abbrev│  (short commit hash, e.g., "a1b2c3d")             │
-│   │  • git.commit.id       │  (full commit hash)                               │
+│   │  • git.commit.id.abbrev│  (short commit hash, e.g., "a1b2c3d")              │
+│   │  • git.commit.id       │  (full commit hash)                                │
 │   │  • git.branch          │                                                    │
 │   └───────────┬────────────┘                                                    │
 │               │                                                                 │
 │               ▼                                                                 │
-│   ┌────────────────────────────┐                                                │
+│   ┌─────────────────────────────┐                                               │
 │   │  filterSourcesWithBuildInfo │  Custom Gradle task                           │
 │   │                             │                                               │
-│   │  1. Copy src/main/java/ to │                                               │
-│   │     build/generated/sources/git-filtered/                                  │
+│   │  1. Copy src/main/java/ to  │                                               │
+│   │     build/generated/sources/git-filtered/                                   │
 │   │                             │                                               │
-│   │  2. Replace placeholders:  │                                               │
-│   │     • $version$            │  → version from gradle.properties             │
-│   │     • $git.commit.id$      │  → actual commit hash (abbrev)                │
-│   │     • COMPILE_TIMESTAMP = 000L → current epoch millis                      │
+│   │  2. Replace placeholders:   │                                               │
+│   │     • $version$             │  → version from gradle.properties             │
+│   │     • $git.commit.id$       │  → actual commit hash (abbrev)                │
+│   │     • COMPILE_TIMESTAMP = 000L → current epoch millis                       │
 │   │                             │                                               │
 │   └───────────┬─────────────────┘                                               │
 │               │                                                                 │
 │               ▼                                                                 │
 │   ┌─────────────────────────────┐                                               │
-│   │  compileJava / sourcesJar   │  Uses filtered sources                       │
-│   │                             │  from build/generated/sources/git-filtered/  │
+│   │  compileJava / sourcesJar   │  Uses filtered sources                        │
+│   │                             │  from build/generated/sources/git-filtered/   │
 │   └─────────────────────────────┘                                               │
 │                                                                                 │
 └─────────────────────────────────────────────────────────────────────────────────┘
@@ -214,7 +214,6 @@ build/classes/                              │
                                     │ Outputs:          │
                                     │ • do_release      │
                                     │ • do_snapshot     │
-                                    │ • pom_version     │
                                     │ • do_javadoc      │
                                     │ • do_test_linux   │
                                     └─────────┬─────────┘
@@ -258,24 +257,24 @@ build/classes/                              │
 ### Execution Matrix
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────────────┐
-│                              Job Execution by Trigger                               │
+┌────────────────────────────────────────────────────────────────────────────────────┐
+│                              Job Execution by Trigger                              │
 ├──────────────────────┬──────────┬─────────────┬─────────────┬──────────────────────┤
 │        Job           │  Push    │ Pull Request│ Tag (v*)    │ Manual (master)      │
 │                      │ (branch) │             │ by author   │ by author            │
 ├──────────────────────┼──────────┼─────────────┼─────────────┼──────────────────────┤
-│ jdk8                 │    ✓     │      ✓      │      ✓      │         ✓            │
-│ workflow_config      │    ✓     │      ✓      │      ✓      │         ✓            │
-│ test_linux           │    ✓     │      ✓      │      ✓      │         ✓            │
-│ build_artifacts      │    ✓     │      ✓      │      ✓      │         ✓            │
+│ jdk8                 │    ✓     │      ✓      │      ✓     │         ✓            │
+│ workflow_config      │    ✓     │      ✓      │      ✓     │         ✓            │
+│ test_linux           │    ✓     │      ✓      │      ✓     │         ✓            │
+│ build_artifacts      │    ✓     │      ✓      │      ✓     │         ✓            │
 ├──────────────────────┼──────────┼─────────────┼─────────────┼──────────────────────┤
-│ deploy_site_gh_page  │    ✗     │      ✗      │      ✓      │         ✓            │
-│ upload (release)     │    ✗     │      ✗      │      ✓      │         ✓ (snapshot) │
-│ push_to_docker       │    ✗     │      ✗      │      ✓      │         ✗            │
-│ create_native_image  │    ✗     │      ✗      │      ✓      │         ✗            │
-│ trigger_eclipse      │    ✗     │      ✗      │      ✓      │         ✗            │
+│ deploy_site_gh_page  │    ✗     │      ✗      │      ✓     │         ✓            │
+│ upload (release)     │    ✗     │      ✗      │      ✓     │         ✓ (snapshot) │
+│ push_to_docker       │    ✗     │      ✗      │      ✓     │         ✗            │
+│ create_native_image  │    ✗     │      ✗      │      ✓     │         ✗            │
+│ trigger_eclipse      │    ✗     │      ✗      │      ✓     │         ✗            │
 ├──────────────────────┼──────────┼─────────────┼─────────────┼──────────────────────┤
-│ ARTIFACTS UPLOADED   │    ✓     │      ✓      │      ✓      │         ✓            │
+│ ARTIFACTS UPLOADED   │    ✓     │      ✓      │      ✓     │         ✓            │
 │ (plantuml-jar,       │  always  │   always    │   always    │       always         │
 │  js-plantuml-zip)    │          │             │             │                      │
 └──────────────────────┴──────────┴─────────────┴─────────────┴──────────────────────┘
@@ -296,17 +295,17 @@ Legend:  ✓ = Runs    ✗ = Skipped    author = arnaudroques or The-Lum
 │                         jdk8 Job                                │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────────┐  │
+│  ┌──────────────┐     ┌──────────────┐    ┌──────────────────┐  │
 │  │   Checkout   │───▶│  Setup JDK 8 │───▶│  Install Ant     │  │
-│  └──────────────┘    │  (Temurin)   │    │  (if needed)     │  │
-│                      └──────────────┘    └────────┬─────────┘  │
-│                                                   │             │
-│                                                   ▼             │
-│  ┌──────────────────┐    ┌──────────────┐    ┌──────────────┐  │
+│  └──────────────┘     │  (Temurin)   │    │  (if needed)     │  │
+│                       └──────────────┘    └────────┬─────────┘  │
+│                                                    │            │
+│                                                    ▼            │
+│  ┌──────────────────┐     ┌──────────────┐    ┌──────────────┐  │
 │  │  Upload artifact │◀───│ Check version│◀───│  Ant build   │  │
-│  │ plantuml-jdk8-jar│    │ (exit code   │    │  ant -noinput│  │
-│  └──────────────────┘    │  must be 16) │    └──────────────┘  │
-│                          └──────────────┘                       │
+│  │ plantuml-jdk8-jar│     │ (exit code   │    │  ant -noinput│  │
+│  └──────────────────┘     │  must be 16) │    └──────────────┘  │
+│                           └──────────────┘                      │
 │                                 │                               │
 │                                 ▼                               │
 │                      ┌──────────────────────┐                   │
@@ -330,45 +329,43 @@ Legend:  ✓ = Runs    ✗ = Skipped    author = arnaudroques or The-Lum
 **Purpose:** Analyzes the trigger context and determines what actions to take.
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                           workflow_config Job                                   │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                 │
-│  Input Variables:                                                               │
-│  ┌─────────────────────────────────────────────────────────────────────────┐   │
-│  │  GITHUB_EVENT_NAME  │  REF_TYPE  │  REF  │  ACTOR  │  REPOSITORY_OWNER  │   │
-│  └─────────────────────────────────────────────────────────────────────────┘   │
-│                                         │                                       │
-│                                         ▼                                       │
-│  ┌─────────────────────────────────────────────────────────────────────────┐   │
-│  │                         Decision Logic                                   │   │
-│  │                                                                          │   │
-│  │   IF event=create AND ref_type=tag AND ref=v* AND actor=authorized      │   │
-│  │      ──► do_release=true, pom_version=tag (without 'v'), do_javadoc=true│   │
-│  │                                                                          │   │
-│  │   ELIF event=push|dispatch AND ref=master AND actor=authorized          │   │
-│  │      ──► do_snapshot_release=true, pom_version=X.Y.Z-SNAPSHOT           │   │
-│  │          (version extracted from Version.java)                           │   │
-│  │                                                                          │   │
-│  │   ELSE                                                                   │   │
-│  │      ──► No release, do_javadoc=false                                   │   │
-│  │                                                                          │   │
-│  └─────────────────────────────────────────────────────────────────────────┘   │
-│                                         │                                       │
-│                                         ▼                                       │
-│  Output Variables:                                                              │
-│  ┌─────────────────────────────────────────────────────────────────────────┐   │
-│  │  do_release          │ true/false  │ Trigger full release               │   │
-│  │  do_snapshot_release │ true/false  │ Trigger snapshot release           │   │
-│  │  pom_version         │ string      │ Version for Maven artifacts        │   │
-│  │  do_javadoc          │ true/false  │ Deploy Javadoc to GitHub Pages     │   │
-│  │  do_test_linux       │ true        │ Always run Linux tests             │   │
-│  │  do_test_windows     │ false       │ Windows tests disabled             │   │
-│  └─────────────────────────────────────────────────────────────────────────┘   │
-│                                                                                 │
-│  Authorized actors: arnaudroques, The-Lum, or repository owner (for forks)     │
-│                                                                                 │
-└─────────────────────────────────────────────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────────────────────────────┐
+│                           workflow_config Job                                 │
+├───────────────────────────────────────────────────────────────────────────────┤
+│                                                                               │
+│  Input Variables:                                                             │
+│  ┌─────────────────────────────────────────────────────────────────────────┐  │
+│  │  GITHUB_EVENT_NAME  │  REF_TYPE  │  REF  │  ACTOR  │  REPOSITORY_OWNER  │  │
+│  └─────────────────────────────────────────────────────────────────────────┘  │
+│                                         │                                     │
+│                                         ▼                                     │
+│  ┌─────────────────────────────────────────────────────────────────────────┐  │
+│  │                         Decision Logic                                  │  │
+│  │                                                                         │  │
+│  │   IF event=create AND ref_type=tag AND ref=v* AND actor=authorized      │  │
+│  │      ──► do_release=true, do_javadoc=true                               │  │
+│  │                                                                         │  │
+│  │   ELIF event=push|dispatch AND ref=master AND actor=authorized          │  │
+│  │      ──► do_snapshot_release=true                                       │  │
+│  │                                                                         │  │
+│  │   ELSE                                                                  │  │
+│  │      ──► No release, do_javadoc=false                                   │  │
+│  │                                                                         │  │
+│  └─────────────────────────────────────────────────────────────────────────┘  │
+│                                         │                                     │
+│                                         ▼                                     │
+│  Output Variables:                                                            │
+│  ┌─────────────────────────────────────────────────────────────────────────┐  │
+│  │  do_release          │ true/false  │ Trigger full release               │  │
+│  │  do_snapshot_release │ true/false  │ Trigger snapshot release           │  │
+│  │  do_javadoc          │ true/false  │ Deploy Javadoc to GitHub Pages     │  │
+│  │  do_test_linux       │ true        │ Always run Linux tests             │  │
+│  │  do_test_windows     │ false       │ Windows tests disabled             │  │
+│  └─────────────────────────────────────────────────────────────────────────┘  │
+│                                                                               │
+│  Authorized actors: arnaudroques, The-Lum, or repository owner (for forks)    │
+│                                                                               │
+└───────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -385,11 +382,11 @@ Legend:  ✓ = Runs    ✗ = Skipped    author = arnaudroques or The-Lum
 │  Matrix:  java_version: [17]                                    │
 │           os: [ubuntu-latest]                                   │
 │                                                                 │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────────┐  │
-│  │   Checkout   │───▶│ Setup JDK 17 │───▶│ gradle compileJava│  │
-│  └──────────────┘    │  + Gradle    │    └────────┬─────────┘  │
-│                      │    cache     │             │             │
-│                      └──────────────┘             ▼             │
+│  ┌──────────────┐     ┌──────────────┐    ┌───────────────────┐ │
+│  │   Checkout   │───▶│ Setup JDK 17 │───▶│ gradle compileJava│ │
+│  └──────────────┘     │  + Gradle    │    └────────┬──────────┘ │
+│                       │    cache     │             │            │
+│                       └──────────────┘             ▼            │
 │                                          ┌──────────────────┐   │
 │                                          │   gradle test    │   │
 │                                          │   --no-daemon -i │   │
@@ -421,44 +418,44 @@ Legend:  ✓ = Runs    ✗ = Skipped    author = arnaudroques or The-Lum
 │                            build_artifacts Job                                  │
 ├─────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                 │
-│  ┌──────────────┐    ┌──────────────┐    ┌─────────────────────────────────┐   │
+│  ┌──────────────┐     ┌──────────────┐    ┌─────────────────────────────────┐   │
 │  │   Checkout   │───▶│ Setup JDK 17 │───▶│         gradle clean build      │   │
-│  └──────────────┘    │  + cache     │    │                pdfJar           │   │
-│                      └──────────────┘    │               teavmZip          │   │
-│                                          │  generateMetadataFileFor...     │   │
-│                                          │  generatePomFileFor...          │   │
-│                                          │              -x test            │   │
-│                                          └───────────────┬─────────────────┘   │
-│                                                          │                      │
-│                                                          ▼                      │
-│  ┌───────────────────────────────────────────────────────────────────────────┐ │
-│  │                    Artifacts Generated (build/libs/)                      │ │
-│  ├───────────────────────────────────────────────────────────────────────────┤ │
-│  │                                                                           │ │
-│  │   plantuml-{version}.jar .............. Main JAR (all dependencies)      │ │
-│  │   plantuml-{version}-javadoc.jar ...... Javadoc JAR                       │ │
-│  │   plantuml-{version}-sources.jar ...... Source code JAR                   │ │
-│  │   plantuml-pdf-{version}.jar .......... JAR with PDF support (FOP/Batik) │ │
-│  │   js-plantuml-{version}.zip ........... TeaVM JavaScript version          │ │
-│  │                                                                           │ │
-│  │   plantuml-{license}/build/libs/ ...... License-specific JARs            │ │
-│  │     (asl, bsd, epl, lgpl, mit, gplv2)                                     │ │
-│  │                                                                           │ │
-│  └───────────────────────────────────────────────────────────────────────────┘ │
+│  └──────────────┘     │  + cache     │    │                pdfJar           │   │
+│                       └──────────────┘    │               teavmZip          │   │
+│                                           │  generateMetadataFileFor...     │   │
+│                                           │  generatePomFileFor...          │   │
+│                                           │              -x test            │   │
+│                                           └───────────────┬─────────────────┘   │
+│                                                           │                     │
+│                                                           ▼                     │
+│  ┌───────────────────────────────────────────────────────────────────────────┐  │
+│  │                    Artifacts Generated (build/libs/)                      │  │
+│  ├───────────────────────────────────────────────────────────────────────────┤  │
+│  │                                                                           │  │
+│  │   plantuml-{version}.jar .............. Main JAR (all dependencies)       │  │
+│  │   plantuml-{version}-javadoc.jar ...... Javadoc JAR                       │  │
+│  │   plantuml-{version}-sources.jar ...... Source code JAR                   │  │
+│  │   plantuml-pdf-{version}.jar .......... JAR with PDF support (FOP/Batik)  │  │
+│  │   js-plantuml-{version}.zip ........... TeaVM JavaScript version          │  │
+│  │                                                                           │  │
+│  │   plantuml-{license}/build/libs/ ...... License-specific JARs             │  │
+│  │     (asl, bsd, epl, lgpl, mit, gplv2)                                     │  │
+│  │                                                                           │  │
+│  └───────────────────────────────────────────────────────────────────────────┘  │
 │                                          │                                      │
 │                    ┌─────────────────────┼─────────────────────┐                │
 │                    │                     │                     │                │
 │                    ▼                     ▼                     ▼                │
-│  ┌──────────────────────┐  ┌───────────────────┐  ┌─────────────────────────┐  │
-│  │   Sign artifacts     │  │   Cache libs      │  │   Upload artifacts      │  │
-│  │   (if signing key    │  │   for later jobs  │  │   (ALWAYS)              │  │
-│  │    available)        │  │                   │  │                         │  │
-│  │                      │  │   key: libs-{id}  │  │  • plantuml-jar         │  │
-│  │   signMavenPub...    │  │                   │  │    (main JAR only)      │  │
-│  │   signPdfJar         │  │                   │  │                         │  │
-│  └──────────────────────┘  └───────────────────┘  │  • js-plantuml-zip      │  │
-│                                                   │    (TeaVM JS version)   │  │
-│                                                   └─────────────────────────┘  │
+│  ┌──────────────────────┐  ┌───────────────────┐  ┌─────────────────────────┐   │
+│  │   Sign artifacts     │  │   Cache libs      │  │   Upload artifacts      │   │
+│  │   (if signing key    │  │   for later jobs  │  │   (ALWAYS)              │   │
+│  │    available)        │  │                   │  │                         │   │
+│  │                      │  │   key: libs-{id}  │  │  • plantuml-jar         │   │
+│  │   signMavenPub...    │  │                   │  │    (main JAR only)      │   │
+│  │   signPdfJar         │  │                   │  │                         │   │
+│  └──────────────────────┘  └───────────────────┘  │  • js-plantuml-zip      │   │
+│                                                   │    (TeaVM JS version)   │   │
+│                                                   └─────────────────────────┘   │
 │                                                                                 │
 │  Output: release_version (from gradle.properties)                               │
 │                                                                                 │
@@ -483,27 +480,27 @@ Legend:  ✓ = Runs    ✗ = Skipped    author = arnaudroques or The-Lum
 │  Condition: do_javadoc == 'true' (release or snapshot only)     │
 │  Depends on: build_artifacts, jdk8                              │
 │                                                                 │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────────┐  │
+│  ┌──────────────┐     ┌──────────────┐    ┌──────────────────┐  │
 │  │   Checkout   │───▶│ Setup JDK 17 │───▶│   gradle site    │  │
-│  └──────────────┘    └──────────────┘    └────────┬─────────┘  │
+│  └──────────────┘     └──────────────┘    └────────┬─────────┘  │
 │                                                   │             │
 │                                                   ▼             │
 │                                      ┌────────────────────────┐ │
-│                                      │  Deploy to GH Pages   │ │
-│                                      │  (peaceiris/actions-  │ │
-│                                      │   gh-pages@v4)        │ │
+│                                      │  Deploy to GH Pages    │ │
+│                                      │  (peaceiris/actions-   │ │
+│                                      │   gh-pages@v4)         │ │
 │                                      │                        │ │
 │                                      │  publish_dir:          │ │
 │                                      │    ./build/site        │ │
 │                                      └────────────────────────┘ │
 │                                                                 │
 │  Site contents (from gradle 'site' task):                       │
-│  ├── index.html ........... Project overview                   │
-│  ├── javadoc/ ............. API documentation                  │
-│  ├── tests/ ............... Test reports                       │
-│  ├── jacoco/ .............. Code coverage                      │
-│  ├── jdepend/ ............. Package dependencies               │
-│  └── js-plantuml/ ......... JavaScript demo                    │
+│  ├── index.html ........... Project overview                    │
+│  ├── javadoc/ ............. API documentation                   │
+│  ├── tests/ ............... Test reports                        │
+│  ├── jacoco/ .............. Code coverage                       │
+│  ├── jdepend/ ............. Package dependencies                │
+│  └── js-plantuml/ ......... JavaScript demo                     │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -515,41 +512,41 @@ Legend:  ✓ = Runs    ✗ = Skipped    author = arnaudroques or The-Lum
 **Purpose:** Uploads complete artifacts and publishes to Maven Central (release/snapshot only).
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                              upload Job                                         │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                 │
-│  Condition: do_release == 'true' OR do_snapshot_release == 'true'               │
-│  Depends on: workflow_config, build_artifacts, test_linux, jdk8                 │
-│                                                                                 │
+┌────────────────────────────────────────────────────────────────────────────────┐
+│                              upload Job                                        │
+├────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                │
+│  Condition: do_release == 'true' OR do_snapshot_release == 'true'              │
+│  Depends on: workflow_config, build_artifacts, test_linux, jdk8                │
+│                                                                                │
 │  ┌──────────────────────────────────────────────────────────────────────────┐  │
 │  │                        Restore cached libs                               │  │
 │  │                        (from build_artifacts job)                        │  │
 │  └──────────────────────────────────────────────────────────────────────────┘  │
-│                                         │                                       │
-│                                         ▼                                       │
+│                                         │                                      │
+│                                         ▼                                      │
 │  ┌──────────────────────────────────────────────────────────────────────────┐  │
 │  │                    Upload all artifacts to GitHub                        │  │
 │  │                    Name: {run_number}-artifacts                          │  │
 │  │                                                                          │  │
-│  │    • build/libs/* (all JARs and ZIPs)                                   │  │
+│  │    • build/libs/* (all JARs and ZIPs)                                    │  │
 │  │    • build/publications/maven/* (POM files)                              │  │
 │  │    • plantuml-{license}/build/libs (license variants)                    │  │
 │  └──────────────────────────────────────────────────────────────────────────┘  │
-│                                         │                                       │
-│                    ┌────────────────────┴────────────────────┐                  │
-│                    │                                         │                  │
-│                    ▼                                         ▼                  │
+│                                         │                                      │
+│                    ┌────────────────────┴────────────────────┐                 │
+│                    │                                         │                 │
+│                    ▼                                         ▼                 │
 │  ┌─────────────────────────────────┐      ┌─────────────────────────────────┐  │
 │  │      SNAPSHOT Release           │      │         FULL Release            │  │
 │  │   (do_snapshot_release=true)    │      │      (do_release=true)          │  │
 │  │                                 │      │                                 │  │
-│  │  • Run release-snapshot.sh     │      │  • Run release.sh               │  │
-│  │  • Publish to Maven Snapshots  │      │  • gradle publish               │  │
+│  │  • Run release-snapshot.sh      │      │  • Run release.sh               │  │
+│  │  • Publish to Maven Snapshots   │      │  • gradle publish               │  │
 │  │                                 │      │  • Push to OSSRH/Central        │  │
 │  └─────────────────────────────────┘      └─────────────────────────────────┘  │
-│                                                                                 │
-└─────────────────────────────────────────────────────────────────────────────────┘
+│                                                                                │
+└────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -559,40 +556,40 @@ Legend:  ✓ = Runs    ✗ = Skipped    author = arnaudroques or The-Lum
 **Purpose:** Builds and pushes multi-architecture Docker images (release only).
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                  push_to_docker_registry Job                    │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Condition: do_release == 'true'                                │
-│  Depends on: workflow_config, upload, test_linux                │
-│                                                                 │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │                   Setup & Login                          │   │
-│  │                                                          │   │
-│  │  • QEMU (for multi-arch builds)                          │   │
-│  │  • Docker Buildx                                         │   │
-│  │  • Login to Docker Hub                                   │   │
-│  │  • Login to GitHub Container Registry (ghcr.io)          │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                              │                                  │
-│                              ▼                                  │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │                 Build & Push Image                       │   │
-│  │                                                          │   │
-│  │  Platforms: linux/amd64, linux/arm64                     │   │
-│  │                                                          │   │
-│  │  Registries:                                             │   │
-│  │    • docker.io/plantuml/plantuml                         │   │
-│  │    • ghcr.io/plantuml/plantuml                           │   │
-│  │                                                          │   │
-│  │  Tags:                                                   │   │
-│  │    • {version} (e.g., 1.2024.1)                          │   │
-│  │    • {major}.{minor} (e.g., 1.2024)                      │   │
-│  │    • {major} (e.g., 1)                                   │   │
-│  │    • sha-{commit}                                        │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────────────┐
+│                  push_to_docker_registry Job                  │
+├───────────────────────────────────────────────────────────────┤
+│                                                               │
+│  Condition: do_release == 'true'                              │
+│  Depends on: workflow_config, upload, test_linux              │
+│                                                               │
+│  ┌─────────────────────────────────────────────────────────┐  │
+│  │                   Setup & Login                         │  │
+│  │                                                         │  │
+│  │  • QEMU (for multi-arch builds)                         │  │
+│  │  • Docker Buildx                                        │  │
+│  │  • Login to Docker Hub                                  │  │
+│  │  • Login to GitHub Container Registry (ghcr.io)         │  │
+│  └─────────────────────────────────────────────────────────┘  │
+│                              │                                │
+│                              ▼                                │
+│  ┌─────────────────────────────────────────────────────────┐  │
+│  │                 Build & Push Image                      │  │
+│  │                                                         │  │
+│  │  Platforms: linux/amd64, linux/arm64                    │  │
+│  │                                                         │  │
+│  │  Registries:                                            │  │
+│  │    • docker.io/plantuml/plantuml                        │  │
+│  │    • ghcr.io/plantuml/plantuml                          │  │
+│  │                                                         │  │
+│  │  Tags:                                                  │  │
+│  │    • {version} (e.g., 1.2024.1)                         │  │
+│  │    • {major}.{minor} (e.g., 1.2024)                     │  │
+│  │    • {major} (e.g., 1)                                  │  │
+│  │    • sha-{commit}                                       │  │
+│  └─────────────────────────────────────────────────────────┘  │
+│                                                               │
+└───────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -655,18 +652,18 @@ Legend:  ✓ = Runs    ✗ = Skipped    author = arnaudroques or The-Lum
 ### Mapping: CI Jobs → Gradle Tasks → Outputs
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                      Gradle Tasks Used in CI                                    │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                 │
-│  build_artifacts job:                                                           │
+┌────────────────────────────────────────────────────────────────────────────────┐
+│                      Gradle Tasks Used in CI                                   │
+├────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                │
+│  build_artifacts job:                                                          │
 │  ┌─────────────────────────────────────────────────────────────────────────┐   │
 │  │  gradle clean build pdfJar teavmZip generate*Publication -x test        │   │
 │  └─────────────────────────────────────────────────────────────────────────┘   │
-│                                                                                 │
-│  Task                              │  Output                                    │
-│  ─────────────────────────────────────────────────────────────────────────────  │
-│  clean ........................... │  Removes build/                            │
+│                                                                                │
+│  Task                              │  Output                                   │
+│  ───────────────────────────────────────────────────────────────────────────── │
+│  clean ........................... │  Removes build/                           │
 │  build (includes jar) ............ │  build/libs/plantuml-{ver}.jar            │
 │                                    │  build/libs/plantuml-{ver}-sources.jar    │
 │                                    │  build/libs/plantuml-{ver}-javadoc.jar    │
@@ -676,28 +673,28 @@ Legend:  ✓ = Runs    ✗ = Skipped    author = arnaudroques or The-Lum
 │  generatePomFileFor.............. │                                            │
 │  signMavenPublication ........... │  *.asc signature files                     │
 │  signPdfJar ..................... │  plantuml-pdf-*.jar.asc                    │
-│                                                                                 │
-│  test_linux job:                                                                │
+│                                                                                │
+│  test_linux job:                                                               │
 │  ┌─────────────────────────────────────────────────────────────────────────┐   │
 │  │  gradle compileJava                                                     │   │
 │  │  gradle test --no-daemon -i                                             │   │
 │  └─────────────────────────────────────────────────────────────────────────┘   │
-│                                                                                 │
-│  deploy_site job:                                                               │
+│                                                                                │
+│  deploy_site job:                                                              │
 │  ┌─────────────────────────────────────────────────────────────────────────┐   │
 │  │  gradle site                                                            │   │
 │  └─────────────────────────────────────────────────────────────────────────┘   │
-│                                                                                 │
-│  Task                              │  Output                                    │
-│  ─────────────────────────────────────────────────────────────────────────────  │
-│  site ............................ │  build/site/                               │
-│    └── javadoc ................... │    ├── javadoc/                            │
-│    └── test ...................... │    ├── tests/                              │
-│    └── jacocoTestReport .......... │    ├── jacoco/                             │
-│    └── jdepend ................... │    ├── jdepend/                            │
-│    └── teavm ..................... │    └── js-plantuml/                        │
-│                                                                                 │
-└─────────────────────────────────────────────────────────────────────────────────┘
+│                                                                                │
+│  Task                              │  Output                                   │
+│  ───────────────────────────────────────────────────────────────────────────── │
+│  site ............................ │  build/site/                              │
+│    └── javadoc ................... │    ├── javadoc/                           │
+│    └── test ...................... │    ├── tests/                             │
+│    └── jacocoTestReport .......... │    ├── jacoco/                            │
+│    └── jdepend ................... │    ├── jdepend/                           │
+│    └── teavm ..................... │    └── js-plantuml/                       │
+│                                                                                │
+└────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### TeaVM Build Pipeline (build.gradle.kts)
@@ -801,24 +798,23 @@ Snapshot version:    Extracted from src/net/sourceforge/plantuml/version/Version
 │                            Release Workflow                                     │
 ├─────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                 │
-│   1. Create tag: git tag v1.2024.8 && git push --tags                          │
+│   1. Create tag: git tag v1.2024.8 && git push --tags                           │
 │                                                                                 │
 │   2. CI detects tag creation by authorized user                                 │
 │                                                                                 │
 │   3. workflow_config sets:                                                      │
 │      • do_release = true                                                        │
-│      • pom_version = 1.2024.8                                                   │
 │      • do_javadoc = true                                                        │
 │                                                                                 │
 │   4. All jobs run:                                                              │
-│      ┌─────────────────────────────────────────────────────────────────────┐   │
-│      │  jdk8 ──────────────┐                                               │   │
-│      │  test_linux ────────┼──► upload ──┬──► push_to_docker_registry      │   │
-│      │  build_artifacts ───┘             │                                 │   │
-│      │                                   ├──► create_native_image_release  │   │
-│      │  deploy_site_to_gh_page           │                                 │   │
-│      │                                   └──► trigger_plantuml_eclipse     │   │
-│      └─────────────────────────────────────────────────────────────────────┘   │
+│      ┌─────────────────────────────────────────────────────────────────────┐    │
+│      │  jdk8 ──────────────┐                                               │    │
+│      │  test_linux ────────┼──► upload ──┬──► push_to_docker_registry      │    │
+│      │  build_artifacts ───┘             │                                 │    │
+│      │                                   ├──► create_native_image_release  │    │
+│      │  deploy_site_to_gh_page           │                                 │    │
+│      │                                   └──► trigger_plantuml_eclipse     │    │
+│      └─────────────────────────────────────────────────────────────────────┘    │
 │                                                                                 │
 │   5. Artifacts published to:                                                    │
 │      • GitHub Releases                                                          │
@@ -836,11 +832,10 @@ Snapshot version:    Extracted from src/net/sourceforge/plantuml/version/Version
 │                           Snapshot Workflow                                     │
 ├─────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                 │
-│   Trigger: Push to master by arnaudroques or The-Lum                           │
+│   Trigger: Push to master by 'arnaudroques' or 'The-Lum'                        │
 │                                                                                 │
 │   workflow_config sets:                                                         │
 │      • do_snapshot_release = true                                               │
-│      • pom_version = X.YYYY.Z-SNAPSHOT (from Version.java)                     │
 │      • do_javadoc = true                                                        │
 │                                                                                 │
 │   Actions:                                                                      │

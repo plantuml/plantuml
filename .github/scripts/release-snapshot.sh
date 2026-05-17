@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 set -ex
 
+echo "::group::[List JAR/ASC]"
 find . -name "*.jar"
 find . -name "*.asc"
+echo "::endgroup::"
 
 TAG="snapshot"
 DATE_TIME_UTC=$(date -u +"%F at %T (UTC)")
@@ -38,6 +40,9 @@ cp "plantuml-lgpl/build/libs/plantuml-lgpl-${RELEASE_VERSION}-sources.jar" "gith
 cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}.jar" "github_release/plantuml-mit-SNAPSHOT.jar"
 cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-mit-SNAPSHOT-javadoc.jar"
 cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-mit-SNAPSHOT-sources.jar"
+cp "plantuml-mit-light/build/libs/plantuml-mit-light-${RELEASE_VERSION}.jar" "github_release/plantuml-mit-light-SNAPSHOT.jar"
+cp "plantuml-mit-light/build/libs/plantuml-mit-light-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-mit-light-SNAPSHOT-javadoc.jar"
+cp "plantuml-mit-light/build/libs/plantuml-mit-light-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-mit-light-SNAPSHOT-sources.jar"
 cp "plantuml-gplv2/build/libs/plantuml-gplv2-${RELEASE_VERSION}.jar" "github_release/plantuml-gplv2-SNAPSHOT.jar"
 cp "plantuml-gplv2/build/libs/plantuml-gplv2-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-gplv2-SNAPSHOT-javadoc.jar"
 cp "plantuml-gplv2/build/libs/plantuml-gplv2-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-gplv2-SNAPSHOT-sources.jar"
@@ -68,6 +73,9 @@ if [[ -e "build/publications/maven/module.json.asc" ]]; then
   cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}.jar.asc" "github_release/plantuml-mit-SNAPSHOT.jar.asc"
   cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}-javadoc.jar.asc" "github_release/plantuml-mit-SNAPSHOT-javadoc.jar.asc"
   cp "plantuml-mit/build/libs/plantuml-mit-${RELEASE_VERSION}-sources.jar.asc" "github_release/plantuml-mit-SNAPSHOT-sources.jar.asc"
+  cp "plantuml-mit-light/build/libs/plantuml-mit-light-${RELEASE_VERSION}.jar.asc" "github_release/plantuml-mit-light-SNAPSHOT.jar.asc"
+  cp "plantuml-mit-light/build/libs/plantuml-mit-light-${RELEASE_VERSION}-javadoc.jar.asc" "github_release/plantuml-mit-light-SNAPSHOT-javadoc.jar.asc"
+  cp "plantuml-mit-light/build/libs/plantuml-mit-light-${RELEASE_VERSION}-sources.jar.asc" "github_release/plantuml-mit-light-SNAPSHOT-sources.jar.asc"
   cp "plantuml-gplv2/build/libs/plantuml-gplv2-${RELEASE_VERSION}.jar.asc" "github_release/plantuml-gplv2-SNAPSHOT.jar.asc"
   cp "plantuml-gplv2/build/libs/plantuml-gplv2-${RELEASE_VERSION}-javadoc.jar.asc" "github_release/plantuml-gplv2-SNAPSHOT-javadoc.jar.asc"
   cp "plantuml-gplv2/build/libs/plantuml-gplv2-${RELEASE_VERSION}-sources.jar.asc" "github_release/plantuml-gplv2-SNAPSHOT-sources.jar.asc"
@@ -77,7 +85,7 @@ echo -n "${DATE_TIME_UTC}" > "github_release/plantuml-SNAPSHOT.timestamp"
 
 cat <<-EOF >notes.txt
   ## Version ~v${RELEASE_VERSION%-SNAPSHOT} of the ${DATE_TIME_UTC}
-  This is a [JAR](https://en.wikipedia.org/wiki/JAR_(file_format)) pre-release of [the latest development work](https://github.com/plantuml/plantuml/commits/).
+  This is a [JAR](https://en.wikipedia.org/wiki/JAR_(file_format))/[JS](https://en.wikipedia.org/wiki/JavaScript) pre-release of [the latest development work](https://github.com/plantuml/plantuml/commits/).
   ⚠️  **It is not ready for general use** ⚠️
   ⏱  _Snapshot taken the ${DATE_TIME_UTC}_
 EOF
@@ -85,8 +93,8 @@ EOF
 gh release create \
   --prerelease \
   --target "${GITHUB_SHA}" \
-  --title "${TAG} - JAR (~v${RELEASE_VERSION%-SNAPSHOT})" \
+  --title "${TAG} - JAR/JS (~v${RELEASE_VERSION%-SNAPSHOT})" \
   --notes-file notes.txt \
   "${TAG}" github_release/*
 
-echo "::notice title=release snapshot::snapshot - JAR (~v${RELEASE_VERSION%-SNAPSHOT}) released at ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${TAG} and taken the ${DATE_TIME_UTC}"
+echo "::notice title=release snapshot::snapshot - JAR/JS (~v${RELEASE_VERSION%-SNAPSHOT}) released at ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${TAG} and taken the ${DATE_TIME_UTC}"

@@ -78,7 +78,6 @@ jobs:
     outputs:
       do_release: ${{ steps.config.outputs.do_release }}
       do_snapshot_release: ${{ steps.config.outputs.do_snapshot_release }}
-      pom_version: ${{ steps.config.outputs.pom_version }}
       do_javadoc: ${{ steps.config.outputs.do_javadoc }}
       do_test_linux: ${{ steps.config.outputs.do_test_linux }}
       do_test_windows: ${{ steps.config.outputs.do_test_windows }}
@@ -174,24 +173,19 @@ jobs:
           cache: gradle
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6.1.0
-#      - name: Set version in gradle.properties
-#        if: env.POM_VERSION
-#        env:
-#          POM_VERSION: ${{ needs.workflow_config.outputs.pom_version }}
-#        run: |
-#          sed -i "s/version = .*/version = $POM_VERSION/" gradle.properties
-#          cat gradle.properties
       - name: Generate artifacts
         run: |
-          echo "print gradle.properties"
-          cat gradle.properties
+          chmod +x .github/scripts/print-gradle-properties-and-release-version.sh
+          .github/scripts/print-gradle-properties-and-release-version.sh
           gradle patchCompilationInfo
           gradle clean build \
             pdfJar \
             teavmZip \
             generateMetadataFileForMavenPublication generatePomFileForMavenPublication \
             -x test
+          echo "::group::[List JAR]"
           find . -name "*.jar"
+          echo "::endgroup::"
       - name: Sign artifacts
         if: env.ORG_GRADLE_PROJECT_signingKey
         env:
@@ -199,13 +193,16 @@ jobs:
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
         run: |
           gradle -i signMavenPublication signPdfJar
+          echo "::group::[List LIBS]"
           ls -l build/libs
           ls -l plantuml-asl/build/libs
           ls -l plantuml-bsd/build/libs
           ls -l plantuml-epl/build/libs
           ls -l plantuml-lgpl/build/libs
           ls -l plantuml-mit/build/libs
+          ls -l plantuml-mit-light/build/libs
           ls -l plantuml-gplv2/build/libs
+          echo "::endgroup::"
       - name: Get release version
         id: version
         run: |
@@ -221,6 +218,7 @@ jobs:
             plantuml-epl/build/libs
             plantuml-lgpl/build/libs
             plantuml-mit/build/libs
+            plantuml-mit-light/build/libs
             plantuml-gplv2/build/libs
           key: "libs-${{ github.run_id }}"
           enableCrossOsArchive: true
@@ -272,8 +270,9 @@ jobs:
         run: |
           mkdir -p build/generated/teavm/js
           unzip -o build/libs/js-plantuml-*.zip -d build/generated/teavm/js
-          echo "Contents of build/generated/teavm/js:"
+          echo "::group::[List build/generated/teavm/js]"
           ls -la build/generated/teavm/js/
+          echo "::endgroup::"
 
       - name: Build Site for GH Page (without TeaVM rebuild)
         run: gradle siteAssemble
@@ -322,6 +321,7 @@ jobs:
             plantuml-epl/build/libs
             plantuml-lgpl/build/libs
             plantuml-mit/build/libs
+            plantuml-mit-light/build/libs
             plantuml-gplv2/build/libs
           key: "libs-${{ github.run_id }}"
           fail-on-cache-miss: true
@@ -340,6 +340,7 @@ jobs:
             plantuml-epl/build/libs
             plantuml-lgpl/build/libs
             plantuml-mit/build/libs
+            plantuml-mit-light/build/libs
             plantuml-gplv2/build/libs
 
       - name: Create snapshot
@@ -353,9 +354,8 @@ jobs:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ARTIFACT_SIGNING_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
         run: |
-          echo "print gradle.properties"
-          cat gradle.properties
-          echo "RELEASE_VERSION=$RELEASE_VERSION"
+          chmod +x .github/scripts/print-gradle-properties-and-release-version.sh
+          .github/scripts/print-gradle-properties-and-release-version.sh
           .github/scripts/release-snapshot.sh
 
       - name: Create release in GitHub and OSSRH
@@ -370,9 +370,8 @@ jobs:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ARTIFACT_SIGNING_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
         run: |
-          echo "print gradle.properties"
-          cat gradle.properties
-          echo "RELEASE_VERSION=$RELEASE_VERSION"
+          chmod +x .github/scripts/print-gradle-properties-and-release-version.sh
+          .github/scripts/print-gradle-properties-and-release-version.sh
           .github/scripts/release.sh
           gradle --debug publish
           NS="net.sourceforge.plantuml"
