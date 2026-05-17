@@ -136,63 +136,63 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2&lt;Class
 
 	@Override
 	protected final boolean isForbidden(CharSequence line) {
-<span class="nc" id="L139">		return FORBIDDEN_PATTERN.matcher(line).matches();</span>
+<span class="fc" id="L139">		return FORBIDDEN_PATTERN.matcher(line).matches();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L145">		String codeRaw = arg.getLazzy(&quot;CODE&quot;, 0);</span>
-<span class="nc" id="L146">		final String displayRaw = arg.getLazzy(&quot;DISPLAY&quot;, 0);</span>
-<span class="nc" id="L147">		final String symbol = &quot;interface&quot;;</span>
+<span class="fc" id="L145">		String codeRaw = arg.getLazzy(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L146">		final String displayRaw = arg.getLazzy(&quot;DISPLAY&quot;, 0);</span>
+<span class="fc" id="L147">		final String symbol = &quot;interface&quot;;</span>
 		final LeafType type;
 		final USymbol usymbol;
 
-<span class="nc" id="L151">		type = LeafType.DESCRIPTION;</span>
-<span class="nc" id="L152">		usymbol = USymbols.fromString(symbol, diagram.getSkinParam());</span>
+<span class="fc" id="L151">		type = LeafType.DESCRIPTION;</span>
+<span class="fc" id="L152">		usymbol = USymbols.fromString(symbol, diagram.getSkinParam());</span>
 
-<span class="nc" id="L154">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(codeRaw));</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="fc" id="L154">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(codeRaw));</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (quark.getData() != null)</span>
 <span class="nc" id="L156">			return CommandExecutionResult.error(&quot;This element (&quot; + quark.getName() + &quot;) is already defined&quot;);</span>
 
-<span class="nc" id="L158">		String display = displayRaw;</span>
-<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (display == null)</span>
-<span class="nc" id="L160">			display = quark.getName();</span>
+<span class="fc" id="L158">		String display = displayRaw;</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (display == null)</span>
+<span class="fc" id="L160">			display = quark.getName();</span>
 
-<span class="nc" id="L162">		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);</span>
-<span class="nc" id="L163">		final String stereotype = arg.getLazzy(&quot;STEREOTYPE&quot;, 0);</span>
-<span class="nc bnc" id="L164" title="All 2 branches missed.">		if (CommandCreateElementFull.existsWithBadType3(diagram, quark, type, usymbol))</span>
+<span class="fc" id="L162">		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);</span>
+<span class="fc" id="L163">		final String stereotype = arg.getLazzy(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		if (CommandCreateElementFull.existsWithBadType3(diagram, quark, type, usymbol))</span>
 <span class="nc" id="L165">			return CommandExecutionResult.error(&quot;This element (&quot; + quark.getName() + &quot;) is already defined&quot;);</span>
 
-<span class="nc" id="L167">		final Entity entity = diagram.reallyCreateLeaf(location, quark,</span>
-<span class="nc" id="L168">				Display.getWithNewlines(diagram.getPragma(), display), type, usymbol);</span>
-<span class="nc" id="L169">		entity.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));</span>
+<span class="fc" id="L167">		final Entity entity = diagram.reallyCreateLeaf(location, quark,</span>
+<span class="fc" id="L168">				Display.getWithNewlines(diagram.getPragma(), display), type, usymbol);</span>
+<span class="fc" id="L169">		entity.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));</span>
 
-<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		if (stereotype != null)</span>
 <span class="nc" id="L172">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
 <span class="nc" id="L173">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
 <span class="nc" id="L174">					diagram.getSkinParam().getIHtmlColorSet()));</span>
 
-<span class="nc" id="L176">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">		if (urlString != null) {</span>
+<span class="fc" id="L176">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		if (urlString != null) {</span>
 <span class="nc" id="L178">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
 <span class="nc" id="L179">			final Url url = urlBuilder.getUrl(urlString);</span>
 <span class="nc" id="L180">			entity.addUrl(url);</span>
 		}
 
-<span class="nc" id="L183">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L184">		final String s = arg.get(&quot;LINECOLOR&quot;, 1);</span>
+<span class="fc" id="L183">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L184">		final String s = arg.get(&quot;LINECOLOR&quot;, 1);</span>
 
-<span class="nc bnc" id="L186" title="All 2 branches missed.">		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
-<span class="nc bnc" id="L187" title="All 2 branches missed.">		if (lineColor != null)</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		if (lineColor != null)</span>
 <span class="nc" id="L188">			colors = colors.add(ColorType.LINE, lineColor);</span>
 
-<span class="nc" id="L190">		entity.setColors(colors);</span>
+<span class="fc" id="L190">		entity.setColors(colors);</span>
 
 		// entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
 		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get(&quot;COLOR&quot;,
 		// 0)));
-<span class="nc" id="L195">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L195">		return CommandExecutionResult.ok();</span>
 	}
 
 	private char getCharEncoding(final String codeRaw) {

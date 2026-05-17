@@ -77,14 +77,14 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 	}
 
 	public void draw(UGraphic ug, TextBlock tb, double xpadding, double ypadding, double width) {
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (this == HorizontalAlignment.LEFT) {</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		if (this == HorizontalAlignment.LEFT) {</span>
 <span class="fc" id="L81">			tb.drawU(ug.apply(new UTranslate(xpadding, ypadding)));</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		} else if (this == HorizontalAlignment.RIGHT) {</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		} else if (this == HorizontalAlignment.RIGHT) {</span>
 <span class="nc" id="L83">			final XDimension2D dimTb = tb.calculateDimension(ug.getStringBounder());</span>
 <span class="nc" id="L84">			tb.drawU(ug.apply(new UTranslate(width - dimTb.getWidth() - xpadding, ypadding)));</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		} else if (this == HorizontalAlignment.CENTER) {</span>
-<span class="nc" id="L86">			final XDimension2D dimTb = tb.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L87">			tb.drawU(ug.apply(new UTranslate((width - dimTb.getWidth()) / 2, ypadding)));</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		} else if (this == HorizontalAlignment.CENTER) {</span>
+<span class="fc" id="L86">			final XDimension2D dimTb = tb.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L87">			tb.drawU(ug.apply(new UTranslate((width - dimTb.getWidth()) / 2, ypadding)));</span>
 		}
 
 <span class="fc" id="L90">	}</span>

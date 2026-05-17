@@ -152,8 +152,8 @@ public final class ClusterHeader {
 <span class="fc" id="L152">		final SName sname = g.getSkinParam().getDiagramType().getStyleName();</span>
 		final StyleSignatureBasic signature;
 <span class="fc" id="L154">		final USymbol uSymbol = g.getUSymbol();</span>
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (g.getGroupType() == GroupType.STATE)</span>
-<span class="nc" id="L156">			signature = StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.name);</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (g.getGroupType() == GroupType.STATE)</span>
+<span class="fc" id="L156">			signature = StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.name);</span>
 <span class="fc bfc" id="L157" title="All 2 branches covered.">		else if (uSymbol != null)</span>
 <span class="fc" id="L158">			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, uSymbol.getSNames(), SName.composite,</span>
 					SName.title);

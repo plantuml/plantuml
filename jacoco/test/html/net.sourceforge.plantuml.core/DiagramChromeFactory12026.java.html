@@ -257,28 +257,28 @@ public final class DiagramChromeFactory12026 {
 	private static TextBlock decorateWithFrame(TextBlock original, Annotated annotated, ISkinParam skinParam) {
 
 <span class="fc" id="L259">		final Display mainFrame = annotated.getMainFrame().getDisplay();</span>
-<span class="pc bpc" id="L260" title="1 of 2 branches missed.">		if (Display.isNull(mainFrame))</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">		if (Display.isNull(mainFrame))</span>
 <span class="fc" id="L261">			return original;</span>
 
-<span class="nc" id="L263">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.mainframe)</span>
-<span class="nc" id="L264">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="nc" id="L265">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);</span>
-<span class="nc" id="L266">		final TextBlock title = mainFrame.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);</span>
+<span class="fc" id="L263">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.mainframe)</span>
+<span class="fc" id="L264">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L265">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, style);</span>
+<span class="fc" id="L266">		final TextBlock title = mainFrame.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);</span>
 
-<span class="nc" id="L268">		final Fashion symbolContext = style.getSymbolContext(skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L269">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="fc" id="L268">		final Fashion symbolContext = style.getSymbolContext(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L269">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
 
-<span class="nc" id="L271">		final TextBlock frame = new BigFrame(title, original, style.getPadding(), symbolContext);</span>
+<span class="fc" id="L271">		final TextBlock frame = new BigFrame(title, original, style.getPadding(), symbolContext);</span>
 
-<span class="nc" id="L273">		return new TextBlock() {</span>
+<span class="fc" id="L273">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L276">				final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L277">				final ClockwiseTopRightBottomLeft padding = computePadding(stringBounder);</span>
-<span class="nc" id="L278">				final UTranslate delta = computeDelta(stringBounder);</span>
-<span class="nc" id="L279">				frame.drawU(ug.apply(margin.getTranslate()));</span>
-<span class="nc" id="L280">				original.drawU(ug.apply(margin.getTranslate().compose(padding.getTranslate().compose(delta))));</span>
-<span class="nc" id="L281">			}</span>
+<span class="fc" id="L276">				final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L277">				final ClockwiseTopRightBottomLeft padding = computePadding(stringBounder);</span>
+<span class="fc" id="L278">				final UTranslate delta = computeDelta(stringBounder);</span>
+<span class="fc" id="L279">				frame.drawU(ug.apply(margin.getTranslate()));</span>
+<span class="fc" id="L280">				original.drawU(ug.apply(margin.getTranslate().compose(padding.getTranslate().compose(delta))));</span>
+<span class="fc" id="L281">			}</span>
 
 			@Override
 			public XRectangle2D getInnerPosition(CharSequence member, StringBounder sb) {
@@ -294,9 +294,9 @@ public final class DiagramChromeFactory12026 {
 			}
 
 			public XDimension2D calculateDimension(StringBounder sb) {
-<span class="nc" id="L297">				final XDimension2D frameDim = frame.calculateDimension(sb);</span>
-<span class="nc" id="L298">				return new XDimension2D(margin.getLeft() + frameDim.getWidth() + margin.getRight(),</span>
-<span class="nc" id="L299">						margin.getTop() + frameDim.getHeight() + margin.getBottom());</span>
+<span class="fc" id="L297">				final XDimension2D frameDim = frame.calculateDimension(sb);</span>
+<span class="fc" id="L298">				return new XDimension2D(margin.getLeft() + frameDim.getWidth() + margin.getRight(),</span>
+<span class="fc" id="L299">						margin.getTop() + frameDim.getHeight() + margin.getBottom());</span>
 			}
 
 			public HColor getBackcolor() {
@@ -304,15 +304,15 @@ public final class DiagramChromeFactory12026 {
 			}
 
 			private ClockwiseTopRightBottomLeft computePadding(StringBounder sb) {
-<span class="nc" id="L307">				final XDimension2D dimTitle = title.calculateDimension(sb);</span>
-<span class="nc" id="L308">				return style.getPadding().incTop(dimTitle.getHeight() + 10);</span>
+<span class="fc" id="L307">				final XDimension2D dimTitle = title.calculateDimension(sb);</span>
+<span class="fc" id="L308">				return style.getPadding().incTop(dimTitle.getHeight() + 10);</span>
 			}
 
 			private UTranslate computeDelta(StringBounder sb) {
-<span class="nc" id="L312">				final MinMax originalMinMax = TextBlockUtils.getMinMax(original, sb, false);</span>
-<span class="nc bnc" id="L313" title="All 2 branches missed.">				final double dx = originalMinMax.getMinX() &lt; 0 ? -originalMinMax.getMinX() : 0;</span>
-<span class="nc bnc" id="L314" title="All 2 branches missed.">				final double dy = originalMinMax.getMinY() &lt; 0 ? -originalMinMax.getMinY() : 0;</span>
-<span class="nc" id="L315">				return new UTranslate(dx, dy);</span>
+<span class="fc" id="L312">				final MinMax originalMinMax = TextBlockUtils.getMinMax(original, sb, false);</span>
+<span class="pc bpc" id="L313" title="1 of 2 branches missed.">				final double dx = originalMinMax.getMinX() &lt; 0 ? -originalMinMax.getMinX() : 0;</span>
+<span class="pc bpc" id="L314" title="1 of 2 branches missed.">				final double dy = originalMinMax.getMinY() &lt; 0 ? -originalMinMax.getMinY() : 0;</span>
+<span class="fc" id="L315">				return new UTranslate(dx, dy);</span>
 			}
 		};
 	}

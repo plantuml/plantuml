@@ -304,7 +304,7 @@ try {
     ST_Agnode_s u, v;
 <span class="fc" id="L305">    u = map_interclust_node(from);</span>
 <span class="fc" id="L306">    v = map_interclust_node(to);</span>
-<span class="pc bpc" id="L307" title="1 of 4 branches missed.">    if (u == from &amp;&amp; v == to)</span>
+<span class="fc bfc" id="L307" title="All 4 branches covered.">    if (u == from &amp;&amp; v == to)</span>
 <span class="fc" id="L308">	newtype = 1;</span>
     else
 <span class="fc" id="L310">	newtype = 5;</span>
@@ -357,12 +357,12 @@ try {
 	    }
 	    
 	    /* flat edges */
-<span class="pc bpc" id="L360" title="1 of 2 branches missed.">	    if (ND_rank(agtail(e)) == ND_rank(aghead(e))) {</span>
+<span class="fc bfc" id="L360" title="All 2 branches covered.">	    if (ND_rank(agtail(e)) == ND_rank(aghead(e))) {</span>
 		ST_Agedge_s fe;
-<span class="nc bnc" id="L362" title="All 2 branches missed.">		if ((fe = find_flat_edge(agtail(e), aghead(e))) == null) {</span>
-<span class="nc" id="L363">		    flat_edge(g, e);</span>
-<span class="nc" id="L364">		    prev = e;</span>
-<span class="nc bnc" id="L365" title="All 2 branches missed.">		} else if ((e != fe)) {</span>
+<span class="fc bfc" id="L362" title="All 2 branches covered.">		if ((fe = find_flat_edge(agtail(e), aghead(e))) == null) {</span>
+<span class="fc" id="L363">		    flat_edge(g, e);</span>
+<span class="fc" id="L364">		    prev = e;</span>
+<span class="pc bpc" id="L365" title="1 of 2 branches missed.">		} else if ((e != fe)) {</span>
 <span class="nc" id="L366">		 		    safe_other_edge(e);</span>
 <span class="nc bnc" id="L367" title="All 2 branches missed.">		 		    if ((ED_to_virt(e)) == null) merge_oneway(e, fe);</span>
 		}

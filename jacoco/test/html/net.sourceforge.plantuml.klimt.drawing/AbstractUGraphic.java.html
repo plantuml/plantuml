@@ -118,9 +118,9 @@ public abstract class AbstractUGraphic&lt;O&gt; extends AbstractCommonUGraphic {
 <span class="fc" id="L118">	}</span>
 
 	public final &lt;SHAPE extends UShape&gt; void draw(SHAPE shape) {
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (shape instanceof SpecialText) {</span>
-<span class="nc" id="L122">			((SpecialText) shape).getTitle().drawU(this);</span>
-<span class="nc" id="L123">			return;</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (shape instanceof SpecialText) {</span>
+<span class="fc" id="L122">			((SpecialText) shape).getTitle().drawU(this);</span>
+<span class="fc" id="L123">			return;</span>
 		}
 <span class="fc bfc" id="L125" title="All 2 branches covered.">		if (shape instanceof UEmpty)</span>
 <span class="fc" id="L126">			return;</span>

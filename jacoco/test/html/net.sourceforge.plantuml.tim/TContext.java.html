@@ -414,9 +414,9 @@ public class TContext {
 <span class="pc bpc" id="L414" title="1 of 2 branches missed.">		} else if (type == TLineType.ASSERT) {</span>
 <span class="nc" id="L415">			this.executeAssert(memory, s.getTrimmed());</span>
 <span class="nc" id="L416">			return null;</span>
-<span class="pc bpc" id="L417" title="1 of 2 branches missed.">		} else if (type == TLineType.OPTION) {</span>
-<span class="nc" id="L418">			this.executeOption(memory, s.getTrimmed());</span>
-<span class="nc" id="L419">			return null;</span>
+<span class="fc bfc" id="L417" title="All 2 branches covered.">		} else if (type == TLineType.OPTION) {</span>
+<span class="fc" id="L418">			this.executeOption(memory, s.getTrimmed());</span>
+<span class="fc" id="L419">			return null;</span>
 <span class="pc bpc" id="L420" title="1 of 2 branches missed.">		} else if (type == TLineType.UNDEF) {</span>
 <span class="nc" id="L421">			this.executeUndef(memory, s);</span>
 <span class="nc" id="L422">			return null;</span>
@@ -491,9 +491,9 @@ public class TContext {
 <span class="nc" id="L491">	}</span>
 
 	private void executeOption(TMemory memory, StringLocated s) throws EaterException {
-<span class="nc" id="L494">		final EaterOption condition = new EaterOption(s);</span>
-<span class="nc" id="L495">		condition.analyze(this, memory);</span>
-<span class="nc" id="L496">	}</span>
+<span class="fc" id="L494">		final EaterOption condition = new EaterOption(s);</span>
+<span class="fc" id="L495">		condition.analyze(this, memory);</span>
+<span class="fc" id="L496">	}</span>
 
 	private void executeUndef(TMemory memory, StringLocated s) throws EaterException {
 <span class="nc" id="L499">		final EaterUndef undef = new EaterUndef(s);</span>

@@ -70,7 +70,7 @@ public class RectangleArea {
 	}
 
 	public boolean contains(double x, double y) {
-<span class="nc bnc" id="L73" title="All 8 branches missed.">		return x &gt;= minX &amp;&amp; x &lt; maxX &amp;&amp; y &gt;= minY &amp;&amp; y &lt; maxY;</span>
+<span class="pc bpc" id="L73" title="1 of 8 branches missed.">		return x &gt;= minX &amp;&amp; x &lt; maxX &amp;&amp; y &gt;= minY &amp;&amp; y &lt; maxY;</span>
 	}
 
 	public RectangleArea merge(RectangleArea other) {
@@ -86,7 +86,7 @@ public class RectangleArea {
 	}
 
 	public boolean contains(XPoint2D p) {
-<span class="nc" id="L89">		return contains(p.getX(), p.getY());</span>
+<span class="fc" id="L89">		return contains(p.getX(), p.getY());</span>
 	}
 
 	@Override
@@ -192,7 +192,7 @@ public class RectangleArea {
 	}
 
 	public XDimension2D getDimension() {
-<span class="nc" id="L195">		return new XDimension2D(maxX - minX, maxY - minY);</span>
+<span class="fc" id="L195">		return new XDimension2D(maxX - minX, maxY - minY);</span>
 	}
 
 	public UTranslate getPosition() {

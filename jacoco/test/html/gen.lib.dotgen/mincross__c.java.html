@@ -1139,11 +1139,11 @@ try {
 <span class="fc" id="L1139">    ND_mark(v, true);</span>
 <span class="fc" id="L1140">    ND_onstack(v, true);</span>
 <span class="fc bfc" id="L1141" title="All 2 branches covered.">    hascl = (GD_n_cluster(dot_root(g)) &gt; 0);</span>
-<span class="pc bpc" id="L1142" title="1 of 2 branches missed.">    if (ND_flat_out(v).list!=null)</span>
+<span class="fc bfc" id="L1142" title="All 2 branches covered.">    if (ND_flat_out(v).list!=null)</span>
 <span class="fc bfc" id="L1143" title="All 2 branches covered.">	for (i = 0; (e = (ST_Agedge_s) ND_flat_out(v).list.get_(i))!=null; i++) {</span>
 <span class="fc bfc" id="L1144" title="All 2 branches covered.">	    if (hascl</span>
-<span class="pc bpc" id="L1145" title="2 of 4 branches missed.">		&amp;&amp; !(agcontains(zz, g, agtail(e)) &amp;&amp; agcontains(zz, g, aghead(e))))</span>
-<span class="nc" id="L1146">		continue;</span>
+<span class="pc bpc" id="L1145" title="1 of 4 branches missed.">		&amp;&amp; !(agcontains(zz, g, agtail(e)) &amp;&amp; agcontains(zz, g, aghead(e))))</span>
+<span class="fc" id="L1146">		continue;</span>
 <span class="pc bpc" id="L1147" title="1 of 2 branches missed.">	    if (ED_weight(e) == 0)</span>
 <span class="nc" id="L1148">		continue;</span>
 <span class="pc bpc" id="L1149" title="1 of 2 branches missed.">	    if (ND_onstack(aghead(e)) == true) {</span>

@@ -545,7 +545,7 @@ try {
 <span class="fc" id="L545">    P.nbox = 0;</span>
 <span class="fc" id="L546">    P.data = e;</span>
 <span class="fc" id="L547">    endp.np.___(P.start.p);</span>
-<span class="pc bpc" id="L548" title="1 of 6 branches missed.">    if ((et == REGULAREDGE) &amp;&amp; (ND_node_type(n) == NORMAL) &amp;&amp; ((side = ED_tail_port(e).side)!=0)) {</span>
+<span class="fc bfc" id="L548" title="All 6 branches covered.">    if ((et == REGULAREDGE) &amp;&amp; (ND_node_type(n) == NORMAL) &amp;&amp; ((side = ED_tail_port(e).side)!=0)) {</span>
 	ST_Agedge_s orig;
 <span class="fc" id="L550">	final ST_boxf b0 = new ST_boxf(), b = endp.nb.copy();</span>
 <span class="pc bpc" id="L551" title="1 of 2 branches missed.">	if ((side &amp; TOP)!=0) {</span>
@@ -611,7 +611,7 @@ try {
 <span class="nc" id="L611">UNSUPPORTED(&quot;2tw6ymudedo6qij3ux424ydsi&quot;); // 	    ED_head_port(orig).clip = 0;</span>
 <span class="fc" id="L612"> 	return;</span>
     }
-<span class="pc bpc" id="L614" title="3 of 4 branches missed.">    if ((et == FLATEDGE) &amp;&amp; ((side = ED_tail_port(e).side)!=0)) {</span>
+<span class="pc bpc" id="L614" title="1 of 4 branches missed.">    if ((et == FLATEDGE) &amp;&amp; ((side = ED_tail_port(e).side)!=0)) {</span>
 <span class="nc" id="L615">UNSUPPORTED(&quot;ew7nyfe712nsiphifeztwxfop&quot;); // 	boxf b0, b = endp-&gt;nb;</span>
 <span class="nc" id="L616">UNSUPPORTED(&quot;a7lrhlfwr0y475aqjk6abhb3b&quot;); // 	edge_t* orig;</span>
 <span class="nc" id="L617">UNSUPPORTED(&quot;ait3wtnnvt134z2k87lvhq4ek&quot;); // 	if (side &amp; (1&lt;&lt;2)) {</span>
@@ -678,15 +678,15 @@ try {
 <span class="nc" id="L678">UNSUPPORTED(&quot;a7fgam0j0jm7bar0mblsv3no4&quot;); // 	return;</span>
     }
     
-<span class="pc bpc" id="L681" title="1 of 2 branches missed.">    if (et == REGULAREDGE) side = BOTTOM;</span>
-<span class="nc" id="L682">    else side = endp.sidemask;  /* for flat edges */</span>
+<span class="fc bfc" id="L681" title="All 2 branches covered.">    if (et == REGULAREDGE) side = BOTTOM;</span>
+<span class="fc" id="L682">    else side = endp.sidemask;  /* for flat edges */</span>
 <span class="fc bfc" id="L683" title="All 2 branches covered.">    if (pboxfn!=null</span>
 <span class="pc bpc" id="L684" title="1 of 2 branches missed.">	&amp;&amp; (mask = (Integer) pboxfn.exe(zz, n, ED_tail_port(e), side, endp.boxes[0], endp.boxn))!=0)</span>
 <span class="nc" id="L685">	endp.sidemask = mask;</span>
     else {
 <span class="fc" id="L687">    endp.boxes[0].___(endp.nb);</span>
 <span class="fc" id="L688">	endp.boxn[0] = 1;</span>
-<span class="pc bpc" id="L689" title="3 of 4 branches missed.">	switch (et) {</span>
+<span class="pc bpc" id="L689" title="2 of 4 branches missed.">	switch (et) {</span>
 	case SELFEDGE:
 	/* moving the box UR.y by + 1 avoids colinearity between
 	   port point and box that confuses Proutespline().  it's
@@ -696,8 +696,8 @@ try {
 <span class="nc" id="L696">UNSUPPORTED(&quot;auefgwb39x5hzqqc9b1zgl239&quot;); // 	    endp-&gt;sidemask = 1&lt;&lt;0;</span>
 <span class="nc" id="L697">	    break;</span>
 	case FLATEDGE:
-<span class="nc bnc" id="L699" title="All 2 branches missed.">	    if (endp.sidemask == TOP)</span>
-<span class="nc" id="L700">		endp.boxes[0].LL.y = P.start.p.y;</span>
+<span class="pc bpc" id="L699" title="1 of 2 branches missed.">	    if (endp.sidemask == TOP)</span>
+<span class="fc" id="L700">		endp.boxes[0].LL.y = P.start.p.y;</span>
 	    else
 <span class="nc" id="L702">	    	endp.boxes[0].UR.y = P.start.p.y;</span>
 <span class="nc" id="L703">	    break;</span>
@@ -757,7 +757,7 @@ try {
 <span class="fc" id="L757">	    P.end.constrained = false;</span>
     }
 <span class="fc" id="L759">    endp.np.___(P.end.p);</span>
-<span class="pc bpc" id="L760" title="2 of 6 branches missed.">    if ((et == REGULAREDGE) &amp;&amp; (ND_node_type(n) == NORMAL) &amp;&amp; ((side = ED_head_port(e).side)!=0)) {</span>
+<span class="pc bpc" id="L760" title="1 of 6 branches missed.">    if ((et == REGULAREDGE) &amp;&amp; (ND_node_type(n) == NORMAL) &amp;&amp; ((side = ED_head_port(e).side)!=0)) {</span>
 	ST_Agedge_s orig;
 <span class="nc" id="L762">	final ST_boxf b0 = new ST_boxf(), b = endp.nb.copy();</span>
 <span class="nc bnc" id="L763" title="All 2 branches missed.">	if ((side &amp; TOP)!=0) {</span>
@@ -824,7 +824,7 @@ try {
 <span class="nc" id="L824">	endp.sidemask = side;</span>
 <span class="nc" id="L825">	return;</span>
     }
-<span class="pc bpc" id="L827" title="3 of 4 branches missed.">    if ((et == FLATEDGE) &amp;&amp; ((side = ED_head_port(e).side)!=0)) {</span>
+<span class="pc bpc" id="L827" title="1 of 4 branches missed.">    if ((et == FLATEDGE) &amp;&amp; ((side = ED_head_port(e).side)!=0)) {</span>
 <span class="nc" id="L828">UNSUPPORTED(&quot;ew7nyfe712nsiphifeztwxfop&quot;); // 	boxf b0, b = endp-&gt;nb;</span>
 <span class="nc" id="L829">UNSUPPORTED(&quot;a7lrhlfwr0y475aqjk6abhb3b&quot;); // 	edge_t* orig;</span>
 <span class="nc" id="L830">UNSUPPORTED(&quot;ait3wtnnvt134z2k87lvhq4ek&quot;); // 	if (side &amp; (1&lt;&lt;2)) {</span>
@@ -891,8 +891,8 @@ try {
 <span class="nc" id="L891">UNSUPPORTED(&quot;a7fgam0j0jm7bar0mblsv3no4&quot;); // 	return;</span>
     }
     
-<span class="pc bpc" id="L894" title="1 of 2 branches missed.">    if (et == REGULAREDGE) side = TOP;</span>
-<span class="nc" id="L895">    else side = endp.sidemask;  /* for flat edges */</span>
+<span class="fc bfc" id="L894" title="All 2 branches covered.">    if (et == REGULAREDGE) side = TOP;</span>
+<span class="fc" id="L895">    else side = endp.sidemask;  /* for flat edges */</span>
 <span class="fc bfc" id="L896" title="All 2 branches covered.">    if (pboxfn!=null</span>
 <span class="pc bpc" id="L897" title="1 of 2 branches missed.">	&amp;&amp; (mask = (Integer) pboxfn.exe(zz, n, ED_head_port(e), side, endp.boxes[0], endp.boxn))!=0)</span>
 <span class="nc" id="L898">	endp.sidemask = mask;</span>
@@ -900,7 +900,7 @@ try {
 <span class="fc" id="L900">    	endp.boxes[0].___(endp.nb);</span>
 <span class="fc" id="L901">	endp.boxn[0] = 1;</span>
 	
-<span class="pc bpc" id="L903" title="3 of 4 branches missed.">	switch (et) {</span>
+<span class="pc bpc" id="L903" title="2 of 4 branches missed.">	switch (et) {</span>
 	case SELFEDGE:
 	    /* offset of -1 is symmetric w.r.t. beginpath() 
 	     * FIXME: is any of this right?  what if self-edge 
@@ -910,8 +910,8 @@ try {
 <span class="nc" id="L910">UNSUPPORTED(&quot;1r4lctdj9z1ivlz3uqpcj1yzf&quot;); // 	    endp-&gt;sidemask = 1&lt;&lt;2;</span>
 <span class="nc" id="L911">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
 	case FLATEDGE:
-<span class="nc bnc" id="L913" title="All 2 branches missed.">	    if (endp.sidemask == TOP)</span>
-<span class="nc" id="L914">	    	endp.boxes[0].LL.y = P.end.p.y;</span>
+<span class="pc bpc" id="L913" title="1 of 2 branches missed.">	    if (endp.sidemask == TOP)</span>
+<span class="fc" id="L914">	    	endp.boxes[0].LL.y = P.end.p.y;</span>
 	    else
 <span class="nc" id="L916">	    	endp.boxes[0].UR.y = P.end.p.y;</span>
 <span class="nc" id="L917">	    break;</span>

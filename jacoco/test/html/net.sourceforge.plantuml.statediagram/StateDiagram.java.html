@@ -108,18 +108,18 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 	public Entity getEnd(LineLocation location) {
 <span class="fc" id="L110">		final Entity p = getCurrentGroup();</span>
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (p.isRoot()) {</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (p.isRoot()) {</span>
 <span class="fc" id="L112">			final String idShort = &quot;*end*&quot;;</span>
 <span class="fc" id="L113">			final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
 <span class="fc bfc" id="L114" title="All 2 branches covered.">			if (quark.getData() == null)</span>
 <span class="fc" id="L115">				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.CIRCLE_END, null);</span>
 <span class="fc" id="L116">			return quark.getData();</span>
 		}
-<span class="nc" id="L118">		final String idShort = &quot;*end*&quot; + p.getName();</span>
-<span class="nc" id="L119">		final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (quark.getData() == null)</span>
-<span class="nc" id="L121">			reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.CIRCLE_END, null);</span>
-<span class="nc" id="L122">		return quark.getData();</span>
+<span class="fc" id="L118">		final String idShort = &quot;*end*&quot; + p.getName();</span>
+<span class="fc" id="L119">		final Quark&lt;Entity&gt; quark = quarkInContext(true, cleanId(idShort));</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (quark.getData() == null)</span>
+<span class="fc" id="L121">			reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), &quot;&quot;), LeafType.CIRCLE_END, null);</span>
+<span class="fc" id="L122">		return quark.getData();</span>
 	}
 
 	public Entity getHistorical(LineLocation location) {
@@ -269,14 +269,14 @@ import net.sourceforge.plantuml.utils.LineLocation;
 <span class="pc bpc" id="L269" title="1 of 2 branches missed.">		while (current != null) {</span>
 <span class="fc" id="L270">			final Quark&lt;Entity&gt; parent = current.getParent();</span>
 
-<span class="pc bpc" id="L272" title="2 of 4 branches missed.">			if (parent == null || parent.getData() != null)</span>
+<span class="pc bpc" id="L272" title="1 of 4 branches missed.">			if (parent == null || parent.getData() != null)</span>
 <span class="fc" id="L273">				return;</span>
 
-<span class="nc" id="L275">			final Entity parentGroup = this.createGroup(location, parent, GroupType.STATE);</span>
-<span class="nc" id="L276">			parentGroup.setDisplay(Display.getWithNewlines(parent));</span>
+<span class="fc" id="L275">			final Entity parentGroup = this.createGroup(location, parent, GroupType.STATE);</span>
+<span class="fc" id="L276">			parentGroup.setDisplay(Display.getWithNewlines(parent));</span>
 
-<span class="nc" id="L278">			current = parent;</span>
-<span class="nc" id="L279">		}</span>
+<span class="fc" id="L278">			current = parent;</span>
+<span class="fc" id="L279">		}</span>
 <span class="nc" id="L280">	}</span>
 
 }

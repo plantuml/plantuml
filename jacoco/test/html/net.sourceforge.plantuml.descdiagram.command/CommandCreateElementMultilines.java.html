@@ -77,7 +77,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2&lt;Abstra
 	};
 
 <span class="fc" id="L79">	private final static Lazy&lt;Pattern2&gt; END0 = new Lazy&lt;&gt;(</span>
-<span class="nc" id="L80">			() -&gt; Pattern2.cmpile(&quot;^(.*)[%g]$&quot;));</span>
+<span class="fc" id="L80">			() -&gt; Pattern2.cmpile(&quot;^(.*)[%g]$&quot;));</span>
 
 <span class="fc" id="L82">	private final static Lazy&lt;Pattern2&gt; END1 = new Lazy&lt;&gt;(</span>
 <span class="fc" id="L83">			() -&gt; Pattern2.cmpile(&quot;^([^\\[\\]]*)\\]$&quot;));</span>
@@ -153,8 +153,8 @@ public class CommandCreateElementMultilines extends CommandMultilines2&lt;Abstra
 <span class="fc" id="L153">		lines = lines.subExtract(1, 1);</span>
 <span class="fc" id="L154">		Display display = lines.toDisplay();</span>
 <span class="fc" id="L155">		final String descStart = line0.get(&quot;DESC&quot;, 0);</span>
-<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (StringUtils.isNotEmpty(descStart))</span>
-<span class="nc" id="L157">			display = display.addFirst(descStart);</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (StringUtils.isNotEmpty(descStart))</span>
+<span class="fc" id="L157">			display = display.addFirst(descStart);</span>
 
 <span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (StringUtils.isNotEmpty(lineLast.get(0)))</span>
 <span class="nc" id="L160">			display = display.add(lineLast.get(0));</span>

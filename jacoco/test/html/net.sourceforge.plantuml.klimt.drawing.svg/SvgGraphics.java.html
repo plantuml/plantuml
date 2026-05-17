@@ -336,19 +336,19 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 <span class="fc" id="L336">		svg.setAttribute(&quot;xmlns:xlink&quot;, &quot;http://www.w3.org/1999/xlink&quot;);</span>
 <span class="fc" id="L337">		svg.setAttribute(&quot;version&quot;, &quot;1.1&quot;);</span>
 
-<span class="pc bpc" id="L339" title="1 of 2 branches missed.">		if (option.getTitle() != null) {</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">		if (option.getTitle() != null) {</span>
 			// Create a title element and set its text
-<span class="nc" id="L341">			final Element title = document.createElement(&quot;title&quot;);</span>
-<span class="nc" id="L342">			title.setTextContent(option.getTitle());</span>
-<span class="nc" id="L343">			svg.appendChild(title);</span>
+<span class="fc" id="L341">			final Element title = document.createElement(&quot;title&quot;);</span>
+<span class="fc" id="L342">			title.setTextContent(option.getTitle());</span>
+<span class="fc" id="L343">			svg.appendChild(title);</span>
 		}
 
 <span class="fc" id="L346">		final String desc = option.getDesc();</span>
-<span class="pc bpc" id="L347" title="1 of 2 branches missed.">		if (desc != null) {</span>
+<span class="fc bfc" id="L347" title="All 2 branches covered.">		if (desc != null) {</span>
 			// Create a desc element and set its text
-<span class="nc" id="L349">			final Element descElement = document.createElement(&quot;desc&quot;);</span>
-<span class="nc" id="L350">			descElement.setTextContent(desc);</span>
-<span class="nc" id="L351">			svg.appendChild(descElement);</span>
+<span class="fc" id="L349">			final Element descElement = document.createElement(&quot;desc&quot;);</span>
+<span class="fc" id="L350">			descElement.setTextContent(desc);</span>
+<span class="fc" id="L351">			svg.appendChild(descElement);</span>
 		}
 <span class="fc" id="L353">		return svg;</span>
 	}
@@ -1170,46 +1170,46 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 		private final String title;
 		private final String target;
 
-<span class="nc" id="L1173">		public LinkData(String url, String title, String target) {</span>
+<span class="fc" id="L1173">		public LinkData(String url, String title, String target) {</span>
 			// javascript: security issue
-<span class="nc bnc" id="L1175" title="All 2 branches missed.">			if (SecurityUtils.ignoreThisLink(Objects.requireNonNull(url)))</span>
+<span class="pc bpc" id="L1175" title="1 of 2 branches missed.">			if (SecurityUtils.ignoreThisLink(Objects.requireNonNull(url)))</span>
 <span class="nc" id="L1176">				this.url = &quot;&quot;;</span>
 			else
-<span class="nc" id="L1178">				this.url = url;</span>
-<span class="nc" id="L1179">			this.title = title;</span>
-<span class="nc" id="L1180">			this.target = target;</span>
-<span class="nc" id="L1181">		}</span>
+<span class="fc" id="L1178">				this.url = url;</span>
+<span class="fc" id="L1179">			this.title = title;</span>
+<span class="fc" id="L1180">			this.target = target;</span>
+<span class="fc" id="L1181">		}</span>
 
-<span class="nc" id="L1183">		private static final Pattern p = Pattern.compile(&quot;\\&lt;U\\+([0-9A-Fa-f]+)\\&gt;&quot;);</span>
+<span class="fc" id="L1183">		private static final Pattern p = Pattern.compile(&quot;\\&lt;U\\+([0-9A-Fa-f]+)\\&gt;&quot;);</span>
 
 		String getXlinkTitle() {
-<span class="nc bnc" id="L1186" title="All 2 branches missed.">			if (title == null)</span>
+<span class="pc bpc" id="L1186" title="1 of 2 branches missed.">			if (title == null)</span>
 <span class="nc" id="L1187">				return url;</span>
 
-<span class="nc" id="L1189">			final Matcher m = p.matcher(title);</span>
-<span class="nc" id="L1190">			final StringBuffer sb = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8</span>
-<span class="nc bnc" id="L1191" title="All 2 branches missed.">			while (m.find()) {</span>
+<span class="fc" id="L1189">			final Matcher m = p.matcher(title);</span>
+<span class="fc" id="L1190">			final StringBuffer sb = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8</span>
+<span class="pc bpc" id="L1191" title="1 of 2 branches missed.">			while (m.find()) {</span>
 <span class="nc" id="L1192">				final String num = m.group(1);</span>
 <span class="nc" id="L1193">				final char c = (char) Integer.parseInt(num, 16);</span>
 <span class="nc" id="L1194">				m.appendReplacement(sb, &quot;&quot; + c);</span>
 <span class="nc" id="L1195">			}</span>
-<span class="nc" id="L1196">			m.appendTail(sb);</span>
+<span class="fc" id="L1196">			m.appendTail(sb);</span>
 
-<span class="nc" id="L1198">			return sb.toString().replaceAll(&quot;\\\\n&quot;, &quot;\n&quot;);</span>
+<span class="fc" id="L1198">			return sb.toString().replaceAll(&quot;\\\\n&quot;, &quot;\n&quot;);</span>
 		}
 
 		public void updateAttributesOf(Element element) {
-<span class="nc" id="L1202">			element.setAttribute(&quot;target&quot;, target);</span>
-<span class="nc" id="L1203">			element.setAttribute(XLINK_HREF1, url);</span>
-<span class="nc" id="L1204">			element.setAttribute(XLINK_HREF2, url);</span>
-<span class="nc" id="L1205">			element.setAttribute(&quot;xlink:type&quot;, &quot;simple&quot;);</span>
-<span class="nc" id="L1206">			element.setAttribute(&quot;xlink:actuate&quot;, &quot;onRequest&quot;);</span>
-<span class="nc" id="L1207">			element.setAttribute(&quot;xlink:show&quot;, &quot;new&quot;);</span>
-<span class="nc" id="L1208">			final String title = getXlinkTitle();</span>
-<span class="nc" id="L1209">			element.setAttribute(XLINK_TITLE1, title);</span>
-<span class="nc" id="L1210">			element.setAttribute(XLINK_TITLE2, title);</span>
+<span class="fc" id="L1202">			element.setAttribute(&quot;target&quot;, target);</span>
+<span class="fc" id="L1203">			element.setAttribute(XLINK_HREF1, url);</span>
+<span class="fc" id="L1204">			element.setAttribute(XLINK_HREF2, url);</span>
+<span class="fc" id="L1205">			element.setAttribute(&quot;xlink:type&quot;, &quot;simple&quot;);</span>
+<span class="fc" id="L1206">			element.setAttribute(&quot;xlink:actuate&quot;, &quot;onRequest&quot;);</span>
+<span class="fc" id="L1207">			element.setAttribute(&quot;xlink:show&quot;, &quot;new&quot;);</span>
+<span class="fc" id="L1208">			final String title = getXlinkTitle();</span>
+<span class="fc" id="L1209">			element.setAttribute(XLINK_TITLE1, title);</span>
+<span class="fc" id="L1210">			element.setAttribute(XLINK_TITLE2, title);</span>
 
-<span class="nc" id="L1212">		}</span>
+<span class="fc" id="L1212">		}</span>
 	}
 
 <span class="fc" id="L1215">	private final List&lt;Element&gt; pendingElements = new ArrayList&lt;&gt;();</span>
@@ -1238,11 +1238,11 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 	 * Validates state to ensure no nested or invalid link closures occur.
 	 */
 	private void closeTopActiveLinkIfNeeded() {
-<span class="pc bpc" id="L1241" title="1 of 2 branches missed.">		if (activeLinks.size() &gt; 0) {</span>
-<span class="nc bnc" id="L1242" title="All 2 branches missed.">			if (pendingElements.get(0).getTagName().equals(&quot;a&quot;) == false)</span>
+<span class="fc bfc" id="L1241" title="All 2 branches covered.">		if (activeLinks.size() &gt; 0) {</span>
+<span class="pc bpc" id="L1242" title="1 of 2 branches missed.">			if (pendingElements.get(0).getTagName().equals(&quot;a&quot;) == false)</span>
 <span class="nc" id="L1243">				throw new IllegalStateException(&quot;Expected top pending element to be a link.&quot;);</span>
 			// Move active link element to document since it's being closed
-<span class="nc" id="L1245">			closeTopPendingElement();</span>
+<span class="fc" id="L1245">			closeTopPendingElement();</span>
 		}
 
 		// Check for invalid state: no links should remain pending
@@ -1253,10 +1253,10 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 <span class="fc" id="L1253">	}</span>
 
 	private void addTopOpenedLinkIfNeeded() {
-<span class="pc bpc" id="L1256" title="1 of 2 branches missed.">		if (activeLinks.size() &gt; 0) {</span>
-<span class="nc" id="L1257">			final LinkData link = activeLinks.get(0);</span>
-<span class="nc" id="L1258">			pendingElements.add(0, document.createElement(&quot;a&quot;));</span>
-<span class="nc" id="L1259">			link.updateAttributesOf(pendingElements.get(0));</span>
+<span class="fc bfc" id="L1256" title="All 2 branches covered.">		if (activeLinks.size() &gt; 0) {</span>
+<span class="fc" id="L1257">			final LinkData link = activeLinks.get(0);</span>
+<span class="fc" id="L1258">			pendingElements.add(0, document.createElement(&quot;a&quot;));</span>
+<span class="fc" id="L1259">			link.updateAttributesOf(pendingElements.get(0));</span>
 		}
 <span class="fc" id="L1261">	}</span>
 
@@ -1270,30 +1270,30 @@ import net.sourceforge.plantuml.xml.XmlFactories;
 		// https://github.com/plantuml/plantuml/issues/2148
 
 		// Ensure previous active link is closed before opening a new one
-<span class="nc" id="L1273">		closeTopActiveLinkIfNeeded();</span>
-<span class="nc" id="L1274">		activeLinks.add(0, new LinkData(url, title, target));</span>
+<span class="fc" id="L1273">		closeTopActiveLinkIfNeeded();</span>
+<span class="fc" id="L1274">		activeLinks.add(0, new LinkData(url, title, target));</span>
 
 		// Create a new pending link element based on provided details
-<span class="nc" id="L1277">		addTopOpenedLinkIfNeeded();</span>
-<span class="nc" id="L1278">	}</span>
+<span class="fc" id="L1277">		addTopOpenedLinkIfNeeded();</span>
+<span class="fc" id="L1278">	}</span>
 
 	/**
 	 * Closes the currently active link and updates the pending elements
 	 * accordingly.
 	 */
 	public void closeLink() {
-<span class="nc bnc" id="L1285" title="All 4 branches missed.">		if (pendingElements.size() == 0 || activeLinks.size() == 0</span>
-<span class="nc bnc" id="L1286" title="All 2 branches missed.">				|| pendingElements.get(0).getTagName().equals(&quot;a&quot;) == false)</span>
+<span class="pc bpc" id="L1285" title="2 of 4 branches missed.">		if (pendingElements.size() == 0 || activeLinks.size() == 0</span>
+<span class="pc bpc" id="L1286" title="1 of 2 branches missed.">				|| pendingElements.get(0).getTagName().equals(&quot;a&quot;) == false)</span>
 <span class="nc" id="L1287">			throw new IllegalStateException(&quot;Attempting to close a link in an invalid state.&quot;);</span>
 
 		// Close active link properly
-<span class="nc" id="L1290">		closeTopActiveLinkIfNeeded();</span>
-<span class="nc" id="L1291">		activeLinks.remove(0);</span>
+<span class="fc" id="L1290">		closeTopActiveLinkIfNeeded();</span>
+<span class="fc" id="L1291">		activeLinks.remove(0);</span>
 
 		// Re-create pending link element if necessary
-<span class="nc" id="L1294">		addTopOpenedLinkIfNeeded();</span>
+<span class="fc" id="L1294">		addTopOpenedLinkIfNeeded();</span>
 
-<span class="nc" id="L1296">	}</span>
+<span class="fc" id="L1296">	}</span>
 
 	/**
 	 * Closes the current SVG group element.

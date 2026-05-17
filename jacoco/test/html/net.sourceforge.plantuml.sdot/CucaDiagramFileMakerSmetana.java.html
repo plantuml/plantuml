@@ -224,8 +224,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	// Duplicate GeneralImageBuilder
 	private boolean isOpalisable(Entity entity) {
-<span class="pc bpc" id="L227" title="1 of 2 branches missed.">		if (entity.isGroup())</span>
-<span class="nc" id="L228">			return false;</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (entity.isGroup())</span>
+<span class="fc" id="L228">			return false;</span>
 
 <span class="fc bfc" id="L230" title="All 2 branches covered.">		if (entity.getLeafType() != LeafType.NOTE)</span>
 <span class="fc" id="L231">			return false;</span>
@@ -334,20 +334,20 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	}
 
 	private ST_Agnode_s getCoreFromGroup(Globals zz, Entity group) {
-<span class="nc" id="L337">		ST_Agnode_s result = coreNodes.get(group);</span>
-<span class="nc bnc" id="L338" title="All 2 branches missed.">		if (result != null)</span>
-<span class="nc" id="L339">			return result;</span>
+<span class="fc" id="L337">		ST_Agnode_s result = coreNodes.get(group);</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">		if (result != null)</span>
+<span class="fc" id="L339">			return result;</span>
 
-<span class="nc" id="L341">		final ST_Agraph_s cluster = clusters.get(group);</span>
-<span class="nc bnc" id="L342" title="All 2 branches missed.">		if (cluster == null)</span>
+<span class="fc" id="L341">		final ST_Agraph_s cluster = clusters.get(group);</span>
+<span class="pc bpc" id="L342" title="1 of 2 branches missed.">		if (cluster == null)</span>
 <span class="nc" id="L343">			throw new IllegalStateException();</span>
 
-<span class="nc" id="L345">		result = agnode(zz, cluster, new CString(&quot;z&quot; + group.getUid()), true);</span>
-<span class="nc" id="L346">		agsafeset(zz, result, new CString(&quot;shape&quot;), new CString(&quot;box&quot;), new CString(&quot;&quot;));</span>
-<span class="nc" id="L347">		agsafeset(zz, result, new CString(&quot;width&quot;), new CString(&quot;0.1&quot;), new CString(&quot;&quot;));</span>
-<span class="nc" id="L348">		agsafeset(zz, result, new CString(&quot;height&quot;), new CString(&quot;0.1&quot;), new CString(&quot;&quot;));</span>
-<span class="nc" id="L349">		coreNodes.put(group, result);</span>
-<span class="nc" id="L350">		return result;</span>
+<span class="fc" id="L345">		result = agnode(zz, cluster, new CString(&quot;z&quot; + group.getUid()), true);</span>
+<span class="fc" id="L346">		agsafeset(zz, result, new CString(&quot;shape&quot;), new CString(&quot;box&quot;), new CString(&quot;&quot;));</span>
+<span class="fc" id="L347">		agsafeset(zz, result, new CString(&quot;width&quot;), new CString(&quot;0.1&quot;), new CString(&quot;&quot;));</span>
+<span class="fc" id="L348">		agsafeset(zz, result, new CString(&quot;height&quot;), new CString(&quot;0.1&quot;), new CString(&quot;&quot;));</span>
+<span class="fc" id="L349">		coreNodes.put(group, result);</span>
+<span class="fc" id="L350">		return result;</span>
 	}
 
 	private void exportEntity(Globals zz, ST_Agraph_s cluster, Entity leaf) {
@@ -665,13 +665,13 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		final ST_Agnode_s node1;
 		final ST_Agnode_s node2;
 
-<span class="pc bpc" id="L668" title="1 of 2 branches missed.">		if (link.getEntity1().isGroup())</span>
-<span class="nc" id="L669">			node1 = getCoreFromGroup(zz, link.getEntity1());</span>
+<span class="fc bfc" id="L668" title="All 2 branches covered.">		if (link.getEntity1().isGroup())</span>
+<span class="fc" id="L669">			node1 = getCoreFromGroup(zz, link.getEntity1());</span>
 		else
 <span class="fc" id="L671">			node1 = getAgnodeFromLeaf(link.getEntity1());</span>
 
-<span class="pc bpc" id="L673" title="1 of 2 branches missed.">		if (link.getEntity2().isGroup())</span>
-<span class="nc" id="L674">			node2 = getCoreFromGroup(zz, link.getEntity2());</span>
+<span class="fc bfc" id="L673" title="All 2 branches covered.">		if (link.getEntity2().isGroup())</span>
+<span class="fc" id="L674">			node2 = getCoreFromGroup(zz, link.getEntity2());</span>
 		else
 <span class="fc" id="L676">			node2 = getAgnodeFromLeaf(link.getEntity2());</span>
 

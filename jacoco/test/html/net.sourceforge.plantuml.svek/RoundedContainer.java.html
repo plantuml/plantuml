@@ -59,51 +59,51 @@ public final class RoundedContainer {
 
 	public RoundedContainer(HColor borderColor, XDimension2D dim, double nameHeight, double descriptionHeight,
 			HColor northBackcolor, HColor centerBackcolor, HColor southBackcolor, UStroke stroke, double rounded,
-<span class="nc" id="L62">			double shadowing) {</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (dim.getWidth() == 0)</span>
+<span class="fc" id="L62">			double shadowing) {</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (dim.getWidth() == 0)</span>
 <span class="nc" id="L64">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L66">		this.rounded = rounded;</span>
-<span class="nc" id="L67">		this.dim = dim;</span>
-<span class="nc" id="L68">		this.nameHeight = nameHeight;</span>
-<span class="nc" id="L69">		this.borderColor = borderColor;</span>
-<span class="nc" id="L70">		this.northBackcolor = northBackcolor;</span>
-<span class="nc" id="L71">		this.centerBackcolor = centerBackcolor;</span>
-<span class="nc" id="L72">		this.southBackcolor = southBackcolor;</span>
-<span class="nc" id="L73">		this.descriptionHeight = descriptionHeight;</span>
-<span class="nc" id="L74">		this.stroke = stroke;</span>
-<span class="nc" id="L75">		this.shadowing = shadowing;</span>
-<span class="nc" id="L76">	}</span>
+<span class="fc" id="L66">		this.rounded = rounded;</span>
+<span class="fc" id="L67">		this.dim = dim;</span>
+<span class="fc" id="L68">		this.nameHeight = nameHeight;</span>
+<span class="fc" id="L69">		this.borderColor = borderColor;</span>
+<span class="fc" id="L70">		this.northBackcolor = northBackcolor;</span>
+<span class="fc" id="L71">		this.centerBackcolor = centerBackcolor;</span>
+<span class="fc" id="L72">		this.southBackcolor = southBackcolor;</span>
+<span class="fc" id="L73">		this.descriptionHeight = descriptionHeight;</span>
+<span class="fc" id="L74">		this.stroke = stroke;</span>
+<span class="fc" id="L75">		this.shadowing = shadowing;</span>
+<span class="fc" id="L76">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L79">		ug = ug.apply(borderColor).apply(stroke);</span>
-<span class="nc" id="L80">		final URectangle rect = URectangle.build(dim.getWidth(), dim.getHeight()).rounded(rounded);</span>
+<span class="fc" id="L79">		ug = ug.apply(borderColor).apply(stroke);</span>
+<span class="fc" id="L80">		final URectangle rect = URectangle.build(dim.getWidth(), dim.getHeight()).rounded(rounded);</span>
 
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (shadowing &gt; 0) {</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (shadowing &gt; 0) {</span>
 <span class="nc" id="L83">			rect.setDeltaShadow(shadowing);</span>
 <span class="nc" id="L84">			ug.apply(HColors.transparent().bg()).draw(rect);</span>
 <span class="nc" id="L85">			rect.setDeltaShadow(0);</span>
 
 		}
 
-<span class="nc" id="L89">		new RoundedNorth(dim.getWidth(), nameHeight, northBackcolor, rounded).drawU(ug);</span>
-<span class="nc" id="L90">		drawCenter(ug);</span>
-<span class="nc" id="L91">		new RoundedSouth(dim.getWidth(), dim.getHeight() - nameHeight - descriptionHeight, southBackcolor, rounded)</span>
-<span class="nc" id="L92">				.drawU(ug.apply(UTranslate.dy(nameHeight + descriptionHeight)));</span>
+<span class="fc" id="L89">		new RoundedNorth(dim.getWidth(), nameHeight, northBackcolor, rounded).drawU(ug);</span>
+<span class="fc" id="L90">		drawCenter(ug);</span>
+<span class="fc" id="L91">		new RoundedSouth(dim.getWidth(), dim.getHeight() - nameHeight - descriptionHeight, southBackcolor, rounded)</span>
+<span class="fc" id="L92">				.drawU(ug.apply(UTranslate.dy(nameHeight + descriptionHeight)));</span>
 
-<span class="nc" id="L94">		ug.apply(HColors.transparent().bg()).draw(rect);</span>
+<span class="fc" id="L94">		ug.apply(HColors.transparent().bg()).draw(rect);</span>
 
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (nameHeight &gt; 0)</span>
-<span class="nc" id="L97">			ug.apply(UTranslate.dy(nameHeight)).draw(ULine.hline(dim.getWidth()));</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (nameHeight &gt; 0)</span>
+<span class="fc" id="L97">			ug.apply(UTranslate.dy(nameHeight)).draw(ULine.hline(dim.getWidth()));</span>
 
-<span class="nc bnc" id="L99" title="All 4 branches missed.">		if (descriptionHeight &gt; 0 &amp;&amp; nameHeight + descriptionHeight &gt; 0)</span>
+<span class="pc bpc" id="L99" title="3 of 4 branches missed.">		if (descriptionHeight &gt; 0 &amp;&amp; nameHeight + descriptionHeight &gt; 0)</span>
 <span class="nc" id="L100">			ug.apply(UTranslate.dy(nameHeight + descriptionHeight)).draw(ULine.hline(dim.getWidth()));</span>
 
-<span class="nc" id="L102">	}</span>
+<span class="fc" id="L102">	}</span>
 
 	private void drawCenter(UGraphic ug) {
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (descriptionHeight == 0)</span>
-<span class="nc" id="L106">			return;</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (descriptionHeight == 0)</span>
+<span class="fc" id="L106">			return;</span>
 <span class="nc" id="L107">		final URectangle rect = URectangle.build(dim.getWidth(), descriptionHeight);</span>
 <span class="nc" id="L108">		ug = ug.apply(UStroke.simple()).apply(centerBackcolor).apply(centerBackcolor.bg());</span>
 <span class="nc" id="L109">		ug.apply(UTranslate.dy(nameHeight)).draw(rect);</span>

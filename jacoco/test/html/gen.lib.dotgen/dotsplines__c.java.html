@@ -858,11 +858,11 @@ try {
 <span class="pc bpc" id="L858" title="1 of 2 branches missed.">	if (ED_label(e1)!=null) {</span>
 <span class="fc" id="L859">	    sz0.___(ED_label(e0).dimen);</span>
 <span class="fc" id="L860">	    sz1.___(ED_label(e1).dimen);</span>
-<span class="pc bpc" id="L861" title="1 of 2 branches missed.">	    if (sz0.x &gt; sz1.x) return -1;</span>
-<span class="nc bnc" id="L862" title="All 2 branches missed.">	    else if (sz0.x &lt; sz1.x) return 1;</span>
-<span class="nc bnc" id="L863" title="All 2 branches missed.">	    else if (sz0.y &gt; sz1.y) return -1;</span>
-<span class="nc bnc" id="L864" title="All 2 branches missed.">	    else if (sz0.y &lt; sz1.y) return 1;</span>
-<span class="nc" id="L865">	    else return 0;</span>
+<span class="fc bfc" id="L861" title="All 2 branches covered.">	    if (sz0.x &gt; sz1.x) return -1;</span>
+<span class="pc bpc" id="L862" title="1 of 2 branches missed.">	    else if (sz0.x &lt; sz1.x) return 1;</span>
+<span class="pc bpc" id="L863" title="1 of 2 branches missed.">	    else if (sz0.y &gt; sz1.y) return -1;</span>
+<span class="pc bpc" id="L864" title="1 of 2 branches missed.">	    else if (sz0.y &lt; sz1.y) return 1;</span>
+<span class="fc" id="L865">	    else return 0;</span>
 	}
 	else
 <span class="nc" id="L868">	    return -1;</span>
@@ -1251,23 +1251,23 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;makeFlatEnd&quot;, key=&quot;fybar4mljnmkh3kure5k1eod&quot;, definition=&quot;static void makeFlatEnd (graph_t* g, spline_info_t* sp, path* P, node_t* n, edge_t* e, pathend_t* endp,              boolean isBegin)&quot;)
 public static void makeFlatEnd(Globals zz, ST_Agraph_s g, ST_spline_info_t sp, ST_path P, ST_Agnode_s n, ST_Agedge_s e, ST_pathend_t endp, boolean isBegin) {
-<span class="nc" id="L1254">ENTERING(&quot;fybar4mljnmkh3kure5k1eod&quot;,&quot;makeFlatEnd&quot;);</span>
+<span class="fc" id="L1254">ENTERING(&quot;fybar4mljnmkh3kure5k1eod&quot;,&quot;makeFlatEnd&quot;);</span>
 try {
-<span class="nc" id="L1256">    final ST_boxf b = new ST_boxf();</span>
-<span class="nc" id="L1257">    b.___(maximal_bbox(g, sp, n, null, e));</span>
-<span class="nc" id="L1258">    endp.nb.___(b);</span>
-<span class="nc" id="L1259">    endp.sidemask = (1&lt;&lt;2);</span>
-<span class="nc bnc" id="L1260" title="All 2 branches missed.">    if (isBegin) beginpath(zz, P, e, 2, endp, false);</span>
-<span class="nc" id="L1261">    else endpath(zz, P, e, 2, endp, false);</span>
-<span class="nc" id="L1262">    b.UR.y = endp.boxes[endp.boxn[0] - 1].UR.y;</span>
-<span class="nc" id="L1263">    b.LL.y = endp.boxes[endp.boxn[0] - 1].LL.y;</span>
-<span class="nc" id="L1264">    b.___(makeregularend((ST_boxf) b, (1&lt;&lt;2), ND_coord(n).y + GD_rank(g).get__(ND_rank(n)).ht2));</span>
-<span class="nc bnc" id="L1265" title="All 4 branches missed.">    if (b.LL.x &lt; b.UR.x &amp;&amp; b.LL.y &lt; b.UR.y)</span>
+<span class="fc" id="L1256">    final ST_boxf b = new ST_boxf();</span>
+<span class="fc" id="L1257">    b.___(maximal_bbox(g, sp, n, null, e));</span>
+<span class="fc" id="L1258">    endp.nb.___(b);</span>
+<span class="fc" id="L1259">    endp.sidemask = (1&lt;&lt;2);</span>
+<span class="fc bfc" id="L1260" title="All 2 branches covered.">    if (isBegin) beginpath(zz, P, e, 2, endp, false);</span>
+<span class="fc" id="L1261">    else endpath(zz, P, e, 2, endp, false);</span>
+<span class="fc" id="L1262">    b.UR.y = endp.boxes[endp.boxn[0] - 1].UR.y;</span>
+<span class="fc" id="L1263">    b.LL.y = endp.boxes[endp.boxn[0] - 1].LL.y;</span>
+<span class="fc" id="L1264">    b.___(makeregularend((ST_boxf) b, (1&lt;&lt;2), ND_coord(n).y + GD_rank(g).get__(ND_rank(n)).ht2));</span>
+<span class="pc bpc" id="L1265" title="2 of 4 branches missed.">    if (b.LL.x &lt; b.UR.x &amp;&amp; b.LL.y &lt; b.UR.y)</span>
 <span class="nc" id="L1266">UNSUPPORTED(&quot;cmjm4y40vf7wklmgz0ae4k36v&quot;); // 	endp-&gt;boxes[endp-&gt;boxn++] = b;</span>
 } finally {
-<span class="nc" id="L1268">LEAVING(&quot;fybar4mljnmkh3kure5k1eod&quot;,&quot;makeFlatEnd&quot;);</span>
+<span class="fc" id="L1268">LEAVING(&quot;fybar4mljnmkh3kure5k1eod&quot;,&quot;makeFlatEnd&quot;);</span>
 }
-<span class="nc" id="L1270">}</span>
+<span class="fc" id="L1270">}</span>
 
 
 
@@ -1463,32 +1463,32 @@ try {
     /* The lead edge edges[ind] might not have been marked earlier as adjacent,
      * so check them all.
      */
-<span class="pc bpc" id="L1466" title="1 of 2 branches missed.">    if (isAdjacent!=0) {</span>
+<span class="fc bfc" id="L1466" title="All 2 branches covered.">    if (isAdjacent!=0) {</span>
 <span class="fc" id="L1467">	make_flat_adj_edges (zz, g, P, edges, ind, cnt, e, et);</span>
 <span class="fc" id="L1468">	return;</span>
     }
-<span class="nc bnc" id="L1470" title="All 2 branches missed.">    if (ED_label(e)!=null) {  /* edges with labels aren't multi-edges */</span>
+<span class="pc bpc" id="L1470" title="1 of 2 branches missed.">    if (ED_label(e)!=null) {  /* edges with labels aren't multi-edges */</span>
 <span class="nc" id="L1471">	make_flat_labeled_edge (zz, g, sp, P, e, et);</span>
 <span class="nc" id="L1472">	return;</span>
     }
     
-<span class="nc bnc" id="L1475" title="All 2 branches missed.">    if (et == (1 &lt;&lt; 1)) {</span>
+<span class="pc bpc" id="L1475" title="1 of 2 branches missed.">    if (et == (1 &lt;&lt; 1)) {</span>
 <span class="nc" id="L1476">	makeSimpleFlat (zz, agtail(e), aghead(e), edges, ind, cnt, et);</span>
 <span class="nc" id="L1477">	return;</span>
     }
     
-<span class="nc" id="L1480">    tside = ED_tail_port(e).side;</span>
-<span class="nc" id="L1481">    hside = ED_head_port(e).side;</span>
-<span class="nc bnc" id="L1482" title="All 8 branches missed.">    if (((tside == (1&lt;&lt;0)) &amp;&amp; (hside != (1&lt;&lt;2))) ||</span>
+<span class="fc" id="L1480">    tside = ED_tail_port(e).side;</span>
+<span class="fc" id="L1481">    hside = ED_head_port(e).side;</span>
+<span class="pc bpc" id="L1482" title="6 of 8 branches missed.">    if (((tside == (1&lt;&lt;0)) &amp;&amp; (hside != (1&lt;&lt;2))) ||</span>
         ((hside == (1&lt;&lt;0)) &amp;&amp; (tside != (1&lt;&lt;2)))) {
 <span class="nc bnc" id="L1484" title="All 2 branches missed.">	make_flat_bottom_edges (g, sp, P, edges, ind, cnt, e, et == (5 &lt;&lt; 1));</span>
 <span class="nc" id="L1485">	return;</span>
     }
     
-<span class="nc" id="L1488">    tn = agtail(e);</span>
-<span class="nc" id="L1489">    hn = aghead(e);</span>
-<span class="nc" id="L1490">    r = ND_rank(tn);</span>
-<span class="nc bnc" id="L1491" title="All 2 branches missed.">    if (r &gt; 0) {</span>
+<span class="fc" id="L1488">    tn = agtail(e);</span>
+<span class="fc" id="L1489">    hn = aghead(e);</span>
+<span class="fc" id="L1490">    r = ND_rank(tn);</span>
+<span class="pc bpc" id="L1491" title="1 of 2 branches missed.">    if (r &gt; 0) {</span>
     	CArray&lt;ST_rank_t&gt; prevr;
 <span class="nc bnc" id="L1493" title="All 2 branches missed.">	if ((GD_has_labels(g) &amp; (1 &lt;&lt; 0))!=0)</span>
 <span class="nc" id="L1494">	    prevr = GD_rank(g).plus_(r-2);</span>
@@ -1497,49 +1497,49 @@ try {
 <span class="nc" id="L1497">	vspace = ND_coord(prevr.get__(0).v.get_(0)).y - prevr.get__(0).ht1 - ND_coord(tn).y - GD_rank(g).get__(r).ht2;</span>
 <span class="nc" id="L1498">    }</span>
     else {
-<span class="nc" id="L1500">	vspace = GD_ranksep(g);</span>
+<span class="fc" id="L1500">	vspace = GD_ranksep(g);</span>
     }
-<span class="nc" id="L1502">    stepx = ((double)sp.Multisep) / (cnt+1); </span>
-<span class="nc" id="L1503">    stepy = vspace / (cnt+1);</span>
-<span class="nc" id="L1504">    makeFlatEnd (zz, g, sp, P, tn, e, tend, true);</span>
-<span class="nc" id="L1505">    makeFlatEnd (zz, g, sp, P, hn, e, hend, false);</span>
+<span class="fc" id="L1502">    stepx = ((double)sp.Multisep) / (cnt+1); </span>
+<span class="fc" id="L1503">    stepy = vspace / (cnt+1);</span>
+<span class="fc" id="L1504">    makeFlatEnd (zz, g, sp, P, tn, e, tend, true);</span>
+<span class="fc" id="L1505">    makeFlatEnd (zz, g, sp, P, hn, e, hend, false);</span>
     
-<span class="nc bnc" id="L1507" title="All 2 branches missed.">    for (i = 0; i &lt; cnt; i++) {</span>
+<span class="fc bfc" id="L1507" title="All 2 branches covered.">    for (i = 0; i &lt; cnt; i++) {</span>
 	int boxn;
-<span class="nc" id="L1509">	final ST_boxf b = new ST_boxf();</span>
-<span class="nc" id="L1510">	e = edges.get_(ind + i);</span>
-<span class="nc" id="L1511">	boxn = 0;</span>
-<span class="nc" id="L1512">	b.___(tend.boxes[tend.boxn[0] - 1]);</span>
-<span class="nc" id="L1513"> 	zz.boxes[boxn].LL.x = b.LL.x; </span>
-<span class="nc" id="L1514">	zz.boxes[boxn].LL.y = b.UR.y; </span>
-<span class="nc" id="L1515">	zz.boxes[boxn].UR.x = b.UR.x + (i + 1) * stepx;</span>
-<span class="nc" id="L1516">	zz.boxes[boxn].UR.y = b.UR.y + (i + 1) * stepy;</span>
-<span class="nc" id="L1517">	boxn++;</span>
-<span class="nc" id="L1518">	zz.boxes[boxn].LL.x = (tend.boxes[tend.boxn[0] - 1]).LL.x; </span>
-<span class="nc" id="L1519">	zz.boxes[boxn].LL.y = (zz.boxes[boxn-1]).UR.y;</span>
-<span class="nc" id="L1520">	zz.boxes[boxn].UR.x = (hend.boxes[hend.boxn[0] - 1]).UR.x;</span>
-<span class="nc" id="L1521">	zz.boxes[boxn].UR.y = zz.boxes[boxn].LL.y + stepy;</span>
-<span class="nc" id="L1522">	boxn++;</span>
-<span class="nc" id="L1523">	b.___(hend.boxes[hend.boxn[0] - 1]);</span>
-<span class="nc" id="L1524">	zz.boxes[boxn].UR.x = b.UR.x;</span>
-<span class="nc" id="L1525">	zz.boxes[boxn].LL.y = b.UR.y;</span>
-<span class="nc" id="L1526">	zz.boxes[boxn].LL.x = b.LL.x - (i + 1) * stepx;</span>
-<span class="nc" id="L1527">	zz.boxes[boxn].UR.y = (zz.boxes[boxn-1]).LL.y;</span>
-<span class="nc" id="L1528">	boxn++;</span>
-<span class="nc bnc" id="L1529" title="All 2 branches missed.">	for (j = 0; j &lt; tend.boxn[0]; j++) add_box(P, tend.boxes[j]);</span>
-<span class="nc bnc" id="L1530" title="All 2 branches missed.">	for (j = 0; j &lt; boxn; j++) add_box(P, zz.boxes[j]);</span>
-<span class="nc bnc" id="L1531" title="All 2 branches missed.">	for (j = hend.boxn[0] - 1; j &gt;= 0; j--) add_box(P, hend.boxes[j]);</span>
-<span class="nc bnc" id="L1532" title="All 2 branches missed.">	if (et == (5 &lt;&lt; 1)) ps = routesplines(zz, P, pn);</span>
+<span class="fc" id="L1509">	final ST_boxf b = new ST_boxf();</span>
+<span class="fc" id="L1510">	e = edges.get_(ind + i);</span>
+<span class="fc" id="L1511">	boxn = 0;</span>
+<span class="fc" id="L1512">	b.___(tend.boxes[tend.boxn[0] - 1]);</span>
+<span class="fc" id="L1513"> 	zz.boxes[boxn].LL.x = b.LL.x; </span>
+<span class="fc" id="L1514">	zz.boxes[boxn].LL.y = b.UR.y; </span>
+<span class="fc" id="L1515">	zz.boxes[boxn].UR.x = b.UR.x + (i + 1) * stepx;</span>
+<span class="fc" id="L1516">	zz.boxes[boxn].UR.y = b.UR.y + (i + 1) * stepy;</span>
+<span class="fc" id="L1517">	boxn++;</span>
+<span class="fc" id="L1518">	zz.boxes[boxn].LL.x = (tend.boxes[tend.boxn[0] - 1]).LL.x; </span>
+<span class="fc" id="L1519">	zz.boxes[boxn].LL.y = (zz.boxes[boxn-1]).UR.y;</span>
+<span class="fc" id="L1520">	zz.boxes[boxn].UR.x = (hend.boxes[hend.boxn[0] - 1]).UR.x;</span>
+<span class="fc" id="L1521">	zz.boxes[boxn].UR.y = zz.boxes[boxn].LL.y + stepy;</span>
+<span class="fc" id="L1522">	boxn++;</span>
+<span class="fc" id="L1523">	b.___(hend.boxes[hend.boxn[0] - 1]);</span>
+<span class="fc" id="L1524">	zz.boxes[boxn].UR.x = b.UR.x;</span>
+<span class="fc" id="L1525">	zz.boxes[boxn].LL.y = b.UR.y;</span>
+<span class="fc" id="L1526">	zz.boxes[boxn].LL.x = b.LL.x - (i + 1) * stepx;</span>
+<span class="fc" id="L1527">	zz.boxes[boxn].UR.y = (zz.boxes[boxn-1]).LL.y;</span>
+<span class="fc" id="L1528">	boxn++;</span>
+<span class="fc bfc" id="L1529" title="All 2 branches covered.">	for (j = 0; j &lt; tend.boxn[0]; j++) add_box(P, tend.boxes[j]);</span>
+<span class="fc bfc" id="L1530" title="All 2 branches covered.">	for (j = 0; j &lt; boxn; j++) add_box(P, zz.boxes[j]);</span>
+<span class="fc bfc" id="L1531" title="All 2 branches covered.">	for (j = hend.boxn[0] - 1; j &gt;= 0; j--) add_box(P, hend.boxes[j]);</span>
+<span class="pc bpc" id="L1532" title="1 of 2 branches missed.">	if (et == (5 &lt;&lt; 1)) ps = routesplines(zz, P, pn);</span>
 <span class="nc" id="L1533">	else ps = routepolylines(zz, P, pn);</span>
-<span class="nc bnc" id="L1534" title="All 2 branches missed.">	if (pn[0] == 0)</span>
+<span class="pc bpc" id="L1534" title="1 of 2 branches missed.">	if (pn[0] == 0)</span>
 <span class="nc" id="L1535">	    return;</span>
-<span class="nc" id="L1536">	clip_and_install(zz, e, aghead(e), ps, pn[0], zz.sinfo);</span>
-<span class="nc" id="L1537">	P.nbox = 0;</span>
+<span class="fc" id="L1536">	clip_and_install(zz, e, aghead(e), ps, pn[0], zz.sinfo);</span>
+<span class="fc" id="L1537">	P.nbox = 0;</span>
     }
 } finally {
 <span class="fc" id="L1540">LEAVING(&quot;6yr3jfkljl5w0z6dv354ryx63&quot;,&quot;make_flat_edge&quot;);</span>
 }
-<span class="nc" id="L1542">}</span>
+<span class="fc" id="L1542">}</span>
 
 
 
@@ -2206,8 +2206,8 @@ try {
     }
 <span class="fc bfc" id="L2207" title="All 2 branches covered.">    if (ND_node_type(adj) == 0) {</span>
 <span class="fc bfc" id="L2208" title="All 2 branches covered.">	cl = ( ND_clust(adj) == g ? null:ND_clust(adj));</span>
-<span class="pc bpc" id="L2209" title="3 of 6 branches missed.">	if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl))</span>
-<span class="nc" id="L2210">	    rv = cl;</span>
+<span class="pc bpc" id="L2209" title="1 of 6 branches missed.">	if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl))</span>
+<span class="fc" id="L2210">	    rv = cl;</span>
     } else {
 <span class="fc" id="L2212">	orig = ED_to_orig(ND_out(adj).list.get_(0));</span>
 <span class="pc bpc" id="L2213" title="1 of 2 branches missed.">	cl = ( ND_clust(agtail(orig)) == g ? null:ND_clust(agtail(orig)));</span>
@@ -2249,8 +2249,8 @@ try {
     /* give this node all the available space up to its neighbors */
 <span class="fc" id="L2250">    b = (double)(ND_coord(vn).x - ND_lw(vn) - FUDGE);</span>
 <span class="fc bfc" id="L2251" title="All 2 branches covered.">    if ((left = neighbor(g, vn, ie, oe, -1))!=null) {</span>
-<span class="pc bpc" id="L2252" title="1 of 2 branches missed.">	if ((left_cl = cl_bound(g, vn, left))!=null)</span>
-<span class="nc" id="L2253">	    nb = GD_bb(left_cl).UR.x + (double)(sp.Splinesep);</span>
+<span class="fc bfc" id="L2252" title="All 2 branches covered.">	if ((left_cl = cl_bound(g, vn, left))!=null)</span>
+<span class="fc" id="L2253">	    nb = GD_bb(left_cl).UR.x + (double)(sp.Splinesep);</span>
 	else {
 <span class="fc" id="L2255">	    nb = (double)(ND_coord(left).x + ND_mval(left));</span>
 <span class="fc bfc" id="L2256" title="All 2 branches covered.">	    if (ND_node_type(left) == NORMAL)</span>
@@ -2270,8 +2270,8 @@ try {
     else
 <span class="fc" id="L2271">	b = (double)(ND_coord(vn).x + ND_rw(vn) + FUDGE);</span>
 <span class="fc bfc" id="L2272" title="All 2 branches covered.">    if ((right = neighbor(g, vn, ie, oe, 1))!=null) {</span>
-<span class="pc bpc" id="L2273" title="1 of 2 branches missed.">	if ((right_cl = cl_bound(g, vn, right))!=null)</span>
-<span class="nc" id="L2274">	    nb = GD_bb(right_cl).LL.x - (double)(sp.Splinesep);</span>
+<span class="fc bfc" id="L2273" title="All 2 branches covered.">	if ((right_cl = cl_bound(g, vn, right))!=null)</span>
+<span class="fc" id="L2274">	    nb = GD_bb(right_cl).LL.x - (double)(sp.Splinesep);</span>
 	else {
 <span class="fc" id="L2276">	    nb = ND_coord(right).x - ND_lw(right);</span>
 <span class="fc bfc" id="L2277" title="All 2 branches covered.">	    if (ND_node_type(right) == NORMAL)</span>

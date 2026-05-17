@@ -122,12 +122,12 @@ try {
     else
 <span class="fc" id="L123">	h_rank = 0;</span>
 <span class="fc" id="L124">    offset = ED_minlen(e) + t_rank - h_rank;</span>
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">    if (offset &gt; 0) {</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">    if (offset &gt; 0) {</span>
 <span class="fc" id="L126">	t_len = 0;</span>
 <span class="fc" id="L127">	h_len = offset;</span>
     } else {
-<span class="nc" id="L129">	t_len = -offset;</span>
-<span class="nc" id="L130">	h_len = 0;</span>
+<span class="fc" id="L129">	t_len = -offset;</span>
+<span class="fc" id="L130">	h_len = 0;</span>
     }
 <span class="fc" id="L132">    v = virtual_node(g);</span>
 <span class="fc" id="L133">    ND_node_type(v, 2);</span>

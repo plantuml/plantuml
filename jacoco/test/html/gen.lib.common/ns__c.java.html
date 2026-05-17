@@ -618,8 +618,8 @@ try {
 <span class="fc" id="L618">	    rerank(agtail(e), delta);</span>
 	else {
 <span class="fc" id="L620">	    s = ND_tree_in(aghead(e)).size + ND_tree_out(aghead(e)).size;</span>
-<span class="pc bpc" id="L621" title="1 of 2 branches missed.">	    if (s == 1)</span>
-<span class="nc" id="L622">		rerank(aghead(e), -delta);</span>
+<span class="fc bfc" id="L621" title="All 2 branches covered.">	    if (s == 1)</span>
+<span class="fc" id="L622">		rerank(aghead(e), -delta);</span>
 	    else {
 <span class="fc bfc" id="L624" title="All 2 branches covered.">		if (ND_lim(agtail(e)) &lt; ND_lim(aghead(e)))</span>
 <span class="fc" id="L625">		    rerank(agtail(e), delta);</span>

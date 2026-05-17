@@ -272,7 +272,7 @@ try {
 <span class="fc" id="L272">	zz.polypointn = boxn * 8;</span>
     }
     
-<span class="pc bpc" id="L275" title="2 of 4 branches missed.">    if ((boxn &gt; 1) &amp;&amp; (((ST_boxf)boxes[0]).LL.y &gt; ((ST_boxf)boxes[1]).LL.y)) {</span>
+<span class="pc bpc" id="L275" title="1 of 4 branches missed.">    if ((boxn &gt; 1) &amp;&amp; (((ST_boxf)boxes[0]).LL.y &gt; ((ST_boxf)boxes[1]).LL.y)) {</span>
 <span class="fc" id="L276">        flip = 1;</span>
 <span class="fc bfc" id="L277" title="All 2 branches covered.">	for (bi = 0; bi &lt; boxn; bi++) {</span>
 <span class="fc" id="L278">	    double v = ((ST_boxf)boxes[bi]).UR.y;</span>
@@ -280,7 +280,7 @@ try {
 <span class="fc" id="L280">	    ((ST_boxf)boxes[bi]).LL.y = -v;</span>
 	}
     }
-<span class="nc" id="L283">    else flip = 0;</span>
+<span class="fc" id="L283">    else flip = 0;</span>
     
 <span class="pc bpc" id="L285" title="1 of 2 branches missed.">    if ((agtail(realedge) != aghead(realedge))) {</span>
 	/* I assume that the path goes either down only or
@@ -288,15 +288,15 @@ try {
 <span class="fc bfc" id="L288" title="All 2 branches covered.">	for (bi = 0, pi = 0; bi &lt; boxn; bi++) {</span>
 <span class="fc" id="L289">	    next = prev = 0;</span>
 <span class="fc bfc" id="L290" title="All 2 branches covered.">	    if (bi &gt; 0)</span>
-<span class="pc bpc" id="L291" title="1 of 2 branches missed.">		prev = (((ST_boxf)boxes[bi]).LL.y &gt; ((ST_boxf)boxes[bi-1]).LL.y) ? -1 : 1;</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">		prev = (((ST_boxf)boxes[bi]).LL.y &gt; ((ST_boxf)boxes[bi-1]).LL.y) ? -1 : 1;</span>
 <span class="fc bfc" id="L292" title="All 2 branches covered.">	    if (bi &lt; boxn - 1)</span>
-<span class="pc bpc" id="L293" title="1 of 2 branches missed.">		next = (((ST_boxf)boxes[bi+1]).LL.y &gt; ((ST_boxf)boxes[bi]).LL.y) ? 1 : -1;</span>
-<span class="pc bpc" id="L294" title="1 of 2 branches missed.">	    if (prev != next) {</span>
-<span class="pc bpc" id="L295" title="2 of 4 branches missed.">		if (next == -1 || prev == 1) {</span>
-<span class="nc" id="L296">		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
-<span class="nc" id="L297">		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
-<span class="nc" id="L298">		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
-<span class="nc" id="L299">		    zz.polypoints.get__(pi++).y =boxes[bi].LL.y;</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">		next = (((ST_boxf)boxes[bi+1]).LL.y &gt; ((ST_boxf)boxes[bi]).LL.y) ? 1 : -1;</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">	    if (prev != next) {</span>
+<span class="fc bfc" id="L295" title="All 4 branches covered.">		if (next == -1 || prev == 1) {</span>
+<span class="fc" id="L296">		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
+<span class="fc" id="L297">		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
+<span class="fc" id="L298">		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
+<span class="fc" id="L299">		    zz.polypoints.get__(pi++).y =boxes[bi].LL.y;</span>
 		} else {
 <span class="fc" id="L301">		    zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
 <span class="fc" id="L302">		    zz.polypoints.get__(pi++).y = boxes[bi].LL.y;</span>
@@ -304,14 +304,14 @@ try {
 <span class="fc" id="L304">		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
 		}
 	    }
-<span class="nc bnc" id="L307" title="All 2 branches missed.">	    else if (prev == 0) { /* single box */</span>
+<span class="pc bpc" id="L307" title="1 of 2 branches missed.">	    else if (prev == 0) { /* single box */</span>
 <span class="nc" id="L308">UNSUPPORTED(&quot;2bfai79qe7cec0rljrn56jg2f&quot;); // 		polypoints[pi].x = boxes[bi].LL.x;</span>
 <span class="nc" id="L309">UNSUPPORTED(&quot;cjppvcr7k9pknjrjugccsky56&quot;); // 		polypoints[pi++].y = boxes[bi].UR.y;</span>
 <span class="nc" id="L310">UNSUPPORTED(&quot;2bfai79qe7cec0rljrn56jg2f&quot;); // 		polypoints[pi].x = boxes[bi].LL.x;</span>
 <span class="nc" id="L311">UNSUPPORTED(&quot;99xeozpks5v0iza4sv2occuuq&quot;); // 		polypoints[pi++].y = boxes[bi].LL.y;</span>
 	    } 
 	    else {
-<span class="nc bnc" id="L314" title="All 4 branches missed."> 		if (!(prev == -1 &amp;&amp; next == -1)) {</span>
+<span class="pc bpc" id="L314" title="2 of 4 branches missed."> 		if (!(prev == -1 &amp;&amp; next == -1)) {</span>
 <span class="nc" id="L315">UNSUPPORTED(&quot;cgpvvfb9phbipyhij0cjh1nmi&quot;); // 		    agerr(AGERR, &quot;in routesplines, illegal values of prev %d and next %d, line %d\n&quot;, prev, next, 444);</span>
 <span class="nc" id="L316">UNSUPPORTED(&quot;9idk92zg2ysz316lfwzvvvde6&quot;); // 		    return NULL;</span>
  		}
@@ -320,42 +320,42 @@ try {
 <span class="fc bfc" id="L320" title="All 2 branches covered.">	for (bi = boxn - 1; bi &gt;= 0; bi--) {</span>
 <span class="fc" id="L321">	    next = prev = 0;</span>
 <span class="fc bfc" id="L322" title="All 2 branches covered.">	    if (bi &lt; boxn - 1)</span>
-<span class="pc bpc" id="L323" title="1 of 2 branches missed.">		prev = (((ST_boxf)boxes[bi]).LL.y &gt; ((ST_boxf)boxes[bi+1]).LL.y) ? -1 : 1;</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">		prev = (((ST_boxf)boxes[bi]).LL.y &gt; ((ST_boxf)boxes[bi+1]).LL.y) ? -1 : 1;</span>
 <span class="fc bfc" id="L324" title="All 2 branches covered.">	    if (bi &gt; 0)</span>
-<span class="pc bpc" id="L325" title="1 of 2 branches missed.">		next = (((ST_boxf)boxes[bi-1]).LL.y &gt; ((ST_boxf)boxes[bi]).LL.y) ? 1 : -1;</span>
-<span class="pc bpc" id="L326" title="1 of 2 branches missed.">	    if (prev != next) {</span>
-<span class="pc bpc" id="L327" title="1 of 4 branches missed.">		if (next == -1 || prev == 1 ) {</span>
+<span class="fc bfc" id="L325" title="All 2 branches covered.">		next = (((ST_boxf)boxes[bi-1]).LL.y &gt; ((ST_boxf)boxes[bi]).LL.y) ? 1 : -1;</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">	    if (prev != next) {</span>
+<span class="fc bfc" id="L327" title="All 4 branches covered.">		if (next == -1 || prev == 1 ) {</span>
 <span class="fc" id="L328">		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
 <span class="fc" id="L329">		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
 <span class="fc" id="L330">		    zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
 <span class="fc" id="L331">		    zz.polypoints.get__(pi++).y = boxes[bi].LL.y;</span>
 		} else {
-<span class="nc" id="L333">		    zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
-<span class="nc" id="L334">		    zz.polypoints.get__(pi++).y = boxes[bi].LL.y;</span>
-<span class="nc" id="L335">		    zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
-<span class="nc" id="L336">		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
+<span class="fc" id="L333">		    zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
+<span class="fc" id="L334">		    zz.polypoints.get__(pi++).y = boxes[bi].LL.y;</span>
+<span class="fc" id="L335">		    zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
+<span class="fc" id="L336">		    zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
 		}
 	    } 
-<span class="nc bnc" id="L339" title="All 2 branches missed.">	    else if (prev == 0) { /* single box */</span>
+<span class="pc bpc" id="L339" title="1 of 2 branches missed.">	    else if (prev == 0) { /* single box */</span>
 <span class="nc" id="L340">UNSUPPORTED(&quot;ya84m81ogarx28l99om39lba&quot;); // 		polypoints[pi].x = boxes[bi].UR.x;</span>
 <span class="nc" id="L341">UNSUPPORTED(&quot;99xeozpks5v0iza4sv2occuuq&quot;); // 		polypoints[pi++].y = boxes[bi].LL.y;</span>
 <span class="nc" id="L342">UNSUPPORTED(&quot;ya84m81ogarx28l99om39lba&quot;); // 		polypoints[pi].x = boxes[bi].UR.x;</span>
 <span class="nc" id="L343">UNSUPPORTED(&quot;cjppvcr7k9pknjrjugccsky56&quot;); // 		polypoints[pi++].y = boxes[bi].UR.y;</span>
 	    }
 	    else {
-<span class="nc bnc" id="L346" title="All 4 branches missed.">		if (!(prev == -1 &amp;&amp; next == -1)) {</span>
+<span class="pc bpc" id="L346" title="2 of 4 branches missed.">		if (!(prev == -1 &amp;&amp; next == -1)) {</span>
 <span class="nc" id="L347">UNSUPPORTED(&quot;87y5d0ts6xdjyx905bha50f3s&quot;); // 		    /* it went badly, e.g. degenerate box in boxlist */</span>
 <span class="nc" id="L348">UNSUPPORTED(&quot;1qt7hixteu3pt64wk1sqw352a&quot;); // 		    agerr(AGERR, &quot;in routesplines, illegal values of prev %d and next %d, line %d\n&quot;, prev, next, 476);</span>
 <span class="nc" id="L349">UNSUPPORTED(&quot;35untdbpd42pt4c74gjbxqx7q&quot;); // 		    return NULL; /* for correctness sake, it's best to just stop */</span>
 		}
-<span class="nc" id="L351">		zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
-<span class="nc" id="L352">		zz.polypoints.get__(pi++).y = boxes[bi].LL.y;</span>
-<span class="nc" id="L353">		zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
-<span class="nc" id="L354">		zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
-<span class="nc" id="L355">		zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
-<span class="nc" id="L356">		zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
-<span class="nc" id="L357">		zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
-<span class="nc" id="L358">		zz.polypoints.get__(pi++).y = boxes[bi].LL.y;</span>
+<span class="fc" id="L351">		zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
+<span class="fc" id="L352">		zz.polypoints.get__(pi++).y = boxes[bi].LL.y;</span>
+<span class="fc" id="L353">		zz.polypoints.get__(pi).x = boxes[bi].UR.x;</span>
+<span class="fc" id="L354">		zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
+<span class="fc" id="L355">		zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
+<span class="fc" id="L356">		zz.polypoints.get__(pi++).y = boxes[bi].UR.y;</span>
+<span class="fc" id="L357">		zz.polypoints.get__(pi).x = boxes[bi].LL.x;</span>
+<span class="fc" id="L358">		zz.polypoints.get__(pi++).y = boxes[bi].LL.y;</span>
 	    }
 	}
     }
@@ -364,7 +364,7 @@ try {
 <span class="nc" id="L364">UNSUPPORTED(&quot;11hwqop4xebvtcskop4uhpp01&quot;); // 	return NULL;</span>
     }
     
-<span class="pc bpc" id="L367" title="1 of 2 branches missed.">    if (flip!=0) {</span>
+<span class="fc bfc" id="L367" title="All 2 branches covered.">    if (flip!=0) {</span>
 	int i;
 <span class="fc bfc" id="L369" title="All 2 branches covered.">	for (bi = 0; bi &lt; boxn; bi++) {</span>
 <span class="fc" id="L370">	    int v = (int) boxes[bi].UR.y;</span>
@@ -522,8 +522,8 @@ public static int overlap(int i0, int i1, int j0, int j1) {
 <span class="fc" id="L522">ENTERING(&quot;65qv6x7ghwyt6hey5qd8cgizn&quot;,&quot;overlap&quot;);</span>
 try {
     /* i'll bet there's an elegant way to do this */
-<span class="pc bpc" id="L525" title="1 of 2 branches missed.">    if (i1 &lt;= j0)</span>
-<span class="nc" id="L526">	return 0;</span>
+<span class="fc bfc" id="L525" title="All 2 branches covered.">    if (i1 &lt;= j0)</span>
+<span class="fc" id="L526">	return 0;</span>
 <span class="fc bfc" id="L527" title="All 2 branches covered.">    if (i0 &gt;= j1)</span>
 <span class="fc" id="L528">	return 0;</span>
 <span class="pc bpc" id="L529" title="1 of 4 branches missed.">    if ((j0 &lt;= i0) &amp;&amp; (i0 &lt;= j1))</span>

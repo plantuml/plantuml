@@ -54,19 +54,19 @@ package net.sourceforge.plantuml.preproc;
 	}
 
 	public static String simplify(String s) {
-<span class="nc" id="L57">		final StringBuilder result = new StringBuilder();</span>
+<span class="fc" id="L57">		final StringBuilder result = new StringBuilder();</span>
 
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		for (char c : s.toCharArray())</span>
-<span class="nc bnc" id="L60" title="All 8 branches missed.">			if ((c &gt;= 'A' &amp;&amp; c &lt;= 'Z') || (c &gt;= 'a' &amp;&amp; c &lt;= 'z'))</span>
-<span class="nc" id="L61">				result.append(Character.toLowerCase(c));</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		for (char c : s.toCharArray())</span>
+<span class="pc bpc" id="L60" title="2 of 8 branches missed.">			if ((c &gt;= 'A' &amp;&amp; c &lt;= 'Z') || (c &gt;= 'a' &amp;&amp; c &lt;= 'z'))</span>
+<span class="fc" id="L61">				result.append(Character.toLowerCase(c));</span>
 
-<span class="nc" id="L63">		return result.toString();</span>
+<span class="fc" id="L63">		return result.toString();</span>
 	}
 
 	public static OptionKey lazyFrom(String s) {
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		for (OptionKey key : values())</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">			if (simplify(s).equals(simplify(key.name())))</span>
-<span class="nc" id="L69">				return key;</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		for (OptionKey key : values())</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">			if (simplify(s).equals(simplify(key.name())))</span>
+<span class="fc" id="L69">				return key;</span>
 <span class="nc" id="L70">		return null;</span>
 	}
 

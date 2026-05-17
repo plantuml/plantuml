@@ -870,7 +870,7 @@ try {
 		}
 <span class="fc" id="L871">		width = ND_rw(t0) + ND_lw(h0);</span>
 <span class="fc" id="L872">		m0 = (int) (ED_minlen(e) * GD_nodesep(g) + width);</span>
-<span class="pc bpc" id="L873" title="1 of 2 branches missed.">		if ((e0 = find_fast_edge(t0, h0))!=null) {</span>
+<span class="fc bfc" id="L873" title="All 2 branches covered.">		if ((e0 = find_fast_edge(t0, h0))!=null) {</span>
 		    /* flat edge between adjacent neighbors 
                      * ED_dist contains the largest label width.
                      */
@@ -880,12 +880,12 @@ try {
 <span class="fc" id="L880">		    ED_minlen(e0, Math.max(ED_minlen(e0), m0));</span>
 <span class="fc" id="L881">		    ED_weight(e0, Math.max(ED_weight(e0), ED_weight(e)));</span>
 		}
-<span class="nc bnc" id="L883" title="All 2 branches missed.">		else if ((ED_label(e)) == null) {</span>
+<span class="pc bpc" id="L883" title="1 of 2 branches missed.">		else if ((ED_label(e)) == null) {</span>
 		    /* unlabeled flat edge between non-neighbors 
 		     * ED_minlen(e) is max of ED_minlen of all equivalent 
                      * edges.
                      */
-<span class="nc" id="L888">		    make_aux_edge(t0, h0, m0, ED_weight(e));</span>
+<span class="fc" id="L888">		    make_aux_edge(t0, h0, m0, ED_weight(e));</span>
 		}
 		/* labeled flat edges between non-neighbors have already
                  * been constrained by the label above. 

@@ -399,11 +399,11 @@ try {
 <span class="fc" id="L399">	hi = ND_order(tn);</span>
     }
 <span class="fc" id="L401">    rank = GD_rank(dot_root(tn)).plus_(ND_rank(tn));</span>
-<span class="pc bpc" id="L402" title="1 of 2 branches missed.">    for (i = lo + 1; i &lt; hi; i++) {</span>
-<span class="nc" id="L403">	n = rank.get__(0).v.get_(i);</span>
-<span class="nc bnc" id="L404" title="All 4 branches missed.">	if ((ND_node_type(n) == VIRTUAL &amp;&amp; ND_label(n)!=null) || </span>
-<span class="nc bnc" id="L405" title="All 2 branches missed.">             ND_node_type(n) == NORMAL)</span>
-<span class="nc" id="L406">	    break;</span>
+<span class="pc bfc" id="L402" title="All 2 branches covered.">    for (i = lo + 1; i &lt; hi; i++) {</span>
+<span class="fc" id="L403">	n = rank.get__(0).v.get_(i);</span>
+<span class="pc bpc" id="L404" title="3 of 4 branches missed.">	if ((ND_node_type(n) == VIRTUAL &amp;&amp; ND_label(n)!=null) || </span>
+<span class="pc bpc" id="L405" title="1 of 2 branches missed.">             ND_node_type(n) == NORMAL)</span>
+<span class="fc" id="L406">	    break;</span>
     }
 <span class="fc bfc" id="L408" title="All 2 branches covered.">    if (i == hi) {  /* adjacent edge */</span>
 	do {

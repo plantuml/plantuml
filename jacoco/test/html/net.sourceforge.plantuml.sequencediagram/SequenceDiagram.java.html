@@ -135,9 +135,9 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 	private EventWithDeactivate lastEventWithDeactivate;
 
 	public EventWithDeactivate getLastEventWithDeactivate() {
-<span class="nc bnc" id="L138" title="All 2 branches missed.">		for (int i = events.size() - 1; i &gt;= 0; i--)</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">			if (events.get(i) instanceof EventWithDeactivate)</span>
-<span class="nc" id="L140">				return (EventWithDeactivate) events.get(i);</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		for (int i = events.size() - 1; i &gt;= 0; i--)</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">			if (events.get(i) instanceof EventWithDeactivate)</span>
+<span class="fc" id="L140">				return (EventWithDeactivate) events.get(i);</span>
 <span class="nc" id="L141">		return null;</span>
 	}
 
@@ -324,8 +324,8 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="fc" id="L324">	private final Stack&lt;AbstractMessage&gt; activationState = new Stack&lt;&gt;();</span>
 
 	public AbstractMessage getActivatingMessage() {
-<span class="nc bnc" id="L327" title="All 2 branches missed.">		if (activationState.empty())</span>
-<span class="nc" id="L328">			return null;</span>
+<span class="pc bpc" id="L327" title="1 of 2 branches missed.">		if (activationState.empty())</span>
+<span class="fc" id="L328">			return null;</span>
 
 <span class="nc" id="L330">		return activationState.peek();</span>
 	}

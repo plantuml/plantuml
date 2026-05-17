@@ -285,8 +285,8 @@ public class Cluster implements Moveable {
 
 	static public StyleSignatureBasic getDefaultStyleDefinition(SName diagramStyleName, USymbol symbol,
 			GroupType groupType) {
-<span class="pc bpc" id="L288" title="1 of 2 branches missed.">		if (diagramStyleName == SName.stateDiagram)</span>
-<span class="nc" id="L289">			return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group);</span>
+<span class="fc bfc" id="L288" title="All 2 branches covered.">		if (diagramStyleName == SName.stateDiagram)</span>
+<span class="fc" id="L289">			return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group);</span>
 <span class="fc bfc" id="L290" title="All 2 branches covered.">		if (symbol != null)</span>
 <span class="fc" id="L291">			return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.group, symbol.getSNames());</span>
 <span class="pc bpc" id="L292" title="1 of 2 branches missed.">		if (groupType == GroupType.PACKAGE)</span>
@@ -348,11 +348,11 @@ public class Cluster implements Moveable {
 <span class="nc" id="L348">				drawSwinLinesState(ug, borderColor);</span>
 <span class="nc" id="L349">				return;</span>
 			}
-<span class="pc bpc" id="L351" title="1 of 2 branches missed.">			final boolean isState = diagramType == DiagramType.STATE;</span>
+<span class="fc bfc" id="L351" title="All 2 branches covered.">			final boolean isState = diagramType == DiagramType.STATE;</span>
 
-<span class="pc bpc" id="L353" title="3 of 4 branches missed.">			if (isState &amp;&amp; group.getUSymbol() == null) {</span>
-<span class="nc" id="L354">				drawUState(ug, diagramType, rounded, shadowing);</span>
-<span class="nc" id="L355">				return;</span>
+<span class="pc bpc" id="L353" title="1 of 4 branches missed.">			if (isState &amp;&amp; group.getUSymbol() == null) {</span>
+<span class="fc" id="L354">				drawUState(ug, diagramType, rounded, shadowing);</span>
+<span class="fc" id="L355">				return;</span>
 			}
 <span class="fc" id="L357">			PackageStyle packageStyle = group.getPackageStyle();</span>
 <span class="pc bpc" id="L358" title="1 of 2 branches missed.">			if (packageStyle == null)</span>
@@ -449,64 +449,64 @@ public class Cluster implements Moveable {
 
 	private void drawUState(UGraphic ug, DiagramType diagramType, double rounded, double shadowing) {
 
-<span class="nc" id="L452">		HColor borderColor = group.getColors().getColor(ColorType.LINE);</span>
-<span class="nc" id="L453">		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();</span>
-<span class="nc" id="L454">		final HColorSet colorSet = skinParam.getIHtmlColorSet();</span>
-<span class="nc bnc" id="L455" title="All 2 branches missed.">		if (borderColor == null) {</span>
-<span class="nc" id="L456">			borderColor = EntityImageStateCommon.getStyleState(group.getStereotype(), styleBuilder)</span>
-<span class="nc" id="L457">					.value(PName.LineColor).asColor(colorSet);</span>
+<span class="fc" id="L452">		HColor borderColor = group.getColors().getColor(ColorType.LINE);</span>
+<span class="fc" id="L453">		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();</span>
+<span class="fc" id="L454">		final HColorSet colorSet = skinParam.getIHtmlColorSet();</span>
+<span class="pc bpc" id="L455" title="1 of 2 branches missed.">		if (borderColor == null) {</span>
+<span class="fc" id="L456">			borderColor = EntityImageStateCommon.getStyleState(group.getStereotype(), styleBuilder)</span>
+<span class="fc" id="L457">					.value(PName.LineColor).asColor(colorSet);</span>
 		}
 
-<span class="nc" id="L460">		HColor northBackcolor = group.getColors().getColor(ColorType.BACK);</span>
-<span class="nc" id="L461">		HColor centerBackColor = northBackcolor;</span>
-<span class="nc" id="L462">		HColor southBackcolor = northBackcolor;</span>
-<span class="nc bnc" id="L463" title="All 2 branches missed.">		if (northBackcolor == null) {</span>
-<span class="nc" id="L464">			northBackcolor = EntityImageStateCommon.STYLE.addSName(SName.name).withTOBECHANGED(group.getStereotype())</span>
-<span class="nc" id="L465">					.getMergedStyle(styleBuilder).value(PName.BackGroundColor).asColor(colorSet);</span>
-<span class="nc" id="L466">			centerBackColor = EntityImageStateCommon.STYLE.addSName(SName.description)</span>
-<span class="nc" id="L467">					.withTOBECHANGED(group.getStereotype()).getMergedStyle(styleBuilder).value(PName.BackGroundColor)</span>
-<span class="nc" id="L468">					.asColor(colorSet);</span>
-<span class="nc" id="L469">			southBackcolor = EntityImageStateCommon.STYLE.addSName(SName.body).withTOBECHANGED(group.getStereotype())</span>
-<span class="nc" id="L470">					.getMergedStyle(styleBuilder).value(PName.BackGroundColor).asColor(colorSet);</span>
+<span class="fc" id="L460">		HColor northBackcolor = group.getColors().getColor(ColorType.BACK);</span>
+<span class="fc" id="L461">		HColor centerBackColor = northBackcolor;</span>
+<span class="fc" id="L462">		HColor southBackcolor = northBackcolor;</span>
+<span class="pc bpc" id="L463" title="1 of 2 branches missed.">		if (northBackcolor == null) {</span>
+<span class="fc" id="L464">			northBackcolor = EntityImageStateCommon.STYLE.addSName(SName.name).withTOBECHANGED(group.getStereotype())</span>
+<span class="fc" id="L465">					.getMergedStyle(styleBuilder).value(PName.BackGroundColor).asColor(colorSet);</span>
+<span class="fc" id="L466">			centerBackColor = EntityImageStateCommon.STYLE.addSName(SName.description)</span>
+<span class="fc" id="L467">					.withTOBECHANGED(group.getStereotype()).getMergedStyle(styleBuilder).value(PName.BackGroundColor)</span>
+<span class="fc" id="L468">					.asColor(colorSet);</span>
+<span class="fc" id="L469">			southBackcolor = EntityImageStateCommon.STYLE.addSName(SName.body).withTOBECHANGED(group.getStereotype())</span>
+<span class="fc" id="L470">					.getMergedStyle(styleBuilder).value(PName.BackGroundColor).asColor(colorSet);</span>
 		}
 
-<span class="nc" id="L473">		final TextBlock attribute = ((Entity) group).getStateDescription(skinParam);</span>
-<span class="nc" id="L474">		final double attributeHeight = attribute.calculateDimension(ug.getStringBounder()).getHeight();</span>
-<span class="nc bnc" id="L475" title="All 2 branches missed.">		if (rectangleArea.getDimension().getWidth() == 0) {</span>
+<span class="fc" id="L473">		final TextBlock attribute = ((Entity) group).getStateDescription(skinParam);</span>
+<span class="fc" id="L474">		final double attributeHeight = attribute.calculateDimension(ug.getStringBounder()).getHeight();</span>
+<span class="pc bpc" id="L475" title="1 of 2 branches missed.">		if (rectangleArea.getDimension().getWidth() == 0) {</span>
 <span class="nc" id="L476">			System.err.println(&quot;Cluster::drawUState issue&quot;);</span>
 <span class="nc" id="L477">			return;</span>
 		}
 
-<span class="nc" id="L480">		UStroke stroke = group.getColors().getSpecificLineStroke();</span>
-<span class="nc bnc" id="L481" title="All 2 branches missed.">		if (stroke == null) {</span>
-<span class="nc" id="L482">			final StyleBuilder styleBuilder4 = skinParam.getCurrentStyleBuilder();</span>
-<span class="nc" id="L483">			stroke = EntityImageStateCommon.getStyleState(group.getStereotype(), styleBuilder4).getStroke();</span>
+<span class="fc" id="L480">		UStroke stroke = group.getColors().getSpecificLineStroke();</span>
+<span class="pc bpc" id="L481" title="1 of 2 branches missed.">		if (stroke == null) {</span>
+<span class="fc" id="L482">			final StyleBuilder styleBuilder4 = skinParam.getCurrentStyleBuilder();</span>
+<span class="fc" id="L483">			stroke = EntityImageStateCommon.getStyleState(group.getStereotype(), styleBuilder4).getStroke();</span>
 		}
 
-<span class="nc bnc" id="L486" title="All 2 branches missed.">		final double descriptionHeight = attributeHeight + (attributeHeight &gt; 0 ? IEntityImage.MARGIN : 0);</span>
+<span class="pc bpc" id="L486" title="1 of 2 branches missed.">		final double descriptionHeight = attributeHeight + (attributeHeight &gt; 0 ? IEntityImage.MARGIN : 0);</span>
 
-<span class="nc" id="L488">		final double nameHeight = clusterHeader.getTitle().calculateDimension(ug.getStringBounder()).getHeight()</span>
+<span class="fc" id="L488">		final double nameHeight = clusterHeader.getTitle().calculateDimension(ug.getStringBounder()).getHeight()</span>
 				+ IEntityImage.MARGIN;
 
-<span class="nc" id="L491">		final RoundedContainer r = new RoundedContainer(borderColor, rectangleArea.getDimension(), nameHeight,</span>
+<span class="fc" id="L491">		final RoundedContainer r = new RoundedContainer(borderColor, rectangleArea.getDimension(), nameHeight,</span>
 				descriptionHeight, northBackcolor, centerBackColor, southBackcolor, stroke, rounded, shadowing);
 
-<span class="nc" id="L494">		r.drawU(ug.apply(rectangleArea.getPosition()));</span>
+<span class="fc" id="L494">		r.drawU(ug.apply(rectangleArea.getPosition()));</span>
 
-<span class="nc" id="L496">		clusterHeader.getTitleHorizontalAlignment().draw(</span>
-<span class="nc" id="L497">				ug.apply(new UTranslate(rectangleArea.getMinX(), xyTitle.getY())), clusterHeader.getTitle(),</span>
-<span class="nc" id="L498">				IEntityImage.MARGIN, 0, rectangleArea.getWidth());</span>
+<span class="fc" id="L496">		clusterHeader.getTitleHorizontalAlignment().draw(</span>
+<span class="fc" id="L497">				ug.apply(new UTranslate(rectangleArea.getMinX(), xyTitle.getY())), clusterHeader.getTitle(),</span>
+<span class="fc" id="L498">				IEntityImage.MARGIN, 0, rectangleArea.getWidth());</span>
 
-<span class="nc bnc" id="L500" title="All 2 branches missed.">		if (attributeHeight &gt; 0)</span>
+<span class="pc bpc" id="L500" title="1 of 2 branches missed.">		if (attributeHeight &gt; 0)</span>
 <span class="nc" id="L501">			attribute.drawU(ug.apply(new UTranslate(rectangleArea.getMinX() + IEntityImage.MARGIN,</span>
 <span class="nc" id="L502">					rectangleArea.getMinY() + nameHeight + IEntityImage.MARGIN / 2.0)));</span>
 
-<span class="nc" id="L504">		final Stereotype stereotype = group.getStereotype();</span>
-<span class="nc bnc" id="L505" title="All 4 branches missed.">		final boolean withSymbol = stereotype != null &amp;&amp; stereotype.isWithOOSymbol();</span>
-<span class="nc bnc" id="L506" title="All 2 branches missed.">		if (withSymbol)</span>
+<span class="fc" id="L504">		final Stereotype stereotype = group.getStereotype();</span>
+<span class="pc bpc" id="L505" title="3 of 4 branches missed.">		final boolean withSymbol = stereotype != null &amp;&amp; stereotype.isWithOOSymbol();</span>
+<span class="pc bpc" id="L506" title="1 of 2 branches missed.">		if (withSymbol)</span>
 <span class="nc" id="L507">			EntityImageState.drawSymbol(ug.apply(borderColor), rectangleArea.getMaxX(), rectangleArea.getMaxY());</span>
 
-<span class="nc" id="L509">	}</span>
+<span class="fc" id="L509">	}</span>
 
 	public void setPosition(XPoint2D min, XPoint2D max) {
 <span class="fc" id="L512">		this.rectangleArea = RectangleArea.build(min, max);</span>

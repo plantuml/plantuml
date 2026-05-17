@@ -42,35 +42,35 @@ import net.sourceforge.plantuml.warning.Warning;
 public class EaterOption extends Eater {
 
 	public EaterOption(StringLocated s) {
-<span class="nc" id="L45">		super(s);</span>
-<span class="nc" id="L46">	}</span>
+<span class="fc" id="L45">		super(s);</span>
+<span class="fc" id="L46">	}</span>
 
 	@Override
 	public void analyze(TContext context, TMemory memory) throws EaterException {
-<span class="nc" id="L50">		skipSpaces();</span>
-<span class="nc" id="L51">		checkAndEatChar(&quot;!option&quot;);</span>
-<span class="nc" id="L52">		skipSpaces();</span>
-<span class="nc" id="L53">		final String key = eatAndGetVarname();</span>
-<span class="nc" id="L54">		skipSpaces();</span>
+<span class="fc" id="L50">		skipSpaces();</span>
+<span class="fc" id="L51">		checkAndEatChar(&quot;!option&quot;);</span>
+<span class="fc" id="L52">		skipSpaces();</span>
+<span class="fc" id="L53">		final String key = eatAndGetVarname();</span>
+<span class="fc" id="L54">		skipSpaces();</span>
 		TValue value;
 		try {
-<span class="nc" id="L57">			value = eatExpression(context, memory);</span>
+<span class="fc" id="L57">			value = eatExpression(context, memory);</span>
 <span class="nc" id="L58">		} catch (EaterException e) {</span>
 			// Sorry, not great...
 <span class="nc" id="L60">			value = null;</span>
-<span class="nc" id="L61">		}</span>
-<span class="nc" id="L62">		skipSpaces();</span>
-<span class="nc" id="L63">		final OptionKey optionKey = OptionKey.lazyFrom(key);</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (optionKey == null)</span>
+<span class="fc" id="L61">		}</span>
+<span class="fc" id="L62">		skipSpaces();</span>
+<span class="fc" id="L63">		final OptionKey optionKey = OptionKey.lazyFrom(key);</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (optionKey == null)</span>
 <span class="nc" id="L65">			context.getPreprocessingArtifact().addWarning(new Warning(&quot;No such !option &quot; + key));</span>
-<span class="nc bnc" id="L66" title="All 4 branches missed.">		else if (value == null &amp;&amp; optionKey.getDefaultValue() == null)</span>
+<span class="pc bpc" id="L66" title="3 of 4 branches missed.">		else if (value == null &amp;&amp; optionKey.getDefaultValue() == null)</span>
 <span class="nc" id="L67">			context.getPreprocessingArtifact().addWarning(new Warning(&quot;No default value for &quot; + key));</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		else if (value == null)</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		else if (value == null)</span>
 <span class="nc" id="L69">			context.getPreprocessingArtifact().getOption().define(optionKey, optionKey.getDefaultValue());</span>
 		else
-<span class="nc" id="L71">			context.getPreprocessingArtifact().getOption().define(optionKey, value.toString());</span>
+<span class="fc" id="L71">			context.getPreprocessingArtifact().getOption().define(optionKey, value.toString());</span>
 
-<span class="nc" id="L73">	}</span>
+<span class="fc" id="L73">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
