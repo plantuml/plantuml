@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.stereo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -52,7 +53,11 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.style.AutomaticCounter;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.parser.StyleParser;
+import net.sourceforge.plantuml.style.parser.StyleParsingException;
+import net.sourceforge.plantuml.utils.BlocLines;
 
 public class Stereogroup {
 
@@ -155,8 +160,7 @@ public class Stereogroup {
 				if (textColor != null)
 					colors = colors.add(ColorType.TEXT, textColor);
 
-			}
-			if (label.startsWith("##")) {
+			} else if (label.startsWith("##")) {
 				label = label.substring(2);
 
 				if (label.charAt(0) == '[') {
@@ -176,6 +180,13 @@ public class Stereogroup {
 
 			} else if (label.startsWith("#")) {
 				colors = colors.mergeWith(new Colors(label, colorSet, ColorType.BACK));
+			} else if (label.contains(":") && label.contains(";")) {
+				try {
+					final Style style = new StyleParser().parseSingleLine(label);
+					colors = colors.applyStyle(style, colorSet);
+				} catch (StyleParsingException e) {
+					// Ignore for now...
+				}
 			}
 		}
 		return colors;

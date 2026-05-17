@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class BlocLines implements Iterable<StringLocated> {
-	// ::remove file when __HAXE__
 
 	private List<StringLocated> lines;
 

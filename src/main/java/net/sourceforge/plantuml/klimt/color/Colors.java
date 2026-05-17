@@ -50,10 +50,9 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.Value;
 
 public class Colors {
-	// ::remove file when __HAXE__
-
 	private final Map<ColorType, HColor> map = new EnumMap<ColorType, HColor>(ColorType.class);
 	private LinkStyle lineStyle = null;
 	private Boolean shadowing = null;
@@ -217,6 +216,24 @@ public class Colors {
 			return stroke;
 
 		return lineStyle.muteStroke(stroke);
+	}
+
+	public Colors applyStyle(Style style, HColorSet colorSet) {
+		Colors result = this;
+		Value tmp = style.value(PName.BackGroundColor);
+		if (tmp != null)
+			result = result.add(ColorType.BACK, tmp.asColor(colorSet));
+		tmp = style.value(PName.LineColor);
+		if (tmp != null) {
+			result = result.add(ColorType.LINE, tmp.asColor(colorSet));
+			result = result.add(ColorType.ARROW, tmp.asColor(colorSet));
+		}
+		tmp = style.value(PName.FontColor);
+		if (tmp != null)
+			result = result.add(ColorType.TEXT, tmp.asColor(colorSet));
+
+		return result;
+
 	}
 
 	public HColor getColor(Style style, PName name, HColorSet colorSet) {

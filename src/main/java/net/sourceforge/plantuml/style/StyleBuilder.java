@@ -45,7 +45,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import net.sourceforge.plantuml.utils.Log;
 
 public class StyleBuilder implements AutomaticCounter {
-	// ::remove file when __HAXE__
 
 	private final StyleStorage storage = new StyleStorage();
 	private final Set<StyleSignatureBasic> printedForLog;
@@ -117,6 +116,7 @@ public class StyleBuilder implements AutomaticCounter {
 		}
 	}
 
+	@Override
 	public int getNextInt() {
 		return ++counter;
 	}
