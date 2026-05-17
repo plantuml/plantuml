@@ -109,6 +109,11 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 		return getStyleState(getEntity().getStereotype(), getSkinParam().getCurrentStyleBuilder());
 	}
 
+	final protected Style getStyleStateDescription() {
+		return STYLE.addSName(SName.name).withTOBECHANGED(getEntity().getStereotype())
+				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+	}
+
 	final public ShapeType getShapeType() {
 		return ShapeType.ROUND_RECTANGLE;
 	}
@@ -123,14 +128,14 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 		return rect;
 	}
 
-	final protected UGraphic applyColor(UGraphic ug) {
+	final protected UGraphic applyColor(UGraphic ug, Style style) {
 
 		HColor border = getBorderColor();
 
 		ug = ug.apply(border);
 		HColor backcolor = lineConfig.getColors().getColor(ColorType.BACK);
 		if (backcolor == null)
-			backcolor = getStyleState().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
+			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 
 		ug = ug.apply(backcolor.bg());
 
