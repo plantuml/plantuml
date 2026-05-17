@@ -39,9 +39,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.style.AutomaticCounter;
+import net.sourceforge.plantuml.style.AutomaticCounterBasic;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleScheme;
@@ -55,23 +57,36 @@ import net.sourceforge.plantuml.utils.PeekerUtils;
 
 public class StyleParser {
 
-	public static Collection<Style> parse(BlocLines lines, AutomaticCounter counter) throws StyleParsingException {
+	private final CssVariables variables = new CssVariables();
+	private StyleScheme scheme = StyleScheme.REGULAR;
+	private Context context = Context.empty();
+	private final AutomaticCounter counter;
+
+	public StyleParser() {
+		this(new AutomaticCounterBasic());
+	}
+
+	public StyleParser(AutomaticCounter counter) {
+		this.counter = counter;
+	}
+
+	public Style parseSingleLine(String s) throws StyleParsingException {
+		final List<StyleToken> tokens = parse(BlocLines.singleString(s).inspector());
+		parseNow(tokens);
+		return new Style(StyleSignatureBasic.empty(), context.getInternalMap());
+	}
+
+	public Collection<Style> parse(BlocLines lines) throws StyleParsingException {
 
 		if (lines.size() == 0)
 			return Collections.emptyList();
 
 		final List<StyleToken> tokens = parse(lines.inspectorWithNewlines());
+		return parseNow(tokens);
+	}
 
+	private List<Style> parseNow(final List<StyleToken> tokens) throws StyleParsingException {
 		final List<Style> result = new ArrayList<>();
-		final CssVariables variables = new CssVariables();
-		StyleScheme scheme = StyleScheme.REGULAR;
-
-		Context context = Context.empty();
-
-//		System.err.println("tokens=" + tokens.size());
-//		if (tokens.size() < 100)
-//			for (StyleToken t : tokens)
-//				System.err.println(t);
 
 		for (Peeker<StyleToken> peeker = PeekerUtils.peeker(tokens); peeker.peek(0) != null;) {
 			final StyleToken token = peeker.peek(0);
@@ -160,7 +175,7 @@ public class StyleParser {
 		return Collections.unmodifiableList(result);
 	}
 
-	private static String readWithComma(Peeker<StyleToken> ins) {
+	private String readWithComma(Peeker<StyleToken> ins) {
 		final StringBuilder result = new StringBuilder();
 		while (ins.peek(0) != null) {
 			final StyleToken current = ins.peek(0);
@@ -172,7 +187,7 @@ public class StyleParser {
 		return result.toString();
 	}
 
-	private static String readValue(Peeker<StyleToken> ins) throws StyleParsingException {
+	private String readValue(Peeker<StyleToken> ins) throws StyleParsingException {
 		final StringBuilder result = new StringBuilder();
 		while (ins.peek(0) != null) {
 			final StyleToken current = ins.peek(0);
@@ -203,7 +218,7 @@ public class StyleParser {
 		return result.toString();
 	}
 
-	private static void skipNewLines(Peeker<StyleToken> ins) {
+	private void skipNewLines(Peeker<StyleToken> ins) {
 		while (true) {
 			final StyleToken token = ins.peek(0);
 			if (token == null || token.getType() != StyleTokenType.NEWLINE)
@@ -212,7 +227,7 @@ public class StyleParser {
 		}
 	}
 
-	private static void skipColon(Peeker<StyleToken> ins) {
+	private void skipColon(Peeker<StyleToken> ins) {
 		while (true) {
 			final StyleToken token = ins.peek(0);
 			if (token == null || token.getType() != StyleTokenType.COLON)
@@ -222,7 +237,7 @@ public class StyleParser {
 	}
 
 	@JawsStrange
-	private static List<StyleToken> parse(CharInspector ins) throws StyleParsingException {
+	private List<StyleToken> parse(CharInspector ins) throws StyleParsingException {
 		final List<StyleToken> result = new ArrayList<>();
 		while (true) {
 			final char current = ins.peek(0);
@@ -273,7 +288,7 @@ public class StyleParser {
 
 	}
 
-	private static void jumpUntil(CharInspector ins, char ch1) {
+	private void jumpUntil(CharInspector ins, char ch1) {
 		while (ins.peek(0) != 0) {
 			if (ins.peek(0) == ch1) {
 				ins.jump();
@@ -283,7 +298,7 @@ public class StyleParser {
 		}
 	}
 
-	private static void jumpUntil(CharInspector ins, char ch1, char ch2) {
+	private void jumpUntil(CharInspector ins, char ch1, char ch2) {
 		while (ins.peek(0) != 0) {
 			if (ins.peek(0) == ch1 && ins.peek(1) == ch2) {
 				ins.jump();
@@ -294,7 +309,7 @@ public class StyleParser {
 		}
 	}
 
-	private static String readArobaseMedia(CharInspector ins) {
+	private String readArobaseMedia(CharInspector ins) {
 		final char current0 = ins.peek(0);
 		if (current0 != '@')
 			throw new IllegalStateException();
@@ -310,7 +325,7 @@ public class StyleParser {
 		return result.toString();
 	}
 
-	private static String readQuotedString(CharInspector ins) {
+	private String readQuotedString(CharInspector ins) {
 		final StringBuilder result = new StringBuilder();
 		if (ins.peek(0) != '\"')
 			throw new IllegalStateException();
@@ -325,7 +340,7 @@ public class StyleParser {
 		return result.toString();
 	}
 
-	private static String readString(CharInspector ins) {
+	private String readString(CharInspector ins) {
 		final StringBuilder result = new StringBuilder();
 		while (ins.peek(0) != 0) {
 			char ch = ins.peek(0);

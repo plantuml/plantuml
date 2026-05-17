@@ -91,7 +91,7 @@ public final class StyleLoader {
 			throw new NoStyleAvailableException();
 		}
 		final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(filename, null));
-		for (Style newStyle : StyleParser.parse(lines2, styleBuilder))
+		for (Style newStyle : new StyleParser(styleBuilder).parse(lines2))
 			styleBuilder.loadInternal(newStyle.getSignature(), newStyle);
 
 		return styleBuilder;

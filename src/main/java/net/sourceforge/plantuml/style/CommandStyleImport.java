@@ -105,7 +105,7 @@ public class CommandStyleImport extends SingleLineCommand2<TitledDiagram> {
 				return CommandExecutionResult.error("Cannot read: " + path);
 
 			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
-			diagram.getSkinParam().muteStyle(StyleParser.parse(lines, styleBuilder));
+			diagram.getSkinParam().muteStyle(new StyleParser(styleBuilder).parse(lines));
 
 		} catch (MalformedURLException e) {
 			return CommandExecutionResult.error("Invalid URL to style definition: " + e.getMessage());

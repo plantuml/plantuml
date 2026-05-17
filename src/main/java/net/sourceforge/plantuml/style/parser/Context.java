@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.style.parser;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -135,6 +136,10 @@ class Context {
 
 		}
 		return result;
+	}
+
+	protected Map<PName, Value> getInternalMap() {
+		return Collections.unmodifiableMap(map);
 	}
 
 }

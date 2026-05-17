@@ -31,14 +31,17 @@
  *
  * Original Author:  Arnaud Roques
  *
- * 
+ *
  */
-package net.sourceforge.plantuml.style.parser;
+package net.sourceforge.plantuml.style;
 
-public class StyleParsingException extends Exception {
+public class AutomaticCounterBasic implements AutomaticCounter {
 
-	public StyleParsingException(String msg) {
-		super(msg);
+	private int counter = 0;
+
+	@Override
+	public int getNextInt() {
+		return ++counter;
 	}
 
 }

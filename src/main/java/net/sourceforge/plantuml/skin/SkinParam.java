@@ -228,7 +228,7 @@ public class SkinParam implements ISkinParam {
 			final StyleBuilder styleBuilder = this.getCurrentStyleBuilder();
 			try {
 				final BlocLines lines = BlocLines.load(internalIs, null);
-				this.muteStyle(StyleParser.parse(lines, styleBuilder));
+				this.muteStyle(new StyleParser(styleBuilder).parse(lines));
 
 			} catch (StyleParsingException e) {
 				Logme.error(e);

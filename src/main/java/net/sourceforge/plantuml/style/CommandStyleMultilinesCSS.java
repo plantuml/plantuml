@@ -73,7 +73,7 @@ public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram>
 	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines, ParserPass currentPass) {
 		try {
 			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
-			diagram.getSkinParam().muteStyle(StyleParser.parse(lines.subExtract(1, 1), styleBuilder));
+			diagram.getSkinParam().muteStyle(new StyleParser(styleBuilder).parse(lines.subExtract(1, 1)));
 
 			((SkinParam) diagram.getSkinParam()).applyPendingStyleMigration();
 			return CommandExecutionResult.ok();
