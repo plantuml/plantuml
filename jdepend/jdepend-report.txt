@@ -10629,11 +10629,11 @@ Stats:
     Abstract Classes: 0
 
     Ca: 36
-    Ce: 9
+    Ce: 10
 
     A: 0
-    I: 0.2
-    D: 0.8
+    I: 0.22
+    D: 0.78
 
 Abstract Classes:
 
@@ -10652,6 +10652,7 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.regex
     net.sourceforge.plantuml.style
+    net.sourceforge.plantuml.style.parser
 
 Used By:
     net.sourceforge.plantuml.abel
@@ -10696,16 +10697,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 22
-    Concrete Classes: 15
+    Total Classes: 23
+    Concrete Classes: 16
     Abstract Classes: 7
 
     Ca: 69
     Ce: 17
 
-    A: 0.32
+    A: 0.3
     I: 0.2
-    D: 0.48
+    D: 0.5
 
 Abstract Classes:
     net.sourceforge.plantuml.style.AutomaticCounter
@@ -10717,6 +10718,7 @@ Abstract Classes:
     net.sourceforge.plantuml.style.WithStyle
 
 Concrete Classes:
+    net.sourceforge.plantuml.style.AutomaticCounterBasic
     net.sourceforge.plantuml.style.ConcatIterator
     net.sourceforge.plantuml.style.FromSkinparamToStyle$Data
     net.sourceforge.plantuml.style.LengthAdjust
@@ -10832,12 +10834,12 @@ Stats:
     Concrete Classes: 4
     Abstract Classes: 0
 
-    Ca: 3
+    Ca: 4
     Ce: 4
 
     A: 0
-    I: 0.57
-    D: 0.43
+    I: 0.5
+    D: 0.5
 
 Abstract Classes:
 
@@ -10856,6 +10858,7 @@ Depends Upon:
 Used By:
     net.sourceforge.plantuml.filesdiagram
     net.sourceforge.plantuml.jsondiagram
+    net.sourceforge.plantuml.stereo
     net.sourceforge.plantuml.yaml
 
 --------------------------------------------------
@@ -15518,9 +15521,9 @@ net.sourceforge.plantuml.statediagram,1,0,3,11,0,0.79,0.21,1
 net.sourceforge.plantuml.statediagram.command,7,0,2,17,0,0.89,0.11,1
 net.sourceforge.plantuml.stats,14,1,1,11,0.07,0.92,0.01,1
 net.sourceforge.plantuml.stats.api,4,3,1,2,0.75,0.67,0.42,1
-net.sourceforge.plantuml.stereo,3,0,36,9,0,0.2,0.8,1
-net.sourceforge.plantuml.style,22,7,69,17,0.32,0.2,0.48,1
-net.sourceforge.plantuml.style.parser,4,0,3,4,0,0.57,0.43,1
+net.sourceforge.plantuml.stereo,3,0,36,10,0,0.22,0.78,1
+net.sourceforge.plantuml.style,23,7,69,17,0.3,0.2,0.5,1
+net.sourceforge.plantuml.style.parser,4,0,4,4,0,0.5,0.5,1
 net.sourceforge.plantuml.sudoku,4,1,0,8,0.25,1,0.25,1
 net.sourceforge.plantuml.svek,64,9,21,34,0.14,0.62,0.24,1
 net.sourceforge.plantuml.svek.extremity,55,4,3,11,0.07,0.79,0.14,1

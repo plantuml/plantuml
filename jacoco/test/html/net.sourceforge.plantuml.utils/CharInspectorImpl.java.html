@@ -36,47 +36,46 @@
 package net.sourceforge.plantuml.utils;
 
 public class CharInspectorImpl implements CharInspector {
-	// ::remove file when __HAXE__
 
 	final private BlocLines data;
 	final private boolean insertNewlines;
-<span class="fc" id="L43">	private int line = 0;</span>
-<span class="fc" id="L44">	private int pos = 0;</span>
+<span class="fc" id="L42">	private int line = 0;</span>
+<span class="fc" id="L43">	private int pos = 0;</span>
 
-<span class="fc" id="L46">	CharInspectorImpl(BlocLines input, boolean insertNewlines) {</span>
-<span class="fc" id="L47">		this.data = input;</span>
-<span class="fc" id="L48">		this.insertNewlines = insertNewlines;</span>
-<span class="fc" id="L49">	}</span>
+<span class="fc" id="L45">	CharInspectorImpl(BlocLines input, boolean insertNewlines) {</span>
+<span class="fc" id="L46">		this.data = input;</span>
+<span class="fc" id="L47">		this.insertNewlines = insertNewlines;</span>
+<span class="fc" id="L48">	}</span>
 
 	@Override
 	public char peek(int ahead) {
-<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (line == -1)</span>
-<span class="fc" id="L54">			return 0;</span>
-<span class="fc" id="L55">		final String currentLine = getCurrentLine();</span>
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (pos + ahead &gt;= currentLine.length())</span>
-<span class="nc" id="L57">			return '\0';</span>
-<span class="fc" id="L58">		return currentLine.charAt(pos + ahead);</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">		if (line == -1)</span>
+<span class="fc" id="L53">			return 0;</span>
+<span class="fc" id="L54">		final String currentLine = getCurrentLine();</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">		if (pos + ahead &gt;= currentLine.length())</span>
+<span class="nc" id="L56">			return '\0';</span>
+<span class="fc" id="L57">		return currentLine.charAt(pos + ahead);</span>
 	}
 
 	private String getCurrentLine() {
-<span class="fc bfc" id="L62" title="All 2 branches covered.">		if (insertNewlines)</span>
-<span class="fc" id="L63">			return data.getAt(line).getTrimmed().getString() + &quot;\n&quot;;</span>
-<span class="fc" id="L64">		return data.getAt(line).getTrimmed().getString();</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (insertNewlines)</span>
+<span class="fc" id="L62">			return data.getAt(line).getTrimmed().getString() + &quot;\n&quot;;</span>
+<span class="fc" id="L63">		return data.getAt(line).getTrimmed().getString();</span>
 	}
 
 	@Override
 	public void jump() {
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (line == -1)</span>
-<span class="nc" id="L70">			throw new IllegalStateException();</span>
-<span class="fc" id="L71">		pos++;</span>
-<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (pos &gt;= getCurrentLine().length()) {</span>
-<span class="fc" id="L73">			line++;</span>
-<span class="fc" id="L74">			pos = 0;</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (line == -1)</span>
+<span class="nc" id="L69">			throw new IllegalStateException();</span>
+<span class="fc" id="L70">		pos++;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (pos &gt;= getCurrentLine().length()) {</span>
+<span class="fc" id="L72">			line++;</span>
+<span class="fc" id="L73">			pos = 0;</span>
 		}
-<span class="pc bpc" id="L76" title="1 of 4 branches missed.">		while (line &lt; data.size() &amp;&amp; getCurrentLine().length() == 0)</span>
-<span class="nc" id="L77">			line++;</span>
-<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (line &gt;= data.size())</span>
-<span class="fc" id="L79">			line = -1;</span>
-<span class="fc" id="L80">	}</span>
+<span class="pc bpc" id="L75" title="1 of 4 branches missed.">		while (line &lt; data.size() &amp;&amp; getCurrentLine().length() == 0)</span>
+<span class="nc" id="L76">			line++;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (line &gt;= data.size())</span>
+<span class="fc" id="L78">			line = -1;</span>
+<span class="fc" id="L79">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -3027,7 +3027,7 @@ Total Classes: 4
 "net.sourceforge.plantuml.stats.api" --> "java.lang"
 "net.sourceforge.plantuml.stats.api" --> "java.util"
 
-class "net.sourceforge.plantuml.stereo" %lighten("red", 20) {
+class "net.sourceforge.plantuml.stereo" %lighten("red", 22) {
 Total Classes: 3
 }
 "net.sourceforge.plantuml.stereo" --> "com.plantuml.ubrex.builder"
@@ -3039,9 +3039,10 @@ Total Classes: 3
 "net.sourceforge.plantuml.stereo" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.stereo" --> "net.sourceforge.plantuml.regex"
 "net.sourceforge.plantuml.stereo" --> "net.sourceforge.plantuml.style"
+"net.sourceforge.plantuml.stereo" --> "net.sourceforge.plantuml.style.parser"
 
-class "net.sourceforge.plantuml.style" %lighten("red", 52) {
-Total Classes: 22
+class "net.sourceforge.plantuml.style" %lighten("red", 50) {
+Total Classes: 23
 }
 "net.sourceforge.plantuml.style" --> "java.lang"
 "net.sourceforge.plantuml.style" --> "java.util"
@@ -3061,7 +3062,7 @@ Total Classes: 22
 "net.sourceforge.plantuml.style" --> "net.sourceforge.plantuml.svek"
 "net.sourceforge.plantuml.style" --> "net.sourceforge.plantuml.text"
 
-class "net.sourceforge.plantuml.style.parser" %lighten("red", 57) {
+class "net.sourceforge.plantuml.style.parser" %lighten("red", 50) {
 Total Classes: 4
 }
 "net.sourceforge.plantuml.style.parser" --> "java.lang"

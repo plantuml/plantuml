@@ -91,7 +91,7 @@ public final class StyleLoader {
 <span class="nc" id="L91">			throw new NoStyleAvailableException();</span>
 		}
 <span class="fc" id="L93">		final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(filename, null));</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">		for (Style newStyle : StyleParser.parse(lines2, styleBuilder))</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		for (Style newStyle : new StyleParser(styleBuilder).parse(lines2))</span>
 <span class="fc" id="L95">			styleBuilder.loadInternal(newStyle.getSignature(), newStyle);</span>
 
 <span class="fc" id="L97">		return styleBuilder;</span>

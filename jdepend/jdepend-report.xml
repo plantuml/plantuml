@@ -15572,10 +15572,10 @@
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>36</Ca>
-                <Ce>9</Ce>
+                <Ce>10</Ce>
                 <A>0</A>
-                <I>0.2</I>
-                <D>0.8</D>
+                <I>0.22</I>
+                <D>0.78</D>
                 <V>1</V>
             </Stats>
 
@@ -15604,6 +15604,7 @@
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.regex</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
+                <Package>net.sourceforge.plantuml.style.parser</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -15648,14 +15649,14 @@
 
         <Package name="net.sourceforge.plantuml.style">
             <Stats>
-                <TotalClasses>22</TotalClasses>
-                <ConcreteClasses>15</ConcreteClasses>
+                <TotalClasses>23</TotalClasses>
+                <ConcreteClasses>16</ConcreteClasses>
                 <AbstractClasses>7</AbstractClasses>
                 <Ca>69</Ca>
                 <Ce>17</Ce>
-                <A>0.32</A>
+                <A>0.3</A>
                 <I>0.2</I>
-                <D>0.48</D>
+                <D>0.5</D>
                 <V>1</V>
             </Stats>
 
@@ -15684,6 +15685,9 @@
             </AbstractClasses>
 
             <ConcreteClasses>
+                <Class sourceFile="AutomaticCounterBasic.java">
+                    net.sourceforge.plantuml.style.AutomaticCounterBasic
+                </Class>
                 <Class sourceFile="StyleStorage.java">
                     net.sourceforge.plantuml.style.ConcatIterator
                 </Class>
@@ -15829,11 +15833,11 @@
                 <TotalClasses>4</TotalClasses>
                 <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>3</Ca>
+                <Ca>4</Ca>
                 <Ce>4</Ce>
                 <A>0</A>
-                <I>0.57</I>
-                <D>0.43</D>
+                <I>0.5</I>
+                <D>0.5</D>
                 <V>1</V>
             </Stats>
 
@@ -15865,6 +15869,7 @@
             <UsedBy>
                 <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.jsondiagram</Package>
+                <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.yaml</Package>
             </UsedBy>
         </Package>

@@ -45,78 +45,78 @@ import java.util.concurrent.ConcurrentHashMap;
 import net.sourceforge.plantuml.utils.Log;
 
 public class StyleBuilder implements AutomaticCounter {
-	// ::remove file when __HAXE__
 
-<span class="fc" id="L50">	private final StyleStorage storage = new StyleStorage();</span>
+<span class="fc" id="L49">	private final StyleStorage storage = new StyleStorage();</span>
 	private final Set&lt;StyleSignatureBasic&gt; printedForLog;
 	private int counter;
 
 	public void printMe() {
-<span class="nc" id="L55">		storage.printMe();</span>
-<span class="nc" id="L56">	}</span>
+<span class="nc" id="L54">		storage.printMe();</span>
+<span class="nc" id="L55">	}</span>
 
-<span class="fc" id="L58">	private StyleBuilder(Set&lt;StyleSignatureBasic&gt; printedForLog) {</span>
-<span class="fc" id="L59">		this.printedForLog = new LinkedHashSet&lt;&gt;();</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L57">	private StyleBuilder(Set&lt;StyleSignatureBasic&gt; printedForLog) {</span>
+<span class="fc" id="L58">		this.printedForLog = new LinkedHashSet&lt;&gt;();</span>
+<span class="fc" id="L59">	}</span>
 
 	public StyleBuilder() {
-<span class="fc" id="L63">		this(new LinkedHashSet&lt;StyleSignatureBasic&gt;());</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L62">		this(new LinkedHashSet&lt;StyleSignatureBasic&gt;());</span>
+<span class="fc" id="L63">	}</span>
 
 	public StyleBuilder cloneMe() {
-<span class="fc" id="L67">		final StyleBuilder result = new StyleBuilder();</span>
-<span class="fc" id="L68">		result.storage.putAll(storage);</span>
-<span class="fc" id="L69">		result.counter = this.counter;</span>
-<span class="fc" id="L70">		return result;</span>
+<span class="fc" id="L66">		final StyleBuilder result = new StyleBuilder();</span>
+<span class="fc" id="L67">		result.storage.putAll(storage);</span>
+<span class="fc" id="L68">		result.counter = this.counter;</span>
+<span class="fc" id="L69">		return result;</span>
 
 	}
 
 	public Style createStyleStereotype(String name) {
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (name.contains(StyleSignatureBasic.STAR))</span>
-<span class="nc" id="L76">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (name.contains(StyleSignatureBasic.STAR))</span>
+<span class="nc" id="L75">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L78">		name = name.toLowerCase();</span>
-<span class="nc" id="L79">		final StyleSignatureBasic signature = StyleSignatureBasic.createStereotype(name);</span>
-<span class="nc" id="L80">		final Style result = storage.get(signature);</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L82">			return new Style(signature, new EnumMap&lt;PName, Value&gt;(PName.class));</span>
+<span class="nc" id="L77">		name = name.toLowerCase();</span>
+<span class="nc" id="L78">		final StyleSignatureBasic signature = StyleSignatureBasic.createStereotype(name);</span>
+<span class="nc" id="L79">		final Style result = storage.get(signature);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L81">			return new Style(signature, new EnumMap&lt;PName, Value&gt;(PName.class));</span>
 
-<span class="nc" id="L84">		return result;</span>
+<span class="nc" id="L83">		return result;</span>
 	}
 
 	public StyleBuilder muteStyle(Collection&lt;Style&gt; modifiedStyles) {
-<span class="fc" id="L88">		final StyleBuilder result = new StyleBuilder(this.printedForLog);</span>
-<span class="fc" id="L89">		result.counter = this.counter;</span>
-<span class="fc" id="L90">		result.storage.putAll(storage);</span>
+<span class="fc" id="L87">		final StyleBuilder result = new StyleBuilder(this.printedForLog);</span>
+<span class="fc" id="L88">		result.counter = this.counter;</span>
+<span class="fc" id="L89">		result.storage.putAll(storage);</span>
 
-<span class="fc bfc" id="L92" title="All 2 branches covered.">		for (Style modifiedStyle : modifiedStyles) {</span>
-<span class="fc" id="L93">			final StyleSignatureBasic signature = modifiedStyle.getSignature();</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		for (Style modifiedStyle : modifiedStyles) {</span>
+<span class="fc" id="L92">			final StyleSignatureBasic signature = modifiedStyle.getSignature();</span>
 
-<span class="fc" id="L95">			final Style orig = result.storage.get(signature);</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">			if (orig == null) {</span>
-<span class="fc" id="L97">				result.storage.put(modifiedStyle);</span>
+<span class="fc" id="L94">			final Style orig = result.storage.get(signature);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">			if (orig == null) {</span>
+<span class="fc" id="L96">				result.storage.put(modifiedStyle);</span>
 			} else {
-<span class="fc" id="L99">				final Style tmp = orig.mergeWith(modifiedStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
-<span class="fc" id="L100">				result.storage.put(tmp);</span>
+<span class="fc" id="L98">				final Style tmp = orig.mergeWith(modifiedStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+<span class="fc" id="L99">				result.storage.put(tmp);</span>
 			}
 
-<span class="fc" id="L103">		}</span>
-<span class="fc" id="L104">		return result;</span>
+<span class="fc" id="L102">		}</span>
+<span class="fc" id="L103">		return result;</span>
 	}
 
 	public void loadInternal(StyleSignatureBasic signature, Style newStyle) {
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (signature.isStarred())</span>
-<span class="nc" id="L109">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (signature.isStarred())</span>
+<span class="nc" id="L108">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L111">		final Style orig = this.storage.get(signature);</span>
-<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (orig == null) {</span>
-<span class="fc" id="L113">			this.storage.put(newStyle);</span>
+<span class="fc" id="L110">		final Style orig = this.storage.get(signature);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (orig == null) {</span>
+<span class="fc" id="L112">			this.storage.put(newStyle);</span>
 		} else {
-<span class="fc" id="L115">			final Style tmp = orig.mergeWith(newStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
-<span class="fc" id="L116">			this.storage.put(tmp);</span>
+<span class="fc" id="L114">			final Style tmp = orig.mergeWith(newStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+<span class="fc" id="L115">			this.storage.put(tmp);</span>
 		}
-<span class="fc" id="L118">	}</span>
+<span class="fc" id="L117">	}</span>
 
+	@Override
 	public int getNextInt() {
 <span class="fc" id="L121">		return ++counter;</span>
 	}

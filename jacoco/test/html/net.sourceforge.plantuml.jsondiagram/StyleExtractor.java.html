@@ -116,7 +116,7 @@ public class StyleExtractor {
 <span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (style.size() &gt; 0) {</span>
 <span class="nc" id="L117">			final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();</span>
 <span class="nc" id="L118">			final BlocLines blocLines = BlocLines.from(style);</span>
-<span class="nc" id="L119">			skinParam.muteStyle(StyleParser.parse(blocLines, styleBuilder));</span>
+<span class="nc" id="L119">			skinParam.muteStyle(new StyleParser(styleBuilder).parse(blocLines));</span>
 		}
 <span class="fc" id="L121">	}</span>
 
