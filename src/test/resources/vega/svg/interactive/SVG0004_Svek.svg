@@ -191,8 +191,8 @@ svg.click-active &gt; g &gt; g.click-highlighted {
       <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="1010.2333" y1="114" y2="114"/>
     </g>
     <g class="link" data-entity-1="ent0001" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
-      <polygon fill="#181818" points="1011.7897,94.0194,1021.2796,96.6542,1016.7355,93.285,1020.1047,88.741,1011.7897,94.0194" style="stroke:#181818;stroke-width:1;"/>
-      <path d="M1011.7897,81.9806 C1023.1634,83.6693 1029.5,85.6758 1029.5,88 C1029.5,90.3242 1029.0983,91.4495 1017.7247,93.1382" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="#181818" points="1011.7897,94.0194,1021.2796,96.6542,1016.7355,93.285,1020.1047,88.741,1011.7897,94.0194" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1011.7897,81.9806 C1023.1634,83.6693 1029.5,85.6758 1029.5,88 C1029.5,90.3242 1028.1092,91.5964 1016.7355,93.285" fill="none" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="29.7917" x="1031.5" y="91.6111">Hello</text>
     </g>
   </g>

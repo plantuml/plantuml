@@ -32,7 +32,7 @@
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="24.9667" x="66.45" y="97.8889">Bob</text>
     </g>
     <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="1" id="msg1">
-      <polygon fill="#181818" points="66.9333,59,76.9333,63,66.9333,67,70.9333,63" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="#181818" points="66.9333,59,76.9333,63,66.9333,67,70.9333,63" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
       <line style="stroke:#181818;stroke-width:1;" x1="27.225" x2="72.9333" y1="63" y2="63"/>
       <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="27.625" x="34.225" y="58.1111">hello</text>
     </g>

@@ -333,8 +333,8 @@
     <line style="stroke:#ADD8E6;stroke-width:1;" x1="148.5333" x2="150.1333" y1="30" y2="30"/>
     <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="0.1333" x="150.4" y="19"/>
     <path d="M150.4,19 L150.5333,19 L150.5333,30 L150.4,30" fill="none" style="stroke:#ADD8E6;stroke-width:1;"/>
-    <polygon fill="#000000" points="152.4,34,157.4,39,152.4,44,147.4,39" style="stroke:#000000;stroke-width:1;"/>
-    <polygon fill="#000000" points="2.5333,49,7.5333,54,2.5333,59,-2.4667,54" style="stroke:#000000;stroke-width:1;"/>
+    <polygon fill="#000000" points="152.4,34,157.4,39,152.4,44,147.4,39" style="stroke:#000000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#000000" points="2.5333,49,7.5333,54,2.5333,59,-2.4667,54" style="stroke:#000000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
     <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="82.6833" x="6" y="27.5556">Prototype design</text>
     <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="101.0167" x="160.4" y="42.5556">Prototype completed</text>
     <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="109.0833" x="10.5333" y="57.5556">Release of new album</text>

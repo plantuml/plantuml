@@ -94,7 +94,7 @@
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="448" y1="39" y2="39"/>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="448" y1="84" y2="84"/>
     <path d="M216,52 L216,61.5 L221,61.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
-    <polygon fill="#181818" points="220,57.5,224,61.5,220,65.5,220,57.5" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="220,57.5,224,61.5,220,65.5,220,57.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
     <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="47" x="2" y="41"/>
     <path d="M48,52 L2,52 L2,41 L48,41" fill="none" style="stroke:#181818;stroke-width:1;"/>
     <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="81" x="80" y="41"/>

@@ -87,7 +87,7 @@ public class ExtremityArrow extends Extremity {
 
 	@Override
 	public double getDecorationLength() {
-		return 6;
+		return 5;
 	}
 
 	public void drawU(UGraphic ug) {
