@@ -299,8 +299,8 @@ try {
 //   assert(objp1-&gt;sz.x == 0 &amp;&amp; objp1-&gt;sz.y == 0);
 <span class="pc bpc" id="L300" title="1 of 2 branches missed.">   if((xlp) == null) return false;</span>
 <span class="fc bfc" id="L301" title="All 2 branches covered.">      return objp1.pos.x &gt; xlp.get__(0).pos.x &amp;&amp;</span>
-<span class="pc bpc" id="L302" title="1 of 2 branches missed.">    		  objp1.pos.x &lt; (xlp.get__(0).pos.x + xlp.get__(0).sz.y) &amp;&amp;</span>
-<span class="nc bnc" id="L303" title="All 2 branches missed.">    		  objp1.pos.y &gt; xlp.get__(0).pos.y &amp;&amp;</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">    		  objp1.pos.x &lt; (xlp.get__(0).pos.x + xlp.get__(0).sz.y) &amp;&amp;</span>
+<span class="pc bpc" id="L303" title="1 of 2 branches missed.">    		  objp1.pos.y &gt; xlp.get__(0).pos.y &amp;&amp;</span>
 <span class="pc bnc" id="L304" title="All 2 branches missed.">    		  objp1.pos.y &lt; (xlp.get__(0).pos.y + xlp.get__(0).sz.y);</span>
 //   UNSUPPORTED(&quot;exdts7f2bpam5122kabq2b86c&quot;); //   return objp1-&gt;pos.x &gt; xlp-&gt;pos.x &amp;&amp;
 //   UNSUPPORTED(&quot;99uxf5dqw5nzdymlzfj764uol&quot;); // 	 objp1-&gt;pos.x &lt; (xlp-&gt;pos.x + xlp-&gt;sz.x) &amp;&amp;
