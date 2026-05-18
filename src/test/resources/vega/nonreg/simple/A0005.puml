@@ -1,16 +1,7 @@
-package nonreg.simple;
-
-import java.io.IOException;
-
-import org.junit.jupiter.api.Test;
-
-import nonreg.BasicTest;
-
-/*
-
-Test diagram MUST be put between triple quotes
-
-"""
+---
+output: svg
+expected-description: (2 entities)
+---
 @startuml
 title title
 legend legend
@@ -47,14 +38,3 @@ class Sally
 
 Sally --> Bob
 @enduml
-"""
-
- */
-public class A0005_Test extends BasicTest {
-
-	@Test
-	void testSimple() throws IOException {
-		checkImage("(2 entities)");
-	}
-
-}

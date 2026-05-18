@@ -27,7 +27,7 @@
     <text fill="#000000" font-family="sans-serif" font-size="9" lengthAdjust="spacing" textLength="159.225" x="6" y="89">Long very very very Long Long note KO</text>
     <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="128" x="2" y="64"/>
     <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="128" x="2" y="64"/>
-    <polygon fill="#000000" points="130,64,135,69,130,74,125,69" style="stroke:#000000;stroke-width:1;"/>
+    <polygon fill="#000000" points="130,64,135,69,130,74,125,69" style="stroke:#000000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
     <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="34.8333" x="6" y="72.5556">TASK1</text>
     <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="56.375" x="138" y="72.5556">Milestone 1</text>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="132" y1="97" y2="97"/>

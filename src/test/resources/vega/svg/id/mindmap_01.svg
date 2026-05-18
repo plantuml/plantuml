@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="183px" preserveAspectRatio="none" style="width:238px;height:183px;background:#FFFFFF;" version="1.1" viewBox="0 0 238 183" width="238px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="44.15" x="10" y="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="24.15" x="20" y="94.8889">root</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="27.8167" x="104.15" y="47"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.8167" x="114.15" y="67.8889">a</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="35.6333" x="181.9667" y="20"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.6333" x="191.9667" y="40.8889">a1</text>
+    <path d="M131.9667,64 L141.9667,64 C156.9667,64 156.9667,37 171.9667,37 L181.9667,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="35.6333" x="181.9667" y="74"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.6333" x="191.9667" y="94.8889">a2</text>
+    <path d="M131.9667,64 L141.9667,64 C156.9667,64 156.9667,91 171.9667,91 L181.9667,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M54.15,91 L64.15,91 C79.15,91 79.15,64 94.15,64 L104.15,64" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="27.8167" x="104.15" y="128"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.8167" x="114.15" y="148.8889">b</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="35.6333" x="181.9667" y="128"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.6333" x="191.9667" y="148.8889">b1</text>
+    <path d="M131.9667,145 L141.9667,145 C156.9667,145 156.9667,145 171.9667,145 L181.9667,145" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M54.15,91 L64.15,91 C79.15,91 79.15,145 94.15,145 L104.15,145" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

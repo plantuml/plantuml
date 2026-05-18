@@ -196,13 +196,13 @@ svg.click-active &gt; g &gt; g.click-highlighted {
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10.15" x="223.5" y="116.8889">D</text>
     </g>
     <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="composition" id="lnk5">
-      <polygon fill="#181818" points="47.3616,28,53.3616,32,59.3616,28,53.3616,24,47.3616,28" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="#181818" points="47.3616,28,53.3616,32,59.3616,28,53.3616,24,47.3616,28" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
       <path d="M59.3616,28 C74.9391,28 84.1333,28 99.6967,28" fill="none" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="31.2" x="58" y="20.1111">holds</text>
       <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7.2583" x="91.6967" y="24.1111">1</text>
     </g>
     <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="aggregation" id="lnk6">
-      <polygon fill="none" points="120.5,44.2235,116.5,50.2235,120.5,56.2235,124.5,50.2235,120.5,44.2235" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="none" points="120.5,44.2235,116.5,50.2235,120.5,56.2235,124.5,50.2235,120.5,44.2235" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
       <path d="M120.5,56.2235 C120.5,71.1994 120.5,81.9306 120.5,96.873" fill="none" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="31.2" x="122.5" y="74.1111">holds</text>
     </g>

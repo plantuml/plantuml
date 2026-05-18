@@ -1,0 +1,250 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="116px" preserveAspectRatio="none" style="width:2719px;height:116px;background:#FFFFFF;" version="1.1" viewBox="0 0 2719 116" width="2719px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="transparent_keyword" data-source-line="6" id="part1-lifeline">
+      <g>
+        <title>transparent_keyword</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="73.5083" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="77" x2="77" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="white_with_zero_alpha" data-source-line="9" id="part2-lifeline">
+      <g>
+        <title>white_with_zero_alpha</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="234.475" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="238.0167" x2="238.0167" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part3" data-qualified-name="black_with_zero_alpha" data-source-line="10" id="part3-lifeline">
+      <g>
+        <title>black_with_zero_alpha</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="401.3917" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="404.9333" x2="404.9333" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part4" data-qualified-name="gray_with_zero_alpha" data-source-line="11" id="part4-lifeline">
+      <g>
+        <title>gray_with_zero_alpha</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="565.5667" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="568.85" x2="568.85" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part5" data-qualified-name="white_with_low_alpha" data-source-line="14" id="part5-lifeline">
+      <g>
+        <title>white_with_low_alpha</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="726.65" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="730.2833" x2="730.2833" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part6" data-qualified-name="black_with_low_alpha" data-source-line="15" id="part6-lifeline">
+      <g>
+        <title>black_with_low_alpha</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="887.3833" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="891.0167" x2="891.0167" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part7" data-qualified-name="gray_with_low_alpha" data-source-line="16" id="part7-lifeline">
+      <g>
+        <title>gray_with_low_alpha</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="1045.375" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="1048.75" x2="1048.75" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part8" data-qualified-name="white_with_high_alpha" data-source-line="19" id="part8-lifeline">
+      <g>
+        <title>white_with_high_alpha</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="1206.1083" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="1210" x2="1210" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part9" data-qualified-name="black_with_high_alpha" data-source-line="20" id="part9-lifeline">
+      <g>
+        <title>black_with_high_alpha</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="1372.325" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="1376.2167" x2="1376.2167" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part10" data-qualified-name="gray_with_high_alpha" data-source-line="21" id="part10-lifeline">
+      <g>
+        <title>gray_with_high_alpha</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="1535.8" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="1539.4333" x2="1539.4333" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part11" data-qualified-name="white_with_full_alpha" data-source-line="24" id="part11-lifeline">
+      <g>
+        <title>white_with_full_alpha</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="1694.9583" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="1698.1667" x2="1698.1667" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part12" data-qualified-name="black_with_full_alpha" data-source-line="25" id="part12-lifeline">
+      <g>
+        <title>black_with_full_alpha</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="1852.5417" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="1855.75" x2="1855.75" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part13" data-qualified-name="gray_with_full_alpha" data-source-line="26" id="part13-lifeline">
+      <g>
+        <title>gray_with_full_alpha</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="2007.3833" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="2011.3333" x2="2011.3333" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part14" data-qualified-name="white_with_unspecified_alpha" data-source-line="29" id="part14-lifeline">
+      <g>
+        <title>white_with_unspecified_alpha</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="2188.7667" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="2192.4333" x2="2192.4333" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part15" data-qualified-name="black_with_unspecified_alpha" data-source-line="30" id="part15-lifeline">
+      <g>
+        <title>black_with_unspecified_alpha</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="2399.4333" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="2403.1" x2="2403.1" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part16" data-qualified-name="gray_with_unspecified_alpha" data-source-line="31" id="part16-lifeline">
+      <g>
+        <title>gray_with_unspecified_alpha</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="2607.3583" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="2610.7667" x2="2610.7667" y1="34" y2="81"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="transparent_keyword" data-source-line="6" id="part1-head">
+      <rect fill="none" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="145.0167" x="5" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="131.0167" x="12" y="22.8889">transparent_keyword</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="transparent_keyword" data-source-line="6" id="part1-tail">
+      <rect fill="none" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="145.0167" x="5" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="131.0167" x="12" y="97.8889">transparent_keyword</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="white_with_zero_alpha" data-source-line="9" id="part2-head">
+      <rect fill="none" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="156.9167" x="160.0167" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="142.9167" x="167.0167" y="22.8889">white_with_zero_alpha</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="white_with_zero_alpha" data-source-line="9" id="part2-tail">
+      <rect fill="none" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="156.9167" x="160.0167" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="142.9167" x="167.0167" y="97.8889">white_with_zero_alpha</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part3" data-qualified-name="black_with_zero_alpha" data-source-line="10" id="part3-head">
+      <rect fill="none" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="156.9167" x="326.9333" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="142.9167" x="333.9333" y="22.8889">black_with_zero_alpha</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part3" data-qualified-name="black_with_zero_alpha" data-source-line="10" id="part3-tail">
+      <rect fill="none" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="156.9167" x="326.9333" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="142.9167" x="333.9333" y="97.8889">black_with_zero_alpha</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part4" data-qualified-name="gray_with_zero_alpha" data-source-line="11" id="part4-head">
+      <rect fill="none" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="151.4333" x="493.85" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="137.4333" x="500.85" y="22.8889">gray_with_zero_alpha</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part4" data-qualified-name="gray_with_zero_alpha" data-source-line="11" id="part4-tail">
+      <rect fill="none" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="151.4333" x="493.85" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="137.4333" x="500.85" y="97.8889">gray_with_zero_alpha</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part5" data-qualified-name="white_with_low_alpha" data-source-line="14" id="part5-head">
+      <rect fill="#FFFFFF" fill-opacity="0.00392" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="150.7333" x="655.2833" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="136.7333" x="662.2833" y="22.8889">white_with_low_alpha</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part5" data-qualified-name="white_with_low_alpha" data-source-line="14" id="part5-tail">
+      <rect fill="#FFFFFF" fill-opacity="0.00392" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="150.7333" x="655.2833" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="136.7333" x="662.2833" y="97.8889">white_with_low_alpha</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part6" data-qualified-name="black_with_low_alpha" data-source-line="15" id="part6-head">
+      <rect fill="#000000" fill-opacity="0.00392" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="150.7333" x="816.0167" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="136.7333" x="823.0167" y="22.8889">black_with_low_alpha</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part6" data-qualified-name="black_with_low_alpha" data-source-line="15" id="part6-tail">
+      <rect fill="#000000" fill-opacity="0.00392" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="150.7333" x="816.0167" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="136.7333" x="823.0167" y="97.8889">black_with_low_alpha</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part7" data-qualified-name="gray_with_low_alpha" data-source-line="16" id="part7-head">
+      <rect fill="#CCCCCC" fill-opacity="0.00392" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="145.25" x="976.75" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="131.25" x="983.75" y="22.8889">gray_with_low_alpha</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part7" data-qualified-name="gray_with_low_alpha" data-source-line="16" id="part7-tail">
+      <rect fill="#CCCCCC" fill-opacity="0.00392" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="145.25" x="976.75" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="131.25" x="983.75" y="97.8889">gray_with_low_alpha</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part8" data-qualified-name="white_with_high_alpha" data-source-line="19" id="part8-head">
+      <rect fill="#FFFFFF" fill-opacity="0.99608" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="156.2167" x="1132" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="142.2167" x="1139" y="22.8889">white_with_high_alpha</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part8" data-qualified-name="white_with_high_alpha" data-source-line="19" id="part8-tail">
+      <rect fill="#FFFFFF" fill-opacity="0.99608" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="156.2167" x="1132" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="142.2167" x="1139" y="97.8889">white_with_high_alpha</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part9" data-qualified-name="black_with_high_alpha" data-source-line="20" id="part9-head">
+      <rect fill="#000000" fill-opacity="0.99608" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="156.2167" x="1298.2167" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="142.2167" x="1305.2167" y="22.8889">black_with_high_alpha</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part9" data-qualified-name="black_with_high_alpha" data-source-line="20" id="part9-tail">
+      <rect fill="#000000" fill-opacity="0.99608" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="156.2167" x="1298.2167" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="142.2167" x="1305.2167" y="97.8889">black_with_high_alpha</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part10" data-qualified-name="gray_with_high_alpha" data-source-line="21" id="part10-head">
+      <rect fill="#CCCCCC" fill-opacity="0.99608" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="150.7333" x="1464.4333" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="136.7333" x="1471.4333" y="22.8889">gray_with_high_alpha</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part10" data-qualified-name="gray_with_high_alpha" data-source-line="21" id="part10-tail">
+      <rect fill="#CCCCCC" fill-opacity="0.99608" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="150.7333" x="1464.4333" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="136.7333" x="1471.4333" y="97.8889">gray_with_high_alpha</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part11" data-qualified-name="white_with_full_alpha" data-source-line="24" id="part11-head">
+      <rect fill="#FFFFFF" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="147.5833" x="1625.1667" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="133.5833" x="1632.1667" y="22.8889">white_with_full_alpha</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part11" data-qualified-name="white_with_full_alpha" data-source-line="24" id="part11-tail">
+      <rect fill="#FFFFFF" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="147.5833" x="1625.1667" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="133.5833" x="1632.1667" y="97.8889">white_with_full_alpha</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part12" data-qualified-name="black_with_full_alpha" data-source-line="25" id="part12-head">
+      <rect fill="#000000" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="147.5833" x="1782.75" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="133.5833" x="1789.75" y="22.8889">black_with_full_alpha</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part12" data-qualified-name="black_with_full_alpha" data-source-line="25" id="part12-tail">
+      <rect fill="#000000" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="147.5833" x="1782.75" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="133.5833" x="1789.75" y="97.8889">black_with_full_alpha</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part13" data-qualified-name="gray_with_full_alpha" data-source-line="26" id="part13-head">
+      <rect fill="#CCCCCC" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="142.1" x="1940.3333" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="128.1" x="1947.3333" y="22.8889">gray_with_full_alpha</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part13" data-qualified-name="gray_with_full_alpha" data-source-line="26" id="part13-tail">
+      <rect fill="#CCCCCC" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="142.1" x="1940.3333" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="128.1" x="1947.3333" y="97.8889">gray_with_full_alpha</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part14" data-qualified-name="white_with_unspecified_alpha" data-source-line="29" id="part14-head">
+      <rect fill="#FFFFFF" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="200.6667" x="2092.4333" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="186.6667" x="2099.4333" y="22.8889">white_with_unspecified_alpha</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part14" data-qualified-name="white_with_unspecified_alpha" data-source-line="29" id="part14-tail">
+      <rect fill="#FFFFFF" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="200.6667" x="2092.4333" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="186.6667" x="2099.4333" y="97.8889">white_with_unspecified_alpha</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part15" data-qualified-name="black_with_unspecified_alpha" data-source-line="30" id="part15-head">
+      <rect fill="#000000" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="200.6667" x="2303.1" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="186.6667" x="2310.1" y="22.8889">black_with_unspecified_alpha</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part15" data-qualified-name="black_with_unspecified_alpha" data-source-line="30" id="part15-tail">
+      <rect fill="#000000" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="200.6667" x="2303.1" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="186.6667" x="2310.1" y="97.8889">black_with_unspecified_alpha</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part16" data-qualified-name="gray_with_unspecified_alpha" data-source-line="31" id="part16-head">
+      <rect fill="#CCCCCC" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="195.1833" x="2513.7667" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="181.1833" x="2520.7667" y="22.8889">gray_with_unspecified_alpha</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part16" data-qualified-name="gray_with_unspecified_alpha" data-source-line="31" id="part16-tail">
+      <rect fill="#CCCCCC" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="195.1833" x="2513.7667" y="80"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="181.1833" x="2520.7667" y="97.8889">gray_with_unspecified_alpha</text>
+    </g>
+    <g class="message" data-entity-1="part2" data-entity-2="part3" data-source-line="33" id="msg1">
+      <polygon fill="#181818" points="393.3917,59,403.3917,63,393.3917,67,397.3917,63" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="238.475" x2="399.3917" y1="63" y2="63"/>
+      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="29.7917" x="245.475" y="58.1111">Hello</text>
+    </g>
+  </g>
+</svg>

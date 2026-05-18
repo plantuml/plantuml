@@ -39,8 +39,8 @@
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="160" y1="84" y2="84"/>
     <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="124" x="2" y="41"/>
     <rect fill="none" height="11" style="stroke:#ADD8E6;stroke-width:1;" width="124" x="2" y="41"/>
-    <polygon fill="#000000" points="120,56,125,61,120,66,115,61" style="stroke:#000000;stroke-width:1;"/>
-    <polygon fill="#000000" points="152,71,157,76,152,81,147,76" style="stroke:#000000;stroke-width:1;"/>
+    <polygon fill="#000000" points="120,56,125,61,120,66,115,61" style="stroke:#000000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#000000" points="152,71,157,76,152,81,147,76" style="stroke:#000000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
     <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="82.6833" x="6" y="49.5556">Prototype design</text>
     <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="101.0167" x="128" y="64.5556">Prototype completed</text>
     <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="109.0833" x="160" y="79.5556">Release of new album</text>

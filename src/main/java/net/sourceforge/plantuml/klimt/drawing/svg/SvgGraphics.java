@@ -362,7 +362,7 @@ public class SvgGraphics {
 			elt.setAttribute("rx", format(xRadius));
 			elt.setAttribute("ry", format(yRadius));
 			fillMe(elt);
-			styleMe(elt);
+			styleMe(elt, null);
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
 		}
@@ -376,7 +376,7 @@ public class SvgGraphics {
 			final Element elt = document.createElement("path");
 			elt.setAttribute("d", path);
 			fillMe(elt);
-			styleMe(elt);
+			styleMe(elt, null);
 			getG().appendChild(elt);
 		}
 		ensureVisible(x1, y1);
@@ -586,7 +586,7 @@ public class SvgGraphics {
 		elt.setAttribute("width", format(width));
 		elt.setAttribute("height", format(height));
 		fillMe(elt);
-		styleMe(elt);
+		styleMe(elt, null);
 		return elt;
 	}
 
@@ -598,7 +598,7 @@ public class SvgGraphics {
 			elt.setAttribute("y1", format(y1));
 			elt.setAttribute("x2", format(x2));
 			elt.setAttribute("y2", format(y2));
-			styleMe(elt);
+			styleMe(elt, null);
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
 		}
@@ -606,7 +606,7 @@ public class SvgGraphics {
 		ensureVisible(x2 + 2 * deltaShadow, y2 + 2 * deltaShadow);
 	}
 
-	private void styleMe(Element elt) {
+	private void styleMe(Element elt, String suppStyle) {
 		if (strokeWidth.equals("0"))
 			return;
 
@@ -617,6 +617,9 @@ public class SvgGraphics {
 
 		if (strokeDasharray != null)
 			style.append("stroke-dasharray:" + strokeDasharray + ";");
+
+		if (suppStyle != null)
+			style.append(suppStyle);
 
 		elt.setAttribute("style", style.toString());
 	}
@@ -636,7 +639,7 @@ public class SvgGraphics {
 			}
 			elt.setAttribute("points", sb.toString());
 			fillMe(elt);
-			styleMe(elt);
+			styleMe(elt, "stroke-linejoin:miter;stroke-miterlimit:10;");
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
 		}
@@ -872,7 +875,7 @@ public class SvgGraphics {
 		if (hidden == false) {
 			final Element elt = document.createElement("path");
 			elt.setAttribute("d", sb.toString().trim());
-			styleMe(elt);
+			styleMe(elt, null);
 			fillMe(elt);
 			final String id = path.getComment();
 			if (id != null)

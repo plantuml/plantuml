@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="171px" preserveAspectRatio="none" style="width:115px;height:171px;background:#FFFFFF;" version="1.1" viewBox="0 0 115 171" width="115px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="a" data-source-line="1" id="part1-lifeline">
+      <g>
+        <title>a</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="102" width="8" x="11.9083" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="15" x2="15" y1="34" y2="136"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="b" data-source-line="1" id="part2-lifeline">
+      <g>
+        <title>b</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="102" width="8" x="89.5333" y="34"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="92.625" x2="92.625" y1="34" y2="136"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="a" data-source-line="1" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.8167" x="5" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.8167" x="12" y="22.8889">a</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="a" data-source-line="1" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.8167" x="5" y="135"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.8167" x="12" y="152.8889">a</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="b" data-source-line="1" id="part2-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.8167" x="82.625" y="5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.8167" x="89.625" y="22.8889">b</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="b" data-source-line="1" id="part2-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.8167" x="82.625" y="135"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.8167" x="89.625" y="152.8889">b</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="1" id="msg1">
+      <polygon fill="#181818" points="81.5333,46,91.5333,50,81.5333,54,85.5333,50" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="15.9083" x2="87.5333" y1="50" y2="50"/>
+    </g>
+    <g class="message" data-entity-1="part2" data-entity-2="part1" data-source-line="2" id="msg2">
+      <polygon fill="#181818" points="26.9083,60,16.9083,64,26.9083,68,22.9083,64" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="20.9083" x2="92.5333" y1="64" y2="64"/>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="3" id="msg3">
+      <polygon fill="#181818" points="81.5333,87,91.5333,91,81.5333,95,85.5333,91" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="15.9083" x2="87.5333" y1="91" y2="91"/>
+      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="43.4417" x="22.9083" y="86.1111">request</text>
+    </g>
+    <g class="message" data-entity-1="part2" data-entity-2="part1" data-source-line="4" id="msg4">
+      <polygon fill="#181818" points="26.9083,114,16.9083,118,26.9083,122,22.9083,118" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="20.9083" x2="92.5333" y1="118" y2="118"/>
+      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="53.625" x="32.9083" y="113.1111">response</text>
+    </g>
+  </g>
+</svg>

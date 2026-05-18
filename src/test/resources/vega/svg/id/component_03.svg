@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="46px" preserveAspectRatio="none" style="width:167px;height:46px;background:#FFFFFF;" version="1.1" viewBox="0 0 167 46" width="167px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <!--entity leaf42-->
+    <g class="entity" data-qualified-name="leaf42" data-source-line="1" id="ent0001">
+      <a href="https://www.plantuml.com" target="_top" title="https://www.plantuml.com" xlink:actuate="onRequest" xlink:href="https://www.plantuml.com" xlink:show="new" xlink:title="https://www.plantuml.com" xlink:type="simple">
+        <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="145.3" x="6" y="12"/>
+        <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="125.3" x="16" y="32.8889">PlantUML at its best</text>
+      </a>
+    </g>
+  </g>
+</svg>

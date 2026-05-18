@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="151px" preserveAspectRatio="none" style="width:181px;height:151px;background:#FFFFFF;" version="1.1" viewBox="0 0 181 151" width="181px" zoomAndPan="magnify">
+  <title>This is the SVG title</title>
+  <defs/>
+  <g>
+    <g class="title" data-source-line="2">
+      <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="154.9333" x="10" y="25.8889">This is the PlantUML title</text>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="alice" data-source-line="3" id="part1-lifeline">
+      <g>
+        <title>alice</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="59.525" y="69"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="63.0583" x2="63.0583" y1="69" y2="116"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="bob" data-source-line="3" id="part2-lifeline">
+      <g>
+        <title>bob</title>
+        <rect fill="#000000" fill-opacity="0.00000" height="47" width="8" x="111.15" y="69"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="114.425" x2="114.425" y1="69" y2="116"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="alice" data-source-line="3" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.9333" x="42.0583" y="40"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="28.9333" x="49.0583" y="57.8889">alice</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="alice" data-source-line="3" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.9333" x="42.0583" y="115"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="28.9333" x="49.0583" y="132.8889">alice</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="bob" data-source-line="3" id="part2-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="37.45" x="96.425" y="40"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="23.45" x="103.425" y="57.8889">bob</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="bob" data-source-line="3" id="part2-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="37.45" x="96.425" y="115"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="23.45" x="103.425" y="132.8889">bob</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="3" id="msg1">
+      <polygon fill="#181818" points="103.15,94,113.15,98,103.15,102,107.15,98" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="63.525" x2="109.15" y1="98" y2="98"/>
+      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="27.625" x="70.525" y="93.1111">hello</text>
+    </g>
+  </g>
+</svg>

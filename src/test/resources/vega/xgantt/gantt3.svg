@@ -45,11 +45,11 @@
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="208" y1="39" y2="39"/>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="208" y1="84" y2="84"/>
     <path d="M37,46 L24,46 L24,76.5 L29,76.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
-    <polygon fill="#181818" points="28,72.5,32,76.5,28,80.5,28,72.5" style="stroke:#181818;stroke-width:1;"/>
+    <polygon fill="#181818" points="28,72.5,32,76.5,28,80.5,28,72.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
     <path d="M203,61 L216,61 L216,76.5 L211,76.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
-    <polygon fill="#181818" points="212,72.5,208,76.5,212,80.5,212,72.5" style="stroke:#181818;stroke-width:1;"/>
-    <polygon fill="#000000" points="40,41,45,46,40,51,35,46" style="stroke:#000000;stroke-width:1;"/>
-    <polygon fill="#000000" points="200,56,205,61,200,66,195,61" style="stroke:#000000;stroke-width:1;"/>
+    <polygon fill="#181818" points="212,72.5,208,76.5,212,80.5,212,72.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#000000" points="40,41,45,46,40,51,35,46" style="stroke:#000000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#000000" points="200,56,205,61,200,66,195,61" style="stroke:#000000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
     <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="172" x="34" y="71"/>
     <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="172" x="34" y="71"/>
     <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="34.8333" x="48" y="49.5556">P_start</text>

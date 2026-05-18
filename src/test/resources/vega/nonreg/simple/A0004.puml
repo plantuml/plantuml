@@ -1,14 +1,7 @@
-package nonreg.simple;
-
-import java.io.IOException;
-
-import org.junit.jupiter.api.Test;
-
-import nonreg.BasicTest;
-
-/*
-
-"""
+---
+output: svg
+expected-description: (12 activities)
+---
 @startuml
 
 (*) --> VerifyReservation
@@ -35,14 +28,3 @@ endif
 --> (*)
 
 @enduml
-
-"""
-
- */
-public class A0004_Test extends BasicTest {
-
-	@Test
-	void testSimple() throws IOException {
-		checkImage("(12 activities)");
-	}
-}
