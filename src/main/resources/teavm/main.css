@@ -201,3 +201,32 @@ main {
 		transform: scale(1);
 	}
 }
+
+/* Right-click context menu shown over the rendered diagram. Reuses the
+   page's color variables so it picks up the active light/dark theme. */
+.ctx-menu {
+	position: fixed;
+	z-index: 200;
+	min-width: 10rem;
+	margin: 0;
+	padding: 0.25rem 0;
+	list-style: none;
+	background: var(--surface);
+	color: var(--fg);
+	border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--surface));
+	border-radius: 0.5rem;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+	font-family: sans-serif;
+	font-size: 0.875rem;
+	user-select: none;
+}
+
+.ctx-menu li {
+	padding: 0.4rem 1rem;
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.ctx-menu li:hover {
+	background: color-mix(in srgb, var(--accent) 30%, var(--surface));
+}
