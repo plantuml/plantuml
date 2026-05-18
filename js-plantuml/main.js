@@ -6,6 +6,7 @@ let dark = false;
 renderer();
 resize();
 controls();
+contextMenu();
 
 function renderer() {
 	const loading = document.getElementById("loading");
@@ -152,4 +153,105 @@ function controls() {
 		const out = document.getElementById("out");
 		return out.innerHTML;
 	}
+}
+
+// ---------------------------------------------------------------------------
+// Right-click context menu shown over the rendered diagram. Entries simply
+// click() the matching toolbar buttons, so all copy logic and visual feedback
+// (.success / .error outlines) stay in the controls() handlers above -- no
+// duplication and nothing to keep in sync.
+// ---------------------------------------------------------------------------
+function contextMenu() {
+	const out = document.getElementById("out");
+	let menuEl = null;
+
+	function close() {
+		if (menuEl) {
+			menuEl.remove();
+			menuEl = null;
+			document.removeEventListener("mousedown", onOutsideMouseDown, true);
+			document.removeEventListener("keydown",   onKeyDown,           true);
+			window.removeEventListener("blur",        close);
+			window.removeEventListener("scroll",      close, true);
+			window.removeEventListener("resize",      close);
+		}
+	}
+
+	function onOutsideMouseDown(e) {
+		if (menuEl && !menuEl.contains(e.target)) {
+			close();
+		}
+	}
+
+	function onKeyDown(e) {
+		if (e.key === "Escape") {
+			e.preventDefault();
+			close();
+		}
+	}
+
+	function open(clientX, clientY) {
+		close();
+
+		const menu = document.createElement("ul");
+		menu.className = "ctx-menu";
+		menu.setAttribute("role", "menu");
+
+		// Each entry delegates to the existing toolbar button so the
+		// real action, error handling and visual feedback live in one
+		// place (the click handlers installed by controls()).
+		const ENTRIES = [
+			{ label: "Copy as bitmap", buttonId: "copy-bitmap" },
+			{ label: "Copy as SVG",    buttonId: "copy"        }
+		];
+		for (const entry of ENTRIES) {
+			const li = document.createElement("li");
+			li.setAttribute("role", "menuitem");
+			li.textContent = entry.label;
+			li.addEventListener("click", () => {
+				const btn = document.getElementById(entry.buttonId);
+				if (btn) {
+					btn.click();
+				} else {
+					console.warn("ctx-menu: button not found:", entry.buttonId);
+				}
+				close();
+			});
+			menu.appendChild(li);
+		}
+
+		// Mount off-screen first to measure, then clamp inside the viewport
+		// so the menu doesn't get cut off near the right/bottom edges.
+		menu.style.left = "-9999px";
+		menu.style.top  = "-9999px";
+		document.body.appendChild(menu);
+		const rect = menu.getBoundingClientRect();
+		const vw   = document.documentElement.clientWidth;
+		const vh   = document.documentElement.clientHeight;
+		let   x    = clientX;
+		let   y    = clientY;
+		if (x + rect.width  > vw) x = Math.max(0, vw - rect.width  - 2);
+		if (y + rect.height > vh) y = Math.max(0, vh - rect.height - 2);
+		menu.style.left = x + "px";
+		menu.style.top  = y + "px";
+
+		menuEl = menu;
+
+		document.addEventListener("mousedown", onOutsideMouseDown, true);
+		document.addEventListener("keydown",   onKeyDown,           true);
+		window.addEventListener("blur",   close);
+		window.addEventListener("scroll", close, true);
+		window.addEventListener("resize", close);
+	}
+
+	// Delegated right-click handler on #out so it keeps working after every
+	// re-render (render() rebuilds the SVG on each keystroke).
+	out.addEventListener("contextmenu", e => {
+		const target = e.target;
+		if (!target || (target.nodeName !== "svg" && !target.closest("svg"))) {
+			return;
+		}
+		e.preventDefault();
+		open(e.clientX, e.clientY);
+	});
 }
