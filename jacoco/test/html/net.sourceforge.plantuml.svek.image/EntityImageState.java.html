@@ -129,7 +129,7 @@ public class EntityImageState extends EntityImageStateCommon {
 
 <span class="fc" id="L130">		final UStroke stroke = style.getStroke(lineConfig.getColors());</span>
 
-<span class="fc" id="L132">		ug = applyColor(ug);</span>
+<span class="fc" id="L132">		ug = applyColor(ug, getStyleState());</span>
 <span class="fc" id="L133">		ug = ug.apply(stroke);</span>
 
 <span class="fc" id="L135">		final HColorSet colorSet = getSkinParam().getIHtmlColorSet();</span>

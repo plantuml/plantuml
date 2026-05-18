@@ -109,39 +109,44 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 <span class="fc" id="L109">		return getStyleState(getEntity().getStereotype(), getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
+	final protected Style getStyleStateDescription() {
+<span class="nc" id="L113">		return STYLE.addSName(SName.name).withTOBECHANGED(getEntity().getStereotype())</span>
+<span class="nc" id="L114">				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());</span>
+	}
+
 	final public ShapeType getShapeType() {
-<span class="fc" id="L113">		return ShapeType.ROUND_RECTANGLE;</span>
+<span class="fc" id="L118">		return ShapeType.ROUND_RECTANGLE;</span>
 	}
 
 	final protected URectangle getShape(final XDimension2D dimTotal) {
 
-<span class="fc" id="L118">		final double corner = getStyleState().value(PName.RoundCorner).asDouble();</span>
-<span class="fc" id="L119">		final double deltaShadow = getStyleState().getShadowing();</span>
+<span class="fc" id="L123">		final double corner = getStyleState().value(PName.RoundCorner).asDouble();</span>
+<span class="fc" id="L124">		final double deltaShadow = getStyleState().getShadowing();</span>
 
-<span class="fc" id="L121">		final URectangle rect = URectangle.build(dimTotal).rounded(corner);</span>
-<span class="fc" id="L122">		rect.setDeltaShadow(deltaShadow);</span>
-<span class="fc" id="L123">		return rect;</span>
+<span class="fc" id="L126">		final URectangle rect = URectangle.build(dimTotal).rounded(corner);</span>
+<span class="fc" id="L127">		rect.setDeltaShadow(deltaShadow);</span>
+<span class="fc" id="L128">		return rect;</span>
 	}
 
-	final protected UGraphic applyColor(UGraphic ug) {
+	final protected UGraphic applyColor(UGraphic ug, Style style) {
 
-<span class="fc" id="L128">		HColor border = getBorderColor();</span>
+<span class="fc" id="L133">		HColor border = getBorderColor();</span>
 
-<span class="fc" id="L130">		ug = ug.apply(border);</span>
-<span class="fc" id="L131">		HColor backcolor = lineConfig.getColors().getColor(ColorType.BACK);</span>
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (backcolor == null)</span>
-<span class="fc" id="L133">			backcolor = getStyleState().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L135">		ug = ug.apply(border);</span>
+<span class="fc" id="L136">		HColor backcolor = lineConfig.getColors().getColor(ColorType.BACK);</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (backcolor == null)</span>
+<span class="fc" id="L138">			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="fc" id="L135">		ug = ug.apply(backcolor.bg());</span>
+<span class="fc" id="L140">		ug = ug.apply(backcolor.bg());</span>
 
-<span class="fc" id="L137">		return ug;</span>
+<span class="fc" id="L142">		return ug;</span>
 	}
 
 	final protected HColor getBorderColor() {
-<span class="fc" id="L141">		HColor border = lineConfig.getColors().getColor(ColorType.LINE);</span>
-<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if (border == null)</span>
-<span class="fc" id="L143">			border = getStyleState().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L144">		return border;</span>
+<span class="fc" id="L146">		HColor border = lineConfig.getColors().getColor(ColorType.LINE);</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (border == null)</span>
+<span class="fc" id="L148">			border = getStyleState().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L149">		return border;</span>
 	}
 
 }
