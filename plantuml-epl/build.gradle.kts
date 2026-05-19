@@ -35,6 +35,8 @@ dependencies {
     implementation(libs.elk.alg.layered)
     implementation(libs.elk.alg.mrtree)
 
+    implementation(libs.openpdf)
+
 }
 
 repositories {

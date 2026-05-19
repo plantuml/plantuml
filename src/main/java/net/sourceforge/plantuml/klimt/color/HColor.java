@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.klimt.color;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.UBackground;
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.awt.XColor;
@@ -111,11 +110,9 @@ public abstract class HColor implements UChange {
 		return TransparentFillBehavior.WITH_FILL_NONE;
 	}
 
-	// ::comment when __HAXE__
 	public String asString() {
 		return "?" + getClass().getSimpleName();
 	}
-	// ::done
 
 	public HColor darkSchemeTheme() {
 		return this;

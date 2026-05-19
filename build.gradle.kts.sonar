@@ -39,6 +39,7 @@ dependencies {
   implementation(libs.elk.core)
   implementation(libs.elk.alg.layered)
   implementation(libs.elk.alg.mrtree)
+	implementation(libs.openpdf)
 
 	// TeaVM JSO APIs for browser interop (provided to the teavm source set by the plugin)
 	teavm(teavm.libs.jsoApis)

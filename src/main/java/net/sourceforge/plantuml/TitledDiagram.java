@@ -35,13 +35,9 @@
  */
 package net.sourceforge.plantuml;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.LinkedHashSet;
@@ -67,7 +63,6 @@ import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
-import net.sourceforge.plantuml.pdf.PdfConverter;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.skin.Pragma;
@@ -398,17 +393,17 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 //		}
 //	}
 
-	private ImageData exportDiagramInternalPdf(OutputStream os, int index) throws IOException {
-		final File svg = FileUtils.createTempFileLegacy("pdf", ".svf");
-		final File pdfFile = FileUtils.createTempFileLegacy("pdf", ".pdf");
-		final ImageData result;
-		try (OutputStream fos = new BufferedOutputStream(new FileOutputStream(svg))) {
-			result = exportDiagram(fos, index, new FileFormatOption(FileFormat.SVG));
-		}
-		PdfConverter.convert(svg, pdfFile);
-		FileUtils.copyToStream(pdfFile, os);
-		return result;
-	}
+//	private ImageData exportDiagramInternalPdf(OutputStream os, int index) throws IOException {
+//		final File svg = FileUtils.createTempFileLegacy("pdf", ".svf");
+//		final File pdfFile = FileUtils.createTempFileLegacy("pdf", ".pdf");
+//		final ImageData result;
+//		try (OutputStream fos = new BufferedOutputStream(new FileOutputStream(svg))) {
+//			result = exportDiagram(fos, index, new FileFormatOption(FileFormat.SVG));
+//		}
+//		PdfConverter.convert(svg, pdfFile);
+//		FileUtils.copyToStream(pdfFile, os);
+//		return result;
+//	}
 
 	final protected void exportCmap(SuggestedFile suggestedFile, int index, final ImageData cmapdata)
 			throws FileNotFoundException {

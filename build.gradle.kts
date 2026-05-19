@@ -33,9 +33,6 @@ java {
         withSourcesJar()
         withJavadocJar()
     }
-	registerFeature("pdf") {
-		usingSourceSet(sourceSets["main"])
-	}
 }
 
 val jdependConfig by configurations.creating
@@ -56,17 +53,13 @@ dependencies {
     implementation(libs.elk.core)
     implementation(libs.elk.alg.layered)
     implementation(libs.elk.alg.mrtree)
+	implementation(libs.openpdf)
 
 	// JDepend for package metrics
 	jdependConfig(libs.jdepend)
 
 	// TeaVM JSO APIs for browser interop (provided to the teavm source set by the plugin)
 	teavm(teavm.libs.jsoApis)
-
-    // Custom configuration for pdfJar task
-    configurations.create("pdfJarDeps")
-    "pdfJarDeps"(libs.fop)
-    "pdfJarDeps"(libs.batik.all)
 
 }
 
@@ -481,19 +474,6 @@ tasks.register<JavaExec>("renderJdependPuml") {
     )
 }
 
-val pdfJar by tasks.registering(Jar::class) {
-	group = "build" // OR for example, "build"
-	description = "Assembles a jar containing dependencies to create PDFs."
-	manifest.attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
-	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-  val dependencies = configurations["pdfJarDeps"].map(::zipTree) + configurations.runtimeClasspath.get().map(::zipTree)
-	from(dependencies) {
-        exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA") // Avoid conflict on signature
-    }
-	with(tasks.jar.get())
-	archiveAppendix.set("pdf")
-}
-
 signing {
 	if (hasProperty("signing.gnupg.keyName") && hasProperty("signing.gnupg.passphrase")) {
 		useGpgCmd()
@@ -504,7 +484,6 @@ signing {
 	}
 	if (hasProperty("signing.gnupg.passphrase") || hasProperty("signingPassword")) {
 		sign(publishing.publications["maven"])
-		sign(closureOf<SignOperation> { sign(pdfJar.get()) })
 	}
 }
 
@@ -845,12 +824,7 @@ if (fastBuild) {
         enabled = false
     }
 
-    // 3) Skip pdfJar
-    tasks.matching { it.name == "pdfJar" }.configureEach {
-        enabled = false
-    }
-
-    // 4) Key point: build only produces the GPL jar (no check, no pdfJar)
+    // 4) Key point: build only produces the GPL jar (no check)
     tasks.named("build") {
         setDependsOn(listOf(tasks.named("jar")))
     }

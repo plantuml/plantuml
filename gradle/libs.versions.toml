@@ -6,9 +6,7 @@
 [versions]
 ant                 = "1.10.17"
 assertj             = "3.27.7"
-batik               = "1.19"
 elk                 = "0.10.0"
-fop                 = "2.11"
 glytching-junit-ext = "2.6.0"
 gorylenko-gradle-git-properties = "2.5.7"
 graalvm-native      = "1.1.0"
@@ -22,16 +20,15 @@ xmlunit-core        = "2.11.0"
 junit-pioneer       = "2.3.0"
 teavm               = "0.13.1"
 sonarqube           = "7.3.0.8198"
+openpdf             = "3.0.4"
 
 [libraries]
 # name                      = { module = "", version.ref = "" }
 ant                         = { module = "org.apache.ant:ant", version.ref = "ant" }
 assertj-core                = { module = "org.assertj:assertj-core", version.ref = "assertj" }
-batik-all                   = { module = "org.apache.xmlgraphics:batik-all", version.ref = "batik" }
 elk-core                    = { module = "org.eclipse.elk:org.eclipse.elk.core", version.ref = "elk" }
 elk-alg-layered             = { module = "org.eclipse.elk:org.eclipse.elk.alg.layered", version.ref = "elk" }
 elk-alg-mrtree              = { module = "org.eclipse.elk:org.eclipse.elk.alg.mrtree", version.ref = "elk" }
-fop                         = { module = "org.apache.xmlgraphics:fop", version.ref = "fop" }
 glytching-junit-extensions  = { module = "io.github.glytching:junit-extensions", version.ref = "glytching-junit-ext" }
 jdepend                     = { module = "jdepend:jdepend", version.ref = "jdepend" }
 jlatexmath                  = { module = "org.scilab.forge:jlatexmath", version.ref = "jlatexmath" }
@@ -45,6 +42,9 @@ xmlunit-core                = { module = "org.xmlunit:xmlunit-core", version.ref
 junit-pioneer               = { module = "org.junit-pioneer:junit-pioneer", version.ref = "junit-pioneer" }
 teavm-classlib              = { module = "org.teavm:teavm-classlib", version.ref = "teavm" }
 teavm-jso-apis              = { module = "org.teavm:teavm-jso-apis", version.ref = "teavm" }
+
+openpdf                     = { module = "com.github.librepdf:openpdf", version.ref = "openpdf" }
+
 
 [plugins]
 adarshr-test-logger = { id = "com.adarshr.test-logger", version.ref = "adarshr-test-logger" }

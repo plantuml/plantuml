@@ -30,25 +30,39 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.klimt.font;
+package net.sourceforge.plantuml.openpdf;
 
-import java.awt.font.TextLayout;
+import net.sourceforge.plantuml.klimt.ClipContainer;
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.drawing.UDriver;
+import net.sourceforge.plantuml.klimt.shape.UImage;
 
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.klimt.shape.UText;
+public class DriverImagePdf implements UDriver<UImage, PdfGraphics> {
 
-public enum UFontContext {
+	private final ClipContainer clipContainer;
 
-	EPS, SVG, G2D, TIKZ, PDF;
-
-	public TextLayout createTextLayout(UText shape) {
-		return createTextLayout(shape.getFontConfiguration().getFont(), shape.getText());
+	public DriverImagePdf(ClipContainer clipContainer) {
+		this.clipContainer = clipContainer;
 	}
 
-	public TextLayout createTextLayout(UFont font, String text) {
-		return new TextLayout(text, UFontImpl.getUnderlayingFont(font, text), FileFormat.gg.getFontRenderContext());
+	public void draw(UImage image, double x, double y, ColorMapper mapper, UParam param, PdfGraphics svg) {
+//		final UClip clip = clipContainer.getClip();
+//		if (clip != null) {
+//			if (clip.isInside(x, y) == false) {
+//				return;
+//			}
+//			if (clip.isInside(x + image.getWidth(), y + image.getHeight()) == false) {
+//				return;
+//			}
+//		}
+//
+//		try {
+//			svg.svgImage(image.getImage(1), x, y);
+//		} catch (IOException e) {
+//			Log.error("Error in svg for image " + e);
+//		}
 	}
 }

@@ -26,6 +26,7 @@ dependencies {
 	compileOnly(libs.ant)
 	compileOnly(libs.teavm.jso.apis)
 	compileOnly(libs.teavm.classlib)
+	compileOnly(libs.openpdf)
 	testImplementation(libs.assertj.core)
 	testImplementation(libs.junit.jupiter)
 	testImplementation(libs.jlatexmath)

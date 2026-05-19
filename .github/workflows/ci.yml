@@ -179,7 +179,6 @@ jobs:
           .github/scripts/print-gradle-properties-and-release-version.sh
           gradle patchCompilationInfo
           gradle clean build \
-            pdfJar \
             teavmZip \
             generateMetadataFileForMavenPublication generatePomFileForMavenPublication \
             -x test
@@ -192,7 +191,7 @@ jobs:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ARTIFACT_SIGNING_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ARTIFACT_SIGNING_PASSPHRASE }}
         run: |
-          gradle -i signMavenPublication signPdfJar
+          gradle -i signMavenPublication
           echo "::group::[List LIBS]"
           ls -l build/libs
           ls -l plantuml-asl/build/libs
@@ -231,7 +230,6 @@ jobs:
             build/libs/plantuml-*.jar
             !build/libs/plantuml-*-javadoc.jar
             !build/libs/plantuml-*-sources.jar
-            !build/libs/plantuml-*-pdf*.jar
           if-no-files-found: error
           retention-days: 30
 

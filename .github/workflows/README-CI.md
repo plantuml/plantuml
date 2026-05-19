@@ -22,8 +22,9 @@ integration with `build.gradle.kts`.
 ## Overview
 
 The CI workflow builds, tests, and optionally releases PlantUML. It produces multiple
-artifact types including Java JARs (with various licenses), a PDF-capable JAR, and a
-JavaScript version compiled via TeaVM.
+artifact types including Java JARs (with various licenses) and a JavaScript version
+compiled via TeaVM. PDF output is built into the main JAR since the migration from
+Batik to OpenPDF (see `src/main/java/net/sourceforge/plantuml/openpdf/readme.md`).
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────┐
@@ -420,9 +421,8 @@ Legend:  ✓ = Runs    ✗ = Skipped    author = arnaudroques or The-Lum
 │                                                                                 │
 │  ┌──────────────┐     ┌──────────────┐    ┌─────────────────────────────────┐   │
 │  │   Checkout   │───▶│ Setup JDK 17 │───▶│         gradle clean build      │   │
-│  └──────────────┘     │  + cache     │    │                pdfJar           │   │
-│                       └──────────────┘    │               teavmZip          │   │
-│                                           │  generateMetadataFileFor...     │   │
+│  └──────────────┘     │  + cache     │    │               teavmZip          │   │
+│                       └──────────────┘    │  generateMetadataFileFor...     │   │
 │                                           │  generatePomFileFor...          │   │
 │                                           │              -x test            │   │
 │                                           └───────────────┬─────────────────┘   │
@@ -432,10 +432,10 @@ Legend:  ✓ = Runs    ✗ = Skipped    author = arnaudroques or The-Lum
 │  │                    Artifacts Generated (build/libs/)                      │  │
 │  ├───────────────────────────────────────────────────────────────────────────┤  │
 │  │                                                                           │  │
-│  │   plantuml-{version}.jar .............. Main JAR (all dependencies)       │  │
+│  │   plantuml-{version}.jar .............. Main JAR (includes OpenPDF        │  │
+│  │                                         for PDF output)                   │  │
 │  │   plantuml-{version}-javadoc.jar ...... Javadoc JAR                       │  │
 │  │   plantuml-{version}-sources.jar ...... Source code JAR                   │  │
-│  │   plantuml-pdf-{version}.jar .......... JAR with PDF support (FOP/Batik)  │  │
 │  │   js-plantuml-{version}.zip ........... TeaVM JavaScript version          │  │
 │  │                                                                           │  │
 │  │   plantuml-{license}/build/libs/ ...... License-specific JARs             │  │
@@ -452,8 +452,8 @@ Legend:  ✓ = Runs    ✗ = Skipped    author = arnaudroques or The-Lum
 │  │    available)        │  │                   │  │                         │   │
 │  │                      │  │   key: libs-{id}  │  │  • plantuml-jar         │   │
 │  │   signMavenPub...    │  │                   │  │    (main JAR only)      │   │
-│  │   signPdfJar         │  │                   │  │                         │   │
-│  └──────────────────────┘  └───────────────────┘  │  • js-plantuml-zip      │   │
+│  └──────────────────────┘  └───────────────────┘  │                         │   │
+│                                                   │  • js-plantuml-zip      │   │
 │                                                   │    (TeaVM JS version)   │   │
 │                                                   └─────────────────────────┘   │
 │                                                                                 │
@@ -463,7 +463,7 @@ Legend:  ✓ = Runs    ✗ = Skipped    author = arnaudroques or The-Lum
 ```
 
 **Artifacts (always uploaded, 30 days retention):**
-- `plantuml-jar` - Main JAR only (excludes -javadoc, -sources, -pdf variants)
+- `plantuml-jar` - Main JAR (excludes -javadoc and -sources variants)
 - `js-plantuml-zip` - JavaScript version for browser use
 
 ---
@@ -658,7 +658,7 @@ Legend:  ✓ = Runs    ✗ = Skipped    author = arnaudroques or The-Lum
 │                                                                                │
 │  build_artifacts job:                                                          │
 │  ┌─────────────────────────────────────────────────────────────────────────┐   │
-│  │  gradle clean build pdfJar teavmZip generate*Publication -x test        │   │
+│  │  gradle clean build teavmZip generate*Publication -x test               │   │
 │  └─────────────────────────────────────────────────────────────────────────┘   │
 │                                                                                │
 │  Task                              │  Output                                   │
@@ -667,12 +667,10 @@ Legend:  ✓ = Runs    ✗ = Skipped    author = arnaudroques or The-Lum
 │  build (includes jar) ............ │  build/libs/plantuml-{ver}.jar            │
 │                                    │  build/libs/plantuml-{ver}-sources.jar    │
 │                                    │  build/libs/plantuml-{ver}-javadoc.jar    │
-│  pdfJar .......................... │  build/libs/plantuml-pdf-{ver}.jar        │
 │  teavmZip ........................ │  build/libs/js-plantuml-{ver}.zip         │
 │  generateMetadataFileFor......... │  build/publications/maven/                 │
 │  generatePomFileFor.............. │                                            │
 │  signMavenPublication ........... │  *.asc signature files                     │
-│  signPdfJar ..................... │  plantuml-pdf-*.jar.asc                    │
 │                                                                                │
 │  test_linux job:                                                               │
 │  ┌─────────────────────────────────────────────────────────────────────────┐   │
@@ -889,9 +887,6 @@ git push origin v1.2024.8
 ```bash
 # Build main JAR (mirrors CI)
 gradle clean build -x test
-
-# Build with PDF support
-gradle pdfJar
 
 # Build JavaScript version
 gradle teavmZip
