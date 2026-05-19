@@ -59,6 +59,9 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.log.Logme;
+//::comment when JAVA8
+import net.sourceforge.plantuml.openpdf.StringBounderOpenPdf;
+//::done
 import net.sourceforge.plantuml.png.MetadataTag;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
@@ -177,20 +180,29 @@ public enum FileFormat {
 		}
 		// ::done
 
-		if (this == LATEX || this == LATEX_NO_PREAMBLE)
+		switch (this) {
+		case LATEX:
+		case LATEX_NO_PREAMBLE:
 			return getTikzStringBounder(tikzFontDistortion);
 
-		if (this == BRAILLE_PNG)
+		case BRAILLE_PNG:
 			return getBrailleStringBounder();
 
-		if (this == DEBUG)
+		case DEBUG:
 			return new StringBounderDebug(this);
+		case SVG:
 
-		if (this == SVG)
 			return getSvgStringBounder(charSizeHack);
+		case SVG_DETERMINISTIC:
 
-		if (this == SVG_DETERMINISTIC || this == LATEX_FIXED)
+		case LATEX_FIXED:
 			return new StringBounderFixed(this);
+
+		// ::comment when JAVA8
+		case PDF:
+			return new StringBounderOpenPdf();
+		// ::done
+		}
 
 		return getNormalStringBounder();
 	}

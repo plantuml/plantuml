@@ -30,25 +30,41 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.klimt.font;
+package net.sourceforge.plantuml.openpdf;
 
-import java.awt.font.TextLayout;
+import net.sourceforge.plantuml.klimt.ClipContainer;
+import net.sourceforge.plantuml.klimt.UClip;
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.drawing.UDriver;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.klimt.shape.UText;
+public class DriverPolygonPdf implements UDriver<UPolygon, PdfGraphics> {
 
-public enum UFontContext {
+	private final ClipContainer clipContainer;
 
-	EPS, SVG, G2D, TIKZ, PDF;
-
-	public TextLayout createTextLayout(UText shape) {
-		return createTextLayout(shape.getFontConfiguration().getFont(), shape.getText());
+	public DriverPolygonPdf(ClipContainer clipContainer) {
+		this.clipContainer = clipContainer;
 	}
 
-	public TextLayout createTextLayout(UFont font, String text) {
-		return new TextLayout(text, UFontImpl.getUnderlayingFont(font, text), FileFormat.gg.getFontRenderContext());
+	public void draw(UPolygon shape, double x, double y, ColorMapper mapper, UParam param, PdfGraphics pdf) {
+		final double points[] = shape.getPointArray(x, y);
+		if (TeaVM.a())
+			assert points.length % 2 == 0;
+		final UClip clip = clipContainer.getClip();
+		if (clip != null)
+			for (int j = 0; j < points.length; j += 2)
+				if (clip.isInside(points[j], points[j + 1]) == false)
+					return;
+
+		DriverRectanglePdf.applyFillColor(pdf, mapper, param);
+		DriverRectanglePdf.applyStrokeColor(pdf, mapper, param);
+
+		pdf.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
+
+		pdf.pdfPolygon(points);
 	}
 }

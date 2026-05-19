@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.klimt.font;
 
 import java.awt.Font;
+import java.awt.font.TextAttribute;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.teavm.TeaVM;
@@ -105,16 +106,13 @@ public final class UFontImpl implements UFont {
 		if (TeaVM.isTeaVM()) {
 			return getTeaVMDefinition();
 		} else {
-			if (context == UFontContext.EPS) {
-//			if (fontStack.getFamily() == null)
-//				return "Times-Roman";
+			switch (context) {
+			case PDF:
+				return fontStack.getFullDefinition();
+			case EPS:
 				return getUnderlayingFont(text).getPSName();
-			}
-			if (context == UFontContext.SVG) {
-				String result = fontStack.getFullDefinition().replace('"', '\'');
-				result = result.replaceAll("(?i)sansserif", "sans-serif");
-
-				return result;
+			case SVG:
+				return fontStack.getFullDefinition().replace('"', '\'').replaceAll("(?i)sansserif", "sans-serif");
 			}
 		}
 		throw new IllegalArgumentException();

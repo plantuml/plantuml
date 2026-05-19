@@ -33,22 +33,24 @@
  * 
  *
  */
-package net.sourceforge.plantuml.klimt.font;
+package net.sourceforge.plantuml.openpdf;
 
-import java.awt.font.TextLayout;
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.drawing.UDriver;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
 
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.klimt.shape.UText;
+public class DriverDotPathPdf implements UDriver<DotPath, PdfGraphics> {
 
-public enum UFontContext {
+	public void draw(DotPath shape, double x, double y, ColorMapper mapper, UParam param, PdfGraphics pdf) {
 
-	EPS, SVG, G2D, TIKZ, PDF;
+		if (param.getColor().isTransparent() == false) {
+			DriverRectanglePdf.applyStrokeColor(pdf, mapper, param);
 
-	public TextLayout createTextLayout(UText shape) {
-		return createTextLayout(shape.getFontConfiguration().getFont(), shape.getText());
-	}
+			pdf.setFillColor(null);
+			pdf.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
 
-	public TextLayout createTextLayout(UFont font, String text) {
-		return new TextLayout(text, UFontImpl.getUnderlayingFont(font, text), FileFormat.gg.getFontRenderContext());
+			pdf.pdfPath(x, y, shape.toUPath());
+		}
 	}
 }
