@@ -38,12 +38,11 @@ import java.util.Locale;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.font.StringBounderRaw;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class StringBounderFixed extends StringBounderRaw {
+public class StringBounderFixed implements StringBounder {
 
 	private static final double[] WIDTH = { 3.3, 3.3, 4.3, 6.7, 6.7, 10.7, 8.0, 2.3, 4.0, 4.0, 4.7, 7.0, 3.3, 4.0, 3.3,
 			3.3, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 3.3, 3.3, 7.0, 7.0, 7.0, 6.7, 12.2, 8.0, 8.0, 8.7,
@@ -51,12 +50,19 @@ public class StringBounderFixed extends StringBounderRaw {
 			8.0, 7.3, 3.3, 3.3, 3.3, 5.6, 6.7, 4.0, 6.7, 6.7, 6.0, 6.7, 6.7, 3.3, 6.7, 6.7, 2.7, 2.7, 6.0, 2.7, 10.0,
 			6.7, 6.7, 6.7, 6.7, 4.0, 6.0, 3.3, 6.7, 6.0, 8.7, 6.0, 6.0, 6.0, 4.0, 3.1, 4.0, 7.0, 6.0, };
 
+	private final FileFormat ff;
+
 	public StringBounderFixed(FileFormat fileFormat) {
-		super(null, fileFormat);
+		this.ff = fileFormat;
 	}
 
 	@Override
-	protected XDimension2D calculateDimensionInternal(UFont font, String text) {
+	public FileFormat getFileFormat() {
+		return ff;
+	}
+
+	@Override
+	public XDimension2D calculateDimension(UFont font, String text) {
 		final double size = font.getSize2D();
 		final double factor = size / 12.0;
 		final double height = size;

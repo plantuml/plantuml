@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -31,23 +31,23 @@
  *
  * Original Author:  Arnaud Roques
  *
+ *
  */
-package net.sourceforge.plantuml.klimt.drawing.debug;
+package net.sourceforge.plantuml;
 
-import java.util.Random;
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineMetrics;
 
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.text.SvgCharSizeHack;
 
-public class StringBounderDebug implements StringBounder {
+public class FF4 implements StringBounder {
 
-	public StringBounderDebug(FileFormat ff) {
-		this.ff = ff;
-	}
-
+	private final SvgCharSizeHack charSizeHack;
+	private final FontRenderContext fontRenderContext = FileFormat.gg.getFontRenderContext();
 	private final FileFormat ff;
 
 	@Override
@@ -55,26 +55,32 @@ public class StringBounderDebug implements StringBounder {
 		return ff;
 	}
 
-	@Override
-	public XDimension2D calculateDimension(UFont font, String text) {
-		final Random rnd = new Random(StringUtils.seed(text));
-		// We want a random factor between 80% et 130%
-		final double factor = 0.8 + 0.5 * rnd.nextDouble();
-		final double size = font.getSize2D();
-		final double height = size;
-		final double width = size * text.length() * factor;
-		return new XDimension2D(width, height);
+	public FF4(FileFormat ff, final SvgCharSizeHack charSizeHack) {
+		this.ff = ff;
+		this.charSizeHack = charSizeHack;
+	}
+
+	public String toString() {
+		return "FileFormat::getSvgStringBounder";
 	}
 
 	@Override
-	public double getDescent(UFont font, String text) {
-		final double descent = font.getSize2D() / 4.5;
-		return descent;
+	public XDimension2D calculateDimension(UFont font, String text) {
+		text = charSizeHack.transformStringForSizeHack(text);
+		return FileFormat.getJavaDimension(font, text);
 	}
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-		return false;
+		return "SVG".equalsIgnoreCase(propertyName);
+	}
+
+	@Override
+	public double getDescent(UFont font, String text) {
+		final LineMetrics lineMetrics = UFontImpl.getUnderlayingFont(font, text).getLineMetrics(text,
+				fontRenderContext);
+		final double descent = lineMetrics.getDescent();
+		return descent;
 	}
 
 }

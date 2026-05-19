@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -31,50 +31,43 @@
  *
  * Original Author:  Arnaud Roques
  *
+ *
  */
-package net.sourceforge.plantuml.klimt.drawing.debug;
+package net.sourceforge.plantuml;
 
-import java.util.Random;
-
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.braille.BrailleCharFactory;
+import net.sourceforge.plantuml.braille.UGraphicBraille;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class StringBounderDebug implements StringBounder {
+public class FF2 implements StringBounder {
 
-	public StringBounderDebug(FileFormat ff) {
-		this.ff = ff;
-	}
-
-	private final FileFormat ff;
-
-	@Override
-	public FileFormat getFileFormat() {
-		return ff;
+	public String toString() {
+		return "FileFormat::getBrailleStringBounder";
 	}
 
 	@Override
 	public XDimension2D calculateDimension(UFont font, String text) {
-		final Random rnd = new Random(StringUtils.seed(text));
-		// We want a random factor between 80% et 130%
-		final double factor = 0.8 + 0.5 * rnd.nextDouble();
-		final double size = font.getSize2D();
-		final double height = size;
-		final double width = size * text.length() * factor;
+		final int nb = BrailleCharFactory.build(text).size();
+		final double quanta = UGraphicBraille.QUANTA;
+		final double height = 5 * quanta;
+		final double width = 3 * nb * quanta + 1;
 		return new XDimension2D(width, height);
 	}
 
 	@Override
 	public double getDescent(UFont font, String text) {
-		final double descent = font.getSize2D() / 4.5;
-		return descent;
+		return UGraphicBraille.QUANTA;
+	}
+
+	public boolean matchesProperty(String propertyName) {
+		return false;
 	}
 
 	@Override
-	public boolean matchesProperty(String propertyName) {
-		return false;
+	public FileFormat getFileFormat() {
+		return FileFormat.BRAILLE_PNG;
 	}
 
 }

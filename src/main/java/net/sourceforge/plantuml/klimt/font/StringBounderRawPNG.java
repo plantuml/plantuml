@@ -43,12 +43,12 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.text.RichText;
 import net.sourceforge.plantuml.text.StyledString;
 
-public abstract class StringBounderRaw implements StringBounder {
+public abstract class StringBounderRawPNG implements StringBounder {
 
 	private final FontRenderContext frc;
 	private final FileFormat fileFormat;
 
-	protected StringBounderRaw(FontRenderContext frc, FileFormat fileFormat) {
+	protected StringBounderRawPNG(FontRenderContext frc, FileFormat fileFormat) {
 		this.frc = frc;
 		this.fileFormat = fileFormat;
 	}

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -33,19 +33,20 @@
  *
  *
  */
-package net.sourceforge.plantuml.asciiart;
+package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class TextStringBounder implements StringBounder {
+public class FF3 implements StringBounder {
 
+	private final LatexManager latexManager;
 	private final FileFormat ff;
 
-	public TextStringBounder(FileFormat ff) {
+	protected FF3(FileFormat ff, final TikzFontDistortion tikzFontDistortion) {
 		this.ff = ff;
+		this.latexManager = new LatexManager(tikzFontDistortion.getTexSystem(), tikzFontDistortion.getTexPreamble());
 	}
 
 	@Override
@@ -53,23 +54,54 @@ public class TextStringBounder implements StringBounder {
 		return ff;
 	}
 
+	public String toString() {
+		return "FileFormat::getTikzStringBounder";
+	}
+
 	@Override
 	public XDimension2D calculateDimension(UFont font, String text) {
-		final int length1 = text.codePointCount(0, text.length());
-		final int length2 = text.length();
-		final int length3 = Wcwidth.length(text);
-		return new XDimension2D(length2, 1);
+		double[] widthHeightDepth = latexManager.getWidthHeightDepth(styleText(font, text));
+		double height = widthHeightDepth[1] + widthHeightDepth[2];
+		if (height == 0.0 && text.trim().isEmpty()) {
+			// avoid return 0 height for space, otherwise cause exception, case in #1259
+			height = latexManager.getWidthHeightDepth(styleText(font, " "))[0];
+		}
+		return new XDimension2D(widthHeightDepth[0], height);
 	}
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-		return false;
+		return "TIKZ".equalsIgnoreCase(propertyName);
 	}
 
 	@Override
 	public double getDescent(UFont font, String text) {
-		final double descent = font.getSize2D() / 4.5;
-		return descent;
+		double[] widthHeightDepth = latexManager.getWidthHeightDepth(styleText(font, text));
+		return widthHeightDepth[2];
+	}
+
+	protected String styleText(UFont font, String text) {
+		if (font == null)
+			return "$" + text + "$";
+
+		StringBuilder sb = new StringBuilder();
+		final boolean italic = font.getFontFace().isItalic();
+		final boolean bold = font.getFontFace().isBold();
+
+		if (italic)
+			sb.append("\\textit{");
+
+		if (bold)
+			sb.append("\\textbf{");
+
+		sb.append(LatexManager.protectText(text));
+		if (bold)
+			sb.append("}");
+
+		if (italic)
+			sb.append("}");
+
+		return sb.toString();
 	}
 
 }
