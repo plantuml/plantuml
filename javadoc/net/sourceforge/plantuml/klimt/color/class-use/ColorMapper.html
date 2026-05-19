@@ -103,18 +103,20 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/sprite" target="_top">
  Sprite</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.png">net.sourceforge.plantuml.png</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.openpdf">net.sourceforge.plantuml.openpdf</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.png">net.sourceforge.plantuml.png</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/en/command-line#458de91d76a8569c" target="_top">
  PNG output format</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.teavm">net.sourceforge.plantuml.teavm</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.teavm">net.sourceforge.plantuml.teavm</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage JS-PlantUML using TeaVM.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.tikz">net.sourceforge.plantuml.tikz</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.tikz">net.sourceforge.plantuml.tikz</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/latex" target="_top">
  LaTeX (with TikZ) output format</a>.</div>
@@ -1054,6 +1056,108 @@ loadScripts(document, 'script');</script>
  <a href="../HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;backcolor,
  <a href="../HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;color)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.openpdf">
+<h2>Uses of <a href="../ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a> in <a href="../../../openpdf/package-summary.html">net.sourceforge.plantuml.openpdf</a></h2>
+<div class="caption"><span>Methods in <a href="../../../openpdf/package-summary.html">net.sourceforge.plantuml.openpdf</a> that return <a href="../ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">PdfOption.</span><code><a href="../../../openpdf/PdfOption.html#getColorMapper()" class="member-name-link">getColorMapper</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../../openpdf/package-summary.html">net.sourceforge.plantuml.openpdf</a> with parameters of type <a href="../ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DriverRectanglePdf.</span><code><a href="../../../openpdf/DriverRectanglePdf.html#applyFillColor(net.sourceforge.plantuml.openpdf.PdfGraphics,net.sourceforge.plantuml.klimt.color.ColorMapper,net.sourceforge.plantuml.klimt.UParam)" class="member-name-link">applyFillColor</a><wbr>(<a href="../../../openpdf/PdfGraphics.html" title="class in net.sourceforge.plantuml.openpdf">PdfGraphics</a>&nbsp;pdf,
+ <a href="../ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a>&nbsp;mapper,
+ <a href="../../UParam.html" title="interface in net.sourceforge.plantuml.klimt">UParam</a>&nbsp;param)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DriverRectanglePdf.</span><code><a href="../../../openpdf/DriverRectanglePdf.html#applyStrokeColor(net.sourceforge.plantuml.openpdf.PdfGraphics,net.sourceforge.plantuml.klimt.color.ColorMapper,net.sourceforge.plantuml.klimt.UParam)" class="member-name-link">applyStrokeColor</a><wbr>(<a href="../../../openpdf/PdfGraphics.html" title="class in net.sourceforge.plantuml.openpdf">PdfGraphics</a>&nbsp;pdf,
+ <a href="../ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a>&nbsp;mapper,
+ <a href="../../UParam.html" title="interface in net.sourceforge.plantuml.klimt">UParam</a>&nbsp;param)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DriverCenteredCharacterPdf.</span><code><a href="../../../openpdf/DriverCenteredCharacterPdf.html#draw(net.sourceforge.plantuml.klimt.shape.UCenteredCharacter,double,double,net.sourceforge.plantuml.klimt.color.ColorMapper,net.sourceforge.plantuml.klimt.UParam,net.sourceforge.plantuml.openpdf.PdfGraphics)" class="member-name-link">draw</a><wbr>(<a href="../../shape/UCenteredCharacter.html" title="class in net.sourceforge.plantuml.klimt.shape">UCenteredCharacter</a>&nbsp;characterCircled,
+ double&nbsp;x,
+ double&nbsp;y,
+ <a href="../ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a>&nbsp;mapper,
+ <a href="../../UParam.html" title="interface in net.sourceforge.plantuml.klimt">UParam</a>&nbsp;param,
+ <a href="../../../openpdf/PdfGraphics.html" title="class in net.sourceforge.plantuml.openpdf">PdfGraphics</a>&nbsp;svg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DriverDotPathPdf.</span><code><a href="../../../openpdf/DriverDotPathPdf.html#draw(net.sourceforge.plantuml.klimt.shape.DotPath,double,double,net.sourceforge.plantuml.klimt.color.ColorMapper,net.sourceforge.plantuml.klimt.UParam,net.sourceforge.plantuml.openpdf.PdfGraphics)" class="member-name-link">draw</a><wbr>(<a href="../../shape/DotPath.html" title="class in net.sourceforge.plantuml.klimt.shape">DotPath</a>&nbsp;shape,
+ double&nbsp;x,
+ double&nbsp;y,
+ <a href="../ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a>&nbsp;mapper,
+ <a href="../../UParam.html" title="interface in net.sourceforge.plantuml.klimt">UParam</a>&nbsp;param,
+ <a href="../../../openpdf/PdfGraphics.html" title="class in net.sourceforge.plantuml.openpdf">PdfGraphics</a>&nbsp;pdf)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DriverEllipsePdf.</span><code><a href="../../../openpdf/DriverEllipsePdf.html#draw(net.sourceforge.plantuml.klimt.shape.UEllipse,double,double,net.sourceforge.plantuml.klimt.color.ColorMapper,net.sourceforge.plantuml.klimt.UParam,net.sourceforge.plantuml.openpdf.PdfGraphics)" class="member-name-link">draw</a><wbr>(<a href="../../shape/UEllipse.html" title="class in net.sourceforge.plantuml.klimt.shape">UEllipse</a>&nbsp;shape,
+ double&nbsp;x,
+ double&nbsp;y,
+ <a href="../ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a>&nbsp;mapper,
+ <a href="../../UParam.html" title="interface in net.sourceforge.plantuml.klimt">UParam</a>&nbsp;param,
+ <a href="../../../openpdf/PdfGraphics.html" title="class in net.sourceforge.plantuml.openpdf">PdfGraphics</a>&nbsp;pdf)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DriverImagePdf.</span><code><a href="../../../openpdf/DriverImagePdf.html#draw(net.sourceforge.plantuml.klimt.shape.UImage,double,double,net.sourceforge.plantuml.klimt.color.ColorMapper,net.sourceforge.plantuml.klimt.UParam,net.sourceforge.plantuml.openpdf.PdfGraphics)" class="member-name-link">draw</a><wbr>(<a href="../../shape/UImage.html" title="class in net.sourceforge.plantuml.klimt.shape">UImage</a>&nbsp;image,
+ double&nbsp;x,
+ double&nbsp;y,
+ <a href="../ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a>&nbsp;mapper,
+ <a href="../../UParam.html" title="interface in net.sourceforge.plantuml.klimt">UParam</a>&nbsp;param,
+ <a href="../../../openpdf/PdfGraphics.html" title="class in net.sourceforge.plantuml.openpdf">PdfGraphics</a>&nbsp;svg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DriverLinePdf.</span><code><a href="../../../openpdf/DriverLinePdf.html#draw(net.sourceforge.plantuml.klimt.shape.ULine,double,double,net.sourceforge.plantuml.klimt.color.ColorMapper,net.sourceforge.plantuml.klimt.UParam,net.sourceforge.plantuml.openpdf.PdfGraphics)" class="member-name-link">draw</a><wbr>(<a href="../../shape/ULine.html" title="class in net.sourceforge.plantuml.klimt.shape">ULine</a>&nbsp;shape,
+ double&nbsp;x,
+ double&nbsp;y,
+ <a href="../ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a>&nbsp;mapper,
+ <a href="../../UParam.html" title="interface in net.sourceforge.plantuml.klimt">UParam</a>&nbsp;param,
+ <a href="../../../openpdf/PdfGraphics.html" title="class in net.sourceforge.plantuml.openpdf">PdfGraphics</a>&nbsp;pdf)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DriverPathPdf.</span><code><a href="../../../openpdf/DriverPathPdf.html#draw(net.sourceforge.plantuml.klimt.UPath,double,double,net.sourceforge.plantuml.klimt.color.ColorMapper,net.sourceforge.plantuml.klimt.UParam,net.sourceforge.plantuml.openpdf.PdfGraphics)" class="member-name-link">draw</a><wbr>(<a href="../../UPath.html" title="class in net.sourceforge.plantuml.klimt">UPath</a>&nbsp;shape,
+ double&nbsp;x,
+ double&nbsp;y,
+ <a href="../ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a>&nbsp;mapper,
+ <a href="../../UParam.html" title="interface in net.sourceforge.plantuml.klimt">UParam</a>&nbsp;param,
+ <a href="../../../openpdf/PdfGraphics.html" title="class in net.sourceforge.plantuml.openpdf">PdfGraphics</a>&nbsp;svg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DriverPolygonPdf.</span><code><a href="../../../openpdf/DriverPolygonPdf.html#draw(net.sourceforge.plantuml.klimt.shape.UPolygon,double,double,net.sourceforge.plantuml.klimt.color.ColorMapper,net.sourceforge.plantuml.klimt.UParam,net.sourceforge.plantuml.openpdf.PdfGraphics)" class="member-name-link">draw</a><wbr>(<a href="../../shape/UPolygon.html" title="class in net.sourceforge.plantuml.klimt.shape">UPolygon</a>&nbsp;shape,
+ double&nbsp;x,
+ double&nbsp;y,
+ <a href="../ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a>&nbsp;mapper,
+ <a href="../../UParam.html" title="interface in net.sourceforge.plantuml.klimt">UParam</a>&nbsp;param,
+ <a href="../../../openpdf/PdfGraphics.html" title="class in net.sourceforge.plantuml.openpdf">PdfGraphics</a>&nbsp;pdf)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DriverRectanglePdf.</span><code><a href="../../../openpdf/DriverRectanglePdf.html#draw(net.sourceforge.plantuml.klimt.shape.URectangle,double,double,net.sourceforge.plantuml.klimt.color.ColorMapper,net.sourceforge.plantuml.klimt.UParam,net.sourceforge.plantuml.openpdf.PdfGraphics)" class="member-name-link">draw</a><wbr>(<a href="../../shape/URectangle.html" title="class in net.sourceforge.plantuml.klimt.shape">URectangle</a>&nbsp;rect,
+ double&nbsp;x,
+ double&nbsp;y,
+ <a href="../ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a>&nbsp;mapper,
+ <a href="../../UParam.html" title="interface in net.sourceforge.plantuml.klimt">UParam</a>&nbsp;param,
+ <a href="../../../openpdf/PdfGraphics.html" title="class in net.sourceforge.plantuml.openpdf">PdfGraphics</a>&nbsp;pdf)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DriverTextPdf.</span><code><a href="../../../openpdf/DriverTextPdf.html#draw(net.sourceforge.plantuml.klimt.shape.UText,double,double,net.sourceforge.plantuml.klimt.color.ColorMapper,net.sourceforge.plantuml.klimt.UParam,net.sourceforge.plantuml.openpdf.PdfGraphics)" class="member-name-link">draw</a><wbr>(<a href="../../shape/UText.html" title="class in net.sourceforge.plantuml.klimt.shape">UText</a>&nbsp;shape,
+ double&nbsp;x,
+ double&nbsp;y,
+ <a href="../ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a>&nbsp;mapper,
+ <a href="../../UParam.html" title="interface in net.sourceforge.plantuml.klimt">UParam</a>&nbsp;param,
+ <a href="../../../openpdf/PdfGraphics.html" title="class in net.sourceforge.plantuml.openpdf">PdfGraphics</a>&nbsp;pdf)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

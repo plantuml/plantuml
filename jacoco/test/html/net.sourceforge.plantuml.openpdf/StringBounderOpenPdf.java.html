@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StringBounderOpenPdf.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.openpdf</a> &gt; <span class="el_source">StringBounderOpenPdf.java</span></div><h1>StringBounderOpenPdf.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.openpdf;
+
+import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.openpdf.text.DocumentException;
+import org.openpdf.text.pdf.BaseFont;
+
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontContext;
+import net.sourceforge.plantuml.klimt.font.UFontFace;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+
+<span class="nc" id="L51">public class StringBounderOpenPdf implements StringBounder {</span>
+
+<span class="nc" id="L53">	private static final Map&lt;String, BaseFont&gt; fontCache = new ConcurrentHashMap&lt;&gt;();</span>
+
+	@Override
+	public double getDescent(UFont font, String text) {
+		// Same reasoning as in calculateDimension: use the *font*'s descender
+		// (constant for the font), not the per-glyph descent of `text`. The
+		// font descriptor returns a negative value, so we negate it to match
+		// the StringBounder contract (positive descent).
+<span class="nc" id="L61">		final BaseFont baseFont = resolveFont(font);</span>
+<span class="nc" id="L62">		final int fontSize = font.getSize();</span>
+<span class="nc" id="L63">		final float fontDescent = baseFont.getFontDescriptor(BaseFont.DESCENT, fontSize);</span>
+<span class="nc" id="L64">		return -fontDescent;</span>
+	}
+
+	@Override
+	public XDimension2D calculateDimension(UFont font, String text) {
+<span class="nc" id="L69">		final BaseFont baseFont = resolveFont(font);</span>
+<span class="nc" id="L70">		final int fontSize = font.getSize();</span>
+
+		// --- Width: per-glyph, that's what we actually want ---
+<span class="nc" id="L73">		final float width = baseFont.getWidthPoint(text, fontSize);</span>
+
+		// --- Height: must come from the *font*'s metrics, NOT the per-glyph
+		// metrics of `text`.
+		//
+		// AWT's getStringBounds() returns ascent + descent + leading of the
+		// *whole font*. We replicate that with the font-descriptor ascender
+		// and descender (which are constants for the font, independent of
+		// `text`), plus a 15% leading - the standard typographic default that
+		// matches what AWT computes for Helvetica/Times/Courier within a few
+		// hundredths of a point.
+<span class="nc" id="L84">		final float fontAscent = baseFont.getFontDescriptor(BaseFont.ASCENT, fontSize);</span>
+<span class="nc" id="L85">		final float fontDescent = baseFont.getFontDescriptor(BaseFont.DESCENT, fontSize); // negative</span>
+<span class="nc" id="L86">		final float leading = 0.15f * fontSize;</span>
+<span class="nc" id="L87">		final float height = fontAscent - fontDescent + leading;</span>
+
+<span class="nc" id="L89">		final XDimension2D result = new XDimension2D(width, height);</span>
+<span class="nc" id="L90">		return result;</span>
+	}
+
+	@Override
+	public boolean matchesProperty(String propertyName) {
+<span class="nc" id="L95">		return false;</span>
+	}
+
+	@Override
+	public FileFormat getFileFormat() {
+<span class="nc" id="L100">		return FileFormat.PDF;</span>
+	}
+
+	public static BaseFont resolveFont(UFont ufont) {
+<span class="nc" id="L104">		final UFontFace face = ufont.getFontFace();</span>
+
+<span class="nc" id="L106">		final boolean bold = face.isBold();</span>
+<span class="nc" id="L107">		final boolean italic = face.isItalic();</span>
+
+<span class="nc" id="L109">		return resolveFont(ufont.getFamily(null, UFontContext.PDF), bold, italic);</span>
+	}
+
+	private static BaseFont resolveFont(String family, boolean bold, boolean italic) {
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (family == null)</span>
+<span class="nc" id="L114">			family = &quot;Helvetica&quot;;</span>
+
+<span class="nc bnc" id="L116" title="All 4 branches missed.">		final String key = family.toLowerCase() + (bold ? &quot;-b&quot; : &quot;&quot;) + (italic ? &quot;-i&quot; : &quot;&quot;);</span>
+<span class="nc" id="L117">		final BaseFont cached = fontCache.get(key);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (cached != null)</span>
+<span class="nc" id="L119">			return cached;</span>
+
+		final String baseName;
+<span class="nc" id="L122">		final String lower = family.toLowerCase();</span>
+<span class="nc bnc" id="L123" title="All 4 branches missed.">		if (lower.contains(&quot;courier&quot;) || lower.contains(&quot;mono&quot;)) {</span>
+<span class="nc bnc" id="L124" title="All 4 branches missed.">			if (bold &amp;&amp; italic)</span>
+<span class="nc" id="L125">				baseName = BaseFont.COURIER_BOLDOBLIQUE;</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">			else if (bold)</span>
+<span class="nc" id="L127">				baseName = BaseFont.COURIER_BOLD;</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">			else if (italic)</span>
+<span class="nc" id="L129">				baseName = BaseFont.COURIER_OBLIQUE;</span>
+			else
+<span class="nc" id="L131">				baseName = BaseFont.COURIER;</span>
+<span class="nc bnc" id="L132" title="All 4 branches missed.">		} else if (lower.contains(&quot;times&quot;) || lower.contains(&quot;serif&quot;)) {</span>
+<span class="nc bnc" id="L133" title="All 4 branches missed.">			if (bold &amp;&amp; italic)</span>
+<span class="nc" id="L134">				baseName = BaseFont.TIMES_BOLDITALIC;</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">			else if (bold)</span>
+<span class="nc" id="L136">				baseName = BaseFont.TIMES_BOLD;</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">			else if (italic)</span>
+<span class="nc" id="L138">				baseName = BaseFont.TIMES_ITALIC;</span>
+			else
+<span class="nc" id="L140">				baseName = BaseFont.TIMES_ROMAN;</span>
+		} else {
+<span class="nc bnc" id="L142" title="All 4 branches missed.">			if (bold &amp;&amp; italic)</span>
+<span class="nc" id="L143">				baseName = BaseFont.HELVETICA_BOLDOBLIQUE;</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			else if (bold)</span>
+<span class="nc" id="L145">				baseName = BaseFont.HELVETICA_BOLD;</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">			else if (italic)</span>
+<span class="nc" id="L147">				baseName = BaseFont.HELVETICA_OBLIQUE;</span>
+			else
+<span class="nc" id="L149">				baseName = BaseFont.HELVETICA;</span>
+		}
+
+		try {
+<span class="nc" id="L153">			final BaseFont bf = BaseFont.createFont(baseName, BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);</span>
+<span class="nc" id="L154">			fontCache.put(key, bf);</span>
+<span class="nc" id="L155">			return bf;</span>
+<span class="nc" id="L156">		} catch (DocumentException | IOException e) {</span>
+<span class="nc" id="L157">			throw new IllegalStateException(&quot;Cannot load font &quot; + baseName, e);</span>
+		}
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

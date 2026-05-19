@@ -1,0 +1,971 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PdfGraphics.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.openpdf</a> &gt; <span class="el_source">PdfGraphics.java</span></div><h1>PdfGraphics.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2026, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ * 
+ */
+package net.sourceforge.plantuml.openpdf;
+
+import java.awt.Color;
+import java.awt.geom.PathIterator;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.LinkedList;
+
+import org.openpdf.text.Document;
+import org.openpdf.text.Image;
+import org.openpdf.text.Rectangle;
+import org.openpdf.text.pdf.BaseFont;
+import org.openpdf.text.pdf.PdfAction;
+import org.openpdf.text.pdf.PdfAnnotation;
+import org.openpdf.text.pdf.PdfContentByte;
+import org.openpdf.text.pdf.PdfTemplate;
+import org.openpdf.text.pdf.PdfWriter;
+
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior;
+import net.sourceforge.plantuml.klimt.geom.USegment;
+import net.sourceforge.plantuml.klimt.geom.USegmentType;
+
+/**
+ * PDF backend that mirrors the public API of
+ * {@code net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics}.
+ *
+ * &lt;h2&gt;Coordinate convention&lt;/h2&gt;
+ *
+ * PDF natively has Y growing upwards from a bottom-left origin; SVG and
+ * PlantUML have Y growing downwards from a top-left origin. Rather than
+ * flipping the CTM (which forces every text run and image to compensate with a
+ * local flip), this driver keeps PDF's native Y-up convention and simply
+ * &lt;strong&gt;negates Y in input&lt;/strong&gt;: a caller-supplied SVG-coord
+ * {@code (x, y)} is drawn at PDF-coord {@code (x, -y)}.
+ *
+ * &lt;p&gt;
+ * For shapes that take a top-left corner plus a size (rectangles, raster
+ * images), the bottom-left in PDF coords becomes {@code (x, -(y + height))}.
+ * For point-like primitives (line endpoints, polygon vertices, ellipse centers,
+ * text baselines, path segments) it is simply {@code (x, -y)}.
+ *
+ * &lt;h2&gt;From negative-Y back to a normal page&lt;/h2&gt;
+ *
+ * The content is buffered into a {@link PdfTemplate} (a PDF form XObject) while
+ * we draw. The template is unbounded - it can hold negative-Y content without
+ * complaining. At {@link #createPdf(OutputStream)} time we know the final
+ * extent ({@code maxX}, {@code maxY} in SVG coords): we open a page of size
+ * {@code maxX x maxY} and place the template translated by {@code (0, maxY)} so
+ * the content lands inside {@code [0, 0, maxX, maxY]}.
+ *
+ * &lt;p&gt;
+ * Net result for callers: SVG-style coords on the way in, a standard-shape page
+ * on the way out, no CTM flip anywhere, no per-call compensation for text or
+ * images.
+ *
+ * &lt;h2&gt;Helper {@link #ny(double)}&lt;/h2&gt;
+ *
+ * All internal conversions go through {@link #ny(double)} (read it as &quot;negate
+ * y&quot;). If anything ever looks upside-down or misplaced in a generated PDF, the
+ * one place to look is whether a coordinate took the {@code ny()} route or
+ * leaked through as a positive PDF coord.
+ *
+ * &lt;h2&gt;Deliberately omitted in v1&lt;/h2&gt;
+ *
+ * Drop shadows, embedded SVG images (stdlib icons), gradients, text-background
+ * filters, rotated text, CSS classes, interactive scripts, dark mode.
+ *
+ * &lt;h2&gt;Not for TeaVM&lt;/h2&gt;
+ *
+ * OpenPDF depends on {@code java.awt} and {@code java.util.zip}; this driver is
+ * server-side only and is excluded from the TeaVM build path.
+ *
+ * &lt;h2&gt;OpenPDF version&lt;/h2&gt;
+ *
+ * Targets OpenPDF 3.0+ which uses the {@code org.openpdf} package namespace.
+ * The legacy {@code com.lowagie} packages have been removed in 3.0 and are not
+ * available anymore.
+ */
+public class PdfGraphics {
+	// ::remove folder when JAVA8
+
+	// ---------- output buffering ----------
+
+<span class="nc" id="L121">	private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();</span>
+	private final Document document;
+	private final PdfWriter writer;
+	private PdfTemplate template;
+	private PdfContentByte cb;
+<span class="nc" id="L126">	private boolean documentOpened = false;</span>
+
+	// ---------- options ----------
+
+	private final PdfOption option;
+
+	// ---------- bounding box tracking (in caller-facing SVG coords, Y &gt; 0) ----
+
+	private double maxX;
+	private double maxY;
+
+	// ---------- current graphics state ----------
+
+<span class="nc" id="L139">	private Color fillColor = Color.BLACK;</span>
+<span class="nc" id="L140">	private Color strokeColor = Color.BLACK;</span>
+<span class="nc" id="L141">	private double strokeWidth = 1.0;</span>
+<span class="nc" id="L142">	private float[] strokeDash = null;</span>
+<span class="nc" id="L143">	private boolean hidden = false;</span>
+<span class="nc" id="L144">	private boolean pathOpen = false;</span>
+
+	// ---------- pending links (for openLink/closeLink) ----------
+
+<span class="nc" id="L148">	private final LinkedList&lt;PendingLink&gt; activeLinks = new LinkedList&lt;&gt;();</span>
+
+	// ----------------------------------------------------------------------
+	// construction
+	// ----------------------------------------------------------------------
+
+<span class="nc" id="L154">	public PdfGraphics(PdfOption option) {</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		this.option = option == null ? new PdfOption() : option;</span>
+<span class="nc" id="L156">		this.maxX = this.option.getMinWidth();</span>
+<span class="nc" id="L157">		this.maxY = this.option.getMinHeight();</span>
+
+		// We do not know the final page size yet. Open with an arbitrary
+		// placeholder (we'll fix the actual page size in createPdf, before
+		// document.open()). All drawing goes into a PdfTemplate which is
+		// unbounded - it can hold negative-Y content without truncation.
+<span class="nc" id="L163">		this.document = new Document(new Rectangle(10, 10));</span>
+<span class="nc" id="L164">		this.writer = PdfWriter.getInstance(document, buffer);</span>
+<span class="nc" id="L165">	}</span>
+
+	private void openDocumentIfNeeded() {
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (documentOpened)</span>
+<span class="nc" id="L169">			return;</span>
+<span class="nc" id="L170">		documentOpened = true;</span>
+
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (option.getTitle() != null)</span>
+<span class="nc" id="L173">			document.addTitle(option.getTitle());</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (option.getAuthor() != null)</span>
+<span class="nc" id="L175">			document.addAuthor(option.getAuthor());</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">		if (option.getSubject() != null)</span>
+<span class="nc" id="L177">			document.addSubject(option.getSubject());</span>
+
+		// Page size will be patched in createPdf. Open document with the
+		// placeholder; we draw exclusively into the template so the page's
+		// own size does not constrain us.
+		//
+		// IMPORTANT: the template has a *bounding box* and content outside
+		// that box is clipped by the viewer. Since we draw in negative Y,
+		// the bbox must extend into negative Y too. We set it to a generous
+		// 10000 x 10000 region covering [0, 10000] x [-10000, 0]; createPdf
+		// later tightens it to the actual content bounds.
+<span class="nc" id="L188">		document.open();</span>
+<span class="nc" id="L189">		final PdfContentByte direct = writer.getDirectContent();</span>
+<span class="nc" id="L190">		this.template = direct.createTemplate(10000, 10000);</span>
+<span class="nc" id="L191">		this.template.setBoundingBox(new Rectangle(0f, -10000f, 10000f, 0f));</span>
+<span class="nc" id="L192">		this.cb = template;</span>
+<span class="nc" id="L193">	}</span>
+
+	// ----------------------------------------------------------------------
+	// the one-line &quot;negate Y&quot; helper
+	// ----------------------------------------------------------------------
+
+	/**
+	 * Convert a caller-facing SVG Y (positive, grows downward) into the PDF Y we
+	 * actually emit (negative, drawn below the y=0 axis).
+	 */
+	private static float ny(double svgY) {
+<span class="nc" id="L204">		return (float) -svgY;</span>
+	}
+
+	// ----------------------------------------------------------------------
+	// bounding box
+	// ----------------------------------------------------------------------
+
+	/**
+	 * Tracked in SVG coords (positive Y). {@code maxX} and {@code maxY} are the
+	 * largest values the caller has drawn at; the final page will be a
+	 * {@code maxX x maxY} rectangle in standard PDF coords.
+	 */
+	protected final void ensureVisible(double x, double y) {
+<span class="nc bnc" id="L217" title="All 2 branches missed.">		if (x &gt; maxX)</span>
+<span class="nc" id="L218">			maxX = x + 1;</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">		if (y &gt; maxY)</span>
+<span class="nc" id="L220">			maxY = y + 1;</span>
+<span class="nc" id="L221">	}</span>
+
+	// ----------------------------------------------------------------------
+	// state setters (mirror SvgGraphics)
+	// ----------------------------------------------------------------------
+
+	public final void setFillColor(Color fill) {
+<span class="nc" id="L228">		this.fillColor = fill;</span>
+<span class="nc" id="L229">	}</span>
+
+	public final void setFillColor(Color fill, TransparentFillBehavior transparentFillBehaviour) {
+<span class="nc" id="L232">		this.fillColor = fill;</span>
+<span class="nc" id="L233">	}</span>
+
+	public final void setStrokeColor(Color stroke) {
+<span class="nc" id="L236">		this.strokeColor = stroke;</span>
+<span class="nc" id="L237">	}</span>
+
+	public final void setStrokeWidth(double width, double[] dash) {
+<span class="nc" id="L240">		this.strokeWidth = width;</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">		if (dash == null) {</span>
+<span class="nc" id="L242">			this.strokeDash = null;</span>
+		} else {
+<span class="nc" id="L244">			this.strokeDash = new float[dash.length];</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">			for (int i = 0; i &lt; dash.length; i++)</span>
+<span class="nc" id="L246">				this.strokeDash[i] = (float) dash[i];</span>
+		}
+<span class="nc" id="L248">	}</span>
+
+	public void setHidden(boolean hidden) {
+<span class="nc" id="L251">		this.hidden = hidden;</span>
+<span class="nc" id="L252">	}</span>
+
+	// ----------------------------------------------------------------------
+	// internal helpers
+	// ----------------------------------------------------------------------
+
+	private void applyStroke() {
+<span class="nc" id="L259">		cb.setLineWidth((float) strokeWidth);</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">		if (strokeColor != null)</span>
+<span class="nc" id="L261">			cb.setColorStroke(strokeColor);</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">		if (strokeDash == null)</span>
+<span class="nc" id="L263">			cb.setLineDash(0);</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">		else if (strokeDash.length &gt;= 2)</span>
+<span class="nc" id="L265">			cb.setLineDash(strokeDash[0], strokeDash[1], 0);</span>
+		else
+<span class="nc" id="L267">			cb.setLineDash(strokeDash[0], strokeDash[0], 0);</span>
+<span class="nc" id="L268">	}</span>
+
+	private void applyFill() {
+<span class="nc bnc" id="L271" title="All 2 branches missed.">		if (fillColor != null)</span>
+<span class="nc" id="L272">			cb.setColorFill(fillColor);</span>
+<span class="nc" id="L273">	}</span>
+
+	private boolean hasFill() {
+<span class="nc bnc" id="L276" title="All 4 branches missed.">		return fillColor != null &amp;&amp; fillColor.getAlpha() &gt; 0;</span>
+	}
+
+	private boolean hasStroke() {
+<span class="nc bnc" id="L280" title="All 6 branches missed.">		return strokeColor != null &amp;&amp; strokeColor.getAlpha() &gt; 0 &amp;&amp; strokeWidth &gt; 0;</span>
+	}
+
+	private void paintPath() {
+<span class="nc" id="L284">		final boolean f = hasFill();</span>
+<span class="nc" id="L285">		final boolean s = hasStroke();</span>
+<span class="nc bnc" id="L286" title="All 4 branches missed.">		if (f &amp;&amp; s)</span>
+<span class="nc" id="L287">			cb.fillStroke();</span>
+<span class="nc bnc" id="L288" title="All 2 branches missed.">		else if (f)</span>
+<span class="nc" id="L289">			cb.fill();</span>
+<span class="nc bnc" id="L290" title="All 2 branches missed.">		else if (s)</span>
+<span class="nc" id="L291">			cb.stroke();</span>
+		else
+<span class="nc" id="L293">			cb.newPath();</span>
+<span class="nc" id="L294">	}</span>
+
+	// ----------------------------------------------------------------------
+	// shape primitives (mirror SvgGraphics)
+	// ----------------------------------------------------------------------
+
+	public void pdfRectangle(double x, double y, double width, double height, double rx, double ry) {
+<span class="nc bnc" id="L301" title="All 4 branches missed.">		if (width &lt;= 0 || height &lt;= 0)</span>
+<span class="nc" id="L302">			return;</span>
+<span class="nc bnc" id="L303" title="All 2 branches missed.">		if (hidden)</span>
+<span class="nc" id="L304">			return;</span>
+<span class="nc" id="L305">		openDocumentIfNeeded();</span>
+<span class="nc" id="L306">		applyStroke();</span>
+<span class="nc" id="L307">		applyFill();</span>
+		// PDF rectangle takes its lower-left corner. In our (Y-negated) world,
+		// the SVG top-left (x, y) becomes the PDF *upper*-left at (x, -y),
+		// which means the lower-left is at (x, -y - height) = (x, -(y+height)).
+<span class="nc bnc" id="L311" title="All 4 branches missed.">		if (rx &gt; 0 &amp;&amp; ry &gt; 0)</span>
+<span class="nc" id="L312">			cb.roundRectangle((float) x, ny(y + height), (float) width, (float) height, (float) Math.min(rx, ry));</span>
+		else
+<span class="nc" id="L314">			cb.rectangle((float) x, ny(y + height), (float) width, (float) height);</span>
+<span class="nc" id="L315">		paintPath();</span>
+<span class="nc" id="L316">		ensureVisible(x + width, y + height);</span>
+<span class="nc" id="L317">	}</span>
+
+	public void pdfLine(double x1, double y1, double x2, double y2) {
+<span class="nc bnc" id="L320" title="All 2 branches missed.">		if (hidden)</span>
+<span class="nc" id="L321">			return;</span>
+<span class="nc" id="L322">		openDocumentIfNeeded();</span>
+<span class="nc" id="L323">		applyStroke();</span>
+<span class="nc" id="L324">		cb.moveTo((float) x1, ny(y1));</span>
+<span class="nc" id="L325">		cb.lineTo((float) x2, ny(y2));</span>
+<span class="nc" id="L326">		cb.stroke();</span>
+<span class="nc" id="L327">		ensureVisible(x1, y1);</span>
+<span class="nc" id="L328">		ensureVisible(x2, y2);</span>
+<span class="nc" id="L329">	}</span>
+
+	public void pdfEllipse(double cx, double cy, double rx, double ry) {
+<span class="nc bnc" id="L332" title="All 2 branches missed.">		if (hidden)</span>
+<span class="nc" id="L333">			return;</span>
+<span class="nc" id="L334">		openDocumentIfNeeded();</span>
+<span class="nc" id="L335">		applyStroke();</span>
+<span class="nc" id="L336">		applyFill();</span>
+		// PdfContentByte.ellipse takes a bounding box (x1, y1, x2, y2). With
+		// Y negated, the box runs from (cx - rx, -cy - ry) to (cx + rx, -cy + ry).
+<span class="nc" id="L339">		cb.ellipse((float) (cx - rx), ny(cy + ry), (float) (cx + rx), ny(cy - ry));</span>
+<span class="nc" id="L340">		paintPath();</span>
+<span class="nc" id="L341">		ensureVisible(cx + rx, cy + ry);</span>
+<span class="nc" id="L342">	}</span>
+
+	public void pdfArcEllipse(double rx, double ry, double x1, double y1, double x2, double y2) {
+<span class="nc bnc" id="L345" title="All 2 branches missed.">		if (hidden)</span>
+<span class="nc" id="L346">			return;</span>
+<span class="nc" id="L347">		openDocumentIfNeeded();</span>
+
+<span class="nc" id="L349">		applyStroke();</span>
+<span class="nc" id="L350">		applyFill();</span>
+
+		// Mirrors the SVG path &quot;M x1,y1 A rx,ry 0 0 0 x2,y2&quot; emitted by the
+		// original SvgGraphics.svgArcEllipse: xAxisRotation=0, largeArc=0,
+		// sweep=0. DriverEllipsePdf has already picked which endpoint goes
+		// first based on the sign of `extend`, so we can keep flags fixed.
+<span class="nc" id="L356">		cb.moveTo((float) x1, ny(y1));</span>
+<span class="nc" id="L357">		arcToCubics(x1, y1, rx, ry, /* phiDeg */ 0, /* largeArc */ false, /* sweep */ false, x2, y2);</span>
+<span class="nc" id="L358">		paintPath();</span>
+
+<span class="nc" id="L360">		ensureVisible(x1, y1);</span>
+<span class="nc" id="L361">		ensureVisible(x2, y2);</span>
+<span class="nc" id="L362">	}</span>
+
+	public void pdfPolygon(double... points) {
+<span class="nc bnc" id="L365" title="All 4 branches missed.">		if (points.length &lt; 4 || (points.length &amp; 1) != 0)</span>
+<span class="nc" id="L366">			return;</span>
+<span class="nc bnc" id="L367" title="All 2 branches missed.">		if (hidden)</span>
+<span class="nc" id="L368">			return;</span>
+<span class="nc" id="L369">		openDocumentIfNeeded();</span>
+<span class="nc" id="L370">		applyStroke();</span>
+<span class="nc" id="L371">		applyFill();</span>
+<span class="nc" id="L372">		cb.moveTo((float) points[0], ny(points[1]));</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">		for (int i = 2; i &lt; points.length; i += 2)</span>
+<span class="nc" id="L374">			cb.lineTo((float) points[i], ny(points[i + 1]));</span>
+<span class="nc" id="L375">		cb.closePath();</span>
+<span class="nc" id="L376">		paintPath();</span>
+<span class="nc bnc" id="L377" title="All 2 branches missed.">		for (int i = 0; i &lt; points.length; i += 2)</span>
+<span class="nc" id="L378">			ensureVisible(points[i], points[i + 1]);</span>
+<span class="nc" id="L379">	}</span>
+
+	// ----------------------------------------------------------------------
+	// path drawing (newpath/moveto/.../fill)
+	// ----------------------------------------------------------------------
+
+	public void newpath() {
+<span class="nc" id="L386">		openDocumentIfNeeded();</span>
+<span class="nc" id="L387">		applyStroke();</span>
+<span class="nc" id="L388">		applyFill();</span>
+<span class="nc" id="L389">		pathOpen = true;</span>
+<span class="nc" id="L390">	}</span>
+
+	public void moveto(double x, double y) {
+<span class="nc" id="L393">		cb.moveTo((float) x, ny(y));</span>
+<span class="nc" id="L394">		ensureVisible(x, y);</span>
+<span class="nc" id="L395">	}</span>
+
+	public void lineto(double x, double y) {
+<span class="nc" id="L398">		cb.lineTo((float) x, ny(y));</span>
+<span class="nc" id="L399">		ensureVisible(x, y);</span>
+<span class="nc" id="L400">	}</span>
+
+	public void closepath() {
+<span class="nc" id="L403">		cb.closePath();</span>
+<span class="nc" id="L404">	}</span>
+
+	public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
+<span class="nc" id="L407">		cb.curveTo((float) x1, ny(y1), (float) x2, ny(y2), (float) x3, ny(y3));</span>
+<span class="nc" id="L408">		ensureVisible(x1, y1);</span>
+<span class="nc" id="L409">		ensureVisible(x2, y2);</span>
+<span class="nc" id="L410">		ensureVisible(x3, y3);</span>
+<span class="nc" id="L411">	}</span>
+
+	/**
+	 * Quadratic bezier. PDF does not have a native quad operator, so we convert to
+	 * a cubic on the fly using the standard formula
+	 * {@code C1 = P0 + 2/3*(P1-P0), C2 = P2 + 2/3*(P1-P2)}. The previous current
+	 * point on the path is needed - we accept it as input because we do not track
+	 * the path cursor ourselves.
+	 *
+	 * Note: the conversion is done in SVG coords for clarity, then Y is negated at
+	 * the very last moment when calling curveTo. Negating before or after the
+	 * convex combination gives the same result mathematically, but doing it last
+	 * keeps the formula readable.
+	 */
+	public void quadto(double x0, double y0, double x1, double y1, double x2, double y2) {
+<span class="nc" id="L426">		final double c1x = x0 + 2.0 / 3.0 * (x1 - x0);</span>
+<span class="nc" id="L427">		final double c1y = y0 + 2.0 / 3.0 * (y1 - y0);</span>
+<span class="nc" id="L428">		final double c2x = x2 + 2.0 / 3.0 * (x1 - x2);</span>
+<span class="nc" id="L429">		final double c2y = y2 + 2.0 / 3.0 * (y1 - y2);</span>
+<span class="nc" id="L430">		cb.curveTo((float) c1x, ny(c1y), (float) c2x, ny(c2y), (float) x2, ny(y2));</span>
+<span class="nc" id="L431">		ensureVisible(x1, y1);</span>
+<span class="nc" id="L432">		ensureVisible(x2, y2);</span>
+<span class="nc" id="L433">	}</span>
+
+	public void fill(int windingRule) {
+<span class="nc bnc" id="L436" title="All 2 branches missed.">		if (!pathOpen)</span>
+<span class="nc" id="L437">			return;</span>
+<span class="nc" id="L438">		pathOpen = false;</span>
+<span class="nc" id="L439">		final boolean f = hasFill();</span>
+<span class="nc" id="L440">		final boolean s = hasStroke();</span>
+<span class="nc bnc" id="L441" title="All 2 branches missed.">		if (windingRule == PathIterator.WIND_EVEN_ODD) {</span>
+<span class="nc bnc" id="L442" title="All 4 branches missed.">			if (f &amp;&amp; s)</span>
+<span class="nc" id="L443">				cb.eoFillStroke();</span>
+<span class="nc bnc" id="L444" title="All 2 branches missed.">			else if (f)</span>
+<span class="nc" id="L445">				cb.eoFill();</span>
+<span class="nc bnc" id="L446" title="All 2 branches missed.">			else if (s)</span>
+<span class="nc" id="L447">				cb.stroke();</span>
+			else
+<span class="nc" id="L449">				cb.newPath();</span>
+		} else {
+<span class="nc bnc" id="L451" title="All 4 branches missed.">			if (f &amp;&amp; s)</span>
+<span class="nc" id="L452">				cb.fillStroke();</span>
+<span class="nc bnc" id="L453" title="All 2 branches missed.">			else if (f)</span>
+<span class="nc" id="L454">				cb.fill();</span>
+<span class="nc bnc" id="L455" title="All 2 branches missed.">			else if (s)</span>
+<span class="nc" id="L456">				cb.stroke();</span>
+			else
+<span class="nc" id="L458">				cb.newPath();</span>
+		}
+<span class="nc" id="L460">	}</span>
+
+	/**
+	 * Replay a Java2D {@link PathIterator} into the current PDF stream. Used by the
+	 * higher-level driver to handle arbitrary AWT shapes (including arcs already
+	 * flattened to bezier by Java2D).
+	 *
+	 * All coordinates go through the regular path API ({@link #moveto},
+	 * {@link #lineto}, {@link #quadto}, {@link #curveto}), so Y negation happens
+	 * transparently there.
+	 */
+	public void drawPathIterator(double x, double y, PathIterator path) {
+<span class="nc" id="L472">		newpath();</span>
+<span class="nc" id="L473">		final double[] coord = new double[6];</span>
+<span class="nc" id="L474">		double curX = 0, curY = 0;</span>
+<span class="nc bnc" id="L475" title="All 2 branches missed.">		while (!path.isDone()) {</span>
+<span class="nc" id="L476">			final int code = path.currentSegment(coord);</span>
+<span class="nc bnc" id="L477" title="All 6 branches missed.">			switch (code) {</span>
+			case PathIterator.SEG_MOVETO:
+<span class="nc" id="L479">				moveto(coord[0] + x, coord[1] + y);</span>
+<span class="nc" id="L480">				curX = coord[0] + x;</span>
+<span class="nc" id="L481">				curY = coord[1] + y;</span>
+<span class="nc" id="L482">				break;</span>
+			case PathIterator.SEG_LINETO:
+<span class="nc" id="L484">				lineto(coord[0] + x, coord[1] + y);</span>
+<span class="nc" id="L485">				curX = coord[0] + x;</span>
+<span class="nc" id="L486">				curY = coord[1] + y;</span>
+<span class="nc" id="L487">				break;</span>
+			case PathIterator.SEG_QUADTO:
+<span class="nc" id="L489">				quadto(curX, curY, coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);</span>
+<span class="nc" id="L490">				curX = coord[2] + x;</span>
+<span class="nc" id="L491">				curY = coord[3] + y;</span>
+<span class="nc" id="L492">				break;</span>
+			case PathIterator.SEG_CUBICTO:
+<span class="nc" id="L494">				curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);</span>
+<span class="nc" id="L495">				curX = coord[4] + x;</span>
+<span class="nc" id="L496">				curY = coord[5] + y;</span>
+<span class="nc" id="L497">				break;</span>
+			case PathIterator.SEG_CLOSE:
+<span class="nc" id="L499">				closepath();</span>
+<span class="nc" id="L500">				break;</span>
+			default:
+<span class="nc" id="L502">				throw new UnsupportedOperationException(&quot;code=&quot; + code);</span>
+			}
+<span class="nc" id="L504">			path.next();</span>
+<span class="nc" id="L505">		}</span>
+<span class="nc" id="L506">		fill(path.getWindingRule());</span>
+<span class="nc" id="L507">	}</span>
+
+	// ----------------------------------------------------------------------
+	// text
+	// ----------------------------------------------------------------------
+
+	/**
+	 * Render a single line of text at the (x, y) baseline position.
+	 *
+	 * With Y negation, the default PDF text matrix (which renders glyphs
+	 * right-side-up) is what we want - no per-call flip is needed. We just use
+	 * {@link PdfContentByte#setTextMatrix(float, float)} to place the baseline at
+	 * {@code (x, -y)}.
+	 */
+	public void pdfText(String text, double x, double y, BaseFont font, int fontSize) {
+<span class="nc bnc" id="L522" title="All 2 branches missed.">		if (hidden)</span>
+<span class="nc" id="L523">			return;</span>
+<span class="nc bnc" id="L524" title="All 4 branches missed.">		if (text == null || text.isEmpty())</span>
+<span class="nc" id="L525">			return;</span>
+<span class="nc" id="L526">		openDocumentIfNeeded();</span>
+
+<span class="nc" id="L528">		cb.beginText();</span>
+<span class="nc bnc" id="L529" title="All 2 branches missed.">		cb.setColorFill(fillColor != null ? fillColor : Color.BLACK);</span>
+<span class="nc" id="L530">		cb.setFontAndSize(font, fontSize);</span>
+
+		// Default text matrix (identity, glyphs upright). Just place the
+		// baseline at (x, -y).
+<span class="nc" id="L534">		cb.setTextMatrix((float) x, ny(y));</span>
+
+<span class="nc" id="L536">		cb.showText(text);</span>
+<span class="nc" id="L537">		cb.endText();</span>
+
+<span class="nc" id="L539">		ensureVisible(x + font.getWidthPoint(text, fontSize), y);</span>
+<span class="nc" id="L540">	}</span>
+
+	// ----------------------------------------------------------------------
+	// images (PNG / JPEG)
+	// ----------------------------------------------------------------------
+
+	/**
+	 * Insert a raster image (PNG/JPEG bytes) at position (x, y).
+	 *
+	 * With Y negation, the image's bottom-left in PDF coords lands at
+	 * {@code (x, -(y + height))} - same formula as for rectangles. No local matrix
+	 * flip is needed; the image stays right-side-up.
+	 *
+	 * @param pngOrJpegBytes encoded image data.
+	 * @param x              top-left X (SVG convention).
+	 * @param y              top-left Y (SVG convention).
+	 * @param width          target render width.
+	 * @param height         target render height.
+	 */
+	public void pdfImage(byte[] pngOrJpegBytes, double x, double y, double width, double height) {
+<span class="nc bnc" id="L560" title="All 2 branches missed.">		if (hidden)</span>
+<span class="nc" id="L561">			return;</span>
+<span class="nc" id="L562">		openDocumentIfNeeded();</span>
+		try {
+<span class="nc" id="L564">			final Image img = Image.getInstance(pngOrJpegBytes);</span>
+<span class="nc" id="L565">			img.scaleAbsolute((float) width, (float) height);</span>
+<span class="nc" id="L566">			img.setAbsolutePosition((float) x, ny(y + height));</span>
+<span class="nc" id="L567">			cb.addImage(img);</span>
+<span class="nc" id="L568">		} catch (Exception e) {</span>
+<span class="nc" id="L569">			throw new IllegalStateException(&quot;Cannot embed image&quot;, e);</span>
+<span class="nc" id="L570">		}</span>
+<span class="nc" id="L571">		ensureVisible(x + width, y + height);</span>
+<span class="nc" id="L572">	}</span>
+
+	// ----------------------------------------------------------------------
+	// links
+	// ----------------------------------------------------------------------
+
+	/**
+	 * A pending link region. Bounds are tracked in &lt;em&gt;PDF&lt;/em&gt; coords (Y already
+	 * negated) because the {@link PdfAnnotation} we eventually emit must match the
+	 * page coordinate system.
+	 */
+	private static final class PendingLink {
+		final String url;
+		final String title;
+<span class="nc" id="L586">		double llx = Double.POSITIVE_INFINITY;</span>
+<span class="nc" id="L587">		double lly = Double.POSITIVE_INFINITY;</span>
+<span class="nc" id="L588">		double urx = Double.NEGATIVE_INFINITY;</span>
+<span class="nc" id="L589">		double ury = Double.NEGATIVE_INFINITY;</span>
+
+<span class="nc" id="L591">		PendingLink(String url, String title) {</span>
+<span class="nc" id="L592">			this.url = url;</span>
+<span class="nc" id="L593">			this.title = title;</span>
+<span class="nc" id="L594">		}</span>
+
+		void expand(double x, double pdfY) {
+<span class="nc bnc" id="L597" title="All 2 branches missed.">			if (x &lt; llx)</span>
+<span class="nc" id="L598">				llx = x;</span>
+<span class="nc bnc" id="L599" title="All 2 branches missed.">			if (pdfY &lt; lly)</span>
+<span class="nc" id="L600">				lly = pdfY;</span>
+<span class="nc bnc" id="L601" title="All 2 branches missed.">			if (x &gt; urx)</span>
+<span class="nc" id="L602">				urx = x;</span>
+<span class="nc bnc" id="L603" title="All 2 branches missed.">			if (pdfY &gt; ury)</span>
+<span class="nc" id="L604">				ury = pdfY;</span>
+<span class="nc" id="L605">		}</span>
+	}
+
+	/**
+	 * Begin a clickable region. Currently the bounding box of the link is driven
+	 * externally (callers must drive {@link #ensureVisible} - the higher-level
+	 * UGraphic driver does that anyway). A future iteration may auto-track inside
+	 * {@code openLink/closeLink} by intercepting every drawing primitive between
+	 * the two calls.
+	 *
+	 * Unlike SVG, PDF link annotations are flat rectangles - we cannot nest them.
+	 * Nested calls do behave correctly because we keep a stack of
+	 * {@link PendingLink}, but they will produce sibling rectangles rather than
+	 * truly nested clickable regions.
+	 */
+	public void openLink(String url, String title) {
+<span class="nc" id="L621">		openDocumentIfNeeded();</span>
+<span class="nc" id="L622">		activeLinks.push(new PendingLink(url, title));</span>
+<span class="nc" id="L623">	}</span>
+
+	public void closeLink() {
+<span class="nc bnc" id="L626" title="All 2 branches missed.">		if (activeLinks.isEmpty())</span>
+<span class="nc" id="L627">			throw new IllegalStateException(&quot;closeLink() with no matching openLink()&quot;);</span>
+<span class="nc" id="L628">		final PendingLink link = activeLinks.pop();</span>
+<span class="nc bnc" id="L629" title="All 4 branches missed.">		if (link.urx &lt;= link.llx || link.ury &lt;= link.lly)</span>
+<span class="nc" id="L630">			return; // nothing was drawn in this region</span>
+<span class="nc" id="L631">		final PdfAction action = new PdfAction(link.url);</span>
+<span class="nc" id="L632">		final PdfAnnotation annot = PdfAnnotation.createLink(writer,</span>
+				new Rectangle((float) link.llx, (float) link.lly, (float) link.urx, (float) link.ury),
+				PdfAnnotation.HIGHLIGHT_INVERT, action);
+<span class="nc" id="L635">		writer.addAnnotation(annot);</span>
+<span class="nc" id="L636">	}</span>
+
+	// ----------------------------------------------------------------------
+	// output
+	// ----------------------------------------------------------------------
+
+	/**
+	 * Flush the buffered drawing to the supplied stream as a complete PDF.
+	 *
+	 * Pipeline:
+	 * &lt;ol&gt;
+	 * &lt;li&gt;Compute the final page size from {@code maxX} and {@code maxY}.&lt;/li&gt;
+	 * &lt;li&gt;Switch the document's page size to {@code maxX x maxY} and start a new
+	 * page (the placeholder page we opened with is replaced).&lt;/li&gt;
+	 * &lt;li&gt;Place the {@link PdfTemplate} on that page with a translation of
+	 * {@code (0, maxY)}: our negative-Y content moves into
+	 * {@code [0, 0, maxX, maxY]} in page coords.&lt;/li&gt;
+	 * &lt;/ol&gt;
+	 *
+	 * After this call the instance must not be used anymore.
+	 */
+	public void createPdf(OutputStream os) throws IOException {
+<span class="nc" id="L658">		openDocumentIfNeeded();</span>
+
+<span class="nc" id="L660">		final float scaledW = (float) (maxX * option.getScale());</span>
+<span class="nc" id="L661">		final float scaledH = (float) (maxY * option.getScale());</span>
+
+		// Tighten the template's bounding box to the actual content extent.
+		// Our content lives in [0, maxX] x [-maxY, 0].
+<span class="nc" id="L665">		template.setBoundingBox(new Rectangle(0f, -scaledH, scaledW, 0f));</span>
+
+		// Switch to the real page size. setPageSize affects subsequent pages,
+		// so we call newPage() to flush the placeholder page and start a new
+		// one with the proper dimensions.
+<span class="nc" id="L670">		final Rectangle pageSize = new Rectangle(scaledW, scaledH);</span>
+<span class="nc" id="L671">		document.setPageSize(pageSize);</span>
+<span class="nc" id="L672">		document.newPage();</span>
+
+		// Place the template, translated up by maxY so the content (which
+		// lives in negative Y inside the template) lands in [0, 0, w, h].
+<span class="nc" id="L676">		final PdfContentByte pageContent = writer.getDirectContent();</span>
+<span class="nc" id="L677">		pageContent.addTemplate(template, 0, scaledH);</span>
+
+<span class="nc" id="L679">		document.close();</span>
+<span class="nc" id="L680">		buffer.writeTo(os);</span>
+<span class="nc" id="L681">	}</span>
+
+	// ----------------------------------------------------------------------
+	// raw access (escape hatch for callers that need PdfContentByte)
+	// ----------------------------------------------------------------------
+
+	/**
+	 * Direct access to the underlying OpenPDF content stream. Intended for advanced
+	 * cases (custom shading patterns, form XObjects, ...). Most callers should
+	 * never need this.
+	 *
+	 * &lt;strong&gt;Coordinate warning:&lt;/strong&gt; raw drawing through this stream uses
+	 * native PDF coords (Y-up). Either work entirely in PDF coords, or negate Y
+	 * yourself with the same convention this class uses ({@code pdfY = -svgY}).
+	 */
+	public PdfContentByte getRawContent() {
+<span class="nc" id="L697">		openDocumentIfNeeded();</span>
+<span class="nc" id="L698">		return cb;</span>
+	}
+
+	public PdfWriter getRawWriter() {
+<span class="nc" id="L702">		openDocumentIfNeeded();</span>
+<span class="nc" id="L703">		return writer;</span>
+	}
+
+	// ----------------------------------------------------------------------
+	// UPath rendering
+	// ----------------------------------------------------------------------
+
+	/**
+	 * Render a {@link UPath} (PlantUML's SVG-flavored path representation)
+	 * translated by {@code (x, y)}.
+	 *
+	 * Each {@link USegment} maps to a native PDF path operator, except
+	 * {@link USegmentType#SEG_ARCTO} which is converted on the fly to a sequence of
+	 * cubic Beziers (PDF has no arc operator). The conversion follows the SVG 1.1
+	 * Appendix F.6 endpoint-to-center parametrization and approximates each ~90
+	 * degree slice with one cubic.
+	 *
+	 * &lt;p&gt;
+	 * Path metadata ({@code comment}, {@code codeLine}) is currently ignored: PDF
+	 * has no clean place to expose it (no element id like SVG). A future iteration
+	 * could emit it as a marked-content tag if useful for accessibility or tooling.
+	 */
+	public void pdfPath(double x, double y, UPath path) {
+<span class="nc bnc" id="L726" title="All 2 branches missed.">		if (hidden)</span>
+<span class="nc" id="L727">			return;</span>
+<span class="nc" id="L728">		openDocumentIfNeeded();</span>
+<span class="nc" id="L729">		ensureVisible(x, y);</span>
+
+<span class="nc" id="L731">		applyStroke();</span>
+<span class="nc" id="L732">		applyFill();</span>
+
+		// Track the current point so we can feed quad-to-cubic conversion and
+		// the arc converter, which both need the previous endpoint.
+<span class="nc" id="L736">		double curX = x;</span>
+<span class="nc" id="L737">		double curY = y;</span>
+
+<span class="nc bnc" id="L739" title="All 2 branches missed.">		for (USegment seg : path) {</span>
+<span class="nc" id="L740">			final USegmentType type = seg.getSegmentType();</span>
+<span class="nc" id="L741">			final double[] c = seg.getCoord();</span>
+
+<span class="nc bnc" id="L743" title="All 2 branches missed.">			if (type == USegmentType.SEG_MOVETO) {</span>
+<span class="nc" id="L744">				final double px = c[0] + x;</span>
+<span class="nc" id="L745">				final double py = c[1] + y;</span>
+<span class="nc" id="L746">				cb.moveTo((float) px, ny(py));</span>
+<span class="nc" id="L747">				ensureVisible(px, py);</span>
+<span class="nc" id="L748">				curX = px;</span>
+<span class="nc" id="L749">				curY = py;</span>
+
+<span class="nc bnc" id="L751" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_LINETO) {</span>
+<span class="nc" id="L752">				final double px = c[0] + x;</span>
+<span class="nc" id="L753">				final double py = c[1] + y;</span>
+<span class="nc" id="L754">				cb.lineTo((float) px, ny(py));</span>
+<span class="nc" id="L755">				ensureVisible(px, py);</span>
+<span class="nc" id="L756">				curX = px;</span>
+<span class="nc" id="L757">				curY = py;</span>
+
+<span class="nc bnc" id="L759" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_QUADTO) {</span>
+				// UPath.quadTo stores the control point twice; we use one pair
+				// as the quadratic control and convert to a cubic for PDF.
+<span class="nc" id="L762">				final double cx1 = c[0] + x;</span>
+<span class="nc" id="L763">				final double cy1 = c[1] + y;</span>
+<span class="nc" id="L764">				final double px = c[4] + x;</span>
+<span class="nc" id="L765">				final double py = c[5] + y;</span>
+<span class="nc" id="L766">				quadToInternal(curX, curY, cx1, cy1, px, py);</span>
+<span class="nc" id="L767">				ensureVisible(px, py);</span>
+<span class="nc" id="L768">				curX = px;</span>
+<span class="nc" id="L769">				curY = py;</span>
+
+<span class="nc bnc" id="L771" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CUBICTO) {</span>
+<span class="nc" id="L772">				final double cx1 = c[0] + x;</span>
+<span class="nc" id="L773">				final double cy1 = c[1] + y;</span>
+<span class="nc" id="L774">				final double cx2 = c[2] + x;</span>
+<span class="nc" id="L775">				final double cy2 = c[3] + y;</span>
+<span class="nc" id="L776">				final double px = c[4] + x;</span>
+<span class="nc" id="L777">				final double py = c[5] + y;</span>
+<span class="nc" id="L778">				cb.curveTo((float) cx1, ny(cy1), (float) cx2, ny(cy2), (float) px, ny(py));</span>
+<span class="nc" id="L779">				ensureVisible(px, py);</span>
+<span class="nc" id="L780">				curX = px;</span>
+<span class="nc" id="L781">				curY = py;</span>
+
+<span class="nc bnc" id="L783" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_ARCTO) {</span>
+				// SVG arc: [rx, ry, xAxisRotation(deg), largeArcFlag, sweepFlag, x, y]
+<span class="nc" id="L785">				final double rx = c[0];</span>
+<span class="nc" id="L786">				final double ry = c[1];</span>
+<span class="nc" id="L787">				final double xAxisRotDeg = c[2];</span>
+<span class="nc bnc" id="L788" title="All 2 branches missed.">				final boolean largeArc = c[3] != 0;</span>
+<span class="nc bnc" id="L789" title="All 2 branches missed.">				final boolean sweep = c[4] != 0;</span>
+<span class="nc" id="L790">				final double endX = c[5] + x;</span>
+<span class="nc" id="L791">				final double endY = c[6] + y;</span>
+<span class="nc" id="L792">				arcToCubics(curX, curY, rx, ry, xAxisRotDeg, largeArc, sweep, endX, endY);</span>
+<span class="nc" id="L793">				ensureVisible(endX, endY);</span>
+<span class="nc" id="L794">				curX = endX;</span>
+<span class="nc" id="L795">				curY = endY;</span>
+
+<span class="nc bnc" id="L797" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CLOSE) {</span>
+<span class="nc" id="L798">				cb.closePath();</span>
+			}
+			// Unknown segment types are silently ignored - UPath's enum is
+			// closed, so we should never get here in practice.
+<span class="nc" id="L802">		}</span>
+
+<span class="nc" id="L804">		paintPath();</span>
+<span class="nc" id="L805">	}</span>
+
+	/**
+	 * Internal helper: emit a quadratic as a cubic. Same math as the public
+	 * {@link #quadto} method, kept private here to avoid disturbing the
+	 * path-building state machine (no {@code newpath}/{@code fill} dance).
+	 */
+	private void quadToInternal(double x0, double y0, double cx, double cy, double x2, double y2) {
+<span class="nc" id="L813">		final double c1x = x0 + 2.0 / 3.0 * (cx - x0);</span>
+<span class="nc" id="L814">		final double c1y = y0 + 2.0 / 3.0 * (cy - y0);</span>
+<span class="nc" id="L815">		final double c2x = x2 + 2.0 / 3.0 * (cx - x2);</span>
+<span class="nc" id="L816">		final double c2y = y2 + 2.0 / 3.0 * (cy - y2);</span>
+<span class="nc" id="L817">		cb.curveTo((float) c1x, ny(c1y), (float) c2x, ny(c2y), (float) x2, ny(y2));</span>
+<span class="nc" id="L818">	}</span>
+
+	// ----------------------------------------------------------------------
+	// SVG arc -&gt; cubic Bezier conversion
+	// ----------------------------------------------------------------------
+
+	/**
+	 * Convert an SVG-style elliptical arc into a sequence of cubic Beziers and emit
+	 * them via {@code cb.curveTo}. Follows SVG 1.1 Appendix F.6 (endpoint-to-center
+	 * parametrization) and approximates each ~90 degree slice of the sweep with a
+	 * single cubic using the standard 4/3*tan(a/4) control-point distance.
+	 *
+	 * @param x1           start point X (already translated, in caller coords)
+	 * @param y1           start point Y
+	 * @param rxIn         radius along the X axis of the ellipse (before rotation)
+	 * @param ryIn         radius along the Y axis
+	 * @param phiDeg       rotation of the ellipse's X axis, in degrees
+	 * @param largeArcFlag SVG large-arc flag
+	 * @param sweepFlag    SVG sweep flag
+	 * @param x2           end point X
+	 * @param y2           end point Y
+	 */
+	private void arcToCubics(double x1, double y1, double rxIn, double ryIn, double phiDeg, boolean largeArcFlag,
+			boolean sweepFlag, double x2, double y2) {
+
+		// Degenerate cases per SVG spec F.6.2:
+		// - identical endpoints: do nothing
+		// - either radius zero: straight line
+<span class="nc bnc" id="L846" title="All 4 branches missed.">		if (x1 == x2 &amp;&amp; y1 == y2)</span>
+<span class="nc" id="L847">			return;</span>
+<span class="nc bnc" id="L848" title="All 4 branches missed.">		if (rxIn == 0 || ryIn == 0) {</span>
+<span class="nc" id="L849">			cb.lineTo((float) x2, ny(y2));</span>
+<span class="nc" id="L850">			return;</span>
+		}
+
+<span class="nc" id="L853">		double rx = Math.abs(rxIn);</span>
+<span class="nc" id="L854">		double ry = Math.abs(ryIn);</span>
+<span class="nc" id="L855">		final double phi = Math.toRadians(phiDeg);</span>
+<span class="nc" id="L856">		final double cosPhi = Math.cos(phi);</span>
+<span class="nc" id="L857">		final double sinPhi = Math.sin(phi);</span>
+
+		// Step 1: compute (x1', y1') in the rotated coordinate system.
+<span class="nc" id="L860">		final double dx = (x1 - x2) / 2.0;</span>
+<span class="nc" id="L861">		final double dy = (y1 - y2) / 2.0;</span>
+<span class="nc" id="L862">		final double x1p = cosPhi * dx + sinPhi * dy;</span>
+<span class="nc" id="L863">		final double y1p = -sinPhi * dx + cosPhi * dy;</span>
+
+		// Step 2: if the radii are too small to reach both endpoints, scale them
+		// up uniformly per SVG F.6.6.2.
+<span class="nc" id="L867">		final double lambda = (x1p * x1p) / (rx * rx) + (y1p * y1p) / (ry * ry);</span>
+<span class="nc bnc" id="L868" title="All 2 branches missed.">		if (lambda &gt; 1.0) {</span>
+<span class="nc" id="L869">			final double s = Math.sqrt(lambda);</span>
+<span class="nc" id="L870">			rx *= s;</span>
+<span class="nc" id="L871">			ry *= s;</span>
+		}
+
+		// Step 3: center (cx', cy') in the rotated system.
+<span class="nc" id="L875">		final double rx2 = rx * rx;</span>
+<span class="nc" id="L876">		final double ry2 = ry * ry;</span>
+<span class="nc" id="L877">		final double x1p2 = x1p * x1p;</span>
+<span class="nc" id="L878">		final double y1p2 = y1p * y1p;</span>
+
+<span class="nc" id="L880">		double numerator = rx2 * ry2 - rx2 * y1p2 - ry2 * x1p2;</span>
+<span class="nc" id="L881">		final double denominator = rx2 * y1p2 + ry2 * x1p2;</span>
+<span class="nc bnc" id="L882" title="All 2 branches missed.">		if (numerator &lt; 0)</span>
+<span class="nc" id="L883">			numerator = 0;</span>
+<span class="nc" id="L884">		double coef = Math.sqrt(numerator / denominator);</span>
+<span class="nc bnc" id="L885" title="All 2 branches missed.">		if (largeArcFlag == sweepFlag)</span>
+<span class="nc" id="L886">			coef = -coef;</span>
+<span class="nc" id="L887">		final double cxp = coef * (rx * y1p) / ry;</span>
+<span class="nc" id="L888">		final double cyp = coef * -(ry * x1p) / rx;</span>
+
+		// Step 4: center (cx, cy) in the original system.
+<span class="nc" id="L891">		final double mx = (x1 + x2) / 2.0;</span>
+<span class="nc" id="L892">		final double my = (y1 + y2) / 2.0;</span>
+<span class="nc" id="L893">		final double cx = cosPhi * cxp - sinPhi * cyp + mx;</span>
+<span class="nc" id="L894">		final double cy = sinPhi * cxp + cosPhi * cyp + my;</span>
+
+		// Step 5: start angle theta1 and sweep deltaTheta.
+<span class="nc" id="L897">		final double ux = (x1p - cxp) / rx;</span>
+<span class="nc" id="L898">		final double uy = (y1p - cyp) / ry;</span>
+<span class="nc" id="L899">		final double vx = (-x1p - cxp) / rx;</span>
+<span class="nc" id="L900">		final double vy = (-y1p - cyp) / ry;</span>
+
+<span class="nc" id="L902">		final double theta1 = angleBetween(1, 0, ux, uy);</span>
+<span class="nc" id="L903">		double deltaTheta = angleBetween(ux, uy, vx, vy);</span>
+<span class="nc bnc" id="L904" title="All 4 branches missed.">		if (!sweepFlag &amp;&amp; deltaTheta &gt; 0)</span>
+<span class="nc" id="L905">			deltaTheta -= 2 * Math.PI;</span>
+<span class="nc bnc" id="L906" title="All 4 branches missed.">		else if (sweepFlag &amp;&amp; deltaTheta &lt; 0)</span>
+<span class="nc" id="L907">			deltaTheta += 2 * Math.PI;</span>
+
+		// Step 6: split sweep into &lt;= 90 degree slices and approximate each
+		// with one cubic Bezier. The standard approximation uses control
+		// distance alpha = (4/3) * tan(slice/4).
+<span class="nc" id="L912">		final int nSlices = (int) Math.ceil(Math.abs(deltaTheta) / (Math.PI / 2.0));</span>
+<span class="nc" id="L913">		final double slice = deltaTheta / nSlices;</span>
+<span class="nc" id="L914">		final double alpha = (4.0 / 3.0) * Math.tan(slice / 4.0);</span>
+
+<span class="nc" id="L916">		double t1 = theta1;</span>
+<span class="nc" id="L917">		double cos1 = Math.cos(t1);</span>
+<span class="nc" id="L918">		double sin1 = Math.sin(t1);</span>
+<span class="nc" id="L919">		double curX = x1;</span>
+<span class="nc" id="L920">		double curY = y1;</span>
+
+<span class="nc bnc" id="L922" title="All 2 branches missed.">		for (int i = 0; i &lt; nSlices; i++) {</span>
+<span class="nc" id="L923">			final double t2 = t1 + slice;</span>
+<span class="nc" id="L924">			final double cos2 = Math.cos(t2);</span>
+<span class="nc" id="L925">			final double sin2 = Math.sin(t2);</span>
+
+			// Endpoint of this slice on the unit-circle parametrization,
+			// then mapped back to the rotated ellipse.
+<span class="nc" id="L929">			final double ex = cosPhi * (rx * cos2) - sinPhi * (ry * sin2) + cx;</span>
+<span class="nc" id="L930">			final double ey = sinPhi * (rx * cos2) + cosPhi * (ry * sin2) + cy;</span>
+
+			// Control points: tangents at t1 and t2, scaled by alpha.
+<span class="nc" id="L933">			final double c1ux = -rx * sin1 * alpha;</span>
+<span class="nc" id="L934">			final double c1uy = ry * cos1 * alpha;</span>
+<span class="nc" id="L935">			final double c2ux = rx * sin2 * alpha;</span>
+<span class="nc" id="L936">			final double c2uy = -ry * cos2 * alpha;</span>
+
+<span class="nc" id="L938">			final double c1x = curX + (cosPhi * c1ux - sinPhi * c1uy);</span>
+<span class="nc" id="L939">			final double c1y = curY + (sinPhi * c1ux + cosPhi * c1uy);</span>
+<span class="nc" id="L940">			final double c2x = ex + (cosPhi * c2ux - sinPhi * c2uy);</span>
+<span class="nc" id="L941">			final double c2y = ey + (sinPhi * c2ux + cosPhi * c2uy);</span>
+
+<span class="nc" id="L943">			cb.curveTo((float) c1x, ny(c1y), (float) c2x, ny(c2y), (float) ex, ny(ey));</span>
+
+<span class="nc" id="L945">			t1 = t2;</span>
+<span class="nc" id="L946">			cos1 = cos2;</span>
+<span class="nc" id="L947">			sin1 = sin2;</span>
+<span class="nc" id="L948">			curX = ex;</span>
+<span class="nc" id="L949">			curY = ey;</span>
+		}
+<span class="nc" id="L951">	}</span>
+
+	/**
+	 * Signed angle between two 2D vectors, in radians, in {@code (-pi, pi]}. Used
+	 * internally by {@link #arcToCubics}.
+	 */
+	private static double angleBetween(double ux, double uy, double vx, double vy) {
+<span class="nc" id="L958">		final double dot = ux * vx + uy * vy;</span>
+<span class="nc" id="L959">		final double lenU = Math.sqrt(ux * ux + uy * uy);</span>
+<span class="nc" id="L960">		final double lenV = Math.sqrt(vx * vx + vy * vy);</span>
+<span class="nc" id="L961">		double cos = dot / (lenU * lenV);</span>
+<span class="nc bnc" id="L962" title="All 2 branches missed.">		if (cos &lt; -1)</span>
+<span class="nc" id="L963">			cos = -1;</span>
+<span class="nc bnc" id="L964" title="All 2 branches missed.">		else if (cos &gt; 1)</span>
+<span class="nc" id="L965">			cos = 1;</span>
+<span class="nc bnc" id="L966" title="All 2 branches missed.">		final double sign = (ux * vy - uy * vx) &lt; 0 ? -1 : 1;</span>
+<span class="nc" id="L967">		return sign * Math.acos(cos);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -35,13 +35,9 @@
  */
 package net.sourceforge.plantuml;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.LinkedHashSet;
@@ -67,7 +63,6 @@ import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
-import net.sourceforge.plantuml.pdf.PdfConverter;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.skin.Pragma;
@@ -85,252 +80,252 @@ import net.sourceforge.plantuml.warning.Warning;
 
 public abstract class TitledDiagram extends UgDiagram implements Annotated, WithSprite {
 
-<span class="fc" id="L88">	private static final Pattern DIGITS = Pattern.compile(&quot;\\d+&quot;);</span>
+<span class="fc" id="L83">	private static final Pattern DIGITS = Pattern.compile(&quot;\\d+&quot;);</span>
 	private XDimension2D lastInfo;
 
-<span class="fc" id="L91">	public static boolean FORCE_SMETANA = false;</span>
-<span class="fc" id="L92">	public static boolean FORCE_ELK = false;</span>
+<span class="fc" id="L86">	public static boolean FORCE_SMETANA = false;</span>
+<span class="fc" id="L87">	public static boolean FORCE_ELK = false;</span>
 
-<span class="fc" id="L94">	private DisplayPositioned title = DisplayPositioned.none(HorizontalAlignment.CENTER, VerticalAlignment.TOP);</span>
+<span class="fc" id="L89">	private DisplayPositioned title = DisplayPositioned.none(HorizontalAlignment.CENTER, VerticalAlignment.TOP);</span>
 
-<span class="fc" id="L96">	private DisplayPositioned caption = DisplayPositioned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);</span>
-<span class="fc" id="L97">	private DisplayPositioned legend = DisplayPositioned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);</span>
-<span class="fc" id="L98">	private DisplayPositioned header = DisplayPositioned.none(HorizontalAlignment.CENTER, null);</span>
-<span class="fc" id="L99">	private DisplayPositioned footer = DisplayPositioned.none(HorizontalAlignment.CENTER, null);</span>
-<span class="fc" id="L100">	private DisplayPositioned mainFrame = DisplayPositioned.none(null, null);</span>
+<span class="fc" id="L91">	private DisplayPositioned caption = DisplayPositioned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);</span>
+<span class="fc" id="L92">	private DisplayPositioned legend = DisplayPositioned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);</span>
+<span class="fc" id="L93">	private DisplayPositioned header = DisplayPositioned.none(HorizontalAlignment.CENTER, null);</span>
+<span class="fc" id="L94">	private DisplayPositioned footer = DisplayPositioned.none(HorizontalAlignment.CENTER, null);</span>
+<span class="fc" id="L95">	private DisplayPositioned mainFrame = DisplayPositioned.none(null, null);</span>
 	private final DiagramType type;
 
 	private final SkinParam skinParam;
-<span class="fc" id="L104">	private String namespaceSeparator = null;</span>
+<span class="fc" id="L99">	private String namespaceSeparator = null;</span>
 
 	public TitledDiagram(UmlSource source, DiagramType type, Previous previous, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L107">		super(source, preprocessing);</span>
-<span class="fc" id="L108">		this.type = type;</span>
-<span class="fc" id="L109">		this.skinParam = SkinParam.create(getMd5map(), source.getPathSystem(), type, Pragma.createEmpty(),</span>
-<span class="fc" id="L110">				preprocessing.getOption());</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (previous != null)</span>
-<span class="fc" id="L112">			this.skinParam.copyAllFrom(previous);</span>
+<span class="fc" id="L102">		super(source, preprocessing);</span>
+<span class="fc" id="L103">		this.type = type;</span>
+<span class="fc" id="L104">		this.skinParam = SkinParam.create(getMd5map(), source.getPathSystem(), type, Pragma.createEmpty(),</span>
+<span class="fc" id="L105">				preprocessing.getOption());</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		if (previous != null)</span>
+<span class="fc" id="L107">			this.skinParam.copyAllFrom(previous);</span>
 
-<span class="fc" id="L114">	}</span>
+<span class="fc" id="L109">	}</span>
 
 	@Override
 	public boolean isHandwritten() {
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (skinParam.handwritten())</span>
-<span class="nc" id="L119">			return true;</span>
-<span class="fc" id="L120">		return super.isHandwritten();</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (skinParam.handwritten())</span>
+<span class="nc" id="L114">			return true;</span>
+<span class="fc" id="L115">		return super.isHandwritten();</span>
 	}
 
 	public void setNamespaceSeparator(String namespaceSeparator) {
-<span class="fc" id="L124">		this.namespaceSeparator = namespaceSeparator;</span>
-<span class="fc" id="L125">	}</span>
+<span class="fc" id="L119">		this.namespaceSeparator = namespaceSeparator;</span>
+<span class="fc" id="L120">	}</span>
 
 	final public String getNamespaceSeparator() {
-<span class="fc" id="L128">		return namespaceSeparator;</span>
+<span class="fc" id="L123">		return namespaceSeparator;</span>
 	}
 
 	public final StyleBuilder getCurrentStyleBuilder() {
-<span class="fc" id="L132">		return skinParam.getCurrentStyleBuilder();</span>
+<span class="fc" id="L127">		return skinParam.getCurrentStyleBuilder();</span>
 	}
 
 	final public DiagramType getDiagramType() {
-<span class="fc" id="L136">		return type;</span>
+<span class="fc" id="L131">		return type;</span>
 	}
 
 	public final ISkinParam getSkinParam() {
-<span class="fc" id="L140">		return skinParam;</span>
+<span class="fc" id="L135">		return skinParam;</span>
 	}
 
 	private boolean skinParamUsed;
 
 	public boolean isSkinParamUsed() {
-<span class="fc" id="L146">		return skinParamUsed;</span>
+<span class="fc" id="L141">		return skinParamUsed;</span>
 	}
 
 	public void setSkinParamUsed(boolean skinParamUsed) {
-<span class="fc" id="L150">		this.skinParamUsed = skinParamUsed;</span>
-<span class="fc" id="L151">	}</span>
+<span class="fc" id="L145">		this.skinParamUsed = skinParamUsed;</span>
+<span class="fc" id="L146">	}</span>
 
 	public void setParam(String key, String value) {
-<span class="fc" id="L154">		skinParam.setParam(StringUtils.goLowerCase(key), value);</span>
-<span class="fc" id="L155">	}</span>
+<span class="fc" id="L149">		skinParam.setParam(StringUtils.goLowerCase(key), value);</span>
+<span class="fc" id="L150">	}</span>
 
 	public void addSprite(String name, Sprite sprite) {
-<span class="fc" id="L158">		skinParam.addSprite(name, sprite);</span>
-<span class="fc" id="L159">	}</span>
+<span class="fc" id="L153">		skinParam.addSprite(name, sprite);</span>
+<span class="fc" id="L154">	}</span>
 
 	@DuplicateCode(reference = &quot;StyleExtractor&quot;)
 	public CommandExecutionResult loadSkin(String newSkin) throws IOException {
-<span class="fc" id="L163">		final String filename = newSkin + &quot;.skin&quot;;</span>
-<span class="fc" id="L164">		final InputStream is = StyleLoader.getInputStreamForStyle(filename);</span>
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (is == null)</span>
-<span class="nc" id="L166">			return CommandExecutionResult.error(&quot;Cannot find style &quot; + newSkin);</span>
-<span class="fc" id="L167">		is.close();</span>
+<span class="fc" id="L158">		final String filename = newSkin + &quot;.skin&quot;;</span>
+<span class="fc" id="L159">		final InputStream is = StyleLoader.getInputStreamForStyle(filename);</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L161">			return CommandExecutionResult.error(&quot;Cannot find style &quot; + newSkin);</span>
+<span class="fc" id="L162">		is.close();</span>
 
-<span class="fc" id="L169">		getSkinParam().setDefaultSkin(filename);</span>
-<span class="fc" id="L170">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L164">		getSkinParam().setDefaultSkin(filename);</span>
+<span class="fc" id="L165">		return CommandExecutionResult.ok();</span>
 	}
 
 	final public void setTitle(DisplayPositioned title) {
-<span class="pc bpc" id="L174" title="2 of 4 branches missed.">		if (title.isNull() || title.getDisplay().isWhite())</span>
-<span class="nc" id="L175">			return;</span>
-<span class="fc" id="L176">		this.title = title;</span>
-<span class="fc" id="L177">	}</span>
+<span class="pc bpc" id="L169" title="2 of 4 branches missed.">		if (title.isNull() || title.getDisplay().isWhite())</span>
+<span class="nc" id="L170">			return;</span>
+<span class="fc" id="L171">		this.title = title;</span>
+<span class="fc" id="L172">	}</span>
 
 	@Override
 	final public DisplayPositioned getTitle() {
-<span class="fc" id="L181">		return title;</span>
+<span class="fc" id="L176">		return title;</span>
 	}
 
 	@Override
 	@ApiStable
 	final public Display getTitleDisplay() {
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		if (title == null)</span>
-<span class="nc" id="L188">			return Display.NULL;</span>
-<span class="fc" id="L189">		return title.getDisplay();</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		if (title == null)</span>
+<span class="nc" id="L183">			return Display.NULL;</span>
+<span class="fc" id="L184">		return title.getDisplay();</span>
 	}
 
 	final public void setMainFrame(DisplayPositioned mainFrame) {
-<span class="fc" id="L193">		this.mainFrame = mainFrame;</span>
-<span class="fc" id="L194">	}</span>
+<span class="fc" id="L188">		this.mainFrame = mainFrame;</span>
+<span class="fc" id="L189">	}</span>
 
 	final public void setCaption(DisplayPositioned caption) {
-<span class="fc" id="L197">		this.caption = caption;</span>
-<span class="fc" id="L198">	}</span>
+<span class="fc" id="L192">		this.caption = caption;</span>
+<span class="fc" id="L193">	}</span>
 
 	@Override
 	final public DisplayPositioned getCaption() {
-<span class="fc" id="L202">		return caption;</span>
+<span class="fc" id="L197">		return caption;</span>
 	}
 
 	@Override
 	final public DisplayPositioned getHeader() {
-<span class="fc" id="L207">		return header;</span>
+<span class="fc" id="L202">		return header;</span>
 	}
 
 	@Override
 	final public DisplayPositioned getFooter() {
-<span class="fc" id="L212">		return footer;</span>
+<span class="fc" id="L207">		return footer;</span>
 	}
 
 	public void updateFooter(LineLocation location, Display display, HorizontalAlignment horizontalAlignment) {
-<span class="fc" id="L216">		this.footer = this.footer.withDisplay(display).withHorizontalAlignment(horizontalAlignment)</span>
+<span class="fc" id="L211">		this.footer = this.footer.withDisplay(display).withHorizontalAlignment(horizontalAlignment)</span>
+<span class="fc" id="L212">				.withLocation(location);</span>
+<span class="fc" id="L213">	}</span>
+
+	public void updateHeader(LineLocation location, Display display, HorizontalAlignment horizontalAlignment) {
+<span class="fc" id="L216">		this.header = this.header.withDisplay(display).withHorizontalAlignment(horizontalAlignment)</span>
 <span class="fc" id="L217">				.withLocation(location);</span>
 <span class="fc" id="L218">	}</span>
 
-	public void updateHeader(LineLocation location, Display display, HorizontalAlignment horizontalAlignment) {
-<span class="fc" id="L221">		this.header = this.header.withDisplay(display).withHorizontalAlignment(horizontalAlignment)</span>
-<span class="fc" id="L222">				.withLocation(location);</span>
-<span class="fc" id="L223">	}</span>
-
 	@Override
 	final public DisplayPositioned getLegend() {
-<span class="fc" id="L227">		return legend;</span>
+<span class="fc" id="L222">		return legend;</span>
 	}
 
 	public void setLegend(DisplayPositioned legend) {
-<span class="fc" id="L231">		this.legend = legend;</span>
-<span class="fc" id="L232">	}</span>
+<span class="fc" id="L226">		this.legend = legend;</span>
+<span class="fc" id="L227">	}</span>
 
 	@Override
 	final public DisplayPositioned getMainFrame() {
-<span class="fc" id="L236">		return mainFrame;</span>
+<span class="fc" id="L231">		return mainFrame;</span>
 	}
 
 	private boolean useSmetana;
 	private boolean useElk;
 
 	public void setUseSmetana(boolean useSmetana) {
-<span class="fc" id="L243">		this.useSmetana = useSmetana;</span>
-<span class="fc" id="L244">	}</span>
+<span class="fc" id="L238">		this.useSmetana = useSmetana;</span>
+<span class="fc" id="L239">	}</span>
 
 	public void setUseElk(boolean useElk) {
-<span class="nc" id="L247">		this.useElk = useElk;</span>
-<span class="nc" id="L248">	}</span>
+<span class="nc" id="L242">		this.useElk = useElk;</span>
+<span class="nc" id="L243">	}</span>
 
 	public boolean isUseElk() {
-<span class="pc bpc" id="L251" title="1 of 2 branches missed.">		if (FORCE_ELK)</span>
-<span class="nc" id="L252">			return true;</span>
-<span class="fc" id="L253">		return this.useElk;</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">		if (FORCE_ELK)</span>
+<span class="nc" id="L247">			return true;</span>
+<span class="fc" id="L248">		return this.useElk;</span>
 	}
 
 	public boolean isUseSmetana() {
-<span class="fc bfc" id="L257" title="All 2 branches covered.">		if (FORCE_SMETANA)</span>
-<span class="fc" id="L258">			return true;</span>
-<span class="fc" id="L259">		return useSmetana;</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">		if (FORCE_SMETANA)</span>
+<span class="fc" id="L253">			return true;</span>
+<span class="fc" id="L254">		return useSmetana;</span>
 		// return true;
 	}
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="fc" id="L265">		return ClockwiseTopRightBottomLeft.same(10);</span>
+<span class="fc" id="L260">		return ClockwiseTopRightBottomLeft.same(10);</span>
 	}
 
 	@Override
 	public final HColor calculateBackColor() {
-<span class="fc" id="L270">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, this.getDiagramType().getStyleName())</span>
-<span class="fc" id="L271">				.getMergedStyle(this.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L265">		final Style style = StyleSignatureBasic.of(SName.root, SName.document, this.getDiagramType().getStyleName())</span>
+<span class="fc" id="L266">				.getMergedStyle(this.getSkinParam().getCurrentStyleBuilder());</span>
 
-<span class="fc" id="L273">		HColor backgroundColor = style.value(PName.BackGroundColor).asColor(this.getSkinParam().getIHtmlColorSet());</span>
-<span class="pc bpc" id="L274" title="1 of 2 branches missed.">		if (backgroundColor == null)</span>
-<span class="nc" id="L275">			backgroundColor = HColors.transparent();</span>
+<span class="fc" id="L268">		HColor backgroundColor = style.value(PName.BackGroundColor).asColor(this.getSkinParam().getIHtmlColorSet());</span>
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">		if (backgroundColor == null)</span>
+<span class="nc" id="L270">			backgroundColor = HColors.transparent();</span>
 
-<span class="fc" id="L277">		return backgroundColor;</span>
+<span class="fc" id="L272">		return backgroundColor;</span>
 	}
 
 	@Override
 	protected ColorMapper muteColorMapper(ColorMapper init) {
-<span class="pc bpc" id="L282" title="1 of 2 branches missed.">		if (SkinParam.isDark(getSkinParam()))</span>
-<span class="nc" id="L283">			return ColorMapper.DARK_MODE;</span>
-<span class="fc" id="L284">		final String monochrome = getSkinParam().getValue(&quot;monochrome&quot;);</span>
-<span class="fc bfc" id="L285" title="All 2 branches covered.">		if (&quot;true&quot;.equals(monochrome))</span>
-<span class="fc" id="L286">			return ColorMapper.MONOCHROME;</span>
-<span class="pc bpc" id="L287" title="1 of 2 branches missed.">		if (&quot;reverse&quot;.equals(monochrome))</span>
-<span class="nc" id="L288">			return ColorMapper.MONOCHROME_REVERSE;</span>
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">		if (SkinParam.isDark(getSkinParam()))</span>
+<span class="nc" id="L278">			return ColorMapper.DARK_MODE;</span>
+<span class="fc" id="L279">		final String monochrome = getSkinParam().getValue(&quot;monochrome&quot;);</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">		if (&quot;true&quot;.equals(monochrome))</span>
+<span class="fc" id="L281">			return ColorMapper.MONOCHROME;</span>
+<span class="pc bpc" id="L282" title="1 of 2 branches missed.">		if (&quot;reverse&quot;.equals(monochrome))</span>
+<span class="nc" id="L283">			return ColorMapper.MONOCHROME_REVERSE;</span>
 
-<span class="fc" id="L290">		final String reversecolor = getSkinParam().getValue(&quot;reversecolor&quot;);</span>
-<span class="pc bpc" id="L291" title="1 of 2 branches missed.">		if (reversecolor == null)</span>
-<span class="fc" id="L292">			return init;</span>
+<span class="fc" id="L285">		final String reversecolor = getSkinParam().getValue(&quot;reversecolor&quot;);</span>
+<span class="pc bpc" id="L286" title="1 of 2 branches missed.">		if (reversecolor == null)</span>
+<span class="fc" id="L287">			return init;</span>
 
-<span class="nc bnc" id="L294" title="All 2 branches missed.">		if (&quot;dark&quot;.equalsIgnoreCase(reversecolor))</span>
-<span class="nc" id="L295">			return ColorMapper.LIGTHNESS_INVERSE;</span>
+<span class="nc bnc" id="L289" title="All 2 branches missed.">		if (&quot;dark&quot;.equalsIgnoreCase(reversecolor))</span>
+<span class="nc" id="L290">			return ColorMapper.LIGTHNESS_INVERSE;</span>
 
-<span class="nc" id="L297">		final ColorOrder order = ColorOrder.fromString(reversecolor);</span>
-<span class="nc bnc" id="L298" title="All 2 branches missed.">		if (order == null)</span>
-<span class="nc" id="L299">			return init;</span>
+<span class="nc" id="L292">		final ColorOrder order = ColorOrder.fromString(reversecolor);</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">		if (order == null)</span>
+<span class="nc" id="L294">			return init;</span>
 
-<span class="nc" id="L301">		return ColorMapper.reverse(order);</span>
+<span class="nc" id="L296">		return ColorMapper.reverse(order);</span>
 
 	}
 
 	final public Pragma getPragma() {
-<span class="fc" id="L306">		return skinParam.getPragma();</span>
+<span class="fc" id="L301">		return skinParam.getPragma();</span>
 	}
 
 	@Override
 	public void addWarning(Warning warning) {
-<span class="fc" id="L311">		getPragma().addWarning(warning);</span>
-<span class="fc" id="L312">	}</span>
+<span class="fc" id="L306">		getPragma().addWarning(warning);</span>
+<span class="fc" id="L307">	}</span>
 
 	@Override
 	public Collection&lt;Warning&gt; getWarnings() {
-<span class="fc" id="L316">		return join(getPreprocessingArtifact().getWarnings(), getPragma().getWarnings());</span>
+<span class="fc" id="L311">		return join(getPreprocessingArtifact().getWarnings(), getPragma().getWarnings());</span>
 	}
 
 	static private Collection&lt;Warning&gt; join(Collection&lt;Warning&gt; col1, Collection&lt;Warning&gt; col2) {
-<span class="fc" id="L320">		final LinkedHashSet&lt;Warning&gt; result = new LinkedHashSet&lt;&gt;();</span>
-<span class="fc" id="L321">		result.addAll(col1);</span>
-<span class="fc" id="L322">		result.addAll(col2);</span>
-<span class="fc" id="L323">		return result;</span>
+<span class="fc" id="L315">		final LinkedHashSet&lt;Warning&gt; result = new LinkedHashSet&lt;&gt;();</span>
+<span class="fc" id="L316">		result.addAll(col1);</span>
+<span class="fc" id="L317">		result.addAll(col2);</span>
+<span class="fc" id="L318">		return result;</span>
 	}
 
 	public final DisplayPositioned getFooterOrHeaderTeoz(FontParam param) {
-<span class="nc bnc" id="L327" title="All 2 branches missed.">		if (param == FontParam.FOOTER)</span>
-<span class="nc" id="L328">			return getFooter();</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">		if (param == FontParam.FOOTER)</span>
+<span class="nc" id="L323">			return getFooter();</span>
 
-<span class="nc bnc" id="L330" title="All 2 branches missed.">		if (param == FontParam.HEADER)</span>
-<span class="nc" id="L331">			return getHeader();</span>
+<span class="nc bnc" id="L325" title="All 2 branches missed.">		if (param == FontParam.HEADER)</span>
+<span class="nc" id="L326">			return getHeader();</span>
 
-<span class="nc" id="L333">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L328">		throw new IllegalArgumentException();</span>
 	}
 
 //	@Override
@@ -398,69 +393,69 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 //		}
 //	}
 
-	private ImageData exportDiagramInternalPdf(OutputStream os, int index) throws IOException {
-<span class="nc" id="L402">		final File svg = FileUtils.createTempFileLegacy(&quot;pdf&quot;, &quot;.svf&quot;);</span>
-<span class="nc" id="L403">		final File pdfFile = FileUtils.createTempFileLegacy(&quot;pdf&quot;, &quot;.pdf&quot;);</span>
-		final ImageData result;
-<span class="nc" id="L405">		try (OutputStream fos = new BufferedOutputStream(new FileOutputStream(svg))) {</span>
-<span class="nc" id="L406">			result = exportDiagram(fos, index, new FileFormatOption(FileFormat.SVG));</span>
-		}
-<span class="nc" id="L408">		PdfConverter.convert(svg, pdfFile);</span>
-<span class="nc" id="L409">		FileUtils.copyToStream(pdfFile, os);</span>
-<span class="nc" id="L410">		return result;</span>
-	}
+//	private ImageData exportDiagramInternalPdf(OutputStream os, int index) throws IOException {
+//		final File svg = FileUtils.createTempFileLegacy(&quot;pdf&quot;, &quot;.svf&quot;);
+//		final File pdfFile = FileUtils.createTempFileLegacy(&quot;pdf&quot;, &quot;.pdf&quot;);
+//		final ImageData result;
+//		try (OutputStream fos = new BufferedOutputStream(new FileOutputStream(svg))) {
+//			result = exportDiagram(fos, index, new FileFormatOption(FileFormat.SVG));
+//		}
+//		PdfConverter.convert(svg, pdfFile);
+//		FileUtils.copyToStream(pdfFile, os);
+//		return result;
+//	}
 
 	final protected void exportCmap(SuggestedFile suggestedFile, int index, final ImageData cmapdata)
 			throws FileNotFoundException {
-<span class="fc" id="L415">		final String name = changeName(suggestedFile.getFile(index).getAbsolutePath());</span>
-<span class="fc" id="L416">		final SFile cmapFile = new SFile(name);</span>
-<span class="fc" id="L417">		try (PrintWriter pw = cmapFile.createPrintWriter()) {</span>
-<span class="pc bpc" id="L418" title="1 of 2 branches missed.">			if (PSystemUtils.canFileBeWritten(cmapFile) == false)</span>
-<span class="nc" id="L419">				return;</span>
+<span class="fc" id="L410">		final String name = changeName(suggestedFile.getFile(index).getAbsolutePath());</span>
+<span class="fc" id="L411">		final SFile cmapFile = new SFile(name);</span>
+<span class="fc" id="L412">		try (PrintWriter pw = cmapFile.createPrintWriter()) {</span>
+<span class="pc bpc" id="L413" title="1 of 2 branches missed.">			if (PSystemUtils.canFileBeWritten(cmapFile) == false)</span>
+<span class="nc" id="L414">				return;</span>
 
-<span class="fc" id="L421">			pw.print(cmapdata.getCMapData(cmapFile.getName().substring(0, cmapFile.getName().length() - 6)));</span>
-<span class="nc bnc" id="L422" title="All 2 branches missed.">		}</span>
-<span class="fc" id="L423">	}</span>
+<span class="fc" id="L416">			pw.print(cmapdata.getCMapData(cmapFile.getName().substring(0, cmapFile.getName().length() - 6)));</span>
+<span class="nc bnc" id="L417" title="All 2 branches missed.">		}</span>
+<span class="fc" id="L418">	}</span>
 
 	static String changeName(String name) {
-<span class="fc" id="L426">		return name.replaceAll(&quot;(?i)\\.\\w{3}$&quot;, &quot;.cmapx&quot;);</span>
+<span class="fc" id="L421">		return name.replaceAll(&quot;(?i)\\.\\w{3}$&quot;, &quot;.cmapx&quot;);</span>
 	}
 
 	@Override
 	public String getWarningOrError() {
-<span class="pc bpc" id="L431" title="1 of 2 branches missed.">		if (lastInfo == null)</span>
-<span class="fc" id="L432">			return null;</span>
+<span class="pc bpc" id="L426" title="1 of 2 branches missed.">		if (lastInfo == null)</span>
+<span class="fc" id="L427">			return null;</span>
 
-<span class="nc" id="L434">		final double actualWidth = lastInfo.getWidth();</span>
-<span class="nc bnc" id="L435" title="All 2 branches missed.">		if (actualWidth == 0)</span>
-<span class="nc" id="L436">			return null;</span>
+<span class="nc" id="L429">		final double actualWidth = lastInfo.getWidth();</span>
+<span class="nc bnc" id="L430" title="All 2 branches missed.">		if (actualWidth == 0)</span>
+<span class="nc" id="L431">			return null;</span>
 
-<span class="nc" id="L438">		final String value = getSkinParam().getValue(&quot;widthwarning&quot;);</span>
-<span class="nc bnc" id="L439" title="All 2 branches missed.">		if (value == null)</span>
-<span class="nc" id="L440">			return null;</span>
+<span class="nc" id="L433">		final String value = getSkinParam().getValue(&quot;widthwarning&quot;);</span>
+<span class="nc bnc" id="L434" title="All 2 branches missed.">		if (value == null)</span>
+<span class="nc" id="L435">			return null;</span>
 
-<span class="nc bnc" id="L442" title="All 2 branches missed.">		if (!DIGITS.matcher(value).matches())</span>
-<span class="nc" id="L443">			return null;</span>
+<span class="nc bnc" id="L437" title="All 2 branches missed.">		if (!DIGITS.matcher(value).matches())</span>
+<span class="nc" id="L438">			return null;</span>
 
-<span class="nc" id="L445">		final int widthwarning = Integer.parseInt(value);</span>
-<span class="nc bnc" id="L446" title="All 2 branches missed.">		if (actualWidth &gt; widthwarning)</span>
-<span class="nc" id="L447">			return &quot;The image is &quot; + ((int) actualWidth) + &quot; pixel width. (Warning limit is &quot; + widthwarning + &quot;)&quot;;</span>
+<span class="nc" id="L440">		final int widthwarning = Integer.parseInt(value);</span>
+<span class="nc bnc" id="L441" title="All 2 branches missed.">		if (actualWidth &gt; widthwarning)</span>
+<span class="nc" id="L442">			return &quot;The image is &quot; + ((int) actualWidth) + &quot; pixel width. (Warning limit is &quot; + widthwarning + &quot;)&quot;;</span>
 
-<span class="nc" id="L449">		return null;</span>
+<span class="nc" id="L444">		return null;</span>
 	}
 
 	public void setHideEmptyDescription(boolean hideEmptyDescription) {
-<span class="nc" id="L453">	}</span>
+<span class="nc" id="L448">	}</span>
 
 	public Previous getPrevious() {
-<span class="nc" id="L456">		return Previous.createFrom(getSkinParam().values());</span>
+<span class="nc" id="L451">		return Previous.createFrom(getSkinParam().values());</span>
 	}
 
 	@Override
 	public TextBlock addChrome(TextBlock result) {
-<span class="fc" id="L461">		final TitledDiagram titledDiagram = (TitledDiagram) this;</span>
-<span class="fc" id="L462">		result = DiagramChromeFactory12026.create(result, titledDiagram, titledDiagram.getSkinParam(), getWarnings());</span>
-<span class="fc" id="L463">		return result;</span>
+<span class="fc" id="L456">		final TitledDiagram titledDiagram = (TitledDiagram) this;</span>
+<span class="fc" id="L457">		result = DiagramChromeFactory12026.create(result, titledDiagram, titledDiagram.getSkinParam(), getWarnings());</span>
+<span class="fc" id="L458">		return result;</span>
 	}
 
 }

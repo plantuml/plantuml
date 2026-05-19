@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UGraphicPdf.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.openpdf</a> &gt; <span class="el_source">UGraphicPdf.java</span></div><h1>UGraphicPdf.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.openpdf;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+import net.sourceforge.plantuml.klimt.ClipContainer;
+import net.sourceforge.plantuml.klimt.UGroup;
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
+import net.sourceforge.plantuml.klimt.drawing.AbstractUGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
+import net.sourceforge.plantuml.klimt.shape.UComment;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.klimt.shape.UImageTikz;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.url.Url;
+
+public class UGraphicPdf extends AbstractUGraphic&lt;PdfGraphics&gt; implements ClipContainer {
+
+	private /* final */ PdfOption option;
+
+	public double dpiFactor() {
+<span class="nc" id="L64">		return 1;</span>
+	}
+
+	@Override
+	protected AbstractCommonUGraphic copyUGraphic() {
+<span class="nc" id="L69">		final UGraphicPdf result = new UGraphicPdf(getStringBounder(), option);</span>
+<span class="nc" id="L70">		result.copy(this);</span>
+<span class="nc" id="L71">		result.option = this.option;</span>
+<span class="nc" id="L72">		return result;</span>
+	}
+
+	private UGraphicPdf(StringBounder stringBounder, PdfOption option) {
+<span class="nc" id="L76">		super(stringBounder);</span>
+<span class="nc" id="L77">		this.option = option;</span>
+<span class="nc" id="L78">		register();</span>
+<span class="nc" id="L79">	}</span>
+
+	public static UGraphicPdf build(PdfOption option, StringBounder stringBounder) {
+<span class="nc" id="L82">		final UGraphicPdf result = new UGraphicPdf(stringBounder, option);</span>
+<span class="nc" id="L83">		result.copy(option.getBackgroundColor(), option.getColorMapper(), new PdfGraphics(option));</span>
+<span class="nc" id="L84">		result.option = option;</span>
+<span class="nc" id="L85">		return result;</span>
+	}
+
+	@Override
+	protected boolean manageHiddenAutomatically() {
+<span class="nc" id="L90">		return false;</span>
+	}
+
+	@Override
+	protected void beforeDraw() {
+<span class="nc" id="L95">		getGraphicObject().setHidden(getParam().isHidden());</span>
+<span class="nc" id="L96">	}</span>
+
+	@Override
+	protected void afterDraw() {
+<span class="nc" id="L100">		getGraphicObject().setHidden(false);</span>
+<span class="nc" id="L101">	}</span>
+
+	private void register() {
+<span class="nc" id="L104">		registerDriver(URectangle.class, new DriverRectanglePdf(this));</span>
+<span class="nc" id="L105">		registerDriver(UText.class, new DriverTextPdf(getStringBounder(), this));</span>
+//
+<span class="nc" id="L107">		registerDriver(ULine.class, new DriverLinePdf(this));</span>
+//		registerDriver(UPixel.class, new DriverPixelSvg());
+<span class="nc" id="L109">		registerDriver(UPolygon.class, new DriverPolygonPdf(this));</span>
+<span class="nc" id="L110">		registerDriver(UEllipse.class, new DriverEllipsePdf(this));</span>
+<span class="nc" id="L111">		registerDriver(UImage.class, new DriverImagePdf(this));</span>
+<span class="nc" id="L112">		ignoreShape(UImageSvg.class);</span>
+<span class="nc" id="L113">		ignoreShape(UImageTikz.class);</span>
+<span class="nc" id="L114">		registerDriver(UPath.class, new DriverPathPdf(this));</span>
+<span class="nc" id="L115">		registerDriver(DotPath.class, new DriverDotPathPdf());</span>
+<span class="nc" id="L116">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterPdf());</span>
+<span class="nc" id="L117">	}</span>
+
+	public PdfGraphics getSvgGraphics() {
+<span class="nc" id="L120">		return this.getGraphicObject();</span>
+	}
+
+	@Override
+	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
+//			if (metadata != null)
+//				getGraphicObject().addCommentMetadata(metadata);
+
+<span class="nc" id="L128">		getGraphicObject().createPdf(os);</span>
+<span class="nc" id="L129">	}</span>
+
+	@Override
+	public void startGroup(UGroup group) {
+		// getGraphicObject().startGroup(group.asMap());
+<span class="nc" id="L134">	}</span>
+
+	@Override
+	public void closeGroup() {
+		// getGraphicObject().closeGroup();
+<span class="nc" id="L139">	}</span>
+
+	@Override
+	public void startUrl(Url url) {
+		// getGraphicObject().openLink(url.getUrl(), url.getTooltip(),
+		// option.getLinkTarget());
+<span class="nc" id="L145">	}</span>
+
+	@Override
+	public void closeUrl() {
+		// getGraphicObject().closeLink();
+<span class="nc" id="L150">	}</span>
+
+	@Override
+	protected void drawComment(UComment comment) {
+		// getGraphicObject().addComment(comment.getComment());
+<span class="nc" id="L155">	}</span>
+
+//	@Override
+//	public boolean matchesProperty(String propertyName) {
+//		if (propertyName.equalsIgnoreCase(&quot;SVG&quot;))
+//			return true;
+//
+//		return super.matchesProperty(propertyName);
+//	}
+
+	// @Override
+	// public String startHiddenGroup() {
+	// getGraphicObject().startHiddenGroup();
+	// return null;
+	// }
+	//
+	// @Override
+	// public String closeHiddenGroup() {
+	// getGraphicObject().closeHiddenGroup();
+	// return null;
+	// }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

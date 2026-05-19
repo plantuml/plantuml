@@ -137,9 +137,9 @@ net.sourceforge.plantuml.nwdiag.next
 net.sourceforge.plantuml.objectdiagram
 net.sourceforge.plantuml.objectdiagram.command
 net.sourceforge.plantuml.openiconic
+net.sourceforge.plantuml.openpdf
 net.sourceforge.plantuml.packetdiag
 net.sourceforge.plantuml.packetdiag.command
-net.sourceforge.plantuml.pdf
 net.sourceforge.plantuml.picoweb
 net.sourceforge.plantuml.plasma
 net.sourceforge.plantuml.png

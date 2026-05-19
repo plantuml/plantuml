@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.klimt.color;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.UBackground;
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.awt.XColor;
@@ -43,41 +42,41 @@ class Back implements UBackground {
 
 	private final HColor hColor;
 
-<span class="fc" id="L46">	public Back(HColor hColor) {</span>
-<span class="fc" id="L47">		this.hColor = hColor;</span>
-<span class="fc" id="L48">	}</span>
+<span class="fc" id="L45">	public Back(HColor hColor) {</span>
+<span class="fc" id="L46">		this.hColor = hColor;</span>
+<span class="fc" id="L47">	}</span>
 
 	@Override
 	public HColor getBackColor() {
-<span class="fc" id="L52">		return hColor;</span>
+<span class="fc" id="L51">		return hColor;</span>
 	}
 }
 
-<span class="fc" id="L56">public abstract class HColor implements UChange {</span>
+<span class="fc" id="L55">public abstract class HColor implements UChange {</span>
 
-<span class="fc" id="L58">	public enum TransparentFillBehavior {</span>
-<span class="fc" id="L59">		WITH_FILL_NONE, WITH_FILL_OPACITY</span>
+<span class="fc" id="L57">	public enum TransparentFillBehavior {</span>
+<span class="fc" id="L58">		WITH_FILL_NONE, WITH_FILL_OPACITY</span>
 	}
 
 	public UBackground bg() {
-<span class="fc" id="L63">		return new Back(this);</span>
+<span class="fc" id="L62">		return new Back(this);</span>
 	}
 
 	public XColor toColor(ColorMapper mapper) {
-<span class="nc" id="L67">		throw new UnsupportedOperationException(&quot;&quot; + getClass());</span>
+<span class="nc" id="L66">		throw new UnsupportedOperationException(&quot;&quot; + getClass());</span>
 	}
 
 	final public String toRGB(ColorMapper mapper) {
-<span class="fc" id="L71">		final XColor color = toColor(mapper);</span>
-<span class="fc" id="L72">		return XColor.toHexRGBColor(color.getRGB());</span>
+<span class="fc" id="L70">		final XColor color = toColor(mapper);</span>
+<span class="fc" id="L71">		return XColor.toHexRGBColor(color.getRGB());</span>
 	}
 
 	final public String toSvg(ColorMapper mapper) {
-<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (this.isTransparent())</span>
-<span class="fc" id="L77">			return &quot;#00000000&quot;;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (this.isTransparent())</span>
+<span class="fc" id="L76">			return &quot;#00000000&quot;;</span>
 
-<span class="fc" id="L79">		final XColor color = toColor(mapper);</span>
-<span class="fc" id="L80">		return color.toSvg();</span>
+<span class="fc" id="L78">		final XColor color = toColor(mapper);</span>
+<span class="fc" id="L79">		return color.toSvg();</span>
 //		final int alpha = color.getAlpha();
 //		if (alpha == 255)
 //			return toRGB(mapper);
@@ -88,57 +87,55 @@ class Back implements UBackground {
 	}
 
 	public HColor lighten(int ratio) {
-<span class="nc" id="L91">		return this;</span>
+<span class="nc" id="L90">		return this;</span>
 	}
 
 	public HColor darken(int ratio) {
-<span class="nc" id="L95">		return this;</span>
+<span class="nc" id="L94">		return this;</span>
 	}
 
 	public HColor reverseHsluv() {
-<span class="nc" id="L99">		return this;</span>
+<span class="nc" id="L98">		return this;</span>
 	}
 
 	public HColor reverse() {
-<span class="nc" id="L103">		return this;</span>
+<span class="nc" id="L102">		return this;</span>
 	}
 
 	public boolean isDark() {
-<span class="nc" id="L107">		return true;</span>
+<span class="nc" id="L106">		return true;</span>
 	}
 
 	public TransparentFillBehavior transparentFillBehavior() {
-<span class="nc" id="L111">		return TransparentFillBehavior.WITH_FILL_NONE;</span>
+<span class="nc" id="L110">		return TransparentFillBehavior.WITH_FILL_NONE;</span>
 	}
 
-	// ::comment when __HAXE__
 	public String asString() {
-<span class="nc" id="L116">		return &quot;?&quot; + getClass().getSimpleName();</span>
+<span class="nc" id="L114">		return &quot;?&quot; + getClass().getSimpleName();</span>
 	}
-	// ::done
 
 	public HColor darkSchemeTheme() {
-<span class="nc" id="L121">		return this;</span>
+<span class="nc" id="L118">		return this;</span>
 	}
 
 	public HColor getAppropriateColor(HColor back) {
-<span class="fc" id="L125">		return this;</span>
+<span class="fc" id="L122">		return this;</span>
 	}
 
 	public HColor withDark(HColor dark) {
-<span class="nc" id="L129">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L126">		throw new UnsupportedOperationException();</span>
 	}
 
 	public HColor withTransparentFillBehavior(TransparentFillBehavior transparentFillBehavior) {
-<span class="nc" id="L133">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L130">		throw new UnsupportedOperationException();</span>
 	}
 
 	public HColor opposite() {
-<span class="nc" id="L137">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L134">		throw new UnsupportedOperationException();</span>
 	}
 
 	public boolean isTransparent() {
-<span class="fc" id="L141">		return false;</span>
+<span class="fc" id="L138">		return false;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
