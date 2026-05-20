@@ -80,12 +80,17 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc" id="L80">	INTERNET,</span>
 
 	/**
+	 * https://github.com/plantuml/plantuml/issues/2495#issuecomment-4495327971
+	 */
+<span class="fc" id="L85">	INTERNET_WITH_DOTSVG,</span>
+
+	/**
 	 * This mode reproduce old PlantUML version behavior.
 	 * &lt;p&gt;
 	 * Right now, this is the default Security Profile but this will be removed from
 	 * future version because it is now full secure, especially on Internet server.
 	 */
-<span class="fc" id="L88">	LEGACY,</span>
+<span class="fc" id="L93">	LEGACY,</span>
 
 	/**
 	 * Running in INSECURE mode means that PlantUML can access to any local file and
@@ -96,7 +101,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	 * you should not use this mode if PlantUML is running on some server,
 	 * especially if the server is accessible from Internet.
 	 */
-<span class="fc" id="L99">	INSECURE;</span>
+<span class="fc" id="L104">	INSECURE;</span>
 
 	/**
 	 * Initialize the default value.
@@ -107,78 +112,93 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	 * @return the value
 	 */
 	static SecurityProfile init() {
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
-<span class="nc" id="L111">			return INSECURE;</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L116">			return INSECURE;</span>
 
-<span class="fc" id="L113">		final String env = SecurityUtils.getenv(&quot;PLANTUML_SECURITY_PROFILE&quot;);</span>
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (&quot;SANDBOX&quot;.equalsIgnoreCase(env))</span>
-<span class="nc" id="L115">			return SANDBOX;</span>
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		else if (&quot;ALLOWLIST&quot;.equalsIgnoreCase(env))</span>
-<span class="nc" id="L117">			return ALLOWLIST;</span>
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		else if (&quot;INTERNET&quot;.equalsIgnoreCase(env))</span>
-<span class="nc" id="L119">			return INTERNET;</span>
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		else if (&quot;INSECURE&quot;.equalsIgnoreCase(env))</span>
-<span class="nc" id="L121">			return INSECURE;</span>
-		// Sorry about this typo
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		else if (&quot;UNSECURE&quot;.equalsIgnoreCase(env))</span>
-<span class="nc" id="L124">			return INSECURE;</span>
+<span class="fc" id="L118">		final String env = SecurityUtils.getenv(&quot;PLANTUML_SECURITY_PROFILE&quot;);</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (env != null)</span>
+<span class="nc bnc" id="L120" title="All 6 branches missed.">			switch (env.toUpperCase()) {</span>
+			case &quot;SANDBOX&quot;:
+<span class="nc" id="L122">				return SANDBOX;</span>
+			case &quot;ALLOWLIST&quot;:
+<span class="nc" id="L124">				return ALLOWLIST;</span>
+			case &quot;INTERNET&quot;:
+<span class="nc" id="L126">				return INTERNET;</span>
+			case &quot;INTERNET_WITH_DOTSVG&quot;:
+<span class="nc" id="L128">				return INTERNET_WITH_DOTSVG;</span>
+			case &quot;INSECURE&quot;:
+			case &quot;UNSECURE&quot;: // Sorry about this typo
+<span class="nc" id="L131">				return INSECURE;</span>
+			}
 
-<span class="fc" id="L126">		return LEGACY;</span>
+<span class="fc" id="L134">		return LEGACY;</span>
 	}
 
 	/**
 	 * A Human understandable description.
 	 */
 	public String longDescription() {
-<span class="nc bnc" id="L133" title="All 6 branches missed.">		switch (this) {</span>
+<span class="nc bnc" id="L141" title="All 7 branches missed.">		switch (this) {</span>
 		case SANDBOX:
-<span class="nc" id="L135">			return &quot;This is completely safe: no access to local files or to distant URL.&quot;;</span>
+<span class="nc" id="L143">			return &quot;This is completely safe: no access to local files or to distant URL.&quot;;</span>
 		case ALLOWLIST:
-<span class="nc" id="L137">			return &quot;Some local resource may be accessible.&quot;;</span>
+<span class="nc" id="L145">			return &quot;Some local resource may be accessible.&quot;;</span>
 		case INTERNET:
-<span class="nc" id="L139">			return &quot;&lt;i&gt;Mode designed for server connected to Internet.&quot;;</span>
+<span class="nc" id="L147">			return &quot;&lt;i&gt;Mode designed for server connected to Internet.&quot;;</span>
+		case INTERNET_WITH_DOTSVG:
+<span class="nc" id="L149">			return &quot;&lt;i&gt;Mode designed for server connected to Internet with Dot Svg permission&quot;;</span>
 		case LEGACY:
-<span class="nc" id="L141">			return &quot;&lt;b&gt;Warning: this mode will be removed in future version&quot;;</span>
+<span class="nc" id="L151">			return &quot;&lt;b&gt;Warning: this mode will be removed in future version&quot;;</span>
 		case INSECURE:
-<span class="nc" id="L143">			return &quot;&lt;b&gt;Make sure that this server is not accessible from Internet&quot;;</span>
+<span class="nc" id="L153">			return &quot;&lt;b&gt;Make sure that this server is not accessible from Internet&quot;;</span>
 		}
-<span class="nc" id="L145">		return &quot;&lt;i&gt;This is completely safe: no access on local files or on distant URL.&quot;;</span>
+<span class="nc" id="L155">		return &quot;&lt;i&gt;This is completely safe: no access on local files or on distant URL.&quot;;</span>
 	}
 
 	/**
 	 * Retrieve the timeout for URL.
 	 */
 	public long getTimeout() {
-<span class="pc bpc" id="L152" title="5 of 6 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L162" title="5 of 6 branches missed.">		switch (this) {</span>
 		case SANDBOX:
-<span class="nc" id="L154">			return 1000L;</span>
+<span class="nc" id="L164">			return 1000L;</span>
 		case ALLOWLIST:
-<span class="nc" id="L156">			return 1000L * 60 * 5;</span>
+<span class="nc" id="L166">			return 1000L * 60 * 5;</span>
 		case INTERNET:
-<span class="nc" id="L158">			return 1000L * 10;</span>
+		case INTERNET_WITH_DOTSVG:
+<span class="nc" id="L169">			return 1000L * 10;</span>
 		case LEGACY:
-<span class="fc" id="L160">			return 1000L * 60;</span>
+<span class="fc" id="L171">			return 1000L * 60;</span>
 		case INSECURE:
-<span class="nc" id="L162">			return 1000L * 60 * 5;</span>
+<span class="nc" id="L173">			return 1000L * 60 * 5;</span>
 		}
-<span class="nc" id="L164">		throw new AssertionError();</span>
+<span class="nc" id="L175">		throw new AssertionError();</span>
 	}
 
 	public boolean canWeReadThisEnvironmentVariable(String name) {
-<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		if (name == null)</span>
-<span class="nc" id="L169">			return false;</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		if (name == null)</span>
+<span class="nc" id="L180">			return false;</span>
 
-<span class="fc" id="L171">		final String lname = name.toLowerCase();</span>
-<span class="fc bfc" id="L172" title="All 2 branches covered.">		if (lname.startsWith(&quot;plantuml.security&quot;))</span>
-<span class="fc" id="L173">			return false;</span>
+<span class="fc" id="L182">		final String lname = name.toLowerCase();</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">		if (lname.startsWith(&quot;plantuml.security&quot;))</span>
+<span class="fc" id="L184">			return false;</span>
 
-<span class="fc bfc" id="L175" title="All 2 branches covered.">		if (lname.startsWith(&quot;plantuml&quot;))</span>
-<span class="fc" id="L176">			return true;</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">		if (lname.startsWith(&quot;plantuml&quot;))</span>
+<span class="fc" id="L187">			return true;</span>
 
-<span class="fc bfc" id="L178" title="All 4 branches covered.">		if (lname.equals(&quot;path.separator&quot;) || lname.equals(&quot;line.separator&quot;))</span>
-<span class="fc" id="L179">			return true;</span>
+<span class="fc bfc" id="L189" title="All 4 branches covered.">		if (lname.equals(&quot;path.separator&quot;) || lname.equals(&quot;line.separator&quot;))</span>
+<span class="fc" id="L190">			return true;</span>
 
-<span class="fc bfc" id="L181" title="All 2 branches covered.">		return this == INSECURE;</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">		return this == INSECURE;</span>
+	}
+
+	public boolean allowDotSvg() {
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		switch (this) {</span>
+		case INSECURE:
+		case INTERNET_WITH_DOTSVG:
+<span class="nc" id="L199">			return true;</span>
+		}
+<span class="nc" id="L201">		return false;</span>
 	}
 
 }
