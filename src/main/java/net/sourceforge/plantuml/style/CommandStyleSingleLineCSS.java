@@ -72,7 +72,7 @@ public class CommandStyleSingleLineCSS extends SingleLineCommand2<TitledDiagram>
 		final String line = arg.get("STYLE", 0);
 		try {
 			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
-			diagram.getSkinParam().muteStyle(new StyleParser(styleBuilder).parse(BlocLines.singleString(line));
+			diagram.getSkinParam().muteStyle(new StyleParser(styleBuilder).parse(BlocLines.singleString(line)));
 
 			((SkinParam) diagram.getSkinParam()).applyPendingStyleMigration();
 			return CommandExecutionResult.ok();
