@@ -98,6 +98,25 @@ To build PlantUML from source, you have two options:
 
 For prerequisites and detailed build instructions, see our [BUILDING.md](https://github.com/plantuml/plantuml/blob/master/docs/BUILDING.md) guide.
 
+### 🌐 Building for the Browser (TeaVM)
+
+PlantUML can be compiled to JavaScript with [TeaVM](https://teavm.org/) to run entirely client-side in the browser, with no server required. To produce the JavaScript artifacts and use them in your own project:
+
+```sh
+git clone https://github.com/plantuml/plantuml.git
+cd plantuml
+chmod +x ./gradlew
+./gradlew clean teavm -Pfast
+cp ./build/generated/teavm/js/plantuml.js $YOUR_PROJECT/plantuml.js
+cp ./build/generated/teavm/js/viz-global.js $YOUR_PROJECT/viz-global.js
+```
+
+The `-Pfast` flag skips the slow parts of a regular build (tests, Javadoc, JaCoCo) so you only get the TeaVM output. The `viz-global.js` file provides [Viz.js](https://github.com/mdaines/viz-js) (Graphviz) support for diagrams that rely on Dot layout.
+
+The `teavm` task also copies the PlantUML stdlib bundles and a ready-to-use `index.html` demo into `./build/generated/teavm/js/`.
+
+For a live example of client-side rendering, see the [JavaScript PlantUML Demo](https://plantuml.github.io/plantuml/js-plantuml).
+
 ## 🧱 Contributing
 
 PlantUML is an open-source project, and we welcome contributions of all kinds. Whether you're helping us fix bugs, improve the docs, or spread the word, we appreciate your support. See our [contributing guide](CONTRIBUTING.md) for more information on how to get started.
