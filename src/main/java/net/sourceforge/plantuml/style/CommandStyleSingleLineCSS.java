@@ -46,8 +46,8 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.style.parser.StyleParser;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
-import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandStyleSingleLineCSS extends SingleLineCommand2<TitledDiagram> {
 
@@ -60,7 +60,7 @@ public class CommandStyleSingleLineCSS extends SingleLineCommand2<TitledDiagram>
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandStyleSingleLineCSS.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("\\<style\\>"), //
-				new RegexLeaf(1, "STYLE", "(.*)"), //
+				new RegexLeaf(1, "STYLE", "([\\w%s;:{}]+)"), //
 				new RegexLeaf("\\</style\\>"), //
 				RegexLeaf.end() //
 		);
