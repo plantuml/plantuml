@@ -80,8 +80,6 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 	private final ClipContainer clipContainer;
 
 	public DriverTextSvg(StringBounder stringBounder, ClipContainer clipContainer) {
-		if (stringBounder == null)
-			System.err.println("stringBounder=" + stringBounder);
 		this.stringBounder = stringBounder;
 		this.clipContainer = clipContainer;
 	}

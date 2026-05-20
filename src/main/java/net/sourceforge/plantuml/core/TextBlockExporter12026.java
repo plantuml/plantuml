@@ -325,7 +325,6 @@ public class TextBlockExporter12026 {
 //			option = option.withRootAttribute("data-diagram-type", diagramType.name());
 //		}
 
-		System.err.println("stringBounder=" + stringBounder);
 		return UGraphicPdf.build(option, stringBounder);
 	}
 	// ::done

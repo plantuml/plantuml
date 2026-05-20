@@ -69,13 +69,9 @@ public class DriverTextPdf implements UDriver<UText, PdfGraphics> {
 //		}
 //	}
 
-	private final StringBounder stringBounder;
 	private final ClipContainer clipContainer;
 
 	public DriverTextPdf(StringBounder stringBounder, ClipContainer clipContainer) {
-		if (stringBounder == null)
-			System.err.println("stringBounder=" + stringBounder);
-		this.stringBounder = stringBounder;
 		this.clipContainer = clipContainer;
 	}
 
