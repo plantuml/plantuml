@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.sequencediagram.command.CommandSkin;
 import net.sourceforge.plantuml.statediagram.command.CommandHideEmptyDescription;
 import net.sourceforge.plantuml.style.CommandStyleImport;
 import net.sourceforge.plantuml.style.CommandStyleMultilinesCSS;
+import net.sourceforge.plantuml.style.CommandStyleSingleLineCSS;
 
 public final class UBrexCommonCommands {
 
@@ -80,6 +81,7 @@ public final class UBrexCommonCommands {
 		cmds.add(CommandSpriteSvgMultiline.ME);
 		cmds.add(CommandSpriteFile.ME);
 
+		cmds.add(CommandStyleSingleLineCSS.ME);
 		cmds.add(CommandStyleMultilinesCSS.ME);
 		cmds.add(CommandStyleImport.ME);
 

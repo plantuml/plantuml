@@ -40,7 +40,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.CommandNope;
 import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
@@ -78,8 +77,6 @@ import net.sourceforge.plantuml.project.lang.SubjectResource;
 import net.sourceforge.plantuml.project.lang.SubjectSeparator;
 import net.sourceforge.plantuml.project.lang.SubjectTask;
 import net.sourceforge.plantuml.project.lang.SubjectToday;
-import net.sourceforge.plantuml.style.CommandStyleImport;
-import net.sourceforge.plantuml.style.CommandStyleMultilinesCSS;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class GanttDiagramFactory extends PSystemCommandFactory {
@@ -100,11 +97,6 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 		CommonCommands.addTitleCommands(cmds);
 		CommonCommands.addCommonCommands2(cmds);
 		CommonCommands.addCommonScaleCommands(cmds);
-
-		cmds.add(CommandStyleMultilinesCSS.ME);
-		cmds.add(CommandStyleImport.ME);
-
-		cmds.add(CommandNope.ME);
 
 		addLanguageCommands(cmds);
 
