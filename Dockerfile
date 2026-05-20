@@ -12,7 +12,7 @@ RUN wget \
 
 FROM eclipse-temurin:17-jre-jammy
 
-ENV LANG en_US.UTF-8
+ENV LANG=en_US.UTF-8
 
 RUN apt-get update \
   && apt-get install --no-install-recommends -y \
@@ -39,7 +39,10 @@ RUN apt-get update && \
     cd graphviz-$GRAPHVIZ_VERSION && \
     ./configure && \
     make && \
-    make install && \
+    echo "/usr/local/lib" > /etc/ld.so.conf.d/graphviz.conf && \
+    echo "/usr/local/lib/graphviz" >> /etc/ld.so.conf.d/graphviz.conf && \
+    LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib/graphviz make install && \
+    ( ldconfig || true ) && \
     apt-get remove -y \
         build-essential \
         jq \
