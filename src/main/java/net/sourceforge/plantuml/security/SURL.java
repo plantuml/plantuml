@@ -218,7 +218,8 @@ public class SURL {
 				// We are INSECURE anyway
 				return true;
 
-			if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET) {
+			if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET
+					|| SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET_WITH_DOTSVG) {
 				if (URLCheck.isURLforbidden(cleanPath(internal.toString())))
 					return false;
 

@@ -90,6 +90,7 @@ public class SFile implements Comparable<SFile>, InputFile {
 	@Override
 	public String toString() {
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET
+				|| SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET_WITH_DOTSVG
 				|| SecurityUtils.getSecurityProfile() == SecurityProfile.ALLOWLIST)
 			return super.toString();
 		try {
@@ -270,6 +271,9 @@ public class SFile implements Comparable<SFile>, InputFile {
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET)
 			return false;
 
+		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET_WITH_DOTSVG)
+			return false;
+
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.ALLOWLIST)
 			return false;
 
@@ -394,7 +398,8 @@ public class SFile implements Comparable<SFile>, InputFile {
 			// vp8Decoder.decodeFrame(iis);
 			iis.close();
 			final Object frame = clVP8Decoder.getMethod("getFrame").invoke(vp8Decoder);
-			return PortableImageFactory.build((BufferedImage) frame.getClass().getMethod("getBufferedImage").invoke(frame));
+			return PortableImageFactory
+					.build((BufferedImage) frame.getClass().getMethod("getBufferedImage").invoke(frame));
 			// final VP8Frame frame = vp8Decoder.getFrame();
 			// return frame.getBufferedImage();
 		} catch (Exception e) {

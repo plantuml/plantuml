@@ -80,6 +80,11 @@ public enum SecurityProfile {
 	INTERNET,
 
 	/**
+	 * https://github.com/plantuml/plantuml/issues/2495#issuecomment-4495327971
+	 */
+	INTERNET_WITH_DOTSVG,
+
+	/**
 	 * This mode reproduce old PlantUML version behavior.
 	 * <p>
 	 * Right now, this is the default Security Profile but this will be removed from
@@ -111,17 +116,20 @@ public enum SecurityProfile {
 			return INSECURE;
 
 		final String env = SecurityUtils.getenv("PLANTUML_SECURITY_PROFILE");
-		if ("SANDBOX".equalsIgnoreCase(env))
-			return SANDBOX;
-		else if ("ALLOWLIST".equalsIgnoreCase(env))
-			return ALLOWLIST;
-		else if ("INTERNET".equalsIgnoreCase(env))
-			return INTERNET;
-		else if ("INSECURE".equalsIgnoreCase(env))
-			return INSECURE;
-		// Sorry about this typo
-		else if ("UNSECURE".equalsIgnoreCase(env))
-			return INSECURE;
+		if (env != null)
+			switch (env.toUpperCase()) {
+			case "SANDBOX":
+				return SANDBOX;
+			case "ALLOWLIST":
+				return ALLOWLIST;
+			case "INTERNET":
+				return INTERNET;
+			case "INTERNET_WITH_DOTSVG":
+				return INTERNET_WITH_DOTSVG;
+			case "INSECURE":
+			case "UNSECURE": // Sorry about this typo
+				return INSECURE;
+			}
 
 		return LEGACY;
 	}
@@ -137,6 +145,8 @@ public enum SecurityProfile {
 			return "Some local resource may be accessible.";
 		case INTERNET:
 			return "<i>Mode designed for server connected to Internet.";
+		case INTERNET_WITH_DOTSVG:
+			return "<i>Mode designed for server connected to Internet with Dot Svg permission";
 		case LEGACY:
 			return "<b>Warning: this mode will be removed in future version";
 		case INSECURE:
@@ -155,6 +165,7 @@ public enum SecurityProfile {
 		case ALLOWLIST:
 			return 1000L * 60 * 5;
 		case INTERNET:
+		case INTERNET_WITH_DOTSVG:
 			return 1000L * 10;
 		case LEGACY:
 			return 1000L * 60;
@@ -179,6 +190,15 @@ public enum SecurityProfile {
 			return true;
 
 		return this == INSECURE;
+	}
+
+	public boolean allowDotSvg() {
+		switch (this) {
+		case INSECURE:
+		case INTERNET_WITH_DOTSVG:
+			return true;
+		}
+		return false;
 	}
 
 }

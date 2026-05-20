@@ -75,8 +75,7 @@ public class PSystemDot extends DirectOsDiagram {
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
 
-		if (SecurityUtils.getSecurityProfile() != SecurityProfile.INSECURE
-				&& fileFormat.getFileFormat() == FileFormat.SVG) {
+		if (SecurityUtils.getSecurityProfile().allowDotSvg() && fileFormat.getFileFormat() == FileFormat.SVG) {
 			final String svg = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 					+ "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
 					+ "<a xlink:href=\"https://github.com/plantuml/plantuml/issues/2495\">\n"
@@ -108,5 +107,4 @@ public class PSystemDot extends DirectOsDiagram {
 
 		return ImageDataSimple.ok();
 	}
-
 }
