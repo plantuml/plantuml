@@ -69,29 +69,25 @@ public class DriverTextPdf implements UDriver&lt;UText, PdfGraphics&gt; {
 //		}
 //	}
 
-	private final StringBounder stringBounder;
 	private final ClipContainer clipContainer;
 
-<span class="nc" id="L75">	public DriverTextPdf(StringBounder stringBounder, ClipContainer clipContainer) {</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (stringBounder == null)</span>
-<span class="nc" id="L77">			System.err.println(&quot;stringBounder=&quot; + stringBounder);</span>
-<span class="nc" id="L78">		this.stringBounder = stringBounder;</span>
-<span class="nc" id="L79">		this.clipContainer = clipContainer;</span>
-<span class="nc" id="L80">	}</span>
+<span class="nc" id="L74">	public DriverTextPdf(StringBounder stringBounder, ClipContainer clipContainer) {</span>
+<span class="nc" id="L75">		this.clipContainer = clipContainer;</span>
+<span class="nc" id="L76">	}</span>
 
 	public void draw(UText shape, double x, double y, ColorMapper mapper, UParam param, PdfGraphics pdf) {
-<span class="nc" id="L83">		final UClip clip = clipContainer.getClip();</span>
-<span class="nc bnc" id="L84" title="All 4 branches missed.">		if (clip != null &amp;&amp; clip.isInside(x, y) == false)</span>
+<span class="nc" id="L79">		final UClip clip = clipContainer.getClip();</span>
+<span class="nc bnc" id="L80" title="All 4 branches missed.">		if (clip != null &amp;&amp; clip.isInside(x, y) == false)</span>
+<span class="nc" id="L81">			return;</span>
+
+<span class="nc" id="L83">		final FontConfiguration fontConfiguration = shape.getFontConfiguration();</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (fontConfiguration.getColor().isTransparent())</span>
 <span class="nc" id="L85">			return;</span>
 
-<span class="nc" id="L87">		final FontConfiguration fontConfiguration = shape.getFontConfiguration();</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (fontConfiguration.getColor().isTransparent())</span>
-<span class="nc" id="L89">			return;</span>
-
-<span class="nc" id="L91">		final UFont ufont = fontConfiguration.getFont();</span>
+<span class="nc" id="L87">		final UFont ufont = fontConfiguration.getFont();</span>
 
 
-<span class="nc" id="L94">		String text = shape.getText();</span>
+<span class="nc" id="L90">		String text = shape.getText();</span>
 //		if (text.matches(&quot;^\\s*$&quot;))
 //			text = text.replace(' ', (char) 160);
 //
@@ -154,16 +150,16 @@ public class DriverTextPdf implements UDriver&lt;UText, PdfGraphics&gt; {
 //
 //		}
 //
-<span class="nc" id="L157">		final HColor textColor = fontConfiguration.getColor();</span>
-<span class="nc" id="L158">		pdf.setFillColor(textColor.toColor(mapper).toAwtColor());</span>
-<span class="nc" id="L159">		final BaseFont baseFont = StringBounderOpenPdf.resolveFont(fontConfiguration.getFont());</span>
+<span class="nc" id="L153">		final HColor textColor = fontConfiguration.getColor();</span>
+<span class="nc" id="L154">		pdf.setFillColor(textColor.toColor(mapper).toAwtColor());</span>
+<span class="nc" id="L155">		final BaseFont baseFont = StringBounderOpenPdf.resolveFont(fontConfiguration.getFont());</span>
 
-<span class="nc" id="L161">		pdf.pdfText(text, x, y, baseFont, ufont.getSize());</span>
+<span class="nc" id="L157">		pdf.pdfText(text, x, y, baseFont, ufont.getSize());</span>
 //		svg.text(text, x, y, font.getFamily(text, UFontContext.SVG), font.getSize(), fontWeight, fontStyle,
 //				textDecoration, width, fontConfiguration.getAttributes(), backColor, shape.getOrientation());
 //
 //		extraLines.drawAll(x, y, width, font, mapper, svg);
 
-<span class="nc" id="L167">	}</span>
+<span class="nc" id="L163">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
