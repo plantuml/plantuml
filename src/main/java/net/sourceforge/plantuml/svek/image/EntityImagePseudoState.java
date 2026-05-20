@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
-import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -61,13 +60,10 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 
 	private static final int SIZE = 22;
 	private final TextBlock desc;
+	private final Style style;
 
 	public EntityImagePseudoState(Entity entity) {
 		this(entity, "H");
-	}
-
-	private Style getStyle() {
-		return getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
 	@Override
@@ -79,8 +75,10 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 		super(entity);
 		final Stereotype stereotype = entity.getStereotype();
 
-		final FontConfiguration fontConfiguration = FontConfiguration.create(getSkinParam(), FontParam.STATE,
-				stereotype);
+		this.style = getStyleSignature().withTOBECHANGED(stereotype)
+				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+
+		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 
 		this.desc = Display.create(historyText).create(fontConfiguration, HorizontalAlignment.CENTER, getSkinParam());
 	}
@@ -93,7 +91,6 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 	final public void drawU(UGraphic ug) {
 		final UEllipse circle = UEllipse.build(SIZE, SIZE);
 
-		final Style style = getStyle();
 		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 		final double shadow = style.getShadowing();

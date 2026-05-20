@@ -73,7 +73,8 @@ public class FtileCircleSpot extends AbstractFtile {
 		this.spot = spot;
 		this.swimlane = swimlane;
 		this.backColor = backColor;
-		this.fc = FontConfiguration.create(skinParam, FontParam.ACTIVITY, null);
+		this.fc = style.getFontConfiguration(getIHtmlColorSet());
+
 	}
 
 	@Override
