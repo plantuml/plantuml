@@ -55,4 +55,11 @@ final class DictionaryData {
 		unpackDictionaryData(dictionary, DATA0, DATA1, SKIP_FLIP);
 		Dictionary.setData(dictionary.asReadOnlyBuffer());
 	}
+	
+	// Add this empty method. Calling it forces the JVM / GraalVM
+    // to load the class, thereby executing the static {} block above.
+    public static void init() {
+        // Intentionally left blank
+    }
+
 }
