@@ -61,7 +61,7 @@ public class VegaInputFile {
 
 	static {
 		CHECKERS.put(FileFormat.DEBUG, new VegaCheckerDebug());
-		CHECKERS.put(FileFormat.LATEX_FIXED, new VegaCheckerLatex());
+		CHECKERS.put(FileFormat.LATEX_DETERMINISTIC, new VegaCheckerLatex());
 		CHECKERS.put(FileFormat.SVG_DETERMINISTIC, new VegaCheckerSvg());
 		CHECKERS.put(FileFormat.SCXML, new VegaCheckerScxml());
 		CHECKERS.put(FileFormat.GRAPHML, new VegaCheckerGraphml());
@@ -236,7 +236,7 @@ public class VegaInputFile {
 			if (trimmed.equals("SVG"))
 				result.add(FileFormat.SVG_DETERMINISTIC);
 			else if (trimmed.equals("LATEX"))
-				result.add(FileFormat.LATEX_FIXED);
+				result.add(FileFormat.LATEX_DETERMINISTIC);
 			else
 				result.add(FileFormat.valueOf(trimmed));
 		}

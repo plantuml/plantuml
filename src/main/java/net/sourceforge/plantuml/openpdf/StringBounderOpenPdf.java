@@ -89,12 +89,6 @@ public class StringBounderOpenPdf implements StringBounder {
 		final XDimension2D result = new XDimension2D(width, height);
 		return result;
 	}
-
-	@Override
-	public boolean matchesProperty(String propertyName) {
-		return false;
-	}
-
 	@Override
 	public FileFormat getFileFormat() {
 		return FileFormat.PDF;

@@ -73,7 +73,7 @@ public class UGraphicTxt extends AbstractCommonUGraphic implements ClipContainer
 	}
 
 	public UGraphicTxt(FileFormat fileFormat) {
-		super(new StringBounderDebug(fileFormat));
+		super(new StringBounderDebug());
 		basicCopy(HColors.BLACK, ColorMapper.IDENTITY);
 		this.charArea = new UmlCharAreaImpl();
 	}

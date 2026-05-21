@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -33,31 +33,48 @@
  *
  *
  */
-package net.sourceforge.plantuml.asciiart;
+package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.FileFormat;
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineMetrics;
+
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.text.SvgCharSizeHack;
 
-public class TextStringBounder implements StringBounder {
+public class StringBounderSvg implements StringBounder {
 
-	private final FileFormat fileFormat;
+	private final SvgCharSizeHack charSizeHack;
+	private final FontRenderContext fontRenderContext = FileFormat.gg.getFontRenderContext();
 
-	public TextStringBounder(FileFormat fileFormat) {
-		this.fileFormat = fileFormat;
+	public StringBounderSvg(final SvgCharSizeHack charSizeHack) {
+		this.charSizeHack = charSizeHack;
 	}
 
 	@Override
 	public FileFormat getFileFormat() {
-		return fileFormat;
+		return FileFormat.SVG;
 	}
 
 	@Override
 	public XDimension2D calculateDimension(UFont font, String text) {
-		final int length1 = text.codePointCount(0, text.length());
-		final int length2 = text.length();
-		final int length3 = Wcwidth.length(text);
-		return new XDimension2D(length2, 1);
+		text = charSizeHack.transformStringForSizeHack(text);
+		return FileFormat.getJavaDimension(font, text);
 	}
+
+	@Override
+	public boolean matchesProperty(String propertyName) {
+		return "SVG".equalsIgnoreCase(propertyName);
+	}
+
+	@Override
+	public double getDescent(UFont font, String text) {
+		final LineMetrics lineMetrics = UFontImpl.getUnderlayingFont(font, text).getLineMetrics(text,
+				fontRenderContext);
+		final double descent = lineMetrics.getDescent();
+		return descent;
+	}
+
 }

@@ -46,15 +46,12 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.braille.BrailleCharFactory;
-import net.sourceforge.plantuml.braille.UGraphicBraille;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.klimt.drawing.debug.StringBounderDebug;
-import net.sourceforge.plantuml.klimt.drawing.debug.StringBounderFixed;
+import net.sourceforge.plantuml.klimt.drawing.debug.StringBounderDeterministic;
 import net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.font.StringBounderRaw;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -93,7 +90,7 @@ public enum FileFormat {
 	VDX("vdx", "application/vnd.visio.xml"), //
 	LATEX("eps", "application/x-latex"), //
 	LATEX_NO_PREAMBLE("eps-no-preamble", "application/x-latex"), //
-	LATEX_FIXED("eps", "application/x-latex"), //
+	LATEX_DETERMINISTIC("eps", "application/x-latex"), //
 	BASE64("base64", "text/plain; charset=x-user-defined"), //
 	BRAILLE_PNG("braille-png", "image/png"), //
 	OBFUSCATE("obfuscate", "text/plain"), //
@@ -143,7 +140,7 @@ public enum FileFormat {
 			if (name().startsWith("XMI"))
 				return ".xmi";
 
-			if (this == LATEX || this == LATEX_NO_PREAMBLE || this == LATEX_FIXED)
+			if (this == LATEX || this == LATEX_NO_PREAMBLE || this == LATEX_DETERMINISTIC)
 				return ".tex";
 
 			if (this == BRAILLE_PNG)
@@ -183,20 +180,20 @@ public enum FileFormat {
 		switch (this) {
 		case LATEX:
 		case LATEX_NO_PREAMBLE:
-			return getTikzStringBounder(tikzFontDistortion);
+			return new StringBounderTikz(tikzFontDistortion, this);
 
 		case BRAILLE_PNG:
-			return getBrailleStringBounder();
+			return new StringBounderBraille();
 
 		case DEBUG:
-			return new StringBounderDebug(this);
+			return new StringBounderDebug();
+
 		case SVG:
+			return new StringBounderSvg(charSizeHack);
 
-			return getSvgStringBounder(charSizeHack);
+		case LATEX_DETERMINISTIC:
 		case SVG_DETERMINISTIC:
-
-		case LATEX_FIXED:
-			return new StringBounderFixed(this);
+			return new StringBounderDeterministic(this);
 
 		// ::comment when JAVA8
 		case PDF:
@@ -204,7 +201,7 @@ public enum FileFormat {
 		// ::done
 		}
 
-		return getNormalStringBounder();
+		return new StringBounderAwt();
 	}
 
 	private static final int CACHE_SIZE = 10_000;
@@ -239,7 +236,7 @@ public enum FileFormat {
 	}
 
 	// ::comment when __TEAVM__
-	static private XDimension2D getJavaDimension(UFont font, String text) {
+	static public XDimension2D getJavaDimension(UFont font, String text) {
 		if (text.length() == 0)
 			return new XDimension2D(0, 0);
 
@@ -257,122 +254,6 @@ public enum FileFormat {
 			DIMENSION_CACHE.put(key, result);
 			return result;
 		}
-	}
-
-	private StringBounder getSvgStringBounder(final SvgCharSizeHack charSizeHack) {
-		return new StringBounderRaw(FileFormat.gg.getFontRenderContext(), this) {
-			public String toString() {
-				return "FileFormat::getSvgStringBounder";
-			}
-
-			protected XDimension2D calculateDimensionInternal(UFont font, String text) {
-				text = charSizeHack.transformStringForSizeHack(text);
-				return getJavaDimension(font, text);
-			}
-
-			public boolean matchesProperty(String propertyName) {
-				return "SVG".equalsIgnoreCase(propertyName);
-			}
-
-		};
-	}
-
-	private StringBounder getNormalStringBounder() {
-		return new StringBounderRaw(FileFormat.gg.getFontRenderContext(), this) {
-			public String toString() {
-				return "FileFormat::getNormalStringBounder";
-			}
-
-			protected XDimension2D calculateDimensionInternal(UFont font, String text) {
-				return getJavaDimension(font, text);
-			}
-
-			public boolean matchesProperty(String propertyName) {
-				return false;
-			}
-
-		};
-	}
-
-	private StringBounder getBrailleStringBounder() {
-		return new StringBounderRaw(FileFormat.gg.getFontRenderContext(), this) {
-			public String toString() {
-				return "FileFormat::getBrailleStringBounder";
-			}
-
-			protected XDimension2D calculateDimensionInternal(UFont font, String text) {
-				final int nb = BrailleCharFactory.build(text).size();
-				final double quanta = UGraphicBraille.QUANTA;
-				final double height = 5 * quanta;
-				final double width = 3 * nb * quanta + 1;
-				return new XDimension2D(width, height);
-			}
-
-			@Override
-			public double getDescent(UFont font, String text) {
-				return UGraphicBraille.QUANTA;
-			}
-
-			public boolean matchesProperty(String propertyName) {
-				return false;
-			}
-
-		};
-	}
-
-	private StringBounder getTikzStringBounder(final TikzFontDistortion tikzFontDistortion) {
-		return new StringBounderRaw(FileFormat.gg.getFontRenderContext(), this) {
-
-			private final LatexManager latexManager = new LatexManager(tikzFontDistortion.getTexSystem(),
-					tikzFontDistortion.getTexPreamble());
-
-			public String toString() {
-				return "FileFormat::getTikzStringBounder";
-			}
-
-			protected XDimension2D calculateDimensionInternal(UFont font, String text) {
-				double[] widthHeightDepth = latexManager.getWidthHeightDepth(styleText(font, text));
-				double height = widthHeightDepth[1] + widthHeightDepth[2];
-				if (height == 0.0 && text.trim().isEmpty()) {
-					// avoid return 0 height for space, otherwise cause exception, case in #1259
-					height = latexManager.getWidthHeightDepth(styleText(font, " "))[0];
-				}
-				return new XDimension2D(widthHeightDepth[0], height);
-			}
-
-			public boolean matchesProperty(String propertyName) {
-				return "TIKZ".equalsIgnoreCase(propertyName);
-			}
-
-			public double getDescent(UFont font, String text) {
-				double[] widthHeightDepth = latexManager.getWidthHeightDepth(styleText(font, text));
-				return widthHeightDepth[2];
-			}
-
-			protected String styleText(UFont font, String text) {
-				if (font == null) {
-					return "$" + text + "$";
-				}
-				StringBuilder sb = new StringBuilder();
-				final boolean italic = font.getFontFace().isItalic();
-				final boolean bold = font.getFontFace().isBold();
-
-				if (italic)
-					sb.append("\\textit{");
-
-				if (bold)
-					sb.append("\\textbf{");
-
-				sb.append(LatexManager.protectText(text));
-				if (bold)
-					sb.append("}");
-
-				if (italic)
-					sb.append("}");
-
-				return sb.toString();
-			}
-		};
 	}
 
 	/**

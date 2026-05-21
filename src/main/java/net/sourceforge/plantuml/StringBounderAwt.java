@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -30,38 +30,35 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.klimt.font;
+package net.sourceforge.plantuml;
 
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 
-import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.text.RichText;
 import net.sourceforge.plantuml.text.StyledString;
 
-public abstract class StringBounderRaw implements StringBounder {
+public class StringBounderAwt implements StringBounder {
+	
+	private final FontRenderContext frc = FileFormat.gg.getFontRenderContext();
 
-	private final FontRenderContext frc;
-	private final FileFormat fileFormat;
 
-	protected StringBounderRaw(FontRenderContext frc, FileFormat fileFormat) {
-		this.frc = frc;
-		this.fileFormat = fileFormat;
+	private XDimension2D calculateDimensionInternal(UFont font, String text) {
+		return FileFormat.getJavaDimension(font, text);
 	}
-
+	
 	@Override
-	public FileFormat getFileFormat() {
-		return fileFormat;
-	}
-
 	public final XDimension2D calculateDimension(UFont font, String text) {
-		if (font == null) {
-			return calculateDimensionInternal(null, text);
-		}
+//		if (font == null) {
+//			return calculateDimensionInternal(null, text);
+//		}
 		if (RichText.isRich(text)) {
 			double width = 0;
 			double height = 0;
@@ -76,12 +73,18 @@ public abstract class StringBounderRaw implements StringBounder {
 		return calculateDimensionInternal(font, text);
 	}
 
-	protected abstract XDimension2D calculateDimensionInternal(UFont font, String text);
 
+	@Override
 	public double getDescent(UFont font, String text) {
 		final LineMetrics lineMetrics = UFontImpl.getUnderlayingFont(font, text).getLineMetrics(text, frc);
 		final double descent = lineMetrics.getDescent();
 		return descent;
 	}
+
+	@Override
+	public FileFormat getFileFormat() {
+		return FileFormat.PNG;
+	}
+
 
 }

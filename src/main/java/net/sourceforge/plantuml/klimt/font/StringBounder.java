@@ -40,11 +40,16 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public interface StringBounder {
 
+	default public boolean matchesProperty(String propertyName) {
+		return false;
+	}
+
+	default public double getDescent(UFont font, String text) {
+		final double descent = font.getSize2D() / 4.5;
+		return descent;
+	}
+
 	public XDimension2D calculateDimension(UFont font, String text);
-
-	public double getDescent(UFont font, String text);
-
-	public boolean matchesProperty(String propertyName);
 
 	public FileFormat getFileFormat();
 

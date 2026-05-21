@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -33,31 +33,33 @@
  *
  *
  */
-package net.sourceforge.plantuml.asciiart;
+package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.braille.BrailleCharFactory;
+import net.sourceforge.plantuml.braille.UGraphicBraille;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class TextStringBounder implements StringBounder {
+public class StringBounderBraille implements StringBounder {
 
-	private final FileFormat fileFormat;
+	@Override
+	public XDimension2D calculateDimension(UFont font, String text) {
+		final int nb = BrailleCharFactory.build(text).size();
+		final double quanta = UGraphicBraille.QUANTA;
+		final double height = 5 * quanta;
+		final double width = 3 * nb * quanta + 1;
+		return new XDimension2D(width, height);
+	}
 
-	public TextStringBounder(FileFormat fileFormat) {
-		this.fileFormat = fileFormat;
+	@Override
+	public double getDescent(UFont font, String text) {
+		return UGraphicBraille.QUANTA;
 	}
 
 	@Override
 	public FileFormat getFileFormat() {
-		return fileFormat;
+		return FileFormat.BRAILLE_PNG;
 	}
 
-	@Override
-	public XDimension2D calculateDimension(UFont font, String text) {
-		final int length1 = text.codePointCount(0, text.length());
-		final int length2 = text.length();
-		final int length3 = Wcwidth.length(text);
-		return new XDimension2D(length2, 1);
-	}
 }

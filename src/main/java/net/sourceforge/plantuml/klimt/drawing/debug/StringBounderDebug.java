@@ -38,18 +38,19 @@ import java.util.Random;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.klimt.font.StringBounderRaw;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class StringBounderDebug extends StringBounderRaw {
+public class StringBounderDebug implements StringBounder {
 
-	public StringBounderDebug(FileFormat fileFormat) {
-		super(null, fileFormat);
+	@Override
+	public FileFormat getFileFormat() {
+		return FileFormat.DEBUG;
 	}
 
 	@Override
-	protected XDimension2D calculateDimensionInternal(UFont font, String text) {
+	public XDimension2D calculateDimension(UFont font, String text) {
 		final Random rnd = new Random(StringUtils.seed(text));
 		// We want a random factor between 80% et 130%
 		final double factor = 0.8 + 0.5 * rnd.nextDouble();
@@ -58,16 +59,4 @@ public class StringBounderDebug extends StringBounderRaw {
 		final double width = size * text.length() * factor;
 		return new XDimension2D(width, height);
 	}
-
-	@Override
-	public double getDescent(UFont font, String text) {
-		final double descent = font.getSize2D() / 4.5;
-		return descent;
-	}
-
-	@Override
-	public boolean matchesProperty(String propertyName) {
-		return false;
-	}
-
 }

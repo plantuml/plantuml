@@ -261,7 +261,7 @@ public class TextBlockExporter12026 {
 		case VDX:
 			return new UGraphicVdx(backcolor, colorMapper, stringBounder);
 		case LATEX:
-		case LATEX_FIXED:
+		case LATEX_DETERMINISTIC:
 		case LATEX_NO_PREAMBLE:
 			return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor,
 					fileFormatOption.getFileFormat(), p);
