@@ -1,0 +1,15 @@
+---
+output: svg, debug
+expected-description: (Timing Diagram)
+---
+@startuml
+clock "MyClock" as Clk with period 12.5 offset 0.1
+binary "State" as B
+
+@0
+B is low
+
+@10.5
+B is high
+
+@enduml

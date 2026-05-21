@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="142px" preserveAspectRatio="none" style="width:418px;height:142px;background:#FFFFFF;" version="1.1" viewBox="0 0 418 142" width="418px" zoomAndPan="magnify">
+  <defs/>
+  <g>
+    <line style="stroke:#333333;stroke-width:0.5;" x1="20" x2="20" y1="20" y2="110"/>
+    <line style="stroke:#333333;stroke-width:0.5;" x1="397.5" x2="397.5" y1="20" y2="110"/>
+    <line style="stroke:#333333;stroke-width:0.5;stroke-dasharray:3,5;" x1="30" x2="30" y1="20" y2="110"/>
+    <line style="stroke:#333333;stroke-width:0.5;stroke-dasharray:3,5;" x1="80" x2="80" y1="20" y2="110"/>
+    <line style="stroke:#333333;stroke-width:0.5;stroke-dasharray:3,5;" x1="130" x2="130" y1="20" y2="110"/>
+    <line style="stroke:#333333;stroke-width:0.5;stroke-dasharray:3,5;" x1="180" x2="180" y1="20" y2="110"/>
+    <line style="stroke:#333333;stroke-width:0.5;stroke-dasharray:3,5;" x1="230" x2="230" y1="20" y2="110"/>
+    <line style="stroke:#333333;stroke-width:0.5;stroke-dasharray:3,5;" x1="280" x2="280" y1="20" y2="110"/>
+    <line style="stroke:#333333;stroke-width:0.5;stroke-dasharray:3,5;" x1="330" x2="330" y1="20" y2="110"/>
+    <line style="stroke:#333333;stroke-width:0.5;stroke-dasharray:3,5;" x1="380" x2="380" y1="20" y2="110"/>
+    <line style="stroke:#333333;stroke-width:0.5;" x1="20" x2="397.5" y1="20" y2="20"/>
+    <text fill="#333333" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="53.7833" x="25" y="30.8889">MyClock</text>
+    <line style="stroke:#333333;stroke-width:0.5;" x1="20" x2="79.7833" y1="35" y2="35"/>
+    <line style="stroke:#333333;stroke-width:0.5;" x1="79.7833" x2="89.7833" y1="35" y2="20"/>
+    <line style="stroke:#006400;stroke-width:1.5;" x1="30" x2="32.5" y1="57" y2="57"/>
+    <line style="stroke:#006400;stroke-width:1.5;" x1="32.5" x2="32.5" y1="43" y2="57"/>
+    <line style="stroke:#006400;stroke-width:1.5;" x1="32.5" x2="188.75" y1="43" y2="43"/>
+    <line style="stroke:#006400;stroke-width:1.5;" x1="188.75" x2="188.75" y1="43" y2="57"/>
+    <line style="stroke:#006400;stroke-width:1.5;" x1="188.75" x2="345" y1="57" y2="57"/>
+    <line style="stroke:#006400;stroke-width:1.5;" x1="345" x2="345" y1="43" y2="57"/>
+    <line style="stroke:#006400;stroke-width:1.5;" x1="345" x2="392.5" y1="43" y2="43"/>
+    <line style="stroke:#333333;stroke-width:0.5;" x1="20" x2="397.5" y1="65" y2="65"/>
+    <text fill="#333333" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="32.6667" x="25" y="75.8889">State</text>
+    <line style="stroke:#333333;stroke-width:0.5;" x1="20" x2="58.6667" y1="80" y2="80"/>
+    <line style="stroke:#333333;stroke-width:0.5;" x1="58.6667" x2="68.6667" y1="80" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="30" x2="30" y1="102" y2="102"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="30" x2="292.5" y1="102" y2="102"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="292.5" x2="292.5" y1="88" y2="102"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="292.5" x2="392.5" y1="88" y2="88"/>
+    <line style="stroke:#333333;stroke-width:2;" x1="30" x2="30" y1="110" y2="115"/>
+    <line style="stroke:#333333;stroke-width:2;" x1="80" x2="80" y1="110" y2="115"/>
+    <line style="stroke:#333333;stroke-width:2;" x1="130" x2="130" y1="110" y2="115"/>
+    <line style="stroke:#333333;stroke-width:2;" x1="180" x2="180" y1="110" y2="115"/>
+    <line style="stroke:#333333;stroke-width:2;" x1="230" x2="230" y1="110" y2="115"/>
+    <line style="stroke:#333333;stroke-width:2;" x1="280" x2="280" y1="110" y2="115"/>
+    <line style="stroke:#333333;stroke-width:2;" x1="330" x2="330" y1="110" y2="115"/>
+    <line style="stroke:#333333;stroke-width:2;" x1="380" x2="380" y1="110" y2="115"/>
+    <line style="stroke:#333333;stroke-width:2;" x1="30" x2="380" y1="110" y2="110"/>
+    <text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="6.1417" x="26.9292" y="124.5556">0</text>
+    <text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="12.2833" x="273.8583" y="124.5556">10</text>
+    <text fill="#333333" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="12.2833" x="323.8583" y="124.5556">12</text>
+  </g>
+</svg>

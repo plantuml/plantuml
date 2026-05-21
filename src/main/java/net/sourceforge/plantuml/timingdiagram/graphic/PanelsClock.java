@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.graphic;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -48,12 +49,12 @@ import net.sourceforge.plantuml.timingdiagram.TimingRuler;
 
 public class PanelsClock extends PanelsNoLeft {
 
-	private final int period;
-	private final int pulse;
-	private final int offset;
+	private final BigDecimal period;
+	private final BigDecimal pulse;
+	private final BigDecimal offset;
 
-	public PanelsClock(TimingRuler ruler, ISkinParam skinParam, int suggestedHeight, Style style, int period, int pulse,
-			int offset, List<TimeConstraint> constraints) {
+	public PanelsClock(TimingRuler ruler, ISkinParam skinParam, int suggestedHeight, Style style, BigDecimal period,
+			BigDecimal pulse, BigDecimal offset, List<TimeConstraint> constraints) {
 		super(ruler, skinParam, suggestedHeight, style, null, constraints);
 
 		this.period = period;
@@ -82,16 +83,16 @@ public class PanelsClock extends PanelsNoLeft {
 		final ULine vline = ULine.vline(getLineHeight(ug.getStringBounder()));
 		ug = ug.apply(UTranslate.dy(MARGIN_Y));
 		double value = 0;
-		if (offset != 0) {
-			drawHorizontalBetweenTimes(ug.apply(UTranslate.dy(vline.getDY())), value, offset);
-			value += offset;
+		if (offset.doubleValue() != 0) {
+			drawHorizontalBetweenTimes(ug.apply(UTranslate.dy(vline.getDY())), value, offset.doubleValue());
+			value += offset.doubleValue();
 		}
 		if (xOfTime(value) > ruler.getWidth())
 			return;
 		drawVline(ug, xOfTime(value), 0, vline);
 
-		final double vpulse = pulse == 0 ? period / 2.0 : pulse;
-		final double remain = period - vpulse;
+		final double vpulse = pulse.doubleValue() == 0 ? period.doubleValue() / 2.0 : pulse.doubleValue();
+		final double remain = period.doubleValue() - vpulse;
 		for (int i = 0; i < 1000; i++) {
 			drawHorizontalBetweenTimes(ug, value, value + vpulse);
 			value += vpulse;

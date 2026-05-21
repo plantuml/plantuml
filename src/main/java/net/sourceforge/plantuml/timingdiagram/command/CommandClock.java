@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import java.math.BigDecimal;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -73,18 +75,18 @@ public class CommandClock extends SingleLineCommand2<TimingDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("period"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf(1, "PERIOD", "([0-9]+)"), //
+				new RegexLeaf(1, "PERIOD", "([0-9]+(?:\\.[0-9]+)?)"), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("pulse"), //
 						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf(1, "PULSE", "([0-9]+)") //
+						new RegexLeaf(1, "PULSE", "([0-9]+(?:\\.[0-9]+)?)") //
 				)), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("offset"), //
 						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf(1, "OFFSET", "([0-9]+)") //
+						new RegexLeaf(1, "OFFSET", "([0-9]+(?:\\.[0-9]+)?)") //
 				)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				StereotypePattern.optional("STEREO"), //
@@ -97,9 +99,9 @@ public class CommandClock extends SingleLineCommand2<TimingDiagram> {
 			ParserPass currentPass) {
 		final String compact = arg.get("COMPACT", 0);
 		final String code = arg.get("CODE", 0);
-		final int period = Integer.parseInt(arg.get("PERIOD", 0));
-		final int pulse = getInt(arg.get("PULSE", 0));
-		final int offset = getInt(arg.get("OFFSET", 0));
+		final BigDecimal period = new BigDecimal(arg.get("PERIOD", 0));
+		final BigDecimal pulse = getBigDecimal(arg.get("PULSE", 0));
+		final BigDecimal offset = getBigDecimal(arg.get("OFFSET", 0));
 		String full = arg.get("FULL", 0);
 		if (full == null)
 			full = "";
@@ -111,10 +113,10 @@ public class CommandClock extends SingleLineCommand2<TimingDiagram> {
 		return CommandExecutionResult.ok();
 	}
 
-	private int getInt(String value) {
+	private BigDecimal getBigDecimal(String value) {
 		if (value == null)
-			return 0;
-		return Integer.parseInt(value);
+			return BigDecimal.ZERO;
+		return new BigDecimal(value);
 	}
 
 }

@@ -315,13 +315,13 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 		return player;
 	}
 
-	public PlayerClock createPlayerClock(String code, String full, int period, int pulse, int offset, boolean compact,
-			Stereotype stereotype) {
+	public PlayerClock createPlayerClock(String code, String full, BigDecimal period, BigDecimal pulse,
+			BigDecimal offset, boolean compact, Stereotype stereotype) {
 		final PlayerClock player = new PlayerClock(full, getSkinParam(), ruler, period, pulse, offset, compactByDefault,
 				stereotype);
 		players.put(code, player);
 		clocks.put(code, player);
-		final TimeTick tick = new TimeTick(new BigDecimal(period), TimingFormat.DECIMAL);
+		final TimeTick tick = new TimeTick(period, TimingFormat.DECIMAL);
 		ruler.addTime(tick);
 		return player;
 	}
@@ -374,7 +374,7 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 		if (clock == null)
 			return null;
 
-		return new TimeTick(new BigDecimal(nb * clock.getPeriod()), TimingFormat.DECIMAL);
+		return new TimeTick(clock.getPeriod().multiply(BigDecimal.valueOf(nb)), TimingFormat.DECIMAL);
 	}
 
 	public void setLastPlayer(Player player) {
