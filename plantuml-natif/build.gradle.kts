@@ -8,12 +8,11 @@
 // the same code as the main plantuml.jar (version/commit injected by the root
 // 'filterSourcesWithBuildInfo' task).
 //
-// Produces two native binaries via the GraalVM buildtools plugin:
-//   - plantuml-full     (AWT/Swing available, -Djava.awt.headless=false)
-//   - plantuml-headless (-Djava.awt.headless=true, for server use)
+// Produces one native binary via the GraalVM buildtools plugin:
+//   - plantuml-headless (-Djava.awt.headless=true, for server / CLI use)
 //
 // Build with:
-//   gradle :plantuml-natif:nativeFullCompile :plantuml-natif:nativeHeadlessCompile -x test
+//   gradle :plantuml-natif:nativeHeadlessCompile -x test
 //
 // Requires Java 11+ (enforced in settings.gradle.kts).
 
@@ -46,19 +45,22 @@ application {
 
 graalvmNative {
 	binaries.all { resources.autodetect() }
-	binaries.create("full") {
-		buildArgs(listOf("-Djava.awt.headless=false", "--enable-url-protocols=https"))
-		runtimeArgs(listOf("-Djava.awt.headless=false"))
-		imageName.set("plantuml-full")
-		mainClass.set(application.mainClass)
-		classpath(binaries.named("main").get().classpath)
-	}
 	binaries.create("headless") {
 		imageName.set("plantuml-headless")
 		mainClass.set(application.mainClass)
 		classpath(binaries.named("main").get().classpath)
 		runtimeArgs(listOf("-Djava.awt.headless=true"))
-		buildArgs(listOf("-Djava.awt.headless=true", "--enable-url-protocols=https"))
+		// The brotli package builds its static dictionary into a direct (off-heap)
+		// ByteBuffer in a class static initializer. GraalVM initializes classes at
+		// build time by default, but direct ByteBuffers allocated at build time do
+		// not survive into the image -- the dictionary ends up null at run time
+		// ("brotli dictionary is not set"). Forcing run-time initialization makes
+		// the static initializer run at startup, allocating the buffer for real.
+		buildArgs(listOf(
+			"-Djava.awt.headless=true",
+			"--enable-url-protocols=https",
+			"--initialize-at-run-time=net.sourceforge.plantuml.brotli"
+		))
 	}
 	toolchainDetection = false
 }

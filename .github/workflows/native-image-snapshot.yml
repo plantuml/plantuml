@@ -2,8 +2,8 @@ name: Native Image - Snapshot
 
 # Simplified workflow for the 'master-natif' branch.
 # Goal: ONLY validate the native compilation of the dedicated `plantuml-natif`
-# subproject on Windows x64. No release publishing -- the binaries are just
-# uploaded as build artifacts so we can confirm the native-image build succeeds.
+# subproject on Windows x64. No release publishing -- the binary is just
+# uploaded as a build artifact so we can confirm the native-image build succeeds.
 
 on:
   workflow_dispatch:
@@ -33,24 +33,24 @@ jobs:
         run: |
           echo "JAVA_TOOL_OPTIONS=-Djava.io.tmpdir=$env:RUNNER_TEMP" >> $env:GITHUB_ENV
 
+      # --no-daemon: the Gradle daemon would otherwise stay alive after the build
+      # and keep the cache .lock files open, which makes setup-graalvm's gradle
+      # cache-save step fail with "Device or resource busy" during post-job cleanup.
       - name: Patch build metadata (version / git commit / timestamp)
         shell: pwsh
-        run: ./gradlew patchCompilationInfo
+        run: ./gradlew --no-daemon patchCompilationInfo
 
       - name: Build native image (plantuml-natif)
         shell: pwsh
-        run: ./gradlew :plantuml-natif:nativeFullCompile :plantuml-natif:nativeHeadlessCompile -x test
+        run: ./gradlew --no-daemon :plantuml-natif:nativeHeadlessCompile -x test
 
-      - name: Archive Windows builds
+      - name: Archive Windows build
         shell: pwsh
         run: |
-          Compress-Archive -Path "plantuml-natif/build/native/nativeFullCompile/*" -DestinationPath "plantuml-full-windows-amd64-SNAPSHOT.zip"
           Compress-Archive -Path "plantuml-natif/build/native/nativeHeadlessCompile/*" -DestinationPath "plantuml-headless-windows-amd64-SNAPSHOT.zip"
 
-      - name: Upload build artifacts (Windows)
+      - name: Upload build artifact (Windows)
         uses: actions/upload-artifact@v7
         with:
           name: windows-amd64
-          path: |
-            plantuml-full-windows-amd64-SNAPSHOT.zip
-            plantuml-headless-windows-amd64-SNAPSHOT.zip
+          path: plantuml-headless-windows-amd64-SNAPSHOT.zip
