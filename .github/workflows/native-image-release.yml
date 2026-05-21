@@ -41,31 +41,31 @@ jobs:
         shell: bash
         run: echo "DATETIME=$(date -u +'%F at %T (UTC)')" >> $GITHUB_ENV
 
-      - name: Build GPLv2 native image
+      - name: Build native image
         shell: bash
         run: |
           ./gradlew patchCompilationInfo
-          ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test
+          ./gradlew :plantuml-natif:nativeFullCompile :plantuml-natif:nativeHeadlessCompile -x test
 
       - name: Archive Full Release
         uses: thedoctor0/zip-release@0.7.6
         with:
           type: 'zip'
           filename: "plantuml-full-${{ matrix.platform }}-${{ env.VERSION }}.zip"
-          directory: plantuml-gplv2/build/native/nativeFullCompile/
+          directory: plantuml-natif/build/native/nativeFullCompile/
 
       - name: Archive Headless Release
         uses: thedoctor0/zip-release@0.7.6
         with:
           type: 'zip'
           filename: "plantuml-headless-${{ matrix.platform }}-${{ env.VERSION }}.zip"
-          directory: plantuml-gplv2/build/native/nativeHeadlessCompile/
+          directory: plantuml-natif/build/native/nativeHeadlessCompile/
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: "plantuml-gplv2/build/native/native*/plantuml-*-${{ matrix.platform }}-${{ env.VERSION }}.zip"
+          file: "plantuml-natif/build/native/native*/plantuml-*-${{ matrix.platform }}-${{ env.VERSION }}.zip"
           file_glob: true
           tag: v${{ env.VERSION }}-native
           release_name: Release - Native Image (v${{ env.VERSION }})
