@@ -34,3 +34,12 @@ if (fastBuild) {
 } else {
     println("Not a CI [without DevTest] build: only GPL will be generated")
 }
+
+// Native image subproject (GraalVM). Independent of the CI/licence logic above:
+// the native binary is a deliverable that we also want to build locally.
+// Requires Java 11 or higher (GraalVM native-image / buildtools plugin).
+if (javaVersion.isCompatibleWith(JavaVersion.VERSION_11)) {
+    include("plantuml-natif")
+} else {
+    println("Skipping plantuml-natif as it requires Java 11 or higher")
+}
