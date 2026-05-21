@@ -89,72 +89,66 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 <span class="nc" id="L89">		final XDimension2D result = new XDimension2D(width, height);</span>
 <span class="nc" id="L90">		return result;</span>
 	}
-
-	@Override
-	public boolean matchesProperty(String propertyName) {
-<span class="nc" id="L95">		return false;</span>
-	}
-
 	@Override
 	public FileFormat getFileFormat() {
-<span class="nc" id="L100">		return FileFormat.PDF;</span>
+<span class="nc" id="L94">		return FileFormat.PDF;</span>
 	}
 
 	public static BaseFont resolveFont(UFont ufont) {
-<span class="nc" id="L104">		final UFontFace face = ufont.getFontFace();</span>
+<span class="nc" id="L98">		final UFontFace face = ufont.getFontFace();</span>
 
-<span class="nc" id="L106">		final boolean bold = face.isBold();</span>
-<span class="nc" id="L107">		final boolean italic = face.isItalic();</span>
+<span class="nc" id="L100">		final boolean bold = face.isBold();</span>
+<span class="nc" id="L101">		final boolean italic = face.isItalic();</span>
 
-<span class="nc" id="L109">		return resolveFont(ufont.getFamily(null, UFontContext.PDF), bold, italic);</span>
+<span class="nc" id="L103">		return resolveFont(ufont.getFamily(null, UFontContext.PDF), bold, italic);</span>
 	}
 
 	private static BaseFont resolveFont(String family, boolean bold, boolean italic) {
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (family == null)</span>
-<span class="nc" id="L114">			family = &quot;Helvetica&quot;;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (family == null)</span>
+<span class="nc" id="L108">			family = &quot;Helvetica&quot;;</span>
 
-<span class="nc bnc" id="L116" title="All 4 branches missed.">		final String key = family.toLowerCase() + (bold ? &quot;-b&quot; : &quot;&quot;) + (italic ? &quot;-i&quot; : &quot;&quot;);</span>
-<span class="nc" id="L117">		final BaseFont cached = fontCache.get(key);</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (cached != null)</span>
-<span class="nc" id="L119">			return cached;</span>
+<span class="nc bnc" id="L110" title="All 4 branches missed.">		final String key = family.toLowerCase() + (bold ? &quot;-b&quot; : &quot;&quot;) + (italic ? &quot;-i&quot; : &quot;&quot;);</span>
+<span class="nc" id="L111">		final BaseFont cached = fontCache.get(key);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (cached != null)</span>
+<span class="nc" id="L113">			return cached;</span>
 
 		final String baseName;
-<span class="nc" id="L122">		final String lower = family.toLowerCase();</span>
-<span class="nc bnc" id="L123" title="All 4 branches missed.">		if (lower.contains(&quot;courier&quot;) || lower.contains(&quot;mono&quot;)) {</span>
-<span class="nc bnc" id="L124" title="All 4 branches missed.">			if (bold &amp;&amp; italic)</span>
-<span class="nc" id="L125">				baseName = BaseFont.COURIER_BOLDOBLIQUE;</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">			else if (bold)</span>
-<span class="nc" id="L127">				baseName = BaseFont.COURIER_BOLD;</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">			else if (italic)</span>
-<span class="nc" id="L129">				baseName = BaseFont.COURIER_OBLIQUE;</span>
+<span class="nc" id="L116">		final String lower = family.toLowerCase();</span>
+<span class="nc bnc" id="L117" title="All 4 branches missed.">		if (lower.contains(&quot;courier&quot;) || lower.contains(&quot;mono&quot;)) {</span>
+<span class="nc bnc" id="L118" title="All 4 branches missed.">			if (bold &amp;&amp; italic)</span>
+<span class="nc" id="L119">				baseName = BaseFont.COURIER_BOLDOBLIQUE;</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">			else if (bold)</span>
+<span class="nc" id="L121">				baseName = BaseFont.COURIER_BOLD;</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">			else if (italic)</span>
+<span class="nc" id="L123">				baseName = BaseFont.COURIER_OBLIQUE;</span>
 			else
-<span class="nc" id="L131">				baseName = BaseFont.COURIER;</span>
-<span class="nc bnc" id="L132" title="All 4 branches missed.">		} else if (lower.contains(&quot;times&quot;) || lower.contains(&quot;serif&quot;)) {</span>
-<span class="nc bnc" id="L133" title="All 4 branches missed.">			if (bold &amp;&amp; italic)</span>
-<span class="nc" id="L134">				baseName = BaseFont.TIMES_BOLDITALIC;</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">			else if (bold)</span>
-<span class="nc" id="L136">				baseName = BaseFont.TIMES_BOLD;</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">			else if (italic)</span>
-<span class="nc" id="L138">				baseName = BaseFont.TIMES_ITALIC;</span>
+<span class="nc" id="L125">				baseName = BaseFont.COURIER;</span>
+<span class="nc bnc" id="L126" title="All 4 branches missed.">		} else if (lower.contains(&quot;times&quot;) || lower.contains(&quot;serif&quot;)) {</span>
+<span class="nc bnc" id="L127" title="All 4 branches missed.">			if (bold &amp;&amp; italic)</span>
+<span class="nc" id="L128">				baseName = BaseFont.TIMES_BOLDITALIC;</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">			else if (bold)</span>
+<span class="nc" id="L130">				baseName = BaseFont.TIMES_BOLD;</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">			else if (italic)</span>
+<span class="nc" id="L132">				baseName = BaseFont.TIMES_ITALIC;</span>
 			else
-<span class="nc" id="L140">				baseName = BaseFont.TIMES_ROMAN;</span>
+<span class="nc" id="L134">				baseName = BaseFont.TIMES_ROMAN;</span>
 		} else {
-<span class="nc bnc" id="L142" title="All 4 branches missed.">			if (bold &amp;&amp; italic)</span>
-<span class="nc" id="L143">				baseName = BaseFont.HELVETICA_BOLDOBLIQUE;</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">			else if (bold)</span>
-<span class="nc" id="L145">				baseName = BaseFont.HELVETICA_BOLD;</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">			else if (italic)</span>
-<span class="nc" id="L147">				baseName = BaseFont.HELVETICA_OBLIQUE;</span>
+<span class="nc bnc" id="L136" title="All 4 branches missed.">			if (bold &amp;&amp; italic)</span>
+<span class="nc" id="L137">				baseName = BaseFont.HELVETICA_BOLDOBLIQUE;</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">			else if (bold)</span>
+<span class="nc" id="L139">				baseName = BaseFont.HELVETICA_BOLD;</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">			else if (italic)</span>
+<span class="nc" id="L141">				baseName = BaseFont.HELVETICA_OBLIQUE;</span>
 			else
-<span class="nc" id="L149">				baseName = BaseFont.HELVETICA;</span>
+<span class="nc" id="L143">				baseName = BaseFont.HELVETICA;</span>
 		}
 
 		try {
-<span class="nc" id="L153">			final BaseFont bf = BaseFont.createFont(baseName, BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);</span>
-<span class="nc" id="L154">			fontCache.put(key, bf);</span>
-<span class="nc" id="L155">			return bf;</span>
-<span class="nc" id="L156">		} catch (DocumentException | IOException e) {</span>
-<span class="nc" id="L157">			throw new IllegalStateException(&quot;Cannot load font &quot; + baseName, e);</span>
+<span class="nc" id="L147">			final BaseFont bf = BaseFont.createFont(baseName, BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);</span>
+<span class="nc" id="L148">			fontCache.put(key, bf);</span>
+<span class="nc" id="L149">			return bf;</span>
+<span class="nc" id="L150">		} catch (DocumentException | IOException e) {</span>
+<span class="nc" id="L151">			throw new IllegalStateException(&quot;Cannot load font &quot; + baseName, e);</span>
 		}
 	}
 

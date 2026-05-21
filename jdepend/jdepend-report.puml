@@ -712,10 +712,9 @@ Total Classes: 4
 "net.sourceforge.plantuml.argon2.model" --> "java.util"
 "net.sourceforge.plantuml.argon2.model" --> "net.sourceforge.plantuml.argon2"
 
-class "net.sourceforge.plantuml.asciiart" %lighten("red", 96) {
+class "net.sourceforge.plantuml.asciiart" %lighten("red", 95) {
 Total Classes: 23
 }
-"net.sourceforge.plantuml.asciiart" --> "java.awt"
 "net.sourceforge.plantuml.asciiart" --> "java.io"
 "net.sourceforge.plantuml.asciiart" --> "java.lang"
 "net.sourceforge.plantuml.asciiart" --> "java.util"
@@ -2058,8 +2057,8 @@ Total Classes: 8
 "net.sourceforge.plantuml.klimt.drawing.visio" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.klimt.drawing.visio" --> "net.sourceforge.plantuml.klimt.shape"
 
-class "net.sourceforge.plantuml.klimt.font" %lighten("red", 43.99999999999999) {
-Total Classes: 12
+class "net.sourceforge.plantuml.klimt.font" %lighten("red", 37) {
+Total Classes: 11
 }
 "net.sourceforge.plantuml.klimt.font" --> "java.awt"
 "net.sourceforge.plantuml.klimt.font" --> "java.awt.font"
@@ -2070,7 +2069,6 @@ Total Classes: 12
 "net.sourceforge.plantuml.klimt.font" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.klimt.font" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.klimt.font" --> "net.sourceforge.plantuml.style"
-"net.sourceforge.plantuml.klimt.font" --> "net.sourceforge.plantuml.text"
 
 class "net.sourceforge.plantuml.klimt.geom" %lighten("red", 27) {
 Total Classes: 34
@@ -3250,7 +3248,7 @@ Total Classes: 1
 "net.sourceforge.plantuml.telnet" --> "java.lang"
 "net.sourceforge.plantuml.telnet" --> "java.net"
 
-class "net.sourceforge.plantuml.text" %lighten("red", 29) {
+class "net.sourceforge.plantuml.text" %lighten("red", 30) {
 Total Classes: 5
 }
 "net.sourceforge.plantuml.text" --> "java.lang"

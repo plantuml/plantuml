@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="../drawing/debug/StringBounderDebug.html" title="class in net.sourceforge.plantuml.klimt.drawing.debug">StringBounderDebug</a></code>, <code><a href="../drawing/debug/StringBounderFixed.html" title="class in net.sourceforge.plantuml.klimt.drawing.debug">StringBounderFixed</a></code>, <code><a href="../../openpdf/StringBounderOpenPdf.html" title="class in net.sourceforge.plantuml.openpdf">StringBounderOpenPdf</a></code>, <code><a href="StringBounderRaw.html" title="class in net.sourceforge.plantuml.klimt.font">StringBounderRaw</a></code>, <code><a href="../../teavm/StringBounderTeaVM.html" title="class in net.sourceforge.plantuml.teavm">StringBounderTeaVM</a></code>, <code><a href="../../asciiart/TextStringBounder.html" title="class in net.sourceforge.plantuml.asciiart">TextStringBounder</a></code></dd>
+<dd><code><a href="../../StringBounderAwt.html" title="class in net.sourceforge.plantuml">StringBounderAwt</a></code>, <code><a href="../../StringBounderBraille.html" title="class in net.sourceforge.plantuml">StringBounderBraille</a></code>, <code><a href="../drawing/debug/StringBounderDebug.html" title="class in net.sourceforge.plantuml.klimt.drawing.debug">StringBounderDebug</a></code>, <code><a href="../drawing/debug/StringBounderDeterministic.html" title="class in net.sourceforge.plantuml.klimt.drawing.debug">StringBounderDeterministic</a></code>, <code><a href="../../openpdf/StringBounderOpenPdf.html" title="class in net.sourceforge.plantuml.openpdf">StringBounderOpenPdf</a></code>, <code><a href="../../StringBounderSvg.html" title="class in net.sourceforge.plantuml">StringBounderSvg</a></code>, <code><a href="../../teavm/StringBounderTeaVM.html" title="class in net.sourceforge.plantuml.teavm">StringBounderTeaVM</a></code>, <code><a href="../../StringBounderTikz.html" title="class in net.sourceforge.plantuml">StringBounderTikz</a></code>, <code><a href="../../asciiart/TextStringBounder.html" title="class in net.sourceforge.plantuml.asciiart">TextStringBounder</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">StringBounder</span></div>
@@ -101,7 +101,7 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab5" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab5', 3)" class="table-tab">Default Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -111,16 +111,16 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#calculateDimension(net.sourceforge.plantuml.klimt.font.UFont,java.lang.String)" class="member-name-link">calculateDimension</a><wbr>(<a href="UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a>&nbsp;font,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>double</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDescent(net.sourceforge.plantuml.klimt.font.UFont,java.lang.String)" class="member-name-link">getDescent</a><wbr>(<a href="UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a>&nbsp;font,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default double</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getDescent(net.sourceforge.plantuml.klimt.font.UFont,java.lang.String)" class="member-name-link">getDescent</a><wbr>(<a href="UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a>&nbsp;font,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFileFormat()" class="member-name-link">getFileFormat</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#matchesProperty(java.lang.String)" class="member-name-link">matchesProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;propertyName)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#matchesProperty(java.lang.String)" class="member-name-link">matchesProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;propertyName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -136,23 +136,23 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="calculateDimension(net.sourceforge.plantuml.klimt.font.UFont,java.lang.String)">
-<h3>calculateDimension</h3>
-<div class="member-signature"><span class="return-type"><a href="../geom/XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></span>&nbsp;<span class="element-name">calculateDimension</span><wbr><span class="parameters">(<a href="UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a>&nbsp;font,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</span></div>
+<section class="detail" id="matchesProperty(java.lang.String)">
+<h3>matchesProperty</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">matchesProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;propertyName)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getDescent(net.sourceforge.plantuml.klimt.font.UFont,java.lang.String)">
 <h3>getDescent</h3>
-<div class="member-signature"><span class="return-type">double</span>&nbsp;<span class="element-name">getDescent</span><wbr><span class="parameters">(<a href="UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a>&nbsp;font,
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getDescent</span><wbr><span class="parameters">(<a href="UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a>&nbsp;font,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="matchesProperty(java.lang.String)">
-<h3>matchesProperty</h3>
-<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">matchesProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;propertyName)</span></div>
+<section class="detail" id="calculateDimension(net.sourceforge.plantuml.klimt.font.UFont,java.lang.String)">
+<h3>calculateDimension</h3>
+<div class="member-signature"><span class="return-type"><a href="../geom/XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></span>&nbsp;<span class="element-name">calculateDimension</span><wbr><span class="parameters">(<a href="UFont.html" title="interface in net.sourceforge.plantuml.klimt.font">UFont</a>&nbsp;font,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</span></div>
 </section>
 </li>
 <li>

@@ -1245,9 +1245,6 @@ Concrete Classes:
     net.sourceforge.plantuml.BlockUmlBuilder
     net.sourceforge.plantuml.ErrorUmlType
     net.sourceforge.plantuml.FileFormat$1
-    net.sourceforge.plantuml.FileFormat$2
-    net.sourceforge.plantuml.FileFormat$3
-    net.sourceforge.plantuml.FileFormat$4
     net.sourceforge.plantuml.FileFormat$FontTextKey
     net.sourceforge.plantuml.FileImageData
     net.sourceforge.plantuml.LZWEncoder
@@ -1266,6 +1263,9 @@ Concrete Classes:
     net.sourceforge.plantuml.ScaleWidth
     net.sourceforge.plantuml.ScaleWidthAndHeight
     net.sourceforge.plantuml.StdrptV2
+    net.sourceforge.plantuml.StringBounderAwt
+    net.sourceforge.plantuml.StringBounderBraille
+    net.sourceforge.plantuml.StringBounderSvg
 
 Depends Upon:
     java.awt
@@ -2631,11 +2631,11 @@ Stats:
     Abstract Classes: 3
 
     Ca: 3
-    Ce: 15
+    Ce: 14
 
     A: 0.13
-    I: 0.83
-    D: 0.04
+    I: 0.82
+    D: 0.05
 
 Abstract Classes:
     net.sourceforge.plantuml.asciiart.AbstractComponentText
@@ -2665,7 +2665,6 @@ Concrete Classes:
     net.sourceforge.plantuml.asciiart.Wcwidth
 
 Depends Upon:
-    java.awt
     java.io
     java.lang
     java.util
@@ -7012,21 +7011,20 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 12
+    Total Classes: 11
     Concrete Classes: 8
-    Abstract Classes: 4
+    Abstract Classes: 3
 
     Ca: 87
-    Ce: 10
+    Ce: 9
 
-    A: 0.33
-    I: 0.1
-    D: 0.56
+    A: 0.27
+    I: 0.09
+    D: 0.63
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.font.FontParamConstant
     net.sourceforge.plantuml.klimt.font.StringBounder
-    net.sourceforge.plantuml.klimt.font.StringBounderRaw
     net.sourceforge.plantuml.klimt.font.UFont
 
 Concrete Classes:
@@ -7049,7 +7047,6 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.geom
     net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.style
-    net.sourceforge.plantuml.text
 
 Used By:
     net.sourceforge.plantuml
@@ -11584,12 +11581,12 @@ Stats:
     Concrete Classes: 4
     Abstract Classes: 1
 
-    Ca: 39
+    Ca: 38
     Ce: 4
 
     A: 0.2
-    I: 0.09
-    D: 0.71
+    I: 0.1
+    D: 0.7
 
 Abstract Classes:
     net.sourceforge.plantuml.text.SvgCharSizeHack
@@ -11625,7 +11622,6 @@ Used By:
     net.sourceforge.plantuml.klimt.creole.command
     net.sourceforge.plantuml.klimt.creole.legacy
     net.sourceforge.plantuml.klimt.drawing.g2d
-    net.sourceforge.plantuml.klimt.font
     net.sourceforge.plantuml.klimt.sprite
     net.sourceforge.plantuml.preproc
     net.sourceforge.plantuml.preproc2
@@ -15339,7 +15335,7 @@ gen.lib.pack,1,0,1,5,0,0.83,0.17,1
 gen.lib.pathplan,3,0,1,4,0,0.8,0.2,1
 gen.plugin.dot_layout,2,0,0,1,0,1,0,1
 h,95,2,12,3,0.02,0.2,0.78,1
-java.awt,0,0,23,0,0,0,1,1
+java.awt,0,0,22,0,0,0,1,1
 java.awt.datatransfer,0,0,1,0,0,0,1,1
 java.awt.event,0,0,1,0,0,0,1,1
 java.awt.font,0,0,4,0,0,0,1,1
@@ -15407,7 +15403,7 @@ net.sourceforge.plantuml.argon2.algorithm,7,0,0,6,0,1,0,1
 net.sourceforge.plantuml.argon2.blake2,13,5,1,5,0.38,0.83,0.22,1
 net.sourceforge.plantuml.argon2.exception,2,0,1,1,0,0.5,0.5,1
 net.sourceforge.plantuml.argon2.model,4,0,3,3,0,0.5,0.5,1
-net.sourceforge.plantuml.asciiart,23,3,3,15,0.13,0.83,0.04,1
+net.sourceforge.plantuml.asciiart,23,3,3,14,0.13,0.82,0.05,1
 net.sourceforge.plantuml.board,7,0,0,18,0,1,0,1
 net.sourceforge.plantuml.bpm,32,7,0,18,0.22,1,0.22,1
 net.sourceforge.plantuml.braille,11,0,2,12,0,0.86,0.14,1
@@ -15485,7 +15481,7 @@ net.sourceforge.plantuml.klimt.drawing.svg,16,2,3,18,0.12,0.86,0.02,1
 net.sourceforge.plantuml.klimt.drawing.tikz,11,0,1,13,0,0.93,0.07,1
 net.sourceforge.plantuml.klimt.drawing.txt,1,0,4,13,0,0.76,0.24,1
 net.sourceforge.plantuml.klimt.drawing.visio,8,1,1,10,0.12,0.91,0.03,1
-net.sourceforge.plantuml.klimt.font,12,4,87,10,0.33,0.1,0.56,1
+net.sourceforge.plantuml.klimt.font,11,3,87,9,0.27,0.09,0.63,1
 net.sourceforge.plantuml.klimt.geom,34,6,89,9,0.18,0.09,0.73,1
 net.sourceforge.plantuml.klimt.shape,41,3,85,16,0.07,0.16,0.77,1
 net.sourceforge.plantuml.klimt.sprite,22,2,13,26,0.09,0.67,0.24,1
@@ -15561,7 +15557,7 @@ net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
 net.sourceforge.plantuml.teavm,19,1,42,14,0.05,0.25,0.7,1
 net.sourceforge.plantuml.teavm.browser,3,3,2,2,1,0.5,0.5,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
-net.sourceforge.plantuml.text,5,1,39,4,0.2,0.09,0.71,1
+net.sourceforge.plantuml.text,5,1,38,4,0.2,0.1,0.7,1
 net.sourceforge.plantuml.theme,1,0,1,6,0,0.86,0.14,1
 net.sourceforge.plantuml.tikz,0,0,1,0,0,0,1,1
 net.sourceforge.plantuml.tim,38,4,3,14,0.11,0.82,0.07,1

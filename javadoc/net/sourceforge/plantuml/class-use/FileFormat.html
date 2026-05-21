@@ -172,6 +172,18 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>final <a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">FileFormatOption.</span><code><a href="../FileFormatOption.html#getFileFormat()" class="member-name-link">getFileFormat</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StringBounderAwt.</span><code><a href="../StringBounderAwt.html#getFileFormat()" class="member-name-link">getFileFormat</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">StringBounderBraille.</span><code><a href="../StringBounderBraille.html#getFileFormat()" class="member-name-link">getFileFormat</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StringBounderSvg.</span><code><a href="../StringBounderSvg.html#getFileFormat()" class="member-name-link">getFileFormat</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">StringBounderTikz.</span><code><a href="../StringBounderTikz.html#getFileFormat()" class="member-name-link">getFileFormat</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static <a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">FileFormat.</span><code><a href="../FileFormat.html#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color">
@@ -205,12 +217,25 @@ the order they are declared.</div>
 <div class="col-second odd-row-color"><code><a href="../FileFormatOption.html#%3Cinit%3E(net.sourceforge.plantuml.FileFormat,boolean)" class="member-name-link">FileFormatOption</a><wbr>(<a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a>&nbsp;fileFormat,
  boolean&nbsp;withMetadata)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected </code></div>
+<div class="col-second even-row-color"><code><a href="../StringBounderTikz.html#%3Cinit%3E(net.sourceforge.plantuml.TikzFontDistortion,net.sourceforge.plantuml.FileFormat)" class="member-name-link">StringBounderTikz</a><wbr>(<a href="../TikzFontDistortion.html" title="class in net.sourceforge.plantuml">TikzFontDistortion</a>&nbsp;tikzFontDistortion,
+ <a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a>&nbsp;latexManager)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
 <li>
 <section class="detail" id="net.sourceforge.plantuml.asciiart">
 <h2>Uses of <a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a> in <a href="../asciiart/package-summary.html">net.sourceforge.plantuml.asciiart</a></h2>
+<div class="caption"><span>Methods in <a href="../asciiart/package-summary.html">net.sourceforge.plantuml.asciiart</a> that return <a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TextStringBounder.</span><code><a href="../asciiart/TextStringBounder.html#getFileFormat()" class="member-name-link">getFileFormat</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
 <div class="caption"><span>Methods in <a href="../asciiart/package-summary.html">net.sourceforge.plantuml.asciiart</a> with parameters of type <a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -426,17 +451,26 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="net.sourceforge.plantuml.klimt.drawing.debug">
 <h2>Uses of <a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a> in <a href="../klimt/drawing/debug/package-summary.html">net.sourceforge.plantuml.klimt.drawing.debug</a></h2>
+<div class="caption"><span>Methods in <a href="../klimt/drawing/debug/package-summary.html">net.sourceforge.plantuml.klimt.drawing.debug</a> that return <a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StringBounderDebug.</span><code><a href="../klimt/drawing/debug/StringBounderDebug.html#getFileFormat()" class="member-name-link">getFileFormat</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">StringBounderDeterministic.</span><code><a href="../klimt/drawing/debug/StringBounderDeterministic.html#getFileFormat()" class="member-name-link">getFileFormat</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
 <div class="caption"><span>Constructors in <a href="../klimt/drawing/debug/package-summary.html">net.sourceforge.plantuml.klimt.drawing.debug</a> with parameters of type <a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier</div>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../klimt/drawing/debug/StringBounderDebug.html#%3Cinit%3E(net.sourceforge.plantuml.FileFormat)" class="member-name-link">StringBounderDebug</a><wbr>(<a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a>&nbsp;fileFormat)</code></div>
+<div class="col-second even-row-color"><code><a href="../klimt/drawing/debug/StringBounderDeterministic.html#%3Cinit%3E(net.sourceforge.plantuml.FileFormat)" class="member-name-link">StringBounderDeterministic</a><wbr>(<a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a>&nbsp;fileFormat)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../klimt/drawing/debug/StringBounderFixed.html#%3Cinit%3E(net.sourceforge.plantuml.FileFormat)" class="member-name-link">StringBounderFixed</a><wbr>(<a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a>&nbsp;fileFormat)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -529,19 +563,6 @@ the order they are declared.</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">StringBounder.</span><code><a href="../klimt/font/StringBounder.html#getFileFormat()" class="member-name-link">getFileFormat</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">StringBounderRaw.</span><code><a href="../klimt/font/StringBounderRaw.html#getFileFormat()" class="member-name-link">getFileFormat</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-</div>
-<div class="caption"><span>Constructors in <a href="../klimt/font/package-summary.html">net.sourceforge.plantuml.klimt.font</a> with parameters of type <a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier</div>
-<div class="table-header col-second">Constructor</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>protected </code></div>
-<div class="col-second even-row-color"><code><a href="../klimt/font/StringBounderRaw.html#%3Cinit%3E(java.awt.font.FontRenderContext,net.sourceforge.plantuml.FileFormat)" class="member-name-link">StringBounderRaw</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/font/FontRenderContext.html" title="class or interface in java.awt.font" class="external-link">FontRenderContext</a>&nbsp;frc,
- <a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a>&nbsp;fileFormat)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>

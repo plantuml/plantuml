@@ -36,27 +36,29 @@
 package net.sourceforge.plantuml.asciiart;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.klimt.font.StringBounderRaw;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class TextStringBounder extends StringBounderRaw {
+public class TextStringBounder implements StringBounder {
 
-	public TextStringBounder(FileFormat fileFormat) {
-<span class="fc" id="L46">		super(FileFormat.gg.getFontRenderContext(), fileFormat);</span>
-<span class="fc" id="L47">	}</span>
+	private final FileFormat fileFormat;
 
-	protected XDimension2D calculateDimensionInternal(UFont font, String text) {
-<span class="nc" id="L50">		final int length1 = text.codePointCount(0, text.length());</span>
-<span class="nc" id="L51">		final int length2 = text.length();</span>
-<span class="nc" id="L52">		final int length3 = Wcwidth.length(text);</span>
-<span class="nc" id="L53">		return new XDimension2D(length2, 1);</span>
+<span class="fc" id="L47">	public TextStringBounder(FileFormat fileFormat) {</span>
+<span class="fc" id="L48">		this.fileFormat = fileFormat;</span>
+<span class="fc" id="L49">	}</span>
+
+	@Override
+	public FileFormat getFileFormat() {
+<span class="nc" id="L53">		return fileFormat;</span>
 	}
 
 	@Override
-	public boolean matchesProperty(String propertyName) {
-<span class="nc" id="L58">		return false;</span>
+	public XDimension2D calculateDimension(UFont font, String text) {
+<span class="nc" id="L58">		final int length1 = text.codePointCount(0, text.length());</span>
+<span class="nc" id="L59">		final int length2 = text.length();</span>
+<span class="nc" id="L60">		final int length3 = Wcwidth.length(text);</span>
+<span class="nc" id="L61">		return new XDimension2D(length2, 1);</span>
 	}
-
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

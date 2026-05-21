@@ -1946,15 +1946,6 @@
                     net.sourceforge.plantuml.FileFormat$1
                 </Class>
                 <Class sourceFile="FileFormat.java">
-                    net.sourceforge.plantuml.FileFormat$2
-                </Class>
-                <Class sourceFile="FileFormat.java">
-                    net.sourceforge.plantuml.FileFormat$3
-                </Class>
-                <Class sourceFile="FileFormat.java">
-                    net.sourceforge.plantuml.FileFormat$4
-                </Class>
-                <Class sourceFile="FileFormat.java">
                     net.sourceforge.plantuml.FileFormat$FontTextKey
                 </Class>
                 <Class sourceFile="FileImageData.java">
@@ -2007,6 +1998,15 @@
                 </Class>
                 <Class sourceFile="StdrptV2.java">
                     net.sourceforge.plantuml.StdrptV2
+                </Class>
+                <Class sourceFile="StringBounderAwt.java">
+                    net.sourceforge.plantuml.StringBounderAwt
+                </Class>
+                <Class sourceFile="StringBounderBraille.java">
+                    net.sourceforge.plantuml.StringBounderBraille
+                </Class>
+                <Class sourceFile="StringBounderSvg.java">
+                    net.sourceforge.plantuml.StringBounderSvg
                 </Class>
             </ConcreteClasses>
 
@@ -4168,10 +4168,10 @@
                 <ConcreteClasses>20</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>3</Ca>
-                <Ce>15</Ce>
+                <Ce>14</Ce>
                 <A>0.13</A>
-                <I>0.83</I>
-                <D>0.04</D>
+                <I>0.82</I>
+                <D>0.05</D>
                 <V>1</V>
             </Stats>
 
@@ -4251,7 +4251,6 @@
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>java.awt</Package>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
@@ -10291,14 +10290,14 @@
 
         <Package name="net.sourceforge.plantuml.klimt.font">
             <Stats>
-                <TotalClasses>12</TotalClasses>
+                <TotalClasses>11</TotalClasses>
                 <ConcreteClasses>8</ConcreteClasses>
-                <AbstractClasses>4</AbstractClasses>
+                <AbstractClasses>3</AbstractClasses>
                 <Ca>87</Ca>
-                <Ce>10</Ce>
-                <A>0.33</A>
-                <I>0.1</I>
-                <D>0.56</D>
+                <Ce>9</Ce>
+                <A>0.27</A>
+                <I>0.09</I>
+                <D>0.63</D>
                 <V>1</V>
             </Stats>
 
@@ -10308,9 +10307,6 @@
                 </Class>
                 <Class sourceFile="StringBounder.java">
                     net.sourceforge.plantuml.klimt.font.StringBounder
-                </Class>
-                <Class sourceFile="StringBounderRaw.java">
-                    net.sourceforge.plantuml.klimt.font.StringBounderRaw
                 </Class>
                 <Class sourceFile="UFont.java">
                     net.sourceforge.plantuml.klimt.font.UFont
@@ -10354,7 +10350,6 @@
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
-                <Package>net.sourceforge.plantuml.text</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -17096,11 +17091,11 @@
                 <TotalClasses>5</TotalClasses>
                 <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>39</Ca>
+                <Ca>38</Ca>
                 <Ce>4</Ce>
                 <A>0.2</A>
-                <I>0.09</I>
-                <D>0.71</D>
+                <I>0.1</I>
+                <D>0.7</D>
                 <V>1</V>
             </Stats>
 
@@ -17151,7 +17146,6 @@
                 <Package>net.sourceforge.plantuml.klimt.creole.command</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.legacy</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.g2d</Package>
-                <Package>net.sourceforge.plantuml.klimt.font</Package>
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.preproc2</Package>
