@@ -59,7 +59,7 @@ graalvmNative {
 		buildArgs(listOf(
 			"-Djava.awt.headless=true",
 			"--enable-url-protocols=https",
-			"--initialize-at-run-time=net.sourceforge.plantuml.brotli"
+			"--initialize-at-run-time=net.sourceforge.plantuml.brotli.Dictionary,net.sourceforge.plantuml.brotli.Dictionary\$DataLoader,net.sourceforge.plantuml.brotli.DictionaryData"
 		))
 	}
 	toolchainDetection = false
