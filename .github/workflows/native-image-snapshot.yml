@@ -5,58 +5,8 @@ on:
   workflow_call:
 
 jobs:
-  clean_release:
-    name: 'Clean the snapshot-native pre-release'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v6
-
-      - name: Clean release and tag
-        run: |
-          gh release delete snapshot-native --cleanup-tag -y || true
-          echo "::notice title=release snapshot-native::snapshot - Native Image at ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/snapshot-native"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  build_linux_amd64:
-    name: 'Build Native Image linux-amd64'
-    needs: clean_release
-    runs-on: ubuntu-latest
-    timeout-minutes: 90
-
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: graalvm/setup-graalvm@v1
-        with:
-          java-version: '21'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          distribution: liberica
-          cache: gradle
-
-      - name: Prepare env and build GPLv2 native image
-        shell: bash
-        run: |
-          ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test
-
-      - name: Archive Linux builds
-        shell: bash
-        run: |
-          zip -r plantuml-full-linux-amd64-SNAPSHOT.zip plantuml-gplv2/build/native/nativeFullCompile/
-          zip -r plantuml-headless-linux-amd64-SNAPSHOT.zip plantuml-gplv2/build/native/nativeHeadlessCompile/
-
-      - name: Upload build artifacts (Linux)
-        uses: actions/upload-artifact@v7
-        with:
-          name: linux-amd64
-          path: |
-            plantuml-full-linux-amd64-SNAPSHOT.zip
-            plantuml-headless-linux-amd64-SNAPSHOT.zip
-
   build_windows_amd64:
     name: 'Build Native Image windows-amd64'
-    needs: clean_release
     runs-on: windows-latest
     timeout-minutes: 90
 
@@ -71,105 +21,106 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           cache: gradle
 
-      - name: Force tmp dir on D for Java
+      - name: Force tmp dir on RUNNER_TEMP for Java
         shell: pwsh
         run: |
           echo "JAVA_TOOL_OPTIONS=-Djava.io.tmpdir=$env:RUNNER_TEMP" >> $env:GITHUB_ENV
 
-      - name: Build GPLv2 native image
+      # --no-daemon: the Gradle daemon would otherwise stay alive after the build
+      # and keep the cache .lock files open, which makes setup-graalvm's gradle
+      # cache-save step fail with "Device or resource busy" during post-job cleanup.
+      - name: Patch build metadata (version / git commit / timestamp)
         shell: pwsh
-        run: ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test
+        run: ./gradlew --no-daemon patchCompilationInfo
 
-      - name: Archive Windows builds
+      - name: Build native image (plantuml-natif)
+        shell: pwsh
+        run: ./gradlew --no-daemon :plantuml-natif:nativeCompile -x test
+
+      - name: Run sample diagram test (ASCII)
         shell: pwsh
         run: |
-          Compress-Archive -Path "plantuml-gplv2/build/native/nativeFullCompile/*" -DestinationPath "plantuml-full-windows-amd64-SNAPSHOT.zip"
-          Compress-Archive -Path "plantuml-gplv2/build/native/nativeHeadlessCompile/*" -DestinationPath "plantuml-headless-windows-amd64-SNAPSHOT.zip"
+          "Alice -> Bob : it works!" | ./plantuml-natif/build/native/nativeCompile/plantuml.exe -pipe -ttxt
 
-      - name: Upload build artifacts (Windows)
+      - name: Archive Windows build
+        shell: pwsh
+        run: |
+          Compress-Archive -Path "plantuml-natif/build/native/nativeCompile/*" -DestinationPath "plantuml-windows-amd64-SNAPSHOT.zip"
+
+      - name: Upload build artifact (Windows)
         uses: actions/upload-artifact@v7
         with:
           name: windows-amd64
-          path: |
-            plantuml-full-windows-amd64-SNAPSHOT.zip
-            plantuml-headless-windows-amd64-SNAPSHOT.zip
+          path: plantuml-windows-amd64-SNAPSHOT.zip
 
-  build_macos_arm64:
-    name: 'Build Native Image darwin-arm64'
-    needs: clean_release
-    runs-on: macos-latest
-    timeout-minutes: 90
-
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: graalvm/setup-graalvm@v1
-        with:
-          java-version: '21'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          distribution: liberica
-          cache: gradle
-
-      - name: Build GPLv2 native image
-        shell: bash
-        run: |
-          ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test
-
-      - name: Archive macOS builds
-        shell: bash
-        run: |
-          zip -r plantuml-full-darwin-arm64-SNAPSHOT.zip plantuml-gplv2/build/native/nativeFullCompile/
-          zip -r plantuml-headless-darwin-arm64-SNAPSHOT.zip plantuml-gplv2/build/native/nativeHeadlessCompile/
-
-      - name: Upload build artifacts (macOS)
-        uses: actions/upload-artifact@v7
-        with:
-          name: darwin-arm64
-          path: |
-            plantuml-full-darwin-arm64-SNAPSHOT.zip
-            plantuml-headless-darwin-arm64-SNAPSHOT.zip
-
-  publish_release:
-    name: Publish combined release
-    needs:
-      - build_linux_amd64
-      - build_windows_amd64
-      - build_macos_arm64
+  build_linux_amd64:
+    name: 'Build Native Image linux-amd64'
     runs-on: ubuntu-latest
+    timeout-minutes: 90
 
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v6
-        
-      - uses: actions/download-artifact@v8
+
+      - uses: graalvm/setup-graalvm@v1
         with:
-          merge-multiple: true
-          path: artifacts/
+          java-version: '21'
+          distribution: liberica
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          cache: gradle
 
-      - name: List artifacts
-        run: ls -lh artifacts/
+      - name: Patch build metadata (version / git commit / timestamp)
+        run: ./gradlew --no-daemon patchCompilationInfo
 
-      - name: Prepare env
-        shell: bash
+      - name: Build native image (plantuml-natif)
+        run: ./gradlew --no-daemon :plantuml-natif:nativeCompile -x test
+
+      - name: Run sample diagram test (ASCII)
         run: |
-          VERSION=$(grep 'version =' gradle.properties | cut -d' ' -f 3)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "DATETIME=$(date -u +'%F at %T (UTC)')" >> $GITHUB_ENV
-          echo "Resolved VERSION=$VERSION"
+          echo "Alice -> Bob : it works!" | ./plantuml-natif/build/native/nativeCompile/plantuml -pipe -ttxt
 
-      - name: Upload all binaries to release
-        uses: svenstaro/upload-release-action@v2
+      - name: Archive Linux build
+        run: |
+          zip -j plantuml-linux-amd64-SNAPSHOT.zip plantuml-natif/build/native/nativeCompile/*
+
+      - name: Upload build artifact (Linux)
+        uses: actions/upload-artifact@v7
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: "artifacts/*.zip"
-          file_glob: true
-          tag: snapshot-native
-          release_name: snapshot - Native Image (~v${{ env.VERSION }})
-          overwrite: true
-          make_latest: false
-          prerelease: true
-          body: |
-            ## Version ~v${{ env.VERSION }} of the ${{ env.DATETIME }}
-            This is a [Native Image](https://www.graalvm.org/latest/reference-manual/native-image/) pre-release of [the latest development work](https://github.com/plantuml/plantuml/commits/).
-            ⚠️  **It is not ready for general use** ⚠️
-            ⏱  _Snapshot taken the ${{ env.DATETIME }}_
+          name: linux-amd64
+          path: plantuml-linux-amd64-SNAPSHOT.zip
+
+  build_linux_arm64:
+    name: 'Build Native Image linux-arm64'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v6
+
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          distribution: liberica
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          cache: gradle
+
+      - name: Patch build metadata (version / git commit / timestamp)
+        run: ./gradlew --no-daemon patchCompilationInfo
+
+      - name: Build native image (plantuml-natif)
+        run: ./gradlew --no-daemon :plantuml-natif:nativeCompile -x test
+
+      - name: Run sample diagram test (ASCII)
+        run: |
+          echo "Alice -> Bob : it works!" | ./plantuml-natif/build/native/nativeCompile/plantuml -pipe -ttxt
+
+      - name: Archive Linux build
+        run: |
+          zip -j plantuml-linux-arm64-SNAPSHOT.zip plantuml-natif/build/native/nativeCompile/*
+
+      - name: Upload build artifact (Linux)
+        uses: actions/upload-artifact@v7
+        with:
+          name: linux-arm64
+          path: plantuml-linux-arm64-SNAPSHOT.zip

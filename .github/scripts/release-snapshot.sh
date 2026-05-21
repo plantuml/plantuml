@@ -24,6 +24,9 @@ cp "build/java8/plantuml.jar" "github_release/plantuml-java8-SNAPSHOT.jar"
 cp "build/libs/plantuml-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-SNAPSHOT-javadoc.jar"
 cp "build/libs/plantuml-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-SNAPSHOT-sources.jar"
 cp "build/libs/js-plantuml-${RELEASE_VERSION}.zip" "github_release/js-plantuml-SNAPSHOT.zip"
+cp "build/native-image/plantuml-windows-amd64-SNAPSHOT.zip" "github_release/plantuml-windows-amd64-SNAPSHOT.zip"
+cp "build/native-image/plantuml-linux-amd64-SNAPSHOT.zip" "github_release/plantuml-linux-amd64-SNAPSHOT.zip"
+cp "build/native-image/plantuml-linux-arm64-SNAPSHOT.zip" "github_release/plantuml-linux-arm64-SNAPSHOT.zip"
 cp "plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}.jar" "github_release/plantuml-asl-SNAPSHOT.jar"
 cp "plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-asl-SNAPSHOT-javadoc.jar"
 cp "plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-asl-SNAPSHOT-sources.jar"
@@ -91,7 +94,7 @@ EOF
 gh release create \
   --prerelease \
   --target "${GITHUB_SHA}" \
-  --title "${TAG} - JAR/JS (~v${RELEASE_VERSION%-SNAPSHOT})" \
+  --title "${TAG} - JAR/JS/EXE (~v${RELEASE_VERSION%-SNAPSHOT})" \
   --notes-file notes.txt \
   "${TAG}" github_release/*
 

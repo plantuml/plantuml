@@ -286,7 +286,7 @@ jobs:
     if: |
       needs.workflow_config.outputs.do_release == 'true' ||
       needs.workflow_config.outputs.do_snapshot_release == 'true'
-    needs: [ workflow_config, build_artifacts, test_linux, jdk8 ]
+    needs: [ workflow_config, build_artifacts, test_linux, jdk8, create_native_image_snapshot ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -307,6 +307,24 @@ jobs:
         with:
           name: plantuml-jdk8-jar
           path: build/java8
+
+      - name: Download native image (Windows)
+        uses: actions/download-artifact@v8
+        with:
+          name: windows-amd64
+          path: build/native-image
+
+      - name: Download native image (Linux)
+        uses: actions/download-artifact@v8
+        with:
+          name: linux-amd64
+          path: build/native-image
+
+      - name: Download native image (Linux arm64)
+        uses: actions/download-artifact@v8
+        with:
+          name: linux-arm64
+          path: build/native-image
 
       - name: Restore Libs cache
         uses: actions/cache/restore@v5
@@ -516,16 +534,10 @@ jobs:
         run: |
           docker buildx imagetools inspect "${{ github.repository }}:${{ steps.meta.outputs.version }}"
 
-#  create_native_image_snapshot:
-#    needs: [ workflow_config, jdk8 ]
-#    if: needs.workflow_config.outputs.do_snapshot_release == 'true'
-#    uses: ./.github/workflows/native-image-snapshot.yml
-#    secrets: inherit
-
-  create_native_image_release:
-    needs: [ workflow_config, upload ]
-    if: needs.workflow_config.outputs.do_release == 'true'
-    uses: ./.github/workflows/native-image-release.yml
+  create_native_image_snapshot:
+    needs: [ workflow_config, jdk8 ]
+    if: needs.workflow_config.outputs.do_snapshot_release == 'true'
+    uses: ./.github/workflows/native-image-snapshot.yml
     secrets: inherit
 
   trigger_plantuml_eclipse_release:
