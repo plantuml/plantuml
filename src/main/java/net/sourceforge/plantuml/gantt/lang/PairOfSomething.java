@@ -1,0 +1,76 @@
+/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.gantt.lang;
+
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexPart;
+
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.gantt.Failable;
+
+public class PairOfSomething<D extends Diagram> implements Something<D> {
+
+	private final Something<D> complement1;
+	private final Something<D> complement2;
+
+	public PairOfSomething(Something<D> complement1, Something<D> complement2) {
+		this.complement1 = complement1;
+		this.complement2 = complement2;
+	}
+
+	@Override
+	public Failable<? extends Object> getMe(D diagram, UMatcher arg) {
+		final Failable<? extends Object> r1 = complement1.getMe(diagram, arg);
+		final Failable<? extends Object> r2 = complement2.getMe(diagram, arg);
+		if (r1.isFail())
+			return r1;
+		if (r2.isFail())
+			return r2;
+		final Object[] result = new Object[] { r1.get(), r2.get() };
+		return Failable.ok(result);
+	}
+
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+		return UBrexConcat.build( //
+				complement1.toUnicodeBracketedExpressionComplement(), //
+				UBrexLeaf.spaceOneOrMore(), //
+				complement2.toUnicodeBracketedExpressionComplement());
+	}
+
+}

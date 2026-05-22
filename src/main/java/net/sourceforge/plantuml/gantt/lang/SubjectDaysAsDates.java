@@ -1,0 +1,202 @@
+/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.gantt.lang;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOr;
+import com.plantuml.ubrex.builder.UBrexPart;
+
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.gantt.DaysAsDates;
+import net.sourceforge.plantuml.gantt.Failable;
+import net.sourceforge.plantuml.gantt.GanttDiagram;
+import net.sourceforge.plantuml.gantt.time.TimePoint;
+import net.sourceforge.plantuml.gantt.ulang.VerbPhraseAction;
+import net.sourceforge.plantuml.klimt.color.HColor;
+
+public class SubjectDaysAsDates implements Subject<GanttDiagram> {
+
+	public static final Subject<GanttDiagram> ME = new SubjectDaysAsDates();
+
+	private SubjectDaysAsDates() {
+	}
+
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionSubject() {
+		return new UBrexOr(toUBrexB(), toUBrexE(), andUBrex(), thenUBrex());
+	}
+
+	private UBrexPart toUBrexB() {
+		return UBrexConcat.build( //
+				TimeResolution.toUbrexB_YYYY_MM_DD("BYEAR1", "BMONTH1", "BDAY1"), //
+				Words.uexactly(Words.TO), //
+				UBrexLeaf.spaceOneOrMore(), //
+				TimeResolution.toUbrexB_YYYY_MM_DD("BYEAR2", "BMONTH2", "BDAY2") //
+		);
+	}
+
+	private UBrexPart toUBrexE() {
+		return UBrexConcat.build( //
+				new UBrexLeaf("「dD」+"), //
+				new UBrexNamed("ECOUNT1", new UBrexLeaf("〇+〴d")), Words.uexactly(Words.TO), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexLeaf("「dD」+"), //
+				new UBrexNamed("ECOUNT2", new UBrexLeaf("〇+〴d")) //
+		);
+	}
+
+	private UBrexPart andUBrex() {
+		return UBrexConcat.build( //
+				TimeResolution.toUbrexB_YYYY_MM_DD("BYEAR3", "BMONTH3", "BDAY3"), //
+				Words.uexactly(Words.AND), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexNamed("COUNT_AND", new UBrexLeaf("〇+〴d")), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexLeaf("day〇?s") //
+		);
+	}
+
+	private UBrexPart thenUBrex() {
+		return UBrexConcat.build( //
+				new UBrexLeaf("then"), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexNamed("COUNT_THEN", new UBrexLeaf("〇+〴d")), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexLeaf("day〇?s") //
+		);
+	}
+
+	@Override
+	public Failable<DaysAsDates> getMe(GanttDiagram project, UMatcher arg) {
+		final String countAnd = arg.get("COUNT_AND", 0);
+		if (countAnd != null) {
+			final TimePoint date3 = getDate(project, arg, "3");
+			final int nb = Integer.parseInt(countAnd);
+			return Failable.ok(new DaysAsDates(project, date3.toDay(), nb));
+		}
+		final String countThen = arg.get("COUNT_THEN", 0);
+		if (countThen != null) {
+			final TimePoint date3 = project.getThenDate();
+			final int nb = Integer.parseInt(countThen);
+			return Failable.ok(new DaysAsDates(project, date3.toDay(), nb));
+		}
+		final TimePoint date1 = getDate(project, arg, "1");
+		final TimePoint date2 = getDate(project, arg, "2");
+		return Failable.ok(new DaysAsDates(date1.toDay(), date2.toDay()));
+	}
+
+	private TimePoint getDate(GanttDiagram project, UMatcher arg, String suffix) {
+		if (arg.get("BDAY" + suffix, 0) != null) {
+			final int day = Integer.parseInt(arg.get("BDAY" + suffix, 0));
+			final int month = Integer.parseInt(arg.get("BMONTH" + suffix, 0));
+			final int year = Integer.parseInt(arg.get("BYEAR" + suffix, 0));
+			return TimePoint.ofStartOfDay(year, month, day);
+		}
+		if (arg.get("ECOUNT" + suffix, 0) != null) {
+			final int day = Integer.parseInt(arg.get("ECOUNT" + suffix, 0));
+			return project.getMinTimePoint().addDays(day);
+		}
+		throw new IllegalStateException();
+	}
+
+	@Override
+	public Collection<VerbPhraseAction> getVerbPhrases() {
+		final List<VerbPhraseAction> result = new ArrayList<>();
+		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementClose()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				for (LocalDate d : (DaysAsDates) subject)
+					project.closeDayAsDate(d, (String) complement);
+
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementOpen()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				for (LocalDate d : (DaysAsDates) subject)
+					project.openDayAsDate(d, (String) complement);
+
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final HColor color = ((CenterBorderColor) complement).getCenter();
+				for (LocalDate d : (DaysAsDates) subject)
+					project.colorDay(d, color);
+
+				return CommandExecutionResult.ok();
+			}
+		});
+
+		result.add(new VerbPhraseAction(Verbs.isOrAreNamed, new ComplementNamed()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+				final String name = (String) complement;
+				final DaysAsDates days = (DaysAsDates) subject;
+				for (LocalDate d : days)
+					project.nameDay(d, name);
+
+				return CommandExecutionResult.ok();
+			}
+		});
+
+//		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {
+//			@Override
+//			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+//				final HColor color = ((CenterBorderColor) complement).getCenter();
+//				project.colorDay((LocalDate) subject, color);
+//				return CommandExecutionResult.ok();
+//			}
+//		});
+
+		return result;
+
+	}
+
+}

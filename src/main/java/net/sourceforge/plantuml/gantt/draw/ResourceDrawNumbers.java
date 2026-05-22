@@ -1,0 +1,145 @@
+/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.gantt.draw;
+
+import net.sourceforge.plantuml.gantt.core.Resource;
+import net.sourceforge.plantuml.gantt.data.GanttModelData;
+import net.sourceforge.plantuml.gantt.data.TimelineStyleData;
+import net.sourceforge.plantuml.gantt.time.TimePoint;
+import net.sourceforge.plantuml.gantt.timescale.TimeScale;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
+
+public class ResourceDrawNumbers implements ResourceDraw {
+
+	private final Resource res;
+	private final TimeScale timeScale;
+	private final double y;
+	private final TimePoint min;
+	private final TimePoint maxTimePointPrintedEndOfDay;
+	private final GanttModelData ganttModelData;
+	private final TimelineStyleData timelineStyleData;
+
+	public ResourceDrawNumbers(GanttModelData ganttModelData, TimelineStyleData timelineStyleData, Resource res,
+			TimeScale timeScale, double y, TimePoint min, TimePoint maxTimePointPrintedEndOfDay) {
+		this.res = res;
+		this.timeScale = timeScale;
+		this.y = y;
+		this.min = min;
+		this.maxTimePointPrintedEndOfDay = maxTimePointPrintedEndOfDay;
+		this.ganttModelData = ganttModelData;
+		this.timelineStyleData = timelineStyleData;
+	}
+
+	public void drawU(UGraphic ug) {
+		final TextBlock title = Display.getWithNewlines(timelineStyleData.getPragma(), res.getName())
+				.create(getFontConfiguration(13), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+		title.drawU(ug);
+		final ULine line = ULine.hline(timeScale.getPosition(maxTimePointPrintedEndOfDay) - timeScale.getPosition(min));
+		ug.apply(HColors.BLACK).apply(UTranslate.dy(title.calculateDimension(ug.getStringBounder()).getHeight()))
+				.draw(line);
+
+		double startingPosition = -1;
+		int totalLoad = 0;
+		boolean isRed = false;
+		for (TimePoint i = min; i.compareTo(maxTimePointPrintedEndOfDay) <= 0; i = i.increment()) {
+			final boolean isBreaking = timeScale.isBreaking(i);
+			final int load = ganttModelData.getLoadForResource(res, i);
+			if (load > 100)
+				isRed = true;
+			totalLoad += load;
+			if (isBreaking) {
+				if (totalLoad > 0) {
+					final TextBlock value = getTextBlock(totalLoad, isRed);
+					if (startingPosition == -1)
+						startingPosition = timeScale.getPosition(i);
+					final double endingPosition = timeScale.getPosition(i) + timeScale.getWidth(i);
+					final double start = (startingPosition + endingPosition) / 2
+							- value.calculateDimension(ug.getStringBounder()).getWidth() / 2;
+					value.drawU(ug.apply(new UTranslate(start, 16)));
+				}
+				startingPosition = -1;
+				totalLoad = 0;
+				isRed = false;
+			} else {
+				if (startingPosition == -1)
+					startingPosition = timeScale.getPosition(i);
+			}
+		}
+
+	}
+
+	private TextBlock getTextBlock(int totalLoad, boolean isRed) {
+		final Display display = Display.getWithNewlines(timelineStyleData.getSkinParam().getPragma(), "" + totalLoad);
+		final FontConfiguration fontConfiguration = getFontConfiguration(isRed);
+		return display.create(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+	}
+
+	private FontConfiguration getFontConfiguration(boolean isRed) {
+		return getFontConfiguration(9, isRed ? HColors.RED : HColors.BLACK);
+	}
+
+	private FontConfiguration getFontConfiguration(int size) {
+		return getFontConfiguration(size, HColors.BLACK);
+	}
+
+	private FontConfiguration getFontConfiguration(int size, HColor color) {
+		final UFont font = UFontFactory.serif(size);
+		return FontConfiguration.create(font, color, color, null);
+	}
+
+	@Override
+	public double getHeight(StringBounder stringBounder) {
+		return 16 * 2;
+	}
+
+	@Override
+	public final double getY() {
+		return y;
+	}
+
+}
