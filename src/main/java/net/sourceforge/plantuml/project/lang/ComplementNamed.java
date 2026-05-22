@@ -43,15 +43,9 @@ import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementNamed implements Something<GanttDiagram> {
-
-	public IRegex toRegex(String suffix) {
-		return new RegexLeaf(1, "COMPLEMENT" + suffix, "\\[([^\\[\\]]+)\\]");
-	}
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {

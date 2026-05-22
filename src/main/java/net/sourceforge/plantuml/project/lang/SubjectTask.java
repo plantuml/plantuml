@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.project.lang;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -66,12 +65,6 @@ import net.sourceforge.plantuml.project.core.TaskCode;
 import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.project.time.TimePoint;
 import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexOptional;
-import net.sourceforge.plantuml.regex.RegexOr;
-import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.url.Url;
@@ -386,23 +379,6 @@ public class SubjectTask implements Subject<GanttDiagram> {
 
 	}
 
-	public IRegex toRegex() {
-		return new RegexOr( //
-				new RegexLeaf(1, "IT", "(it)"), //
-				new RegexConcat(new RegexLeaf(1, "THEN", "(then[%s]+)?"), //
-						new RegexLeaf(1, "SUBJECT", REGEX_TASK_CODE), //
-						StereotypePattern.optional("STEREOTYPE"), //
-						new RegexOptional(new RegexConcat(//
-								Words.exactly(Words.AS), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf(1, "SHORTNAME", REGEX_TASK_CODE))), //
-						new RegexOptional(new RegexConcat( //
-								Words.exactly(Words.ON), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf(1, "RESOURCE", "((?:\\{[^{}]+\\}[%s]*)+)") //
-						))));
-	}
-
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionSubject() {
 		return new UBrexOr( //
@@ -430,7 +406,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<Task> ugetMe(GanttDiagram gantt, UMatcher arg) {
+	public Failable<Task> getMe(GanttDiagram gantt, UMatcher arg) {
 		final Task result;
 		if (arg.get("IT", 0) != null) {
 			result = gantt.getIt();
@@ -469,57 +445,6 @@ public class SubjectTask implements Subject<GanttDiagram> {
 		}
 		return Failable.ok(result);
 
-	}
-
-	public Failable<Task> getMe(GanttDiagram gantt, RegexResult arg) {
-		final Task result;
-		if (arg.get("IT", 0) != null) {
-			result = gantt.getIt();
-			if (result == null)
-				return Failable.error("Not sure what are you refering to?");
-		} else {
-			final String subject = arg.get("SUBJECT", 0);
-			final String shortName = arg.get("SHORTNAME", 0);
-			final String then = arg.get("THEN", 0);
-			final String stereotype = arg.get("STEREOTYPE", 0);
-
-			final TaskCode code = TaskCode.fromIdAndDisplay(shortName, subject);
-			result = gantt.getOrCreateTask(code, then != null);
-
-			if (stereotype != null)
-				result.setStereotype(Stereotype.build(arg.get("STEREOTYPE", 0)));
-
-			gantt.setIt(result);
-		}
-
-		if (result == null)
-			throw new IllegalStateException();
-
-		final String resource = arg.get("RESOURCE", 0);
-		if (resource != null) {
-			for (final StringTokenizer st = new StringTokenizer(resource, "{}"); st.hasMoreTokens();) {
-				final String part = st.nextToken().trim();
-				if (part.length() > 0) {
-					final boolean ok = gantt.affectResource(result, part);
-					if (ok == false)
-						return Failable.error("Bad argument for resource");
-
-				}
-			}
-
-		}
-		return Failable.ok(result);
-	}
-
-	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
-		return Arrays.asList(new SentenceRequire(), new SentenceTaskStarts(), new SentenceTaskStartsWithColor(),
-				new SentenceTaskStartsOnlyRelative(), new SentenceTaskStartsAbsolute(), new SentenceHappens(),
-				new SentenceHappensDate(), new SentenceEnds(), new SentenceTaskEndsOnlyRelative(),
-				new SentenceTaskEndsAbsolute(), new SentenceIsColored(), new SentenceIsColoredForCompletion(),
-				new SentenceIsDeleted(), new SentenceIsForTask(), new SentenceLinksTo(), new SentenceOccurs(),
-				new SentenceDisplayOnSameRowAs(), new SentencePausesAbsoluteDate(),
-				new SentencePausesAbsoluteIntervals(), new SentencePausesAbsoluteIntervalsSmart(),
-				new SentencePausesDayOfWeek(), new SentenceIsDisplayedAs());
 	}
 
 }

@@ -46,6 +46,10 @@ public class RegexResult {
 	private final Map<String, RegexPartialMatch> data;
 	private final UMatcher matcher;
 
+	public UMatcher getUMatcher() {
+		return matcher;
+	}
+
 	public RegexResult(Map<String, RegexPartialMatch> data) {
 		this.data = Collections.unmodifiableMap(data);
 		this.matcher = null;

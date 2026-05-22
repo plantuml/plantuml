@@ -85,7 +85,7 @@ public class NaturalGanttCommand implements Command<GanttDiagram> {
 
 		final Deque<VerbPhraseAction> candidates = new ArrayDeque<VerbPhraseAction>(getVerbPhrases());
 
-		final Failable<? extends Object> subjectResult = subject.ugetMe(diagram, matcherSubject);
+		final Failable<? extends Object> subjectResult = subject.getMe(diagram, matcherSubject);
 		if (subjectResult.isFail())
 			return CommandExecutionResult.error(subjectResult.getError());
 

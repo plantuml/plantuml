@@ -53,11 +53,6 @@ import net.sourceforge.plantuml.url.UrlMode;
 
 public class ComplementUrl implements Something<GanttDiagram> {
 
-	public IRegex toRegex(String suffix) {
-		return new RegexConcat( //
-				new RegexLeaf(12, "COMPLEMENT" + suffix, "(" + UrlBuilder.getRegexp() + ")")); //
-	}
-
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
 		return new UBrexNamed("COMPLEMENT", new UBrexLeaf("[[〄>]]")); //

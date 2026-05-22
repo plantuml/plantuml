@@ -40,21 +40,14 @@ import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.project.Failable;
-import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexResult;
 
 public interface Something<D extends Diagram> {
 
-	public IRegex toRegex(String suffix);
-
 	public Failable<? extends Object> getMe(D diagram, RegexResult arg, String suffix);
 
-	default public Failable<? extends Object> ugetMe(D diagram, UMatcher arg) {
-		throw new IllegalArgumentException("wip8542 " + getClass());
-	}
+	public Failable<? extends Object> ugetMe(D diagram, UMatcher arg);
 
-	default public UBrexPart toUnicodeBracketedExpressionComplement() {
-		throw new IllegalArgumentException("wip8541 " + getClass());
-	}
+	public UBrexPart toUnicodeBracketedExpressionComplement();
 
 }

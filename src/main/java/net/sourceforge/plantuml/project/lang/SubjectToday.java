@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.project.lang;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -50,10 +49,6 @@ import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.Today;
 import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class SubjectToday implements Subject<GanttDiagram> {
 
@@ -67,18 +62,8 @@ public class SubjectToday implements Subject<GanttDiagram> {
 		return new UBrexLeaf("today");
 	}
 
-	public IRegex toRegex() {
-		return new RegexConcat( //
-				new RegexLeaf("today") //
-		);
-	}
-
-	public Failable<Today> getMe(GanttDiagram project, RegexResult arg) {
-		return Failable.ok(new Today());
-	}
-
 	@Override
-	public Failable<Today> ugetMe(GanttDiagram project, UMatcher arg) {
+	public Failable<Today> getMe(GanttDiagram project, UMatcher arg) {
 		return Failable.ok(new Today());
 	}
 
@@ -105,41 +90,6 @@ public class SubjectToday implements Subject<GanttDiagram> {
 		});
 
 		return result;
-
-	}
-
-	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
-		return Arrays.asList(new InColor(), new IsDate());
-	}
-
-	class InColor extends SentenceSimple<GanttDiagram> {
-
-		public InColor() {
-			super(SubjectToday.this, Verbs.isColored.getRegex(), new ComplementInColors());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			final Today task = (Today) subject;
-			final CenterBorderColor colors = (CenterBorderColor) complement;
-			project.setTodayColors(colors);
-			return CommandExecutionResult.ok();
-
-		}
-
-	}
-
-	class IsDate extends SentenceSimple<GanttDiagram> {
-
-		public IsDate() {
-			super(SubjectToday.this, Verbs.is.getRegex(), ComplementDate.any());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			final LocalDate date = (LocalDate) complement;
-			return project.setToday(date);
-		}
 
 	}
 

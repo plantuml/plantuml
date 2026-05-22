@@ -51,10 +51,6 @@ import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementInColors2 implements Something<GanttDiagram> {
 
-	public IRegex toRegex(String suffix) {
-		return new RegexLeaf(2, "COMPLEMENT" + suffix, "colou?red[%s]+(?:in[%s]+)?(#?\\w+)(?:/(#?\\w+))?");
-	}
-
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
 		return UBrexConcat.build( //

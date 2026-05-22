@@ -56,6 +56,12 @@ class CaptureEntry {
 		return new CaptureEntry(prefix + "/" + key, value);
 	}
 
+	public CaptureEntry withoutPrefixedKey(String prefix) {
+		if (key.startsWith(prefix + "/") == false)
+			return null;
+		return new CaptureEntry(key.substring(prefix.length() + 1), value);
+	}
+
 	@Override
 	public String toString() {
 		return key + "=" + value;

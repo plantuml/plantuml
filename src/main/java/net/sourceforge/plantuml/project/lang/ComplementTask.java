@@ -35,6 +35,10 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
@@ -44,9 +48,21 @@ import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementTask implements Something<GanttDiagram> {
 
-	public IRegex toRegex(String suffix) {
-		return new RegexLeaf(1, "COMPLEMENT" + suffix, SubjectTask.REGEX_TASK_CODE);
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+		return new UBrexNamed("COMPLEMENT",  SubjectTask.taskCode("FOO"));
 	}
+	
+	@Override
+	public Failable<Task> ugetMe(GanttDiagram gantt, UMatcher arg) {
+		final String code = arg.get("COMPLEMENT", 0);
+		final Task task = gantt.getExistingTask(code);
+		if (task == null)
+			return Failable.error("No such task " + code);
+		return Failable.ok(task);
+	}
+
+
 
 	public Failable<Task> getMe(GanttDiagram gantt, RegexResult arg, String suffix) {
 		final String code = arg.get("COMPLEMENT" + suffix, 0);

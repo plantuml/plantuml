@@ -47,10 +47,6 @@ import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementDeleted implements Something<GanttDiagram> {
 
-	public IRegex toRegex(String suffix) {
-		return new RegexLeaf("deleted");
-	}
-
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
 		return new UBrexLeaf("deleted");

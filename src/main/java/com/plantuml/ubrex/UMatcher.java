@@ -48,6 +48,8 @@ public interface UMatcher {
 
 	public List<String> findFirstValuesByKeyPrefix(String keyPrefix);
 
+	public Capture extractByPrefix(String key);
+
 	public default String get(String key, int num) {
 		final List<String> tmp = getCapture(key);
 		if (num >= tmp.size())

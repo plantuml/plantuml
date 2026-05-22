@@ -37,18 +37,24 @@ package net.sourceforge.plantuml.project.command;
 
 import java.time.LocalDate;
 
+import com.plantuml.ubrex.Capture;
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.UnicodeBracketedExpression;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.lang.ComplementDate;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexPartialMatch;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandPrintBetween extends SingleLineCommand2<GanttDiagram> {
+public class CommandPrintBetween extends UBrexSingleLineCommand2<GanttDiagram> {
 
 	private static final ComplementDate pattern = ComplementDate.any();
 
@@ -56,26 +62,43 @@ public class CommandPrintBetween extends SingleLineCommand2<GanttDiagram> {
 		super(getRegexConcat());
 	}
 
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandPrintBetween.class.getName(), RegexLeaf.start(), //
+	static UnicodeBracketedExpression getRegexConcat() {
+		return UBrexConcat.build(
 				// Print between 2020/02/14 and 2020/03/04
-				new RegexLeaf("print"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("between"), //
-				RegexLeaf.spaceOneOrMore(), //
-				pattern.toRegex("START"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("and"), //
-				RegexLeaf.spaceOneOrMore(), //
-				pattern.toRegex("END"), //
-				RegexLeaf.end());
+				new UBrexLeaf("print"), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexLeaf("between"), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexNamed("START", pattern.toUnicodeBracketedExpressionComplement()), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexLeaf("and"), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexNamed("END", pattern.toUnicodeBracketedExpressionComplement()), //
+				UBrexLeaf.end());
 	}
+
+//	static IRegex getRegexConcatOld() {
+//		return RegexConcat.build(CommandPrintBetween.class.getName(), RegexLeaf.start(), //
+//				// Print between 2020/02/14 and 2020/03/04
+//				new RegexLeaf("print"), //
+//				RegexLeaf.spaceOneOrMore(), //
+//				new RegexLeaf("between"), //
+//				RegexLeaf.spaceOneOrMore(), //
+//				pattern.toRegex("START"), //
+//				RegexLeaf.spaceOneOrMore(), //
+//				new RegexLeaf("and"), //
+//				RegexLeaf.spaceOneOrMore(), //
+//				pattern.toRegex("END"), //
+//				RegexLeaf.end());
+//	}
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-		final LocalDate start = pattern.getMe(diagram, arg, "START").get();
-		final LocalDate end = pattern.getMe(diagram, arg, "END").get();
+		final Capture startCapture = arg.getUMatcher().extractByPrefix("START");
+		final Capture endCapture = arg.getUMatcher().extractByPrefix("END");
+		final LocalDate start = pattern.getMe(diagram, startCapture).get();
+		final LocalDate end = pattern.getMe(diagram, endCapture).get();
 		diagram.setPrintInterval(start, end);
 		return CommandExecutionResult.ok();
 	}

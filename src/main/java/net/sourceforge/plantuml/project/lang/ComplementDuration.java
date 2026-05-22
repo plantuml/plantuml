@@ -52,13 +52,6 @@ import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementDuration implements Something<GanttDiagram> {
 
-	public IRegex toRegex(String suffix) {
-		return new RegexConcat( //
-				new RegexLeaf(4, "COMPLEMENT" + suffix, "(\\d+)[%s]+(hour|day|week|month)s?" + //
-						"(?:[%s]+and[%s]+(\\d+)[%s]+(hour|day|week|month)s?)?" //
-				)); //
-	}
-
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
 		return UBrexConcat.build( //

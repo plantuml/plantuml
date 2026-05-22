@@ -75,4 +75,8 @@ public class ChallengeResult {
 		return capture;
 	}
 
+	public Capture extractByPrefix(String key) {
+		return capture.extractByPrefix(key);
+	}
+
 }

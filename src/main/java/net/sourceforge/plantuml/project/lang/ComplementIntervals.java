@@ -48,33 +48,13 @@ import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.TimePoint;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementIntervals implements Something<GanttDiagram> {
 
-	public IRegex toRegex(String suffix) {
-		return new RegexOr(toRegexB(suffix), toRegexE(suffix));
-	}
-
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
 		return new UBrexOr(toRegexB(), toRegexE());
-	}
-
-	private IRegex toRegexB(String suffix) {
-		final DayPattern dayPattern1 = new DayPattern("1");
-		final DayPattern dayPattern2 = new DayPattern("2");
-		return new RegexConcat( //
-				dayPattern1.toRegex(), //
-				Words.exactly(Words.TO), //
-				Words.zeroOrMore(Words.THE), //
-				RegexLeaf.spaceOneOrMore(), //
-				dayPattern2.toRegex() //
-		);
 	}
 
 	private UBrexPart toRegexB() {
@@ -89,17 +69,6 @@ public class ComplementIntervals implements Something<GanttDiagram> {
 		);
 	}
 
-	private IRegex toRegexE(String suffix) {
-		return new RegexConcat( //
-				new RegexLeaf("[dD]\\+"), //
-				new RegexLeaf(1, "ECOUNT1" + suffix, "([\\d]+)"), //
-				Words.exactly(Words.TO), //
-				Words.zeroOrMore(Words.THE), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("[dD]\\+"), //
-				new RegexLeaf(1, "ECOUNT2" + suffix, "([\\d]+)") //
-		);
-	}
 
 	private UBrexPart toRegexE() {
 		return UBrexConcat.build( //

@@ -18,18 +18,28 @@ import net.sourceforge.plantuml.preproc.Defines;
 /*
  * 
 
-You can use this file to put a test you are working on.
-Here is a simple example:
+{
+  "sha1": "h4hukjrsgvm9hjs2qjy7lpj8vgoazdp",
+  "insertion": {
+    "when": "2024-06-03T18:59:29.144Z",
+    "url": "https://github.com/plantuml/plantuml/issues/1664",
+    "user": "plantuml@gmail.com"
+  },
+  "humhash": "cisede-80-vove445"
+}
+@startgantt
 
-@startuml
-alice->bob: this is a test
-@enduml
+Print between 2020-09-01 and 2020-09-30
+Printscale weekly
 
-So you can edit this file, but please do not push any modification in the "main" branch.
-Put your own tests on your own branches.
+Project starts 2020-08-01
+[A] starts 2020-08-01 and lasts 1 week
+[B] starts 2020-09-01 and lasts 2 weeks
 
-However, if your test are interesting, you can add them to the "pdiff" project.
-See https://github.com/plantuml/pdiff
+@endgantt
+
+
+
 
  */
 public class Test_0 {

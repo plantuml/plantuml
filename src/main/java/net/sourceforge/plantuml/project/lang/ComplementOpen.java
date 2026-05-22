@@ -50,10 +50,6 @@ import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementOpen implements Something<GanttDiagram> {
 
-	public IRegex toRegex(String suffix) {
-		return new RegexLeaf(2, "OPEN" + suffix, "(opene?d?(?: for " + SubjectTask.REGEX_TASK_CODE + ")?)");
-	}
-
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
 		return new UBrexNamed("OPEN", //

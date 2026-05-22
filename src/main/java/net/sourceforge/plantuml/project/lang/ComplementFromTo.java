@@ -48,10 +48,6 @@ import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementFromTo implements Something<GanttDiagram> {
 
-	public IRegex toRegex(String suffix) {
-		return new RegexLeaf(2, "COMPLEMENT" + suffix, "from[%s]+\\[([^\\[\\]]+)\\][%s]+to[%s]+\\[([^\\[\\]]+)\\]");
-	}
-
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
 		return UBrexConcat.build( //

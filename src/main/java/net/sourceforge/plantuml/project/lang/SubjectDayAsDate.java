@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.project.lang;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -53,11 +52,6 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexOr;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class SubjectDayAsDate implements Subject<GanttDiagram> {
 
@@ -99,7 +93,7 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<LocalDate> ugetMe(GanttDiagram project, UMatcher arg) {
+	public Failable<LocalDate> getMe(GanttDiagram project, UMatcher arg) {
 		if (arg.get("BDAY", 0) != null)
 			return Failable.ok(resultB(arg));
 
@@ -107,17 +101,6 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 			return Failable.ok(resultE(project, arg));
 
 		throw new IllegalStateException();
-	}
-
-	public Failable<LocalDate> getMe(GanttDiagram project, RegexResult arg) {
-		if (arg.get("BDAY", 0) != null)
-			return Failable.ok(resultB(arg));
-
-		if (arg.get("ECOUNT", 0) != null)
-			return Failable.ok(resultE(project, arg));
-
-		throw new IllegalStateException();
-
 	}
 
 	private LocalDate resultB(UMatcher arg) {
@@ -125,28 +108,6 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 		final int month = Integer.parseInt(arg.get("BMONTH", 0));
 		final int year = Integer.parseInt(arg.get("BYEAR", 0));
 		return LocalDate.of(year, month, day);
-	}
-
-	private LocalDate resultB(RegexResult arg) {
-		final int day = Integer.parseInt(arg.get("BDAY", 0));
-		final int month = Integer.parseInt(arg.get("BMONTH", 0));
-		final int year = Integer.parseInt(arg.get("BYEAR", 0));
-		return LocalDate.of(year, month, day);
-	}
-
-	private LocalDate resultE(GanttDiagram system, RegexResult arg) {
-		final String type = arg.get("ETYPE", 0).toUpperCase();
-		final String operation = arg.get("EOPERATION", 0);
-		int day = Integer.parseInt(arg.get("ECOUNT", 0));
-		if ("-".equals(operation))
-			day = -day;
-		if ("D".equals(type))
-			return system.getMinDay().plusDays(day);
-		if ("T".equals(type))
-			return system.getToday().plusDays(day);
-		if ("E".equals(type))
-			return system.getMaxDay().plusDays(day);
-		throw new IllegalStateException();
 	}
 
 	private LocalDate resultE(GanttDiagram system, UMatcher arg) {
@@ -162,66 +123,6 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 		if ("E".equals(type))
 			return system.getMaxDay().plusDays(day);
 		throw new IllegalStateException();
-	}
-
-	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
-		return Arrays.asList(new Close(), new Open(), new InColor());
-	}
-
-	class Close extends SentenceSimple<GanttDiagram> {
-
-		public Close() {
-			super(SubjectDayAsDate.this, Verbs.isOrAre.getRegex(), new ComplementClose());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			project.closeDayAsDate((LocalDate) subject, (String) complement);
-			return CommandExecutionResult.ok();
-		}
-	}
-
-	class Open extends SentenceSimple<GanttDiagram> {
-		public Open() {
-			super(SubjectDayAsDate.this, Verbs.isOrAre.getRegex(), new ComplementOpen());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			project.openDayAsDate((LocalDate) subject, (String) complement);
-			return CommandExecutionResult.ok();
-		}
-	}
-
-	class InColor extends SentenceSimple<GanttDiagram> {
-
-		public InColor() {
-			super(SubjectDayAsDate.this, Verbs.isOrAre.getRegex(), new ComplementInColors2());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			final HColor color = ((CenterBorderColor) complement).getCenter();
-			project.colorDay((LocalDate) subject, color);
-			return CommandExecutionResult.ok();
-		}
-
-	}
-
-	public IRegex toRegex() {
-		return new RegexOr(toRegexB(), toRegexE());
-	}
-
-	private IRegex toRegexB() {
-		return TimeResolution.toRegexB_YYYY_MM_DD("BYEAR", "BMONTH", "BDAY");
-	}
-
-	private IRegex toRegexE() {
-		return new RegexConcat( //
-				new RegexLeaf(1, "ETYPE", "([dDtTeE])"), //
-				new RegexLeaf(1, "EOPERATION", "([-+])"), //
-				new RegexLeaf(1, "ECOUNT", "([\\d]+)") //
-		);
 	}
 
 	private UBrexPart toUbrexB() {

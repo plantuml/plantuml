@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.project.lang;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -56,10 +55,6 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Resource;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexOr;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class SubjectResource implements Subject<GanttDiagram> {
 
@@ -68,21 +63,8 @@ public class SubjectResource implements Subject<GanttDiagram> {
 	private SubjectResource() {
 	}
 
-	public Failable<Resource> getMe(GanttDiagram gantt, RegexResult arg) {
-		if (arg.get("THEY", 0) != null) {
-			final Resource they = gantt.getThey();
-			if (they == null)
-				return Failable.error("Not sure who are you refering to?");
-			return Failable.ok(they);
-		}
-		final String resource = arg.get("RESOURCE", 0);
-		final Resource result = gantt.getResource(resource);
-		gantt.setThey(result);
-		return Failable.ok(result);
-	}
-
 	@Override
-	public Failable<Resource> ugetMe(GanttDiagram gantt, UMatcher arg) {
+	public Failable<Resource> getMe(GanttDiagram gantt, UMatcher arg) {
 		if (arg.get("THEY", 0) != null) {
 			final Resource they = gantt.getThey();
 			if (they == null)
@@ -199,18 +181,6 @@ public class SubjectResource implements Subject<GanttDiagram> {
 
 	}
 
-	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
-		return Arrays.asList(new IsOffDate(), new IsOffDates(), new IsOffDayOfWeek(), new IsOnDate(), new IsOnDates(),
-				new IsOffBeforeDate(), new IsOffAfterDate(), new WorksOn());
-	}
-
-	public IRegex toRegex() {
-		return new RegexOr( //
-				new RegexLeaf(1, "THEY", "(she|he|they)"), //
-				new RegexLeaf(1, "RESOURCE", "\\{([^{}]+)\\}") //
-		);
-	}
-
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionSubject() {
 		return new UBrexOr( //
@@ -219,142 +189,6 @@ public class SubjectResource implements Subject<GanttDiagram> {
 						new UBrexLeaf("{"), //
 						new UBrexNamed("RESOURCE", new UBrexLeaf("〇+「〤{}」")), //
 						new UBrexLeaf("}")));
-	}
-
-	public class WorksOn extends SentenceSimple<GanttDiagram> {
-
-		public WorksOn() {
-			super(SubjectResource.this, Verbs.worksOn.getRegex(), new ComplementTask());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
-			final Resource resource = (Resource) subject;
-			final Task task = (Task) complement;
-			task.addResource(resource, 100);
-			return CommandExecutionResult.ok();
-		}
-
-	}
-
-	public class IsOffBeforeDate extends SentenceSimple<GanttDiagram> {
-
-		public IsOffBeforeDate() {
-			super(SubjectResource.this, Verbs.isOff.getRegex(),
-					Words.concat(Words.exactly(Words.BEFORE), Words.zeroOrMore(Words.THE)), ComplementDate.any());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
-			final Resource resource = (Resource) subject;
-			final LocalDate when = (LocalDate) complement;
-			resource.setOffBeforeDate(when);
-			return CommandExecutionResult.ok();
-		}
-
-	}
-
-	public class IsOffAfterDate extends SentenceSimple<GanttDiagram> {
-
-		public IsOffAfterDate() {
-			super(SubjectResource.this, Verbs.isOff.getRegex(),
-					Words.concat(Words.exactly(Words.AFTER), Words.zeroOrMore(Words.THE)), ComplementDate.any());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
-			final Resource resource = (Resource) subject;
-			final LocalDate when = (LocalDate) complement;
-			resource.setOffAfterDate(when);
-			return CommandExecutionResult.ok();
-		}
-
-	}
-
-	public class IsOffDate extends SentenceSimple<GanttDiagram> {
-
-		public IsOffDate() {
-			super(SubjectResource.this, Verbs.isOff.getRegex(),
-					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), ComplementDate.any());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
-			final Resource resource = (Resource) subject;
-			final LocalDate when = (LocalDate) complement;
-			resource.addCloseDay(when);
-			return CommandExecutionResult.ok();
-		}
-
-	}
-
-	public class IsOffDates extends SentenceSimple<GanttDiagram> {
-
-		public IsOffDates() {
-			super(SubjectResource.this, Verbs.isOff.getRegex(),
-					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementIntervals());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
-			final Resource resource = (Resource) subject;
-			for (LocalDate when : (DaysAsDates) complement)
-				resource.addCloseDay(when);
-
-			return CommandExecutionResult.ok();
-		}
-
-	}
-
-	public class IsOffDayOfWeek extends SentenceSimple<GanttDiagram> {
-
-		public IsOffDayOfWeek() {
-			super(SubjectResource.this, Verbs.isOff.getRegex(),
-					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementDayOfWeek());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
-			final Resource resource = (Resource) subject;
-			resource.addCloseDay(((DayOfWeek) complement));
-			return CommandExecutionResult.ok();
-		}
-
-	}
-
-	public class IsOnDate extends SentenceSimple<GanttDiagram> {
-
-		public IsOnDate() {
-			super(SubjectResource.this, Verbs.isOn.getRegex(),
-					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), ComplementDate.any());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
-			final Resource resource = (Resource) subject;
-			final LocalDate when = (LocalDate) complement;
-			resource.addForceOnDay(when);
-			return CommandExecutionResult.ok();
-		}
-
-	}
-
-	public class IsOnDates extends SentenceSimple<GanttDiagram> {
-
-		public IsOnDates() {
-			super(SubjectResource.this, Verbs.isOn.getRegex(),
-					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementIntervals());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
-			final Resource resource = (Resource) subject;
-			for (LocalDate when : (DaysAsDates) complement)
-				resource.addForceOnDay(when);
-
-			return CommandExecutionResult.ok();
-		}
-
 	}
 
 }

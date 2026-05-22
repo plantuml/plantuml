@@ -44,17 +44,12 @@ import com.plantuml.ubrex.builder.UBrexNamed;
 import com.plantuml.ubrex.builder.UBrexOptional;
 import com.plantuml.ubrex.builder.UBrexPart;
 
-import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.project.time.TimePoint;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementIntervalsSmart extends AbstractComplementTaskInstant {
@@ -116,34 +111,6 @@ public class ComplementIntervalsSmart extends AbstractComplementTaskInstant {
 	}
 
 
-	@DuplicateCode(reference = "ComplementBeforeOrAfterOrAtTaskStartOrEnd")
-	public IRegex toRegex(String suffix) {
-		final DayPattern dayPattern1 = new DayPattern("1");
-		return new RegexConcat( //
-				dayPattern1.toRegex(), //
-				Words.exactly(Words.TO), //
-				RegexLeaf.spaceZeroOrMore(), //
-				//
-				new RegexOptional(new RegexConcat( //
-						new RegexLeaf(1, "COMPLEMENT_NB1" + suffix, "(\\d+)"), //
-						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf(1, "COMPLEMENT_WORKING1" + suffix, "(working[%s]+)?"),
-						new RegexLeaf(1, "COMPLEMENT_DAY_OR_WEEK1" + suffix, "(day|week)s?"),
-						new RegexOptional(new RegexConcat(//
-								Words.exactly(Words.AND), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf(1, "COMPLEMENT_NB2" + suffix, "(\\d+)"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf(1, "COMPLEMENT_WORKING2" + suffix, "(working[%s]+)?"),
-								new RegexLeaf(1, "COMPLEMENT_DAY_OR_WEEK2" + suffix, "(day|week)s?"))),
-						RegexLeaf.spaceOneOrMore(), //
-						Words.namedOneOf("COMPLEMENT_BEFORE_OR_AFTER" + suffix, Words.BEFORE, Words.AFTER))),
-				//
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(1, "COMPLEMENT_CODE_OTHER" + suffix, SubjectTask.REGEX_TASK_CODE + ".?s"), //
-				RegexLeaf.spaceOneOrMore(), //
-				Words.namedOneOf("COMPLEMENT_START_OR_END" + suffix, Words.START, Words.END));
-	}
 
 	public Failable<DaysAsDates> getMe(GanttDiagram system, RegexResult arg, String suffix) {
 		final LocalDate d1 = new DayPattern("1").getDay(arg);

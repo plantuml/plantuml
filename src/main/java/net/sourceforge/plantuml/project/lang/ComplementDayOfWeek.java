@@ -51,11 +51,6 @@ import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementDayOfWeek implements Something<GanttDiagram> {
 
-	public IRegex toRegex(String suffix) {
-		return new RegexConcat( //
-				new RegexLeaf(1, "COMPLEMENT" + suffix, "(" + DayOfWeekUtils.getRegexString() + ")")); //
-	}
-
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
 		return new UBrexNamed("COMPLEMENT", DayOfWeekUtils.getUbrex());

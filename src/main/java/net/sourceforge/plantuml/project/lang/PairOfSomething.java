@@ -90,10 +90,5 @@ public class PairOfSomething<D extends Diagram> implements Something<D> {
 		return Failable.ok(result);
 	}
 
-	public IRegex toRegex(String suffix) {
-		final IRegex pattern1 = complement1.toRegex("A" + suffix);
-		final IRegex pattern2 = complement2.toRegex("B" + suffix);
-		return new RegexConcat(pattern1, new RegexLeaf("[%s]+"), pattern2);
-	}
 
 }

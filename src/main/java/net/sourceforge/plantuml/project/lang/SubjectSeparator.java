@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.project.lang;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -50,9 +49,6 @@ import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class SubjectSeparator implements Subject<GanttDiagram> {
@@ -62,26 +58,14 @@ public class SubjectSeparator implements Subject<GanttDiagram> {
 	private SubjectSeparator() {
 	}
 
-	public IRegex toRegex() {
-		return new RegexLeaf(0, "SUBJECT", "separator");
-	}
-
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionSubject() {
 		return new UBrexLeaf("separator");
 	}
 
-	public Failable<GanttDiagram> getMe(GanttDiagram project, RegexResult arg) {
-		return Failable.ok(project);
-	}
-
 	@Override
-	public Failable<GanttDiagram> ugetMe(GanttDiagram project, UMatcher arg) {
+	public Failable<GanttDiagram> getMe(GanttDiagram project, UMatcher arg) {
 		return Failable.ok(project);
-	}
-
-	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
-		return Arrays.asList(new JustBefore(), new JustAfter(), new Just());
 	}
 
 	@Override
@@ -123,58 +107,6 @@ public class SubjectSeparator implements Subject<GanttDiagram> {
 		});
 
 		return result;
-
-	}
-
-	class JustBefore extends SentenceSimple<GanttDiagram> {
-
-		public JustBefore() {
-			super(SubjectSeparator.this, Verbs.just.getRegex(), Words.exactly(Words.BEFORE), ComplementDate.any());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			final LocalDate day = (LocalDate) complement;
-			if (TeaVM.a())
-				assert project == subject;
-			project.addVerticalSeparatorBefore(day);
-			return CommandExecutionResult.ok();
-		}
-
-	}
-
-	class JustAfter extends SentenceSimple<GanttDiagram> {
-
-		public JustAfter() {
-			super(SubjectSeparator.this, Verbs.just.getRegex(), Words.exactly(Words.AFTER), ComplementDate.any());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			final LocalDate day = (LocalDate) complement;
-			if (TeaVM.a())
-				assert project == subject;
-			project.addVerticalSeparatorBefore(day.plusDays(1));
-			return CommandExecutionResult.ok();
-		}
-
-	}
-
-	class Just extends SentenceSimple<GanttDiagram> {
-
-		public Just() {
-			super(SubjectSeparator.this, Verbs.just.getRegex(), new ComplementBeforeOrAfterOrAtTaskStartOrEnd());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			final TaskInstant when = (TaskInstant) complement;
-
-			if (TeaVM.a())
-				assert project == subject;
-			project.addVerticalSeparatorBefore(when.getInstantPrecise().toDay());
-			return CommandExecutionResult.ok();
-		}
 
 	}
 

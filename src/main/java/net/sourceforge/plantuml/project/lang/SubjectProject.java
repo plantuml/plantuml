@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.project.lang;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -49,9 +48,6 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.ulang.VerbPhraseAction;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class SubjectProject implements Subject<GanttDiagram> {
@@ -69,8 +65,8 @@ public class SubjectProject implements Subject<GanttDiagram> {
 	@Override
 	public Collection<VerbPhraseAction> getVerbPhrases() {
 		final List<VerbPhraseAction> result = new ArrayList<>();
-		result.add(new VerbPhraseAction(Verbs.starts,
-				Words.uzeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT), ComplementDate.onlyAbsolute()) {
+		result.add(new VerbPhraseAction(Verbs.starts, Words.uzeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT),
+				ComplementDate.onlyAbsolute()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 				final LocalDate start = (LocalDate) complement;
@@ -83,38 +79,9 @@ public class SubjectProject implements Subject<GanttDiagram> {
 
 	}
 
-	public IRegex toRegex() {
-		return new RegexLeaf(0, "SUBJECT", "project");
-	}
-
-	public Failable<GanttDiagram> getMe(GanttDiagram project, RegexResult arg) {
-		return Failable.ok(project);
-	}
-
 	@Override
-	public Failable<GanttDiagram> ugetMe(GanttDiagram project, UMatcher arg) {
+	public Failable<GanttDiagram> getMe(GanttDiagram project, UMatcher arg) {
 		return Failable.ok(project);
-	}
-
-	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
-		return Arrays.asList(new Starts());
-	}
-
-	class Starts extends SentenceSimple<GanttDiagram> {
-
-		public Starts() {
-			super(SubjectProject.this, Verbs.starts.getRegex(),
-					Words.zeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT), ComplementDate.onlyAbsolute());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			final LocalDate start = (LocalDate) complement;
-			if (TeaVM.a())
-				assert project == subject;
-			return project.updateStartingPoint(start);
-		}
-
 	}
 
 }
