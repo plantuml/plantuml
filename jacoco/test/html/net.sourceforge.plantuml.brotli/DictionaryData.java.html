@@ -55,5 +55,12 @@ import java.nio.ByteBuffer;
 <span class="fc" id="L55">		unpackDictionaryData(dictionary, DATA0, DATA1, SKIP_FLIP);</span>
 <span class="fc" id="L56">		Dictionary.setData(dictionary.asReadOnlyBuffer());</span>
 <span class="fc" id="L57">	}</span>
+	
+	// Add this empty method. Calling it forces the JVM / GraalVM
+    // to load the class, thereby executing the static {} block above.
+    public static void init() {
+        // Intentionally left blank
+<span class="fc" id="L63">    }</span>
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

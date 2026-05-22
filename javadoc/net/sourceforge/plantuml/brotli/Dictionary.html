@@ -98,12 +98,7 @@ loadScripts(document, 'script');</script>
  <p>
  Dictionary content is loaded from binary resource when <a href="#getData()"><code>getData()</code></a> is
  executed for the first time. Consequently, it saves memory and CPU in case
- dictionary is not required.
-
- <p>
- One possible drawback is that multiple threads that need dictionary data may
- be blocked (only once in each classworld). To avoid this, it is enough to
- call <a href="#getData()"><code>getData()</code></a> proactively.</div>
+ dictionary is not required.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">

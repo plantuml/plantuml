@@ -17,44 +17,44 @@ import java.nio.ByteBuffer;
  * Dictionary content is loaded from binary resource when {@link #getData()} is
  * executed for the first time. Consequently, it saves memory and CPU in case
  * dictionary is not required.
- *
- * &lt;p&gt;
- * One possible drawback is that multiple threads that need dictionary data may
- * be blocked (only once in each classworld). To avoid this, it is enough to
- * call {@link #getData()} proactively.
  */
-<span class="nc" id="L26">public final class Dictionary {</span>
+<span class="nc" id="L21">public final class Dictionary {</span>
 	private static volatile ByteBuffer data;
-
-	private static class DataLoader {
-		static final boolean OK;
-
-		static {
-<span class="fc" id="L33">			boolean ok = true;</span>
-			try {
-<span class="fc" id="L35">				Class.forName(Dictionary.class.getPackage().getName() + &quot;.DictionaryData&quot;);</span>
-<span class="nc" id="L36">			} catch (Throwable ex) {</span>
-<span class="nc" id="L37">				ok = false;</span>
-<span class="fc" id="L38">			}</span>
-<span class="fc" id="L39">			OK = ok;</span>
-<span class="fc" id="L40">		}</span>
-	}
+<span class="fc" id="L23">	private static boolean initialized = false;</span>
 
 	public static void setData(ByteBuffer data) {
-<span class="pc bpc" id="L44" title="2 of 4 branches missed.">		if (!data.isDirect() || !data.isReadOnly()) {</span>
-<span class="nc" id="L45">			throw new BrotliRuntimeException(&quot;data must be a direct read-only byte buffer&quot;);</span>
+<span class="pc bpc" id="L26" title="2 of 4 branches missed.">		if (!data.isDirect() || !data.isReadOnly()) {</span>
+<span class="nc" id="L27">			throw new BrotliRuntimeException(&quot;data must be a direct read-only byte buffer&quot;);</span>
 		}
-<span class="fc" id="L47">		Dictionary.data = data;</span>
-<span class="fc" id="L48">	}</span>
+<span class="fc" id="L29">		Dictionary.data = data;</span>
+<span class="fc" id="L30">	}</span>
 
 	public static ByteBuffer getData() {
-<span class="fc bfc" id="L51" title="All 2 branches covered.">		if (data != null) {</span>
-<span class="fc" id="L52">			return data;</span>
+		// 1. If the buffer is already present, return it directly (fast path)
+<span class="fc bfc" id="L34" title="All 2 branches covered.">		if (data != null) {</span>
+<span class="fc" id="L35">			return data;</span>
 		}
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if (!DataLoader.OK) {</span>
+
+		// 2. Double-checked locking to initialize in a thread-safe manner at run-time
+<span class="fc" id="L39">		synchronized (Dictionary.class) {</span>
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">			if (!initialized) {</span>
+				try {
+					// Direct call to DictionaryData instead of using Class.forName.
+					// This allows GraalVM to detect the dependency and ensure DictionaryData 
+					// is included in the native binary.
+<span class="fc" id="L45">					net.sourceforge.plantuml.brotli.DictionaryData.init(); </span>
+<span class="nc" id="L46">				} catch (Throwable ex) {</span>
+					// Optional: logging or error handling
+<span class="fc" id="L48">				}</span>
+<span class="fc" id="L49">				initialized = true;</span>
+			}
+<span class="fc" id="L51">		}</span>
+
+		// 3. If it is still null after initialization, something went wrong
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if (data == null) {</span>
 <span class="nc" id="L55">			throw new BrotliRuntimeException(&quot;brotli dictionary is not set&quot;);</span>
 		}
-		/* Might have been set when {@link DictionaryData} was loaded. */
+
 <span class="fc" id="L58">		return data;</span>
 	}
 }
