@@ -2869,8 +2869,8 @@ Total Classes: 30
 "net.sourceforge.plantuml.sequencediagram.command" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.sequencediagram.command" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.sequencediagram.graphic" %lighten("red", 94) {
-Total Classes: 50
+class "net.sourceforge.plantuml.sequencediagram.graphic" %lighten("red", 92) {
+Total Classes: 51
 }
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "java.io"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "java.lang"
@@ -3090,7 +3090,7 @@ Total Classes: 4
 "net.sourceforge.plantuml.sudoku" --> "net.sourceforge.plantuml.regex"
 
 class "net.sourceforge.plantuml.svek" %lighten("red", 76) {
-Total Classes: 64
+Total Classes: 65
 }
 "net.sourceforge.plantuml.svek" --> "java.io"
 "net.sourceforge.plantuml.svek" --> "java.lang"
@@ -3123,7 +3123,6 @@ Total Classes: 64
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.svek.extremity"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.svek.image"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.teavm"
-"net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.teavm.browser"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.svek" --> "net.sourceforge.plantuml.utils"
 
@@ -3236,7 +3235,7 @@ Total Classes: 19
 "net.sourceforge.plantuml.teavm" --> "org.teavm.jso"
 "net.sourceforge.plantuml.teavm" --> "org.teavm.jso.dom.xml"
 
-class "net.sourceforge.plantuml.teavm.browser" %lighten("red", 50) {
+class "net.sourceforge.plantuml.teavm.browser" %lighten("red", 33) {
 Total Classes: 3
 }
 "net.sourceforge.plantuml.teavm.browser" --> "java.lang"
@@ -3536,6 +3535,7 @@ Total Classes: 16
 "net.sourceforge.plantuml.xmi" --> "net.sourceforge.plantuml.decoration"
 "net.sourceforge.plantuml.xmi" --> "net.sourceforge.plantuml.descdiagram"
 "net.sourceforge.plantuml.xmi" --> "net.sourceforge.plantuml.klimt.creole"
+"net.sourceforge.plantuml.xmi" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.xmi" --> "net.sourceforge.plantuml.log"
 "net.sourceforge.plantuml.xmi" --> "net.sourceforge.plantuml.sequencediagram"
 "net.sourceforge.plantuml.xmi" --> "net.sourceforge.plantuml.sequencediagram.graphic"

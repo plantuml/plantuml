@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.core.AbstractDiagram;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.core.TextBlockExporter12026;
+import net.sourceforge.plantuml.core.TextBlockExporter;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.CrashReportHandler;
 import net.sourceforge.plantuml.crash.GraphvizCrash;
@@ -65,7 +65,7 @@ public abstract class UgDiagram extends AbstractDiagram {
 <span class="fc" id="L65">		super(source, preprocessing);</span>
 <span class="fc" id="L66">	}</span>
 
-	public abstract TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception;
+	public abstract TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) throws Exception;
 
 	public TextBlock addChrome(TextBlock result) {
 <span class="fc" id="L71">		return result;</span>
@@ -117,8 +117,8 @@ public abstract class UgDiagram extends AbstractDiagram {
 <span class="fc" id="L117">		return false;</span>
 	}
 
-	protected TextBlockExporter12026 getExporter(int index, FileFormatOption fileFormatOption) throws Exception {
-<span class="fc" id="L121">		TextBlock result = getTextBlock12026(index, fileFormatOption);</span>
+	protected TextBlockExporter getExporter(int index, FileFormatOption fileFormatOption) throws Exception {
+<span class="fc" id="L121">		TextBlock result = getTextBlock(index, fileFormatOption);</span>
 
 <span class="fc" id="L123">		final int status = computeStatus(result);</span>
 
@@ -131,7 +131,7 @@ public abstract class UgDiagram extends AbstractDiagram {
 <span class="fc" id="L131">		final ColorMapper mutedMapper = muteColorMapper(fileFormatOption.getColorMapper());</span>
 <span class="fc" id="L132">		final FileFormatOption effectiveFormat = fileFormatOption.withColorMapper(mutedMapper);</span>
 
-<span class="fc" id="L134">		final TextBlockExporter12026.Builder builder = TextBlockExporter12026.builder(result, effectiveFormat,</span>
+<span class="fc" id="L134">		final TextBlockExporter.Builder builder = TextBlockExporter.builder(result, effectiveFormat,</span>
 <span class="fc" id="L135">				isHandwritten());</span>
 <span class="fc bfc" id="L136" title="All 2 branches covered.">		if (this instanceof TitledDiagram)</span>
 <span class="fc" id="L137">			builder.styled((TitledDiagram) this);</span>

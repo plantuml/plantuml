@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextBlockExporter12026.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.core</a> &gt; <span class="el_source">TextBlockExporter12026.java</span></div><h1>TextBlockExporter12026.java</h1><pre class="source lang-java linenums">/* ========================================================================
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextBlockExporter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.core</a> &gt; <span class="el_source">TextBlockExporter.java</span></div><h1>TextBlockExporter.java</h1><pre class="source lang-java linenums">/* ========================================================================
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
@@ -109,10 +109,10 @@ import net.sourceforge.plantuml.url.Url;
  * &lt;p&gt;
  * It does &lt;b&gt;not&lt;/b&gt; handle diagram chrome (title, header, footer, etc.). The
  * input {@link TextBlock} is expected to be already fully decorated (e.g. by
- * {@link DiagramChromeFactory12026}). Handwritten mode is applied automatically
+ * {@link DiagramChromeFactory}). Handwritten mode is applied automatically
  * when {@code skinParam.handwritten()} is {@code true}.
  */
-public class TextBlockExporter12026 {
+public class TextBlockExporter {
 
 	private final TextBlock textBlock;
 	private final FileFormatOption fileFormatOption;
@@ -131,7 +131,7 @@ public class TextBlockExporter12026 {
 	// Optional diagram-level info for SVG attributes
 	private final DiagramType diagramType;
 
-<span class="fc" id="L134">	private TextBlockExporter12026(Builder builder) {</span>
+<span class="fc" id="L134">	private TextBlockExporter(Builder builder) {</span>
 <span class="fc" id="L135">		this.textBlock = builder.textBlock;</span>
 <span class="fc" id="L136">		this.fileFormatOption = builder.fileFormatOption;</span>
 <span class="fc" id="L137">		this.skinParam = builder.skinParam;</span>
@@ -497,8 +497,8 @@ public class TextBlockExporter12026 {
 <span class="fc" id="L497">			return this;</span>
 		}
 
-		public TextBlockExporter12026 build() {
-<span class="fc" id="L501">			return new TextBlockExporter12026(this);</span>
+		public TextBlockExporter build() {
+<span class="fc" id="L501">			return new TextBlockExporter(this);</span>
 		}
 
 		private static ClockwiseTopRightBottomLeft calculateMargin(net.sourceforge.plantuml.TitledDiagram diagram) {

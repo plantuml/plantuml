@@ -387,7 +387,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 <span class="fc" id="L387">	private static final Lock lock = new ReentrantLock();</span>
 
 	@Override
-	public TextBlock getTextBlock12026(List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)
+	public TextBlock getTextBlock(List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
 
 <span class="fc" id="L393">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
@@ -420,7 +420,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		try {
 <span class="fc" id="L421">			final Globals zz = Globals.open();</span>
 			try {
-<span class="fc" id="L423">				return getTextBlock(stringBounder, zz);</span>
+<span class="fc" id="L423">				return getTextBlockInternal(stringBounder, zz);</span>
 			} finally {
 <span class="fc" id="L425">				Globals.close();</span>
 			}
@@ -429,7 +429,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		}
 	}
 
-	private TextBlock getTextBlock(StringBounder stringBounder, Globals zz) {
+	private TextBlock getTextBlockInternal(StringBounder stringBounder, Globals zz) {
 
 <span class="fc" id="L434">		final ST_Agraph_s g = agopen(zz, new CString(&quot;g&quot;), zz.Agdirected, null);</span>
 

@@ -69,66 +69,33 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 <span class="nc" id="L69">		incRawLayout();</span>
 <span class="nc" id="L70">	}</span>
 
-//	@Override
-//	final protected ImageData exportDiagramInternal01970(OutputStream os, int index, FileFormatOption fileFormatOption)
-//			throws IOException {
-//		if (useLayoutExplicit != 0)
-//			return exportLayoutExplicit(os, index, fileFormatOption);
-//
-//		return super.exportDiagramInternal01970(os, index, fileFormatOption);
-//	}
-//
-//	final protected ImageData exportLayoutExplicit(OutputStream os, int index, FileFormatOption fileFormatOption)
-//			throws IOException {
-//		final FullLayout fullLayout = new FullLayout();
-//		for (int i = 0; i &lt;= useLayoutExplicit; i++) {
-//			final RowLayout rawLayout = getRawLayout(i);
-//			fullLayout.addRowLayout(rawLayout);
-//		}
-//		return createImageBuilder(fileFormatOption).annotations(false) // Backwards compatibility - this only applies
-//																		// when &quot;layout_new_line&quot; is used
-//				.drawable(fullLayout).write(os);
-//	}
-//
-//	private RowLayout getRawLayout(int raw) {
-//		final RowLayout rawLayout = new RowLayout();
-//		for (Entity leaf : this.leafs())
-//			if (leaf.getRawLayout() == raw)
-//				rawLayout.addLeaf(getEntityImageClass(leaf));
-//
-//		return rawLayout;
-//	}
-//
-//	private TextBlock getEntityImageClass(Entity entity) {
-//		return new EntityImageClass(entity, this);
-//	}
 
 	@Override
 	public String checkFinalError() {
-<span class="fc bfc" id="L108" title="All 2 branches covered.">		for (Link link : this.getLinks()) {</span>
-<span class="fc" id="L109">			final int len = link.getLength();</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">			if (len == 1)</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">				for (Link link2 : this.getLinks())</span>
-<span class="pc bpc" id="L112" title="1 of 4 branches missed.">					if (link2.sameConnections(link) &amp;&amp; link2.getLength() != 1)</span>
-<span class="nc" id="L113">						link2.setLength(1);</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		for (Link link : this.getLinks()) {</span>
+<span class="fc" id="L76">			final int len = link.getLength();</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">			if (len == 1)</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">				for (Link link2 : this.getLinks())</span>
+<span class="pc bpc" id="L79" title="1 of 4 branches missed.">					if (link2.sameConnections(link) &amp;&amp; link2.getLength() != 1)</span>
+<span class="nc" id="L80">						link2.setLength(1);</span>
 
-<span class="fc" id="L115">		}</span>
+<span class="fc" id="L82">		}</span>
 
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (getPragma().isFalse(PragmaKey.USE_INTERMEDIATE_PACKAGES))</span>
-<span class="nc" id="L118">			packSomePackage();</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (getPragma().isFalse(PragmaKey.USE_INTERMEDIATE_PACKAGES))</span>
+<span class="nc" id="L85">			packSomePackage();</span>
 
-<span class="fc" id="L120">		this.applySingleStrategy();</span>
-<span class="fc" id="L121">		return super.checkFinalError();</span>
+<span class="fc" id="L87">		this.applySingleStrategy();</span>
+<span class="fc" id="L88">		return super.checkFinalError();</span>
 	}
 
 	public CommandExecutionResult checkIfPackageHierarchyIsOk(Entity entity) {
-<span class="fc" id="L125">		Quark&lt;Entity&gt; current = entity.getQuark().getParent();</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">		while (current.isRoot() == false) {</span>
-<span class="pc bpc" id="L127" title="2 of 4 branches missed.">			if (current.getData() != null &amp;&amp; current.getData().isGroup() == false)</span>
-<span class="nc" id="L128">				return CommandExecutionResult.error(&quot;Bad hierarchy for class &quot; + entity.getQuark().getQualifiedName());</span>
-<span class="fc" id="L129">			current = current.getParent();</span>
+<span class="fc" id="L92">		Quark&lt;Entity&gt; current = entity.getQuark().getParent();</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		while (current.isRoot() == false) {</span>
+<span class="pc bpc" id="L94" title="2 of 4 branches missed.">			if (current.getData() != null &amp;&amp; current.getData().isGroup() == false)</span>
+<span class="nc" id="L95">				return CommandExecutionResult.error(&quot;Bad hierarchy for class &quot; + entity.getQuark().getQualifiedName());</span>
+<span class="fc" id="L96">			current = current.getParent();</span>
 		}
-<span class="fc" id="L131">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L98">		return CommandExecutionResult.ok();</span>
 	}
 
 }

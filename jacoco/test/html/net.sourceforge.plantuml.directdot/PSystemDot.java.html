@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.ProcessState;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.core.TextBlockExporter12026;
+import net.sourceforge.plantuml.core.TextBlockExporter;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
@@ -90,7 +90,7 @@ public class PSystemDot extends DirectOsDiagram {
 <span class="nc bnc" id="L90" title="All 2 branches missed.">		if (graphviz.getExeState() != ExeState.OK) {</span>
 <span class="nc" id="L91">			final TextBlock result = GraphicStrings</span>
 <span class="nc" id="L92">					.createForError(Arrays.asList(&quot;There is an issue with your Dot/Graphviz installation&quot;), false);</span>
-<span class="nc" id="L93">			return TextBlockExporter12026.builder(result, fileFormat, false).seed(seed()).status(FileImageData.CRASH)</span>
+<span class="nc" id="L93">			return TextBlockExporter.builder(result, fileFormat, false).seed(seed()).status(FileImageData.CRASH)</span>
 <span class="nc" id="L94">					.build().exportTo(os);</span>
 		}
 
@@ -101,7 +101,7 @@ public class PSystemDot extends DirectOsDiagram {
 		// }
 <span class="nc bnc" id="L102" title="All 4 branches missed.">		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {</span>
 <span class="nc" id="L103">			final TextBlock result = GraphicStrings.createForError(Arrays.asList(&quot;GraphViz has crashed&quot;), false);</span>
-<span class="nc" id="L104">			return TextBlockExporter12026.builder(result, fileFormat, false).seed(seed()).status(FileImageData.CRASH)</span>
+<span class="nc" id="L104">			return TextBlockExporter.builder(result, fileFormat, false).seed(seed()).status(FileImageData.CRASH)</span>
 <span class="nc" id="L105">					.build().exportTo(os);</span>
 		}
 

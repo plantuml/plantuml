@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemUnsupported;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.core.TextBlockExporter12026;
+import net.sourceforge.plantuml.core.TextBlockExporter;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -262,7 +262,7 @@ public class SourceStringReader {
 <span class="nc" id="L262">				Arrays.asList(&quot;No valid @start/@end found, please check the version&quot;),</span>
 <span class="nc" id="L263">				fileFormatOption.isUseRedForError());</span>
 
-<span class="nc" id="L265">		return TextBlockExporter12026.builder(error, fileFormatOption, false).build().exportTo(os);</span>
+<span class="nc" id="L265">		return TextBlockExporter.builder(error, fileFormatOption, false).build().exportTo(os);</span>
 	}
 
 	public final List&lt;BlockUml&gt; getBlocks() {

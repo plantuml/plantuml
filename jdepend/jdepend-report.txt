@@ -3678,15 +3678,15 @@ Abstract Classes:
     net.sourceforge.plantuml.core.ImageData
 
 Concrete Classes:
-    net.sourceforge.plantuml.core.DiagramChromeFactory12026$1
-    net.sourceforge.plantuml.core.DiagramChromeFactory12026$2
-    net.sourceforge.plantuml.core.DiagramChromeFactory12026$WarningBannerBlock
+    net.sourceforge.plantuml.core.DiagramChromeFactory$1
+    net.sourceforge.plantuml.core.DiagramChromeFactory$2
+    net.sourceforge.plantuml.core.DiagramChromeFactory$WarningBannerBlock
     net.sourceforge.plantuml.core.DiagramDescription
     net.sourceforge.plantuml.core.DiagramType
     net.sourceforge.plantuml.core.InstallationRequirement
-    net.sourceforge.plantuml.core.TextBlockExporter12026
-    net.sourceforge.plantuml.core.TextBlockExporter12026$1
-    net.sourceforge.plantuml.core.TextBlockExporter12026$Builder
+    net.sourceforge.plantuml.core.TextBlockExporter
+    net.sourceforge.plantuml.core.TextBlockExporter$1
+    net.sourceforge.plantuml.core.TextBlockExporter$Builder
     net.sourceforge.plantuml.core.UmlSource
 
 Depends Upon:
@@ -7302,7 +7302,7 @@ Stats:
     Concrete Classes: 38
     Abstract Classes: 3
 
-    Ca: 85
+    Ca: 86
     Ce: 16
 
     A: 0.07
@@ -7458,6 +7458,7 @@ Used By:
     net.sourceforge.plantuml.version
     net.sourceforge.plantuml.wbs
     net.sourceforge.plantuml.wire
+    net.sourceforge.plantuml.xmi
 
 --------------------------------------------------
 - Package: net.sourceforge.plantuml.klimt.sprite
@@ -10049,18 +10050,19 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 50
+    Total Classes: 51
     Concrete Classes: 42
-    Abstract Classes: 8
+    Abstract Classes: 9
 
     Ca: 3
     Ce: 28
 
-    A: 0.16
+    A: 0.18
     I: 0.9
-    D: 0.06
+    D: 0.08
 
 Abstract Classes:
+    net.sourceforge.plantuml.sequencediagram.graphic.FileMaker
     net.sourceforge.plantuml.sequencediagram.graphic.FreeYStrategy
     net.sourceforge.plantuml.sequencediagram.graphic.Frontier
     net.sourceforge.plantuml.sequencediagram.graphic.FrontierStack
@@ -10926,21 +10928,22 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 64
+    Total Classes: 65
     Concrete Classes: 55
-    Abstract Classes: 9
+    Abstract Classes: 10
 
     Ca: 21
-    Ce: 34
+    Ce: 33
 
-    A: 0.14
-    I: 0.62
+    A: 0.15
+    I: 0.61
     D: 0.24
 
 Abstract Classes:
     net.sourceforge.plantuml.svek.AbstractEntityImage
     net.sourceforge.plantuml.svek.AbstractExtremityFactory
     net.sourceforge.plantuml.svek.ArithmeticStrategy
+    net.sourceforge.plantuml.svek.CucaDiagramFileMaker
     net.sourceforge.plantuml.svek.GuideLine
     net.sourceforge.plantuml.svek.IEntityImage
     net.sourceforge.plantuml.svek.Point2DFunction
@@ -11037,7 +11040,6 @@ Depends Upon:
     net.sourceforge.plantuml.svek.extremity
     net.sourceforge.plantuml.svek.image
     net.sourceforge.plantuml.teavm
-    net.sourceforge.plantuml.teavm.browser
     net.sourceforge.plantuml.text
     net.sourceforge.plantuml.utils
 
@@ -11522,12 +11524,12 @@ Stats:
     Concrete Classes: 0
     Abstract Classes: 3
 
-    Ca: 2
+    Ca: 1
     Ce: 2
 
     A: 1
-    I: 0.5
-    D: 0.5
+    I: 0.67
+    D: 0.67
 
 Abstract Classes:
     net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser$StringCallback
@@ -11541,7 +11543,6 @@ Depends Upon:
     org.teavm.jso
 
 Used By:
-    net.sourceforge.plantuml.svek
     net.sourceforge.plantuml.tim
 
 --------------------------------------------------
@@ -12647,7 +12648,7 @@ Stats:
     Abstract Classes: 6
 
     Ca: 1
-    Ce: 26
+    Ce: 27
 
     A: 0.38
     I: 0.96
@@ -12691,6 +12692,7 @@ Depends Upon:
     net.sourceforge.plantuml.decoration
     net.sourceforge.plantuml.descdiagram
     net.sourceforge.plantuml.klimt.creole
+    net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.log
     net.sourceforge.plantuml.sequencediagram
     net.sourceforge.plantuml.sequencediagram.graphic
@@ -13479,29 +13481,17 @@ net.sourceforge.plantuml.abel
 
 net.sourceforge.plantuml.activitydiagram
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.activitydiagram.command
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.activitydiagram3
     |
@@ -13512,73 +13502,39 @@ net.sourceforge.plantuml.activitydiagram3
 
 net.sourceforge.plantuml.activitydiagram3.command
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.activitydiagram3.ftile
     |
     |   net.sourceforge.plantuml.klimt.drawing
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.activitydiagram3.ftile.vcompact
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.activitydiagram3.ftile.vertical
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.activitydiagram3.gtile
     |
@@ -13602,16 +13558,10 @@ net.sourceforge.plantuml.ant
 
 net.sourceforge.plantuml.api
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.api.mda.option2
     |
@@ -13660,43 +13610,24 @@ net.sourceforge.plantuml.asciiart
 
 net.sourceforge.plantuml.board
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.bpm
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.braille
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.chart
     |
@@ -13712,42 +13643,24 @@ net.sourceforge.plantuml.chart
 
 net.sourceforge.plantuml.chart.command
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.cheneer
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.cheneer.command
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.chronology
     |
@@ -13763,29 +13676,17 @@ net.sourceforge.plantuml.chronology
 
 net.sourceforge.plantuml.classdiagram
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.classdiagram.command
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.code
     |
@@ -13797,80 +13698,44 @@ net.sourceforge.plantuml.code
 
 net.sourceforge.plantuml.command
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.command.note
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.command.note.sequence
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.core
     |
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.crash
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.cruise
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.cucadiagram
     |
@@ -13910,16 +13775,10 @@ net.sourceforge.plantuml.dedication
 
 net.sourceforge.plantuml.definition
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.descdiagram
     |
@@ -13943,43 +13802,24 @@ net.sourceforge.plantuml.descdiagram.command
 
 net.sourceforge.plantuml.directdot
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.ditaa
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.donors
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.dot
     |
@@ -13990,45 +13830,25 @@ net.sourceforge.plantuml.dot
 
 net.sourceforge.plantuml.ebnf
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.eggs
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.elk
     |
     |   net.sourceforge.plantuml.skin.rose
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.elk.proxy
     |
@@ -14102,29 +13922,17 @@ net.sourceforge.plantuml.emoji
 
 net.sourceforge.plantuml.error
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.filesdiagram
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.flashcode
     |
@@ -14135,29 +13943,17 @@ net.sourceforge.plantuml.flashcode
 
 net.sourceforge.plantuml.flowdiagram
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.font
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.ftp
     |
@@ -14169,16 +13965,10 @@ net.sourceforge.plantuml.ftp
 
 net.sourceforge.plantuml.gitlog
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.golem
     |
@@ -14202,29 +13992,17 @@ net.sourceforge.plantuml.graphml
 
 net.sourceforge.plantuml.hcl
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.help
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.jaws
     |
@@ -14237,16 +14015,10 @@ net.sourceforge.plantuml.jaws
 
 net.sourceforge.plantuml.jcckit
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.jsondiagram
     |
@@ -14277,46 +14049,23 @@ net.sourceforge.plantuml.klimt.color
 
 net.sourceforge.plantuml.klimt.compress
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt.creole
     |
     |   net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.creole
 
 net.sourceforge.plantuml.klimt.creole.atom
     |
-    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.creole
     |   net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.klimt.creole
 
 net.sourceforge.plantuml.klimt.creole.command
     |
@@ -14341,31 +14090,17 @@ net.sourceforge.plantuml.klimt.creole.legacy
 
 net.sourceforge.plantuml.klimt.drawing
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt.drawing.debug
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt.drawing.eps
     |
@@ -14391,17 +14126,10 @@ net.sourceforge.plantuml.klimt.drawing.hand
 
 net.sourceforge.plantuml.klimt.drawing.html5
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt.drawing.svg
     |
@@ -14435,15 +14163,8 @@ net.sourceforge.plantuml.klimt.drawing.visio
 net.sourceforge.plantuml.klimt.font
     |
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt.geom
     |
@@ -14454,31 +14175,17 @@ net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.klimt.shape
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt.sprite
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.log
     |
@@ -14489,16 +14196,10 @@ net.sourceforge.plantuml.log
 
 net.sourceforge.plantuml.math
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.mda
     |
@@ -14512,29 +14213,17 @@ net.sourceforge.plantuml.mda
 
 net.sourceforge.plantuml.mindmap
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.nwdiag
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.nwdiag.core
     |
@@ -14548,17 +14237,10 @@ net.sourceforge.plantuml.nwdiag.core
 
 net.sourceforge.plantuml.nwdiag.next
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.objectdiagram
     |
@@ -14574,16 +14256,10 @@ net.sourceforge.plantuml.objectdiagram
 
 net.sourceforge.plantuml.openiconic
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.openpdf
     |
@@ -14606,16 +14282,10 @@ net.sourceforge.plantuml.packetdiag
 
 net.sourceforge.plantuml.packetdiag.command
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.png
     |
@@ -14662,16 +14332,10 @@ net.sourceforge.plantuml.project
 
 net.sourceforge.plantuml.project.command
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.project.core
     |
@@ -14685,17 +14349,10 @@ net.sourceforge.plantuml.project.core
 
 net.sourceforge.plantuml.project.data
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.project.draw
     |
@@ -14767,59 +14424,32 @@ net.sourceforge.plantuml.regex
 
 net.sourceforge.plantuml.regexdiagram
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.salt
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.salt.element
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.salt.factory
     |
     |   net.sourceforge.plantuml.salt
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.sdot
     |
@@ -14856,30 +14486,17 @@ net.sourceforge.plantuml.sequencediagram
 
 net.sourceforge.plantuml.sequencediagram.command
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.sequencediagram.graphic
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.sequencediagram.puma
     |
@@ -14890,17 +14507,10 @@ net.sourceforge.plantuml.sequencediagram.puma
 
 net.sourceforge.plantuml.sequencediagram.teoz
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.skin
     |
@@ -14912,43 +14522,24 @@ net.sourceforge.plantuml.skin
 
 net.sourceforge.plantuml.skin.rose
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.statediagram
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.statediagram.command
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.stats
     |
@@ -14994,16 +14585,10 @@ net.sourceforge.plantuml.style.parser
 
 net.sourceforge.plantuml.sudoku
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.svek
     |
@@ -15023,17 +14608,10 @@ net.sourceforge.plantuml.svek.extremity
 
 net.sourceforge.plantuml.svek.image
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.svg.parser
     |
@@ -15052,16 +14630,10 @@ net.sourceforge.plantuml.swing
 
 net.sourceforge.plantuml.syntax
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.teavm
     |
@@ -15127,44 +14699,24 @@ net.sourceforge.plantuml.tim.iterator
 
 net.sourceforge.plantuml.timingdiagram
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.timingdiagram.command
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.timingdiagram.graphic
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.url
     |
@@ -15184,17 +14736,10 @@ net.sourceforge.plantuml.utils
 
 net.sourceforge.plantuml.version
     |
-    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |   net.sourceforge.plantuml.klimt.creole
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.vizjs
     |
@@ -15206,16 +14751,10 @@ net.sourceforge.plantuml.vizjs
 
 net.sourceforge.plantuml.wbs
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.windowsdot
     |
@@ -15227,16 +14766,10 @@ net.sourceforge.plantuml.windowsdot
 
 net.sourceforge.plantuml.wire
     |
-    |   net.sourceforge.plantuml.core
-    |   net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.stereo
-    |   net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml
-    |-> net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
-    |   net.sourceforge.plantuml.klimt.color
-    |-> net.sourceforge.plantuml.klimt.awt
+    |-> net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.creole
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.core
 
 net.sourceforge.plantuml.xmi
     |
@@ -15483,7 +15016,7 @@ net.sourceforge.plantuml.klimt.drawing.txt,1,0,4,13,0,0.76,0.24,1
 net.sourceforge.plantuml.klimt.drawing.visio,8,1,1,10,0.12,0.91,0.03,1
 net.sourceforge.plantuml.klimt.font,11,3,87,9,0.27,0.09,0.63,1
 net.sourceforge.plantuml.klimt.geom,34,6,89,9,0.18,0.09,0.73,1
-net.sourceforge.plantuml.klimt.shape,41,3,85,16,0.07,0.16,0.77,1
+net.sourceforge.plantuml.klimt.shape,41,3,86,16,0.07,0.16,0.77,1
 net.sourceforge.plantuml.klimt.sprite,22,2,13,26,0.09,0.67,0.24,1
 net.sourceforge.plantuml.licensing,7,0,0,5,0,1,0,1
 net.sourceforge.plantuml.log,2,0,26,4,0,0.13,0.87,1
@@ -15535,7 +15068,7 @@ net.sourceforge.plantuml.security.authentication.oauth,4,1,0,11,0.25,1,0.25,1
 net.sourceforge.plantuml.security.authentication.token,2,0,0,4,0,1,0,1
 net.sourceforge.plantuml.sequencediagram,24,5,11,19,0.21,0.63,0.16,1
 net.sourceforge.plantuml.sequencediagram.command,30,1,3,17,0.03,0.85,0.12,1
-net.sourceforge.plantuml.sequencediagram.graphic,50,8,3,28,0.16,0.9,0.06,1
+net.sourceforge.plantuml.sequencediagram.graphic,51,9,3,28,0.18,0.9,0.08,1
 net.sourceforge.plantuml.sequencediagram.puma,6,0,0,3,0,1,0,1
 net.sourceforge.plantuml.sequencediagram.teoz,50,6,0,18,0.12,1,0.12,1
 net.sourceforge.plantuml.skin,34,5,40,26,0.15,0.39,0.46,1
@@ -15548,14 +15081,14 @@ net.sourceforge.plantuml.stereo,3,0,36,10,0,0.22,0.78,1
 net.sourceforge.plantuml.style,23,7,69,17,0.3,0.2,0.5,1
 net.sourceforge.plantuml.style.parser,4,0,4,4,0,0.5,0.5,1
 net.sourceforge.plantuml.sudoku,4,1,0,8,0.25,1,0.25,1
-net.sourceforge.plantuml.svek,64,9,21,34,0.14,0.62,0.24,1
+net.sourceforge.plantuml.svek,65,10,21,33,0.15,0.61,0.24,1
 net.sourceforge.plantuml.svek.extremity,55,4,3,11,0.07,0.79,0.14,1
 net.sourceforge.plantuml.svek.image,37,2,12,23,0.05,0.66,0.29,1
 net.sourceforge.plantuml.svg.parser,11,1,1,13,0.09,0.93,0.02,1
 net.sourceforge.plantuml.swing,36,0,0,15,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
 net.sourceforge.plantuml.teavm,19,1,42,14,0.05,0.25,0.7,1
-net.sourceforge.plantuml.teavm.browser,3,3,2,2,1,0.5,0.5,1
+net.sourceforge.plantuml.teavm.browser,3,3,1,2,1,0.67,0.67,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.text,5,1,38,4,0.2,0.1,0.7,1
 net.sourceforge.plantuml.theme,1,0,1,6,0,0.86,0.14,1
@@ -15576,7 +15109,7 @@ net.sourceforge.plantuml.wbs,10,2,1,23,0.2,0.96,0.16,1
 net.sourceforge.plantuml.webp,8,0,0,2,0,1,0,1
 net.sourceforge.plantuml.windowsdot,1,0,1,4,0,0.8,0.2,1
 net.sourceforge.plantuml.wire,21,0,0,17,0,1,0,1
-net.sourceforge.plantuml.xmi,16,6,1,26,0.38,0.96,0.34,1
+net.sourceforge.plantuml.xmi,16,6,1,27,0.38,0.96,0.34,1
 net.sourceforge.plantuml.xml,3,0,3,3,0,0.5,0.5,1
 net.sourceforge.plantuml.xmlsc,2,0,0,17,0,1,0,1
 net.sourceforge.plantuml.yaml,2,0,1,17,0,0.94,0.06,1

@@ -69,7 +69,7 @@ import javax.swing.WindowConstants;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.GeneratedImage;
-import net.sourceforge.plantuml.core.TextBlockExporter12026;
+import net.sourceforge.plantuml.core.TextBlockExporter;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -340,7 +340,7 @@ class ImageWindow extends JFrame {
 <span class="nc" id="L340">			final TextBlock error = GraphicStrings.createForError(Arrays.asList(msg), false);</span>
 			try {
 <span class="nc" id="L342">				final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="nc" id="L343">				TextBlockExporter12026.builder(error, new FileFormatOption(FileFormat.PNG), false).build()</span>
+<span class="nc" id="L343">				TextBlockExporter.builder(error, new FileFormatOption(FileFormat.PNG), false).build()</span>
 <span class="nc" id="L344">						.exportTo(baos);</span>
 <span class="nc" id="L345">				image = SImageIO.read(baos.toByteArray());</span>
 <span class="nc" id="L346">			} catch (IOException e) {</span>

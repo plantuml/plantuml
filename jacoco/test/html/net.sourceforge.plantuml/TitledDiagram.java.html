@@ -47,7 +47,7 @@ import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.api.ApiStable;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.core.DiagramChromeFactory12026;
+import net.sourceforge.plantuml.core.DiagramChromeFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -454,7 +454,7 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 	@Override
 	public TextBlock addChrome(TextBlock result) {
 <span class="fc" id="L456">		final TitledDiagram titledDiagram = (TitledDiagram) this;</span>
-<span class="fc" id="L457">		result = DiagramChromeFactory12026.create(result, titledDiagram, titledDiagram.getSkinParam(), getWarnings());</span>
+<span class="fc" id="L457">		result = DiagramChromeFactory.create(result, titledDiagram, titledDiagram.getSkinParam(), getWarnings());</span>
 <span class="fc" id="L458">		return result;</span>
 	}
 

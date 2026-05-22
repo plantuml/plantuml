@@ -15,7 +15,7 @@ import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.core.AbstractDiagram;
 import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.core.DiagramChromeFactory12026;
+import net.sourceforge.plantuml.core.DiagramChromeFactory;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -394,7 +394,7 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 
 <span class="nc" id="L395">		final Scale scale = ((AbstractDiagram) diagram).getScale();</span>
 <span class="nc" id="L396">		final UgDiagram ugDiagram = (UgDiagram) diagram;</span>
-<span class="nc" id="L397">		TextBlock tb = ugDiagram.getTextBlock12026(0, fileFormat);</span>
+<span class="nc" id="L397">		TextBlock tb = ugDiagram.getTextBlock(0, fileFormat);</span>
 
 <span class="nc" id="L399">		HColor tbBackcolor = tb.getBackcolor();</span>
 		final SvgGraphicsTeaVM svg;
@@ -409,7 +409,7 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 <span class="nc" id="L409">		UGraphic ug = UGraphicTeaVM.build(tbBackcolor, colorMapper, STRING_BOUNDER, svg);</span>
 
 <span class="nc bnc" id="L411" title="All 2 branches missed.">		if (diagram instanceof TitledDiagram)</span>
-<span class="nc" id="L412">			tb = DiagramChromeFactory12026.create(tb, (TitledDiagram) ugDiagram,</span>
+<span class="nc" id="L412">			tb = DiagramChromeFactory.create(tb, (TitledDiagram) ugDiagram,</span>
 <span class="nc" id="L413">					((TitledDiagram) ugDiagram).getSkinParam(), ugDiagram.getWarnings());</span>
 
 <span class="nc bnc" id="L415" title="All 2 branches missed.">		if (ugDiagram.isHandwritten())</span>
