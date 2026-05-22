@@ -45,13 +45,13 @@ jobs:
       - name: Archive Windows build
         shell: pwsh
         run: |
-          Compress-Archive -Path "plantuml-natif/build/native/nativeCompile/*" -DestinationPath "plantuml-windows-amd64-SNAPSHOT.zip"
+          Compress-Archive -Path "plantuml-natif/build/native/nativeCompile/*" -DestinationPath "native-plantuml-windows-amd64-SNAPSHOT.zip"
 
       - name: Upload build artifact (Windows)
         uses: actions/upload-artifact@v7
         with:
           name: windows-amd64
-          path: plantuml-windows-amd64-SNAPSHOT.zip
+          path: native-plantuml-windows-amd64-SNAPSHOT.zip
 
   build_linux_amd64:
     name: 'Build Native Image linux-amd64'
@@ -81,13 +81,13 @@ jobs:
 
       - name: Archive Linux build
         run: |
-          zip -j plantuml-linux-amd64-SNAPSHOT.zip plantuml-natif/build/native/nativeCompile/*
+          zip -j native-plantuml-linux-amd64-SNAPSHOT.zip plantuml-natif/build/native/nativeCompile/*
 
       - name: Upload build artifact (Linux)
         uses: actions/upload-artifact@v7
         with:
           name: linux-amd64
-          path: plantuml-linux-amd64-SNAPSHOT.zip
+          path: native-plantuml-linux-amd64-SNAPSHOT.zip
 
   build_linux_arm64:
     name: 'Build Native Image linux-arm64'
@@ -117,10 +117,10 @@ jobs:
 
       - name: Archive Linux build
         run: |
-          zip -j plantuml-linux-arm64-SNAPSHOT.zip plantuml-natif/build/native/nativeCompile/*
+          zip -j native-plantuml-linux-arm64-SNAPSHOT.zip plantuml-natif/build/native/nativeCompile/*
 
       - name: Upload build artifact (Linux)
         uses: actions/upload-artifact@v7
         with:
           name: linux-arm64
-          path: plantuml-linux-arm64-SNAPSHOT.zip
+          path: native-plantuml-linux-arm64-SNAPSHOT.zip
