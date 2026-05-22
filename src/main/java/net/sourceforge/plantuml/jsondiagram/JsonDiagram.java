@@ -137,7 +137,7 @@ public class JsonDiagram extends TitledDiagram implements TextBlock {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
 		return this;
 	}
 

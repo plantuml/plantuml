@@ -76,7 +76,7 @@ public class PSystemCreole extends UgDiagram {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
 		final Display display = Display.create(lines);
 		final UFont font = UFontFactory.serif(14);
 		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);

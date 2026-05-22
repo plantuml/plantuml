@@ -70,7 +70,7 @@ public class WireDiagram extends TitledDiagram {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
 		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {

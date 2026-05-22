@@ -211,7 +211,7 @@ public abstract class PSystemError extends UgDiagram {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws IOException {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) throws IOException {
 		TextBlock result = getGraphicalFormatted();
 
 		if (!TeaVM.isTeaVM() && !Logme.MODE_VEGA) {
@@ -254,7 +254,7 @@ public abstract class PSystemError extends UgDiagram {
 
 	private TextBlock getWelcome() {
 		return new PSystemWelcome(getSource(), GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT, getPreprocessingArtifact())
-				.getTextBlock12026(0, null);
+				.getTextBlock(0, null);
 	}
 
 	private TextBlock addWelcome(final TextBlock result) {

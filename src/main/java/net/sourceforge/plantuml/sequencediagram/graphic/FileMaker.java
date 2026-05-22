@@ -37,15 +37,10 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 
 public interface FileMaker {
 
 	public int getNbPages();
 
-	public default TextBlock getTextBlock12026(int num, FileFormatOption fileFormat) {
-		System.err.println("FileMaker::getTextBlock12026 " + getClass().getSimpleName());
-		return TextBlockUtils.EMPTY_TEXT_BLOCK;
-		// throw new UnsupportedOperationException("wip");
-	}
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormat);
 }

@@ -69,39 +69,6 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		incRawLayout();
 	}
 
-//	@Override
-//	final protected ImageData exportDiagramInternal01970(OutputStream os, int index, FileFormatOption fileFormatOption)
-//			throws IOException {
-//		if (useLayoutExplicit != 0)
-//			return exportLayoutExplicit(os, index, fileFormatOption);
-//
-//		return super.exportDiagramInternal01970(os, index, fileFormatOption);
-//	}
-//
-//	final protected ImageData exportLayoutExplicit(OutputStream os, int index, FileFormatOption fileFormatOption)
-//			throws IOException {
-//		final FullLayout fullLayout = new FullLayout();
-//		for (int i = 0; i <= useLayoutExplicit; i++) {
-//			final RowLayout rawLayout = getRawLayout(i);
-//			fullLayout.addRowLayout(rawLayout);
-//		}
-//		return createImageBuilder(fileFormatOption).annotations(false) // Backwards compatibility - this only applies
-//																		// when "layout_new_line" is used
-//				.drawable(fullLayout).write(os);
-//	}
-//
-//	private RowLayout getRawLayout(int raw) {
-//		final RowLayout rawLayout = new RowLayout();
-//		for (Entity leaf : this.leafs())
-//			if (leaf.getRawLayout() == raw)
-//				rawLayout.addLeaf(getEntityImageClass(leaf));
-//
-//		return rawLayout;
-//	}
-//
-//	private TextBlock getEntityImageClass(Entity entity) {
-//		return new EntityImageClass(entity, this);
-//	}
 
 	@Override
 	public String checkFinalError() {

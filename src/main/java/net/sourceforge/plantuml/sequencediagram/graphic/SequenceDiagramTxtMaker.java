@@ -42,6 +42,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.asciiart.TextSkin;
@@ -53,6 +54,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Participant;
@@ -141,6 +143,11 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 
 	public int getNbPages() {
 		return 1;
+	}
+
+	@Override
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormat) {
+		throw new UnsupportedOperationException();
 	}
 
 }

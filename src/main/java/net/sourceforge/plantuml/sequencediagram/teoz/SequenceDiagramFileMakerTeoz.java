@@ -118,7 +118,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormat) {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormat) {
 		return new TextBlock() {
 
 			public void drawU(UGraphic ug) {

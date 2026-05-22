@@ -55,7 +55,7 @@ public class PSystemListArchimateSprites extends UgDiagram {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) throws Exception {
 		final List<String> lines = new ArrayList<>();
 		lines.add("<b>List Current Sprites");
 		lines.add("<i>Credit to");

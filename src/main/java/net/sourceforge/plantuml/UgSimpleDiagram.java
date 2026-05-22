@@ -45,7 +45,7 @@ public abstract class UgSimpleDiagram extends UgDiagram implements TextBlock {
 	}
 
 	@Override
-	public final TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+	public final TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
 		return this;
 	}
 }

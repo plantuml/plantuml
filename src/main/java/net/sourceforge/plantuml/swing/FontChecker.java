@@ -52,7 +52,7 @@ import net.atmp.SvgOption;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.annotation.Fast;
-import net.sourceforge.plantuml.core.TextBlockExporter12026;
+import net.sourceforge.plantuml.core.TextBlockExporter;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -200,7 +200,7 @@ public class FontChecker {
 			}
 		};
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		TextBlockExporter12026.builder(textBlock, new FileFormatOption(FileFormat.PNG), false).build().exportTo(baos);
+		TextBlockExporter.builder(textBlock, new FileFormatOption(FileFormat.PNG), false).build().exportTo(baos);
 		return SImageIO.read(baos.toByteArray());
 	}
 

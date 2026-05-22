@@ -47,7 +47,7 @@ public class PSystemSudoku extends UgDiagram {
 	final private ISudoku sudoku;
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
 		return new GraphicsSudoku(sudoku);
 	}
 

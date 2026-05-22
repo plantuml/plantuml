@@ -178,7 +178,7 @@ public class BpmDiagram extends TitledDiagram {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
 		final Grid grid = createGrid();
 		cleanGrid(grid);
 		return grid.toArray(SkinParam.create(getMd5map(), PathSystem.fetch(), getDiagramType(), getPragma(),

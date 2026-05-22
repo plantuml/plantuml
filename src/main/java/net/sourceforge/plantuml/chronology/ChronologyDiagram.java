@@ -169,7 +169,7 @@ public class ChronologyDiagram extends TitledDiagram implements GanttStyle {
 //	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 		initMinMax();
 

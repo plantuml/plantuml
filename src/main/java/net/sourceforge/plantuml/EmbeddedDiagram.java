@@ -156,7 +156,7 @@ public class EmbeddedDiagram extends TextBlockMemoized implements Line, Atom {
 		if (textBlock == null) {
 			PSystemBuilder2.getInstance().reset();
 			final UgDiagram ugDiagram = (UgDiagram) diagram;
-			textBlock = ugDiagram.getTextBlock12026(0, new FileFormatOption(fileFormat));
+			textBlock = ugDiagram.getTextBlock(0, new FileFormatOption(fileFormat));
 		}
 		// ::done
 		return textBlock;

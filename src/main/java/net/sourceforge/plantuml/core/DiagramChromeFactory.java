@@ -96,12 +96,12 @@ import net.sourceforge.plantuml.warning.Warning;
  * <li>header / footer</li>
  * </ol>
  */
-public final class DiagramChromeFactory12026 {
+public final class DiagramChromeFactory {
 
 	private static final FontConfiguration WARNING_FC = FontConfiguration.blackBlueTrue(UFontFactory.monospaced(10));
 
 	// Utility class — no instantiation
-	private DiagramChromeFactory12026() {
+	private DiagramChromeFactory() {
 	}
 
 	/**
@@ -138,7 +138,7 @@ public final class DiagramChromeFactory12026 {
 			Collection<Warning> warnings) {
 
 		TextBlock result = raw;
-		BrowserLog.consoleLog(DiagramChromeFactory12026.class, "create " + warnings);
+		BrowserLog.consoleLog(DiagramChromeFactory.class, "create " + warnings);
 		result = addWarnings(result, warnings);
 		result = decorateWithFrame(result, annotated, skinParam);
 		result = addLegend(result, annotated, skinParam);

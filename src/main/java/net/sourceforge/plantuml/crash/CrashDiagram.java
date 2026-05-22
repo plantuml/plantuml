@@ -59,7 +59,7 @@ public class CrashDiagram extends TitledDiagram {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) throws Exception {
 		if (type == CrashType.DRAWING)
 			throw new IllegalStateException("This is a normal crash when DRAWING");
 

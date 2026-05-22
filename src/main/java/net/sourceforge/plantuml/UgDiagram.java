@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.core.AbstractDiagram;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.core.TextBlockExporter12026;
+import net.sourceforge.plantuml.core.TextBlockExporter;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.CrashReportHandler;
 import net.sourceforge.plantuml.crash.GraphvizCrash;
@@ -65,7 +65,7 @@ public abstract class UgDiagram extends AbstractDiagram {
 		super(source, preprocessing);
 	}
 
-	public abstract TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception;
+	public abstract TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) throws Exception;
 
 	public TextBlock addChrome(TextBlock result) {
 		return result;
@@ -117,8 +117,8 @@ public abstract class UgDiagram extends AbstractDiagram {
 		return false;
 	}
 
-	protected TextBlockExporter12026 getExporter(int index, FileFormatOption fileFormatOption) throws Exception {
-		TextBlock result = getTextBlock12026(index, fileFormatOption);
+	protected TextBlockExporter getExporter(int index, FileFormatOption fileFormatOption) throws Exception {
+		TextBlock result = getTextBlock(index, fileFormatOption);
 
 		final int status = computeStatus(result);
 
@@ -131,7 +131,7 @@ public abstract class UgDiagram extends AbstractDiagram {
 		final ColorMapper mutedMapper = muteColorMapper(fileFormatOption.getColorMapper());
 		final FileFormatOption effectiveFormat = fileFormatOption.withColorMapper(mutedMapper);
 
-		final TextBlockExporter12026.Builder builder = TextBlockExporter12026.builder(result, effectiveFormat,
+		final TextBlockExporter.Builder builder = TextBlockExporter.builder(result, effectiveFormat,
 				isHandwritten());
 		if (this instanceof TitledDiagram)
 			builder.styled((TitledDiagram) this);

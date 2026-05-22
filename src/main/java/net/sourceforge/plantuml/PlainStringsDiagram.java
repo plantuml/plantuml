@@ -57,7 +57,7 @@ public abstract class PlainStringsDiagram extends UgDiagram {
 	}
 
 	@Override
-	public final TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+	public final TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
 		return createBlackOnWhite(strings, image, imagePosition);
 	}
 

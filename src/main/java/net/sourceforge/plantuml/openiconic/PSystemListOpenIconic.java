@@ -57,7 +57,7 @@ public class PSystemListOpenIconic extends UgDiagram {
 		super(source, preprocessing);
 	}
 
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) throws Exception {
 		final List<String> lines = new ArrayList<>();
 		lines.add("<b>List Open Iconic");
 		lines.add("<i>Credit to");

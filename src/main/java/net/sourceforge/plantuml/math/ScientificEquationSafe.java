@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.core.TextBlockExporter12026;
+import net.sourceforge.plantuml.core.TextBlockExporter;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.MutableImage;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
@@ -101,7 +101,7 @@ public class ScientificEquationSafe {
 			}
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
-			dimSvg = TextBlockExporter12026.builder(getRollback(), new FileFormatOption(FileFormat.SVG), false)
+			dimSvg = TextBlockExporter.builder(getRollback(), new FileFormatOption(FileFormat.SVG), false)
 					.build().exportTo(baos);
 		} catch (IOException e1) {
 			return null;
@@ -118,7 +118,7 @@ public class ScientificEquationSafe {
 			}
 		try {
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			TextBlockExporter12026.builder(getRollback(), new FileFormatOption(FileFormat.PNG), false)
+			TextBlockExporter.builder(getRollback(), new FileFormatOption(FileFormat.PNG), false)
 					.build().exportTo(baos);
 			return new PixelImage(SImageIO.read(baos.toByteArray()), AffineTransformType.TYPE_BILINEAR);
 		} catch (IOException e1) {

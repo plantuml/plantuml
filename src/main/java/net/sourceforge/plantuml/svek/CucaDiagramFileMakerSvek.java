@@ -57,7 +57,7 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(List<String> dotStrings, FileFormatOption fileFormatOption)
+	public TextBlock getTextBlock(List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
 
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());

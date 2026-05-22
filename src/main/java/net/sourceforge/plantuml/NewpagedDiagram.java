@@ -43,9 +43,9 @@ import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.core.DiagramChromeFactory12026;
+import net.sourceforge.plantuml.core.DiagramChromeFactory;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.core.TextBlockExporter12026;
+import net.sourceforge.plantuml.core.TextBlockExporter;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -117,19 +117,19 @@ public class NewpagedDiagram extends UgDiagram {
 //	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) throws Exception {
 		final TitledDiagram titledDiagram = (TitledDiagram) diagrams.get(num);
-		TextBlock result = titledDiagram.getTextBlock12026(num, fileFormatOption);
-		result = DiagramChromeFactory12026.create(result, titledDiagram, titledDiagram.getSkinParam(),
+		TextBlock result = titledDiagram.getTextBlock(num, fileFormatOption);
+		result = DiagramChromeFactory.create(result, titledDiagram, titledDiagram.getSkinParam(),
 				titledDiagram.getWarnings());
 
 		return result;
 	}
 
 	@Override
-	protected TextBlockExporter12026 getExporter(int num, FileFormatOption fileFormatOption) throws Exception {
+	protected TextBlockExporter getExporter(int num, FileFormatOption fileFormatOption) throws Exception {
 
-		TextBlock result = getTextBlock12026(num, fileFormatOption);
+		TextBlock result = getTextBlock(num, fileFormatOption);
 
 		final HColor backColor = calculateBackColor();
 		if (backColor != null)
@@ -140,7 +140,7 @@ public class NewpagedDiagram extends UgDiagram {
 
 		final TitledDiagram titledDiagram = (TitledDiagram) diagrams.get(num);
 
-		final TextBlockExporter12026.Builder builder = TextBlockExporter12026.builder(result, effectiveFormat,
+		final TextBlockExporter.Builder builder = TextBlockExporter.builder(result, effectiveFormat,
 				titledDiagram.isHandwritten());
 
 		builder.styled(titledDiagram);

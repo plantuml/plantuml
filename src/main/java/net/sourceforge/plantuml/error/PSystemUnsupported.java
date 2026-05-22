@@ -80,7 +80,7 @@ public class PSystemUnsupported extends UgDiagram {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) throws Exception {
 		return GraphicStrings.createBlackOnWhite(strings, PSystemVersion.getPlantumlImage(),
 				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
 	}

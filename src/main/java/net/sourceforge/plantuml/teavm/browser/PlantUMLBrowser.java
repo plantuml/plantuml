@@ -15,7 +15,7 @@ import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.core.AbstractDiagram;
 import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.core.DiagramChromeFactory12026;
+import net.sourceforge.plantuml.core.DiagramChromeFactory;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -394,7 +394,7 @@ public class PlantUMLBrowser {
 
 		final Scale scale = ((AbstractDiagram) diagram).getScale();
 		final UgDiagram ugDiagram = (UgDiagram) diagram;
-		TextBlock tb = ugDiagram.getTextBlock12026(0, fileFormat);
+		TextBlock tb = ugDiagram.getTextBlock(0, fileFormat);
 
 		HColor tbBackcolor = tb.getBackcolor();
 		final SvgGraphicsTeaVM svg;
@@ -409,7 +409,7 @@ public class PlantUMLBrowser {
 		UGraphic ug = UGraphicTeaVM.build(tbBackcolor, colorMapper, STRING_BOUNDER, svg);
 
 		if (diagram instanceof TitledDiagram)
-			tb = DiagramChromeFactory12026.create(tb, (TitledDiagram) ugDiagram,
+			tb = DiagramChromeFactory.create(tb, (TitledDiagram) ugDiagram,
 					((TitledDiagram) ugDiagram).getSkinParam(), ugDiagram.getWarnings());
 
 		if (ugDiagram.isHandwritten())

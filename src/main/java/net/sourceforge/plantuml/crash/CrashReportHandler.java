@@ -41,7 +41,7 @@ import java.io.PrintWriter;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.core.TextBlockExporter12026;
+import net.sourceforge.plantuml.core.TextBlockExporter;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
@@ -67,7 +67,7 @@ public class CrashReportHandler extends ReportLog {
 
 		final CrashImage image = new CrashImage(exception, flash, this);
 
-		TextBlockExporter12026.builder(image, fileFormat, false).metadata(metadata).seed(seed).build().exportTo(os);
+		TextBlockExporter.builder(image, fileFormat, false).metadata(metadata).seed(seed).build().exportTo(os);
 	}
 
 	private void exportDiagramErrorText(OutputStream os, Throwable exception) {

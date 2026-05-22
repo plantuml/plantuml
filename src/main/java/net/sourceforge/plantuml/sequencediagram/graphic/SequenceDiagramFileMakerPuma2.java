@@ -121,7 +121,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormat) {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormat) {
 		final Page page = pages.get(num);
 
 		double delta = 0;

@@ -104,7 +104,7 @@ public class PSystemDonors extends UgDiagram {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) throws Exception {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) throws Exception {
 		final List<TextBlock> cols = getCols(getDonors(), COLS, FREE_LINES);
 		return new TextBlock() {
 			public void drawU(UGraphic ug) {

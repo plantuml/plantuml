@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
-import net.sourceforge.plantuml.core.TextBlockExporter12026;
+import net.sourceforge.plantuml.core.TextBlockExporter;
 
 // https://www.branah.com/braille-translator
 public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements ClipContainer {
@@ -114,7 +114,7 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
-		TextBlockExporter12026.builder(new BrailleDrawer(getGraphicObject()), new FileFormatOption(FileFormat.PNG), false)
+		TextBlockExporter.builder(new BrailleDrawer(getGraphicObject()), new FileFormatOption(FileFormat.PNG), false)
 				.metadata(metadata).build().exportTo(os);
 	}
 }

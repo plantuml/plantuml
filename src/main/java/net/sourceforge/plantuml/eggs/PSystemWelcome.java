@@ -79,7 +79,7 @@ public class PSystemWelcome extends UgDiagram {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
 		if (position != null)
 			return GraphicStrings.createBlackOnWhite(strings, PSystemVersion.getPlantumlImage(), position);
 

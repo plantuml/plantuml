@@ -478,7 +478,7 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(List<String> dotStrings, FileFormatOption fileFormatOption)
+	public TextBlock getTextBlock(List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
 
 		final ElkNode root = ElkGraphUtil.createGraph();

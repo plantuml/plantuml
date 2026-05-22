@@ -60,10 +60,9 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(List<String> dotStrings, FileFormatOption fileFormatOption)
+	public TextBlock getTextBlock(List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
 
-		BrowserLog.consoleLog(CucaDiagramFileMakerTeaVM.class, "getTextBlock12026");
 		final StringBounder stringBounder = new StringBounderTeaVM();
 
 		if (diagram.getDiagramType() == DiagramType.ACTIVITY)

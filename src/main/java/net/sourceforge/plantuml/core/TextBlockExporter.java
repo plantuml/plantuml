@@ -109,10 +109,10 @@ import net.sourceforge.plantuml.url.Url;
  * <p>
  * It does <b>not</b> handle diagram chrome (title, header, footer, etc.). The
  * input {@link TextBlock} is expected to be already fully decorated (e.g. by
- * {@link DiagramChromeFactory12026}). Handwritten mode is applied automatically
+ * {@link DiagramChromeFactory}). Handwritten mode is applied automatically
  * when {@code skinParam.handwritten()} is {@code true}.
  */
-public class TextBlockExporter12026 {
+public class TextBlockExporter {
 
 	private final TextBlock textBlock;
 	private final FileFormatOption fileFormatOption;
@@ -131,7 +131,7 @@ public class TextBlockExporter12026 {
 	// Optional diagram-level info for SVG attributes
 	private final DiagramType diagramType;
 
-	private TextBlockExporter12026(Builder builder) {
+	private TextBlockExporter(Builder builder) {
 		this.textBlock = builder.textBlock;
 		this.fileFormatOption = builder.fileFormatOption;
 		this.skinParam = builder.skinParam;
@@ -497,8 +497,8 @@ public class TextBlockExporter12026 {
 			return this;
 		}
 
-		public TextBlockExporter12026 build() {
-			return new TextBlockExporter12026(this);
+		public TextBlockExporter build() {
+			return new TextBlockExporter(this);
 		}
 
 		private static ClockwiseTopRightBottomLeft calculateMargin(net.sourceforge.plantuml.TitledDiagram diagram) {

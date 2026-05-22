@@ -107,7 +107,7 @@ public class PSystemRegex extends TitledDiagram {
 	private final HColor lineColor;
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
 //		while (stack.size() > 1)
 //			concatenation();
 		final ETile peekFirst = stack.peekFirst();

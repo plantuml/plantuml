@@ -94,7 +94,7 @@ public class PSystemEbnf extends TitledDiagram {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
 		if (expressions.size() == 0) {
 			final Style style = ETile.getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 			final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());

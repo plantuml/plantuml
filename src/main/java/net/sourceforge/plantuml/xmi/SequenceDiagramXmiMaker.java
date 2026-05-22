@@ -18,8 +18,10 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
@@ -80,5 +82,11 @@ public final class SequenceDiagramXmiMaker implements FileMaker {
 		transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());
 		transformer.transform(source, resultat);
 	}
+	
+	@Override
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormat) {
+		throw new UnsupportedOperationException();
+	}
+
 
 }

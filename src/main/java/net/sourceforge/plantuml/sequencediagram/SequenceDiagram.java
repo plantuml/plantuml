@@ -315,9 +315,9 @@ public class SequenceDiagram extends TitledDiagram {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormat) {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormat) {
 		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(num, fileFormat);
-		return sequenceDiagramPngMaker.getTextBlock12026(num, fileFormat);
+		return sequenceDiagramPngMaker.getTextBlock(num, fileFormat);
 	}
 
 	// support for CommandReturn

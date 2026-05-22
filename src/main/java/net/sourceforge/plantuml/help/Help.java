@@ -77,7 +77,7 @@ public class Help extends TitledDiagram {
 	}
 
 	@Override
-	public TextBlock getTextBlock12026(int num, FileFormatOption fileFormatOption) {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
 		final Display display = Display.create(lines);
 		final UFont font = UFontFactory.serif(16);
 		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);
