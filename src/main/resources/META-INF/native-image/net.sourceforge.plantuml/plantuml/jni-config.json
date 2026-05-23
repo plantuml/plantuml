@@ -1,0 +1,325 @@
+[
+{
+  "name":"[Lsun.java2d.loops.GraphicsPrimitive;"
+},
+{
+  "name":"java.awt.AlphaComposite",
+  "fields":[{"name":"extraAlpha"}, {"name":"rule"}]
+},
+{
+  "name":"java.awt.Color",
+  "methods":[{"name":"getRGB","parameterTypes":[] }]
+},
+{
+  "name":"java.awt.Component"
+},
+{
+  "name":"java.awt.Font",
+  "fields":[{"name":"name"}, {"name":"pData"}, {"name":"size"}, {"name":"style"}],
+  "methods":[{"name":"getFont","parameterTypes":["java.lang.String"] }, {"name":"getFontPeer","parameterTypes":[] }]
+},
+{
+  "name":"java.awt.Insets",
+  "methods":[{"name":"<init>","parameterTypes":["int","int","int","int"] }]
+},
+{
+  "name":"java.awt.Toolkit",
+  "methods":[{"name":"getDefaultToolkit","parameterTypes":[] }, {"name":"getFontMetrics","parameterTypes":["java.awt.Font"] }]
+},
+{
+  "name":"java.awt.desktop.UserSessionEvent$Reason",
+  "fields":[{"name":"CONSOLE"}, {"name":"LOCK"}, {"name":"REMOTE"}, {"name":"UNSPECIFIED"}]
+},
+{
+  "name":"java.awt.geom.AffineTransform",
+  "fields":[{"name":"m00"}, {"name":"m01"}, {"name":"m02"}, {"name":"m10"}, {"name":"m11"}, {"name":"m12"}]
+},
+{
+  "name":"java.awt.geom.GeneralPath",
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"<init>","parameterTypes":["int","byte[]","int","float[]","int"] }]
+},
+{
+  "name":"java.awt.geom.Path2D",
+  "fields":[{"name":"numTypes"}, {"name":"pointTypes"}, {"name":"windingRule"}]
+},
+{
+  "name":"java.awt.geom.Path2D$Float",
+  "fields":[{"name":"floatCoords"}]
+},
+{
+  "name":"java.awt.geom.Point2D$Float",
+  "fields":[{"name":"x"}, {"name":"y"}],
+  "methods":[{"name":"<init>","parameterTypes":["float","float"] }]
+},
+{
+  "name":"java.awt.geom.Rectangle2D$Float",
+  "fields":[{"name":"height"}, {"name":"width"}, {"name":"x"}, {"name":"y"}],
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"<init>","parameterTypes":["float","float","float","float"] }]
+},
+{
+  "name":"java.awt.image.BufferedImage",
+  "fields":[{"name":"colorModel"}, {"name":"imageType"}, {"name":"raster"}],
+  "methods":[{"name":"getRGB","parameterTypes":["int","int","int","int","int[]","int","int"] }, {"name":"setRGB","parameterTypes":["int","int","int","int","int[]","int","int"] }]
+},
+{
+  "name":"java.awt.image.ColorModel",
+  "fields":[{"name":"colorSpace"}, {"name":"colorSpaceType"}, {"name":"isAlphaPremultiplied"}, {"name":"is_sRGB"}, {"name":"nBits"}, {"name":"numComponents"}, {"name":"supportsAlpha"}, {"name":"transparency"}],
+  "methods":[{"name":"getRGBdefault","parameterTypes":[] }]
+},
+{
+  "name":"java.awt.image.DirectColorModel"
+},
+{
+  "name":"java.awt.image.IndexColorModel",
+  "fields":[{"name":"allgrayopaque"}, {"name":"colorData"}, {"name":"map_size"}, {"name":"rgb"}, {"name":"transparent_index"}]
+},
+{
+  "name":"java.awt.image.PackedColorModel"
+},
+{
+  "name":"java.awt.image.Raster",
+  "fields":[{"name":"dataBuffer"}, {"name":"height"}, {"name":"minX"}, {"name":"minY"}, {"name":"numBands"}, {"name":"numDataElements"}, {"name":"sampleModel"}, {"name":"sampleModelTranslateX"}, {"name":"sampleModelTranslateY"}, {"name":"width"}]
+},
+{
+  "name":"java.awt.image.SampleModel",
+  "fields":[{"name":"height"}, {"name":"width"}],
+  "methods":[{"name":"getPixels","parameterTypes":["int","int","int","int","int[]","java.awt.image.DataBuffer"] }, {"name":"setPixels","parameterTypes":["int","int","int","int","int[]","java.awt.image.DataBuffer"] }]
+},
+{
+  "name":"java.awt.image.SinglePixelPackedSampleModel",
+  "fields":[{"name":"bitMasks"}, {"name":"bitOffsets"}, {"name":"bitSizes"}, {"name":"maxBitSize"}]
+},
+{
+  "name":"java.lang.Boolean",
+  "methods":[{"name":"getBoolean","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"sun.awt.AWTAutoShutdown",
+  "methods":[{"name":"notifyToolkitThreadBusy","parameterTypes":[] }, {"name":"notifyToolkitThreadFree","parameterTypes":[] }]
+},
+{
+  "name":"sun.awt.SunHints",
+  "fields":[{"name":"INTVAL_STROKE_PURE"}]
+},
+{
+  "name":"sun.awt.SunToolkit",
+  "methods":[{"name":"isTouchKeyboardAutoShowEnabled","parameterTypes":[] }]
+},
+{
+  "name":"sun.awt.Win32GraphicsEnvironment",
+  "methods":[{"name":"dwmCompositionChanged","parameterTypes":["boolean"] }]
+},
+{
+  "name":"sun.awt.image.BufImgSurfaceData$ICMColorData",
+  "fields":[{"name":"pData"}],
+  "methods":[{"name":"<init>","parameterTypes":["long"] }]
+},
+{
+  "name":"sun.awt.image.ByteComponentRaster",
+  "fields":[{"name":"data"}, {"name":"dataOffsets"}, {"name":"pixelStride"}, {"name":"scanlineStride"}, {"name":"type"}]
+},
+{
+  "name":"sun.awt.image.BytePackedRaster",
+  "fields":[{"name":"data"}, {"name":"dataBitOffset"}, {"name":"pixelBitStride"}, {"name":"scanlineStride"}, {"name":"type"}]
+},
+{
+  "name":"sun.awt.image.ImageRepresentation",
+  "fields":[{"name":"numSrcLUT"}, {"name":"srcLUTtransIndex"}]
+},
+{
+  "name":"sun.awt.image.IntegerComponentRaster",
+  "fields":[{"name":"data"}, {"name":"dataOffsets"}, {"name":"pixelStride"}, {"name":"scanlineStride"}, {"name":"type"}]
+},
+{
+  "name":"sun.awt.image.ShortComponentRaster",
+  "fields":[{"name":"data"}, {"name":"dataOffsets"}, {"name":"pixelStride"}, {"name":"scanlineStride"}, {"name":"type"}]
+},
+{
+  "name":"sun.awt.image.SunVolatileImage",
+  "fields":[{"name":"volSurfaceManager"}]
+},
+{
+  "name":"sun.awt.image.VolatileSurfaceManager",
+  "fields":[{"name":"sdCurrent"}]
+},
+{
+  "name":"sun.awt.windows.WDesktopPeer",
+  "methods":[{"name":"systemSleepCallback","parameterTypes":["boolean"] }, {"name":"userSessionCallback","parameterTypes":["boolean","java.awt.desktop.UserSessionEvent$Reason"] }]
+},
+{
+  "name":"sun.awt.windows.WToolkit",
+  "methods":[{"name":"displayChanged","parameterTypes":[] }, {"name":"windowsSettingChange","parameterTypes":[] }]
+},
+{
+  "name":"sun.font.CharToGlyphMapper",
+  "methods":[{"name":"charToGlyph","parameterTypes":["int"] }]
+},
+{
+  "name":"sun.font.Font2D",
+  "methods":[{"name":"canDisplay","parameterTypes":["char"] }, {"name":"charToGlyph","parameterTypes":["int"] }, {"name":"charToVariationGlyph","parameterTypes":["int","int"] }, {"name":"getMapper","parameterTypes":[] }, {"name":"getTableBytes","parameterTypes":["int"] }]
+},
+{
+  "name":"sun.font.FontStrike",
+  "methods":[{"name":"getGlyphMetrics","parameterTypes":["int"] }]
+},
+{
+  "name":"sun.font.FontUtilities",
+  "methods":[{"name":"debugFonts","parameterTypes":[] }]
+},
+{
+  "name":"sun.font.FreetypeFontScaler",
+  "methods":[{"name":"invalidateScaler","parameterTypes":[] }]
+},
+{
+  "name":"sun.font.GlyphLayout$GVData",
+  "fields":[{"name":"_count"}, {"name":"_flags"}, {"name":"_glyphs"}, {"name":"_indices"}, {"name":"_positions"}],
+  "methods":[{"name":"grow","parameterTypes":[] }]
+},
+{
+  "name":"sun.font.GlyphList",
+  "fields":[{"name":"gposx"}, {"name":"gposy"}, {"name":"images"}, {"name":"lcdRGBOrder"}, {"name":"lcdSubPixPos"}, {"name":"len"}, {"name":"positions"}, {"name":"usePositions"}]
+},
+{
+  "name":"sun.font.PhysicalStrike",
+  "fields":[{"name":"pScalerContext"}],
+  "methods":[{"name":"adjustPoint","parameterTypes":["java.awt.geom.Point2D$Float"] }, {"name":"getGlyphPoint","parameterTypes":["int","int"] }]
+},
+{
+  "name":"sun.font.StrikeMetrics",
+  "methods":[{"name":"<init>","parameterTypes":["float","float","float","float","float","float","float","float","float","float"] }]
+},
+{
+  "name":"sun.font.TrueTypeFont",
+  "methods":[{"name":"readBlock","parameterTypes":["java.nio.ByteBuffer","int","int"] }, {"name":"readBytes","parameterTypes":["int","int"] }]
+},
+{
+  "name":"sun.font.Type1Font",
+  "methods":[{"name":"readFile","parameterTypes":["java.nio.ByteBuffer"] }]
+},
+{
+  "name":"sun.java2d.Disposer",
+  "methods":[{"name":"addRecord","parameterTypes":["java.lang.Object","long","long"] }]
+},
+{
+  "name":"sun.java2d.InvalidPipeException"
+},
+{
+  "name":"sun.java2d.NullSurfaceData"
+},
+{
+  "name":"sun.java2d.SunGraphics2D",
+  "fields":[{"name":"clipRegion"}, {"name":"composite"}, {"name":"eargb"}, {"name":"lcdTextContrast"}, {"name":"pixel"}, {"name":"strokeHint"}]
+},
+{
+  "name":"sun.java2d.SurfaceData",
+  "fields":[{"name":"pData"}, {"name":"valid"}]
+},
+{
+  "name":"sun.java2d.loops.Blit",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.BlitBg",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.CompositeType",
+  "fields":[{"name":"AnyAlpha"}, {"name":"Src"}, {"name":"SrcNoEa"}, {"name":"SrcOver"}, {"name":"SrcOverNoEa"}, {"name":"Xor"}]
+},
+{
+  "name":"sun.java2d.loops.DrawGlyphList",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.DrawGlyphListAA",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.DrawGlyphListLCD",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.DrawLine",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.DrawParallelogram",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.DrawPath",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.DrawPolygons",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.DrawRect",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.FillParallelogram",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.FillPath",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.FillRect",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.FillSpans",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.GraphicsPrimitive",
+  "fields":[{"name":"pNativePrim"}]
+},
+{
+  "name":"sun.java2d.loops.GraphicsPrimitiveMgr",
+  "methods":[{"name":"register","parameterTypes":["sun.java2d.loops.GraphicsPrimitive[]"] }]
+},
+{
+  "name":"sun.java2d.loops.MaskBlit",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.MaskFill",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.ScaledBlit",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.SurfaceType",
+  "fields":[{"name":"Any3Byte"}, {"name":"Any4Byte"}, {"name":"AnyByte"}, {"name":"AnyColor"}, {"name":"AnyInt"}, {"name":"AnyShort"}, {"name":"ByteBinary1Bit"}, {"name":"ByteBinary2Bit"}, {"name":"ByteBinary4Bit"}, {"name":"ByteGray"}, {"name":"ByteIndexed"}, {"name":"ByteIndexedBm"}, {"name":"FourByteAbgr"}, {"name":"FourByteAbgrPre"}, {"name":"Index12Gray"}, {"name":"Index8Gray"}, {"name":"IntArgb"}, {"name":"IntArgbBm"}, {"name":"IntArgbPre"}, {"name":"IntBgr"}, {"name":"IntRgb"}, {"name":"IntRgbx"}, {"name":"OpaqueColor"}, {"name":"ThreeByteBgr"}, {"name":"Ushort4444Argb"}, {"name":"Ushort555Rgb"}, {"name":"Ushort555Rgbx"}, {"name":"Ushort565Rgb"}, {"name":"UshortGray"}, {"name":"UshortIndexed"}]
+},
+{
+  "name":"sun.java2d.loops.TransformHelper",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.XORComposite",
+  "fields":[{"name":"alphaMask"}, {"name":"xorColor"}, {"name":"xorPixel"}]
+},
+{
+  "name":"sun.java2d.pipe.Region",
+  "fields":[{"name":"bands"}, {"name":"endIndex"}, {"name":"hix"}, {"name":"hiy"}, {"name":"lox"}, {"name":"loy"}]
+},
+{
+  "name":"sun.java2d.pipe.RegionIterator",
+  "fields":[{"name":"curIndex"}, {"name":"numXbands"}, {"name":"region"}]
+},
+{
+  "name":"sun.java2d.pipe.ShapeSpanIterator",
+  "fields":[{"name":"pData"}]
+},
+{
+  "name":"sun.java2d.windows.WindowsFlags",
+  "fields":[{"name":"d3dEnabled"}, {"name":"d3dSet"}, {"name":"offscreenSharingEnabled"}, {"name":"setHighDPIAware"}]
+}
+]
