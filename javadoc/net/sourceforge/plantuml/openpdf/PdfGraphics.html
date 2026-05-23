@@ -258,66 +258,74 @@ loadScripts(document, 'script');</script>
 <div class="block">Insert a raster image (PNG/JPEG bytes) at position (x, y).</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pdfLine(double,double,double,double)" class="member-name-link">pdfLine</a><wbr>(double&nbsp;x1,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pdfImage(java.awt.image.BufferedImage,double,double)" class="member-name-link">pdfImage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a>&nbsp;bufferedImage,
+ double&nbsp;x,
+ double&nbsp;y)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Insert a raster <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link"><code>BufferedImage</code></a> at position (x, y), rendered at its
+ natural pixel size (1 px = 1 user unit).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pdfLine(double,double,double,double)" class="member-name-link">pdfLine</a><wbr>(double&nbsp;x1,
  double&nbsp;y1,
  double&nbsp;x2,
  double&nbsp;y2)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pdfPath(double,double,net.sourceforge.plantuml.klimt.UPath)" class="member-name-link">pdfPath</a><wbr>(double&nbsp;x,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pdfPath(double,double,net.sourceforge.plantuml.klimt.UPath)" class="member-name-link">pdfPath</a><wbr>(double&nbsp;x,
  double&nbsp;y,
  <a href="../klimt/UPath.html" title="class in net.sourceforge.plantuml.klimt">UPath</a>&nbsp;path)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Render a <a href="../klimt/UPath.html" title="class in net.sourceforge.plantuml.klimt"><code>UPath</code></a> (PlantUML's SVG-flavored path representation)
  translated by <code>(x, y)</code>.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pdfPolygon(double...)" class="member-name-link">pdfPolygon</a><wbr>(double...&nbsp;points)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pdfRectangle(double,double,double,double,double,double)" class="member-name-link">pdfRectangle</a><wbr>(double&nbsp;x,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pdfPolygon(double...)" class="member-name-link">pdfPolygon</a><wbr>(double...&nbsp;points)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pdfRectangle(double,double,double,double,double,double)" class="member-name-link">pdfRectangle</a><wbr>(double&nbsp;x,
  double&nbsp;y,
  double&nbsp;width,
  double&nbsp;height,
  double&nbsp;rx,
  double&nbsp;ry)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pdfText(java.lang.String,double,double,org.openpdf.text.pdf.BaseFont,int)" class="member-name-link">pdfText</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pdfText(java.lang.String,double,double,org.openpdf.text.pdf.BaseFont,int)" class="member-name-link">pdfText</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text,
  double&nbsp;x,
  double&nbsp;y,
  org.openpdf.text.pdf.BaseFont&nbsp;font,
  int&nbsp;fontSize)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Render a single line of text at the (x, y) baseline position.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#quadto(double,double,double,double,double,double)" class="member-name-link">quadto</a><wbr>(double&nbsp;x0,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#quadto(double,double,double,double,double,double)" class="member-name-link">quadto</a><wbr>(double&nbsp;x0,
  double&nbsp;y0,
  double&nbsp;x1,
  double&nbsp;y1,
  double&nbsp;x2,
  double&nbsp;y2)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Quadratic bezier.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFillColor(java.awt.Color)" class="member-name-link">setFillColor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/Color.html" title="class or interface in java.awt" class="external-link">Color</a>&nbsp;fill)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFillColor(java.awt.Color,net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior)" class="member-name-link">setFillColor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/Color.html" title="class or interface in java.awt" class="external-link">Color</a>&nbsp;fill,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFillColor(java.awt.Color)" class="member-name-link">setFillColor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/Color.html" title="class or interface in java.awt" class="external-link">Color</a>&nbsp;fill)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFillColor(java.awt.Color,net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior)" class="member-name-link">setFillColor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/Color.html" title="class or interface in java.awt" class="external-link">Color</a>&nbsp;fill,
  <a href="../klimt/color/HColor.TransparentFillBehavior.html" title="enum class in net.sourceforge.plantuml.klimt.color">HColor.TransparentFillBehavior</a>&nbsp;transparentFillBehaviour)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setHidden(boolean)" class="member-name-link">setHidden</a><wbr>(boolean&nbsp;hidden)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStrokeColor(java.awt.Color)" class="member-name-link">setStrokeColor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/Color.html" title="class or interface in java.awt" class="external-link">Color</a>&nbsp;stroke)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setHidden(boolean)" class="member-name-link">setHidden</a><wbr>(boolean&nbsp;hidden)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStrokeWidth(double,double%5B%5D)" class="member-name-link">setStrokeWidth</a><wbr>(double&nbsp;width,
- double[]&nbsp;dash)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStrokeColor(java.awt.Color)" class="member-name-link">setStrokeColor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/Color.html" title="class or interface in java.awt" class="external-link">Color</a>&nbsp;stroke)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStrokeWidth(double,double%5B%5D)" class="member-name-link">setStrokeWidth</a><wbr>(double&nbsp;width,
+ double[]&nbsp;dash)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -552,6 +560,34 @@ loadScripts(document, 'script');</script>
 <dd><code>y</code> - top-left Y (SVG convention).</dd>
 <dd><code>width</code> - target render width.</dd>
 <dd><code>height</code> - target render height.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="pdfImage(java.awt.image.BufferedImage,double,double)">
+<h3>pdfImage</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">pdfImage</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link">BufferedImage</a>&nbsp;bufferedImage,
+ double&nbsp;x,
+ double&nbsp;y)</span>
+              throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Insert a raster <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/image/BufferedImage.html" title="class or interface in java.awt.image" class="external-link"><code>BufferedImage</code></a> at position (x, y), rendered at its
+ natural pixel size (1 px = 1 user unit). Used by <code>DriverImagePdf</code> for
+ <a href="../klimt/shape/UImage.html" title="class in net.sourceforge.plantuml.klimt.shape"><code>UImage</code></a> content.
+
+ <p>
+ Handed straight to OpenPDF via
+ <code>Image.getInstance(java.awt.Image, Color, boolean)</code>: passing a
+ <code>null</code> mask color makes OpenPDF derive the transparency mask from the
+ image's own alpha channel (PlantUML icons and sprites rely on it), and
+ <code>forceBW=false</code> keeps the colors. Positioning and Y-negation follow the
+ same convention as <a href="#pdfImage(byte%5B%5D,double,double,double,double)"><code>pdfImage(byte[], double, double, double, double)</code></a>.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>bufferedImage</code> - the image to embed.</dd>
+<dd><code>x</code> - top-left X (SVG convention).</dd>
+<dd><code>y</code> - top-left Y (SVG convention).</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if OpenPDF cannot build the image.</dd>
 </dl>
 </section>
 </li>

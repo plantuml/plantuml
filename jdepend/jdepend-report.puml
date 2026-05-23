@@ -2308,7 +2308,7 @@ Total Classes: 7
 "net.sourceforge.plantuml.openiconic" --> "net.sourceforge.plantuml.style"
 
 class "net.sourceforge.plantuml.openpdf" %lighten("red", 92) {
-Total Classes: 11
+Total Classes: 10
 }
 "net.sourceforge.plantuml.openpdf" --> "java.awt.geom"
 "net.sourceforge.plantuml.openpdf" --> "java.io"

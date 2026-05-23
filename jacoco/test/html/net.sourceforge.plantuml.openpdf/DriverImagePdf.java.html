@@ -34,36 +34,40 @@
  */
 package net.sourceforge.plantuml.openpdf;
 
+import java.io.IOException;
+
 import net.sourceforge.plantuml.klimt.ClipContainer;
+import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.utils.Log;
 
 public class DriverImagePdf implements UDriver&lt;UImage, PdfGraphics&gt; {
 
 	private final ClipContainer clipContainer;
 
-<span class="nc" id="L47">	public DriverImagePdf(ClipContainer clipContainer) {</span>
-<span class="nc" id="L48">		this.clipContainer = clipContainer;</span>
-<span class="nc" id="L49">	}</span>
+<span class="nc" id="L51">	public DriverImagePdf(ClipContainer clipContainer) {</span>
+<span class="nc" id="L52">		this.clipContainer = clipContainer;</span>
+<span class="nc" id="L53">	}</span>
 
-	public void draw(UImage image, double x, double y, ColorMapper mapper, UParam param, PdfGraphics svg) {
-//		final UClip clip = clipContainer.getClip();
-//		if (clip != null) {
-//			if (clip.isInside(x, y) == false) {
-//				return;
-//			}
-//			if (clip.isInside(x + image.getWidth(), y + image.getHeight()) == false) {
-//				return;
-//			}
-//		}
-//
-//		try {
-//			svg.svgImage(image.getImage(1), x, y);
-//		} catch (IOException e) {
-//			Log.error(&quot;Error in svg for image &quot; + e);
-//		}
-<span class="nc" id="L67">	}</span>
+	public void draw(UImage image, double x, double y, ColorMapper mapper, UParam param, PdfGraphics pdf) {
+<span class="nc" id="L56">		final UClip clip = clipContainer.getClip();</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (clip != null) {</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">			if (clip.isInside(x, y) == false) {</span>
+<span class="nc" id="L59">				return;</span>
+			}
+<span class="nc bnc" id="L61" title="All 2 branches missed.">			if (clip.isInside(x + image.getWidth(), y + image.getHeight()) == false) {</span>
+<span class="nc" id="L62">				return;</span>
+			}
+		}
+
+		try {
+<span class="nc" id="L67">			pdf.pdfImage(image.getImage(1).getBufferedImage(), x, y);</span>
+<span class="nc" id="L68">		} catch (IOException e) {</span>
+<span class="nc" id="L69">			Log.error(&quot;Error in svg for image &quot; + e);</span>
+<span class="nc" id="L70">		}</span>
+<span class="nc" id="L71">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

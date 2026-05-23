@@ -8091,8 +8091,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 11
-    Concrete Classes: 11
+    Total Classes: 10
+    Concrete Classes: 10
     Abstract Classes: 0
 
     Ca: 1
@@ -8107,7 +8107,6 @@ Abstract Classes:
 Concrete Classes:
     net.sourceforge.plantuml.openpdf.DriverDotPathPdf
     net.sourceforge.plantuml.openpdf.DriverEllipsePdf
-    net.sourceforge.plantuml.openpdf.DriverImagePdf
     net.sourceforge.plantuml.openpdf.DriverLinePdf
     net.sourceforge.plantuml.openpdf.DriverPathPdf
     net.sourceforge.plantuml.openpdf.DriverPolygonPdf
@@ -15030,7 +15029,7 @@ net.sourceforge.plantuml.nwdiag.next,6,1,1,10,0.17,0.91,0.08,1
 net.sourceforge.plantuml.objectdiagram,2,1,0,14,0.5,1,0.5,1
 net.sourceforge.plantuml.objectdiagram.command,0,0,3,0,0,0,1,1
 net.sourceforge.plantuml.openiconic,7,1,1,14,0.14,0.93,0.08,1
-net.sourceforge.plantuml.openpdf,11,0,1,12,0,0.92,0.08,1
+net.sourceforge.plantuml.openpdf,10,0,1,12,0,0.92,0.08,1
 net.sourceforge.plantuml.packetdiag,6,0,1,16,0,0.94,0.06,1
 net.sourceforge.plantuml.packetdiag.command,6,0,1,7,0,0.88,0.12,1
 net.sourceforge.plantuml.picoweb,3,0,0,4,0,1,0,1

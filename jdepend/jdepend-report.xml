@@ -11749,8 +11749,8 @@
 
         <Package name="net.sourceforge.plantuml.openpdf">
             <Stats>
-                <TotalClasses>11</TotalClasses>
-                <ConcreteClasses>11</ConcreteClasses>
+                <TotalClasses>10</TotalClasses>
+                <ConcreteClasses>10</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>12</Ce>
@@ -11769,9 +11769,6 @@
                 </Class>
                 <Class sourceFile="DriverEllipsePdf.java">
                     net.sourceforge.plantuml.openpdf.DriverEllipsePdf
-                </Class>
-                <Class sourceFile="DriverImagePdf.java">
-                    net.sourceforge.plantuml.openpdf.DriverImagePdf
                 </Class>
                 <Class sourceFile="DriverLinePdf.java">
                     net.sourceforge.plantuml.openpdf.DriverLinePdf
