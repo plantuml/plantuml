@@ -34,11 +34,15 @@
  */
 package net.sourceforge.plantuml.openpdf;
 
+import java.io.IOException;
+
 import net.sourceforge.plantuml.klimt.ClipContainer;
+import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.utils.Log;
 
 public class DriverImagePdf implements UDriver<UImage, PdfGraphics> {
 
@@ -48,21 +52,21 @@ public class DriverImagePdf implements UDriver<UImage, PdfGraphics> {
 		this.clipContainer = clipContainer;
 	}
 
-	public void draw(UImage image, double x, double y, ColorMapper mapper, UParam param, PdfGraphics svg) {
-//		final UClip clip = clipContainer.getClip();
-//		if (clip != null) {
-//			if (clip.isInside(x, y) == false) {
-//				return;
-//			}
-//			if (clip.isInside(x + image.getWidth(), y + image.getHeight()) == false) {
-//				return;
-//			}
-//		}
-//
-//		try {
-//			svg.svgImage(image.getImage(1), x, y);
-//		} catch (IOException e) {
-//			Log.error("Error in svg for image " + e);
-//		}
+	public void draw(UImage image, double x, double y, ColorMapper mapper, UParam param, PdfGraphics pdf) {
+		final UClip clip = clipContainer.getClip();
+		if (clip != null) {
+			if (clip.isInside(x, y) == false) {
+				return;
+			}
+			if (clip.isInside(x + image.getWidth(), y + image.getHeight()) == false) {
+				return;
+			}
+		}
+
+		try {
+			pdf.pdfImage(image.getImage(1).getBufferedImage(), x, y);
+		} catch (IOException e) {
+			Log.error("Error in svg for image " + e);
+		}
 	}
 }

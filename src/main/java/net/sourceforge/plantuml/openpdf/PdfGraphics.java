@@ -37,11 +37,13 @@ package net.sourceforge.plantuml.openpdf;
 
 import java.awt.Color;
 import java.awt.geom.PathIterator;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.LinkedList;
 
+import org.openpdf.text.BadElementException;
 import org.openpdf.text.Document;
 import org.openpdf.text.Image;
 import org.openpdf.text.Rectangle;
@@ -53,6 +55,7 @@ import org.openpdf.text.pdf.PdfTemplate;
 import org.openpdf.text.pdf.PdfWriter;
 
 import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior;
 import net.sourceforge.plantuml.klimt.geom.USegment;
 import net.sourceforge.plantuml.klimt.geom.USegmentType;
@@ -521,7 +524,7 @@ public class PdfGraphics {
 	public void pdfText(String text, double x, double y, BaseFont font, int fontSize) {
 		if (hidden)
 			return;
-		if (text == null || text.isEmpty())
+		if (text == null || text.isEmpty() || fontSize == 0)
 			return;
 		openDocumentIfNeeded();
 
@@ -570,6 +573,45 @@ public class PdfGraphics {
 		}
 		ensureVisible(x + width, y + height);
 	}
+	
+	/**
+	 * Insert a raster {@link BufferedImage} at position (x, y), rendered at its
+	 * natural pixel size (1 px = 1 user unit). Used by {@code DriverImagePdf} for
+	 * {@link net.sourceforge.plantuml.klimt.shape.UImage} content.
+	 *
+	 * <p>
+	 * Handed straight to OpenPDF via
+	 * {@code Image.getInstance(java.awt.Image, Color, boolean)}: passing a
+	 * {@code null} mask color makes OpenPDF derive the transparency mask from the
+	 * image's own alpha channel (PlantUML icons and sprites rely on it), and
+	 * {@code forceBW=false} keeps the colors. Positioning and Y-negation follow the
+	 * same convention as {@link #pdfImage(byte[], double, double, double, double)}.
+	 *
+	 * @param bufferedImage the image to embed.
+	 * @param x             top-left X (SVG convention).
+	 * @param y             top-left Y (SVG convention).
+	 * @throws IOException if OpenPDF cannot build the image.
+	 */
+	public void pdfImage(BufferedImage bufferedImage, double x, double y) throws IOException {
+		if (hidden)
+			return;
+		if (bufferedImage == null)
+			return;
+		openDocumentIfNeeded();
+		final int width = bufferedImage.getWidth();
+		final int height = bufferedImage.getHeight();
+		if (width <= 0 || height <= 0)
+			return;
+		try {
+			final Image img = Image.getInstance(bufferedImage, null, false);
+			img.setAbsolutePosition((float) x, ny(y + height));
+			cb.addImage(img);
+		} catch (BadElementException e) {
+			throw new IOException("Cannot embed image", e);
+		}
+		ensureVisible(x + width, y + height);
+	}
+
 
 	// ----------------------------------------------------------------------
 	// links
@@ -966,5 +1008,6 @@ public class PdfGraphics {
 		final double sign = (ux * vy - uy * vx) < 0 ? -1 : 1;
 		return sign * Math.acos(cos);
 	}
+
 
 }
