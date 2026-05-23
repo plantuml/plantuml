@@ -1,0 +1,61 @@
+name: Native Image - Agent (generate JNI/reflection metadata)
+
+# Manually-triggered workflow.
+#
+# Runs PlantUML under the GraalVM tracing agent (on the SAME platform as the
+# native build target, Windows x64) to generate the JNI / reflection / resource
+# metadata that static analysis misses -- notably the sun.awt.image.* raster
+# classes accessed by the native AWT imaging libraries.
+#
+# It does NOT commit anything. It uploads the generated *.json as an artifact.
+# You then download it and commit the files into the ROOT project at:
+#   src/main/resources/META-INF/native-image/net.sourceforge.plantuml/plantuml/
+# After that, plantuml-natif:nativeHeadlessCompile will pick them up
+# automatically (they ship inside plantuml-<version>.jar).
+
+on:
+  workflow_dispatch:
+
+jobs:
+  trace_windows_amd64:
+    name: 'Trace metadata (windows-amd64)'
+    runs-on: windows-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v6
+
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          distribution: liberica
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          cache: gradle
+
+      - name: Force tmp dir on RUNNER_TEMP for Java
+        shell: pwsh
+        run: |
+          echo "JAVA_TOOL_OPTIONS=-Djava.io.tmpdir=$env:RUNNER_TEMP" >> $env:GITHUB_ENV
+
+      - name: Patch build metadata (version / git commit / timestamp)
+        shell: pwsh
+        run: ./gradlew --no-daemon patchCompilationInfo
+
+      # Build the root jar (the exact artifact plantuml-natif compiles from).
+      - name: Build root jar
+        shell: pwsh
+        run: ./gradlew --no-daemon :jar
+
+      - name: Run tracing agent over diagram corpus
+        shell: bash
+        run: |
+          JAR=$(ls build/libs/plantuml-*.jar | grep -v -- '-pdf' | grep -v -- '-sources' | grep -v -- '-javadoc' | head -n 1)
+          echo "Using jar: $JAR"
+          bash .github/scripts/native-agent-trace.sh "$JAR" native-image-config-dir
+
+      - name: Upload generated metadata
+        uses: actions/upload-artifact@v7
+        with:
+          name: native-image-config-windows-amd64
+          path: native-image-config-dir/*.json
