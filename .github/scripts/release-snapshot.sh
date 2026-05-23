@@ -27,6 +27,7 @@ cp "build/libs/js-plantuml-${RELEASE_VERSION}.zip" "github_release/js-plantuml-S
 cp "build/native-image/native-plantuml-windows-amd64-SNAPSHOT.zip" "github_release/native-plantuml-windows-amd64-SNAPSHOT.zip"
 cp "build/native-image/native-plantuml-linux-amd64-SNAPSHOT.zip" "github_release/native-plantuml-linux-amd64-SNAPSHOT.zip"
 cp "build/native-image/native-plantuml-linux-arm64-SNAPSHOT.zip" "github_release/native-plantuml-linux-arm64-SNAPSHOT.zip"
+cp "build/native-image/native-plantuml-macos-arm64-SNAPSHOT.zip" "github_release/native-plantuml-macos-arm64-SNAPSHOT.zip"
 cp "plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}.jar" "github_release/plantuml-asl-SNAPSHOT.jar"
 cp "plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-asl-SNAPSHOT-javadoc.jar"
 cp "plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-asl-SNAPSHOT-sources.jar"

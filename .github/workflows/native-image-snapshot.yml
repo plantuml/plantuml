@@ -124,3 +124,39 @@ jobs:
         with:
           name: linux-arm64
           path: native-plantuml-linux-arm64-SNAPSHOT.zip
+
+  build_macos_arm64:
+    name: 'Build Native Image macos-arm64'
+    runs-on: macos-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v6
+
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          distribution: liberica
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          cache: gradle
+
+      - name: Patch build metadata (version / git commit / timestamp)
+        run: ./gradlew --no-daemon patchCompilationInfo
+
+      - name: Build native image (plantuml-natif)
+        run: ./gradlew --no-daemon :plantuml-natif:nativeCompile -x test
+
+      - name: Run sample diagram test (ASCII)
+        run: |
+          echo "Alice -> Bob : it works!" | ./plantuml-natif/build/native/nativeCompile/plantuml -pipe -ttxt
+
+      - name: Archive macOS build
+        run: |
+          zip -j native-plantuml-macos-arm64-SNAPSHOT.zip plantuml-natif/build/native/nativeCompile/*
+
+      - name: Upload build artifact (macOS)
+        uses: actions/upload-artifact@v7
+        with:
+          name: macos-arm64
+          path: native-plantuml-macos-arm64-SNAPSHOT.zip

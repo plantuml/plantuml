@@ -326,6 +326,12 @@ jobs:
           name: linux-arm64
           path: build/native-image
 
+      - name: Download native image (macOS arm64)
+        uses: actions/download-artifact@v8
+        with:
+          name: macos-arm64
+          path: build/native-image
+
       - name: Restore Libs cache
         uses: actions/cache/restore@v5
         with:
