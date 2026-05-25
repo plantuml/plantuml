@@ -86,7 +86,7 @@ public class SubjectWorkingHours implements Subject<GanttDiagram> {
 
 		result.add(new VerbPhraseAction(Verbs.are, new ComplementWorkingHours()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final TimeRange timeRange = (TimeRange) subject;
 				System.out.println("HOP! timeRange=" + timeRange);
 				return CommandExecutionResult.ok();

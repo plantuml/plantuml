@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.gantt.command.NaturalGanttCommand;
 import net.sourceforge.plantuml.gantt.lang.SubjectDayAsDate;
 import net.sourceforge.plantuml.gantt.lang.SubjectDayOfWeek;
 import net.sourceforge.plantuml.gantt.lang.SubjectDaysAsDates;
-import net.sourceforge.plantuml.gantt.lang.SubjectProject;
+import net.sourceforge.plantuml.gantt.lang.SubjectGantt;
 import net.sourceforge.plantuml.gantt.lang.SubjectResource;
 import net.sourceforge.plantuml.gantt.lang.SubjectSeparator;
 import net.sourceforge.plantuml.gantt.lang.SubjectTask;
@@ -108,7 +108,7 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 	}
 
 	private void addLanguageCommands(List<Command> cmd) {
-		cmd.add(new NaturalGanttCommand(SubjectProject.ME));
+		cmd.add(new NaturalGanttCommand(SubjectGantt.ME));
 		cmd.add(new NaturalGanttCommand(SubjectToday.ME));
 		cmd.add(new NaturalGanttCommand(SubjectTask.ME));
 		cmd.add(new NaturalGanttCommand(SubjectResource.ME));

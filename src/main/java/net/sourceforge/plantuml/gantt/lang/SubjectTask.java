@@ -90,7 +90,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.requires, Words.uzeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT),
 				new ComplementDuration()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final Load duration = (Load) complement;
 				task.setLoad(duration);
@@ -101,7 +101,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.starts,
 				new PairOfSomething<>(new ComplementBeforeOrAfterOrAtTaskStartOrEnd(), new ComplementWithColorLink())) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram diagram, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final TaskInstant when;
 
@@ -112,10 +112,10 @@ public class SubjectTask implements Subject<GanttDiagram> {
 				task.setStart(when.getInstantPrecise());
 				if (when.isTask()) {
 					final HColor color = complement22.getCenter();
-					final GanttConstraint link = new GanttConstraint(diagram.getIHtmlColorSet(),
-							diagram.getCurrentStyleBuilder(), when, new TaskInstant(task, TaskAttribute.START), color);
+					final GanttConstraint link = new GanttConstraint(gantt.getIHtmlColorSet(),
+							gantt.getCurrentStyleBuilder(), when, new TaskInstant(task, TaskAttribute.START), color);
 					link.applyStyle(complement22.getStyle());
-					diagram.addContraint(link);
+					gantt.addContraint(link);
 				}
 				return CommandExecutionResult.ok();
 			}
@@ -123,15 +123,15 @@ public class SubjectTask implements Subject<GanttDiagram> {
 
 		result.add(new VerbPhraseAction(Verbs.starts, new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final TaskInstant when;
 				HColor color = null;
 				when = (TaskInstant) complement;
 				task.setStart(when.getInstantPrecise());
 				if (when.isTask())
-					project.addContraint(new GanttConstraint(project.getIHtmlColorSet(),
-							project.getCurrentStyleBuilder(), when, new TaskInstant(task, TaskAttribute.START), color));
+					gantt.addContraint(new GanttConstraint(gantt.getIHtmlColorSet(),
+							gantt.getCurrentStyleBuilder(), when, new TaskInstant(task, TaskAttribute.START), color));
 
 				return CommandExecutionResult.ok();
 			}
@@ -140,7 +140,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.starts, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),
 				ComplementDate.onlyRelative()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final LocalDate start = (LocalDate) complement;
 
@@ -152,10 +152,10 @@ public class SubjectTask implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.starts, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),
 				ComplementDate.any()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final LocalDate start = (LocalDate) complement;
-				if (project.getMinDay().equals(TimePoint.epoch()))
+				if (gantt.getMinDay().equals(TimePoint.epoch()))
 					return CommandExecutionResult.error("No starting date for the project");
 
 				task.setStart(TimePoint.ofStartOfDay(start));
@@ -165,7 +165,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 
 		result.add(new VerbPhraseAction(Verbs.isColored, new ComplementInColors()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final CenterBorderColor colors = (CenterBorderColor) complement;
 				task.setColors(colors);
@@ -176,7 +176,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.isColored, Words.uexactly2(Words.FOR, Words.COMPLETION),
 				new ComplementInColorsFromTo()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final CenterBorderColor[] colors = (CenterBorderColor[]) complement;
 				task.setColors(colors);
@@ -187,7 +187,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.happens, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),
 				ComplementDate.any()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				task.setLoad(Load.ofDays(1));
 				final LocalDate start = (LocalDate) complement;
@@ -200,7 +200,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.happens, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),
 				new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				task.setLoad(Load.ofDays(1));
 				task.setDiamond(true);
@@ -216,24 +216,24 @@ public class SubjectTask implements Subject<GanttDiagram> {
 
 		result.add(new VerbPhraseAction(Verbs.occurs, new ComplementFromTo()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final TwoNames bothNames = (TwoNames) complement;
 				final String name1 = bothNames.getName1();
 				final String name2 = bothNames.getName2();
-				final Task from = project.getExistingTask(name1);
+				final Task from = gantt.getExistingTask(name1);
 				if (from == null)
 					return CommandExecutionResult.error("No such " + name1 + " task");
 
-				final Task to = project.getExistingTask(name2);
+				final Task to = gantt.getExistingTask(name2);
 				if (to == null)
 					return CommandExecutionResult.error("No such " + name2 + " task");
 
 				task.setStart(from.getStart());
 				task.setEnd(to.getEnd());
-				project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),
+				gantt.addContraint(new GanttConstraint(gantt.getIHtmlColorSet(), gantt.getCurrentStyleBuilder(),
 						new TaskInstant(from, TaskAttribute.START), new TaskInstant(task, TaskAttribute.START)));
-				project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),
+				gantt.addContraint(new GanttConstraint(gantt.getIHtmlColorSet(), gantt.getCurrentStyleBuilder(),
 						new TaskInstant(to, TaskAttribute.END), new TaskInstant(task, TaskAttribute.END)));
 				return CommandExecutionResult.ok();
 			}
@@ -241,11 +241,11 @@ public class SubjectTask implements Subject<GanttDiagram> {
 
 		result.add(new VerbPhraseAction(Verbs.ends, new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final TaskInstant when = (TaskInstant) complement;
 				task.setEnd(when.getInstantPrecise());
-				project.addContraint(new GanttConstraint(project.getIHtmlColorSet(), project.getCurrentStyleBuilder(),
+				gantt.addContraint(new GanttConstraint(gantt.getIHtmlColorSet(), gantt.getCurrentStyleBuilder(),
 						when, new TaskInstant(task, TaskAttribute.END)));
 				return CommandExecutionResult.ok();
 			}
@@ -254,7 +254,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.ends, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),
 				ComplementDate.onlyRelative()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final LocalDate end = (LocalDate) complement;
 
@@ -266,10 +266,10 @@ public class SubjectTask implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.ends, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),
 				ComplementDate.any()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final LocalDate end = (LocalDate) complement;
-				if (project.getMinDay().equals(TimePoint.epoch()))
+				if (gantt.getMinDay().equals(TimePoint.epoch()))
 					return CommandExecutionResult.error("No starting date for the project");
 				task.setEnd(TimePoint.ofStartOfDay(end).increment());
 
@@ -279,9 +279,9 @@ public class SubjectTask implements Subject<GanttDiagram> {
 
 		result.add(new VerbPhraseAction(Verbs.displayOnSameRowAs, new ComplementNamed()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task1 = (Task) subject;
-				final Task task2 = project.getExistingTask((String) complement);
+				final Task task2 = gantt.getExistingTask((String) complement);
 				if (task2 == null)
 					return CommandExecutionResult.error("No such task " + task2);
 
@@ -292,15 +292,15 @@ public class SubjectTask implements Subject<GanttDiagram> {
 
 		result.add(new VerbPhraseAction(Verbs.is, new ComplementDeleted()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
-				return project.deleteTask(task);
+				return gantt.deleteTask(task);
 			}
 		});
 
 		result.add(new VerbPhraseAction(Verbs.is, new ComplementCompleted()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final Completion completed = (Completion) complement;
 				task.setCompletion(completed.getCompletion());
@@ -311,7 +311,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),
 				new ComplementIntervals()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final DaysAsDates pauses = (DaysAsDates) complement;
 				for (LocalDate day : pauses)
@@ -324,7 +324,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),
 				new ComplementIntervalsSmart()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final DaysAsDates pauses = (DaysAsDates) complement;
 				for (LocalDate day : pauses)
@@ -336,7 +336,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),
 				ComplementDate.any()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final LocalDate pause = (LocalDate) complement;
 				task.addPause(pause);
@@ -347,7 +347,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),
 				new ComplementDayOfWeek()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final DayOfWeek pause = (DayOfWeek) complement;
 				task.addPause(pause);
@@ -357,7 +357,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 
 		result.add(new VerbPhraseAction(Verbs.linksTo, new ComplementUrl()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final Url url = (Url) complement;
 				task.setUrl(url);
@@ -367,7 +367,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 
 		result.add(new VerbPhraseAction(Verbs.isDisplayedAs, new ComplementAnything()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
 				final String displayString = (String) complement;
 				task.setDisplay(displayString);

@@ -103,53 +103,53 @@ public class ComplementDate implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<LocalDate> getMe(GanttDiagram system, UMatcher arg) {
+	public Failable<LocalDate> getMe(GanttDiagram gantt, UMatcher arg) {
 		final DayPattern dayPattern = new DayPattern("");
 		final LocalDate result = dayPattern.getDay(arg);
 		if (result != null)
 			return Failable.ok(result);
 		if (arg.get("DCOUNT", 0) != null)
-			return Failable.ok(resultD(system, arg));
+			return Failable.ok(resultD(gantt, arg));
 
 		if (arg.get("ECOUNT", 0) != null)
-			return Failable.ok(resultE(system, arg));
+			return Failable.ok(resultE(gantt, arg));
 
 		throw new IllegalStateException();
 	}
 
-	public Failable<LocalDate> getMe(GanttDiagram system, Capture arg) {
+	public Failable<LocalDate> getMe(GanttDiagram gantt, Capture arg) {
 		final DayPattern dayPattern = new DayPattern("");
 		final LocalDate result = dayPattern.getDay(arg);
 		if (result != null)
 			return Failable.ok(result);
 
 		if (arg.get("DCOUNT") != null)
-			return Failable.ok(resultD(system, arg));
+			return Failable.ok(resultD(gantt, arg));
 
 		if (arg.get("ECOUNT") != null)
-			return Failable.ok(resultE(system, arg));
+			return Failable.ok(resultE(gantt, arg));
 
 		throw new IllegalStateException();
 	}
 
-	private LocalDate resultD(GanttDiagram system, UMatcher arg) {
+	private LocalDate resultD(GanttDiagram gantt, UMatcher arg) {
 		final int day = Integer.parseInt(arg.get("DCOUNT", 0));
-		return system.getMinDay().plusDays(day);
+		return gantt.getMinDay().plusDays(day);
 	}
 
-	private LocalDate resultD(GanttDiagram system, Capture arg) {
+	private LocalDate resultD(GanttDiagram gantt, Capture arg) {
 		final int day = Integer.parseInt(arg.get("DCOUNT"));
-		return system.getMinDay().plusDays(day);
+		return gantt.getMinDay().plusDays(day);
 	}
 
-	private LocalDate resultE(GanttDiagram system, UMatcher arg) {
+	private LocalDate resultE(GanttDiagram gantt, UMatcher arg) {
 		final int day = Integer.parseInt(arg.get("ECOUNT", 0));
-		return system.getMinDay().plusDays(day);
+		return gantt.getMinDay().plusDays(day);
 	}
 
-	private LocalDate resultE(GanttDiagram system, Capture arg) {
+	private LocalDate resultE(GanttDiagram gantt, Capture arg) {
 		final int day = Integer.parseInt(arg.get("ECOUNT"));
-		return system.getMinDay().plusDays(day);
+		return gantt.getMinDay().plusDays(day);
 	}
 
 }

@@ -69,10 +69,10 @@ public abstract class VerbPhraseAction {
 		this.complement = complement;
 	}
 
-	public abstract CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement);
+	public abstract CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement);
 
-	public Failable<? extends Object> getComplement(GanttDiagram project, VerbPhraseMatcher result) {
-		return complement.getMe(project, result.getComplementMatcher());
+	public Failable<? extends Object> getComplement(GanttDiagram gantt, VerbPhraseMatcher result) {
+		return complement.getMe(gantt, result.getComplementMatcher());
 	}
 
 //	public Failable<? extends Object> getSubject(D project, ParsedSentence result) {

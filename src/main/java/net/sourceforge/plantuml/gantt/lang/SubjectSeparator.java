@@ -64,8 +64,8 @@ public class SubjectSeparator implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<GanttDiagram> getMe(GanttDiagram project, UMatcher arg) {
-		return Failable.ok(project);
+	public Failable<GanttDiagram> getMe(GanttDiagram gantt, UMatcher arg) {
+		return Failable.ok(gantt);
 	}
 
 	@Override
@@ -74,34 +74,34 @@ public class SubjectSeparator implements Subject<GanttDiagram> {
 
 		result.add(new VerbPhraseAction(Verbs.just, Words.usingle(Words.BEFORE), ComplementDate.any()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final LocalDate day = (LocalDate) complement;
 				if (TeaVM.a())
-					assert project == subject;
-				project.addVerticalSeparatorBefore(day);
+					assert gantt == subject;
+				gantt.addVerticalSeparatorBefore(day);
 				return CommandExecutionResult.ok();
 			}
 		});
 
 		result.add(new VerbPhraseAction(Verbs.just, Words.usingle(Words.AFTER), ComplementDate.any()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final LocalDate day = (LocalDate) complement;
 				if (TeaVM.a())
-					assert project == subject;
-				project.addVerticalSeparatorBefore(day.plusDays(1));
+					assert gantt == subject;
+				gantt.addVerticalSeparatorBefore(day.plusDays(1));
 				return CommandExecutionResult.ok();
 			}
 		});
 
 		result.add(new VerbPhraseAction(Verbs.just, new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final TaskInstant when = (TaskInstant) complement;
 
 				if (TeaVM.a())
-					assert project == subject;
-				project.addVerticalSeparatorBefore(when.getInstantPrecise().toDay());
+					assert gantt == subject;
+				gantt.addVerticalSeparatorBefore(when.getInstantPrecise().toDay());
 				return CommandExecutionResult.ok();
 			}
 		});

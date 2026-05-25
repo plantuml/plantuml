@@ -68,28 +68,28 @@ public class SubjectDayOfWeek implements Subject<GanttDiagram> {
 		final List<VerbPhraseAction> result = new ArrayList<>();
 		result.add(new VerbPhraseAction(Verbs.are, new ComplementOpen()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final DayOfWeek day = (DayOfWeek) subject;
-				project.openDayOfWeek(day, (String) complement);
+				gantt.openDayOfWeek(day, (String) complement);
 				return CommandExecutionResult.ok();
 			}
 		});
 
 		result.add(new VerbPhraseAction(Verbs.are, new ComplementClose()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final DayOfWeek day = (DayOfWeek) subject;
-				project.closeDayOfWeek(day, (String) complement);
+				gantt.closeDayOfWeek(day, (String) complement);
 				return CommandExecutionResult.ok();
 			}
 		});
 
 		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final HColor color = ((CenterBorderColor) complement).getCenter();
 				final DayOfWeek day = (DayOfWeek) subject;
-				project.colorDay(day, color);
+				gantt.colorDay(day, color);
 
 				return CommandExecutionResult.ok();
 			}
@@ -100,7 +100,7 @@ public class SubjectDayOfWeek implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<DayOfWeek> getMe(GanttDiagram diagram, UMatcher arg) {
+	public Failable<DayOfWeek> getMe(GanttDiagram gantt, UMatcher arg) {
 		final String s = arg.get("SUBJECT", 0);
 		return Failable.ok(DayOfWeekUtils.fromString(s));
 	}

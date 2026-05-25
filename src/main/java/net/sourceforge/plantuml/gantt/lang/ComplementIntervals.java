@@ -80,7 +80,7 @@ public class ComplementIntervals implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<DaysAsDates> getMe(GanttDiagram project, UMatcher arg) {
+	public Failable<DaysAsDates> getMe(GanttDiagram gantt, UMatcher arg) {
 		final LocalDate d1 = new DayPattern("1").getDay(arg);
 		if (d1 != null) {
 			final LocalDate d2 = new DayPattern("2").getDay(arg);
@@ -88,17 +88,17 @@ public class ComplementIntervals implements Something<GanttDiagram> {
 		}
 
 		if (arg.get("ECOUNT1", 0) != null)
-			return Failable.ok(resultE(project, arg));
+			return Failable.ok(resultE(gantt, arg));
 
 		throw new IllegalStateException();
 	}
 
-	private DaysAsDates resultE(GanttDiagram project, UMatcher arg) {
+	private DaysAsDates resultE(GanttDiagram gantt, UMatcher arg) {
 		final int day1 = Integer.parseInt(arg.get("ECOUNT1", 0));
-		final TimePoint date1 = project.getMinTimePoint().addDays(day1);
+		final TimePoint date1 = gantt.getMinTimePoint().addDays(day1);
 
 		final int day2 = Integer.parseInt(arg.get("ECOUNT2", 0));
-		final TimePoint date2 = project.getMinTimePoint().addDays(day2);
+		final TimePoint date2 = gantt.getMinTimePoint().addDays(day2);
 
 		return new DaysAsDates(date1.toDay(), date2.toDay());
 	}

@@ -46,24 +46,24 @@ import net.sourceforge.plantuml.gantt.core.TaskInstant;
 
 abstract class AbstractComplementTaskInstant implements Something<GanttDiagram> {
 
-	final public Failable<TaskInstant> getComplementTaskInstant(GanttDiagram system, UMatcher arg) {
+	final public Failable<TaskInstant> getComplementTaskInstant(GanttDiagram gantt, UMatcher arg) {
 		final String code = arg.get("COMPLEMENT_CODE_OTHER", 0);
 		final String startOrEnd = arg.get("COMPLEMENT_START_OR_END", 0);
 
-		final Moment task = system.getExistingMoment(code);
+		final Moment task = gantt.getExistingMoment(code);
 		if (task == null)
 			return Failable.error("No such task " + code);
 
 		TaskInstant result = new TaskInstant(task, TaskAttribute.fromString(startOrEnd));
 		final String nb1 = arg.get("COMPLEMENT_NB1", 0);
 		if (nb1 != null) {
-			final int factor1 = arg.get("COMPLEMENT_DAY_OR_WEEK1", 0).startsWith("w") ? system.daysInWeek() : 1;
+			final int factor1 = arg.get("COMPLEMENT_DAY_OR_WEEK1", 0).startsWith("w") ? gantt.daysInWeek() : 1;
 			final int days1 = Integer.parseInt(nb1) * factor1;
 
 			final String nb2 = arg.get("COMPLEMENT_NB2", 0);
 			int days2 = 0;
 			if (nb2 != null) {
-				final int factor2 = arg.get("COMPLEMENT_DAY_OR_WEEK2", 0).startsWith("w") ? system.daysInWeek() : 1;
+				final int factor2 = arg.get("COMPLEMENT_DAY_OR_WEEK2", 0).startsWith("w") ? gantt.daysInWeek() : 1;
 				days2 = Integer.parseInt(nb2) * factor2;
 			}
 
@@ -77,7 +77,7 @@ abstract class AbstractComplementTaskInstant implements Something<GanttDiagram> 
 			final GanttConstraintMode mode = working ? GanttConstraintMode.DO_NOT_COUNT_CLOSE_DAY
 					: GanttConstraintMode.IGNORE_CALENDAR;
 
-			result = result.withDelta(delta, mode, system.getDefaultPlan());
+			result = result.withDelta(delta, mode, gantt.getDefaultPlan());
 		}
 		return Failable.ok(result);
 	}

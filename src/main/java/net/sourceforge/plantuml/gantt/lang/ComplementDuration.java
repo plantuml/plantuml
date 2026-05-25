@@ -67,18 +67,18 @@ public class ComplementDuration implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<Load> getMe(GanttDiagram system, UMatcher arg) {
+	public Failable<Load> getMe(GanttDiagram gantt, UMatcher arg) {
 
 		final int firstValue = Integer.parseInt(arg.get("CNUM1", 0));
 		final String firstUnit = arg.get("CUNIT1", 0);
-		final int[] firstDaysAndHours = toDaysAndHours(system, firstValue, firstUnit);
+		final int[] firstDaysAndHours = toDaysAndHours(gantt, firstValue, firstUnit);
 
 		int[] secondDaysAndHours = { 0, 0 };
 		final String secondValue = arg.get("CNUM2", 0);
 		if (secondValue != null) {
 			final int value = Integer.parseInt(secondValue);
 			final String unit = arg.get("CUNIT2", 0);
-			secondDaysAndHours = toDaysAndHours(system, value, unit);
+			secondDaysAndHours = toDaysAndHours(gantt, value, unit);
 		}
 
 		final int totalDays = firstDaysAndHours[0] + secondDaysAndHours[0];
@@ -87,7 +87,7 @@ public class ComplementDuration implements Something<GanttDiagram> {
 		return Failable.ok(Load.ofDaysAndHours(totalDays, totalHours));
 	}
 
-	private int[] toDaysAndHours(GanttDiagram system, int value, String unit) {
+	private int[] toDaysAndHours(GanttDiagram gantt, int value, String unit) {
 		switch (unit.charAt(0)) {
 		case 'H':
 		case 'h':
@@ -97,10 +97,10 @@ public class ComplementDuration implements Something<GanttDiagram> {
 			return new int[] { value, 0 };
 		case 'W':
 		case 'w':
-			return new int[] { value * system.daysInWeek(), 0 };
+			return new int[] { value * gantt.daysInWeek(), 0 };
 		case 'M':
 		case 'm':
-			return new int[] { value * system.daysInMonth(), 0 };
+			return new int[] { value * gantt.daysInMonth(), 0 };
 		default:
 			throw new IllegalArgumentException("unknown time unit: " + unit);
 		}

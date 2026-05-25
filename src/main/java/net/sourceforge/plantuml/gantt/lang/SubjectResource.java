@@ -84,7 +84,7 @@ public class SubjectResource implements Subject<GanttDiagram> {
 		// WorksOn
 		result.add(new VerbPhraseAction(Verbs.worksOn, new ComplementTask()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Resource resource = (Resource) subject;
 				final Task task = (Task) complement;
 				task.addResource(resource, 100);
@@ -96,7 +96,7 @@ public class SubjectResource implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.isOff,
 				Words.uconcat(Words.usingle(Words.BEFORE), Words.uzeroOrMore(Words.THE)), ComplementDate.any()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Resource resource = (Resource) subject;
 				final LocalDate when = (LocalDate) complement;
 				resource.setOffBeforeDate(when);
@@ -108,7 +108,7 @@ public class SubjectResource implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.isOff,
 				Words.uconcat(Words.usingle(Words.AFTER), Words.uzeroOrMore(Words.THE)), ComplementDate.any()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Resource resource = (Resource) subject;
 				final LocalDate when = (LocalDate) complement;
 				resource.setOffAfterDate(when);
@@ -120,7 +120,7 @@ public class SubjectResource implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.isOff,
 				Words.uzeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementIntervals()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Resource resource = (Resource) subject;
 				for (LocalDate when : (DaysAsDates) complement)
 					resource.addCloseDay(when);
@@ -133,7 +133,7 @@ public class SubjectResource implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.isOff,
 				Words.uzeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementDayOfWeek()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Resource resource = (Resource) subject;
 				resource.addCloseDay(((DayOfWeek) complement));
 				return CommandExecutionResult.ok();
@@ -144,7 +144,7 @@ public class SubjectResource implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.isOff,
 				Words.uzeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), ComplementDate.any()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Resource resource = (Resource) subject;
 				final LocalDate when = (LocalDate) complement;
 				resource.addCloseDay(when);
@@ -156,7 +156,7 @@ public class SubjectResource implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.isOn,
 				Words.uzeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementIntervals()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Resource resource = (Resource) subject;
 				for (LocalDate when : (DaysAsDates) complement)
 					resource.addForceOnDay(when);
@@ -169,7 +169,7 @@ public class SubjectResource implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.isOn,
 				Words.uzeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), ComplementDate.any()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Resource resource = (Resource) subject;
 				final LocalDate when = (LocalDate) complement;
 				resource.addForceOnDay(when);

@@ -42,6 +42,7 @@ import java.util.List;
 
 import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexOr;
 import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -50,16 +51,16 @@ import net.sourceforge.plantuml.gantt.GanttDiagram;
 import net.sourceforge.plantuml.gantt.ulang.VerbPhraseAction;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
-public class SubjectProject implements Subject<GanttDiagram> {
+public class SubjectGantt implements Subject<GanttDiagram> {
 
-	public static final Subject<GanttDiagram> ME = new SubjectProject();
+	public static final Subject<GanttDiagram> ME = new SubjectGantt();
 
-	private SubjectProject() {
+	private SubjectGantt() {
 	}
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionSubject() {
-		return new UBrexLeaf("project");
+		return new UBrexOr(new UBrexLeaf("project"), new UBrexLeaf("gantt"));
 	}
 
 	@Override
@@ -68,11 +69,11 @@ public class SubjectProject implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.starts, Words.uzeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT),
 				ComplementDate.onlyAbsolute()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final LocalDate start = (LocalDate) complement;
 				if (TeaVM.a())
-					assert project == subject;
-				return project.updateStartingPoint(start);
+					assert gantt == subject;
+				return gantt.updateStartingPoint(start);
 			}
 		});
 		return result;
@@ -80,8 +81,8 @@ public class SubjectProject implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<GanttDiagram> getMe(GanttDiagram project, UMatcher arg) {
-		return Failable.ok(project);
+	public Failable<GanttDiagram> getMe(GanttDiagram gantt, UMatcher arg) {
+		return Failable.ok(gantt);
 	}
 
 }

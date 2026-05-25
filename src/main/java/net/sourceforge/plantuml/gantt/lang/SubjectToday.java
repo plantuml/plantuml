@@ -63,7 +63,7 @@ public class SubjectToday implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<Today> getMe(GanttDiagram project, UMatcher arg) {
+	public Failable<Today> getMe(GanttDiagram gantt, UMatcher arg) {
 		return Failable.ok(new Today());
 	}
 
@@ -73,19 +73,19 @@ public class SubjectToday implements Subject<GanttDiagram> {
 
 		result.add(new VerbPhraseAction(Verbs.isColored, new ComplementInColors()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Today task = (Today) subject;
 				final CenterBorderColor colors = (CenterBorderColor) complement;
-				project.setTodayColors(colors);
+				gantt.setTodayColors(colors);
 				return CommandExecutionResult.ok();
 			}
 		});
 
 		result.add(new VerbPhraseAction(Verbs.is, ComplementDate.any()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final LocalDate date = (LocalDate) complement;
-				return project.setToday(date);
+				return gantt.setToday(date);
 			}
 		});
 

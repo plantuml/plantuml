@@ -65,25 +65,25 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 		final List<VerbPhraseAction> result = new ArrayList<>();
 		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementOpen()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-				project.openDayAsDate((LocalDate) subject, (String) complement);
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+				gantt.openDayAsDate((LocalDate) subject, (String) complement);
 				return CommandExecutionResult.ok();
 			}
 		});
 
 		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementClose()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-				project.closeDayAsDate((LocalDate) subject, (String) complement);
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+				gantt.closeDayAsDate((LocalDate) subject, (String) complement);
 				return CommandExecutionResult.ok();
 			}
 		});
 
 		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final HColor color = ((CenterBorderColor) complement).getCenter();
-				project.colorDay((LocalDate) subject, color);
+				gantt.colorDay((LocalDate) subject, color);
 				return CommandExecutionResult.ok();
 			}
 		});
@@ -93,12 +93,12 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<LocalDate> getMe(GanttDiagram project, UMatcher arg) {
+	public Failable<LocalDate> getMe(GanttDiagram gantt, UMatcher arg) {
 		if (arg.get("BDAY", 0) != null)
 			return Failable.ok(resultB(arg));
 
 		if (arg.get("ECOUNT", 0) != null)
-			return Failable.ok(resultE(project, arg));
+			return Failable.ok(resultE(gantt, arg));
 
 		throw new IllegalStateException();
 	}
@@ -110,18 +110,18 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 		return LocalDate.of(year, month, day);
 	}
 
-	private LocalDate resultE(GanttDiagram system, UMatcher arg) {
+	private LocalDate resultE(GanttDiagram gantt, UMatcher arg) {
 		final String type = arg.get("ETYPE", 0).toUpperCase();
 		final String operation = arg.get("EOPERATION", 0);
 		int day = Integer.parseInt(arg.get("ECOUNT", 0));
 		if ("-".equals(operation))
 			day = -day;
 		if ("D".equals(type))
-			return system.getMinDay().plusDays(day);
+			return gantt.getMinDay().plusDays(day);
 		if ("T".equals(type))
-			return system.getToday().plusDays(day);
+			return gantt.getToday().plusDays(day);
 		if ("E".equals(type))
-			return system.getMaxDay().plusDays(day);
+			return gantt.getMaxDay().plusDays(day);
 		throw new IllegalStateException();
 	}
 

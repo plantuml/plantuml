@@ -108,25 +108,25 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<DaysAsDates> getMe(GanttDiagram project, UMatcher arg) {
+	public Failable<DaysAsDates> getMe(GanttDiagram gantt, UMatcher arg) {
 		final String countAnd = arg.get("COUNT_AND", 0);
 		if (countAnd != null) {
-			final TimePoint date3 = getDate(project, arg, "3");
+			final TimePoint date3 = getDate(gantt, arg, "3");
 			final int nb = Integer.parseInt(countAnd);
-			return Failable.ok(new DaysAsDates(project, date3.toDay(), nb));
+			return Failable.ok(new DaysAsDates(gantt, date3.toDay(), nb));
 		}
 		final String countThen = arg.get("COUNT_THEN", 0);
 		if (countThen != null) {
-			final TimePoint date3 = project.getThenDate();
+			final TimePoint date3 = gantt.getThenDate();
 			final int nb = Integer.parseInt(countThen);
-			return Failable.ok(new DaysAsDates(project, date3.toDay(), nb));
+			return Failable.ok(new DaysAsDates(gantt, date3.toDay(), nb));
 		}
-		final TimePoint date1 = getDate(project, arg, "1");
-		final TimePoint date2 = getDate(project, arg, "2");
+		final TimePoint date1 = getDate(gantt, arg, "1");
+		final TimePoint date2 = getDate(gantt, arg, "2");
 		return Failable.ok(new DaysAsDates(date1.toDay(), date2.toDay()));
 	}
 
-	private TimePoint getDate(GanttDiagram project, UMatcher arg, String suffix) {
+	private TimePoint getDate(GanttDiagram gantt, UMatcher arg, String suffix) {
 		if (arg.get("BDAY" + suffix, 0) != null) {
 			final int day = Integer.parseInt(arg.get("BDAY" + suffix, 0));
 			final int month = Integer.parseInt(arg.get("BMONTH" + suffix, 0));
@@ -135,7 +135,7 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 		}
 		if (arg.get("ECOUNT" + suffix, 0) != null) {
 			final int day = Integer.parseInt(arg.get("ECOUNT" + suffix, 0));
-			return project.getMinTimePoint().addDays(day);
+			return gantt.getMinTimePoint().addDays(day);
 		}
 		throw new IllegalStateException();
 	}
@@ -145,9 +145,9 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 		final List<VerbPhraseAction> result = new ArrayList<>();
 		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementClose()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				for (LocalDate d : (DaysAsDates) subject)
-					project.closeDayAsDate(d, (String) complement);
+					gantt.closeDayAsDate(d, (String) complement);
 
 				return CommandExecutionResult.ok();
 			}
@@ -155,9 +155,9 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 
 		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementOpen()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				for (LocalDate d : (DaysAsDates) subject)
-					project.openDayAsDate(d, (String) complement);
+					gantt.openDayAsDate(d, (String) complement);
 
 				return CommandExecutionResult.ok();
 			}
@@ -165,10 +165,10 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 
 		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final HColor color = ((CenterBorderColor) complement).getCenter();
 				for (LocalDate d : (DaysAsDates) subject)
-					project.colorDay(d, color);
+					gantt.colorDay(d, color);
 
 				return CommandExecutionResult.ok();
 			}
@@ -176,11 +176,11 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 
 		result.add(new VerbPhraseAction(Verbs.isOrAreNamed, new ComplementNamed()) {
 			@Override
-			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final String name = (String) complement;
 				final DaysAsDates days = (DaysAsDates) subject;
 				for (LocalDate d : days)
-					project.nameDay(d, name);
+					gantt.nameDay(d, name);
 
 				return CommandExecutionResult.ok();
 			}
@@ -188,7 +188,7 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 
 //		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {
 //			@Override
-//			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+//			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 //				final HColor color = ((CenterBorderColor) complement).getCenter();
 //				project.colorDay((LocalDate) subject, color);
 //				return CommandExecutionResult.ok();
