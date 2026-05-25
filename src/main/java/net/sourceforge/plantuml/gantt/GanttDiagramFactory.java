@@ -69,6 +69,7 @@ import net.sourceforge.plantuml.gantt.lang.SubjectResource;
 import net.sourceforge.plantuml.gantt.lang.SubjectSeparator;
 import net.sourceforge.plantuml.gantt.lang.SubjectTask;
 import net.sourceforge.plantuml.gantt.lang.SubjectToday;
+import net.sourceforge.plantuml.gantt.lang.SubjectWorkingHours;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
@@ -107,7 +108,6 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 	}
 
 	private void addLanguageCommands(List<Command> cmd) {
-
 		cmd.add(new NaturalGanttCommand(SubjectProject.ME));
 		cmd.add(new NaturalGanttCommand(SubjectToday.ME));
 		cmd.add(new NaturalGanttCommand(SubjectTask.ME));
@@ -116,32 +116,7 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 		cmd.add(new NaturalGanttCommand(SubjectDayOfWeek.ME));
 		cmd.add(new NaturalGanttCommand(SubjectDayAsDate.ME));
 		cmd.add(new NaturalGanttCommand(SubjectSeparator.ME));
-//		} else {
-//			for (Subject<GanttDiagram> subject : subjects())
-//				for (SentenceSimple<GanttDiagram> sentenceA : subject.getSentences()) {
-//					cmd.add(NaturalCommand.create(sentenceA));
-//					for (SentenceSimple<GanttDiagram> sentenceB : subject.getSentences()) {
-//						final String signatureA = sentenceA.getSignature();
-//						final String signatureB = sentenceB.getSignature();
-//						if (signatureA.equals(signatureB) == false)
-//							cmd.add(NaturalCommand.create(new SentenceAnd<GanttDiagram>(sentenceA, sentenceB)));
-//
-//					}
-//				}
-//
-//			for (Subject<GanttDiagram> subject : subjects())
-//				for (SentenceSimple<GanttDiagram> sentenceA : subject.getSentences())
-//					for (SentenceSimple<GanttDiagram> sentenceB : subject.getSentences())
-//						for (SentenceSimple<GanttDiagram> sentenceC : subject.getSentences()) {
-//							final String signatureA = sentenceA.getSignature();
-//							final String signatureB = sentenceB.getSignature();
-//							final String signatureC = sentenceC.getSignature();
-//							if (signatureA.equals(signatureB) == false && signatureA.equals(signatureC) == false
-//									&& signatureC.equals(signatureB) == false)
-//								cmd.add(NaturalCommand
-//										.create(new SentenceAndAnd<GanttDiagram>(sentenceA, sentenceB, sentenceC)));
-//						}
-//		}
+		cmd.add(new NaturalGanttCommand(SubjectWorkingHours.ME));
 	}
 
 	@Override
