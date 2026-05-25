@@ -48,20 +48,11 @@ public class TimeRange {
 	}
 
 	public TimeRange(LocalTime start, LocalTime end) {
-		if (start == null || end == null)
-			throw new IllegalArgumentException("start and end must not be null");
-
-		if (end.isBefore(start))
-			throw new IllegalArgumentException("end must not be before start");
-
 		this.start = start;
 		this.end = end;
 	}
 
 	private static LocalTime parse(String time) {
-		if (time == null)
-			throw new IllegalArgumentException("time must not be null");
-
 		final int index = time.indexOf(':');
 		if (index == -1)
 			throw new IllegalArgumentException("Invalid time: " + time);
@@ -70,8 +61,8 @@ public class TimeRange {
 			final int hour = Integer.parseInt(time.substring(0, index).trim());
 			final int minute = Integer.parseInt(time.substring(index + 1).trim());
 			return LocalTime.of(hour, minute);
-		} catch (NumberFormatException | DateTimeParseException e) {
-			throw new IllegalArgumentException("Invalid time: " + time, e);
+		} catch (Exception e) {
+			return null;
 		}
 	}
 
@@ -86,7 +77,6 @@ public class TimeRange {
 	public boolean contains(LocalTime time) {
 		if (time == null)
 			return false;
-
 		return time.isBefore(start) == false && time.isBefore(end);
 	}
 
