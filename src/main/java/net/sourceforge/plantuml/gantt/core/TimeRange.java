@@ -36,10 +36,63 @@
 package net.sourceforge.plantuml.gantt.core;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 
 public class TimeRange {
 
-	public LocalTime start;
-	public LocalTime end;
+	private final LocalTime start;
+	private final LocalTime end;
+
+	public TimeRange(String start, String end) {
+		this(parse(start), parse(end));
+	}
+
+	public TimeRange(LocalTime start, LocalTime end) {
+		if (start == null || end == null)
+			throw new IllegalArgumentException("start and end must not be null");
+
+		if (end.isBefore(start))
+			throw new IllegalArgumentException("end must not be before start");
+
+		this.start = start;
+		this.end = end;
+	}
+
+	private static LocalTime parse(String time) {
+		if (time == null)
+			throw new IllegalArgumentException("time must not be null");
+
+		final int index = time.indexOf(':');
+		if (index == -1)
+			throw new IllegalArgumentException("Invalid time: " + time);
+
+		try {
+			final int hour = Integer.parseInt(time.substring(0, index).trim());
+			final int minute = Integer.parseInt(time.substring(index + 1).trim());
+			return LocalTime.of(hour, minute);
+		} catch (NumberFormatException | DateTimeParseException e) {
+			throw new IllegalArgumentException("Invalid time: " + time, e);
+		}
+	}
+
+	public LocalTime getStart() {
+		return start;
+	}
+
+	public LocalTime getEnd() {
+		return end;
+	}
+
+	public boolean contains(LocalTime time) {
+		if (time == null)
+			return false;
+
+		return time.isBefore(start) == false && time.isBefore(end);
+	}
+
+	@Override
+	public String toString() {
+		return start + "-" + end;
+	}
 
 }
