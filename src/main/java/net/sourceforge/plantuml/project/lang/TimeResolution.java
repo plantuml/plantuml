@@ -42,38 +42,8 @@ import com.plantuml.ubrex.builder.UBrexPart;
 import com.plantuml.ubrex.builder.UBrexUpto;
 
 import net.sourceforge.plantuml.project.time.MonthUtils;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
 
 public abstract class TimeResolution {
-
-	public static IRegex toRegexA_DD_MONTH_YYYY(String year, String month, String day) {
-		return new RegexConcat( //
-				new RegexLeaf(1, day, "([\\d]{1,2})"), //
-				new RegexLeaf("[\\w, ]*?"), //
-				new RegexLeaf(1, month, "(" + MonthUtils.getRegexString() + ")"), //
-				new RegexLeaf("[\\w, ]*?"), //
-				new RegexLeaf(1, year, "([\\d]{1,4})"));
-	}
-
-	public static IRegex toRegexB_YYYY_MM_DD(String year, String month, String day) {
-		return new RegexConcat( //
-				new RegexLeaf(1, year, "([\\d]{1,4})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf(1, month, "([\\d]{1,2})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf(1, day, "([\\d]{1,2})"));
-	}
-
-	public static IRegex toRegexC_MONTH_DD_YYYY(String year, String month, String day) {
-		return new RegexConcat( //
-				new RegexLeaf(1, month, "(" + MonthUtils.getRegexString() + ")"), //
-				new RegexLeaf("[\\w, ]*?"), //
-				new RegexLeaf(1, day, "([\\d]{1,2})"), //
-				new RegexLeaf("[\\w, ]*?"), //
-				new RegexLeaf(1, year, "([\\d]{1,4})"));
-	}
 
 	public static UBrexPart toUbrexA_DD_MONTH_YYYY(String year, String month, String day) {
 		final UBrexPart digits1to2 = new UBrexLeaf("〇{1-2}〴d");
