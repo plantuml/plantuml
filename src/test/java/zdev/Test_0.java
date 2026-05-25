@@ -18,24 +18,14 @@ import net.sourceforge.plantuml.preproc.Defines;
 /*
  * 
 
-{
-  "sha1": "h4hukjrsgvm9hjs2qjy7lpj8vgoazdp",
-  "insertion": {
-    "when": "2024-06-03T18:59:29.144Z",
-    "url": "https://github.com/plantuml/plantuml/issues/1664",
-    "user": "plantuml@gmail.com"
-  },
-  "humhash": "cisede-80-vove445"
-}
 @startgantt
-
-Print between 2020-09-01 and 2020-09-30
-Printscale weekly
-
-Project starts 2020-08-01
-[A] starts 2020-08-01 and lasts 1 week
-[B] starts 2020-09-01 and lasts 2 weeks
-
+Project starts 2025-05-25
+[Task 1] starts 2025-05-25
+[Task 2] starts 2025-05-25
+[Task 3] starts 2025-05-25
+[Task 1] requires 6 days
+[Task 2] requires 6 days and 12 hours
+[Task 3] requires 7 days
 @endgantt
 
 
