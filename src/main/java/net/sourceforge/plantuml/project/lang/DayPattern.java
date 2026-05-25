@@ -44,9 +44,6 @@ import com.plantuml.ubrex.builder.UBrexOr;
 import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.project.time.MonthUtils;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexOr;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class DayPattern {
 
@@ -74,12 +71,6 @@ public class DayPattern {
 		this.dayKeyC = "CDAY" + id;
 	}
 
-	public IRegex toRegex() {
-		return new RegexOr(TimeResolution.toRegexA_DD_MONTH_YYYY(yearKeyA, monthKeyA, dayKeyA),
-				TimeResolution.toRegexB_YYYY_MM_DD(yearKeyB, monthKeyB, dayKeyB),
-				TimeResolution.toRegexC_MONTH_DD_YYYY(yearKeyC, monthKeyC, dayKeyC));
-	}
-
 	public UBrexPart toUbrex() {
 		return new UBrexOr(TimeResolution.toUbrexA_DD_MONTH_YYYY(yearKeyA, monthKeyA, dayKeyA),
 				TimeResolution.toUbrexB_YYYY_MM_DD(yearKeyB, monthKeyB, dayKeyB),
@@ -98,18 +89,6 @@ public class DayPattern {
 		return null;
 	}
 
-
-	public LocalDate getDay(RegexResult arg) {
-		if (arg.get(dayKeyA, 0) != null)
-			return resultA(arg);
-
-		if (arg.get(dayKeyB, 0) != null)
-			return resultB(arg);
-
-		if (arg.get(dayKeyC, 0) != null)
-			return resultC(arg);
-		return null;
-	}
 
 	public LocalDate getDay(UMatcher arg) {
 		if (arg.get(dayKeyA, 0) != null)
@@ -138,13 +117,6 @@ public class DayPattern {
 		return LocalDate.of(year, month, day);
 	}
 
-	private LocalDate resultA(RegexResult arg) {
-		final int day = Integer.parseInt(arg.get(dayKeyA, 0));
-		final Month month = MonthUtils.fromString(arg.get(monthKeyA, 0));
-		final int year = Integer.parseInt(arg.get(yearKeyA, 0));
-		return LocalDate.of(year, month, day);
-	}
-
 	private LocalDate resultB(UMatcher arg) {
 		final int day = Integer.parseInt(arg.get(dayKeyB, 0));
 		final int month = Integer.parseInt(arg.get(monthKeyB, 0));
@@ -156,20 +128,6 @@ public class DayPattern {
 		final int day = Integer.parseInt(arg.get(dayKeyB));
 		final int month = Integer.parseInt(arg.get(monthKeyB));
 		final int year = Integer.parseInt(arg.get(yearKeyB));
-		return LocalDate.of(year, month, day);
-	}
-
-	private LocalDate resultB(RegexResult arg) {
-		final int day = Integer.parseInt(arg.get(dayKeyB, 0));
-		final int month = Integer.parseInt(arg.get(monthKeyB, 0));
-		final int year = Integer.parseInt(arg.get(yearKeyB, 0));
-		return LocalDate.of(year, month, day);
-	}
-
-	private LocalDate resultC(RegexResult arg) {
-		final int day = Integer.parseInt(arg.get(dayKeyC, 0));
-		final Month month = MonthUtils.fromString(arg.get(monthKeyC, 0));
-		final int year = Integer.parseInt(arg.get(yearKeyC, 0));
 		return LocalDate.of(year, month, day);
 	}
 
