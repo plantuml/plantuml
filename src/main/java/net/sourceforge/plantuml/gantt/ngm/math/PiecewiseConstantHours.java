@@ -59,8 +59,28 @@ public final class PiecewiseConstantHours extends AbstractPiecewiseConstant {
 		return new PiecewiseConstantHours(defaultValue);
 	}
 
+	/**
+	 * Builds an intra-day profile from a list of working time ranges.
+	 *
+	 * <p>
+	 * The resulting profile is {@link Fraction#ZERO} everywhere by default (no work),
+	 * and {@link Fraction#ONE} inside each provided {@link TimeRange}. Ranges are
+	 * applied in order; an empty or {@code null} list yields a profile that is
+	 * closed for the whole day.
+	 * </p>
+	 *
+	 * @param workingTimeRanges the working hours, for example 8:00-12:00 and 13:00-18:00
+	 * @return an immutable intra-day profile
+	 */
 	public static PiecewiseConstantHours fromWorkingHours(List<TimeRange> workingTimeRanges) {
+		PiecewiseConstantHours result = of(Fraction.ZERO);
+		if (workingTimeRanges == null)
+			return result;
 
+		for (TimeRange range : workingTimeRanges)
+			result = result.with(range.getStart(), range.getEnd(), Fraction.ONE);
+
+		return result;
 	}
 
 	@Override
