@@ -50,7 +50,7 @@ public class ComplementDeleted implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<Object> ugetMe(GanttDiagram system, UMatcher arg) {
+	public Failable<Object> getMe(GanttDiagram system, UMatcher arg) {
 		return Failable.ok(new Object());
 	}
 

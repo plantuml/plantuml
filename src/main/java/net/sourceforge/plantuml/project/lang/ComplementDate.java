@@ -103,7 +103,7 @@ public class ComplementDate implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<LocalDate> ugetMe(GanttDiagram system, UMatcher arg) {
+	public Failable<LocalDate> getMe(GanttDiagram system, UMatcher arg) {
 		final DayPattern dayPattern = new DayPattern("");
 		final LocalDate result = dayPattern.getDay(arg);
 		if (result != null)

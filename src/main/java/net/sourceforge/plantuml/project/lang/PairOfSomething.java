@@ -54,9 +54,9 @@ public class PairOfSomething<D extends Diagram> implements Something<D> {
 	}
 
 	@Override
-	public Failable<? extends Object> ugetMe(D diagram, UMatcher arg) {
-		final Failable<? extends Object> r1 = complement1.ugetMe(diagram, arg);
-		final Failable<? extends Object> r2 = complement2.ugetMe(diagram, arg);
+	public Failable<? extends Object> getMe(D diagram, UMatcher arg) {
+		final Failable<? extends Object> r1 = complement1.getMe(diagram, arg);
+		final Failable<? extends Object> r2 = complement2.getMe(diagram, arg);
 		if (r1.isFail())
 			return r1;
 		if (r2.isFail())

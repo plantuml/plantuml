@@ -60,7 +60,7 @@ public class ComplementInColors implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<CenterBorderColor> ugetMe(GanttDiagram diagram, UMatcher arg) {
+	public Failable<CenterBorderColor> getMe(GanttDiagram diagram, UMatcher arg) {
 		final String color1 = arg.get("COMPLEMENT1", 0);
 		final String color2 = arg.get("COMPLEMENT2", 0);
 		final HColor col1 = color1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color1);

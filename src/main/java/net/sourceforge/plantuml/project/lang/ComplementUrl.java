@@ -54,7 +54,7 @@ public class ComplementUrl implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<Url> ugetMe(GanttDiagram diagram, UMatcher arg) {
+	public Failable<Url> getMe(GanttDiagram diagram, UMatcher arg) {
 		final String urlString = arg.get("COMPLEMENT", 0);
 		final UbrexUrlBuilder urlBuilder = new UbrexUrlBuilder("", UrlMode.STRICT);
 		final Url url = urlBuilder.getUrl(urlString);

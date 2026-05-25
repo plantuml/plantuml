@@ -68,7 +68,7 @@ public class ComplementInColorsFromTo implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<CenterBorderColor[]> ugetMe(GanttDiagram diagram, UMatcher arg) {
+	public Failable<CenterBorderColor[]> getMe(GanttDiagram diagram, UMatcher arg) {
 		final String arg0 = arg.get("FROM1", 0);
 		final String arg1 = arg.get("FROM2", 0);
 		final String arg2 = arg.get("TO1", 0);

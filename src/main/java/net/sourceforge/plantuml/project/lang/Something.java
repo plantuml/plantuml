@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.project.Failable;
 
 public interface Something<D extends Diagram> {
 
-	public Failable<? extends Object> ugetMe(D diagram, UMatcher arg);
+	public Failable<? extends Object> getMe(D diagram, UMatcher arg);
 
 	public UBrexPart toUnicodeBracketedExpressionComplement();
 

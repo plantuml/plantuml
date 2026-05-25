@@ -57,7 +57,7 @@ public class ComplementFromTo implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<TwoNames> ugetMe(GanttDiagram diagram, UMatcher arg) {
+	public Failable<TwoNames> getMe(GanttDiagram diagram, UMatcher arg) {
 		final String name1 = arg.get("COMPLEMENT1", 0);
 		final String name2 = arg.get("COMPLEMENT2", 0);
 		return Failable.ok(new TwoNames(name1, name2));

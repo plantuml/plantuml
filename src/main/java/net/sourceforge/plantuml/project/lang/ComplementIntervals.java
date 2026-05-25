@@ -80,7 +80,7 @@ public class ComplementIntervals implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<DaysAsDates> ugetMe(GanttDiagram project, UMatcher arg) {
+	public Failable<DaysAsDates> getMe(GanttDiagram project, UMatcher arg) {
 		final LocalDate d1 = new DayPattern("1").getDay(arg);
 		if (d1 != null) {
 			final LocalDate d2 = new DayPattern("2").getDay(arg);

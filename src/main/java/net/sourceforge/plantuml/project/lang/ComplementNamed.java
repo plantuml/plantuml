@@ -55,7 +55,7 @@ public class ComplementNamed implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<String> ugetMe(GanttDiagram diagram, UMatcher arg) {
+	public Failable<String> getMe(GanttDiagram diagram, UMatcher arg) {
 		final String name = arg.get("COMPLEMENT", 0);
 		return Failable.ok(name);
 	}

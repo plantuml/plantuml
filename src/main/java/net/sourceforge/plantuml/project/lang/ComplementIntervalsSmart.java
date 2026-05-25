@@ -92,7 +92,7 @@ public class ComplementIntervalsSmart extends AbstractComplementTaskInstant {
 	}
 
 	@Override
-	public Failable<DaysAsDates> ugetMe(GanttDiagram system, UMatcher arg) {
+	public Failable<DaysAsDates> getMe(GanttDiagram system, UMatcher arg) {
 		final LocalDate d1 = new DayPattern("1").getDay(arg);
 
 		final Failable<TaskInstant> i2 = getComplementTaskInstant(system, arg);

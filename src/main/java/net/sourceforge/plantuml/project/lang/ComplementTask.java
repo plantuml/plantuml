@@ -51,7 +51,7 @@ public class ComplementTask implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<Task> ugetMe(GanttDiagram gantt, UMatcher arg) {
+	public Failable<Task> getMe(GanttDiagram gantt, UMatcher arg) {
 		final String code = arg.get("COMPLEMENT", 0);
 		final Task task = gantt.getExistingTask(code);
 		if (task == null)

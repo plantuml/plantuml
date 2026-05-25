@@ -88,7 +88,7 @@ public class ComplementBeforeOrAfterOrAtTaskStartOrEnd extends AbstractComplemen
 	}
 
 	@Override
-	public Failable<TaskInstant> ugetMe(GanttDiagram system, UMatcher arg) {
+	public Failable<TaskInstant> getMe(GanttDiagram system, UMatcher arg) {
 		return getComplementTaskInstant(system, arg);
 	}
 

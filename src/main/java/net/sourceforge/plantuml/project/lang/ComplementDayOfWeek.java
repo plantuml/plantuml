@@ -53,7 +53,7 @@ public class ComplementDayOfWeek implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<DayOfWeek> ugetMe(GanttDiagram diagram, UMatcher arg) {
+	public Failable<DayOfWeek> getMe(GanttDiagram diagram, UMatcher arg) {
 		final String s = arg.get("COMPLEMENT", 0);
 		return Failable.ok(DayOfWeekUtils.fromString(s));
 	}
