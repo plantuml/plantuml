@@ -139,6 +139,7 @@ public class DayCalendarData {
 
 	public void addWorkingTimeRange(TimeRange timeRange) {
 		workingTimeRanges.add(timeRange);
+		openClose.addWorkingTimeRange(timeRange);
 	}
 
 }

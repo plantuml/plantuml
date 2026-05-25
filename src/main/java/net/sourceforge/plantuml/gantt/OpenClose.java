@@ -42,6 +42,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.gantt.core.TimeRange;
 import net.sourceforge.plantuml.gantt.ngm.math.Combiner;
 import net.sourceforge.plantuml.gantt.ngm.math.Fraction;
 import net.sourceforge.plantuml.gantt.ngm.math.PiecewiseConstant;
@@ -80,27 +81,27 @@ public class OpenClose {
 		return result;
 	}
 
-	private boolean isThereSomeChangeAfter(LocalDate day) {
-		if (weekdayStatus.size() > 0)
-			return true;
-
-		for (LocalDate tmp : dayStatus.keySet())
-			if (tmp.compareTo(day) >= 0)
-				return true;
-
-		return false;
-	}
-
-	private boolean isThereSomeChangeBefore(LocalDate day) {
-		if (weekdayStatus.size() > 0)
-			return true;
-
-		for (LocalDate tmp : dayStatus.keySet())
-			if (tmp.compareTo(day) <= 0)
-				return true;
-
-		return false;
-	}
+//	private boolean isThereSomeChangeAfter(LocalDate day) {
+//		if (weekdayStatus.size() > 0)
+//			return true;
+//
+//		for (LocalDate tmp : dayStatus.keySet())
+//			if (tmp.compareTo(day) >= 0)
+//				return true;
+//
+//		return false;
+//	}
+//
+//	private boolean isThereSomeChangeBefore(LocalDate day) {
+//		if (weekdayStatus.size() > 0)
+//			return true;
+//
+//		for (LocalDate tmp : dayStatus.keySet())
+//			if (tmp.compareTo(day) <= 0)
+//				return true;
+//
+//		return false;
+//	}
 
 	public boolean isClosed(LocalDate day) {
 		final DayStatus status = getLocalStatus(day);
@@ -174,6 +175,7 @@ public class OpenClose {
 	}
 
 	public PiecewiseConstant asPiecewiseConstant() {
+		System.out.println("OpenClose::asPiecewiseConstant()");
 		if (cachedPiecewiseConstant != null)
 			return cachedPiecewiseConstant;
 
@@ -198,8 +200,10 @@ public class OpenClose {
 					openDays.put(date, Fraction.ONE);
 			}
 
-			final PiecewiseConstantSpecificDays specificDaysClosed = PiecewiseConstantSpecificDays.of(Fraction.ONE, closedDays);
-			final PiecewiseConstantSpecificDays specificDaysOpen = PiecewiseConstantSpecificDays.of(Fraction.ZERO, openDays);
+			final PiecewiseConstantSpecificDays specificDaysClosed = PiecewiseConstantSpecificDays.of(Fraction.ONE,
+					closedDays);
+			final PiecewiseConstantSpecificDays specificDaysOpen = PiecewiseConstantSpecificDays.of(Fraction.ZERO,
+					openDays);
 
 			result = Combiner.max(specificDaysOpen, Combiner.product(weekPattern, specificDaysClosed));
 		}
@@ -224,6 +228,11 @@ public class OpenClose {
 		cachedPiecewiseConstant = Combiner.product(result,
 				new PiecewiseConstantTimeWindow(offBefore.atStartOfDay(), offAfter.plusDays(1).atStartOfDay()));
 		return cachedPiecewiseConstant;
+	}
+
+	public void addWorkingTimeRange(TimeRange timeRange) {
+		System.out.println("OpenClose::addWorkingTimeRange " + timeRange);
+
 	}
 
 }
