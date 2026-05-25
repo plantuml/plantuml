@@ -60,7 +60,10 @@ public class SubjectWorkingHours implements Subject<GanttDiagram> {
 
 	@Override
 	public Failable<TimeRange> getMe(GanttDiagram gantt, UMatcher arg) {
-		return Failable.ok(new TimeRange());
+		System.out.println("arg=" + arg);
+		final String start = arg.get("START", 0); // 8:00
+		final String end = arg.get("END", 0); // 12:00
+		return Failable.ok(new TimeRange(start, end));
 	}
 
 	// From 8:00 to 12:00 are working hours
@@ -84,7 +87,8 @@ public class SubjectWorkingHours implements Subject<GanttDiagram> {
 		result.add(new VerbPhraseAction(Verbs.are, new ComplementWorkingHours()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-				System.out.println("HOP!");
+				final TimeRange timeRange = (TimeRange) subject;
+				System.out.println("HOP! timeRange=" + timeRange);
 				return CommandExecutionResult.ok();
 			}
 		});
