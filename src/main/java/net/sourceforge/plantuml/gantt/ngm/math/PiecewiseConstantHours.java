@@ -38,9 +38,12 @@ package net.sourceforge.plantuml.gantt.ngm.math;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.NavigableMap;
 import java.util.TreeMap;
+
+import net.sourceforge.plantuml.gantt.core.TimeRange;
 
 public final class PiecewiseConstantHours extends AbstractPiecewiseConstant {
 
@@ -54,6 +57,10 @@ public final class PiecewiseConstantHours extends AbstractPiecewiseConstant {
 
 	public static PiecewiseConstantHours of(Fraction defaultValue) {
 		return new PiecewiseConstantHours(defaultValue);
+	}
+
+	public static PiecewiseConstantHours fromWorkingHours(List<TimeRange> workingTimeRanges) {
+
 	}
 
 	@Override

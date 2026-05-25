@@ -38,8 +38,10 @@ package net.sourceforge.plantuml.gantt;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.gantt.core.TimeRange;
@@ -54,6 +56,8 @@ public class OpenClose {
 
 	private final Map<DayOfWeek, DayStatus> weekdayStatus = new EnumMap<>(DayOfWeek.class);
 	private final Map<LocalDate, DayStatus> dayStatus = new HashMap<>();
+	private final List<TimeRange> workingTimeRanges = new ArrayList<>();
+	
 	private LocalDate offBefore;
 	private LocalDate offAfter;
 
@@ -232,6 +236,8 @@ public class OpenClose {
 
 	public void addWorkingTimeRange(TimeRange timeRange) {
 		System.out.println("OpenClose::addWorkingTimeRange " + timeRange);
+		workingTimeRanges.add(timeRange);
+
 
 	}
 
