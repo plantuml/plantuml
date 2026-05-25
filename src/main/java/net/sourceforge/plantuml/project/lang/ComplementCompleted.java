@@ -44,9 +44,6 @@ import com.plantuml.ubrex.builder.UBrexPart;
 import net.sourceforge.plantuml.project.Completion;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementCompleted implements Something<GanttDiagram> {
 
@@ -64,8 +61,4 @@ public class ComplementCompleted implements Something<GanttDiagram> {
 		return Failable.ok(new Completion(Integer.parseInt(value)));
 	}
 
-	public Failable<Completion> getMe(GanttDiagram system, RegexResult arg, String suffix) {
-		final String value = arg.get("COMPLEMENT" + suffix, 0);
-		return Failable.ok(new Completion(Integer.parseInt(value)));
-	}
 }

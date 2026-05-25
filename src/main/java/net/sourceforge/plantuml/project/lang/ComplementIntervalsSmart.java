@@ -50,10 +50,9 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.project.time.TimePoint;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementIntervalsSmart extends AbstractComplementTaskInstant {
-	
+
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
 		final DayPattern dayPattern1 = new DayPattern("1");
@@ -108,26 +107,6 @@ public class ComplementIntervalsSmart extends AbstractComplementTaskInstant {
 
 		final DaysAsDates days = new DaysAsDates(d1, precise.toDay());
 		return Failable.ok(days);
-	}
-
-
-
-	public Failable<DaysAsDates> getMe(GanttDiagram system, RegexResult arg, String suffix) {
-		final LocalDate d1 = new DayPattern("1").getDay(arg);
-
-		final Failable<TaskInstant> i2 = getComplementTaskInstant(system, arg, suffix);
-
-		if (i2.isFail())
-			return Failable.error(i2.getError());
-
-		final TaskInstant end = i2.get();
-		TimePoint precise = end.getInstantPrecise();
-		if (end.getAttribute() == TaskAttribute.END)
-			precise = precise.decrement();
-
-		final DaysAsDates days = new DaysAsDates(d1, precise.toDay());
-		return Failable.ok(days);
-
 	}
 
 }

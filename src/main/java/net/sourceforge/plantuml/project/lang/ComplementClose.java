@@ -44,9 +44,6 @@ import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementClose implements Something<GanttDiagram> {
 
@@ -55,8 +52,7 @@ public class ComplementClose implements Something<GanttDiagram> {
 		return new UBrexNamed("CLOSED", //
 				UBrexConcat.build( //
 						new UBrexLeaf("close〇?d"), //
-						new UBrexOptional(
-								UBrexConcat.build(new UBrexLeaf("∙for∙"), SubjectTask.taskCode("FOO")))));
+						new UBrexOptional(UBrexConcat.build(new UBrexLeaf("∙for∙"), SubjectTask.taskCode("FOO")))));
 	}
 
 	@Override
@@ -71,14 +67,4 @@ public class ComplementClose implements Something<GanttDiagram> {
 		return Failable.ok("");
 	}
 
-	public Failable<String> getMe(GanttDiagram project, RegexResult arg, String suffix) {
-		final String value = arg.get("CLOSED" + suffix, 0);
-		final int x = value.indexOf('[');
-		if (x > 0) {
-			final int y = value.lastIndexOf(']');
-			final String s = value.substring(x + 1, y);
-			return Failable.ok(s);
-		}
-		return Failable.ok("");
-	}
 }

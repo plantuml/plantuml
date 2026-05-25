@@ -47,7 +47,6 @@ import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementDate implements Something<GanttDiagram> {
 
@@ -133,22 +132,6 @@ public class ComplementDate implements Something<GanttDiagram> {
 		throw new IllegalStateException();
 	}
 
-	public Failable<LocalDate> getMe(GanttDiagram system, RegexResult arg, String suffix) {
-		final DayPattern dayPattern = new DayPattern(suffix);
-		final LocalDate result = dayPattern.getDay(arg);
-
-		if (result != null)
-			return Failable.ok(result);
-
-		if (arg.get("DCOUNT" + suffix, 0) != null)
-			return Failable.ok(resultD(system, arg, suffix));
-
-		if (arg.get("ECOUNT" + suffix, 0) != null)
-			return Failable.ok(resultE(system, arg, suffix));
-
-		throw new IllegalStateException();
-	}
-
 	private LocalDate resultD(GanttDiagram system, UMatcher arg) {
 		final int day = Integer.parseInt(arg.get("DCOUNT", 0));
 		return system.getMinDay().plusDays(day);
@@ -166,16 +149,6 @@ public class ComplementDate implements Something<GanttDiagram> {
 
 	private LocalDate resultE(GanttDiagram system, Capture arg) {
 		final int day = Integer.parseInt(arg.get("ECOUNT"));
-		return system.getMinDay().plusDays(day);
-	}
-
-	private LocalDate resultD(GanttDiagram system, RegexResult arg, String suffix) {
-		final int day = Integer.parseInt(arg.get("DCOUNT" + suffix, 0));
-		return system.getMinDay().plusDays(day);
-	}
-
-	private LocalDate resultE(GanttDiagram system, RegexResult arg, String suffix) {
-		final int day = Integer.parseInt(arg.get("ECOUNT" + suffix, 0));
 		return system.getMinDay().plusDays(day);
 	}
 

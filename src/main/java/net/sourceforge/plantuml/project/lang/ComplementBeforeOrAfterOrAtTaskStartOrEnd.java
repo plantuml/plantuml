@@ -46,7 +46,6 @@ import com.plantuml.ubrex.builder.UBrexPart;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.TaskInstant;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementBeforeOrAfterOrAtTaskStartOrEnd extends AbstractComplementTaskInstant {
 
@@ -93,7 +92,4 @@ public class ComplementBeforeOrAfterOrAtTaskStartOrEnd extends AbstractComplemen
 		return getComplementTaskInstant(system, arg);
 	}
 
-	public Failable<TaskInstant> getMe(GanttDiagram system, RegexResult arg, String suffix) {
-		return getComplementTaskInstant(system, arg, suffix);
-	}
 }

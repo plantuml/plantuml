@@ -45,9 +45,6 @@ import com.plantuml.ubrex.builder.UBrexPart;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementInColors implements Something<GanttDiagram> {
 
@@ -71,11 +68,4 @@ public class ComplementInColors implements Something<GanttDiagram> {
 		return Failable.ok(new CenterBorderColor(col1, col2));
 	}
 
-	public Failable<CenterBorderColor> getMe(GanttDiagram diagram, RegexResult arg, String suffix) {
-		final String color1 = arg.get("COMPLEMENT" + suffix, 0);
-		final String color2 = arg.get("COMPLEMENT" + suffix, 1);
-		final HColor col1 = color1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color1);
-		final HColor col2 = color2 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color2);
-		return Failable.ok(new CenterBorderColor(col1, col2));
-	}
 }

@@ -45,10 +45,6 @@ import com.plantuml.ubrex.builder.UBrexPart;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.Load;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementDuration implements Something<GanttDiagram> {
 
@@ -82,29 +78,6 @@ public class ComplementDuration implements Something<GanttDiagram> {
 		if (secondValue != null) {
 			final int value = Integer.parseInt(secondValue);
 			final String unit = arg.get("CUNIT2", 0);
-			secondDaysAndHours = toDaysAndHours(system, value, unit);
-		}
-
-		final int totalDays = firstDaysAndHours[0] + secondDaysAndHours[0];
-		final int totalHours = firstDaysAndHours[1] + secondDaysAndHours[1];
-
-		return Failable.ok(Load.ofDaysAndHours(totalDays, totalHours));
-	}
-
-	@Override
-	public Failable<Load> getMe(GanttDiagram system, RegexResult arg, String suffix) {
-
-		final String prefix = "COMPLEMENT" + suffix;
-
-		final int firstValue = Integer.parseInt(arg.get(prefix, 0));
-		final String firstUnit = arg.get(prefix, 1);
-		final int[] firstDaysAndHours = toDaysAndHours(system, firstValue, firstUnit);
-
-		int[] secondDaysAndHours = { 0, 0 };
-		final String secondValue = arg.get(prefix, 2);
-		if (secondValue != null) {
-			final int value = Integer.parseInt(secondValue);
-			final String unit = arg.get(prefix, 3);
 			secondDaysAndHours = toDaysAndHours(system, value, unit);
 		}
 

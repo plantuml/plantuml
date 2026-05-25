@@ -42,9 +42,6 @@ import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementFromTo implements Something<GanttDiagram> {
 
@@ -53,8 +50,7 @@ public class ComplementFromTo implements Something<GanttDiagram> {
 		return UBrexConcat.build( //
 				new UBrexLeaf("from"), //
 				UBrexLeaf.spaceOneOrMore(), //
-				SubjectTask.taskCode("COMPLEMENT1"),
-				UBrexLeaf.spaceOneOrMore(), //
+				SubjectTask.taskCode("COMPLEMENT1"), UBrexLeaf.spaceOneOrMore(), //
 				new UBrexLeaf("to"), //
 				UBrexLeaf.spaceOneOrMore(), //
 				SubjectTask.taskCode("COMPLEMENT2"));
@@ -67,9 +63,4 @@ public class ComplementFromTo implements Something<GanttDiagram> {
 		return Failable.ok(new TwoNames(name1, name2));
 	}
 
-	public Failable<TwoNames> getMe(GanttDiagram system, RegexResult arg, String suffix) {
-		final String name1 = arg.get("COMPLEMENT" + suffix, 0);
-		final String name2 = arg.get("COMPLEMENT" + suffix, 1);
-		return Failable.ok(new TwoNames(name1, name2));
-	}
 }

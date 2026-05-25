@@ -42,13 +42,8 @@ import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.url.UbrexUrlBuilder;
 import net.sourceforge.plantuml.url.Url;
-import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
 
 public class ComplementUrl implements Something<GanttDiagram> {
@@ -62,13 +57,6 @@ public class ComplementUrl implements Something<GanttDiagram> {
 	public Failable<Url> ugetMe(GanttDiagram diagram, UMatcher arg) {
 		final String urlString = arg.get("COMPLEMENT", 0);
 		final UbrexUrlBuilder urlBuilder = new UbrexUrlBuilder("", UrlMode.STRICT);
-		final Url url = urlBuilder.getUrl(urlString);
-		return Failable.ok(url);
-	}
-
-	public Failable<Url> getMe(GanttDiagram diagram, RegexResult arg, String suffix) {
-		final String urlString = arg.get("COMPLEMENT" + suffix, 0);
-		final UrlBuilder urlBuilder = new UrlBuilder("", UrlMode.STRICT);
 		final Url url = urlBuilder.getUrl(urlString);
 		return Failable.ok(url);
 	}

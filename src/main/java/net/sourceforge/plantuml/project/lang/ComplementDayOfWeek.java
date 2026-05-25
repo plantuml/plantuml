@@ -44,10 +44,6 @@ import com.plantuml.ubrex.builder.UBrexPart;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.DayOfWeekUtils;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementDayOfWeek implements Something<GanttDiagram> {
 
@@ -59,11 +55,6 @@ public class ComplementDayOfWeek implements Something<GanttDiagram> {
 	@Override
 	public Failable<DayOfWeek> ugetMe(GanttDiagram diagram, UMatcher arg) {
 		final String s = arg.get("COMPLEMENT", 0);
-		return Failable.ok(DayOfWeekUtils.fromString(s));
-	}
-
-	public Failable<DayOfWeek> getMe(GanttDiagram project, RegexResult arg, String suffix) {
-		final String s = arg.get("COMPLEMENT" + suffix, 0);
 		return Failable.ok(DayOfWeekUtils.fromString(s));
 	}
 

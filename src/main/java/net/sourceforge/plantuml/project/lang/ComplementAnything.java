@@ -42,9 +42,6 @@ import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementAnything implements Something<GanttDiagram> {
 
@@ -59,8 +56,4 @@ public class ComplementAnything implements Something<GanttDiagram> {
 		return Failable.ok(value);
 	}
 
-	public Failable<String> getMe(GanttDiagram system, RegexResult arg, String suffix) {
-		final String value = arg.get("ANYTHING" + suffix, 0);
-		return Failable.ok(value);
-	}
 }

@@ -42,10 +42,6 @@ import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.project.Failable;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class PairOfSomething<D extends Diagram> implements Something<D> {
 
@@ -76,19 +72,5 @@ public class PairOfSomething<D extends Diagram> implements Something<D> {
 				UBrexLeaf.spaceOneOrMore(), //
 				complement2.toUnicodeBracketedExpressionComplement());
 	}
-
-	public Failable<? extends Object> getMe(D diagram, RegexResult arg, String suffix) {
-		final Failable<? extends Object> r1 = complement1.getMe(diagram, arg, "A" + suffix);
-		final Failable<? extends Object> r2 = complement2.getMe(diagram, arg, "B" + suffix);
-		if (r1.isFail())
-			return r1;
-
-		if (r2.isFail())
-			return r2;
-
-		final Object[] result = new Object[] { r1.get(), r2.get() };
-		return Failable.ok(result);
-	}
-
 
 }

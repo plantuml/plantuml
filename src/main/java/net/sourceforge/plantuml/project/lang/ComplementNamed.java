@@ -43,7 +43,6 @@ import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementNamed implements Something<GanttDiagram> {
 
@@ -54,15 +53,11 @@ public class ComplementNamed implements Something<GanttDiagram> {
 				new UBrexNamed("COMPLEMENT", new UBrexLeaf("〇+「〤[]」")), //
 				new UBrexLeaf("]"));
 	}
-	
+
 	@Override
 	public Failable<String> ugetMe(GanttDiagram diagram, UMatcher arg) {
 		final String name = arg.get("COMPLEMENT", 0);
 		return Failable.ok(name);
 	}
 
-	public Failable<String> getMe(GanttDiagram system, RegexResult arg, String suffix) {
-		final String name = arg.get("COMPLEMENT" + suffix, 0);
-		return Failable.ok(name);
-	}
 }

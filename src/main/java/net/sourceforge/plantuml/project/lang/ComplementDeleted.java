@@ -41,9 +41,6 @@ import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementDeleted implements Something<GanttDiagram> {
 
@@ -57,7 +54,4 @@ public class ComplementDeleted implements Something<GanttDiagram> {
 		return Failable.ok(new Object());
 	}
 
-	public Failable<Object> getMe(GanttDiagram system, RegexResult arg, String suffix) {
-		return Failable.ok(new Object());
-	}
 }

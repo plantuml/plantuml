@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.time.TimePoint;
-import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementIntervals implements Something<GanttDiagram> {
 
@@ -68,7 +67,6 @@ public class ComplementIntervals implements Something<GanttDiagram> {
 				dayPattern2.toUbrex() //
 		);
 	}
-
 
 	private UBrexPart toRegexE() {
 		return UBrexConcat.build( //
@@ -93,30 +91,6 @@ public class ComplementIntervals implements Something<GanttDiagram> {
 			return Failable.ok(resultE(project, arg));
 
 		throw new IllegalStateException();
-	}
-
-	public Failable<DaysAsDates> getMe(GanttDiagram project, RegexResult arg, String suffix) {
-		final LocalDate d1 = new DayPattern("1").getDay(arg);
-		if (d1 != null) {
-			final LocalDate d2 = new DayPattern("2").getDay(arg);
-			return Failable.ok(new DaysAsDates(d1, d2));
-		}
-
-		if (arg.get("ECOUNT1" + suffix, 0) != null)
-			return Failable.ok(resultE(project, arg, suffix));
-
-		throw new IllegalStateException();
-
-	}
-
-	private DaysAsDates resultE(GanttDiagram project, RegexResult arg, String suffix) {
-		final int day1 = Integer.parseInt(arg.get("ECOUNT1" + suffix, 0));
-		final TimePoint date1 = project.getMinTimePoint().addDays(day1);
-
-		final int day2 = Integer.parseInt(arg.get("ECOUNT2" + suffix, 0));
-		final TimePoint date2 = project.getMinTimePoint().addDays(day2);
-
-		return new DaysAsDates(date1.toDay(), date2.toDay());
 	}
 
 	private DaysAsDates resultE(GanttDiagram project, UMatcher arg) {
