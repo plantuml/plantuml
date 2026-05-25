@@ -18,8 +18,11 @@ import net.sourceforge.plantuml.preproc.Defines;
 /*
  * 
 
+from 2018/04/17 to 2018/04/19 is closed
+
 @startgantt
 Project starts 2025-05-25
+From 8:00 to 12:00 are working hours
 [Task 1] starts 2025-05-25
 [Task 2] starts 2025-05-25
 [Task 3] starts 2025-05-25
